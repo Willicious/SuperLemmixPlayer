@@ -656,9 +656,9 @@ procedure TGameBaseMenuScreen.SaveReplay;
 var
   S: String;
 begin
-  S := GlobalGame.ReplayManager.GetSaveFileName(self, rsoPostview);
-  if S = '' then Exit;
   GlobalGame.EnsureCorrectReplayDetails;
+  S := GlobalGame.ReplayManager.GetSaveFileName(self, rsoPostview, GlobalGame.ReplayManager);
+  if S = '' then Exit;
   GlobalGame.ReplayManager.SaveToFile(S);
 end;
 

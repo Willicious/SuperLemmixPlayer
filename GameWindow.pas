@@ -1926,9 +1926,9 @@ begin
   OldSpeed := fGameSpeed;
   try
     GameSpeed := gspPause;
-    s := Game.ReplayManager.GetSaveFileName(self, rsoIngame);
-    if s = '' then Exit;
     Game.EnsureCorrectReplayDetails;
+    s := Game.ReplayManager.GetSaveFileName(self, rsoIngame, Game.ReplayManager);
+    if s = '' then Exit;
     Game.ReplayManager.SaveToFile(s);
   finally
     GameSpeed := OldSpeed;
@@ -2061,28 +2061,23 @@ begin
   Img.Cursor := crNone;
   SkillPanel.SetCursor(crNone);
 
-  // We assume that we close the game for the main menu or the preview screen,
-  // only via the level selection menu, and not in regular game play mode
-  if not (aNextScreen in [gstMenu, gstPreview]) then
+  Game.SetGameResult;
+  GameParams.GameResult := Game.GameResultRec;
+  with GameParams, GameResult do
   begin
-    Game.SetGameResult;
-    GameParams.GameResult := Game.GameResultRec;
-    with GameParams, GameResult do
+    if gCheated then
     begin
-      if gCheated then
-      begin
-        GameParams.NextLevel(true);
-        GameParams.ShownText := false;
-        aNextScreen := gstPreview;
-      end;
+      GameParams.NextLevel(true);
+      GameParams.ShownText := false;
+      aNextScreen := gstPreview;
+    end;
 
-      if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
-      begin
-        S := Game.ReplayManager.GetSaveFileName(self, rsoAuto);
-        ForceDirectories(ExtractFilePath(S));
-        Game.EnsureCorrectReplayDetails;
-        Game.ReplayManager.SaveToFile(S, true);
-      end;
+    if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
+    begin
+      Game.EnsureCorrectReplayDetails;
+      S := Game.ReplayManager.GetSaveFileName(self, rsoAuto, Game.ReplayManager);
+      ForceDirectories(ExtractFilePath(S));
+      Game.ReplayManager.SaveToFile(S, true);
     end;
   end;
 

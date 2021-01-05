@@ -135,8 +135,8 @@ type
     public
       constructor Create;
       destructor Destroy; override;
-      class function EvaluateReplayNamePattern(aPattern: String): String;
-      class function GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion): String;
+      class function EvaluateReplayNamePattern(aPattern: String; aReplay: TReplay = nil): String;
+      class function GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
       procedure Add(aItem: TBaseReplayItem);
       procedure Clear(EraseLevelInfo: Boolean = false);
       procedure Delete(aItem: TBaseReplayItem);
@@ -223,7 +223,7 @@ begin
   inherited;
 end;
 
-class function TReplay.EvaluateReplayNamePattern(aPattern: String): String;
+class function TReplay.EvaluateReplayNamePattern(aPattern: String; aReplay: TReplay = nil): String;
 var
   SplitPos: Integer;
 const
@@ -233,6 +233,7 @@ const
   TAG_TIMESTAMP = '{TIMESTAMP}';
   TAG_PACK = '{PACK}';
   TAG_USERNAME = '{USERNAME}';
+  TAG_VERSION = '{VERSION}';
 begin
   SplitPos := Pos('|', aPattern);
   if SplitPos > 0 then
@@ -249,12 +250,25 @@ begin
   else
     Result := aPattern;
 
-  Result := StringReplace(Result, TAG_TITLE, GameParams.CurrentLevel.Title, [rfReplaceAll]);
-  Result := StringReplace(Result, TAG_GROUP, GameParams.CurrentLevel.Group.Name, [rfReplaceAll]);
-  Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2), [rfReplaceAll]);
+  if aReplay = nil then
+  begin
+    Result := StringReplace(Result, TAG_TITLE, GameParams.CurrentLevel.Title, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUP, GameParams.CurrentLevel.Group.Name, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_PACK, GameParams.CurrentLevel.Group.ParentBasePack.Name, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_USERNAME, GameParams.Username, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_VERSION, IntToStr(GameParams.Level.Info.LevelVersion), [rfReplaceAll]);
+  end else begin
+    Result := StringReplace(Result, TAG_TITLE, aReplay.LevelName, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUP, aReplay.LevelRank, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(aReplay.LevelPosition, 2), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_PACK, aReplay.LevelGame, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_USERNAME, aReplay.PlayerName, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_VERSION, IntToStr(aReplay.LevelVersion), [rfReplaceAll]);
+  end;
+
+  // The rest are the same whether aReplay is nil or not.
   Result := StringReplace(Result, TAG_TIMESTAMP, FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now), [rfReplaceAll]);
-  Result := StringReplace(Result, TAG_PACK, GameParams.CurrentLevel.Group.ParentBasePack.Name, [rfReplaceAll]);
-  Result := StringReplace(Result, TAG_USERNAME, GameParams.Username, [rfReplaceAll]);
 
   Result := MakeSafeForFilename(Result);
 
@@ -262,7 +276,7 @@ begin
     Result := '*' + Result;
 end;
 
-class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion): String;
+class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
   function GetDefaultSavePath: String;
   begin
     if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
@@ -306,9 +320,9 @@ var
   UseDialog: Boolean;
 begin
   case aSaveOccasion of
-    rsoAuto: SaveName := EvaluateReplayNamePattern(GameParams.AutoSaveReplayPattern);
-    rsoIngame: SaveName := EvaluateReplayNamePattern(GameParams.IngameSaveReplayPattern);
-    rsoPostview: SaveName := EvaluateReplayNamePattern(GameParams.PostviewSaveReplayPattern);
+    rsoAuto: SaveName := EvaluateReplayNamePattern(GameParams.AutoSaveReplayPattern, aReplay);
+    rsoIngame: SaveName := EvaluateReplayNamePattern(GameParams.IngameSaveReplayPattern, aReplay);
+    rsoPostview: SaveName := EvaluateReplayNamePattern(GameParams.PostviewSaveReplayPattern, aReplay);
     else raise Exception.Create('Invalid replay save occasion');
   end;
 
@@ -535,7 +549,10 @@ begin
     Sec := Parser.MainSection;
 
     if fIsModified then
+    begin
       fPlayerName := GameParams.UserName; // If modified, treat it as this user's.
+      fLevelVersion := GameParams.Level.Info.LevelVersion; // And as the up to date version.
+    end;
 
     Sec.AddLine('USER', fPlayerName);
 
