@@ -108,8 +108,6 @@ type
       procedure EnableIdle;
 
       procedure LoadLayoutData;
-
-      procedure TestReplayOptionForm;
     protected
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
@@ -127,7 +125,6 @@ type
 implementation
 
 uses
-  FReplayRename,
   LemMenuFont, // for size const
   CustomPopup,
   FStyleManager,
@@ -365,9 +362,6 @@ begin
     GetGraphic('sign_quit.png', BMP);
     NewRegion := MakeClickableImageAuto(MakePosition(0.5, 0.5), BMP.BoundsRect, ExitGame, BMP);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
-
-    // Debug
-    MakeHiddenOption(VK_F12, TestReplayOptionForm);
 
     fFinishedMakingSigns := true;
 
@@ -819,18 +813,6 @@ begin
 
     // And apply the settings chosen
     ApplyConfigChanges(OldFullScreen, OldHighRes, false, false);
-  finally
-    F.Free;
-  end;
-end;
-
-procedure TGameMenuScreen.TestReplayOptionForm;
-var
-  F: TFReplayNaming;
-begin
-  F := TFReplayNaming.Create(self);
-  try
-    F.ShowModal;
   finally
     F.Free;
   end;

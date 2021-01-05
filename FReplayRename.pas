@@ -26,6 +26,7 @@ type
     cbRefresh: TCheckBox;
     btnOK: TButton;
     btnCancel: TButton;
+    lblClassic: TLabel;
     procedure rgReplayKindClick(Sender: TObject);
     procedure rbReplayActionClick(Sender: TObject);
     procedure cbNamingSchemeChange(Sender: TObject);
@@ -104,14 +105,20 @@ end;
 
 procedure TFReplayNaming.cbNamingSchemeChange(Sender: TObject);
 begin
-  if not fIsSetting then
-    SetToOptions(true, false);
+  if fIsSetting then
+    Exit;
+
+  lblClassic.Visible := false;
+  SetToOptions(true, false);
 end;
 
 procedure TFReplayNaming.cbRefreshClick(Sender: TObject);
 begin
-  if not fIsSetting then
-    SetToOptions(false, true);
+  if fIsSetting then
+    Exit;
+
+  lblClassic.Visible := false;
+  SetToOptions(false, true);
 end;
 
 class procedure TFReplayNaming.ClearNamingSettings;
@@ -160,6 +167,8 @@ begin
   if fIsSetting then
     Exit;
 
+  lblClassic.Visible := false;
+
   fIsSetting := true;
   try
     if not (rbCopyTo.Checked or rbMoveTo.Checked) then
@@ -180,8 +189,11 @@ end;
 
 procedure TFReplayNaming.rgReplayKindClick(Sender: TObject);
 begin
-  if not fIsSetting then
-    SetFromOptions;
+  if fIsSetting then
+    Exit;
+
+  lblClassic.Visible := false;
+  SetFromOptions;
 end;
 
 procedure TFReplayNaming.SetFromOptions;

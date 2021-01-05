@@ -4,7 +4,7 @@ object FReplayNaming: TFReplayNaming
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Replay Naming'
-  ClientHeight = 182
+  ClientHeight = 195
   ClientWidth = 369
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,11 +17,24 @@ object FReplayNaming: TFReplayNaming
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object lblClassic: TLabel
+    Left = 141
+    Top = 152
+    Width = 212
+    Height = 13
+    Caption = 'For "classic" behavior, just click "OK".'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object rgReplayKind: TRadioGroup
     Left = 8
     Top = 8
     Width = 121
-    Height = 170
+    Height = 183
     Caption = 'Replay Kind'
     ItemIndex = 0
     Items.Strings = (
@@ -109,7 +122,7 @@ object FReplayNaming: TFReplayNaming
   end
   object btnOK: TButton
     Left = 205
-    Top = 153
+    Top = 166
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -118,7 +131,7 @@ object FReplayNaming: TFReplayNaming
   end
   object btnCancel: TButton
     Left = 286
-    Top = 153
+    Top = 166
     Width = 75
     Height = 25
     Caption = 'Cancel'

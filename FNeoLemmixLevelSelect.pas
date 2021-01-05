@@ -135,6 +135,7 @@ const // Icon indexes
 implementation
 
 uses
+  FReplayRename,
   LemLevel;
 
 const
@@ -1004,6 +1005,7 @@ end;
 procedure TFLevelSelect.btnMassReplayClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
+  F: TFReplayNaming;
 begin
   OpenDlg := TOpenDialog.Create(self);
   try
@@ -1016,6 +1018,14 @@ begin
     GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
   finally
     OpenDlg.Free;
+  end;
+
+  F := TFReplayNaming.Create(self);
+  try
+    if F.ShowModal = mrCancel then
+      Exit;
+  finally
+    F.Free;
   end;
 
   WriteToParams;
