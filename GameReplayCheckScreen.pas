@@ -7,7 +7,7 @@ interface
 uses
   Types,
   LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager, SharedGlobals,
-  Windows, Classes, SysUtils, StrUtils, Controls, Contnrs,
+  Windows, Classes, SysUtils, StrUtils, IOUtils, Controls, Contnrs,
   UMisc,
   Gr32, Gr32_Layers, GR32_Resamplers,
   LemTypes, LemStrings, LemGame, LemGameMessageQueue,
@@ -76,7 +76,12 @@ type
 
 implementation
 
-uses Forms, LemNeoLevelPack, CustomPopup;
+uses
+  LemReplay,
+  FReplayRename,
+  Forms,
+  LemNeoLevelPack,
+  CustomPopup;
 
 { TGameReplayCheckScreen }
 
@@ -120,6 +125,7 @@ var
   Game: TLemmingGame;
   Level: TLevel;
   i: Integer;
+  OutStream: TMemoryStream;
 
   procedure BuildReplaysList;
     procedure Get(aExt: String);
@@ -237,150 +243,190 @@ var
       Result := Result + ' + ' + IntToStr(f) + ' frames';
   end;
 
-begin
-  BuildReplaysList;
-
-  if fReplays.Count = 0 then
+  procedure HandleReplayNaming(aEntry: TReplayCheckEntry);
+  var
+    NewName: String;
+    ThisSetting: TReplayNamingSetting;
   begin
-    fScreenText.Add('No valid replay files found.');
-    while fScreenText.Count < 29 do
-      fScreenText.Add('');
-    fScreenText.Add('Click mouse to exit');
+    ThisSetting := ReplayNaming[aEntry.ReplayResult];
+    //GameParams.ReplayCheckPath
+
+    if (ThisSetting.Action = rnaNone) and (not ThisSetting.Refresh) then
+      Exit;
+
+    if ThisSetting.Action = rnaDelete then
+    begin
+      DeleteFile(GameParams.ReplayCheckPath + aEntry.ReplayFile);
+      Exit;
+    end;
+
+    if ThisSetting.Action = rnaNone then
+      NewName := aEntry.ReplayFile
+    else
+      NewName := TReplay.EvaluateReplayNamePattern(ThisSetting.Template, Game.ReplayManager);
+
+    if not TPath.IsPathRooted(NewName) then
+      NewName := GameParams.ReplayCheckPath + NewName;
+
+    ForceDirectories(ExtractFilePath(NewName));
+    OutStream.Clear;
+
+    if ThisSetting.Refresh then
+      Game.ReplayManager.SaveToStream(OutStream)
+    else
+      OutStream.LoadFromFile(GameParams.ReplayCheckPath + aEntry.ReplayFile);
+
+    OutStream.SaveToFile(NewName);
+
+    if ThisSetting.Action = rnaMove then
+      DeleteFile(GameParams.ReplayCheckPath + aEntry.ReplayFile);
   end;
 
-  GetReplayLevelIDs;
+begin
+  OutStream := TMemoryStream.Create;
+  try
+    BuildReplaysList;
 
-  Game := GlobalGame;        // shortcut
-  Level := GameParams.Level; // shortcut
-  Renderer := GameParams.Renderer; // shortcut
-  Renderer.SetInterface(Game.RenderInterface);
+    if fReplays.Count = 0 then
+    begin
+      fScreenText.Add('No valid replay files found.');
+      while fScreenText.Count < 29 do
+        fScreenText.Add('');
+      fScreenText.Add('Click mouse to exit');
+    end;
 
-  if ScreenImg.Bitmap.Resampler is TLinearResampler then
-    TNearestResampler.Create(ScreenImg.Bitmap);
+    GetReplayLevelIDs;
 
-  for i := 0 to fReplays.Count-1 do
-  begin
-    fScreenText.Add(ExtractFileName(fReplays[i].ReplayFile));
+    Game := GlobalGame;        // shortcut
+    Level := GameParams.Level; // shortcut
+    Renderer := GameParams.Renderer; // shortcut
+    Renderer.SetInterface(Game.RenderInterface);
 
-    try
-      fReplays[i].ReplayLevelText := '';
-      fReplays[i].ReplayLevelTitle := '<no match>';
+    if ScreenImg.Bitmap.Resampler is TLinearResampler then
+      TNearestResampler.Create(ScreenImg.Bitmap);
 
-      if not LoadLevel(fReplays[i].ReplayLevelID) then
-      begin
-        fReplays[i].ReplayResult := CR_NOLEVELMATCH;
-        Continue;
-      end;
+    for i := 0 to fReplays.Count-1 do
+    begin
+      fScreenText.Add(ExtractFileName(fReplays[i].ReplayFile));
 
-      if GameParams.Level.HasAnyFallbacks then
-      begin
-        fReplays[i].ReplayResult := CR_ERROR;
-        Continue;
-      end;
+      try
+        fReplays[i].ReplayLevelText := '';
+        fReplays[i].ReplayLevelTitle := '<no match>';
 
-      fReplays[i].ReplayLevelText := GameParams.CurrentLevel.Group.Name + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
-      fReplays[i].ReplayLevelTitle := Level.Info.Title;
+        if not LoadLevel(fReplays[i].ReplayLevelID) then
+          fReplays[i].ReplayResult := CR_NOLEVELMATCH
+        else if GameParams.Level.HasAnyFallbacks then
+          fReplays[i].ReplayResult := CR_ERROR
+        else begin
+          fReplays[i].ReplayLevelText := GameParams.CurrentLevel.Group.Name + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
+          fReplays[i].ReplayLevelTitle := Level.Info.Title;
 
-      PieceManager.Tidy;
-      Game.PrepareParams;
+          PieceManager.Tidy;
+          Game.PrepareParams;
 
-      Game.ReplayManager.LoadFromFile(fReplays[i].ReplayFile);
+          Game.ReplayManager.LoadFromFile(fReplays[i].ReplayFile);
 
-      fReplays[i].ReplayResult := CR_UNDETERMINED;
+          fReplays[i].ReplayResult := CR_UNDETERMINED;
 
-      Game.Start;
-      repeat
-        if Game.CurrentIteration mod 170 = 0 then
-        begin
-          if Game.CurrentIteration = 0 then
-            fScreenText.Add('');
-          fScreenText[fScreenText.Count-1] := 'Running for ' + IntToStr(Game.CurrentIteration div 17) + ' seconds (in-game time).';
-          OutputText;
-
-          Application.ProcessMessages;
-          if not fProcessing then Break;
-        end;
-
-        Game.UpdateLemmings;
-
-        if (Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17)) or
-           Game.IsOutOfTime then
-        begin
-          Game.Finish(GM_FIN_TERMINATE);
-          if Game.GameResultRec.gSuccess then
-            fReplays[i].ReplayResult := CR_PASS;
-          if Game.GameResultRec.gGotTalisman then
-            fReplays[i].ReplayResult := CR_PASS_TALISMAN;
-          Break;
-        end;
-
-        while Game.MessageQueue.HasMessages do
-          if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
-          begin
-            if Game.GameResultRec.gSuccess then
+          Game.Start;
+          repeat
+            if Game.CurrentIteration mod 170 = 0 then
             begin
-              if Game.GameResultRec.gGotTalisman then
-                fReplays[i].ReplayResult := CR_PASS_TALISMAN
-              else
+              if Game.CurrentIteration = 0 then
+                fScreenText.Add('');
+              fScreenText[fScreenText.Count-1] := 'Running for ' + IntToStr(Game.CurrentIteration div 17) + ' seconds (in-game time).';
+              OutputText;
+
+              Application.ProcessMessages;
+              if not fProcessing then Break;
+            end;
+
+            Game.UpdateLemmings;
+
+            if (Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17)) or
+               Game.IsOutOfTime then
+            begin
+              Game.Finish(GM_FIN_TERMINATE);
+              if Game.GameResultRec.gSuccess then
                 fReplays[i].ReplayResult := CR_PASS;
-            end else
-              fReplays[i].ReplayResult := CR_FAIL;
-          end;
-        if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
-      until false;
+              if Game.GameResultRec.gGotTalisman then
+                fReplays[i].ReplayResult := CR_PASS_TALISMAN;
+              Break;
+            end;
 
-      fReplays[i].ReplayDuration := Game.CurrentIteration;
+            while Game.MessageQueue.HasMessages do
+              if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
+              begin
+                if Game.GameResultRec.gSuccess then
+                begin
+                  if Game.GameResultRec.gGotTalisman then
+                    fReplays[i].ReplayResult := CR_PASS_TALISMAN
+                  else
+                    fReplays[i].ReplayResult := CR_PASS;
+                end else
+                  fReplays[i].ReplayResult := CR_FAIL;
+              end;
+            if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
+          until false;
 
-      fReplays[i].ReplayLevelVersion := Level.Info.LevelVersion;
-      fReplays[i].ReplayReplayVersion := Game.ReplayManager.LevelVersion;
-    except
-      fReplays[i].ReplayResult := CR_ERROR;
+          fReplays[i].ReplayDuration := Game.CurrentIteration;
+
+          fReplays[i].ReplayLevelVersion := Level.Info.LevelVersion;
+          fReplays[i].ReplayReplayVersion := Game.ReplayManager.LevelVersion;
+        end;
+      except
+        fReplays[i].ReplayResult := CR_ERROR;
+      end;
+
+      if fProcessing then
+      begin
+        fScreenText.Delete(fScreenText.Count-1);
+
+        fScreenText.Add(fReplays[i].ReplayLevelText + ' ' + fReplays[i].ReplayLevelTitle);
+        if fReplays[i].ReplayResult in [CR_PASS, CR_PASS_TALISMAN, CR_FAIL, CR_UNDETERMINED] then
+          fScreenText.Add('Ran for ' + MakeTimeText);
+        fScreenText.Add('*** ' + MakeResultText + ' ***');
+        if fReplays[i].ReplayResult in [CR_FAIL, CR_UNDETERMINED] then
+          if fReplays[i].ReplayLevelVersion <> fReplays[i].ReplayReplayVersion then
+            fScreenText.Add('LvV ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' | ' +
+                            'RpV: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16));
+        fScreenText.Add('');
+
+        OutputText;
+      end;
+
+      HandleReplayNaming(fReplays[i]);
+
+      Application.ProcessMessages;
+      if not fProcessing then Break;
     end;
 
     if fProcessing then
     begin
-      fScreenText.Delete(fScreenText.Count-1);
+      if ParamStr(2) <> 'replaytest' then
+      begin
+        fReplays.SaveToFile(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
+        fScreenText.Add('Results saved to');
+        fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
+        fScreenText.Add('');
+        fScreenText.Add(''); // Padding for clickable text.
+      end;
 
-      fScreenText.Add(fReplays[i].ReplayLevelText + ' ' + fReplays[i].ReplayLevelTitle);
-      if fReplays[i].ReplayResult in [CR_PASS, CR_PASS_TALISMAN, CR_FAIL, CR_UNDETERMINED] then
-        fScreenText.Add('Ran for ' + MakeTimeText);
-      fScreenText.Add('*** ' + MakeResultText + ' ***');
-      if fReplays[i].ReplayResult in [CR_FAIL, CR_UNDETERMINED] then
-        if fReplays[i].ReplayLevelVersion <> fReplays[i].ReplayReplayVersion then
-          fScreenText.Add('LvV ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' | ' +
-                          'RpV: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16));
-      fScreenText.Add('');
+      if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
+        TLinearResampler.Create(ScreenImg.Bitmap);
 
       OutputText;
+
+      with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
+      begin
+        ShortcutKeys.Add(VK_RETURN);
+        ShortcutKeys.Add(VK_SPACE);
+      end;
+
+      DrawAllClickables;
     end;
-
-    Application.ProcessMessages;
-    if not fProcessing then Break;
-  end;
-
-  if fProcessing then
-  begin
-    if ParamStr(2) <> 'replaytest' then
-    begin
-      fReplays.SaveToFile(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
-      fScreenText.Add('Results saved to');
-      fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
-      fScreenText.Add('');
-      fScreenText.Add(''); // Padding for clickable text.
-    end;
-
-    if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
-      TLinearResampler.Create(ScreenImg.Bitmap);
-
-    OutputText;
-
-    with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
-    begin
-      ShortcutKeys.Add(VK_RETURN);
-      ShortcutKeys.Add(VK_SPACE);
-    end;
-
-    DrawAllClickables;
+  finally
+    OutStream.Free;
   end;
 end;
 
