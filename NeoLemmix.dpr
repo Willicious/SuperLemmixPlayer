@@ -72,7 +72,7 @@ uses
   GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
   GameMenuScreen in 'GameMenuScreen.pas',
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
-  FReplayRename in 'FReplayRename.pas' {Form1};
+  FReplayRename in 'FReplayRename.pas' {FReplayNaming};
 
 {$R *.res}
 
@@ -80,7 +80,5 @@ begin
   Application.Initialize;
   Application.Title := 'NeoLemmix';
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TLevelInfoPanel, LevelInfoPanel);
-  Application.CreateForm(TForm1, Form1);
   Application.Run;
 end.

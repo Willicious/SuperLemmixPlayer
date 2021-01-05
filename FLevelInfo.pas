@@ -64,9 +64,6 @@ type
       property Talisman: TTalisman read fTalisman write fTalisman;
   end;
 
-var
-  LevelInfoPanel: TLevelInfoPanel;
-
 implementation
 
 uses

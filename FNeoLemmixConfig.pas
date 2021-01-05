@@ -99,10 +99,6 @@ uses
   GameBaseScreenCommon, // for EXTRA_ZOOM_LEVELS constant
   GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
 
-  {Position + Timestamp
-Title + Timestamp
-Position + Title + Timestamp
-}
 const
   PRESET_REPLAY_PATTERNS: array[0..3] of String =
   (
