@@ -247,6 +247,10 @@ var
   var
     NewName: String;
     ThisSetting: TReplayNamingSetting;
+    OutcomeText: String;
+  const
+    TAG_RESULT = '{RESULT}';
+    TAG_FILENAME = '{FILENAME}';
   begin
     ThisSetting := ReplayNaming[aEntry.ReplayResult];
     //GameParams.ReplayCheckPath
@@ -268,6 +272,19 @@ var
       NewName := TReplay.EvaluateReplayNamePattern(ThisSetting.Template, Game.ReplayManager);
 
     NewName := StringReplace(NewName, '/', '\', [rfReplaceAll]);
+
+    case aEntry.ReplayResult of
+      CR_UNKNOWN, CR_ERROR: OutcomeText := 'Error';
+      CR_PASS: OutcomeText := 'Passed';
+      CR_PASS_TALISMAN: OutcomeText := 'Talisman';
+      CR_FAIL: OutcomeText := 'Failed';
+      CR_UNDETERMINED: OutcomeText := 'Undetermined';
+      CR_NOLEVELMATCH: OutcomeText := 'LevelNotFound';
+      else raise Exception.Create('Invalid replay result');
+    end;
+
+    NewName := StringReplace(NewName, TAG_FILENAME, ChangeFileExt(ExtractFileName(aEntry.ReplayFile), ''), [rfReplaceAll]);
+    NewName := StringReplace(NewName, TAG_RESULT, OutcomeText, [rfReplaceAll]);
 
     if not TPath.IsPathRooted(NewName) then
       NewName := GameParams.ReplayCheckPath + NewName;
