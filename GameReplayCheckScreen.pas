@@ -256,14 +256,18 @@ var
 
     if ThisSetting.Action = rnaDelete then
     begin
-      DeleteFile(GameParams.ReplayCheckPath + aEntry.ReplayFile);
+      DeleteFile(aEntry.ReplayFile);
       Exit;
     end;
+
+    Game.EnsureCorrectReplayDetails;
 
     if ThisSetting.Action = rnaNone then
       NewName := aEntry.ReplayFile
     else
       NewName := TReplay.EvaluateReplayNamePattern(ThisSetting.Template, Game.ReplayManager);
+
+    NewName := StringReplace(NewName, '/', '\', [rfReplaceAll]);
 
     if not TPath.IsPathRooted(NewName) then
       NewName := GameParams.ReplayCheckPath + NewName;
@@ -272,14 +276,18 @@ var
     OutStream.Clear;
 
     if ThisSetting.Refresh then
-      Game.ReplayManager.SaveToStream(OutStream)
-    else
-      OutStream.LoadFromFile(GameParams.ReplayCheckPath + aEntry.ReplayFile);
+    begin
+      if aEntry.ReplayResult in [CR_PASS, CR_PASS_TALISMAN] then
+        Game.ReplayManager.LevelVersion := GameParams.Level.Info.LevelVersion;
+
+      Game.ReplayManager.SaveToStream(OutStream);
+    end else
+      OutStream.LoadFromFile(aEntry.ReplayFile);
 
     OutStream.SaveToFile(NewName);
 
     if ThisSetting.Action = rnaMove then
-      DeleteFile(GameParams.ReplayCheckPath + aEntry.ReplayFile);
+      DeleteFile(aEntry.ReplayFile);
   end;
 
 begin
@@ -389,7 +397,7 @@ begin
         if fReplays[i].ReplayResult in [CR_FAIL, CR_UNDETERMINED] then
           if fReplays[i].ReplayLevelVersion <> fReplays[i].ReplayReplayVersion then
             fScreenText.Add('LvV ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' | ' +
-                            'RpV: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16));
+                            'RpV: ' + IntToHex(fReplays[i].ReplayReplayVersion, 16));
         fScreenText.Add('');
 
         OutputText;

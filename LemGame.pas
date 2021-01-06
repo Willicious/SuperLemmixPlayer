@@ -5737,7 +5737,7 @@ begin
   begin
     LevelName := Trim(fLevel.Info.Title);
     LevelAuthor := Trim(fLevel.Info.Author);
-    LevelGame := GameParams.BaseLevelPack.Name;
+    LevelGame := GameParams.CurrentLevel.Group.ParentBasePack.Name;
     LevelRank := GameParams.CurrentGroupName;
     LevelPosition := GameParams.CurrentLevel.GroupIndex + 1;
     LevelID := fLevel.Info.LevelID;

@@ -245,35 +245,30 @@ begin
       aPattern := LeftStr(aPattern, SplitPos - 1);
   end;
 
-  if LeftStr(aPattern, 1) = '*' then
-    Result := RightStr(aPattern, Length(aPattern) - 1)
-  else
-    Result := aPattern;
+  Result := aPattern;
 
   if aReplay = nil then
   begin
-    Result := StringReplace(Result, TAG_TITLE, GameParams.CurrentLevel.Title, [rfReplaceAll]);
-    Result := StringReplace(Result, TAG_GROUP, GameParams.CurrentLevel.Group.Name, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_TITLE, MakeSafeForFilename(GameParams.CurrentLevel.Title), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUP, MakeSafeForFilename(GameParams.CurrentLevel.Group.Name), [rfReplaceAll]);
     Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2), [rfReplaceAll]);
-    Result := StringReplace(Result, TAG_PACK, GameParams.CurrentLevel.Group.ParentBasePack.Name, [rfReplaceAll]);
-    Result := StringReplace(Result, TAG_USERNAME, GameParams.Username, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_PACK, MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_USERNAME, MakeSafeForFilename(GameParams.Username), [rfReplaceAll]);
     Result := StringReplace(Result, TAG_VERSION, IntToStr(GameParams.Level.Info.LevelVersion), [rfReplaceAll]);
   end else begin
-    Result := StringReplace(Result, TAG_TITLE, aReplay.LevelName, [rfReplaceAll]);
-    Result := StringReplace(Result, TAG_GROUP, aReplay.LevelRank, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_TITLE, MakeSafeForFilename(aReplay.LevelName), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUP, MakeSafeForFilename(aReplay.LevelRank), [rfReplaceAll]);
     Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(aReplay.LevelPosition, 2), [rfReplaceAll]);
-    Result := StringReplace(Result, TAG_PACK, aReplay.LevelGame, [rfReplaceAll]);
-    Result := StringReplace(Result, TAG_USERNAME, aReplay.PlayerName, [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_PACK, MakeSafeForFilename(aReplay.LevelGame), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_USERNAME, MakeSafeForFilename(aReplay.PlayerName), [rfReplaceAll]);
     Result := StringReplace(Result, TAG_VERSION, IntToStr(aReplay.LevelVersion), [rfReplaceAll]);
   end;
 
   // The rest are the same whether aReplay is nil or not.
   Result := StringReplace(Result, TAG_TIMESTAMP, FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now), [rfReplaceAll]);
 
-  Result := MakeSafeForFilename(Result);
-
-  if LeftStr(aPattern, 1) = '*' then
-    Result := '*' + Result;
+  if ExtractFileExt(Result) = '' then
+    Result := Result + '.nxrp';
 end;
 
 class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
@@ -333,8 +328,6 @@ begin
     if aSaveOccasion <> rsoAuto then
       UseDialog := true;
   end;
-
-  SaveName := SaveName + '.nxrp';
 
   if UseDialog then
     Result := GetSavePath(SaveName)
