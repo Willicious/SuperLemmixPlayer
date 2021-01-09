@@ -61,6 +61,7 @@ type
     fSkillCountErase      : TBitmap32;
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
+    fSkillSelected        : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
     fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
@@ -285,6 +286,10 @@ begin
   fSkillInfinite.DrawMode := dmBlend;
   fSkillInfinite.CombineMode := cmMerge;
 
+  fSkillSelected := TBitmap32.Create;
+  fSkillSelected.DrawMode := dmBlend;
+  fSkillSelected.CombineMode := cmMerge;
+
   fSkillCountErase := TBitmap32.Create;
   fSkillCountErase.DrawMode := dmBlend;
   fSkillCountErase.CombineMode := cmMerge;
@@ -326,6 +331,7 @@ begin
     fSkillOvercount[i].Free;
 
   fSkillInfinite.Free;
+  fSkillSelected.Free;
   fSkillCountErase.Free;
   fSkillLock.Free;
 
@@ -630,8 +636,9 @@ var
       Outline(dst, true);
   end;
 begin
-  // Load the erasing icon first
+  // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
+  GetGraphic('skill_selected.png', fSkillSelected);
 
   //for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   //  GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
@@ -1033,18 +1040,9 @@ begin
     BorderRect := fButtonRects[aButton];
 
   Inc(BorderRect.Right, ResMod);
-  Inc(BorderRect.Bottom, 2 * ResMod);
+  Inc(BorderRect.Bottom, ResMod * 2);
 
-  Image.Bitmap.FrameRectS(BorderRect, fRectColor);
-
-  if GameParams.HighResolution then
-  begin
-    Inc(BorderRect.Left);
-    Inc(BorderRect.Top);
-    Dec(BorderRect.Right);
-    Dec(BorderRect.Bottom);
-    Image.Bitmap.FrameRectS(BorderRect, fRectColor);
-  end;
+  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fSkillSelected);
 end;
 
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
