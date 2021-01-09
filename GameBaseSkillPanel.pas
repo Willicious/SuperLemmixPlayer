@@ -1060,6 +1060,9 @@ begin
   Inc(BorderRect.Right, ResMod);
   Inc(BorderRect.Bottom, 2 * ResMod);
 
+  fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
+  Exit;
+
   // top
   EraseRect := BorderRect;
   EraseRect.Bottom := EraseRect.Top + 1 * ResMod;
@@ -1212,26 +1215,32 @@ var
 begin
   fIsBlinkFrame := (GetTickCount mod 1000) > 499;
 
-  // Text info string
-  CreateNewInfoString;
-  DrawNewStr;
-  fLastDrawnStr := fNewDrawStr;
+  Image.BeginUpdate;
+  try
+    // Text info string
+    CreateNewInfoString;
+    DrawNewStr;
+    fLastDrawnStr := fNewDrawStr;
 
-  // Skill and RR numbers
-  for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    DrawSkillCount(i, Game.SkillCount[i]);
+    DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
+    DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
 
-  DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
-  DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
+    // Highlight selected button
+    if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
+    begin
+      DrawButtonSelector(fHighlitSkill, false);
+      DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+    end;
 
-  // Highlight selected button
-  if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
-  begin
-    DrawButtonSelector(fHighlitSkill, false);
-    DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+    // Skill and RR numbers
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      DrawSkillCount(i, Game.SkillCount[i]);
+
+    DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
+  finally
+    Image.EndUpdate;
+    Image.Invalidate;
   end;
-
-  DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
