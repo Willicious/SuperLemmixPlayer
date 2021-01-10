@@ -9,12 +9,12 @@
  AUTHOR 
  MUSIC orig_04
  ID x3774994110ABC012
- VERSION x0000000000000004
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 440
- HEIGHT 104
+ HEIGHT 152
  START_X 160
  START_Y 80
  THEME orig_marble
@@ -59,7 +59,6 @@
      X 32
      Y 26
      ERASE
-     ONE_WAY
    $END
    
  $END
@@ -909,6 +908,432 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 8
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 8
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 48
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 71
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 69
+   Y 124
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 48
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 88
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 111
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 109
+   Y 125
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 88
+   Y 126
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 128
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 151
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 149
+   Y 126
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 128
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 168
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 191
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 189
+   Y 127
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 168
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 208
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 231
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 229
+   Y 128
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 208
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 248
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 271
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 269
+   Y 129
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 248
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 288
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 311
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 309
+   Y 130
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 288
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 328
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 351
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 349
+   Y 131
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 328
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 368
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 391
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 389
+   Y 132
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 368
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 408
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group14473854
+   X 431
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 429
+   Y 133
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 408
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 12
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 52
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 92
+   Y 126
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 132
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 172
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 212
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 252
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 292
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 332
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1707328215
+   X 372
+   Y 133
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
@@ -1041,6 +1466,72 @@
  $LEMMING
    X 408
    Y 66
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 8
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 48
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 88
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 128
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 168
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 208
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 248
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 288
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 328
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 368
+   Y 122
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 408
+   Y 122
    SLIDER 
  $END
  

@@ -3424,7 +3424,11 @@ function TLemmingGame.LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integ
 begin
   Result := true;
 
-  if not HasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
+  if HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY-1) then
+  begin
+    Transition(L, baWalking);
+    Result := false;
+  end else if not HasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
   begin
     Transition(L, baFalling);
     Result := false;
