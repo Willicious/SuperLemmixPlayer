@@ -334,6 +334,7 @@ type
     function HandleDehoisting(L: TLemming) : Boolean;
       function LemCanDehoist(L: TLemming; AlreadyMovedX: Boolean): Boolean;
     function HandleSliding(L: TLemming) : Boolean;
+      function LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -3365,20 +3366,9 @@ begin
     for n := 0 to 1 do
     begin
       Inc(L.LemY);
-      if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
+      if not LemSliderTerrainChecks(L, (L.LemPhysicsFrame * 2) - 3 + n) then
       begin
-        Dec(L.LemX, L.LemDX);
-        if L.LemIsSwimmer then
-          Transition(L, baSwimming, true)
-        else begin
-          Result := false;
-          Transition(L, baDrowning, true);
-        end;
-        Break;
-      end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
-      begin
-        Dec(L.LemX, L.LemDX);
-        Transition(L, baWalking, true);
+        if L.LemAction = baDrowning then Result := false;
         Break;
       end;
     end;
@@ -3422,26 +3412,35 @@ begin
   for n := 0 to 1 do
   begin
     Inc(L.LemY);
-    if not HasPixelAt(L.LemX, L.LemY - 7) then
+    if not LemSliderTerrainChecks(L) then
     begin
-      Transition(L, baFalling);
-      Exit;
-    end else if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
-    begin
-      Dec(L.LemX, L.LemDX);
-      if L.LemIsSwimmer then
-        Transition(L, baSwimming, true)
-      else begin
-        Result := false;
-        Transition(L, baDrowning, true);
-      end;
-      Break;
-    end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
-    begin
-      Dec(L.LemX, L.LemDX);
-      Transition(L, baWalking, true);
+      if L.LemAction = baDrowning then Result := false;
       Break;
     end;
+  end;
+end;
+
+function TLemmingGame.LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;
+begin
+  Result := true;
+
+  if not HasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
+  begin
+    Transition(L, baFalling);
+    Result := false;
+  end else if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
+  begin
+    Dec(L.LemX, L.LemDX);
+    if L.LemIsSwimmer then
+      Transition(L, baSwimming, true)
+    else
+      Transition(L, baDrowning, true);
+    Result := false;
+  end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
+  begin
+    Dec(L.LemX, L.LemDX);
+    Transition(L, baWalking, true);
+    Result := false;
   end;
 end;
 
@@ -3559,7 +3558,6 @@ begin
   Result := Result and not HasPixelAt(L.LemX + L.LemDx, L.LemY - 1);
   Result := Result and not HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 1);
 end;
-
 
 function TLemmingGame.HandlePlatforming(L: TLemming): Boolean;
   function PlatformerTerrainCheck(X, Y: Integer): Boolean;
