@@ -30,7 +30,6 @@ type
 
       fOnComplete: TProc;
 
-      function DownloadToFile(aURL: String; aPath: String): Boolean;
       function DownloadToStream(aURL: String; aStream: TStream): Boolean;
     protected
       procedure Execute; override;
@@ -145,13 +144,12 @@ begin
   fOnComplete := nil;
 end;
 
-function TDownloadThread.DownloadToFile(aURL: string; aPath: string): Boolean;
+function TDownloadThread.DownloadToStream(aURL: String; aStream: TStream): Boolean;
 const
-  BLOCK_SIZE = 8192;
+  BLOCK_SIZE = 1024;
 var
   InetHandle: Pointer;
   URLHandle: Pointer;
-  FileHandle: Cardinal;
   BytesRead: Cardinal;
   DownloadBuffer: Pointer;
   Buffer: array [1 .. BLOCK_SIZE] of byte;
@@ -170,20 +168,12 @@ begin
       URLHandle := InternetOpenUrl(InetHandle, PWideChar(aURL), nil, 0, 0, 0);
       if not Assigned(URLHandle) then RaiseLastOSError;
       try
-        ForceDirectories(ExtractFilePath(aPath));
-        FileHandle := CreateFile(PWideChar(aPath), GENERIC_WRITE, FILE_SHARE_WRITE, nil,
-          CREATE_NEW, FILE_ATTRIBUTE_NORMAL, 0);
-        if FileHandle = INVALID_HANDLE_VALUE then RaiseLastOSError;
-        try
-          DownloadBuffer := @Buffer;
-          repeat
-            if (not InternetReadFile(URLHandle, DownloadBuffer, BLOCK_SIZE, BytesRead))
-               or (not WriteFile(FileHandle, DownloadBuffer^, BytesRead, BytesWritten, nil)) then
-              RaiseLastOSError;
-          until (BytesRead = 0) or fTerminateRequested;
-        finally
-          CloseHandle(FileHandle);
-        end;
+        DownloadBuffer := @Buffer;
+        repeat
+          if (not InternetReadFile(URLHandle, DownloadBuffer, BLOCK_SIZE, BytesRead)) then
+            RaiseLastOSError;
+          aStream.Write(Buffer, BytesRead);
+        until (BytesRead = 0) or fTerminateRequested;
       finally
         InternetCloseHandle(URLHandle);
       end;
@@ -195,36 +185,6 @@ begin
   except
     Result := false;
   end;
-end;
-
-function TDownloadThread.DownloadToStream(aURL: String; aStream: TStream): Boolean;
-var
-  Filename: String;
-  MS: TMemoryStream;
-  OldPos: Integer;
-begin
-  Filename := GetTemporaryFilename;
-  if DownloadToFile(aURL, Filename) then
-  begin
-    if aStream is TMemoryStream then
-    begin
-      MS := TMemoryStream(aStream);
-      MS.LoadFromFile(Filename);
-    end else begin
-      MS := TMemoryStream.Create;
-      try
-        MS.LoadFromFile(Filename);
-        OldPos := aStream.Position;
-        aStream.CopyFrom(MS, MS.Size);
-        aStream.Position := OldPos;
-      finally
-        MS.Free;
-      end;
-    end;
-
-    Result := true;
-  end else
-    Result := false;
 end;
 
 end.
