@@ -8,7 +8,7 @@ interface
 
 uses
   Dialogs,
-  System.Types,
+  System.Types, Generics.Collections,
   Classes, Math, Windows,
   GR32, GR32_Blend,
   UMisc, SysUtils, StrUtils,
@@ -162,6 +162,7 @@ type
     procedure DrawBuilderShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
+    procedure DrawLasererShadow(L: TLemming);
     procedure DrawBasherShadow(L: TLemming);
     procedure DrawFencerShadow(L: TLemming);
     procedure DrawMinerShadow(L: TLemming);
@@ -843,6 +844,12 @@ begin
         CopyL.LemDX := -CopyL.LemDX;
         DrawShadows(CopyL, ActionToSkillPanelButton[CopyL.LemAction], SelectedSkill, true);
       end;
+
+    spbLaserer:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baLasering);
+        DrawLasererShadow(CopyL);
+      end;
     end;
   end;
 
@@ -1317,6 +1324,33 @@ begin
     SetHighShadowPixel(PosX + BomberShadow[i, 0], L.LemY + BomberShadow[i, 1]);
     SetHighShadowPixel(PosX - BomberShadow[i, 0] - 1, L.LemY + BomberShadow[i, 1]);
   end;
+end;
+
+procedure TRenderer.DrawLasererShadow(L: TLemming);
+var
+  LastPoint: TPoint;
+  LastHit: Boolean;
+  SavePhysicsMap: TBitmap32;
+
+  procedure PerformIteration;
+  begin
+    // Simulate next frame advance for lemming
+    LastPoint := L.LemLaserHitPoint;
+    LastHit := L.LemLaserHit;
+    fRenderInterface.SimulateLem(L);
+  end;
+begin
+  fLayers.fIsEmpty[rlHighShadows] := False;
+
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  // Todo: Actual laserer shadow
+
+  // Restore PhysicsMap
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
 end;
 
 
