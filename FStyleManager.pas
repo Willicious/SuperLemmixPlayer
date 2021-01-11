@@ -340,6 +340,8 @@ var
 
   NewItem: TListItem;
   NewString: String;
+
+  DownloadThread: TDownloadThread;
 begin
   if FileExists(AppPath + SFSaveData + 'styletimes.ini') then
     fLocalList.LoadFromFile(AppPath + SFSaveData + 'styletimes.ini')
@@ -363,7 +365,10 @@ begin
 
   fWebList.Clear;
   if GameParams.EnableOnline then
-    TInternet.DownloadToStringList(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, fWebList);
+  begin
+    DownloadThread := DownloadInThread(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, fWebList);
+    while not DownloadThread.Complete do {nothing};
+  end;
 
   StyleList := TStringList.Create;
   try

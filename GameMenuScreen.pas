@@ -246,7 +246,10 @@ end;
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   if fUpdateCheckThread <> nil then
+  begin
+    fUpdateCheckThread.Kill;
     FreeAndNil(fUpdateCheckThread);
+  end;
 
   inherited;
 end;

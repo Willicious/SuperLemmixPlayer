@@ -106,9 +106,12 @@ function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32; overload;
 
 function EvaluateResizable(aSpecified: Integer; aDefault: Integer; aBase: Integer; aIsResizable: Boolean): Integer;
 
+function GetTemporaryFilename: String;
+
 implementation
 
 uses
+  LemStrings,
   GameControl;
 
 var
@@ -120,6 +123,13 @@ begin
   if _AppPath = '' then
     _AppPath := ExtractFilePath(ParamStr(0));
   Result := _AppPath;
+end;
+
+function GetTemporaryFilename: String;
+begin
+  repeat
+    Result := AppPath + SFTemp + IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4);
+  until not FileExists(Result);
 end;
 
 function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;

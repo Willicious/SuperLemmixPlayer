@@ -40,6 +40,8 @@ const
 
   SFSaveData = 'settings\';
 
+  SFTemp = 'temp\';
+
   // Sound effect files
   SFX_BUILDER_WARNING = 'ting';
   SFX_ASSIGN_SKILL = 'mousepre';

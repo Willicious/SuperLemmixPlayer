@@ -2,7 +2,7 @@ unit LemNeoOnline;
 
 interface
 
-// If GameParams.EnableOnline is false, TInternet.DownloadToStream refuses to
+// If GameParams.EnableOnline is false, TDownloadThread.DownloadToFile refuses to
 // run. All other internet-based functionality eventually runs through that
 // function, so this is a total killswitch.
 
@@ -17,12 +17,6 @@ const
   STYLES_PHP_FILE = 'styles.php';
 
 type
-  TInternet = class
-    public
-      class function DownloadToStream(aURL: String; aStream: TStream): Boolean;
-      class function DownloadToStringList(aURL: String; aStringList: TStringList): Boolean;
-  end;
-
   TDownloadThread = class(TThread)
     private
       fSourceURL: String;
@@ -32,8 +26,12 @@ type
 
       fComplete: Boolean;
       fSuccess: Boolean;
+      fTerminateRequested: Boolean;
 
       fOnComplete: TProc;
+
+      function DownloadToFile(aURL: String; aPath: String): Boolean;
+      function DownloadToStream(aURL: String; aStream: TStream): Boolean;
     protected
       procedure Execute; override;
     public
@@ -54,7 +52,7 @@ type
 implementation
 
 uses
-  GameControl;
+  GameControl, LemTypes;
 
 procedure SetupDownloadThread(aThread: TDownloadThread; aOnComplete: TProc);
 begin
@@ -113,7 +111,7 @@ begin
     else
       LoadToStringList := false;
 
-    if not TInternet.DownloadToStream(fSourceURL, fStream) then
+    if not DownloadToStream(fSourceURL, fStream) then
     begin
       fSuccess := false;
       fComplete := true;
@@ -143,75 +141,90 @@ end;
 
 procedure TDownloadThread.Kill;
 begin
-  Terminate;
+  fTerminateRequested := true;
   fOnComplete := nil;
 end;
 
-class function TInternet.DownloadToStream(aURL: String; aStream: TStream): Boolean;
+function TDownloadThread.DownloadToFile(aURL: string; aPath: string): Boolean;
+const
+  BLOCK_SIZE = 8192;
 var
-  hrResult:   HRESULT;
-  ppStream:   IStream;
-  statstg:    TStatStg;
-  lpBuffer:   Pointer;
-  dwRead:     Integer;
-
+  InetHandle: Pointer;
+  URLHandle: Pointer;
+  FileHandle: Cardinal;
+  BytesRead: Cardinal;
+  DownloadBuffer: Pointer;
+  Buffer: array [1 .. BLOCK_SIZE] of byte;
+  BytesWritten: Cardinal;
 begin
-  // Very complicated. I found this code (or very similar) in several places,
-  // so I doubt the true original author can be found. So, thanks whoever you are.
-
-  // Set default result
-  result:=False;
-
   if not GameParams.EnableOnline then
-    Exit;
-
-  // Make sure stream is assigned
-  if not(Assigned(aStream)) then exit;
-
-  DeleteUrlCacheEntry(PChar(aURL));
-
-  // Open blocking stream
-  hrResult:=URLOpenBlockingStream(nil, PChar(aURL), ppStream, 0, nil);
-  if (hrResult = S_OK) then
   begin
-     // Get the stat from the IStream interface
-     if (ppStream.Stat(statstg, STATFLAG_NONAME) = S_OK) then
-     begin
-        // Make sure size is greater than zero
-        if (statstg.cbSize > 0) then
-        begin
-           // Allocate buffer for the read
-           lpBuffer:=AllocMem(statstg.cbSize);
-           // Read from the stream
-           if (ppStream.Read(lpBuffer, statstg.cbSize, @dwRead) = S_OK) then
-           begin
-              // Write to delphi stream
-              aStream.Write(lpBuffer^, dwRead);
-              // Success
-              result:=True;
-           end;
-           // Free the buffer
-           FreeMem(lpBuffer);
+    Result := false;
+    Exit;
+  end;
+
+  try
+    InetHandle := InternetOpen(PWideChar(aURL), 0, nil, nil, 0);
+    if not Assigned(InetHandle) then RaiseLastOSError;
+    try
+      URLHandle := InternetOpenUrl(InetHandle, PWideChar(aURL), nil, 0, 0, 0);
+      if not Assigned(URLHandle) then RaiseLastOSError;
+      try
+        ForceDirectories(ExtractFilePath(aPath));
+        FileHandle := CreateFile(PWideChar(aPath), GENERIC_WRITE, FILE_SHARE_WRITE, nil,
+          CREATE_NEW, FILE_ATTRIBUTE_NORMAL, 0);
+        if FileHandle = INVALID_HANDLE_VALUE then RaiseLastOSError;
+        try
+          DownloadBuffer := @Buffer;
+          repeat
+            if (not InternetReadFile(URLHandle, DownloadBuffer, BLOCK_SIZE, BytesRead))
+               or (not WriteFile(FileHandle, DownloadBuffer^, BytesRead, BytesWritten, nil)) then
+              RaiseLastOSError;
+          until (BytesRead = 0) or fTerminateRequested;
+        finally
+          CloseHandle(FileHandle);
         end;
-     end;
-     // Release the IStream interface
-     ppStream:=nil;
+      finally
+        InternetCloseHandle(URLHandle);
+      end;
+    finally
+      InternetCloseHandle(InetHandle);
+    end;
+
+    Result := not fTerminateRequested;
+  except
+    Result := false;
   end;
 end;
 
-class function TInternet.DownloadToStringList(aURL: String; aStringList: TStringList): Boolean;
+function TDownloadThread.DownloadToStream(aURL: String; aStream: TStream): Boolean;
 var
-  TempStream: TMemoryStream;
+  Filename: String;
+  MS: TMemoryStream;
+  OldPos: Integer;
 begin
-  // We just go via DownloadToStream for this one. Easier that way.
-  TempStream := TMemoryStream.Create;
-  try
-    Result := DownloadToStream(aURL, TempStream);
-    TempStream.Position := 0;
-    aStringList.LoadFromStream(TempStream);
-  finally
-    TempStream.Free;
-  end;
+  Filename := GetTemporaryFilename;
+  if DownloadToFile(aURL, Filename) then
+  begin
+    if aStream is TMemoryStream then
+    begin
+      MS := TMemoryStream(aStream);
+      MS.LoadFromFile(Filename);
+    end else begin
+      MS := TMemoryStream.Create;
+      try
+        MS.LoadFromFile(Filename);
+        OldPos := aStream.Position;
+        aStream.CopyFrom(MS, MS.Size);
+        aStream.Position := OldPos;
+      finally
+        MS.Free;
+      end;
+    end;
+
+    Result := true;
+  end else
+    Result := false;
 end;
 
 end.
