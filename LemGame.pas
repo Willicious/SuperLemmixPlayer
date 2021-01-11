@@ -1415,12 +1415,9 @@ begin
 
   if (NewAction = baShimmying) and (L.LemAction = baDehoisting) then
   begin
-    for i := -1 to 3 do
-      if HasPixelAt(L.LemX, L.LemY - 9 - i) then
-      begin
-        Dec(L.LemY, i);
-        Break;
-      end;
+    Inc(L.LemY, 2);
+    if HasPixelAt(L.LemX, L.LemY - 9 + 1) then
+      Inc(L.LemY);
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
