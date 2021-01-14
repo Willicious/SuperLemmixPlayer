@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, StrUtils;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes, StrUtils;
 
 const
   SKILL_COUNT = 19;
@@ -58,6 +58,7 @@ type
     procedure CreateSkillInputs;
 
     procedure ApplyChanges;
+    procedure RecursiveFindLevels(aBaseFolder: String);
     procedure ApplyChangesToLevelFile(aFile: String);
   public
     constructor Create(aOwner: TComponent); override;
@@ -231,12 +232,115 @@ end;
 
 procedure TFQuickmodMain.ApplyChanges;
 begin
+  RecursiveFindLevels(fPackList.Names[cbPack.ItemIndex]);
+end;
 
+procedure TFQuickmodMain.RecursiveFindLevels(aBaseFolder: String);
+var
+  SearchRec: TSearchRec;
+begin
+  if FindFirst(aBaseFolder + '*', faDirectory, SearchRec) = 0 then
+  begin
+    try
+      repeat
+        if (SearchRec.Attr and faDirectory) = 0 then Continue;
+        if (SearchRec.Name = '.') or (SearchRec.Name = '..') then Continue;
+        RecursiveFindLevels(IncludeTrailingPathDelimiter(aBaseFolder + SearchRec.Name));
+      until FindNext(SearchRec) <> 0;
+    finally
+      FindClose(SearchRec);
+    end;
+  end;
+
+  if FindFirst(aBaseFolder + '*.nxlv', 0, SearchRec) = 0 then
+  begin
+    try
+      repeat
+        ApplyChangesToLevelFile(aBaseFolder + SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+    finally
+      FindClose(SearchRec);
+    end;
+  end;
 end;
 
 procedure TFQuickmodMain.ApplyChangesToLevelFile(aFile: String);
+var
+  SL: TStringList;
+  ThisLine: String;
+  SecLevel: Integer;
+  n: Integer;
+  i: Integer;
 begin
+  SecLevel := 0;
+  n := 0;
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(aFile);
 
+    while n < SL.Count do
+    begin
+      ThisLine := Uppercase(TrimLeft(SL[n]));
+
+      if LeftStr(ThisLine, 4) = '$END' then
+      begin
+        Dec(SecLevel);
+        if SecLevel < 0 then Break;
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$SKILLSET') and (cbCustomSkillset.Checked) then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+          SL[n] := '# ' + SL[n];
+          Inc(n);
+        until ThisLine = '$END';
+      end else if LeftStr(ThisLine, 1) = '$' then
+        Inc(SecLevel)
+      else if SecLevel = 0 then begin
+        if (LeftStr(ThisLine, 8) = 'LEMMINGS') and cbLemCount.Checked then
+          SL[n] := '# ' + SL[n];
+
+        if (LeftStr(ThisLine, 16) = 'SAVE_REQUIREMENT') and cbSaveRequirement.Checked then
+          SL[n] := '# ' + SL[n];
+
+        if (LeftStr(ThisLine, 18) = 'MAX_SPAWN_INTERVAL') and cbReleaseRate.Checked then
+          SL[n] := '# ' + SL[n];
+
+        if (LeftStr(ThisLine, 10) = 'TIME_LIMIT') and cbTimeLimit.Checked then
+          SL[n] := '# ' + SL[n];
+
+        if (Trim(ThisLine) = 'SPAWN_INTERVAL_LOCKED') and (cbLockRR.Checked or cbUnlockRR.Checked) then
+          SL[n] := '# ' + SL[n];
+      end;
+
+      Inc(n);
+    end;
+
+    SL.Add('');
+    SL.Add('# Modified by NL QuickMod');
+    SL.Add('');
+
+    if cbLemCount.Checked then SL.Add('LEMMINGS ' + IntToStr(StrToIntDef(ebLemCount.Text, 0)));
+    if cbSaveRequirement.Checked then SL.Add('SAVE_REQUIREMENT ' + IntToStr(StrToIntDef(ebSaveRequirement.Text, 0)));
+    if cbReleaseRate.Checked then SL.Add('MAX_SPAWN_INTERVAL ' + IntToStr(103 - StrToIntDef(ebReleaseRate.Text, 0)));
+    if cbLockRR.Checked then SL.Add('SPAWN_INTERVAL_LOCKED');
+    if cbTimeLimit.Checked and (StrToIntDef(ebTimeLimit.Text, 0) >= 1) then
+      SL.Add('TIME_LIMIT' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
+
+    if cbCustomSkillset.Checked then
+    begin
+      SL.Add('$SKILLSET');
+
+      for i := 0 to SKILL_COUNT-1 do
+        if StrToIntDef(fSkillInputs[i].SIEdit.Text, 0) > 0 then
+          SL.Add('  ' + Uppercase(SKILLS[i]) + ' ' + IntToStr(StrToIntDef(fSkillInputs[i].SIEdit.Text, 0)));
+
+      SL.Add('$END');
+    end;
+
+    SL.SaveToFile(aFile);
+  finally
+    SL.Free;
+  end;
 end;
 
 end.
