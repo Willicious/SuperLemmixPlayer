@@ -3162,27 +3162,23 @@ end;
 function TLemmingGame.HandleSwimming(L: TLemming): Boolean;
 var
   LemDy: Integer;
+  DiveDist: Integer;
 
   function LemDive(L: TLemming): Integer;
     // Returns 0 if the lem may not dive down
     // Otherwise return the amount of pixels the lem dives
-  var
-    DiveDepth: Integer;
   begin
-    if L.LemIsClimber then DiveDepth := 3
-    else DiveDepth := 4;
-
     Result := 1;
-    while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= DiveDepth) do
+    while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= 4) do
     begin
       Inc(Result);
-      if L.LemY + Result >= PhysicsMap.Height then Result := DiveDepth + 1; // End while loop!
+      if L.LemY + Result >= PhysicsMap.Height then Result := 5; // End while loop!
     end;
 
     // do not dive, when there is no more water
     if not HasTriggerAt(L.LemX, L.LemY + Result, trWater) then Result := 0;
 
-    if Result > DiveDepth then Result := 0; // too much terrain to dive
+    if Result > 4 then Result := 0; // too much terrain to dive
   end;
 
 begin
@@ -3201,13 +3197,16 @@ begin
 
     else if LemDy < -6 then
     begin
-      if LemDive(L) > 0 then
-        Inc(L.LemY, LemDive(L)) // Dive below the terrain
+      DiveDist := LemDive(L);
+
+      if (DiveDist > 0) and ((DiveDist < 4) or not L.LemIsClimber) then
+        Inc(L.LemY, DiveDist) // Dive below the terrain
       // Only transition to climber, if the lemming is not under water
       else if L.LemIsClimber and not HasTriggerAt(L.LemX, L.LemY - 1, trWater) then
         Transition(L, baClimbing)
-      else
-      begin
+      else if (DiveDist = 4) and L.LemIsClimber then
+        Inc(L.LemY, DiveDist) // Dive below the terrain
+      else begin
         TurnAround(L);
         Inc(L.LemX, L.LemDx); // Move lemming back
       end
