@@ -1380,10 +1380,13 @@ begin
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
-    L.LemFallen := 1;
-    if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
-    else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
-    else if L.LemAction in [baBlocking, baJumping] then L.LemFallen := -1;
+    if L.LemAction <> baSwimming then // for Swimming it's set in HandleSwimming as there is no single universal value
+    begin
+      L.LemFallen := 1;
+      if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
+      else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
+      else if L.LemAction in [baBlocking, baJumping] then L.LemFallen := -1;
+    end;
     L.LemTrueFallen := L.LemFallen;
   end;
 
@@ -3172,17 +3175,19 @@ var
     while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= 4) do
     begin
       Inc(Result);
-      if L.LemY + Result >= PhysicsMap.Height then Result := 5; // End while loop!
+      Inc(L.LemFallen);
+      if HasTriggerAt(L.LemX, L.LemY + Result, trWater) then L.LemFallen := 0;
+      if L.LemY + Result >= PhysicsMap.Height then Break;
     end;
-
-    // do not dive, when there is no more water
-    if not HasTriggerAt(L.LemX, L.LemY + Result, trWater) then Result := 0;
 
     if Result > 4 then Result := 0; // too much terrain to dive
   end;
 
 begin
   Result := True;
+  L.LemFallen := 0; // Transition expects HandleSwimming to set this for swimmers, as it's not constant.
+                    // 0 is the fallback value that's correct for *most* situations. Transition will
+                    // still set LemTrueFallen so we don't need to worry about that one.
 
   Inc(L.LemX, L.LemDx);
 
@@ -3200,9 +3205,12 @@ begin
       DiveDist := LemDive(L);
 
       if DiveDist > 0 then
-        Inc(L.LemY, DiveDist) // Dive below the terrain
+      begin
+        Inc(L.LemY, DiveDist); // Dive below the terrain
+        if not HasTriggerAt(L.LemX, L.LemY, trWater) then
+          Transition(L, baWalking);
+      end else if L.LemIsClimber and not HasTriggerAt(L.LemX, L.LemY - 1, trWater) then
       // Only transition to climber, if the lemming is not under water
-      else if L.LemIsClimber and not HasTriggerAt(L.LemX, L.LemY - 1, trWater) then
         Transition(L, baClimbing)
       else begin
         TurnAround(L);
