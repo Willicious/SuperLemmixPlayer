@@ -3199,13 +3199,11 @@ begin
     begin
       DiveDist := LemDive(L);
 
-      if (DiveDist > 0) and ((DiveDist < 4) or not L.LemIsClimber) then
+      if DiveDist > 0 then
         Inc(L.LemY, DiveDist) // Dive below the terrain
       // Only transition to climber, if the lemming is not under water
       else if L.LemIsClimber and not HasTriggerAt(L.LemX, L.LemY - 1, trWater) then
         Transition(L, baClimbing)
-      else if (DiveDist = 4) and L.LemIsClimber then
-        Inc(L.LemY, DiveDist) // Dive below the terrain
       else begin
         TurnAround(L);
         Inc(L.LemX, L.LemDx); // Move lemming back
