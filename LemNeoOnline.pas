@@ -153,7 +153,6 @@ var
   BytesRead: Cardinal;
   DownloadBuffer: Pointer;
   Buffer: array [1 .. BLOCK_SIZE] of byte;
-  BytesWritten: Cardinal;
 begin
   if not GameParams.EnableOnline then
   begin
