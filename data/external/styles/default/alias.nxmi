@@ -30,6 +30,13 @@ $GADGET
   TO orig_dirt:trap_01
 $END
 
+$GADGET
+  FROM redirecttest:gadgettestresize
+  TO default:water
+  WIDTH 80
+  HEIGHT 48
+$END
+
 $TERRAIN
   FROM redirecttest:terraintest
   TO orig_dirt:clump_02

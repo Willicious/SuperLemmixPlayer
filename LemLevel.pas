@@ -674,7 +674,7 @@ begin
   begin
     Title := aSection.LineString['title'];
     Author := aSection.LineString['author'];
-    GraphicSetName := PieceManager.Dealias(aSection.LineTrimString['theme'], rkStyle);
+    GraphicSetName := PieceManager.Dealias(aSection.LineTrimString['theme'], rkStyle).Piece.GS;
     MusicFile := aSection.LineTrimString['music'];
     LevelID := aSection.LineNumeric['id'];
     LevelVersion := aSection.LineNumeric['version'];
@@ -692,7 +692,7 @@ begin
     ScreenPosition := aSection.LineNumeric['start_x'];
     ScreenYPosition := aSection.LineNumeric['start_y'];
 
-    Background := PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground);
+    Background := CombineIdentifier(PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground).Piece);
 
     if (Background <> '') and (Background <> ':') then
     begin
@@ -836,8 +836,8 @@ var
   end;
 
 var
-  Ident: TLabelRecord;
   MO: TGadgetMetaInfo;
+  DealiasInfo: TDealiasResult;
 const
   NO_FLIP_HORIZONTAL_TYPES = [DOM_PICKUP];
   NO_FLIP_VERTICAL_TYPES = [DOM_WINDOW, DOM_PICKUP, DOM_UPDRAFT];
@@ -852,9 +852,9 @@ begin
 
   O.Piece := aSection.LineTrimString['piece'];
 
-  Ident := SplitIdentifier(PieceManager.Dealias(O.Identifier, rkGadget));
-  O.GS := Ident.GS;
-  O.Piece := Ident.Piece;
+  DealiasInfo := PieceManager.Dealias(O.Identifier, rkGadget);
+  O.GS := DealiasInfo.Piece.GS;
+  O.Piece := DealiasInfo.Piece.Piece;
 
   MO := PieceManager.Objects[O.Identifier];
   if MO = nil then
@@ -869,6 +869,9 @@ begin
   O.Top := aSection.LineNumeric['y'];
   O.Width := aSection.LineNumeric['width'];
   O.Height := aSection.LineNumeric['height'];
+
+  if O.Width = 0 then O.Width := DealiasInfo.DefWidth;
+  if O.Height = 0 then O.Height := DealiasInfo.DefHeight;
 
   O.DrawingFlags := 0;
   if (aSection.Line['rotate'] <> nil) then Flag(odf_Rotate);

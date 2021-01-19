@@ -122,7 +122,7 @@ procedure TTerrain.LoadFromSection(aSection: TParserSection);
     fDrawingFlags := fDrawingFlags or aValue;
   end;
 var
-  Ident: TLabelRecord;
+  DealiasInfo: TDealiasResult;
 begin
   if aSection.Line['style'] = nil then
     GS := aSection.LineTrimString['collection']
@@ -131,9 +131,9 @@ begin
 
   Piece := aSection.LineTrimString['piece'];
 
-  Ident := SplitIdentifier(PieceManager.Dealias(Identifier, rkTerrain));
-  GS := Ident.GS;
-  Piece := Ident.Piece;
+  DealiasInfo := PieceManager.Dealias(Identifier, rkTerrain);
+  GS := DealiasInfo.Piece.GS;
+  Piece := DealiasInfo.Piece.Piece;
 
   if (PieceManager.Terrains[Identifier] = nil) then
     if (CompareText(GS, COMPOSITE_PIECE_STYLE) <> 0) then
@@ -147,6 +147,9 @@ begin
   Top := aSection.LineNumeric['y'];
   Width := aSection.LineNumeric['width'];
   Height := aSection.LineNumeric['height'];
+
+  if Width = 0 then Width := DealiasInfo.DefWidth;
+  if Height = 0 then Height := DealiasInfo.DefHeight;
 
   DrawingFlags := tdf_NoOneWay;
   if (aSection.Line['one_way'] <> nil) then fDrawingFlags := 0;

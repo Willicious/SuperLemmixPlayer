@@ -332,7 +332,7 @@ begin
     if (fTheme = nil) or (GameParams.ForceDefaultLemmings) then
       SrcFolder := 'default'
     else
-      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings);
+      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS;
 
     if SrcFolder = '' then SrcFolder := 'default';
     if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
