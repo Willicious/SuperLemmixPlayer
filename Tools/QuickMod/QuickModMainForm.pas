@@ -42,6 +42,9 @@ type
     gbSkillset: TGroupBox;
     btnApply: TButton;
     cbCustomSkillset: TCheckBox;
+    cbRemoveTalismans: TCheckBox;
+    cbChangeID: TCheckBox;
+    lblVersion: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -102,6 +105,7 @@ end;
 constructor TFQuickmodMain.Create(aOwner: TComponent);
 begin
   inherited;
+  Randomize;
   fPackList := TStringList.Create;
   AppPath := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
 end;
@@ -271,9 +275,11 @@ var
   SecLevel: Integer;
   n: Integer;
   i: Integer;
+  OldID, NewID: String;
 begin
   SecLevel := 0;
   n := 0;
+  OldID := '';
   SL := TStringList.Create;
   try
     SL.LoadFromFile(aFile);
@@ -287,6 +293,13 @@ begin
         Dec(SecLevel);
         if SecLevel < 0 then Break;
       end else if (SecLevel = 0) and (Trim(ThisLine) = '$SKILLSET') and (cbCustomSkillset.Checked) then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+          SL[n] := '# ' + SL[n];
+          Inc(n);
+        until ThisLine = '$END';
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$TALISMAN') and (cbRemoveTalismans.Checked) then
       begin
         repeat
           ThisLine := Uppercase(Trim(SL[n]));
@@ -310,14 +323,52 @@ begin
 
         if (Trim(ThisLine) = 'SPAWN_INTERVAL_LOCKED') and (cbLockRR.Checked or cbUnlockRR.Checked) then
           SL[n] := '# ' + SL[n];
+
+        if ((LeftStr(ThisLine, 2)) = 'ID') and cbChangeID.Checked then
+        begin
+          ThisLine := Trim(MidStr(ThisLine, 3, Length(ThisLine) - 2));
+          if LeftStr(ThisLine, 1) = 'X' then
+            OldID := RightStr(ThisLine, Length(ThisLine)-1)
+          else if Length(ThisLine) > 0 then
+          begin
+            OldID := IntToHex(StrToInt64Def(ThisLine, 0), 16);
+          end;
+
+          SL[n] := '# ' + SL[n];
+        end;
       end;
 
       Inc(n);
     end;
 
+    SL.Insert(0, '# Level file modified by NL QuickMod');
+    SL.Insert(1, '');
+
     SL.Add('');
-    SL.Add('# Modified by NL QuickMod');
+    SL.Add('# NL QuickMod modifications');
     SL.Add('');
+
+    if cbChangeID.Checked then
+    begin
+      if (OldID = '') or (StrToInt64Def('x' + OldID, 0) = 0) then
+        repeat
+          NewID := IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4);
+        until NewID <> '0000000000000000'
+      else begin
+        while Length(OldID) < 16 do
+          OldID := '0' + OldID; // Just in case
+
+        NewID := RightStr(OldID, 15) + LeftStr(OldID, 1);
+        if NewID[16] = 'A' then
+          NewID[16] := '9'
+        else if NewID[16] = '0' then
+          NewID[16] := 'F'
+        else
+          Dec(NewID[16]);
+      end;
+
+      SL.Add('ID x' + NewID);
+    end;
 
     if cbLemCount.Checked then SL.Add('LEMMINGS ' + IntToStr(StrToIntDef(ebLemCount.Text, 0)));
     if cbSaveRequirement.Checked then SL.Add('SAVE_REQUIREMENT ' + IntToStr(StrToIntDef(ebSaveRequirement.Text, 0)));
