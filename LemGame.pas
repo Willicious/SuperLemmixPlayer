@@ -1441,6 +1441,7 @@ begin
                        L.LemExplosionTimer := 0;
                      CueSoundEffect(SFX_YIPPEE, L.Position);
                    end;
+    baVaporizing : L.LemExplosionTimer := 0;
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
