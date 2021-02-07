@@ -841,15 +841,15 @@ end;
 procedure TRenderer.DrawGliderShadow(L: TLemming);
 var
   FrameCount: Integer; // counts number of frames we have simulated, because glider paths can be infinitely long
-  MaxFrameCount: Integer;
   LemPosArray: TArrayArrayInt;
   i: Integer;
+const
+  MAX_FRAME_COUNT = 2000;
 begin
   // Set ShadowLayer to be drawn
   fLayers.fIsEmpty[rlLowShadows] := False;
   // Initialize FrameCount
   FrameCount := 0;
-  MaxFrameCount := 2000; // enough to fill the current screen, which should be sufficient
   // Initialize LemPosArray
   LemPosArray := nil;
 
@@ -857,7 +857,7 @@ begin
   SetLowShadowPixel(L.LemX, L.LemY - 1);
 
   // We simulate as long as the lemming is gliding, but allow for a falling or jumping period at the beginning
-  while     (FrameCount < MaxFrameCount)
+  while     (FrameCount < MAX_FRAME_COUNT)
         and Assigned(L)
         and ((L.LemAction = baGliding) or ((FrameCount < 15) and (L.LemAction in [baFalling, baJumping]))) do
   begin
@@ -982,8 +982,10 @@ const
      (7, -5), (7, -6), (7, -7), (6, -7), (6, -8),
      (5, -8)
    );
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
+  CurFrameCount: Integer;
   BashPosX, BashPosY, BashPosDx: Integer;
   SavePhysicsMap: TBitmap32;
 begin
@@ -997,7 +999,9 @@ begin
   BashPosX := L.LemX;
   BashPosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baBashing) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baBashing) and (curFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for basher tunnel
     if (L.LemPhysicsFrame + 1) mod 16 = 2 then
@@ -1015,6 +1019,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(curFrameCount);
   end;
 
   // Draw end of the tunnel
@@ -1033,11 +1038,13 @@ const
      (6, -4), (6, -5), (6, -6), (6, -7), (6, -8),
      (6, -9)
    );
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
   FencePosX, FencePosY, FencePosDx: Integer;
   DrawDY: Integer;
   SavePhysicsMap: TBitmap32;
+  CurFrameCount: Integer;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
 
@@ -1049,7 +1056,9 @@ begin
   FencePosX := L.LemX;
   FencePosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baFencing) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baFencing) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for fencer tunnel
     if (L.LemPhysicsFrame + 1) mod 16 = 2 then
@@ -1071,6 +1080,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(CurFrameCount);
   end;
 
   // Draw end of the tunnel
@@ -1094,10 +1104,12 @@ const
      (8, -6), (8, -7), (7, -7), (7, -8), (7, -9),
      (7, -10)
    );
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
   MinePosX, MinePosY, MinePosDx: Integer;
   SavePhysicsMap: TBitmap32;
+  CurFrameCount: Integer;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
 
@@ -1109,7 +1121,9 @@ begin
   MinePosX := L.LemX;
   MinePosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baMining) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baMining) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for miner tunnel
     if L.LemPhysicsFrame + 1 = 1 then
@@ -1124,6 +1138,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(CurFrameCount);
   end;
 
   // Draw end of the tunnel
@@ -1135,10 +1150,13 @@ begin
 end;
 
 procedure TRenderer.DrawDiggerShadow(L: TLemming);
+const
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
   DigPosX, DigPosY: Integer;
   SavePhysicsMap: TBitmap32;
+  CurFrameCount: Integer;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
 
@@ -1149,7 +1167,9 @@ begin
   DigPosX := L.LemX;
   DigPosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baDigging) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baDigging) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for dug row
     if (L.LemPhysicsFrame + 1) mod 8 = 0 then
@@ -1162,6 +1182,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(CurFrameCount);
   end;
 
   // Draw bottom line of digger tunnel
