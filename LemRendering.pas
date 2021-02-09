@@ -660,6 +660,10 @@ end;
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false);
 begin
   fLayers.PhysicsMap := fPhysicsMap; // can we assign this just once somewhere? very likely.
+  if PtInRect(fPhysicsMap.BoundsRect, fRenderInterface.MousePos) then
+    fLayers.OneWayHighlightBit := fPhysicsMap[fRenderInterface.MousePos.X, fRenderInterface.MousePos.Y] and PM_ONEWAYFLAGS
+  else
+    fLayers.OneWayHighlightBit := 0;
   fLayers.CombineTo(aDst, aRegion, aClearPhysics);
 end;
 
@@ -966,15 +970,15 @@ end;
 procedure TRenderer.DrawGliderShadow(L: TLemming);
 var
   FrameCount: Integer; // counts number of frames we have simulated, because glider paths can be infinitely long
-  MaxFrameCount: Integer;
   LemPosArray: TArrayArrayInt;
   i: Integer;
+const
+  MAX_FRAME_COUNT = 2000;
 begin
   // Set ShadowLayer to be drawn
   fLayers.fIsEmpty[rlLowShadows] := False;
   // Initialize FrameCount
   FrameCount := 0;
-  MaxFrameCount := 2000; // enough to fill the current screen, which should be sufficient
   // Initialize LemPosArray
   LemPosArray := nil;
 
@@ -982,7 +986,7 @@ begin
   SetLowShadowPixel(L.LemX, L.LemY - 1);
 
   // We simulate as long as the lemming is gliding, but allow for a falling or jumping period at the beginning
-  while     (FrameCount < MaxFrameCount)
+  while     (FrameCount < MAX_FRAME_COUNT)
         and Assigned(L)
         and ((L.LemAction = baGliding) or ((FrameCount < 15) and (L.LemAction in [baFalling, baJumping]))) do
   begin
@@ -1107,8 +1111,10 @@ const
      (7, -5), (7, -6), (7, -7), (6, -7), (6, -8),
      (5, -8)
    );
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
+  CurFrameCount: Integer;
   BashPosX, BashPosY, BashPosDx: Integer;
   SavePhysicsMap: TBitmap32;
 begin
@@ -1122,7 +1128,9 @@ begin
   BashPosX := L.LemX;
   BashPosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baBashing) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baBashing) and (curFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for basher tunnel
     if (L.LemPhysicsFrame + 1) mod 16 = 2 then
@@ -1140,6 +1148,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(curFrameCount);
   end;
 
   // Draw end of the tunnel
@@ -1158,11 +1167,13 @@ const
      (6, -4), (6, -5), (6, -6), (6, -7), (6, -8),
      (6, -9)
    );
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
   FencePosX, FencePosY, FencePosDx: Integer;
   DrawDY: Integer;
   SavePhysicsMap: TBitmap32;
+  CurFrameCount: Integer;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
 
@@ -1174,7 +1185,9 @@ begin
   FencePosX := L.LemX;
   FencePosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baFencing) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baFencing) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for fencer tunnel
     if (L.LemPhysicsFrame + 1) mod 16 = 2 then
@@ -1196,6 +1209,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(CurFrameCount);
   end;
 
   // Draw end of the tunnel
@@ -1219,10 +1233,12 @@ const
      (8, -6), (8, -7), (7, -7), (7, -8), (7, -9),
      (7, -10)
    );
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
   MinePosX, MinePosY, MinePosDx: Integer;
   SavePhysicsMap: TBitmap32;
+  CurFrameCount: Integer;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
 
@@ -1234,7 +1250,9 @@ begin
   MinePosX := L.LemX;
   MinePosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baMining) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baMining) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for miner tunnel
     if L.LemPhysicsFrame + 1 = 1 then
@@ -1249,6 +1267,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(CurFrameCount);
   end;
 
   // Draw end of the tunnel
@@ -1260,10 +1279,13 @@ begin
 end;
 
 procedure TRenderer.DrawDiggerShadow(L: TLemming);
+const
+  MAX_FRAME_COUNT = 10000;
 var
   i: Integer;
   DigPosX, DigPosY: Integer;
   SavePhysicsMap: TBitmap32;
+  CurFrameCount: Integer;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
 
@@ -1274,7 +1296,9 @@ begin
   DigPosX := L.LemX;
   DigPosY := L.LemY;
 
-  while Assigned(L) and (L.LemAction = baDigging) do
+  CurFrameCount := 0;
+
+  while Assigned(L) and (L.LemAction = baDigging) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
     // draw shadow for dug row
     if (L.LemPhysicsFrame + 1) mod 8 = 0 then
@@ -1287,6 +1311,7 @@ begin
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
+    Inc(CurFrameCount);
   end;
 
   // Draw bottom line of digger tunnel
@@ -1674,6 +1699,8 @@ var
     MetaTerrain: TMetaTerrain;
     ThisTerrainRect: TRect;
     HasFoundNonEraserTerrain: Boolean;
+
+    PieceWidth, PieceHeight: Integer;
   begin
     // Calculates the initial canvas rectangle we draw on to. If shrinking this
     // is needed later, we do so, but for now we just want a size that's 100%
@@ -1694,14 +1721,18 @@ var
       ThisTerrainRect.Left := Terrain.Left * Multiplier;
       ThisTerrainRect.Top := Terrain.Top * Multiplier;
 
-      if (Terrain.DrawingFlags and tdf_Rotate) = 0 then
-      begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + (MetaTerrain.Width[false, false, false] * Multiplier);
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + (MetaTerrain.Height[false, false, false] * Multiplier);
-      end else begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + (MetaTerrain.Height[false, false, false] * Multiplier);
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + (MetaTerrain.Width[false, false, false] * Multiplier);
-      end;
+      PieceWidth := EvaluateResizable(Terrain.Width,
+                                      MetaTerrain.DefaultWidth[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                      MetaTerrain.Width[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                      MetaTerrain.ResizeHorizontal[Terrain.Flip, Terrain.Invert, Terrain.Rotate]);
+
+      PieceHeight := EvaluateResizable(Terrain.Height,
+                                       MetaTerrain.DefaultHeight[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                       MetaTerrain.Height[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                       MetaTerrain.ResizeVertical[Terrain.Flip, Terrain.Invert, Terrain.Rotate]);
+
+      ThisTerrainRect.Right := ThisTerrainRect.Left + PieceWidth;
+      ThisTerrainRect.Bottom := ThisTerrainRect.Top + PieceHeight;
 
       if HasFoundNonEraserTerrain then
         DataBoundsRect := TRect.Union(DataBoundsRect, ThisTerrainRect)
@@ -1834,6 +1865,8 @@ var
   Src: TBitmap32;
   Flip, Invert, Rotate: Boolean;
   MT: TMetaTerrain;
+
+  SrcRect, DstRect, Margins: TRect;
 begin
 
   MT := FindMetaTerrain(T);
@@ -1846,15 +1879,43 @@ begin
   else
     Src := MT.GraphicImage[Flip, Invert, Rotate];
 
+  SrcRect := Src.BoundsRect;
+
   if IsPhysicsDraw then
     PrepareTerrainBitmapForPhysics(Src, T.DrawingFlags, MT.IsSteel)
   else
     PrepareTerrainBitmap(Src, T.DrawingFlags);
 
+  DstRect.Left := T.Left;
+  DstRect.Top := T.Top;
+  DstRect.Right := DstRect.Left + EvaluateResizable(T.Width,
+                                                    MT.DefaultWidth[T.Flip, T.Invert, T.Rotate],
+                                                    MT.Width[T.Flip, T.Invert, T.Rotate],
+                                                    MT.ResizeHorizontal[T.Flip, T.Invert, T.Rotate]);
+  DstRect.Bottom := DstRect.Top + EvaluateResizable(T.Height,
+                                                    MT.DefaultHeight[T.Flip, T.Invert, T.Rotate],
+                                                    MT.Height[T.Flip, T.Invert, T.Rotate],
+                                                    MT.ResizeVertical[T.Flip, T.Invert, T.Rotate]);
+
+  Margins.Left := MT.CutLeft[Flip, Invert, Rotate];
+  Margins.Top := MT.CutTop[Flip, Invert, Rotate];
+  Margins.Right := MT.CutRight[Flip, Invert, Rotate];
+  Margins.Bottom := MT.CutBottom[Flip, Invert, Rotate];
+
   if IsHighRes then
-    Src.DrawTo(Dst, T.Left * 2, T.Top * 2)
-  else
-    Src.DrawTo(Dst, T.Left, T.Top);
+  begin
+    DstRect.Left := DstRect.Left * 2;
+    DstRect.Top := DstRect.Top * 2;
+    DstRect.Right := DstRect.Right * 2;
+    DstRect.Bottom := DstRect.Bottom * 2;
+
+    Margins.Left := Margins.Left * 2;
+    Margins.Top := Margins.Top * 2;
+    Margins.Right := Margins.Right * 2;
+    Margins.Bottom := Margins.Bottom * 2;
+  end;
+
+  DrawNineSlice(Dst, DstRect, SrcRect, Margins, Src);
 end;
 
 procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
@@ -1966,6 +2027,11 @@ begin
       begin
         fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
         fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+      end;
+
+    DOM_UPDRAFT:
+      begin
+        fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
       end;
 
     DOM_FLIPPER:
@@ -2176,6 +2242,12 @@ var
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
+  function GetDigitTargetLayer: TBitmap32;
+  begin
+    Result := fLayers[rlObjectHelpers];
+    fLayers.fIsEmpty[rlObjectHelpers] := false;
+  end;
+
   procedure DrawNumberWithCountdownDigits(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
     DigitsWidth: Integer;
@@ -2187,8 +2259,12 @@ var
     SrcRect: TRect;
 
     OldDrawColor: TColor32;
+
+    LocalDst: TBitmap32;
   begin
     OldDrawColor := fFixedDrawColor;
+
+    LocalDst := GetDigitTargetLayer;
 
     Y := Y - 2; // to center
 
@@ -2208,13 +2284,13 @@ var
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod, Y * ResMod, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod, Y * ResMod + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
       fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod - 1, Y * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
       CurX := CurX + 5;
     end;
 
@@ -2228,9 +2304,13 @@ var
 
     CurX, TargetY: Integer;
     n: Integer;
+
+    LocalDst: TBitmap32;
   begin
     if (aNumber = 0) and (aMinDigits <= 0) then
       Exit; // Special case - allow for "show nothing on zero"
+
+    LocalDst := GetDigitTargetLayer;
 
     Digits := Gadget.MetaObj.DigitAnimation;
     DigitString := LeadZeroStr(aNumber, aMinDigits);
@@ -2252,7 +2332,7 @@ var
 
     for n := 1 to Length(DigitString) do
     begin
-      Digits.Draw(Dst, CurX * ResMod, TargetY * ResMod, StrToInt(DigitString[n]));
+      Digits.Draw(LocalDst, CurX * ResMod, TargetY * ResMod, StrToInt(DigitString[n]));
       Inc(CurX, Digits.Width);
     end;
   end;
@@ -2265,7 +2345,7 @@ var
 
   procedure AddLemmingCountNumber;
   begin
-    if (Gadget.RemainingLemmingsCount >= 0) then
+    if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or fUsefulOnly) then
       DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.RemainingLemmingsCount,
                  Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
@@ -2451,6 +2531,10 @@ begin
     MakeFixedDrawColor;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
+  if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
+
+  fLayers.fIsEmpty[rlTriggers] := true;
+  fLayers.fIsEmpty[rlObjectHelpers] := true;
 
   DrawGadgetsOnLayer(rlBackgroundObjects);
   DrawGadgetsOnLayer(rlGadgetsLow);
@@ -2460,7 +2544,6 @@ begin
 
   if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
 
-  if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
   // Draw hatch helpers
   for i := 0 to Gadgets.Count-1 do
   begin
@@ -3007,15 +3090,18 @@ begin
   ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
 
   // Combine all layers to the WorldMap
-  World.SetSize(fLayers.Width * ResMod, fLayers.Height * ResMod);
-  fLayers.PhysicsMap := fPhysicsMap;
-  fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
+  if World <> nil then
+  begin
+    World.SetSize(fLayers.Width * ResMod, fLayers.Height * ResMod);
+    fLayers.PhysicsMap := fPhysicsMap;
+    fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
+  end;
 end;
 
 
 procedure TRenderer.CreateGadgetList(var Gadgets: TGadgetList);
 var
-  i: Integer;
+  i, n: Integer;
   Gadget: TGadget;
   MO: TGadgetMetaAccessor;
 begin
@@ -3032,6 +3118,15 @@ begin
     begin
       if Gadget.TriggerEffect <> DOM_BACKGROUND then
         Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
+    end;
+
+    if (MO.TriggerEffect = DOM_WINDOW) then
+    begin
+      Gadget.ShowRemainingLemmings := (Gadget.RemainingLemmingsCount > 0) or (Gadget.IsPreassignedZombie);
+      Gadget.RemainingLemmingsCount := 0;
+      for n := 0 to Length(RenderInfoRec.Level.Info.SpawnOrder)-1 do
+        if RenderInfoRec.Level.Info.SpawnOrder[n] = i then
+          Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount + 1;
     end;
 
     Gadgets.Add(Gadget);
@@ -3063,6 +3158,13 @@ begin
 
   try
     fAni.ReadData;
+
+    if (aLevel.Info.ZombieCount > 0) and (not fAni.HasZombieColor) then
+      raise Exception.Create('Specified lemming spriteset does not include zombie coloring.');
+
+    if (aLevel.Info.NeutralCount > 0) and (not fAni.HasNeutralColor) then
+      raise Exception.Create('Specified lemming spriteset does not include neutral coloring.');
+
   except
     on E: Exception do
     begin

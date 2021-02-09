@@ -30,7 +30,15 @@ type
   TStyleAlias = record
     Source: TLabelRecord;
     Dest: TLabelRecord;
+    DefWidth: Integer;
+    DefHeight: Integer;
     Kind: TAliasKind;
+  end;
+
+  TDealiasResult = record
+    Piece: TLabelRecord;
+    DefWidth: Integer;
+    DefHeight: Integer;
   end;
 
   TUpscaleInfo = record
@@ -85,7 +93,7 @@ type
       procedure MakePieceFromGroup(aGroup: TTerrainGroup);
 
       procedure LoadProperties(aStyle: String);
-      function Dealias(aIdentifier: String; aKind: TAliasKind): String;
+      function Dealias(aIdentifier: String; aKind: TAliasKind): TDealiasResult;
       function GetUpscaleInfo(aIdentifier: String; aKind: TAliasKind): TUpscaleInfo;
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
@@ -434,6 +442,8 @@ var
 begin
   NewRec.Source := SplitIdentifier(aSection.LineString['FROM']);
   NewRec.Dest := SplitIdentifier(aSection.LineString['TO']);
+  NewRec.DefWidth := aSection.LineNumericDefault['WIDTH', -1];
+  NewRec.DefHeight := aSection.LineNumericDefault['HEIGHT', -1];
   NewRec.Kind := Kind;
 
   if NewRec.Source.GS = '' then NewRec.Source.GS := fLoadPropertiesStyle;
@@ -473,29 +483,39 @@ begin
   end);
 end;
 
-function TNeoPieceManager.Dealias(aIdentifier: String; aKind: TAliasKind): String;
+function TNeoPieceManager.Dealias(aIdentifier: String; aKind: TAliasKind): TDealiasResult;
 var
-  Ident: TLabelRecord;
+  LastIdent: TLabelRecord;
   i: Integer;
 begin
-  Ident := SplitIdentifier(aIdentifier);
+  Result.Piece := SplitIdentifier(aIdentifier);
+  Result.DefWidth := 0;
+  Result.DefHeight := 0;
+  repeat
+    LastIdent := Result.Piece;
+    LoadProperties(Result.Piece.GS);
 
-  LoadProperties(Ident.GS);
+    if aKind <> rkStyle then
+      for i := 0 to fAliases.Count-1 do
+      begin
+        if Result.Piece.GS <> fAliases[i].Source.GS then Continue;
 
-  for i := 0 to fAliases.Count-1 do
-  begin
-    if Ident.GS <> fAliases[i].Source.GS then Continue;
+        if (fAliases[i].Kind = aKind) and (Result.Piece.Piece = fAliases[i].Source.Piece) then
+        begin
+          Result.Piece := fAliases[i].Dest;
+          Result.DefWidth := fAliases[i].DefWidth;
+          Result.DefHeight := fAliases[i].DefHeight;
+        end;
+      end;
 
-    if fAliases[i].Kind = rkStyle then
-      Ident.GS := fAliases[i].Dest.GS
-    else if (fAliases[i].Kind = aKind) and (Ident.Piece = fAliases[i].Source.Piece) then
-      Ident := fAliases[i].Dest;
-  end;
+    for i := 0 to fAliases.Count-1 do
+    begin
+      if Result.Piece.GS <> fAliases[i].Source.GS then Continue;
 
-  if aKind in [rkStyle, rkLemmings] then
-    Result := Ident.GS
-  else
-    Result := CombineIdentifier(Ident);
+      if fAliases[i].Kind = rkStyle then
+        Result.Piece.GS := fAliases[i].Dest.GS;
+    end;
+  until (Result.Piece.GS = LastIdent.GS) and (Result.Piece.Piece = LastIdent.Piece);
 end;
 
 function TNeoPieceManager.GetUpscaleInfo(aIdentifier: String;
@@ -510,7 +530,12 @@ begin
 
   // Fallback settings
   FillChar(Result, SizeOf(TUpscaleInfo), 0);
-  Result.Settings.Mode := umPixelArt;
+
+  if aKind = rkLemmings then
+    Result.Settings.Mode := umNearest
+  else
+    Result.Settings.Mode := umPixelArt;
+
   if aKind in [rkTerrain, rkBackground] then
   begin
     Result.Settings.LeftSide := uebRepeat;

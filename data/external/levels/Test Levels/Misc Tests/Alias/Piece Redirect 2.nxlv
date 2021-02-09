@@ -34,7 +34,14 @@
    X 65
    Y 63
    NO_OVERWRITE
-   SKILL WALKER
+ $END
+ 
+ $GADGET
+   STYLE redirecttest
+   PIECE gadgettestresize
+   X 165
+   Y 63
+   NO_OVERWRITE
  $END
  
 #        Terrain pieces         

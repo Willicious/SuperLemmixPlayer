@@ -10,8 +10,6 @@ uses
 
 type
   TTalismanColor = (tcBronze, tcSilver, tcGold);
-  TTalismanSpecialCondition = (tscNull, tscOneSkillPerLemming, tscAssignToOne);
-  TTalismanSpecialConditions = set of TTalismanSpecialCondition;
 
   TTalisman = class
   private

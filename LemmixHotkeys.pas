@@ -27,6 +27,7 @@ type
                          lka_ReleaseRateMin,
                          lka_Pause,
                          lka_Nuke,
+                         lka_BypassNuke,
                          lka_SaveState,
                          lka_LoadState,
                          lka_Highlight,
@@ -235,7 +236,7 @@ begin
   SetKeyFunction($70, lka_ReleaseRateDown);
   SetKeyFunction($71, lka_ReleaseRateUp);
   SetKeyFunction($7A, lka_Pause);
-  SetKeyFunction($7B, lka_Nuke);
+  SetKeyFunction($7B, lka_BypassNuke);
   SetKeyFunction($C0, lka_ReleaseMouse);
 
   // Misc ones that need other details set
@@ -289,6 +290,7 @@ begin
   if s = 'rr_min' then Result := lka_ReleaseRateMin;
   if s = 'pause' then Result := lka_Pause;
   if s = 'nuke' then Result := lka_Nuke;
+  if s = 'bypass_nuke' then Result := lka_BypassNuke;
   if s = 'save_state' then Result := lka_SaveState;
   if s = 'load_state' then Result := lka_LoadState;
   if s = 'dir_select_left' then Result := lka_DirLeft;
@@ -436,6 +438,7 @@ var
       lka_ReleaseRateMin:   Result := 'RR_Min';
       lka_Pause:            Result := 'Pause';
       lka_Nuke:             Result := 'Nuke';
+      lka_BypassNuke:       Result := 'Bypass_Nuke';
       lka_SaveState:        Result := 'Save_State';
       lka_LoadState:        Result := 'Load_State';
       lka_DirLeft:          Result := 'Dir_Select_Left';

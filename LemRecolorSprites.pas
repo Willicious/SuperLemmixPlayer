@@ -14,7 +14,8 @@ const
   CPM_LEMMING_NORMAL = $FF0000FF;  // used for a non-athlete
   CPM_LEMMING_ATHLETE = $FF00FFFF; // used for an athlete
   CPM_LEMMING_SELECTED = $007F0000; // OR'd to base value for selected lemming
-  CPM_LEMMING_ZOMBIE = $00808080; // AND-NOT'd to base value for zombies
+  CPM_LEMMING_ZOMBIE_OR = $00007F00; // OR'd to base value for zombies
+  CPM_LEMMING_ZOMBIE_NOT = $000000C0; // AND-NOT'd to base value for zombies
   CPM_LEMMING_NEUTRAL = $00FFFFFF; // XOR'd to base value for neutrals
 
 type
@@ -92,7 +93,7 @@ begin
       B := B xor CPM_LEMMING_NEUTRAL;
 
     if fLemming.LemIsZombie then
-      B := B and not CPM_LEMMING_ZOMBIE;
+      B := (B or CPM_LEMMING_ZOMBIE_OR) and not CPM_LEMMING_ZOMBIE_NOT;
   end else
     for i := 0 to Length(fSwaps)-1 do
     begin

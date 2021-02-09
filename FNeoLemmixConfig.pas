@@ -15,16 +15,13 @@ type
     btnCancel: TButton;
     btnApply: TButton;
     GroupBox4: TGroupBox;
-    cbAutoSaveReplay: TCheckBox;
     TabSheet4: TTabSheet;
     tbSoundVol: TTrackBar;
     Label3: TLabel;
     Label5: TLabel;
     tbMusicVol: TTrackBar;
     Label6: TLabel;
-    Label7: TLabel;
-    cbSuccessJingle: TCheckBox;
-    cbFailureJingle: TCheckBox;
+    cbPostviewJingles: TCheckBox;
     TabSheet5: TTabSheet;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
@@ -43,7 +40,6 @@ type
     cbCompactSkillPanel: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     cbSpawnInterval: TCheckBox;
-    cbReplayAutoName: TCheckBox;
     btnHotkeys: TButton;
     cbNoAutoReplay: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
@@ -55,6 +51,15 @@ type
     cbResetWindowPosition: TCheckBox;
     cbHideShadows: TCheckBox;
     cbHideAdvanced: TCheckBox;
+    cbAutoSaveReplay: TCheckBox;
+    cbAutoSaveReplayPattern: TComboBox;
+    lblIngameSaveReplay: TLabel;
+    cbIngameSaveReplayPattern: TComboBox;
+    cbPostviewSaveReplayPattern: TComboBox;
+    lblPostviewSaveReplay: TLabel;
+    cbPanelZoom: TComboBox;
+    Label2: TLabel;
+    cbForceDefaultLemmings: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -63,6 +68,7 @@ type
     procedure SliderChange(Sender: TObject);
     procedure btnStylesClick(Sender: TObject);
     procedure cbFullScreenClick(Sender: TObject);
+    procedure cbAutoSaveReplayClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -72,8 +78,12 @@ type
     procedure SaveToParams;
 
     procedure SetZoomDropdown(aValue: Integer = -1);
+    procedure SetPanelZoomDropdown(aValue: Integer = -1);
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
+
+    procedure SetReplayPatternDropdown(aBox: TComboBox; aPattern: String);
+    function GetReplayPattern(aBox: TComboBox): String;
   public
     procedure SetGameParams;
     property ResetWindowSize: Boolean read GetResetWindowSize;
@@ -89,11 +99,28 @@ uses
   GameBaseScreenCommon, // for EXTRA_ZOOM_LEVELS constant
   GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
 
+const
+  PRESET_REPLAY_PATTERNS: array[0..3] of String =
+  (
+    '{GROUP}_{GROUPPOS}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}',
+    '{TITLE}__{TIMESTAMP}',
+    '{GROUP}_{GROUPPOS}__{TITLE}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}',
+    '*{TITLE}__{TIMESTAMP}'
+  );
+
 {$R *.dfm}
 
 function TFormNXConfig.GetResetWindowSize: Boolean;
 begin
   Result := fResetWindowSize and not GameParams.FullScreen;
+end;
+
+function TFormNXConfig.GetReplayPattern(aBox: TComboBox): String;
+begin
+  if aBox.ItemIndex = -1 then
+    Result := aBox.Text
+  else
+    Result := PRESET_REPLAY_PATTERNS[aBox.ItemIndex];
 end;
 
 function TFormNXConfig.GetResetWindowPosition: Boolean;
@@ -104,6 +131,21 @@ end;
 procedure TFormNXConfig.SetGameParams;
 begin
   SetFromParams;
+end;
+
+procedure TFormNXConfig.SetReplayPatternDropdown(aBox: TComboBox;
+  aPattern: String);
+var
+  i: Integer;
+begin
+  for i := 0 to aBox.Items.Count-1 do
+    if PRESET_REPLAY_PATTERNS[i] = aPattern then
+    begin
+      aBox.ItemIndex := i;
+      Exit;
+    end;
+
+  aBox.Text := aPattern;
 end;
 
 procedure TFormNXConfig.SetZoomDropdown(aValue: Integer = -1);
@@ -125,9 +167,39 @@ begin
     cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
 
   if aValue < 0 then
-    cbZoom.ItemIndex := Max(GameParams.ZoomLevel-1, 0)
+    aValue := GameParams.ZoomLevel - 1;
+
+  cbZoom.ItemIndex := Max(0, Min(aValue, cbZoom.Items.Count - 1));
+end;
+
+procedure TFormNXConfig.SetPanelZoomDropdown(aValue: Integer);
+var
+  i: Integer;
+  MaxWidth: Integer;
+  MaxZoom: Integer;
+begin
+  cbPanelZoom.Items.Clear;
+
+  if GameParams.FullScreen or cbFullScreen.Checked then
+    MaxWidth := Screen.Width
   else
-    cbZoom.ItemIndex := aValue;
+    MaxWidth := GameParams.MainForm.ClientWidth;
+
+  if cbCompactSkillPanel.Checked then
+    MaxZoom := Max(MaxWidth div 320, 1)
+  else
+    MaxZoom := Max(MaxWidth div 416, 1);
+
+  if cbHighResolution.Checked then
+    MaxZoom := Max(1, MaxZoom div 2);
+
+  for i := 1 to MaxZoom do
+    cbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
+
+  if aValue < 0 then
+    aValue := GameParams.PanelZoomLevel - 1;
+
+  cbPanelZoom.ItemIndex := Max(0, Min(aValue, cbPanelZoom.Items.Count - 1));
 end;
 
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
@@ -152,7 +224,9 @@ begin
 
     // Checkboxes
     cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
-    cbReplayAutoName.Checked := GameParams.ReplayAutoName;
+    SetReplayPatternDropdown(cbAutoSaveReplayPattern, GameParams.AutoSaveReplayPattern);
+    SetReplayPatternDropdown(cbIngameSaveReplayPattern, GameParams.IngameSaveReplayPattern);
+    SetReplayPatternDropdown(cbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
 
     cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
     cbEnableOnline.Checked := GameParams.EnableOnline;
@@ -163,6 +237,7 @@ begin
     cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
 
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+    cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbSpawnInterval.Checked := GameParams.SpawnInterval;
@@ -182,6 +257,7 @@ begin
 
     // Zoom Dropdown
     SetZoomDropdown;
+    SetPanelZoomDropdown;
 
     //// Page 3 (Audio Options) ////
     if SoundManager.MuteSound then
@@ -193,8 +269,7 @@ begin
     else
       tbMusicVol.Position := SoundManager.MusicVolume;
 
-    cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
-    cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
+    cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
     btnApply.Enabled := false;
   finally
@@ -211,7 +286,9 @@ begin
 
   // Checkboxes
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
-  GameParams.ReplayAutoName := cbReplayAutoName.Checked;
+  GameParams.AutoSaveReplayPattern := GetReplayPattern(cbAutoSaveReplayPattern);
+  GameParams.IngameSaveReplayPattern := GetReplayPattern(cbIngameSaveReplayPattern);
+  GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
   GameParams.EnableOnline := cbEnableOnline.Checked;
   GameParams.CheckUpdates := cbUpdateCheck.Checked;
@@ -222,6 +299,7 @@ begin
   GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
@@ -239,6 +317,7 @@ begin
 
   // Zoom Dropdown
   GameParams.ZoomLevel := cbZoom.ItemIndex + 1;
+  GameParams.PanelZoomLevel := cbPanelZoom.ItemIndex + 1;
 
   //// Page 3 (Audio Options) ////
   SoundManager.MuteSound := tbSoundVol.Position = 0;
@@ -247,9 +326,8 @@ begin
   SoundManager.MuteMusic := tbMusicVol.Position = 0;
   if tbMusicVol.Position <> 0 then
     SoundManager.MusicVolume := tbMusicVol.Position;
-    
-  GameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
-  GameParams.PostLevelFailureSound := cbFailureJingle.Checked;
+
+  GameParams.PostviewJingles := cbPostviewJingles.Checked;
 
   btnApply.Enabled := false;
 end;
@@ -281,17 +359,42 @@ begin
 end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);
+var
+  NewZoom: Integer;
+  NewPanelZoom: Integer;
 begin
   if not fIsSetting then
   begin
+    NewZoom := -1;
+    NewPanelZoom := -1;
+
     if Sender = cbHighResolution then
       if cbHighResolution.Checked then
-        SetZoomDropdown(cbZoom.ItemIndex div 2)
-      else
-        SetZoomDropdown(cbZoom.ItemIndex * 2 + 1);
+      begin
+        NewZoom := cbZoom.ItemIndex div 2;
+        NewPanelZoom := cbPanelZoom.ItemIndex div 2;
+      end else begin
+        NewZoom := cbZoom.ItemIndex * 2 + 1;
+        NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
+      end;
+
+    if Sender = cbCompactSkillPanel then
+      NewPanelZoom := cbPanelZoom.ItemIndex;
+
+    if (Sender = cbFullScreen) and not GameParams.FullScreen then
+      NewPanelZoom := cbPanelZoom.ItemIndex;
+
+    if NewZoom >= 0 then SetZoomDropdown(NewZoom);
+    if NewPanelZoom >= 0 then SetPanelZoomDropdown(NewPanelZoom);
 
     btnApply.Enabled := true;
   end;
+end;
+
+procedure TFormNXConfig.cbAutoSaveReplayClick(Sender: TObject);
+begin
+  cbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
+  OptionChanged(Sender);
 end;
 
 procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);

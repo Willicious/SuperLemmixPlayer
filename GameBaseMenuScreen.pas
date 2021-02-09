@@ -15,7 +15,7 @@ uses
   GameControl,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
-  Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils;
+  Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows;
 
 const
   INTERNAL_SCREEN_WIDTH = 864;
@@ -78,6 +78,7 @@ type
   TGameBaseMenuScreen = class(TGameBaseScreen)
     private
       fMenuFont          : TMenuFont;
+      fKeyStates: TDictionary<Word, UInt64>;
 
       fBasicCursor: TNLCursor;
 
@@ -89,6 +90,7 @@ type
       procedure InitializeImage;
 
       procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+      procedure Form_KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
       procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure Form_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
       procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
@@ -104,6 +106,8 @@ type
       procedure SaveScreenImage;
       {$endif}{$endif}
     protected
+      procedure CloseScreen(aNextScreen: TGameScreenType); override;
+
       procedure DoLevelSelect;
       procedure SaveReplay;
 
@@ -138,6 +142,8 @@ type
 
       procedure ReloadCursor;
 
+      procedure AfterCancelLevelSelect; virtual;
+
       property MenuFont: TMenuFont read fMenuFont;
     public
       constructor Create(aOwner: TComponent); override;
@@ -149,16 +155,31 @@ type
 implementation
 
 uses
-  LemGame,
+  LemGame, LemReplay,
   FMain, FNeoLemmixLevelSelect, FNeoLemmixConfig,
   PngInterface;
 
+const
+  ACCEPT_KEY_DELAY = 200;
+
 { TGameBaseMenuScreen }
+
+procedure TGameBaseMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
+begin
+  OnKeyDown := nil;
+  OnKeyUp := nil;
+  OnMouseDown := nil;
+  OnMouseMove := nil;
+  ScreenImg.OnMouseDown := nil;
+  ScreenImg.OnMouseMove := nil;
+  inherited;
+end;
 
 constructor TGameBaseMenuScreen.Create(aOwner: TComponent);
 begin
   inherited;
 
+  fKeyStates := TDictionary<Word, UInt64>.Create;
   fClickableRegions := TObjectList<TClickableRegion>.Create;
 
   fMenuFont := TMenuFont.Create;
@@ -171,6 +192,7 @@ begin
   InitializeImage;
 
   OnKeyDown := Form_KeyDown;
+  OnKeyUp := Form_KeyUp;
   OnMouseDown := Form_MouseDown;
   OnMouseMove := Form_MouseMove;
   ScreenImg.OnMouseDown := Img_MouseDown;
@@ -198,6 +220,7 @@ begin
   fMenuFont.Free;
   fBasicCursor.Free;
   fClickableRegions.Free;
+  fKeyStates.Free;
 
   inherited;
 end;
@@ -619,6 +642,11 @@ begin
   SetBasicCursor;
 end;
 
+procedure TGameBaseMenuScreen.AfterCancelLevelSelect;
+begin
+  // Intentionally blank.
+end;
+
 procedure TGameBaseMenuScreen.AfterRedrawClickables;
 begin
   // Intentionally blank.
@@ -628,9 +656,9 @@ procedure TGameBaseMenuScreen.SaveReplay;
 var
   S: String;
 begin
-  S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
-  if S = '' then Exit;
   GlobalGame.EnsureCorrectReplayDetails;
+  S := GlobalGame.ReplayManager.GetSaveFileName(self, rsoPostview, GlobalGame.ReplayManager);
+  if S = '' then Exit;
   GlobalGame.ReplayManager.SaveToFile(S);
 end;
 
@@ -755,7 +783,22 @@ end;
 procedure TGameBaseMenuScreen.Form_KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  HandleKeyboardInput(Key);
+  if not fKeyStates.ContainsKey(Key) then
+    fKeyStates.Add(Key, GetTickCount64);
+end;
+
+procedure TGameBaseMenuScreen.Form_KeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  TimeDiff: UInt64;
+begin
+  if fKeyStates.ContainsKey(Key) then
+  begin
+    TimeDiff := GetTickCount64 - fKeyStates[Key];
+    fKeyStates.Remove(Key);
+    if TimeDiff <= ACCEPT_KEY_DELAY then
+      HandleKeyboardInput(Key);
+  end;
 end;
 
 procedure TGameBaseMenuScreen.Form_MouseDown(Sender: TObject;
@@ -819,6 +862,7 @@ begin
   end else if not Success then
   begin
     GameParams.SetLevel(OldLevel);
+    AfterCancelLevelSelect;
   end else begin
     if LoadAsPack then
       CloseScreen(gstMenu)

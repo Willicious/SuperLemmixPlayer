@@ -23,8 +23,6 @@ type
   TGadgetModel = class(TIdentifiedPiece)
   private
   protected
-    fWidth: Integer;
-    fHeight: Integer;
     fDrawingFlags: Byte; // odf_xxxx
     fSkill: Integer;
     fTarLev: Integer; // This saves the preassigned skills for hatches
@@ -37,8 +35,6 @@ type
     procedure Assign(Source: TPiece); override;
   published
     constructor Create;
-    property Width: Integer read fWidth write fWidth;
-    property Height: Integer read fHeight write fHeight;
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
     property Skill : Integer read fSkill write fSkill;
     property TarLev : Integer read fTarLev write fTarLev;
@@ -128,8 +124,6 @@ begin
   begin
     inherited;
     DrawingFlags := O.DrawingFlags;
-    Width := O.Width;
-    Height := O.Height;
     Skill := O.Skill;
     TarLev := O.TarLev;
     LemmingCap := O.LemmingCap;

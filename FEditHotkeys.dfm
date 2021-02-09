@@ -98,6 +98,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Min Release Rate'
       'Pause'
       'Nuke'
+      'Nuke (Timer Bypass)'
       'Save State'
       'Load State'
       'Highlight Lemming'

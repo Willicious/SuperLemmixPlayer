@@ -39,6 +39,8 @@ type
     fDownloadList: TStringList;
     fDownloadIndex: Integer;
 
+    fFailList: TStringList;
+
     fTimeForNextDownload: Boolean;
 
     procedure ClearPieceManager;
@@ -124,10 +126,14 @@ begin
   pbDownload.Visible := true;
   tmContinueDownload.Enabled := true;
   fLocalList.Sorted := false;
+  fFailList.Clear;
   BeginNextDownload;
 end;
 
 procedure TFManageStyles.EndDownloads;
+var
+  FailMsg: String;
+  i: Integer;
 begin
   fDownloadIndex := -1;
   SaveLocalList;
@@ -138,6 +144,16 @@ begin
   pbDownload.Visible := false;
   tmContinueDownload.Enabled := false;
   fLocalList.Sorted := true;
+
+  if fFailList.Count > 0 then
+  begin
+    FailMsg := 'Some styles failed to download: ' + #10#10;
+
+    for i := 0 to fFailList.Count-1 do
+      FailMsg := FailMsg + fFailList.Names[i] + ': ' + fFailList.ValueFromIndex[i] + #10;
+
+    ShowMessage(FailMsg);
+  end;
 end;
 
 procedure TFManageStyles.ConcludeDownload;
@@ -153,21 +169,21 @@ begin
         TDirectory.Delete(AppPath + SFStyles + fDownloadList[fDownloadIndex], true);
       Zip.ExtractAll(AppPath);
       Zip.Close;
+
+      try
+        if PieceManager.NeedCheckStyles.IndexOf(fDownloadList[fDownloadIndex]) >= 0 then
+          PieceManager.NeedCheckStyles.Delete(PieceManager.NeedCheckStyles.IndexOf(fDownloadList[fDownloadIndex]));
+
+        fLocalList.Values[fDownloadList[fDownloadIndex]] := fWebList.Values[fDownloadList[fDownloadIndex]];
+      except
+        // Fail silently here.
+      end;
     except
       on E: Exception do
-        ShowMessage(E.ClassName + ': ' + E.Message);
-    end;
-    try
-      if PieceManager.NeedCheckStyles.IndexOf(fDownloadList[fDownloadIndex]) >= 0 then
-        PieceManager.NeedCheckStyles.Delete(PieceManager.NeedCheckStyles.IndexOf(fDownloadList[fDownloadIndex]));
-
-      fLocalList.Values[fDownloadList[fDownloadIndex]] := fWebList.Values[fDownloadList[fDownloadIndex]];
-    except
-      // Fail silently here.
+        fFailList.Values[fDownloadList[fDownloadIndex]] := 'Threw ' + E.ClassName + ': ' + E.Message;
     end;
   finally
     Zip.Free;
-    Inc(fDownloadIndex);
   end;
 end;
 
@@ -183,6 +199,7 @@ begin
 
   if fWebList.IndexOfName(fDownloadList[fDownloadIndex]) < 0 then
   begin
+    fFailList.Values[fDownloadList[fDownloadIndex]] := 'Style does not exist on server.';
     fTimeForNextDownload := true;
     Exit;
   end;
@@ -203,7 +220,8 @@ begin
   if fTimeForNextDownload then
   begin
     fTimeForNextDownload := false;
-    ConcludeDownload;
+    if fDownloadStream.Size > 0 then ConcludeDownload;
+    Inc(fDownloadIndex);
     BeginNextDownload;
   end;
 end;
@@ -268,6 +286,7 @@ begin
   fLocalList := TStringList.Create;
   fWebList := TStringList.Create;
   fDownloadList := TStringList.Create;
+  fFailList := TStringList.Create;
 
   fLocalList.Sorted := true;
   fWebList.Sorted := true;
@@ -291,6 +310,7 @@ begin
   fLocalList.Free;
   fWebList.Free;
   fDownloadList.Free;
+  fFailList.Free;
   fDownloadStream.Free;
 end;
 
@@ -340,6 +360,8 @@ var
 
   NewItem: TListItem;
   NewString: String;
+
+  DownloadThread: TDownloadThread;
 begin
   if FileExists(AppPath + SFSaveData + 'styletimes.ini') then
     fLocalList.LoadFromFile(AppPath + SFSaveData + 'styletimes.ini')
@@ -363,7 +385,10 @@ begin
 
   fWebList.Clear;
   if GameParams.EnableOnline then
-    TInternet.DownloadToStringList(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, fWebList);
+  begin
+    DownloadThread := DownloadInThread(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, fWebList);
+    while not DownloadThread.Complete do {nothing};
+  end;
 
   StyleList := TStringList.Create;
   try

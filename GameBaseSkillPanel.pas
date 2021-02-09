@@ -61,6 +61,7 @@ type
     fSkillCountErase      : TBitmap32;
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
+    fSkillSelected        : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
     fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
@@ -287,6 +288,10 @@ begin
   fSkillInfinite.DrawMode := dmBlend;
   fSkillInfinite.CombineMode := cmMerge;
 
+  fSkillSelected := TBitmap32.Create;
+  fSkillSelected.DrawMode := dmBlend;
+  fSkillSelected.CombineMode := cmMerge;
+
   fSkillCountErase := TBitmap32.Create;
   fSkillCountErase.DrawMode := dmBlend;
   fSkillCountErase.CombineMode := cmMerge;
@@ -328,6 +333,7 @@ begin
     fSkillOvercount[i].Free;
 
   fSkillInfinite.Free;
+  fSkillSelected.Free;
   fSkillCountErase.Free;
   fSkillLock.Free;
 
@@ -632,8 +638,9 @@ var
       Outline(dst, true);
   end;
 begin
-  // Load the erasing icon first
+  // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
+  GetGraphic('skill_selected.png', fSkillSelected);
 
   //for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   //  GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
@@ -1037,18 +1044,9 @@ begin
     BorderRect := fButtonRects[aButton];
 
   Inc(BorderRect.Right, ResMod);
-  Inc(BorderRect.Bottom, 2 * ResMod);
+  Inc(BorderRect.Bottom, ResMod * 2);
 
-  Image.Bitmap.FrameRectS(BorderRect, fRectColor);
-
-  if GameParams.HighResolution then
-  begin
-    Inc(BorderRect.Left);
-    Inc(BorderRect.Top);
-    Dec(BorderRect.Right);
-    Dec(BorderRect.Bottom);
-    Image.Bitmap.FrameRectS(BorderRect, fRectColor);
-  end;
+  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fSkillSelected);
 end;
 
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
@@ -1065,6 +1063,9 @@ begin
 
   Inc(BorderRect.Right, ResMod);
   Inc(BorderRect.Bottom, 2 * ResMod);
+
+  fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
+  Exit;
 
   // top
   EraseRect := BorderRect;
@@ -1218,26 +1219,32 @@ var
 begin
   fIsBlinkFrame := (GetTickCount mod 1000) > 499;
 
-  // Text info string
-  CreateNewInfoString;
-  DrawNewStr;
-  fLastDrawnStr := fNewDrawStr;
+  Image.BeginUpdate;
+  try
+    // Text info string
+    CreateNewInfoString;
+    DrawNewStr;
+    fLastDrawnStr := fNewDrawStr;
 
-  // Skill and RR numbers
-  for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    DrawSkillCount(i, Game.SkillCount[i]);
+    DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
+    DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
 
-  DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
-  DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
+    // Highlight selected button
+    if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
+    begin
+      DrawButtonSelector(fHighlitSkill, false);
+      DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+    end;
 
-  // Highlight selected button
-  if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
-  begin
-    DrawButtonSelector(fHighlitSkill, false);
-    DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+    // Skill and RR numbers
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      DrawSkillCount(i, Game.SkillCount[i]);
+
+    DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
+  finally
+    Image.EndUpdate;
+    Image.Invalidate;
   end;
-
-  DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
@@ -1452,7 +1459,12 @@ begin
     spbNuke:
       begin
         Game.RegainControl;
-        Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
+        if GameParams.Hotkeys.CheckForKey(lka_Highlight) or (Button = mbRight) then
+        begin
+          Game.SetSelectedSkill(i, True, true);
+          fGameWindow.GotoSaveState(Game.CurrentIteration, 0, Game.CurrentIteration - 85);
+        end else
+          Game.SetSelectedSkill(i, True);
       end;
     spbFastForward:
       begin

@@ -35,6 +35,8 @@ type
     btnSaveImage: TButton;
     btnMassReplay: TButton;
     btnCleanseLevels: TButton;
+    btnCleanseOne: TButton;
+    btnClearRecords: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -44,6 +46,8 @@ type
     procedure btnSaveImageClick(Sender: TObject);
     procedure btnMassReplayClick(Sender: TObject);
     procedure btnCleanseLevelsClick(Sender: TObject);
+    procedure btnCleanseOneClick(Sender: TObject);
+    procedure btnClearRecordsClick(Sender: TObject);
   private
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
@@ -133,6 +137,7 @@ const // Icon indexes
 implementation
 
 uses
+  FReplayRename,
   LemLevel;
 
 const
@@ -276,6 +281,28 @@ begin
   fTalismanButtons.Free;
 end;
 
+procedure TFLevelSelect.btnCleanseOneClick(Sender: TObject);
+var
+  SaveDlg: TSaveDialog;
+begin
+  SaveDlg := TSaveDialog.Create(self);
+  try
+    SaveDlg.Title := 'Select file to save to';
+    SaveDlg.Filter := 'NXLV Level Files|*.nxlv';
+    SaveDlg.InitialDir := AppPath + SFLevels;
+    SaveDlg.FileName := MakeSafeForFilename(GameParams.Level.Info.Title) + '.nxlv';
+    SaveDlg.Options := [ofOverwritePrompt];
+    if SaveDlg.Execute then
+    begin
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion + 1;
+      GameParams.Level.SaveToFile(SaveDlg.FileName);
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion - 1;
+    end;
+  finally
+    SaveDlg.Free;
+  end;
+end;
+
 procedure TFLevelSelect.btnMakeShortcutClick(Sender: TObject);
 var
   N: TTreeNode;
@@ -388,6 +415,40 @@ begin
   end
   else if Obj is TNeoLevelEntry then
     GameParams.SetLevel(L);
+end;
+
+procedure TFLevelSelect.btnClearRecordsClick(Sender: TObject);
+var
+  Obj: TObject;
+  G: TNeoLevelGroup absolute Obj;
+  L: TNeoLevelEntry absolute Obj;
+  N: TTreeNode;
+
+  GroupWord: String;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit; // safeguard
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+  begin
+    if G.IsBasePack then
+      GroupWord := 'pack'
+    else
+      GroupWord := 'group';
+
+    if MessageDlg('Are you sure you want to clear records for all levels in the ' + GroupWord + ' "' + G.Name + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+      G.WipeAllRecords;
+  end else begin
+    if MessageDlg('Are you sure you want to clear records for the level "' + L.Title + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+      L.WipeRecords;
+
+    if fDisplayRecords then
+      fInfoForm.PrepareEmbedRecords;
+  end;
 end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
@@ -881,6 +942,7 @@ begin
     btnSaveImage.Caption := 'Save Level Images';
     btnMassReplay.Enabled := true;
     btnCleanseLevels.Enabled := true;
+    btnCleanseOne.Enabled := false;
   end;
 end;
 
@@ -891,6 +953,7 @@ begin
     btnSaveImage.Caption := 'Save Image';
     btnMassReplay.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
     btnCleanseLevels.Enabled := btnMassReplay.Enabled;
+    btnCleanseOne.Enabled := true;
   end;
 end;
 
@@ -944,6 +1007,7 @@ end;
 procedure TFLevelSelect.btnMassReplayClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
+  F: TFReplayNaming;
 begin
   OpenDlg := TOpenDialog.Create(self);
   try
@@ -956,6 +1020,14 @@ begin
     GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
   finally
     OpenDlg.Free;
+  end;
+
+  F := TFReplayNaming.Create(self);
+  try
+    if F.ShowModal = mrCancel then
+      Exit;
+  finally
+    F.Free;
   end;
 
   WriteToParams;

@@ -104,6 +104,7 @@ type
     fMessageQueue              : TGameMessageQueue;
 
     fTalismanReceived          : Boolean;
+    fNewTalismanReceived       : Boolean;
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
@@ -266,7 +267,7 @@ type
     function LayStackBrick(L: TLemming): Boolean;
     procedure MoveLemToReceivePoint(L: TLemming; GadgetID: Byte);
 
-    procedure RecordNuke;
+    procedure RecordNuke(aInsert: Boolean);
     procedure RecordSpawnInterval(aSI: Integer);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
     procedure RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
@@ -399,7 +400,6 @@ type
     procedure CheckAdjustSpawnInterval;
     procedure AdjustSpawnInterval(aSI: Integer);
     function CheckIfLegalSI(aSI: Integer): Boolean;
-    procedure CreateLemmingAtCursorPoint;
     procedure Finish(aReason: Integer);
     procedure Cheat;
     procedure HitTest(Autofail: Boolean = false);
@@ -801,10 +801,11 @@ begin
 
   for i := 0 to Level.Talismans.Count-1 do
   begin
-    if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then Continue;
     if CheckTalisman(Level.Talismans[i]) then
     begin
       fTalismanReceived := true;
+      if not GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then
+        fNewTalismanReceived := true;
       GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
     end;
   end;
@@ -1071,6 +1072,7 @@ begin
     fReplayManager.LevelRank := GameParams.CurrentGroupName;
     fReplayManager.LevelPosition := GameParams.CurrentLevel.GroupIndex+1;
     fReplayManager.LevelID := Level.Info.LevelID;
+    fReplayManager.LevelVersion := Level.Info.LevelVersion;
   end;
 
   with Level.Info do
@@ -1137,6 +1139,7 @@ begin
     SetSelectedSkill(InitialSkill, True); // default
 
   fTalismanReceived := false;
+  fNewTalismanReceived := false;
 
   MessageQueue.Clear;
 
@@ -1161,6 +1164,7 @@ begin
     with L do
     begin
       LemIndex := LemmingList.Add(L);
+      L.LemIdentifier := 'P' + IntToStr(Lem.X) + '.' + IntToStr(Lem.Y);
       SetFromPreplaced(Lem);
 
       if Lem.IsShimmier and HasPixelAt(L.LemX, L.LemY - 9) then
@@ -1397,10 +1401,13 @@ begin
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
-    L.LemFallen := 1;
-    if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
-    else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
-    else if L.LemAction in [baBlocking, baJumping, baLasering] then L.LemFallen := -1;
+    if L.LemAction <> baSwimming then // for Swimming it's set in HandleSwimming as there is no single universal value
+    begin
+      L.LemFallen := 1;
+      if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
+      else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
+      else if L.LemAction in [baBlocking, baJumping, baLasering] then L.LemFallen := -1;
+    end;
     L.LemTrueFallen := L.LemFallen;
   end;
 
@@ -1470,6 +1477,7 @@ begin
                        L.LemExplosionTimer := 0;
                      CueSoundEffect(SFX_YIPPEE, L.Position);
                    end;
+    baVaporizing : L.LemExplosionTimer := 0;
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
@@ -1876,6 +1884,7 @@ begin
   NewL := TLemming.Create;
   NewL.Assign(L);
   NewL.LemIndex := LemmingList.Count;
+  NewL.LemIdentifier := 'C' + IntToStr(CurrentIteration);
   LemmingList.Add(NewL);
   TurnAround(NewL);
   Inc(LemmingsOut);
@@ -2206,7 +2215,21 @@ var
   OldAction: TBasicLemmingAction;
 begin
   Result := (L.LemAction in ActionSet);
-  if L.LemAction in [baClimbing, baSliding, baDehoisting] then
+  if L.LemAction = baClimbing then
+  begin
+    // Check whether the lemming would fall down the next frame
+    CopyL := TLemming.Create;
+    CopyL.Assign(L);
+    CopyL.LemIsPhysicsSimulation := true;
+
+    SimulateLem(CopyL, False);
+
+    if (CopyL.LemAction = baFalling) and (CopyL.LemDX = -L.LemDX) then
+      if HasPixelAt(CopyL.LemX, CopyL.LemY - 9) or HasPixelAt(CopyL.LemX, CopyL.LemY - 8) then
+        Result := True;
+
+    CopyL.Free;
+  end else if L.LemAction in [baSliding, baDehoisting] then
   begin
     // Check whether the lemming would fall down the next frame
     CopyL := TLemming.Create;
@@ -3329,31 +3352,29 @@ end;
 function TLemmingGame.HandleSwimming(L: TLemming): Boolean;
 var
   LemDy: Integer;
+  DiveDist: Integer;
 
   function LemDive(L: TLemming): Integer;
     // Returns 0 if the lem may not dive down
     // Otherwise return the amount of pixels the lem dives
-  var
-    DiveDepth: Integer;
   begin
-    if L.LemIsClimber then DiveDepth := 3
-    else DiveDepth := 4;
-
     Result := 1;
-    while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= DiveDepth) do
+    while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= 4) do
     begin
       Inc(Result);
-      if L.LemY + Result >= PhysicsMap.Height then Result := DiveDepth + 1; // End while loop!
+      Inc(L.LemFallen);
+      if HasTriggerAt(L.LemX, L.LemY + Result, trWater) then L.LemFallen := 0;
+      if L.LemY + Result >= PhysicsMap.Height then Break;
     end;
 
-    // do not dive, when there is no more water
-    if not HasTriggerAt(L.LemX, L.LemY + Result, trWater) then Result := 0;
-
-    if Result > DiveDepth then Result := 0; // too much terrain to dive
+    if Result > 4 then Result := 0; // too much terrain to dive
   end;
 
 begin
   Result := True;
+  L.LemFallen := 0; // Transition expects HandleSwimming to set this for swimmers, as it's not constant.
+                    // 0 is the fallback value that's correct for *most* situations. Transition will
+                    // still set LemTrueFallen so we don't need to worry about that one.
 
   Inc(L.LemX, L.LemDx);
 
@@ -3368,13 +3389,17 @@ begin
 
     else if LemDy < -6 then
     begin
-      if LemDive(L) > 0 then
-        Inc(L.LemY, LemDive(L)) // Dive below the terrain
-      // Only transition to climber, if the lemming is not under water
-      else if L.LemIsClimber and not HasTriggerAt(L.LemX, L.LemY - 1, trWater) then
-        Transition(L, baClimbing)
-      else
+      DiveDist := LemDive(L);
+
+      if DiveDist > 0 then
       begin
+        Inc(L.LemY, DiveDist); // Dive below the terrain
+        if not HasTriggerAt(L.LemX, L.LemY, trWater) then
+          Transition(L, baWalking);
+      end else if L.LemIsClimber and not HasTriggerAt(L.LemX, L.LemY - 1, trWater) then
+      // Only transition to climber, if the lemming is not under water
+        Transition(L, baClimbing)
+      else begin
         TurnAround(L);
         Inc(L.LemX, L.LemDx); // Move lemming back
       end
@@ -5288,15 +5313,30 @@ end;
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 var
   L: TLemming;
+  i: Integer;
 begin
   with aReplayItem do
   begin
-    if (LemmingIndex < 0) or (LemmingIndex >= LemmingList.Count) then
-      Exit;
+    L := nil;
 
-    L := LemmingList.List[LemmingIndex];
+    if LemmingIdentifier = '' then
+    begin
+      if (LemmingIndex >= 0) and (LemmingIndex < LemmingList.Count) then
+      begin
+        L := LemmingList.List[LemmingIndex];
+        LemmingIdentifier := L.LemIdentifier;
+      end;
+    end else begin
+      for i := 0 to LemmingList.Count-1 do
+        if LemmingList[i].LemIdentifier = LemmingIdentifier then
+        begin
+          L := LemmingList[i];
+          LemmingIndex := L.LemIndex;
+          Break;
+        end;
+    end;
 
-    if Skill in AssignableSkills then
+    if (L <> nil) and (Skill in AssignableSkills) then
     begin
       fTargetLemmingID := L.LemIndex;
       AssignNewSkill(Skill, false, true);
@@ -5364,7 +5404,7 @@ begin
       end;
     spbNuke:
       begin
-        RecordNuke;
+        RecordNuke(RightClick);
       end;
     spbPause: ; // Do Nothing
     spbNone: ; // Do Nothing
@@ -5414,6 +5454,7 @@ begin
         with NewLemming do
         begin
           LemIndex := LemmingList.Add(NewLemming);
+          LemIdentifier := 'N' + IntToStr(Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease);
           Transition(NewLemming, baFalling);
 
           if LemAction = baFalling then // could be a walker if eg. spawned inside terrain
@@ -5485,31 +5526,6 @@ begin
 
     end;
   end;
-end;
-
-procedure TLemmingGame.CreateLemmingAtCursorPoint;
-{-------------------------------------------------------------------------------
-  debugging procedure: click and create lemming
--------------------------------------------------------------------------------}
-var
-  NewLemming: TLemming;
-begin
-  if not HatchesOpened then
-    Exit;
-  if UserSetNuking then
-    Exit;
-
-  NewLemming := TLemming.Create;
-  with NewLemming do
-  begin
-    LemIndex := LemmingList.Add(NewLemming);
-    Transition(NewLemming, baFalling);
-    LemX := CursorPoint.X;
-    LemY := CursorPoint.Y;
-    LemDX := 1;
-  end;
-  Inc(LemmingsOut);
-
 end;
 
 
@@ -5593,14 +5609,17 @@ begin
 end;
 
 
-procedure TLemmingGame.RecordNuke;
+procedure TLemmingGame.RecordNuke(aInsert: Boolean);
 var
   E: TReplayNuke;
 begin
-  if not fPlaying then
+  if (aInsert and (fCurrentIteration < 84)) or (not fPlaying) then
     Exit;
   E := TReplayNuke.Create;
-  E.Frame := fCurrentIteration;
+  if aInsert then
+    E.Frame := fCurrentIteration - 84
+  else
+    E.Frame := fCurrentIteration;
   fReplayManager.Add(E);
 end;
 
@@ -5941,6 +5960,7 @@ begin
     gToRescue           := Level.Info.RescueCount;
     gRescued            := LemmingsIn;
     gGotTalisman        := fTalismanReceived;
+    gGotNewTalisman     := fNewTalismanReceived;
     gCheated            := fGameCheated;
     gSuccess            := (gRescued >= gToRescue) or gCheated;
     gTimeIsUp           := IsOutOfTime;
@@ -6054,7 +6074,7 @@ begin
   begin
     LevelName := Trim(fLevel.Info.Title);
     LevelAuthor := Trim(fLevel.Info.Author);
-    LevelGame := GameParams.BaseLevelPack.Name;
+    LevelGame := GameParams.CurrentLevel.Group.ParentBasePack.Name;
     LevelRank := GameParams.CurrentGroupName;
     LevelPosition := GameParams.CurrentLevel.GroupIndex + 1;
     LevelID := fLevel.Info.LevelID;

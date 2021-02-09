@@ -71,7 +71,8 @@ uses
   LemMenuFont in 'LemMenuFont.pas',
   GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
   GameMenuScreen in 'GameMenuScreen.pas',
-  FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel};
+  FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
+  FReplayRename in 'FReplayRename.pas' {FReplayNaming};
 
 {$R *.res}
 
@@ -79,6 +80,5 @@ begin
   Application.Initialize;
   Application.Title := 'NeoLemmix';
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TLevelInfoPanel, LevelInfoPanel);
   Application.Run;
 end.

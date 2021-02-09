@@ -64,9 +64,6 @@ type
       property Talisman: TTalisman read fTalisman write fTalisman;
   end;
 
-var
-  LevelInfoPanel: TLevelInfoPanel;
-
 implementation
 
 uses
@@ -686,7 +683,7 @@ begin
   if Records.LemmingsRescued < 0 then
     Add(ICON_SAVE_REQUIREMENT, '~', true, pmNextColumnSame)
   else
-    Add(ICON_SAVE_REQUIREMENT, Records.LemmingsRescued, true, pmNextColumnSame, COLOR_RECORDS);
+    Add(ICON_SAVE_REQUIREMENT, IntToStr(Records.LemmingsRescued) + ' / ' + IntToStr(fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount), true, pmNextColumnSame, COLOR_RECORDS);
 
   if Records.TimeTaken < 0 then
     Add(ICON_TIMER, '~', true, pmNextColumnSame)

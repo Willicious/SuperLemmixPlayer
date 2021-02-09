@@ -61,6 +61,7 @@ type
 implementation
 
 uses
+  LemMetaTerrain,
   LemNeoPieceManager;
 
 { TTerrain }
@@ -121,7 +122,7 @@ procedure TTerrain.LoadFromSection(aSection: TParserSection);
     fDrawingFlags := fDrawingFlags or aValue;
   end;
 var
-  Ident: TLabelRecord;
+  DealiasInfo: TDealiasResult;
 begin
   if aSection.Line['style'] = nil then
     GS := aSection.LineTrimString['collection']
@@ -130,9 +131,9 @@ begin
 
   Piece := aSection.LineTrimString['piece'];
 
-  Ident := SplitIdentifier(PieceManager.Dealias(Identifier, rkTerrain));
-  GS := Ident.GS;
-  Piece := Ident.Piece;
+  DealiasInfo := PieceManager.Dealias(Identifier, rkTerrain);
+  GS := DealiasInfo.Piece.GS;
+  Piece := DealiasInfo.Piece.Piece;
 
   if (PieceManager.Terrains[Identifier] = nil) then
     if (CompareText(GS, COMPOSITE_PIECE_STYLE) <> 0) then
@@ -144,6 +145,11 @@ begin
 
   Left := aSection.LineNumeric['x'];
   Top := aSection.LineNumeric['y'];
+  Width := aSection.LineNumeric['width'];
+  Height := aSection.LineNumeric['height'];
+
+  if Width = 0 then Width := DealiasInfo.DefWidth;
+  if Height = 0 then Height := DealiasInfo.DefHeight;
 
   DrawingFlags := tdf_NoOneWay;
   if (aSection.Line['one_way'] <> nil) then fDrawingFlags := 0;
@@ -159,6 +165,8 @@ procedure TTerrain.SaveToSection(aSection: TParserSection);
   begin
     Result := DrawingFlags and aValue = aValue;
   end;
+var
+  MT: TMetaTerrain;
 begin
   aSection.AddLine('STYLE', GS);
   aSection.AddLine('PIECE', Piece);
@@ -171,6 +179,10 @@ begin
   if Flag(tdf_NoOverwrite) then aSection.AddLine('NO_OVERWRITE');
   if Flag(tdf_Erase) then aSection.AddLine('ERASE');
   if not Flag(tdf_NoOneWay) then aSection.AddLine('ONE_WAY');
+
+  MT := PieceManager.Terrains[Identifier];
+  if (Width > 0) and MT.ResizeHorizontal[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)] then aSection.AddLine('WIDTH', Width);
+  if (Height > 0) and MT.ResizeVertical[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)] then aSection.AddLine('HEIGHT', Height);
 end;
 
 { TTerrains }

@@ -75,6 +75,7 @@ type
     sSecondariesTreatAsBusy: Boolean;
 
     sRemainingLemmingsCount: Integer;
+    sShowRemainingLemmings: Boolean;
 
     Obj            : TGadgetModel;
 
@@ -164,6 +165,7 @@ type
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
     property RemainingLemmingsCount: Integer read GetRemainingLemmingsCount write sRemainingLemmingsCount;
+    property ShowRemainingLemmings: Boolean read sShowRemainingLemmings write sShowRemainingLemmings;
 
     property AnimationFlag[Flag: TGadgetAnimationTriggerCondition]: Boolean read GetAnimFlagState;
 
@@ -238,11 +240,9 @@ begin
   // Set basic stuff
   sTop := Obj.Top;
   sLeft := Obj.Left;
-  if (not MetaObj.CanResizeVertical) or (Obj.Height < 1) then
-    Obj.Height := MetaObj.Height;
+  Obj.Width := EvaluateResizable(Obj.Width, MetaObj.DefaultWidth, MetaObj.Width, MetaObj.CanResizeHorizontal);
+  Obj.Height := EvaluateResizable(Obj.Height, MetaObj.DefaultHeight, MetaObj.Height, MetaObj.CanResizeVertical);
   sHeight := Obj.Height;
-  if (not MetaObj.CanResizeHorizontal) or (Obj.Width < 1) then
-    Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
 
   sWidthVariance := sWidth - MetaObj.Width;
@@ -512,6 +512,8 @@ begin
       sRemainingLemmingsCount := Obj.LemmingCap
     else
       sRemainingLemmingsCount := -1;
+
+    sShowRemainingLemmings := true;
   end;
 
   Result := sRemainingLemmingsCount;

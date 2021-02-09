@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 451
+  ClientHeight = 516
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,15 +18,15 @@ object FormNXConfig: TFormNXConfig
   Position = poMainFormCenter
   DesignSize = (
     273
-    451)
+    516)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 273
-    Height = 412
-    ActivePage = TabSheet5
+    Height = 477
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -42,26 +42,73 @@ object FormNXConfig: TFormNXConfig
         Left = 7
         Top = 215
         Width = 249
-        Height = 67
+        Height = 106
         Caption = 'Replay Options'
         TabOrder = 3
+        object lblIngameSaveReplay: TLabel
+          Left = 28
+          Top = 48
+          Width = 41
+          Height = 13
+          Caption = 'In-game:'
+        end
+        object lblPostviewSaveReplay: TLabel
+          Left = 28
+          Top = 75
+          Width = 46
+          Height = 13
+          Caption = 'Postview:'
+        end
         object cbAutoSaveReplay: TCheckBox
           Left = 12
-          Top = 16
-          Width = 217
+          Top = 19
+          Width = 72
           Height = 17
-          Caption = 'Automatically Save Successful Replays'
+          Caption = 'Auto-save:'
           TabOrder = 0
-          OnClick = OptionChanged
+          OnClick = cbAutoSaveReplayClick
         end
-        object cbReplayAutoName: TCheckBox
-          Left = 12
-          Top = 34
-          Width = 225
-          Height = 17
-          Caption = 'Use Timestamped Replay Names'
+        object cbAutoSaveReplayPattern: TComboBox
+          Left = 90
+          Top = 16
+          Width = 145
+          Height = 21
+          ItemIndex = 0
           TabOrder = 1
-          OnClick = OptionChanged
+          Text = 'Position + Timestamp'
+          OnChange = OptionChanged
+          Items.Strings = (
+            'Position + Timestamp'
+            'Title + Timestamp'
+            'Position + Title + Timestamp')
+        end
+        object cbIngameSaveReplayPattern: TComboBox
+          Left = 90
+          Top = 43
+          Width = 145
+          Height = 21
+          TabOrder = 2
+          Text = 'Position + Timestamp'
+          OnChange = OptionChanged
+          Items.Strings = (
+            'Position + Timestamp'
+            'Title + Timestamp'
+            'Position + Title + Timestamp'
+            '(Show file selector)')
+        end
+        object cbPostviewSaveReplayPattern: TComboBox
+          Left = 90
+          Top = 70
+          Width = 145
+          Height = 21
+          TabOrder = 3
+          Text = 'Position + Timestamp'
+          OnChange = OptionChanged
+          Items.Strings = (
+            'Position + Timestamp'
+            'Title + Timestamp'
+            'Position + Title + Timestamp'
+            '(Show file selector)')
         end
       end
       object GroupBox1: TGroupBox
@@ -119,6 +166,10 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -149,7 +200,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 68
         Width = 249
-        Height = 112
+        Height = 129
         Caption = 'Interface Options'
         TabOrder = 1
         object cbNoBackgrounds: TCheckBox
@@ -163,7 +214,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbEdgeScrolling: TCheckBox
           Left = 12
-          Top = 50
+          Top = 67
           Width = 221
           Height = 17
           Caption = 'Enable Edge Scrolling and Trap Cursor'
@@ -172,7 +223,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbSpawnInterval: TCheckBox
           Left = 12
-          Top = 67
+          Top = 84
           Width = 153
           Height = 17
           Caption = 'Use Spawn Interval'
@@ -181,7 +232,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbHideShadows: TCheckBox
           Left = 12
-          Top = 33
+          Top = 50
           Width = 153
           Height = 17
           Caption = 'Hide Skill Shadows'
@@ -190,19 +241,28 @@ object FormNXConfig: TFormNXConfig
         end
         object cbHideAdvanced: TCheckBox
           Left = 12
-          Top = 84
+          Top = 101
           Width = 234
           Height = 17
           Caption = 'Hide Advanced Options in Level Select'
           TabOrder = 4
           OnClick = OptionChanged
         end
+        object cbForceDefaultLemmings: TCheckBox
+          Left = 12
+          Top = 33
+          Width = 173
+          Height = 17
+          Caption = 'Force Default Lemming Sprites'
+          TabOrder = 5
+          OnClick = OptionChanged
+        end
       end
       object GroupBox6: TGroupBox
         Left = 8
-        Top = 183
+        Top = 200
         Width = 249
-        Height = 196
+        Height = 226
         Caption = 'Graphics Options'
         TabOrder = 2
         object Label1: TLabel
@@ -211,6 +271,13 @@ object FormNXConfig: TFormNXConfig
           Width = 30
           Height = 13
           Caption = 'Zoom:'
+        end
+        object Label2: TLabel
+          Left = 11
+          Top = 47
+          Width = 30
+          Height = 13
+          Caption = 'Panel:'
         end
         object cbZoom: TComboBox
           Left = 56
@@ -227,7 +294,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbLinearResampleMenu: TCheckBox
           Left = 12
-          Top = 120
+          Top = 148
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Menus'
@@ -236,7 +303,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbLinearResampleGame: TCheckBox
           Left = 12
-          Top = 136
+          Top = 164
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Game'
@@ -245,7 +312,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbFullScreen: TCheckBox
           Left = 12
-          Top = 40
+          Top = 68
           Width = 205
           Height = 17
           Caption = 'Full Screen'
@@ -254,7 +321,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbMinimapHighQuality: TCheckBox
           Left = 12
-          Top = 168
+          Top = 196
           Width = 153
           Height = 17
           Caption = 'High Quality Minimap'
@@ -263,7 +330,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbIncreaseZoom: TCheckBox
           Left = 12
-          Top = 104
+          Top = 132
           Width = 205
           Height = 17
           Caption = 'Increase Zoom On Small Levels'
@@ -272,7 +339,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbCompactSkillPanel: TCheckBox
           Left = 12
-          Top = 152
+          Top = 180
           Width = 153
           Height = 17
           Caption = 'Compact Skill Panel'
@@ -281,7 +348,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbHighResolution: TCheckBox
           Left = 12
-          Top = 88
+          Top = 116
           Width = 205
           Height = 17
           Caption = 'High Resolution'
@@ -290,7 +357,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbResetWindowSize: TCheckBox
           Left = 12
-          Top = 72
+          Top = 100
           Width = 205
           Height = 17
           Caption = 'Reset Window Size'
@@ -299,18 +366,35 @@ object FormNXConfig: TFormNXConfig
         end
         object cbResetWindowPosition: TCheckBox
           Left = 12
-          Top = 56
+          Top = 84
           Width = 205
           Height = 17
           Caption = 'Reset Window Position'
           TabOrder = 9
           OnClick = OptionChanged
         end
+        object cbPanelZoom: TComboBox
+          Left = 56
+          Top = 43
+          Width = 177
+          Height = 21
+          Style = csDropDownList
+          ItemIndex = 0
+          TabOrder = 10
+          Text = '1x Zoom'
+          OnChange = OptionChanged
+          Items.Strings = (
+            '1x Zoom')
+        end
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 24
         Top = 45
@@ -338,19 +422,6 @@ object FormNXConfig: TFormNXConfig
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label7: TLabel
-        Left = 16
-        Top = 112
-        Width = 104
-        Height = 13
-        Caption = 'Post-Level Jingles'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
       object tbSoundVol: TTrackBar
         Left = 64
         Top = 40
@@ -371,29 +442,20 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 1
         OnChange = SliderChange
       end
-      object cbSuccessJingle: TCheckBox
-        Left = 28
-        Top = 136
+      object cbPostviewJingles: TCheckBox
+        Left = 24
+        Top = 120
         Width = 129
         Height = 17
-        Caption = 'Success'
+        Caption = 'Post-Level Jingles'
         TabOrder = 2
-        OnClick = OptionChanged
-      end
-      object cbFailureJingle: TCheckBox
-        Left = 28
-        Top = 160
-        Width = 129
-        Height = 17
-        Caption = 'Failure'
-        TabOrder = 3
         OnClick = OptionChanged
       end
     end
   end
   object btnOK: TButton
     Left = 24
-    Top = 418
+    Top = 483
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -403,7 +465,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 104
-    Top = 418
+    Top = 483
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -413,7 +475,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 184
-    Top = 418
+    Top = 483
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]

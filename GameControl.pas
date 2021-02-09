@@ -35,6 +35,7 @@ type
     gTimeIsUp           : Boolean;
     gLastRescueIteration: Integer;
     gGotTalisman        : Boolean;
+    gGotNewTalisman     : Boolean;
   end;
 
 type
@@ -60,7 +61,6 @@ type
 type
   TMiscOption = (
     moAutoReplaySave,
-    moReplayAutoName,
     moEnableOnline,
     moCheckUpdates,
     moNoAutoReplayMode,
@@ -79,18 +79,17 @@ type
     moCompactSkillPanel,
     moEdgeScroll,
     moSpawnInterval,
-    moHideAdvanced
+    moHideAdvanced,
+    moFileCaching,
+    moPostviewJingles,
+    moForceDefaultLemmings
   );
 
   TMiscOptions = set of TMiscOption;
 
-  TPostLevelSoundOption = (plsVictory, plsFailure);
-  TPostLevelSoundOptions = set of TPostLevelSoundOption;
-
 const
   DEF_MISCOPTIONS = [
     moAutoReplaySave,
-    moReplayAutoName,
     moPauseAfterBackwards,
     moLinearResampleMenu,
     moFullScreen,
@@ -116,6 +115,7 @@ type
 
     fCursorResize: Double;
     fZoomLevel: Integer;
+    fPanelZoomLevel: Integer;
     fWindowLeft: Integer;
     fWindowTop: Integer;
     fWindowWidth: Integer;
@@ -127,16 +127,16 @@ type
 
     fUserName: String;
 
+    fAutoSaveReplayPattern: String;
+    fIngameSaveReplayPattern: String;
+    fPostviewSaveReplayPattern: String;
+
     fMainForm: TForm; // link to the FMain form
 
     MiscOptions           : TMiscOptions;
-    PostLevelSoundOptions : TPostLevelSoundOptions;
 
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
     procedure SetOptionFlag(aFlag: TMiscOption; aValue: Boolean);
-
-    function GetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption): Boolean;
-    procedure SetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption; aValue: Boolean);
 
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
@@ -202,7 +202,6 @@ type
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
-    property ReplayAutoName: Boolean Index moReplayAutoName read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
@@ -220,13 +219,14 @@ type
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
+    property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
 
     property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
+    property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
-    property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
-    property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
+    property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
 
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
@@ -237,6 +237,7 @@ type
 
     property CursorResize: Double read fCursorResize write fCursorResize;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
+    property PanelZoomLevel: Integer read fPanelZoomLevel write fPanelZoomLevel;
 
     property WindowLeft: Integer read fWindowLeft write fWindowLeft;
     property WindowTop: Integer read fWindowTop write fWindowTop;
@@ -257,6 +258,9 @@ type
     property CurrentGroupName: String read GetCurrentGroupName;
 
     property Username: String read fUsername write SetUsername;
+    property AutoSaveReplayPattern: String read fAutoSaveReplayPattern write fAutoSaveReplayPattern;
+    property IngameSaveReplayPattern: String read fIngameSaveReplayPattern write fIngameSaveReplayPattern;
+    property PostviewSaveReplayPattern: String read fPostviewSaveReplayPattern write fPostviewSaveReplayPattern;
 
     property DisableSaveOptions: Boolean read fDisableSaveOptions write fDisableSaveOptions;
   published
@@ -273,6 +277,11 @@ uses
   SharedGlobals, Controls, UITypes,
   GameBaseScreenCommon, //for EXTRA_ZOOM_LEVELS const
   GameSound;
+
+const
+  DEFAULT_REPLAY_PATTERN_INGAME = '{TITLE}__{TIMESTAMP}';
+  DEFAULT_REPLAY_PATTERN_AUTO = '{TITLE}__{TIMESTAMP}';
+  DEFAULT_REPLAY_PATTERN_POSTVIEW = '*{TITLE}__{TIMESTAMP}';
 
 { TDosGameParams }
 
@@ -354,12 +363,14 @@ begin
 
   SL.Add('');
   SL.Add('# Interface Options');
-  SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
-  SaveBoolean('AutoReplayNames', ReplayAutoName);
-  SaveBoolean('NoAutoReplay', NoAutoReplayMode);
+  SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
+  SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
+  SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
+  SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
+  SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
   SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
@@ -367,6 +378,7 @@ begin
   SaveBoolean('UseSpawnInterval', SpawnInterval);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+  SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
   SL.Add('CursorResize=' + FloatToStr(CursorResize));
   SaveBoolean('IncreaseZoom', IncreaseZoom);
   SaveBoolean('FullScreen', FullScreen);
@@ -394,18 +406,19 @@ begin
   SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
   SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
   SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
-  SaveBoolean('VictoryJingle', PostLevelVictorySound);
-  SaveBoolean('FailureJingle', PostLevelFailureSound);
+  SaveBoolean('PostviewJingles', PostviewJingles);
 
   SL.Add('');
   SL.Add('# Online Options');
   SaveBoolean('EnableOnline', EnableOnline);
   SaveBoolean('UpdateCheck', CheckUpdates);
 
+  SL.Add('');
+  SL.Add('# Technical Options');
+  SaveBoolean('FileCaching', FileCaching);
+
   if UnderWine then
   begin
-    SL.Add('');
-    SL.Add('# Technical Options');
     SaveBoolean('DisableWineWarnings', DisableWineWarnings);
   end;
 
@@ -474,6 +487,18 @@ var
     // Disallow zoom levels that are too high
     if fZoomLevel > Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod) + EXTRA_ZOOM_LEVELS then
       fZoomLevel := Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod);
+
+    // Now validate the panel zoom
+    if fPanelZoomLevel < 0 then
+      fPanelZoomLevel := fZoomLevel;
+
+    if CompactSkillPanel then
+      fPanelZoomLevel := Min(Screen.Width div 320 div ResMod, fPanelZoomLevel)
+    else
+      fPanelZoomLevel := Min(Screen.Width div 416 div ResMod, fPanelZoomLevel);
+
+    if fPanelZoomLevel < 1 then
+      fPanelZoomLevel := 1;
   end;
 
 begin
@@ -495,11 +520,20 @@ begin
     UserName := SL.Values['UserName'];
 
     HideAdvancedOptions := LoadBoolean('HideAdvancedOptions', HideAdvancedOptions);
+
     AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
-    ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
+    AutoSaveReplayPattern := SL.Values['AutoSaveReplayPattern'];
+    IngameSaveReplayPattern := SL.Values['IngameSaveReplayPattern'];
+    PostviewSaveReplayPattern := SL.Values['PostviewSaveReplayPattern'];
+
+    if AutoSaveReplayPattern = '' then AutoSaveReplayPattern := DEFAULT_REPLAY_PATTERN_AUTO;
+    if IngameSaveReplayPattern = '' then IngameSaveReplayPattern := DEFAULT_REPLAY_PATTERN_INGAME;
+    if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
+
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+    ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
@@ -513,8 +547,10 @@ begin
     CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
+    FileCaching := LoadBoolean('FileCaching', FileCaching);
 
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
+    PanelZoomLevel := StrToIntDef(SL.Values['PanelZoomLevel'], -1);
 
     CursorResize := StrToFloatDef(SL.Values['CursorResize'], CursorResize);
 
@@ -539,8 +575,10 @@ begin
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
     LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 
-    PostLevelVictorySound := LoadBoolean('VictoryJingle', PostLevelVictorySound);
-    PostLevelFailureSound := LoadBoolean('FailureJingle', PostLevelFailureSound);
+    if LoadBoolean('VictoryJingle', false) or LoadBoolean('FailureJingle', false) then
+      PostviewJingles := true
+    else
+      PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
 
     SoundManager.MuteSound := not LoadBoolean('SoundEnabled', not SoundManager.MuteSound);
     SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
@@ -723,9 +761,10 @@ begin
   inherited Create;
 
   MiscOptions := DEF_MISCOPTIONS;
-  PostLevelSoundOptions := [];
 
   UserName := 'Anonymous';
+
+
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;
@@ -733,6 +772,7 @@ begin
   fOneLevelMode := false;
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+  fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 416);
   fCursorResize := 1;
 
   LemDataInResource := True;
@@ -793,19 +833,6 @@ begin
     Include(MiscOptions, aFlag)
   else
     Exclude(MiscOptions, aFlag);
-end;
-
-function TDosGameParams.GetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption): Boolean;
-begin
-  Result := aFlag in PostLevelSoundOptions;
-end;
-
-procedure TDosGameParams.SetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption; aValue: Boolean);
-begin
-  if aValue then
-    Include(PostLevelSoundOptions, aFlag)
-  else
-    Exclude(PostLevelSoundOptions, aFlag);
 end;
 
 procedure TDosGameParams.SetUserName(aValue: String);

@@ -192,7 +192,7 @@ var
       if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
         if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
-          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount);
+          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
       Result := 0;
       CurrentMin := -1;
       for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
@@ -244,13 +244,13 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if gRescued >= Level.Info.RescueCount then
+    if GameParams.PostviewJingles then
     begin
-      if PostLevelVictorySound then
-        SoundManager.PlaySound('success');
-    end else begin
-      if PostLevelFailureSound then
-        SoundManager.PlaySound('failure');
+      SoundManager.PurgePackSounds;
+      if gRescued >= Level.Info.RescueCount then
+          SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
+      else
+          SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
     end;
 
     // init some local strings
@@ -258,7 +258,7 @@ begin
     SDone := PadL(IntToStr(gRescued), 4);
 
     // top text
-    if gGotTalisman then
+    if gGotNewTalisman then
         Add(STalismanUnlocked)
     else if gTimeIsUp then
         Add(SYourTimeIsUp)

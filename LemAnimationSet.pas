@@ -144,6 +144,9 @@ type
     fHighlightBitmap        : TBitmap32;
     fTheme                  : TNeoTheme;
 
+    fHasZombieColor         : Boolean;
+    fHasNeutralColor        : Boolean;
+
     fRecolorer              : TRecolorImage;
 
     procedure ReadMetaData(aColorDict: TColorDict = nil; aShadeDict: TShadeDict = nil);
@@ -164,6 +167,9 @@ type
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
+
+    property HasZombieColor: Boolean read fHasZombieColor;
+    property HasNeutralColor: Boolean read fHasNeutralColor;
   end;
 
 implementation
@@ -193,11 +199,14 @@ var
   ThisAnimSec: TParserSection;
   ColorSec: TParserSection;
   ShadeSec: TParserSection;
+  StateRecolorSec: TParserSection;
   DirSec: TParserSection;
   i: Integer;
   dx: Integer;
 
   Anim: TMetaLemmingAnimation;
+
+  HasRequiredRecoloring: Boolean;
 begin
   Parser := TParser.Create;
   try
@@ -207,6 +216,18 @@ begin
     except
       raise Exception.Create('TBaseAnimationSet: Error while opening scheme.nxmi.');
     end;
+
+    HasRequiredRecoloring := false;
+    StateRecolorSec := Parser.MainSection.Section['state_recoloring'];
+    if StateRecolorSec <> nil then
+    begin
+      HasRequiredRecoloring := (StateRecolorSec.Section['athlete'] <> nil) and (StateRecolorSec.Section['selected'] <> nil);
+      fHasZombieColor := StateRecolorSec.Section['zombie'] <> nil;
+      fHasNeutralColor := StateRecolorSec.Section['neutral'] <> nil;
+    end;
+
+    if not HasRequiredRecoloring then
+      raise Exception.Create('TBaseAnimationSet: Athlete and/or Selected Lemming recoloring data missing.');
 
     for i := 0 to NUM_LEM_SPRITE_TYPE - 1 do
     begin
@@ -318,10 +339,10 @@ begin
   ShadeDict := TShadeDict.Create;
 
   try
-    if fTheme = nil then
+    if (fTheme = nil) or (GameParams.ForceDefaultLemmings) then
       SrcFolder := 'default'
     else
-      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings);
+      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS;
 
     if SrcFolder = '' then SrcFolder := 'default';
     if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
@@ -422,6 +443,8 @@ begin
   fMetaLemmingAnimations.Clear;
   fCountDownDigitsBitmap.Clear;
   fHighlightBitmap.Clear;
+  fHasZombieColor := false;
+  fHasNeutralColor := false;
   fTheme := nil;
 end;
 

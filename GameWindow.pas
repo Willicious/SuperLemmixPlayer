@@ -182,7 +182,7 @@ type
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ApplyMouseTrap;
-    procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0);
+    procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
     procedure LoadReplay;
     procedure SaveReplay;
     procedure RenderMinimap;
@@ -309,9 +309,6 @@ begin
 
     Img.Scale := aNewZoom;
 
-    if (aNewZoom >= GameParams.ZoomLevel) or NoRedraw then // NoRedraw is only true during the call at a start of gameplay
-      SkillPanel.Zoom := aNewZoom;
-
     fInternalZoom := aNewZoom;
 
     // Change the Img size and update everything accordingly.
@@ -348,7 +345,10 @@ begin
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
 
-  SkillPanel.Zoom := Max(SkillPanel.Zoom, fInternalZoom); // this checks for MaxZoom automatically.
+  if GameParams.CompactSkillPanel then
+    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 320 div ResMod)
+  else
+    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 416 div ResMod);
 
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
   Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40 * ResMod), GameParams.Level.Info.Height * fInternalZoom * ResMod);
@@ -853,7 +853,7 @@ begin
                 'saved to the "Auto" folder if possible, then you will be returned to the main menu.');
 
   try
-    SL.Insert(0, Game.ReplayManager.GetSaveFileName(self, Game.Level, true));
+    SL.Insert(0, Game.ReplayManager.GetSaveFileName(self, rsoAuto));
     ForceDirectories(ExtractFilePath(SL[0]));
     Game.EnsureCorrectReplayDetails;
     Game.ReplayManager.SaveToFile(SL[0]);
@@ -968,7 +968,7 @@ begin
   Game.fSelectDx := SDir;
 end;
 
-procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0);
+procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
 {-------------------------------------------------------------------------------
   Go in hyperspeed from the beginning to aTargetIteration
   PauseAfterSkip values:
@@ -979,6 +979,9 @@ procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: I
 var
   UseSaveState: Integer;
 begin
+  if aForceBeforeIteration < 0 then
+    aForceBeforeIteration := aTargetIteration;
+
   CanPlay := False;
   if PauseAfterSkip < 0 then
     GameSpeed := gspNormal
@@ -988,7 +991,7 @@ begin
 
   // Find correct save state
   if aTargetIteration > 0 then
-    UseSaveState := fSaveList.FindNearestState(aTargetIteration)
+    UseSaveState := fSaveList.FindNearestState(aForceBeforeIteration)
   else if fSaveList.Count = 0 then
     UseSaveState := -1
   else
@@ -1351,6 +1354,17 @@ begin
                   end else
                     fLastNukeKeyTime := CurrTime;
                 end;
+      lka_BypassNuke: begin
+                        // double keypress needed to prevent accidently nuking
+                        CurrTime := TimeGetTime;
+                        if CurrTime - fLastNukeKeyTime < 250 then
+                        begin
+                          RegainControl;
+                          SetSelectedSkill(spbNuke, true, true);
+                          GotoSaveState(Game.CurrentIteration, 0, Game.CurrentIteration - 85);
+                        end else
+                          fLastNukeKeyTime := CurrTime;
+                      end;
       lka_SaveState : begin
                         fSaveStateFrame := fGame.CurrentIteration;
                         fSaveStateReplayStream.Clear;
@@ -1915,9 +1929,9 @@ begin
   OldSpeed := fGameSpeed;
   try
     GameSpeed := gspPause;
-    s := Game.ReplayManager.GetSaveFileName(self, Game.Level);
-    if s = '' then Exit;
     Game.EnsureCorrectReplayDetails;
+    s := Game.ReplayManager.GetSaveFileName(self, rsoIngame, Game.ReplayManager);
+    if s = '' then Exit;
     Game.ReplayManager.SaveToFile(s);
   finally
     GameSpeed := OldSpeed;
@@ -2050,28 +2064,23 @@ begin
   Img.Cursor := crNone;
   SkillPanel.SetCursor(crNone);
 
-  // We assume that we close the game for the main menu or the preview screen,
-  // only via the level selection menu, and not in regular game play mode
-  if not (aNextScreen in [gstMenu, gstPreview]) then
+  Game.SetGameResult;
+  GameParams.GameResult := Game.GameResultRec;
+  with GameParams, GameResult do
   begin
-    Game.SetGameResult;
-    GameParams.GameResult := Game.GameResultRec;
-    with GameParams, GameResult do
+    if gCheated then
     begin
-      if gCheated then
-      begin
-        GameParams.NextLevel(true);
-        GameParams.ShownText := false;
-        aNextScreen := gstPreview;
-      end;
+      GameParams.NextLevel(true);
+      GameParams.ShownText := false;
+      aNextScreen := gstPreview;
+    end;
 
-      if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
-      begin
-        S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
-        ForceDirectories(ExtractFilePath(S));
-        Game.EnsureCorrectReplayDetails;
-        Game.ReplayManager.SaveToFile(S, true);
-      end;
+    if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
+    begin
+      Game.EnsureCorrectReplayDetails;
+      S := Game.ReplayManager.GetSaveFileName(self, rsoAuto, Game.ReplayManager);
+      ForceDirectories(ExtractFilePath(S));
+      Game.ReplayManager.SaveToFile(S, true);
     end;
   end;
 

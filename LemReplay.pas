@@ -35,6 +35,8 @@ const
 
 
 type
+  TReplaySaveOccasion = (rsoAuto, rsoIngame, rsoPostview);
+
   TBaseReplayItem = class
     private
       fFrame: Integer;
@@ -52,6 +54,7 @@ type
   TBaseReplayLemmingItem = class(TBaseReplayItem)
     private
       fLemmingIndex: Integer;
+      fLemmingIdentifier: String;
       fLemmingX: Integer;
       fLemmingDx: Integer;
       fLemmingY: Integer;
@@ -63,6 +66,7 @@ type
     public
       procedure SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
       property LemmingIndex: Integer read fLemmingIndex write fLemmingIndex;
+      property LemmingIdentifier: String read fLemmingIdentifier write fLemmingIdentifier;
       property LemmingX: Integer read fLemmingX write fLemmingX;
       property LemmingDx: Integer read fLemmingDx write fLemmingDx;
       property LemmingY: Integer read fLemmingY write fLemmingY;
@@ -122,6 +126,7 @@ type
       fLevelRank: String;
       fLevelPosition: Integer;
       fLevelID: Int64;
+      fLevelVersion: Int64;
       function GetIsThisUsersReplay: Boolean;
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
@@ -131,7 +136,8 @@ type
     public
       constructor Create;
       destructor Destroy; override;
-      class function GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
+      class function EvaluateReplayNamePattern(aPattern: String; aReplay: TReplay = nil): String;
+      class function GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
       procedure Add(aItem: TBaseReplayItem);
       procedure Clear(EraseLevelInfo: Boolean = false);
       procedure Delete(aItem: TBaseReplayItem);
@@ -148,6 +154,7 @@ type
       property LevelRank: String read fLevelRank write fLevelRank;
       property LevelPosition: Integer read fLevelPosition write fLevelPosition;
       property LevelID: Int64 read fLevelID write fLevelID;
+      property LevelVersion: Int64 read fLevelVersion write fLevelVersion;
       property Assignment[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
       property SpawnIntervalChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
@@ -217,56 +224,67 @@ begin
   inherited;
 end;
 
-class function TReplay.GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
+class function TReplay.EvaluateReplayNamePattern(aPattern: String; aReplay: TReplay = nil): String;
 var
-  RankName: String;
-  SaveName: String;
-
-  function GetReplayFileName(TestModeName: Boolean): String;
+  SplitPos: Integer;
+const
+  TAG_TITLE = '{TITLE}';
+  TAG_GROUP = '{GROUP}';
+  TAG_GROUPPOS = '{GROUPPOS}';
+  TAG_TIMESTAMP = '{TIMESTAMP}';
+  TAG_PACK = '{PACK}';
+  TAG_USERNAME = '{USERNAME}';
+  TAG_VERSION = '{VERSION}';
+begin
+  SplitPos := Pos('|', aPattern);
+  if SplitPos > 0 then
   begin
-    if not GameParams.CurrentLevel.Group.IsOrdered then
-      Result := Trim(aLevel.Info.Title)
+    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) or
+       (not GameParams.CurrentLevel.Group.IsOrdered) then
+      aPattern := MidStr(aPattern, SplitPos + 1, Length(aPattern) - SplitPos)
     else
-      Result := RankName + '_' + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2);
-    if TestModeName or GameParams.ReplayAutoName then
-      Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
-    Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '>', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, ':', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '"', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '/', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '\', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '|', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '?', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '*', '_', [rfReplaceAll]);
-    Result := Result + '.nxrp';
+      aPattern := LeftStr(aPattern, SplitPos - 1);
   end;
 
-  function GetDefaultSavePath: String;
-    function GetGroupName: String;
-    var
-      G: TNeoLevelGroup;
-    begin
-      G := GameParams.CurrentLevel.Group;
-      if G.Parent = nil then
-        Result := ''
-      else begin
-        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
-          G := G.Parent;
-        Result := MakeSafeForFilename(G.Name, false) + '\';
-      end;
-    end;
+  Result := aPattern;
+
+  if aReplay = nil then
   begin
-    if GameParams.TestModeLevel <> nil then
+    Result := StringReplace(Result, TAG_TITLE, MakeSafeForFilename(GameParams.CurrentLevel.Title), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUP, MakeSafeForFilename(GameParams.CurrentLevel.Group.Name), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_PACK, MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_USERNAME, MakeSafeForFilename(GameParams.Username), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_VERSION, IntToStr(GameParams.Level.Info.LevelVersion), [rfReplaceAll]);
+  end else begin
+    Result := StringReplace(Result, TAG_TITLE, MakeSafeForFilename(aReplay.LevelName), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUP, MakeSafeForFilename(aReplay.LevelRank), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(aReplay.LevelPosition, 2), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_PACK, MakeSafeForFilename(aReplay.LevelGame), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_USERNAME, MakeSafeForFilename(aReplay.PlayerName), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_VERSION, IntToStr(aReplay.LevelVersion), [rfReplaceAll]);
+  end;
+
+  // The rest are the same whether aReplay is nil or not.
+  Result := StringReplace(Result, TAG_TIMESTAMP, FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now), [rfReplaceAll]);
+
+  if ExtractFileExt(Result) = '' then
+    Result := Result + '.nxrp';
+end;
+
+class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
+  function GetDefaultSavePath: String;
+  begin
+    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
       Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
     else
-      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + GetGroupName;
-    if TestModeName then Result := Result + 'Auto\';
+      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name) + '\';
+    if aSaveOccasion = rsoAuto then Result := Result + 'Auto\';
   end;
 
   function GetInitialSavePath: String;
   begin
-    if (LastReplayDir <> '') and not TestModeName then
+    if LastReplayDir <> '' then
       Result := LastReplayDir
     else
       Result := GetDefaultSavePath;
@@ -277,7 +295,7 @@ var
     Dlg : TSaveDialog;
   begin
     Dlg := TSaveDialog.Create(aOwner);
-    Dlg.Title := 'Save replay file (' + RankName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(aLevel.Info.Title) + ')';
+    Dlg.Title := 'Save replay file (' + GameParams.CurrentLevel.Group.Name + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + GameParams.CurrentLevel.Title + ')';
     Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
@@ -292,15 +310,30 @@ var
       Result := '';
     Dlg.Free;
   end;
+
+var
+  SaveName: String;
+  UseDialog: Boolean;
 begin
-  RankName := GameParams.CurrentGroupName;
+  case aSaveOccasion of
+    rsoAuto: SaveName := EvaluateReplayNamePattern(GameParams.AutoSaveReplayPattern, aReplay);
+    rsoIngame: SaveName := EvaluateReplayNamePattern(GameParams.IngameSaveReplayPattern, aReplay);
+    rsoPostview: SaveName := EvaluateReplayNamePattern(GameParams.PostviewSaveReplayPattern, aReplay);
+    else raise Exception.Create('Invalid replay save occasion');
+  end;
 
-  SaveName := GetReplayFileName(TestModeName);
+  UseDialog := false;
+  if LeftStr(SaveName, 1) = '*' then
+  begin
+    SaveName := RightStr(SaveName, Length(SaveName) - 1);
+    if aSaveOccasion <> rsoAuto then
+      UseDialog := true;
+  end;
 
-  if GameParams.ReplayAutoName or TestModeName then
-    Result := GetDefaultSavePath + SaveName
+  if UseDialog then
+    Result := GetSavePath(SaveName)
   else
-    Result := GetSavePath(SaveName);
+    Result := GetDefaultSavePath + SaveName;
 end;
 
 procedure TReplay.Add(aItem: TBaseReplayItem);
@@ -357,6 +390,7 @@ begin
   fLevelRank := '';
   fLevelPosition := 0;
   fLevelID := 0;
+  fLevelVersion := 0;
 end;
 
 procedure TReplay.Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
@@ -440,6 +474,7 @@ begin
     fLevelRank := Sec.LineString['group'];
     fLevelPosition := Sec.LineNumeric['level'];
     fLevelID := Sec.LineNumeric['id'];
+    fLevelVersion := Sec.LineNumeric['version'];
 
     Sec.DoForEachSection('assignment', HandleLoadSection);
     Sec.DoForEachSection('spawn_interval', HandleLoadSection);
@@ -508,7 +543,10 @@ begin
     Sec := Parser.MainSection;
 
     if fIsModified then
+    begin
       fPlayerName := GameParams.UserName; // If modified, treat it as this user's.
+      fLevelVersion := GameParams.Level.Info.LevelVersion; // And as the up to date version.
+    end;
 
     Sec.AddLine('USER', fPlayerName);
 
@@ -521,6 +559,7 @@ begin
       Sec.AddLine('LEVEL', fLevelPosition);
     end;
     Sec.AddLine('ID', fLevelID, 16);
+    Sec.AddLine('VERSION', fLevelVersion);
 
     SaveReplayList(fAssignments, Sec);
     SaveReplayList(fSpawnIntervalChanges, Sec);
@@ -687,6 +726,7 @@ procedure TBaseReplayLemmingItem.InitializeValues();
 begin
   inherited InitializeValues();
   fLemmingIndex := 0;
+  fLemmingIdentifier := '';
   fLemmingX := 0;
   fLemmingDx := 0;
   fLemmingY := 0;
@@ -696,6 +736,7 @@ end;
 procedure TBaseReplayLemmingItem.SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
 begin
   fLemmingIndex := aLemming.LemIndex;
+  fLemmingIdentifier := aLemming.LemIdentifier;
   fLemmingX := aLemming.LemX;
   fLemmingDx := aLemming.LemDX;
   fLemmingY := aLemming.LemY;
@@ -709,6 +750,7 @@ begin
   inherited DoLoadSection(Sec);
 
   fLemmingIndex := Sec.LineNumeric['lem_index'];
+  fLemmingIdentifier := Uppercase(Sec.LineTrimString['lem_identifier']);
   fLemmingX := Sec.LineNumeric['lem_x'];
   fLemmingY := Sec.LineNumeric['lem_y'];
 
@@ -727,6 +769,7 @@ procedure TBaseReplayLemmingItem.DoSave(Sec: TParserSection);
 begin
   inherited;
   Sec.AddLine('LEM_INDEX', fLemmingIndex);
+  Sec.AddLine('LEM_IDENTIFIER', fLemmingIdentifier);
   Sec.AddLine('LEM_X', fLemmingX);
   Sec.AddLine('LEM_Y', fLemmingY);
   if fLemmingDx < 0 then

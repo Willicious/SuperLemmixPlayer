@@ -103,7 +103,10 @@ var
       Result := Result + ', ' + GetSkillString(A.Skill);
     end else if aItem is TReplayChangeSpawnInterval then
     begin
-      Result := Result + 'Spawn Interval ' + IntToStr(R.NewSpawnInterval);
+      if GameParams.SpawnInterval then
+        Result := Result + 'Spawn Interval ' + IntToStr(R.NewSpawnInterval)
+      else
+        Result := Result + 'Release Rate ' + IntToStr(103 - R.NewSpawnInterval);
     end else if aItem is TReplayNuke then
     begin
       Result := Result + 'Nuke';

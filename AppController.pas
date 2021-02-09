@@ -138,6 +138,14 @@ begin
   GameParams.Free;
 
   SoundManager.Free; // must NOT be moved before GameParams.Save!
+
+  try
+    if DirectoryExists(AppPath + SFTemp) then
+      TDirectory.Delete(AppPath + SFTemp, true);
+  except
+    // Do nothing - this is a "if it fails it fails" situation.
+  end;
+
   inherited;
 end;
 

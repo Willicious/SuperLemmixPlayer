@@ -9,8 +9,7 @@ uses
   Classes,
   StrUtils,
   SysUtils,
-  IdHash,
-  IdHashMessageDigest;
+  SZChecksummer;
 
 const
   DEFAULT_SOUNDS: array[0..28] of string =
@@ -47,42 +46,39 @@ const
   SOUND_EXTS: array[0..4] of string = ('.ogg', '.wav', '.aiff', '.aif', '.mp3');
 
 var
-  MD5List, MD5Report: TStringList;
+  ChecksumList, ChecksumReport: TStringList;
 
   function AppPath: String;
   begin
     Result := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
   end;
 
-  function CalculateMD5(aFilename: String): String;
+  function CalculateChecksum(aFilename: String): String;
   var
-    IDMD5: TIdHashMessageDigest5;
     FS: TFileStream;
   begin
-    IDMD5 := TIdHashMessageDigest5.Create;
     FS := TFileStream.Create(aFilename, fmOpenRead);
     try
-      Result := IDMD5.HashStreamAsHex(FS);
+      Result := MakeChecksum(FS);
     finally
       FS.Free;
-      IDMD5.Free;
     end;
   end;
 
-  procedure HandleMD5(aZipFilename: String);
+  procedure HandleChecksum(aZipFilename: String);
   var
-    MD5: String;
+    Checksum: String;
   begin
-    MD5 := CalculateMD5(AppPath + 'style_zips\' + aZipFilename);
+    Checksum := CalculateChecksum(AppPath + 'style_zips\' + aZipFilename);
 
-    if MD5List.Values[aZipFilename] = '' then
-      MD5Report.Add('      NEW: ' + aZipFilename)
-    else if MD5List.Values[aZipFilename] = MD5 then
-      MD5Report.Add('UNCHANGED: ' + aZipFilename)
+    if ChecksumList.Values[aZipFilename] = '' then
+      ChecksumReport.Add('      NEW: ' + aZipFilename)
+    else if ChecksumList.Values[aZipFilename] = Checksum then
+      ChecksumReport.Add('UNCHANGED: ' + aZipFilename)
     else
-      MD5Report.Add('  CHANGED: ' + aZipFilename);
+      ChecksumReport.Add('  CHANGED: ' + aZipFilename);
 
-    MD5List.Values[aZipFilename] := MD5;
+    ChecksumList.Values[aZipFilename] := Checksum;
   end;
 
   function IsDefaultSound(aName: String): Boolean;
@@ -168,7 +164,7 @@ var
 
       Zip.Close;
 
-      HandleMD5(aName + '.zip');
+      HandleChecksum(aName + '.zip');
     finally
       Zip.Free;
       Sounds.Free;
@@ -239,7 +235,7 @@ var
 
       Zip.Close;
 
-      HandleMD5(aZipFilename);
+      //HandleChecksum(aZipFilename); // don't really need checksum for all-styles zip, just see if anything else has changed
     finally
       Zip.Free;
       SL.Free;
@@ -247,24 +243,25 @@ var
   end;
 
 begin
-  MD5List := TStringList.Create;
-  MD5Report := TStringList.Create;
+  ChecksumList := TStringList.Create;
+  ChecksumReport := TStringList.Create;
   try
     try
       ForceDirectories(AppPath + 'style_zips\');
 
-      if FileExists(AppPath + '..\data\styles_md5s.ini') then
-        MD5List.LoadFromFile(AppPath + '..\data\styles_md5s.ini');
+      if FileExists(AppPath + '..\data\styles_checksums.ini') then
+        ChecksumList.LoadFromFile(AppPath + '..\data\styles_checksums.ini');
 
       ZipStyles;
 
       WriteLn('Making all-styles zip.');
       MakeDirectoryZip('styles|sound', '_all_styles.zip');
 
-      MD5List.SaveToFile(AppPath + '..\data\styles_md5s.ini');
+      ChecksumList.Sorted := true;
+      ChecksumList.SaveToFile(AppPath + '..\data\styles_checksums.ini');
 
-      MD5Report.Sort;
-      MD5Report.SaveToFile(AppPath + 'style_zip_report.txt');
+      ChecksumReport.Sort;
+      ChecksumReport.SaveToFile(AppPath + 'style_zip_report.txt');
 
       WriteLn('Done.');
       WriteLn('');
@@ -273,7 +270,7 @@ begin
         Writeln(E.ClassName, ': ', E.Message);
     end;
   finally
-    MD5List.Free;
-    MD5Report.Free;
+    ChecksumList.Free;
+    ChecksumReport.Free;
   end;
 end.

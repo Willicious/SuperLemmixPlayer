@@ -97,6 +97,7 @@ type
       destructor Destroy; override;
 
       procedure WriteNewRecords(aRecords: TLevelRecords);
+      procedure WipeRecords;
 
       property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
@@ -208,6 +209,7 @@ type
       {$endif}
 
       function GetLevelForTalisman(aTalisman: TTalisman): TNeoLevelEntry;
+      procedure WipeAllRecords;
 
       property Parent: TNeoLevelGroup read fParentGroup;
       property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
@@ -574,6 +576,11 @@ begin
         Break;
 end;
 
+procedure TNeoLevelEntry.WipeRecords;
+begin
+  FillChar(Records, SizeOf(TLevelRecords), $FF);
+end;
+
 procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords);
   procedure Apply(var Existing: Integer; New: Integer; aHigherIsBetter: Boolean);
   begin
@@ -753,7 +760,9 @@ begin
 
       CheckForWarnings;
 
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion + 1;
       GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion - 1; // just in case
     except
       if aOutput.Count > 0 then
         aOutput.Add('');
@@ -940,6 +949,17 @@ begin
   LoadPostviewData;
 end;
 
+procedure TNeoLevelGroup.WipeAllRecords;
+var
+  i: Integer;
+begin
+  for i := 0 to fChildGroups.Count-1 do
+    fChildGroups[i].WipeAllRecords;
+
+  for i := 0 to fLevels.Count-1 do
+    fLevels[i].WipeRecords;
+end;
+
 procedure TNeoLevelGroup.LoadScrollerDataDefault;
 begin
   fPackTitle := '';
@@ -982,7 +1002,9 @@ begin
     Parser.LoadFromFile(Path + 'info.nxmi');
     MainSec := Parser.MainSection;
     fPackTitle := MainSec.LineTrimString['title'];
+    fName := fPackTitle;
     fPackAuthor := MainSec.LineTrimString['author'];
+    fAuthor := fPackAuthor;
     fPackVersion := MainSec.LineTrimString['version'];
     MainSec.DoForEachSection('scroller', LoadScrollerSection);
   finally
@@ -1301,19 +1323,9 @@ begin
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
     fIsOrdered := true;
-    Parser.Clear;
+
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!
-
-    if FileExists(Path + 'info.nxmi') then
-    begin
-      Parser.LoadFromFile(Path + 'info.nxmi');
-      MainSec := Parser.MainSection;
-      if MainSec.LineTrimString['title'] <> '' then
-        fName := MainSec.LineTrimString['title'];
-      if MainSec.LineTrimString['author'] <> '' then
-        fAuthor := MainSec.LineTrimString['author'];
-    end;
   finally
     Parser.Free;
   end;

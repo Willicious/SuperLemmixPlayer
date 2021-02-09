@@ -1,0 +1,189 @@
+$BACKGROUND
+  FROM :nin10_horizLava
+  TO :nin10_horiz_lava
+$END
+
+$BACKGROUND
+  FROM :nin10_vertLava
+  TO :nin10_vert_lava
+$END
+
+$GADGET
+  FROM :arrowsLeft
+  TO :arrows_left
+$END
+
+$GADGET
+  FROM :arrowsRight
+  TO :arrows_right
+$END
+
+$GADGET
+  FROM :entrancePanels
+  TO :entrance_panels
+$END
+
+$GADGET
+  FROM :exitPanels
+  TO :exit_panels
+$END
+
+$GADGET
+  FROM :fireBall
+  TO :fire_ball
+$END
+
+$GADGET
+  FROM :splitterLip
+  TO :splitter_lip
+$END
+
+$GADGET
+  FROM :trapBlaarg
+  TO :trap_blaarg
+$END
+
+$GADGET
+  FROM :trapPanels
+  TO :trap_panels
+$END
+
+$GADGET
+  FROM :trapSinglePanels
+  TO :trap_single_panels
+$END
+
+$GADGET
+  FROM :waterLava
+  TO :water_lava
+$END
+
+$GADGET
+  FROM :waterLavaFall
+  TO :water_lava_fall
+$END
+
+$GADGET
+  FROM :waterLavaUnder
+  TO :water_lava_under
+$END
+
+$TERRAIN
+  FROM :count0
+  TO :count_0
+$END
+
+$TERRAIN
+  FROM :count1
+  TO :count_1
+$END
+
+$TERRAIN
+  FROM :count2
+  TO :count_2
+$END
+
+$TERRAIN
+  FROM :count3
+  TO :count_3
+$END
+
+$TERRAIN
+  FROM :count4
+  TO :count_4
+$END
+
+$TERRAIN
+  FROM :count5
+  TO :count_5
+$END
+
+$TERRAIN
+  FROM :countFairy
+  TO :count_fairy
+$END
+
+$TERRAIN
+  FROM :lumpsHoriz
+  TO :lumps_horiz
+$END
+
+$TERRAIN
+  FROM :lumpsSingle
+  TO :lumps_single
+$END
+
+$TERRAIN
+  FROM :panelCircle
+  TO :panel_circle
+$END
+
+$TERRAIN
+  FROM :panelDiamond
+  TO :panel_diamond
+$END
+
+$TERRAIN
+  FROM :panelDownTri
+  TO :panel_down_tri
+$END
+
+$TERRAIN
+  FROM :panelHeart
+  TO :panel_heart
+$END
+
+$TERRAIN
+  FROM :panelShock
+  TO :panel_shock
+$END
+
+$TERRAIN
+  FROM :panelStar
+  TO :panel_star
+$END
+
+$TERRAIN
+  FROM :panelUpTri
+  TO :panel_up_tri
+$END
+
+$TERRAIN
+  FROM :rockBlock
+  TO :rock_block
+$END
+
+$TERRAIN
+  FROM :rockHoriz
+  TO :rock_horiz
+$END
+
+$TERRAIN
+  FROM :rockHorizEdge
+  TO :rock_horiz_edge
+$END
+
+$TERRAIN
+  FROM :rockVert
+  TO :rock_vert
+$END
+
+$TERRAIN
+  FROM :rockVertEdge
+  TO :rock_vert_edge
+$END
+
+$TERRAIN
+  FROM :rockWall
+  TO :rock_wall
+$END
+
+$TERRAIN
+  FROM :steelPanel
+  TO :steel_panel
+$END
+
+$TERRAIN
+  FROM :steelPanelSmall
+  TO :steel_panel_small
+$END

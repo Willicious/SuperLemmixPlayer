@@ -177,11 +177,8 @@ var
 
     PieceManager.Objects[PieceIdentifier].GetInterface(Flip, Invert, Rotate).GetBoundsInfo(AnimRect, PhysRect);
 
-    if (Width < 0) or (not Accessor.CanResizeHorizontal) then
-      Width := PhysRect.Width;
-
-    if (Height < 0) or (not Accessor.CanResizeVertical) then
-      Height := PhysRect.Height;
+    Width := EvaluateResizable(Width, Accessor.DefaultWidth, Accessor.Width, Accessor.CanResizeHorizontal);
+    Height := EvaluateResizable(Height, Accessor.DefaultHeight, Accessor.Height, Accessor.CanResizeVertical);
 
     ExtraWidth := Width - PhysRect.Width;
     ExtraHeight := Height - PhysRect.Height;

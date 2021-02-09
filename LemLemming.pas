@@ -67,6 +67,7 @@ type
     LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
   { integer sized fields }
     LemIndex                      : Integer; // index in the lemminglist
+    LemIdentifier                 : String;  // identifier for replay purposes
     LemX                          : Integer; // the "main" foot x position
     LemY                          : Integer; // the "main" foot y position
     LemDX                         : Integer; // x speed (1 if left to right, -1 if right to left)
@@ -277,6 +278,7 @@ procedure TLemming.Assign(Source: TLemming);
 begin
 
   // does NOT copy LemIndex! This is intentional //
+  LemIdentifier := Source.LemIdentifier;
   LemEraseRect := Source.LemEraseRect;
   LemX := Source.LemX;
   LemY := Source.LemY;
@@ -284,6 +286,7 @@ begin
   LemAscended := Source.LemAscended;
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
+  LemInitialFall := Source.LemInitialFall;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemDisarmingFrames := Source.LemDisarmingFrames;
   LemFrame := Source.LemFrame;

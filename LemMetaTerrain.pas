@@ -16,10 +16,18 @@ type
   TTerrainVariableProperties = record // For properties that vary based on flip / invert
     GraphicImage:        TBitmap32;
     GraphicImageHighRes: TBitmap32;
+    ResizeHorizontal: Boolean;
+    ResizeVertical  : Boolean;
+    DefaultWidth: Integer;
+    DefaultHeight: Integer;
+    CutLeft: Integer;
+    CutTop: Integer;
+    CutRight: Integer;
+    CutBottom: Integer;
   end;
   PTerrainVariableProperties = ^TTerrainVariableProperties;
 
-  TTerrainMetaProperty = (tv_Width, tv_Height);
+  TTerrainMetaProperty = (tv_Width, tv_Height, tv_DefaultHeight, tv_DefaultWidth, tv_CutLeft, tv_CutTop, tv_CutRight, tv_CutBottom);
                          // Integer properties only.
 
    TMetaTerrain = class
@@ -30,7 +38,8 @@ type
       fVariableInfo: array[0..ALIGNMENT_COUNT-1] of TTerrainVariableProperties;
       fGeneratedVariableInfo: array[0..ALIGNMENT_COUNT-1] of Boolean;
 
-      fIsSteel        : Boolean;
+      fIsSteel         : Boolean;
+
       fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
 
       function GetIdentifier: String;
@@ -42,6 +51,8 @@ type
 
       function GetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty): Integer;
       //procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty; const aValue: Integer);
+
+      function GetResizableProperty(Flip, Invert, Rotate: Boolean; aDirection: Integer): Boolean;
     public
       constructor Create;
       destructor Destroy; override;
@@ -58,6 +69,14 @@ type
       property Piece  : String read fPiece write fPiece;
       property Width[Flip, Invert, Rotate: Boolean] : Integer index tv_Width read GetVariableProperty;
       property Height[Flip, Invert, Rotate: Boolean]: Integer index tv_Height read GetVariableProperty;
+      property ResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index 0 read GetResizableProperty;
+      property ResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index 1 read GetResizableProperty;
+      property DefaultWidth[Flip, Invert, Rotate: Boolean] : Integer index tv_DefaultWidth read GetVariableProperty;
+      property DefaultHeight[Flip, Invert, Rotate: Boolean]: Integer index tv_DefaultHeight read GetVariableProperty;
+      property CutLeft[Flip, Invert, Rotate: Boolean]: Integer index tv_CutLeft read GetVariableProperty;
+      property CutTop[Flip, Invert, Rotate: Boolean]: Integer index tv_CutTop read GetVariableProperty;
+      property CutRight[Flip, Invert, Rotate: Boolean]: Integer index tv_CutRight read GetVariableProperty;
+      property CutBottom[Flip, Invert, Rotate: Boolean]: Integer index tv_CutBottom read GetVariableProperty;
       property IsSteel       : Boolean read fIsSteel write fIsSteel;
       property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
   end;
@@ -122,6 +141,14 @@ begin
     try
       Parser.LoadFromFile(aPiece + '.nxmt');
       fIsSteel := Parser.MainSection.Line['steel'] <> nil;
+      fVariableInfo[0].ResizeHorizontal := (Parser.MainSection.Line['resize_horizontal'] <> nil) or (Parser.MainSection.Line['resize_both'] <> nil);
+      fVariableInfo[0].ResizeVertical := (Parser.MainSection.Line['resize_vertical'] <> nil) or (Parser.MainSection.Line['resize_both'] <> nil);
+      fVariableInfo[0].DefaultWidth := Parser.MainSection.LineNumeric['default_width'];
+      fVariableInfo[0].DefaultHeight := Parser.MainSection.LineNumeric['default_height'];
+      fVariableInfo[0].CutLeft := Parser.MainSection.LineNumeric['nine_slice_left'];
+      fVariableInfo[0].CutTop := Parser.MainSection.LineNumeric['nine_slice_top'];
+      fVariableInfo[0].CutRight := Parser.MainSection.LineNumeric['nine_slice_right'];
+      fVariableInfo[0].CutBottom := Parser.MainSection.LineNumeric['nine_slice_bottom'];
     finally
       Parser.Free;
     end;
@@ -203,6 +230,20 @@ begin
   if Rotate then Inc(Result, 4);
 end;
 
+function TMetaTerrain.GetResizableProperty(Flip, Invert, Rotate: Boolean;
+  aDirection: Integer): Boolean;
+var
+  i: Integer;
+begin           
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  case aDirection of
+    0: Result := fVariableInfo[i].ResizeHorizontal;
+    1: Result := fVariableInfo[i].ResizeVertical;
+    else raise Exception.Create('Invalid input to TMetaTerrain.GetResizableProperty');
+  end;
+end;
+
 function TMetaTerrain.GetGraphicImage(Flip, Invert, Rotate: Boolean): TBitmap32;
 var
   i: Integer;
@@ -230,6 +271,12 @@ begin
     case Index of
       tv_Width: Result := GraphicImage.Width;
       tv_Height: Result := GraphicImage.Height;
+      tv_DefaultWidth: Result := DefaultWidth;
+      tv_DefaultHeight: Result := DefaultHeight;
+      tv_CutLeft: Result := CutLeft;
+      tv_CutTop: Result := CutTop;
+      tv_CutRight: Result := CutRight;
+      tv_CutBottom: Result := CutBottom;
       else raise Exception.Create('TMetaTerrain.GetVariableProperty given invalid value.');
     end;
   end;
@@ -248,6 +295,7 @@ procedure TMetaTerrain.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   i: Integer;
   BMP: TBitmap32;
+  Temp: Integer;
 
   procedure CloneFromStandard;
   var
@@ -278,6 +326,32 @@ begin
     if Rotate then BMP.Rotate90;
     if Flip then BMP.FlipHorz;
     if Invert then BMP.FlipVert;
+  end;
+
+  if Rotate then
+  begin
+    fVariableInfo[i].ResizeHorizontal := fVariableInfo[0].ResizeVertical;
+    fVariableInfo[i].ResizeVertical := fVariableInfo[0].ResizeHorizontal;
+    fVariableInfo[i].DefaultWidth := fVariableInfo[0].DefaultHeight;
+    fVariableInfo[i].DefaultHeight := fVariableInfo[0].DefaultWidth;
+    fVariableInfo[i].CutLeft := fVariableInfo[0].CutBottom;
+    fVariableInfo[i].CutTop := fVariableInfo[0].CutLeft;
+    fVariableInfo[i].CutRight := fVariableInfo[0].CutTop;
+    fVariableInfo[i].CutBottom := fVariableInfo[0].CutRight;
+  end;
+
+  if Flip then
+  begin
+    Temp := fVariableInfo[0].CutLeft;
+    fVariableInfo[i].CutLeft := fVariableInfo[i].CutRight;
+    fVariableInfo[i].CutRight := Temp;
+  end;
+
+  if Invert then
+  begin
+    Temp := fVariableInfo[0].CutTop;
+    fVariableInfo[i].CutTop := fVariableInfo[i].CutBottom;
+    fVariableInfo[i].CutBottom := Temp;
   end;
 
   fGeneratedVariableInfo[i] := true;
