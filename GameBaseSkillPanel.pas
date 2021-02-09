@@ -180,7 +180,9 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png', {Skills end here}
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png', {Skills end here}
+
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
     'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_frameskip.png',
     'icon_directional.png', 'icon_cpm_and_replay.png',
@@ -653,10 +655,11 @@ begin
     ///  This code is mostly copied to LemGadgetAnimation. ///
     //////////////////////////////////////////////////////////
 
-    // Walker, Jumper, Shimmier, Climber, - all simple
+    // Walker, Jumper, Shimmier, Slider, Climber, - all simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
     DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
+    DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 6, 22);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 22);
 
     // Swimmer - we need to draw the background water
@@ -1249,6 +1252,7 @@ var
       2: Result := SAthlete;
       3: Result := STriathlete;
       4: Result := SQuadathlete;
+      5: Result := SQuintathlete
     end;
   end;
 begin
@@ -1259,18 +1263,20 @@ begin
 
   if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
-    Result := '------';
-    if L.LemIsClimber then Result[1] := 'C';
-    if L.LemIsSwimmer then Result[2] := 'S';
-    if L.LemIsFloater then Result[3] := 'F';
-    if L.LemIsGlider then Result[3] := 'G';
-    if L.LemIsDisarmer then Result[4] := 'D';
-    if L.LemIsZombie then Result[5] := 'Z';
-    if L.LemIsNeutral then Result[6] := 'N';
+    Result := '-------';
+    if L.LemIsSlider then Result[1] := 'L';    
+    if L.LemIsClimber then Result[2] := 'C';
+    if L.LemIsSwimmer then Result[3] := 'S';
+    if L.LemIsFloater then Result[4] := 'F';
+    if L.LemIsGlider then Result[4] := 'G';
+    if L.LemIsDisarmer then Result[5] := 'D';
+    if L.LemIsZombie then Result[6] := 'Z';
+    if L.LemIsNeutral then Result[7] := 'N';
   end
   else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baLasering, baBashing, baMining, baDigging, baBlocking]) then
   begin
     i := 0;
+    if L.LemIsSlider then DoInc(SSlider);
     if L.LemIsClimber then DoInc(SClimber);
     if L.LemIsSwimmer then DoInc(SSwimmer);
     if L.LemIsFloater then DoInc(SFloater);

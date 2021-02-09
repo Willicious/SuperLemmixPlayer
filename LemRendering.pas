@@ -713,7 +713,7 @@ const
                        baBuilding, baBashing, baMining, baFalling, baFloating,
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
                        baFixing, baFencing, baReaching, baShimmying, baJumping,
-                       baLasering];
+                       baDehoisting, baSliding, baLasering];
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
@@ -741,6 +741,7 @@ begin
                    else
                      fRenderInterface.SimulateTransitionLem(CopyL, baToWalking);
         spbShimmier: fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
+        spbSlider: CopyL.LemIsSlider := true;
         spbClimber: CopyL.LemIsClimber := true;
         spbSwimmer: CopyL.LemIsSwimmer := true;
         spbFloater: CopyL.LemIsFloater := true;
@@ -914,7 +915,7 @@ begin
   // We simulate as long as the lemming is either reaching or shimmying
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
-    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding]) do
+    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding, baSliding]) do
   begin
     Inc(FrameCount);
 
@@ -2024,6 +2025,7 @@ begin
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
+  if Gadget.IsPreassignedSlider then Inc(numHelpers);
   if Gadget.IsPreassignedClimber then Inc(numHelpers);
   if Gadget.IsPreassignedSwimmer then Inc(numHelpers);
   if Gadget.IsPreassignedFloater then Inc(numHelpers);
@@ -2056,6 +2058,11 @@ begin
   if Gadget.IsPreassignedNeutral then
   begin
     fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    Inc(indexHelper);
+  end;
+  if Gadget.IsPreassignedSlider then
+  begin
+    fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedClimber then
@@ -2098,6 +2105,7 @@ begin
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
+  if L.LemIsSlider then Inc(numHelpers);
   if L.LemIsClimber then Inc(numHelpers);
   if L.LemIsSwimmer then Inc(numHelpers);
   if L.LemIsFloater then Inc(numHelpers);
@@ -2129,6 +2137,11 @@ begin
   end;
 
   indexHelper := 0;
+  if L.LemIsSlider then
+  begin
+    fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    Inc(indexHelper);
+  end;
   if L.LemIsClimber then
   begin
     fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);

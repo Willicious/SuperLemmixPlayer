@@ -432,10 +432,11 @@ begin
     SkillIcons.Add(NewBmp);
   end;
 
-  // Walker, Jumper, Shimmier Climber, Swimmer, Floater, Glider, Disarmer - all simple
+  // Walker, Jumper, Shimmier, Slider, Climber, Swimmer, Floater, Glider, Disarmer - all simple
   DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, PICKUP_MID, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbJumper)], JUMPING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
   DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
+  DrawAnimationFrame(SkillIcons[Integer(spbSlider)], SLIDING_RTL, 0, PICKUP_MID - 2, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, PICKUP_MID + 3, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, PICKUP_MID + 1, PICKUP_BASELINE - 6);
   DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);

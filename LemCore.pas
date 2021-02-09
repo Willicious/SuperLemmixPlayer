@@ -76,6 +76,8 @@ type
     baReaching,
     baShimmying,
     baJumping,
+    baDehoisting,
+    baSliding,
     baLasering
   );
 
@@ -89,6 +91,7 @@ type
     spbWalker,
     spbJumper,
     spbShimmier,
+    spbSlider,
     spbClimber,
     spbSwimmer,
     spbFloater,
@@ -132,6 +135,7 @@ const
     'walker',
     'jumper',
     'shimmier',
+    'slider',
     'climber',
     'swimmer',
     'floater',
@@ -154,6 +158,7 @@ const
     'walkers',
     'jumpers',
     'shimmiers',
+    'sliders',
     'climbers',
     'swimmers',
     'floaters',
@@ -218,6 +223,7 @@ const
     baFencing,
     baShimmying,
     baJumping,
+    baSliding,
     baLasering
   ];
 
@@ -255,6 +261,8 @@ const
     spbNone,
     spbShimmier,
     spbJumper,
+    spbNone,
+    spbSlider,
     spbLaserer
   );
 
@@ -264,6 +272,7 @@ const
     baToWalking,
     baJumping,
     baShimmying,
+    baSliding,
     baClimbing,
     baSwimming,
     baFloating,

@@ -23,9 +23,10 @@ uses
   LemNeoParser;
 
 const
-  SKILL_REPLAY_NAME_COUNT = 20;
+  SKILL_REPLAY_NAME_COUNT = 21;
   SKILL_REPLAY_NAMES: array[0..SKILL_REPLAY_NAME_COUNT-1] of String =
-                                               ('WALKER', 'JUMPER', 'SHIMMIER', 'CLIMBER',
+                                               ('WALKER', 'JUMPER', 'SHIMMIER',
+                                                'SLIDER', 'CLIMBER',
                                                 'SWIMMER', 'FLOATER', 'GLIDER',
                                                 'DISARMER', 'BOMBER', 'STONER',
                                                 'BLOCKER', 'PLATFORMER', 'BUILDER',

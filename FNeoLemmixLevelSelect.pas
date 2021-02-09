@@ -92,6 +92,7 @@ const // Icon indexes
     6, // Walker
     7, // Jumper
     8, // Shimmier
+    38, // Slider
     9, // Climber
     10, // Swimmer
     11, // Floater
@@ -108,7 +109,7 @@ const // Icon indexes
     21, // Fencer
     22, // Miner
     23, // Digger
-    24 // Cloner
+    24  // Cloner
   );
 
   ICON_BRONZE_TALISMAN = 25;
