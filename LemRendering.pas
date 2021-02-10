@@ -1724,12 +1724,14 @@ var
       PieceWidth := EvaluateResizable(Terrain.Width,
                                       MetaTerrain.DefaultWidth[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
                                       MetaTerrain.Width[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
-                                      MetaTerrain.ResizeHorizontal[Terrain.Flip, Terrain.Invert, Terrain.Rotate]);
+                                      MetaTerrain.ResizeHorizontal[Terrain.Flip, Terrain.Invert, Terrain.Rotate])
+                     * Multiplier;
 
       PieceHeight := EvaluateResizable(Terrain.Height,
                                        MetaTerrain.DefaultHeight[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
                                        MetaTerrain.Height[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
-                                       MetaTerrain.ResizeVertical[Terrain.Flip, Terrain.Invert, Terrain.Rotate]);
+                                       MetaTerrain.ResizeVertical[Terrain.Flip, Terrain.Invert, Terrain.Rotate])
+                     * Multiplier;
 
       ThisTerrainRect.Right := ThisTerrainRect.Left + PieceWidth;
       ThisTerrainRect.Bottom := ThisTerrainRect.Top + PieceHeight;
