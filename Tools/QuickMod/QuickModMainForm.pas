@@ -45,6 +45,8 @@ type
     cbRemoveTalismans: TCheckBox;
     cbChangeID: TCheckBox;
     lblVersion: TLabel;
+    cbRemoveSpecialLemmings: TCheckBox;
+    cbRemovePreplaced: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -306,6 +308,22 @@ begin
           SL[n] := '# ' + SL[n];
           Inc(n);
         until ThisLine = '$END';
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbRemoveSpecialLemmings.Checked) then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+          if (LeftStr(ThisLine, 8) = 'LEMMINGS') or (ThisLine = 'ZOMBIE') or (ThisLine = 'NEUTRAL') then
+            SL[n] := '# ' + SL[n];
+          Inc(n);
+        until ThisLine = '$END';
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$LEMMING') and (cbRemovePreplaced.Checked or cbRemoveSpecialLemmings.Checked) then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+          if (cbRemovePreplaced.Checked) or (ThisLine = 'ZOMBIE') or (ThisLine = 'NEUTRAL') then
+          SL[n] := '# ' + SL[n];
+          Inc(n);
+        until ThisLine = '$END';
       end else if LeftStr(ThisLine, 1) = '$' then
         Inc(SecLevel)
       else if SecLevel = 0 then begin
@@ -375,7 +393,7 @@ begin
     if cbReleaseRate.Checked then SL.Add('MAX_SPAWN_INTERVAL ' + IntToStr(103 - StrToIntDef(ebReleaseRate.Text, 0)));
     if cbLockRR.Checked then SL.Add('SPAWN_INTERVAL_LOCKED');
     if cbTimeLimit.Checked and (StrToIntDef(ebTimeLimit.Text, 0) >= 1) then
-      SL.Add('TIME_LIMIT' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
+      SL.Add('TIME_LIMIT ' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
 
     if cbCustomSkillset.Checked then
     begin

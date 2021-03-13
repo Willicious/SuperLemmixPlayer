@@ -4,7 +4,7 @@ object FQuickmodMain: TFQuickmodMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'NL QuickMod'
-  ClientHeight = 357
+  ClientHeight = 411
   ClientWidth = 251
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FQuickmodMain: TFQuickmodMain
   OnCreate = FormCreate
   DesignSize = (
     251
-    357)
+    411)
   PixelsPerInch = 96
   TextHeight = 13
   object lblPack: TLabel
@@ -29,12 +29,13 @@ object FQuickmodMain: TFQuickmodMain
   end
   object lblVersion: TLabel
     Left = 215
-    Top = 336
+    Top = 390
     Width = 28
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v0.02'
+    Caption = 'v0.03'
+    ExplicitTop = 336
   end
   object cbPack: TComboBox
     Left = 48
@@ -49,11 +50,11 @@ object FQuickmodMain: TFQuickmodMain
     Left = 8
     Top = 43
     Width = 235
-    Height = 210
+    Height = 264
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
-    ExplicitHeight = 156
+    ExplicitHeight = 210
     object cbLemCount: TCheckBox
       Left = 16
       Top = 24
@@ -159,23 +160,41 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbChangeID: TCheckBox
       Left = 16
-      Top = 182
+      Top = 236
       Width = 130
       Height = 17
       Caption = 'Change Level IDs'
       TabOrder = 11
       OnClick = cbStatCheckboxClicked
     end
+    object cbRemoveSpecialLemmings: TCheckBox
+      Left = 16
+      Top = 209
+      Width = 201
+      Height = 17
+      Caption = 'Remove Zombies, Neutrals, Lem Caps'
+      TabOrder = 12
+      OnClick = cbStatCheckboxClicked
+    end
+    object cbRemovePreplaced: TCheckBox
+      Left = 16
+      Top = 182
+      Width = 161
+      Height = 17
+      Caption = 'Remove Preplaced Lemmings'
+      TabOrder = 13
+      OnClick = cbStatCheckboxClicked
+    end
   end
   object gbSkillset: TGroupBox
     Left = 8
-    Top = 261
+    Top = 315
     Width = 235
     Height = 57
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Level Skillset'
     TabOrder = 2
-    ExplicitTop = 207
+    ExplicitTop = 261
     object cbCustomSkillset: TCheckBox
       Left = 16
       Top = 20
@@ -188,13 +207,13 @@ object FQuickmodMain: TFQuickmodMain
   end
   object btnApply: TButton
     Left = 83
-    Top = 324
+    Top = 378
     Width = 75
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 270
+    ExplicitTop = 324
   end
 end
