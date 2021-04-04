@@ -288,7 +288,8 @@ type
 
     procedure SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
     function SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt;
-    procedure AddPreplacedLemming;
+    procedure AddPreplacedLemmings;
+    procedure FixDuplicatePreplacedLemmingIdentifiers;
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
@@ -1111,7 +1112,7 @@ begin
   InitializeAllTriggerMaps;
   SetGadgetMap;
 
-  AddPreplacedLemming;
+  AddPreplacedLemmings;
 
   SetBlockerMap;
 
@@ -1151,7 +1152,7 @@ begin
 end;
 
 
-procedure TLemmingGame.AddPreplacedLemming;
+procedure TLemmingGame.AddPreplacedLemmings;
 var
   L: TLemming;
   Lem: TPreplacedLemming;
@@ -1188,6 +1189,45 @@ begin
     end;
     Dec(LemmingsToRelease);
     Inc(LemmingsOut);
+  end;
+
+  FixDuplicatePreplacedLemmingIdentifiers;
+end;
+
+procedure TLemmingGame.FixDuplicatePreplacedLemmingIdentifiers;
+var
+  i, i2: Integer;
+
+  BaseName: String;
+  Suffix: Integer;
+
+  function BuildModifiedName(aBaseName: String; aModifier: Integer): String;
+  begin
+    if aModifier = 0 then
+      Result := aBaseName
+    else
+      Result := aBaseName + '.' + LeadZeroStr(aModifier, 3);
+  end;
+begin
+  for i := 0 to LemmingList.Count-1 do
+  begin
+    BaseName := LemmingList[i].LemIdentifier;
+    Suffix := 0;
+    i2 := 0;
+
+    while i2 < i do
+    begin
+      if LemmingList[i2].LemIdentifier = BuildModifiedName(BaseName, Suffix) then
+      begin
+        i2 := 0;
+        Inc(Suffix);
+        Continue;
+      end;
+
+      Inc(i2);
+    end;
+
+    LemmingList[i].LemIdentifier := BuildModifiedName(BaseName, Suffix);
   end;
 end;
 
