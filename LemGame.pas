@@ -35,7 +35,7 @@ const
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
-        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND];
+        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND, DOM_PAINT];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie);
@@ -525,7 +525,8 @@ const
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;
   DOM_BGIMAGE          = 32; // no longer used!!
-  DOM_ONEWAYUP         = 33; *)
+  DOM_ONEWAYUP         = 33;
+  DOM_PAINT            = 34 *)
 
   // removal modes
   RM_NEUTRAL           = 0;

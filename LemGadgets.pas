@@ -371,7 +371,7 @@ end;
 
 function TGadget.GetIsOnlyOnTerrain: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0);
+  Result := (MetaObj.TriggerEffect = DOM_PAINT) or ((Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0);
 end;
 
 function TGadget.GetIsUpsideDown: Boolean;

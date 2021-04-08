@@ -38,6 +38,7 @@ const
   DOM_TRAPONCE         = 31;
   // 32 = unused, formerly background image
   DOM_ONEWAYUP         = 33;
+  DOM_PAINT            = 34;
 
 implementation
 

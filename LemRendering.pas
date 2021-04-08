@@ -2216,7 +2216,8 @@ procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
 const
   DO_NOT_DRAW: set of 0..255 =
         [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_BLOCKER,
-         DOM_ONEWAYDOWN, DOM_WINDOW, DOM_BACKGROUND, DOM_ONEWAYUP];
+         DOM_ONEWAYDOWN, DOM_WINDOW, DOM_BACKGROUND, DOM_ONEWAYUP,
+         DOM_PAINT];
 begin
   if not (Gadget.TriggerEffect in DO_NOT_DRAW) then
     DrawTriggerAreaRectOnLayer(Gadget.TriggerRect);
@@ -2240,7 +2241,7 @@ begin
   Result := true;
   if not fUsefulOnly then Exit;
 
-  if Gadget.TriggerEffect in [DOM_NONE, DOM_BACKGROUND] then
+  if Gadget.TriggerEffect in [DOM_NONE, DOM_BACKGROUND, DOM_PAINT] then
     Result := false;
 
   if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId < 0) then
@@ -2280,7 +2281,9 @@ var
 
   function IsValidForLayer(Gadget: TGadget): Boolean;
   begin
-    if (Gadget.TriggerEffect = DOM_BACKGROUND) and not Gadget.IsOnlyOnTerrain then
+    if (Gadget.TriggerEffect = DOM_PAINT) then
+      Result := aLayer = rlOnTerrainGadgets
+    else if (Gadget.TriggerEffect = DOM_BACKGROUND) and not Gadget.IsOnlyOnTerrain then
       Result := aLayer = rlBackgroundObjects
     else if Gadget.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
       Result := aLayer = rlOneWayArrows
@@ -2939,7 +2942,7 @@ begin
        or (Gadget.TriggerRect.Right < 0)
        or (Gadget.TriggerRect.Left > RenderInfoRec.Level.Info.Width) then
     begin
-      if Gadget.TriggerEffect <> DOM_BACKGROUND then
+      if not (Gadget.TriggerEffect in [DOM_BACKGROUND, DOM_PAINT]) then
         Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
     end;
 

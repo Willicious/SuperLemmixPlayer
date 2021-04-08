@@ -280,6 +280,8 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'background' then fTriggerEffect := DOM_BACKGROUND;
     if Lowercase(Sec.LineTrimString['effect']) = 'traponce' then fTriggerEffect := DOM_TRAPONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewayup' then fTriggerEffect := DOM_ONEWAYUP;
+    if Lowercase(Sec.LineTrimString['effect']) = 'paint' then fTriggerEffect := DOM_PAINT;
+
 
     if Sec.Section['PRIMARY_ANIMATION'] = nil then
     begin
@@ -346,7 +348,7 @@ begin
       GadgetAccessor.CanResizeVertical := Sec.Line['resize_vertical'] <> nil;
     end;
 
-    if fTriggerEffect in [DOM_NONE, DOM_BACKGROUND] then // No trigger area
+    if fTriggerEffect in [DOM_NONE, DOM_BACKGROUND, DOM_PAINT] then // No trigger area
     begin
       GadgetAccessor.TriggerWidth := 0;
       GadgetAccessor.TriggerHeight := 0;
