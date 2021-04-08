@@ -2727,7 +2727,7 @@ var
 
         if thisSolidity >= ALPHA_CUTOFF then
         begin
-          C := PM_SOLID;
+          C := PM_SOLID or PM_ORIGSOLID;
 
           SolidityMod := thisSolidity / 255;
           Cutoff := ALPHA_CUTOFF * SolidityMod;

@@ -24,10 +24,10 @@ const
   PM_ONEWAYDOWN  = $00000020; // Yes, I know they're mutually incompatible, but it's easier to do this way
   PM_ONEWAYUP    = $00000040;
   PM_NOCANCELSTEEL = $00000080;
+  PM_ORIGSOLID = $00000100;
 
-  PM_TERRAIN   = $000000FF;
+  PM_TERRAIN = $000001FF; // combination of all terrain flags
   PM_ONEWAYFLAGS = PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN or PM_ONEWAYUP;
-
 
   SHADOW_COLOR = $80202020;
   ALPHA_CUTOFF = $80; // below this = nonsolid, based on the COMPOSITE image (not individual pieces)
@@ -476,12 +476,12 @@ end;
 
 procedure TRenderBitmaps.CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $00000001) = 0 then B := 0;
+  if (F and PM_ORIGSOLID) = 0 then B := 0;
 end;
 
 procedure TRenderBitmaps.CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $00000004) = 0 then B := 0;
+  if (F and PM_ONEWAY) = 0 then B := 0;
 end;
 
 
