@@ -226,6 +226,7 @@ end;
 class function TReplay.EvaluateReplayNamePattern(aPattern: String; aReplay: TReplay = nil): String;
 var
   SplitPos: Integer;
+  NeedAddExt: Boolean;
 const
   TAG_TITLE = '{TITLE}';
   TAG_GROUP = '{GROUP}';
@@ -244,6 +245,8 @@ begin
     else
       aPattern := LeftStr(aPattern, SplitPos - 1);
   end;
+
+  NeedAddExt := (Pos('.', aPattern) = 0);
 
   Result := aPattern;
 
@@ -267,7 +270,7 @@ begin
   // The rest are the same whether aReplay is nil or not.
   Result := StringReplace(Result, TAG_TIMESTAMP, FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now), [rfReplaceAll]);
 
-  if ExtractFileExt(Result) = '' then
+  if NeedAddExt then
     Result := Result + '.nxrp';
 end;
 
