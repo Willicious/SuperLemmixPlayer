@@ -141,6 +141,8 @@ type
 
     function GetPickupSkillCount(aSkill: TSkillPanelButton): Integer;
 
+    procedure CalculateAutoScreenStart(out HorzStart: Integer; out VertStart: Integer);
+
     property HasAnyFallbacks: Boolean read GetHasAnyFallbacks;
   published
     property Info: TLevelInfo read fLevelInfo;
@@ -579,6 +581,145 @@ begin
       Result := Result + O.TarLev;
   end;
 
+end;
+
+procedure TLevel.CalculateAutoScreenStart(out HorzStart, VertStart: Integer);
+var
+  EntranceIndexes: TList<Integer>;
+  ExitIndexes: TList<Integer>;
+  PreplacedLemmingIndexes: TList<Integer>;
+  i: Integer;
+  O: TGadgetModel;
+  MO: TGadgetMetaInfo;
+  L: TPreplacedLemming;
+
+  TargetDX: Integer;
+  TargetVertShift: Boolean;
+  ThisDX: Integer;
+
+  AverageX: Double;
+  AverageY: Double;
+
+  ClosestDistance: Double;
+
+  procedure TryPosition(X, Y, DX: Integer; VertShift: Boolean);
+  var
+    ThisDistance: Double;
+  begin
+    ThisDistance := Sqrt(((X - AverageX) * (X - AverageX)) + ((Y - AverageY) * (Y - AverageY)));
+    if (ThisDistance < ClosestDistance) or (ClosestDistance < 0) then
+    begin
+      ClosestDistance := ThisDistance;
+      HorzStart := X;
+      VertStart := Y;
+      TargetDX := DX;
+      TargetVertShift := VertShift;
+    end;
+  end;
+begin
+  EntranceIndexes := TList<Integer>.Create;
+  ExitIndexes := TList<Integer>.Create;
+  PreplacedLemmingIndexes := TList<Integer>.Create;
+
+  try
+    // Fallback
+    HorzStart := Info.Width div 2;
+    VertStart := Info.Height div 2;
+    TargetDX := 0;
+    TargetVertShift := false;
+
+    for i := 0 to fInteractiveObjects.Count-1 do
+    begin
+      O := fInteractiveObjects[i];
+      MO := PieceManager.Objects[O.Identifier];
+      if (MO.TriggerEffect = DOM_WINDOW) and ((O.TarLev and 192) = 0) then
+          EntranceIndexes.Add(i);
+      if MO.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+        ExitIndexes.Add(i);
+    end;
+
+    for i := 0 to fPreplacedLemmings.Count-1 do
+    begin
+      L := fPreplacedLemmings[i];
+      if not (L.IsZombie or L.IsNeutral) then
+        PreplacedLemmingIndexes.Add(i);
+    end;
+
+    AverageX := 0;
+    AverageY := 0;
+
+    if EntranceIndexes.Count >= 1 then
+    begin
+      for i := 0 to EntranceIndexes.Count-1 do
+      begin
+        O := fInteractiveObjects[EntranceIndexes[i]];
+        MO := PieceManager.Objects[O.Identifier];
+
+        AverageX := AverageX + (O.Left + MO.TriggerLeft[O.Flip, O.Invert, O.Rotate]);
+        AverageY := AverageY + (O.Top + MO.TriggerTop[O.Flip, O.Invert, O.Rotate]);
+      end;
+
+      AverageX := AverageX / EntranceIndexes.Count;
+      AverageY := AverageY / EntranceIndexes.Count;
+    end else if PreplacedLemmingIndexes.Count >= 1 then
+    begin
+      for i := 0 to PreplacedLemmingIndexes.Count-1 do
+      begin
+        L := fPreplacedLemmings[PreplacedLemmingIndexes[i]];
+
+        AverageX := AverageX + L.X;
+        AverageY := AverageY + L.Y;
+      end;
+
+      AverageX := AverageX / PreplacedLemmingIndexes.Count;
+      AverageY := AverageY / PreplacedLemmingIndexes.Count;
+    end;
+
+    ClosestDistance := -1;
+
+    for i := 0 to EntranceIndexes.Count-1 do
+    begin
+      O := fInteractiveObjects[EntranceIndexes[i]];
+      MO := PieceManager.Objects[O.Identifier];
+
+      if O.Flip then
+        ThisDX := -1
+      else
+        ThisDX := 1;
+
+      TryPosition(O.Left + MO.TriggerLeft[O.Flip, O.Invert, O.Rotate],
+                  O.Top + MO.TriggerTop[O.Flip, O.Invert, O.Rotate],
+                  ThisDX, true);
+    end;
+
+    for i := 0 to ExitIndexes.Count-1 do
+    begin
+      O := fInteractiveObjects[ExitIndexes[i]];
+      MO := PieceManager.Objects[O.Identifier];
+
+      TryPosition(O.Left + MO.TriggerLeft[O.Flip, O.Invert, O.Rotate] + (MO.TriggerWidth[O.Flip, O.Invert, O.Rotate] div 2),
+                  O.Top + MO.TriggerTop[O.Flip, O.Invert, O.Rotate] + (MO.TriggerHeight[O.Flip, O.Invert, O.Rotate] div 2),
+                  0, false);
+    end;
+
+    for i := 0 to PreplacedLemmingIndexes.Count-1 do
+    begin
+      L := fPreplacedLemmings[PreplacedLemmingIndexes[i]];
+      TryPosition(L.X, L.Y, L.Dx, false);
+    end;
+
+    if TargetDX <> 0 then
+      HorzStart := HorzStart + (48 * TargetDX);
+
+    if TargetVertShift then
+      VertStart := VertStart + 20
+    else
+      VertStart := VertStart - 12;
+  finally
+    EntranceIndexes.Free;
+    ExitIndexes.Free;
+    PreplacedLemmingIndexes.Free;
+  end;
 end;
 
 procedure TLevel.Clear;

@@ -1752,8 +1752,16 @@ begin
 
   ChangeZoom(Sca, true);
 
-  HorzStart := (GameParams.Level.Info.ScreenStartX * ResMod) - ((Img.Width div 2) div Sca);
-  VertStart := (GameParams.Level.Info.ScreenStartY * ResMod) - ((Img.Height div 2) div Sca);
+  if GameParams.Level.Info.ScreenStartAuto then
+    GameParams.Level.CalculateAutoScreenStart(HorzStart, VertStart)
+  else begin
+    HorzStart := GameParams.Level.Info.ScreenStartX;
+    VertStart := GameParams.Level.Info.ScreenStartY;
+  end;
+
+  HorzStart := (HorzStart * ResMod) - ((Img.Width div 2) div Sca);
+  VertStart := (VertStart * ResMod) - ((Img.Height div 2) div Sca);
+
   HorzStart := HorzStart * Sca;
   VertStart := VertStart * Sca;
   Img.OffsetHorz := Min(Max(-HorzStart, MinScroll), MaxScroll);
