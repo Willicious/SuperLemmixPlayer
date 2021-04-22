@@ -36,8 +36,10 @@ type
 
     fBackground: String;
 
-    fScreenPosition : Integer;
-    fScreenYPosition: Integer;
+    fScreenStartX : Integer;
+    fScreenStartY: Integer;
+    fScreenStartAuto: Boolean;
+
     fTitle          : string;
     fAuthor         : string;
 
@@ -67,8 +69,10 @@ type
     property Skillset: TSkillset read fSkillset write fSkillset;
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount write SetSkillCount;
 
-    property ScreenPosition : Integer read fScreenPosition write fScreenPosition;
-    property ScreenYPosition : Integer read fScreenYPosition write fScreenYPosition;
+    property ScreenStartX : Integer read fScreenStartX write fScreenStartX;
+    property ScreenStartY : Integer read fScreenStartY write fScreenStartY;
+    property ScreenStartAuto: Boolean read fScreenStartAuto write fScreenStartAuto;
+
     property Title          : string read fTitle write fTitle;
     property Author         : string read fAuthor write fAuthor;
 
@@ -170,8 +174,10 @@ begin
   fSkillset       := [];
   FillChar(fSkillCounts, SizeOf(TSkillCounts), 0);
 
-  ScreenPosition  := 0;
-  ScreenYPosition := 0;
+  ScreenStartX  := 0;
+  ScreenStartY := 0;
+  ScreenStartAuto := true;
+
   Width           := 320;
   Height          := 160;
   Title           := '';
@@ -689,8 +695,10 @@ begin
 
     Width := aSection.LineNumeric['width'];
     Height := aSection.LineNumeric['height'];
-    ScreenPosition := aSection.LineNumeric['start_x'];
-    ScreenYPosition := aSection.LineNumeric['start_y'];
+
+    ScreenStartAuto := (aSection.Line['start_x'] = nil) or (aSection.Line['start_y'] = nil);
+    ScreenStartX := aSection.LineNumeric['start_x'];
+    ScreenStartY := aSection.LineNumeric['start_y'];
 
     Background := CombineIdentifier(PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground).Piece);
 
@@ -989,11 +997,11 @@ begin
     if Width < 1 then Width := 1;
     if Height < 1 then Height := 1;
 
-    if ScreenPosition < 0 then ScreenPosition := 0;
-    if ScreenPosition > Width-1 then ScreenPosition := Width-1;
+    if ScreenStartX < 0 then ScreenStartX := 0;
+    if ScreenStartX > Width-1 then ScreenStartX := Width-1;
 
-    if ScreenYPosition < 0 then ScreenYPosition := 0;
-    if ScreenYPosition > Height-1 then ScreenYPosition := Height-1;
+    if ScreenStartY < 0 then ScreenStartY := 0;
+    if ScreenStartY > Height-1 then ScreenStartY := Height-1;
 
     if LemmingsCount < PreplacedLemmings.Count then LemmingsCount := PreplacedLemmings.Count;
     if RescueCount < 0 then RescueCount := 0;
@@ -1224,8 +1232,12 @@ begin
 
     aSection.AddLine('WIDTH', Width);
     aSection.AddLine('HEIGHT', Height);
-    aSection.AddLine('START_X', ScreenPosition);
-    aSection.AddLine('START_Y', ScreenYPosition);
+
+    if not ScreenStartAuto then
+    begin
+      aSection.AddLine('START_X', ScreenStartX);
+      aSection.AddLine('START_Y', ScreenStartY);
+    end;
 
     if not ((Background = '') or (Background = ':')) then
       aSection.AddLine('BACKGROUND', Background);
