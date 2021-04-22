@@ -77,6 +77,7 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 1
           Text = 'Position + Timestamp'
           OnChange = OptionChanged
+          OnEnter = cbReplayPatternEnter
           Items.Strings = (
             'Position + Timestamp'
             'Title + Timestamp'
@@ -90,6 +91,7 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 2
           Text = 'Position + Timestamp'
           OnChange = OptionChanged
+          OnEnter = cbReplayPatternEnter
           Items.Strings = (
             'Position + Timestamp'
             'Title + Timestamp'
@@ -104,6 +106,7 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 3
           Text = 'Position + Timestamp'
           OnChange = OptionChanged
+          OnEnter = cbReplayPatternEnter
           Items.Strings = (
             'Position + Timestamp'
             'Title + Timestamp'
@@ -166,10 +169,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -391,10 +390,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 24
         Top = 45

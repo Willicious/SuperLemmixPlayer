@@ -102,6 +102,7 @@ object FReplayNaming: TFReplayNaming
       Height = 21
       TabOrder = 4
       OnChange = cbNamingSchemeChange
+      OnEnter = cbNamingSchemeEnter
       Items.Strings = (
         'Position + Timestamp'
         'Title + Timestamp'

@@ -69,6 +69,7 @@ type
     procedure btnStylesClick(Sender: TObject);
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
+    procedure cbReplayPatternEnter(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -395,6 +396,17 @@ procedure TFormNXConfig.cbAutoSaveReplayClick(Sender: TObject);
 begin
   cbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
   OptionChanged(Sender);
+end;
+
+procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);
+var
+  P: TComboBox;
+begin
+  if not (Sender is TComboBox) then Exit;
+  P := TComboBox(Sender);
+
+  if P.ItemIndex >= 0 then
+    P.Text := PRESET_REPLAY_PATTERNS[P.ItemIndex];
 end;
 
 procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);

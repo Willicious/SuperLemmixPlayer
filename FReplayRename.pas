@@ -33,6 +33,7 @@ type
     procedure cbRefreshClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
+    procedure cbNamingSchemeEnter(Sender: TObject);
   private
     fIsSetting: Boolean;
 
@@ -110,6 +111,12 @@ begin
 
   lblClassic.Visible := false;
   SetToOptions(true, false);
+end;
+
+procedure TFReplayNaming.cbNamingSchemeEnter(Sender: TObject);
+begin
+  if cbNamingScheme.ItemIndex >= 0 then
+    cbNamingScheme.Text := PRESET_REPLAY_PATTERNS[cbNamingScheme.ItemIndex];
 end;
 
 procedure TFReplayNaming.cbRefreshClick(Sender: TObject);
