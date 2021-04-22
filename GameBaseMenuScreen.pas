@@ -864,6 +864,8 @@ begin
     GameParams.SetLevel(OldLevel);
     AfterCancelLevelSelect;
   end else begin
+    GameParams.ShownText := false;
+
     if LoadAsPack then
       CloseScreen(gstMenu)
     else
