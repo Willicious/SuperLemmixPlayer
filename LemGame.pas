@@ -129,6 +129,7 @@ type
     SplatMap                   : TArrayArrayBoolean;
     ForceLeftMap               : TArrayArrayBoolean;
     ForceRightMap              : TArrayArrayBoolean;
+    AnimMap                    : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
 
@@ -232,6 +233,7 @@ type
       function FindGadgetID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
       function HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleAnimation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -526,7 +528,8 @@ const
   DOM_TRAPONCE         = 31;
   DOM_BGIMAGE          = 32; // no longer used!!
   DOM_ONEWAYUP         = 33;
-  DOM_PAINT            = 34 *)
+  DOM_PAINT            = 34;
+  DOM_ANIMONCE         = 35; *)
 
   // removal modes
   RM_NEUTRAL           = 0;
@@ -1604,6 +1607,8 @@ begin
   SetLength(ForceLeftMap, Level.Info.Width, Level.Info.Height);
   SetLength(ForceRightMap, 0, 0);
   SetLength(ForceRightMap, Level.Info.Width, Level.Info.Height);
+  SetLength(AnimMap, 0, 0);
+  SetLength(AnimMap, Level.Info.Width, Level.Info.Height);
 
   BlockerMap.SetSize(Level.Info.Width, Level.Info.Height);
   BlockerMap.Clear(DOM_NONE);
@@ -1742,6 +1747,8 @@ begin
       DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
       DOM_FORCELEFT:  WriteTriggerMap(ForceLeftMap, Gadgets[i].TriggerRect);
       DOM_FORCERIGHT: WriteTriggerMap(ForceRightMap, Gadgets[i].TriggerRect);
+      DOM_ANIMATION:  WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
+      DOM_ANIMONCE:   WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -2411,6 +2418,10 @@ begin
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
     end;
 
+    // Triggered animations and one-shot animations
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnim) then
+      HandleAnimation(L, CheckPos[0, i], CheckPos[1, i]); // HandleAnimation will never activate AbortChecks
+
     // If the lem was required stop, move him there!
     if AbortChecks then
     begin
@@ -2455,6 +2466,7 @@ begin
     trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT) or ReadTriggerMap(X, Y, ForceLeftMap);
     trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT) or ReadTriggerMap(X, Y, ForceRightMap);
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
+    trAnim:       Result :=     ReadTriggerMap(X, Y, AnimMap);
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
     trOWLeft:     Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYLEFT <> 0);
@@ -2510,7 +2522,7 @@ begin
     if Gadget.Triggered then
       GadgetFound := False;
     // ignore already used buttons and one-shot traps
-    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE])
+    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_ANIMONCE])
        and (Gadget.CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
       GadgetFound := False;
     // ignore already used pickup skills
@@ -2573,6 +2585,34 @@ begin
     // Check for one-shot trap and possibly disable it
     if Gadget.TriggerEffect = DOM_TRAPONCE then Gadget.TriggerEffect := DOM_NONE;
   end;
+end;
+
+
+function TLemmingGame.HandleAnimation(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  Gadget: TGadget;
+  GadgetID: Word;
+begin
+  Result := False;
+
+  GadgetID := FindGadgetID(PosX, PosY, trAnim);
+  // Exit if there is no Object
+  if GadgetID = 65535 then
+  begin
+    Result := False;
+    Exit;
+  end;
+
+  // Set ObjectInfos
+  Gadget := Gadgets[GadgetID];
+
+  // trigger trap
+  Gadget.Triggered := True;
+
+  CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
+
+  // Check for one-shot animation and possibly disable it
+  if Gadget.TriggerEffect = DOM_ANIMONCE then Gadget.TriggerEffect := DOM_NONE;
 end;
 
 
@@ -4183,6 +4223,10 @@ begin
       if HasPixelAt(L.LemX, L.LemY) then
       begin
         Transition(L, baWalking);
+        Exit;
+      end else if L.LemY >= Level.Info.Height + 8 then
+      begin
+        RemoveLemming(L, RM_NEUTRAL);
         Exit;
       end;
     end;

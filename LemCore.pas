@@ -174,6 +174,7 @@ type
     trForceLeft,  // as well for blockers
     trForceRight, // as well for blockers
     trTrap,       // for triggered and one-time traps
+    trAnim,       // ditto for triggered animations
     trWater,
     trFire,
     trOWLeft,
@@ -292,7 +293,7 @@ const
 const
   // All objects that don't have trigger areas got mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..33] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..35] of TTriggerTypes = (
     trZombie,                 // no-object
     trZombie,                 // no trigger area
     trExit,                   // exit
@@ -318,7 +319,7 @@ const
     trFlipper,                // flipper
     trZombie,                 // slowfreeze - unused
     trZombie,                 // hatch
-    trZombie,                 // triggered animation - unused
+    trAnim,                   // triggered animation
     trZombie,                 // hint
     trNoSplat,                // no-splat
     trSplat,                  // splat
@@ -327,7 +328,9 @@ const
     trZombie,                 // background
     trTrap,                   // once trap
     trZombie,                 // background image - unused
-    trOWUp                    // OWW up
+    trOWUp,                   // OWW up
+    trZombie,                 // paint
+    trAnim                    // once animation
   );
 
   function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
