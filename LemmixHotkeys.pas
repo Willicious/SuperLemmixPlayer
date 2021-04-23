@@ -331,6 +331,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     if s = 'walker' then Result := Integer(spbWalker)
     else if s = 'jumper' then Result := Integer(spbJumper)
     else if s = 'shimmier' then Result := Integer(spbShimmier)
+    else if s = 'slider' then Result := Integer(spbSlider)
     else if s = 'climber' then Result := Integer(spbClimber)
     else if s = 'swimmer' then Result := Integer(spbSwimmer)
     else if s = 'floater' then Result := Integer(spbFloater)
@@ -342,6 +343,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else if s = 'platformer' then Result := Integer(spbPlatformer)
     else if s = 'builder' then Result := Integer(spbBuilder)
     else if s = 'stacker' then Result := Integer(spbStacker)
+    else if s = 'laserer' then Result := Integer(spbLaserer)
     else if s = 'basher' then Result := Integer(spbBasher)
     else if s = 'fencer' then Result := Integer(spbFencer)
     else if s = 'miner' then Result := Integer(spbMiner)
@@ -479,6 +481,7 @@ var
                     Integer(spbWalker):     Result := 'Walker';
                     Integer(spbJumper):     Result := 'Jumper';
                     Integer(spbShimmier):   Result := 'Shimmier';
+                    Integer(spbSlider):     Result := 'Slider';
                     Integer(spbClimber):    Result := 'Climber';
                     Integer(spbSwimmer):    Result := 'Swimmer';
                     Integer(spbFloater):    Result := 'Floater';
@@ -490,6 +493,7 @@ var
                     Integer(spbPlatformer): Result := 'Platformer';
                     Integer(spbBuilder):    Result := 'Builder';
                     Integer(spbStacker):    Result := 'Stacker';
+                    Integer(spbLaserer):    Result := 'Laserer';
                     Integer(spbBasher):     Result := 'Basher';
                     Integer(spbFencer):     Result := 'Fencer';
                     Integer(spbMiner):      Result := 'Miner';

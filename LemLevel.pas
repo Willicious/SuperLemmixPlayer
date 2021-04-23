@@ -877,6 +877,7 @@ begin
   HandleSkill('walker', spbWalker);
   HandleSkill('jumper', spbJumper);
   HandleSkill('shimmier', spbShimmier);
+  HandleSkill('slider', spbSlider);
   HandleSkill('climber', spbClimber);
   HandleSkill('swimmer', spbSwimmer);
   HandleSkill('floater', spbFloater);
@@ -888,6 +889,7 @@ begin
   HandleSkill('platformer', spbPlatformer);
   HandleSkill('builder', spbBuilder);
   HandleSkill('stacker', spbStacker);
+  HandleSkill('laserer', spbLaserer);
   HandleSkill('basher', spbBasher);
   HandleSkill('fencer', spbFencer);
   HandleSkill('miner', spbMiner);
@@ -930,6 +932,7 @@ var
     if S = 'walker' then O.Skill := Integer(spbWalker);
     if S = 'jumper' then O.Skill := Integer(spbJumper);    
     if S = 'shimmier' then O.Skill := Integer(spbShimmier);
+    if S = 'slider' then O.Skill := Integer(spbSlider);
     if S = 'climber' then O.Skill := Integer(spbClimber);
     if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
     if S = 'floater' then O.Skill := Integer(spbFloater);
@@ -941,6 +944,7 @@ var
     if S = 'platformer' then O.Skill := Integer(spbPlatformer);
     if S = 'builder' then O.Skill := Integer(spbBuilder);
     if S = 'stacker' then O.Skill := Integer(spbStacker);
+    if S = 'laserer' then O.Skill := Integer(spbLaserer);
     if S = 'basher' then O.Skill := Integer(spbBasher);
     if S = 'fencer' then O.Skill := Integer(spbFencer);
     if S = 'miner' then O.Skill := Integer(spbMiner);
@@ -964,6 +968,7 @@ var
   procedure GetWindowData;
   begin
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
+    if (aSection.Line['slider'] <> nil) then O.TarLev := O.TarLev or 256;
     if (aSection.Line['climber'] <> nil) then O.TarLev := O.TarLev or 1;
     if (aSection.Line['swimmer'] <> nil) then O.TarLev := O.TarLev or 2;
     if (aSection.Line['floater'] <> nil) then O.TarLev := O.TarLev or 4;
@@ -1088,6 +1093,7 @@ begin
                // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
   L.IsShimmier := (aSection.Line['shimmier'] <> nil);
+  L.IsSlider   := (aSection.Line['slider'] <> nil);
   L.IsClimber  := (aSection.Line['climber']  <> nil);
   L.IsSwimmer  := (aSection.Line['swimmer']  <> nil);
   L.IsFloater  := (aSection.Line['floater']  <> nil);
@@ -1404,6 +1410,7 @@ begin
   HandleSkill('WALKER', spbWalker);
   HandleSkill('JUMPER', spbJumper);
   HandleSkill('SHIMMIER', spbShimmier);
+  HandleSkill('SLIDER', spbSlider);
   HandleSkill('CLIMBER', spbClimber);
   HandleSkill('SWIMMER', spbSwimmer);
   HandleSkill('FLOATER', spbFloater);
@@ -1415,6 +1422,7 @@ begin
   HandleSkill('PLATFORMER', spbPlatformer);
   HandleSkill('BUILDER', spbBuilder);
   HandleSkill('STACKER', spbStacker);
+  HandleSkill('LASERER', spbLaserer);
   HandleSkill('BASHER', spbBasher);
   HandleSkill('FENCER', spbFencer);
   HandleSkill('MINER', spbMiner);
@@ -1451,6 +1459,7 @@ var
      spbWalker: s := 'WALKER';
      spbJumper: s := 'JUMPER';
      spbShimmier: s := 'SHIMMIER';
+     spbSlider: s := 'SLIDER';
      spbClimber: s := 'CLIMBER';
      spbSwimmer: s := 'SWIMMER';
      spbFloater: s := 'FLOATER';
@@ -1462,6 +1471,7 @@ var
      spbPlatformer: s := 'PLATFORMER';
      spbBuilder: s := 'BUILDER';
      spbStacker: s := 'STACKER';
+     spbLaserer: s := 'LASERER';
      spbBasher: s := 'BASHER';
      spbFencer: s := 'FENCER';     
      spbMiner: s := 'MINER';
@@ -1476,6 +1486,7 @@ var
 
   procedure SetWindowData;
   begin
+    if O.TarLev and 256 <> 0 then Sec.AddLine('SLIDER');
     if O.TarLev and 1 <> 0 then Sec.AddLine('CLIMBER');
     if O.TarLev and 2 <> 0 then Sec.AddLine('SWIMMER');
     if O.TarLev and 4 <> 0 then Sec.AddLine('FLOATER');
@@ -1587,6 +1598,7 @@ begin
       Sec.AddLine('FLIP_HORIZONTAL');
 
     if L.IsShimmier then Sec.AddLine('SHIMMIER');
+    if L.IsSlider then Sec.AddLine('SLIDER');
     if L.IsClimber then Sec.AddLine('CLIMBER');
     if L.IsSwimmer then Sec.AddLine('SWIMMER');
     if L.IsFloater then Sec.AddLine('FLOATER');

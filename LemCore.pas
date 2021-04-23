@@ -75,7 +75,10 @@ type
     baFencing,
     baReaching,
     baShimmying,
-    baJumping
+    baJumping,
+    baDehoisting,
+    baSliding,
+    baLasering
   );
 
 const
@@ -88,6 +91,7 @@ type
     spbWalker,
     spbJumper,
     spbShimmier,
+    spbSlider,
     spbClimber,
     spbSwimmer,
     spbFloater,
@@ -99,6 +103,7 @@ type
     spbPlatformer,
     spbBuilder,
     spbStacker,
+    spbLaserer,
     spbBasher,
     spbFencer,
     spbMiner,
@@ -130,6 +135,7 @@ const
     'walker',
     'jumper',
     'shimmier',
+    'slider',
     'climber',
     'swimmer',
     'floater',
@@ -141,6 +147,7 @@ const
     'platformer',
     'builder',
     'stacker',
+    'laserer',
     'basher',
     'fencer',
     'miner',
@@ -151,6 +158,7 @@ const
     'walkers',
     'jumpers',
     'shimmiers',
+    'sliders',
     'climbers',
     'swimmers',
     'floaters',
@@ -162,6 +170,7 @@ const
     'platformers',
     'builders',
     'stackers',
+    'laserers',
     'bashers',
     'fencers',
     'miners',
@@ -214,7 +223,9 @@ const
     baCloning,
     baFencing,
     baShimmying,
-    baJumping
+    baJumping,
+    baSliding,
+    baLasering
   ];
 
 const
@@ -250,7 +261,10 @@ const
     spbFencer,
     spbNone,
     spbShimmier,
-    spbJumper
+    spbJumper,
+    spbNone,
+    spbSlider,
+    spbLaserer
   );
 
 const
@@ -259,6 +273,7 @@ const
     baToWalking,
     baJumping,
     baShimmying,
+    baSliding,
     baClimbing,
     baSwimming,
     baFloating,
@@ -270,6 +285,7 @@ const
     baPlatforming,
     baBuilding,
     baStacking,
+    baLasering,
     baBashing,
     baFencing,
     baMining,

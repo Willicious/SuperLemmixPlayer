@@ -8,7 +8,7 @@ interface
 
 uses
   Dialogs,
-  System.Types,
+  System.Types, Generics.Collections,
   Classes, Math, Windows,
   GR32, GR32_Blend,
   UMisc, SysUtils, StrUtils,
@@ -47,6 +47,8 @@ type
 
     fDisableBackground  : Boolean;
     fTransparentBackground: Boolean;
+
+    fLaserGraphic: TBitmap32;
 
     fPhysicsMap         : TBitmap32;
     fLayers             : TRenderBitmaps;
@@ -148,6 +150,7 @@ type
 
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
+    procedure DrawLemmingLaser(aLemming: TLemming);
     procedure DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
     procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
@@ -159,6 +162,7 @@ type
     procedure DrawBuilderShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
+    procedure DrawLasererShadow(L: TLemming);
     procedure DrawBasherShadow(L: TLemming);
     procedure DrawFencerShadow(L: TLemming);
     procedure DrawMinerShadow(L: TLemming);
@@ -322,10 +326,7 @@ begin
     end
   );
 
-  for i := 0 to LemmingList.Count-1 do
-    DrawThisLemming(LemmingList[i], UsefulOnly);
-
-  // Draw particles for exploding lemmings
+  // Draw particles for exploding lemmings, laser for laserers
   fLayers.fIsEmpty[rlParticles] := True;
   for i := 0 to LemmingList.Count-1 do
   begin
@@ -335,7 +336,13 @@ begin
       fLayers.fIsEmpty[rlParticles] := False;
     end;
     DrawLemmingCountdown(LemmingList[i]);
+
+    if LemmingList[i].LemAction = baLasering then
+      DrawLemmingLaser(LemmingList[i]);
   end;
+
+  for i := 0 to LemmingList.Count-1 do
+    DrawThisLemming(LemmingList[i], UsefulOnly);
 end;
 
 procedure TRenderer.DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
@@ -461,6 +468,120 @@ begin
   begin
     DrawLemmingPoint;
     fLayers.fIsEmpty[rlTriggers] := false;
+  end;
+end;
+
+procedure TRenderer.DrawLemmingLaser(aLemming: TLemming);
+var
+  InnerC, OuterC: TColor32;
+  Origin, Target: TPoint;
+
+  Src, Dst: TRect;
+  n, CIndex: Integer;
+const
+  RED_COLOR = $FFF01818;
+  WHITE_COLOR = $FFF0F0F0;
+  YELLOW_COLOR = $FFF0F018;
+
+  BLAST_COLORS: array[0..2] of TColor32 =
+    ( $00000000, RED_COLOR, YELLOW_COLOR );
+begin
+  if aLemming.LemPhysicsFrame mod 2 = 0 then
+  begin
+    InnerC := WHITE_COLOR;
+    OuterC := RED_COLOR;
+  end else begin
+    OuterC := WHITE_COLOR;
+    InnerC := RED_COLOR;
+  end;
+
+  Origin := Point(aLemming.LemX + (aLemming.LemDX * 2), aLemming.LemY - 5);
+  Target := aLemming.LemLaserHitPoint;
+
+  if GameParams.HighResolution then
+  begin
+    Origin.X := Origin.X * 2;
+    Origin.Y := Origin.Y * 2;
+    Target.X := Target.X * 2;
+    Target.Y := Target.Y * 2;
+
+    if aLemming.LemDX > 0 then
+    begin
+      Origin.X := Origin.X + 1;
+      Target.X := Target.X + 1;
+    end;
+
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
+      Target.X, Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
+      Target.X - aLemming.LemDX, Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+      Target.X, Target.Y + 1,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
+      Target.X - (aLemming.LemDX * 2), Target.Y,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
+      Target.X, Target.Y + 2,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 3,
+      Target.X - (aLemming.LemDX * 3), Target.Y,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 3), Origin.Y,
+      Target.X, Target.Y + 3,
+      OuterC, true);
+  end else begin
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
+      Target.X, Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
+      Target.X - aLemming.LemDX, Target.Y,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+      Target.X, Target.Y + 1,
+      OuterC, true);
+  end;
+
+  if aLemming.LemLaserHit then
+  begin
+    Target := aLemming.LemLaserHitPoint; // undo high-res modifications from above, if any
+
+    Src := Rect(48, 0, 61, 13);
+    Dst := Rect(Target.X - 6, Target.Y - 6, Target.X + 6 + 1, Target.Y + 6 + 1);
+
+    if GameParams.HighResolution then
+    begin
+      Src.Left := Src.Left * 2;
+      Src.Top := Src.Top * 2;
+      Src.Right := Src.Right * 2;
+      Src.Bottom := Src.Bottom * 2;
+
+      Dst.Left := Dst.Left * 2;
+      Dst.Top := Dst.Top * 2;
+      Dst.Right := Dst.Right * 2;
+      Dst.Bottom := Dst.Bottom * 2;
+    end;
+
+    CIndex := aLemming.LemPhysicsFrame mod 3;
+    for n := 0 to 2 do
+    begin
+      if BLAST_COLORS[CIndex] <> $00000000 then
+      begin
+        fFixedDrawColor := BLAST_COLORS[CIndex];
+        fLaserGraphic.DrawTo(fLayers[rlLemmings], Dst, Src);
+      end;
+
+      MoveRect(Src, -13 * ResMod, 0);
+
+      repeat
+        CIndex := (CIndex + 1) mod 3;
+      until BLAST_COLORS[CIndex] <> $00000000;
+    end;
+
+    fFixedDrawColor := WHITE_COLOR;
+    fLaserGraphic.DrawTo(fLayers[rlLemmings], Dst, Src);
   end;
 end;
 
@@ -595,7 +716,8 @@ const
   PROJECTION_STATES = [baWalking, baAscending, baDigging, baClimbing, baHoisting,
                        baBuilding, baBashing, baMining, baFalling, baFloating,
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
-                       baFixing, baFencing, baReaching, baShimmying, baJumping];
+                       baFixing, baFencing, baReaching, baShimmying, baJumping,
+                       baDehoisting, baSliding, baLasering];
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
@@ -623,6 +745,7 @@ begin
                    else
                      fRenderInterface.SimulateTransitionLem(CopyL, baToWalking);
         spbShimmier: fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
+        spbSlider: CopyL.LemIsSlider := true;
         spbClimber: CopyL.LemIsClimber := true;
         spbSwimmer: CopyL.LemIsSwimmer := true;
         spbFloater: CopyL.LemIsFloater := true;
@@ -726,6 +849,12 @@ begin
         CopyL.LemDX := -CopyL.LemDX;
         DrawShadows(CopyL, ActionToSkillPanelButton[CopyL.LemAction], SelectedSkill, true);
       end;
+
+    spbLaserer:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baLasering);
+        DrawLasererShadow(CopyL);
+      end;
     end;
   end;
 
@@ -790,7 +919,7 @@ begin
   // We simulate as long as the lemming is either reaching or shimmying
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
-    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding]) do
+    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding, baSliding]) do
   begin
     Inc(FrameCount);
 
@@ -1221,6 +1350,33 @@ begin
     SetHighShadowPixel(PosX + BomberShadow[i, 0], L.LemY + BomberShadow[i, 1]);
     SetHighShadowPixel(PosX - BomberShadow[i, 0] - 1, L.LemY + BomberShadow[i, 1]);
   end;
+end;
+
+procedure TRenderer.DrawLasererShadow(L: TLemming);
+var
+  LastPoint: TPoint;
+  LastHit: Boolean;
+  SavePhysicsMap: TBitmap32;
+
+  procedure PerformIteration;
+  begin
+    // Simulate next frame advance for lemming
+    LastPoint := L.LemLaserHitPoint;
+    LastHit := L.LemLaserHit;
+    fRenderInterface.SimulateLem(L);
+  end;
+begin
+  fLayers.fIsEmpty[rlHighShadows] := False;
+
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  // Todo: Actual laserer shadow
+
+  // Restore PhysicsMap
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
 end;
 
 
@@ -1937,6 +2093,7 @@ begin
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
+  if Gadget.IsPreassignedSlider then Inc(numHelpers);
   if Gadget.IsPreassignedClimber then Inc(numHelpers);
   if Gadget.IsPreassignedSwimmer then Inc(numHelpers);
   if Gadget.IsPreassignedFloater then Inc(numHelpers);
@@ -1969,6 +2126,11 @@ begin
   if Gadget.IsPreassignedNeutral then
   begin
     fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    Inc(indexHelper);
+  end;
+  if Gadget.IsPreassignedSlider then
+  begin
+    fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedClimber then
@@ -2011,6 +2173,7 @@ begin
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
+  if L.LemIsSlider then Inc(numHelpers);
   if L.LemIsClimber then Inc(numHelpers);
   if L.LemIsSwimmer then Inc(numHelpers);
   if L.LemIsFloater then Inc(numHelpers);
@@ -2042,6 +2205,11 @@ begin
   end;
 
   indexHelper := 0;
+  if L.LemIsSlider then
+  begin
+    fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    Inc(indexHelper);
+  end;
   if L.LemIsClimber then
   begin
     fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
@@ -2274,6 +2442,12 @@ begin
 
   fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
   fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
+
+  // And laserer!
+  if GameParams.HighResolution then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser-hr.png', fLaserGraphic)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser.png', fLaserGraphic);
 
   fHelpersAreHighRes := GameParams.HighResolution;
 end;
@@ -2560,6 +2734,10 @@ begin
   fPreviewGadgets := TGadgetList.Create;
   fTempLemmingList := TLemmingList.Create(false);
 
+  fLaserGraphic := TBitmap32.Create;
+  fLaserGraphic.DrawMode := dmCustom;
+  fLaserGraphic.OnPixelCombine := CombineFixedColor;
+
   LoadHelperImages;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
@@ -2583,6 +2761,7 @@ begin
   fAni.Free;
   fPreviewGadgets.Free;
   fTempLemmingList.Free;
+  fLaserGraphic.Free;
 
   for iIcon := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[iIcon].Free;

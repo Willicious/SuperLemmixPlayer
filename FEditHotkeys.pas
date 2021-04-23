@@ -95,6 +95,7 @@ begin
                      Integer(spbWalker):     s := s + 'Walker';
                      Integer(spbJumper):     s := s + 'Jumper';
                      Integer(spbShimmier):   s := s + 'Shimmier';
+                     Integer(spbSlider):     s := s + 'Slider';
                      Integer(spbClimber):    s := s + 'Climber';
                      Integer(spbSwimmer):    s := s + 'Swimmer';
                      Integer(spbFloater):    s := s + 'Floater';
@@ -106,6 +107,7 @@ begin
                      Integer(spbPlatformer): s := s + 'Platformer';
                      Integer(spbBuilder):    s := s + 'Builder';
                      Integer(spbStacker):    s := s + 'Stacker';
+                     Integer(spbLaserer):    s := s + 'Laserer';
                      Integer(spbBasher):     s := s + 'Basher';
                      Integer(spbFencer):     s := s + 'Fencer';
                      Integer(spbMiner):      s := s + 'Miner';
