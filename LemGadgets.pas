@@ -411,13 +411,15 @@ end;
 function TGadget.GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
 const
   READY_OBJECT_TYPES = // Any object not listed here, always returns *TRUE* (not false like the others)
-    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE,
+     DOM_ANIMATION, DOM_ANIMONCE];
   BUSY_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMATION,
+     DOM_ANIMONCE];
   DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_EXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+    [DOM_EXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE];
   EXHAUSTED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_EXIT, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+    [DOM_EXIT, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE];
 
   function CheckReadyFlag: Boolean;
   begin
@@ -430,9 +432,9 @@ const
       else
         case TriggerEffectBase of
           DOM_EXIT: Result := RemainingLemmingsCount <> 0;
-          DOM_TRAP, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_TRAP, DOM_TELEPORT, DOM_ANIMATION: Result := (CurrentFrame = 0);
           DOM_LOCKEXIT: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
-          DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
+          DOM_BUTTON, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 1;
           DOM_PICKUP: Result := CurrentFrame mod 2 <> 0;
           DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
           DOM_WINDOW: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
@@ -449,8 +451,8 @@ const
         Result := true
       else
         case TriggerEffectBase of
-          DOM_TRAP, DOM_TELEPORT: Result := CurrentFrame > 0;
-          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW: Result := CurrentFrame > 1;
+          DOM_TRAP, DOM_ANIMATION, DOM_TELEPORT: Result := CurrentFrame > 0;
+          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_ANIMONCE: Result := CurrentFrame > 1;
           DOM_RECEIVER: Result := (CurrentFrame > 0) or HoldActive;
         end;
     end;
@@ -468,7 +470,7 @@ const
           DOM_EXIT: Result := RemainingLemmingsCount = 0;
           // DOM_TRAP: Only condition is handled by the above TriggerEffect check
           DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
-          DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
+          DOM_BUTTON, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
           DOM_LOCKEXIT: Result := (CurrentFrame = 1) or (RemainingLemmingsCount = 0);
           DOM_WINDOW: Result := RemainingLemmingsCount = 0; // todo: when all lemmings are released even on infinite windows
         end;
@@ -481,7 +483,7 @@ const
     if TriggerEffectBase in EXHAUSTED_OBJECT_TYPES then
       case TriggerEffectBase of
         DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
-        DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
+        DOM_BUTTON, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
         DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW: Result := RemainingLemmingsCount = 0;
       end;
   end;
@@ -564,9 +566,14 @@ function TGadget.GetCanDrawToBackground: Boolean;
 var
   i: Integer;
 begin
-  Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
+  Assert(MetaObj.TriggerEffect in [DOM_BACKGROUND, DOM_ANIMATION, DOM_ANIMONCE],
+         'GetCanDrawToBackground called for an object that isn''t a moving background!');
+
   Result := false;
+
+  if MetaObj.TriggerEffect <> DOM_BACKGROUND then Exit;
   if GetSpeed <> 0 then Exit;
+
   for i := 0 to MetaObj.Animations.Count-1 do
     if MetaObj.Animations.Items[i].FrameCount > 1 then
       Exit;
@@ -766,7 +773,7 @@ begin
     if MetaObj.TriggerEffect = DOM_PICKUP then
       fFrame := (aGadget.Obj.Skill * 2) + 1;
 
-    if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
+    if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE] then
       fFrame := 1;
 
     if (MetaObj.TriggerEffect = DOM_FLIPPER) and (aGadget.IsFlipPhysics) then
