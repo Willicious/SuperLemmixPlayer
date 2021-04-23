@@ -74,6 +74,8 @@ type
   DOM_BUTTON      | True when the button has not been pressed
   DOM_WINDOW      | True when the window is fully open, and if it has a lemming limit, hasn't yet reached it
   DOM_TRAPONCE    | True when the trap has not yet been triggered (or disabled)
+  DOM_ANIMATION   | True when the animation is idle
+  DOM_ANIMONCE    | True when the animation has not yet been triggered
   All others      | Always true
 
 
@@ -86,6 +88,8 @@ type
   DOM_LOCKEXIT    | True when the exit is in the process of opening
   DOM_WINDOW      | True when the window is in the process of opening
   DOM_TRAPONCE    | True when the trap is mid-kill
+  DOM_ANIMATION   | True when the animation is playing
+  DOM_ANIMONCE    | True when the animation is playing
   All others      | Always false
 
 
@@ -102,6 +106,7 @@ type
   DOM_BUTTON      | True when the button has been pressed
   DOM_WINDOW      | True if the window has a lemming limit and it has been reached
   DOM_TRAPONCE    | True when the trap has been disabled (most likely by a disarmer) or used
+  DOM_ANIMONCE    | True when the animation has completed
   All others      | Always false
 
 
@@ -114,6 +119,7 @@ type
   DOM_BUTTON      | True when the button has been pressed
   DOM_WINDOW      | True if the window is limited-use and has released all lemmings
   DOM_TRAPONCE    | True when the trap has been used
+  DOM_ANIMONCE    | True when the animation has completed
   All others      | Always false
 
   }

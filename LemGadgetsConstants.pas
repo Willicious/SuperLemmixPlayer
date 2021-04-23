@@ -28,7 +28,7 @@ const
   DOM_FLIPPER          = 21;
   // 22 = unused, formerly slowfreeze
   DOM_WINDOW           = 23;
-  // 24 = unused, formerly triggered animation
+  DOM_ANIMATION        = 24;
   // 25 = unused, formerly placeholder for hint but never actually implemented
   DOM_NOSPLAT          = 26;
   DOM_SPLAT            = 27;
@@ -39,6 +39,7 @@ const
   // 32 = unused, formerly background image
   DOM_ONEWAYUP         = 33;
   DOM_PAINT            = 34;
+  DOM_ANIMONCE         = 35;
 
 implementation
 

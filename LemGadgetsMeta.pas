@@ -281,7 +281,8 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'traponce' then fTriggerEffect := DOM_TRAPONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewayup' then fTriggerEffect := DOM_ONEWAYUP;
     if Lowercase(Sec.LineTrimString['effect']) = 'paint' then fTriggerEffect := DOM_PAINT;
-
+    if Lowercase(Sec.LineTrimString['effect']) = 'animation' then fTriggerEffect := DOM_ANIMATION;
+    if Lowercase(Sec.LineTrimString['effect']) = 'animationonce' then fTriggerEffect := DOM_ANIMONCE;
 
     if Sec.Section['PRIMARY_ANIMATION'] = nil then
     begin
