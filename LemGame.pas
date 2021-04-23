@@ -2595,6 +2595,9 @@ var
 begin
   Result := False;
 
+  if GameParams.NoBackgrounds then
+    Exit;
+
   GadgetID := FindGadgetID(PosX, PosY, trAnim);
   // Exit if there is no Object
   if GadgetID = 65535 then

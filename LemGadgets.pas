@@ -566,9 +566,14 @@ function TGadget.GetCanDrawToBackground: Boolean;
 var
   i: Integer;
 begin
-  Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
+  Assert(MetaObj.TriggerEffect in [DOM_BACKGROUND, DOM_ANIMATION, DOM_ANIMONCE],
+         'GetCanDrawToBackground called for an object that isn''t a moving background!');
+
   Result := false;
+
+  if MetaObj.TriggerEffect <> DOM_BACKGROUND then Exit;
   if GetSpeed <> 0 then Exit;
+
   for i := 0 to MetaObj.Animations.Count-1 do
     if MetaObj.Animations.Items[i].FrameCount > 1 then
       Exit;
