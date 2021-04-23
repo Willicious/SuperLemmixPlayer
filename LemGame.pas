@@ -4184,6 +4184,10 @@ begin
       begin
         Transition(L, baWalking);
         Exit;
+      end else if L.LemY >= Level.Info.Height + 8 then
+      begin
+        RemoveLemming(L, RM_NEUTRAL);
+        Exit;
       end;
     end;
     if not HasPixelAt(L.LemX, L.LemY - 9) then
