@@ -989,19 +989,22 @@ begin
        or (PauseAfterSkip > 0) then
     GameSpeed := gspPause;
 
-  // Find correct save state
-  if aTargetIteration > 0 then
-    UseSaveState := fSaveList.FindNearestState(aForceBeforeIteration)
-  else if fSaveList.Count = 0 then
-    UseSaveState := -1
-  else
-    UseSaveState := 0;
+  if aTargetIteration <> Game.CurrentIteration then
+  begin
+    // Find correct save state
+    if aTargetIteration > 0 then
+      UseSaveState := fSaveList.FindNearestState(aForceBeforeIteration)
+    else if fSaveList.Count = 0 then
+      UseSaveState := -1
+    else
+      UseSaveState := 0;
 
-  // Load save state or restart the level
-  if UseSaveState >= 0 then
-    Game.LoadSavedState(fSaveList[UseSaveState])
-  else
-    Game.Start(true);
+    // Load save state or restart the level
+    if UseSaveState >= 0 then
+      Game.LoadSavedState(fSaveList[UseSaveState])
+    else
+      Game.Start(true);
+  end;
 
   fSaveList.ClearAfterIteration(Game.CurrentIteration);
 
