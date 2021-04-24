@@ -2412,7 +2412,7 @@ begin
   Result := true;
   if not fUsefulOnly then Exit;
 
-  if Gadget.TriggerEffect in [DOM_NONE, DOM_BACKGROUND, DOM_PAINT, DOM_ANIMATION, DOM_ANIMONCE] then
+  if Gadget.TriggerEffect in [DOM_NONE, DOM_BACKGROUND, DOM_PAINT] then
     Result := false;
 
   if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId < 0) then
@@ -2460,7 +2460,7 @@ var
   begin
     if (Gadget.TriggerEffect = DOM_PAINT) then
       Result := aLayer = rlOnTerrainGadgets
-    else if (Gadget.TriggerEffect in [DOM_BACKGROUND, DOM_ANIMATION, DOM_ANIMONCE]) and not Gadget.IsOnlyOnTerrain then
+    else if (Gadget.TriggerEffect = DOM_BACKGROUND) and not Gadget.IsOnlyOnTerrain then
       Result := aLayer = rlBackgroundObjects
     else if Gadget.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
       Result := aLayer = rlOneWayArrows
@@ -2477,6 +2477,7 @@ var
     Gadget: TGadget;
   begin
     Gadget := fGadgets[aIndex];
+    if (Gadget.TriggerEffectBase in [DOM_ANIMATION, DOM_ANIMONCE]) and GameParams.NoBackgrounds then Exit;
     if not (IsValidForLayer(Gadget) and IsUseful(Gadget)) then Exit;
 
     if (aLayer = rlBackgroundObjects) and (Gadget.CanDrawToBackground) then
