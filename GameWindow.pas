@@ -1937,15 +1937,14 @@ var
   s: String;
   OldSpeed: TGameSpeed;
 begin
-  OldSpeed := fGameSpeed;
+  SuspendGameplay;
   try
-    GameSpeed := gspPause;
     Game.EnsureCorrectReplayDetails;
     s := Game.ReplayManager.GetSaveFileName(self, rsoIngame, Game.ReplayManager);
     if s = '' then Exit;
     Game.ReplayManager.SaveToFile(s);
   finally
-    GameSpeed := OldSpeed;
+    ResumeGameplay;
   end;
 end;
 
