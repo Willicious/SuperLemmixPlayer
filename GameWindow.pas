@@ -1301,6 +1301,7 @@ const
                          lka_ToggleShadows,
                          lka_Projection,
                          lka_SkillProjection,
+                         lka_ShowUsedSkills,
                          lka_ZoomIn,
                          lka_ZoomOut,
                          lka_Scroll];
@@ -1441,6 +1442,10 @@ begin
                              ProjectionType := 2
                            else if func.Modifier = 0 then
                              ProjectionType := 0;
+      lka_ShowUsedSkills: if func.Modifier = 0 then
+                            SkillPanel.ShowUsedSkills := not SkillPanel.ShowUsedSkills
+                          else
+                            SkillPanel.ShowUsedSkills := true;
       lka_EditReplay: ExecuteReplayEdit;
       lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
@@ -1535,6 +1540,8 @@ begin
                                  ProjectionType := 0;
       lka_SkillProjection    : if (func.Modifier <> 0) and (ProjectionType = 2) then
                                  ProjectionType := 0;
+      lka_ShowUsedSkills     : if func.Modifier <> 0 then
+                                 SkillPanel.ShowUsedSkills := false;
     end;
   end;
 
@@ -1935,7 +1942,6 @@ end;
 procedure TGameWindow.SaveReplay;
 var
   s: String;
-  OldSpeed: TGameSpeed;
 begin
   SuspendGameplay;
   try

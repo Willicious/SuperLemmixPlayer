@@ -138,6 +138,10 @@ begin
                              s := 'Skill Projection (toggle)'
                            else
                              s := 'Skill Projection (hold)';
+      lka_ShowUsedSkills: if Hotkey.Modifier = 0 then
+                            s := 'Show Used Skills (toggle)'
+                          else
+                            s := 'Show Used Skills (hold)';
       lka_SpecialSkip: begin
                          s := 'Skip to ';
                          case TSpecialSkipCondition(Hotkey.Modifier) of
@@ -204,10 +208,11 @@ begin
               end;
     lka_ClearPhysics,
     lka_Projection,
-    lka_SkillProjection: begin
-                           cbHoldKey.Visible := true;
-                           cbHoldKey.Enabled := true;
-                         end;
+    lka_SkillProjection,
+    lka_ShowUsedSkills: begin
+                          cbHoldKey.Visible := true;
+                          cbHoldKey.Enabled := true;
+                        end;
     lka_SpecialSkip: begin
                        lblSkip.Visible := true;
                        cbSpecialSkip.Visible := true;
@@ -239,7 +244,8 @@ begin
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
     lka_ClearPhysics,
     lka_Projection,
-    lka_SkillProjection: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
+    lka_SkillProjection,
+    lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
   end;
   Label3.Caption := 'Editing key: ' + fKeyNames[i];
   cbFunctionsChange(self);
@@ -280,10 +286,11 @@ begin
                      end;
     lka_ClearPhysics,
     lka_Projection,
-    lka_SkillProjection: if cbHoldKey.Checked then
-                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
-                         else
-                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 0);
+    lka_SkillProjection,
+    lka_ShowUsedSkills: if cbHoldKey.Checked then
+                          fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
+                        else
+                          fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 0);
     else fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
   end;
   SetVisibleModifier(TLemmixHotkeyAction(cbFunctions.ItemIndex));
@@ -398,7 +405,7 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; //safety; should never happen
 
-  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics, lka_Projection, lka_SkillProjection]) then Exit;
+  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics, lka_Projection, lka_SkillProjection, lka_ShowUsedSkills]) then Exit;
 
   if cbHoldKey.Checked then
     fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 1)

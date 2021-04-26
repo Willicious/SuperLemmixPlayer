@@ -126,6 +126,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Toggle Shadows'
       'Projection Shadow'
       'Skill Projection Shadow'
+      'Show Used Skill Counts'
       'Fall Distance Template'
       'Zoom In'
       'Zoom Out'

@@ -21,6 +21,7 @@ type
   private
     fGame                 : TLemmingGame;
     fIconBmp              : TBitmap32;   // for temporary storage
+    fShowUsedSkills       : Boolean;
 
     fSetInitialZoom       : Boolean;
 
@@ -43,6 +44,7 @@ type
     function GetMaxZoom: Integer;
 
     procedure CombineShift(F: TColor32; var B: TColor32; M: TColor32);
+    procedure SetShowUsedSkills(const Value: Boolean);
   protected
     fGameWindow           : IGameWindow;
     fButtonRects          : array[TSkillPanelButton] of TRect;
@@ -165,6 +167,7 @@ type
 
     property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
+    property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
   end;
 
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
@@ -879,6 +882,12 @@ begin
   Invalidate;
 end;
 
+procedure TBaseSkillPanel.SetShowUsedSkills(const Value: Boolean);
+begin
+  fShowUsedSkills := Value;
+  RefreshInfo;
+end;
+
 procedure TBaseSkillPanel.SetSkillIcons;
 var
   ButtonIndex: Integer;
@@ -1236,9 +1245,15 @@ begin
       DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
     end;
 
-    // Skill and RR numbers
-    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      DrawSkillCount(i, Game.SkillCount[i]);
+    // Skill numbers
+    if self.fShowUsedSkills then
+    begin
+      for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+        DrawSkillCount(i, Game.SkillsUsed[i]);
+    end else begin
+      for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+        DrawSkillCount(i, Game.SkillCount[i]);
+    end;
 
     DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
   finally

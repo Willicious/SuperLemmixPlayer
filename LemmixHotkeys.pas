@@ -55,6 +55,7 @@ type
                          lka_ToggleShadows,
                          lka_Projection,
                          lka_SkillProjection,
+                         lka_ShowUsedSkills,
                          lka_FallDistance,
                          lka_ZoomIn,
                          lka_ZoomOut,
@@ -315,7 +316,8 @@ begin
   if s = 'clear_physics' then Result := lka_ClearPhysics;
   if s = 'toggle_shadows' then Result := lka_ToggleShadows;  
   if s = 'projection' then Result := lka_Projection;
-  if s = 'skill_projection' then Result := lka_SkillProjection;  
+  if s = 'skill_projection' then Result := lka_SkillProjection;
+  if s = 'show_used_skills' then Result := lka_ShowUsedSkills;
   if s = 'fall_distance' then Result := lka_FallDistance;
   if s = 'edit_replay' then Result := lka_EditReplay;
   if s = 'replay_insert' then Result := lka_ReplayInsert;
@@ -464,6 +466,7 @@ var
       lka_ToggleShadows:    Result := 'Toggle_Shadows';
       lka_Projection:       Result := 'Projection';
       lka_SkillProjection:  Result := 'Skill_Projection';
+      lka_ShowUsedSkills:   Result := 'Show_Used_Skills';
       lka_FallDistance:     Result := 'Fall_Distance';
       lka_EditReplay:       Result := 'Edit_Replay';
       lka_ReplayInsert:     Result := 'Replay_Insert';
@@ -517,7 +520,7 @@ begin
   begin
     s := InterpretMain(fKeyFunctions[i].Action);
     if s = 'Null' then Continue;
-    if fKeyFunctions[i].Action in [lka_Skill, lka_Skip, lka_SpecialSkip, lka_ClearPhysics, lka_Projection, lka_SkillProjection] then
+    if fKeyFunctions[i].Action in [lka_Skill, lka_Skip, lka_SpecialSkip, lka_ClearPhysics, lka_Projection, lka_SkillProjection, lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;
