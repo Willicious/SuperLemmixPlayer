@@ -16,8 +16,9 @@ type
   TPanelButtonArray = array of TSkillPanelButton;
 
 type
-  TBaseSkillPanel = class(TCustomControl)
+  TFontBitmapArray = array['0'..'9', 0..1] of TBitmap32;
 
+  TBaseSkillPanel = class(TCustomControl)
   private
     fGame                 : TLemmingGame;
     fIconBmp              : TBitmap32;   // for temporary storage
@@ -58,9 +59,11 @@ type
     fMinimapScrollFreeze  : Boolean;
     fLastClickFrameskip   : Cardinal;
 
-    fSkillFont            : array['0'..'9', 0..1] of TBitmap32;
+    fSkillFont            : TFontBitmapArray;
+    fSkillFontInvert      : TFontBitmapArray;
     fSkillOvercount       : array[100..MAXIMUM_SI] of TBitmap32;
     fSkillCountErase      : TBitmap32;
+    fSkillCountEraseInvert: TBitmap32;
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
     fSkillSelected        : TBitmap32;
@@ -285,6 +288,10 @@ begin
       fSkillFont[c, i] := TBitmap32.Create;
       fSkillFont[c, i].DrawMode := dmBlend;
       fSkillFont[c, i].CombineMode := cmMerge;
+
+      fSkillFontInvert[c, i] := TBitmap32.Create;
+      fSkillFontInvert[c, i].DrawMode := dmBlend;
+      fSkillFontInvert[c, i].CombineMode := cmMerge;
     end;
 
   fSkillInfinite := TBitmap32.Create;
@@ -298,6 +305,10 @@ begin
   fSkillCountErase := TBitmap32.Create;
   fSkillCountErase.DrawMode := dmBlend;
   fSkillCountErase.CombineMode := cmMerge;
+
+  fSkillCountEraseInvert := TBitmap32.Create;
+  fSkillCountEraseInvert.DrawMode := dmBlend;
+  fSkillCountEraseInvert.CombineMode := cmMerge;
 
   fSkillLock := TBitmap32.Create;
   fSkillLock.DrawMode := dmBlend;
@@ -327,7 +338,10 @@ begin
 
   for c := '0' to '9' do
     for i := 0 to 1 do
+    begin
       fSkillFont[c, i].Free;
+      fSkillFontInvert[c, i].Free;
+    end;
 
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     fSkillIcons[Button].Free;
@@ -338,6 +352,7 @@ begin
   fSkillInfinite.Free;
   fSkillSelected.Free;
   fSkillCountErase.Free;
+  fSkillCountEraseInvert.Free;
   fSkillLock.Free;
 
   fMinimapTemp.Free;
@@ -538,6 +553,7 @@ var
   BrickColor: TColor32;
   Button: TSkillPanelButton;
   TempBmp: TBitmap32;
+  x, y: Integer;
 
   procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
   var
@@ -645,8 +661,11 @@ begin
   GetGraphic('skill_count_erase.png', fSkillCountErase);
   GetGraphic('skill_selected.png', fSkillSelected);
 
-  //for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-  //  GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
+  fSkillCountEraseInvert.Assign(fSkillCountErase);
+  for y := 0 to fSkillCountEraseInvert.Height-1 do
+    for x := 0 to fSkillCountEraseInvert.Width-1 do
+      fSkillCountEraseInvert[x, y] := fSkillCountEraseInvert[x, y] xor $00FFFFFF; // don't invert alpha
+
   TempBmp := TBitmap32.Create; // freely useable as long as Outline isn't called while it's being used
   try
     // Some preparation
@@ -752,6 +771,7 @@ var
   i: Integer;
   SrcRect: TRect;
   TempBmp: TBitmap32;
+  x, y: Integer;
 
   procedure MakeOvercountImage(aCount: Integer);
   var
@@ -773,6 +793,11 @@ begin
     begin
       fSkillFont[c, i].SetSize(8 * ResMod, 8 * ResMod);
       fIconBmp.DrawTo(fSkillFont[c, i], (4 - 4 * i)  * ResMod, 0, SrcRect);
+
+      fSkillFontInvert[c, i].Assign(fSkillFont[c, i]);
+      for y := 0 to fSkillFontInvert[c, i].Height-1 do
+        for x := 0 to fSkillFontInvert[c, i].Width-1 do
+          fSkillFontInvert[c, i][x, y] := fSkillFontInvert[c,i][x,y] xor $00FFFFFF; // don't invert alpha
     end;
     OffsetRect(SrcRect, 4 * ResMod, 0);
   end;
@@ -1109,16 +1134,34 @@ procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: In
 var
   ButtonLeft, ButtonTop: Integer;
   NumberStr: string;
+
+  EraseBMP: TBitmap32;
+  FontBMP: TFontBitmapArray;
+  // Don't need variables for Infinite, Lock or Overcount as they're never used in inverted form
+
+  IsRegularSkill: Boolean;
 begin
   if fButtonRects[aButton].Left < 0 then Exit;
   if fGameWindow.IsHyperSpeed then Exit;
+
+  IsRegularSkill := aButton <= LAST_SKILL_BUTTON;
+
+  if IsRegularSkill and fShowUsedSkills then
+  begin
+    if aNumber > 99 then aNumber := 99;
+    EraseBMP := fSkillCountEraseInvert;
+    FontBMP := fSkillFontInvert;
+  end else begin
+    EraseBMP := fSkillCountErase;
+    FontBMP := fSkillFont;
+  end;
 
   ButtonLeft := fButtonRects[aButton].Left;
   ButtonTop := fButtonRects[aButton].Top;
 
   // Erase previous number
-  fSkillCountErase.DrawTo(fImage.Bitmap, ButtonLeft, ButtonTop);
-  if aNumber = 0 then Exit;
+  EraseBMP.DrawTo(fImage.Bitmap, ButtonLeft, ButtonTop);
+  if IsRegularSkill and (aNumber = 0) and not fShowUsedSkills then Exit;
 
   if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
     fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
@@ -1131,11 +1174,11 @@ begin
   end else if aNumber < 10 then
   begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1 * ResMod, ButtonTop + 1 * ResMod);
+    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1 * ResMod, ButtonTop + 1 * ResMod);
   end else begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    fSkillFont[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
-    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
+    FontBMP[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
+    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
   end;
 end;
 
