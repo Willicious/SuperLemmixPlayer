@@ -2790,7 +2790,7 @@ begin
   Result := False; // only see exit trigger area, if it actually used
 
   if     (not L.LemIsZombie)
-     and (not (L.LemAction in [baFalling, baSplatting, baJumping]))
+     and (not (L.LemAction in [baFalling, baSplatting, baJumping, baReaching]))
      and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
     if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
@@ -5708,6 +5708,9 @@ begin
     E.Frame := fCurrentIteration - 84
   else
     E.Frame := fCurrentIteration;
+
+  E.AddedByInsert := ReplayInsert;
+
   fReplayManager.Add(E);
 end;
 
@@ -5723,6 +5726,8 @@ begin
   E.NewSpawnInterval := aSI;
   E.SpawnedLemmingCount := LemmingList.Count;
 
+  E.AddedByInsert := ReplayInsert;
+
   fReplayManager.Add(E);
   CheckForReplayAction(true);
 end;
@@ -5737,6 +5742,8 @@ begin
   E.Skill := aSkill;
   E.SetInfoFromLemming(L, (L.LemIndex = fHighlightLemmingID));
   E.Frame := fCurrentIteration;
+
+  E.AddedByInsert := ReplayInsert;
 
   fReplayManager.Add(E);
 end;

@@ -40,6 +40,7 @@ type
   TBaseReplayItem = class
     private
       fFrame: Integer;
+      fAddedByInsert: Boolean;
     protected
       procedure DoLoadSection(Sec: TParserSection); virtual;    // Return TRUE if the line is understood. Should start with "if inherited then Exit".
       procedure DoSave(Sec: TParserSection); virtual;  // Should start with a call to inherited.
@@ -48,6 +49,7 @@ type
       constructor Create; // NEVER call this from this base class - only instanciate children!
       procedure Load(Sec: TParserSection);
       procedure Save(Sec: TParserSection);
+      property AddedByInsert: Boolean read fAddedByInsert write fAddedByInsert;
       property Frame: Integer read fFrame write fFrame;
   end;
 
@@ -117,6 +119,8 @@ type
   TReplay = class
     private
       fIsModified: Boolean;
+      fLastAddedAction: TBaseReplayItem; // should ONLY be used to test "is this action the last added one?"
+
       fAssignments: TReplayItemList;        // nuking is also included here
       fSpawnIntervalChanges: TReplayItemList;
       fPlayerName: String;
@@ -147,6 +151,7 @@ type
       procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
       procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
+      function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
       property LevelAuthor: String read fLevelAuthor write fLevelAuthor;
@@ -358,6 +363,7 @@ begin
       Dst.Delete(i);
   Dst.Add(aItem);
 
+  fLastAddedAction := aItem;
   fIsModified := true;
 end;
 
@@ -436,6 +442,11 @@ function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
 begin
   Result := CheckForAction(fAssignments)
          or CheckForAction(fSpawnIntervalChanges);
+end;
+
+function TReplay.IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
+begin
+  Result := (aAction = fLastAddedAction);
 end;
 
 function TReplay.GetLastActionFrame: Integer;
