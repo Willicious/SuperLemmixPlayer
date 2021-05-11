@@ -69,9 +69,11 @@ object FReplayEditor: TFReplayEditor
     Top = 48
     Width = 209
     Height = 209
+    Style = lbOwnerDrawFixed
     ItemHeight = 13
     TabOrder = 2
     OnClick = lbReplayActionsClick
+    OnDrawItem = lbReplayActionsDrawItem
   end
   object Panel1: TPanel
     Left = 8

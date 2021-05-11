@@ -6,6 +6,7 @@ unit FEditReplay;
 interface
 
 uses
+  SharedGlobals,
   LemReplay, UMisc, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls;
@@ -26,6 +27,8 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure lbReplayActionsClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
+    procedure lbReplayActionsDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
   private
     fSavedReplay: TMemoryStream;
     fReplay: TReplay;
@@ -113,6 +116,11 @@ var
     end else
       Result := 'Unknown replay action';
   end;
+
+  procedure AddAction(aAction: TBaseReplayItem);
+  begin
+    lbReplayActions.AddItem(GetString(aAction), aAction);
+  end;
 begin
   if aSelect <> nil then
     Selected := aSelect
@@ -128,10 +136,11 @@ begin
     begin
       Action := fReplay.SpawnIntervalChange[i, 0];
       if Action <> nil then
-        lbReplayActions.AddItem(GetString(Action), Action);
+        AddAction(Action);
+
       Action := fReplay.Assignment[i, 0];
       if Action <> nil then
-        lbReplayActions.AddItem(GetString(Action), Action);
+        AddAction(Action);
     end;
   finally
     for i := 0 to lbReplayActions.Items.Count-1 do
@@ -189,6 +198,36 @@ begin
   if lbReplayActions.ItemIndex = -1 then Exit;
   I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
   ebActionFrame.Text := IntToStr(I.Frame);
+end;
+
+procedure TFReplayEditor.lbReplayActionsDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; State: TOwnerDrawState);
+var
+  Action: TBaseReplayItem;
+
+  IsLatest: Boolean;
+  IsInsert: Boolean;
+
+  OldColor : TColor;
+begin
+  Action := TBaseReplayItem(lbReplayActions.Items.Objects[Index]);
+  IsLatest := fReplay.IsThisLatestAction(Action);
+  IsInsert := Action.AddedByInsert;
+
+  try
+    Log(lbReplayActions.Items[Index]);
+    if IsLatest then Log('yes latest') else Log('no latest');
+    if IsInsert then Log('yes insert') else Log('no insert');
+    Log('');
+
+
+    if IsLatest then lbReplayActions.Canvas.Font.Style := [fsBold];
+    if IsInsert then lbReplayActions.Canvas.Font.Color := $FF0000; // BGR, bleurgh
+    lbReplayActions.Canvas.TextOut(Rect.Left, Rect.Top, lbReplayActions.Items[Index]);
+  finally
+    lbReplayActions.Canvas.Font.Style := [];
+    lbReplayActions.Canvas.Font.Color := $000000;
+  end;
 end;
 
 procedure TFReplayEditor.btnDeleteClick(Sender: TObject);
