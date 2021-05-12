@@ -56,7 +56,7 @@ type
 
       procedure ShowPopup;
       procedure PrepareEmbed;
-      procedure PrepareEmbedRecords;
+      procedure PrepareEmbedRecords(aKind: TRecordDisplay);
 
       procedure Wipe;
 
@@ -668,7 +668,7 @@ begin
   ApplySize(AS_PANEL_WIDTH, AS_PANEL_HEIGHT);
 end;
 
-procedure TLevelInfoPanel.PrepareEmbedRecords;
+procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
 var
   Records: TLevelRecords;
 
@@ -676,9 +676,14 @@ var
 begin
   Wipe;
 
-  Records := GameParams.CurrentLevel.Records;
-
-  Add(ICON_RECORDS, 'Your records', true, pmNextRowLeft);
+  if aKind = rdUser then
+  begin
+    Records := GameParams.CurrentLevel.UserRecords;
+    Add(ICON_RECORDS, 'Your records', true, pmNextRowLeft);
+  end else begin
+    Records := GameParams.CurrentLevel.WorldRecords;
+    Add(ICON_WORLD_RECORDS, 'Records', true, pmNextRowLeft);
+  end;
 
   if Records.LemmingsRescued < 0 then
     Add(ICON_SAVE_REQUIREMENT, '~', true, pmNextColumnSame)

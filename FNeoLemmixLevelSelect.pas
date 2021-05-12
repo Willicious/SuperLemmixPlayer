@@ -56,7 +56,7 @@ type
     fPackTalBox: TScrollBox;
 
     fTalismanButtons: TObjectList<TSpeedButton>;
-    fDisplayRecords: Boolean;
+    fDisplayRecords: TRecordDisplay;
 
     procedure InitializeTreeview;
     procedure SetInfo;
@@ -130,6 +130,7 @@ const // Icon indexes
   ICON_MAX_SKILLS = 32;
 
   ICON_RECORDS = 35;
+  ICON_WORLD_RECORDS = 39;
   ICON_TIMER = 36;
 
   ICON_BLANK = 3;
@@ -446,8 +447,8 @@ begin
                   mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
       L.WipeRecords;
 
-    if fDisplayRecords then
-      fInfoForm.PrepareEmbedRecords;
+    if fDisplayRecords <> rdNone then
+      fInfoForm.PrepareEmbedRecords(fDisplayRecords);
   end;
 end;
 
@@ -619,7 +620,7 @@ begin
   fInfoForm.Visible := true;
   fInfoForm.Level := GameParams.Level;
   fInfoForm.Talisman := nil;
-  fDisplayRecords := false;
+  fDisplayRecords := rdNone;
 
   fInfoForm.PrepareEmbed;
 
@@ -781,6 +782,9 @@ begin
   if GameParams.CurrentLevel.Status in [lst_Completed_Outdated, lst_Completed] then
     MakeButton(-1);
 
+  if GameParams.CurrentLevel.WorldRecords.LemmingsRescued > 0 then
+    MakeButton(-2);
+
   for i := 0 to GameParams.Level.Talismans.Count-1 do
     MakeButton(i);
 
@@ -791,23 +795,30 @@ procedure TFLevelSelect.TalButtonClick(Sender: TObject);
 var
   TalBtn: TSpeedButton absolute Sender;
   Tal: TTalisman;
+  NewRecords: TRecordDisplay;
 begin
   if TalBtn.Tag < 0 then
   begin
-    fDisplayRecords := not fDisplayRecords;
+    NewRecords := rdWorld;
+    if TalBtn.Tag = -1 then NewRecords := rdUser;
+
+    if fDisplayRecords = NewRecords then
+      fDisplayRecords := rdNone
+    else
+      fDisplayRecords := NewRecords;
     fInfoForm.Talisman := nil;
 
     DrawTalismanButtons;
 
-    if fDisplayRecords then
-      fInfoForm.PrepareEmbedRecords
+    if fDisplayRecords <> rdNone then
+      fInfoForm.PrepareEmbedRecords(fDisplayRecords)
     else begin
       fInfoForm.Talisman := nil;
       fInfoForm.PrepareEmbed;
     end;
   end else begin
     Tal := GameParams.Level.Talismans[TalBtn.Tag];
-    fDisplayRecords := false;
+    fDisplayRecords := rdNone;
 
     if fInfoForm.Talisman = Tal then
       fInfoForm.Talisman := nil
@@ -907,15 +918,28 @@ var
   i: Integer;
   TalIcon: Integer;
   Tal: TTalisman;
+  RecordType: TRecordDisplay;
 begin
   for i := 0 to fTalismanButtons.Count-1 do
   begin
     if fTalismanButtons[i].Tag < 0 then
     begin
-      if fDisplayRecords then
-        DrawSpeedButton(fTalismanButtons[i], ICON_RECORDS, ICON_SELECTED_TALISMAN)
-      else
-        DrawSpeedButton(fTalismanButtons[i], ICON_RECORDS);
+      RecordType := rdWorld;
+      if fTalismanButtons[i].Tag = -1 then
+        RecordType := rdUser;
+
+      if RecordType = rdUser then
+      begin
+        if fDisplayRecords = rdUser then
+          DrawSpeedButton(fTalismanButtons[i], ICON_RECORDS, ICON_SELECTED_TALISMAN)
+        else
+          DrawSpeedButton(fTalismanButtons[i], ICON_RECORDS);
+      end else begin
+        if fDisplayRecords = rdWorld then
+          DrawSpeedButton(fTalismanButtons[i], ICON_WORLD_RECORDS, ICON_SELECTED_TALISMAN)
+        else
+          DrawSpeedButton(fTalismanButtons[i], ICON_WORLD_RECORDS);
+      end;
     end else begin
       Tal := GameParams.Level.Talismans[fTalismanButtons[i].Tag];
 

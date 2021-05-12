@@ -349,6 +349,9 @@ const
     trAnim                    // once animation
   );
 
+type
+  TRecordDisplay = (rdNone, rdUser, rdWorld);
+
   function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
   function SpawnIntervalToReleaseRate(aSI: Integer): Integer;
 
