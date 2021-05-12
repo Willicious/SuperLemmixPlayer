@@ -159,7 +159,7 @@ procedure TFReplayEditor.SetReplay(aReplay: TReplay; aIteration: Integer = -1);
 begin
   fReplay := aReplay;
   fSavedReplay.Clear;
-  fReplay.SaveToStream(fSavedReplay);
+  fReplay.SaveToStream(fSavedReplay, false, true);
   lblLevelName.Caption := Trim(fReplay.LevelName);
   if aIteration <> -1 then
     lblFrame.Caption := 'Current frame: ' + IntToStr(aIteration);
@@ -184,7 +184,7 @@ end;
 procedure TFReplayEditor.btnCancelClick(Sender: TObject);
 begin
   fSavedReplay.Position := 0;
-  fReplay.LoadFromStream(fSavedReplay);
+  fReplay.LoadFromStream(fSavedReplay, true);
 end;
 
 procedure TFReplayEditor.lbReplayActionsClick(Sender: TObject);

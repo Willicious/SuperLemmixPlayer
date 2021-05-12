@@ -1372,13 +1372,13 @@ begin
       lka_SaveState : begin
                         fSaveStateFrame := fGame.CurrentIteration;
                         fSaveStateReplayStream.Clear;
-                        Game.ReplayManager.SaveToStream(fSaveStateReplayStream);
+                        Game.ReplayManager.SaveToStream(fSaveStateReplayStream, false, true);
                       end;
       lka_LoadState : if fSaveStateFrame <> -1 then
                       begin
                         fSaveList.ClearAfterIteration(0);
                         fSaveStateReplayStream.Position := 0;
-                        Game.ReplayManager.LoadFromStream(fSaveStateReplayStream);
+                        Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, true);
                         GotoSaveState(fSaveStateFrame, 1);
                         if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                       end;
