@@ -598,8 +598,11 @@ procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: 
       if Existing.Value < 0 then
         Existing := New
       else if (New.Value = Existing.Value) and (New.User <> Existing.User) then
-        Existing.User := 'Multiple users'
-      else if (aHigherIsBetter and (New.Value > Existing.Value)) or
+      begin
+        Existing.User := Existing.User + ' & ' + New.User;
+        if Length(Existing.User) > 64 then
+          Existing.User := 'Many users';
+      end else if (aHigherIsBetter and (New.Value > Existing.Value)) or
               ((not aHigherIsBetter) and (New.Value < Existing.Value)) then
         Existing := New;
     end;
