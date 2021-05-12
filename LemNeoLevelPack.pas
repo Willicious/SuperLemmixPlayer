@@ -597,7 +597,7 @@ procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: 
     begin
       if Existing.Value < 0 then
         Existing := New
-      else if (New.Value = Existing.Value) and (New.User <> Existing.User) then
+      else if (New.Value = Existing.Value) and (Pos(New.User, Existing.User) = 0) then
       begin
         Existing.User := Existing.User + ' & ' + New.User;
         if Length(Existing.User) > 64 then
