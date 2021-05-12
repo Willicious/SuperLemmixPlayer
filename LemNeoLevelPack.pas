@@ -1248,7 +1248,7 @@ var
       UserExit, WorldExit: Boolean;
     begin
       UserExit := (aLevel.Status = lst_None);
-      WorldExit := (aLevel.WorldRecords.LemmingsRescued > 0);
+      WorldExit := (aLevel.WorldRecords.LemmingsRescued <= 0);
 
       if UserExit and WorldExit then
         Exit;

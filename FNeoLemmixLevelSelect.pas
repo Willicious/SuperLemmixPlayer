@@ -780,9 +780,10 @@ begin
   n := 0;
 
   if GameParams.CurrentLevel.Status in [lst_Completed_Outdated, lst_Completed] then
+  begin
     MakeButton(-1);
-
-  if GameParams.CurrentLevel.WorldRecords.LemmingsRescued > 0 then
+    MakeButton(-2);
+  end else if GameParams.CurrentLevel.WorldRecords.LemmingsRescued > 0 then
     MakeButton(-2);
 
   for i := 0 to GameParams.Level.Talismans.Count-1 do

@@ -5246,8 +5246,6 @@ var
   NewRecs: TLevelRecords;
   Skill: TSkillPanelButton;
 begin
-  if not fReplayManager.IsThisUsersReplay then Exit;
-
   FillChar(NewRecs, SizeOf(TLevelRecords), $FF);
   NewRecs.LemmingsRescued := LemmingsIn;
 
