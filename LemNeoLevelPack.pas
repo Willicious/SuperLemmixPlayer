@@ -91,12 +91,13 @@ type
 
       procedure ValidateTalismans;
     public
-      Records: TLevelRecords;
+      UserRecords: TLevelRecords;
+      WorldRecords: TLevelRecords;
 
       constructor Create(aGroup: TNeoLevelGroup);
       destructor Destroy; override;
 
-      procedure WriteNewRecords(aRecords: TLevelRecords);
+      procedure WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);
       procedure WipeRecords;
 
       property Group: TNeoLevelGroup read fGroup;
@@ -376,7 +377,8 @@ begin
   fTalismans := TObjectList<TTalisman>.Create(true);
   fUnlockedTalismanList := TList<LongWord>.Create;
 
-  FillChar(Records, SizeOf(TLevelRecords), $FF);
+  FillChar(UserRecords, SizeOf(TLevelRecords), $FF);
+  FillChar(WorldRecords, SizeOf(TLevelRecords), $FF);
 end;
 
 destructor TNeoLevelEntry.Destroy;
@@ -578,10 +580,11 @@ end;
 
 procedure TNeoLevelEntry.WipeRecords;
 begin
-  FillChar(Records, SizeOf(TLevelRecords), $FF);
+  FillChar(UserRecords, SizeOf(TLevelRecords), $FF);
+  FillChar(WorldRecords, SizeOf(TLevelRecords), $FF);
 end;
 
-procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords);
+procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);
   procedure Apply(var Existing: Integer; New: Integer; aHigherIsBetter: Boolean);
   begin
     if New >= 0 then
@@ -600,12 +603,22 @@ procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords);
 var
   Skill: TSkillPanelButton;
 begin
-  Apply(Records.LemmingsRescued, aRecords.LemmingsRescued, true);
-  Apply(Records.TimeTaken, aRecords.TimeTaken, false);
-  Apply(Records.TotalSkills, aRecords.TotalSkills, false);
+  Apply(WorldRecords.LemmingsRescued, aRecords.LemmingsRescued, true);
+  Apply(WorldRecords.TimeTaken, aRecords.TimeTaken, false);
+  Apply(WorldRecords.TotalSkills, aRecords.TotalSkills, false);
+  if aUserRecords then
+  begin
+    Apply(UserRecords.LemmingsRescued, aRecords.LemmingsRescued, true);
+    Apply(UserRecords.TimeTaken, aRecords.TimeTaken, false);
+    Apply(UserRecords.TotalSkills, aRecords.TotalSkills, false);
+  end;
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    Apply(Records.SkillCount[Skill], aRecords.SkillCount[Skill], false);
+  begin
+    Apply(WorldRecords.SkillCount[Skill], aRecords.SkillCount[Skill], false);
+    if aUserRecords then
+      Apply(UserRecords.SkillCount[Skill], aRecords.SkillCount[Skill], false);
+  end;
 end;
 
 { TNeoLevelGroup }
@@ -1155,12 +1168,19 @@ var
       if aLevel.Status = lst_Completed then
         CheckIfOutdated;
 
-      aLevel.Records.LemmingsRescued := Sec.LineNumericDefault['lemming_record', -1];
-      aLevel.Records.TimeTaken := Sec.LineNumericDefault['time_record', -1];
-      aLevel.Records.TotalSkills := Sec.LineNumericDefault['fewest_skills', -1];
+      aLevel.UserRecords.LemmingsRescued := Sec.LineNumericDefault['lemming_record', -1];
+      aLevel.UserRecords.TimeTaken := Sec.LineNumericDefault['time_record', -1];
+      aLevel.UserRecords.TotalSkills := Sec.LineNumericDefault['fewest_skills', -1];
 
       for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        aLevel.Records.SkillCount[Skill] := Sec.LineNumericDefault['fewest_' + SKILL_NAMES[Skill], -1];
+        aLevel.UserRecords.SkillCount[Skill] := Sec.LineNumericDefault['fewest_' + SKILL_NAMES[Skill], -1];
+
+      aLevel.WorldRecords.LemmingsRescued := Sec.LineNumericDefault['world_lemming_record', -1];
+      aLevel.WorldRecords.TimeTaken := Sec.LineNumericDefault['world_time_record', -1];
+      aLevel.WorldRecords.TotalSkills := Sec.LineNumericDefault['world_fewest_skills', -1];
+
+      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+        aLevel.WorldRecords.SkillCount[Skill] := Sec.LineNumericDefault['world_fewest_' + SKILL_NAMES[Skill], -1];
 
       Sec.DoForEachLine('talisman',
                         procedure(aLine: TParserLine; const aIteration: Integer)
@@ -1224,33 +1244,52 @@ var
       ActiveLevelSec: TParserSection;
       i: Integer;
       Skill: TSkillPanelButton;
+
+      UserExit, WorldExit: Boolean;
     begin
-      if aLevel.Status = lst_None then
+      UserExit := (aLevel.Status = lst_None);
+      WorldExit := (aLevel.WorldRecords.LemmingsRescued <= 0);
+
+      if UserExit and WorldExit then
         Exit;
 
       ActiveLevelSec := LevelSec.SectionList.Add(aLevel.RelativePath);
 
-      ActiveLevelSec.AddLine('status', STATUS_TEXTS[aLevel.Status]);
-
-      if aLevel.Status >= lst_Completed_Outdated then
+      if not UserExit then
       begin
-        ActiveLevelSec.AddLine('modified_date', GetFileAge(aLevel.Path));
-        ActiveLevelSec.AddLine('crc', aLevel.CRC32);
+        ActiveLevelSec.AddLine('status', STATUS_TEXTS[aLevel.Status]);
+
+        if aLevel.Status >= lst_Completed_Outdated then
+        begin
+          ActiveLevelSec.AddLine('modified_date', GetFileAge(aLevel.Path));
+          ActiveLevelSec.AddLine('crc', aLevel.CRC32);
+        end;
+
+        ActiveLevelSec.AddLine('lemming_record', aLevel.UserRecords.LemmingsRescued);
+
+        if aLevel.Status >= lst_Completed_Outdated then
+        begin
+          ActiveLevelSec.AddLine('time_record', aLevel.UserRecords.TimeTaken);
+          ActiveLevelSec.AddLine('fewest_skills', aLevel.UserRecords.TotalSkills);
+          for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+            if aLevel.UserRecords.SkillCount[Skill] >= 0 then
+              ActiveLevelSec.AddLine('fewest_' + SKILL_NAMES[Skill], aLevel.UserRecords.SkillCount[Skill]);
+        end;
+
+        for i := 0 to aLevel.fUnlockedTalismanList.Count-1 do
+          ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fUnlockedTalismanList[i], 8));
       end;
 
-      ActiveLevelSec.AddLine('lemming_record', aLevel.Records.LemmingsRescued);
-
-      if aLevel.Status >= lst_Completed_Outdated then
+      if not WorldExit then
       begin
-        ActiveLevelSec.AddLine('time_record', aLevel.Records.TimeTaken);
-        ActiveLevelSec.AddLine('fewest_skills', aLevel.Records.TotalSkills);
+        ActiveLevelSec.AddLine('world_lemming_record', aLevel.WorldRecords.LemmingsRescued);
+
+        ActiveLevelSec.AddLine('world_time_record', aLevel.WorldRecords.TimeTaken);
+        ActiveLevelSec.AddLine('world_fewest_skills', aLevel.WorldRecords.TotalSkills);
         for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-          if aLevel.Records.SkillCount[Skill] >= 0 then
-            ActiveLevelSec.AddLine('fewest_' + SKILL_NAMES[Skill], aLevel.Records.SkillCount[Skill]);
+          if aLevel.UserRecords.SkillCount[Skill] >= 0 then
+            ActiveLevelSec.AddLine('world_fewest_' + SKILL_NAMES[Skill], aLevel.WorldRecords.SkillCount[Skill]);
       end;
-
-      for i := 0 to aLevel.fUnlockedTalismanList.Count-1 do
-        ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fUnlockedTalismanList[i], 8));
     end;
   begin
     for i := 0 to aGroup.Children.Count-1 do

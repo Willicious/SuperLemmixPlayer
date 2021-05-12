@@ -5246,8 +5246,6 @@ var
   NewRecs: TLevelRecords;
   Skill: TSkillPanelButton;
 begin
-  if not fReplayManager.IsThisUsersReplay then Exit;
-
   FillChar(NewRecs, SizeOf(TLevelRecords), $FF);
   NewRecs.LemmingsRescued := LemmingsIn;
 
@@ -5265,12 +5263,16 @@ begin
       end;
   end;
 
-  if LemmingsIn >= Level.Info.RescueCount then
-    GameParams.CurrentLevel.Status := lst_Completed
-  else if GameParams.CurrentLevel.Status = lst_None then
-    GameParams.CurrentLevel.Status := lst_Attempted;
+  if fReplayManager.IsThisUsersReplay then
+  begin
+    if LemmingsIn >= Level.Info.RescueCount then
+      GameParams.CurrentLevel.Status := lst_Completed
+    else if GameParams.CurrentLevel.Status = lst_None then
+      GameParams.CurrentLevel.Status := lst_Attempted;
 
-  GameParams.CurrentLevel.WriteNewRecords(NewRecs);
+    GameParams.CurrentLevel.WriteNewRecords(NewRecs, true);
+  end else
+    GameParams.CurrentLevel.WriteNewRecords(NewRecs, false);
 end;
 
 procedure TLemmingGame.IncrementIteration;
