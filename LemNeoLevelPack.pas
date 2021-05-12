@@ -57,6 +57,8 @@ type
     TimeTaken: TLevelRecordEntry;
     TotalSkills: TLevelRecordEntry;
     SkillCount: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TLevelRecordEntry;
+    procedure Wipe;
+    procedure SetNameOnAll(aName: String);
   end;
 
   TNeoLevelEntry = class  // This is an entry in a level pack's list, and does NOT contain the level itself
@@ -583,25 +585,9 @@ begin
 end;
 
 procedure TNeoLevelEntry.WipeRecords;
-  procedure WipeRecordEntry(var aEntry: TLevelRecordEntry);
-  begin
-    aEntry.Value := -1;
-    aEntry.User := '';
-  end;
-
-  procedure WipeRecordSet(var aSet: TLevelRecords);
-  var
-    Skill: TSkillPanelButton;
-  begin
-    WipeRecordEntry(aSet.LemmingsRescued);
-    WipeRecordEntry(aSet.TimeTaken);
-    WipeRecordEntry(aSet.TotalSkills);
-    for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      WipeRecordEntry(aSet.SkillCount[Skill]);
-  end;
 begin
-  WipeRecordSet(UserRecords);
-  WipeRecordSet(WorldRecords);
+  UserRecords.Wipe;
+  WorldRecords.Wipe;
 end;
 
 procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);
@@ -1287,14 +1273,20 @@ var
 
       procedure SaveRecord(aLabel: String; aUserEntry: TLevelRecordEntry; aWorldEntry: TLevelRecordEntry);
       var
-        SubSec: TParserSection;
+        RealSubSec: TParserSection;
+        function SubSec: TParserSection;
+        begin
+          if RealSubSec = nil then
+            RealSubSec := ActiveLevelSec.SectionList.Add(aLabel);
+          Result := RealSubSec;
+        end;
       begin
-        SubSec := ActiveLevelSec; // FUCK
+        RealSubSec := nil;
 
-        if not UserExit then
+        if (not UserExit) and (aUserEntry.Value >= 0) then
           SubSec.AddLine('user', aUserEntry.Value);
 
-        if not WorldExit then
+        if (not WorldExit) and (aWorldEntry.Value >= 0) then
         begin
           SubSec.AddLine('world', aWorldEntry.Value);
           SubSec.AddLine('world_username', aWorldEntry.User);
@@ -1810,5 +1802,38 @@ begin
   Result := inherited Get(Index);
 end;
 
+
+{ TLevelRecords }
+
+procedure TLevelRecords.SetNameOnAll(aName: String);
+  procedure SetNameOnRecordEntry(var aEntry: TLevelRecordEntry);
+  begin
+    aEntry.User := aName;
+  end;
+var
+  Skill: TSkillPanelButton;
+begin
+  SetNameOnRecordEntry(LemmingsRescued);
+  SetNameOnRecordEntry(TimeTaken);
+  SetNameOnRecordEntry(TotalSkills);
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    SetNameOnRecordEntry(SkillCount[Skill]);
+end;
+
+procedure TLevelRecords.Wipe;
+  procedure WipeRecordEntry(var aEntry: TLevelRecordEntry);
+  begin
+    aEntry.Value := -1;
+    aEntry.User := '';
+  end;
+var
+  Skill: TSkillPanelButton;
+begin
+  WipeRecordEntry(LemmingsRescued);
+  WipeRecordEntry(TimeTaken);
+  WipeRecordEntry(TotalSkills);
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    WipeRecordEntry(SkillCount[Skill]);
+end;
 
 end.
