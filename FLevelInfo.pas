@@ -685,32 +685,32 @@ begin
     Add(ICON_WORLD_RECORDS, 'Records', true, pmNextRowLeft);
   end;
 
-  if Records.LemmingsRescued < 0 then
+  if Records.LemmingsRescued.Value < 0 then
     Add(ICON_SAVE_REQUIREMENT, '~', true, pmNextColumnSame)
   else
-    Add(ICON_SAVE_REQUIREMENT, IntToStr(Records.LemmingsRescued) + ' / ' + IntToStr(fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount), true, pmNextColumnSame, COLOR_RECORDS);
+    Add(ICON_SAVE_REQUIREMENT, IntToStr(Records.LemmingsRescued.Value) + ' / ' + IntToStr(fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount), true, pmNextColumnSame, COLOR_RECORDS);
 
-  if Records.TimeTaken < 0 then
+  if Records.TimeTaken.Value < 0 then
     Add(ICON_TIMER, '~', true, pmNextColumnSame)
   else
     Add(ICON_TIMER,
-      IntToStr(Records.TimeTaken div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken div 17) mod 60, 2) + '.' +
-        LeadZeroStr(Round((Records.TimeTaken mod 17) / 17 * 100), 2),
+      IntToStr(Records.TimeTaken.Value div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken.Value div 17) mod 60, 2) + '.' +
+        LeadZeroStr(Round((Records.TimeTaken.Value mod 17) / 17 * 100), 2),
       true, pmNextColumnSame, COLOR_RECORDS);
 
-  if Records.TotalSkills < 0 then
+  if Records.TotalSkills.Value < 0 then
     Add(ICON_MAX_SKILLS, '~', true, pmNextColumnSame)
   else
-    Add(ICON_MAX_SKILLS, Records.TotalSkills, true, pmNextColumnSame, COLOR_RECORDS);
+    Add(ICON_MAX_SKILLS, Records.TotalSkills.Value, true, pmNextColumnSame, COLOR_RECORDS);
 
   Reposition(pmNextRowPadLeft);
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
-      if Records.SkillCount[Skill] < 0 then
+      if Records.SkillCount[Skill].Value < 0 then
         Add(ICON_SKILLS[Skill], '~', false, pmMoveHorz)
       else
-        Add(ICON_SKILLS[Skill], Records.SkillCount[Skill], false, pmMoveHorz, COLOR_RECORDS);
+        Add(ICON_SKILLS[Skill], Records.SkillCount[Skill].Value, false, pmMoveHorz, COLOR_RECORDS);
 
   if fCurrentPos.X = PADDING_SIZE then
     AddDummy(false, pmMoveHorz);

@@ -274,10 +274,10 @@ begin
 
     if GameParams.TestModeLevel <> nil then
       LF(1)
-    else if GameParams.CurrentLevel.UserRecords.LemmingsRescued < 0 then
+    else if GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value < 0 then
       Add(SYourRecord + PadL('0', 4))
     else
-      Add(SYourRecord + PadL(IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued), 4));
+      Add(SYourRecord + PadL(IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value), 4));
 
     LF(2);
 
@@ -297,7 +297,7 @@ begin
       if (GameParams.TestModeLevel <> nil) then
         LF(1)
       else
-        Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.UserRecords.TimeTaken), 8));
+        Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.UserRecords.TimeTaken.Value), 8));
     end;
   end;
 end;
