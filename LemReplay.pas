@@ -19,7 +19,7 @@ uses
   Dialogs,
   LemLevel,
   LemLemming, LemCore, LemVersion,
-  Contnrs, Classes, SysUtils, StrUtils,
+  Contnrs, Classes, SysUtils, StrUtils, Windows,
   LemNeoParser;
 
 const
@@ -41,6 +41,7 @@ type
     private
       fFrame: Integer;
       fAddedByInsert: Boolean;
+      fAddTime: Int64;
     protected
       procedure DoLoadSection(Sec: TParserSection); virtual;    // Return TRUE if the line is understood. Should start with "if inherited then Exit".
       procedure DoSave(Sec: TParserSection); virtual;  // Should start with a call to inherited.
@@ -50,6 +51,7 @@ type
       procedure Load(Sec: TParserSection);
       procedure Save(Sec: TParserSection);
       property AddedByInsert: Boolean read fAddedByInsert write fAddedByInsert;
+      property AddTime: Int64 read fAddTime write fAddTime;
       property Frame: Integer read fFrame write fFrame;
   end;
 
@@ -119,7 +121,6 @@ type
   TReplay = class
     private
       fIsModified: Boolean;
-      fLastAddedAction: TBaseReplayItem; // should ONLY be used to test "is this action the last added one?"
 
       fAssignments: TReplayItemList;        // nuking is also included here
       fSpawnIntervalChanges: TReplayItemList;
@@ -147,8 +148,8 @@ type
       procedure Delete(aItem: TBaseReplayItem);
       procedure LoadFromFile(aFile: String);
       procedure SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
-      procedure LoadFromStream(aStream: TStream);
-      procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
+      procedure LoadFromStream(aStream: TStream; aInternal: Boolean = false);
+      procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false; aInternal: Boolean = false);
       procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
       function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
@@ -180,6 +181,9 @@ implementation
 
 uses
   CustomPopup, LemNeoLevelPack, LemTypes, GameControl, uMisc, SharedGlobals; // in TReplay.GetSaveFileName
+
+var
+  IncludeInternalInfo: Boolean;
 
 // Standalone functions
 
@@ -363,7 +367,7 @@ begin
       Dst.Delete(i);
   Dst.Add(aItem);
 
-  fLastAddedAction := aItem;
+  aItem.AddTime := GetTickCount64;
   fIsModified := true;
 end;
 
@@ -445,8 +449,23 @@ begin
 end;
 
 function TReplay.IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
+var
+  i: Integer;
 begin
-  Result := (aAction = fLastAddedAction);
+  Result := false;
+
+  if aAction.AddTime <= 0 then Exit;
+
+  if aAction is TReplayChangeSpawnInterval then
+  begin
+    for i := 0 to fSpawnIntervalChanges.Count-1 do
+      if (fSpawnIntervalChanges[i] <> aAction) and (fSpawnIntervalChanges[i].AddTime >= aAction.AddTime) then Exit;
+  end else begin
+    for i := 0 to fAssignments.Count-1 do
+      if (fAssignments[i] <> aAction) and (fAssignments[i].AddTime >= aAction.AddTime) then Exit;
+  end;
+
+  Result := true;
 end;
 
 function TReplay.GetLastActionFrame: Integer;
@@ -465,12 +484,13 @@ begin
   CheckForAction(fSpawnIntervalChanges);
 end;
 
-procedure TReplay.LoadFromStream(aStream: TStream);
+procedure TReplay.LoadFromStream(aStream: TStream; aInternal: Boolean = false);
 var
   Parser: TParser;
   Sec: TParserSection;
   SL: TStringList;
 begin
+  IncludeInternalInfo := aInternal;
   Clear(true);
 
   SL := TStringList.Create;
@@ -547,11 +567,13 @@ begin
   end;
 end;
 
-procedure TReplay.SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
+procedure TReplay.SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false; aInternal: Boolean = false);
 var
   Parser: TParser;
   Sec: TParserSection;
 begin
+  IncludeInternalInfo := aInternal;
+
   Parser := TParser.Create;
   try
     Sec := Parser.MainSection;
@@ -727,11 +749,23 @@ end;
 procedure TBaseReplayItem.DoLoadSection(Sec: TParserSection);
 begin
   fFrame := Sec.LineNumeric['frame'];
+
+  if IncludeInternalInfo then
+  begin
+    fAddedByInsert := Sec.Line['inserted'] <> nil;
+    fAddTime := Sec.LineNumeric['addtime'];
+  end;
 end;
 
 procedure TBaseReplayItem.DoSave(Sec: TParserSection);
 begin
   Sec.AddLine('FRAME', fFrame);
+
+  if IncludeInternalInfo then
+  begin
+    if fAddedByInsert then Sec.AddLine('inserted');
+    Sec.AddLine('ADDTIME', fAddTime);
+  end;
 end;
 
 { TBaseReplayLemmingItem }
