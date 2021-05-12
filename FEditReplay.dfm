@@ -69,35 +69,11 @@ object FReplayEditor: TFReplayEditor
     Top = 48
     Width = 209
     Height = 209
-    Style = lbOwnerDrawFixed
+    Style = lbOwnerDrawVariable
     ItemHeight = 13
     TabOrder = 2
     OnClick = lbReplayActionsClick
     OnDrawItem = lbReplayActionsDrawItem
-  end
-  object Panel1: TPanel
-    Left = 8
-    Top = 288
-    Width = 209
-    Height = 97
-    BevelOuter = bvLowered
-    Enabled = False
-    TabOrder = 3
-    Visible = False
-    object Label1: TLabel
-      Left = 8
-      Top = 8
-      Width = 32
-      Height = 13
-      Caption = 'Frame:'
-    end
-    object ebActionFrame: TEdit
-      Left = 48
-      Top = 5
-      Width = 73
-      Height = 21
-      TabOrder = 0
-    end
   end
   object btnDelete: TButton
     Left = 72
@@ -106,7 +82,7 @@ object FReplayEditor: TFReplayEditor
     Height = 25
     Caption = 'Delete'
     Enabled = False
-    TabOrder = 4
+    TabOrder = 3
     OnClick = btnDeleteClick
   end
 end

@@ -6,7 +6,6 @@ unit FEditReplay;
 interface
 
 uses
-  SharedGlobals,
   LemReplay, UMisc, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls;
@@ -17,9 +16,6 @@ type
     btnCancel: TButton;
     lbReplayActions: TListBox;
     lblLevelName: TLabel;
-    Panel1: TPanel;
-    Label1: TLabel;
-    ebActionFrame: TEdit;
     btnDelete: TButton;
     lblFrame: TLabel;
     procedure FormCreate(Sender: TObject);
@@ -33,8 +29,9 @@ type
     fSavedReplay: TMemoryStream;
     fReplay: TReplay;
     fEarliestChange: Integer;
+    fCurrentIteration: Integer;
 
-    procedure ListReplayActions(aSelect: TBaseReplayItem = nil);
+    procedure ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = false);
     procedure NoteChangeAtFrame(aFrame: Integer);
   public
     procedure SetReplay(aReplay: TReplay; aIteration: Integer = -1);
@@ -58,7 +55,7 @@ begin
     fEarliestChange := aFrame;
 end;
 
-procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil);
+procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = false);
 var
   Selected: TObject;
   i: Integer;
@@ -122,18 +119,23 @@ var
     lbReplayActions.AddItem(GetString(aAction), aAction);
   end;
 begin
-  if aSelect <> nil then
+  if (aSelect <> nil) or SelectNil then
     Selected := aSelect
   else if lbReplayActions.ItemIndex = -1 then
     Selected := nil
-  else
+  else begin
     Selected := lbReplayActions.Items.Objects[lbReplayActions.ItemIndex];
+    SelectNil := (Selected = nil); // ItemIndex is not -1 if we reached here
+  end;
   lbReplayActions.OnClick := nil;
   lbReplayActions.Items.BeginUpdate;
   try
     lbReplayActions.Items.Clear;
     for i := 0 to fReplay.LastActionFrame do
     begin
+      if i = fCurrentIteration then
+        lbReplayActions.AddItem('--- CURRENT FRAME ---', nil);
+
       Action := fReplay.SpawnIntervalChange[i, 0];
       if Action <> nil then
         AddAction(Action);
@@ -144,7 +146,8 @@ begin
     end;
   finally
     for i := 0 to lbReplayActions.Items.Count-1 do
-      if lbReplayActions.Items.Objects[i] = Selected then
+      if (lbReplayActions.Items.Objects[i] = Selected) and
+         (SelectNil or (Selected <> nil)) then
       begin
         lbReplayActions.ItemIndex := i;
         Break;
@@ -158,11 +161,12 @@ end;
 procedure TFReplayEditor.SetReplay(aReplay: TReplay; aIteration: Integer = -1);
 begin
   fReplay := aReplay;
+  fCurrentIteration := aIteration;
   fSavedReplay.Clear;
   fReplay.SaveToStream(fSavedReplay, false, true);
   lblLevelName.Caption := Trim(fReplay.LevelName);
-  if aIteration <> -1 then
-    lblFrame.Caption := 'Current frame: ' + IntToStr(aIteration);
+  if fCurrentIteration <> -1 then
+    lblFrame.Caption := 'Current frame: ' + IntToStr(fCurrentIteration);
   ListReplayActions;
 end;
 
@@ -188,16 +192,9 @@ begin
 end;
 
 procedure TFReplayEditor.lbReplayActionsClick(Sender: TObject);
-var
-  I: TBaseReplayItem;
-  A: TReplaySkillAssignment absolute I;
-  R: TReplayChangeSpawnInterval absolute I;
-  N: TReplayNuke absolute I;
 begin
-  btnDelete.Enabled := lbReplayActions.ItemIndex <> -1;
-  if lbReplayActions.ItemIndex = -1 then Exit;
-  I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
-  ebActionFrame.Text := IntToStr(I.Frame);
+  btnDelete.Enabled := (lbReplayActions.ItemIndex <> -1) and
+                       (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] <> nil);
 end;
 
 procedure TFReplayEditor.lbReplayActionsDrawItem(Control: TWinControl;
@@ -207,22 +204,21 @@ var
 
   IsLatest: Boolean;
   IsInsert: Boolean;
-
-  OldColor : TColor;
 begin
   Action := TBaseReplayItem(lbReplayActions.Items.Objects[Index]);
-  IsLatest := fReplay.IsThisLatestAction(Action);
-  IsInsert := Action.AddedByInsert;
 
   try
-    Log(lbReplayActions.Items[Index]);
-    if IsLatest then Log('yes latest') else Log('no latest');
-    if IsInsert then Log('yes insert') else Log('no insert');
-    Log('');
+    if Action = nil then
+    begin
+      lbReplayActions.Canvas.Font.Color := $007F00;
+    end else begin
+      IsLatest := fReplay.IsThisLatestAction(Action);
+      IsInsert := Action.AddedByInsert;
 
+      if IsLatest then lbReplayActions.Canvas.Font.Style := [fsBold];
+      if IsInsert then lbReplayActions.Canvas.Font.Color := $FF0000; // BGR, bleurgh
+    end;
 
-    if IsLatest then lbReplayActions.Canvas.Font.Style := [fsBold];
-    if IsInsert then lbReplayActions.Canvas.Font.Color := $FF0000; // BGR, bleurgh
     lbReplayActions.Canvas.TextOut(Rect.Left, Rect.Top, lbReplayActions.Items[Index]);
   finally
     lbReplayActions.Canvas.Font.Style := [];
@@ -266,6 +262,8 @@ begin
 
   if lbReplayActions.ItemIndex = -1 then Exit;
   I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+  if I = nil then Exit; // just in case  
+
   NoteChangeAtFrame(I.Frame);
   if I is TReplayChangeSpawnInterval then
     if CheckConsecutiveRR then
