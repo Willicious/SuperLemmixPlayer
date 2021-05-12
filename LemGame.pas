@@ -5246,33 +5246,36 @@ var
   NewRecs: TLevelRecords;
   Skill: TSkillPanelButton;
 begin
-  FillChar(NewRecs, SizeOf(TLevelRecords), $FF);
-  NewRecs.LemmingsRescued := LemmingsIn;
+  NewRecs.Wipe;
+  NewRecs.LemmingsRescued.Value := LemmingsIn;
 
   if LemmingsIn = Level.Info.RescueCount then
   begin
     // We only want to update the rest when we're at the rescue count EXACTLY.
-    NewRecs.TimeTaken := fCurrentIteration;
-    NewRecs.TotalSkills := 0;
+    NewRecs.TimeTaken.Value := fCurrentIteration;
+    NewRecs.TotalSkills.Value := 0;
 
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if Skill in Level.Info.Skillset then
       begin
-        NewRecs.SkillCount[Skill] := SkillsUsed[Skill];
-        NewRecs.TotalSkills := NewRecs.TotalSkills + SkillsUsed[Skill];
+        NewRecs.SkillCount[Skill].Value := SkillsUsed[Skill];
+        NewRecs.TotalSkills.Value := NewRecs.TotalSkills.Value + SkillsUsed[Skill];
       end;
   end;
 
   if fReplayManager.IsThisUsersReplay then
   begin
+    NewRecs.SetNameOnAll(GameParams.Username);
     if LemmingsIn >= Level.Info.RescueCount then
       GameParams.CurrentLevel.Status := lst_Completed
     else if GameParams.CurrentLevel.Status = lst_None then
       GameParams.CurrentLevel.Status := lst_Attempted;
 
     GameParams.CurrentLevel.WriteNewRecords(NewRecs, true);
-  end else
+  end else begin
+    NewRecs.SetNameOnAll(fReplayManager.PlayerName);
     GameParams.CurrentLevel.WriteNewRecords(NewRecs, false);
+  end;
 end;
 
 procedure TLemmingGame.IncrementIteration;

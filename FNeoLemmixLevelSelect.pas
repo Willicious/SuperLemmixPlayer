@@ -783,7 +783,7 @@ begin
   begin
     MakeButton(-1);
     MakeButton(-2);
-  end else if GameParams.CurrentLevel.WorldRecords.LemmingsRescued > 0 then
+  end else if GameParams.CurrentLevel.WorldRecords.LemmingsRescued.Value > 0 then
     MakeButton(-2);
 
   for i := 0 to GameParams.Level.Talismans.Count-1 do

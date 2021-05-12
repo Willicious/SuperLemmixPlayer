@@ -47,11 +47,18 @@ type
       property List;
   end;
 
+  TLevelRecordEntry = record
+    Value: Integer;
+    User: String;
+  end;
+
   TLevelRecords = record
-    LemmingsRescued: Integer;
-    TimeTaken: Integer;
-    TotalSkills: Integer;
-    SkillCount: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
+    LemmingsRescued: TLevelRecordEntry;
+    TimeTaken: TLevelRecordEntry;
+    TotalSkills: TLevelRecordEntry;
+    SkillCount: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TLevelRecordEntry;
+    procedure Wipe;
+    procedure SetNameOnAll(aName: String);
   end;
 
   TNeoLevelEntry = class  // This is an entry in a level pack's list, and does NOT contain the level itself
@@ -377,8 +384,7 @@ begin
   fTalismans := TObjectList<TTalisman>.Create(true);
   fUnlockedTalismanList := TList<LongWord>.Create;
 
-  FillChar(UserRecords, SizeOf(TLevelRecords), $FF);
-  FillChar(WorldRecords, SizeOf(TLevelRecords), $FF);
+  WipeRecords;
 end;
 
 destructor TNeoLevelEntry.Destroy;
@@ -580,25 +586,26 @@ end;
 
 procedure TNeoLevelEntry.WipeRecords;
 begin
-  FillChar(UserRecords, SizeOf(TLevelRecords), $FF);
-  FillChar(WorldRecords, SizeOf(TLevelRecords), $FF);
+  UserRecords.Wipe;
+  WorldRecords.Wipe;
 end;
 
 procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);
-  procedure Apply(var Existing: Integer; New: Integer; aHigherIsBetter: Boolean);
+  procedure Apply(var Existing: TLevelRecordEntry; New: TLevelRecordEntry; aHigherIsBetter: Boolean);
   begin
-    if New >= 0 then
+    if New.Value >= 0 then
     begin
-      if Existing < 0 then
+      if Existing.Value < 0 then
         Existing := New
-      else if aHigherIsBetter xor (New < Existing) then // see note below
+      else if (New.Value = Existing.Value) and (Pos(New.User, Existing.User) = 0) then
+      begin
+        Existing.User := Existing.User + ' & ' + New.User;
+        if Length(Existing.User) > 64 then
+          Existing.User := 'Many users';
+      end else if (aHigherIsBetter and (New.Value > Existing.Value)) or
+              ((not aHigherIsBetter) and (New.Value < Existing.Value)) then
         Existing := New;
     end;
-
-    // The check noted above returns "false" if New = Existing when lower is better,
-    // but "true" if New = Existing when higher is better. In the context of this
-    // procedure, this inconsistency is harmless, but be aware if copying the code
-    // or turning this into a "detect for the sake of displaying a message" function.
   end;
 var
   Skill: TSkillPanelButton;
@@ -1153,6 +1160,33 @@ var
             aLevel.Status := lst_Completed_Outdated;
         end;
       end;
+
+      procedure LoadRecord(aLabel: String; var aUserEntry: TLevelRecordEntry; var aWorldEntry: TLevelRecordEntry);
+      var
+        SubSec: TParserSection;
+      begin
+        if Sec.Line[aLabel] <> nil then
+        begin
+          // Fallback behavior for older files
+          aUserEntry.Value := Sec.LineNumericDefault[aLabel, -1];
+          aUserEntry.User := GameParams.Username;
+          aWorldEntry.Value := Sec.LineNumericDefault[aLabel, -1];
+          aWorldEntry.User := GameParams.Username;
+        end else begin
+          aUserEntry.Value := -1;
+          aUserEntry.User := '';
+          aWorldEntry.Value := -1;
+          aWorldEntry.User := '';
+
+          SubSec := Sec.Section[aLabel];
+          if SubSec = nil then Exit;
+
+          aUserEntry.Value := SubSec.LineNumericDefault['user', -1];
+          if aUserEntry.Value >= 0 then aUserEntry.User := GameParams.Username;
+          aWorldEntry.Value := SubSec.LineNumericDefault['world', -1];
+          aWorldEntry.User := SubSec.LineString['world_username'];
+        end;
+      end;
     begin
       Sec := LevelSec.Section[aLevel.RelativePath];
       if Sec = nil then Exit;
@@ -1168,19 +1202,12 @@ var
       if aLevel.Status = lst_Completed then
         CheckIfOutdated;
 
-      aLevel.UserRecords.LemmingsRescued := Sec.LineNumericDefault['lemming_record', -1];
-      aLevel.UserRecords.TimeTaken := Sec.LineNumericDefault['time_record', -1];
-      aLevel.UserRecords.TotalSkills := Sec.LineNumericDefault['fewest_skills', -1];
+      LoadRecord('lemming_record', aLevel.UserRecords.LemmingsRescued, aLevel.WorldRecords.LemmingsRescued);
+      LoadRecord('time_record', aLevel.UserRecords.TimeTaken, aLevel.WorldRecords.TimeTaken);
+      LoadRecord('fewest_skills', aLevel.UserRecords.TotalSkills, aLevel.WorldRecords.TotalSkills);
 
       for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        aLevel.UserRecords.SkillCount[Skill] := Sec.LineNumericDefault['fewest_' + SKILL_NAMES[Skill], -1];
-
-      aLevel.WorldRecords.LemmingsRescued := Sec.LineNumericDefault['world_lemming_record', -1];
-      aLevel.WorldRecords.TimeTaken := Sec.LineNumericDefault['world_time_record', -1];
-      aLevel.WorldRecords.TotalSkills := Sec.LineNumericDefault['world_fewest_skills', -1];
-
-      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        aLevel.WorldRecords.SkillCount[Skill] := Sec.LineNumericDefault['world_fewest_' + SKILL_NAMES[Skill], -1];
+        LoadRecord('fewest_' + SKILL_NAMES[Skill], aLevel.UserRecords.SkillCount[Skill], aLevel.WorldRecords.SkillCount[Skill]);
 
       Sec.DoForEachLine('talisman',
                         procedure(aLine: TParserLine; const aIteration: Integer)
@@ -1246,9 +1273,31 @@ var
       Skill: TSkillPanelButton;
 
       UserExit, WorldExit: Boolean;
+
+      procedure SaveRecord(aLabel: String; aUserEntry: TLevelRecordEntry; aWorldEntry: TLevelRecordEntry);
+      var
+        RealSubSec: TParserSection;
+        function SubSec: TParserSection;
+        begin
+          if RealSubSec = nil then
+            RealSubSec := ActiveLevelSec.SectionList.Add(aLabel);
+          Result := RealSubSec;
+        end;
+      begin
+        RealSubSec := nil;
+
+        if (not UserExit) and (aUserEntry.Value >= 0) then
+          SubSec.AddLine('user', aUserEntry.Value);
+
+        if (not WorldExit) and (aWorldEntry.Value >= 0) then
+        begin
+          SubSec.AddLine('world', aWorldEntry.Value);
+          SubSec.AddLine('world_username', aWorldEntry.User);
+        end;
+      end;
     begin
       UserExit := (aLevel.Status = lst_None);
-      WorldExit := (aLevel.WorldRecords.LemmingsRescued <= 0);
+      WorldExit := (aLevel.WorldRecords.LemmingsRescued.Value <= 0);
 
       if UserExit and WorldExit then
         Exit;
@@ -1265,31 +1314,18 @@ var
           ActiveLevelSec.AddLine('crc', aLevel.CRC32);
         end;
 
-        ActiveLevelSec.AddLine('lemming_record', aLevel.UserRecords.LemmingsRescued);
-
-        if aLevel.Status >= lst_Completed_Outdated then
-        begin
-          ActiveLevelSec.AddLine('time_record', aLevel.UserRecords.TimeTaken);
-          ActiveLevelSec.AddLine('fewest_skills', aLevel.UserRecords.TotalSkills);
-          for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-            if aLevel.UserRecords.SkillCount[Skill] >= 0 then
-              ActiveLevelSec.AddLine('fewest_' + SKILL_NAMES[Skill], aLevel.UserRecords.SkillCount[Skill]);
-        end;
-
         for i := 0 to aLevel.fUnlockedTalismanList.Count-1 do
           ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fUnlockedTalismanList[i], 8));
       end;
 
-      if not WorldExit then
-      begin
-        ActiveLevelSec.AddLine('world_lemming_record', aLevel.WorldRecords.LemmingsRescued);
+      SaveRecord('lemming_record', aLevel.UserRecords.LemmingsRescued, aLevel.WorldRecords.LemmingsRescued);
+      SaveRecord('time_record', aLevel.UserRecords.TimeTaken, aLevel.WorldRecords.TimeTaken);
+      SaveRecord('fewest_skills', aLevel.UserRecords.TotalSkills, aLevel.WorldRecords.TotalSkills);
 
-        ActiveLevelSec.AddLine('world_time_record', aLevel.WorldRecords.TimeTaken);
-        ActiveLevelSec.AddLine('world_fewest_skills', aLevel.WorldRecords.TotalSkills);
-        for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-          if aLevel.UserRecords.SkillCount[Skill] >= 0 then
-            ActiveLevelSec.AddLine('world_fewest_' + SKILL_NAMES[Skill], aLevel.WorldRecords.SkillCount[Skill]);
-      end;
+      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+        if (aLevel.UserRecords.SkillCount[Skill].Value >= 0) or
+           (aLevel.WorldRecords.SkillCount[Skill].Value >= 0) then // avoid skills that don't exist in the level
+          SaveRecord('fewest_' + SKILL_NAMES[Skill], aLevel.UserRecords.SkillCount[Skill], aLevel.WorldRecords.SkillCount[Skill]);
     end;
   begin
     for i := 0 to aGroup.Children.Count-1 do
@@ -1769,5 +1805,38 @@ begin
   Result := inherited Get(Index);
 end;
 
+
+{ TLevelRecords }
+
+procedure TLevelRecords.SetNameOnAll(aName: String);
+  procedure SetNameOnRecordEntry(var aEntry: TLevelRecordEntry);
+  begin
+    aEntry.User := aName;
+  end;
+var
+  Skill: TSkillPanelButton;
+begin
+  SetNameOnRecordEntry(LemmingsRescued);
+  SetNameOnRecordEntry(TimeTaken);
+  SetNameOnRecordEntry(TotalSkills);
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    SetNameOnRecordEntry(SkillCount[Skill]);
+end;
+
+procedure TLevelRecords.Wipe;
+  procedure WipeRecordEntry(var aEntry: TLevelRecordEntry);
+  begin
+    aEntry.Value := -1;
+    aEntry.User := '';
+  end;
+var
+  Skill: TSkillPanelButton;
+begin
+  WipeRecordEntry(LemmingsRescued);
+  WipeRecordEntry(TimeTaken);
+  WipeRecordEntry(TotalSkills);
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    WipeRecordEntry(SkillCount[Skill]);
+end;
 
 end.
