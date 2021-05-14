@@ -3592,7 +3592,7 @@ begin
   Result := True;
   if L.LemEndOfAnimation then
   begin
-    if (L.LemX <= 0) or (L.LemX >= Level.Info.Width - 1) then
+    if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
       RemoveLemming(L, RM_NEUTRAL) // shouldn't get to this point but just in case
     else if HasPixelAt(L.LemX, L.LemY - 7) then
       Transition(L, baSliding)
@@ -3647,7 +3647,7 @@ function TLemmingGame.HandleSliding(L: TLemming): Boolean;
 var
   n: Integer;
 begin
-  if (L.LemX <= 0) or (L.LemX >= Level.Info.Width - 1) then
+  if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
     RemoveLemming(L, RM_NEUTRAL); // shouldn't get to this point but just in case
 
   Result := true;
