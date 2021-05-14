@@ -4621,17 +4621,17 @@ const
               begin
                 L.LemX := CheckX;
                 L.LemY := L.LemY - n + 1;
-                Transition(L, baWalking);
+                fLemNextAction := baWalking;
               end else if n <= 5 then begin
                 L.LemX := CheckX;
                 L.LemY := L.LemY - n + 5;
-                Transition(L, baHoisting);
+                fLemNextAction := baHoisting;
                 Inc(L.LemFrame, 2);
                 Inc(L.LemPhysicsFrame, 2);
               end else begin
                 L.LemX := CheckX;
                 L.LemY := L.LemY - n + 8;
-                Transition(L, baHoisting);
+                fLemNextAction := baHoisting;
               end;
 
               Exit;
@@ -4642,14 +4642,16 @@ const
               if L.LemIsClimber then
               begin
                 L.LemX := CheckX;
-                Transition(L, baClimbing);
+                fLemNextAction := baClimbing;
               end else begin
                 if L.LemIsSlider then
                 begin
                   Inc(L.LemX, L.LemDX);
-                  Transition(L, baSliding);
-                end else
-                  Transition(L, baFalling, true);
+                  fLemNextAction := baSliding;
+                end else begin
+                  L.LemDX := -L.LemDX;
+                  fLemNextAction := baFalling;
+                end;
               end;
               Exit;
             end;
@@ -4666,7 +4668,7 @@ const
         
           if HasPixelAt(L.LemX, L.LemY - n) then
           begin
-            Transition(L, baFalling);
+            fLemNextAction := baFalling;
             Exit;
           end;
         end;
@@ -4681,7 +4683,7 @@ const
         FirstStepSpecialHandling := false
       else if HasPixelAt(L.LemX, L.LemY) then // Foot check
       begin
-        Transition(L, baWalking);
+        fLemNextAction := baWalking;
         Exit;
       end;
     end;
@@ -4693,9 +4695,9 @@ begin
   begin
     Inc(L.LemJumpProgress);
     if (L.LemJumpProgress >= 8) and (L.LemIsGlider) then
-      Transition(L, baGliding)
+      fLemNextAction := baGliding
     else if L.LemJumpProgress = JUMPER_ARC_FRAMES then
-      Transition(L, baWalking);
+      fLemNextAction := baWalking;
   end;
 
   Result := true;
@@ -5939,6 +5941,7 @@ function TLemmingGame.SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): 
 var
   HandleGadgets: Boolean;
   LemPosArray: TArrayArrayInt;
+  LemWasJumping: Boolean;
   i: Integer;
 begin
   // Start Simulation Mode
@@ -5954,6 +5957,7 @@ begin
   begin
     // Get positions to check
     LemPosArray := GetGadgetCheckPositions(L);
+    LemWasJumping := L.LemAction = baJumping;
 
     // Check for exit, traps and teleporters (but stop at teleporters!)
     for i := 0 to Length(LemPosArray[0]) do
@@ -5968,7 +5972,7 @@ begin
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
              and not L.LemIsDisarmer)
-         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit)
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit) and not LemWasJumping)
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
