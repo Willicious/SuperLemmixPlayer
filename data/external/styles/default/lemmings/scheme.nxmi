@@ -494,7 +494,8 @@ $ANIMATIONS
   $END
   
   $SLIDER
-    FRAMES 1
+    FRAMES 3
+    LOOP_TO_FRAME 1
 
     $RIGHT
       FOOT_X 8

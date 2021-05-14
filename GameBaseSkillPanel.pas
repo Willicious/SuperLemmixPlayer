@@ -688,7 +688,7 @@ begin
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
     DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
-    DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 6, 22);
+    DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 5, 21);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 22);
 
     // Swimmer - we need to draw the background water
