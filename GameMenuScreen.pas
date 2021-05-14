@@ -863,6 +863,7 @@ begin
       {$endif}
     {$endif}
 
+    ForceDirectories(AppPath + 'styles\');
     SL.SaveToFile(AppPath + 'styles\version.ini');
   finally
     SL.Free;
