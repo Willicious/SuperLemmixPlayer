@@ -2272,7 +2272,8 @@ begin
 
     SimulateLem(CopyL, False);
 
-    if (CopyL.LemAction = baFalling) and (CopyL.LemDX = -L.LemDX) then
+    if ((CopyL.LemAction = baFalling) and (CopyL.LemDX = -L.LemDX)) or
+        (CopyL.LemAction = baSliding) then
       if HasPixelAt(CopyL.LemX, CopyL.LemY - 9) or HasPixelAt(CopyL.LemX, CopyL.LemY - 8) then
         Result := True;
 
