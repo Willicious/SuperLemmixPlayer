@@ -495,7 +495,7 @@ begin
     InnerC := RED_COLOR;
   end;
 
-  Origin := Point(aLemming.LemX + (aLemming.LemDX * 2), aLemming.LemY - 5);
+  Origin := Point(aLemming.LemX + aLemming.LemDX, aLemming.LemY - 4);
   Target := aLemming.LemLaserHitPoint;
 
   if GameParams.HighResolution then
@@ -507,9 +507,12 @@ begin
 
     if aLemming.LemDX > 0 then
     begin
-      Origin.X := Origin.X + 1;
+      Origin.X := Origin.X - 1;
       Target.X := Target.X + 1;
-    end;
+    end else
+      Origin.X := Origin.X + 2;
+
+    Origin.Y := Origin.Y + 2;
 
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
       Target.X, Target.Y,
@@ -532,6 +535,18 @@ begin
     fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 3), Origin.Y,
       Target.X, Target.Y + 3,
       OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 4,
+      Target.X - (aLemming.LemDX * 4), Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 4), Origin.Y,
+      Target.X, Target.Y + 4,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 5,
+      Target.X - (aLemming.LemDX * 5), Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 5), Origin.Y,
+      Target.X, Target.Y + 5,
+      InnerC, true);
   end else begin
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
       Target.X, Target.Y,
@@ -542,6 +557,12 @@ begin
     fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
       OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
+      Target.X - (aLemming.LemDX * 2), Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
+      Target.X, Target.Y + 2,
+      InnerC, true);
   end;
 
   if aLemming.LemLaserHit then
