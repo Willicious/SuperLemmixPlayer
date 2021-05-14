@@ -3713,8 +3713,10 @@ begin
       if not L.LemIsStartingAction then L.LemY := L.LemY - L.LemPhysicsFrame + 3;
 
       if L.LemIsSlider then
-        Transition(L, baSliding)
-      else begin
+      begin
+        Dec(L.LemY);
+        Transition(L, baSliding);
+      end else begin
         Dec(L.LemX, L.LemDx);
         Transition(L, baFalling, True); // turn around as well
       end;
