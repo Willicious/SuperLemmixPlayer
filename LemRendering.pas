@@ -2655,16 +2655,22 @@ var
   DrawRect: TRect;
 
   procedure DrawTriggerPixel();
+  var
+    AlreadyPresent: Boolean;
   begin
+    AlreadyPresent := PDst^ <> $00000000;
     if PPhys^ and PM_SOLID = 0 then
       PDst^ := $FFFF00FF
     else if PPhys^ and PM_STEEL <> 0 then
-      PDst^ := $FF400040
+      PDst^ := $FF600060
     else
       PDst^ := $FFA000A0;
 
     if (x - y) mod 2 <> 0 then
       PDst^ := PDst^ - $00200020;
+
+    if AlreadyPresent then
+      PDst^ := PDst^ - $00300030;
   end;
 
 begin
