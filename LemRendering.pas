@@ -95,6 +95,7 @@ type
     procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: TColor32);
 
     // Clear Physics combines
+    procedure CombineLasererShadowToShadowLayer(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
@@ -1375,17 +1376,13 @@ end;
 
 procedure TRenderer.DrawLasererShadow(L: TLemming);
 var
-  LastPoint: TPoint;
-  LastHit: Boolean;
+  LastHitPoint: TPoint;
   SavePhysicsMap: TBitmap32;
-
-  procedure PerformIteration;
-  begin
-    // Simulate next frame advance for lemming
-    LastPoint := L.LemLaserHitPoint;
-    LastHit := L.LemLaserHit;
-    fRenderInterface.SimulateLem(L);
-  end;
+  x, y: Integer;
+  AbsTotal: Integer;
+  Targ: TPoint;
+  Bounds: TRect;
+  PixPtr: PColor32;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
 
@@ -1393,7 +1390,48 @@ begin
   SavePhysicsMap := TBitmap32.Create;
   SavePhysicsMap.Assign(PhysicsMap);
 
-  // Todo: Actual laserer shadow
+  if (TempBitmap.Width <> PhysicsMap.Width) or (TempBitmap.Height <> PhysicsMap.Height) then
+    TempBitmap.SetSize(PhysicsMap.Width, PhysicsMap.Height);
+
+  TempBitmap.Clear(0);
+  TempBitmap.DrawMode := dmCustom;
+  TempBitmap.OnPixelCombine := CombineLasererShadowToShadowLayer;
+  Bounds := TempBitmap.BoundsRect;
+
+  LastHitPoint := Point(-1, -1); // can't actually hit because no terrain outside borders, so guaranteed dummy
+
+  while Assigned(L) and (L.LemAction = baLasering) do
+  begin
+    if L.LemLaserHit then
+      for y := -4 to 4 do
+        for x := -4 to 4 do
+        begin
+          AbsTotal := Abs(x) + Abs(y);
+          if AbsTotal <= 5 then
+          begin
+            Targ := Point(L.LemLaserHitPoint.X + x, L.LemLaserHitPoint.Y + y);
+            if not PtInRect(Bounds, Targ) then Continue;
+
+            PixPtr := TempBitmap.PixelPtr[Targ.X, Targ.Y];
+
+            if (AbsTotal = 5) or ((AbsTotal = 4) and ((x = 0) or (y = 0))) then
+            begin
+              Inc(PixPtr^, $00000100);
+              if AbsTotal = 5 then
+                if ((L.LemDX < 0) and ((x < 0) <> (y < 0))) or
+                   ((L.LemDX > 0) and ((x < 0) = (y < 0))) then
+                  Inc(PixPtr^, $00010000);
+            end else
+              Inc(PixPtr^, $00000001);
+          end;
+        end;
+
+    fRenderInterface.SimulateLem(L);
+    if (not L.LemLaserHit) or (L.LemLaserHitPoint = LastHitPoint) then break;
+    LastHitPoint := L.LemLaserHitPoint;
+  end;
+
+  TempBitmap.DrawTo(fLayers[rlHighShadows]);
 
   // Restore PhysicsMap
   PhysicsMap.Assign(SavePhysicsMap);
@@ -1645,6 +1683,12 @@ begin
     else
       MergeMem(F, B);
   end;
+end;
+
+procedure TRenderer.CombineLasererShadowToShadowLayer(F: TColor32;
+  var B: TColor32; M: TColor32);
+begin
+  if (F and $00FF0000 <> 0) or ((F and $0000FFFF) = $00000100) then B := SHADOW_COLOR;
 end;
 
 procedure TRenderer.CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: TColor32);
