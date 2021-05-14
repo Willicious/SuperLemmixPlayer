@@ -4567,6 +4567,9 @@ const
       if HandleFlipper(L, L.LemX, L.LemY) then
         Exit;
 
+    if HasTriggerAt(L.LemX, L.LemY, trZombie, L) and not L.LemIsZombie then
+      RemoveLemming(L, RM_ZOMBIE);
+
     if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
       HandleForceField(L, -1)
     else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
