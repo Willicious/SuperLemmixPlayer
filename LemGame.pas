@@ -173,6 +173,7 @@ type
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
+    fLemJumpToHoistAdvance     : Boolean; // when using above with Jumper -> Hoister, whether to apply a frame offset
     fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval          : Integer;
@@ -2444,7 +2445,14 @@ begin
       and ((fLemNextAction <> baSplatting) or not HasTriggerAt(L.LemX, L.LemY, trWater)) then
     begin
       Transition(L, fLemNextAction);
+      if fLemJumpToHoistAdvance then
+      begin
+        Inc(L.LemFrame, 2);
+        Inc(L.LemPhysicsFrame, 2);
+      end;
+
       fLemNextAction := baNone;
+      fLemJumpToHoistAdvance := false;
     end;
 
     // Pickup Skills
@@ -3349,6 +3357,7 @@ begin
   L.LemActionOld := L.LemAction;
   // No transition to do at the end of lemming movement
   fLemNextAction := baNone;
+  fLemJumpToHoistAdvance := false;
 
   Inc(L.LemFrame);
   Inc(L.LemPhysicsFrame);
@@ -4639,8 +4648,7 @@ const
                 L.LemX := CheckX;
                 L.LemY := L.LemY - n + 5;
                 fLemNextAction := baHoisting;
-                Inc(L.LemFrame, 2);
-                Inc(L.LemPhysicsFrame, 2);
+                fLemJumpToHoistAdvance := true;
               end else begin
                 L.LemX := CheckX;
                 L.LemY := L.LemY - n + 8;
@@ -5979,7 +5987,13 @@ begin
       if (fLemNextAction <> baNone) and ([LemPosArray[0, i], LemPosArray[1, i]] = [L.LemX, L.LemY]) then
       begin
         Transition(L, fLemNextAction);
+        if fLemJumpToHoistAdvance then
+        begin
+          Inc(L.LemFrame, 2);
+          Inc(L.LemPhysicsFrame, 2);
+        end;
         fLemNextAction := baNone;
+        fLemJumpToHoistAdvance := false;
       end;
 
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
