@@ -498,4 +498,47 @@ $ANIMATIONS
       FOOT_Y 10
     $END
   $END
+
+  $LASERER
+    FRAMES 1
+    
+    $RIGHT
+      FOOT_X 4
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 11
+      FOOT_Y 10
+    $END
+  $END
+
+  $DEHOISTER
+    FRAMES 7
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 12
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 12
+    $END
+  $END
+  
+  $SLIDER
+    FRAMES 3
+    LOOP_TO_FRAME 1
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 11
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 11
+    $END
+  $END
 $END
