@@ -220,7 +220,7 @@ type
     procedure DoTalismanCheck;
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
-    procedure ApplyLaserMask(P: TPoint; DX: Integer);
+    procedure ApplyLaserMask(P: TPoint; L: TLemming);
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
@@ -3010,21 +3010,31 @@ begin
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 end;
 
-procedure TLemmingGame.ApplyLaserMask(P: TPoint; DX: Integer);
+procedure TLemmingGame.ApplyLaserMask(P: TPoint; L: TLemming);
 var
   D, S: TRect;
+  DOrigin: TPoint;
+  TargetRect: TRect;
 begin
-  if DX = 1 then
-    LaserMask.OnPixelCombine := CombineMaskPixelsUpRight
-  else
+  if L.LemDX = 1 then
+  begin
+    LaserMask.OnPixelCombine := CombineMaskPixelsUpRight;
+    TargetRect := Rect(L.LemX, 0, Level.Info.Width, L.LemY);
+  end else begin
     LaserMask.OnPixelCombine := CombineMaskPixelsUpLeft;
+    TargetRect := Rect(0, 0, L.LemX + 1, L.LemY);
+  end;
 
   D.Left := P.X - 4;
   D.Top := P.Y - 4;
   D.Right := P.X + 4 + 1;
   D.Bottom := P.Y + 4 + 1;
 
-  S := Rect(0, 0, 9, 9);
+  DOrigin := D.TopLeft;
+
+  D := TRect.Intersect(D, TargetRect);
+
+  S := Rect(D.Left - DOrigin.X, D.Top - DOrigin.Y, D.Right - DOrigin.X, D.Bottom - DOrigin.Y);
 
   LaserMask.DrawTo(PhysicsMap, D, S);
 
@@ -3322,7 +3332,7 @@ begin
     if Hit then
     begin
       L.LemLaserHit := true;
-      ApplyLaserMask(Target, L.LemDX);
+      ApplyLaserMask(Target, L);
     end else
       L.LemLaserHit := false;
 

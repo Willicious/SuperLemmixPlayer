@@ -1383,8 +1383,15 @@ var
   Targ: TPoint;
   Bounds: TRect;
   PixPtr: PColor32;
+
+  TargetRect: TRect;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
+
+  if L.LemDX = 1 then
+    TargetRect := Rect(L.LemX, 0, PhysicsMap.Width, L.LemY)
+  else
+    TargetRect := Rect(0, 0, L.LemX + 1, L.LemY);
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1431,7 +1438,7 @@ begin
     LastHitPoint := L.LemLaserHitPoint;
   end;
 
-  TempBitmap.DrawTo(fLayers[rlHighShadows]);
+  TempBitmap.DrawTo(fLayers[rlHighShadows], TargetRect, TargetRect);
 
   // Restore PhysicsMap
   PhysicsMap.Assign(SavePhysicsMap);
