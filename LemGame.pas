@@ -4767,7 +4767,6 @@ begin
               or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing, baLasering]))
               or ( HasTriggerAt(X, Y, trOWLeft) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
               or ( HasTriggerAt(X, Y, trOWRight) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
-              or ((Y < -1) and (Skill = baFencing))
             );
 end;
 
