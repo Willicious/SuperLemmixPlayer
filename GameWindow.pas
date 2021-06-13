@@ -57,6 +57,7 @@ const
 type
   TGameWindow = class(TGameBaseScreen, IGameWindow)
   private
+    fRanOneUpdate: Boolean;
     fSaveStateReplayStream: TMemoryStream;
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
@@ -641,6 +642,8 @@ begin
         AddSaveState;
         fSaveList.TidyList(Game.CurrentIteration);
       end;
+
+      fRanOneUpdate := true;
     end;
 
     if Hyper and (fHyperSpeedStopCondition <> 0) then
@@ -989,7 +992,7 @@ begin
        or (PauseAfterSkip > 0) then
     GameSpeed := gspPause;
 
-  if aTargetIteration <> Game.CurrentIteration then
+  if (aTargetIteration <> Game.CurrentIteration) or fRanOneUpdate then
   begin
     // Find correct save state
     if aTargetIteration > 0 then
