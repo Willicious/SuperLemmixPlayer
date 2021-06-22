@@ -1492,6 +1492,11 @@ begin
       end;
   end;
 
+  if NewAction = baDehoisting then
+    L.LemDehoistPinY := L.LemY;
+  if NewAction = baSliding then
+    L.LemDehoistPinY := -1;
+
   // Change Action
   L.LemAction := NewAction;
   L.LemFrame := 0;
@@ -2728,8 +2733,11 @@ begin
   CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
   L.LemTeleporting := True;
   Gadget.TeleLem := L.LemIndex;
-  // Make sure to remove the blocker field!
+
+  // Make sure to remove the blocker field and the Dehoister pin
   L.LemHasBlockerField := False;
+  L.LemDehoistPinY := -1;
+
   SetBlockerMap;
 
   Gadgets[Gadget.ReceiverID].HoldActive := True;
@@ -3682,14 +3690,20 @@ begin
 end;
 
 function TLemmingGame.LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;
+  function SliderHasPixelAt(X, Y: Integer): Boolean;
+  begin
+    Result := HasPixelAt(X, Y);
+    if (not Result) and (X = L.LemX) and (Y = L.LemDehoistPinY) and (Y >= 0) then
+      Result := HasPixelAt(X, Y+1);
+  end;
 begin
   Result := true;
 
-  if HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY-1) then
+  if SliderHasPixelAt(L.LemX, L.LemY) and not SliderHasPixelAt(L.LemX, L.LemY-1) then
   begin
     Transition(L, baWalking);
     Result := false;
-  end else if not HasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
+  end else if not SliderHasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
   begin
     Transition(L, baFalling);
     Result := false;
@@ -3705,7 +3719,7 @@ begin
       CueSoundEffect(SFX_DROWNING, L.Position);
     end;
     Result := false;
-  end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
+  end else if SliderHasPixelAt(L.LemX - L.LemDX, L.LemY) then
   begin
     Dec(L.LemX, L.LemDX);
     Transition(L, baWalking, true);

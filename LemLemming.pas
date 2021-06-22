@@ -110,6 +110,7 @@ type
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
+    LemDehoistPinY                : Integer; // The Y coordinate the lemming started dehoisting on
     LemLaserHit                   : Boolean;
     LemLaserHitPoint              : TPoint;
     LemLaserRemainTime            : Integer;
@@ -321,6 +322,7 @@ begin
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
   LemJumpProgress := Source.LemJumpProgress;
+  LemDehoistPinY := Source.LemDehoistPinY;
   LemLaserHit := Source.LemLaserHit;
   LemLaserHitPoint := Source.LemLaserHitPoint;
   LemLaserRemainTime := Source.LemLaserRemainTime;
