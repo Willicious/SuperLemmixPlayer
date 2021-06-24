@@ -1729,7 +1729,6 @@ procedure TGameWindow.PrepareGameParams;
 -------------------------------------------------------------------------------}
 var
   Sca: Integer;
-  CenterPoint: TPoint;
   HorzStart, VertStart: Integer;
 begin
   inherited;
@@ -1789,8 +1788,6 @@ begin
   end;
 
   InitializeCursor;
-  CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
-  SetCursorPos(CenterPoint.X, CenterPoint.Y);
   if GameParams.EdgeScroll then ApplyMouseTrap;
 
   fRenderer := GameParams.Renderer;
