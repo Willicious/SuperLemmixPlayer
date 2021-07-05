@@ -1531,7 +1531,8 @@ begin
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
-    baOhnoing    : begin
+    baOhnoing,
+    baStoning    : begin
                      CueSoundEffect(SFX_OHNO, L.Position);
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
@@ -1541,7 +1542,6 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
-    baStoning    : CueSoundEffect(SFX_OHNO, L.Position);
     baExploding  : CueSoundEffect(SFX_EXPLOSION, L.Position);
     baStoneFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
