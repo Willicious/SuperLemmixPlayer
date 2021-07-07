@@ -220,7 +220,7 @@ type
     procedure DoTalismanCheck;
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
-    procedure ApplyLaserMask(P: TPoint; DX: Integer);
+    procedure ApplyLaserMask(P: TPoint; L: TLemming);
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
@@ -1492,6 +1492,11 @@ begin
       end;
   end;
 
+  if NewAction = baDehoisting then
+    L.LemDehoistPinY := L.LemY;
+  if NewAction = baSliding then
+    L.LemDehoistPinY := -1;
+
   // Change Action
   L.LemAction := NewAction;
   L.LemFrame := 0;
@@ -1526,7 +1531,8 @@ begin
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
-    baOhnoing    : begin
+    baOhnoing,
+    baStoning    : begin
                      CueSoundEffect(SFX_OHNO, L.Position);
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
@@ -1536,7 +1542,6 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
-    baStoning    : CueSoundEffect(SFX_OHNO, L.Position);
     baExploding  : CueSoundEffect(SFX_EXPLOSION, L.Position);
     baStoneFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
@@ -2728,8 +2733,11 @@ begin
   CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
   L.LemTeleporting := True;
   Gadget.TeleLem := L.LemIndex;
-  // Make sure to remove the blocker field!
+
+  // Make sure to remove the blocker field and the Dehoister pin
   L.LemHasBlockerField := False;
+  L.LemDehoistPinY := -1;
+
   SetBlockerMap;
 
   Gadgets[Gadget.ReceiverID].HoldActive := True;
@@ -3010,21 +3018,31 @@ begin
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 end;
 
-procedure TLemmingGame.ApplyLaserMask(P: TPoint; DX: Integer);
+procedure TLemmingGame.ApplyLaserMask(P: TPoint; L: TLemming);
 var
   D, S: TRect;
+  DOrigin: TPoint;
+  TargetRect: TRect;
 begin
-  if DX = 1 then
-    LaserMask.OnPixelCombine := CombineMaskPixelsUpRight
-  else
+  if L.LemDX = 1 then
+  begin
+    LaserMask.OnPixelCombine := CombineMaskPixelsUpRight;
+    TargetRect := Rect(L.LemX, 0, Level.Info.Width, L.LemY);
+  end else begin
     LaserMask.OnPixelCombine := CombineMaskPixelsUpLeft;
+    TargetRect := Rect(0, 0, L.LemX + 1, L.LemY);
+  end;
 
   D.Left := P.X - 4;
   D.Top := P.Y - 4;
   D.Right := P.X + 4 + 1;
   D.Bottom := P.Y + 4 + 1;
 
-  S := Rect(0, 0, 9, 9);
+  DOrigin := D.TopLeft;
+
+  D := TRect.Intersect(D, TargetRect);
+
+  S := Rect(D.Left - DOrigin.X, D.Top - DOrigin.Y, D.Right - DOrigin.X, D.Bottom - DOrigin.Y);
 
   LaserMask.DrawTo(PhysicsMap, D, S);
 
@@ -3322,7 +3340,7 @@ begin
     if Hit then
     begin
       L.LemLaserHit := true;
-      ApplyLaserMask(Target, L.LemDX);
+      ApplyLaserMask(Target, L);
     end else
       L.LemLaserHit := false;
 
@@ -3672,14 +3690,20 @@ begin
 end;
 
 function TLemmingGame.LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;
+  function SliderHasPixelAt(X, Y: Integer): Boolean;
+  begin
+    Result := HasPixelAt(X, Y);
+    if (not Result) and (X = L.LemX) and (Y = L.LemDehoistPinY) and (Y >= 0) then
+      Result := HasPixelAt(X, Y+1);
+  end;
 begin
   Result := true;
 
-  if HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY-1) then
+  if SliderHasPixelAt(L.LemX, L.LemY) and not SliderHasPixelAt(L.LemX, L.LemY-1) then
   begin
     Transition(L, baWalking);
     Result := false;
-  end else if not HasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
+  end else if not SliderHasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
   begin
     Transition(L, baFalling);
     Result := false;
@@ -3695,7 +3719,7 @@ begin
       CueSoundEffect(SFX_DROWNING, L.Position);
     end;
     Result := false;
-  end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
+  end else if SliderHasPixelAt(L.LemX - L.LemDX, L.LemY) then
   begin
     Dec(L.LemX, L.LemDX);
     Transition(L, baWalking, true);
@@ -4757,7 +4781,6 @@ begin
               or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing, baLasering]))
               or ( HasTriggerAt(X, Y, trOWLeft) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
               or ( HasTriggerAt(X, Y, trOWRight) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
-              or ((Y < -1) and (Skill = baFencing))
             );
 end;
 

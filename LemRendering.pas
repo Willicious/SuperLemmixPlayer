@@ -474,7 +474,8 @@ end;
 
 procedure TRenderer.DrawLemmingLaser(aLemming: TLemming);
 var
-  InnerC, OuterC: TColor32;
+  //InnerC, OuterC: TColor32;
+  LaserColors: array[0..4] of TColor32;
   Origin, Target: TPoint;
 
   Src, Dst: TRect;
@@ -487,15 +488,6 @@ const
   BLAST_COLORS: array[0..2] of TColor32 =
     ( $00000000, RED_COLOR, YELLOW_COLOR );
 begin
-  if aLemming.LemPhysicsFrame mod 2 = 0 then
-  begin
-    InnerC := WHITE_COLOR;
-    OuterC := RED_COLOR;
-  end else begin
-    OuterC := WHITE_COLOR;
-    InnerC := RED_COLOR;
-  end;
-
   Origin := Point(aLemming.LemX + aLemming.LemDX, aLemming.LemY - 4);
   Target := aLemming.LemLaserHitPoint;
 
@@ -515,55 +507,103 @@ begin
 
     Origin.Y := Origin.Y + 2;
 
+
+    LaserColors[0] := WHITE_COLOR;
+
+    case aLemming.LemPhysicsFrame mod 4 of
+      0, 2:
+        begin
+          LaserColors[1] := WHITE_COLOR;
+          LaserColors[2] := RED_COLOR;
+          LaserColors[3] := RED_COLOR;
+          LaserColors[4] := $00000000;
+        end;
+
+      1:
+        begin
+          LaserColors[1] := WHITE_COLOR;
+          LaserColors[2] := WHITE_COLOR;
+          LaserColors[3] := RED_COLOR;
+          LaserColors[4] := RED_COLOR;
+        end;
+
+      3:
+        begin
+          LaserColors[1] := RED_COLOR;
+          LaserColors[2] := RED_COLOR;
+          LaserColors[3] := $00000000;
+          LaserColors[4] := $00000000;
+        end;
+    end;
+
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
       Target.X, Target.Y,
-      InnerC, true);
+      LaserColors[0], true);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
       Target.X - aLemming.LemDX, Target.Y,
-      InnerC, true);
+      LaserColors[0], true);
     fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
-      InnerC, true);
+      LaserColors[0], true);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
       Target.X - (aLemming.LemDX * 2), Target.Y,
-      OuterC, true);
+      LaserColors[1], true);
     fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
       Target.X, Target.Y + 2,
-      OuterC, true);
+      LaserColors[1], true);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 3,
       Target.X - (aLemming.LemDX * 3), Target.Y,
-      OuterC, true);
+      LaserColors[2], true);
     fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 3), Origin.Y,
       Target.X, Target.Y + 3,
-      OuterC, true);
+      LaserColors[2], true);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 4,
       Target.X - (aLemming.LemDX * 4), Target.Y,
-      InnerC, true);
+      LaserColors[3], true);
     fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 4), Origin.Y,
       Target.X, Target.Y + 4,
-      InnerC, true);
+      LaserColors[3], true);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 5,
       Target.X - (aLemming.LemDX * 5), Target.Y,
-      InnerC, true);
+      LaserColors[4], true);
     fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 5), Origin.Y,
       Target.X, Target.Y + 5,
-      InnerC, true);
+      LaserColors[4], true);
   end else begin
+
+    LaserColors[0] := WHITE_COLOR;
+
+    case aLemming.LemPhysicsFrame mod 4 of
+      0, 1:
+        begin
+          LaserColors[1] := RED_COLOR;
+          LaserColors[2] := $00000000;
+        end;
+
+      2, 3:
+        begin
+          LaserColors[1] := WHITE_COLOR;
+          LaserColors[2] := RED_COLOR;
+        end;
+    end;
+
+    // LaserColors[3] and [4] are unused in low-res
+
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
       Target.X, Target.Y,
-      InnerC, true);
+      LaserColors[0], true);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
       Target.X - aLemming.LemDX, Target.Y,
-      OuterC, true);
+      LaserColors[1], true);
     fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
-      OuterC, true);
+      LaserColors[1], true);
     fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
       Target.X - (aLemming.LemDX * 2), Target.Y,
-      InnerC, true);
+      LaserColors[2], true);
     fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
       Target.X, Target.Y + 2,
-      InnerC, true);
+      LaserColors[2], true);
   end;
 
   if aLemming.LemLaserHit then
@@ -1383,8 +1423,15 @@ var
   Targ: TPoint;
   Bounds: TRect;
   PixPtr: PColor32;
+
+  TargetRect: TRect;
 begin
   fLayers.fIsEmpty[rlHighShadows] := False;
+
+  if L.LemDX = 1 then
+    TargetRect := Rect(L.LemX, 0, PhysicsMap.Width, L.LemY)
+  else
+    TargetRect := Rect(0, 0, L.LemX + 1, L.LemY);
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1431,7 +1478,7 @@ begin
     LastHitPoint := L.LemLaserHitPoint;
   end;
 
-  TempBitmap.DrawTo(fLayers[rlHighShadows]);
+  TempBitmap.DrawTo(fLayers[rlHighShadows], TargetRect, TargetRect);
 
   // Restore PhysicsMap
   PhysicsMap.Assign(SavePhysicsMap);

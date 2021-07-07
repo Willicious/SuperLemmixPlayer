@@ -57,6 +57,7 @@ const
 type
   TGameWindow = class(TGameBaseScreen, IGameWindow)
   private
+    fRanOneUpdate: Boolean;
     fSaveStateReplayStream: TMemoryStream;
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
@@ -641,6 +642,8 @@ begin
         AddSaveState;
         fSaveList.TidyList(Game.CurrentIteration);
       end;
+
+      fRanOneUpdate := true;
     end;
 
     if Hyper and (fHyperSpeedStopCondition <> 0) then
@@ -989,7 +992,7 @@ begin
        or (PauseAfterSkip > 0) then
     GameSpeed := gspPause;
 
-  if aTargetIteration <> Game.CurrentIteration then
+  if (aTargetIteration <> Game.CurrentIteration) or fRanOneUpdate then
   begin
     // Find correct save state
     if aTargetIteration > 0 then
@@ -1726,7 +1729,6 @@ procedure TGameWindow.PrepareGameParams;
 -------------------------------------------------------------------------------}
 var
   Sca: Integer;
-  CenterPoint: TPoint;
   HorzStart, VertStart: Integer;
 begin
   inherited;
@@ -1786,8 +1788,6 @@ begin
   end;
 
   InitializeCursor;
-  CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
-  SetCursorPos(CenterPoint.X, CenterPoint.Y);
   if GameParams.EdgeScroll then ApplyMouseTrap;
 
   fRenderer := GameParams.Renderer;

@@ -171,24 +171,29 @@ begin
   SetKeyFunction($39, lka_SpecialSkip, 2);
 
   // Skills
-  SetKeyFunction($44, lka_Skill, Integer(spbWalker));  // walker, D
-  SetKeyFunction($12, lka_Skill, Integer(spbShimmier)); // shimmier, alt
-  SetKeyFunction($5A, lka_Skill, Integer(spbClimber));  // climber, Z
-  SetKeyFunction($10, lka_Skill, Integer(spbSwimmer));  // swimmer, shift
-  SetKeyFunction($51, lka_Skill, Integer(spbFloater));  // floater, Q
-  SetKeyFunction($09, lka_Skill, Integer(spbGlider));  // glider, tab
-  SetKeyFunction($52, lka_Skill, Integer(spbDisarmer));  // disarmer, R
-  SetKeyFunction($56, lka_Skill, Integer(spbBomber));  // bomber, V
-  SetKeyFunction($42, lka_Skill, Integer(spbStoner));  // stoner, B
-  SetKeyFunction($58, lka_Skill, Integer(spbBlocker));  // blocker, X
+  SetKeyFunction($10, lka_SkillLeft);                      // <previous skill>, shift
+  SetKeyFunction($42, lka_SkillRight);                     // <next skill>, B
+  SetKeyFunction($44, lka_Skill, Integer(spbWalker));      // walker, D
+  SetKeyFunction($52, lka_Skill, Integer(spbJumper));      // jumper, R
+  SetKeyFunction($12, lka_Skill, Integer(spbShimmier));    // shimmier, alt
+  SetKeyFunction($48, lka_Skill, Integer(spbSlider));      // slider, H
+  SetKeyFunction($5A, lka_Skill, Integer(spbClimber));     // climber, Z
+                                                           // swimmer, <none>
+  SetKeyFunction($51, lka_Skill, Integer(spbFloater));     // floater, Q
+  SetKeyFunction($09, lka_Skill, Integer(spbGlider));      // glider, tab
+                                                           // disarmer, <none>
+  SetKeyFunction($56, lka_Skill, Integer(spbBomber));      // bomber, V
+                                                           // stoner, <none>
+  SetKeyFunction($58, lka_Skill, Integer(spbBlocker));     // blocker, X
   SetKeyFunction($54, lka_Skill, Integer(spbPlatformer));  // platformer, T
-  SetKeyFunction($41, lka_Skill, Integer(spbBuilder)); // builder, A
-  SetKeyFunction($59, lka_Skill, Integer(spbStacker)); // stacker, Y
-  SetKeyFunction($45, lka_Skill, Integer(spbBasher)); // basher, E
-  SetKeyFunction($43, lka_Skill, Integer(spbFencer)); // fencer, C
-  SetKeyFunction($47, lka_Skill, Integer(spbMiner)); // miner, G
-  SetKeyFunction($57, lka_Skill, Integer(spbDigger)); // digger, W
-  SetKeyFunction($48, lka_Skill, Integer(spbCloner)); // cloner, H
+  SetKeyFunction($41, lka_Skill, Integer(spbBuilder));     // builder, A
+                                                           // stacker, <none>
+  SetKeyFunction($59, lka_Skill, Integer(spbLaserer));     // laserer, Y
+  SetKeyFunction($45, lka_Skill, Integer(spbBasher));      // basher, E
+  SetKeyFunction($43, lka_Skill, Integer(spbFencer));      // fencer, C
+  SetKeyFunction($47, lka_Skill, Integer(spbMiner));       // miner, G
+  SetKeyFunction($57, lka_Skill, Integer(spbDigger));      // digger, W
+                                                           // cloner, <none>
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsMinimal;
@@ -258,6 +263,7 @@ begin
   SetKeyFunction($DC, lka_SpecialSkip, 2);
 
   // And here's the skill ones; these ones need the skill specified seperately
+  SetKeyFunction($09, lka_Skill, Integer(spbSlider));
   SetKeyFunction($31, lka_Skill, Integer(spbWalker));
   SetKeyFunction($32, lka_Skill, Integer(spbShimmier));
   SetKeyFunction($33, lka_Skill, Integer(spbSwimmer));
@@ -268,6 +274,7 @@ begin
   SetKeyFunction($38, lka_Skill, Integer(spbStacker));
   SetKeyFunction($39, lka_Skill, Integer(spbFencer));
   SetKeyFunction($30, lka_Skill, Integer(spbCloner));
+  SetKeyFunction($51, lka_Skill, Integer(spbLaserer));
   SetKeyFunction($72, lka_Skill, Integer(spbClimber));
   SetKeyFunction($73, lka_Skill, Integer(spbFloater));
   SetKeyFunction($74, lka_Skill, Integer(spbBomber));
@@ -276,6 +283,7 @@ begin
   SetKeyFunction($77, lka_Skill, Integer(spbBasher));
   SetKeyFunction($78, lka_Skill, Integer(spbMiner));
   SetKeyFunction($79, lka_Skill, Integer(spbDigger));
+  SetKeyFunction($BB, lka_Skill, Integer(spbJumper));
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;

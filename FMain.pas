@@ -30,6 +30,7 @@ type
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint; var Handled: Boolean);
     procedure FormShow(Sender: TObject);
+    procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
   private
     Started: Boolean;
     AppController: TAppController;
@@ -59,6 +60,17 @@ uses
   GameControl, GameBaseScreenCommon;
 
 {$R *.dfm}
+
+procedure TMainForm.CNKeyDown(var Message: TWMKeyDown);
+var
+  AssignedEventHandler: TKeyEvent;
+begin
+  AssignedEventHandler := OnKeyDown;
+  if Message.CharCode = vk_tab then
+    if Assigned(AssignedEventHandler) then
+      OnKeyDown(Self, Message.CharCode, KeyDataToShiftState(Message.KeyData));
+  inherited;
+end;
 
 procedure TMainForm.LMStart(var Msg: TMessage);
 begin
