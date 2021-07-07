@@ -12,21 +12,22 @@ implementation
 function GetBinaryChecksumMod(aStream: TStream): UInt64;
 var
   InData: UInt64;
-  OldResult: UInt64;
+  ShiftLen: Integer;
 begin
   Result := aStream.Size;
   while aStream.Position < aStream.Size do
   begin
     InData := 0;
     aStream.Read(InData, 8);
-    OldResult := Result;
 
-    if (OldResult and $8000000000000000) <> 0 then
-      Result := 1
-    else
-      Result := 0;
+    Result := Result xor InData;
 
-    Result := Result or ((OldResult and $7FFFFFFFFFFFFFFF) shl 1);
+    ShiftLen := 0;
+    while ((Result and $8000000000000000) = 0) and (ShiftLen < 13) do
+    begin
+      Result := Result shl 1;
+      Inc(ShiftLen);
+    end;
   end;
 end;
 
