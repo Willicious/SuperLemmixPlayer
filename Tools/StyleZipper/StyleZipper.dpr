@@ -5,6 +5,7 @@ program StyleZipper;
 {$R *.res}
 
 uses
+  GR32, GR32_Png,
   Zip,
   Classes,
   StrUtils,
@@ -99,6 +100,8 @@ var
     Sounds: TStringList;
     ObjSL: TStringList;
     i: Integer;
+    BMP: TBitmap32;
+    PngStream: TMemoryStream;
 
     procedure AddRecursive(aRelPath: String);
     var
@@ -113,6 +116,18 @@ var
 
           if (SearchRec.Attr and faDirectory) = 0 then
           begin
+            if (ParamStr(1) <> '-d') and (Lowercase(ExtractFileExt(SearchRec.Name)) = '.png') then
+            begin
+              // This is because some people use really dumb image editors that create huge files.
+              LoadBitmap32FromPng(BMP, Base + aRelPath + SearchRec.Name);
+
+              PngStream.Clear;
+              SaveBitmap32ToPng(BMP, PngStream);
+
+              if PngStream.Size < SearchRec.Size then
+                PngStream.SaveToFile(Base + aRelPath + SearchRec.Name);
+            end;
+
             Zip.Add(Base + aRelPath + SearchRec.Name, 'styles/' + aName + '/' + aRelPath + SearchRec.Name);
             if CompareText(ExtractFileExt(SearchRec.Name), '.nxmo') = 0 then
             begin
@@ -146,6 +161,8 @@ var
     Zip := TZipFile.Create;
     Sounds := TStringList.Create;
     ObjSL := TStringList.Create;
+    BMP := TBitmap32.Create;
+    PngStream := TMemoryStream.Create;
     try
       if FileExists(AppPath + 'style_zips\' + aName + '.zip') then
         DeleteFile(AppPath + 'style_zips\' + aName + '.zip');
@@ -169,6 +186,8 @@ var
       Zip.Free;
       Sounds.Free;
       ObjSL.Free;
+      BMP.Free;
+      PngStream.Free;
     end;
   end;
 
