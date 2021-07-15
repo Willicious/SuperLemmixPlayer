@@ -246,12 +246,12 @@ $ANIMATIONS
 
     $RIGHT
       FOOT_X 6
-      FOOT_Y 13
+      FOOT_Y 14
     $END
 
     $LEFT
       FOOT_X 7
-      FOOT_Y 13
+      FOOT_Y 14
     $END
   $END
 

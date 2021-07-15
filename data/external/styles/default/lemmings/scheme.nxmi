@@ -484,12 +484,12 @@ $ANIMATIONS
 
     $RIGHT
       FOOT_X 7
-      FOOT_Y 12
+      FOOT_Y 13
     $END
 
     $LEFT
       FOOT_X 8
-      FOOT_Y 12
+      FOOT_Y 13
     $END
   $END
   
