@@ -1,0 +1,112 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.40
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Zombie Kill Talisman Test
+ AUTHOR 
+ ID x6BD8F6B81C0812EB
+ VERSION x0000000000000002
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ THEME orig_dirt
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 12
+ SAVE_REQUIREMENT 1
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   WALKER 3
+ $END 
+ 
+ $TALISMAN 
+   TITLE Zombieeee
+   ID 0
+   COLOR Bronze
+   SAVE_REQUIREMENT 2
+   KILL_ZOMBIES
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_dirt
+   PIECE window
+   X 28
+   Y 42
+   NO_OVERWRITE
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE exit
+   X 194
+   Y 65
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 41
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 188
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 29
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_03
+   X 27
+   Y 90
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 82
+   Y 90
+   BLOCKER 
+ $END
+ 
+ $LEMMING
+   X 204
+   Y 88
+   BLOCKER 
+ $END
+ 
+ $LEMMING
+   X 192
+   Y 88
+   BLOCKER 
+ $END
+ 
+ 

@@ -21,6 +21,7 @@ type
     fTimeLimit: Integer;
     fTotalSkillLimit: Integer;
     fSkillLimits: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
+    fRequireKillZombies: Boolean;
 
     fLevelLemmingCount: Integer;
 
@@ -45,6 +46,7 @@ type
     property TimeLimit: Integer read fTimeLimit write fTimeLimit;
     property TotalSkillLimit: Integer read fTotalSkillLimit write fTotalSkillLimit;
     property SkillLimit[Index: TSkillPanelButton]: Integer read GetSkillLimit write SetSkillLimit;
+    property RequireKillZombies: Boolean read fRequireKillZombies write fRequireKillZombies;
     property RequirementText: String read fRequirementText;
 
     property LevelLemmingCount: Integer read fLevelLemmingCount write fLevelLemmingCount;
@@ -149,6 +151,9 @@ begin
     for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if SKILL_NAMES[i] <> S then
         fSkillLimits[i] := 0;
+
+  if aSec.Line['kill_zombies'] <> nil then
+    fRequireKillZombies := true;
 end;
 
 procedure TTalisman.SaveToSection(aSec: TParserSection);
@@ -176,6 +181,9 @@ begin
 
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     AddLine(SKILL_NAMES[i] + '_limit', fSkillLimits[i]);
+
+  if fRequireKillZombies then
+    aSec.AddLine('kill_zombies');
 end;
 
 end.
