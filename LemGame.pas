@@ -829,6 +829,9 @@ var
 begin
   Result := false;
 
+  if UserSetNuking then
+    Exit;
+
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i].LemIsZombie and not LemmingList[i].LemRemoved then
       Exit;
