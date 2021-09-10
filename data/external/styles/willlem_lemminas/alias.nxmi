@@ -1,0 +1,114 @@
+$GADGET
+  FROM :antisplat_glow
+  TO willlem_special:antisplat_glow
+$END
+
+$GADGET
+  FROM :bubbles
+  TO :water
+$END
+
+$GADGET
+  FROM :exit_locked_teal
+  TO :exit_locked
+$END
+
+$GADGET
+  FROM :exit_teal
+  TO :exit
+$END
+
+$GADGET
+  FROM :splat_glow
+  TO willlem_special:splat_glow
+$END
+
+$GADGET
+  FROM :window_teal
+  TO :window
+$END
+
+$TERRAIN
+  FROM :black_brick
+  TO :purplebricks_03
+$END
+
+$TERRAIN
+  FROM :blue_brick
+  TO :purplebricks_03
+$END
+
+$TERRAIN
+  FROM :fairy_dust__teal_01
+  TO :fairy_dust_01
+$END
+
+$TERRAIN
+  FROM :fairy_dust_melt_teal_01
+  TO :fairy_dust_melt_01
+$END
+
+$TERRAIN
+  FROM :fairy_dust_melt_teal_02
+  TO :fairy_dust_melt_02
+$END
+
+$TERRAIN
+  FROM :fairy_dust_teal_01
+  TO :fairy_dust_01
+$END
+
+$TERRAIN
+  FROM :fairy_dust_teal_02
+  TO :fairy_dust_02
+$END
+
+$TERRAIN
+  FROM :fairy_dust_teal_03
+  TO :fairy_dust_03
+$END
+
+$TERRAIN
+  FROM :fairy_dust_teal_04
+  TO :fairy_dust_04
+$END
+
+$TERRAIN
+  FROM :fairy_dust_teal_05
+  TO :fairy_dust_05
+$END
+
+$TERRAIN
+  FROM :fairy_dust_teal_06
+  TO :fairy_dust_06
+$END
+
+$TERRAIN
+  FROM :fairy_dust_teal_07
+  TO :fairy_dust_07
+$END
+
+$TERRAIN
+  FROM :purplebricks_teal_01
+  TO :purplebricks_01
+$END
+
+$TERRAIN
+  FROM :purplebricks_teal_02
+  TO :purplebricks_02
+$END
+
+$TERRAIN
+  FROM :purplebricks_teal_03
+  TO :purplebricks_03
+$END
+
+$TERRAIN
+  FROM :purplebricks_teal_04
+  TO :purplebricks_04
+$END
+
+$TERRAIN
+  FROM :purplebricks_teal_05
+  TO :purplebricks_05
+$END
