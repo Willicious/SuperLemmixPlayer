@@ -143,6 +143,10 @@ var
                 Line := TrimLeft(ObjSL[i]);
                 if CompareText(LeftStr(Line, 5), 'SOUND') = 0 then
                   Sounds.Add(RightStr(Line, Length(Line) - 6));
+                if CompareText(LeftStr(Line, 14), 'SOUND_ACTIVATE') = 0 then
+                  Sounds.Add(RightStr(Line, Length(Line) - 15));
+                if CompareText(LeftStr(Line, 13), 'SOUND_EXHAUST') = 0 then
+                  Sounds.Add(RightStr(Line, Length(Line) - 14));
               end;
             end;
           end else
