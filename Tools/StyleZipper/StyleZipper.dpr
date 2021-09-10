@@ -116,6 +116,12 @@ var
 
           if (SearchRec.Attr and faDirectory) = 0 then
           begin
+            if Lowercase(SearchRec.Name) = 'thumbs.db' then
+            begin
+              DeleteFile(Base + aRelPath + SearchRec.Name);
+              Continue;
+            end;
+
             if (ParamStr(1) <> '-d') and (Lowercase(ExtractFileExt(SearchRec.Name)) = '.png') then
             begin
               // This is because some people use really dumb image editors that create huge files.
