@@ -116,6 +116,12 @@ var
 
           if (SearchRec.Attr and faDirectory) = 0 then
           begin
+            if Lowercase(SearchRec.Name) = 'thumbs.db' then
+            begin
+              DeleteFile(Base + aRelPath + SearchRec.Name);
+              Continue;
+            end;
+
             if (ParamStr(1) <> '-d') and (Lowercase(ExtractFileExt(SearchRec.Name)) = '.png') then
             begin
               // This is because some people use really dumb image editors that create huge files.
@@ -137,6 +143,10 @@ var
                 Line := TrimLeft(ObjSL[i]);
                 if CompareText(LeftStr(Line, 5), 'SOUND') = 0 then
                   Sounds.Add(RightStr(Line, Length(Line) - 6));
+                if CompareText(LeftStr(Line, 14), 'SOUND_ACTIVATE') = 0 then
+                  Sounds.Add(RightStr(Line, Length(Line) - 15));
+                if CompareText(LeftStr(Line, 13), 'SOUND_EXHAUST') = 0 then
+                  Sounds.Add(RightStr(Line, Length(Line) - 14));
               end;
             end;
           end else
