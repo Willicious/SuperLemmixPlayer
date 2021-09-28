@@ -503,7 +503,7 @@ $ANIMATIONS
     LOOP_TO_FRAME 1
 
     $RIGHT
-      FOOT_X 8
+      FOOT_X 7
       FOOT_Y 11
     $END
 
