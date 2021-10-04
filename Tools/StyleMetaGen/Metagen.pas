@@ -19,6 +19,7 @@ type
   TStyleProcessor = class
     private
       fRawStyleData: TList<TStyleInfo>;
+      fWarnings: TStringList;
 
       procedure LoadStyleIni;
 
@@ -27,6 +28,7 @@ type
       procedure SortStyleList;
       procedure FixIndices;
       procedure GenerateMetaFiles;
+      procedure SaveWarningInfo;
     public
       constructor Create;
       destructor Destroy; override;
@@ -41,11 +43,13 @@ implementation
 constructor TStyleProcessor.Create;
 begin
   fRawStyleData := TList<TStyleInfo>.Create;
+  fWarnings := TStringList.Create;
 end;
 
 destructor TStyleProcessor.Destroy;
 begin
   fRawStyleData.Free;
+  fWarnings.Free;
   inherited;
 end;
 
@@ -56,6 +60,15 @@ begin
   SortStyleList;
   FixIndices;
   GenerateMetaFiles;
+  SaveWarningInfo;
+end;
+
+procedure TStyleProcessor.SaveWarningInfo;
+begin
+  if fWarnings.Count = 0 then
+    fWarnings.Add('No warnings to report.');
+
+  fWarnings.SaveToFile('..\StyleMetaGen Warnings.txt');
 end;
 
 procedure TStyleProcessor.GenerateMetaFiles;
@@ -73,6 +86,9 @@ begin
       SL.Add('ORDER ' + IntToStr(Round(fRawStyleData[i].OrderNumber)));
 
       SL.SaveToFile(fRawStyleData[i].InternalName + '\style.nxmi');
+
+      if CompareText(fRawStyleData[i].Author, LeftStr(fRawStyleData[i].InternalName, Pos('_', fRawStyleData[i].InternalName) - 1)) <> 0 then
+        fWarnings.Add('Potential author name error: ' + fRawStyleData[i].InternalName);
     end;
   finally
     SL.Free;
@@ -112,6 +128,13 @@ begin
   i := 1;
   while i < fRawStyleData.Count do
   begin
+    if not DirectoryExists(fRawStyleData[i].InternalName) then
+    begin
+      fWarnings.Add('Style not found: ' + fRawStyleData[i].InternalName);
+      fRawStyleData.Delete(i);
+      Continue;
+    end;
+
     Balance := CompareText(fRawStyleData[i].Author, fRawStyleData[i-1].Author); // negative means should be pushed back
     if Balance = 0 then
       Balance := Sign(fRawStyleData[i].OrderNumber - fRawStyleData[i-1].OrderNumber);
@@ -242,6 +265,9 @@ begin
             end;
           end;
         end;
+
+        if LeftStr(IniFile[i], 6) = 'Order=' then
+          NewStyleRec.OrderNumber := StrToFloatDef(RightStr(IniFile[i], Length(IniFile[i])-6), 0);
       end;
     end;
 

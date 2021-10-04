@@ -15,7 +15,7 @@ begin
   try
     Processor := TStyleProcessor.Create;
     try
-
+      Processor.Execute;
     finally
       Processor.Free;
     end;
