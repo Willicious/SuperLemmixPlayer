@@ -12,6 +12,7 @@ type
     InternalName: String;
     Name: String;
     Author: String;
+    SortAuthor: String;
     OrderNumber: Double;
     FilledBySearchRec: Boolean;
   end;
@@ -28,7 +29,10 @@ type
       procedure SortStyleList;
       procedure FixIndices;
       procedure GenerateMetaFiles;
+      procedure GenerateCombineFile;
       procedure SaveWarningInfo;
+
+      procedure HandleSpecialCases(var Rec: TStyleInfo);
     public
       constructor Create;
       destructor Destroy; override;
@@ -37,6 +41,13 @@ type
   end;
 
 implementation
+
+function GetAuthor(aRec: TStyleInfo): String;
+begin
+  Result := aRec.SortAuthor;
+  if Result = '' then
+    Result := aRec.Author;
+end;
 
 { TStyleProcessor }
 
@@ -60,6 +71,7 @@ begin
   SortStyleList;
   FixIndices;
   GenerateMetaFiles;
+  GenerateCombineFile;
   SaveWarningInfo;
 end;
 
@@ -69,6 +81,30 @@ begin
     fWarnings.Add('No warnings to report.');
 
   fWarnings.SaveToFile('..\StyleMetaGen Warnings.txt');
+end;
+
+procedure TStyleProcessor.GenerateCombineFile;
+var
+  i: Integer;
+  SL: TStringList;
+begin
+  SL := TStringList.Create;
+  try
+    for i := 0 to fRawStyleData.Count-1 do
+    begin
+      SL.Add('[' + fRawStyleData[i].InternalName + ']');
+      SL.Add('NAME ' + fRawStyleData[i].Name);
+      SL.Add('AUTHOR ' + fRawStyleData[i].Author);
+      if fRawStyleData[i].SortAuthor <> '' then
+        SL.Add('SORT_AUTHOR ' + fRawStyleData[i].SortAuthor);
+      SL.Add('ORDER ' + IntToStr(Round(fRawStyleData[i].OrderNumber)));
+      SL.Add('');
+    end;
+
+    SL.SaveToFile('..\StyleMetaGen Combine.txt');
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TStyleProcessor.GenerateMetaFiles;
@@ -83,6 +119,8 @@ begin
       SL.Clear;
       SL.Add('NAME ' + fRawStyleData[i].Name);
       SL.Add('AUTHOR ' + fRawStyleData[i].Author);
+      if fRawStyleData[i].SortAuthor <> '' then
+        SL.Add('SORT_AUTHOR ' + fRawStyleData[i].SortAuthor);
       SL.Add('ORDER ' + IntToStr(Round(fRawStyleData[i].OrderNumber)));
 
       SL.SaveToFile(fRawStyleData[i].InternalName + '\style.nxmi');
@@ -107,9 +145,9 @@ begin
 
   for i := 0 to fRawStyleData.Count-1 do
   begin
-    if CompareText(fRawStyleData[i].Author, LastAuthor) <> 0 then
+    if CompareText(GetAuthor(fRawStyleData[i]), LastAuthor) <> 0 then
     begin
-      LastAuthor := fRawStyleData[i].Author;
+      LastAuthor := GetAuthor(fRawStyleData[i]);
       IndexCounter := 0;
     end;
 
@@ -135,7 +173,7 @@ begin
       Continue;
     end;
 
-    Balance := CompareText(fRawStyleData[i].Author, fRawStyleData[i-1].Author); // negative means should be pushed back
+    Balance := CompareText(GetAuthor(fRawStyleData[i]), GetAuthor(fRawStyleData[i-1]));
     if Balance = 0 then
       Balance := Sign(fRawStyleData[i].OrderNumber - fRawStyleData[i-1].OrderNumber);
     if Balance = 0 then
@@ -212,7 +250,76 @@ begin
       Capitalize(i);
   NewStyleRec.Name := NameMod;
 
+  NewStyleRec.SortAuthor := '';
+
   fRawStyleData.Add(NewStyleRec);
+end;
+
+procedure TStyleProcessor.HandleSpecialCases(var Rec: TStyleInfo);
+begin
+  if (Rec.Author = 'Orig') or (Rec.Author = 'OhNo') then
+    Rec.Author := 'Official';
+
+  if (Rec.Author = 'Genesis') then
+  begin
+    Rec.Name := 'Dirt-Genesis';
+    Rec.Author := 'Official';
+  end;
+
+  if (Rec.Author = 'Arty') then
+    Rec.Author := 'Colorful Arty';
+
+  if (Rec.Author = 'Flo+Giga') then
+  begin
+    Rec.Author := 'Flopsy, GigaLem';
+    Rec.SortAuthor := 'Flopsy';
+  end;
+
+  if (Rec.Author = 'Flopsy, namida') then
+  begin
+    Rec.Author := 'Flopsy, namida';
+    Rec.SortAuthor := 'Flopsy';
+  end;
+
+  if LeftStr(Rec.Author, 14) = 'Freedom Planet' then
+    Rec.SortAuthor := 'GigaLem';
+
+  if (Rec.InternalName = 'ichotolot_pieuw_castle') then
+  begin
+    Rec.Author := 'IchoTolot, Pieuw';
+    Rec.SortAuthor := 'IchoTolot';
+  end;
+
+  if (Rec.InternalName = 'ichotolot_jamie_city') then
+  begin
+    Rec.Author := 'IchoTolot, Jamie';
+    Rec.SortAuthor := 'IchoTolot';
+  end;
+
+  if (Rec.Author = 'mikedailly+garytimmons') then
+    Rec.Author := 'Mike Dailly, Gary Timmons';
+
+  if RightStr(Rec.Name, 8) = ' Special' then
+  begin
+    Rec.Name := 'Special';
+    Rec.Author := LeftStr(Rec.Name, Length(Rec.Name) - 8);
+    Rec.OrderNumber := 99999;
+  end;
+
+  if (Rec.InternalName = 'examples') then
+    Rec.OrderNumber := 100000;
+
+  if CompareText(RightStr(Rec.Author, 5), ', Lix') = 0 then
+    Rec.SortAuthor := LeftStr(Rec.Author, Length(Rec.Author) - 5);
+
+  if (Rec.Author = 'Unknown Author') then
+    Rec.Author := 'Unknown';
+
+  if (Rec.InternalName = 'timfoxxy_gigalem_launchbase') then
+  begin
+    Rec.Author := 'timfoxxy, GigaLem';
+    Rec.SortAuthor := 'timfoxxy';
+  end;
 end;
 
 procedure TStyleProcessor.LoadStyleIni;
@@ -238,6 +345,7 @@ begin
           NewStyleRec.InternalName := Copy(IniFile[i], 2, Length(IniFile[i])-2);
           NewStyleRec.Name := '';
           NewStyleRec.Author := '';
+          NewStyleRec.SortAuthor := '';
           NewStyleRec.OrderNumber := 0;
           NewStyleRec.FilledBySearchRec := false;
         end;
@@ -255,14 +363,7 @@ begin
                                        Pos('(', RawName) + 1,
                                        Pos(')', RawName) - Pos('(', RawName) - 1);
 
-            if (NewStyleRec.Author = 'Orig') or (NewStyleRec.Author = 'OhNo') then
-              NewStyleRec.Author := 'Official';
-
-            if (NewStyleRec.Author = 'Genesis') then
-            begin
-              NewStyleRec.Name := 'Dirt-Genesis';
-              NewStyleRec.Author := 'Official';
-            end;
+            HandleSpecialCases(NewStyleRec);
           end;
         end;
 
