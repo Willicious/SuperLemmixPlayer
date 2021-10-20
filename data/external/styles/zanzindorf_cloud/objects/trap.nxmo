@@ -7,7 +7,7 @@ SOUND electric
 
 $ANIMATION
   NAME constant
-  FRAMES 6
+  FRAMES 7
   OFFSET_X 0
   OFFSET_Y 0
   
