@@ -12,6 +12,7 @@ uses
 
 type
   TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
+  TNeoLevelLoadState = (lls_None, lls_BasicInfo, lls_Full);
 
 const
   STATUS_TEXTS: array[TNeoLevelStatus] of String = ('none', 'attempted', 'outdated', 'completed');
@@ -65,7 +66,7 @@ type
     private
       fGroup: TNeoLevelGroup;
 
-      fDataLoaded: Boolean;
+      fLoadState: TNeoLevelLoadState;
 
       fTitle: String;
       fAuthor: String;
@@ -80,7 +81,7 @@ type
       fCRC32: Cardinal;
       fCalculatedCRC: Boolean;
 
-      procedure LoadLevelFileData;
+      procedure LoadLevelFileData(aExtent: TNeoLevelLoadState);
 
       function GetFullPath: String;
       function GetRelativePath: String;
@@ -396,13 +397,13 @@ end;
 
 function TNeoLevelEntry.GetTitle: String;
 begin
-  LoadLevelFileData;
+  LoadLevelFileData(lls_BasicInfo);
   Result := fTitle;
 end;
 
 function TNeoLevelEntry.GetLevelID: Int64;
 begin
-  LoadLevelFileData;
+  LoadLevelFileData(lls_BasicInfo);
   Result := fLevelID;
 end;
 
@@ -449,7 +450,7 @@ end;
 
 function TNeoLevelEntry.GetAuthor: String;
 begin
-  LoadLevelFileData;
+  LoadLevelFileData(lls_BasicInfo);
   Result := fAuthor;
 end;
 
@@ -461,7 +462,7 @@ begin
   Result := fCRC32;
 end;
 
-procedure TNeoLevelEntry.LoadLevelFileData;
+procedure TNeoLevelEntry.LoadLevelFileData(aExtent: TNeoLevelLoadState);
 var
   Parser: TParser;
   i: Integer;
@@ -469,7 +470,8 @@ var
   TalInfoLevel: TLevel;
   CloneTal: TTalisman;
 begin
-  if fDataLoaded then Exit;
+  if fLoadState >= aExtent then Exit;
+
   if not FileExists(Path) then
   begin
     MessageDlg('No file at location: ' + Path, mtWarning, [mbOK], 0);
@@ -479,32 +481,40 @@ begin
   Parser := TParser.Create;
   try
     Parser.LoadFromFile(Path);
-    fTitle := Parser.MainSection.LineTrimString['title'];
-    fAuthor := Parser.MainSection.LineTrimString['author'];
-    fLevelID := Parser.MainSection.LineNumeric['id'];
 
-    if Parser.MainSection.Section['talisman'] <> nil then
+    if aExtent >= lls_BasicInfo then
     begin
-      // set talisman.Data to "self"
-      TalInfoLevel := TLevel.Create;
-      try
-        try
-          TalInfoLevel.LoadFromFile(Path);
-          for i := 0 to TalInfoLevel.Talismans.Count-1 do
-          begin
-            CloneTal := TTalisman.Create;
-            CloneTal.Clone(TalInfoLevel.Talismans[i]);
-            fTalismans.Add(CloneTal);
+      fTitle := Parser.MainSection.LineTrimString['title'];
+      fAuthor := Parser.MainSection.LineTrimString['author'];
+      fLevelID := Parser.MainSection.LineNumeric['id'];
+
+      if Parser.MainSection.Section['talisman'] <> nil then
+      begin
+        if (aExtent = lls_Full) then
+        begin
+          fTalismans.Clear;
+          // set talisman.Data to "self"
+          TalInfoLevel := TLevel.Create;
+          try
+            try
+              TalInfoLevel.LoadFromFile(Path);
+              for i := 0 to TalInfoLevel.Talismans.Count-1 do
+              begin
+                CloneTal := TTalisman.Create;
+                CloneTal.Clone(TalInfoLevel.Talismans[i]);
+                fTalismans.Add(CloneTal);
+              end;
+            except
+              // Fail silently.
+            end;
+          finally
+            TalInfoLevel.Free;
           end;
-        except
-          // Fail silently.
         end;
-      finally
-        TalInfoLevel.Free;
       end;
     end;
 
-    fDataLoaded := true;
+    fLoadState := aExtent;
   finally
     Parser.Free;
   end;
@@ -538,7 +548,7 @@ end;
 
 function TNeoLevelEntry.GetTalismans: TObjectList<TTalisman>;
 begin
-  LoadLevelFileData;
+  LoadLevelFileData(lls_Full);
   Result := fTalismans;
 end;
 
@@ -563,6 +573,7 @@ var
   i: Integer;
 begin
   Result := false;
+  ValidateTalismans;
   for i := 0 to fUnlockedTalismanList.Count-1 do
     if fUnlockedTalismanList[i] = aIndex then
     begin
@@ -575,7 +586,8 @@ procedure TNeoLevelEntry.ValidateTalismans;
 var
   i, i2: Integer;
 begin
-  LoadLevelFileData;
+  LoadLevelFileData(lls_Full);
+
   for i := fUnlockedTalismanList.Count-1 downto 0 do
     for i2 := 0 to fTalismans.Count do
       if i2 = fTalismans.Count then
@@ -1214,8 +1226,6 @@ var
                         begin
                           aLevel.TalismanStatus[aLine.ValueNumeric] := true;
                         end);
-
-      aLevel.ValidateTalismans;
     end;
 
   begin
