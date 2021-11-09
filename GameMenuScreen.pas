@@ -749,13 +749,10 @@ begin
 end;
 
 procedure TGameMenuScreen.RedrawGroupSign;
-const
-  GROUP_GRAPHIC_OFFSET_X = 11;
-  GROUP_GRAPHIC_OFFSET_Y = 8;
 begin
   fGroupGraphic.DrawTo(ScreenImg.Bitmap,
-                       fGroupSignCenter.X + GROUP_GRAPHIC_OFFSET_X - (fGroupGraphic.Width div 2),
-                       fGroupSignCenter.Y + GROUP_GRAPHIC_OFFSET_Y - (fGroupGraphic.Height div 2));
+                       fGroupSignCenter.X + LayoutInfo.GroupGraphicOffsetX - (fGroupGraphic.Width div 2),
+                       fGroupSignCenter.Y + LayoutInfo.GroupGraphicOffsetY - (fGroupGraphic.Height div 2));
 end;
 
 procedure TGameMenuScreen.AfterRedrawClickables;
