@@ -35,6 +35,7 @@ type
     fHeight : Integer;
 
     fBackground: String;
+    fLoadBackground: String;
 
     fScreenStartX : Integer;
     fScreenStartY: Integer;
@@ -44,6 +45,7 @@ type
     fAuthor         : string;
 
     fGraphicSetName : string;
+    fLoadGraphicSetName: string;
     fMusicFile      : string;
 
     fLevelID        : Int64;
@@ -80,9 +82,11 @@ type
     property Height         : Integer read fHeight write fHeight;
 
     property GraphicSetName : String read fGraphicSetName write fGraphicSetName;
+    property LoadGraphicSetName: String read fLoadGraphicSetName write fLoadGraphicSetName;
     property MusicFile      : String read fMusicFile write fMusicFile;
 
     property Background: String read fBackground write fBackground;
+    property LoadBackground: String read fLoadBackground write fLoadBackground;
 
     property LevelID: Int64 read fLevelID write fLevelID;
     property LevelVersion: Int64 read fLevelVersion write fLevelVersion;
@@ -158,6 +162,7 @@ type
 implementation
 
 uses
+  LemVersion,
   Dialogs, Math; // for backwards compatibility
 
 { TLevelInfo }
@@ -825,7 +830,15 @@ begin
   begin
     Title := aSection.LineString['title'];
     Author := aSection.LineString['author'];
+
     GraphicSetName := PieceManager.Dealias(aSection.LineTrimString['theme'], rkStyle).Piece.GS;
+    LoadGraphicSetName := aSection.LineTrimString['theme'];
+    if not FileExists(AppPath + SFStyles + GraphicSetName + 'theme.nxmt') then
+    begin
+      PieceManager.NeedCheckStyles.Add(GraphicSetName);
+      GraphicSetName := 'default'; // Tidier than using a fake "fallback"
+    end;
+
     MusicFile := aSection.LineTrimString['music'];
     LevelID := aSection.LineNumeric['id'];
     LevelVersion := aSection.LineNumeric['version'];
@@ -846,6 +859,7 @@ begin
     ScreenStartY := aSection.LineNumeric['start_y'];
 
     Background := CombineIdentifier(PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground).Piece);
+    LoadBackground := aSection.LineTrimString['background'];
 
     if (Background <> '') and (Background <> ':') then
     begin
@@ -1009,6 +1023,8 @@ begin
     O.GS := aSection.LineTrimString['style'];
 
   O.Piece := aSection.LineTrimString['piece'];
+
+  O.LoadIdentifier := O.Identifier;
 
   DealiasInfo := PieceManager.Dealias(O.Identifier, rkGadget);
   O.GS := DealiasInfo.Piece.GS;
@@ -1214,6 +1230,10 @@ var
     until WindowLemmingCount[n] <> 0;
   end;
 begin
+  for i := 0 to InteractiveObjects.Count-1 do
+    if InteractiveObjects[i].Identifier = 'default:fallback' then
+      Exit; // safer not to do this with fallbacks in play
+
   // 1. Validate skillset - remove skills that don't exist in the level, and forbid infinite cloners
   for S := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
@@ -1346,6 +1366,12 @@ var
 begin
   Parser := TParser.Create;
   try
+    Parser.MainSection.AddLine('#', 'Level cleansed using NeoLemmix V' + CurrentVersionString + ':' + COMMIT_ID);
+    if HasAnyFallbacks then
+      Parser.MainSection.AddLine('#', 'SOME PIECES WERE NOT FOUND');
+
+    Parser.MainSection.AddLine('');
+
     SaveGeneralInfo(Parser.MainSection);
     SaveSkillsetSection(Parser.MainSection);
     SaveObjectSections(Parser.MainSection);
@@ -1366,7 +1392,12 @@ begin
   begin
     aSection.AddLine('TITLE', Title);
     aSection.AddLine('AUTHOR', Author);
-    aSection.AddLine('THEME', GraphicSetName);
+    if (GraphicSetName = 'default') then
+    begin
+      aSection.AddLine('THEME', LoadGraphicSetName);
+      aSection.AddLine('#', 'Theme not found');
+    end else
+      aSection.AddLine('THEME', GraphicSetName);
     aSection.AddLine('MUSIC', MusicFile);
     aSection.AddLine('ID', 'x' + IntToHex(LevelID, 16));
     aSection.AddLine('VERSION', LevelVersion);
@@ -1390,7 +1421,11 @@ begin
       aSection.AddLine('START_Y', ScreenStartY);
     end;
 
-    if not ((Background = '') or (Background = ':')) then
+    if Background = 'default:fallback' then
+    begin
+      aSection.AddLine('BACKGROUND', LoadBackground);
+      aSection.AddLine('#', 'Background not found');
+    end else if not ((Background = '') or (Background = ':')) then
       aSection.AddLine('BACKGROUND', Background);
   end;
 end;
@@ -1439,6 +1474,7 @@ var
   i: Integer;
   O: TGadgetModel;
   Sec: TParserSection;
+  LocalIdentifier: TLabelRecord;
 
   function Flag(aValue: Integer): Boolean;
   begin
@@ -1524,8 +1560,16 @@ begin
     O := fInteractiveObjects[i];
     Sec := aSection.SectionList.Add('GADGET');
 
-    Sec.AddLine('STYLE', O.GS);
-    Sec.AddLine('PIECE', O.Piece);
+    if O.Identifier = 'default:fallback' then
+    begin
+      LocalIdentifier := SplitIdentifier(O.LoadIdentifier);
+      Sec.AddLine('STYLE', LocalIdentifier.GS);
+      Sec.AddLine('PIECE', LocalIdentifier.Piece);
+      Sec.AddLine('#', 'Gadget not found');
+    end else begin
+      Sec.AddLine('STYLE', O.GS);
+      Sec.AddLine('PIECE', O.Piece);
+    end;
     Sec.AddLine('X', O.Left);
     Sec.AddLine('Y', O.Top);
     if O.Width > 0 then Sec.AddLine('WIDTH', O.Width);
@@ -1537,13 +1581,23 @@ begin
     if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
 
-    case PieceManager.Objects[O.Identifier].TriggerEffect of
-      DOM_EXIT, DOM_LOCKEXIT: SetExitData;
-      DOM_TELEPORT: SetTeleporterData;
-      DOM_RECEIVER: SetReceiverData;
-      DOM_PICKUP: SetPickupData;
-      DOM_WINDOW: SetWindowData;
-      DOM_BACKGROUND: SetMovingBackgroundData;
+    if O.Identifier = 'default:fallback' then
+    begin
+      // Just have to save everything and hope for the best.
+      SetTeleporterData;
+      SetPickupData;
+      SetWindowData;
+      SetMovingBackgroundData;
+      // Receiver and Exit's data are covered by Teleporter and Window respectively.
+    end else begin
+      case PieceManager.Objects[O.Identifier].TriggerEffect of
+        DOM_EXIT, DOM_LOCKEXIT: SetExitData;
+        DOM_TELEPORT: SetTeleporterData;
+        DOM_RECEIVER: SetReceiverData;
+        DOM_PICKUP: SetPickupData;
+        DOM_WINDOW: SetWindowData;
+        DOM_BACKGROUND: SetMovingBackgroundData;
+      end;
     end;
   end;
 end;

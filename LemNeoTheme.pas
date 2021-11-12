@@ -76,7 +76,7 @@ var
 begin
   Clear;
   SetCurrentDir(AppPath + SFStyles + aSet + '\');
-  if not FileExists('theme.nxtm') then Exit; // should this raise an exception?
+  if not FileExists('theme.nxtm') then Exit;
 
   Parser := TParser.Create;
   try
