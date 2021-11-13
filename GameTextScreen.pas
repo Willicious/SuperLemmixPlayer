@@ -31,7 +31,8 @@ type
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
-      property PreviewText: Boolean read fPreviewText write fPreviewText;
+      constructor Create(aOwner: TComponent); override;
+      property PreviewText: Boolean read fPreviewText;
   end;
 
 implementation
@@ -216,6 +217,12 @@ procedure TGameTextScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
 begin
   inherited;
   ToNextScreen;
+end;
+
+constructor TGameTextScreen.Create(aOwner: TComponent);
+begin
+  fPreviewText := (GameParams.NextScreen = gstPlay);
+  inherited Create(aOwner);
 end;
 
 procedure TGameTextScreen.ExitToMenu;
