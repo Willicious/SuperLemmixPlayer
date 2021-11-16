@@ -833,7 +833,7 @@ begin
 
     GraphicSetName := PieceManager.Dealias(aSection.LineTrimString['theme'], rkStyle).Piece.GS;
     LoadGraphicSetName := aSection.LineTrimString['theme'];
-    if not FileExists(AppPath + SFStyles + GraphicSetName + 'theme.nxmt') then
+    if not FileExists(AppPath + SFStyles + GraphicSetName + '\theme.nxtm') then
     begin
       PieceManager.NeedCheckStyles.Add(GraphicSetName);
       GraphicSetName := 'default'; // Tidier than using a fake "fallback"
