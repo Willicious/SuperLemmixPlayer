@@ -1714,30 +1714,33 @@ begin
     else
       fLastBlockerCheckLem := nil;
 
-    // For builders, check that this is not the middle part of a newly created blocker area
-    // see http://www.lemmingsforums.net/index.php?topic=3295.0
-    if (Result <> DOM_NONE) and (L <> nil) and (L.LemAction = baBuilding) then
+    if fLastBlockerCheckLem <> nil then
     begin
-      if fLastBlockerCheckLem.LemDX = L.LemDx then
-        CheckPosX := L.LemX + 2 * L.LemDx
-      else
-        CheckPosX := L.LemX + 3 * L.LemDx;
-
-      if     (L.LemY >= fLastBlockerCheckLem.LemY - 1) and (L.LemY <= fLastBlockerCheckLem.LemY + 3)
-         and (fLastBlockerCheckLem.LemX = CheckPosX) then
+      // For builders, check that this is not the middle part of a newly created blocker area
+      // see http://www.lemmingsforums.net/index.php?topic=3295.0
+      if (Result <> DOM_NONE) and (L <> nil) and (L.LemAction = baBuilding) then
       begin
-        Result := DOM_NONE;
-        Exit;
+        if fLastBlockerCheckLem.LemDX = L.LemDx then
+          CheckPosX := L.LemX + 2 * L.LemDx
+        else
+          CheckPosX := L.LemX + 3 * L.LemDx;
+
+        if     (L.LemY >= fLastBlockerCheckLem.LemY - 1) and (L.LemY <= fLastBlockerCheckLem.LemY + 3)
+           and (fLastBlockerCheckLem.LemX = CheckPosX) then
+        begin
+          Result := DOM_NONE;
+          Exit;
+        end;
       end;
-    end;
 
-    // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
-    if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
-    begin
-      if not HasPixelAt(fLastBlockerCheckLem.LemX, fLastBlockerCheckLem.LemY) then
+      // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
+      if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
       begin
-        Result := DOM_NONE;
-        Exit;
+        if not HasPixelAt(fLastBlockerCheckLem.LemX, fLastBlockerCheckLem.LemY) then
+        begin
+          Result := DOM_NONE;
+          Exit;
+        end;
       end;
     end;
   end
@@ -2574,6 +2577,7 @@ function TLemmingGame.HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L:
 // Checks whether the trigger area TriggerType occurs at position (X, Y)
 begin
   Result := False;
+  fLastBlockerCheckLem := nil;
 
   case TriggerType of
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
