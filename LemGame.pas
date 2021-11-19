@@ -3791,6 +3791,7 @@ begin
       end else begin
         Dec(L.LemX, L.LemDx);
         Transition(L, baFalling, True); // turn around as well
+        Inc(L.LemFallen); // Least-impact way to fix a fall distance inconsistency. See https://www.lemmingsforums.net/index.php?topic=5794.0
       end;
     end
     else if not HasPixelAt(L.LemX, L.LemY - 7 - L.LemPhysicsFrame) then
