@@ -108,7 +108,6 @@
    COLOR Gold
    SWIMMER_LIMIT 1
    USE_ONLY_SKILL Swimmer
-   KILL_ZOMBIES
  $END 
  
 #     Interactive objects       
