@@ -1368,12 +1368,17 @@ begin
 end;
 
 function TLemmingGame.CheckForOverlappingField(L: TLemming): Boolean;
+var
+  X: Integer;
 begin
   // Check only the vertices of the new blocker field
-  Result :=    HasTriggerAt(L.LemX - 5, L.LemY - 6, trBlocker)
-            or HasTriggerAt(L.LemX + 5, L.LemY - 6, trBlocker)
-            or HasTriggerAt(L.LemX - 5, L.LemY + 4, trBlocker)
-            or HasTriggerAt(L.LemX + 5, L.LemY + 4, trBlocker);
+  X := L.LemX - 6;
+  if L.LemDx = 1 then Inc(X);
+
+  Result :=    HasTriggerAt(X, L.LemY - 6, trBlocker)
+            or HasTriggerAt(X + 11, L.LemY - 6, trBlocker)
+            or HasTriggerAt(X, L.LemY + 4, trBlocker)
+            or HasTriggerAt(X + 11, L.LemY + 4, trBlocker);
 end;
 
 
