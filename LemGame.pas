@@ -3716,23 +3716,26 @@ begin
   begin
     Transition(L, baFalling);
     Result := false;
-  end else if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
+  end else if SliderHasPixelAt(L.LemX, L.LemY)
   begin
-    Dec(L.LemX, L.LemDX);
-    if L.LemIsSwimmer then
+    if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
     begin
-      Transition(L, baSwimming, true);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
-    end else begin
-      Transition(L, baDrowning, true);
-      CueSoundEffect(SFX_DROWNING, L.Position);
+      Dec(L.LemX, L.LemDX);
+      if L.LemIsSwimmer then
+      begin
+        Transition(L, baSwimming, true);
+        CueSoundEffect(SFX_SWIMMING, L.Position);
+      end else begin
+        Transition(L, baDrowning, true);
+        CueSoundEffect(SFX_DROWNING, L.Position);
+      end;
+      Result := false;
+    end else if SliderHasPixelAt(L.LemX - L.LemDX, L.LemY) then
+    begin
+      Dec(L.LemX, L.LemDX);
+      Transition(L, baWalking, true);
+      Result := false;
     end;
-    Result := false;
-  end else if SliderHasPixelAt(L.LemX - L.LemDX, L.LemY) then
-  begin
-    Dec(L.LemX, L.LemDX);
-    Transition(L, baWalking, true);
-    Result := false;
   end;
 end;
 
