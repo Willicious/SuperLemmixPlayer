@@ -2302,7 +2302,7 @@ begin
 
     SimulateLem(CopyL, False);
 
-    if (CopyL.LemAction <> OldAction) and
+    if (CopyL.LemAction <> OldAction) and (CopyL.LemDX = L.LemDX) and
        ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding)) then
       Result := True;
 
@@ -3716,7 +3716,7 @@ begin
   begin
     Transition(L, baFalling);
     Result := false;
-  end else if SliderHasPixelAt(L.LemX, L.LemY)
+  end else if SliderHasPixelAt(L.LemX, L.LemY) then
   begin
     if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
     begin
