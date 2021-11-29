@@ -772,10 +772,17 @@ begin
       PrepareHintName(Records.TimeTaken.User), true, pmNextColumnSame, COLOR_RECORDS);
 
   if Records.TotalSkills.Value < 0 then
-    Add(ICON_MAX_SKILLS, '~', '', true, pmNextColumnSame)
+    Add(ICON_MAX_SKILLS, '~', '', true, pmNextColumnShortSame)
   else
     Add(ICON_MAX_SKILLS, Records.TotalSkills.Value,
-        PrepareHintName(Records.TotalSkills.User), true, pmNextColumnSame, COLOR_RECORDS);
+        PrepareHintName(Records.TotalSkills.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+
+  if Records.SkillTypes.Value < 0 then
+    Add(ICON_MAX_SKILL_TYPES, '~', '', true, pmNextColumnSame)
+  else
+    Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value,
+        PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+
 
   Reposition(pmNextRowPadLeft);
 

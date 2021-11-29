@@ -5322,12 +5322,15 @@ begin
     // We only want to update the rest when we're at the rescue count EXACTLY.
     NewRecs.TimeTaken.Value := fCurrentIteration;
     NewRecs.TotalSkills.Value := 0;
+    NewRecs.SkillTypes.Value := 0;
 
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if Skill in Level.Info.Skillset then
       begin
         NewRecs.SkillCount[Skill].Value := SkillsUsed[Skill];
         NewRecs.TotalSkills.Value := NewRecs.TotalSkills.Value + SkillsUsed[Skill];
+        if SkillsUsed[Skill] > 0 then
+          NewRecs.SkillTypes.Value := NewRecs.SkillTypes.Value + 1;
       end;
   end;
 
