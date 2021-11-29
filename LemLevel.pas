@@ -351,7 +351,7 @@ begin
 
   if not MadeSkillRestrictionText then
   begin
-    if (aTalisman.TotalSkillLimit = 0) and (SkillTypeCount > 0) then
+    if ((aTalisman.TotalSkillLimit = 0) or (aTalisman.SkillTypeLimit = 0)) and (SkillTypeCount > 0) then
     begin
       ReqText := ReqText + ' without any skills';
       MadeSkillRestrictionText := true;
@@ -535,9 +535,22 @@ begin
   if aTalisman.TotalSkillLimit > 0 then
   begin
     if MadeSkillRestrictionText then
-      ReqText := ReqText + '; and';
+    begin
+      ReqText := ReqText + ';';
+      if aTalisman.SkillTypeLimit <= 0 then
+        ReqText := ReqText + ' and';
+    end;
 
     ReqText := ReqText + ' using no more than ' + IntToStr(aTalisman.TotalSkillLimit) + ' total skills';
+  end;
+
+  // Skill type limit
+  if aTalisman.SkillTypeLimit > 0 then
+  begin
+    if MadeSkillRestrictionText or (aTalisman.TotalSkillLimit > 0) then
+      ReqText := ReqText + '; and';
+
+    ReqText := ReqText + ' using no more than ' + IntToStr(aTalisman.SkillTypeLimit) + ' different skill types';
   end;
 
   // Special case for talismans with no further requirements

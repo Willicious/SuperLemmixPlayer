@@ -777,6 +777,7 @@ var
   function CheckTalisman(aTalisman: TTalisman): Boolean;
   var
     TotalSkills: Integer;
+    TotalSkillTypes: Integer;
     SaveReq: Integer;
     i: TSkillPanelButton;
   begin
@@ -791,13 +792,17 @@ var
     if (CurrentIteration >= aTalisman.TimeLimit) and (aTalisman.TimeLimit >= 0) then Exit;
 
     TotalSkills := 0;
+    TotalSkillTypes := 0;
     for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     begin
       if (SkillsUsed[i] > aTalisman.SkillLimit[i]) and (aTalisman.SkillLimit[i] >= 0) then Exit;
       Inc(TotalSkills, SkillsUsed[i]);
+      if SkillsUsed[i] > 0 then
+        Inc(TotalSkillTypes);
     end;
 
     if (TotalSkills > aTalisman.TotalSkillLimit) and (aTalisman.TotalSkillLimit >= 0) then Exit;
+    if (TotalSkillTypes > aTalisman.SkillTypeLimit) and (aTalisman.SkillTypeLimit >= 0) then Exit;
 
     Result := true;
   end;

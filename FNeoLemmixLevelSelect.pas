@@ -128,12 +128,13 @@ const // Icon indexes
   ICON_SELECTED_TALISMAN = 31;
 
   ICON_MAX_SKILLS = 32;
+  ICON_MAX_SKILL_TYPES = 3;
 
   ICON_RECORDS = 35;
   ICON_WORLD_RECORDS = 39;
   ICON_TIMER = 36;
 
-  ICON_BLANK = 3;
+  ICON_BLANK = -1;
 
 implementation
 

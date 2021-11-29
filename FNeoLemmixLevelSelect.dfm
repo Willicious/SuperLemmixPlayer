@@ -80,7 +80,7 @@ object FLevelSelect: TFLevelSelect
   object lblAdvancedOptions: TLabel
     Left = 720
     Top = 8
-    Width = 88
+    Width = 95
     Height = 13
     Caption = 'Advanced Options'
   end

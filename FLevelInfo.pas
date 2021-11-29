@@ -194,7 +194,9 @@ procedure TLevelInfoPanel.DrawIcon(aIconIndex: Integer; aDst: TBitmap32);
 begin
   aDst.SetSize(ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE);
   aDst.Clear($FFF0F0F0);
-  fIcons.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * ICON_INTERNAL_SIZE, (aIconIndex div 4) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE));
+
+  if aIconIndex >= 0 then
+    fIcons.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * ICON_INTERNAL_SIZE, (aIconIndex div 4) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE));
 end;
 
 procedure TLevelInfoPanel.Wipe;
@@ -533,6 +535,9 @@ procedure TLevelInfoPanel.ShowPopup;
     if Talisman.TotalSkillLimit >= 0 then
       LocalAdd(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
+    if Talisman.SkillTypeLimit >= 0 then
+      LocalAdd(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if Skill in fLevel.Info.Skillset then
       begin
@@ -665,8 +670,14 @@ begin
   else if fLevel.Info.HasTimeLimit then
     Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + LeadZeroStr(fLevel.Info.TimeLimit mod 60, 2), '', true, pmNextColumnSame);
 
-  if (Talisman <> nil) and (Talisman.TotalSkillLimit >= 0) then
-    Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+  if (Talisman <> nil) then
+  begin
+    if (Talisman.TotalSkillLimit >= 0) then
+      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+    if (Talisman.SkillTypeLimit >= 0) then
+      Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+  end;
+
 
   Reposition(pmNextRowPadLeft);
 

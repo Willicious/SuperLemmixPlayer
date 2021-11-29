@@ -20,6 +20,7 @@ type
     fRescueCount: Integer;
     fTimeLimit: Integer;
     fTotalSkillLimit: Integer;
+    fSkillTypeLimit: Integer;
     fSkillLimits: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
 
     fLevelLemmingCount: Integer;
@@ -44,6 +45,7 @@ type
     property RescueCount: Integer read fRescueCount write fRescueCount;
     property TimeLimit: Integer read fTimeLimit write fTimeLimit;
     property TotalSkillLimit: Integer read fTotalSkillLimit write fTotalSkillLimit;
+    property SkillTypeLimit: Integer read fSkillTypeLimit write fSkillTypeLimit;
     property SkillLimit[Index: TSkillPanelButton]: Integer read GetSkillLimit write SetSkillLimit;
     property RequirementText: String read fRequirementText;
 
@@ -66,6 +68,7 @@ begin
   fRescueCount := aSrc.fRescueCount;
   fTimeLimit := aSrc.fTimeLimit;
   fTotalSkillLimit := aSrc.fTotalSkillLimit;
+  fSkillTypeLimit := aSrc.fSkillTypeLimit;
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     fSkillLimits[Skill] := aSrc.fSkillLimits[Skill];
@@ -85,6 +88,7 @@ begin
   fRescueCount := -1;
   fTimeLimit := -1;
   fTotalSkillLimit := -1;
+  fSkillTypeLimit := -1;
 
   fLevelLemmingCount := -1;
 
@@ -132,6 +136,7 @@ begin
   fRescueCount := aSec.LineNumericDefault['save_requirement', fRescueCount];
   fTimeLimit := aSec.LineNumericDefault['time_limit', -1];
   fTotalSkillLimit := aSec.LineNumericDefault['skill_limit', -1];
+  fSkillTypeLimit := aSec.LineNumericDefault['skill_type_limit', -1];
 
   // Apply single skill restrictions
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -173,6 +178,7 @@ begin
   AddLine('save_requirement', fRescueCount);
   AddLine('time_limit', fTimeLimit);
   AddLine('skill_limit', fTotalSkillLimit);
+  AddLine('skill_type_limit', fSkillTypeLimit);
 
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     AddLine(SKILL_NAMES[i] + '_limit', fSkillLimits[i]);
