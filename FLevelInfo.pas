@@ -17,6 +17,7 @@ const
   PADDING_BASE_SIZE = 8;
   NORMAL_BASE_SPACING = 40;
   COLUMN_BASE_SPACING = 92;
+  COLUMN_SMALLER_SPACING = 72;
   ICON_BASE_SIZE = 32;
   ICON_INTERNAL_SIZE = 32;
 
@@ -28,11 +29,12 @@ type
     PaddingSize: Integer;
     NormalSpacing: Integer;
     ColumnSpacing: Integer;
+    ColumnSmallerSpacing: Integer;
     IconSize: Integer;
   end;
 
   TLevelInfoPanelMove = (pmNone,
-                         pmNextColumnTop, pmNextColumnSame, pmMoveHorz,
+                         pmNextColumnTop, pmNextColumnSame, pmNextColumnShortSame, pmMoveHorz,
                          pmNextRowLeft, pmNextRowSame, pmNextRowPadLeft, pmNextRowPadSame);
 
   TLevelInfoPanel = class(TForm)
@@ -467,6 +469,7 @@ begin
   case aMovement of
     pmNextColumnTop: begin fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.ColumnSpacing; fCurrentPos.Y := fAdjustedSizing.PaddingSize; end;
     pmNextColumnSame: fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.ColumnSpacing;
+    pmNextColumnShortSame: fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.ColumnSmallerSpacing;
     pmMoveHorz: fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.NormalSpacing;
     pmNextRowLeft: begin fCurrentPos.X := fAdjustedSizing.PaddingSize; fCurrentPos.Y := fCurrentPos.Y + fAdjustedSizing.NormalSpacing; end;
     pmNextRowSame: fCurrentPos.Y := fCurrentPos.Y + fAdjustedSizing.NormalSpacing;
@@ -492,6 +495,7 @@ begin
     PaddingSize := Adjust(PADDING_BASE_SIZE);
     NormalSpacing := Adjust(NORMAL_BASE_SPACING);
     ColumnSpacing := Adjust(COLUMN_BASE_SPACING);
+    ColumnSmallerSpacing := Adjust(COLUMN_SMALLER_SPACING);
     IconSize := Adjust(ICON_BASE_SIZE);
   end;
 end;
@@ -673,7 +677,7 @@ begin
   if (Talisman <> nil) then
   begin
     if (Talisman.TotalSkillLimit >= 0) then
-      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', true, pmNextColumnShortSame, COLOR_TALISMAN_RESTRICTION);
     if (Talisman.SkillTypeLimit >= 0) then
       Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
   end;
