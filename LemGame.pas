@@ -2510,7 +2510,7 @@ begin
                          and not (L.LemAction = baBlocking)
                          and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
     begin
-      NeedShiftPosition := (L.LemAction in [baClimbing, baSliding]);
+      NeedShiftPosition := (L.LemAction in [baClimbing, baSliding, baDehoisting]);
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
     end;
@@ -2869,7 +2869,7 @@ begin
     // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
     else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
       LayBrick(L)
-    else if L.LemAction in [baClimbing, baSliding] then
+    else if L.LemAction in [baClimbing, baSliding, baDehoisting] then
     begin
       Inc(L.LemX, L.LemDx); // Move out of the wall
       if not L.LemIsStartingAction then Inc(L.LemY); // Don't move below original position
