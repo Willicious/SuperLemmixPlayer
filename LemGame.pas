@@ -230,7 +230,7 @@ type
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
-    procedure CheckTriggerArea(L: TLemming);
+    procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
       function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
       function FindGadgetID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
@@ -252,6 +252,7 @@ type
     procedure CheckForReplayAction(PausedRRCheck: Boolean = false);
     procedure CheckLemmings;
     function CheckLemTeleporting(L: TLemming): Boolean;
+    procedure HandlePostTeleport(L: TLemming);
     procedure CheckReleaseLemming;
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSound: String); overload;
@@ -2434,7 +2435,7 @@ begin
 end;
 
 
-procedure TLemmingGame.CheckTriggerArea(L: TLemming);
+procedure TLemmingGame.CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
 // For intermediate pixels, we call the trigger function according to trigger area
 var
   CheckPos: TArrayArrayInt; // Combined list for both X- and Y-coordinates
@@ -2442,7 +2443,16 @@ var
   AbortChecks: Boolean;
 
   NeedShiftPosition: Boolean;
+  SavePos: TPoint;
 begin
+  // If this is a post-teleport check, (a) reset previous position and (b) remember new position
+  if IsPostTeleportCheck then
+  begin
+    L.LemXOld := L.LemX;
+    L.LemYOld := L.LemY;
+    SavePos := Point(L.LemX, L.LemY);
+  end;
+
   // Get positions to check for trigger areas
   CheckPos := GetGadgetCheckPositions(L);
 
@@ -2498,7 +2508,7 @@ begin
     end;
 
     // Teleporter
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) and not IsPostTeleportCheck then
       AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Exits
@@ -2549,6 +2559,13 @@ begin
       HandleForceField(L, -1)
     else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
       HandleForceField(L, 1);
+  end;
+
+  // And if this was a post-teleporter check, reset any position changes that may have occurred.
+  if IsPostTeleportCheck then
+  begin
+    L.LemX := SavePos.X;
+    L.LemY := SavePos.Y;
   end;
 end;
 
@@ -6117,6 +6134,15 @@ begin
   L.LemTeleporting := False; // Let lemming reappear
   Gadget.TeleLem := -1;
   Result := True;
+
+  HandlePostTeleport(L);
+end;
+
+procedure TLemmingGame.HandlePostTeleport(L: TLemming);
+begin
+  // Check for trigger areas.
+  CheckTriggerArea(L, true);
+
   // Reset blocker map, if lemming is a blocker and the target position is free
   if L.LemAction = baBlocking then
   begin
