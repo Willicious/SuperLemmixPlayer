@@ -1539,10 +1539,13 @@ begin
                      CueSoundEffect(SFX_YIPPEE, L.Position);
                    end;
     baVaporizing : L.LemExplosionTimer := 0;
-    baBuilding   : L.LemNumberOfBricksLeft := 12;
+    baBuilding   : begin
+                     L.LemNumberOfBricksLeft := 12;
+                     L.LemConstructivePositionFreeze := false;
+                   end;
     baPlatforming: begin
                      L.LemNumberOfBricksLeft := 12;
-                     L.LemPlatformPositionFreeze := false;
+                     L.LemConstructivePositionFreeze := false;
                    end;
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing,
@@ -2748,7 +2751,6 @@ begin
   if L.LemAction = baSplatting then Exit;
   // Exit if lemming is falling, has ground under his feet and will splat
   if (L.LemAction = baFalling) and HasPixelAt(PosX, PosY) and (L.LemFallen > MAX_FALLDISTANCE) then Exit;
-  if (L.LemAction = baPlatforming) and (L.LemPhysicsFrame >= 9) then L.LemPlatformPositionFreeze := true;
 
   GadgetID := FindGadgetID(PosX, PosY, trTeleport);
 
@@ -3912,7 +3914,7 @@ begin
       Transition(L, baWalking, True);  // turn around as well
     end
 
-    else if not L.LemPlatformPositionFreeze then
+    else if not L.LemConstructivePositionFreeze then
       Inc(L.LemX, L.LemDx);
   end
 
@@ -3932,7 +3934,7 @@ begin
 
     else
     begin
-      if not L.LemPlatformPositionFreeze then
+      if not L.LemConstructivePositionFreeze then
         Inc(L.LemX, 2*L.LemDx);
       Dec(L.LemNumberOfBricksLeft); // Why are we doing this here, instead at the beginning of frame 15??
       if L.LemNumberOfBricksLeft = 0 then
@@ -3945,7 +3947,7 @@ begin
   end;
 
   if L.LemPhysicsFrame = 0 then
-    L.LemPlatformPositionFreeze := false;
+    L.LemConstructivePositionFreeze := false;
 end;
 
 
@@ -3979,8 +3981,11 @@ begin
 
     else
     begin
-      Dec(L.LemY);
-      Inc(L.LemX, 2*L.LemDx);
+      if not L.LemConstructivePositionFreeze then
+      begin
+        Dec(L.LemY);
+        Inc(L.LemX, 2*L.LemDx);
+      end;
 
       if (     HasPixelAt(L.LemX, L.LemY - 2)
            or  HasPixelAt(L.LemX, L.LemY - 3)
@@ -3993,6 +3998,9 @@ begin
          Transition(L, baShrugging);
     end;
   end;
+
+  if L.LemPhysicsFrame = 0 then
+    L.LemConstructivePositionFreeze := false;
 end;
 
 
@@ -6162,6 +6170,9 @@ begin
       SetBlockerMap;
     end;
   end;
+
+  if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
+  L.LemConstructivePositionFreeze := true;
 end;
 
 
