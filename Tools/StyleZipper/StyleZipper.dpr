@@ -108,7 +108,29 @@ var
       SearchRec: TSearchRec;
       i: Integer;
       Line: String;
+
+      RepackPNGMode: Boolean;
+      NameSeg: String;
+      NameSplit: Integer;
     begin
+      RepackPNGMode := ParamStr(1) = '-d';
+      if (not RepackPNGMode) and (ParamStr(1) = '-ds') then
+      begin
+        NameSeg := ExtractFileName(LeftStr(Base, Length(Base) - 1));
+
+        i := 2;
+        while ParamStr(i) <> '' do
+        begin
+          if Lowercase(ParamStr(i)) = Lowercase(NameSeg) then
+          begin
+            RepackPNGMode := true;
+            break;
+          end;
+
+          Inc(i);
+        end;
+      end;
+
       if FindFirst(Base + aRelPath + '*', faDirectory, SearchRec) = 0 then
       begin
         repeat
@@ -122,7 +144,7 @@ var
               Continue;
             end;
 
-            if (ParamStr(1) <> '-d') and (Lowercase(ExtractFileExt(SearchRec.Name)) = '.png') then
+            if RepackPNGMode and (Lowercase(ExtractFileExt(SearchRec.Name)) = '.png') then
             begin
               // This is because some people use really dumb image editors that create huge files.
               LoadBitmap32FromPng(BMP, Base + aRelPath + SearchRec.Name);
