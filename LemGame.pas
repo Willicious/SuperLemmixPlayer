@@ -6155,6 +6155,8 @@ begin
 end;
 
 procedure TLemmingGame.HandlePostTeleport(L: TLemming);
+var
+  i: Integer;
 begin
   // Check for trigger areas.
   CheckTriggerArea(L, true);
@@ -6172,7 +6174,24 @@ begin
   end;
 
   if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
-  L.LemConstructivePositionFreeze := true;
+    L.LemConstructivePositionFreeze := true;
+
+  if (L.LemAction = baBuilding) and ((L.LemNumberOfBricksLeft < 12) or (L.LemPhysicsFrame >= 9)) then
+  begin
+    if L.LemPhysicsFrame < 9 then
+      Inc(L.LemNumberOfBricksLeft);
+    for i := 0 to 3 do
+      AddConstructivePixel(L.LemX + (i * L.LemDX), L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    if L.LemPhysicsFrame < 9 then
+      Dec(L.LemNumberOfBricksLeft);
+  end else if (L.LemAction = baPlatforming) and ((L.LemNumberOfBricksLeft < 12) or (L.LemPhysicsFrame >= 9)) then
+  begin
+    if L.LemPhysicsFrame < 9 then
+      Inc(L.LemNumberOfBricksLeft);
+    AddConstructivePixel(L.LemX, L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    if L.LemPhysicsFrame < 9 then
+      Dec(L.LemNumberOfBricksLeft);
+  end;
 end;
 
 
