@@ -17,6 +17,7 @@ type
     btnUpdateAll: TButton;
     pbDownload: TProgressBar;
     tmContinueDownload: TTimer;
+    btnDownloadAll: TButton;
     procedure btnExitClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -29,6 +30,7 @@ type
       Item: TListItem; SubItem: Integer; State: TCustomDrawState;
       var DefaultDraw: Boolean);
     procedure btnUpdateAllClick(Sender: TObject);
+    procedure btnDownloadAllClick(Sender: TObject);
   private
     fClearedPieceManager: Boolean;
     fLocalList: TStringList;
@@ -119,15 +121,22 @@ end;
 
 procedure TFManageStyles.BeginDownloads;
 begin
-  fDownloadIndex := 0;
-  btnGetSelected.Enabled := false;
-  btnUpdateAll.Enabled := false;
-  btnExit.Caption := 'Cancel';
-  pbDownload.Visible := true;
-  tmContinueDownload.Enabled := true;
-  fLocalList.Sorted := false;
-  fFailList.Clear;
-  BeginNextDownload;
+  if fDownloadList.Count = 0 then
+  begin
+    if Visible then
+      ShowMessage('Please select at least one style.');
+  end else begin
+    fDownloadIndex := 0;
+    btnGetSelected.Enabled := false;
+    btnDownloadAll.Enabled := false;
+    btnUpdateAll.Enabled := false;
+    btnExit.Caption := 'Cancel';
+    pbDownload.Visible := true;
+    tmContinueDownload.Enabled := true;
+    fLocalList.Sorted := false;
+    fFailList.Clear;
+    BeginNextDownload;
+  end;
 end;
 
 procedure TFManageStyles.EndDownloads;
@@ -139,6 +148,7 @@ begin
   SaveLocalList;
   MakeStyleList;
   btnGetSelected.Enabled := true;
+  btnDownloadAll.Enabled := true;
   btnUpdateAll.Enabled := true;
   btnExit.Caption := 'Exit';
   pbDownload.Visible := false;
@@ -226,6 +236,34 @@ begin
   end;
 end;
 
+procedure TFManageStyles.btnDownloadAllClick(Sender: TObject);
+var
+  i: Integer;
+  ThisStyle: String;
+begin
+  fDownloadList.Clear;
+  for i := 0 to lvStyles.Items.Count-1 do
+  begin
+    ThisStyle := lvStyles.Items[i].Caption;
+    // We want to add styles to the download list in two cases here
+    // 1. If the style is not already downloaded
+    // 2. If the style is downloaded but an update is available
+    if (StrToInt64Def(fWebList.Values[ThisStyle], 0) > 0) then
+    begin
+      if (fLocalList.IndexOfName(ThisStyle) >= 0) and (fLocalList.Values[ThisStyle] <> '-1') and
+       (StrToInt64Def(fWebList.Values[ThisStyle], 0) > StrToInt64Def(fLocalList.Values[ThisStyle], 0)) then
+        fDownloadList.Add(ThisStyle)
+      else if fLocalList.IndexOfName(ThisStyle) < 0 then
+        fDownloadList.Add(ThisStyle);
+    end;
+  end;
+
+  if fDownloadList.Count > 0 then
+    BeginDownloads
+  else
+    ShowMessage('All available styles are already downloaded and up-to-date.');
+end;
+
 procedure TFManageStyles.btnExitClick(Sender: TObject);
 begin
   if fDownloadIndex < 0 then
@@ -263,7 +301,10 @@ begin
       fDownloadList.Add(lvStyles.Items[i].Caption);
   end;
 
-  BeginDownloads;
+  if fDownloadList.Count > 0 then
+    BeginDownloads
+  else
+    ShowMessage('No updates available for installed styles.');
 end;
 
 procedure TFManageStyles.ClearPieceManager;
@@ -301,6 +342,7 @@ begin
   if not GameParams.EnableOnline then
   begin
     btnGetSelected.Enabled := false;
+    btnDownloadAll.Enabled := false;
     btnUpdateAll.Enabled := false;
   end;
 end;
