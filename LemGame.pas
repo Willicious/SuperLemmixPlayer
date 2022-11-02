@@ -2208,7 +2208,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLasering, baBashing,
                baFencing, baMining, baDigging];
 begin
-  Result := (L.LemAction in ActionSet) and not (L.LemY <= 1);
+  Result := (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
