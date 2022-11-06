@@ -12,7 +12,7 @@ object FormNXConfig: TFormNXConfig
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
@@ -26,7 +26,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 477
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -34,7 +34,7 @@ object FormNXConfig: TFormNXConfig
       object lblUserName: TLabel
         Left = 7
         Top = 16
-        Width = 54
+        Width = 56
         Height = 13
         Caption = 'Your name:'
       end
@@ -48,14 +48,14 @@ object FormNXConfig: TFormNXConfig
         object lblIngameSaveReplay: TLabel
           Left = 28
           Top = 48
-          Width = 41
+          Width = 45
           Height = 13
           Caption = 'In-game:'
         end
         object lblPostviewSaveReplay: TLabel
           Left = 28
           Top = 75
-          Width = 46
+          Width = 48
           Height = 13
           Caption = 'Postview:'
         end
@@ -179,7 +179,7 @@ object FormNXConfig: TFormNXConfig
         object cbNoAutoReplay: TCheckBox
           Left = 12
           Top = 16
-          Width = 225
+          Width = 234
           Height = 17
           Caption = 'Don'#39't Replay After Backwards Frameskips'
           TabOrder = 0
@@ -188,7 +188,7 @@ object FormNXConfig: TFormNXConfig
         object cbPauseAfterBackwards: TCheckBox
           Left = 12
           Top = 34
-          Width = 153
+          Width = 173
           Height = 17
           Caption = 'Pause After Backwards Skip'
           TabOrder = 1
@@ -267,14 +267,14 @@ object FormNXConfig: TFormNXConfig
         object Label1: TLabel
           Left = 11
           Top = 20
-          Width = 30
+          Width = 32
           Height = 13
           Caption = 'Zoom:'
         end
         object Label2: TLabel
           Left = 11
           Top = 47
-          Width = 30
+          Width = 31
           Height = 13
           Caption = 'Panel:'
         end
@@ -393,27 +393,27 @@ object FormNXConfig: TFormNXConfig
       object Label3: TLabel
         Left = 24
         Top = 45
-        Width = 31
+        Width = 34
         Height = 13
         Caption = 'Sound'
       end
       object Label5: TLabel
         Left = 24
         Top = 75
-        Width = 28
+        Width = 30
         Height = 13
         Caption = 'Music'
       end
       object Label6: TLabel
         Left = 16
         Top = 16
-        Width = 42
+        Width = 39
         Height = 13
         Caption = 'Volume'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'MS Sans Serif'
+        Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
       end

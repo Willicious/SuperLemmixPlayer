@@ -12,7 +12,7 @@ object FReplayEditor: TFReplayEditor
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'MS Sans Serif'
+  Font.Name = 'Segoe UI'
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
@@ -28,7 +28,7 @@ object FReplayEditor: TFReplayEditor
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Segoe UI'
     Font.Style = [fsBold, fsUnderline]
     ParentFont = False
   end
@@ -41,7 +41,7 @@ object FReplayEditor: TFReplayEditor
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
-    Font.Name = 'MS Sans Serif'
+    Font.Name = 'Segoe UI'
     Font.Style = [fsBold, fsUnderline]
     ParentFont = False
   end

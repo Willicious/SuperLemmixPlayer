@@ -57,6 +57,7 @@ type
     LemmingsRescued: TLevelRecordEntry;
     TimeTaken: TLevelRecordEntry;
     TotalSkills: TLevelRecordEntry;
+    SkillTypes: TLevelRecordEntry;
     SkillCount: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TLevelRecordEntry;
     procedure Wipe;
     procedure SetNameOnAll(aName: String);
@@ -281,6 +282,9 @@ type
   end;
 
   function SortAlphabetical(Item1, Item2: Pointer): Integer;
+
+var
+  DumpImagesFallbackFlag: Boolean;
 
 implementation
 
@@ -625,11 +629,13 @@ begin
   Apply(WorldRecords.LemmingsRescued, aRecords.LemmingsRescued, true);
   Apply(WorldRecords.TimeTaken, aRecords.TimeTaken, false);
   Apply(WorldRecords.TotalSkills, aRecords.TotalSkills, false);
+  Apply(WorldRecords.SkillTypes, aRecords.SkillTypes, false);
   if aUserRecords then
   begin
     Apply(UserRecords.LemmingsRescued, aRecords.LemmingsRescued, true);
     Apply(UserRecords.TimeTaken, aRecords.TimeTaken, false);
     Apply(UserRecords.TotalSkills, aRecords.TotalSkills, false);
+    Apply(UserRecords.SkillTypes, aRecords.SkillTypes, false);
   end;
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -835,6 +841,9 @@ begin
     begin
       GameParams.SetLevel(Levels[i]);
       GameParams.LoadCurrentLevel;
+
+      if GameParams.Level.HasAnyFallbacks then
+        DumpImagesFallbackFlag := true;
 
       Output.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
       GameParams.Renderer.RenderWorld(Output, true);
@@ -1217,6 +1226,7 @@ var
       LoadRecord('lemming_record', aLevel.UserRecords.LemmingsRescued, aLevel.WorldRecords.LemmingsRescued);
       LoadRecord('time_record', aLevel.UserRecords.TimeTaken, aLevel.WorldRecords.TimeTaken);
       LoadRecord('fewest_skills', aLevel.UserRecords.TotalSkills, aLevel.WorldRecords.TotalSkills);
+      LoadRecord('fewest_skill_types', aLevel.UserRecords.SkillTypes, aLevel.WorldRecords.SkillTypes);
 
       for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
         LoadRecord('fewest_' + SKILL_NAMES[Skill], aLevel.UserRecords.SkillCount[Skill], aLevel.WorldRecords.SkillCount[Skill]);
@@ -1331,6 +1341,7 @@ var
       SaveRecord('lemming_record', aLevel.UserRecords.LemmingsRescued, aLevel.WorldRecords.LemmingsRescued);
       SaveRecord('time_record', aLevel.UserRecords.TimeTaken, aLevel.WorldRecords.TimeTaken);
       SaveRecord('fewest_skills', aLevel.UserRecords.TotalSkills, aLevel.WorldRecords.TotalSkills);
+      SaveRecord('fewest_skill_types', aLevel.UserRecords.SkillTypes, aLevel.WorldRecords.SkillTypes);
 
       for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
         if (aLevel.UserRecords.SkillCount[Skill].Value >= 0) or
@@ -1829,6 +1840,7 @@ begin
   SetNameOnRecordEntry(LemmingsRescued);
   SetNameOnRecordEntry(TimeTaken);
   SetNameOnRecordEntry(TotalSkills);
+  SetNameOnRecordEntry(SkillTypes);
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     SetNameOnRecordEntry(SkillCount[Skill]);
 end;
@@ -1845,6 +1857,7 @@ begin
   WipeRecordEntry(LemmingsRescued);
   WipeRecordEntry(TimeTaken);
   WipeRecordEntry(TotalSkills);
+  WipeRecordEntry(SkillTypes);
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     WipeRecordEntry(SkillCount[Skill]);
 end;

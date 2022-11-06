@@ -131,6 +131,8 @@ begin
 
   Piece := aSection.LineTrimString['piece'];
 
+  LoadIdentifier := Identifier;
+
   DealiasInfo := PieceManager.Dealias(Identifier, rkTerrain);
   GS := DealiasInfo.Piece.GS;
   Piece := DealiasInfo.Piece.Piece;
@@ -167,9 +169,18 @@ procedure TTerrain.SaveToSection(aSection: TParserSection);
   end;
 var
   MT: TMetaTerrain;
+  LocalIdentifier: TLabelRecord;
 begin
-  aSection.AddLine('STYLE', GS);
-  aSection.AddLine('PIECE', Piece);
+  if Identifier = 'default:fallback' then
+  begin
+    LocalIdentifier := SplitIdentifier(LoadIdentifier);
+    aSection.AddLine('STYLE', LocalIdentifier.GS);
+    aSection.AddLine('PIECE', LocalIdentifier.Piece);
+    aSection.AddLine('#', 'Terrain not found');
+  end else begin
+    aSection.AddLine('STYLE', GS);
+    aSection.AddLine('PIECE', Piece);
+  end;
   aSection.AddLine('X', Left);
   aSection.AddLine('Y', Top);
 
@@ -181,8 +192,14 @@ begin
   if not Flag(tdf_NoOneWay) then aSection.AddLine('ONE_WAY');
 
   MT := PieceManager.Terrains[Identifier];
-  if (Width > 0) and MT.ResizeHorizontal[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)] then aSection.AddLine('WIDTH', Width);
-  if (Height > 0) and MT.ResizeVertical[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)] then aSection.AddLine('HEIGHT', Height);
+  if (Width > 0) and
+     ((Identifier = 'default:fallback') or (MT.ResizeHorizontal[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)]))
+    then
+    aSection.AddLine('WIDTH', Width);
+  if (Height > 0) and
+     ((Identifier = 'default:fallback') or (MT.ResizeVertical[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)]))
+    then
+    aSection.AddLine('HEIGHT', Height);
 end;
 
 { TTerrains }

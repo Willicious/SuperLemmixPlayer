@@ -11,14 +11,30 @@ uses
   GR32, GR32_Image, GR32_Resamplers, PngInterface;
 
 const
-  AS_PANEL_WIDTH = 408;
-  AS_PANEL_HEIGHT = 312;
-
-  MIN_PREVIEW_HEIGHT = 32;
+  AS_PANEL_BASE_WIDTH = 408;
+  AS_PANEL_BASE_HEIGHT = 312;
+  MIN_PREVIEW_BASE_HEIGHT = 32;
+  PADDING_BASE_SIZE = 8;
+  NORMAL_BASE_SPACING = 40;
+  COLUMN_BASE_SPACING = 92;
+  COLUMN_SMALLER_SPACING = 72;
+  ICON_BASE_SIZE = 32;
+  ICON_INTERNAL_SIZE = 32;
 
 type
+  TInfoPanelSizing = record
+    AsPanelWidth: Integer;
+    AsPanelHeight: Integer;
+    MinPreviewHeight: Integer;
+    PaddingSize: Integer;
+    NormalSpacing: Integer;
+    ColumnSpacing: Integer;
+    ColumnSmallerSpacing: Integer;
+    IconSize: Integer;
+  end;
+
   TLevelInfoPanelMove = (pmNone,
-                         pmNextColumnTop, pmNextColumnSame, pmMoveHorz,
+                         pmNextColumnTop, pmNextColumnSame, pmNextColumnShortSame, pmMoveHorz,
                          pmNextRowLeft, pmNextRowSame, pmNextRowPadLeft, pmNextRowPadSame);
 
   TLevelInfoPanel = class(TForm)
@@ -35,6 +51,8 @@ type
       fLevel: TLevel;
       fTalisman: TTalisman;
 
+      fAdjustedSizing: TInfoPanelSizing;
+
       procedure Add(aIcon: Integer; aText: Integer; aHintText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
       procedure Add(aIcon: Integer; aText: String; aHintText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
       procedure AddTalisman(aWrapWidth: Integer);
@@ -50,6 +68,8 @@ type
       procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32);
 
       procedure DoTalismanOverride(aTalismanBMP: TBitmap32);
+
+      procedure SetSizingInfo;
     public
       constructor Create(aOwner: TComponent; aIconBMP: TBitmap32; fTalismanOverrideBMP: TBitmap32 = nil); reintroduce;
       destructor Destroy; override;
@@ -74,12 +94,6 @@ const
   COLOR_TALISMAN_RESTRICTION = $0050A0; // BBGGRR, because it's WinForms not GR32
   COLOR_RECORDS = $00A000;
 
-  PADDING_SIZE = 8;
-
-  NORMAL_SPACING = 40;
-
-  COLUMN_SPACING = 92;
-
 
 {$R *.dfm}
 
@@ -88,6 +102,8 @@ const
 constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32; fTalismanOverrideBMP: TBitmap32 = nil);
 begin
   inherited Create(aOwner);
+
+  SetSizingInfo;
 
   fLevelImage := TBitmap32.Create;
 
@@ -111,7 +127,7 @@ begin
   if fTalismanOverrideBMP <> nil then
     DoTalismanOverride(fTalismanOverrideBMP);
 
-  fCurrentPos := Types.Point(PADDING_SIZE, PADDING_SIZE);
+  fCurrentPos := Types.Point(fAdjustedSizing.PaddingSize, fAdjustedSizing.PaddingSize);
 end;
 
 destructor TLevelInfoPanel.Destroy;
@@ -161,7 +177,7 @@ begin
 
     for i := 0 to Length(TALISMAN_TARGETS)-1 do
     begin
-      DstRect := SizedRect((TALISMAN_TARGETS[i] mod 4) * 32, (TALISMAN_TARGETS[i] div 4) * 32, 32, 32);
+      DstRect := SizedRect((TALISMAN_TARGETS[i] mod 4) * ICON_INTERNAL_SIZE, (TALISMAN_TARGETS[i] div 4) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE);
 
       fIcons.FillRect(DstRect.Left, DstRect.Top, DstRect.Right, DstRect.Bottom, $00000000);
       BMP.DrawTo(fIcons, DstRect, SrcRect);
@@ -178,9 +194,11 @@ end;
 
 procedure TLevelInfoPanel.DrawIcon(aIconIndex: Integer; aDst: TBitmap32);
 begin
-  aDst.SetSize(32, 32);
+  aDst.SetSize(ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE);
   aDst.Clear($FFF0F0F0);
-  fIcons.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * 32, (aIconIndex div 4) * 32, 32, 32));
+
+  if aIconIndex >= 0 then
+    fIcons.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * ICON_INTERNAL_SIZE, (aIconIndex div 4) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE));
 end;
 
 procedure TLevelInfoPanel.Wipe;
@@ -193,8 +211,8 @@ begin
     if (Controls[i] <> btnClose) then
       Controls[i].Free;
 
-  fMinSize := Types.Point(PADDING_SIZE * 2, PADDING_SIZE * 2);
-  fCurrentPos := Types.Point(PADDING_SIZE, PADDING_SIZE);
+  fMinSize := Types.Point(fAdjustedSizing.PaddingSize * 2, fAdjustedSizing.PaddingSize * 2);
+  fCurrentPos := Types.Point(fAdjustedSizing.PaddingSize, fAdjustedSizing.PaddingSize);
 end;
 
 procedure TLevelInfoPanel.Add(aIcon: Integer; aText: String; aHintText: String;
@@ -205,8 +223,10 @@ var
 begin
   NewImage := TImage32.Create(self);
   NewImage.Parent := self;
-  NewImage.Width := 32;
-  NewImage.Height := 32;
+  NewImage.Width := fAdjustedSizing.IconSize;
+  NewImage.Height := fAdjustedSizing.IconSize;
+  NewImage.ScaleMode := smResize;
+  TLinearResampler.Create(NewImage.Bitmap);
 
   NewLabel := TLabel.Create(self);
   NewLabel.Parent := self;
@@ -229,17 +249,17 @@ begin
   begin
     NewImage.Left := fCurrentPos.X;
     NewImage.Top := fCurrentPos.Y;
-    NewLabel.Left := fCurrentPos.X + NewImage.Width + PADDING_SIZE;
+    NewLabel.Left := fCurrentPos.X + NewImage.Width + fAdjustedSizing.PaddingSize;
     NewLabel.Top := fCurrentPos.Y + ((NewImage.Height - NewLabel.Height) div 2);
   end else begin
     NewLabel.Left := fCurrentPos.X + ((NewImage.Width - NewLabel.Width) div 2);
     NewLabel.Top := fCurrentPos.Y;
     NewImage.Left := fCurrentPos.X;
-    NewImage.Top := fCurrentPos.Y + NewLabel.Height + (PADDING_SIZE div 2);
+    NewImage.Top := fCurrentPos.Y + NewLabel.Height + (fAdjustedSizing.PaddingSize div 2);
   end;
 
-  fMinSize.X := Max(fMinSize.X, Max(NewImage.Left + NewImage.Width, NewLabel.Left + NewLabel.Width) + PADDING_SIZE);
-  fMinSize.Y := Max(fMinSize.Y, Max(NewImage.Top + NewImage.Height, NewLabel.Top + NewLabel.Height) + PADDING_SIZE);
+  fMinSize.X := Max(fMinSize.X, Max(NewImage.Left + NewImage.Width, NewLabel.Left + NewLabel.Width) + fAdjustedSizing.PaddingSize);
+  fMinSize.Y := Max(fMinSize.Y, Max(NewImage.Top + NewImage.Height, NewLabel.Top + NewLabel.Height) + fAdjustedSizing.PaddingSize);
 
   NewLabel.Visible := true;
   NewImage.Visible := true;
@@ -273,9 +293,11 @@ begin
 
   Img := TImage32.Create(self);
   Img.Parent := self;
-  Img.Width := 32;
-  Img.Height := 32;
+  Img.Width := fAdjustedSizing.IconSize;
+  Img.Height := fAdjustedSizing.IconSize;
   Img.Left := fCurrentPos.X;
+  Img.ScaleMode := smResize;
+  TLinearResampler.Create(Img.Bitmap);
 
   IconIndex := ICON_TALISMAN[fTalisman.Color];
   if not GameParams.CurrentLevel.TalismanStatus[fTalisman.ID] then
@@ -291,7 +313,7 @@ begin
     LblTitle.Parent := self;
     LblTitle.Font.Style := [fsBold];
     LblTitle.Caption := fTalisman.Title;
-    LblTitle.Left := fCurrentPos.X + Img.Width + PADDING_SIZE;
+    LblTitle.Left := fCurrentPos.X + Img.Width + fAdjustedSizing.PaddingSize;
     LabelHeight := LabelHeight + LblTitle.Height;
   end else
     LblTitle := nil;
@@ -299,14 +321,14 @@ begin
   LblRequirement := TLabel.Create(self);
   LblRequirement.Parent := self;
   LblRequirement.Caption := MakeWrappedRequirementText;
-  LblRequirement.Left := fCurrentPos.X + Img.Width + PADDING_SIZE;
+  LblRequirement.Left := fCurrentPos.X + Img.Width + fAdjustedSizing.PaddingSize;
   LabelHeight := LabelHeight + LblRequirement.Height;
 
-  fCurrentPos.X := PADDING_SIZE;
+  fCurrentPos.X := fAdjustedSizing.PaddingSize;
   fMinSize.X := LblRequirement.Left + LblRequirement.Width;
   if LblTitle <> nil then
     fMinSize.X := Max(fMinSize.X, LblTitle.Left + LblTitle.Width);
-  fMinSize.X := fMinSize.X + PADDING_SIZE;
+  fMinSize.X := fMinSize.X + fAdjustedSizing.PaddingSize;
 
   if LabelHeight > Img.Height then
   begin
@@ -319,8 +341,8 @@ begin
       LblRequirement.Top := LblTitle.Top + LblTitle.Height;
     end;
 
-    fMinSize.Y := LblRequirement.Top + LblRequirement.Height + PADDING_SIZE;
-    fCurrentPos.Y := fCurrentPos.Y + LabelHeight + PADDING_SIZE;
+    fMinSize.Y := LblRequirement.Top + LblRequirement.Height + fAdjustedSizing.PaddingSize;
+    fCurrentPos.Y := fCurrentPos.Y + LabelHeight + fAdjustedSizing.PaddingSize;
   end else begin
     Img.Top := fCurrentPos.Y;
 
@@ -331,8 +353,8 @@ begin
       LblRequirement.Top := LblTitle.Top + LblTitle.Height;
     end;
 
-    fMinSize.Y := Img.Top + Img.Height + PADDING_SIZE;
-    fCurrentPos.Y := fCurrentPos.Y + Img.Height + PADDING_SIZE;
+    fMinSize.Y := Img.Top + Img.Height + fAdjustedSizing.PaddingSize;
+    fCurrentPos.Y := fCurrentPos.Y + Img.Height + fAdjustedSizing.PaddingSize;
   end;
 
 end;
@@ -350,10 +372,10 @@ var
 begin
   btnClose.Top := fMinSize.Y;
 
-  if fMinSize.X < btnClose.Width + (PADDING_SIZE * 2) then
+  if fMinSize.X < btnClose.Width + (fAdjustedSizing.PaddingSize * 2) then
   begin
-    Diff := (btnClose.Width + (PADDING_SIZE * 2)) - fMinSize.X;
-    btnClose.Left := PADDING_SIZE;
+    Diff := (btnClose.Width + (fAdjustedSizing.PaddingSize * 2)) - fMinSize.X;
+    btnClose.Left := fAdjustedSizing.PaddingSize;
     fMinSize.X := fMinSize.X + Diff;
 
     for i := 0 to ControlCount-1 do
@@ -362,7 +384,7 @@ begin
   end else
     btnClose.Left := (fMinSize.X - btnClose.Width) div 2;
 
-  fMinSize.Y := btnClose.Top + btnClose.Height + PADDING_SIZE;
+  fMinSize.Y := btnClose.Top + btnClose.Height + fAdjustedSizing.PaddingSize;
 
   btnClose.Visible := true;
 end;
@@ -380,9 +402,9 @@ var
 
   i: Integer;
 begin
-  AvailHeight := AS_PANEL_HEIGHT - fMinSize.Y - PADDING_SIZE;
+  AvailHeight := fAdjustedSizing.AsPanelHeight - fMinSize.Y - fAdjustedSizing.PaddingSize;
 
-  if AvailHeight < MIN_PREVIEW_HEIGHT then Exit;
+  if AvailHeight < fAdjustedSizing.MinPreviewHeight then Exit;
 
   LevelImg := TImage32.Create(self);
   LevelImg.Parent := self;
@@ -399,13 +421,13 @@ begin
 
   TLinearResampler.Create(LevelImg.Bitmap);
 
-  LevelImg.BoundsRect := Rect(0, 0, AS_PANEL_WIDTH, AvailHeight);
+  LevelImg.BoundsRect := Rect(0, 0, fAdjustedSizing.AsPanelWidth, AvailHeight);
 
-  fMinSize := Types.Point(AS_PANEL_WIDTH, AS_PANEL_HEIGHT);
+  fMinSize := Types.Point(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
 
   for i := 0 to ControlCount-1 do
     if Controls[i] <> LevelImg then
-      Controls[i].Top := Controls[i].Top + LevelImg.Height + PADDING_SIZE;
+      Controls[i].Top := Controls[i].Top + LevelImg.Height + fAdjustedSizing.PaddingSize;
 end;
 
 procedure TLevelInfoPanel.ApplySize(aForcedMinWidth, aForcedMinHeight: Integer);
@@ -445,13 +467,36 @@ end;
 procedure TLevelInfoPanel.Reposition(aMovement: TLevelInfoPanelMove);
 begin
   case aMovement of
-    pmNextColumnTop: begin fCurrentPos.X := fCurrentPos.X + COLUMN_SPACING; fCurrentPos.Y := PADDING_SIZE; end;
-    pmNextColumnSame: fCurrentPos.X := fCurrentPos.X + COLUMN_SPACING;
-    pmMoveHorz: fCurrentPos.X := fCurrentPos.X + NORMAL_SPACING;
-    pmNextRowLeft: begin fCurrentPos.X := PADDING_SIZE; fCurrentPos.Y := fCurrentPos.Y + NORMAL_SPACING; end;
-    pmNextRowSame: fCurrentPos.Y := fCurrentPos.Y + NORMAL_SPACING;
-    pmNextRowPadLeft: begin fCurrentPos.X := PADDING_SIZE; fCurrentPos.Y := fCurrentPos.Y + NORMAL_SPACING + (PADDING_SIZE * 2); end;
-    pmNextRowPadSame: fCurrentPos.Y := fCurrentPos.Y + NORMAL_SPACING + (PADDING_SIZE * 2);
+    pmNextColumnTop: begin fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.ColumnSpacing; fCurrentPos.Y := fAdjustedSizing.PaddingSize; end;
+    pmNextColumnSame: fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.ColumnSpacing;
+    pmNextColumnShortSame: fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.ColumnSmallerSpacing;
+    pmMoveHorz: fCurrentPos.X := fCurrentPos.X + fAdjustedSizing.NormalSpacing;
+    pmNextRowLeft: begin fCurrentPos.X := fAdjustedSizing.PaddingSize; fCurrentPos.Y := fCurrentPos.Y + fAdjustedSizing.NormalSpacing; end;
+    pmNextRowSame: fCurrentPos.Y := fCurrentPos.Y + fAdjustedSizing.NormalSpacing;
+    pmNextRowPadLeft: begin fCurrentPos.X := fAdjustedSizing.PaddingSize; fCurrentPos.Y := fCurrentPos.Y + fAdjustedSizing.NormalSpacing + (fAdjustedSizing.PaddingSize * 2); end;
+    pmNextRowPadSame: fCurrentPos.Y := fCurrentPos.Y + fAdjustedSizing.NormalSpacing + (fAdjustedSizing.PaddingSize * 2);
+  end;
+end;
+
+procedure TLevelInfoPanel.SetSizingInfo;
+var
+  Factor: Double;
+  function Adjust(aInput: Integer): Integer;
+  begin
+    Result := Round(aInput * Factor);
+  end;
+begin
+  Factor := Screen.PixelsPerInch / 96;
+  with fAdjustedSizing do
+  begin
+    AsPanelWidth := Adjust(AS_PANEL_BASE_WIDTH);
+    AsPanelHeight := Adjust(AS_PANEL_BASE_HEIGHT);
+    MinPreviewHeight := Adjust(MIN_PREVIEW_BASE_HEIGHT);
+    PaddingSize := Adjust(PADDING_BASE_SIZE);
+    NormalSpacing := Adjust(NORMAL_BASE_SPACING);
+    ColumnSpacing := Adjust(COLUMN_BASE_SPACING);
+    ColumnSmallerSpacing := Adjust(COLUMN_SMALLER_SPACING);
+    IconSize := Adjust(ICON_BASE_SIZE);
   end;
 end;
 
@@ -481,7 +526,7 @@ procedure TLevelInfoPanel.ShowPopup;
   begin
     Result := 0;
 
-    if (Talisman.RescueCount > fLevel.Info.RescueCount) then
+    if (fTalisman.RescueCount > fLevel.Info.RescueCount) then
       LocalAdd(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
     if (Talisman.TimeLimit > 0) and
@@ -493,6 +538,9 @@ procedure TLevelInfoPanel.ShowPopup;
 
     if Talisman.TotalSkillLimit >= 0 then
       LocalAdd(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+
+    if Talisman.SkillTypeLimit >= 0 then
+      LocalAdd(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if Skill in fLevel.Info.Skillset then
@@ -508,9 +556,6 @@ procedure TLevelInfoPanel.ShowPopup;
             LocalAdd(ICON_SKILLS[Skill], TalCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
         end;
       end;
-
-    if (Talisman.RequireKillZombies) then
-      LocalAdd(ICON_KILL_ZOMBIES, '', false, pmMoveHorz);
   end;
 
   procedure RepositionExistingControls(aNewWidth: Integer);
@@ -554,14 +599,14 @@ begin
     Wipe;
 
     ReqCount := AddRequirements(true);
-    ReqWidth := 40 * ReqCount - 8;
+    ReqWidth := fAdjustedSizing.NormalSpacing * ReqCount - 8;
 
-    AddTalisman(Max(ReqWidth, MIN_CENTER_REQ_COUNT * 40 - 8));
+    AddTalisman(Max(ReqWidth, MIN_CENTER_REQ_COUNT * fAdjustedSizing.NormalSpacing - 8));
 
-    if fMinSize.X > ReqWidth + (PADDING_SIZE * 2) then
+    if fMinSize.X > ReqWidth + (fAdjustedSizing.PaddingSize * 2) then
       fCurrentPos.X := (fMinSize.X - ReqWidth) div 2
     else
-      RepositionExistingControls(ReqWidth + PADDING_SIZE * 2);
+      RepositionExistingControls(ReqWidth + fAdjustedSizing.PaddingSize * 2);
 
     AddRequirements(false);
 
@@ -599,13 +644,8 @@ begin
   if fLevel.Info.NeutralCount > 0 then
     Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, '', true, pmNextColumnSame);
 
-  if (fLevel.Info.ZombieCount > 0) or ((fTalisman <> nil) and (fTalisman.RequireKillZombies)) then
-  begin
-    if (fTalisman <> nil) and (fTalisman.RequireKillZombies) then
-      Add(ICON_KILL_ZOMBIES, fLevel.Info.ZombieCount, '', true, pmNextColumnSame)
-    else
-      Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
-  end;
+  if fLevel.Info.ZombieCount > 0 then
+    Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
 
   Reposition(pmNextRowLeft);
 
@@ -634,8 +674,14 @@ begin
   else if fLevel.Info.HasTimeLimit then
     Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + LeadZeroStr(fLevel.Info.TimeLimit mod 60, 2), '', true, pmNextColumnSame);
 
-  if (Talisman <> nil) and (Talisman.TotalSkillLimit >= 0) then
-    Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+  if (Talisman <> nil) then
+  begin
+    if (Talisman.TotalSkillLimit >= 0) then
+      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', true, pmNextColumnShortSame, COLOR_TALISMAN_RESTRICTION);
+    if (Talisman.SkillTypeLimit >= 0) then
+      Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+  end;
+
 
   Reposition(pmNextRowPadLeft);
 
@@ -676,12 +722,12 @@ begin
       end;
     end;
 
-  if fCurrentPos.X = PADDING_SIZE then
+  if fCurrentPos.X = fAdjustedSizing.PaddingSize then
     AddDummy(false, pmMoveHorz);
 
   AddPreview;
 
-  ApplySize(AS_PANEL_WIDTH, AS_PANEL_HEIGHT);
+  ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
 end;
 
 procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
@@ -726,10 +772,17 @@ begin
       PrepareHintName(Records.TimeTaken.User), true, pmNextColumnSame, COLOR_RECORDS);
 
   if Records.TotalSkills.Value < 0 then
-    Add(ICON_MAX_SKILLS, '~', '', true, pmNextColumnSame)
+    Add(ICON_MAX_SKILLS, '~', '', true, pmNextColumnShortSame)
   else
     Add(ICON_MAX_SKILLS, Records.TotalSkills.Value,
-        PrepareHintName(Records.TotalSkills.User), true, pmNextColumnSame, COLOR_RECORDS);
+        PrepareHintName(Records.TotalSkills.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+
+  if Records.SkillTypes.Value < 0 then
+    Add(ICON_MAX_SKILL_TYPES, '~', '', true, pmNextColumnSame)
+  else
+    Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value,
+        PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+
 
   Reposition(pmNextRowPadLeft);
 
@@ -741,12 +794,12 @@ begin
         Add(ICON_SKILLS[Skill], Records.SkillCount[Skill].Value,
             PrepareHintName(Records.SkillCount[Skill].User), false, pmMoveHorz, COLOR_RECORDS);
 
-  if fCurrentPos.X = PADDING_SIZE then
+  if fCurrentPos.X = fAdjustedSizing.PaddingSize then
     AddDummy(false, pmMoveHorz);
 
   AddPreview;
 
-  ApplySize(AS_PANEL_WIDTH, AS_PANEL_HEIGHT);
+  ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
 end;
 
 end.

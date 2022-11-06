@@ -223,7 +223,6 @@ begin
       ShowPostviewScreen;
   end else begin
     fActiveForm := TGameTextScreen.Create(nil);
-    TGameTextScreen(fActiveForm).PreviewText := IsPreview;
     fActiveForm.ShowScreen;
   end;
 end;

@@ -115,7 +115,7 @@ type
       procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
 
-      function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
+      function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false; aFromPackOnly: Boolean = false): Boolean;
 
       procedure DrawBackground; overload;
       procedure DrawBackground(aRegion: TRect); overload;
@@ -713,14 +713,14 @@ begin
   AfterRedrawClickables;
 end;
 
-function TGameBaseMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
+function TGameBaseMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false; aFromPackOnly: Boolean = false): Boolean;
 begin
   Result := true;
 
   if (not (GameParams.CurrentLevel = nil))
      and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if FileExists(AppPath + SFGraphicsMenu + aName) then
+  else if FileExists(AppPath + SFGraphicsMenu + aName) and ((not aFromPackOnly) or (not aAcceptFailure)) then // aFromPackOnly + aAcceptFailure is an invalid combination
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
   else begin
     if not aAcceptFailure then

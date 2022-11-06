@@ -33,7 +33,6 @@ object FManageStyles: TFManageStyles
     Caption = 'Exit'
     TabOrder = 0
     OnClick = btnExitClick
-    ExplicitLeft = 239
   end
   object lvStyles: TListView
     Left = 8
@@ -75,9 +74,9 @@ object FManageStyles: TFManageStyles
     OnClick = btnGetSelectedClick
   end
   object btnUpdateAll: TButton
-    Left = 119
+    Left = 230
     Top = 271
-    Width = 105
+    Width = 82
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Update All'
@@ -95,11 +94,20 @@ object FManageStyles: TFManageStyles
     TabOrder = 4
     Visible = False
   end
+  object btnDownloadAll: TButton
+    Left = 119
+    Top = 271
+    Width = 105
+    Height = 25
+    Anchors = [akLeft, akBottom]
+    Caption = 'Download All'
+    TabOrder = 5
+    OnClick = btnDownloadAllClick
+  end
   object tmContinueDownload: TTimer
     Enabled = False
     Interval = 75
     OnTimer = tmContinueDownloadTimer
-    Left = 248
-    Top = 272
+    Top = 240
   end
 end

@@ -218,7 +218,6 @@ type
 
   { internal methods }
     procedure DoTalismanCheck;
-    function CheckAllZombiesKilled: Boolean;
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplyLaserMask(P: TPoint; L: TLemming);
@@ -231,7 +230,7 @@ type
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
-    procedure CheckTriggerArea(L: TLemming);
+    procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
       function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
       function FindGadgetID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
@@ -253,6 +252,7 @@ type
     procedure CheckForReplayAction(PausedRRCheck: Boolean = false);
     procedure CheckLemmings;
     function CheckLemTeleporting(L: TLemming): Boolean;
+    procedure HandlePostTeleport(L: TLemming);
     procedure CheckReleaseLemming;
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSound: String); overload;
@@ -778,6 +778,7 @@ var
   function CheckTalisman(aTalisman: TTalisman): Boolean;
   var
     TotalSkills: Integer;
+    TotalSkillTypes: Integer;
     SaveReq: Integer;
     i: TSkillPanelButton;
   begin
@@ -792,17 +793,17 @@ var
     if (CurrentIteration >= aTalisman.TimeLimit) and (aTalisman.TimeLimit >= 0) then Exit;
 
     TotalSkills := 0;
+    TotalSkillTypes := 0;
     for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     begin
       if (SkillsUsed[i] > aTalisman.SkillLimit[i]) and (aTalisman.SkillLimit[i] >= 0) then Exit;
       Inc(TotalSkills, SkillsUsed[i]);
+      if SkillsUsed[i] > 0 then
+        Inc(TotalSkillTypes);
     end;
 
     if (TotalSkills > aTalisman.TotalSkillLimit) and (aTalisman.TotalSkillLimit >= 0) then Exit;
-
-    if (aTalisman.RequireKillZombies) then
-      if not CheckAllZombiesKilled then
-        Exit;
+    if (TotalSkillTypes > aTalisman.SkillTypeLimit) and (aTalisman.SkillTypeLimit >= 0) then Exit;
 
     Result := true;
   end;
@@ -820,32 +821,6 @@ begin
       GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
     end;
   end;
-end;
-
-function TLemmingGame.CheckAllZombiesKilled: Boolean;
-var
-  i: Integer;
-  ReleaseOffset: Integer;
-begin
-  Result := false;
-
-  if UserSetNuking then
-    Exit;
-
-  for i := 0 to LemmingList.Count-1 do
-    if LemmingList[i].LemIsZombie and not LemmingList[i].LemRemoved then
-      Exit;
-
-  ReleaseOffset := 0;
-  if (LemmingsToRelease - ReleaseOffset > 0) then
-  begin
-    i := Level.Info.SpawnOrder[Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease + ReleaseOffset];
-    if i >= 0 then
-      if Gadgets[i].IsPreassignedZombie then
-        Exit;
-  end;
-
-  Result := true;
 end;
 
 function TLemmingGame.Checkpass: Boolean;
@@ -1399,12 +1374,17 @@ begin
 end;
 
 function TLemmingGame.CheckForOverlappingField(L: TLemming): Boolean;
+var
+  X: Integer;
 begin
   // Check only the vertices of the new blocker field
-  Result :=    HasTriggerAt(L.LemX - 5, L.LemY - 6, trBlocker)
-            or HasTriggerAt(L.LemX + 5, L.LemY - 6, trBlocker)
-            or HasTriggerAt(L.LemX - 5, L.LemY + 4, trBlocker)
-            or HasTriggerAt(L.LemX + 5, L.LemY + 4, trBlocker);
+  X := L.LemX - 6;
+  if L.LemDx = 1 then Inc(X);
+
+  Result :=    HasTriggerAt(X, L.LemY - 6, trBlocker)
+            or HasTriggerAt(X + 11, L.LemY - 6, trBlocker)
+            or HasTriggerAt(X, L.LemY + 4, trBlocker)
+            or HasTriggerAt(X + 11, L.LemY + 4, trBlocker);
 end;
 
 
@@ -1559,8 +1539,14 @@ begin
                      CueSoundEffect(SFX_YIPPEE, L.Position);
                    end;
     baVaporizing : L.LemExplosionTimer := 0;
-    baBuilding   : L.LemNumberOfBricksLeft := 12;
-    baPlatforming: L.LemNumberOfBricksLeft := 12;
+    baBuilding   : begin
+                     L.LemNumberOfBricksLeft := 12;
+                     L.LemConstructivePositionFreeze := false;
+                   end;
+    baPlatforming: begin
+                     L.LemNumberOfBricksLeft := 12;
+                     L.LemConstructivePositionFreeze := false;
+                   end;
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing,
     baStoning    : begin
@@ -1714,30 +1700,33 @@ begin
     else
       fLastBlockerCheckLem := nil;
 
-    // For builders, check that this is not the middle part of a newly created blocker area
-    // see http://www.lemmingsforums.net/index.php?topic=3295.0
-    if (Result <> DOM_NONE) and (L <> nil) and (L.LemAction = baBuilding) then
+    if fLastBlockerCheckLem <> nil then
     begin
-      if fLastBlockerCheckLem.LemDX = L.LemDx then
-        CheckPosX := L.LemX + 2 * L.LemDx
-      else
-        CheckPosX := L.LemX + 3 * L.LemDx;
-
-      if     (L.LemY >= fLastBlockerCheckLem.LemY - 1) and (L.LemY <= fLastBlockerCheckLem.LemY + 3)
-         and (fLastBlockerCheckLem.LemX = CheckPosX) then
+      // For builders, check that this is not the middle part of a newly created blocker area
+      // see http://www.lemmingsforums.net/index.php?topic=3295.0
+      if (Result <> DOM_NONE) and (L <> nil) and (L.LemAction = baBuilding) then
       begin
-        Result := DOM_NONE;
-        Exit;
+        if fLastBlockerCheckLem.LemDX = L.LemDx then
+          CheckPosX := L.LemX + 2 * L.LemDx
+        else
+          CheckPosX := L.LemX + 3 * L.LemDx;
+
+        if     (L.LemY >= fLastBlockerCheckLem.LemY - 1) and (L.LemY <= fLastBlockerCheckLem.LemY + 3)
+           and (fLastBlockerCheckLem.LemX = CheckPosX) then
+        begin
+          Result := DOM_NONE;
+          Exit;
+        end;
       end;
-    end;
 
-    // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
-    if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
-    begin
-      if not HasPixelAt(fLastBlockerCheckLem.LemX, fLastBlockerCheckLem.LemY) then
+      // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
+      if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
       begin
-        Result := DOM_NONE;
-        Exit;
+        if not HasPixelAt(fLastBlockerCheckLem.LemX, fLastBlockerCheckLem.LemY) then
+        begin
+          Result := DOM_NONE;
+          Exit;
+        end;
       end;
     end;
   end
@@ -2219,7 +2208,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLasering, baBashing,
                baFencing, baMining, baDigging];
 begin
-  Result := (L.LemAction in ActionSet) and not (L.LemY <= 1);
+  Result := (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
@@ -2325,7 +2314,7 @@ begin
 
     SimulateLem(CopyL, False);
 
-    if (CopyL.LemAction <> OldAction) and
+    if (CopyL.LemAction <> OldAction) and (CopyL.LemDX = L.LemDX) and
        ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding)) then
       Result := True;
 
@@ -2452,7 +2441,7 @@ begin
 end;
 
 
-procedure TLemmingGame.CheckTriggerArea(L: TLemming);
+procedure TLemmingGame.CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
 // For intermediate pixels, we call the trigger function according to trigger area
 var
   CheckPos: TArrayArrayInt; // Combined list for both X- and Y-coordinates
@@ -2460,7 +2449,16 @@ var
   AbortChecks: Boolean;
 
   NeedShiftPosition: Boolean;
+  SavePos: TPoint;
 begin
+  // If this is a post-teleport check, (a) reset previous position and (b) remember new position
+  if IsPostTeleportCheck then
+  begin
+    L.LemXOld := L.LemX;
+    L.LemYOld := L.LemY;
+    SavePos := Point(L.LemX, L.LemY);
+  end;
+
   // Get positions to check for trigger areas
   CheckPos := GetGadgetCheckPositions(L);
 
@@ -2516,7 +2514,7 @@ begin
     end;
 
     // Teleporter
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) and not IsPostTeleportCheck then
       AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Exits
@@ -2528,7 +2526,7 @@ begin
                          and not (L.LemAction = baBlocking)
                          and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
     begin
-      NeedShiftPosition := (L.LemAction in [baClimbing, baSliding]);
+      NeedShiftPosition := (L.LemAction in [baClimbing, baSliding, baDehoisting]);
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
     end;
@@ -2548,7 +2546,7 @@ begin
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       L.LemInFlipper := DOM_NOOBJECT;
-  until [CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY] (*or AbortChecks*);
+  until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY) (*or AbortChecks*);
 
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
@@ -2568,12 +2566,20 @@ begin
     else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
       HandleForceField(L, 1);
   end;
+
+  // And if this was a post-teleporter check, reset any position changes that may have occurred.
+  if IsPostTeleportCheck then
+  begin
+    L.LemX := SavePos.X;
+    L.LemY := SavePos.Y;
+  end;
 end;
 
 function TLemmingGame.HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
 // Checks whether the trigger area TriggerType occurs at position (X, Y)
 begin
   Result := False;
+  fLastBlockerCheckLem := nil;
 
   case TriggerType of
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
@@ -2886,7 +2892,7 @@ begin
     // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
     else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
       LayBrick(L)
-    else if L.LemAction in [baClimbing, baSliding] then
+    else if L.LemAction in [baClimbing, baSliding, baDehoisting] then
     begin
       Inc(L.LemX, L.LemDx); // Move out of the wall
       if not L.LemIsStartingAction then Inc(L.LemY); // Don't move below original position
@@ -3738,23 +3744,26 @@ begin
   begin
     Transition(L, baFalling);
     Result := false;
-  end else if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
+  end else if SliderHasPixelAt(L.LemX, L.LemY) then
   begin
-    Dec(L.LemX, L.LemDX);
-    if L.LemIsSwimmer then
+    if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
     begin
-      Transition(L, baSwimming, true);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
-    end else begin
-      Transition(L, baDrowning, true);
-      CueSoundEffect(SFX_DROWNING, L.Position);
+      Dec(L.LemX, L.LemDX);
+      if L.LemIsSwimmer then
+      begin
+        Transition(L, baSwimming, true);
+        CueSoundEffect(SFX_SWIMMING, L.Position);
+      end else begin
+        Transition(L, baDrowning, true);
+        CueSoundEffect(SFX_DROWNING, L.Position);
+      end;
+      Result := false;
+    end else if SliderHasPixelAt(L.LemX - L.LemDX, L.LemY) then
+    begin
+      Dec(L.LemX, L.LemDX);
+      Transition(L, baWalking, true);
+      Result := false;
     end;
-    Result := false;
-  end else if SliderHasPixelAt(L.LemX - L.LemDX, L.LemY) then
-  begin
-    Dec(L.LemX, L.LemDX);
-    Transition(L, baWalking, true);
-    Result := false;
   end;
 end;
 
@@ -3787,6 +3796,7 @@ begin
       end else begin
         Dec(L.LemX, L.LemDx);
         Transition(L, baFalling, True); // turn around as well
+        Inc(L.LemFallen); // Least-impact way to fix a fall distance inconsistency. See https://www.lemmingsforums.net/index.php?topic=5794.0
       end;
     end
     else if not HasPixelAt(L.LemX, L.LemY - 7 - L.LemPhysicsFrame) then
@@ -3904,7 +3914,7 @@ begin
       Transition(L, baWalking, True);  // turn around as well
     end
 
-    else
+    else if not L.LemConstructivePositionFreeze then
       Inc(L.LemX, L.LemDx);
   end
 
@@ -3924,7 +3934,8 @@ begin
 
     else
     begin
-      Inc(L.LemX, 2*L.LemDx);
+      if not L.LemConstructivePositionFreeze then
+        Inc(L.LemX, 2*L.LemDx);
       Dec(L.LemNumberOfBricksLeft); // Why are we doing this here, instead at the beginning of frame 15??
       if L.LemNumberOfBricksLeft = 0 then
       begin
@@ -3933,7 +3944,10 @@ begin
         Transition(L, baShrugging);
       end;
     end;
-  end
+  end;
+
+  if L.LemPhysicsFrame = 0 then
+    L.LemConstructivePositionFreeze := false;
 end;
 
 
@@ -3967,8 +3981,11 @@ begin
 
     else
     begin
-      Dec(L.LemY);
-      Inc(L.LemX, 2*L.LemDx);
+      if not L.LemConstructivePositionFreeze then
+      begin
+        Dec(L.LemY);
+        Inc(L.LemX, 2*L.LemDx);
+      end;
 
       if (     HasPixelAt(L.LemX, L.LemY - 2)
            or  HasPixelAt(L.LemX, L.LemY - 3)
@@ -3981,6 +3998,9 @@ begin
          Transition(L, baShrugging);
     end;
   end;
+
+  if L.LemPhysicsFrame = 0 then
+    L.LemConstructivePositionFreeze := false;
 end;
 
 
@@ -5335,12 +5355,15 @@ begin
     // We only want to update the rest when we're at the rescue count EXACTLY.
     NewRecs.TimeTaken.Value := fCurrentIteration;
     NewRecs.TotalSkills.Value := 0;
+    NewRecs.SkillTypes.Value := 0;
 
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if Skill in Level.Info.Skillset then
       begin
         NewRecs.SkillCount[Skill].Value := SkillsUsed[Skill];
         NewRecs.TotalSkills.Value := NewRecs.TotalSkills.Value + SkillsUsed[Skill];
+        if SkillsUsed[Skill] > 0 then
+          NewRecs.SkillTypes.Value := NewRecs.SkillTypes.Value + 1;
       end;
   end;
 
@@ -5607,7 +5630,7 @@ var
   NewLemming: TLemming;
   ix: Integer;
 begin
-
+                                            
   if not HatchesOpened then
     Exit;
   if UserSetNuking then
@@ -6127,6 +6150,17 @@ begin
   L.LemTeleporting := False; // Let lemming reappear
   Gadget.TeleLem := -1;
   Result := True;
+
+  HandlePostTeleport(L);
+end;
+
+procedure TLemmingGame.HandlePostTeleport(L: TLemming);
+var
+  i: Integer;
+begin
+  // Check for trigger areas.
+  CheckTriggerArea(L, true);
+
   // Reset blocker map, if lemming is a blocker and the target position is free
   if L.LemAction = baBlocking then
   begin
@@ -6137,6 +6171,26 @@ begin
       L.LemHasBlockerField := True;
       SetBlockerMap;
     end;
+  end;
+
+  if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
+    L.LemConstructivePositionFreeze := true;
+
+  if (L.LemAction = baBuilding) and ((L.LemNumberOfBricksLeft < 12) or (L.LemPhysicsFrame >= 9)) then
+  begin
+    if L.LemPhysicsFrame < 9 then
+      Inc(L.LemNumberOfBricksLeft);
+    for i := 0 to 3 do
+      AddConstructivePixel(L.LemX + (i * L.LemDX), L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    if L.LemPhysicsFrame < 9 then
+      Dec(L.LemNumberOfBricksLeft);
+  end else if (L.LemAction = baPlatforming) and ((L.LemNumberOfBricksLeft < 12) or (L.LemPhysicsFrame >= 9)) then
+  begin
+    if L.LemPhysicsFrame < 9 then
+      Inc(L.LemNumberOfBricksLeft);
+    AddConstructivePixel(L.LemX, L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    if L.LemPhysicsFrame < 9 then
+      Dec(L.LemNumberOfBricksLeft);
   end;
 end;
 

@@ -720,8 +720,8 @@ var
   TempBmp: TBitmap32;
   Sca: Double;
 begin
-  if not GetGraphic('group_graphic.png', fGroupGraphic, true) then
-    if not GetGraphic('rank_graphic.png', fGroupGraphic, true) then
+  if not GetGraphic('group_graphic.png', fGroupGraphic, true, true) then
+    if not GetGraphic('rank_graphic.png', fGroupGraphic, true, true) then
     begin
       TempBmp := TBitmap32.Create;
       try

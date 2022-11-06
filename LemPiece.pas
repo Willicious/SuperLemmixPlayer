@@ -28,6 +28,7 @@ type
   protected
     fSet: String;
     fPiece: String;
+    fLoadIdentifier: String;
     fWidth: Integer;
     fHeight: Integer;
     function GetFlip: Boolean; virtual;
@@ -42,6 +43,7 @@ type
   published
     property GS: String read fSet write fSet; // "Set" is a reserved keyword :(
     property Piece: String read fPiece write fPiece;
+    property LoadIdentifier: String read fLoadIdentifier write fLoadIdentifier;
     property Identifier: String read GetIdentifier;
     property Width: Integer read fWidth write fWidth;
     property Height: Integer read fHeight write fHeight;
@@ -85,6 +87,7 @@ begin
     inherited;
     GS := IP.GS;
     Piece := IP.Piece;
+    LoadIdentifier := IP.LoadIdentifier;
     Width := IP.Width;
     Height := IP.Height;
   end;
