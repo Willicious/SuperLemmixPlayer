@@ -409,6 +409,7 @@ begin
   fLevelPosition := 0;
   fLevelID := 0;
   fLevelVersion := 0;
+  fExpectedCompletionIteration := 0;
 end;
 
 procedure TReplay.Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
