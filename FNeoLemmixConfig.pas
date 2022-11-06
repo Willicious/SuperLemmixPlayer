@@ -60,6 +60,7 @@ type
     cbPanelZoom: TComboBox;
     Label2: TLabel;
     cbForceDefaultLemmings: TCheckBox;
+    cbDisableTestplayMusic: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -270,6 +271,7 @@ begin
     else
       tbMusicVol.Position := SoundManager.MusicVolume;
 
+    cbDisableTestplayMusic.Checked := GameParams.DisableMusicInTestplay;
     cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
     btnApply.Enabled := false;
@@ -328,6 +330,7 @@ begin
   if tbMusicVol.Position <> 0 then
     SoundManager.MusicVolume := tbMusicVol.Position;
 
+  GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
 
   btnApply.Enabled := false;

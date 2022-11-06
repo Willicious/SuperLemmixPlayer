@@ -1794,7 +1794,8 @@ begin
   fRenderInterface := Game.RenderInterface;
   fRenderer.SetInterface(fRenderInterface);
 
-  if FileExists(AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, true)) then
+  if FileExists(AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, true)) and
+    not (GameParams.DisableMusicInTestplay and (GameParams.TestModeLevel <> nil)) then
     SoundManager.LoadMusicFromFile(GetLevelMusicName)
   else
     SoundManager.FreeMusic; // This is safe to call even if no music is loaded, but ensures we don't just get the previous level's music

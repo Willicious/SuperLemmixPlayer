@@ -26,7 +26,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 477
-    ActivePage = TabSheet5
+    ActivePage = TabSheet4
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -439,10 +439,19 @@ object FormNXConfig: TFormNXConfig
       end
       object cbPostviewJingles: TCheckBox
         Left = 24
-        Top = 120
+        Top = 143
         Width = 129
         Height = 17
         Caption = 'Post-Level Jingles'
+        TabOrder = 3
+        OnClick = OptionChanged
+      end
+      object cbDisableTestplayMusic: TCheckBox
+        Left = 24
+        Top = 120
+        Width = 193
+        Height = 17
+        Caption = 'Disable Music When Testplaying'
         TabOrder = 2
         OnClick = OptionChanged
       end

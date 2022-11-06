@@ -82,7 +82,8 @@ type
     moHideAdvanced,
     moFileCaching,
     moPostviewJingles,
-    moForceDefaultLemmings
+    moForceDefaultLemmings,
+    moDisableMusicInTestplay
   );
 
   TMiscOptions = set of TMiscOption;
@@ -220,6 +221,7 @@ type
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
     property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
+    property DisableMusicInTestplay: boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
 
     property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
@@ -406,6 +408,7 @@ begin
   SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
   SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
   SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
+  SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
   SaveBoolean('PostviewJingles', PostviewJingles);
 
   SL.Add('');
@@ -579,6 +582,8 @@ begin
       PostviewJingles := true
     else
       PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
+
+    DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
     SoundManager.MuteSound := not LoadBoolean('SoundEnabled', not SoundManager.MuteSound);
     SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
