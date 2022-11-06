@@ -5283,7 +5283,10 @@ begin
     RM_SAVE : begin
                 Inc(LemmingsIn);
                 if LemmingsIn = Level.Info.RescueCount then
+                begin
                   GameResultRec.gLastRescueIteration := fCurrentIteration;
+                  fReplayManager.ExpectedCompletionIteration := fCurrentIteration;
+                end;
                 UpdateLevelRecords;
               end;
     RM_NEUTRAL: if not Silent then
@@ -5331,6 +5334,9 @@ begin
   CheckLemmings;
   CheckUpdateNuking;
   UpdateGadgets;
+
+  if (fReplayManager.ExpectedCompletionIteration = fCurrentIteration) and (not Checkpass) then
+    fReplayManager.ExpectedCompletionIteration := 0;
 
   // Get highest priority lemming under cursor
   GetPriorityLemming(fLemSelected, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);

@@ -5,7 +5,7 @@ unit GameReplayCheckScreen;
 interface
 
 uses
-  Types,
+  Types, Math,
   LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager, SharedGlobals,
   Windows, Classes, SysUtils, StrUtils, IOUtils, Controls, Contnrs,
   UMisc,
@@ -126,6 +126,7 @@ var
   Level: TLevel;
   i: Integer;
   OutStream: TMemoryStream;
+  CutoffFrame: Integer;
 
   procedure BuildReplaysList;
     procedure Get(aExt: String);
@@ -351,6 +352,8 @@ begin
 
           Game.ReplayManager.LoadFromFile(fReplays[i].ReplayFile);
 
+          CutoffFrame := Max(Game.ReplayManager.LastActionFrame, Game.ReplayManager.ExpectedCompletionIteration) + (5 * 60 * 17);
+
           fReplays[i].ReplayResult := CR_UNDETERMINED;
 
           Game.Start;
@@ -368,7 +371,7 @@ begin
 
             Game.UpdateLemmings;
 
-            if (Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17)) or
+            if (Game.CurrentIteration > CutoffFrame) or
                Game.IsOutOfTime then
             begin
               Game.Finish(GM_FIN_TERMINATE);
