@@ -2546,7 +2546,7 @@ begin
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       L.LemInFlipper := DOM_NOOBJECT;
-  until [CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY] (*or AbortChecks*);
+  until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY) (*or AbortChecks*);
 
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
