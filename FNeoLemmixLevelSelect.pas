@@ -1002,6 +1002,7 @@ begin
 
   if Obj is TNeoLevelGroup then
   begin
+    DumpImagesFallbackFlag := false;
     BasePack := TNeoLevelGroup(Obj).ParentBasePack;
 
     PathString := MakeSafeForFilename(BasePack.Name);
@@ -1010,12 +1011,18 @@ begin
     {$ifdef exp}
     BasePack.DumpNeoLemmixWebsiteMetaInfo(AppPath + 'Dump\' + PathString + '\');
     {$endif}
-    ShowMessage('Level images saved to "Dump\' + PathString + '"');
+
+    if DumpImagesFallbackFlag then
+      ShowMessage('Some styles used in this group appear to be missing. Use the Style Manager to download these. Level images with fallbacks saved to "Dump\' + PathString + '"')
+    else
+      ShowMessage('Level images saved to "Dump\' + PathString + '"');
   end else if Obj is TNeoLevelEntry then
   begin
     BMP := TBitmap32.Create;
     SaveDlg := TSaveDialog.Create(self);
     try
+      if GameParams.Level.HasAnyFallbacks then
+        ShowMessage('Some styles used by this level appear to be missing. Use the Style Manager to download these.');
       SaveDlg.Options := [ofOverwritePrompt];
       SaveDlg.Filter := 'PNG File|*.png';
       SaveDlg.DefaultExt := '.png';
