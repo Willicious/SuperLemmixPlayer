@@ -49,6 +49,8 @@ type
     procedure btnCleanseOneClick(Sender: TObject);
     procedure btnClearRecordsClick(Sender: TObject);
   private
+    fLastLevelPath: String;
+
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
     fIconBMP: TBitmap32;
@@ -614,9 +616,14 @@ begin
 end;
 
 procedure TFLevelSelect.DisplayLevelInfo;
+var
+  NeedRedraw: Boolean;
 begin
   WriteToParams;
   GameParams.LoadCurrentLevel(false);
+
+  NeedRedraw := (GameParams.CurrentLevel.Path <> fLastLevelPath);
+  fLastLevelPath := GameParams.CurrentLevel.Path;
 
   fInfoForm.Visible := true;
   fInfoForm.BoundsRect := pnLevelInfo.BoundsRect; // Delphi 10.4 bugfix
@@ -624,7 +631,7 @@ begin
   fInfoForm.Talisman := nil;
   fDisplayRecords := rdNone;
 
-  fInfoForm.PrepareEmbed;
+  fInfoForm.PrepareEmbed(NeedRedraw);
 
   SetTalismanInfo;
 end;
@@ -817,7 +824,7 @@ begin
       fInfoForm.PrepareEmbedRecords(fDisplayRecords)
     else begin
       fInfoForm.Talisman := nil;
-      fInfoForm.PrepareEmbed;
+      fInfoForm.PrepareEmbed(false);
     end;
   end else begin
     Tal := GameParams.Level.Talismans[TalBtn.Tag];
@@ -829,7 +836,7 @@ begin
       fInfoForm.Talisman := Tal;
 
     DrawTalismanButtons;
-    fInfoForm.PrepareEmbed;
+    fInfoForm.PrepareEmbed(false);
   end;
 end;
 

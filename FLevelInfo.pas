@@ -59,7 +59,7 @@ type
       procedure Add(aIcon: Integer; aText: String; aHintText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
       procedure AddTalisman(aWrapWidth: Integer);
       procedure AddDummy(aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove);
-      procedure AddPreview;
+      procedure AddPreview(aForceRedraw: Boolean);
       procedure AddClose;
 
       procedure Reposition(aMovement: TLevelInfoPanelMove);
@@ -77,7 +77,7 @@ type
       destructor Destroy; override;
 
       procedure ShowPopup;
-      procedure PrepareEmbed;
+      procedure PrepareEmbed(aForceRedraw: Boolean);
       procedure PrepareEmbedRecords(aKind: TRecordDisplay);
 
       procedure Wipe;
@@ -397,7 +397,7 @@ begin
   Add(ICON_BLANK, '', '', aTextOnRight, aMovement);
 end;
 
-procedure TLevelInfoPanel.AddPreview;
+procedure TLevelInfoPanel.AddPreview(aForceRedraw: Boolean);
 var
   AvailHeight: Integer;
   LevelImg: TImage32;
@@ -413,7 +413,7 @@ begin
   LevelImg.ScaleMode := smResize;
   LevelImg.BitmapAlign := baCenter;
 
-  if fLastRenderLevelID <> fLevel.Info.LevelID then
+  if (fLastRenderLevelID <> fLevel.Info.LevelID) or aForceRedraw then
   begin
     fLastRenderLevelID := fLevel.Info.LevelID;
     GameParams.Renderer.RenderWorld(fLevelImage, true);
@@ -623,7 +623,7 @@ begin
   end;
 end;
 
-procedure TLevelInfoPanel.PrepareEmbed;
+procedure TLevelInfoPanel.PrepareEmbed(aForceRedraw: Boolean);
 var
   SIVal: Integer;
   Skill: TSkillPanelButton;
@@ -729,7 +729,7 @@ begin
   if fCurrentPos.X = fAdjustedSizing.PaddingSize then
     AddDummy(false, pmMoveHorz);
 
-  AddPreview;
+  AddPreview(aForceRedraw);
 
   ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
 end;
@@ -801,7 +801,7 @@ begin
   if fCurrentPos.X = fAdjustedSizing.PaddingSize then
     AddDummy(false, pmMoveHorz);
 
-  AddPreview;
+  AddPreview(false);
 
   ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
 end;
