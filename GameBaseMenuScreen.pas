@@ -895,7 +895,7 @@ begin
   // Wise advice from Simon - save these things on exiting the
   // config dialog, rather than waiting for a quit or a screen
   // transition to save them.
-  GameParams.Save;
+  GameParams.Save(scImportant);
 
   ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos);
 

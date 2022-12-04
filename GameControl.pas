@@ -100,10 +100,12 @@ const
   ];
 
 type
+  TGameParamsSaveCriticality = ( scNone, scImportant, scCritical );
 
   TDosGameParams = class(TPersistent)
   private
     fDisableSaveOptions: Boolean;
+    fSaveCriticality: TGameParamsSaveCriticality;
 
     fHotkeys: TLemmixHotkeyManager;
     fTalismanPage: Integer;
@@ -184,7 +186,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure Save;
+    procedure Save(aCriticality: TGameParamsSaveCriticality);
     procedure Load;
 
     procedure SetCurrentLevelToBestMatch(aPattern: String);
@@ -199,6 +201,8 @@ type
     procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = false); // re-prepares using the existing TLevel in memory
+
+    procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
@@ -287,20 +291,47 @@ const
 
 { TDosGameParams }
 
-procedure TDosGameParams.Save;
+procedure TDosGameParams.Save(aCriticality: TGameParamsSaveCriticality);
+var
+  i: Integer;
+  Attempts: Integer;
+  Success: Boolean;
 begin
+  ElevateSaveCriticality(aCriticality);
+
   if TestModeLevel <> nil then Exit;
   if fDisableSaveOptions then Exit;
   if not LoadedConfig then Exit;
-  
-
   if IsHalting then Exit;
-  try
-    SaveToIniFile;
-    BaseLevelPack.SaveUserData;
-    Hotkeys.SaveFile;
-  except
-    ShowMessage('An error occured while trying to save data.');
+
+  Success := false;
+  Attempts := 2;
+  case fSaveCriticality of
+    scImportant: Attempts := 5;
+    scCritical: Attempts := 10;
+  end;
+
+  for i := 1 to Attempts do
+  begin
+    try
+      SaveToIniFile;
+      BaseLevelPack.SaveUserData;
+      Hotkeys.SaveFile;
+      Success := true;
+    except
+      Sleep(50);
+    end;
+
+    if Success then Break;
+  end;
+
+  if Success then
+    fSaveCriticality := scNone
+  else begin
+    if fSaveCriticality = scCritical then
+      ShowMessage('An error occured while trying to save data.')
+    else
+      Inc(fSaveCriticality);
   end;
 end;
 
@@ -825,6 +856,12 @@ begin
   fHotkeys.Free;
   BaseLevelPack.Free;
   inherited Destroy;
+end;
+
+procedure TDosGameParams.ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
+begin
+  if fSaveCriticality < aCriticality then
+    fSaveCriticality := aCriticality;
 end;
 
 function TDosGameParams.GetOptionFlag(aFlag: TMiscOption): Boolean;

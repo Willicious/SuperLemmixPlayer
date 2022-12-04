@@ -131,7 +131,7 @@ begin
 
   PieceManager.Free;
 
-  GameParams.Save;
+  GameParams.Save(scCritical);
 
   GameParams.Renderer.Free;
   GameParams.Level.Free;
@@ -170,7 +170,7 @@ begin
   //begin
     // Save the data between screens. This way it's more up to date in case
     // game crashes at any point.
-    GameParams.Save;
+    GameParams.Save(TGameParamsSaveCriticality.scNone); // compiler throws a fit without the type specifier here
 
     // I don't remember why this part is written like this.
     // Might be so that after the text screen, the right screen out of
