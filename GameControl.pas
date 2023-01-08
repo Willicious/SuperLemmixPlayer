@@ -401,6 +401,7 @@ begin
   SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
   SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
   SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
+  SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
