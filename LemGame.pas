@@ -3313,7 +3313,7 @@ var
   Hit: Boolean;
   HitUseful: Boolean;
 const
-  DISTANCE_CAP = 112;
+  DISTANCE_CAP = 3200;
 
   function CheckForHit: THitType;
   const
