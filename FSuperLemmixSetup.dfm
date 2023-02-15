@@ -5,7 +5,7 @@ object FNLSetup: TFNLSetup
   VertScrollBar.Visible = False
   BorderIcons = []
   BorderStyle = bsToolWindow
-  Caption = 'NeoLemmix Setup'
+  Caption = 'SuperLemmix Setup'
   ClientHeight = 283
   ClientWidth = 473
   Color = clBtnFace
@@ -36,15 +36,16 @@ object FNLSetup: TFNLSetup
       object lblWelcome: TLabel
         Left = 16
         Top = 16
-        Width = 194
+        Width = 206
         Height = 21
-        Caption = 'Welcome to NeoLemmix!'
+        Caption = 'Welcome to SuperLemmix!'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Style = [fsBold]
         ParentFont = False
+        OnClick = lblWelcomeClick
       end
       object lblOptionsText1: TLabel
         Left = 24

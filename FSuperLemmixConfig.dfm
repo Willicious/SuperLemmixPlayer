@@ -5,7 +5,7 @@ object FormNXConfig: TFormNXConfig
   VertScrollBar.Visible = False
   BorderIcons = []
   BorderStyle = bsToolWindow
-  Caption = 'NeoLemmix Configuration'
+  Caption = 'SuperLemmix Configuration'
   ClientHeight = 516
   ClientWidth = 273
   Color = clBtnFace
@@ -26,7 +26,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 477
-    ActivePage = TabSheet4
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet

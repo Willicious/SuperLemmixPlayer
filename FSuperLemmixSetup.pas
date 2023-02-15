@@ -27,6 +27,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
+    procedure lblWelcomeClick(Sender: TObject);
   private
   end;
 
@@ -42,6 +43,11 @@ uses
 procedure TFNLSetup.FormCreate(Sender: TObject);
 begin
   SetupPages.TabIndex := 0;
+end;
+
+procedure TFNLSetup.lblWelcomeClick(Sender: TObject);
+begin
+
 end;
 
 { Page Control }
