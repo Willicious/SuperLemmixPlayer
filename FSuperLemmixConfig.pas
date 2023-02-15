@@ -37,7 +37,6 @@ type
     cbFullScreen: TCheckBox;
     cbMinimapHighQuality: TCheckBox;
     cbIncreaseZoom: TCheckBox;
-    cbCompactSkillPanel: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     cbSpawnInterval: TCheckBox;
     btnHotkeys: TButton;
@@ -187,9 +186,9 @@ begin
   else
     MaxWidth := GameParams.MainForm.ClientWidth;
 
-  if cbCompactSkillPanel.Checked then
-    MaxZoom := Max(MaxWidth div 320, 1)
-  else
+  //if cbCompactSkillPanel.Checked then
+    //MaxZoom := Max(MaxWidth div 320, 1)
+  //else
     MaxZoom := Max(MaxWidth div 416, 1);
 
   if cbHighResolution.Checked then
@@ -254,7 +253,7 @@ begin
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
     cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
     cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
-    cbCompactSkillPanel.Checked := GameParams.CompactSkillPanel;
+    //cbCompactSkillPanel.Checked := GameParams.CompactSkillPanel;
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
     // Zoom Dropdown
@@ -315,7 +314,7 @@ begin
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
-  GameParams.CompactSkillPanel := cbCompactSkillPanel.Checked;
+  //GameParams.CompactSkillPanel := cbCompactSkillPanel.Checked;
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
 
   // Zoom Dropdown
@@ -382,8 +381,8 @@ begin
         NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
       end;
 
-    if Sender = cbCompactSkillPanel then
-      NewPanelZoom := cbPanelZoom.ItemIndex;
+    //if Sender = cbCompactSkillPanel then
+      //NewPanelZoom := cbPanelZoom.ItemIndex;
 
     if (Sender = cbFullScreen) and not GameParams.FullScreen then
       NewPanelZoom := cbPanelZoom.ItemIndex;

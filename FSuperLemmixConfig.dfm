@@ -26,7 +26,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 477
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -320,7 +320,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbMinimapHighQuality: TCheckBox
           Left = 12
-          Top = 196
+          Top = 180
           Width = 153
           Height = 17
           Caption = 'High Quality Minimap'
@@ -336,22 +336,13 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 5
           OnClick = OptionChanged
         end
-        object cbCompactSkillPanel: TCheckBox
-          Left = 12
-          Top = 180
-          Width = 153
-          Height = 17
-          Caption = 'Compact Skill Panel'
-          TabOrder = 6
-          OnClick = OptionChanged
-        end
         object cbHighResolution: TCheckBox
           Left = 12
           Top = 116
           Width = 205
           Height = 17
           Caption = 'High Resolution'
-          TabOrder = 7
+          TabOrder = 6
           OnClick = OptionChanged
         end
         object cbResetWindowSize: TCheckBox
@@ -360,7 +351,7 @@ object FormNXConfig: TFormNXConfig
           Width = 205
           Height = 17
           Caption = 'Reset Window Size'
-          TabOrder = 8
+          TabOrder = 7
           OnClick = OptionChanged
         end
         object cbResetWindowPosition: TCheckBox
@@ -369,7 +360,7 @@ object FormNXConfig: TFormNXConfig
           Width = 205
           Height = 17
           Caption = 'Reset Window Position'
-          TabOrder = 9
+          TabOrder = 8
           OnClick = OptionChanged
         end
         object cbPanelZoom: TComboBox
@@ -379,7 +370,7 @@ object FormNXConfig: TFormNXConfig
           Height = 21
           Style = csDropDownList
           ItemIndex = 0
-          TabOrder = 10
+          TabOrder = 9
           Text = '1x Zoom'
           OnChange = OptionChanged
           Items.Strings = (

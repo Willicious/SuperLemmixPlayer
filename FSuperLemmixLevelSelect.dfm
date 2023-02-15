@@ -115,7 +115,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
-    Left = 296
+    Left = 298
     Top = 128
     Width = 408
     Height = 313

@@ -406,7 +406,7 @@ begin
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
   SaveBoolean('HideShadows', HideShadows);
-  SaveBoolean('CompactSkillPanel', CompactSkillPanel);
+  //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
   SaveBoolean('UseSpawnInterval', SpawnInterval);
@@ -527,9 +527,9 @@ var
     if fPanelZoomLevel < 0 then
       fPanelZoomLevel := fZoomLevel;
 
-    if CompactSkillPanel then
-      fPanelZoomLevel := Min(Screen.Width div 320 div ResMod, fPanelZoomLevel)
-    else
+    //if CompactSkillPanel then
+      //fPanelZoomLevel := Min(Screen.Width div 320 div ResMod, fPanelZoomLevel)
+    //else
       fPanelZoomLevel := Min(Screen.Width div 416 div ResMod, fPanelZoomLevel);
 
     if fPanelZoomLevel < 1 then
@@ -570,7 +570,7 @@ begin
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
     ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
-    CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
+    //CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);

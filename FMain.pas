@@ -147,9 +147,9 @@ begin
   if WindowScale < ResMod then
     WindowScale := ResMod;
 
-  if GameParams.CompactSkillPanel then
-    ClientWidth := WindowScale * 320
-  else
+  //if GameParams.CompactSkillPanel then
+    //ClientWidth := WindowScale * 320
+  //else
     ClientWidth := Max(WindowScale * 320, 416 * ResMod);
 
   ClientHeight := ClientWidth * 9 div 16;
@@ -261,9 +261,9 @@ begin
   NewCW := NewWidth - CWDiff;
   NewCH := NewHeight - CHDiff;
 
-  if GameParams.CompactSkillPanel then
-    NewCW := Max(320 * ResMod, NewCW)
-  else
+  //if GameParams.CompactSkillPanel then
+    //NewCW := Max(320 * ResMod, NewCW)
+  //else
     NewCW := Max(416 * ResMod, NewCW);
   NewCH := Max(200 * ResMod, NewCH);
 

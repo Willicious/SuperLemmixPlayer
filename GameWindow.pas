@@ -1183,9 +1183,9 @@ begin
   Img.ScaleMode := smScale;
 
   // create toolbar
-  if GameParams.CompactSkillPanel then
-    SkillPanel := TSkillPanelCompact.CreateWithWindow(Self, Self)
-  else
+  //if GameParams.CompactSkillPanel then
+    //SkillPanel := TSkillPanelCompact.CreateWithWindow(Self, Self)
+  //else
     SkillPanel := TSkillPanelStandard.CreateWithWindow(Self, Self);
 
   SkillPanel.Parent := Self;
