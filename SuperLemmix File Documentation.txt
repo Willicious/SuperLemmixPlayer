@@ -3,7 +3,7 @@ WARNING: This is out of date.
 -------------------------------------
   1) Generalities
 -------------------------------------
-All NeoLemmix files .nxmt, .nxmi, .nxtp, .nxto are text files.
+All SuperLemmix files .nxmt, .nxmi, .nxtp, .nxto are text files.
 
 For all of them the following rules hold:
 - Any line starting with '#' is ignored.
@@ -137,7 +137,7 @@ d) The level ID. A randomized number that (hopefully) identifies the level uniqu
 e) The Autosteel type used 
    Key: 'AUTOSTEEL'
    Value: 'on' or 'off' ???? HOW ABOUT SIMPLE AUTOSTEEL ????
-   As the NeoLemmix player uses autosteel as the default, this line is not necessary.
+   As the SuperLemmix player uses autosteel as the default, this line is not necessary.
 f) The width of the level
    Key: 'WIDTH'
    Value: The width of the level in pixels
