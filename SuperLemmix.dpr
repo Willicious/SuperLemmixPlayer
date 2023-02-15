@@ -1,6 +1,6 @@
 {$include lem_directives.inc}
 
-program NeoLemmix;
+program SuperLemmix;
 
 
 
@@ -16,9 +16,9 @@ uses
   FBaseDosForm in 'FBaseDosForm.pas' {BaseDosForm},
   FEditHotkeys in 'FEditHotkeys.pas' {FLemmixHotkeys},
   FEditReplay in 'FEditReplay.pas' {FReplayEditor},
-  FNeoLemmixConfig in 'FNeoLemmixConfig.pas' {FormNXConfig},
-  FNeoLemmixLevelSelect in 'FNeoLemmixLevelSelect.pas' {FLevelSelect},
-  FNeoLemmixSetup in 'FNeoLemmixSetup.pas' {FNLSetup},
+  FSuperLemmixConfig in 'FSuperLemmixConfig.pas' {FormNXConfig},
+  FSuperLemmixLevelSelect in 'FSuperLemmixLevelSelect.pas' {FLevelSelect},
+  FSuperLemmixSetup in 'FSuperLemmixSetup.pas' {FNLSetup},
   GameBaseScreenCommon in 'GameBaseScreenCommon.pas',
   GameBaseSkillPanel in 'GameBaseSkillPanel.pas',
   GameCommandLine in 'GameCommandLine.pas',
@@ -78,7 +78,7 @@ uses
 
 begin
   Application.Initialize;
-  Application.Title := 'NeoLemmix';
+  Application.Title := 'SuperLemmix';
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.

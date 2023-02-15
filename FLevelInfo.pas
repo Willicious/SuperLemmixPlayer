@@ -89,7 +89,7 @@ type
 implementation
 
 uses
-  FNeoLemmixLevelSelect,
+  FSuperLemmixLevelSelect,
   GameControl;
 
 const

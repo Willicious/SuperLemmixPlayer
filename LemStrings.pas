@@ -64,7 +64,7 @@ const
   SFX_TIMEUP = 'timeup';
 
 resourcestring
-  SProgramName = 'NeoLemmix Player';
+  SProgramName = 'SuperLemmix Player';
   SDummyString = '';
 
 

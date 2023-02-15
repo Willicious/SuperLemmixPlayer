@@ -46,7 +46,7 @@ implementation
 
 uses
   LemNeoPieceManager, FMain,
-  FNeoLemmixConfig, LemNeoLevelPack, FNeoLemmixLevelSelect, UITypes;
+  FSuperLemmixConfig, LemNeoLevelPack, FSuperLemmixLevelSelect, UITypes;
 
 { TGameBaseScreen }
 
@@ -187,7 +187,7 @@ begin
   Dlg := TOpenDialog.Create(self);
   try
     Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := 'NeoLemmix Replay File (*.nxrp)|*.nxrp';
+    Dlg.Filter := 'SuperLemmix Replay File (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     if LastReplayDir = '' then
     begin
@@ -214,7 +214,7 @@ begin
   begin
     GlobalGame.ReplayManager.LoadFromFile(s);
     if GlobalGame.ReplayManager.LevelID <> GameParams.Level.Info.LevelID then
-      ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
+      ShowMessage('Warning: This replay appears to be from a different level. SuperLemmix' + #13 +
                   'will attempt to play the replay anyway.');
   end;
 end;

@@ -43,7 +43,7 @@ end;
 constructor TBaseDosForm.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-  Caption := 'NeoLemmix';
+  Caption := 'SuperLemmix';
   Color := clBlack;
   BorderStyle := bsNone;
   BorderIcons := [];

@@ -390,7 +390,7 @@ begin
     WriteInfo;
 
     if LowerCase(ParamStr(2)) <> 'silent' then
-      SL.SaveToFile(AppPath + 'NeoLemmixVersion.ini');
+      SL.SaveToFile(AppPath + 'SuperLemmixVersion.ini');
   finally
     SL.Free;
   end;

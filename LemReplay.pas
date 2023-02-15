@@ -313,7 +313,7 @@ class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TRepla
   begin
     Dlg := TSaveDialog.Create(aOwner);
     Dlg.Title := 'Save replay file (' + GameParams.CurrentLevel.Group.Name + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + GameParams.CurrentLevel.Title + ')';
-    Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
+    Dlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
     Dlg.DefaultExt := '.nxrp';
@@ -642,7 +642,7 @@ var
   end;
 begin
   // First, verify if it NEEDS to be updated. There's a few things we can check for, though we don't have anything 100% reliable.
-  // (These tests are 100% reliable on NeoLemmix-generated files, but possibly not on user-edited ones.)
+  // (These tests are 100% reliable on SuperLemmix-generated files, but possibly not on user-edited ones.)
   NeedUpdate := false;
   for i := 0 to SL.Count-1 do
   begin

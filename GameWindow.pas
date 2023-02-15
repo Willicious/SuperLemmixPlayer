@@ -744,9 +744,9 @@ begin
   // We don't want to trigger a second exception here, so let's be over-cautious
   // with the try...excepts. Performance probably doesn't matter if we end up here.
   try
-    if FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt') then
+    if FileExists(ExtractFilePath(ParamStr(0)) + 'SuperLemmixException.txt') then
     begin
-      SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
+      SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'SuperLemmixException.txt');
       SL.Add('');
       SL.Add('');
     end;
@@ -841,7 +841,7 @@ begin
   // Attempt to save report. Once again, we'd rather it just fail than crash
   // and lose the replay data.
   try
-    SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
+    SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'SuperLemmixException.txt');
     RIValid := true;
   except
     // We can't do much here.
@@ -849,7 +849,7 @@ begin
   end;
 
   if RIValid then
-    ShowMessage('An exception has occurred. Details have been saved to NeoLemmixException.txt. Your current replay will be' + #13 +
+    ShowMessage('An exception has occurred. Details have been saved to SuperLemmixException.txt. Your current replay will be' + #13 +
                 'saved to the "Auto" folder if possible, then you will be returned to the main menu.')
   else
     ShowMessage('An exception has occurred. Attempting to save details to a text file failed. Your current replay will be' + #13 +
@@ -860,7 +860,7 @@ begin
     ForceDirectories(ExtractFilePath(SL[0]));
     Game.EnsureCorrectReplayDetails;
     Game.ReplayManager.SaveToFile(SL[0]);
-    ShowMessage('Your replay was saved successfully. Returning to main menu now. Restarting NeoLemmix is recommended.');
+    ShowMessage('Your replay was saved successfully. Returning to main menu now. Restarting SuperLemmix is recommended.');
   except
     ShowMessage('Unfortunately, your replay could not be saved.');
   end;
@@ -1909,7 +1909,7 @@ begin
   Game.ReplayManager.LoadFromFile(aFilename);
 
   if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
-    ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
+    ShowMessage('Warning: This replay appears to be from a different level. SuperLemmix' + #13 +
                 'will attempt to play the replay anyway.');
 
   GameSpeed := gspNormal;
@@ -2002,7 +2002,7 @@ begin
   SuspendGameplay;
   try
     Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := 'NeoLemmix Replay File (*.nxrp)|*.nxrp';
+    Dlg.Filter := 'SuperLemmix Replay File (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     if LastReplayDir = '' then
     begin

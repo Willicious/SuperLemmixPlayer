@@ -128,7 +128,7 @@ uses
   LemMenuFont, // for size const
   CustomPopup,
   FStyleManager,
-  FNeoLemmixSetup,
+  FSuperLemmixSetup,
   LemGame, // to clear replay
   LemVersion,
   PngInterface;
@@ -198,9 +198,9 @@ begin
     DisableIdle;
 
     fCleanInstallFail := false;
-    ShowMessage('It appears you have installed this version of NeoLemmix over ' +
+    ShowMessage('It appears you have installed this version of SuperLemmix over ' +
                 'an older major version. It is recommended that you perform a ' +
-                'clean install of NeoLemmix whenever updating to a new major ' +
+                'clean install of SuperLemmix whenever updating to a new major ' +
                 'version. If you encounter any bugs, especially relating to ' +
                 'styles, please test with a fresh install before reporting them.');
     fLastReelUpdateTickCount := GetTickCount64;
@@ -401,7 +401,7 @@ begin
   else
     PackInfoText := #13 + 'No Pack';
 
-  NLInfoText := 'NeoLemmix Player V' + CurrentVersionString;
+  NLInfoText := 'SuperLemmix Player V' + CurrentVersionString;
   {$ifdef exp}if COMMIT_ID <> '' then NLInfoText := NLInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
@@ -909,8 +909,8 @@ begin
 
       if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
       begin
-        case RunCustomPopup(self, 'Update', 'A NeoLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
-          'Go to NeoLemmix website|Remind me later') of
+        case RunCustomPopup(self, 'Update', 'A SuperLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
+          'Go to SuperLemmix website|Remind me later') of
           1: begin
                URL := 'https://www.neolemmix.com/?page=neolemmix';
                ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);

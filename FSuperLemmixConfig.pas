@@ -1,4 +1,4 @@
-unit FNeoLemmixConfig;
+unit FSuperLemmixConfig;
 
 interface
 

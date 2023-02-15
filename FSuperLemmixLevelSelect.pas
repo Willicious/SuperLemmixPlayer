@@ -1,4 +1,4 @@
-unit FNeoLemmixLevelSelect;
+unit FSuperLemmixLevelSelect;
 
 interface
 
@@ -364,11 +364,11 @@ begin
   if Obj is TNeoLevelGroup then
   begin
     TargetPath := G.Path;
-    Description := 'NeoLemmix - ' + MakeNameRecursive(G);
+    Description := 'SuperLemmix - ' + MakeNameRecursive(G);
   end else if Obj is TNeoLevelEntry then
   begin
     TargetPath := L.Path;
-    Description := 'NeoLemmix - ' + MakeNameRecursive(L.Group) + ' :: ' + L.Title;
+    Description := 'SuperLemmix - ' + MakeNameRecursive(L.Group) + ' :: ' + L.Title;
   end else
     Exit;
 
@@ -1016,7 +1016,7 @@ begin
 
     BasePack.DumpImages(AppPath + 'Dump\' + PathString + '\');
     {$ifdef exp}
-    BasePack.DumpNeoLemmixWebsiteMetaInfo(AppPath + 'Dump\' + PathString + '\');
+    BasePack.DumpSuperLemmixWebsiteMetaInfo(AppPath + 'Dump\' + PathString + '\');
     {$endif}
 
     if DumpImagesFallbackFlag then
@@ -1054,7 +1054,7 @@ begin
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
     OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
-    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
+    OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
     OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
     if not OpenDlg.Execute then
       Exit;

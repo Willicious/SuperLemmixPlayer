@@ -98,14 +98,14 @@ begin
     if GameParams.FullScreen then
     begin
       case RunCustomPopup(nil, 'WINE Detected',
-                               'You appear to be running NeoLemmix under WINE. Fullscreen mode may not work properly.' + #13 +
+                               'You appear to be running SuperLemmix under WINE. Fullscreen mode may not work properly.' + #13 +
                                'Do you wish to change to windowed mode instead?', 'Yes|No|Never') of
         1: GameParams.FullScreen := false;
         3: GameParams.DisableWineWarnings := true;
       end;
     end;
 
-  GameParams.MainForm.Caption := 'NeoLemmix';
+  GameParams.MainForm.Caption := 'SuperLemmix';
   Application.Title := GameParams.MainForm.Caption;
 
   GameParams.Renderer.BackgroundColor := $000000;

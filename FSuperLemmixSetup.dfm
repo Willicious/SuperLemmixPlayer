@@ -36,8 +36,8 @@ object FNLSetup: TFNLSetup
       object lblWelcome: TLabel
         Left = 16
         Top = 16
-        Width = 197
-        Height = 20
+        Width = 194
+        Height = 21
         Caption = 'Welcome to NeoLemmix!'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -49,7 +49,7 @@ object FNLSetup: TFNLSetup
       object lblOptionsText1: TLabel
         Left = 24
         Top = 48
-        Width = 436
+        Width = 491
         Height = 13
         Caption = 
           'It appears that this is your first time using NeoLemmix, or that' +
@@ -58,7 +58,7 @@ object FNLSetup: TFNLSetup
       object lblOptionsText2: TLabel
         Left = 24
         Top = 80
-        Width = 342
+        Width = 366
         Height = 13
         Caption = 
           'Please select the desired options. You can always change them la' +
@@ -67,28 +67,28 @@ object FNLSetup: TFNLSetup
       object lblHotkeys: TLabel
         Left = 24
         Top = 139
-        Width = 76
+        Width = 83
         Height = 13
         Caption = 'Hotkey settings:'
       end
       object lblGraphics: TLabel
         Left = 24
         Top = 166
-        Width = 79
+        Width = 87
         Height = 13
         Caption = 'Graphic settings:'
       end
       object lblUsername: TLabel
         Left = 24
         Top = 112
-        Width = 54
+        Width = 56
         Height = 13
         Caption = 'Your name:'
       end
       object lblOnline: TLabel
         Left = 24
         Top = 193
-        Width = 72
+        Width = 82
         Height = 13
         Caption = 'Online settings:'
       end

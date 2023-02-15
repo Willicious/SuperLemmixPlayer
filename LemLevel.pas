@@ -1375,7 +1375,7 @@ var
 begin
   Parser := TParser.Create;
   try
-    Parser.MainSection.AddLine('#', 'Level cleansed using NeoLemmix V' + CurrentVersionString + ':' + COMMIT_ID);
+    Parser.MainSection.AddLine('#', 'Level cleansed using SuperLemmix V' + CurrentVersionString + ':' + COMMIT_ID);
     if HasAnyFallbacks then
       Parser.MainSection.AddLine('#', 'SOME PIECES WERE NOT FOUND');
 

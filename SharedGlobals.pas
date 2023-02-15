@@ -20,7 +20,7 @@ procedure Log(const aString: String);
 begin
   {$ifdef logging}
   DebugLog.Add(aString);
-  DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
+  DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'superlemmix_logging.txt');
   {$endif}
 end;
 
@@ -35,14 +35,14 @@ end;
 {$ifdef logging}
 initialization
   DebugLog := TStringList.Create;
-  if FileExists(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt') then
-    DebugLog.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
+  if FileExists(ExtractFilePath(ParamStr(0)) + 'superlemmix_logging.txt') then
+    DebugLog.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'superlemmix_logging.txt');
   DebugLog.Add('** Begin session at ' + FormatDateTime('yyyy/mm/dd hh:nn:ss', Now()));
 
 finalization
   DebugLog.Add('----------------------------------------');
   DebugLog.Add('');
-  DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
+  DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'superlemmix_logging.txt');
   DebugLog.Free;
 {$endif}
 

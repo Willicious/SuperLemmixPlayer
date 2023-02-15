@@ -386,8 +386,8 @@ begin
   try
     if FileExists(AppPath + SFSaveData + 'hotkeys.ini') then
       StringList.LoadFromFile(AppPath + SFSaveData + 'hotkeys.ini')
-    else if FileExists(AppPath + 'NeoLemmixHotkeys.ini') then
-      StringList.LoadFromFile(AppPath + 'NeoLemmixHotkeys.ini')
+    else if FileExists(AppPath + 'SuperLemmixHotkeys.ini') then
+      StringList.LoadFromFile(AppPath + 'SuperLemmixHotkeys.ini')
     else begin
       SetDefaultsFunctional;
       Exit;

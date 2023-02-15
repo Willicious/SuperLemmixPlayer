@@ -388,8 +388,8 @@ begin
   ForceDirectories(AppPath + SFSaveData);
   if FileExists(AppPath + SFSaveData + 'settings.ini') then
     SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
-  else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
-    SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
+  else if FileExists(AppPath + 'SuperLemmix147Settings.ini') then
+    SL2.LoadFromFile(AppPath + 'SuperLemmix147Settings.ini');
 
   SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
   SL.Add('UserName=' + UserName);

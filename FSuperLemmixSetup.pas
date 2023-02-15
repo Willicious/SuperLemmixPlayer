@@ -1,4 +1,4 @@
-unit FNeoLemmixSetup;
+unit FSuperLemmixSetup;
 
 interface
 

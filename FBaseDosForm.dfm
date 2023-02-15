@@ -3,7 +3,7 @@ object BaseDosForm: TBaseDosForm
   Top = 189
   Caption = 'BaseDosForm'
   ClientHeight = 0
-  ClientWidth = 104
+  ClientWidth = 120
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

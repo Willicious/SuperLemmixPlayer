@@ -156,7 +156,7 @@ implementation
 
 uses
   LemGame, LemReplay,
-  FMain, FNeoLemmixLevelSelect, FNeoLemmixConfig,
+  FMain, FSuperLemmixLevelSelect, FSuperLemmixConfig,
   PngInterface;
 
 const

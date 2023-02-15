@@ -200,7 +200,7 @@ type
       function GetParentBasePack: TNeoLevelGroup;
 
       {$ifdef exp}
-      procedure InternalDumpNeoLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
+      procedure InternalDumpSuperLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
       {$endif}
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
@@ -215,7 +215,7 @@ type
       procedure CleanseLevels(aPath: String; aOutput: TStringList = nil);
 
       {$ifdef exp}
-      procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
+      procedure DumpSuperLemmixWebsiteMetaInfo(aPath: String);
       {$endif}
 
       function GetLevelForTalisman(aTalisman: TTalisman): TNeoLevelEntry;
@@ -855,7 +855,7 @@ begin
 end;
 
 {$ifdef exp}
-procedure TNeoLevelGroup.DumpNeoLemmixWebsiteMetaInfo(aPath: String);
+procedure TNeoLevelGroup.DumpSuperLemmixWebsiteMetaInfo(aPath: String);
 var
   Ranks: TStringList;
   Titles: TStringList;
@@ -887,7 +887,7 @@ begin
   Stats := TStringList.Create;
   try
     AddGroup(self, '');
-    InternalDumpNeoLemmixWebsiteMetaInfo(Titles, Stats);
+    InternalDumpSuperLemmixWebsiteMetaInfo(Titles, Stats);
 
     Ranks.SaveToFile(aPath + 'ranks.txt');
     Titles.SaveToFile(aPath + 'titles.txt');
@@ -899,7 +899,7 @@ begin
   end;
 end;
 
-procedure TNeoLevelGroup.InternalDumpNeoLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
+procedure TNeoLevelGroup.InternalDumpSuperLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
 var
   i: Integer;
 
@@ -955,7 +955,7 @@ var
   end;
 begin
   for i := 0 to Children.Count-1 do
-    Children[i].InternalDumpNeoLemmixWebsiteMetaInfo(Titles, Stats);
+    Children[i].InternalDumpSuperLemmixWebsiteMetaInfo(Titles, Stats);
 
   for i := 0 to Levels.Count-1 do
   begin
