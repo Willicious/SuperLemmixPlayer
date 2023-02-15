@@ -3,7 +3,7 @@ object MainForm: TMainForm
   Top = 487
   Anchors = []
   BorderIcons = []
-  Caption = 'NeoLemmix'
+  Caption = 'SuperLemmix'
   ClientHeight = 272
   ClientWidth = 428
   Color = clBtnFace
