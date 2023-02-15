@@ -73,7 +73,7 @@ end;
 
 function TSkillPanelStandard.PanelHeight: Integer;
 begin
-  Result := 63 * ResMod;
+  Result := 40 * ResMod;
 end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
