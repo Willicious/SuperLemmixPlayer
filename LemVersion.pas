@@ -8,8 +8,8 @@ uses
   UMisc, Classes, SysUtils;
 
 const
-  FORMAT_VERSION = 12;
-  CORE_VERSION = 12;
+  FORMAT_VERSION = 1;
+  CORE_VERSION = 0;
   FEATURES_VERSION = 0;
   HOTFIX_VERSION = 0; // or RC version
 

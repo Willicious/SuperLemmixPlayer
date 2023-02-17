@@ -121,6 +121,7 @@ type
     spbBackOneFrame,
     spbDirLeft,
     spbClearPhysics,
+    spbSquiggle,
 
     // These three are the bottom part of a vertical split
     spbForwardOneFrame,
@@ -298,6 +299,7 @@ const
     baNone,  //Nuke
     baNone,  // FF
     baNone,  // Restart
+    baNone,  // Squiggle
     baNone,  // -1f
     baNone,  // +1f
     baNone,  // Clear Physics

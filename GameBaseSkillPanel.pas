@@ -191,8 +191,8 @@ const
     'empty_slot.png', {Skills end here}
 
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
-    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_frameskip.png',
-    'icon_directional.png', 'icon_cpm_and_replay.png',
+    'icon_nuke.png', 'icon_ff.png', 'icon_cpm_and_replay.png', 'icon_restart.png', 'icon_frameskip.png',
+    'icon_directional.png', 'squiggle.png',
 
     // These ones are placeholders - they're the bottom half of splits
     'icon_frameskip.png', 'icon_directional.png', 'icon_cpm_and_replay.png'

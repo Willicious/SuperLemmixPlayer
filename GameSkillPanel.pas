@@ -95,7 +95,7 @@ end;
 //this adjusts the position of the actual minimap within its frame, but also moves the frame around. Small adjustments are enough
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(354 * ResMod, 4 * ResMod, 436 * ResMod, 38 * ResMod);
+  Result := Rect(356 * ResMod, 5 * ResMod, 436 * ResMod, 38 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -113,7 +113,7 @@ function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
 begin
-  SetLength(Result, 21);
+  SetLength(Result, 22);
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (0 + MAX_SKILL_TYPES_PER_LEVEL -1) do
@@ -121,7 +121,7 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
-  //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbSquiggle;
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
