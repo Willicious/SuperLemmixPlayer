@@ -78,12 +78,12 @@ end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
 begin
-  Result := 38;
+  Result := 39;
 end;
 
 function TSkillPanelStandard.DrawStringTemplate: string;
 begin
-  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
+  Result := '.............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
@@ -101,12 +101,12 @@ end;
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   SetInfoCursorLemming(1);
-  SetReplayMark(13);
-  SetInfoLemHatch(16);
-  SetInfoLemAlive(22);
-  SetInfoLemIn(28);
-  SetTimeLimit(33);
-  SetInfoTime(34, 37);
+  SetReplayMark(14);
+  SetInfoLemHatch(17);
+  SetInfoLemAlive(23);
+  SetInfoLemIn(29);
+  SetTimeLimit(34);
+  SetInfoTime(35, 38);
 end;
 
 function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
