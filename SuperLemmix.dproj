@@ -3,7 +3,7 @@
         <ProjectGuid>{EA531DB2-6C15-4E5E-93B1-7AA1776E0F35}</ProjectGuid>
         <MainSource>SuperLemmix.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">RC Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>

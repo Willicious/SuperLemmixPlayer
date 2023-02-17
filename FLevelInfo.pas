@@ -11,11 +11,11 @@ uses
   GR32, GR32_Image, GR32_Resamplers, PngInterface;
 
 const
-  AS_PANEL_BASE_WIDTH = 408;
-  AS_PANEL_BASE_HEIGHT = 312;
-  MIN_PREVIEW_BASE_HEIGHT = 32;
+  AS_PANEL_BASE_WIDTH = 629;
+  AS_PANEL_BASE_HEIGHT = 369;
+  MIN_PREVIEW_BASE_HEIGHT = 88;
   PADDING_BASE_SIZE = 8;
-  NORMAL_BASE_SPACING = 40;
+  NORMAL_BASE_SPACING = 38;
   COLUMN_BASE_SPACING = 92;
   COLUMN_LONGER_SPACING = 112;
   COLUMN_SMALLER_SPACING = 72;
@@ -40,7 +40,7 @@ type
                          pmNextRowLeft, pmNextRowSame, pmNextRowPadLeft, pmNextRowPadSame);
 
   TLevelInfoPanel = class(TForm)
-      btnClose: TButton;
+    btnClose: TButton;
     private
       fCurrentPos: TPoint;
       fMinSize: TPoint;

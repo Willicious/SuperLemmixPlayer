@@ -1,9 +1,9 @@
 object LevelInfoPanel: TLevelInfoPanel
-  Left = 0
+  Left = 411
   Top = 0
   BorderIcons = []
   BorderStyle = bsNone
-  ClientHeight = 80
+  ClientHeight = 102
   ClientWidth = 94
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,11 +12,12 @@ object LevelInfoPanel: TLevelInfoPanel
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesigned
   PixelsPerInch = 96
   TextHeight = 13
   object btnClose: TButton
-    Left = 8
-    Top = 46
+    Left = 11
+    Top = 38
     Width = 75
     Height = 25
     Caption = 'Close'

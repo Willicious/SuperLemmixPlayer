@@ -6,9 +6,9 @@
 #        Level info             
 # ----------------------------- 
  TITLE 16 Skills
- AUTHOR 
+ AUTHOR WillLem
  ID x69FE49DB3715D768
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
@@ -39,6 +39,13 @@
    BUILDER 1
    STACKER 1
    LASERER 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Yo
+   ID 0
+   COLOR Gold
+   SAVE_REQUIREMENT 1
  $END 
  
 #     Interactive objects       

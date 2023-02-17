@@ -6,8 +6,8 @@ object FLevelSelect: TFLevelSelect
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Level Select'
-  ClientHeight = 480
-  ClientWidth = 849
+  ClientHeight = 528
+  ClientWidth = 1057
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,24 +22,24 @@ object FLevelSelect: TFLevelSelect
   PixelsPerInch = 96
   TextHeight = 13
   object lblName: TLabel
-    Left = 304
-    Top = 16
-    Width = 321
-    Height = 13
+    Left = 308
+    Top = 8
+    Width = 621
+    Height = 25
     AutoSize = False
     Caption = '<Name>'
-    Font.Charset = DEFAULT_CHARSET
+    Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -19
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object lblPosition: TLabel
-    Left = 304
+    Left = 308
     Top = 40
-    Width = 321
-    Height = 13
+    Width = 621
+    Height = 16
     AutoSize = False
     Caption = '<Position>'
     Font.Charset = DEFAULT_CHARSET
@@ -50,10 +50,10 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAuthor: TLabel
-    Left = 304
-    Top = 56
-    Width = 321
-    Height = 13
+    Left = 308
+    Top = 62
+    Width = 621
+    Height = 16
     AutoSize = False
     Caption = '<Author>'
     Font.Charset = DEFAULT_CHARSET
@@ -64,10 +64,10 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblCompletion: TLabel
-    Left = 304
-    Top = 80
-    Width = 321
-    Height = 13
+    Left = 308
+    Top = 84
+    Width = 621
+    Height = 32
     AutoSize = False
     Caption = '<Completion>'
     Font.Charset = DEFAULT_CHARSET
@@ -78,17 +78,23 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAdvancedOptions: TLabel
-    Left = 720
-    Top = 8
-    Width = 95
+    Left = 949
+    Top = 17
+    Width = 105
     Height = 13
     Caption = 'Advanced Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 8
     Width = 273
-    Height = 465
+    Height = 513
     Images = ilStatuses
     Indent = 19
     MultiSelectStyle = []
@@ -97,79 +103,82 @@ object FLevelSelect: TFLevelSelect
     OnClick = tvLevelSelectClick
   end
   object btnCancel: TButton
-    Left = 629
-    Top = 446
-    Width = 75
+    Left = 945
+    Top = 495
+    Width = 105
     Height = 25
-    Caption = 'Cancel'
+    Caption = 'Close'
     ModalResult = 2
     TabOrder = 1
   end
   object btnOK: TButton
-    Left = 575
-    Top = 446
-    Width = 48
+    Left = 300
+    Top = 495
+    Width = 621
     Height = 25
-    Caption = 'OK'
+    Caption = 'Play'
     TabOrder = 2
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
-    Left = 298
-    Top = 128
-    Width = 408
-    Height = 313
+    Left = 300
+    Top = 122
+    Width = 629
+    Height = 369
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
     TabOrder = 3
   end
   object btnMakeShortcut: TButton
-    Left = 467
-    Top = 446
-    Width = 85
+    Left = 945
+    Top = 65
+    Width = 105
     Height = 25
     Caption = 'Create Shortcut'
     TabOrder = 4
     OnClick = btnMakeShortcutClick
   end
   object sbAdvancedOptions: TScrollBox
-    Left = 712
-    Top = 24
-    Width = 129
-    Height = 448
+    Left = 945
+    Top = 94
+    Width = 110
+    Height = 117
     VertScrollBar.Visible = False
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    BorderStyle = bsNone
     TabOrder = 5
     object btnSaveImage: TButton
-      Left = 3
-      Top = 3
-      Width = 118
+      Left = 0
+      Top = 0
+      Width = 105
       Height = 25
-      Caption = 'Save Image'
+      Caption = 'Screenshot'
       TabOrder = 0
       OnClick = btnSaveImageClick
     end
     object btnMassReplay: TButton
-      Left = 3
-      Top = 30
-      Width = 118
+      Left = 0
+      Top = 29
+      Width = 105
       Height = 25
       Caption = 'Mass Replay Check'
       TabOrder = 1
       OnClick = btnMassReplayClick
     end
     object btnCleanseLevels: TButton
-      Left = 3
-      Top = 57
-      Width = 118
+      Left = 0
+      Top = 58
+      Width = 105
       Height = 25
       Caption = 'Cleanse All Levels'
       TabOrder = 2
       OnClick = btnCleanseLevelsClick
     end
     object btnCleanseOne: TButton
-      Left = 3
-      Top = 84
-      Width = 118
+      Left = 0
+      Top = 87
+      Width = 105
       Height = 25
       Caption = 'Cleanse This Level'
       TabOrder = 3
@@ -177,9 +186,9 @@ object FLevelSelect: TFLevelSelect
     end
   end
   object btnClearRecords: TButton
-    Left = 296
-    Top = 447
-    Width = 85
+    Left = 945
+    Top = 36
+    Width = 105
     Height = 25
     Caption = 'Clear Records'
     TabOrder = 6
