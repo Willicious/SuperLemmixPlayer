@@ -1,0 +1,596 @@
+TITLE Sandy Danger
+AUTHOR IchoTolot
+THEME l2_beach
+ID x069A226C3A9A9853
+LEMMINGS 20
+SAVE_REQUIREMENT 20
+MAX_SPAWN_INTERVAL 38
+WIDTH 320
+HEIGHT 480
+START_X 160
+START_Y 80
+
+$SKILLSET
+  PLATFORMER 11
+  BUILDER 11
+  BASHER 11
+  DIGGER 11
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE window
+  X 16
+  Y 0
+  WIDTH 48
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE sucker_trap
+  X 32
+  Y 300
+  WIDTH 32
+  HEIGHT 56
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE clam_trap
+  X 8
+  Y 192
+  WIDTH 32
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE exit
+  X 160
+  Y 424
+  WIDTH 32
+  HEIGHT 48
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE clam_trap
+  X 216
+  Y 448
+  WIDTH 32
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE sucker_trap
+  X 48
+  Y 97
+  WIDTH 32
+  HEIGHT 56
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE face
+  X 224
+  Y -8
+  WIDTH 52
+  HEIGHT 48
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE cloud_02
+  X 120
+  Y -8
+  WIDTH 64
+  HEIGHT 32
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE cloud_04
+  X 72
+  Y 0
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE cloud_02
+  X 264
+  Y 0
+  WIDTH 64
+  HEIGHT 32
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_beach
+  PIECE cloud_01
+  X 176
+  Y -16
+  WIDTH 64
+  HEIGHT 32
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_23
+  X 8
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_24
+  X 64
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_10
+  X 184
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_05
+  X 304
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_05
+  X 288
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_01
+  X 272
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_04
+  X 256
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE can_02
+  X 272
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_04
+  X 136
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_09
+  X 120
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_09
+  X 104
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_15
+  X 88
+  Y 160
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_22
+  X 40
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 72
+  Y 160
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_12
+  X 192
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 208
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 240
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 272
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 304
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE bucket_03
+  X 272
+  Y 160
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE palm_01
+  X 216
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 0
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 32
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 64
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_14
+  X 128
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_13
+  X 96
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_10
+  X 72
+  Y 296
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE spade_02
+  X 96
+  Y 168
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE bucket_05
+  X 200
+  Y 248
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_10
+  X -136
+  Y 352
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_10
+  X 272
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE tent_02
+  X -8
+  Y 304
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE tent_03
+  X 304
+  Y 288
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sandcastle
+  X 40
+  Y 360
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE palm_02
+  X 240
+  Y 416
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_23
+  X 192
+  Y 384
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE spade_01
+  X 200
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 240
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 224
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 208
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_07
+  X 192
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_07
+  X 128
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 112
+  Y 472
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 144
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 176
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 160
+  Y 472
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 24
+  Y 472
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X 8
+  Y 472
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_03
+  X -8
+  Y 472
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE can_01
+  X 304
+  Y 440
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE palm_01
+  X -24
+  Y 416
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_12
+  X 152
+  Y 248
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_14
+  X 168
+  Y 248
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE clam
+  X 80
+  Y 264
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_05
+  X 232
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_beach
+  PIECE sand_grassy_06
+  X 248
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

@@ -1,0 +1,2479 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Night Of The Living Lems
+ AUTHOR IchoTolot
+ ID x4BD1040F6530B03C
+ VERSION x0000000000000003
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 720
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME ray_spooky
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 42
+ SAVE_REQUIREMENT 17
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   CLIMBER 3
+   DISARMER 0
+   BLOCKER 0
+   PLATFORMER 0
+   BUILDER 0
+   BASHER 0
+   DIGGER 0
+   CLONER 0
+ $END 
+ 
+ $PRETEXT 
+   LINE Zombie lemmings are here to eat your
+   LINE brains! You have to avoid them, as they
+   LINE infect your normal lemmings and turn
+   LINE them into zombies as well. They also
+   LINE keep all permanent skills and use them
+   LINE against you! Zombies don't push buttons
+   LINE and cannot pick up pick-up skills, but
+   LINE they do activate traps! Use this to your
+   LINE advantage! There can also be zombie
+   LINE hatches!
+   LINE 
+   LINE Send out scouts in this level to
+   LINE nullify the zombie threat before you
+   LINE send out your main crowd. Build over
+   LINE incoming zombies to avoid them, lure
+   LINE them into traps, dig death pits and lead
+   LINE the zombies into them, or avoid them
+   LINE completely.
+   LINE The pick-up skills in this level may
+   LINE give you a hint towards the right
+   LINE technique needed in an area.
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ray_spooky
+   PIECE entrance
+   X 56
+   Y 80
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_spooky
+   PIECE entrance
+   X 624
+   Y 95
+   NO_OVERWRITE
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE ray_spooky
+   PIECE exit
+   X 672
+   Y 9
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_wasteland
+   PIECE mine
+   X 369
+   Y 67
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_wasteland
+   PIECE mine
+   X 399
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_spooky
+   PIECE soup
+   X 686
+   Y 125
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_spooky
+   PIECE water
+   X 325
+   Y 144
+   WIDTH 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 412
+   Y 124
+   NO_OVERWRITE
+   SKILL DIGGER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 502
+   Y 123
+   NO_OVERWRITE
+   SKILL CLONER
+ $END
+ 
+ $GADGET
+   STYLE ray_spooky
+   PIECE reaper
+   X 624
+   Y 57
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_spooky
+   PIECE soup
+   X 228
+   Y 19
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 120
+   Y 86
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 661
+   Y 75
+   NO_OVERWRITE
+   SKILL DISARMER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 568
+   Y 43
+   NO_OVERWRITE
+   SKILL BLOCKER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 610
+   Y 75
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 638
+   Y 123
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 516
+   Y 123
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 342
+   Y 75
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 592
+   Y 43
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 655
+   Y 43
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 624
+   Y 123
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X -3
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 53
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X -10
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X -10
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave4
+   X 118
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 110
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 94
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground3
+   X 127
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground4
+   X 111
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 165
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 156
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop2
+   X 131
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 90
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 64
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 38
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 15
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop2
+   X 133
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop5
+   X 123
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop5
+   X 118
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 187
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 221
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 218
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 249
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 280
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 301
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X 305
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X 288
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X 273
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 279
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 299
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave3
+   X 353
+   Y 58
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X 346
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X 346
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X 364
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground5
+   X 363
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 357
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 326
+   Y 87
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 357
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 333
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 326
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 254
+   Y 131
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 220
+   Y 131
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 40
+   Y 130
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 299
+   Y 91
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 414
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground3
+   X 385
+   Y 104
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground3
+   X 398
+   Y 94
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground4
+   X 379
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground4
+   X 389
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 388
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 395
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 414
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 401
+   Y 139
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 385
+   Y 139
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 443
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 470
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 471
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 427
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 461
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 498
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 529
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 529
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 529
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 545
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y 89
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 561
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 545
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 545
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 577
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 561
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 561
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 577
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 577
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 593
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 593
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 609
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 609
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 625
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 625
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 640
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 640
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 656
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 656
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 672
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 672
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 688
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 688
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 41
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 545
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 561
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 577
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 593
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 609
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 625
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 640
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 656
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 672
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 688
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y 9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 704
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y 73
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y 57
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y 41
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y 25
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y 9
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y -7
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 529
+   Y 105
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 593
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 688
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 609
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 680
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 672
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 664
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 656
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 648
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 625
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 641
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 657
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE pumpkin1
+   X 16
+   Y 116
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE pumpkin2
+   X 31
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground4
+   X 325
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 557
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 688
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 672
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 656
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 608
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 592
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 560
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 544
+   Y 57
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs2
+   X 576
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs2
+   X 588
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs2
+   X 596
+   Y 77
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 659
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 643
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 627
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 611
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 595
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 545
+   Y 44
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 565
+   Y 24
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs3
+   X 579
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE chain1
+   X 669
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE chain1
+   X 605
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE chain1
+   X 605
+   Y 25
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE chain1
+   X 605
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE cauldron
+   X 683
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 545
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 545
+   Y 57
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 561
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 561
+   Y 57
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks1
+   X 576
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 573
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 581
+   Y 69
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 577
+   Y 65
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 574
+   Y 61
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 589
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 589
+   Y 77
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 592
+   Y 81
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 597
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 605
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 609
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 605
+   Y 93
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks2
+   X 613
+   Y 93
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE chain1
+   X 669
+   Y 25
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE chain1
+   X 669
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks3
+   X 545
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks4
+   X 561
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE bricks3
+   X 653
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs1
+   X 624
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE stairs2
+   X 640
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X -1
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X -6
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 105
+   Y 32
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground3
+   X 214
+   Y 57
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 52
+   Y 10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 55
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 131
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 235
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 189
+   Y 56
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground3
+   X 292
+   Y 32
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 186
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground4
+   X 204
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 284
+   Y 10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 334
+   Y 10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 272
+   Y -18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 334
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 387
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 430
+   Y 31
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 456
+   Y 53
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 483
+   Y 54
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 471
+   Y 44
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 455
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 431
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground1
+   X 383
+   Y -10
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 504
+   Y 73
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 16
+   Y 28
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 47
+   Y 27
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 75
+   Y 27
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 102
+   Y 32
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 131
+   Y 50
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 156
+   Y 50
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 186
+   Y 57
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop2
+   X 214
+   Y 54
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 242
+   Y 50
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 265
+   Y 50
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop2
+   X 292
+   Y 30
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 321
+   Y 26
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 351
+   Y 26
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 378
+   Y 26
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 402
+   Y 26
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 433
+   Y 34
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 451
+   Y 50
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 477
+   Y 68
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop3
+   X 499
+   Y 72
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave2
+   X 147
+   Y 62
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave1
+   X 168
+   Y 62
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave3
+   X 157
+   Y 63
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE coffin1
+   X 362
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 115
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 146
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 156
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 186
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 217
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 249
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 253
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave4
+   X 264
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave2
+   X 246
+   Y 17
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave1
+   X 139
+   Y 18
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave3
+   X 156
+   Y 1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave1
+   X 201
+   Y 17
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE grave2
+   X 176
+   Y 17
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE cauldron
+   X 225
+   Y 15
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE pumpkin1
+   X 119
+   Y 17
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE pumpkin2
+   X 188
+   Y 0
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop4
+   X 232
+   Y -2
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop5
+   X 227
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop6
+   X 216
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop7
+   X 131
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 238
+   Y -6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 162
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 143
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 119
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop7
+   X 205
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop4
+   X 272
+   Y 7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop6
+   X 169
+   Y -1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE coffin1
+   X 487
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE pumpkin1
+   X 456
+   Y 17
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground2
+   X 505
+   Y -10
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE pumpkin2
+   X 496
+   Y 3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop5
+   X 479
+   Y 15
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop7
+   X 515
+   Y 4
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop1
+   X 488
+   Y -7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE goop4
+   X 443
+   Y 12
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE ground4
+   X 509
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 340
+   Y 89
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE steel
+   X 332
+   Y 105
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE coffin1
+   X 118
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_spooky
+   PIECE coffin1
+   X 299
+   Y 8
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 164
+   Y 131
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 550
+   Y 52
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 631
+   Y 24
+   ZOMBIE 
+ $END
+ 
+ 

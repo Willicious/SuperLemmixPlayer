@@ -1,0 +1,678 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Just As He Was About To Fall
+ AUTHOR IchoTolot
+ ID x51BBAC207DAD15A6
+ VERSION x0000000000000002
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 384
+ HEIGHT 160
+ START_X 192
+ START_Y 80
+ THEME sqron_turrican2wall
+ BACKGROUND namida_bridge:red_small
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 22
+ SAVE_REQUIREMENT 22
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   PLATFORMER 1
+   STACKER 1
+   DIGGER 2
+ $END 
+ 
+ $PRETEXT 
+   LINE More digger tricks!  
+   LINE If a digger has finished digging
+   LINE through a floor, there is a brief
+   LINE moment where there is no terrain 
+   LINE beneath him where you still can 
+   LINE assign skills to the digger before 
+   LINE he falls.
+   LINE For example, builders and platformers
+   LINE could still create a platform
+   LINE in the direction the digger 
+   LINE is facing. Stackers can do this 
+   LINE as well when the digger is close to 
+   LINE a steel wall. Try it out!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE entrance
+   X 0
+   Y 88
+   NO_OVERWRITE
+   CLIMBER 
+   NEUTRAL 
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE entrance
+   X 344
+   Y 88
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   CLIMBER 
+   NEUTRAL 
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE entrance
+   X 172
+   Y 64
+   NO_OVERWRITE
+   CLIMBER 
+   LEMMINGS 1
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE entrance
+   X 172
+   Y 64
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   CLIMBER 
+   LEMMINGS 1
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE exit
+   X 232
+   Y 121
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE exit
+   X 100
+   Y 121
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE spikes_c
+   X 176
+   Y 15
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE pneumatic_trap
+   X 354
+   Y 15
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE pneumatic_trap
+   X 0
+   Y 15
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE spikes_c
+   X 40
+   Y 15
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE sqron_turrican2wall
+   PIECE spikes_c
+   X 312
+   Y 15
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 32
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 64
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 96
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 128
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 160
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 192
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 256
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 288
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 320
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 158
+   Y 113
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 211
+   Y 113
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 158
+   Y 81
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 211
+   Y 81
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 158
+   Y 49
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 211
+   Y 49
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 32
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 64
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 96
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 128
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 160
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 192
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 224
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 256
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 288
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 320
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE bricks_01
+   X 160
+   Y 113
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 118
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_axis_section_v
+   X 227
+   Y 121
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 79
+   Y 113
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 79
+   Y 81
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 79
+   Y 49
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 290
+   Y 113
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 290
+   Y 81
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_v
+   X 290
+   Y 49
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_block_02
+   X 110
+   Y 65
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_PT_top
+   X 195
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_PT_top
+   X 158
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 211
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 157
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 79
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 289
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 352
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 0
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 352
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 0
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE bricks_platform_01
+   X 320
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE bricks_platform_01
+   X 32
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_01
+   X 40
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_01
+   X 40
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_01
+   X 328
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_01
+   X 328
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 250
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_block_02
+   X 242
+   Y 65
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE steel_pipe_h
+   X 224
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_01
+   X 250
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_01
+   X 118
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 328
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 40
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 142
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 142
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 94
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 94
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 274
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 274
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 226
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 226
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 274
+   Y 33
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 226
+   Y 33
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 142
+   Y 33
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE sqron_turrican2wall
+   PIECE brick_small_02
+   X 94
+   Y 33
+   ERASE
+   ONE_WAY
+ $END
+ 
+ 

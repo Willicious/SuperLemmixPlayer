@@ -1,0 +1,1357 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The Graveyard
+ AUTHOR IchoTolot
+ ID x731CC68A55E75DE7
+ VERSION x000000000000000A
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 600
+ HEIGHT 280
+ START_X 288
+ START_Y 120
+ THEME dex_halloween
+ BACKGROUND dex_halloween:halloween_cloudy
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 114
+ SAVE_REQUIREMENT 37
+ MAX_SPAWN_INTERVAL 5
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   WALKER 4
+   CLIMBER 1
+   DISARMER 1
+   BLOCKER 3
+   STACKER 3
+ $END 
+
+ $PRETEXT 
+   LINE Keeping your lemmings away from 
+   LINE zombies can be difficult and just
+   LINE placing one blocker or stacker 
+   LINE won't usually do the trick as the 
+   LINE zombies can contaminate the blocker,
+   LINE and through the thin stacker wall.
+   LINE But how about using two blockers or 
+   LINE stackers in a little distance from each other?
+   LINE
+   LINE The zombies won't be able to get to the second 
+   LINE blocker or contaminate  your lemmings through 
+   LINE the second stacker. This can also be used in 
+   LINE combination with one blocker and one stacker. 
+   LINE In this level, you will try out all three 
+   LINE combinations. Using the walkers here will be 
+   LINE key here! Keep in mind that you 
+   LINE will have to use most of them to 
+   LINE release your leftover blockers!
+   LINE Also, assign blockers to lemmings 
+   LINE facing the correct release direction!
+ $END 
+
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE dex_halloween
+   PIECE entrance_harvest
+   X 240
+   Y 64
+   NO_OVERWRITE
+   NEUTRAL 
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE entrance_harvest
+   X 360
+   Y 64
+   NO_OVERWRITE
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE entrance_harvest
+   X 168
+   Y 144
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE exit_harvest
+   X 88
+   Y 237
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_halloween
+   PIECE trap_pumpkinhead
+   X 150
+   Y 234
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave2
+   X 41
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave4
+   X 36
+   Y 220
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave5
+   X 569
+   Y 14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave1
+   X 462
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 396
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 474
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 533
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 478
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt9
+   X 538
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt5
+   X 558
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt4
+   X 574
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 322
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 245
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 240
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 161
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 88
+   Y 193
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 11
+   Y 193
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt9
+   X -45
+   Y 191
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt5
+   X -31
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_trunk1
+   X 15
+   Y 126
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_trunk2
+   X 27
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig2
+   X -1
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig6
+   X 38
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig8
+   X 6
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig3
+   X 42
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig6
+   X 6
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig7
+   X 59
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 240
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 161
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 88
+   Y 193
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 11
+   Y 193
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 219
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 140
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 67
+   Y 265
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X -10
+   Y 265
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 219
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 140
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 67
+   Y 265
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X -10
+   Y 265
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 374
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 295
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 374
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 295
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 524
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 445
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 524
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE dirt8
+   X 445
+   Y 264
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 23
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X -47
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_stump1
+   X -10
+   Y 170
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 97
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_stump4
+   X 112
+   Y 170
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave3
+   X 513
+   Y 218
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 440
+   Y 260
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 514
+   Y 259
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 588
+   Y 259
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_stump2
+   X 538
+   Y 241
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_trunk1
+   X 554
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig7
+   X 543
+   Y 186
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig2
+   X 572
+   Y 211
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig3
+   X 578
+   Y 171
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig4
+   X 555
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig2
+   X 533
+   Y 167
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_stump1
+   X 494
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_trunk2
+   X 510
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_trunk1
+   X 511
+   Y 38
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig2
+   X 528
+   Y 25
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig4
+   X 508
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig3
+   X 478
+   Y 12
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig7
+   X 564
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig8
+   X 463
+   Y -9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_twig8
+   X 501
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 404
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 330
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X -3
+   Y 261
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 71
+   Y 261
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 145
+   Y 260
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 218
+   Y 260
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 292
+   Y 260
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grassdead
+   X 366
+   Y 260
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 171
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 245
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass_sml_45
+   X 319
+   Y 188
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass_sml_45
+   X 237
+   Y 106
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass
+   X 256
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass_22
+   X 577
+   Y 34
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grass_22
+   X 560
+   Y 45
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave_epitaph1
+   X 466
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE tree_stump3
+   X 377
+   Y 243
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave_epitaph2
+   X 518
+   Y 236
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave_epitaph3
+   X 41
+   Y 237
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE grave_epitaph7
+   X 44
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump3
+   X 522
+   Y 183
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 581
+   Y 158
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump1
+   X 514
+   Y 154
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump2
+   X 527
+   Y 177
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump4
+   X 545
+   Y 120
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump2
+   X 563
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump3
+   X 521
+   Y 166
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump1
+   X 524
+   Y 158
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump2
+   X 583
+   Y 198
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump1
+   X 574
+   Y 197
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf3
+   X 532
+   Y 201
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf5
+   X 577
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump1
+   X 485
+   Y 43
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump1
+   X 44
+   Y 29
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 460
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 558
+   Y -25
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf2
+   X 467
+   Y 21
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf1
+   X 456
+   Y -4
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump3
+   X 556
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump3
+   X 552
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump2
+   X 527
+   Y 8
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump2
+   X 540
+   Y 10
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 537
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 511
+   Y -23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 45
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf3
+   X 505
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf1
+   X 503
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf6
+   X 468
+   Y 30
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump1
+   X -23
+   Y 44
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 49
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump1
+   X -14
+   Y 46
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump3
+   X 14
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump3
+   X -13
+   Y 101
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump5
+   X 1
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump4
+   X -13
+   Y 103
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump3
+   X -5
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf_clump2
+   X 4
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf4
+   X 50
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE leaf5
+   X 40
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE ivy1
+   X -10
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE ivy4
+   X 497
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE ivy1
+   X 538
+   Y 206
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE ivy3
+   X -35
+   Y 191
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE ivy3
+   X 562
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE mush1
+   X 70
+   Y 174
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE mush2
+   X 449
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE mush4
+   X 495
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE mush3
+   X 27
+   Y 223
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE skel_skull2
+   X 63
+   Y 244
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_halloween
+   PIECE skel_tophat
+   X 52
+   Y 135
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 212
+   Y 262
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 224
+   Y 262
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 238
+   Y 262
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 249
+   Y 261
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 256
+   Y 262
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 265
+   Y 262
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 274
+   Y 262
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 285
+   Y 261
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 204
+   Y 261
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 231
+   Y 262
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 288
+   Y 109
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 279
+   Y 107
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 298
+   Y 108
+ $END
+ 
+ $LEMMING
+   X 309
+   Y 107
+ $END
+ 
+ 

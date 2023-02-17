@@ -1,0 +1,981 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.20
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Curse Of The Gold
+ AUTHOR IchoTolot
+ ID x70F5EDF24027F38C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME ray_eldorado
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 18
+ MAX_SPAWN_INTERVAL 13
+ 
+ $SKILLSET 
+   WALKER 0
+   STONER 2
+   PLATFORMER 2
+   STACKER 2
+   BASHER 0
+   FENCER 2
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ray_eldorado
+   PIECE entrance
+   X 69
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_eldorado
+   PIECE exit
+   X 268
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_eldorado
+   PIECE lava
+   X 160
+   Y 144
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_eldorado
+   PIECE lava
+   X 280
+   Y 144
+   WIDTH 40
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_eldorado
+   PIECE fire
+   X 32
+   Y 76
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 114
+   Y 50
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 154
+   Y 50
+   NO_OVERWRITE
+   SKILL WALKER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 134
+   Y 50
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 64
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 96
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 128
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 0
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 0
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 192
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 192
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 224
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 192
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 0
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 224
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 224
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 64
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 32
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 32
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 0
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 80
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_04
+   X 64
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_02
+   X 0
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 96
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 112
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 128
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 144
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 160
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 176
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 192
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 208
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 224
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 240
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_02
+   X 256
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_02
+   X 272
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_02
+   X 288
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_02
+   X 256
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_02
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_02
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 304
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_02
+   X 304
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE blowerR
+   X 32
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 272
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 144
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 128
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 112
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 96
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 176
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 176
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 160
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_05
+   X 96
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 256
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 256
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 256
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 256
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_01
+   X 256
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 16
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 0
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 256
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_03
+   X 256
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_03
+   X 60
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_03
+   X 68
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 144
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 144
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 192
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE steel_01
+   X 192
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_03
+   X 192
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_03
+   X 168
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_09
+   X 200
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_10
+   X 248
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_11
+   X 200
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_09
+   X 248
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_10
+   X 248
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_11
+   X 104
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_10
+   X 56
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_09
+   X 8
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_11
+   X 8
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_10
+   X 8
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_09
+   X 56
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE brick_11
+   X 8
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_eldorado
+   PIECE statue_02
+   X 224
+   Y 112
+   ONE_WAY
+ $END
+ 
+ 

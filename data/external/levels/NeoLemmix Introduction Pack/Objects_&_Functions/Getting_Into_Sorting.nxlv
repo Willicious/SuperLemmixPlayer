@@ -1,0 +1,3315 @@
+TITLE Getting Into Sorting
+AUTHOR IchoTolot
+THEME ohno_brick
+ID x4D935FCB106C9AA3
+LEMMINGS 14
+SAVE_REQUIREMENT 14
+MAX_SPAWN_INTERVAL 4
+WIDTH 600
+HEIGHT 145
+START_X 300
+START_Y 80
+
+$SKILLSET
+  BASHER 2
+  DIGGER 4
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE window
+  X 181
+  Y 46
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+  DISARMER
+  LEMMINGS 2
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE window
+  X 305
+  Y 46
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+  CLIMBER
+  LEMMINGS 4
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE window
+  X 367
+  Y 46
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+  LEMMINGS 5
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 281
+  Y 254
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 8
+  Y 74
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+  LEMMINGS 4
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 7
+  Y 10
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+  LEMMINGS 2
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 445
+  Y 254
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 556
+  Y 74
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+  LEMMINGS 3
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 555
+  Y 10
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+  LEMMINGS 2
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 117
+  Y 254
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE trap_01
+  X 55
+  Y 88
+  WIDTH 16
+  HEIGHT 35
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE trap_01
+  X 530
+  Y 88
+  WIDTH 16
+  HEIGHT 35
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE water
+  X 348
+  Y 296
+  WIDTH 64
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE water
+  X 97
+  Y 178
+  WIDTH 120
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE water
+  X 0
+  Y 296
+  WIDTH 248
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE window
+  X 243
+  Y 46
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+  LEMMINGS 3
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 117
+  Y 74
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+  LEMMINGS 1
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 445
+  Y 74
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+  LEMMINGS 2
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 119
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 167
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 95
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 143
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 181
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 205
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 229
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 243
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 267
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 291
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 105
+  Y 24
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 167
+  Y 24
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 229
+  Y 24
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 291
+  Y 24
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 305
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 329
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 353
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 353
+  Y 24
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 367
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 391
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 415
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 415
+  Y 24
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 429
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 453
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 477
+  Y 0
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 477
+  Y 24
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 167
+  Y 48
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 229
+  Y 48
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 291
+  Y 48
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 353
+  Y 48
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 415
+  Y 48
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 151
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 183
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 215
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 247
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 279
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 311
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 343
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 375
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 407
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 491
+  Y 67
+  ERASE
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_01
+  X 342
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_01
+  X 304
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_01
+  X 180
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_01
+  X 218
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_01
+  X 466
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_01
+  X 428
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 242
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 280
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 118
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 156
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 366
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 404
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 118
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 156
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 242
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 280
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 366
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 404
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 180
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 218
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 304
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 342
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 428
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 466
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 24
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 0
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 48
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 72
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 96
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 504
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 480
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 528
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 552
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 576
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 593
+  Y 44
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 593
+  Y 20
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X -7
+  Y 44
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X -7
+  Y 20
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 84
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 504
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 504
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 504
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 84
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 84
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 507
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 521
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 407
+  Y 282
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 593
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 79
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X -17
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 55
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 591
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 591
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 591
+  Y 106
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X -2
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X -2
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X -2
+  Y 106
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_03
+  X 521
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_03
+  X 47
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 120
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 448
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 424
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 152
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 176
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 200
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 224
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 352
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 376
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 400
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 103
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 119
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 135
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 151
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 431
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 447
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 463
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 479
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 267
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 283
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 299
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 315
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 504
+  Y 242
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 480
+  Y 146
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 480
+  Y 170
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 480
+  Y 194
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 480
+  Y 218
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 480
+  Y 242
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 514
+  Y 266
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 514
+  Y 290
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 514
+  Y 314
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 495
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 511
+  Y 302
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 407
+  Y 296
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 407
+  Y 268
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 407
+  Y 244
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 331
+  Y 296
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 243
+  Y 296
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 243
+  Y 136
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 243
+  Y 272
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 230
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 216
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 202
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 188
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 174
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 258
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 244
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 243
+  Y 160
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 205
+  Y 202
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 215
+  Y 178
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 181
+  Y 202
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 157
+  Y 202
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 133
+  Y 202
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 109
+  Y 202
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 85
+  Y 202
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 85
+  Y 178
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_07
+  X 167
+  Y 300
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_06
+  X 71
+  Y 300
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 67
+  Y 160
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 41
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 15
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 59
+  Y 166
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 33
+  Y 148
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 7
+  Y 130
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X 21
+  Y 210
+  ROTATE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X -43
+  Y 210
+  ROTATE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X 21
+  Y 186
+  ROTATE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X -43
+  Y 186
+  ROTATE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_06
+  X 183
+  Y 176
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 205
+  Y 274
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 215
+  Y 226
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 215
+  Y 250
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 183
+  Y 256
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 157
+  Y 238
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 130
+  Y 220
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 103
+  Y 202
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 545
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 41
+  Y 68
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 55
+  Y 54
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 415
+  Y 72
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 353
+  Y 72
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 291
+  Y 72
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 229
+  Y 72
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 167
+  Y 72
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 118
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 156
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 242
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 280
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 366
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 404
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 180
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 218
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 304
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 342
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 428
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_red_02
+  X 466
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 23
+  Y 58
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X -9
+  Y 58
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X -7
+  Y -4
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 593
+  Y -4
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 531
+  Y 54
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 545
+  Y 58
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 577
+  Y 58
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_08
+  X 562
+  Y -19
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_09
+  X 7
+  Y -19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_08
+  X 63
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_09
+  X 501
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_02
+  X 543
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_02
+  X 41
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_08
+  X 389
+  Y 242
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 528
+  Y 272
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 560
+  Y 272
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 592
+  Y 272
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 528
+  Y 224
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 560
+  Y 224
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 592
+  Y 224
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 528
+  Y 176
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 560
+  Y 176
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 592
+  Y 176
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 528
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 560
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 592
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 496
+  Y 218
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 496
+  Y 170
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 496
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 486
+  Y 218
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 486
+  Y 170
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 486
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 504
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 516
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 560
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X 576
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X 576
+  Y 210
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X 576
+  Y 274
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 494
+  Y 226
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 510
+  Y 226
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 504
+  Y 210
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 513
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 513
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_01
+  X 510
+  Y 179
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 525
+  Y 240
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 552
+  Y 258
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 579
+  Y 276
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_03
+  X 550
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 160
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 176
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 192
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 208
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 224
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 240
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 256
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 272
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 288
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 550
+  Y 299
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 550
+  Y 312
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE barrel_01
+  X 531
+  Y 302
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE barrel_02
+  X 532
+  Y 289
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 538
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 538
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_01
+  X 535
+  Y 203
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 538
+  Y 176
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 477
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 69
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 119
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 151
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 183
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 215
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 247
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 279
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 311
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 343
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 375
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 407
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 439
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 471
+  Y 14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 111
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 173
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 235
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 297
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 359
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 421
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_08
+  X 211
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 163
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 176
+  Y 135
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 109
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_02
+  X 107
+  Y 164
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 69
+  Y 127
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 47
+  Y 134
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_09
+  X -7
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 12
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 12
+  Y 184
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 12
+  Y 216
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 12
+  Y 248
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 30
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 30
+  Y 168
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 30
+  Y 200
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 30
+  Y 232
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 57
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 57
+  Y 168
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 57
+  Y 200
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 57
+  Y 232
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 78
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 78
+  Y 168
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 78
+  Y 200
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 78
+  Y 232
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 57
+  Y 240
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 78
+  Y 256
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_02
+  X 76
+  Y 284
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_02
+  X 28
+  Y 259
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_01
+  X 54
+  Y 268
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_01
+  X 9
+  Y 276
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 186
+  Y 216
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 186
+  Y 240
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_02
+  X 184
+  Y 268
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 178
+  Y 216
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 115
+  Y 215
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 88
+  Y 215
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 151
+  Y 211
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 106
+  Y 226
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_01
+  X 103
+  Y 254
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 330
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 352
+  Y 136
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_02
+  X 362
+  Y 160
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 352
+  Y 184
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 298
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 266
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 255
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 282
+  Y 215
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 282
+  Y 199
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 282
+  Y 183
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 282
+  Y 167
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 282
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 262
+  Y 199
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 262
+  Y 183
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 262
+  Y 167
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 262
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 262
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 282
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 298
+  Y 183
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 298
+  Y 167
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 298
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 298
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 338
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 338
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 338
+  Y 184
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 338
+  Y 168
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 338
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 338
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 317
+  Y 248
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 317
+  Y 232
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 317
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 317
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 317
+  Y 184
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 317
+  Y 168
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 317
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 317
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 304
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 278
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 259
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 366
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 391
+  Y 135
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 385
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_02
+  X 383
+  Y 163
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE barrel_01
+  X 257
+  Y 284
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE barrel_02
+  X 259
+  Y 270
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE barrel_02
+  X 269
+  Y 288
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_09
+  X 257
+  Y 235
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE barrel_01
+  X 258
+  Y 219
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE barrel_02
+  X 267
+  Y 223
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 488
+  Y 266
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 491
+  Y 242
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 485
+  Y 258
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 248
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 328
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 272
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 314
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 300
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 286
+  Y 122
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 135
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_03
+  X 429
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Hatches can release lemmings with
+  LINE permanent skills already assigned
+  LINE to them. In this case, they are
+  LINE marked with the icon of that skill.
+  LINE
+  LINE Normally, lemmings are equally spread
+  LINE among all hatches, but some hatches
+  LINE can be limited to spawning a
+  LINE certain number of lemmings. Exits can
+  LINE also be limited in the number of
+  LINE lemmings they can take.
+  LINE
+  LINE Hovering the cursor over a lemming
+  LINE will give information on his status
+  LINE on the left side above the skillbar.
+  LINE So now you have the task of deciding
+  LINE which group of lemmings to release
+  LINE first and which exits they need to
+  LINE take. Think ahead here!
+$END
+

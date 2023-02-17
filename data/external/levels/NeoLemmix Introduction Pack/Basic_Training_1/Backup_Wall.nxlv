@@ -1,0 +1,700 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Backup Wall
+ AUTHOR IchoTolot
+ ID x4DCCFB1E721A896D
+ VERSION x0000000000000002
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 800
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME l2_polar
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 50
+ MAX_SPAWN_INTERVAL 38
+ 
+ $SKILLSET 
+   BUILDER 9
+   BASHER 3
+ $END 
+ 
+ $PRETEXT 
+   LINE Builders can be used to create walls
+   LINE that could serve as a one-way
+   LINE substitute for a blocker.
+   LINE Simply place three builders right
+   LINE next to each other and watch them
+   LINE slowly become a wall for the side
+   LINE they are facing.
+   LINE Builders are also useful to seal
+   LINE up tunnels so that the lemming
+   LINE digging them ends up separated
+   LINE from the crowd.
+   LINE Just have an extra skill ready to
+   LINE free the crowd afterwards! ;)
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_polar
+   PIECE window
+   X 16
+   Y 104
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_polar
+   PIECE exit
+   X 712
+   Y 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_polar
+   PIECE water
+   X 656
+   Y 144
+   WIDTH 144
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_06
+   X 16
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_18
+   X 144
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_06
+   X 64
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_slope_32
+   X 160
+   Y 96
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_25
+   X 128
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_26
+   X 176
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_07
+   X 176
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_deco_01
+   X 176
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_07
+   X 208
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_deco_04
+   X 208
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_07
+   X 240
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_07
+   X 240
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_deco_03
+   X 272
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_deco_05
+   X 272
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_15
+   X 208
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_12
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_26
+   X 288
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_24
+   X 72
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_24
+   X 416
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_24
+   X 464
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_25
+   X 560
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_26
+   X 608
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_24
+   X 512
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE polarbear_01
+   X 592
+   Y 56
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_25
+   X 672
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE bottom_10
+   X 720
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_06
+   X 720
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_06
+   X 320
+   Y 152
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_19
+   X 304
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_deco_02
+   X 720
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_deco_04
+   X 768
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_04
+   X 752
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE block_04
+   X 752
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_16
+   X 576
+   Y 112
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_19
+   X 640
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE penguin
+   X 248
+   Y 56
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE moon
+   X 400
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE polarbear_01
+   X 168
+   Y 24
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE snowman
+   X 776
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE snowball_02
+   X 136
+   Y 40
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE tree_01
+   X 296
+   Y 40
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE tree_02
+   X 72
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_24
+   X 8
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_24
+   X 32
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_26
+   X -32
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE iglu
+   X 208
+   Y 56
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE tree_01
+   X 752
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE tree_02
+   X 736
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE bottom_10
+   X 720
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE bottom_10
+   X 640
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE bottom_11
+   X 592
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_22
+   X 632
+   Y 0
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_01
+   X 592
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_01
+   X 472
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_02
+   X 552
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_02
+   X 496
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 528
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_04
+   X 328
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 376
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_01
+   X 376
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_02
+   X 272
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 240
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_04
+   X 192
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 136
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_02
+   X 48
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_01
+   X 160
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 72
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_04
+   X 8
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 24
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 608
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_04
+   X 512
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE star_05
+   X 472
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE ground_06
+   X -7
+   Y 148
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE steel_02
+   X 306
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_polar
+   PIECE steel_02
+   X 306
+   Y 96
+   ONE_WAY
+ $END
+ 
+ 

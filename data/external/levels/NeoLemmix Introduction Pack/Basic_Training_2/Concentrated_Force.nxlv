@@ -1,0 +1,828 @@
+TITLE Concentrated Force
+AUTHOR IchoTolot
+THEME sqron_turrican2wall
+ID x06FFD4C88FF7965A
+LEMMINGS 50
+SAVE_REQUIREMENT 44
+MAX_SPAWN_INTERVAL 53
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+BACKGROUND sqron_turrican2wall:turr2walkerfactoryvoid
+
+$SKILLSET
+  BOMBER 1
+  BLOCKER 2
+  BASHER 1
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE entrance
+  X 16
+  Y 72
+  WIDTH 40
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE exit
+  X 272
+  Y 88
+  WIDTH 48
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE pneumatic_trap
+  X 216
+  Y 48
+  WIDTH 30
+  HEIGHT 64
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE pneumatic_trap
+  X 184
+  Y 48
+  WIDTH 30
+  HEIGHT 64
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE pneumatic_trap
+  X 152
+  Y 48
+  WIDTH 30
+  HEIGHT 64
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE pneumatic_trap
+  X 248
+  Y 48
+  WIDTH 30
+  HEIGHT 64
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE turrican_sprite
+  X 8
+  Y 28
+  WIDTH 29
+  HEIGHT 36
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE walker
+  X 108
+  Y 44
+  WIDTH 24
+  HEIGHT 20
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE walker
+  X 72
+  Y 44
+  WIDTH 24
+  HEIGHT 20
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE turret
+  X 120
+  Y 141
+  WIDTH 80
+  HEIGHT 19
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE gear_perpendicular
+  X -9
+  Y 128
+  WIDTH 42
+  HEIGHT 41
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE gear_perpendicular_02
+  X 29
+  Y 122
+  WIDTH 42
+  HEIGHT 41
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE gear_perpendicular
+  X 253
+  Y 117
+  WIDTH 42
+  HEIGHT 41
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE gear_perpendicular_02
+  X 290
+  Y 128
+  WIDTH 42
+  HEIGHT 41
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE gear
+  X 48
+  Y 0
+  WIDTH 40
+  HEIGHT 16
+  ONLY_ON_TERRAIN
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE sqron_turrican2wall
+  PIECE gear
+  X 96
+  Y 0
+  WIDTH 40
+  HEIGHT 16
+  ONLY_ON_TERRAIN
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 8
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 16
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 24
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 32
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 40
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 48
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 56
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 64
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 248
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 256
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 264
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 272
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 280
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 288
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 296
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 304
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 312
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE bricks_04
+  X 72
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE bricks_07
+  X 104
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_01
+  X 216
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_02
+  X 184
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_02
+  X 88
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_05
+  X 152
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_04
+  X 120
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE bricks_07
+  X 72
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_05
+  X 104
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_t_d
+  X 64
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_t_d
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_t_d
+  X 248
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_t_d
+  X 312
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 248
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 248
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 248
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 248
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 248
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 312
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 312
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 312
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 312
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 312
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 0
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 0
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 0
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 0
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 64
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 64
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 64
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 64
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_v
+  X 64
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_01
+  X 152
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_01
+  X 184
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_01
+  X 216
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_01
+  X 248
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_small_01
+  X 72
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_small_02
+  X 88
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE brick_02
+  X 216
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 16
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 24
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 32
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 40
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 48
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 56
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 64
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_axis_section_h
+  X 8
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_block_02
+  X 248
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE bricks_07
+  X 216
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE bricks_07
+  X 184
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_block_02
+  X 152
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_gearset_01
+  X 31
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_block_02
+  X 0
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_block_04
+  X 280
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_block_03
+  X 280
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE steel_block_02
+  X 312
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE sqron_turrican2wall
+  PIECE bricks_07
+  X 312
+  Y 0
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE You've already increased the
+  LINE release rate to get more lemmings
+  LINE past unavoidable traps, but now let's
+  LINE turn down the casualties even more!
+  LINE Try to get the lemmings tightly 
+  LINE together as much as possible using 
+  LINE blockers (for example), and then 
+  LINE release the concentrated horde at 
+  LINE the right time. This way,
+  LINE each trap will only get a single
+  LINE lemming instead of multiple ones.
+  LINE Now compress and conquer!
+$END
+

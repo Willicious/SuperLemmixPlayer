@@ -1,0 +1,69 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.29
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE A Beast of a level
+ AUTHOR 
+ MUSIC beasti
+ ID xC1BCFC14C1BCFC14
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 511
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_dirt
+BACKGROUND orig_dirt_md:genesis_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 100
+ SAVE_REQUIREMENT 80
+ TIME_LIMIT 300
+ MAX_SPAWN_INTERVAL 13
+ 
+ $SKILLSET 
+   CLIMBER 20
+   FLOATER 20
+   BOMBER 20
+   BLOCKER 20
+   BUILDER 20
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE special
+   PIECE window_beast
+   X 16
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE special
+   PIECE exit_beast
+   X 448
+   Y 46
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE special
+   PIECE beasti_md
+   X 6
+   Y 0
+   ONE_WAY
+ $END
+ 
+ 

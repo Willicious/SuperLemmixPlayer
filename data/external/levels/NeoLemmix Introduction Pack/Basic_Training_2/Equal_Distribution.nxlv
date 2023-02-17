@@ -1,0 +1,1855 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Equal Distribution
+ AUTHOR IchoTolot
+ ID x08A035067302E39E
+ VERSION x0000000000000004
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 480
+ HEIGHT 160
+ START_X 240
+ START_Y 80
+ THEME l2_space
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 22
+ MAX_SPAWN_INTERVAL 38
+ 
+ $SKILLSET 
+   SHIMMIER 0
+   CLIMBER 2
+   FLOATER 2
+   BUILDER 0
+   MINER 0
+   CLONER 2
+ $END 
+ 
+ $PRETEXT 
+   LINE Be informed here that cloned 
+   LINE skills like builders or miners 
+   LINE also have a skill shadow.
+   LINE Also, you might want to wait
+   LINE a few frames before cloning
+   LINE certain skills. For example,
+   LINE a cloned miner creates a
+   LINE smaller tunnel if cloned
+   LINE slightly later.
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_space
+   PIECE window
+   X 24
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_space
+   PIECE window
+   X 408
+   Y 96
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE l2_space
+   PIECE exit
+   X 160
+   Y 20
+   NO_OVERWRITE
+   LEMMINGS 11
+ $END
+ 
+ $GADGET
+   STYLE l2_space
+   PIECE exit
+   X 288
+   Y 20
+   NO_OVERWRITE
+   LEMMINGS 11
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 130
+   Y 90
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 338
+   Y 90
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 82
+   Y 90
+   NO_OVERWRITE
+   SKILL SHIMMIER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 386
+   Y 90
+   NO_OVERWRITE
+   SKILL SHIMMIER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 210
+   Y 38
+   NO_OVERWRITE
+   SKILL MINER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 258
+   Y 38
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group1712206133
+   
+   $TERRAIN
+     STYLE l2_space
+     PIECE brick_06
+     X 320
+     Y 104
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE l2_space
+     PIECE brick_06
+     X 312
+     Y 104
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE l2_space
+     PIECE brick_06
+     X 326
+     Y 112
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1017348985
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 328
+     Y 104
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 328
+     Y 106
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 326
+     Y 104
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group212517298
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 328
+     Y 100
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 326
+     Y 105
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 328
+     Y 97
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group303691252
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group212517298
+     X 334
+     Y 105
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group212517298
+     X 334
+     Y 103
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group968393400
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 332
+     Y 104
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 332
+     Y 106
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 334
+     Y 104
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-2127146862
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 332
+     Y 100
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 334
+     Y 100
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1712206133
+     X 332
+     Y 98
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1053966379
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1017348985
+     X 334
+     Y 104
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group303691252
+     X 334
+     Y 106
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group968393400
+     X 332
+     Y 104
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-2127146862
+     X 332
+     Y 106
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 80
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 0
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 16
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 32
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 48
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 64
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 80
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 96
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 112
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 128
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 144
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 160
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 176
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 192
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 208
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 224
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 240
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 256
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 272
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 288
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 304
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 320
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 336
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 352
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 368
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 384
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 400
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 416
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 432
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 448
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 464
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 80
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 96
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 96
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 112
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 112
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 128
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 128
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 128
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 112
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 96
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 80
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_02
+   X 144
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_03
+   X 64
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 80
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 80
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 96
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 96
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 112
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 112
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 128
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 128
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 128
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 112
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 96
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 80
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_02
+   X 144
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_03
+   X 320
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 336
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 336
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 352
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 352
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 368
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 368
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 384
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 384
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 384
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 368
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 352
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 336
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_02
+   X 400
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 272
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 256
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 240
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 224
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 208
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 192
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 272
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 256
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 240
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 224
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 208
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 192
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 176
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 288
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 272
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 256
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 240
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 224
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 208
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 192
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 272
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 256
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 240
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 224
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 208
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 192
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 160
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 304
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 176
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 288
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 272
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 256
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 240
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 224
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 208
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 192
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 160
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 304
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 320
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 336
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 352
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 368
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 384
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 400
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 416
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 432
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 448
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_01
+   X 464
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_18
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_20
+   X 256
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 0
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_01
+   X 464
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE panel_06
+   X 432
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE panel_05
+   X 16
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_02
+   X 16
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_03
+   X 448
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_19
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE bar_19
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 176
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 288
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 272
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 256
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 240
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 224
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 208
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 192
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 160
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE brick_09
+   X 304
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_02
+   X 288
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_03
+   X 176
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_04
+   X 160
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_04
+   X 192
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_04
+   X 304
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_07
+   X 176
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_07
+   X 288
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_04
+   X 272
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_04
+   X 256
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_04
+   X 208
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_07
+   X 224
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE block_07
+   X 240
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_05
+   X 176
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_space
+   PIECE metal_04
+   X 288
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1053966379
+   X 332
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1053966379
+   X 144
+   Y 104
+   ONE_WAY
+ $END
+ 
+ 

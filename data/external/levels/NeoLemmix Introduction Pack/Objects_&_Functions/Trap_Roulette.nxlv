@@ -1,0 +1,2053 @@
+TITLE Trap Roulette
+AUTHOR IchoTolot
+THEME l2_space
+ID x1A174C676F76AB61
+LEMMINGS 50
+SAVE_REQUIREMENT 40
+MAX_SPAWN_INTERVAL 28
+WIDTH 560
+HEIGHT 176
+START_X 160
+START_Y 88
+
+$SKILLSET
+  BASHER 10
+  MINER 1
+$END
+
+$GADGET
+  STYLE namida_honeycomb
+  PIECE bee_trap
+  X 148
+  Y 39
+  WIDTH 23
+  HEIGHT 21
+$END
+
+$GADGET
+  STYLE l2_space
+  PIECE window
+  X 16
+  Y 32
+  WIDTH 48
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_space
+  PIECE exit
+  X 24
+  Y 128
+  WIDTH 32
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_wasteland
+  PIECE mine
+  X 64
+  Y 57
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_wasteland
+  PIECE mine
+  X 88
+  Y 57
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_honeycomb
+  PIECE bee_trap
+  X 220
+  Y 38
+  WIDTH 23
+  HEIGHT 21
+$END
+
+$GADGET
+  STYLE l2_space
+  PIECE trap_airlock
+  X 184
+  Y 48
+  WIDTH 32
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_dirt
+  PIECE trap_02
+  X 434
+  Y 13
+  WIDTH 16
+  HEIGHT 38
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_garden
+  PIECE flytrap
+  X 366
+  Y 66
+  WIDTH 20
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_garden
+  PIECE flytrap
+  X 414
+  Y 66
+  WIDTH 20
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_space
+  PIECE owf_left
+  X 544
+  Y 32
+  WIDTH 16
+  HEIGHT 112
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE gigalem_lagoon
+  PIECE sword
+  X 443
+  Y 86
+  WIDTH 21
+  HEIGHT 75
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE gigalem_lagoon
+  PIECE sword
+  X 416
+  Y 86
+  WIDTH 21
+  HEIGHT 75
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_DaVinci
+  PIECE stabber_trap
+  X 277
+  Y 128
+  WIDTH 12
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_DaVinci
+  PIECE stabber_trap
+  X 271
+  Y 128
+  WIDTH 12
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_DaVinci
+  PIECE mousetrap_final
+  X 148
+  Y 147
+  WIDTH 25
+  HEIGHT 13
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_DaVinci
+  PIECE hazard_flame
+  X 129
+  Y 109
+  WIDTH 5
+  HEIGHT 10
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_DaVinci
+  PIECE hazard_flame
+  X 106
+  Y 108
+  WIDTH 5
+  HEIGHT 10
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_space
+  PIECE owf_left
+  X 544
+  Y 32
+  WIDTH 16
+  HEIGHT 112
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 148
+  Y 49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bones_01
+  X 377
+  Y -52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE brick_blue_19
+  X 491
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 16
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 32
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 48
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 64
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 96
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 112
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 128
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 144
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 16
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 16
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 0
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 16
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 32
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 32
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 32
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 48
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 48
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 48
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 64
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 64
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 64
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 80
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 80
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 80
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 96
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 96
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 96
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 112
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 112
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 112
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 128
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 128
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 128
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 144
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 144
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 144
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 160
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 160
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 160
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 176
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 176
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 176
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 192
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 192
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 192
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 208
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 208
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 208
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 224
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 224
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 224
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 240
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 240
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 240
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 256
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 256
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 256
+  Y 160
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 130
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 112
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 148
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 166
+  Y 38
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 184
+  Y 27
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 202
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 220
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 202
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 166
+  Y 17
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 184
+  Y 6
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 166
+  Y -4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 238
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 255
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 272
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 288
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 304
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 320
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 336
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 352
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 368
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 272
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 288
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 304
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 320
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 336
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 352
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 368
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 272
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 288
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 304
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 320
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 336
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 352
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 368
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 384
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 400
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 416
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 432
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 448
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 464
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 480
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 384
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 400
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 416
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 432
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 448
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 464
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 480
+  Y 80
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 384
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 400
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 416
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 432
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 448
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 464
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 480
+  Y 160
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 299
+  Y -21
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_05
+  X 364
+  Y -28
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_04
+  X 315
+  Y 57
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_04
+  X 338
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_04
+  X 384
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_05
+  X 374
+  Y -32
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_03
+  X 422
+  Y -30
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_03
+  X 439
+  Y -13
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_05
+  X 449
+  Y 53
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 396
+  Y 47
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_03
+  X 420
+  Y 50
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 496
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 512
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 528
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 544
+  Y 160
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 496
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 512
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 528
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 544
+  Y 0
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 544
+  Y 16
+$END
+
+$TERRAIN
+  STYLE l2_space
+  PIECE steel_02
+  X 544
+  Y 144
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE brick_blue_14
+  X 480
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE brick_blue_16
+  X 544
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE brick_blue_16
+  X 480
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE spike_2
+  X 274
+  Y 137
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 242
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 242
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 210
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 178
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_slope_sml
+  X 218
+  Y 138
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 210
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 178
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_slope_sml
+  X 186
+  Y 128
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_slope_sml
+  X 210
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_slope_sml
+  X 242
+  Y 130
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 146
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_shelfnails
+  X 146
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_slope_sml
+  X 154
+  Y 118
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_slope_sml
+  X 178
+  Y 110
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE bookshelf_end3
+  X 286
+  Y 134
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE bookshelf
+  X 303
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE bookshelf_end1
+  X 351
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE plantpot1
+  X 313
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE peonie2
+  X 311
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE plantpot1
+  X 294
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE peonie3
+  X 294
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE books8
+  X 297
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE books6
+  X 330
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE bottle_side2
+  X 369
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE bottle
+  X 332
+  Y 106
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE candleholder5
+  X 105
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE celestial_moon
+  X 62
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE candle8
+  X 127
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE candle7
+  X 105
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE wood_slope_45_sml
+  X 16
+  Y 96
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE brick_blue_18
+  X 400
+  Y 96
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE rainbow_02
+  X 388
+  Y 84
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE rainbow_01
+  X 474
+  Y 1
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE rainbow_04
+  X 525
+  Y 28
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE rainbow_03
+  X 353
+  Y 80
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE rainbow_04
+  X 370
+  Y 92
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE rope6
+  X 243
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE rope3
+  X 193
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE rope5
+  X 210
+  Y 89
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE rope6
+  X -2
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_DaVinci
+  PIECE rope3
+  X 59
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE rainbow_03
+  X 502
+  Y 9
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_01
+  X 112
+  Y -3
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 112
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_01
+  X 76
+  Y -2
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 58
+  Y -2
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_07
+  X 101
+  Y 36
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 81
+  Y 26
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 48
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_06
+  X 68
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_07
+  X 132
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 132
+  Y 35
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 115
+  Y 45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 166
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 226
+  Y 66
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 220
+  Y 6
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 239
+  Y 15
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE combs_02
+  X 257
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 257
+  Y 23
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_07
+  X 278
+  Y 13
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_honeycomb
+  PIECE honey_08
+  X 232
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE brick_blue_16
+  X 543
+  Y -2
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 348
+  Y 26
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 321
+  Y 28
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 368
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 345
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 412
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 320
+  Y 30
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 442
+  Y 18
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 442
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 382
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_02
+  X 423
+  Y 17
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_02
+  X 356
+  Y 25
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_04
+  X 305
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_04
+  X 332
+  Y 18
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_03
+  X 373
+  Y 30
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_03
+  X 346
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_03
+  X 357
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_03
+  X 378
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_03
+  X 443
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_03
+  X 425
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_03
+  X 340
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 428
+  Y 7
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE roots_04
+  X 461
+  Y 25
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 392
+  Y 65
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE rocks_03
+  X 289
+  Y 7
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gigalem_lagoon
+  PIECE brick_blue_18
+  X 455
+  Y -2
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Some traps only go off once.
+  LINE After the activation, they are
+  LINE completely harmless.
+  LINE Let's see if you can avoid the
+  LINE normal, "endless" traps and find
+  LINE the route with the single-use traps.
+  LINE
+  LINE Clear physics mode will help you here!
+  LINE Hovering the mouse over an object tells
+  LINE you exactly what it is when the mode
+  LINE is active. It also helps in detecting
+  LINE somewhat hidden objects by displaying
+  LINE them and their trigger in a brash color.
+  LINE
+  LINE One-way fields turn around lemmings 
+  LINE in the indicated direction when they 
+  LINE walk into it. That also includes the 
+  LINE skills the lemmings currently perform.
+$END
+

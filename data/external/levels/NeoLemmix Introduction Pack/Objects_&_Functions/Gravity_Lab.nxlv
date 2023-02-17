@@ -1,0 +1,1806 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.27
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Gravity Lab
+ AUTHOR IchoTolot
+ ID x51A3620945E5787D
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1200
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME namida_lab
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 3
+ SAVE_REQUIREMENT 3
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   FLOATER 1
+   GLIDER 1
+   BUILDER 2
+   FENCER 1
+ $END 
+ 
+ $PRETEXT 
+   LINE Updrafts prevent lemmings 
+   LINE falling through them from splatting.
+   LINE They also slow down the fall of
+   LINE normal lemmings and floaters,
+   LINE while they cause gliders to
+   LINE glide upwards again.
+   LINE 
+   LINE Splat pads make any lemmings that are
+   LINE not a floater or a glider splat if they
+   LINE land inside their trigger area no matter
+   LINE the distance they fell. Anti-splat pads
+   LINE let all lemmings survive if they
+   LINE land inside their trigger area.
+   LINE To see which object is which, you can
+   LINE rely on clear physics mode again.
+   LINE 
+   LINE Let's see if you can figure out how
+   LINE to distribute the glider and
+   LINE the floater correctly here. ;)
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_lab
+   PIECE window
+   X 72
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE exit
+   X 1086
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 288
+   Y 32
+   WIDTH 32
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 320
+   Y 39
+   WIDTH 32
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 352
+   Y 32
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 416
+   Y 40
+   WIDTH 32
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 448
+   Y 32
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_wasteland
+   PIECE splat_wire
+   X 776
+   Y 124
+   WIDTH 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 784
+   Y 64
+   WIDTH 32
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE acid
+   X 364
+   Y 144
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 512
+   Y 40
+   WIDTH 32
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 544
+   Y 32
+   WIDTH 32
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 256
+   Y 16
+   WIDTH 32
+   HEIGHT 112
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 616
+   Y 80
+   WIDTH 32
+   HEIGHT 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_wasteland
+   PIECE antisplat_wire
+   X 968
+   Y 124
+   WIDTH 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE acid
+   X 552
+   Y 143
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_02
+   X 0
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_06
+   X 48
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_06
+   X 0
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_06
+   X 24
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 64
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 128
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 160
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 176
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 192
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 208
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 192
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 224
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 176
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 208
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 208
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 192
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 224
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 224
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 256
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 320
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 240
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 240
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 240
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 240
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 256
+   Y 112
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 256
+   Y 80
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 256
+   Y 48
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 408
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 472
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 536
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 568
+   Y 128
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 600
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 688
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 688
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 704
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 720
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 736
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 752
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 704
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 736
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 736
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 720
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 752
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 752
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 768
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 768
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 768
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 752
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 816
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 784
+   Y 80
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 784
+   Y 48
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 830
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_06
+   X 830
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 1008
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 1072
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_02
+   X 1136
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_02
+   X 1136
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 1136
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 1072
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 1008
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 816
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 784
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 752
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 688
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 624
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 560
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 496
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 432
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 368
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X -48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_05
+   X 830
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 830
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 830
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_05
+   X 48
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 48
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 48
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 0
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 24
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 24
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 0
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_05
+   X 24
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_05
+   X 0
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_01
+   X 364
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_02
+   X 308
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_02
+   X 452
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE sign_radioactive
+   X 8
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE sign_death
+   X 712
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 504
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 488
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 472
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 352
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 552
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 455
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 407
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 368
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 320
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 385
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_02
+   X 664
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 669
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 672
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 1072
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_08
+   X 1040
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 1040
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 1056
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_08
+   X 1024
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE sign_radioactive
+   X 1076
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 1152
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 1168
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 1136
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 1152
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 1024
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_08
+   X 1120
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_02
+   X 1008
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 1021
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 1018
+   Y 52
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_05
+   X 592
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_05
+   X 656
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_13
+   X 594
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_14
+   X 658
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_02
+   X 605
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_02
+   X 628
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 656
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 448
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 32
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 80
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 336
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_02
+   X 696
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 706
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_02
+   X 136
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 143
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_14
+   X 208
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_13
+   X 293
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_14
+   X 752
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_13
+   X 805
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 663
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 677
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 668
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 683
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 654
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE goop_02
+   X 655
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 880
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 896
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 912
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 928
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 944
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 896
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 928
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 928
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 912
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 944
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 944
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 960
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 960
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 960
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 880
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 944
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 992
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 976
+   Y 80
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 976
+   Y 48
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_01
+   X 880
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_14
+   X 944
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_13
+   X 997
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 976
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 944
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 864
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_02
+   X 870
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 876
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 880
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 896
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 816
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_05
+   X 1060
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_06
+   X 1060
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 1060
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_01
+   X 1060
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 672
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 674
+   Y 146
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_steel
+   X 662
+   Y 146
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 208
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 96
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 560
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 488
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 814
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE barrel_normal
+   X 839
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_09
+   X 584
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_09
+   X 600
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 568
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_09
+   X 568
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 552
+   Y 144
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_09
+   X 552
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE sign_biological
+   X 512
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 584
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_06
+   X 568
+   Y 144
+   ONE_WAY
+ $END
+ 
+ 

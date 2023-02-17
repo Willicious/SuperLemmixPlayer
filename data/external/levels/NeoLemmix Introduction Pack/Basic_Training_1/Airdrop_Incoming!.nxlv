@@ -1,0 +1,1029 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.20
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Airdrop Incoming!
+ AUTHOR IchoTolot
+ ID x621C38712EB0E3E3
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME namida_abstract
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 33
+ 
+ $SKILLSET 
+   WALKER 3
+   SHIMMIER 3
+   CLIMBER 3
+   FLOATER 3
+   GLIDER 3
+   BUILDER 3
+   MINER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_abstract
+   PIECE locked_exit
+   X 147
+   Y 49
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_abstract
+   PIECE button
+   X 275
+   Y 61
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_abstract
+   PIECE window
+   X 17
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_abstract
+   PIECE button
+   X 35
+   Y 61
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_abstract
+   PIECE window
+   X 256
+   Y 88
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 168
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_big
+   X 8
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 144
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 128
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 112
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 96
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 80
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 64
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 48
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 32
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_big
+   X 8
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 16
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 0
+   Y 0
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_big
+   X 40
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_big
+   X 40
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 88
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 88
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 120
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 120
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 200
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 168
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 200
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_big
+   X 248
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_big
+   X 280
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_big
+   X 248
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_big
+   X 280
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 0
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 16
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 32
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 48
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 64
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 80
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 96
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 112
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 128
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 312
+   Y 144
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 168
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 120
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_small
+   X 136
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_small
+   X 120
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_small
+   X 168
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_small
+   X 184
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 200
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_small
+   X 200
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_small
+   X 216
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 88
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_small
+   X 104
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_small
+   X 88
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_small
+   X 232
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_small
+   X 232
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_small
+   X 232
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_green_small
+   X 232
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_small
+   X 72
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_small
+   X 72
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_small
+   X 72
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_red_small
+   X 72
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 128
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_blue_big
+   X 96
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 164
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_yellow_big
+   X 196
+   Y 76
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE triangle_red
+   X 28
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE triangle_green
+   X 268
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 296
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 280
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 264
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 248
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 232
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 8
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 24
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 40
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 56
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 72
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 216
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 200
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 184
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 168
+   Y 24
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 88
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 104
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 120
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 136
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 232
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 72
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 152
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 152
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 152
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 152
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 152
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 152
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE block_purple_small
+   X 152
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_purple
+   X 152
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 296
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 280
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 264
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 248
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_green_arrows
+   X 232
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 8
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 24
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 40
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 56
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_red_arrows
+   X 72
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 216
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 200
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 184
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_yellow_arrows
+   X 168
+   Y 128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 88
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 104
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 120
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_blue_arrows
+   X 136
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_abstract
+   PIECE bar_purple
+   X 152
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $PRETEXT
+  LINE Walkers can be assigned to
+  LINE shimmiers to make them stop
+  LINE immediately and cause the lemming
+  LINE to fall down.
+  LINE This can be used to reach places
+  LINE which they would otherwise just
+  LINE shimmy over. In combination with
+  LINE floaters or gliders, this
+  LINE can be quite a powerful 
+  LINE combination to gain access to
+  LINE new parts of the map.
+  LINE Just try it out yourself!
+ $END

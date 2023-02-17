@@ -1,0 +1,14 @@
+$GROUP
+  NAME Lemmings
+  FOLDER Lemmings
+$END
+
+$GROUP
+  NAME ONML
+  FOLDER ONML
+$END
+
+$GROUP
+  NAME Genesis
+  FOLDER Genesis
+$END

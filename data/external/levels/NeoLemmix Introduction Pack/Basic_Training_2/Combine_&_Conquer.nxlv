@@ -1,0 +1,2584 @@
+TITLE Combine & Conquer
+AUTHOR IchoTolot
+THEME l2_circus
+ID x1E62647E5718896A
+LEMMINGS 10
+SAVE_REQUIREMENT 9
+MAX_SPAWN_INTERVAL 53
+WIDTH 800
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 1
+  STONER 1
+  PLATFORMER 1
+  BUILDER 0
+  STACKER 1
+  BASHER 1
+  MINER 0
+  DIGGER 0
+$END
+
+$GADGET
+  STYLE l2_circus
+  PIECE window
+  X 40
+  Y 80
+  WIDTH 48
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_circus
+  PIECE exit
+  X 752
+  Y 96
+  WIDTH 32
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 394
+  Y 82
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL BUILDER
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 642
+  Y 18
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL PLATFORMER
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 450
+  Y 18
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL MINER
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 322
+  Y 130
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL CLIMBER
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 706
+  Y 34
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL DIGGER
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 770
+  Y 66
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL STACKER
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 16
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 32
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 48
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_15
+  X 64
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_26
+  X 64
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_15
+  X 80
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_26
+  X 80
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 96
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE ball_03
+  X 40
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE unicycle
+  X 16
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 112
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 128
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 144
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 160
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 112
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 112
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 112
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 144
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 144
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 176
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 192
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 208
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 208
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 208
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 208
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_23
+  X 160
+  Y 104
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 224
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 256
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 240
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 240
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 240
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 384
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 400
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 416
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_16
+  X 272
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_25
+  X 288
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_16
+  X 288
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 256
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 256
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 256
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 256
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 256
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 304
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 320
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 336
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 352
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 400
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 416
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 384
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 416
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 384
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 400
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 384
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 400
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 416
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 448
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 448
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 480
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 448
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 464
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 448
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 464
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 480
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 448
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 464
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 480
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 464
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 480
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 448
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 480
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 448
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 464
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 432
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 368
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 368
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 368
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 368
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 448
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 464
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 480
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 496
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 496
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 496
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 496
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 496
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 496
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 544
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 512
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 528
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 512
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 528
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 544
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 512
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 528
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 544
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 528
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 544
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 512
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 544
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 512
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 528
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 512
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 528
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 544
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 560
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 560
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 560
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 560
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 560
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 560
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 560
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 560
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 576
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 592
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 608
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 592
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 608
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 576
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 608
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 576
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 592
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 576
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 592
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 608
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 624
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 624
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 624
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 624
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 640
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 672
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 688
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 688
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 688
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 704
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 720
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 720
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 704
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 704
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 720
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 736
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 736
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 736
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE steel_04
+  X 784
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 736
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 752
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 768
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 736
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 752
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 768
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_21
+  X 736
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_03
+  X 720
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_02
+  X 704
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_01
+  X 688
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_23
+  X 752
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_24
+  X 768
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 736
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 752
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 768
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_09
+  X 720
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_04
+  X 704
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_03
+  X 688
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_12
+  X 240
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 80
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 112
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 208
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 240
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 0
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 0
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 0
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE pole_05
+  X 144
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE pole_05
+  X 208
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE carriage
+  X 576
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_26
+  X 352
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_23
+  X 16
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_18
+  X 16
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_23
+  X 32
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_15
+  X 16
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_26
+  X 16
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_15
+  X 32
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_26
+  X 32
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_15
+  X 48
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_26
+  X 48
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_15
+  X 64
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE ball_02
+  X 240
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_20
+  X 112
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_20
+  X 128
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_21
+  X 128
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 144
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 160
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 192
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 208
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_14
+  X 192
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE weights_04
+  X 144
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_20
+  X 80
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_23
+  X 96
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 304
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 320
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 336
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 368
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 384
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 352
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 400
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 432
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 448
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 416
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 464
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 496
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 512
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 480
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 528
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 560
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 576
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 544
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 592
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 624
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 640
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 608
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 656
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 688
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 672
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_23
+  X 704
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_04
+  X 704
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_01
+  X 720
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_03
+  X 752
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_02
+  X 736
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_04
+  X 768
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_24
+  X 768
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE ball_03
+  X 768
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE weights_03
+  X 472
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 272
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_14
+  X 272
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 304
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_14
+  X 288
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 320
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_14
+  X 304
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 336
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_14
+  X 320
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_27
+  X 272
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_22
+  X 272
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_27
+  X 288
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_22
+  X 288
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_27
+  X 304
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 272
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE pole_05
+  X 352
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 352
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_01
+  X 416
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_02
+  X 368
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_03
+  X 384
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 400
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE stage_02
+  X 376
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE pole_03
+  X 416
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_19
+  X 288
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE pole_06
+  X 176
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE pole_06
+  X 96
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE pole_03
+  X 256
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_02
+  X 720
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_04
+  X 688
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_01
+  X 704
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE ball_02
+  X 688
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE ball_03
+  X 720
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE stage_01
+  X 696
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_16
+  X 720
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_small_17
+  X 736
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_04
+  X 272
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_circus
+  PIECE block_15
+  X 288
+  Y 112
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Constructive skills can be used
+  LINE to create terrain for destructive
+  LINE skills. With this method, they can
+  LINE go on for way longer and get more
+  LINE work done.
+  LINE A platformer at the right height
+  LINE can keep a basher going. A well-placed
+  LINE builder keeps a miner or
+  LINE a fencer going.  A digger doesn't
+  LINE care if he digs through natural
+  LINE terrain or a stacker.
+  LINE I think you get the idea.
+  LINE Now it's your turn!
+$END
+

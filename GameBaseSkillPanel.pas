@@ -1252,14 +1252,16 @@ begin
       end else
         SpecialCombine := false;
 
+        //this changes the position of the game info string (lems, time limit, etc)
+        //change the *8 to *6 for slimmer font so small circle buttons can fit on
       if SpecialCombine then
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8 * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8 + 64) * ResMod, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8 * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8 + 64) * ResMod, 0);
       end;
     end;
   end;

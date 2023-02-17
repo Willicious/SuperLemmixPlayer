@@ -1,0 +1,950 @@
+TITLE Top-Down Approach
+AUTHOR IchoTolot
+THEME ichotolot_dune
+ID x30C5CE92385B55BA
+LEMMINGS 10
+SAVE_REQUIREMENT 11
+MAX_SPAWN_INTERVAL 43
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  SHIMMIER 2
+  CLIMBER 1
+  PLATFORMER 1
+  BASHER 2
+  MINER 1
+  CLONER 1
+$END
+
+$GADGET
+  STYLE ichotolot_dune
+  PIECE hatch
+  X 16
+  Y 96
+  WIDTH 64
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ichotolot_dune
+  PIECE exit
+  X 16
+  Y 23
+  WIDTH 40
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_02
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_02
+  X 304
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_02
+  X 304
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_02
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 304
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 304
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 304
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 304
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 16
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 48
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 80
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 112
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 144
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 176
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 208
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 240
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 272
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 0
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_05
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 80
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 112
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 144
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 208
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 240
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_16
+  X 112
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_16
+  X 144
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_16
+  X 176
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 208
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 240
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 272
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_17
+  X 176
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_18
+  X 112
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_18
+  X 144
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 16
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 48
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 80
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 96
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 112
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 160
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 112
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 160
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_04
+  X 176
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_03
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 144
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 112
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 112
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 32
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 48
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 16
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 80
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 48
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 16
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_19
+  X 80
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 144
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 176
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 208
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 224
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 256
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 272
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 288
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 176
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 192
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 208
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 224
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 240
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 256
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 272
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 288
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_02
+  X 208
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_03
+  X 256
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_01
+  X 224
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_01
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_01
+  X 224
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_01
+  X 240
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_05
+  X 208
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_04
+  X 256
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 160
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 144
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 128
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_01
+  X 112
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 128
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_01
+  X 112
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_red_05
+  X 96
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_blue_02
+  X 96
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_05
+  X 240
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_09
+  X 80
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_09
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_06
+  X 64
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_10
+  X 144
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_11
+  X 112
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 144
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_yellow_01
+  X 128
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE steel_02
+  X 128
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE block_green_04
+  X 224
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE pipe_04
+  X 56
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE pipe_01
+  X 88
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE pipe_01
+  X 112
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE pipe_01
+  X 136
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE pipe_01
+  X 160
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE pipe_03
+  X 184
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Bashers won't stop when encountering
+  LINE a slight steel slope, as they are able
+  LINE to go SLIGHTLY upwards or downwards.
+  LINE So don't give up on them while
+  LINE facing those slopes.
+  LINE Climbers can be turned into
+  LINE shimmiers right before hitting their
+  LINE heads. When giving them a shimmier
+  LINE close to the ceiling, they transition
+  LINE into a shimmier and won't fall down.
+  LINE This allows you to reach new areas!
+  LINE Let's test both of these things out!
+$END
+

@@ -1,0 +1,726 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.20
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Fly Traps
+ AUTHOR IchoTolot
+ ID x499FFC0B34B5558C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 552
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME namida_metal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   WALKER 2
+   SHIMMIER 1
+   CLIMBER 1
+   GLIDER 1
+   PLATFORMER 1
+   BASHER 1
+   MINER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_metal
+   PIECE laser_01
+   X 344
+   Y 0
+   HEIGHT 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_metal
+   PIECE exit
+   X 453
+   Y 89
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_metal
+   PIECE window
+   X 119
+   Y 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_metal
+   PIECE laser_01
+   X 208
+   Y 48
+   HEIGHT 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_metal
+   PIECE laser_01
+   X 64
+   Y 32
+   HEIGHT 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_metal
+   PIECE laser_01
+   X 504
+   Y 16
+   HEIGHT 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_metal
+   PIECE laser_01
+   X 152
+   Y 120
+   HEIGHT 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_metal
+   PIECE laser_01
+   X 124
+   Y 120
+   HEIGHT 48
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_06
+   X 0
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_06
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_07
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_10
+   X 72
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_09
+   X 144
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_07
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_10
+   X 216
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_09
+   X 288
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 320
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 352
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 232
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 360
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 328
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_07
+   X 360
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 392
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_07
+   X 408
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_07
+   X 456
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 424
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_06
+   X 520
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 456
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_06
+   X 520
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_07
+   X 416
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 384
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_10
+   X 392
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 464
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_09
+   X 464
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_07
+   X 504
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 488
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 520
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 496
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 528
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_08
+   X 352
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_10
+   X 352
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_06
+   X 0
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 32
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_08
+   X 88
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_10
+   X 88
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_08
+   X 224
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_10
+   X 224
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_02
+   X 188
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_02
+   X 96
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_08
+   X 56
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_09
+   X 48
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_06
+   X 160
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_06
+   X 96
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_02
+   X 128
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_10
+   X 248
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_11
+   X 264
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_10
+   X 104
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_11
+   X 120
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_10
+   X 424
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_11
+   X 440
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 128
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 320
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 352
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 488
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 456
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 496
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 528
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 520
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 32
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE steel_02
+   X 232
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_11
+   X 264
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE block_10
+   X 312
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_metal
+   PIECE bar_07
+   X 272
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

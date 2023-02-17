@@ -1,0 +1,1265 @@
+TITLE Reacharound
+AUTHOR IchoTolot
+THEME ohno_brick
+ID x7DFD06E377BCA2C4
+LEMMINGS 50
+SAVE_REQUIREMENT 50
+MAX_SPAWN_INTERVAL 28
+WIDTH 512
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  SHIMMIER 1
+  CLIMBER 1
+  GLIDER 1
+  BUILDER 0
+  BASHER 2
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE window
+  X 36
+  Y 72
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 433
+  Y 70
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE water
+  X 0
+  Y 136
+  WIDTH 512
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 200
+  Y 80
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL BUILDER
+  SKILL_COUNT 2
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 300
+  Y 80
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL BUILDER
+  SKILL_COUNT 2
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 112
+  Y 94
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 88
+  Y 94
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 112
+  Y 70
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 88
+  Y 70
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_12
+  X 88
+  Y 87
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_14
+  X 88
+  Y 102
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 88
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 88
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 88
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 0
+  Y -32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 32
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 64
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 96
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 128
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 32
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 64
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 96
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 128
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 160
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 192
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 160
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 192
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 480
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 480
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 480
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 480
+  Y -32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 224
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 256
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 288
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 224
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 256
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 288
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 320
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 352
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 384
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 320
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 352
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 384
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 416
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 448
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 416
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 448
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 32
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 32
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 64
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 64
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 96
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 96
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 128
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 128
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 352
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 352
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 384
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 384
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 416
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 416
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 448
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_01
+  X 448
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 400
+  Y 94
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 376
+  Y 94
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 400
+  Y 70
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_01
+  X 376
+  Y 70
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_14
+  X 392
+  Y 102
+  FLIP_HORIZONTAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_14
+  X 392
+  Y 86
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_14
+  X 360
+  Y 86
+  FLIP_HORIZONTAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_14
+  X 360
+  Y 70
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 392
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 392
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 376
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 282
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 244
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 268
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 230
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 306
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 192
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 206
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_14
+  X 120
+  Y 86
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ichotolot_dune
+  PIECE sandstone_12
+  X 120
+  Y 71
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 104
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 104
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 104
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 376
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 376
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 178
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 182
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 302
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 298
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 345
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 160
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_02
+  X 336
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 336
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 336
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 144
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 144
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 112
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_06
+  X 192
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_07
+  X 224
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_06
+  X 256
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_07
+  X 288
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 178
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 164
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 320
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 334
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 334
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 164
+  Y 52
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_07
+  X 178
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_06
+  X 302
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 334
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_03
+  X 250
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 250
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 250
+  Y 35
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 140
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 126
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 102
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 88
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 64
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 50
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 424
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 410
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 386
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 372
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_03
+  X 348
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE steel_04
+  X 448
+  Y 38
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 350
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 382
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 414
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 446
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 50
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 66
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 98
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_04
+  X 130
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 162
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 166
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 330
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 172
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 308
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 130
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 319
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 48
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 401
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 360
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 89
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+ $PRETEXT
+  LINE A pick-up skill can contain more 
+  LINE than just one use of a skill.
+  LINE A number next to it will 
+  LINE indicate the amount it provides.
+  LINE
+  LINE Also, gliders can bounce off walls.
+  LINE They will just bounce off and glide 
+  LINE the other way and not just simply 
+  LINE fall down after hitting a wall.
+  LINE
+  LINE Shimmiers stop when they regain
+  LINE ground under their feet.
+  LINE There is a certain pillar here
+  LINE which will demonstrate this. 
+ $END
+

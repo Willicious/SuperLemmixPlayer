@@ -1,0 +1,470 @@
+TITLE They Can't Mash Us All!
+AUTHOR IchoTolot
+THEME orig_marble
+ID x5B3E66C762B3543F
+LEMMINGS 60
+SAVE_REQUIREMENT 6
+MAX_SPAWN_INTERVAL 102
+WIDTH 336
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$GADGET
+  STYLE orig_marble
+  PIECE window
+  X 0
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE exit
+  X 286
+  Y 104
+  WIDTH 48
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE trap
+  X 104
+  Y 34
+  WIDTH 32
+  HEIGHT 34
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE trap
+  X 152
+  Y 50
+  WIDTH 32
+  HEIGHT 34
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE trap
+  X 200
+  Y 66
+  WIDTH 32
+  HEIGHT 34
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 0
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 0
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 48
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 48
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 96
+  Y 154
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 144
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 192
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 288
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 48
+  Y -72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 96
+  Y -56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 144
+  Y -40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 192
+  Y -24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 240
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 288
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_04
+  X 288
+  Y -82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 144
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 80
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 16
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X -48
+  Y 28
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_01
+  X 200
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 248
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_01
+  X 168
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 128
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 192
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_01
+  X 224
+  Y 12
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE rock_02
+  X -13
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 295
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_01
+  X 292
+  Y 33
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 298
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_01
+  X 296
+  Y -14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 56
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_01
+  X 53
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 59
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_01
+  X 48
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 51
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 103
+  Y 119
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_01
+  X 100
+  Y 90
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 106
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_01
+  X 94
+  Y 139
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 197
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_01
+  X 194
+  Y 1
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 200
+  Y -17
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 48
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE stuff_02
+  X 296
+  Y 134
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE You may have noticed a number
+  LINE above the + and the - in the 
+  LINE bottom-left corner of the skill bar. 
+  LINE This is the current Release Rate.
+  LINE
+  LINE The Release Rate determines
+  LINE the rate at which the hatch
+  LINE releases new Lemmings. The
+  LINE higher the number, the faster
+  LINE the Lemmings spawn. Every level
+  LINE has a starting Release Rate
+  LINE which you cannot go under.
+  LINE
+  LINE Let's try turning the
+  LINE Release Rate up to the maximum
+  LINE of 99 in this level. With the
+  LINE slow standard Rate the Lemmings
+  LINE won't be able to go through
+  LINE the traps. When enough Lemmings
+  LINE come at the same time though...
+$END
+

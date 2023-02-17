@@ -1,0 +1,1382 @@
+TITLE A Sudden Change In Direction
+AUTHOR IchoTolot
+THEME l3_biolab
+ID x5E50194033D3933F
+LEMMINGS 30
+SAVE_REQUIREMENT 28
+MAX_SPAWN_INTERVAL 28
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+BACKGROUND l3_biolab:biolab_horizontal
+
+$SKILLSET
+  CLIMBER 2
+  BLOCKER 3
+  BUILDER 1
+  BASHER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE l3_biolab
+  PIECE hatch_grey
+  X 96
+  Y 40
+  WIDTH 64
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l3_biolab
+  PIECE exit
+  X 36
+  Y 120
+  WIDTH 40
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_right
+  X 112
+  Y 120
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_right
+  X 112
+  Y 88
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_right
+  X 80
+  Y 88
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_right
+  X 80
+  Y 120
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE l3_biolab
+  PIECE water
+  X 240
+  Y 144
+  WIDTH 80
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 16
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 80
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 48
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 144
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 112
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 32
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 64
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 96
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 128
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_05
+  X 0
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_17
+  X 48
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 160
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_05
+  X 168
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 160
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 80
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 144
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 112
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 96
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 128
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_17
+  X 64
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_19
+  X 64
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_07
+  X 0
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_05
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 80
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 144
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 112
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_17
+  X 64
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_18
+  X 80
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_18
+  X 64
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_20
+  X 48
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 176
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 208
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 192
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 224
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 240
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 272
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 256
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 288
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 256
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 272
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 288
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 256
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 272
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 288
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 240
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 240
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 256
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 272
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 288
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 224
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 208
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 176
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 160
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 192
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 208
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 224
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 256
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 240
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 208
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 192
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_07
+  X 264
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 192
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 208
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 224
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 176
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 184
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 192
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 200
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 208
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 216
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 224
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 232
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 224
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 208
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 208
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 224
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 232
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 192
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 200
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 192
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 144
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 112
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 96
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 128
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 80
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 48
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 32
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 64
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 16
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_07
+  X 0
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_05
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_07
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 160
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 64
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 32
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 128
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 96
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 16
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 48
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 80
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 112
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 144
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 96
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 128
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 112
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 112
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 128
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 96
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 96
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_04
+  X 128
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_01
+  X 112
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 304
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 272
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 288
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 304
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_07
+  X 304
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_04
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_pipe_06
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_16
+  X 272
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_14
+  X 288
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_40
+  X 8
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_40
+  X 32
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_48
+  X 24
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE jungle_21
+  X 0
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_32
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_10
+  X 224
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 176
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 184
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_40
+  X 8
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_40
+  X 32
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_48
+  X 24
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE jungle_04
+  X 8
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE jungle_38
+  X 16
+  Y 88
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_20
+  X 208
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE steel_18
+  X 224
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 304
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 304
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 304
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 304
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 304
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 304
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l3_biolab
+  PIECE block_green_03
+  X 304
+  Y 96
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Blockers can be used to turn around
+  LINE other skills.
+  LINE Placing a blocker right in front of an  
+  LINE ongoing builder or miner, for example,  
+  LINE turns the working lemming around,
+  LINE and he will continue building/mining.
+  LINE Even diggers can be turned around by
+  LINE placing a blocker in front
+  LINE of them. This has the advantage of
+  LINE also releasing the blocker again the
+  LINE next time the digger digs downwards.
+  LINE Are you ready to try this out?
+$END
+

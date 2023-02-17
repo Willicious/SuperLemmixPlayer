@@ -1,0 +1,1159 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.28
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Victory Lap
+ AUTHOR IchoTolot
+ ID x04EF1FBC76E21E0E
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME flopsy_scrapbrain
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 15
+ SAVE_REQUIREMENT 11
+ MAX_SPAWN_INTERVAL 28
+ 
+ $SKILLSET 
+   CLIMBER 4
+   BOMBER 3
+   BLOCKER 1
+   PLATFORMER 2
+   BASHER 1
+   MINER 0
+   DIGGER 0
+ $END 
+ 
+ $PRETEXT 
+   LINE Remember the last levels and
+   LINE the things you learned about diggers, 
+   LINE and I bet you will be able to
+   LINE solve this riddle!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE trapdoor
+   X 109
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE exit
+   X 7
+   Y 76
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE spikey_cog3
+   X 76
+   Y 36
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE spikey_cog3
+   X 72
+   Y 36
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE spikey_cog
+   X 52
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE spikey_cog
+   X 92
+   Y 44
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE spikey_cog3
+   X 0
+   Y 4
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE flopsy_scrapbrain
+   PIECE electric_zapper
+   X 62
+   Y 144
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 17
+   Y 130
+   NO_OVERWRITE
+   SKILL MINER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 216
+   Y 74
+   NO_OVERWRITE
+   SKILL MINER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 58
+   Y 18
+   NO_OVERWRITE
+   SKILL DIGGER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 90
+   Y 18
+   NO_OVERWRITE
+   SKILL DIGGER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 134
+   Y 18
+   NO_OVERWRITE
+   SKILL CLIMBER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 150
+   Y 18
+   NO_OVERWRITE
+   SKILL CLIMBER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 230
+   Y 74
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 298
+   Y 58
+   NO_OVERWRITE
+   SKILL BOMBER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_01
+   X 104
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 96
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 96
+   Y 152
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_04
+   X 56
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 56
+   Y 144
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_37
+   X 8
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 0
+   Y 144
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 0
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 88
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 0
+   Y 112
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 8
+   Y 112
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 32
+   Y 112
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 32
+   Y 104
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 8
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X -4
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X -12
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_15
+   X 128
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 160
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 160
+   Y 120
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 160
+   Y 96
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 160
+   Y 72
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 160
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 136
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 112
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 88
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_42
+   X 232
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 208
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 200
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 312
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 312
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_44
+   X 240
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 160
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_46
+   X 208
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_46
+   X 176
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 168
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 168
+   Y 104
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 168
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 184
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 172
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 184
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 184
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 168
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 176
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_60
+   X 180
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 312
+   Y 28
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 200
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 200
+   Y 0
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 200
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 312
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 312
+   Y 8
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 208
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 232
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 256
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 276
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 288
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 0
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 24
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 96
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 120
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 144
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 168
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 176
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 88
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 60
+   Y 64
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 88
+   Y 40
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 60
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_05
+   X 60
+   Y 32
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 96
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 116
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 140
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 164
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 164
+   Y 8
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 36
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_03
+   X 88
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_03
+   X 88
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_03
+   X 88
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_03
+   X 56
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 164
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 140
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 120
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 96
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 72
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 48
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 28
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 4
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 200
+   Y 88
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 200
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_07
+   X 312
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_02
+   X 312
+   Y 48
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 312
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_66
+   X 112
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X -4
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE platforms
+   X 224
+   Y -20
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_04
+   X 104
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_12
+   X 168
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_60
+   X 36
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_30
+   X -72
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 0
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 36
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 16
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_03
+   X 56
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 40
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 16
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE border_01
+   X 0
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_03
+   X 56
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_60
+   X 108
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_40
+   X 128
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_59
+   X 16
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_03
+   X 40
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 173
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 176
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 173
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_62
+   X 176
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE block_60
+   X 179
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_02
+   X 160
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_scrapbrain
+   PIECE steel_02
+   X 168
+   Y 98
+   ONE_WAY
+ $END
+ 
+ 

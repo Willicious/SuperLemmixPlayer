@@ -1,0 +1,956 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE A Different Kind Of Space
+ AUTHOR IchoTolot
+ ID x04CCA79B0985B3D2
+ VERSION x0000000000000002
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME namida_space
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 8
+ SAVE_REQUIREMENT 8
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   WALKER 0
+   SHIMMIER 0
+   CLIMBER 0
+   BLOCKER 1
+   PLATFORMER 2
+   BASHER 0
+   MINER 0
+ $END 
+ 
+ $PRETEXT 
+   LINE Remember the lessons learned in 
+   LINE the last three levels!
+   LINE You will need them all to
+   LINE solve this mess of a level!
+   LINE As another hint:
+   LINE Teleporters can also teleport
+   LINE blockers!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_space
+   PIECE window
+   X 253
+   Y 40
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE window
+   X 157
+   Y 112
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE teleporter
+   X 209
+   Y 117
+   NO_OVERWRITE
+   PAIRING 1
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE receiver
+   X 192
+   Y 54
+   NO_OVERWRITE
+   PAIRING 1
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exit
+   X 160
+   Y 14
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE teleporter
+   X 24
+   Y 117
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   PAIRING 2
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE receiver
+   X 129
+   Y 54
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   PAIRING 2
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 176
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust
+   X 152
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X -8
+   Y 144
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 8
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 8
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 96
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 272
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 272
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 272
+   Y 144
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 114
+   Y 66
+   NO_OVERWRITE
+   SKILL BLOCKER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 45
+   Y 130
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 124
+   Y 34
+   NO_OVERWRITE
+   SKILL MINER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 136
+   Y 34
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE namida_space
+   PIECE exhaust_r
+   X 37
+   Y 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 59
+   Y 130
+   NO_OVERWRITE
+   SKILL WALKER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 112
+   Y 34
+   NO_OVERWRITE
+   SKILL WALKER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 98
+   Y 73
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 38
+   Y 74
+   NO_OVERWRITE
+   SKILL CLIMBER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 24
+   Y 74
+   NO_OVERWRITE
+   SKILL SHIMMIER
+   SKILL_COUNT 2
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 60
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 184
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 208
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 208
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 192
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 232
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 280
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 304
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_03
+   X 304
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_03
+   X 304
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 304
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 280
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 256
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 232
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 208
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 192
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 160
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 144
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 144
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_11
+   X 128
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 64
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 88
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 40
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 24
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 128
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 192
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_12
+   X 208
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 0
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_03
+   X 0
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_03
+   X 0
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 0
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 64
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 40
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 16
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 144
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 152
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_01
+   X 152
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 152
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 112
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 8
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_12
+   X 40
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 40
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 24
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 24
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_01
+   X 76
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_01
+   X 60
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 76
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 123
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 91
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_12
+   X 88
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_09
+   X 88
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 104
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE platform_03
+   X 152
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 52
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_04
+   X 67
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 89
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 60
+   Y 74
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_12
+   X 128
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 112
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 288
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_12
+   X 304
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 288
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 304
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 80
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 48
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 16
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 60
+   Y 81
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_09
+   X 96
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_11
+   X 52
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 65
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 74
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 81
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE thruster_02
+   X 52
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_10
+   X 60
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 192
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 165
+   Y 40
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_02
+   X 168
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE steel_04
+   X 192
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE block_09
+   X 136
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 102
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_space
+   PIECE girder_01
+   X 111
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

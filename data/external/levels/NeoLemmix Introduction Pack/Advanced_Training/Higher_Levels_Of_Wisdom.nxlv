@@ -1,0 +1,1570 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.24
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Higher Levels Of Wisdom
+ AUTHOR IchoTolot
+ ID x03658F6D260F8C9D
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 208
+ START_X 160
+ START_Y 128
+ THEME dex_davinci
+ BACKGROUND dex_davinci:renaissance_attic_hor
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 38
+ 
+ $SKILLSET 
+   WALKER 11
+   PLATFORMER 11
+   BASHER 6
+   FENCER 3
+   MINER 3
+ $END 
+ 
+ $PRETEXT 
+   LINE You've already learned about
+   LINE cancelling bashers and miners
+   LINE with walkers to step up.
+   LINE You can use this to your advantage
+   LINE and assign skills like platformers
+   LINE at this elevated position.
+   LINE That will allow things like
+   LINE platforming up zig-zag miner
+   LINE tunnels if the miners were
+   LINE cancelled mid-stroke before.
+   LINE
+   LINE Platformers can also allow
+   LINE you to create zig-zag fencer
+   LINE tunnels. For that, no walker
+   LINE canceling is needed, though.
+   LINE Just platform to the fencer
+   LINE tunnel's ceiling. 
+   LINE Every other platforming spot 
+   LINE will connect here.
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE dex_davinci
+   PIECE hatch_final
+   X 17
+   Y 130
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE hatch_final
+   X 262
+   Y 130
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE exit_final
+   X 283
+   Y 21
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE exit_roof4
+   X 280
+   Y 13
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE exit_final
+   X 11
+   Y 21
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE exit_roof2
+   X 2
+   Y 6
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE hazard_flame
+   X 243
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE hazard_flame
+   X 222
+   Y 12
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE hazard_flame
+   X 94
+   Y 10
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE hazard_flame
+   X 71
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE arrows_down
+   X 82
+   Y 104
+   WIDTH 52
+   HEIGHT 104
+   ONLY_ON_TERRAIN
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE dex_davinci
+   PIECE arrows_down
+   X 186
+   Y 104
+   WIDTH 52
+   HEIGHT 104
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf
+   X 17
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 65
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 0
+   Y 182
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 0
+   Y 156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 0
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 134
+   Y 184
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 117
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 82
+   Y 182
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 99
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 117
+   Y 156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 82
+   Y 156
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 99
+   Y 156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 117
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 82
+   Y 130
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 99
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 58
+   Y 130
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 134
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 134
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 221
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 186
+   Y 182
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 203
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 221
+   Y 156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 186
+   Y 156
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 203
+   Y 156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 221
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 186
+   Y 130
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 203
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf
+   X 255
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 303
+   Y 182
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 238
+   Y 182
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 162
+   Y 184
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 162
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 162
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 303
+   Y 156
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 303
+   Y 130
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 238
+   Y 130
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 58
+   Y 154
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 238
+   Y 154
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 117
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 82
+   Y 104
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 99
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 221
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 186
+   Y 104
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_short
+   X 203
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 238
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 58
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 99
+   Y 104
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 153
+   Y 114
+   NO_OVERWRITE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf
+   X 255
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 303
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 257
+   Y 80
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf
+   X 17
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 46
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bookshelf_end3
+   X 0
+   Y 80
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 160
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 112
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 160
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 112
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 164
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 116
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 164
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 116
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 272
+   Y 55
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 24
+   Y 55
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 0
+   Y 55
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 160
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 112
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 164
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 116
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 296
+   Y 55
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_slope_sml
+   X 48
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_slope_sml
+   X 248
+   Y 57
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_block_long
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 164
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE drawer
+   X 116
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE candleholder5
+   X 70
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE candleholder5
+   X 220
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE candle8
+   X 241
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE candle7
+   X 70
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE candle2
+   X 91
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE candle6
+   X 221
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 262
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 286
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 10
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 34
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X -4
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 310
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 259
+   Y 119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X -60
+   Y 119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE plantpot2
+   X 44
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rope_sandbag
+   X 257
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rope2
+   X 263
+   Y -4
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE peonie3
+   X 44
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 134
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass2
+   X 162
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 99
+   Y 115
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass3
+   X 148
+   Y 113
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 176
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 144
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 112
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 238
+   Y 69
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X -44
+   Y 69
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X 16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE wood_shelfnails
+   X -16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 63
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 63
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 243
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 243
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X -44
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X -44
+   Y 95
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X -44
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 238
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 238
+   Y 95
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE rafters
+   X 238
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books4
+   X 9
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books8
+   X -9
+   Y 162
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE yorick
+   X 45
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books5
+   X 90
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books4
+   X 281
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books6
+   X 245
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE chess_white_knight
+   X 309
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE chess_white_bishop
+   X 312
+   Y 162
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 304
+   Y 195
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 296
+   Y 195
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 288
+   Y 195
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 292
+   Y 188
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 300
+   Y 188
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE chess_white_rook
+   X 279
+   Y 191
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 264
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 272
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 268
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE chess_white_bishop
+   X 65
+   Y 188
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books2
+   X -2
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE chess_white_knight
+   X 45
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 29
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 21
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 25
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 10
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books6
+   X 198
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 116
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 108
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 112
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 194
+   Y 169
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 202
+   Y 169
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 198
+   Y 162
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books8
+   X 212
+   Y 162
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books8
+   X 109
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books2
+   X 92
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books5
+   X 108
+   Y 195
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE chess_white_rook
+   X 194
+   Y 191
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE chess_white_bishop
+   X 93
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 219
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 211
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 215
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 92
+   Y 169
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side2
+   X 100
+   Y 169
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE bottle_side
+   X 96
+   Y 162
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books2
+   X 113
+   Y 161
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE book
+   X 195
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE book
+   X 199
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE books8
+   X 207
+   Y 188
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y 1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE dex_davinci
+   PIECE brass1
+   X 153
+   Y -13
+   ONE_WAY
+ $END
+ 
+ 

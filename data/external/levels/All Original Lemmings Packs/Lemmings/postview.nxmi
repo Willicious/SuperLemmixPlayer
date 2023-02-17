@@ -1,0 +1,55 @@
+
+$RESULT
+  CONDITION 0
+  LINE ROCK BOTTOM! I hope for your sake
+  LINE that you nuked that level.
+$END
+
+$RESULT
+  CONDITION 1
+  LINE Better rethink your strategy before
+  LINE you try this level again!
+$END
+
+$RESULT
+  CONDITION -50%
+  LINE A little more practice on the level
+  LINE is definitely recommended.
+$END
+
+$RESULT
+  CONDITION -5
+  LINE You got pretty close that time.
+  LINE Now try again for that few % extra.
+$END
+
+$RESULT
+  CONDITION -1
+  LINE OH NO, So near and yet so far...
+  LINE Maybe this time.....
+$END
+
+$RESULT
+  CONDITION +0
+  LINE RIGHT ON. You can't get much closer
+  LINE than that. Let's try the next...
+$END
+
+$RESULT
+  CONDITION +1
+  LINE That level seemed no problem to you
+  LINE on that attempt. Onto the next....
+$END
+
+$RESULT
+  CONDITION +20%
+  LINE You totally stormed that level!
+  LINE Let's see if you can do it again...
+$END
+
+$RESULT
+  CONDITION 100%
+  LINE Superb! You rescued every lemming
+  LINE on that one. Can you do it again?
+$END
+

@@ -1,0 +1,489 @@
+TITLE Stepping Up To The Stars
+AUTHOR IchoTolot
+THEME flopsy_starlight
+ID x14E3D7A913E2FD57
+LEMMINGS 10
+SAVE_REQUIREMENT 10
+MAX_SPAWN_INTERVAL 53
+WIDTH 336
+HEIGHT 360
+START_X 168
+START_Y 280
+
+$SKILLSET
+  WALKER 7
+  PLATFORMER 1
+  STACKER 1
+  BASHER 2
+  FENCER 1
+  MINER 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE trapdoor
+  X 237
+  Y 296
+  WIDTH 48
+  HEIGHT 13
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE exit
+  X 248
+  Y 30
+  WIDTH 32
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE eggmanboss
+  X 48
+  Y 152
+  WIDTH 36
+  HEIGHT 31
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE pole2
+  X 56
+  Y 296
+  WIDTH 9
+  HEIGHT 56
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE pole1
+  X 97
+  Y 288
+  WIDTH 9
+  HEIGHT 64
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE barrier
+  X 64
+  Y 336
+  WIDTH 33
+  HEIGHT 16
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE cone
+  X 124
+  Y 336
+  WIDTH 7
+  HEIGHT 16
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE cone
+  X 46
+  Y 336
+  WIDTH 7
+  HEIGHT 16
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE fan
+  X 175
+  Y 253
+  WIDTH 15
+  HEIGHT 16
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 172
+  Y 130
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL MINER
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 184
+  Y 130
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL FENCER
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_01
+  X 157
+  Y 33
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_07
+  X 11
+  Y 24
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_08
+  X 12
+  Y 215
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_02
+  X 0
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_07
+  X 261
+  Y 279
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 0
+  Y 176
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_07
+  X 196
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_02
+  X 256
+  Y 216
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 312
+  Y 176
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE block_04
+  X 172
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_02
+  X 242
+  Y 57
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_07
+  X 68
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 0
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_06
+  X -16
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_01
+  X -29
+  Y 89
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_03
+  X -32
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_01
+  X 140
+  Y -15
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_03
+  X 173
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 151
+  Y -9
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_01
+  X 247
+  Y 128
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 232
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_03
+  X 282
+  Y 172
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_02
+  X 145
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_03
+  X 284
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_02
+  X 312
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 25
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 87
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_03
+  X 128
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 14
+  Y 97
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_10
+  X -77
+  Y 240
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_01
+  X 52
+  Y 352
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_02
+  X 101
+  Y 352
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_01
+  X 273
+  Y 257
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_03
+  X 217
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 233
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 274
+  Y 0
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 108
+  Y 41
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 142
+  Y 161
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_02
+  X 158
+  Y 264
+$END
+
+$POSTTEXT
+  LINE Well done!
+  LINE Be sure to still check out
+  LINE the advanced training rank
+  LINE though. There are still quite
+  LINE a few tricks and techniques
+  LINE that will help you in your
+  LINE future quests to save the
+  LINE Lemmings!
+$END
+

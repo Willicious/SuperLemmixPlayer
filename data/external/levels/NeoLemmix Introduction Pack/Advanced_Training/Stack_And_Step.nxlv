@@ -1,0 +1,1987 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Stack And Step
+ AUTHOR IchoTolot
+ ID x13E3163030219486
+ VERSION x0000000000000018
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME l2_sports
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 39
+ MAX_SPAWN_INTERVAL 28
+ 
+ $SKILLSET 
+   JUMPER 0
+   SHIMMIER 1
+   BOMBER 1
+   PLATFORMER 1
+   STACKER 2
+   MINER 3
+ $END 
+ 
+ $PRETEXT 
+   LINE Need to get up and no upwards 
+   LINE construction skills or climbers?
+   LINE Stackers can be a very powerful tool here! 
+   LINE 
+   LINE Normally a complete stacker is a 
+   LINE non-stepable wall for the lemmings, 
+   LINE but while it's building it is still 
+   LINE stepable. Use this to your advantage 
+   LINE and assign a well-placed miner on the 
+   LINE stacker in construction facing the 
+   LINE direction the lemmings should step up 
+   LINE from. This will create a little step 
+   LINE in the full stacker which your lemmings 
+   LINE can then use to step on top of it.
+   LINE 
+   LINE Also, a miner can also be potentially be extended by
+   LINE stackers that are placed next to each other.  
+   LINE 
+   LINE Hint: The RR is already fine for 
+   LINE the required tricks in this level! 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_sports
+   PIECE hatch
+   X 253
+   Y 104
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_sports
+   PIECE water
+   X 144
+   Y 144
+   WIDTH 80
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_sports
+   PIECE exit
+   X 272
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_sports
+   PIECE hatch
+   X 175
+   Y 104
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 178
+   Y 48
+   NO_OVERWRITE
+   SKILL STACKER
+   SKILL_COUNT 3
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 106
+   Y 74
+   NO_OVERWRITE
+   SKILL JUMPER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 224
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 240
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 224
+   Y 152
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 248
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 256
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 264
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 280
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 288
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 128
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 144
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 208
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 192
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 176
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 160
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 144
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 128
+   Y 152
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 0
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 16
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 24
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 32
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 40
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 48
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 56
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 64
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 72
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 0
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 0
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 0
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 40
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 88
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 56
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 72
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 56
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 80
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 88
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 96
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 104
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 72
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 104
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 88
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 88
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 72
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 120
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 104
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 112
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 120
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 16
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 32
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 48
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 64
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_01
+   X 304
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 104
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 112
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 120
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_13
+   X 88
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 160
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 176
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 240
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 248
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 256
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 264
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 280
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 288
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 240
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 248
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 256
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 264
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 280
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 288
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 80
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 96
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_05
+   X 112
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 248
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 256
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 264
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 280
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 184
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 200
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 216
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 232
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 152
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 168
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_15
+   X 128
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 136
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 112
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_13
+   X 96
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 80
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 64
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 48
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_03
+   X 16
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_01
+   X 96
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_01
+   X 80
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_01
+   X 64
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_01
+   X 48
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_01
+   X 32
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_01
+   X 16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_13
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 16
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X -16
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_05
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 0
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 64
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 32
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 0
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_02
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_02
+   X 56
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_02
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_02
+   X 8
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_03
+   X 8
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_03
+   X 0
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_03
+   X 24
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_03
+   X 16
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_03
+   X 8
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE ball_03
+   X 0
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 192
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 208
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 224
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 240
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 256
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 272
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 288
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 208
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 216
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 224
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 232
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 176
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 184
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 192
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 200
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 208
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 216
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 224
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 232
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 160
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 168
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 160
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 208
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 208
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 240
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 248
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 256
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 264
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 280
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 288
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 208
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 216
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 224
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 232
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 240
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 248
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 264
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 272
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 280
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 288
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 176
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 184
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 192
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 200
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 208
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 216
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 232
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 160
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 168
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 168
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 184
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 200
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 216
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 232
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 248
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 264
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 280
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 216
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 232
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 248
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 264
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_11
+   X 280
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 296
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 128
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 144
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_13
+   X 120
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_12
+   X 144
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 136
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_14
+   X 152
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_15
+   X 176
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 168
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_14
+   X 208
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_15
+   X 232
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_21
+   X 224
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE steel_02
+   X 128
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_04
+   X 226
+   Y 128
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_04
+   X 126
+   Y 128
+   ERASE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_13
+   X 160
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE block_green_13
+   X 208
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 208
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 240
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 272
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 176
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_04
+   X 160
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 208
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 240
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_sports
+   PIECE bar_01
+   X 272
+   Y 56
+   ONE_WAY
+ $END
+ 
+ 

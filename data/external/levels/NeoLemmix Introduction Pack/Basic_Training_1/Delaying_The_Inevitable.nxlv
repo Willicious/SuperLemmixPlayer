@@ -1,0 +1,2129 @@
+TITLE Delaying The Inevitable
+AUTHOR IchoTolot
+THEME zanzindorf_kiwi
+ID x7FA68C6522A6338F
+LEMMINGS 40
+SAVE_REQUIREMENT 40
+MAX_SPAWN_INTERVAL 28
+WIDTH 1160
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  BUILDER 8
+  BASHER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE window
+  X 64
+  Y 72
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE exit
+  X 1032
+  Y 64
+  WIDTH 16
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 288
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 304
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 512
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 528
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 544
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 560
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 864
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 880
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 896
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 912
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 928
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 944
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 960
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 1008
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 1024
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 1040
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 1056
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 1104
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 1120
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE spikes
+  X 1136
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE trap_hand
+  X 699
+  Y 32
+  WIDTH 9
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE zanzindorf_kiwi
+  PIECE trap_hand
+  X 763
+  Y 32
+  WIDTH 9
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 784
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_05
+  X 256
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_01
+  X 112
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 0
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 32
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 0
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_08
+  X 32
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 64
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 96
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 128
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_02
+  X 208
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_05
+  X 128
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_04
+  X 144
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 160
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 256
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 352
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 320
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 352
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_03
+  X 160
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 192
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_01
+  X 176
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_02
+  X 192
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 192
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_01
+  X 368
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_01
+  X 384
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_01
+  X 400
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 384
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 416
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 384
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 416
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_01
+  X 416
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_10
+  X 448
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 416
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_09
+  X 384
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_10
+  X 432
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 320
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 352
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_04
+  X 416
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_05
+  X 432
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_04
+  X 448
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 448
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 480
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_05
+  X 480
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 576
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 608
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 576
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 608
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 640
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_01
+  X 640
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 704
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_01
+  X 848
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_01
+  X 848
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_03
+  X 720
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_01
+  X 752
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_03
+  X 832
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steel_01
+  X 736
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steel_01
+  X 848
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 768
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steel_04
+  X 976
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steel_04
+  X 976
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE stair_01
+  X 960
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_01
+  X 1008
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_03
+  X 1056
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 1024
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steel_04
+  X 1072
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steel_04
+  X 1072
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE stair_02
+  X 1096
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_04
+  X 464
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_05
+  X 480
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_04
+  X 496
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_08
+  X 512
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 112
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 112
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 144
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 144
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 208
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 208
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 208
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 240
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 80
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 272
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 560
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 544
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_03
+  X 304
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_01
+  X 320
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_03
+  X 368
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_01
+  X 384
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 592
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 576
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 624
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 608
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 656
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 640
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 688
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 672
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 720
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 704
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 752
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 736
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 784
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 768
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 816
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 800
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 848
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 832
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 880
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 864
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 912
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 896
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_01
+  X 568
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_01
+  X 632
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_01
+  X 696
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_01
+  X 760
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_01
+  X 824
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_01
+  X 888
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 928
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 944
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE pillar_01
+  X 952
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 968
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 352
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 336
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 288
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 1000
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 1000
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 1032
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_06
+  X 1064
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_08
+  X 1096
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 960
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 1064
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 1128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 576
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 608
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_08
+  X 640
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 672
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_08
+  X 704
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 736
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_08
+  X 768
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_07
+  X 800
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_05
+  X 576
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_06
+  X 608
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_06
+  X 640
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_05
+  X 672
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_06
+  X 704
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_05
+  X 736
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_06
+  X 768
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_05
+  X 800
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_08
+  X 832
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_06
+  X 832
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_09
+  X 624
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE block_09
+  X 608
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steel_01
+  X 1152
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_01
+  X 1152
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_03
+  X 1152
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 1152
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_02
+  X 1152
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 64
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 96
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 128
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 160
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 192
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 224
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 256
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 224
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_07
+  X 320
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_06
+  X 32
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_03
+  X 316
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_04
+  X 312
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE steps_03
+  X 560
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_01
+  X 432
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_03
+  X 416
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_05
+  X 400
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_04
+  X 400
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_structure_04
+  X 400
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_03
+  X 384
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bricks_01
+  X 384
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 816
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 800
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 784
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 768
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 704
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 688
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_05
+  X 672
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_06
+  X 656
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 800
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 768
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 736
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 704
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 672
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_02
+  X 656
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 784
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 752
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 720
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 688
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 656
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_02
+  X 640
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 800
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 768
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 736
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 704
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_04
+  X 672
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_02
+  X 656
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_01
+  X 848
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 640
+  Y 97
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 704
+  Y 97
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 784
+  Y 97
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE stair_02
+  X 996
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE stair_01
+  X 1060
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_06
+  X 767
+  Y 97
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_02
+  X 832
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_02
+  X 816
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE platform_02
+  X 832
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_03
+  X 556
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_03
+  X 560
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_03
+  X 564
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_03
+  X 568
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE zanzindorf_kiwi
+  PIECE bar_03
+  X 572
+  Y 112
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Sometimes, the crowd cannot be
+  LINE contained in a safe location.
+  LINE You need to either distract them or
+  LINE re-route them onto a longer path.
+  LINE A possible distraction could be
+  LINE skills that temporarily hold them
+  LINE back like little basher, miner, or
+  LINE digger tunnels.
+  LINE The following level will require
+  LINE several of these distractions.
+$END
+

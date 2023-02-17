@@ -1,0 +1,961 @@
+TITLE Set Your Priorities Right!
+AUTHOR IchoTolot
+THEME orig_crystal
+ID x1A23ADE42A1DDE45
+LEMMINGS 24
+SAVE_REQUIREMENT 24
+MAX_SPAWN_INTERVAL 4
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  FLOATER 2
+  BASHER 4
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE window
+  X 82
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE window
+  X 189
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE exit
+  X 138
+  Y 129
+  WIDTH 48
+  HEIGHT 23
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE water
+  X 251
+  Y 32
+  WIDTH 72
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE water
+  X -3
+  Y 32
+  WIDTH 72
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE water
+  X 283
+  Y 144
+  WIDTH 72
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE water
+  X -16
+  Y 144
+  WIDTH 72
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE owa_left
+  X 112
+  Y 57
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE owa_right
+  X 176
+  Y 73
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_01
+  X 44
+  Y 119
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_02
+  X 194
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE block
+  X 144
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE block
+  X 144
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 119
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 176
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 119
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 176
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 119
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 176
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 176
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 119
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 119
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 137
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE block
+  X 144
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 80
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 201
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 94
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 94
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 69
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 69
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 226
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 226
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 201
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 201
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 69
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 69
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 94
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 94
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 226
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 251
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 251
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 251
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 44
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 44
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 44
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 44
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 19
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 276
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 276
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 301
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 301
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 301
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 301
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 301
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 276
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X -6
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X -6
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X -6
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X -6
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X -6
+  Y 48
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 19
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 19
+  Y 112
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 19
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 201
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 203
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 205
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 205
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 207
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 111
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 113
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 115
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 115
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 117
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 119
+  Y 32
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 94
+  Y 32
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 69
+  Y 32
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 176
+  Y 32
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 226
+  Y 32
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 201
+  Y 32
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 211
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 214
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 104
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 107
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_01
+  X 217
+  Y 119
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_02
+  X 5
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_01
+  X -28
+  Y -49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_01
+  X 256
+  Y -50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_02
+  X 197
+  Y -50
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE clump_02
+  X 33
+  Y -51
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE crystal_04
+  X 134
+  Y -66
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE crystal_03
+  X 289
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE crystal_01
+  X 7
+  Y 21
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 144
+  Y 46
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 144
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 144
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 144
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 144
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 144
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 144
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 176
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 201
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 226
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 251
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 276
+  Y 96
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 251
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 276
+  Y 80
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 19
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE steel_03
+  X 44
+  Y 64
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 55
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 20
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X -44
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X -20
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 277
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 277
+  Y 96
+  ONE_WAY
+$END
+
+$LEMMING
+  X 70
+  Y 80
+  FLOATER
+$END
+
+$LEMMING
+  X 211
+  Y 96
+$END
+
+$LEMMING
+  X 248
+  Y 96
+  FLIP_HORIZONTAL
+$END
+
+$LEMMING
+  X 108
+  Y 80
+  FLIP_HORIZONTAL
+  FLOATER
+$END
+
+$PRETEXT
+  LINE Want to assign a skill to a lemming
+  LINE facing a certain direction? Press and
+  LINE hold [HOTKEY:Dir_Select_Left] or [HOTKEY:Dir_Select_Right].
+  LINE Pressing the blue arrow
+  LINE buttons with the desired direction will
+  LINE also do the trick. Just don't forget to
+  LINE unselect these when you are finished.
+  LINE
+  LINE Pressing and holding
+  LINE [HOTKEY:Force_Walker] 
+  LINE forces the game to select a walking 
+  LINE lemming inside your cursor. Useful if 
+  LINE you don't want to select the digger 
+  LINE inside a digger pit, for example. 
+  LINE You can combine this with the 
+  LINE "directional-select" mode.
+  LINE
+  LINE Levels may begin with some pre-placed
+  LINE lemmings, which are active straight
+  LINE away. These lemmings can already have
+  LINE permanent skills assigned to them!
+$END
+

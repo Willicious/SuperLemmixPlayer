@@ -1,0 +1,1122 @@
+TITLE Neutral Response
+AUTHOR IchoTolot
+THEME flopsy_starlight
+ID x7E775625331C0D09
+LEMMINGS 11
+SAVE_REQUIREMENT 11
+MAX_SPAWN_INTERVAL 4
+WIDTH 880
+HEIGHT 160
+START_X 168
+START_Y 80
+
+$SKILLSET
+  CLIMBER 1
+  PLATFORMER 1
+  BUILDER 1
+  STACKER 1
+  BASHER 1
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE trapdoor
+  X 53
+  Y 0
+  WIDTH 48
+  HEIGHT 13
+  NO_OVERWRITE
+  NEUTRAL
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE trapdoor
+  X 5
+  Y 0
+  WIDTH 48
+  HEIGHT 13
+  NO_OVERWRITE
+  LEMMINGS 1
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE exit
+  X 808
+  Y 112
+  WIDTH 32
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE trapdoor
+  X 277
+  Y 40
+  WIDTH 48
+  HEIGHT 13
+  NO_OVERWRITE
+  NEUTRAL
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE barrier
+  X 69
+  Y 120
+  WIDTH 33
+  HEIGHT 16
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE eggmanboss
+  X 315
+  Y 11
+  WIDTH 36
+  HEIGHT 31
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE goal_ring
+  X 850
+  Y 120
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE pole2
+  X 55
+  Y 80
+  WIDTH 9
+  HEIGHT 56
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE flopsy_starlight
+  PIECE sonic
+  X 19
+  Y 116
+  WIDTH 13
+  HEIGHT 20
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_07
+  X 290
+  Y 15
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 413
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_02
+  X 122
+  Y 124
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_02
+  X 224
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_01
+  X 168
+  Y 90
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 152
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_01
+  X 128
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 18
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_01
+  X 80
+  Y 80
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 80
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X -30
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_10
+  X 480
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_03
+  X 480
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_03
+  X 544
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_11
+  X 609
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_15
+  X 709
+  Y 144
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_02
+  X 725
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 560
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 511
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 462
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_06
+  X 377
+  Y 33
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 352
+  Y 58
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_08
+  X 343
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_02
+  X 448
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 418
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_08
+  X 343
+  Y 83
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 321
+  Y 79
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_07
+  X 443
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 609
+  Y 24
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 625
+  Y 16
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 576
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_08
+  X 625
+  Y 106
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 576
+  Y 107
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_02
+  X 615
+  Y 104
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 634
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 675
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 716
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 757
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_02
+  X 233
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE structure_01
+  X 233
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 250
+  Y 60
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 224
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 224
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_01
+  X 192
+  Y 31
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 224
+  Y -44
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 250
+  Y 8
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 250
+  Y -44
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 224
+  Y 111
+  ROTATE
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 266
+  Y 111
+  ROTATE
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 224
+  Y 112
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 224
+  Y 136
+  ROTATE
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 224
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 272
+  Y 96
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 241
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_12
+  X 282
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_12
+  X 274
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 798
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 855
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 609
+  Y 55
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_12
+  X 601
+  Y 99
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 864
+  Y 100
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 224
+  Y 111
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 266
+  Y 111
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 224
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 855
+  Y 99
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 855
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 650
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 691
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 732
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 773
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_04
+  X 814
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 793
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 745
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_05
+  X 741
+  Y 92
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_02
+  X -160
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 97
+  Y 136
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_04
+  X 81
+  Y 145
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_01
+  X 164
+  Y 51
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE stuff_01
+  X 200
+  Y 72
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 625
+  Y 58
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 649
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 649
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 673
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 673
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 697
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 697
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 721
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 721
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 745
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 745
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 769
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 769
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 793
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 793
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 817
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 817
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_01
+  X 841
+  Y 42
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 806
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 757
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 708
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 659
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 610
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 561
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 512
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 463
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 414
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 365
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 316
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 267
+  Y 0
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 175
+  Y 0
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE ground_22
+  X 126
+  Y 0
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE flopsy_starlight
+  PIECE platform_07
+  X 117
+  Y -1
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE The gray neutral lemmings can and
+  LINE should be saved just like normal
+  LINE lemmings, but there is a catch:
+  LINE You cannot assign skills to them!
+  LINE Use normal lemmings to make a safe
+  LINE path for them. Otherwise, they will
+  LINE most likely just walk straight to
+  LINE their deaths!
+  LINE Even if only neutrals remain on
+  LINE the level, it will continue to
+  LINE play as they could still reach
+  LINE the exit. Also, there can be 
+  LINE neutral hatches on the map.
+  LINE
+  LINE Now try and guide these mindless
+  LINE dummies to the exit!
+$END
+

@@ -1,0 +1,676 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.27
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Central Fear
+ AUTHOR IchoTolot
+ ID x0E06EF316A05E7A3
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 240
+ START_X 160
+ START_Y 80
+ THEME l2_cavelem
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 13
+ 
+ $SKILLSET 
+   WALKER 6
+   DISARMER 1
+   BLOCKER 6
+   PLATFORMER 1
+   BASHER 6
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE window
+   X 136
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE exit
+   X 136
+   Y 212
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE window
+   X 136
+   Y 0
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE flame_L
+   X 161
+   Y 196
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE flame_R
+   X 127
+   Y 196
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE trap
+   X 136
+   Y 136
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE flame_L
+   X 218
+   Y 8
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_cavelem
+   PIECE flame_R
+   X 105
+   Y 2
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_23
+   X 144
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_17
+   X 176
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_09
+   X 176
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 128
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_08
+   X 128
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 128
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_08
+   X 128
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_21
+   X 200
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 200
+   Y 224
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_20
+   X 48
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 88
+   Y 224
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_15
+   X 288
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_12
+   X 0
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_15
+   X 96
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_14
+   X 168
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 112
+   Y 208
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 112
+   Y 192
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 176
+   Y 208
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 176
+   Y 192
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 160
+   Y 176
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 128
+   Y 176
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 144
+   Y 176
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 144
+   Y 160
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 152
+   Y 160
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_17
+   X 128
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_03
+   X 152
+   Y 232
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_03
+   X 104
+   Y 232
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE mushroom_01
+   X 64
+   Y 200
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_07
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_09
+   X 224
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 208
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_08
+   X 208
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_14
+   X 32
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_17
+   X 96
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_09
+   X 96
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_14
+   X 232
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_10
+   X 264
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_06
+   X 296
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 216
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_08
+   X 216
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE bones_02
+   X 240
+   Y 200
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE plant_03
+   X -16
+   Y 0
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE plant_04
+   X 272
+   Y 0
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE plant_05
+   X 48
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_09
+   X 64
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_12
+   X 96
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 80
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_08
+   X 80
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_13
+   X 176
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_17
+   X 208
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_09
+   X 208
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_02
+   X 0
+   Y 224
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 176
+   Y 176
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE steel_02
+   X 112
+   Y 176
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE mushroom_02
+   X 288
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE plant_05
+   X -16
+   Y 120
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE plant_06
+   X -16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE plant_02
+   X -16
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE plant_02
+   X 264
+   Y 136
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE mushroom_03
+   X 304
+   Y 112
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 232
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_08
+   X 232
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_15
+   X 248
+   Y -32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_22
+   X 60
+   Y -23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_17
+   X 92
+   Y 1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_09
+   X 92
+   Y 17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_14
+   X 304
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_16
+   X 288
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE rocks_bottom_08
+   X 288
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_cavelem
+   PIECE mushroom_03
+   X 134
+   Y 161
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

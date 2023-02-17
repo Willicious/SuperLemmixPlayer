@@ -1,0 +1,1307 @@
+TITLE Split And Splat
+AUTHOR IchoTolot
+THEME namida_clockwork
+ID x5308EE125ECCF830
+LEMMINGS 60
+SAVE_REQUIREMENT 40
+MAX_SPAWN_INTERVAL 13
+WIDTH 320
+HEIGHT 360
+START_X 160
+START_Y 80
+
+$SKILLSET
+  STACKER 10
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE window
+  X 136
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 147
+  Y 24
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 86
+  Y 92
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 193
+  Y 76
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 244
+  Y 144
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 148
+  Y 130
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 193
+  Y 180
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 103
+  Y 190
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 233
+  Y 260
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 50
+  Y 258
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE splitter
+  X 149
+  Y 228
+  WIDTH 26
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_clockwork
+  PIECE exit
+  X 148
+  Y 280
+  WIDTH 32
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 128
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 160
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 67
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 99
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 174
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 206
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 225
+  Y 181
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 257
+  Y 181
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 129
+  Y 167
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 161
+  Y 167
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 174
+  Y 217
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 206
+  Y 217
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 84
+  Y 227
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 116
+  Y 227
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 214
+  Y 297
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 246
+  Y 297
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 31
+  Y 295
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 63
+  Y 295
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 130
+  Y 265
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 162
+  Y 265
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 0
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 64
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 128
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 192
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 256
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 0
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 32
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 64
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 96
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 128
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 160
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 192
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 224
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 256
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 288
+  Y 324
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 130
+  Y 312
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_01
+  X 162
+  Y 312
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_03
+  X 120
+  Y 319
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_03
+  X 124
+  Y 314
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_03
+  X 190
+  Y 319
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_03
+  X 186
+  Y 314
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 298
+  Y 299
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 2
+  Y 299
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_07
+  X 2
+  Y 267
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_07
+  X 298
+  Y 267
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 298
+  Y 242
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 2
+  Y 242
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 0
+  Y 218
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 296
+  Y 218
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 2
+  Y 193
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_07
+  X 2
+  Y 161
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 2
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 298
+  Y 193
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_07
+  X 298
+  Y 161
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 298
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 296
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 2
+  Y 87
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_07
+  X 2
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 2
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 298
+  Y 87
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_07
+  X 298
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_14
+  X 298
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 0
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 296
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 256
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 192
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 0
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE wood_02
+  X 64
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_13
+  X 24
+  Y 8
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_13
+  X 271
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 104
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE steel_01
+  X 192
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_13
+  X 79
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_13
+  X 216
+  Y 8
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_06
+  X 239
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE pipe_lead_06
+  X 49
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X -18
+  Y 274
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X -2
+  Y 257
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X -15
+  Y 241
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X -11
+  Y 181
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 4
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X -17
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X -17
+  Y 173
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 3
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X -7
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 7
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X -12
+  Y 57
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X -13
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 5
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 39
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 28
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 50
+  Y 3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 73
+  Y 14
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 73
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 54
+  Y -11
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 221
+  Y -13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 255
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 245
+  Y 9
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 272
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 271
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 228
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 287
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 261
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 293
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 281
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 297
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 311
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 291
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 307
+  Y 163
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 299
+  Y 177
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 310
+  Y 186
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 291
+  Y 233
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 288
+  Y 261
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 306
+  Y 277
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 295
+  Y 289
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 309
+  Y 294
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X -7
+  Y 332
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 22
+  Y 326
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 51
+  Y 342
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 67
+  Y 328
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 82
+  Y 349
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 89
+  Y 336
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 99
+  Y 341
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 122
+  Y 330
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 150
+  Y 319
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 183
+  Y 333
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 152
+  Y 348
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 172
+  Y 349
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 207
+  Y 329
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 208
+  Y 347
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_01
+  X 221
+  Y 327
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 254
+  Y 325
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_02
+  X 276
+  Y 338
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 250
+  Y 348
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 264
+  Y 352
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 292
+  Y 329
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 298
+  Y 344
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 307
+  Y 331
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 309
+  Y 346
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 111
+  Y 328
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_clockwork
+  PIECE cog_03
+  X 140
+  Y 319
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Sometimes, you can be unsure if a
+  LINE fall is survivable or deadly.
+  LINE Press and hold [HOTKEY:Fall_Distance] to bring out
+  LINE the "splat-fall ruler". The pink marker 
+  LINE of the ruler measures a 64-pixel fall, 
+  LINE so if a fall  is just as long or even 
+  LINE longer than this marker, it is deadly 
+  LINE and should be avoided. The other
+  LINE colored markers represent some 
+  LINE edge-cases that should not worry 
+  LINE you for now.
+  LINE
+  LINE Splitters will alternate turning
+  LINE lemmings around to the left
+  LINE and to the right.
+  LINE For example: If a lemming coming from
+  LINE the left was not turned around by it,
+  LINE then the next left-facing one will be
+  LINE turned around for sure.
+  LINE Splitters cannot be deactivated.
+$END
+

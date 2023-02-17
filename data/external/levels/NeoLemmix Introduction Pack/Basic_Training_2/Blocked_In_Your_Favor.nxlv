@@ -1,0 +1,1575 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.20
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Blocked In Your Favor
+ AUTHOR IchoTolot
+ ID x5A4793982E642018
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 600
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME zanzindorf_glacier
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 32
+ MAX_SPAWN_INTERVAL 18
+ 
+ $SKILLSET 
+   BOMBER 0
+   BLOCKER 4
+   BUILDER 0
+   BASHER 1
+   MINER 1
+   DIGGER 1
+ $END 
+ 
+ $PRETEXT 
+   LINE You might need some assistance here!
+   LINE The level includes three central
+   LINE tricks you learned: Turning around a
+   LINE miner with a blocker, turning around
+   LINE a digger with a blocker, and 
+   LINE containing the crowd in a tight 
+   LINE space so your losses to traps 
+   LINE are minimal.
+   LINE I've prepared a spot right before
+   LINE the traps for the containment trick.
+   LINE Good luck!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE window
+   X 34
+   Y 4
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE trap
+   X 209
+   Y 27
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE trap
+   X 426
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE trap
+   X 443
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE trap
+   X 373
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE trap
+   X 390
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE exit
+   X 534
+   Y 45
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE zanzindorf_glacier
+   PIECE water
+   X 127
+   Y 152
+   WIDTH 376
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 119
+   Y 58
+   NO_OVERWRITE
+   SKILL BUILDER
+   SKILLCOUNT 3
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 193
+   Y 42
+   NO_OVERWRITE
+   SKILL BOMBER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 12
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 40
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE brick_02
+   X 68
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 32
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 7
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 28
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 21
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 12
+   Y 114
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 19
+   Y 126
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 111
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE pillar_03
+   X 144
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE pillar_01
+   X 144
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE pillar_03
+   X 180
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE pillar_01
+   X 180
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE pillar_01
+   X 180
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_08
+   X 216
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 288
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_09
+   X 264
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_09
+   X 296
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_14
+   X 216
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_13
+   X 348
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_13
+   X 400
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_06
+   X 456
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_16
+   X 416
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_10
+   X 372
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_11
+   X 356
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_05
+   X 256
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_04
+   X 312
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 175
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_16
+   X 161
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 151
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_02
+   X 175
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 151
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_16
+   X 158
+   Y 23
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 119
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 135
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_19
+   X 140
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_02
+   X 159
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_02
+   X 175
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 151
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 175
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_16
+   X 160
+   Y 13
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 175
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 191
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 207
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 223
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_02
+   X 231
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_02
+   X 231
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 223
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 207
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 191
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 175
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 159
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 143
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 95
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 127
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 111
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 119
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 135
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_04
+   X 111
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_04
+   X 135
+   Y 15
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_03
+   X 107
+   Y 21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 0
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_03
+   X 31
+   Y -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_03
+   X 42
+   Y -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_09
+   X 78
+   Y -7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_07
+   X 23
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_08
+   X 20
+   Y -2
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_08
+   X 14
+   Y -2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_07
+   X 15
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 424
+   Y 97
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 440
+   Y 97
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 371
+   Y 97
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_03
+   X 387
+   Y 97
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_05
+   X 129
+   Y 37
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_01
+   X 122
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_03
+   X 121
+   Y 26
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_13
+   X 172
+   Y 55
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_14
+   X 230
+   Y 11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_14
+   X 228
+   Y -43
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_07
+   X 489
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_01
+   X 550
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_08
+   X 580
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_14
+   X 496
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_14
+   X 499
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_15
+   X 504
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 557
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_16
+   X 584
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_18
+   X 522
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_19
+   X 531
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_06
+   X 429
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_09
+   X 542
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_02
+   X 503
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_15
+   X 489
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_01
+   X 471
+   Y 111
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_06
+   X 558
+   Y -6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 506
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_10
+   X 480
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_05
+   X 411
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_08
+   X 423
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_13
+   X 359
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_11
+   X 321
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_08
+   X 259
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 280
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_06
+   X 226
+   Y 29
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_14
+   X 438
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_04
+   X 405
+   Y -18
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_05
+   X 332
+   Y -13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_09
+   X 232
+   Y -2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_10
+   X 362
+   Y 27
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_15
+   X 427
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_07
+   X 449
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 470
+   Y -32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_12
+   X 432
+   Y -40
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_06
+   X 349
+   Y -13
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_06
+   X 462
+   Y -8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_01
+   X 379
+   Y 39
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_09
+   X 375
+   Y -9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_07
+   X 394
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_08
+   X 403
+   Y -1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_13
+   X 410
+   Y -9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_09
+   X 487
+   Y 4
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_09
+   X 417
+   Y -10
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_09
+   X 451
+   Y 4
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_10
+   X 577
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_01
+   X 549
+   Y -3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_04
+   X 489
+   Y 38
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_10
+   X 267
+   Y -12
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_09
+   X 250
+   Y -7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_07
+   X 325
+   Y -5
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_05
+   X 245
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_10
+   X 258
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_18
+   X 294
+   Y 94
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ground_07
+   X 102
+   Y 23
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_04
+   X 159
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_04
+   X 119
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE ice_05
+   X 121
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE zanzindorf_glacier
+   PIECE steel_01
+   X 318
+   Y 83
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 129
+   Y 21
+   FLOATER 
+ $END
+ 
+ $LEMMING
+   X 116
+   Y 21
+ $END
+ 
+ 

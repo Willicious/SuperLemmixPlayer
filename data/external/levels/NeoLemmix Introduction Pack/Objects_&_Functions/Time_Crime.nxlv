@@ -1,0 +1,1033 @@
+TITLE Time Crime
+AUTHOR IchoTolot
+THEME ohno_bubble
+ID x1A3B1ED43655EC3F
+LEMMINGS 100
+SAVE_REQUIREMENT 95
+TIME_LIMIT 80
+MAX_SPAWN_INTERVAL 28
+WIDTH 512
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  BLOCKER 5
+  BASHER 5
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE window
+  X 88
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE exit
+  X 120
+  Y 109
+  WIDTH 48
+  HEIGHT 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_10
+  X 32
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 48
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 80
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 112
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 144
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 208
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 240
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_11
+  X 464
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 272
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 304
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 336
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 368
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_02
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 32
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_11
+  X 64
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_10
+  X 144
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_03
+  X 480
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 192
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 224
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 256
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 288
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 320
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 352
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 384
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 416
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 160
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_01
+  X 0
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_04
+  X 480
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X -2
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X -2
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X -2
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 499
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 499
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 499
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_01
+  X 35
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_02
+  X 53
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 11
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 43
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_11
+  X 75
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_10
+  X 32
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 48
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 80
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 112
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 144
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 176
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 208
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 240
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_11
+  X 464
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 272
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 304
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 336
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 368
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 32
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 64
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 96
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 128
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 160
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 192
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 224
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 256
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 288
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 320
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 352
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 384
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 416
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_10
+  X 229
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 245
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 277
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 309
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 341
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 373
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 405
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 469
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 381
+  Y 69
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 356
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_01
+  X 54
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_02
+  X 32
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 260
+  Y 36
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 235
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_02
+  X 469
+  Y 11
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_02
+  X 469
+  Y 78
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_02
+  X 469
+  Y 117
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_03
+  X 11
+  Y 117
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_07
+  X 0
+  Y 0
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_06
+  X 176
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_07
+  X 208
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_06
+  X 256
+  Y 110
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_07
+  X 288
+  Y 110
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_04
+  X 96
+  Y 110
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_03
+  X 64
+  Y 110
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_10
+  X 336
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_11
+  X 368
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 120
+  Y 46
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 184
+  Y 35
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_03
+  X 118
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_03
+  X 182
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_03
+  X 480
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_04
+  X 0
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_01
+  X 379
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 354
+  Y -15
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_01
+  X 335
+  Y -23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 309
+  Y -22
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_01
+  X 264
+  Y -19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_02
+  X 285
+  Y -17
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_01
+  X 243
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_02
+  X 217
+  Y -15
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_02
+  X 101
+  Y 35
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_03
+  X 122
+  Y 35
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_02
+  X 165
+  Y 35
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_03
+  X 186
+  Y 35
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 448
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 448
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 437
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 400
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 432
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 400
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 432
+  Y 32
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Time waits for no one!
+  LINE Some levels have a time limit and will
+  LINE prevent lemmings from exiting when it 
+  LINE runs out. If you have not saved enough 
+  LINE lemmings at that point, you have failed 
+  LINE your attempt. The timer can be observed 
+  LINE at the upper right of the skillbar.
+  LINE
+  LINE Be sure to use the shortest way possible
+  LINE to the exit, avoid having the lemmings
+  LINE walk long detours, and crank the
+  LINE release rate up to the maximum as soon
+  LINE as possible to get the lemmings out
+  LINE quickly!
+  LINE If you do all these things, timers will
+  LINE be a lot less scary. ;)
+$END
+

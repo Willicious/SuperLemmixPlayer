@@ -1,0 +1,55 @@
+
+$RESULT
+  CONDITION 0
+  LINE Oh dear, not even one poor Lemming
+  LINE saved. Try a little harder next time
+$END
+
+$RESULT
+  CONDITION 1
+  LINE Yes, well, err, erm, maybe that is
+  LINE NOT the way to do this level.
+$END
+
+$RESULT
+  CONDITION -50%
+  LINE We are not too impressed with your
+  LINE attempt at that level!
+$END
+
+$RESULT
+  CONDITION -5
+  LINE Getting close. You are either pretty
+  LINE good, or simply lucky.
+$END
+
+$RESULT
+  CONDITION -1
+  LINE Shame, you were short by a tiny
+  LINE amount. Go for it this time.
+$END
+
+$RESULT
+  CONDITION +0
+  LINE Just made it by the skin of your
+  LINE teeth. Time to progress..
+$END
+
+$RESULT
+  CONDITION +1
+  LINE More than enough. You have the
+  LINE makings of a master Lemmings player.
+$END
+
+$RESULT
+  CONDITION +20%
+  LINE What a fine display of Lemmings
+  LINE control. Take a bow then carry on.
+$END
+
+$RESULT
+  CONDITION 100%
+  LINE WOW! You saved every Lemming.
+  LINE TOTALLY EXCELLENT!
+$END
+

@@ -1,0 +1,561 @@
+TITLE Chalk Walk
+AUTHOR IchoTolot
+THEME orig_crystal
+ID x50E9AB7864C8BAC9
+LEMMINGS 50
+SAVE_REQUIREMENT 42
+MAX_SPAWN_INTERVAL 6
+SPAWN_INTERVAL_LOCKED
+WIDTH 760
+HEIGHT 160
+START_X 400
+START_Y 80
+BACKGROUND dex_chalk:chalkboard_bg_dark
+
+$SKILLSET
+  BLOCKER 8
+  BUILDER 7
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE start
+  X 300
+  Y 72
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE exit
+  X 636
+  Y 38
+  WIDTH 41
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 760
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE noose
+  X 85
+  Y 96
+  WIDTH 24
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE flamer
+  X 205
+  Y 29
+  WIDTH 80
+  HEIGHT 20
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE noose
+  X 5
+  Y 24
+  WIDTH 24
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE flamer
+  X 256
+  Y -1
+  WIDTH 80
+  HEIGHT 20
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE flamer
+  X 87
+  Y 69
+  WIDTH 80
+  HEIGHT 20
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE dex_chalk
+  PIECE flamer
+  X 120
+  Y 16
+  WIDTH 80
+  HEIGHT 20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_2
+  X 366
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_1
+  X 271
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22
+  X 200
+  Y 105
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_45
+  X 355
+  Y 51
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_2
+  X 140
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_2
+  X 297
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_2
+  X 63
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_45_sml
+  X 122
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_cloud3
+  X 509
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE char_plus
+  X 157
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE big_1
+  X 135
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE big_1
+  X 192
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22
+  X 197
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22_short
+  X 267
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22_short
+  X 279
+  Y 57
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22_short
+  X 286
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_1
+  X 175
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22_short
+  X 140
+  Y 65
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_2
+  X 116
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_45_sml
+  X 152
+  Y 46
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_2
+  X 170
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_true_straight_sml
+  X 285
+  Y 33
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_qmark1
+  X 389
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE char_minus
+  X 284
+  Y 21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_true_straight_sml
+  X 285
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_1
+  X 75
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE letter-y
+  X 67
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE letter-x
+  X 39
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE letter-z
+  X 91
+  Y 65
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_45_sml
+  X 306
+  Y 22
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_1
+  X -15
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22
+  X 30
+  Y 21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_1
+  X 177
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22_short
+  X 270
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22_short
+  X 206
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_2
+  X 220
+  Y 14
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE char_not
+  X 335
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_cursor
+  X 13
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_lem
+  X 667
+  Y 10
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_hand_1
+  X 245
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_note5
+  X 448
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_star_3
+  X 649
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_star_2
+  X 347
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_cloud
+  X 13
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_cloud2
+  X 38
+  Y 3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_scribble2
+  X 631
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_scribble6
+  X 576
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_heart3
+  X 561
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE doodle_hand_2
+  X 559
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_true_straight_sml
+  X 167
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_22
+  X 61
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_1
+  X 128
+  Y 5
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_true_straight_sml
+  X 118
+  Y 14
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE dex_chalk
+  PIECE line_true_straight_sml
+  X 118
+  Y 20
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Yay, more crowd delaying training!
+  LINE It's a very important skill to have,
+  LINE trust me!
+  LINE This time, use blockers to delay and
+  LINE re-route the crowd onto a longer path.
+  LINE You also need to resort to some
+  LINE builder-stretching here again to reach
+  LINE the exit. Stretching can be the deciding
+  LINE factor to solve a level, so keep it
+  LINE in mind!
+$END
+

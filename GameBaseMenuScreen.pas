@@ -18,6 +18,7 @@ uses
   Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows;
 
 const
+  //this determines the size of the available window space
   INTERNAL_SCREEN_WIDTH = 864;
   INTERNAL_SCREEN_HEIGHT = 486;
 
@@ -398,11 +399,12 @@ begin
 
 end;
 
+//changes hue of clickable text in pre-level screen
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
   aText: String; aAction: TRegionAction): TClickableRegion;
 const
-  HUE_SHIFT_NORMAL = -0.250;
-  HUE_SHIFT_HOVER = -0.125;
+  HUE_SHIFT_NORMAL = 0.610; //0.250 for blue
+  HUE_SHIFT_HOVER = 0.150; //0.150 for teal
   VALUE_SHIFT_CLICK = -0.250;
 var
   tmpNormal, tmpHover, tmpClick: TBitmap32;

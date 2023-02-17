@@ -1,0 +1,63 @@
+BASE
+
+
+$GROUP
+  NAME 2P
+  FOLDER 2P
+$END
+
+$GROUP
+  NAME Bonus
+  FOLDER Bonus
+$END
+
+$GROUP
+  NAME Prima Lemmings
+  FOLDER Prima Lemmings
+$END
+
+$GROUP
+  NAME Covox Lemmings
+  FOLDER Covox Lemmings
+$END
+
+$GROUP
+  NAME Genesis
+  FOLDER Genesis
+$END
+
+$GROUP
+  NAME Present
+  FOLDER Present
+$END
+
+$GROUP
+  NAME Sunsoft
+  FOLDER Sunsoft
+$END
+
+$GROUP
+  NAME SMS
+  FOLDER SMS
+$END
+
+$GROUP
+  NAME PSP
+  FOLDER PSP
+$END
+
+$GROUP
+  NAME NES
+  FOLDER NES
+$END
+
+$GROUP
+  NAME Xmas Lemmings
+  FOLDER Xmas Lemmings
+$END
+
+$GROUP
+  NAME New Year Lemmings 1991-92
+  FOLDER New Year Lemmings 1991-92
+$END
+

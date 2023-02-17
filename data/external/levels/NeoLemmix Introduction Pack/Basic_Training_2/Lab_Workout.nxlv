@@ -1,0 +1,656 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.24
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Lab Workout
+ AUTHOR IchoTolot
+ ID x539A4FF811350020
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME namida_lab
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 19
+ MAX_SPAWN_INTERVAL 33
+ 
+ $SKILLSET 
+   JUMPER 10
+   SHIMMIER 3
+   CLIMBER 1
+   STONER 1
+   PLATFORMER 0
+   BUILDER 2
+   STACKER 1
+   MINER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_lab
+   PIECE window
+   X 125
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE exit
+   X 58
+   Y 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE owf_left
+   X 312
+   Y 0
+   HEIGHT 152
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE acid
+   X 192
+   Y 32
+   WIDTH 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE acid
+   X 112
+   Y 32
+   WIDTH 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE acid
+   X 32
+   Y 144
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE acid
+   X 288
+   Y 144
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE owa_left
+   X 176
+   Y 80
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE owa_left
+   X 208
+   Y 80
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE namida_lab
+   PIECE owa_left
+   X 240
+   Y 80
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 274
+   Y 18
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 192
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 160
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 256
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 272
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 240
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 224
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 192
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 208
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 176
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 144
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 160
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 128
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 96
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 128
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 96
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 16
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 0
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X -16
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X -16
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X -16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X -16
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 112
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X -16
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X -16
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X -16
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X -16
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 240
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 224
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 192
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 128
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 96
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 160
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 80
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_01
+   X 106
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_03
+   X 160
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_01
+   X 186
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_04
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_02
+   X 56
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_02
+   X 56
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_03
+   X 40
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_04
+   X 272
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_03
+   X 40
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_04
+   X 40
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE steel_04
+   X 80
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE shelf_01
+   X 40
+   Y 90
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_02
+   X 190
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_02
+   X 220
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE goop_03
+   X 195
+   Y 102
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE goop_02
+   X 203
+   Y 99
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_13
+   X 179
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE pipe_14
+   X 250
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 128
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 240
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 160
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 96
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_05
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_lab
+   PIECE bricks_04
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+$PRETEXT
+  LINE If a jumping lemming is right under
+  LINE a ceiling, you can assign a  
+  LINE shimmier to him so that he grabs
+  LINE the ceiling and transition into
+  LINE a shimmier.
+  LINE 
+  LINE Also, if a jumper happens to jump
+  LINE into a one-way field, he will
+  LINE immediately turn around but still
+  LINE finish his jump. 
+  LINE
+  LINE Let's go to the laboratory and test
+  LINE this out!
+$END

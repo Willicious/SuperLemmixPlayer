@@ -1,0 +1,1604 @@
+TITLE Dig The Trench!
+AUTHOR IchoTolot
+THEME l2_medieval
+ID x2C5091016C22B87F
+LEMMINGS 15
+SAVE_REQUIREMENT 15
+MAX_SPAWN_INTERVAL 43
+WIDTH 600
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  PLATFORMER 2
+  BUILDER 5
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE hatch
+  X 40
+  Y 80
+  WIDTH 48
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE exit
+  X 528
+  Y 72
+  WIDTH 32
+  HEIGHT 40
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 496
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 454
+  Y 41
+  WIDTH 16
+  HEIGHT 24
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE flag_green
+  X 558
+  Y 72
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 434
+  Y 41
+  WIDTH 16
+  HEIGHT 24
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 406
+  Y 57
+  WIDTH 16
+  HEIGHT 24
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 386
+  Y 57
+  WIDTH 16
+  HEIGHT 24
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 326
+  Y 41
+  WIDTH 16
+  HEIGHT 24
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 306
+  Y 41
+  WIDTH 16
+  HEIGHT 24
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 245
+  Y 16
+  WIDTH 16
+  HEIGHT 24
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_medieval
+  PIECE torch
+  X 187
+  Y 16
+  WIDTH 16
+  HEIGHT 24
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE beam_01
+  X 324
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_21
+  X 32
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_22
+  X 48
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_21
+  X 80
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_22
+  X 96
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_20
+  X 72
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 104
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_02
+  X 168
+  Y 128
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_04
+  X 88
+  Y 128
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_23
+  X 184
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_21
+  X 128
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_22
+  X 144
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_21
+  X 176
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_22
+  X 192
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 120
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 136
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE beam_01
+  X 256
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 120
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_08
+  X 104
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 152
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_09
+  X 152
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_16
+  X 224
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE beam_01
+  X 432
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_07
+  X 496
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 496
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 496
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 512
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 544
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_07
+  X 576
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_07
+  X 576
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 512
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 544
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_07
+  X 496
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 496
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 496
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 496
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_16
+  X 32
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 504
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 504
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 504
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 520
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 520
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 520
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 536
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 536
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 536
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 552
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 552
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 552
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 568
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 568
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 568
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 104
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 584
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 568
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 568
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 568
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 568
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 552
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 552
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 552
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 552
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 536
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 536
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 536
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 536
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 520
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 520
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 520
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 520
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 504
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 504
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 504
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 504
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_19
+  X 512
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_16
+  X 512
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_17
+  X 552
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_18
+  X 544
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_29
+  X 432
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_30
+  X 464
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_26
+  X 400
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_25
+  X 368
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_30
+  X 336
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_27
+  X 368
+  Y 32
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_28
+  X 400
+  Y 32
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 392
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 392
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 392
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 440
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 440
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 440
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 312
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 312
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 312
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 312
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 224
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 192
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 192
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 160
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 160
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 128
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 96
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 64
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 64
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 32
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 32
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 0
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 0
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_10
+  X 96
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 160
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 128
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 0
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 0
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_02
+  X 0
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 8
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_01
+  X 8
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 192
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_06
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE cup
+  X 112
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_10
+  X 32
+  Y 40
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_10
+  X 64
+  Y 24
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 64
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_10
+  X 96
+  Y 8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 96
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 128
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 152
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 152
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_05
+  X 152
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_19
+  X 208
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_33
+  X 240
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_32
+  X 192
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_38
+  X 240
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_37
+  X 192
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_35
+  X 192
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_36
+  X 240
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_06
+  X 208
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_10
+  X 64
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_10
+  X 32
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_11
+  X 64
+  Y 8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 112
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 96
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 80
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE rock_01
+  X 64
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_15
+  X 576
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_15
+  X 576
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_22
+  X 568
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_21
+  X 576
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_medieval
+  PIECE wood_21
+  X 576
+  Y 80
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Quite often, there are no blockers
+  LINE to contain the crowd. Using a digger
+  LINE or even miners could be the solution.
+  LINE Let a lemming dig and create a small
+  LINE pit for the main crowd here. Stop
+  LINE him with a spare builder, and you
+  LINE have safely contained the horde.
+  LINE You can release them later with
+  LINE another builder, for example.
+  LINE Depending on the shape of the
+  LINE terrain and the release rate,  
+  LINE a second lemming may or may not 
+  LINE slip past the digger.
+  LINE Try it!
+$END
+

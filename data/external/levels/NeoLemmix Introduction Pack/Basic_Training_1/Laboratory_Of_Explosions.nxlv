@@ -1,0 +1,1735 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Laboratory Of Explosions
+ AUTHOR IchoTolot
+ ID x68178B1E23825576
+ VERSION x000000000000000A
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 336
+ HEIGHT 240
+ START_X 168
+ START_Y 80
+ THEME ray_biolab
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 10
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 8
+   BOMBER 10
+   BASHER 1
+   MINER 2
+ $END 
+
+ $PRETEXT 
+   LINE Using bombers on climbers or miners 
+   LINE can be very useful! 
+   LINE 
+   LINE A climber can be used to bomb a ledge 
+   LINE into a wall at an elevated position 
+   LINE which another climber can then use 
+   LINE to reach new areas. Bombing a climber 
+   LINE right as he climbs on top of a block 
+   LINE can create a wonderful slope for your 
+   LINE crowd to get up. 
+   LINE
+   LINE Your miner cannot mine out the crowd 
+   LINE as he comes out too high? Bomb him at 
+   LINE the end to get an extra downward slope.  
+   LINE This can also work with a climber 
+   LINE climbing into the miner tunnel, 
+   LINE but in this case, only in every second 
+   LINE position as he would otherwise blow a 
+   LINE non-climbable step into the tunnel. 
+   LINE 
+   LINE Let's try these things out!
+ $END 
+
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ray_biolab
+   PIECE entrance
+   X 24
+   Y 40
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE acidspray
+   X 144
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE acid
+   X 208
+   Y 88
+   WIDTH 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE acid
+   X 0
+   Y 224
+   WIDTH 272
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE exit
+   X 16
+   Y 184
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE arrows_left
+   X 112
+   Y 128
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE arrows_right
+   X 80
+   Y 16
+   WIDTH 8
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE arrows_right
+   X 224
+   Y 32
+   WIDTH 16
+   HEIGHT 40
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE ray_biolab
+   PIECE arrows_left
+   X 48
+   Y 128
+   WIDTH 8
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 16
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 0
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 32
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 48
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 64
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 0
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 16
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 32
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 48
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 64
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 80
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 80
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 96
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 112
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 128
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 160
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 160
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 160
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 160
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 160
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipes_02
+   X 160
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipes_02
+   X -8
+   Y 56
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipes_01
+   X -2
+   Y 56
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 0
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipes_05
+   X 7
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 0
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 80
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_11
+   X 176
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 144
+   Y 40
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 144
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 144
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 80
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 96
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 64
+   Y 160
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 112
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 128
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_11
+   X 256
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 208
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 224
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 240
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 272
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 176
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 192
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 208
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 224
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 240
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 256
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 224
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 232
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 224
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 232
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 224
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 232
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 216
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 232
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 256
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_07
+   X 288
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_08
+   X 304
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_08
+   X 304
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 272
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 272
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 272
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_07
+   X 288
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_08
+   X 304
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 320
+   Y 224
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 304
+   Y 224
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 288
+   Y 224
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 192
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 208
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 144
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 176
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 160
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 272
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 256
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 240
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 224
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 272
+   Y 224
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 48
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 48
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_01
+   X 48
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 48
+   Y 160
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_01
+   X 40
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 80
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 80
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 80
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 40
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 0
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 32
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 16
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 0
+   Y 200
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 0
+   Y 184
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 0
+   Y 168
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 0
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 0
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_01
+   X 0
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_09
+   X 96
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 56
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 72
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 88
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 104
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 120
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 136
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 152
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 168
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 184
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 200
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 216
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 232
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 16
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 32
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 48
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 80
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 80
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipes_05
+   X 152
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pod_01
+   X 96
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipes_04
+   X 256
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipes_05
+   X 272
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_05
+   X 288
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_04
+   X 304
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_04
+   X 112
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_11
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_05
+   X 176
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_04
+   X 208
+   Y 208
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_09
+   X 240
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_05
+   X 240
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_04
+   X 224
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_04
+   X 224
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE block_04
+   X 224
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 24
+   Y 168
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE pipe_02
+   X 8
+   Y 168
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_biolab
+   PIECE steel_02
+   X 128
+   Y 160
+   ONE_WAY
+ $END
+ 
+ 

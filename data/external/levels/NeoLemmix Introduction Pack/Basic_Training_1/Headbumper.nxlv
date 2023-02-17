@@ -1,0 +1,1115 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.20
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Headbumper
+ AUTHOR IchoTolot
+ ID x65F8AC4850BDB1C8
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 560
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME l2_highland
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 1
+   PLATFORMER 1
+   BUILDER 2
+   MINER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_highland
+   PIECE hatch
+   X 155
+   Y 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_highland
+   PIECE exit
+   X 472
+   Y 40
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_highland
+   PIECE water
+   X 400
+   Y 144
+   WIDTH 160
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 112
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_02
+   X 160
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 192
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 208
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 208
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_01
+   X 208
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_02
+   X 224
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 224
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_03
+   X 192
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 208
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 224
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 112
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 128
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 144
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 112
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 48
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 64
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 64
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 80
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 96
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 0
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 16
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 32
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 64
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 80
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 96
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 0
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 32
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 64
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 16
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 32
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 48
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_10
+   X 96
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_04
+   X 160
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_11
+   X 96
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_03
+   X 192
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_02
+   X 224
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_05
+   X 128
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_06
+   X 160
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_11
+   X 192
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_05
+   X 224
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_16
+   X 288
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_04
+   X 256
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_06
+   X 256
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_11
+   X 288
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 352
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_17
+   X 320
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_05
+   X 320
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 240
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 256
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 272
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 288
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 304
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 320
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 336
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 384
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_green_02
+   X 352
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_01
+   X 352
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_green_02
+   X 352
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_01
+   X 352
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_green_02
+   X 352
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 384
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 384
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 384
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 384
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 384
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 384
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 336
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 336
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 336
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_01
+   X 352
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_01
+   X 336
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 240
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 240
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_01
+   X 240
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_02
+   X 256
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 256
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 272
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 272
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_01
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_02
+   X 288
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 288
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 304
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_01
+   X 304
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_02
+   X 320
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 320
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 304
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_01
+   X 304
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 288
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_03
+   X 320
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 424
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 432
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_02
+   X 464
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 496
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE steel_05
+   X 504
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE pipe_03
+   X 480
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE pipe_01
+   X 448
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE pipe_03
+   X 16
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE pipe_03
+   X 40
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE nessy_01
+   X 432
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE nessy_02
+   X 480
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE dog
+   X 496
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE bottles
+   X 192
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE bottle
+   X 232
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE cloud
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE cloud
+   X -24
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE cloud
+   X 264
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE cloud
+   X 408
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_green_02
+   X 80
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_02
+   X 80
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_02
+   X 0
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_yellow_01
+   X 0
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_02
+   X 192
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_02
+   X 224
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_red_02
+   X 288
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_02
+   X 320
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_13
+   X 96
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_14
+   X 320
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_15
+   X 288
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_08
+   X 168
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_14
+   X 136
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE grass_bright_13
+   X 248
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE pipe_03
+   X 424
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE pipe_01
+   X 504
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_highland
+   PIECE block_blue_03
+   X 320
+   Y 32
+   ONE_WAY
+ $END
+ 
+  $PRETEXT 
+   LINE This level serves as a 
+   LINE little reminder that builders 
+   LINE and platformers turn around when 
+   LINE they hit their heads on a ceiling 
+   LINE and that they also turn around if 
+   LINE they build right into something.
+   LINE In the platformer's case,
+   LINE the lemming has to be right under
+   LINE the ceiling (1 pixel to be exact).
+   LINE
+   LINE On top of that, be sure to remember 
+   LINE that if, for example, a basher or 
+   LINE a miner hits steel, he turns around
+   LINE as well.
+ $END 

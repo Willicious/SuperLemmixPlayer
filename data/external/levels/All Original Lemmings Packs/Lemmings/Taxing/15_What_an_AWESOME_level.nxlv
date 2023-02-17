@@ -1,0 +1,69 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE What an AWESOME level
+ AUTHOR 
+ MUSIC awesome
+ ID xCBB73390CBB73390
+ VERSION x0000000000000000
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1008
+ HEIGHT 160
+ START_X 176
+ START_Y 80
+ THEME orig_dirt
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 100
+ SAVE_REQUIREMENT 80
+ TIME_LIMIT 360
+ MAX_SPAWN_INTERVAL 28
+ 
+ $SKILLSET 
+   CLIMBER 20
+   FLOATER 20
+   BOMBER 20
+   BLOCKER 20
+   BUILDER 20
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE special
+   PIECE window_awesome
+   X 64
+   Y 4
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE special
+   PIECE exit_awesome
+   X 896
+   Y 4
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE special
+   PIECE awesome
+   X 33
+   Y 0
+   ONE_WAY
+ $END
+ 
+ 

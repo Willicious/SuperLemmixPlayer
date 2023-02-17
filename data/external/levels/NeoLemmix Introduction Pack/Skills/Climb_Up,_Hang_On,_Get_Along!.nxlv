@@ -1,0 +1,1071 @@
+TITLE Climb Up, Hang On, Get Along!
+AUTHOR IchoTolot
+THEME ohno_brick
+ID x2CCDCB833FCC0497
+LEMMINGS 3
+SAVE_REQUIREMENT 2
+MAX_SPAWN_INTERVAL 28
+WIDTH 480
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  SHIMMIER 12
+  CLIMBER 3
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE window
+  X 40
+  Y 104
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE exit
+  X 173
+  Y 92
+  WIDTH 38
+  HEIGHT 48
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_brick
+  PIECE water
+  X 416
+  Y 136
+  WIDTH 64
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_03
+  X 64
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_03
+  X 32
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 96
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 128
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_01
+  X 128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 192
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_03
+  X 160
+  Y 36
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 160
+  Y 20
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_03
+  X 128
+  Y 36
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 128
+  Y 20
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 160
+  Y 4
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 128
+  Y 4
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 160
+  Y -12
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 128
+  Y -12
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_03
+  X 224
+  Y 36
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 224
+  Y 20
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_03
+  X 192
+  Y 36
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 192
+  Y 20
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 224
+  Y 4
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 192
+  Y 4
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 224
+  Y -12
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_diagonal_01
+  X 192
+  Y -12
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 224
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_06
+  X 160
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_06
+  X 192
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_06
+  X 224
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 224
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 256
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 256
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 288
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 288
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 384
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 416
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 448
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 288
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 320
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 384
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_large_02
+  X 448
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 384
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 448
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 448
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_03
+  X 288
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_02
+  X 352
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 399
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_08
+  X 416
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 421
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_06
+  X 288
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 224
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 256
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 272
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 288
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 304
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE arch_03
+  X 224
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_06
+  X 320
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_06
+  X 352
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_06
+  X 352
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 369
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 384
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 400
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 400
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X 429
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 454
+  Y 108
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_03
+  X 345
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 345
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_01
+  X 345
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X 64
+  Y 32
+  ROTATE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE girder_01
+  X 0
+  Y 32
+  ROTATE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_01
+  X 366
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 369
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 47
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_02
+  X 45
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE hook_01
+  X 59
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 62
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 62
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 296
+  Y 15
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 275
+  Y 34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 275
+  Y 10
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 104
+  Y 43
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_03
+  X 104
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_06
+  X 352
+  Y 62
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_01
+  X 95
+  Y 12
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE chain_02
+  X -9
+  Y 17
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 192
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE crate
+  X 175
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_02
+  X 185
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE pole_silver_03
+  X 185
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_08
+  X 256
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_09
+  X 256
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 96
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 72
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 64
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 40
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 32
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 8
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X 0
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_01
+  X -24
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 257
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 283
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 289
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 315
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 321
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 347
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 353
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 379
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 385
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 411
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 417
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 443
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 449
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE stairs_02
+  X 475
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 280
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE platform_05
+  X 248
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_brick
+  PIECE bricks_small_08
+  X 360
+  Y 10
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Now we've got two more
+  LINE skills: Climbers and
+  LINE Shimmiers!
+  LINE The Climber is a permanent
+  LINE skill that stays with a Lemming
+  LINE until he dies or exits the level.
+  LINE Climbers climb up straight
+  LINE walls, until they either reach
+  LINE an edge or hit their head. If they
+  LINE hit their head, they fall back down.
+  LINE
+  LINE Shimmiers jump up and try
+  LINE to reach a ceiling. If they are
+  LINE successful, they go along the
+  LINE ceiling until they reach a two
+  LINE or more pixel height difference.
+  LINE
+  LINE Lemmings die if they fall
+  LINE 64 or more pixels in height!
+$END
+

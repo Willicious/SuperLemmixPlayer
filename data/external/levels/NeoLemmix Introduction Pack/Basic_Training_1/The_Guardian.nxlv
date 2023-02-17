@@ -1,0 +1,2782 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.24
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The Guardian
+ AUTHOR IchoTolot
+ ID x4F2E71F924C1D861
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 784
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME l2_shadow
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 11
+ SAVE_REQUIREMENT 11
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   JUMPER 25
+   PLATFORMER 1
+   BUILDER 1
+   STACKER 1
+   BASHER 3
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_shadow
+   PIECE cloud_03
+   X 656
+   Y 80
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE cloud_01
+   X 704
+   Y 80
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE moon
+   X 8
+   Y 88
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE hatch
+   X 7
+   Y 24
+   NO_OVERWRITE
+   CLIMBER 
+   SWIMMER 
+   LEMMINGS 1
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE hatch
+   X 87
+   Y 64
+   NO_OVERWRITE
+   NEUTRAL 
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_right
+   X 288
+   Y 32
+   WIDTH 64
+   HEIGHT 56
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE water
+   X 376
+   Y 64
+   WIDTH 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE exit
+   X 232
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 192
+   Y 24
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE lamp_bright
+   X 8
+   Y 104
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE lamp_dark
+   X 767
+   Y 88
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE lamp_bright
+   X 720
+   Y 88
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_shadow
+   PIECE lamp_dark
+   X 671
+   Y 88
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 0
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 0
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 80
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 144
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 112
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 128
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 96
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 128
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 192
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 240
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 208
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 224
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 128
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 160
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 160
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 192
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 192
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 288
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 336
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 304
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 320
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 288
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 320
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 288
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 256
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 224
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 256
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 224
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE pipe_large
+   X 312
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE pipe_large
+   X 312
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 368
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 432
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 416
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 400
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 352
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 368
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 368
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 416
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 464
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 528
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 512
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 336
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 352
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 368
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 336
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 384
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 400
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 384
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 400
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 416
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 432
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 416
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 432
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 448
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 464
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 448
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 464
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 576
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 624
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 592
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 608
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 576
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 608
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 576
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 624
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 544
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 544
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE pipe_large
+   X 600
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE pipe_large
+   X 600
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE pipe_large
+   X 600
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 480
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 496
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 496
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 464
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 512
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 528
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 512
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 512
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 528
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_20
+   X 384
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 336
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 320
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 304
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_21
+   X 448
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_21
+   X 480
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_20
+   X 208
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 432
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 464
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 576
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 496
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 480
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 528
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 512
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_20
+   X 544
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 560
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 528
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 576
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 576
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 592
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 608
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 592
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 608
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 608
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 576
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 576
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 608
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 592
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 576
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 560
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 544
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 544
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 448
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 480
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 560
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 544
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 544
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 512
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 480
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 448
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 480
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_21
+   X 416
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 448
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_20
+   X 448
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 416
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_21
+   X 384
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 384
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 432
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 416
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 400
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 464
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 448
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 432
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 416
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 384
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 400
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 384
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 304
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 320
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 304
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 272
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 336
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 320
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 296
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 328
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 288
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 328
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 304
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 384
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 400
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 272
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 256
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 392
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 384
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 432
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 392
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 392
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 392
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 360
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 352
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 352
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_10
+   X 360
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 368
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 384
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 272
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 240
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 208
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 176
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 528
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 144
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 192
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 176
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 176
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 192
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 64
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 112
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 80
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 32
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 48
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 16
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 64
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 248
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 96
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 96
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 96
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 176
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 144
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 208
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 240
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 224
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 176
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 192
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 208
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 160
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 176
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 176
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 192
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 96
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 368
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 368
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 368
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 352
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_10
+   X 416
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_07
+   X 416
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 432
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 400
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 432
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 416
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_20
+   X 512
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 384
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 400
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 416
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 432
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 160
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 144
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 144
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 480
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 328
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 304
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 312
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 312
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 328
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 296
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 224
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 272
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 256
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 240
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 240
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 256
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 352
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 560
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 576
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 480
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 496
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 624
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 640
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 640
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 624
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_21
+   X 656
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_23
+   X 656
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_25
+   X 688
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 688
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 624
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 656
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 688
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 768
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 768
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 640
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 624
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 768
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 688
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 672
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 640
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 608
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 656
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 672
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 624
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 608
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 624
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 640
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 656
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 672
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 688
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 704
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 496
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 528
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 480
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 496
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 512
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 264
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 264
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 264
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 264
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 264
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_01
+   X 352
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 352
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE steel_04
+   X 368
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 256
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 272
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 0
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 16
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 704
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_20
+   X 704
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_20
+   X 736
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_22
+   X 736
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 720
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 736
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 752
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 768
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 704
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 688
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 720
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 736
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 704
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_17
+   X 736
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_01
+   X 768
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 704
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 720
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 736
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 752
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_24
+   X 768
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 720
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 736
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_27
+   X 752
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_28
+   X 768
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 208
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_35
+   X 208
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_bright
+   X 688
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_bright
+   X 776
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_bright
+   X 760
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_bright
+   X 704
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_medium
+   X 736
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_medium
+   X 752
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_medium
+   X 0
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE star_medium
+   X 40
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_shadow
+   PIECE block_26
+   X 0
+   Y 56
+   ONE_WAY
+ $END
+ 
+ 

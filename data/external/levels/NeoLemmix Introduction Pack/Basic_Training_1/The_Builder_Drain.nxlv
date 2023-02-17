@@ -1,0 +1,1782 @@
+TITLE The Builder Drain
+AUTHOR IchoTolot
+THEME orig_sega
+ID x667B9611411852FB
+LEMMINGS 40
+SAVE_REQUIREMENT 40
+MAX_SPAWN_INTERVAL 28
+SPAWN_INTERVAL_LOCKED
+WIDTH 592
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  BUILDER 25
+$END
+
+$GADGET
+  STYLE orig_sega
+  PIECE window
+  X 48
+  Y 76
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_sega
+  PIECE trap
+  X 224
+  Y 3
+  WIDTH 16
+  HEIGHT 41
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_sega
+  PIECE exit
+  X 510
+  Y 108
+  WIDTH 40
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_sega
+  PIECE water
+  X 416
+  Y 144
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_sega
+  PIECE water
+  X 192
+  Y 144
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_sega
+  PIECE water
+  X 288
+  Y 144
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 256
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 224
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 256
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 16
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 16
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 0
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 32
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 48
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 48
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 32
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 64
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 80
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 80
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 64
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 96
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 112
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 112
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 96
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 16
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 16
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 16
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 16
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 0
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 16
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 16
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 0
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 32
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 48
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 64
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 80
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 80
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 16
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_04
+  X 320
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 32
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 64
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 96
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 160
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 176
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 176
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 160
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 160
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 176
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 160
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 128
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 144
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 144
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 128
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 128
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 320
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 96
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 112
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 128
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 144
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 144
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 144
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 144
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 112
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 352
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 160
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 160
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 160
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 176
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 224
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 224
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 320
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 320
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 320
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 352
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 352
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 352
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 256
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 272
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_04
+  X 320
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_04
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_04
+  X 192
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_04
+  X 224
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 432
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 448
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 448
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 432
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 432
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 448
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 448
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 432
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 368
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 320
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 352
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 416
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 416
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 432
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 448
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 448
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 432
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_04
+  X 384
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 432
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 448
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 448
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 432
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 368
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 448
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_01
+  X 384
+  Y 144
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 432
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 480
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 464
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 512
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 496
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 544
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 528
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 576
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 560
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 464
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 480
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 480
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 464
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 464
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 480
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 480
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 464
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 464
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 480
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 480
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 464
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 496
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 512
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 512
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 496
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 496
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 512
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 512
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 496
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 528
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 544
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 544
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 528
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 528
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 544
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 544
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 528
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 560
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 576
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 576
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 560
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 560
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 576
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 576
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 560
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 560
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 576
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 576
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 560
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 560
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 576
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 576
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 560
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_03
+  X 576
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_04
+  X 560
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_01
+  X 464
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_01
+  X 496
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_06
+  X 528
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_02
+  X 529
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_02
+  X 529
+  Y 36
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_09
+  X 496
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_09
+  X 528
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE tap_handle
+  X 500
+  Y 65
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE bathplug
+  X 104
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_07
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_09
+  X 152
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE moss_01
+  X 32
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE moss_02
+  X 64
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE moss_03
+  X 88
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_02
+  X 48
+  Y 15
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_01
+  X 32
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_06
+  X 64
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_02
+  X 65
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 224
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 256
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 432
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 464
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 496
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE platform_02
+  X 528
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_06
+  X 479
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_01
+  X 447
+  Y 115
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_02
+  X 480
+  Y 83
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_13
+  X 144
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_10
+  X 144
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_09
+  X 112
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_09
+  X 80
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_09
+  X 48
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_09
+  X 16
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE pipe_09
+  X -16
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE tap_handle
+  X 3
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_08
+  X 448
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_07
+  X 336
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_sega
+  PIECE blocks_08
+  X 176
+  Y 120
+  ONE_WAY
+$END
+

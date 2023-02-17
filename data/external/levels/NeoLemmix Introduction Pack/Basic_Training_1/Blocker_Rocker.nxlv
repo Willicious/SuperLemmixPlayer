@@ -1,0 +1,2342 @@
+TITLE Blocker Rocker
+AUTHOR IchoTolot
+THEME l2_egyptian
+ID x72B7C3193FBA5AD9
+LEMMINGS 100
+SAVE_REQUIREMENT 99
+MAX_SPAWN_INTERVAL 18
+WIDTH 640
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  WALKER 1
+  BOMBER 1
+  BLOCKER 5
+  PLATFORMER 4
+  BASHER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE hatch
+  X 16
+  Y 16
+  WIDTH 43
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE hatch
+  X 96
+  Y 16
+  WIDTH 43
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE hatch
+  X 192
+  Y 16
+  WIDTH 43
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE hatch
+  X 304
+  Y 16
+  WIDTH 43
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE hatch
+  X 432
+  Y 16
+  WIDTH 43
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE water
+  X 16
+  Y 144
+  WIDTH 160
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE water
+  X 256
+  Y 144
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE water
+  X 384
+  Y 144
+  WIDTH 64
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE exit
+  X 568
+  Y 120
+  WIDTH 32
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE flag
+  X 584
+  Y 112
+  WIDTH 16
+  HEIGHT 8
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE l2_egyptian
+  PIECE torch
+  X 152
+  Y 24
+  WIDTH 8
+  HEIGHT 24
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 80
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 112
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 144
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 192
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 208
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 240
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 304
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 16
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 32
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 48
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 64
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 80
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 16
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 32
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 48
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 80
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 80
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 80
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 80
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 80
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 64
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 48
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 32
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 96
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 112
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 128
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 112
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 176
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 176
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 176
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 176
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 192
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 208
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 224
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 240
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 288
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 288
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 288
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 288
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 304
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 320
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 336
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 352
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_05
+  X 224
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_04
+  X 256
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 320
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 304
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 336
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 256
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 368
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 352
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 320
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 336
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 352
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 400
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 400
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 400
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 400
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 448
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 464
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 480
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 368
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 384
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 400
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 416
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 432
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 448
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 464
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 480
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 480
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 480
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 480
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 240
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 224
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 208
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 192
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 208
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 240
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_10
+  X 176
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 224
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 224
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 208
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 208
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 192
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_02
+  X 192
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 224
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_02
+  X 240
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 288
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 288
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 368
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 368
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 368
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 336
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 320
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 352
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_10
+  X 288
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 336
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 320
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 304
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_02
+  X 304
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 336
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_02
+  X 352
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 448
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 448
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 528
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 528
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 528
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 512
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 496
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 480
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 464
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 480
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 512
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_10
+  X 448
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 512
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 496
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 496
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 480
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 480
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 464
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_02
+  X 464
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_03
+  X 496
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_rough_02
+  X 512
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 128
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 112
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 96
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 80
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 64
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 48
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 32
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 16
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE libra
+  X 504
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 496
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 512
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 528
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 544
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 560
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 576
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 592
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 608
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 624
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE monolith
+  X 576
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 616
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_01
+  X 616
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_03
+  X 616
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_04
+  X 616
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_05
+  X 616
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_06
+  X 616
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_07
+  X 616
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 544
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 560
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 576
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 592
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 616
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_01
+  X 616
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_03
+  X 616
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_04
+  X 616
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_05
+  X 616
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_06
+  X 616
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_07
+  X 616
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 608
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 624
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 352
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 304
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 320
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 336
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 352
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 512
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 464
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 480
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 496
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 512
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 240
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 240
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 224
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 208
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 192
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_08
+  X 448
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_08
+  X 288
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_08
+  X 176
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_10
+  X 448
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 352
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 336
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 320
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 304
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_02
+  X 256
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_03
+  X 224
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_04
+  X 144
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 128
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 112
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 96
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_11
+  X 128
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_13
+  X 96
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_12
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_13
+  X 224
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_13
+  X 304
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_12
+  X 512
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_12
+  X 336
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_11
+  X 480
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_11
+  X 192
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_13
+  X 304
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_12
+  X 352
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_11
+  X 352
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 456
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 488
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 520
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 552
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 584
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_06
+  X 488
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_03
+  X 552
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 344
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 192
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 304
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_02
+  X 232
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_04
+  X 304
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE pillar_05
+  X 192
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_05
+  X 256
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 272
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_05
+  X 368
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 384
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 240
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 240
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_06
+  X 464
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 336
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 352
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE steel_02
+  X 368
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 352
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 336
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 320
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_01
+  X 304
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_10
+  X 432
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_04
+  X 416
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 496
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 512
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_02
+  X 544
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 560
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_01
+  X 576
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_colorful_03
+  X 592
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_05
+  X 64
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE l2_egyptian
+  PIECE block_05
+  X 160
+  Y 16
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Blockers are an effective way of
+  LINE containing the crowd, so that a
+  LINE single worker lemming can create
+  LINE a safe way to the exit undisturbed.
+  LINE But how to release the crowd after
+  LINE the work is done?
+  LINE Walkers can be used to turn blockers
+  LINE into a normal walker again, while
+  LINE bombers can blow them out of the way.
+  LINE Removing the terrain underneath the
+  LINE blocker also does the trick, and all
+  LINE kinds of destructive skills can be
+  LINE used for that purpose. Even diggers
+  LINE can work if lemmings land right on
+  LINE top of the blocker (for example,
+  LINE when a blocker is placed right under
+  LINE the hatch).
+  LINE Now let's train this!
+$END
+

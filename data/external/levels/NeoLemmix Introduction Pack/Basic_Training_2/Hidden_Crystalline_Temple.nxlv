@@ -1,0 +1,1374 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Hidden Crystalline Temple
+ AUTHOR IchoTolot
+ ID x07FB670226B1F305
+ VERSION x0000000000000002
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 400
+ HEIGHT 400
+ START_X 192
+ START_Y 80
+ THEME gigalem_lagoon
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 16
+ MAX_SPAWN_INTERVAL 23
+ 
+ $SKILLSET 
+   STONER 2
+   PLATFORMER 0
+   BUILDER 0
+   STACKER 2
+ $END 
+ 
+ $PRETEXT 
+   LINE As you most likely noticed, the stoner
+   LINE and the stacker are quite different
+   LINE in terms of deployment speed. Stackers
+   LINE are quite slow while stoners are quick
+   LINE or even instant when falling.
+   LINE Sometimes, the fast deployment of the
+   LINE stoner can save many lives by
+   LINE sacrificing one.
+   LINE In this level, you need to decide where
+   LINE you can use a slow stacker and where 
+   LINE the stoner sacrifice is needed to 
+   LINE quickly contain the crowd. Also, save
+   LINE enough stoners for the deadly falls!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE gigalem_lagoon
+   PIECE hatch
+   X 144
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 238
+   Y 43
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 260
+   Y 249
+   WIDTH 80
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gigalem_lagoon
+   PIECE exit
+   X 41
+   Y 333
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 243
+   Y 108
+   NO_OVERWRITE
+   SKILL PLATFORMER
+   SKILL_COUNT 6
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 136
+   Y 171
+   NO_OVERWRITE
+   SKILL BUILDER
+   SKILL_COUNT 3
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 264
+   Y 108
+   NO_OVERWRITE
+   SKILL STACKER
+   SKILL_COUNT 4
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 214
+   Y 190
+   NO_OVERWRITE
+   SKILL STONER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE plant_04
+   X 369
+   Y 62
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_07
+   X 0
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_05
+   X 128
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_08
+   X 232
+   Y -74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_02
+   X 130
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_01
+   X 154
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_03
+   X 218
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_03
+   X 256
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_01
+   X 360
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_05
+   X 299
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_05
+   X 171
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_02
+   X 147
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_02
+   X 328
+   Y 179
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_01
+   X 352
+   Y 179
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_02
+   X 331
+   Y 250
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_01
+   X 355
+   Y 250
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_07
+   X -83
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_04
+   X 272
+   Y 259
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_02
+   X 120
+   Y 185
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_03
+   X 45
+   Y 187
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 352
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_12
+   X 224
+   Y 288
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 0
+   Y 256
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 32
+   Y 256
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_03
+   X 32
+   Y 288
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_04
+   X 64
+   Y 256
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 96
+   Y 256
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 193
+   Y 256
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 161
+   Y 256
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 96
+   Y 272
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 64
+   Y 272
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 32
+   Y 272
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 0
+   Y 272
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_12
+   X 0
+   Y 224
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_03
+   X 95
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 161
+   Y 272
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 64
+   Y 288
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 96
+   Y 288
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 128
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 96
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 64
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 0
+   Y 288
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 32
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 0
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 193
+   Y 272
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 384
+   Y 288
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 352
+   Y 288
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 384
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_11
+   X 192
+   Y 306
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_04
+   X 0
+   Y 320
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 0
+   Y 336
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 0
+   Y 352
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 0
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_03
+   X 0
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 128
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 96
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 64
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 32
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 316
+   Y 353
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_04
+   X 348
+   Y 353
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 368
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_12
+   X 188
+   Y 337
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 160
+   Y 304
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 384
+   Y 320
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 316
+   Y 337
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 384
+   Y 336
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 384
+   Y 352
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 384
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 288
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 256
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 224
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_05
+   X 192
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_01
+   X 160
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 336
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_07
+   X 288
+   Y 384
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_12
+   X 64
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_06
+   X 95
+   Y 352
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 95
+   Y 336
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_02
+   X 100
+   Y 324
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_11
+   X 124
+   Y 323
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_11
+   X 192
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_11
+   X 95
+   Y 353
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_03
+   X 352
+   Y 320
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_12
+   X 64
+   Y 306
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_09
+   X 161
+   Y 192
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 332
+   Y 377
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 10
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_09
+   X -27
+   Y 241
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_06
+   X 144
+   Y 185
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE brick_blue_11
+   X 225
+   Y 256
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_01
+   X 339
+   Y 219
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 374
+   Y 200
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 386
+   Y 220
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 328
+   Y 63
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 166
+   Y 369
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_01
+   X 371
+   Y 1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 348
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 299
+   Y 2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 317
+   Y 10
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 329
+   Y 22
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 335
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_01
+   X 2
+   Y 140
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 30
+   Y 148
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_06
+   X -7
+   Y -69
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_07
+   X -50
+   Y -85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_08
+   X 78
+   Y -128
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_07
+   X 124
+   Y -95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 135
+   Y 50
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 170
+   Y 71
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 188
+   Y 69
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_09
+   X 188
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_09
+   X -39
+   Y 1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_08
+   X 97
+   Y 146
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_08
+   X 124
+   Y -8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_08
+   X 9
+   Y 7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_08
+   X 155
+   Y 80
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_08
+   X 292
+   Y 74
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_08
+   X 331
+   Y 195
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_08
+   X 144
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_16
+   X -1
+   Y 51
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 68
+   Y 122
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 120
+   Y 139
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 2
+   Y 97
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_01
+   X 19
+   Y 169
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 196
+   Y 145
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 167
+   Y 129
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_02
+   X 50
+   Y 15
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_01
+   X 72
+   Y -3
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 35
+   Y 9
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 3
+   Y 4
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 200
+   Y -10
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 223
+   Y -18
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_03
+   X 134
+   Y -13
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rainbow_04
+   X 106
+   Y -7
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_10
+   X 306
+   Y -6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_10
+   X 255
+   Y -9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_10
+   X 378
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_10
+   X 334
+   Y 199
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_10
+   X -14
+   Y 207
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_09
+   X 326
+   Y 161
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_06
+   X 374
+   Y 165
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_03
+   X 242
+   Y 204
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE grass_01
+   X 178
+   Y 204
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_02
+   X 173
+   Y 210
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_10
+   X 198
+   Y 227
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gigalem_lagoon
+   PIECE rocks_purple_10
+   X 198
+   Y 255
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

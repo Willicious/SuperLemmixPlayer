@@ -1,0 +1,2696 @@
+TITLE Steps And Pixels
+AUTHOR IchoTolot
+THEME gronkling_cyber
+ID x795E83C24456A8CE
+LEMMINGS 30
+SAVE_REQUIREMENT 20
+MAX_SPAWN_INTERVAL 18
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  BUILDER 15
+$END
+
+$GADGET
+  STYLE gronkling_cyber
+  PIECE hatch
+  X 6
+  Y 130
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE gronkling_cyber
+  PIECE exit
+  X 47
+  Y 6
+  WIDTH 27
+  HEIGHT 28
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 22
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 22
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 22
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X -4
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 28
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 220
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 252
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 284
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 316
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 188
+  Y 154
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 156
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 92
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 124
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE gronkling_cyber
+  PIECE pipe_thin_02
+  X 60
+  Y 121
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Lemmings can step upwards up to
+  LINE 6 pixels at once. If they encounter
+  LINE a 7 pixel high wall, they will turn
+  LINE around. Raising 4-6 pixel high walls
+  LINE with constructive skills could be
+  LINE an easy blocker substitute.
+  LINE You also may have noticed before
+  LINE that lemmings can step through thin
+  LINE ceilings. This happens if there is
+  LINE free space in the pixel-column
+  LINE before them on the higher level.
+  LINE Lemmings also fall through terrain
+  LINE that is only diagonally connected.
+  LINE Let's say on a checkerboard they
+  LINE would fall down in between
+  LINE the diagonally oriented squares.
+  LINE Let's see that in action!
+$END
+

@@ -1,0 +1,1544 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Checkerboard's Crossing
+ AUTHOR IchoTolot
+ ID x0AB5EE791FD0600F
+ VERSION x0000000000000008
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 352
+ HEIGHT 192
+ START_X 176
+ START_Y 80
+ THEME gronkling_minimal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 21
+ MAX_SPAWN_INTERVAL 68
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   JUMPER 5
+   CLIMBER 1
+   GLIDER 0
+   PLATFORMER 0
+   STACKER 0
+   BASHER 2
+   CLONER 0
+ $END 
+
+ $PRETEXT 
+   LINE Extra hint: 
+   LINE A stacker assigned at an edge 
+   LINE can create a handy landing spot
+   LINE for fallers from above!
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE gronkling_minimal
+   PIECE entrance
+   X 56
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gronkling_minimal
+   PIECE exit
+   X 276
+   Y 6
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gronkling_minimal
+   PIECE entrance
+   X 248
+   Y 96
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE gronkling_minimal
+   PIECE exit
+   X 48
+   Y 102
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gronkling_minimal
+   PIECE water
+   X 0
+   Y 176
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gronkling_minimal
+   PIECE water
+   X 128
+   Y 176
+   WIDTH 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE gronkling_minimal
+   PIECE water
+   X 320
+   Y 176
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 98
+   Y 114
+   NO_OVERWRITE
+   SKILL PLATFORMER
+   SKILL_COUNT 3
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 258
+   Y 18
+   NO_OVERWRITE
+   SKILL GLIDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 82
+   Y 114
+   NO_OVERWRITE
+   SKILL CLONER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 294
+   Y 98
+   NO_OVERWRITE
+   SKILL CLONER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 114
+   Y 66
+   NO_OVERWRITE
+   SKILL STACKER
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group1582809011
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_part_14
+     X 306
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_part_14
+     X 304
+     Y 120
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_part_14
+     X 306
+     Y 120
+     NO_OVERWRITE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1095743080
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_part_16
+     X 306
+     Y 96
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_part_16
+     X 306
+     Y 98
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_part_16
+     X 304
+     Y 96
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-663352698
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_part_15
+     X 230
+     Y 96
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_part_15
+     X 230
+     Y 98
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_part_15
+     X 232
+     Y 96
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1691928023
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_part_15
+     X 230
+     Y 24
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_part_15
+     X 230
+     Y 22
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_part_15
+     X 232
+     Y 24
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1478042092
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_block_01
+     X 224
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_block_01
+     X 224
+     Y 119
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-220481086
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_block_01
+     X 224
+     Y 120
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_block_01
+     X 224
+     Y 119
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1848612989
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_block_01
+     X 224
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_block_01
+     X 224
+     Y 111
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE white_block_01
+     X 224
+     Y 125
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group928775583
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-1478042092
+     X 224
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-220481086
+     X 224
+     Y 127
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1848612989
+     X 224
+     Y 119
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1848612989
+     X 224
+     Y 121
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-925975458
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group928775583
+     X 224
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group928775583
+     X 229
+     Y 118
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1956105052
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group928775583
+     X 222
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group928775583
+     X 221
+     Y 118
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-94800714
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-925975458
+     X 224
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-1956105052
+     X 229
+     Y 118
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group471618780
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_block_01
+     X 122
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_block_01
+     X 122
+     Y 119
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1518314400
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_block_01
+     X 122
+     Y 120
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_block_01
+     X 122
+     Y 119
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-783636525
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_block_01
+     X 122
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_block_01
+     X 122
+     Y 111
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE gronkling_minimal
+     PIECE black_block_01
+     X 122
+     Y 125
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1614134698
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group471618780
+     X 122
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-1518314400
+     X 122
+     Y 127
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-783636525
+     X 122
+     Y 119
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-783636525
+     X 122
+     Y 121
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1508230769
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1614134698
+     X 122
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1614134698
+     X 123
+     Y 118
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-86693897
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1614134698
+     X 120
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1614134698
+     X 115
+     Y 118
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1614134698
+     X 127
+     Y 118
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1890394551
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1614134698
+     X 120
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1614134698
+     X 119
+     Y 118
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1989066451
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-1508230769
+     X 122
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-86693897
+     X 123
+     Y 118
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-1890394551
+     X 127
+     Y 118
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 32
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 48
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 32
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 48
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 64
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 80
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 96
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 112
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 112
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 80
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 32
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 48
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 64
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 80
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 96
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 112
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 224
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 240
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 224
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 240
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 256
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 272
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 288
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 304
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 304
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 272
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 304
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 224
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 240
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 256
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 272
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 288
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 304
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 32
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 48
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 32
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 48
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 64
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 80
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 96
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 112
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 112
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 80
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 112
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 32
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 32
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 48
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 64
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 80
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 96
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 112
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 224
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 240
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 224
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 240
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 256
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 272
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 288
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 304
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 304
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE bw_block_01
+   X 272
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 304
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 224
+   Y 160
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 224
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 240
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 256
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 272
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_03
+   X 288
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_03
+   X 304
+   Y 176
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1582809011
+   X 304
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1095743080
+   X 304
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_part_15
+   X 230
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-663352698
+   X 230
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_part_15
+   X 230
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_part_15
+   X 232
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_part_10
+   X 112
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_part_11
+   X 120
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_part_13
+   X 120
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_part_12
+   X 112
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1582809011
+   X 304
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1691928023
+   X 230
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1582809011
+   X 112
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1095743080
+   X 112
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1691928023
+   X 38
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-663352698
+   X 38
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1582809011
+   X 112
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1691928023
+   X 38
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_01
+   X 240
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_01
+   X 296
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_01
+   X 48
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_01
+   X 104
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_01
+   X 240
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_01
+   X 296
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE black_block_01
+   X 48
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE gronkling_minimal
+   PIECE white_block_01
+   X 104
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-94800714
+   X 224
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1989066451
+   X 122
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1989066451
+   X 314
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-94800714
+   X 314
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1989066451
+   X 224
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-94800714
+   X 224
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1989066451
+   X 314
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-94800714
+   X 122
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-94800714
+   X 32
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1989066451
+   X 122
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-94800714
+   X 32
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1989066451
+   X 32
+   Y 96
+   ONE_WAY
+ $END
+ 
+ 

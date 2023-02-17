@@ -1,0 +1,508 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.35
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Jump The Sausage!
+ AUTHOR IchoTolot
+ ID x34AF885C2F7A9427
+ VERSION x000000000000000D
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 440
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME ray_food
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 28
+ MAX_SPAWN_INTERVAL 18
+ 
+ $SKILLSET 
+   FLOATER 1
+   BOMBER 1
+   BLOCKER 3
+   PLATFORMER 0
+   BUILDER 2
+   STACKER 2
+   MINER 2
+ $END 
+ 
+ $PRETEXT 
+   LINE Hint: Do not jump the sausage!
+   LINE 
+   LINE The releasing two blockers with
+   LINE one bomber trick can also be done 
+   LINE in the other direction. One blocker 
+   LINE may be heading the other way, 
+   LINE but you have a floater. 
+   LINE Changing the crowd release timing 
+   LINE could solve certain problems you 
+   LINE might encounter.
+   LINE Also, there might be a situation 
+   LINE where you might want to create the 
+   LINE miner step inside the stacker
+   LINE before the lemmings become able
+   LINE to step up and just walk away.
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ray_food
+   PIECE entrance
+   X 55
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_food
+   PIECE exit
+   X 408
+   Y 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_food
+   PIECE milk
+   X 0
+   Y 136
+   WIDTH 440
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ray_food
+   PIECE arrows_left
+   X 344
+   Y 64
+   WIDTH 96
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE ray_food
+   PIECE arrows_right
+   X 280
+   Y 64
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE ray_food
+   PIECE arrows_left
+   X 48
+   Y 32
+   WIDTH 64
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE ray_food
+   PIECE arrows_right
+   X 16
+   Y 88
+   WIDTH 64
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 98
+   Y 106
+   NO_OVERWRITE
+   SKILL PLATFORMER
+   SKILL_COUNT 4
+ $END
+ 
+ $GADGET
+   STYLE ray_food
+   PIECE arrows_left
+   X 344
+   Y 32
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_02
+   X 16
+   Y 88
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_03
+   X 48
+   Y 88
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 344
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 216
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_02
+   X 48
+   Y 32
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_03
+   X 80
+   Y 32
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_02
+   X 72
+   Y 120
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_03
+   X 104
+   Y 120
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 280
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE bread_01
+   X 248
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 312
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 280
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 344
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 344
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 376
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 408
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 280
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 312
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 344
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 376
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_01
+   X 408
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE lemon_02
+   X 280
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE steel
+   X 264
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE steel
+   X 264
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE steel
+   X 264
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE steel
+   X 264
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE steel
+   X 264
+   Y 16
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE steel
+   X 264
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE grape_01
+   X 336
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE apple_01
+   X 352
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE bottle
+   X 120
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_02
+   X 232
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE sausage
+   X 99
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE lemon_03
+   X 312
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE bread_02
+   X 311
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE ketchup
+   X 0
+   Y -40
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE mustard
+   X 184
+   Y -40
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE steel_fork
+   X 376
+   Y 112
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE bread_01
+   X 359
+   Y 62
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE bread_01
+   X 394
+   Y 62
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE bread_01
+   X 342
+   Y 78
+   NO_OVERWRITE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE bread_01
+   X 297
+   Y 75
+   NO_OVERWRITE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_03
+   X 344
+   Y 56
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ray_food
+   PIECE cheese_03
+   X 280
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

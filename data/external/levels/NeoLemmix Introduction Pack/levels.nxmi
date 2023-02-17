@@ -1,0 +1,27 @@
+BASE 
+ 
+$GROUP 
+  NAME Skills
+  FOLDER Skills
+$END 
+ 
+$GROUP 
+  NAME Objects & Functions
+  FOLDER Objects_&_Functions
+$END 
+ 
+$GROUP 
+  NAME Basic Training 1
+  FOLDER Basic_Training_1
+$END 
+
+$GROUP 
+  NAME Basic Training 2
+  FOLDER Basic_Training_2
+$END 
+
+$GROUP 
+  NAME Advanced Training
+  FOLDER Advanced_Training
+$END 
+ 

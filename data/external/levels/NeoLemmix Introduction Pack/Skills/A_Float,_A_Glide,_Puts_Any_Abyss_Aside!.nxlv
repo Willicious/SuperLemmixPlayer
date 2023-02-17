@@ -1,0 +1,600 @@
+TITLE A Float, A Glide, Puts Any Abyss Aside!
+AUTHOR IchoTolot
+THEME ohno_bubble
+ID x767E66C12D958614
+LEMMINGS 8
+SAVE_REQUIREMENT 6
+MAX_SPAWN_INTERVAL 38
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  FLOATER 4
+  GLIDER 4
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE window
+  X 24
+  Y 22
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE exit
+  X 120
+  Y 109
+  WIDTH 48
+  HEIGHT 40
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE water
+  X 216
+  Y 129
+  WIDTH 104
+  HEIGHT 31
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE water
+  X 0
+  Y 129
+  WIDTH 80
+  HEIGHT 31
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_07
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_01
+  X 11
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_04
+  X 32
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 43
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 75
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_11
+  X 107
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_01
+  X 171
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_02
+  X 112
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_03
+  X 144
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_02
+  X 194
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_10
+  X 160
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 176
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 208
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_04
+  X 240
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 259
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_07
+  X 250
+  Y 22
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 218
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 282
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_09
+  X 314
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_01
+  X 186
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 259
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_large_08
+  X 184
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 91
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_01
+  X 74
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE balls_blue_06
+  X 160
+  Y 7
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE balls_blue_06
+  X 136
+  Y -14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE balls_gold_05
+  X 20
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE balls_gold_05
+  X -5
+  Y 78
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_03
+  X 96
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_03
+  X 64
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_02
+  X 98
+  Y 57
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_02
+  X 66
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_07
+  X 96
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 64
+  Y 3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_09
+  X 108
+  Y -14
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_01
+  X 272
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_01
+  X 304
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_02
+  X 272
+  Y 76
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_01
+  X 304
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_02
+  X 304
+  Y 108
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_04
+  X 197
+  Y 1
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_04
+  X 197
+  Y -31
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_04
+  X 229
+  Y 1
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_04
+  X 229
+  Y -31
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_05
+  X 272
+  Y 1
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_05
+  X 272
+  Y -31
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_05
+  X 304
+  Y -31
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_05
+  X 304
+  Y 1
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_01
+  X -21
+  Y -21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_gold_01
+  X 22
+  Y -21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_tiny_03
+  X -21
+  Y 22
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_03
+  X 120
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_02
+  X 122
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_03
+  X 207
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_02
+  X 209
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_10
+  X 229
+  Y 44
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_gold_02
+  X 84
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_02
+  X -16
+  Y 49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_01
+  X 60
+  Y -25
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE bubbles_blue_01
+  X 74
+  Y -27
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_09
+  X 73
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE fence_blue_09
+  X 89
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$PRETEXT
+  LINE Let's talk about
+  LINE Floaters and Gliders.
+  LINE
+  LINE The Floater is a permanent
+  LINE skill which allows a Lemming 
+  LINE to survive long falls
+  LINE to the ground.
+  LINE 
+  LINE The Glider is similar,
+  LINE but the lemming glides down
+  LINE in a diagonal line.
+  LINE
+  LINE Both skills save the Lemming
+  LINE from splatting immediately
+  LINE after the assignment.
+  LINE A Lemming can either be a
+  LINE floater or a glider, but
+  LINE never both.
+$END
+

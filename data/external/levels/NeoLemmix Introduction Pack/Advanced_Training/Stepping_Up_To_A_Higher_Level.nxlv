@@ -1,0 +1,841 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.17
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Stepping Up To A Higher Level
+ AUTHOR IchoTolot
+ ID x5B43E5A953C876A9
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME l2_medieval
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 23
+ SPAWN_INTERVAL_LOCKED
+ 
+ $SKILLSET 
+   WALKER 8
+   CLIMBER 1
+   BLOCKER 1
+   PLATFORMER 1
+   BUILDER 1
+   BASHER 5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE l2_medieval
+   PIECE hatch
+   X 37
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_medieval
+   PIECE exit
+   X 272
+   Y 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE l2_medieval
+   PIECE flag_green
+   X 258
+   Y 22
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_medieval
+   PIECE torch
+   X 14
+   Y 16
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE l2_medieval
+   PIECE water
+   X 156
+   Y 144
+   WIDTH 104
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_wood_02
+   X 0
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_wood_01
+   X 80
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 16
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 32
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 48
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 64
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_43
+   X 96
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_37
+   X 96
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_38
+   X 144
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_42
+   X 144
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_19
+   X 112
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_wood_01
+   X 112
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_wood_02
+   X 128
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 128
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 112
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 96
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 112
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 128
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 144
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_23
+   X 176
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_32
+   X 160
+   Y 144
+   ROTATE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_43
+   X 256
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_37
+   X 256
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_38
+   X 304
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_42
+   X 304
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_19
+   X 272
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_wood_01
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_wood_02
+   X 288
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 272
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 288
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 288
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 272
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 256
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 272
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 288
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_01
+   X 304
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_32
+   X 240
+   Y 144
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE rock_20
+   X 224
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 0
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_09
+   X 0
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 0
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 0
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_12
+   X 48
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_13
+   X 64
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_12
+   X 64
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 80
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 96
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 112
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 128
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_08
+   X 168
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_09
+   X 184
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_08
+   X 216
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_09
+   X 232
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 32
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 96
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 160
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 192
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 224
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 256
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 304
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 304
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_08
+   X 304
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 144
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 160
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 176
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 192
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 208
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 224
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_13
+   X 256
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 240
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE cup
+   X 104
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 200
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 192
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 232
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 224
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 168
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 160
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 0
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 0
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 0
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_13
+   X 0
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_09
+   X 16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_06
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_08
+   X 32
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_13
+   X 80
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 48
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_07
+   X 64
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE l2_medieval
+   PIECE wood_01
+   X 288
+   Y 8
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+
+$PRETEXT
+  LINE WARNING !!!! 
+  LINE This rank is dedicated to those
+  LINE who want to dig deeper into the
+  LINE mechanics of NeoLemmix.
+  LINE A bunch of the tricks in here appear
+  LINE quite rarely in custom level packs
+  LINE and require pretty precise execution
+  LINE combined with a deeper knowledge of
+  LINE the games' physics.
+  LINE So it might be a bit too much for 
+  LINE more casual lovers of Lemmings from
+  LINE here on out! Be warned!
+  LINE
+  LINE With that: Welcome to the 
+  LINE Advanced Training rank!
+  LINE  
+  LINE First, show me you've paid
+  LINE attention so far and did not
+  LINE skip the last few ranks. ;)
+$END
+ 
+ 

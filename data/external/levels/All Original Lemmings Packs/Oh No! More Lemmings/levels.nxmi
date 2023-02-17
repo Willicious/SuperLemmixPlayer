@@ -1,0 +1,25 @@
+$GROUP
+  NAME Tame
+  FOLDER Tame
+$END
+
+$GROUP
+  NAME Crazy
+  FOLDER Crazy
+$END
+
+$GROUP
+  NAME Wild
+  FOLDER Wild
+$END
+
+$GROUP
+  NAME Wicked
+  FOLDER Wicked
+$END
+
+$GROUP
+  NAME Havoc
+  FOLDER Havoc
+$END
+

@@ -1,0 +1,732 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.24
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Counterclockwise
+ AUTHOR IchoTolot
+ ID x695A85DF69C87F8C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME namida_psychedelic
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 22
+ SAVE_REQUIREMENT 22
+ MAX_SPAWN_INTERVAL 33
+ 
+ $SKILLSET 
+   JUMPER 9
+   SHIMMIER 2
+   CLIMBER 0
+   GLIDER 0
+   PLATFORMER 0
+   BASHER 2
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE window
+   X 80
+   Y 4
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE exit
+   X 21
+   Y 17
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE owa_right
+   X 64
+   Y 16
+   WIDTH 16
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 242
+   Y 18
+   NO_OVERWRITE
+   SKILL GLIDER
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE owf_right
+   X 0
+   Y 28
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 162
+   Y 98
+   NO_OVERWRITE
+   SKILL PLATFORMER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 114
+   Y 90
+   NO_OVERWRITE
+   SKILL CLIMBER
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE water
+   X 48
+   Y 144
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE water
+   X 128
+   Y 144
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE water
+   X 176
+   Y 144
+   WIDTH 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE water
+   X 256
+   Y 144
+   WIDTH 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE water
+   X -15
+   Y 126
+   WIDTH 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE namida_psychedelic
+   PIECE water
+   X 8
+   Y 144
+   WIDTH 8
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 64
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 64
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 0
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 64
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 48
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 16
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE steel_02
+   X 64
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE steel_02
+   X 64
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 80
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 112
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_05
+   X 80
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 144
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_07
+   X 116
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE block_02
+   X 160
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE block_02
+   X 144
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_07
+   X 119
+   Y 36
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_07
+   X 123
+   Y 39
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_05
+   X 144
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 128
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_05
+   X 192
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 240
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 240
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 224
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 288
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 288
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 288
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 288
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 288
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_05
+   X 256
+   Y -3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 224
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 224
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 224
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_01
+   X 16
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE steel_02
+   X 64
+   Y 64
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE color_10
+   X 16
+   Y 56
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE color_10
+   X 16
+   Y 48
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 16
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 0
+   Y 48
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 0
+   Y 56
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 0
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 0
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 0
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 0
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 0
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 96
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 104
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 112
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 120
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 128
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 136
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 144
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_03
+   X 8
+   Y 152
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_08
+   X 13
+   Y 45
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_05
+   X 16
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE steel_02
+   X 112
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 160
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 160
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 160
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE steel_02
+   X 112
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE block_02
+   X 112
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 112
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_03
+   X 117
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 64
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 64
+   Y 88
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 16
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 16
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 16
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 16
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE colorblocks_02
+   X 72
+   Y 80
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE namida_psychedelic
+   PIECE bar_04
+   X 52
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 
