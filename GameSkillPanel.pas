@@ -95,7 +95,7 @@ end;
 //this adjusts the position of the actual minimap within its frame, but also moves the frame around. Small adjustments are enough
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(356 * ResMod, 5 * ResMod, 436 * ResMod, 38 * ResMod);
+  Result := Rect(354 * ResMod, 5 * ResMod, 436 * ResMod, 38 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
