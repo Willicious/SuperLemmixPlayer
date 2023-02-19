@@ -183,6 +183,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
     <PropertyGroup Condition="'$(Cfg_4_Win32)'!=''">
         <Icon_MainIcon>NeoLemmix_Icon.ico</Icon_MainIcon>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_4_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -243,7 +244,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="LemMetaTerrain.pas"/>
         <DCCReference Include="LemmixHotkeys.pas"/>
         <DCCReference Include="LemNeoLevelPack.pas"/>
-        <DCCReference Include="LemNeoOnline.pas"/>
         <DCCReference Include="LemNeoParser.pas"/>
         <DCCReference Include="LemNeoPieceManager.pas"/>
         <DCCReference Include="LemNeoTheme.pas"/>
@@ -318,6 +318,12 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>SuperLemmix.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="RC Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
                         <Overwrite>true</Overwrite>

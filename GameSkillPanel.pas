@@ -120,7 +120,7 @@ begin
     Result[i] := Low(TSkillPanelButton); // placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbRestart;  //spbFastForward previously in place here
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbSquiggle;
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight

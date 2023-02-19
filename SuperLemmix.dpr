@@ -47,7 +47,6 @@ uses
   LemMetaTerrain in 'LemMetaTerrain.pas',
   LemmixHotkeys in 'LemmixHotkeys.pas',
   LemNeoLevelPack in 'LemNeoLevelPack.pas',
-  LemNeoOnline in 'LemNeoOnline.pas',
   LemNeoParser in 'LemNeoParser.pas',
   LemNeoPieceManager in 'LemNeoPieceManager.pas',
   LemNeoTheme in 'LemNeoTheme.pas',

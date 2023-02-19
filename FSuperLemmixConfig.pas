@@ -9,64 +9,58 @@ uses
 
 type
   TFormNXConfig = class(TForm)
-    NXConfigPages: TPageControl;
-    TabSheet1: TTabSheet;
     btnOK: TButton;
     btnCancel: TButton;
     btnApply: TButton;
+    NXConfigPages: TPageControl;
+    Graphics: TTabSheet;
+    TabSheet1: TTabSheet;
+    lblUserName: TLabel;
     GroupBox4: TGroupBox;
-    TabSheet4: TTabSheet;
-    tbSoundVol: TTrackBar;
-    Label3: TLabel;
-    Label5: TLabel;
-    tbMusicVol: TTrackBar;
-    Label6: TLabel;
-    cbPostviewJingles: TCheckBox;
+    lblIngameSaveReplay: TLabel;
+    lblPostviewSaveReplay: TLabel;
+    cbAutoSaveReplay: TCheckBox;
+    cbAutoSaveReplayPattern: TComboBox;
+    cbIngameSaveReplayPattern: TComboBox;
+    cbPostviewSaveReplayPattern: TComboBox;
+    btnHotkeys: TButton;
+    ebUserName: TEdit;
     TabSheet5: TTabSheet;
-    GroupBox2: TGroupBox;
+    cbNoAutoReplay: TCheckBox;
+    cbPauseAfterBackwards: TCheckBox;
     GroupBox3: TGroupBox;
     cbNoBackgrounds: TCheckBox;
-    GroupBox1: TGroupBox;
-    cbEnableOnline: TCheckBox;
-    cbUpdateCheck: TCheckBox;
+    cbEdgeScrolling: TCheckBox;
+    cbHideShadows: TCheckBox;
+    cbForceDefaultLemmings: TCheckBox;
+    TabSheet4: TTabSheet;
+    Label3: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    tbSoundVol: TTrackBar;
+    tbMusicVol: TTrackBar;
+    cbDisableTestplayMusic: TCheckBox;
     GroupBox6: TGroupBox;
-    cbZoom: TComboBox;
     Label1: TLabel;
+    Label2: TLabel;
+    cbZoom: TComboBox;
     cbLinearResampleMenu: TCheckBox;
     cbLinearResampleGame: TCheckBox;
     cbFullScreen: TCheckBox;
     cbMinimapHighQuality: TCheckBox;
     cbIncreaseZoom: TCheckBox;
-    cbEdgeScrolling: TCheckBox;
-    cbSpawnInterval: TCheckBox;
-    btnHotkeys: TButton;
-    cbNoAutoReplay: TCheckBox;
-    cbPauseAfterBackwards: TCheckBox;
-    lblUserName: TLabel;
-    ebUserName: TEdit;
     cbHighResolution: TCheckBox;
-    btnStyles: TButton;
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
-    cbHideShadows: TCheckBox;
-    cbHideAdvanced: TCheckBox;
-    cbAutoSaveReplay: TCheckBox;
-    cbAutoSaveReplayPattern: TComboBox;
-    lblIngameSaveReplay: TLabel;
-    cbIngameSaveReplayPattern: TComboBox;
-    cbPostviewSaveReplayPattern: TComboBox;
-    lblPostviewSaveReplay: TLabel;
     cbPanelZoom: TComboBox;
-    Label2: TLabel;
-    cbForceDefaultLemmings: TCheckBox;
-    cbDisableTestplayMusic: TCheckBox;
+    cbClassicMode: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
     procedure OptionChanged(Sender: TObject);
-    procedure cbEnableOnlineClick(Sender: TObject);
+    //procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
-    procedure btnStylesClick(Sender: TObject);
+    //procedure btnStylesClick(Sender: TObject);
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
@@ -229,20 +223,20 @@ begin
     SetReplayPatternDropdown(cbIngameSaveReplayPattern, GameParams.IngameSaveReplayPattern);
     SetReplayPatternDropdown(cbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
 
-    cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
-    cbEnableOnline.Checked := GameParams.EnableOnline;
+    //cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
+    //cbEnableOnline.Checked := GameParams.EnableOnline;
 
     //// Page 2 (Interface Options) ////
     // Checkboxes
+    //cbClassicMode.Checked := GameParams.EnableClassicMode;  //needs code
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
-
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
-    cbSpawnInterval.Checked := GameParams.SpawnInterval;
-    cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
+    //cbSpawnInterval.Checked := GameParams.SpawnInterval;
+    //cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
 
     cbFullScreen.Checked := GameParams.FullScreen;
     cbResetWindowSize.Enabled := not GameParams.FullScreen;
@@ -271,7 +265,7 @@ begin
       tbMusicVol.Position := SoundManager.MusicVolume;
 
     cbDisableTestplayMusic.Checked := GameParams.DisableMusicInTestplay;
-    cbPostviewJingles.Checked := GameParams.PostviewJingles;
+    //cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
     btnApply.Enabled := false;
   finally
@@ -292,8 +286,8 @@ begin
   GameParams.IngameSaveReplayPattern := GetReplayPattern(cbIngameSaveReplayPattern);
   GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
-  GameParams.EnableOnline := cbEnableOnline.Checked;
-  GameParams.CheckUpdates := cbUpdateCheck.Checked;
+  //GameParams.EnableOnline := cbEnableOnline.Checked;
+  //GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
   //// Page 2 (Interface Options) ////
   // Checkboxes
@@ -304,8 +298,8 @@ begin
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
-  GameParams.SpawnInterval := cbSpawnInterval.Checked;
-  GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
+  //GameParams.SpawnInterval := cbSpawnInterval.Checked;
+  //GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
   fResetWindowSize := cbResetWindowSize.Checked;
@@ -330,7 +324,7 @@ begin
     SoundManager.MusicVolume := tbMusicVol.Position;
 
   GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
-  GameParams.PostviewJingles := cbPostviewJingles.Checked;
+  //GameParams.PostviewJingles := cbPostviewJingles.Checked;
 
   btnApply.Enabled := false;
 end;
@@ -345,21 +339,21 @@ begin
   HotkeyForm.Free;
 end;
 
-procedure TFormNXConfig.btnStylesClick(Sender: TObject);
-var
-  F: TFManageStyles;
-  OldEnableOnline: Boolean;
-begin
-  OldEnableOnline := GameParams.EnableOnline;
-  GameParams.EnableOnline := cbEnableOnline.Checked; // Behave as checkbox indicates; but don't break the Cancel button.
-  F := TFManageStyles.Create(self);
-  try
-    F.ShowModal;
-  finally
-    F.Free;
-    GameParams.EnableOnline := OldEnableOnline;
-  end;
-end;
+//procedure TFormNXConfig.btnStylesClick(Sender: TObject);
+//var
+  //F: TFManageStyles;
+  //OldEnableOnline: Boolean;
+//begin
+  //OldEnableOnline := GameParams.EnableOnline;
+  //GameParams.EnableOnline := cbEnableOnline.Checked; // Behave as checkbox indicates; but don't break the Cancel button.
+  //F := TFManageStyles.Create(self);
+  //try
+    //F.ShowModal;
+  //finally
+    //F.Free;
+   // GameParams.EnableOnline := OldEnableOnline;
+  //end;
+//end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);
 var
@@ -411,12 +405,12 @@ begin
     P.Text := PRESET_REPLAY_PATTERNS[P.ItemIndex];
 end;
 
-procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
-begin
-  cbUpdateCheck.Enabled := cbEnableOnline.Checked;
-  if not cbEnableOnline.Checked then cbUpdateCheck.Checked := false;
-  btnApply.Enabled := true;
-end;
+//procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
+//begin
+  //cbUpdateCheck.Enabled := cbEnableOnline.Checked;
+  //if not cbEnableOnline.Checked then cbUpdateCheck.Checked := false;
+  //btnApply.Enabled := true;
+//end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
 begin

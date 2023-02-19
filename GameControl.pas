@@ -400,7 +400,7 @@ begin
   SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
   SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
   SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
-  SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
+  //SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
@@ -409,7 +409,7 @@ begin
   //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
-  SaveBoolean('UseSpawnInterval', SpawnInterval);
+  //SaveBoolean('UseSpawnInterval', SpawnInterval);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
   SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
@@ -441,12 +441,12 @@ begin
   SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
   SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
   SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
-  SaveBoolean('PostviewJingles', PostviewJingles);
+  //SaveBoolean('PostviewJingles', PostviewJingles);
 
-  SL.Add('');
-  SL.Add('# Online Options');
-  SaveBoolean('EnableOnline', EnableOnline);
-  SaveBoolean('UpdateCheck', CheckUpdates);
+  //SL.Add('');
+  //SL.Add('# Online Options');
+  //SaveBoolean('EnableOnline', EnableOnline);
+  //SaveBoolean('UpdateCheck', CheckUpdates);
 
   SL.Add('');
   SL.Add('# Technical Options');
@@ -578,8 +578,8 @@ begin
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
-    EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-    CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
+    //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
+    //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
     FileCaching := LoadBoolean('FileCaching', FileCaching);
@@ -610,10 +610,10 @@ begin
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
     LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 
-    if LoadBoolean('VictoryJingle', false) or LoadBoolean('FailureJingle', false) then
-      PostviewJingles := true
-    else
-      PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
+    //if LoadBoolean('VictoryJingle', false) or LoadBoolean('FailureJingle', false) then
+      //PostviewJingles := true
+    //else
+      //PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
 
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
