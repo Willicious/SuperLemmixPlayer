@@ -23,9 +23,6 @@ type
     cbHoldKey: TCheckBox;
     cbSpecialSkip: TComboBox;
     lblSkip: TLabel;
-    btnFunctionalLayout: TButton;
-    btnTraditionalLayout: TButton;
-    btnMinimalLayout: TButton;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -41,9 +38,10 @@ type
     procedure cbHoldKeyClick(Sender: TObject);
     procedure SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
     procedure cbSpecialSkipChange(Sender: TObject);
-    procedure btnFunctionalLayoutClick(Sender: TObject);
-    procedure btnTraditionalLayoutClick(Sender: TObject);
-    procedure btnMinimalLayoutClick(Sender: TObject);
+    //procedure btnFunctionalLayoutClick(Sender: TObject);
+    //procedure btnTraditionalLayoutClick(Sender: TObject);
+    procedure btnClassicLayoutClick(Sender: TObject);
+    //procedure btnMinimalLayoutClick(Sender: TObject);
   private
     fShownFindInfo: Boolean;
     fKeyNames: TKeyNameArray;
@@ -362,26 +360,26 @@ begin
     ShowMessage('Could not find the key.');
 end;
 
-procedure TFLemmixHotkeys.btnFunctionalLayoutClick(Sender: TObject);
+//procedure TFLemmixHotkeys.btnFunctionalLayoutClick(Sender: TObject);
+//begin
+  //fHotkeys.ClearAllKeys;
+  //fHotkeys.SetDefaultsFunctional;
+  //RefreshList;
+//end;
+
+procedure TFLemmixHotkeys.btnClassicLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
-  fHotkeys.SetDefaultsFunctional;
+  fHotkeys.SetDefaultsClassic;
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnMinimalLayoutClick(Sender: TObject);
-begin
-  fHotkeys.ClearAllKeys;
-  fHotkeys.SetDefaultsMinimal;
-  RefreshList;
-end;
-
-procedure TFLemmixHotkeys.btnTraditionalLayoutClick(Sender: TObject);
-begin
-  fHotkeys.ClearAllKeys;
-  fHotkeys.SetDefaultsTraditional;
-  RefreshList;
-end;
+//procedure TFLemmixHotkeys.btnTraditionalLayoutClick(Sender: TObject);
+//begin
+  //fHotkeys.ClearAllKeys;
+  //fHotkeys.SetDefaultsTraditional;
+  //RefreshList;
+//end;
 
 procedure TFLemmixHotkeys.btnFindKeyClick(Sender: TObject);
 begin

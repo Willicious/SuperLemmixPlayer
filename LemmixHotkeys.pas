@@ -1,7 +1,5 @@
 unit LemmixHotkeys;
 
-// A quick and shitty unit to allow for customizable hotkeys.
-
 interface
 
 uses
@@ -86,9 +84,9 @@ type
       procedure ClearAllKeys;
       procedure SaveFile;
 
-      procedure SetDefaultsTraditional;
-      procedure SetDefaultsFunctional;
-      procedure SetDefaultsMinimal;
+      //procedure SetDefaultsTraditional;
+      //procedure SetDefaultsFunctional;
+      procedure SetDefaultsClassic;
 
       procedure SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
       function CheckKeyEffect(aKey: Word): TLemmixHotkey;
@@ -121,169 +119,37 @@ begin
     fKeyFunctions[i].Action := lka_Null;
 end;
 
-procedure TLemmixHotkeyManager.SetDefaultsFunctional;
+procedure TLemmixHotkeyManager.SetDefaultsClassic;
 begin
-  ClearAllKeys;
-
-  // Here's the simple ones that don't need further settings.
-  SetKeyFunction($08, lka_ToggleShadows);
-  SetKeyFunction($53, lka_DirLeft);
-  SetKeyFunction($46, lka_DirRight);
-  SetKeyFunction($25, lka_DirLeft);
-  SetKeyFunction($27, lka_DirRight);
-  SetKeyFunction($20, lka_Pause);
-  SetKeyFunction($70, lka_Restart);
-  SetKeyFunction($71, lka_LoadState);
-  SetKeyFunction($72, lka_SaveState);
-  SetKeyFunction($34, lka_FastForward);
-  SetKeyFunction($35, lka_FastForward);
-  SetKeyFunction($04, lka_Pause);
-  SetKeyFunction($05, lka_ZoomIn);
-  SetKeyFunction($06, lka_ZoomOut);
-  SetKeyFunction($1B, lka_Exit);
-  SetKeyFunction($02, lka_Scroll);
-  SetKeyFunction($75, lka_SaveReplay);
-  SetKeyFunction($76, lka_LoadReplay);
-  SetKeyFunction($11, lka_Highlight);
-  SetKeyFunction($19, lka_Highlight);
-  SetKeyFunction($4D, lka_Music);
-  SetKeyFunction($4E, lka_Sound);
-  SetKeyFunction($73, lka_ReleaseRateDown);
-  SetKeyFunction($74, lka_ReleaseRateUp);
-  SetKeyFunction($49, lka_FallDistance);
-  SetKeyFunction($50, lka_EditReplay);
-  SetKeyFunction($4F, lka_ReplayInsert);
-  SetKeyFunction($0D, lka_SaveImage);
-  SetKeyFunction($4A, lka_Scroll);
-
-  // Misc ones that need other details set
-  SetKeyFunction($BF, lka_ClearPhysics, 1);
-  SetKeyFunction($DB, lka_SkillProjection, 1);
-  SetKeyFunction($DD, lka_Projection, 1);
-
-  // Skips
-  SetKeyFunction($31, lka_Skip, -17);
-  SetKeyFunction($32, lka_Skip, -1);
-  SetKeyFunction($33, lka_Skip, 1);
-  SetKeyFunction($36, lka_Skip, 170);
-  SetKeyFunction($37, lka_SpecialSkip, 0);
-  SetKeyFunction($38, lka_SpecialSkip, 1);
-  SetKeyFunction($39, lka_SpecialSkip, 2);
-
-  // Skills
-  SetKeyFunction($10, lka_SkillLeft);                      // <previous skill>, shift
-  SetKeyFunction($42, lka_SkillRight);                     // <next skill>, B
-  SetKeyFunction($44, lka_Skill, Integer(spbWalker));      // walker, D
-  SetKeyFunction($52, lka_Skill, Integer(spbJumper));      // jumper, R
-  SetKeyFunction($12, lka_Skill, Integer(spbShimmier));    // shimmier, alt
-  SetKeyFunction($48, lka_Skill, Integer(spbSlider));      // slider, H
-  SetKeyFunction($5A, lka_Skill, Integer(spbClimber));     // climber, Z
-                                                           // swimmer, <none>
-  SetKeyFunction($51, lka_Skill, Integer(spbFloater));     // floater, Q
-  SetKeyFunction($09, lka_Skill, Integer(spbGlider));      // glider, tab
-                                                           // disarmer, <none>
-  SetKeyFunction($56, lka_Skill, Integer(spbBomber));      // bomber, V
-                                                           // stoner, <none>
-  SetKeyFunction($58, lka_Skill, Integer(spbBlocker));     // blocker, X
-  SetKeyFunction($54, lka_Skill, Integer(spbPlatformer));  // platformer, T
-  SetKeyFunction($41, lka_Skill, Integer(spbBuilder));     // builder, A
-                                                           // stacker, <none>
-  SetKeyFunction($59, lka_Skill, Integer(spbLaserer));     // laserer, Y
-  SetKeyFunction($45, lka_Skill, Integer(spbBasher));      // basher, E
-  SetKeyFunction($43, lka_Skill, Integer(spbFencer));      // fencer, C
-  SetKeyFunction($47, lka_Skill, Integer(spbMiner));       // miner, G
-  SetKeyFunction($57, lka_Skill, Integer(spbDigger));      // digger, W
-                                                           // cloner, <none>
-end;
-
-procedure TLemmixHotkeyManager.SetDefaultsMinimal;
-begin
+  //Need a new procedure which saves the user configuration in a separate file for later recall
   ClearAllKeys;
 
   SetKeyFunction($04, lka_Pause);
-  SetKeyFunction($05, lka_ZoomIn);
-  SetKeyFunction($06, lka_ZoomOut);
-  SetKeyFunction($02, lka_Scroll);
-  SetKeyFunction($1B, lka_Exit);
-end;
-
-procedure TLemmixHotkeyManager.SetDefaultsTraditional;
-begin
-  ClearAllKeys;
-
-  // Here's the simple ones that don't need further settings.
-  SetKeyFunction($02, lka_Highlight);
-  SetKeyFunction($04, lka_Pause);
-  SetKeyFunction($05, lka_ZoomIn);
-  SetKeyFunction($06, lka_ZoomOut);
-  SetKeyFunction($08, lka_LoadState);
-  SetKeyFunction($0D, lka_SaveState);
-  SetKeyFunction($11, lka_ForceWalker);
-  SetKeyFunction($19, lka_ForceWalker);
-  SetKeyFunction($1B, lka_Exit);
-  SetKeyFunction($25, lka_DirLeft);
-  SetKeyFunction($27, lka_DirRight);
-  SetKeyFunction($41, lka_Scroll);
-  SetKeyFunction($43, lka_CancelReplay);
-  SetKeyFunction($44, lka_FallDistance);
-  SetKeyFunction($45, lka_EditReplay);
-  SetKeyFunction($46, lka_FastForward);
-  SetKeyFunction($48, lka_ToggleShadows);
-  SetKeyFunction($49, lka_SaveImage);
-  SetKeyFunction($4C, lka_LoadReplay);
-  SetKeyFunction($4D, lka_Music);
   SetKeyFunction($50, lka_Pause);
+  SetKeyFunction($4E, lka_Nuke);
   SetKeyFunction($52, lka_Restart);
+  SetKeyFunction($46, lka_FastForward);
+  SetKeyFunction($1B, lka_Exit);
+  SetKeyFunction($05, lka_ZoomIn);
+  SetKeyFunction($06, lka_ZoomOut);
+  SetKeyFunction($02, lka_Scroll);
+  SetKeyFunction($4D, lka_Music);
   SetKeyFunction($53, lka_Sound);
-  SetKeyFunction($55, lka_SaveReplay);
-  SetKeyFunction($57, lka_ReplayInsert);
-  SetKeyFunction($58, lka_SkillRight);
-  SetKeyFunction($5A, lka_SkillLeft);
-  SetKeyFunction($70, lka_ReleaseRateDown);
-  SetKeyFunction($71, lka_ReleaseRateUp);
-  SetKeyFunction($7A, lka_Pause);
-  SetKeyFunction($7B, lka_BypassNuke);
-  SetKeyFunction($C0, lka_ReleaseMouse);
-
-  // Misc ones that need other details set
-  SetKeyFunction($54, lka_ClearPhysics, 1);
-  SetKeyFunction($10, lka_SkillProjection, 1);
-  SetKeyFunction($12, lka_Projection, 1);
-
-  // Here's the frameskip ones; these need a number of *frames* to skip (forwards or backwards).
-  SetKeyFunction($20, lka_Skip, 17 * 10);
-  SetKeyFunction($42, lka_Skip, -1);
-  SetKeyFunction($4E, lka_Skip, 1);
-  SetKeyFunction($6D, lka_Skip, -17);
-  SetKeyFunction($BC, lka_Skip, -17 * 5);
-  SetKeyFunction($BD, lka_Skip, -17);
-  SetKeyFunction($BE, lka_Skip, 17 * 5);
-  SetKeyFunction($DB, lka_SpecialSkip, 0);
-  SetKeyFunction($DD, lka_SpecialSkip, 1);
-  SetKeyFunction($DC, lka_SpecialSkip, 2);
-
-  // And here's the skill ones; these ones need the skill specified seperately
-  SetKeyFunction($09, lka_Skill, Integer(spbSlider));
-  SetKeyFunction($31, lka_Skill, Integer(spbWalker));
-  SetKeyFunction($32, lka_Skill, Integer(spbShimmier));
-  SetKeyFunction($33, lka_Skill, Integer(spbSwimmer));
-  SetKeyFunction($34, lka_Skill, Integer(spbGlider));
-  SetKeyFunction($35, lka_Skill, Integer(spbDisarmer));
-  SetKeyFunction($36, lka_Skill, Integer(spbStoner));
-  SetKeyFunction($37, lka_Skill, Integer(spbPlatformer));
-  SetKeyFunction($38, lka_Skill, Integer(spbStacker));
-  SetKeyFunction($39, lka_Skill, Integer(spbFencer));
-  SetKeyFunction($30, lka_Skill, Integer(spbCloner));
-  SetKeyFunction($51, lka_Skill, Integer(spbLaserer));
-  SetKeyFunction($72, lka_Skill, Integer(spbClimber));
-  SetKeyFunction($73, lka_Skill, Integer(spbFloater));
-  SetKeyFunction($74, lka_Skill, Integer(spbBomber));
-  SetKeyFunction($75, lka_Skill, Integer(spbBlocker));
-  SetKeyFunction($76, lka_Skill, Integer(spbBuilder));
-  SetKeyFunction($77, lka_Skill, Integer(spbBasher));
-  SetKeyFunction($78, lka_Skill, Integer(spbMiner));
-  SetKeyFunction($79, lka_Skill, Integer(spbDigger));
-  SetKeyFunction($BB, lka_Skill, Integer(spbJumper));
+  SetKeyFunction($41, lka_ShowAthleteInfo);
+  SetKeyFunction($BB, lka_ReleaseRateUp);
+  SetKeyFunction($BD, lka_ReleaseRateDown);
+  SetKeyFunction($25, lka_SkillLeft);
+  SetKeyFunction($27, lka_SkillRight);
+  SetKeyFunction($0D, lka_ReleaseMouse);
+  SetKeyFunction($20, lka_ShowUsedSkills);
+  SetKeyFunction($31, lka_Skill, Integer(spbClimber));
+  SetKeyFunction($32, lka_Skill, Integer(spbFloater));
+  SetKeyFunction($33, lka_Skill, Integer(spbBomber));
+  SetKeyFunction($34, lka_Skill, Integer(spbBlocker));
+  SetKeyFunction($35, lka_Skill, Integer(spbBuilder));
+  SetKeyFunction($36, lka_Skill, Integer(spbBasher));
+  SetKeyFunction($37, lka_Skill, Integer(spbMiner));
+  SetKeyFunction($38, lka_Skill, Integer(spbDigger));
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
@@ -389,7 +255,7 @@ begin
     else if FileExists(AppPath + 'SuperLemmixHotkeys.ini') then
       StringList.LoadFromFile(AppPath + 'SuperLemmixHotkeys.ini')
     else begin
-      SetDefaultsFunctional;
+      SetDefaultsClassic;
       Exit;
     end;
     for i := 0 to MAX_KEY do
@@ -423,7 +289,7 @@ begin
     on E: Exception do
     begin
       fDisableSaving := true;
-      SetDefaultsFunctional;
+      SetDefaultsClassic;
       raise E;
     end;
   end;
@@ -586,8 +452,8 @@ begin
   for i := 0 to MAX_KEY do
     Result[i] := '';
 
-  // Too lazy to include them in an interally-included file. So I just
-  // coded them in here. xD
+  // This list shows which characters correspond to which keys
+  // Whoever wrote it got it slightly wrong though!!!
   if aUseHardcoded then
   begin
     Result[$02] := 'Right-Click';
@@ -615,11 +481,11 @@ begin
     Result[$28] := 'Down Arrow';
     Result[$2D] := 'Insert';
     Result[$2E] := 'Delete';
-    // Shortcut time!
+    // Shortcut time!   //Yeah, you should have written it all out properly tbh!!!
     for i := 0 to 9 do
       Result[$30 + i] := IntToStr(i);
     for i := 0 to 25 do
-      Result[$41 + i] := Char(i + 65);
+      Result[$41 + i] := Char(i + 65);   //no, this doesn't work: J - O are 4A - 4F
     Result[$5B] := 'Windows';
     for i := 0 to 9 do
       Result[$60 + i] := 'NumPad ' + IntToStr(i);

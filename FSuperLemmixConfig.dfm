@@ -227,11 +227,12 @@ object FormNXConfig: TFormNXConfig
       end
       object cbClassicMode: TCheckBox
         Left = 56
-        Top = 12
+        Top = 18
         Width = 135
         Height = 17
         Caption = 'Enable Classic Mode'
         TabOrder = 1
+        OnClick = cbClassicModeClick
       end
     end
     object Graphics: TTabSheet

@@ -64,9 +64,7 @@ begin
   GameParams.UserName := ebUserName.Text;
 
   case cbHotkey.ItemIndex of
-    0: GameParams.Hotkeys.SetDefaultsFunctional;
-    1: GameParams.Hotkeys.SetDefaultsTraditional;
-    2: GameParams.Hotkeys.SetDefaultsMinimal;
+    0: GameParams.Hotkeys.SetDefaultsClassic;
   end;
 
   case cbGraphics.ItemIndex of

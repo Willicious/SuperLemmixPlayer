@@ -22,7 +22,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   object lblSkill: TLabel
     Left = 304
     Top = 131
-    Width = 22
+    Width = 24
     Height = 13
     Caption = 'Skill:'
     Visible = False
@@ -30,7 +30,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   object lblDuration: TLabel
     Left = 284
     Top = 155
-    Width = 43
+    Width = 49
     Height = 13
     Caption = 'Duration:'
     Visible = False
@@ -38,7 +38,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   object Label3: TLabel
     Left = 280
     Top = 72
-    Width = 5
+    Width = 3
     Height = 13
     Alignment = taCenter
     Font.Charset = DEFAULT_CHARSET
@@ -51,7 +51,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   object lblSkip: TLabel
     Left = 301
     Top = 179
-    Width = 24
+    Width = 25
     Height = 13
     Caption = 'Skip:'
     Visible = False
@@ -239,31 +239,13 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Next Shrugger'
       'Highlit State Change')
   end
-  object btnFunctionalLayout: TButton
+  object btnClassicLayout: TButton
     Left = 284
-    Top = 312
+    Top = 310
     Width = 141
     Height = 25
-    Caption = 'Set to Functional Layout'
+    Caption = 'Set to Classic Layout'
     TabOrder = 10
-    OnClick = btnFunctionalLayoutClick
-  end
-  object btnTraditionalLayout: TButton
-    Left = 284
-    Top = 343
-    Width = 141
-    Height = 25
-    Caption = 'Set to Traditional Layout'
-    TabOrder = 11
-    OnClick = btnTraditionalLayoutClick
-  end
-  object btnMinimalLayout: TButton
-    Left = 284
-    Top = 374
-    Width = 141
-    Height = 25
-    Caption = 'Set to Minimal Layout'
-    TabOrder = 12
-    OnClick = btnMinimalLayoutClick
+    OnClick = btnClassicLayoutClick
   end
 end

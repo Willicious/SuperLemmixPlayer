@@ -3,7 +3,7 @@ unit FSuperLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, FEditHotkeys, FStyleManager, Math,
+  GameControl, GameSound, FEditHotkeys, FStyleManager, LemmixHotkeys, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls;
 
@@ -64,6 +64,7 @@ type
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
+    procedure cbClassicModeClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -392,6 +393,12 @@ procedure TFormNXConfig.cbAutoSaveReplayClick(Sender: TObject);
 begin
   cbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
   OptionChanged(Sender);
+end;
+
+procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
+begin
+  //TLemmixHotkeyManager.SetDefaultsClassic <--- I need to call on this
+  //GameParams.HideShadows <--- And this
 end;
 
 procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);
