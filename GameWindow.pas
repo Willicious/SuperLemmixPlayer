@@ -1301,9 +1301,9 @@ const
                          lka_ReleaseMouse,
                          lka_Nuke,          // nuke also cancels, but requires double-press to do so so handled elsewhere
                          lka_ClearPhysics,
-                         lka_ToggleShadows,
-                         lka_Projection,
-                         lka_SkillProjection,
+                         //lka_ToggleShadows,
+                         //lka_Projection,
+                         //lka_SkillProjection,
                          lka_ShowUsedSkills,
                          lka_ZoomIn,
                          lka_ZoomOut,
@@ -1441,19 +1441,19 @@ begin
                           ClearPhysics := not ClearPhysics
                         else
                           ClearPhysics := true;
-      lka_ToggleShadows: begin
-                           GameParams.HideShadows := not GameParams.HideShadows;
-                           SetRedraw(rdRedraw);
-                           Game.CheckForNewShadow(true);
-                         end;
-      lka_Projection: if ProjectionType <> 1 then
-                        ProjectionType := 1
-                      else if func.Modifier = 0 then
-                        ProjectionType := 0;
-      lka_SkillProjection: if ProjectionType <> 2 then
-                             ProjectionType := 2
-                           else if func.Modifier = 0 then
-                             ProjectionType := 0;
+      //lka_ToggleShadows: begin
+                           //GameParams.HideShadows := not GameParams.HideShadows;
+                           //SetRedraw(rdRedraw);
+                           //Game.CheckForNewShadow(true);
+                         //end;
+      //lka_Projection: if ProjectionType <> 1 then
+                        //ProjectionType := 1
+                      //else if func.Modifier = 0 then
+                        //ProjectionType := 0;
+      //lka_SkillProjection: if ProjectionType <> 2 then
+                             //ProjectionType := 2
+                           //else if func.Modifier = 0 then
+                             //ProjectionType := 0;
       lka_ShowUsedSkills: if func.Modifier = 0 then
                             SkillPanel.ShowUsedSkills := not SkillPanel.ShowUsedSkills
                           else
@@ -1548,10 +1548,10 @@ begin
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
       lka_ClearPhysics       : if func.Modifier <> 0 then
                                  ClearPhysics := false;
-      lka_Projection         : if (func.Modifier <> 0) and (ProjectionType = 1) then
-                                 ProjectionType := 0;
-      lka_SkillProjection    : if (func.Modifier <> 0) and (ProjectionType = 2) then
-                                 ProjectionType := 0;
+      //lka_Projection         : if (func.Modifier <> 0) and (ProjectionType = 1) then
+                                //ProjectionType := 0;
+      //lka_SkillProjection    : if (func.Modifier <> 0) and (ProjectionType = 2) then
+                                 //ProjectionType := 0;
       lka_ShowUsedSkills     : if func.Modifier <> 0 then
                                  SkillPanel.ShowUsedSkills := false;
     end;

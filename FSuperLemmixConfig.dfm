@@ -7,7 +7,7 @@ object FormNXConfig: TFormNXConfig
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Configuration'
   ClientHeight = 335
-  ClientWidth = 273
+  ClientWidth = 279
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FormNXConfig: TFormNXConfig
   OldCreateOrder = False
   Position = poMainFormCenter
   DesignSize = (
-    273
+    279
     335)
   PixelsPerInch = 96
   TextHeight = 13
@@ -54,9 +54,9 @@ object FormNXConfig: TFormNXConfig
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
-    Width = 273
+    Width = 279
     Height = 296
-    ActivePage = TabSheet5
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -161,22 +161,31 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 0
       end
     end
-    object TabSheet5: TTabSheet
+    object TabSheet2: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
       object GroupBox3: TGroupBox
-        Left = 6
-        Top = 41
+        Left = 12
+        Top = 7
         Width = 249
-        Height = 155
+        Height = 135
         TabOrder = 0
+        object cbEdgeScrolling: TCheckBox
+          Left = 12
+          Top = 11
+          Width = 221
+          Height = 17
+          Caption = 'Enable Edge Scrolling and Trap Cursor'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
         object cbNoAutoReplay: TCheckBox
           Left = 12
           Top = 34
           Width = 234
           Height = 17
           Caption = 'Don'#39't Replay After Backwards Frameskips'
-          TabOrder = 4
+          TabOrder = 1
           OnClick = OptionChanged
         end
         object cbPauseAfterBackwards: TCheckBox
@@ -185,7 +194,7 @@ object FormNXConfig: TFormNXConfig
           Width = 173
           Height = 17
           Caption = 'Pause After Backwards Skip'
-          TabOrder = 5
+          TabOrder = 2
           OnClick = OptionChanged
         end
         object cbNoBackgrounds: TCheckBox
@@ -194,25 +203,7 @@ object FormNXConfig: TFormNXConfig
           Width = 153
           Height = 17
           Caption = 'Disable Background Images'
-          TabOrder = 0
-          OnClick = OptionChanged
-        end
-        object cbEdgeScrolling: TCheckBox
-          Left = 12
-          Top = 11
-          Width = 221
-          Height = 17
-          Caption = 'Enable Edge Scrolling and Trap Cursor'
-          TabOrder = 2
-          OnClick = OptionChanged
-        end
-        object cbHideShadows: TCheckBox
-          Left = 12
-          Top = 126
-          Width = 153
-          Height = 17
-          Caption = 'Hide Skill Shadows'
-          TabOrder = 1
+          TabOrder = 3
           OnClick = OptionChanged
         end
         object cbForceDefaultLemmings: TCheckBox
@@ -221,25 +212,45 @@ object FormNXConfig: TFormNXConfig
           Width = 173
           Height = 17
           Caption = 'Force Default Lemming Sprites'
-          TabOrder = 3
+          TabOrder = 4
           OnClick = OptionChanged
         end
       end
+    end
+    object TabSheet5: TTabSheet
+      Caption = 'Input'
+      ImageIndex = 4
       object cbClassicMode: TCheckBox
-        Left = 56
+        Left = 64
         Top = 18
         Width = 135
         Height = 17
         Caption = 'Enable Classic Mode'
-        TabOrder = 1
+        TabOrder = 0
         OnClick = cbClassicModeClick
+      end
+      object GroupBox5: TGroupBox
+        Left = 20
+        Top = 49
+        Width = 238
+        Height = 72
+        TabOrder = 1
+        object cbHideShadows: TCheckBox
+          Left = 12
+          Top = 11
+          Width = 153
+          Height = 17
+          Caption = 'Hide Skill Shadows'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
       end
     end
     object Graphics: TTabSheet
       Caption = 'Graphics'
       ImageIndex = 3
       object GroupBox6: TGroupBox
-        Left = 9
+        Left = 12
         Top = 6
         Width = 249
         Height = 254
@@ -271,23 +282,18 @@ object FormNXConfig: TFormNXConfig
           Items.Strings = (
             '1x Zoom')
         end
-        object cbLinearResampleMenu: TCheckBox
-          Left = 12
-          Top = 180
-          Width = 205
-          Height = 17
-          Caption = 'Use Smooth Resampling In Menus'
+        object cbPanelZoom: TComboBox
+          Left = 56
+          Top = 37
+          Width = 177
+          Height = 21
+          Style = csDropDownList
+          ItemIndex = 0
           TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbLinearResampleGame: TCheckBox
-          Left = 12
-          Top = 203
-          Width = 205
-          Height = 17
-          Caption = 'Use Smooth Resampling In Game'
-          TabOrder = 2
-          OnClick = OptionChanged
+          Text = '1x Zoom'
+          OnChange = OptionChanged
+          Items.Strings = (
+            '1x Zoom')
         end
         object cbFullScreen: TCheckBox
           Left = 12
@@ -295,34 +301,16 @@ object FormNXConfig: TFormNXConfig
           Width = 205
           Height = 17
           Caption = 'Full Screen'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = cbFullScreenClick
         end
-        object cbMinimapHighQuality: TCheckBox
+        object cbResetWindowPosition: TCheckBox
           Left = 12
-          Top = 226
-          Width = 153
-          Height = 17
-          Caption = 'High Quality Minimap'
-          TabOrder = 4
-          OnClick = OptionChanged
-        end
-        object cbIncreaseZoom: TCheckBox
-          Left = 12
-          Top = 157
+          Top = 88
           Width = 205
           Height = 17
-          Caption = 'Increase Zoom On Small Levels'
-          TabOrder = 5
-          OnClick = OptionChanged
-        end
-        object cbHighResolution: TCheckBox
-          Left = 12
-          Top = 134
-          Width = 205
-          Height = 17
-          Caption = 'High Resolution'
-          TabOrder = 6
+          Caption = 'Reset Window Position'
+          TabOrder = 3
           OnClick = OptionChanged
         end
         object cbResetWindowSize: TCheckBox
@@ -331,30 +319,53 @@ object FormNXConfig: TFormNXConfig
           Width = 205
           Height = 17
           Caption = 'Reset Window Size'
+          TabOrder = 4
+          OnClick = OptionChanged
+        end
+        object cbHighResolution: TCheckBox
+          Left = 12
+          Top = 134
+          Width = 205
+          Height = 17
+          Caption = 'High Resolution'
+          TabOrder = 5
+          OnClick = OptionChanged
+        end
+        object cbIncreaseZoom: TCheckBox
+          Left = 12
+          Top = 157
+          Width = 205
+          Height = 17
+          Caption = 'Increase Zoom On Small Levels'
+          TabOrder = 6
+          OnClick = OptionChanged
+        end
+        object cbLinearResampleMenu: TCheckBox
+          Left = 12
+          Top = 180
+          Width = 205
+          Height = 17
+          Caption = 'Use Smooth Resampling In Menus'
           TabOrder = 7
           OnClick = OptionChanged
         end
-        object cbResetWindowPosition: TCheckBox
+        object cbLinearResampleGame: TCheckBox
           Left = 12
-          Top = 88
+          Top = 203
           Width = 205
           Height = 17
-          Caption = 'Reset Window Position'
+          Caption = 'Use Smooth Resampling In Game'
           TabOrder = 8
           OnClick = OptionChanged
         end
-        object cbPanelZoom: TComboBox
-          Left = 56
-          Top = 37
-          Width = 177
-          Height = 21
-          Style = csDropDownList
-          ItemIndex = 0
+        object cbMinimapHighQuality: TCheckBox
+          Left = 12
+          Top = 226
+          Width = 153
+          Height = 17
+          Caption = 'High Quality Minimap'
           TabOrder = 9
-          Text = '1x Zoom'
-          OnChange = OptionChanged
-          Items.Strings = (
-            '1x Zoom')
+          OnClick = OptionChanged
         end
       end
     end

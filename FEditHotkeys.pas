@@ -128,14 +128,14 @@ begin
                           s := 'Clear Physics Mode (toggle)'
                         else
                           s := 'Clear Physics Mode (hold)';
-      lka_Projection: if Hotkey.Modifier = 0 then
-                        s := 'Projection (toggle)'
-                      else
-                        s := 'Projection (hold)';
-      lka_SkillProjection: if Hotkey.Modifier = 0 then
-                             s := 'Skill Projection (toggle)'
-                           else
-                             s := 'Skill Projection (hold)';
+      //lka_Projection: if Hotkey.Modifier = 0 then
+                        //s := 'Projection (toggle)'
+                      //else
+                        //s := 'Projection (hold)';
+      //lka_SkillProjection: if Hotkey.Modifier = 0 then
+                             //s := 'Skill Projection (toggle)'
+                           //else
+                             //s := 'Skill Projection (hold)';
       lka_ShowUsedSkills: if Hotkey.Modifier = 0 then
                             s := 'Show Used Skills (toggle)'
                           else
@@ -205,8 +205,8 @@ begin
                 ebSkipDuration.Enabled := true;
               end;
     lka_ClearPhysics,
-    lka_Projection,
-    lka_SkillProjection,
+    //lka_Projection,
+    //lka_SkillProjection,
     lka_ShowUsedSkills: begin
                           cbHoldKey.Visible := true;
                           cbHoldKey.Enabled := true;
@@ -241,8 +241,8 @@ begin
     lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
     lka_ClearPhysics,
-    lka_Projection,
-    lka_SkillProjection,
+    //lka_Projection,
+    //lka_SkillProjection,
     lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
   end;
   Label3.Caption := 'Editing key: ' + fKeyNames[i];
@@ -283,8 +283,8 @@ begin
                        fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
                      end;
     lka_ClearPhysics,
-    lka_Projection,
-    lka_SkillProjection,
+    //lka_Projection,
+    //lka_SkillProjection,
     lka_ShowUsedSkills: if cbHoldKey.Checked then
                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
                         else
@@ -403,7 +403,8 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; //safety; should never happen
 
-  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics, lka_Projection, lka_SkillProjection, lka_ShowUsedSkills]) then Exit;
+  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics, //lka_Projection, lka_SkillProjection,
+  lka_ShowUsedSkills]) then Exit;
 
   if cbHoldKey.Checked then
     fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 1)

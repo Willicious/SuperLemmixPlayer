@@ -50,9 +50,9 @@ type
                          lka_SkillRight,
                          lka_ReleaseMouse,
                          lka_ClearPhysics,
-                         lka_ToggleShadows,
-                         lka_Projection,
-                         lka_SkillProjection,
+                         //lka_ToggleShadows,
+                         //lka_Projection,
+                         //lka_SkillProjection,
                          lka_ShowUsedSkills,
                          lka_FallDistance,
                          lka_ZoomIn,
@@ -188,9 +188,9 @@ begin
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
   if s = 'clear_physics' then Result := lka_ClearPhysics;
-  if s = 'toggle_shadows' then Result := lka_ToggleShadows;  
-  if s = 'projection' then Result := lka_Projection;
-  if s = 'skill_projection' then Result := lka_SkillProjection;
+  //if s = 'toggle_shadows' then Result := lka_ToggleShadows;
+  //if s = 'projection' then Result := lka_Projection;
+  //if s = 'skill_projection' then Result := lka_SkillProjection;
   if s = 'show_used_skills' then Result := lka_ShowUsedSkills;
   if s = 'fall_distance' then Result := lka_FallDistance;
   if s = 'edit_replay' then Result := lka_EditReplay;
@@ -337,9 +337,9 @@ var
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
       lka_ClearPhysics:     Result := 'Clear_Physics';
-      lka_ToggleShadows:    Result := 'Toggle_Shadows';
-      lka_Projection:       Result := 'Projection';
-      lka_SkillProjection:  Result := 'Skill_Projection';
+      //lka_ToggleShadows:    Result := 'Toggle_Shadows';
+      //lka_Projection:       Result := 'Projection';
+      //lka_SkillProjection:  Result := 'Skill_Projection';
       lka_ShowUsedSkills:   Result := 'Show_Used_Skills';
       lka_FallDistance:     Result := 'Fall_Distance';
       lka_EditReplay:       Result := 'Edit_Replay';
@@ -394,7 +394,8 @@ begin
   begin
     s := InterpretMain(fKeyFunctions[i].Action);
     if s = 'Null' then Continue;
-    if fKeyFunctions[i].Action in [lka_Skill, lka_Skip, lka_SpecialSkip, lka_ClearPhysics, lka_Projection, lka_SkillProjection, lka_ShowUsedSkills] then
+    if fKeyFunctions[i].Action in [lka_Skill, lka_Skip, lka_SpecialSkip, lka_ClearPhysics, //lka_Projection, lka_SkillProjection,
+    lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;

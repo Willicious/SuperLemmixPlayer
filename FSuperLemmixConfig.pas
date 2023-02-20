@@ -54,6 +54,7 @@ type
     cbResetWindowPosition: TCheckBox;
     cbPanelZoom: TComboBox;
     cbClassicMode: TCheckBox;
+    TabSheet2: TTabSheet;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -235,6 +236,7 @@ begin
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
     cbHideShadows.Checked := GameParams.HideShadows;
+    //cbHideClearPhysics.Checked := GameParams.HideShadows;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     //cbSpawnInterval.Checked := GameParams.SpawnInterval;
     //cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
@@ -397,8 +399,12 @@ end;
 
 procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
 begin
-  //TLemmixHotkeyManager.SetDefaultsClassic <--- I need to call on this
-  //GameParams.HideShadows <--- And this
+  if cbClassicMode.Checked then
+begin
+  cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
+  cbHideShadows.Enabled := false;
+end else
+  cbHideShadows.Enabled := true;
 end;
 
 procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);

@@ -971,23 +971,23 @@ begin
 
   // Set only rectangles for non-skill buttons
   // The skill buttons are dealt with in SetSkillIcons
-  for i := 0 to Length(ButtonList) - 1 do
-  begin
-    if ButtonList[i] in [spbDirLeft, spbDirRight] then
-    begin
-      fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
-      fButtonRects[spbDirRight] := HalfButtonRect(i, false);
-    end else if ButtonList[i] in [spbBackOneFrame, spbForwardOneFrame] then
-    begin
-      fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
-      fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
-    end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
-    begin
-      fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
-      fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
-    end else if ButtonList[i] > spbNone then
-      fButtonRects[ButtonList[i]] := ButtonRect(i);
-  end;
+  //for i := 0 to Length(ButtonList) - 1 do
+  //begin
+    //if ButtonList[i] in [spbDirLeft, spbDirRight] then
+    //begin
+      //fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
+      //fButtonRects[spbDirRight] := HalfButtonRect(i, false);
+    //end else if ButtonList[i] in [spbBackOneFrame, spbForwardOneFrame] then
+    //begin
+      //fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
+      //fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
+    //end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
+    //begin
+      //fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
+      //fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
+    //end else if ButtonList[i] > spbNone then
+      //fButtonRects[ButtonList[i]] := ButtonRect(i);
+  //end;
 end;
 
 procedure TBaseSkillPanel.DrawMinimap;
