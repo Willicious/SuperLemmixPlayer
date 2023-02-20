@@ -55,6 +55,7 @@ type
     cbPanelZoom: TComboBox;
     cbClassicMode: TCheckBox;
     TabSheet2: TTabSheet;
+    cbHideClearPhysics: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -230,13 +231,13 @@ begin
 
     //// Page 2 (Interface Options) ////
     // Checkboxes
-    //cbClassicMode.Checked := GameParams.EnableClassicMode;  //needs code
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
+    cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
-    //cbHideClearPhysics.Checked := GameParams.HideShadows;
+    cbHideClearPhysics.Checked := GameParams.HideClearPhysics;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     //cbSpawnInterval.Checked := GameParams.SpawnInterval;
     //cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
@@ -300,6 +301,7 @@ begin
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
+  GameParams.HideClearPhysics := cbHideClearPhysics.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   //GameParams.SpawnInterval := cbSpawnInterval.Checked;
   //GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
@@ -397,14 +399,18 @@ begin
   OptionChanged(Sender);
 end;
 
+//----------Classic Mode-------------------------------------------------------
 procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
 begin
   if cbClassicMode.Checked then
 begin
   cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
   cbHideShadows.Enabled := false;
+  cbHideClearPhysics.Checked := true;
+  cbHideClearPhysics.Enabled := false;
 end else
   cbHideShadows.Enabled := true;
+  cbHideClearPhysics.Enabled := true;
 end;
 
 procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);

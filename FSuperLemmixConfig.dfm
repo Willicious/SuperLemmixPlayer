@@ -56,7 +56,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 279
     Height = 296
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -243,6 +243,14 @@ object FormNXConfig: TFormNXConfig
           Caption = 'Hide Skill Shadows'
           TabOrder = 0
           OnClick = OptionChanged
+        end
+        object cbHideClearPhysics: TCheckBox
+          Left = 12
+          Top = 34
+          Width = 125
+          Height = 17
+          Caption = 'Hide Clear Physics'
+          TabOrder = 1
         end
       end
     end

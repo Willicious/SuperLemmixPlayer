@@ -80,7 +80,7 @@ object FLevelSelect: TFLevelSelect
   object lblAdvancedOptions: TLabel
     Left = 949
     Top = 17
-    Width = 105
+    Width = 96
     Height = 13
     Caption = 'Advanced Options'
     Font.Charset = DEFAULT_CHARSET
