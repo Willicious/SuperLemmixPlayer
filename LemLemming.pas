@@ -106,8 +106,8 @@ type
     LemIsStartingAction           : Boolean; // replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemTimerToStone               : Boolean;
-    LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
+    LemTimerToFreeze               : Boolean;
+    LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Freezer
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
     LemDehoistPinY                : Integer; // The Y coordinate the lemming started dehoisting on
@@ -319,7 +319,7 @@ begin
   LemIsStartingAction := Source.LemIsStartingAction;
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
-  LemTimerToStone := Source.LemTimerToStone;
+  LemTimerToFreeze := Source.LemTimerToFreeze;
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
   LemJumpProgress := Source.LemJumpProgress;

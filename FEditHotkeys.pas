@@ -100,7 +100,7 @@ begin
                      Integer(spbGlider):     s := s + 'Glider';
                      Integer(spbDisarmer):   s := s + 'Disarmer';
                      Integer(spbBomber):     s := s + 'Bomber';
-                     Integer(spbStoner):     s := s + 'Stoner';
+                     Integer(spbFreezer):     s := s + 'Freezer';
                      Integer(spbBlocker):    s := s + 'Blocker';
                      Integer(spbPlatformer): s := s + 'Platformer';
                      Integer(spbBuilder):    s := s + 'Builder';

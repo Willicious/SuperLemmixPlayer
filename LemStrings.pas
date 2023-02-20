@@ -109,7 +109,7 @@ resourcestring
   SExploder = 'Bomber';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';
-  SStoner = 'Stoner';
+  SFreezer = 'Freezer';
   SSwimmer = 'Swimmer';
   SGlider = 'Glider';
   SDisarmer = 'Disarmer';
@@ -177,8 +177,8 @@ const
     SDummyString,
     SPlatformer,
     SStacker,
-    SStoner,
-    SStoner,
+    SFreezer,
+    SFreezer,
     SSwimmer,
     SGlider,
     SDisarmer,

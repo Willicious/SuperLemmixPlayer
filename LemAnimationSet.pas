@@ -64,8 +64,8 @@ const
   EXPLOSION_RTL       = 35;
   PLATFORMING         = 36;
   PLATFORMING_RTL     = 37;
-  STONEEXPLOSION      = 38;
-  STONEEXPLOSION_RTL  = 39;
+  FREEZEREXPLOSION      = 38;
+  FREEZEREXPLOSION_RTL  = 39;
   SWIMMING            = 40;
   SWIMMING_RTL        = 41;
   GLIDING             = 42;
@@ -88,7 +88,7 @@ const
   SLIDING_RTL         = 59;
   LASERING            = 60;
   LASERING_RTL        = 61;
-  STONED              = 62; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
+  FROZEN              = 62; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
@@ -116,8 +116,8 @@ const
     (0,0),                                    // baToWalking. Should never happen.
     (PLATFORMING, PLATFORMING_RTL),           // baPlatforming
     (STACKING, STACKING_RTL),                 // baStacking
-    (OHNOING, OHNOING_RTL),                   // baStoneOhNoing <-- might be incorrect name so don't rely on this
-    (STONEEXPLOSION, STONEEXPLOSION_RTL),     // baStoneFinish
+    (OHNOING, OHNOING_RTL),                   // baFreezeOhNoing <-- might be incorrect name so don't rely on this
+    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL),     // baFreezeFinish
     (SWIMMING, SWIMMING_RTL),                 // baSwimming
     (GLIDING, GLIDING_RTL),                   // baGliding
     (FIXING, FIXING_RTL),                     // baFixing
@@ -188,7 +188,7 @@ const
                                          'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                          'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                          'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
-                                         'OHNOER', 'BOMBER', 'PLATFORMER', 'STONER',
+                                         'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER',
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
                                          'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER',
                                          'DEHOISTER', 'SLIDER', 'LASERER');
@@ -298,16 +298,16 @@ procedure TBaseAnimationSet.ReadMetaData(aColorDict: TColorDict = nil; aShadeDic
 var
   AnimIndex: Integer;
 begin
-  // Add right- and left-facing version for 25 skills and the one stoner mask
+  // Add right- and left-facing version for 25 skills and the one freezer mask
   for AnimIndex := 0 to NUM_LEM_SPRITES - 1 do
   begin
     fMetaLemmingAnimations.Add;
   end;
 
-  // Setting the foot position of the stoner mask.
-  // This should be irrelevant for the stoner mask, as the stoner mask is not positioned wrt. the lemming's foot.
+  // Setting the foot position of the freezer mask.
+  // This should be irrelevant for the freezer mask, as the freezer mask is not positioned wrt. the lemming's foot.
   // For other sprites, the foot position is required though.
-  with fMetaLemmingAnimations[STONED] do
+  with fMetaLemmingAnimations[FROZEN] do
   begin
     FrameCount := 1;
     FootX := 8 * ResMod;
@@ -360,7 +360,7 @@ begin
     else
       ImgSrcFolder := MetaSrcFolder;
 
-    for iAnimation := 0 to NUM_LEM_SPRITES - 2 do // -2 to leave out the stoner placeholder
+    for iAnimation := 0 to NUM_LEM_SPRITES - 2 do // -2 to leave out the freezer placeholder
     begin
       MLA := fMetaLemmingAnimations[iAnimation];
       Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
@@ -402,7 +402,7 @@ begin
 
     HandleRecoloring(ColorDict, ShadeDict);
 
-    fLemmingAnimations.Add(TBitmap32.Create); // for the Stoner
+    fLemmingAnimations.Add(TBitmap32.Create); // for the Freezer
 
     // // // // // // // // // // // //
     // Extract masks / Digits / etc. //
@@ -416,19 +416,19 @@ begin
 
     if GameParams.HighResolution then
     begin
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'stoner-hr.png', fLemmingAnimations[STONED]);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[FROZEN]);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
     end else begin
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'stoner.png', fLemmingAnimations[STONED]);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer.png', fLemmingAnimations[FROZEN]);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
     end;
 
-    fMetaLemmingAnimations[STONED].Width := fLemmingAnimations[STONED].Width;
-    fMetaLemmingAnimations[STONED].Height := fLemmingAnimations[STONED].Height;
-    fLemmingAnimations[STONED].DrawMode := dmBlend;
-    fLemmingAnimations[STONED].CombineMode := cmMerge;
+    fMetaLemmingAnimations[FROZEN].Width := fLemmingAnimations[FROZEN].Width;
+    fMetaLemmingAnimations[FROZEN].Height := fLemmingAnimations[FROZEN].Height;
+    fLemmingAnimations[FROZEN].DrawMode := dmBlend;
+    fLemmingAnimations[FROZEN].CombineMode := cmMerge;
   finally
     TempBitmap.Free;
     ColorDict.Free;

@@ -105,7 +105,7 @@ const // Icon indexes
     12, // Glider
     13, // Disarmer
     14, // Bomber
-    15, // Stoner
+    15, // Freezer
     16, // Blocker
     17, // Platformer
     18, // Builder

@@ -139,7 +139,7 @@ type
 
   { masks }
     BomberMask                 : TBitmap32;
-    StonerMask                 : TBitmap32;
+    FreezerMask                 : TBitmap32;
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
     MinerMasks                 : TBitmap32;
@@ -215,7 +215,7 @@ type
     procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   //left-facing miner
     procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  //right-facing miner
     procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber
-    procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: TColor32);
 
   { internal methods }
     procedure DoTalismanCheck;
@@ -225,7 +225,7 @@ type
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
-    procedure ApplyStoneLemming(L: TLemming);
+    procedure ApplyFreezeLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
@@ -362,7 +362,7 @@ type
     function MayAssignSwimmer(L: TLemming): Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
-    function MayAssignExploderStoner(L: TLemming): Boolean;
+    function MayAssignExploderFreezer(L: TLemming): Boolean;
     function MayAssignBuilder(L: TLemming): Boolean;
     function MayAssignPlatformer(L: TLemming): Boolean;
     function MayAssignStacker(L: TLemming): Boolean;
@@ -557,7 +557,7 @@ const
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
   ActionListArray: array[0..20] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
-             baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
+             baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering);
 
@@ -873,7 +873,7 @@ begin
   LemmingList    := TLemmingList.Create;
 
   BomberMask     := TBitmap32.Create;
-  StonerMask     := TBitmap32.Create;
+  FreezerMask     := TBitmap32.Create;
   BasherMasks    := TBitmap32.Create;
   FencerMasks    := TBitmap32.Create;
   MinerMasks     := TBitmap32.Create;
@@ -915,8 +915,8 @@ begin
   LemmingMethods[baToWalking]  := HandleWalking; //should never happen anyway
   LemmingMethods[baPlatforming] := HandlePlatforming;
   LemmingMethods[baStacking]   := HandleStacking;
-  LemmingMethods[baStoning]    := HandleOhNoing; // same behavior!
-  LemmingMethods[baStoneFinish] := HandleExploding; // same behavior, except applied mask!
+  LemmingMethods[baFreezing]    := HandleOhNoing; // same behavior!
+  LemmingMethods[baFreezeFinish] := HandleExploding; // same behavior, except applied mask!
   LemmingMethods[baSwimming]   := HandleSwimming;
   LemmingMethods[baGliding]    := HandleGliding;
   LemmingMethods[baFixing]     := HandleDisarming;
@@ -946,11 +946,11 @@ begin
   NewSkillMethods[baBlocking]     := MayAssignBlocker;
   NewSkillMethods[baShrugging]    := nil;
   NewSkillMethods[baOhnoing]      := nil;
-  NewSkillMethods[baExploding]    := MayAssignExploderStoner;
+  NewSkillMethods[baExploding]    := MayAssignExploderFreezer;
   NewSkillMethods[baToWalking]    := MayAssignWalker;
   NewSkillMethods[baPlatforming]  := MayAssignPlatformer;
   NewSkillMethods[baStacking]     := MayAssignStacker;
-  NewSkillMethods[baStoning]      := MayAssignExploderStoner;
+  NewSkillMethods[baFreezing]      := MayAssignExploderFreezer;
   NewSkillMethods[baSwimming]     := MayAssignSwimmer;
   NewSkillMethods[baGliding]      := MayAssignFloaterGlider;
   NewSkillMethods[baFixing]       := MayAssignDisarmer;
@@ -974,7 +974,7 @@ end;
 destructor TLemmingGame.Destroy;
 begin
   BomberMask.Free;
-  StonerMask.Free;
+  FreezerMask.Free;
   LaserMask.Free;
   BasherMasks.Free;
   FencerMasks.Free;
@@ -1013,7 +1013,7 @@ begin
   if not fMasksLoaded then
   begin
     LoadMask(BomberMask, 'bomber.png', CombineMaskPixelsNeutral);
-    LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteStoner);
+    LoadMask(FreezerMask, 'freezer.png', CombineNoOverwriteFreezer);
     LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Laserer, Basher, Fencer and Miner are set when used
     LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
@@ -1310,8 +1310,8 @@ end;
 
 
 
-procedure TLemmingGame.CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
-// copy Stoner to world
+procedure TLemmingGame.CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: TColor32);
+// copy Freezer to world
 begin
   if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
 end;
@@ -1422,8 +1422,8 @@ const
      0, //baToWalking,
     16, //baPlatforming,
      8, //baStacking,
-    16, //baStoning,
-     1, //baStoneFinish,
+    16, //baFreezing,
+     1, //baFreezeFinish,
      8, //baSwimming,
     17, //baGliding,
     16, //baFixing,
@@ -1442,7 +1442,7 @@ begin
   //Switch from baToWalking to baWalking
   if NewAction = baToWalking then NewAction := baWalking;
 
-  if L.LemHasBlockerField and not (NewAction in [baOhNoing, baStoning]) then
+  if L.LemHasBlockerField and not (NewAction in [baOhNoing, baFreezing]) then
   begin
     L.LemHasBlockerField := False;
     SetBlockerMap;
@@ -1550,7 +1550,7 @@ begin
                    end;
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing,
-    baStoning    : begin
+    baFreezing    : begin
                      CueSoundEffect(SFX_OHNO, L.Position);
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
@@ -1561,7 +1561,7 @@ begin
                      L.LemHasBeenOhnoer := true;
                    end;
     baExploding  : CueSoundEffect(SFX_EXPLOSION, L.Position);
-    baStoneFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
+    baFreezeFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
                      while (i < 4) and HasTriggerAt(L.LemX, L.LemY - i - 1, trWater)
@@ -1593,14 +1593,14 @@ begin
     if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding,
                        baFalling, baSwimming, baReaching, baShimmying, baJumping] then
     begin
-      if L.LemTimerToStone then
-        Transition(L, baStoneFinish)
+      if L.LemTimerToFreeze then
+        Transition(L, baFreezeFinish)
       else
         Transition(L, baExploding);
       end
     else begin
-      if L.LemTimerToStone then
-        Transition(L, baStoning)
+      if L.LemTimerToFreeze then
+        Transition(L, baFreezing)
       else
         Transition(L, baOhnoing);
     end;
@@ -1922,13 +1922,13 @@ begin
   else if (NewSkill = baExploding) then
   begin
     L.LemExplosionTimer := 1;
-    L.LemTimerToStone := False;
+    L.LemTimerToFreeze := False;
     L.LemHideCountdown := True;
   end
-  else if (NewSkill = baStoning) then
+  else if (NewSkill = baFreezing) then
   begin
     L.LemExplosionTimer := 1;
-    L.LemTimerToStone := True;
+    L.LemTimerToFreeze := True;
     L.LemHideCountdown := True;
   end
   else if (NewSkill = baCloning) then
@@ -2149,7 +2149,7 @@ end;
 
 function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+  ActionSet = [baOhnoing, baFreezing, baExploding, baFreezeFinish, baDrowning,
                baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
@@ -2157,7 +2157,7 @@ end;
 
 function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+  ActionSet = [baOhnoing, baFreezing, baExploding, baFreezeFinish, baDrowning,
                baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
@@ -2165,7 +2165,7 @@ end;
 
 function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+  ActionSet = [baOhnoing, baFreezing, baExploding, baFreezeFinish, baDrowning,
                baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not (L.LemIsFloater or L.LemIsGlider);
@@ -2173,7 +2173,7 @@ end;
 
 function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baVaporizing,
+  ActionSet = [baOhnoing, baFreezing, baExploding, baFreezeFinish, baVaporizing,
                baSplatting, baExiting];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
@@ -2181,7 +2181,7 @@ end;
 
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+  ActionSet = [baOhnoing, baFreezing, baExploding, baFreezeFinish, baDrowning,
                baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
@@ -2195,9 +2195,9 @@ begin
   Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
 end;
 
-function TLemmingGame.MayAssignExploderStoner(L: TLemming): Boolean;
+function TLemmingGame.MayAssignExploderFreezer(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baStoning, baDrowning, baExploding, baStoneFinish,
+  ActionSet = [baOhnoing, baFreezing, baDrowning, baExploding, baFreezeFinish,
                baVaporizing, baSplatting, baExiting];
 begin
   Result := not (L.LemAction in ActionSet);
@@ -2935,7 +2935,7 @@ end;
 
 function TLemmingGame.HandleWaterDrown(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baExploding, baStoneFinish, baVaporizing, baExiting, baSplatting];
+  ActionSet = [baSwimming, baExploding, baFreezeFinish, baVaporizing, baExiting, baSplatting];
 begin
   Result := False;
   if not L.LemIsSwimmer then
@@ -2953,7 +2953,7 @@ end;
 function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
 const
   ActionSet = [baSwimming, baClimbing, baHoisting, baOhnoing, baExploding,
-                baStoning, baStoneFinish, baVaporizing, baExiting, baSplatting];
+                baFreezing, baFreezeFinish, baVaporizing, baExiting, baSplatting];
 begin
   Result := True;
   if L.LemIsSwimmer and not (L.LemAction in ActionSet) then
@@ -2965,17 +2965,17 @@ end;
 
 
 
-procedure TLemmingGame.ApplyStoneLemming(L: TLemming);
+procedure TLemmingGame.ApplyFreezeLemming(L: TLemming);
 var
   X: Integer;
 begin
   X := L.LemX;
   if L.LemDx = 1 then Inc(X);
 
-  StonerMask.DrawTo(PhysicsMap, X - 8, L.LemY -10);
+  FreezerMask.DrawTo(PhysicsMap, X - 8, L.LemY -10);
 
   if not IsSimulating then // could happen as a result of slowfreeze objects!
-    fRenderInterface.AddTerrainStoner(X - 8, L.LemY -10);
+    fRenderInterface.AddTerrainFreezer(X - 8, L.LemY -10);
 end;
 
 
@@ -3404,7 +3404,7 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baVaporizing, baShrugging, baOhnoing, baExploding,
-                      baStoning, baReaching, baDehoisting];
+                      baFreezing, baReaching, baDehoisting];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -5226,8 +5226,8 @@ begin
   begin
     if L.LemAction = baOhNoing then
       Transition(L, baExploding)
-    else // if L.LemAction = baStoning then
-      Transition(L, baStoneFinish);
+    else // if L.LemAction = baFreezing then
+      Transition(L, baFreezeFinish);
     L.LemHasBlockerField := False; // remove blocker field
     SetBlockerMap;
     Result := False;
@@ -5251,8 +5251,8 @@ begin
 
   if L.LemAction = baExploding then
     ApplyExplosionMask(L)
-  else // if L.LemAction = baStoneFinish
-    ApplyStoneLemming(L);
+  else // if L.LemAction = baFreezeFinish
+    ApplyFreezeLemming(L);
 
   RemoveLemming(L, RM_KILL);
   L.LemExploded := True;

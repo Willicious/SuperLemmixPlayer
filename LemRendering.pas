@@ -72,7 +72,7 @@ type
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
-    procedure AddStoner(X, Y: Integer);
+    procedure AddFreezer(X, Y: Integer);
     // Remove stuff
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
 
@@ -207,7 +207,7 @@ procedure TRenderer.SetInterface(aInterface: TRenderInterface);
 begin
   fRenderInterface := aInterface;
   fRenderInterface.SetDrawRoutineBrick(AddTerrainPixel);
-  fRenderInterface.SetDrawRoutineStoner(AddStoner);
+  fRenderInterface.SetDrawRoutineFreezer(AddFreezer);
   fRenderInterface.SetRemoveRoutine(ApplyRemovedTerrain);
 end;
 
@@ -814,7 +814,7 @@ begin
         spbGlider: CopyL.LemIsGlider := true;
         spbDisarmer: CopyL.LemIsDisarmer := true;
         spbBomber: DoProjection := false;
-        spbStoner: DoProjection := false;
+        spbFreezer: DoProjection := false;
         spbBlocker: DoProjection := false;
         spbCloner: CopyL.LemDX := -CopyL.LemDX;
         spbNone: ; // Do nothing
@@ -1541,11 +1541,11 @@ begin
     Apply(X, Y);
 end;
 
-procedure TRenderer.AddStoner(X, Y: Integer);
+procedure TRenderer.AddFreezer(X, Y: Integer);
 begin
-  fAni.LemmingAnimations[STONED].DrawMode := dmCustom;
-  fAni.LemmingAnimations[STONED].OnPixelCombine := CombineTerrainNoOverwrite;
-  fAni.LemmingAnimations[STONED].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
+  fAni.LemmingAnimations[FROZEN].DrawMode := dmCustom;
+  fAni.LemmingAnimations[FROZEN].OnPixelCombine := CombineTerrainNoOverwrite;
+  fAni.LemmingAnimations[FROZEN].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
 end;
 
 function TRenderer.FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;

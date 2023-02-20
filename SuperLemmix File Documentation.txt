@@ -200,7 +200,7 @@ r) The skillset in the level
        Value: The number of bomber skills available or 'INFINITE'
    rh) Stoner skills
        Key: 'STONER'
-       Value: The number of stoner skills available or 'INFINITE'
+       Value: The number of freezer skills available or 'INFINITE'
    ri) Blocker skills
        Key: 'BLOCKER'
        Value: The number of blocker skills available or 'INFINITE'
@@ -271,7 +271,7 @@ s) An interactive object in the level
        This line only has an effect on vertically resizable objects. The default value is the height of the sprite.
    sm) The skill of a pick-up skill.
        Key: 'SKILL'
-       Value: 'walker', 'climber', 'swimmer', 'floater', 'glider', 'disarmer', 'bomber', 'stoner',
+       Value: 'walker', 'climber', 'swimmer', 'floater', 'glider', 'disarmer', 'bomber', 'freezer',
               'blocker', 'builder', 'platformer', 'stacker', 'basher', 'miner', 'digger', 'fencer', 'cloner'
        This line only has an effect for pick-up skills
    sn) Preassigned skills used for a hatch 

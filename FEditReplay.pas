@@ -81,7 +81,7 @@ var
             baToWalking:   Result := 'Walker';
             baPlatforming: Result := 'Platformer';
             baStacking:    Result := 'Stacker';
-            baStoning:     Result := 'Stoner';
+            baFreezing:    Result := 'Freezer';
             baSwimming:    Result := 'Swimmer';
             baGliding:     Result := 'Glider';
             baFixing:      Result := 'Disarmer';

@@ -708,13 +708,13 @@ begin
     // Bomber is drawn resized
     DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));
 
-    // Stoner is tricky - the goal is an outlined stoned lemming over a stoner explosion graphic
-    DrawAnimationFrame(fSkillIcons[spbStoner], STONED, 0, 8, 21);
-    Outline(fSkillIcons[spbStoner]);
-    TempBmp.Assign(fSkillIcons[spbStoner]);
-    fSkillIcons[spbStoner].Clear(0);
-    DrawAnimationFrameResized(fSkillIcons[spbStoner], STONEEXPLOSION, 0, Rect(-2, 7, 15, 24));
-    TempBmp.DrawTo(fSkillIcons[spbStoner], 0, 0);
+    // Freezer is tricky - the goal is an outlined frozen lemming over a freezer explosion graphic
+    DrawAnimationFrame(fSkillIcons[spbFreezer], FROZEN, 0, 8, 21);
+    Outline(fSkillIcons[spbFreezer]);
+    TempBmp.Assign(fSkillIcons[spbFreezer]);
+    fSkillIcons[spbFreezer].Clear(0);
+    DrawAnimationFrameResized(fSkillIcons[spbFreezer], FREEZEREXPLOSION, 0, Rect(-2, 7, 15, 24));
+    TempBmp.DrawTo(fSkillIcons[spbFreezer], 0, 0);
 
     // Blocker is simple
     DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 0, 7, 21);
@@ -969,25 +969,25 @@ begin
   ButtonList := GetButtonList;
   Assert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
 
-  // Set only rectangles for non-skill buttons
-  // The skill buttons are dealt with in SetSkillIcons
-  //for i := 0 to Length(ButtonList) - 1 do
-  //begin
-    //if ButtonList[i] in [spbDirLeft, spbDirRight] then
-    //begin
-      //fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
-      //fButtonRects[spbDirRight] := HalfButtonRect(i, false);
-    //end else if ButtonList[i] in [spbBackOneFrame, spbForwardOneFrame] then
-    //begin
-      //fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
-      //fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
-    //end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
-    //begin
-      //fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
-      //fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
-    //end else if ButtonList[i] > spbNone then
-      //fButtonRects[ButtonList[i]] := ButtonRect(i);
-  //end;
+  //Set only rectangles for non-skill buttons
+  //The skill buttons are dealt with in SetSkillIcons
+  for i := 0 to Length(ButtonList) - 1 do
+  begin
+    if ButtonList[i] in [spbDirLeft, spbDirRight] then
+    begin
+      fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
+      fButtonRects[spbDirRight] := HalfButtonRect(i, false);
+    end else if ButtonList[i] in [spbBackOneFrame, spbForwardOneFrame] then
+    begin
+      fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
+      fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
+    end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
+    begin
+      fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
+      fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
+    end else if ButtonList[i] > spbNone then
+      fButtonRects[ButtonList[i]] := ButtonRect(i);
+  end;
 end;
 
 procedure TBaseSkillPanel.DrawMinimap;

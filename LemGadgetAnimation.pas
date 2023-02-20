@@ -449,9 +449,9 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
   DrawAnimationFrame(SkillIcons[Integer(spbDisarmer)], FIXING, 6, PICKUP_MID - 2, PICKUP_BASELINE - 3);
 
-  // Bomber, stoner and blocker are simple. Unlike the skill panel, we use the Ohnoer animation for bomber here.
+  // Bomber, freezer and blocker are simple. Unlike the skill panel, we use the Ohnoer animation for bomber here.
   DrawAnimationFrame(SkillIcons[Integer(spbBomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);
-  DrawAnimationFrame(SkillIcons[Integer(spbStoner)], STONED, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], FROZEN, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 1);
 
   // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.

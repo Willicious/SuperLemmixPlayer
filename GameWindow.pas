@@ -820,7 +820,7 @@ begin
       spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
       spbDisarmer: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
       spbBomber: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
-      spbStoner: SL.Add('  fRenderInterface.SelectedSkill: Stoner');
+      spbFreezer: SL.Add('  fRenderInterface.SelectedSkill: Freezer');
       spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
       spbPlatformer: SL.Add('  fRenderInterface.SelectedSkill: Platformer');
       spbBuilder: SL.Add('  fRenderInterface.SelectedSkill: Builder');
@@ -1862,7 +1862,7 @@ const
      (baFalling, baFloating),
      (baFalling, baGliding),
      (baOhnoing, baExploding),
-     (baStoning, baStoneFinish),
+     (baFreezing, baFreezeFinish),
      (baReaching, baShimmying)
     );
 

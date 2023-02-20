@@ -28,7 +28,7 @@ const
                                                ('WALKER', 'JUMPER', 'SHIMMIER',
                                                 'SLIDER', 'CLIMBER',
                                                 'SWIMMER', 'FLOATER', 'GLIDER',
-                                                'DISARMER', 'BOMBER', 'STONER',
+                                                'DISARMER', 'BOMBER', 'FREEZER',
                                                 'BLOCKER', 'PLATFORMER', 'BUILDER',
                                                 'STACKER', 'LASERER', 'BASHER', 'FENCER',
                                                 'MINER', 'DIGGER', 'CLONER');

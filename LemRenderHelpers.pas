@@ -34,7 +34,7 @@ const
 
 type
 
-  TDrawableItem = (di_ConstructivePixel, di_Stoner);
+  TDrawableItem = (di_ConstructivePixel, di_Freezer);
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutineWithColor = procedure(X, Y: Integer; Color: TColor32) of object;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
@@ -139,7 +139,7 @@ type
       fScreenPos: TPoint;
       fMousePos: TPoint;
       fDrawRoutineBrick: TDrawRoutineWithColor;
-      fDrawRoutineStoner: TDrawRoutine;
+      fDrawRoutineFreezer: TDrawRoutine;
       fRemoveRoutine: TRemoveRoutine;
       fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
@@ -157,14 +157,14 @@ type
     public
       constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
-      procedure SetDrawRoutineStoner(aRoutine: TDrawRoutine);
+      procedure SetDrawRoutineFreezer(aRoutine: TDrawRoutine);
       procedure SetDrawRoutineBrick(aRoutine: TDrawRoutineWithColor);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
       procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
       procedure SetIsStartingSecondsRoutine(aRoutine: TIsStartingSecondsRoutine);
       procedure AddTerrainBrick(X, Y: Integer; Color: TColor32);
-      procedure AddTerrainStoner(X, Y: Integer);
+      procedure AddTerrainFreezer(X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       procedure Null;
       procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
@@ -254,14 +254,14 @@ uses
 constructor TRenderInterface.Create;
 begin
   fDrawRoutineBrick := nil;
-  fDrawRoutineStoner := nil;
+  fDrawRoutineFreezer := nil;
   fUserHelperIcon := hpi_None;
   fSelectedLemmingID := -1;
 end;
 
-procedure TRenderInterface.SetDrawRoutineStoner(aRoutine: TDrawRoutine);
+procedure TRenderInterface.SetDrawRoutineFreezer(aRoutine: TDrawRoutine);
 begin
-  fDrawRoutineStoner := aRoutine;
+  fDrawRoutineFreezer := aRoutine;
 end;
 
 procedure TRenderInterface.SetDrawRoutineBrick(aRoutine: TDrawRoutineWithColor);
@@ -298,12 +298,12 @@ begin
   if Assigned(fDrawRoutineBrick) then fDrawRoutineBrick(X, Y, Color);
 end;
 
-procedure TRenderInterface.AddTerrainStoner(X, Y: Integer);
+procedure TRenderInterface.AddTerrainFreezer(X, Y: Integer);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
   // This is to pass to TRenderer for on-screen drawing.
   if fDisableDrawing then Exit;
-  if Assigned(fDrawRoutineStoner) then fDrawRoutineStoner(X, Y);
+  if Assigned(fDrawRoutineFreezer) then fDrawRoutineFreezer(X, Y);
 end;
 
 procedure TRenderInterface.RemoveTerrain(X, Y, Width, Height: Integer);

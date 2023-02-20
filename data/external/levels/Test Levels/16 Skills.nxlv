@@ -8,7 +8,7 @@
  TITLE 16 Skills
  AUTHOR WillLem
  ID x69FE49DB3715D768
- VERSION x0000000000000002
+ VERSION x0000000000000003
  
 #       Level dimensions        
 # ----------------------------- 
@@ -18,27 +18,27 @@
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 1
- SAVE_REQUIREMENT 1
+ LEMMINGS 10
+ SAVE_REQUIREMENT 5
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
    WALKER 1
    JUMPER 1
    SHIMMIER 1
-   SLIDER 1
    CLIMBER 1
    SWIMMER 1
    FLOATER 1
-   GLIDER 1
    DISARMER 1
    BOMBER 1
-   STONER 1
+   FREEZER 1
    BLOCKER 1
    PLATFORMER 1
    BUILDER 1
    STACKER 1
    LASERER 1
+   BASHER 1
+   DIGGER 1
  $END 
  
  $TALISMAN 
