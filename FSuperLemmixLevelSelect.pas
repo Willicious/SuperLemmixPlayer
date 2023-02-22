@@ -110,13 +110,13 @@ const // Icon indexes
     17, // Platformer
     18, // Builder
     19, // Stacker
+    40, // Spearer
+    41, // Grenader
     37, // Laserer
     20, // Basher
     21, // Fencer
     22, // Miner
     23, // Digger
-    40, // Spearer
-    41, // Grenader
     24  // Cloner
   );
 
