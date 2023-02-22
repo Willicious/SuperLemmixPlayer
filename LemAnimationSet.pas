@@ -86,10 +86,10 @@ const
   DEHOISTING_RTL      = 57;
   SLIDING             = 58;
   SLIDING_RTL         = 59;
-  LASERING            = 60;
-  LASERING_RTL        = 61;
-  THROWING            = 62;
-  THROWING_RTL        = 63;
+  THROWING            = 60;
+  THROWING_RTL        = 61;
+  LASERING            = 62;
+  LASERING_RTL        = 63;
   FROZEN              = 64; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
@@ -130,9 +130,9 @@ const
     (JUMPING, JUMPING_RTL),                   // 31 baJumping
     (DEHOISTING, DEHOISTING_RTL),             // 32 baDehoisting
     (SLIDING, SLIDING_RTL),                   // 33 baSliding
-    (LASERING, LASERING_RTL),                  // 34 baLasering
     (THROWING, THROWING_RTL),                 // 35 baSpearing
-    (THROWING, THROWING_RTL)                 // 35 baGrenading
+    (THROWING, THROWING_RTL),                 // 35 baGrenading
+    (LASERING, LASERING_RTL)                  // 34 baLasering
   );
 
 type
@@ -195,7 +195,7 @@ const
                                          'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER',
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
                                          'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER',
-                                         'DEHOISTER', 'SLIDER', 'LASERER', 'THROWER');
+                                         'DEHOISTER', 'SLIDER', 'THROWER', 'LASERER');
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
   Parser: TParser;
