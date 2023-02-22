@@ -24,8 +24,8 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES     = 63;
-  NUM_LEM_SPRITE_TYPE = 31;
+  NUM_LEM_SPRITES     = 65;
+  NUM_LEM_SPRITE_TYPE = 32;
   WALKING             = 0;
   WALKING_RTL         = 1;
   ASCENDING           = 2;
@@ -64,8 +64,8 @@ const
   EXPLOSION_RTL       = 35;
   PLATFORMING         = 36;
   PLATFORMING_RTL     = 37;
-  FREEZEREXPLOSION      = 38;
-  FREEZEREXPLOSION_RTL  = 39;
+  FREEZEREXPLOSION     = 38;
+  FREEZEREXPLOSION_RTL = 39;
   SWIMMING            = 40;
   SWIMMING_RTL        = 41;
   GLIDING             = 42;
@@ -88,47 +88,51 @@ const
   SLIDING_RTL         = 59;
   LASERING            = 60;
   LASERING_RTL        = 61;
-  FROZEN              = 62; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
+  THROWING            = 62;
+  THROWING_RTL        = 63;
+  FROZEN              = 64; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
   // I should change it... at some point.
   AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
     (0,0),
-    (WALKING, WALKING_RTL),                   // baWalk,
-    (ASCENDING, ASCENDING_RTL),               // baAscending,
-    (DIGGING, DIGGING_RTL),                   // baDigging,
-    (CLIMBING, CLIMBING_RTL),                 // baClimbing,
-    (DROWNING, DROWNING_RTL),                 // baDrowning,
-    (HOISTING, HOISTING_RTL),                 // baHoisting,
-    (BRICKLAYING, BRICKLAYING_RTL),           // baBricklaying,
-    (BASHING, BASHING_RTL),                   // baBashing,
-    (MINING, MINING_RTL),                     // baMining,
-    (FALLING, FALLING_RTL),                   // baFalling,
-    (UMBRELLA, UMBRELLA_RTL),                 // baUmbrella,
-    (SPLATTING, SPLATTING_RTL),               // baSplatting,
-    (EXITING, EXITING_RTL),                   // baExiting,
-    (FRIED, FRIED_RTL),                       // baFried,
-    (BLOCKING, BLOCKING_RTL),                 // baBlocking,
-    (SHRUGGING, SHRUGGING_RTL),               // baShrugging,
-    (OHNOING, OHNOING_RTL),                   // baOhnoing,
-    (EXPLOSION, EXPLOSION_RTL),               // baExploding
-    (0,0),                                    // baToWalking. Should never happen.
-    (PLATFORMING, PLATFORMING_RTL),           // baPlatforming
-    (STACKING, STACKING_RTL),                 // baStacking
-    (OHNOING, OHNOING_RTL),                   // baFreezeOhNoing <-- might be incorrect name so don't rely on this
-    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL),     // baFreezeFinish
-    (SWIMMING, SWIMMING_RTL),                 // baSwimming
-    (GLIDING, GLIDING_RTL),                   // baGliding
-    (FIXING, FIXING_RTL),                     // baFixing
-    (0,0),                                    // baCloning? Another that should never happen
-    (FENCING, FENCING_RTL),                   // baFencing
-    (REACHING, REACHING_RTL),                 // baReaching (for shimmier)
-    (SHIMMYING, SHIMMYING_RTL),               // baShimmying
-    (JUMPING, JUMPING_RTL),                   // baJumping
-    (DEHOISTING, DEHOISTING_RTL),             // baDehoisting
-    (SLIDING, SLIDING_RTL),                   // baSliding
-    (LASERING, LASERING_RTL)                  // baLasering
+    (WALKING, WALKING_RTL),                   // 1 baWalk,
+    (ASCENDING, ASCENDING_RTL),               // 2 baAscending,
+    (DIGGING, DIGGING_RTL),                   // 3 baDigging,
+    (CLIMBING, CLIMBING_RTL),                 // 4 baClimbing,
+    (DROWNING, DROWNING_RTL),                 // 5 baDrowning,
+    (HOISTING, HOISTING_RTL),                 // 6 baHoisting,
+    (BRICKLAYING, BRICKLAYING_RTL),           // 7 baBricklaying,
+    (BASHING, BASHING_RTL),                   // 8 baBashing,
+    (MINING, MINING_RTL),                     // 9 baMining,
+    (FALLING, FALLING_RTL),                   // 10 baFalling,
+    (UMBRELLA, UMBRELLA_RTL),                 // 11 baUmbrella,
+    (SPLATTING, SPLATTING_RTL),               // 12 baSplatting,
+    (EXITING, EXITING_RTL),                   // 13 baExiting,
+    (FRIED, FRIED_RTL),                       // 14 baFried,
+    (BLOCKING, BLOCKING_RTL),                 // 15 baBlocking,
+    (SHRUGGING, SHRUGGING_RTL),               // 16 baShrugging,
+    (OHNOING, OHNOING_RTL),                   // 17 baOhnoing,
+    (EXPLOSION, EXPLOSION_RTL),               // 18 baExploding
+    (0,0),                                    // 19 baToWalking. Should never happen.
+    (PLATFORMING, PLATFORMING_RTL),           // 20 baPlatforming
+    (STACKING, STACKING_RTL),                 // 21 baStacking
+    (OHNOING, OHNOING_RTL),                   // 22 baFreezeOhNoing <-- might be incorrect name so don't rely on this
+    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL),     // 23 baFreezeFinish
+    (SWIMMING, SWIMMING_RTL),                 // 24 baSwimming
+    (GLIDING, GLIDING_RTL),                   // 25 baGliding
+    (FIXING, FIXING_RTL),                     // 26 baFixing
+    (0,0),                                    // 27 baCloning? Another that should never happen
+    (FENCING, FENCING_RTL),                   // 28 baFencing
+    (REACHING, REACHING_RTL),                 // 29 baReaching (for shimmier)
+    (SHIMMYING, SHIMMYING_RTL),               // 30 baShimmying
+    (JUMPING, JUMPING_RTL),                   // 31 baJumping
+    (DEHOISTING, DEHOISTING_RTL),             // 32 baDehoisting
+    (SLIDING, SLIDING_RTL),                   // 33 baSliding
+    (LASERING, LASERING_RTL),                  // 34 baLasering
+    (THROWING, THROWING_RTL),                 // 35 baSpearing
+    (THROWING, THROWING_RTL)                 // 35 baGrenading
   );
 
 type
@@ -184,14 +188,14 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..30] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
+  ANIM_NAMES: array[0..31] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
                                          'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                          'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                          'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
                                          'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER',
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
                                          'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER',
-                                         'DEHOISTER', 'SLIDER', 'LASERER');
+                                         'DEHOISTER', 'SLIDER', 'LASERER', 'THROWER');
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
   Parser: TParser;

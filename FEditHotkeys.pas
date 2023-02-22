@@ -105,6 +105,8 @@ begin
                      Integer(spbPlatformer): s := s + 'Platformer';
                      Integer(spbBuilder):    s := s + 'Builder';
                      Integer(spbStacker):    s := s + 'Stacker';
+                     Integer(spbSpearer):    s := s + 'Spearer';
+                     Integer(spbGrenader):   s := s + 'Grenader';
                      Integer(spbLaserer):    s := s + 'Laserer';
                      Integer(spbBasher):     s := s + 'Basher';
                      Integer(spbFencer):     s := s + 'Fencer';

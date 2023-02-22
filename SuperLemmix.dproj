@@ -278,6 +278,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <Form>FReplayNaming</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="LemProjectile.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

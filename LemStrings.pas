@@ -120,6 +120,8 @@ resourcestring
   SJumper = 'Jumper';
   SDehoister = 'Dehoister';
   SSlider = 'Slider';
+  SSpearer = 'Spearer';
+  SGrenader = 'Grenader';
   SLaserer = 'Laserer';
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
@@ -189,6 +191,8 @@ const
     SJumper,
     SDehoister,
     SSlider,
+    SSpearer,
+    SGrenader,
     SLaserer
   );
 

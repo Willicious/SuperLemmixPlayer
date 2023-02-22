@@ -71,7 +71,8 @@ uses
   GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
   GameMenuScreen in 'GameMenuScreen.pas',
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
-  FReplayRename in 'FReplayRename.pas' {FReplayNaming};
+  FReplayRename in 'FReplayRename.pas' {FReplayNaming},
+  LemProjectile in 'LemProjectile.pas';
 
 {$R *.res}
 

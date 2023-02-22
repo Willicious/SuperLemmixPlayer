@@ -78,6 +78,8 @@ type
     baJumping,
     baDehoisting,
     baSliding,
+    baSpearing,
+    baGrenading,
     baLasering
   );
 
@@ -103,6 +105,8 @@ type
     spbPlatformer,
     spbBuilder,
     spbStacker,
+    spbSpearer,
+    spbGrenader,
     spbLaserer,
     spbBasher,
     spbFencer,
@@ -153,7 +157,10 @@ const
     'fencer',
     'miner',
     'digger',
-    'cloner');
+    'spearer',
+    'grenader',
+    'cloner'
+    );
 
   SKILL_PLURAL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
     'walkers',
@@ -176,7 +183,10 @@ const
     'fencers',
     'miners',
     'diggers',
-    'cloners');
+    'spearers',
+    'grenaders',
+    'cloners'
+    );
 
 type
   TTriggerTypes = (
@@ -226,6 +236,8 @@ const
     baShimmying,
     baJumping,
     baSliding,
+    baSpearing,
+    baGrenading,
     baLasering
   ];
 
@@ -265,6 +277,8 @@ const
     spbJumper,
     spbNone,
     spbSlider,
+    spbSpearer,
+    spbGrenader,
     spbLaserer
   );
 
@@ -287,6 +301,8 @@ const
     baBuilding,
     baStacking,
     baLasering,
+    baSpearing,
+    baGrenading,
     baBashing,
     baFencing,
     baMining,

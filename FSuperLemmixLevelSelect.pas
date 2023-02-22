@@ -115,6 +115,8 @@ const // Icon indexes
     21, // Fencer
     22, // Miner
     23, // Digger
+    40, // Spearer
+    41, // Grenader
     24  // Cloner
   );
 
@@ -141,7 +143,7 @@ const // Icon indexes
 implementation
 
 uses
-  FReplayRename,
+  fReplayRename,
   LemLevel;
 
 const
