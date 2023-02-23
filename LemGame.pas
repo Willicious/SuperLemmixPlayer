@@ -1478,9 +1478,9 @@ const
     13, //baJumping
      7, //baDehoisting
      1, //baSliding
-    12,  //baLasering - it's, ironically, this high for rendering purposes
-    6, //baSpearing
-    6 //baGrenading
+    10, //baSpearing
+    10,  //baGrenading
+    12  //baLasering - it's, ironically, this high for rendering purposes
     );
 begin
   if DoTurn then TurnAround(L);
