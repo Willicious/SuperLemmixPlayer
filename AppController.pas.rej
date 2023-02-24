@@ -1,0 +1,27 @@
+diff a/AppController.pas b/AppController.pas	(rejected hunks)
+@@ -150,25 +150,24 @@
+ 
+   ZeroMemory(@Input, SizeOf(Input));
+   SendInput(1, Input, SizeOf(Input)); // don't send anyting actually to another app..
+   SetForegroundWindow(Application.Handle);
+   DoneBringToFront := true;
+ end;
+ 
+ constructor TAppController.Create(aOwner: TComponent);
+ var
+   i: Integer;
+   OpenDlg: TOpenDialog;
+   DoSingleLevel: Boolean;
+-  OverrideDirectDrop: Boolean;
+   fMainDatExtractor : TMainDatExtractor;
+ begin
+   inherited;
+ 
+   // Set to true as default; change to false if any failure.
+   fLoadSuccess := true;
+ 
+   // Unless command line starts with "testmode" (sent by editor when launching test mode),
+   // we need to get which file to run. The command line may have already specified it in which
+   // case we can just get it from that; otherwise, we need to promt the user to select an
+   // NXP or LVL file.
+   DoSingleLevel := false;

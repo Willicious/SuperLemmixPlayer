@@ -1165,7 +1165,7 @@ constructor TGameWindow.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
 
-  Color := $300000;
+  Color := $200020;
 
   fNeedResetMouseTrap := true;
 
