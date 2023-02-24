@@ -671,11 +671,11 @@ begin
   if ShowCountdown then
   begin
     n := (aLemming.LemExplosionTimer div 17) + 1;
-    SrcRect := SizedRect(n * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
+    SrcRect := SizedRect(n * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
     if aLemming.LemDX < 0 then
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect)
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 3) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect)
     else
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 1) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
     fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
