@@ -2533,7 +2533,7 @@ var
 
     Y := Y - 2; // to center
 
-    DigitsWidth := Length(aDigitString) * 5;
+    DigitsWidth := Length(aDigitString) * 6;
     if aAlignment < 0 then
       CurX := X
     else if aAlignment > 0 then
@@ -2544,7 +2544,7 @@ var
     for n := 1 to Length(aDigitString) do
     begin
       Digit := StrToInt(aDigitString[n]);
-      SrcRect := SizedRect(Digit * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
+      SrcRect := SizedRect(Digit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
@@ -2556,7 +2556,7 @@ var
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
       fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
       fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
-      CurX := CurX + 5;
+      CurX := CurX + 7;
     end;
 
     fFixedDrawColor := OldDrawColor;
