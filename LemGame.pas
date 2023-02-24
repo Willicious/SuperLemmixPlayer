@@ -2905,7 +2905,7 @@ begin
   Result := False; // only see exit trigger area, if it actually used
 
   if     (not L.LemIsZombie)
-     and (not (L.LemAction in [baFalling, baSplatting, baJumping, baReaching]))
+     //and (not (L.LemAction in [baFalling, baSplatting, baJumping, baReaching]))
      and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
     if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
