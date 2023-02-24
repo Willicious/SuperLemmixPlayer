@@ -7,7 +7,7 @@ SOUND thud
 
 $ANIMATION
   NAME constant
-  FRAMES 24
+  FRAMES 1
   OFFSET_X 2
   OFFSET_Y 0
   

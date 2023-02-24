@@ -6,7 +6,7 @@ TRIGGER_HEIGHT 4
 SOUND weedgulp
 
 $ANIMATION
-  FRAMES 20
+  FRAMES 160
   NAME constant
   
   OFFSET_X 55
