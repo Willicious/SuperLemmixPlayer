@@ -1,5 +1,5 @@
 # ----------------------------- 
-#        NeoLemmix Level        
+#        SuperLemmix Level        
 #   Created with NLEditor 1.40
 # ----------------------------- 
  
@@ -8,17 +8,19 @@
  TITLE 16 Skills
  AUTHOR WillLem
  ID x69FE49DB3715D768
- VERSION x0000000000000003
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 400
  HEIGHT 160
+ START_X 160
+ START_Y 80
  THEME orig_crystal
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 10
+ LEMMINGS 50
  SAVE_REQUIREMENT 5
  MAX_SPAWN_INTERVAL 53
  
@@ -53,35 +55,44 @@
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 57
-   Y 36
+   X 41
+   Y 44
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_crystal
    PIECE exit
-   X 223
-   Y 57
+   X 255
+   Y 65
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_crystal
    PIECE trap_03
-   X 142
-   Y 67
+   X 174
+   Y 75
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_crystal
    PIECE water
-   X 125
-   Y 106
+   X 157
+   Y 114
    WIDTH 64
    HEIGHT 16
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 303
+   Y 33
+   NO_OVERWRITE
+   LEMMINGS 20
  $END
  
  
@@ -90,32 +101,16 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_01
-   X 125
-   Y 24
+   X 157
+   Y 32
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 84
-   Y 80
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 132
-   Y 80
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_01
-   X 173
-   Y 18
+   X 116
+   Y 88
    ONE_WAY
  $END
  
@@ -123,63 +118,95 @@
    STYLE orig_crystal
    PIECE bar_04
    X 164
-   Y 80
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 36
-   Y 80
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 212
-   Y 80
+   Y 88
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_01
-   X 125
-   Y 68
+   X 205
+   Y 26
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 125
-   Y 122
+   X 196
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 20
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 244
+   Y 88
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_01
-   X 173
-   Y 106
+   X 157
+   Y 76
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 125
-   Y 18
+   X 157
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 205
+   Y 114
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 189
-   Y 106
+   X 157
+   Y 26
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 221
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 285
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 55
+   Y 88
    ONE_WAY
  $END
  

@@ -235,9 +235,7 @@ begin
     cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
-    cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
-    cbHideClearPhysics.Checked := GameParams.HideClearPhysics;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     //cbSpawnInterval.Checked := GameParams.SpawnInterval;
     //cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
@@ -301,7 +299,6 @@ begin
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
-  GameParams.HideClearPhysics := cbHideClearPhysics.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   //GameParams.SpawnInterval := cbSpawnInterval.Checked;
   //GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
@@ -406,10 +403,14 @@ begin
 begin
   cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
   cbHideShadows.Enabled := false;
+end else
+  cbHideShadows.Enabled := true;
+
+if cbClassicMode.Checked then
+begin
   cbHideClearPhysics.Checked := true;
   cbHideClearPhysics.Enabled := false;
 end else
-  cbHideShadows.Enabled := true;
   cbHideClearPhysics.Enabled := true;
 end;
 

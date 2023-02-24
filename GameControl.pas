@@ -68,7 +68,7 @@ type
     moNoBackgrounds,
     moClassicMode,
     moHideShadows,
-    moHideClearPhysics,
+    //moHideClearPhysics,
     moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
@@ -216,7 +216,7 @@ type
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
-    property HideClearPhysics: boolean Index moHideClearPhysics read GetOptionFlag write SetOptionFlag;
+    //property HideClearPhysics: boolean Index moHideClearPhysics read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
@@ -411,7 +411,7 @@ begin
   SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
-  SaveBoolean('HideClearPhysics', HideClearPhysics);
+  //SaveBoolean('HideClearPhysics', HideClearPhysics);
   //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
@@ -577,7 +577,7 @@ begin
     ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
-    HideClearPhysics := LoadBoolean('HideClearPhysics', HideClearPhysics);
+    //HideClearPhysics := LoadBoolean('HideClearPhysics', HideClearPhysics);
     //CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
