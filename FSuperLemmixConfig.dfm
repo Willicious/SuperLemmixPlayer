@@ -56,7 +56,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 279
     Height = 296
-    ActivePage = TabSheet5
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -251,6 +251,7 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Hide Clear Physics'
           TabOrder = 1
+          OnClick = OptionChanged
         end
         object cbHideSpecialSelect: TCheckBox
           Left = 12
@@ -259,6 +260,7 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Hide Special Select'
           TabOrder = 2
+          OnClick = OptionChanged
         end
         object cbHideFrameskipping: TCheckBox
           Left = 12
@@ -267,6 +269,7 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Hide Frameskipping'
           TabOrder = 3
+          OnClick = OptionChanged
         end
         object cbHideHelpers: TCheckBox
           Left = 12
@@ -275,6 +278,7 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Hide Helper Overlays'
           TabOrder = 4
+          OnClick = OptionChanged
         end
       end
     end
