@@ -231,9 +231,9 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox5: TGroupBox
         Left = 20
-        Top = 49
+        Top = 41
         Width = 238
-        Height = 72
+        Height = 136
         TabOrder = 1
         object cbHideShadows: TCheckBox
           Left = 12
@@ -251,6 +251,30 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Hide Clear Physics'
           TabOrder = 1
+        end
+        object cbHideSpecialSelect: TCheckBox
+          Left = 12
+          Top = 57
+          Width = 125
+          Height = 17
+          Caption = 'Hide Special Select'
+          TabOrder = 2
+        end
+        object cbHideFrameskipping: TCheckBox
+          Left = 12
+          Top = 80
+          Width = 125
+          Height = 17
+          Caption = 'Hide Frameskipping'
+          TabOrder = 3
+        end
+        object cbHideHelpers: TCheckBox
+          Left = 12
+          Top = 103
+          Width = 125
+          Height = 17
+          Caption = 'Hide Helper Overlays'
+          TabOrder = 4
         end
       end
     end

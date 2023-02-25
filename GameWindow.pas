@@ -574,8 +574,10 @@ begin
     Exit;
   end;
 
+  //This might be able to be removed because Framestepping is no longer on the panel
   PanelFrameSkip := SkillPanel.FrameSkip;
 
+  if not GameParams.HideFrameskipping then
   if PanelFrameSkip < 0 then
   begin
     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
@@ -947,29 +949,36 @@ procedure TGameWindow.CheckShifts(Shift: TShiftState);
 var
   SDir: Integer;
 begin
+  if not GameParams.HideSpecialSelect then
   Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
+  if not GameParams.HideSpecialSelect then
   Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
   Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
   SDir := 0;
+  if not GameParams.HideSpecialSelect then
   if GameParams.Hotkeys.CheckForKey(lka_DirLeft) then SDir := SDir - 1;
+  if not GameParams.HideSpecialSelect then
   if GameParams.Hotkeys.CheckForKey(lka_DirRight) then SDir := SDir + 1; // These two cancel each other out if both are pressed. Genius. :D
-  if SDir = 0 then
-  begin
-    SDir := SkillPanel.SkillPanelSelectDx;
-    if (SDir = 0) and (Game.fSelectDx <> 0) then
-    begin
-      SkillPanel.DrawButtonSelector(spbDirLeft, false);
-      SkillPanel.DrawButtonSelector(spbDirRight, false);
-    end;
-  end else begin
-    SkillPanel.SkillPanelSelectDx := 0;
-    if (Game.fSelectDx <> SDir) then
-    begin
-      SkillPanel.DrawButtonSelector(spbDirLeft, (SDir = -1));
-      SkillPanel.DrawButtonSelector(spbDirRight, (SDir = 1));
-    end;
-  end;
+
+  // Code not needed because Direction Select is no longer shown on the panel
+  //if SDir = 0 then
+  //if not GameParams.HideSpecialSelect then
+  //begin
+    //SDir := SkillPanel.SkillPanelSelectDx;
+    //if (SDir = 0) and (Game.fSelectDx <> 0) then
+    //begin
+      //SkillPanel.DrawButtonSelector(spbDirLeft, false);
+      //SkillPanel.DrawButtonSelector(spbDirRight, false);
+    //end;
+  //end else begin
+    //SkillPanel.SkillPanelSelectDx := 0;
+    //if (Game.fSelectDx <> SDir) then
+    //begin
+      //SkillPanel.DrawButtonSelector(spbDirLeft, (SDir = -1));
+      //SkillPanel.DrawButtonSelector(spbDirRight, (SDir = 1));
+    //end;
+  //end;
 
   Game.fSelectDx := SDir;
 end;
@@ -1427,6 +1436,7 @@ begin
                         end;
                       end;
       lka_Skip: if Game.Playing then
+                  if not GameParams.HideFrameskipping then
                   if func.Modifier < 0 then
                   begin
                     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
@@ -1440,10 +1450,11 @@ begin
                   end else
                     if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
-      lka_ClearPhysics: if func.Modifier = 0 then
-                          ClearPhysics := not ClearPhysics
-                        else
-                          ClearPhysics := true;
+      lka_ClearPhysics: if not GameParams.HideClearPhysics then
+              if func.Modifier = 0 then
+                ClearPhysics := not ClearPhysics
+              else
+                ClearPhysics := true;
       //lka_ToggleShadows: begin
                            //GameParams.HideShadows := not GameParams.HideShadows;
                            //SetRedraw(rdRedraw);
@@ -1616,6 +1627,7 @@ begin
     begin
       Game.RegainControl;
       Game.ProcessSkillAssignment;
+      if not GameParams.HideFrameskipping then
       if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
     end;
 

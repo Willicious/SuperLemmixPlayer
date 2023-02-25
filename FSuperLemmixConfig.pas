@@ -31,7 +31,12 @@ type
     GroupBox3: TGroupBox;
     cbNoBackgrounds: TCheckBox;
     cbEdgeScrolling: TCheckBox;
+    cbClassicMode: TCheckBox;
     cbHideShadows: TCheckBox;
+    cbHideClearPhysics: TCheckBox;
+    cbHideSpecialSelect: TCheckBox;
+    cbHideFrameskipping: TCheckBox;
+    cbHideHelpers: TCheckBox;
     cbForceDefaultLemmings: TCheckBox;
     TabSheet4: TTabSheet;
     Label3: TLabel;
@@ -53,9 +58,7 @@ type
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
     cbPanelZoom: TComboBox;
-    cbClassicMode: TCheckBox;
     TabSheet2: TTabSheet;
-    cbHideClearPhysics: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -235,7 +238,12 @@ begin
     cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
+    cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
+    cbHideClearPhysics.Checked := GameParams.HideClearPhysics;
+    cbHideSpecialSelect.Checked := GameParams.HideSpecialSelect;
+    cbHideFrameskipping.Checked := GameParams.HideFrameskipping;
+    cbHideHelpers.Checked := GameParams.HideHelpers;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     //cbSpawnInterval.Checked := GameParams.SpawnInterval;
     //cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
@@ -298,7 +306,12 @@ begin
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
+  GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
+  GameParams.HideClearPhysics := cbHideClearPhysics.Checked;
+  GameParams.HideSpecialSelect := cbHideSpecialSelect.Checked;
+  GameParams.HideFrameskipping := cbHideFrameskipping.Checked;
+  GameParams.HideHelpers := cbHideHelpers.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   //GameParams.SpawnInterval := cbSpawnInterval.Checked;
   //GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
@@ -400,18 +413,24 @@ end;
 procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
 begin
   if cbClassicMode.Checked then
-begin
-  cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
-  cbHideShadows.Enabled := false;
-end else
-  cbHideShadows.Enabled := true;
-
-if cbClassicMode.Checked then
-begin
-  cbHideClearPhysics.Checked := true;
-  cbHideClearPhysics.Enabled := false;
-end else
-  cbHideClearPhysics.Enabled := true;
+  begin
+    cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
+    cbHideShadows.Enabled := false;
+    cbHideClearPhysics.Checked := true;
+    cbHideClearPhysics.Enabled := false;
+    cbHideSpecialSelect.Checked := true;
+    cbHideSpecialSelect.Enabled := false;
+    cbHideFrameskipping.Checked := true;
+    cbHideFrameskipping.Enabled := false;
+    cbHideHelpers.Checked := true;
+    cbHideHelpers.Enabled := false;
+  end else begin
+    cbHideShadows.Enabled := true;
+    cbHideClearPhysics.Enabled := true;
+    cbHideSpecialSelect.Enabled := true;
+    cbHideFrameskipping.Enabled := true;
+    cbHideHelpers.Enabled := true;
+  end;
 end;
 
 procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);

@@ -8,13 +8,13 @@
  TITLE 16 Skills
  AUTHOR WillLem
  ID x69FE49DB3715D768
- VERSION x0000000000000008
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 400
+ WIDTH 344
  HEIGHT 160
- START_X 160
+ START_X 176
  START_Y 80
  THEME orig_crystal
  
@@ -55,15 +55,16 @@
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 41
+   X 42
    Y 44
    NO_OVERWRITE
+   FLIP_HORIZONTAL
  $END
  
  $GADGET
    STYLE orig_crystal
    PIECE exit
-   X 255
+   X 231
    Y 65
    NO_OVERWRITE
  $END
@@ -89,10 +90,19 @@
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 303
+   X 279
    Y 33
    NO_OVERWRITE
    LEMMINGS 20
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 97
+   Y 12
+   NO_OVERWRITE
+   CLIMBER 
  $END
  
  
@@ -149,7 +159,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 244
+   X 220
    Y 88
    ONE_WAY
  $END
@@ -189,7 +199,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 221
+   X 205
    Y 114
    ONE_WAY
  $END
@@ -197,7 +207,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 285
+   X 269
    Y 114
    ONE_WAY
  $END

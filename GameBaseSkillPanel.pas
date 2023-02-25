@@ -1587,7 +1587,8 @@ begin
         else if Button = mbMiddle then
           fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
       end;
-    spbClearPhysics: fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
+    spbClearPhysics: if not GameParams.HideClearPhysics then
+      fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
     spbDirLeft:
       begin
         if fSelectDx = -1 then
