@@ -37,6 +37,7 @@ type
     cbHideAdvancedSelect: TCheckBox;
     cbHideFrameskipping: TCheckBox;
     cbHideHelpers: TCheckBox;
+    cbHideSkillQ: TCheckBox;
     cbForceDefaultLemmings: TCheckBox;
     TabSheet4: TTabSheet;
     Label3: TLabel;
@@ -244,6 +245,7 @@ begin
     cbHideAdvancedSelect.Checked := GameParams.HideAdvancedSelect;
     cbHideFrameskipping.Checked := GameParams.HideFrameskipping;
     cbHideHelpers.Checked := GameParams.HideHelpers;
+    cbHideSkillQ.Checked := GameParams.HideSkillQ;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     //cbSpawnInterval.Checked := GameParams.SpawnInterval;
     //cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
@@ -312,6 +314,7 @@ begin
   GameParams.HideAdvancedSelect := cbHideAdvancedSelect.Checked;
   GameParams.HideFrameskipping := cbHideFrameskipping.Checked;
   GameParams.HideHelpers := cbHideHelpers.Checked;
+  GameParams.HideSkillQ := cbHideSkillQ.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   //GameParams.SpawnInterval := cbSpawnInterval.Checked;
   //GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
@@ -424,12 +427,15 @@ begin
     cbHideFrameskipping.Enabled := false;
     cbHideHelpers.Checked := true;
     cbHideHelpers.Enabled := false;
+    cbHideSkillQ.Checked := true;
+    cbHideSkillQ.Enabled := false;
   end else begin
     cbHideShadows.Enabled := true;
     cbHideClearPhysics.Enabled := true;
     cbHideAdvancedSelect.Enabled := true;
     cbHideFrameskipping.Enabled := true;
     cbHideHelpers.Enabled := true;
+    cbHideSkillQ.Enabled := true;
   end;
 end;
 

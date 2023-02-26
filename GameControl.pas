@@ -72,6 +72,7 @@ type
     moHideAdvancedSelect,
     moHideFrameskipping,
     moHideHelpers,
+    moHideSkillQ,
     moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
@@ -223,6 +224,7 @@ type
     property HideAdvancedSelect: boolean Index moHideAdvancedSelect read GetOptionFlag write SetOptionFlag;
     property HideFrameskipping: boolean Index moHideFrameskipping read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
+    property HideSkillQ: boolean Index moHideSkillQ read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
@@ -421,6 +423,7 @@ begin
   SaveBoolean('HideAdvancedSelect', HideAdvancedSelect);
   SaveBoolean('HideFrameskipping', HideFrameskipping);
   SaveBoolean('HideHelpers', HideHelpers);
+  SaveBoolean('HideSkillQ', HideSkillQ);
   //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
@@ -590,6 +593,7 @@ begin
     HideAdvancedSelect := LoadBoolean('HideAdvancedSelect', HideAdvancedSelect);
     HideFrameskipping := LoadBoolean('HideFrameskipping', HideFrameskipping);
     HideHelpers := LoadBoolean('HideHelpers', HideHelpers);
+    HideSkillQ := LoadBoolean('HideSkillQ', HideSkillQ);
     //CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);

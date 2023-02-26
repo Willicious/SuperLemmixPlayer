@@ -1886,10 +1886,13 @@ begin
   // Queue skill assignment if current assignment is impossible
   if not Assigned(L) or not CheckSkillAvailable(Skill) then
   begin
-    if Assigned(LQueue) and not (Skill in PermSkillSet) then
+  if not GameParams.HideSkillQ then
     begin
-      LQueue.LemQueueAction := Skill;
-      LQueue.LemQueueFrame := 0;
+      if Assigned(LQueue) and not (Skill in PermSkillSet) then
+      begin
+        LQueue.LemQueueAction := Skill;
+        LQueue.LemQueueFrame := 0;
+      end;
     end;
   end
 

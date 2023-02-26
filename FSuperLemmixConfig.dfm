@@ -56,7 +56,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 279
     Height = 296
-    ActivePage = TabSheet2
+    ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -165,10 +165,10 @@ object FormNXConfig: TFormNXConfig
       Caption = 'Interface'
       ImageIndex = 4
       object GroupBox3: TGroupBox
-        Left = 12
-        Top = 7
+        Left = 11
+        Top = 8
         Width = 249
-        Height = 135
+        Height = 137
         TabOrder = 0
         object cbEdgeScrolling: TCheckBox
           Left = 12
@@ -230,10 +230,10 @@ object FormNXConfig: TFormNXConfig
         OnClick = cbClassicModeClick
       end
       object GroupBox5: TGroupBox
-        Left = 20
+        Left = 52
         Top = 41
-        Width = 238
-        Height = 136
+        Width = 147
+        Height = 152
         TabOrder = 1
         object cbHideShadows: TCheckBox
           Left = 12
@@ -277,6 +277,15 @@ object FormNXConfig: TFormNXConfig
           Width = 125
           Height = 17
           Caption = 'Hide Helper Overlays'
+          TabOrder = 5
+          OnClick = OptionChanged
+        end
+        object cbHideSkillQ: TCheckBox
+          Left = 12
+          Top = 126
+          Width = 125
+          Height = 17
+          Caption = 'Hide Skill Queueing'
           TabOrder = 4
           OnClick = OptionChanged
         end
