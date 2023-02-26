@@ -235,7 +235,7 @@ begin
     //// Page 2 (Interface Options) ////
     // Checkboxes
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
-    cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
+    cbNoAutoReplay.Checked := not GameParams.NoAutoReplayMode;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
     cbClassicMode.Checked := GameParams.ClassicMode;
@@ -302,7 +302,7 @@ begin
   //// Page 2 (Interface Options) ////
   // Checkboxes
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
-  GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
+  GameParams.NoAutoReplayMode := not cbNoAutoReplay.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
