@@ -34,7 +34,7 @@ type
     cbClassicMode: TCheckBox;
     cbHideShadows: TCheckBox;
     cbHideClearPhysics: TCheckBox;
-    cbHideSpecialSelect: TCheckBox;
+    cbHideAdvancedSelect: TCheckBox;
     cbHideFrameskipping: TCheckBox;
     cbHideHelpers: TCheckBox;
     cbForceDefaultLemmings: TCheckBox;
@@ -241,7 +241,7 @@ begin
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbHideClearPhysics.Checked := GameParams.HideClearPhysics;
-    cbHideSpecialSelect.Checked := GameParams.HideSpecialSelect;
+    cbHideAdvancedSelect.Checked := GameParams.HideAdvancedSelect;
     cbHideFrameskipping.Checked := GameParams.HideFrameskipping;
     cbHideHelpers.Checked := GameParams.HideHelpers;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
@@ -309,7 +309,7 @@ begin
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.HideClearPhysics := cbHideClearPhysics.Checked;
-  GameParams.HideSpecialSelect := cbHideSpecialSelect.Checked;
+  GameParams.HideAdvancedSelect := cbHideAdvancedSelect.Checked;
   GameParams.HideFrameskipping := cbHideFrameskipping.Checked;
   GameParams.HideHelpers := cbHideHelpers.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
@@ -418,8 +418,8 @@ begin
     cbHideShadows.Enabled := false;
     cbHideClearPhysics.Checked := true;
     cbHideClearPhysics.Enabled := false;
-    cbHideSpecialSelect.Checked := true;
-    cbHideSpecialSelect.Enabled := false;
+    cbHideAdvancedSelect.Checked := true;
+    cbHideAdvancedSelect.Enabled := false;
     cbHideFrameskipping.Checked := true;
     cbHideFrameskipping.Enabled := false;
     cbHideHelpers.Checked := true;
@@ -427,7 +427,7 @@ begin
   end else begin
     cbHideShadows.Enabled := true;
     cbHideClearPhysics.Enabled := true;
-    cbHideSpecialSelect.Enabled := true;
+    cbHideAdvancedSelect.Enabled := true;
     cbHideFrameskipping.Enabled := true;
     cbHideHelpers.Enabled := true;
   end;

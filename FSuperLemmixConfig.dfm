@@ -56,7 +56,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 279
     Height = 296
-    ActivePage = TabSheet2
+    ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -253,12 +253,12 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 1
           OnClick = OptionChanged
         end
-        object cbHideSpecialSelect: TCheckBox
+        object cbHideAdvancedSelect: TCheckBox
           Left = 12
           Top = 57
           Width = 125
           Height = 17
-          Caption = 'Hide Special Select'
+          Caption = 'Hide Advanced Select'
           TabOrder = 2
           OnClick = OptionChanged
         end

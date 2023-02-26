@@ -2221,128 +2221,131 @@ var
 
   DrawX, DrawY: Integer;
 begin
-  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+  if not GameParams.HideHelpers then
+  begin
+    Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
-  MO := Gadget.MetaObj;
+    MO := Gadget.MetaObj;
 
-  // We don't question here whether the conditions are met to draw the helper or
-  // not. We assume the calling routine has already done this, and we just draw it.
-  // We do, however, determine which ones to draw here.
+    // We don't question here whether the conditions are met to draw the helper or
+    // not. We assume the calling routine has already done this, and we just draw it.
+    // We do, however, determine which ones to draw here.
 
-  DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod; // Obj.Left + Obj.Width div 2 - 4;
-  DrawY := (Gadget.Top - 9) * ResMod; // much simpler
-  if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod; // Draw below instead above the level border
+    DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod; // Obj.Left + Obj.Width div 2 - 4;
+    DrawY := (Gadget.Top - 9) * ResMod; // much simpler
+    if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod; // Draw below instead above the level border
 
-  case MO.TriggerEffect of
-    DOM_WINDOW:
-      begin
-        if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
-
-        if Gadget.IsFlipPhysics then
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4 * ResMod, DrawY)
-        else
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4 * ResMod, DrawY);
-
-        if Gadget.IsPreassignedZombie then
-          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
-      end;
-
-    DOM_TELEPORT:
-      begin
-        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
-        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
-      end;
-
-    DOM_RECEIVER:
-      begin
-        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
-        fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
-      end;
-
-    DOM_EXIT:
-      begin
-        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-      end;
-
-    DOM_LOCKEXIT:
-      begin
-        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-
-        if (Gadget.CurrentFrame = 1) then
+    case MO.TriggerEffect of
+      DOM_WINDOW:
         begin
-          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
-          fHelperImages[hpi_Exit_Lock].DrawTo(Dst, DrawX - 3 * ResMod, (Gadget.TriggerRect.Top - 10) * ResMod);
+          if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
 
-          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
+          if Gadget.IsFlipPhysics then
+            fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4 * ResMod, DrawY)
+          else
+            fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4 * ResMod, DrawY);
+
+          if Gadget.IsPreassignedZombie then
+            fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
         end;
-      end;
 
-    DOM_FIRE:
-      begin
-        fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-      end;
+      DOM_TELEPORT:
+        begin
+          fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+          fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
+        end;
 
-    DOM_TRAP:
-      begin
-        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
-        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
-      end;
+      DOM_RECEIVER:
+        begin
+          fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+          fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
+        end;
 
-    DOM_TRAPONCE:
-      begin
-        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
-        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
-      end;
+      DOM_EXIT:
+        begin
+          fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+        end;
 
-    DOM_UPDRAFT:
-      begin
-        fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
-      end;
+      DOM_LOCKEXIT:
+        begin
+          fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
 
-    DOM_FLIPPER:
-      begin
-        fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-      end;
+          if (Gadget.CurrentFrame = 1) then
+          begin
+            fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
+            fHelperImages[hpi_Exit_Lock].DrawTo(Dst, DrawX - 3 * ResMod, (Gadget.TriggerRect.Top - 10) * ResMod);
 
-    DOM_BUTTON:
-      begin
-        fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-      end;
+            fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
+          end;
+        end;
 
-    DOM_FORCELEFT:
-      if Gadget.IsFlipImage then
-      begin
-        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
-      end else begin
-        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
-      end;
+      DOM_FIRE:
+        begin
+          fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+        end;
 
-    DOM_FORCERIGHT:
-      if Gadget.IsFlipImage then
-      begin
-        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
-      end else begin
-        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
-      end;
+      DOM_TRAP:
+        begin
+          fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+        end;
 
-    DOM_NOSPLAT:
-      begin
-        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-      end;
+      DOM_TRAPONCE:
+        begin
+          fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+        end;
 
-    DOM_SPLAT:
-      begin
-        fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-      end;
+      DOM_UPDRAFT:
+        begin
+          fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
+        end;
 
-    DOM_WATER:
-      begin
-        fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-      end;
+      DOM_FLIPPER:
+        begin
+          fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+        end;
+
+      DOM_BUTTON:
+        begin
+          fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        end;
+
+      DOM_FORCELEFT:
+        if Gadget.IsFlipImage then
+        begin
+          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
+        end else begin
+          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
+        end;
+
+      DOM_FORCERIGHT:
+        if Gadget.IsFlipImage then
+        begin
+          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
+        end else begin
+          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
+        end;
+
+      DOM_NOSPLAT:
+        begin
+          fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
+
+      DOM_SPLAT:
+        begin
+          fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
+
+      DOM_WATER:
+        begin
+          fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
+    end;
   end;
 end;
 
@@ -2351,74 +2354,77 @@ var
   numHelpers, indexHelper: Integer;
   DrawX, DrawY: Integer;
 begin
-  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-  Assert(Gadget.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
+  if not GameParams.HideHelpers then
+  begin
+    Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+    Assert(Gadget.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
 
-  // Count number of helper icons to be displayed.
-  numHelpers := 0;
-  if Gadget.IsPreassignedSlider then Inc(numHelpers);
-  if Gadget.IsPreassignedClimber then Inc(numHelpers);
-  if Gadget.IsPreassignedSwimmer then Inc(numHelpers);
-  if Gadget.IsPreassignedFloater then Inc(numHelpers);
-  if Gadget.IsPreassignedGlider then Inc(numHelpers);
-  if Gadget.IsPreassignedDisarmer then Inc(numHelpers);
-  if Gadget.IsPreassignedZombie then Inc(numHelpers);
-  if Gadget.IsPreassignedNeutral then Inc(numHelpers);
-  
-  if DrawOtherHelper then Inc(numHelpers);
+    // Count number of helper icons to be displayed.
+    numHelpers := 0;
+    if Gadget.IsPreassignedSlider then Inc(numHelpers);
+    if Gadget.IsPreassignedClimber then Inc(numHelpers);
+    if Gadget.IsPreassignedSwimmer then Inc(numHelpers);
+    if Gadget.IsPreassignedFloater then Inc(numHelpers);
+    if Gadget.IsPreassignedGlider then Inc(numHelpers);
+    if Gadget.IsPreassignedDisarmer then Inc(numHelpers);
+    if Gadget.IsPreassignedZombie then Inc(numHelpers);
+    if Gadget.IsPreassignedNeutral then Inc(numHelpers);
 
-  // Set base drawing position; helper icons will be drawn 10 pixels apart
-  DrawX := (Gadget.Left + Gadget.Width div 2 - numHelpers * 5) * ResMod;
-  DrawY := Gadget.Top * ResMod;
+    if DrawOtherHelper then Inc(numHelpers);
 
-  // Draw actual helper icons
-  indexHelper := 0;
-  if DrawOtherHelper then
-  begin
-    if Gadget.IsFlipPhysics then
-      fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY)
-    else
-      fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedZombie then
-  begin
-    fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedNeutral then
-  begin
-    fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedSlider then
-  begin
-    fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedClimber then
-  begin
-    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedSwimmer then
-  begin
-    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedFloater then
-  begin
-    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedGlider then
-  begin
-    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if Gadget.IsPreassignedDisarmer then
-  begin
-    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    // Set base drawing position; helper icons will be drawn 10 pixels apart
+    DrawX := (Gadget.Left + Gadget.Width div 2 - numHelpers * 5) * ResMod;
+    DrawY := Gadget.Top * ResMod;
+
+    // Draw actual helper icons
+    indexHelper := 0;
+    if DrawOtherHelper then
+    begin
+      if Gadget.IsFlipPhysics then
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY)
+      else
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedZombie then
+    begin
+      fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedNeutral then
+    begin
+      fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedSlider then
+    begin
+      fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedClimber then
+    begin
+      fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedSwimmer then
+    begin
+      fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedFloater then
+    begin
+      fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedGlider then
+    begin
+      fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedDisarmer then
+    begin
+      fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    end;
   end;
 end;
 
@@ -2431,71 +2437,74 @@ const
   DRAW_ABOVE_MIN_Y = 19;
   DRAW_ABOVE_MIN_Y_CPM = 28;
 begin
-  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-  //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // why?
+  if not GameParams.HideHelpers then
+  begin
+    Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+    //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // why?
 
-  // Count number of helper icons to be displayed.
-  numHelpers := 0;
-  if L.LemIsSlider then Inc(numHelpers);
-  if L.LemIsClimber then Inc(numHelpers);
-  if L.LemIsSwimmer then Inc(numHelpers);
-  if L.LemIsFloater then Inc(numHelpers);
-  if L.LemIsGlider then Inc(numHelpers);
-  if L.LemIsDisarmer then Inc(numHelpers);
+    // Count number of helper icons to be displayed.
+    numHelpers := 0;
+    if L.LemIsSlider then Inc(numHelpers);
+    if L.LemIsClimber then Inc(numHelpers);
+    if L.LemIsSwimmer then Inc(numHelpers);
+    if L.LemIsFloater then Inc(numHelpers);
+    if L.LemIsGlider then Inc(numHelpers);
+    if L.LemIsDisarmer then Inc(numHelpers);
 
-  DrawX := (L.LemX - numHelpers * 5) * ResMod;
+    DrawX := (L.LemX - numHelpers * 5) * ResMod;
 
-  if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_CPM) and IsClearPhysics) then
-  begin
-    DrawY := (L.LemY + 1) * ResMod;
-    if numHelpers > 0 then
-      DirDrawY := DrawY + 9 * ResMod
-    else
-      DirDrawY := DrawY;
-  end else begin
-    DrawY := (L.LemY - 10 - 9) * ResMod;
-    if numHelpers > 0 then
-      DirDrawY := DrawY - 9 * ResMod
-    else
-      DirDrawY := DrawY;
-  end;
+    if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_CPM) and IsClearPhysics) then
+    begin
+      DrawY := (L.LemY + 1) * ResMod;
+      if numHelpers > 0 then
+        DirDrawY := DrawY + 9 * ResMod
+      else
+        DirDrawY := DrawY;
+    end else begin
+      DrawY := (L.LemY - 10 - 9) * ResMod;
+      if numHelpers > 0 then
+        DirDrawY := DrawY - 9 * ResMod
+      else
+        DirDrawY := DrawY;
+    end;
 
-  // Draw actual helper icons
-  if isClearPhysics then
-  begin
-    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY)
-    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY);
-  end;
+    // Draw actual helper icons
+    if isClearPhysics then
+    begin
+      if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY)
+      else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY);
+    end;
 
-  indexHelper := 0;
-  if L.LemIsSlider then
-  begin
-    fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if L.LemIsClimber then
-  begin
-    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if L.LemIsSwimmer then
-  begin
-    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if L.LemIsFloater then
-  begin
-    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if L.LemIsGlider then
-  begin
-    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
-    Inc(indexHelper);
-  end;
-  if L.LemIsDisarmer then
-  begin
-    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    indexHelper := 0;
+    if L.LemIsSlider then
+    begin
+      fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if L.LemIsClimber then
+    begin
+      fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if L.LemIsSwimmer then
+    begin
+      fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if L.LemIsFloater then
+    begin
+      fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if L.LemIsGlider then
+    begin
+      fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if L.LemIsDisarmer then
+    begin
+      fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+    end;
   end;
 end;
 
@@ -2686,33 +2695,36 @@ procedure TRenderer.LoadHelperImages;
 var
   i: THelperIcon;
 begin
-  for i := Low(THelperIcon) to High(THelperIcon) do
+  if not GameParams.HideHelpers then
   begin
-    if i = hpi_None then Continue;
-    if fHelperImages[i] <> nil then
-      fHelperImages[i].Free;
+    for i := Low(THelperIcon) to High(THelperIcon) do
+    begin
+      if i = hpi_None then Continue;
+      if fHelperImages[i] <> nil then
+        fHelperImages[i].Free;
 
-    fHelperImages[i] := TBitmap32.Create;
+      fHelperImages[i] := TBitmap32.Create;
 
-    if GameParams.HighResolution and FileExists(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i]) then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i], fHelperImages[i])
-    else if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
+      if GameParams.HighResolution and FileExists(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i]) then
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i], fHelperImages[i])
+      else if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
 
-    fHelperImages[i].DrawMode := dmBlend;
-    fHelperImages[i].CombineMode := cmMerge;
+      fHelperImages[i].DrawMode := dmBlend;
+      fHelperImages[i].CombineMode := cmMerge;
+    end;
+
+    fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
+    fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
+
+    // And laserer!
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser-hr.png', fLaserGraphic)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser.png', fLaserGraphic);
+
+    fHelpersAreHighRes := GameParams.HighResolution;
   end;
-
-  fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
-  fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
-
-  // And laserer!
-  if GameParams.HighResolution then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser-hr.png', fLaserGraphic)
-  else
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser.png', fLaserGraphic);
-
-  fHelpersAreHighRes := GameParams.HighResolution;
 end;
 
 procedure TRenderer.LoadProjectileImages;

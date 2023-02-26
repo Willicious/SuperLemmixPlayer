@@ -874,9 +874,12 @@ end;
 
 procedure TGameWindow.CheckUserHelpers;
 begin
-  fRenderInterface.UserHelper := hpi_None;
-  if GameParams.Hotkeys.CheckForKey(lka_FallDistance) then
-    fRenderInterface.UserHelper := hpi_FallDist;
+  if not GameParams.HideHelpers then
+  begin
+    fRenderInterface.UserHelper := hpi_None;
+    if GameParams.Hotkeys.CheckForKey(lka_FallDistance) then
+      fRenderInterface.UserHelper := hpi_FallDist;
+  end;
 end;
 
 procedure TGameWindow.DoDraw;
@@ -949,21 +952,21 @@ procedure TGameWindow.CheckShifts(Shift: TShiftState);
 var
   SDir: Integer;
 begin
-  if not GameParams.HideSpecialSelect then
+  if not GameParams.HideAdvancedSelect then
   Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
-  if not GameParams.HideSpecialSelect then
+  if not GameParams.HideAdvancedSelect then
   Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
   Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
   SDir := 0;
-  if not GameParams.HideSpecialSelect then
+  if not GameParams.HideAdvancedSelect then
   if GameParams.Hotkeys.CheckForKey(lka_DirLeft) then SDir := SDir - 1;
-  if not GameParams.HideSpecialSelect then
+  if not GameParams.HideAdvancedSelect then
   if GameParams.Hotkeys.CheckForKey(lka_DirRight) then SDir := SDir + 1; // These two cancel each other out if both are pressed. Genius. :D
 
   // Code not needed because Direction Select is no longer shown on the panel
   //if SDir = 0 then
-  //if not GameParams.HideSpecialSelect then
+  //if not GameParams.HideAdvancedSelect then
   //begin
     //SDir := SkillPanel.SkillPanelSelectDx;
     //if (SDir = 0) and (Game.fSelectDx <> 0) then
@@ -1404,7 +1407,8 @@ begin
                            gspFF: GameSpeed := gspNormal;
                          end;
                        end;
-      lka_SlowMotion: begin
+      lka_SlowMotion: if not GameParams.HideFrameskipping then
+                      begin
                         case fGameSpeed of
                           gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
                           gspSlowMo: GameSpeed := gspNormal;
@@ -1500,44 +1504,47 @@ var
   TargetFrame: Integer;
   HasSuitableSkill: Boolean;
 begin
-  TargetFrame := 0; // fallback
-  fSpecialStartIteration := Game.CurrentIteration;
+  if not GameParams.HideFrameskipping then
+  begin
+    TargetFrame := 0; // fallback
+    fSpecialStartIteration := Game.CurrentIteration;
 
-  case TSpecialSkipCondition(aSkipType) of
-    ssc_LastAction: begin
-                      if (Game.ReplayManager.LastActionFrame = -1) then Exit;
+    case TSpecialSkipCondition(aSkipType) of
+      ssc_LastAction: begin
+                        if (Game.ReplayManager.LastActionFrame = -1) then Exit;
 
-                      if Game.CurrentIteration > Game.ReplayManager.LastActionFrame then
-                        TargetFrame := Game.ReplayManager.LastActionFrame
-                      else
-                        for i := 0 to Game.CurrentIteration do
-                          if Game.ReplayManager.HasAnyActionAt(i) then
-                            TargetFrame := i;
-                      GotoSaveState(Max(TargetFrame - 1, 0));
-                   end;
-    ssc_NextShrugger: begin
-                        HasSuitableSkill := false;
-                        for i := 0 to fRenderInterface.LemmingList.Count-1 do
-                        begin
-                          if fRenderInterface.LemmingList[i].LemRemoved then Continue;
-
-                          if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking] then
+                        if Game.CurrentIteration > Game.ReplayManager.LastActionFrame then
+                          TargetFrame := Game.ReplayManager.LastActionFrame
+                        else
+                          for i := 0 to Game.CurrentIteration do
+                            if Game.ReplayManager.HasAnyActionAt(i) then
+                              TargetFrame := i;
+                        GotoSaveState(Max(TargetFrame - 1, 0));
+                     end;
+      ssc_NextShrugger: begin
+                          HasSuitableSkill := false;
+                          for i := 0 to fRenderInterface.LemmingList.Count-1 do
                           begin
-                            HasSuitableSkill := true;
-                            Break;
-                          end;
-                        end;
-                        if not HasSuitableSkill then Exit;
+                            if fRenderInterface.LemmingList[i].LemRemoved then Continue;
 
-                        fHyperSpeedStopCondition := SHE_SHRUGGER;
-                        GameSpeed := gspPause;
-                      end;
-    ssc_HighlitStateChange: begin
-                              if (fRenderInterface = nil) or (fRenderInterface.HighlitLemming = nil) then Exit;
-                              fHighlitStartCopyLemming.Assign(fRenderInterface.HighlitLemming);
-                              fHyperSpeedStopCondition := SHE_HIGHLIT;
-                              GameSpeed := gspPause;
+                            if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking] then
+                            begin
+                              HasSuitableSkill := true;
+                              Break;
                             end;
+                          end;
+                          if not HasSuitableSkill then Exit;
+
+                          fHyperSpeedStopCondition := SHE_SHRUGGER;
+                          GameSpeed := gspPause;
+                        end;
+      ssc_HighlitStateChange: begin
+                                if (fRenderInterface = nil) or (fRenderInterface.HighlitLemming = nil) then Exit;
+                                fHighlitStartCopyLemming.Assign(fRenderInterface.HighlitLemming);
+                                fHyperSpeedStopCondition := SHE_HIGHLIT;
+                                GameSpeed := gspPause;
+                              end;
+    end;
   end;
 end;
 

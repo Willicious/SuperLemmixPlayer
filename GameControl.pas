@@ -69,7 +69,7 @@ type
     moClassicMode,
     moHideShadows,
     moHideClearPhysics,
-    moHideSpecialSelect,
+    moHideAdvancedSelect,
     moHideFrameskipping,
     moHideHelpers,
     moDisableWineWarnings,
@@ -220,7 +220,7 @@ type
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
     property HideClearPhysics: boolean Index moHideClearPhysics read GetOptionFlag write SetOptionFlag;
-    property HideSpecialSelect: boolean Index moHideSpecialSelect read GetOptionFlag write SetOptionFlag;
+    property HideAdvancedSelect: boolean Index moHideAdvancedSelect read GetOptionFlag write SetOptionFlag;
     property HideFrameskipping: boolean Index moHideFrameskipping read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
@@ -418,7 +418,7 @@ begin
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('HideClearPhysics', HideClearPhysics);
-  SaveBoolean('HideSpecialSelect', HideSpecialSelect);
+  SaveBoolean('HideAdvancedSelect', HideAdvancedSelect);
   SaveBoolean('HideFrameskipping', HideFrameskipping);
   SaveBoolean('HideHelpers', HideHelpers);
   //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
@@ -587,7 +587,7 @@ begin
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     HideClearPhysics := LoadBoolean('HideClearPhysics', HideClearPhysics);
-    HideSpecialSelect := LoadBoolean('HideSpecialSelect', HideSpecialSelect);
+    HideAdvancedSelect := LoadBoolean('HideAdvancedSelect', HideAdvancedSelect);
     HideFrameskipping := LoadBoolean('HideFrameskipping', HideFrameskipping);
     HideHelpers := LoadBoolean('HideHelpers', HideHelpers);
     //CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
