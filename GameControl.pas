@@ -88,7 +88,7 @@ type
     moHideAdvanced,
     moFileCaching,
     moPostviewJingles,
-    moForceDefaultLemmings,
+    //moForceDefaultLemmings,
     moDisableMusicInTestplay
   );
 
@@ -236,7 +236,7 @@ type
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
-    property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
+    //property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
 
     property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
@@ -416,7 +416,7 @@ begin
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
-  SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
+  //SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('HideClearPhysics', HideClearPhysics);
@@ -586,7 +586,7 @@ begin
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
-    ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
+    //ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     HideClearPhysics := LoadBoolean('HideClearPhysics', HideClearPhysics);

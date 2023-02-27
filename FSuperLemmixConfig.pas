@@ -31,14 +31,14 @@ type
     GroupBox3: TGroupBox;
     cbNoBackgrounds: TCheckBox;
     cbEdgeScrolling: TCheckBox;
-    cbClassicMode: TCheckBox;
+    cbClassicMode: TCheckbox;
     cbHideShadows: TCheckBox;
     cbHideClearPhysics: TCheckBox;
     cbHideAdvancedSelect: TCheckBox;
     cbHideFrameskipping: TCheckBox;
     cbHideHelpers: TCheckBox;
     cbHideSkillQ: TCheckBox;
-    cbForceDefaultLemmings: TCheckBox;
+    //cbForceDefaultLemmings: TCheckBox;
     TabSheet4: TTabSheet;
     Label3: TLabel;
     Label5: TLabel;
@@ -46,7 +46,6 @@ type
     tbSoundVol: TTrackBar;
     tbMusicVol: TTrackBar;
     cbDisableTestplayMusic: TCheckBox;
-    GroupBox6: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
     cbZoom: TComboBox;
@@ -59,7 +58,6 @@ type
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
     cbPanelZoom: TComboBox;
-    TabSheet2: TTabSheet;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -238,7 +236,7 @@ begin
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbNoAutoReplay.Checked := not GameParams.NoAutoReplayMode;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
-    cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
+    //cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbHideClearPhysics.Checked := GameParams.HideClearPhysics;
@@ -307,7 +305,7 @@ begin
   GameParams.NoAutoReplayMode := not cbNoAutoReplay.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
-  GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
+  //GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.HideClearPhysics := cbHideClearPhysics.Checked;
