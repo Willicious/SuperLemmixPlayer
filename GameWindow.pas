@@ -1421,7 +1421,14 @@ begin
       lka_SaveImage: SaveShot;
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
-      lka_Restart: GotoSaveState(0);
+      lka_Restart: begin
+                   if GameParams.ClassicMode then
+                      begin
+                        Game.CancelReplayAfterSkip := true;
+                        GotoSaveState(0);
+                      end else
+                        GotoSaveState(0);
+                   end;
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
       lka_SaveReplay: if not GameParams.ClassicMode then SaveReplay;
       lka_SkillRight: begin
