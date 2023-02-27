@@ -1633,6 +1633,7 @@ begin
     if (Button = mbLeft) and not Game.IsHighlightHotkey then
     begin
       Game.RegainControl;
+      if (not GameParams.ClassicMode) or (fGameSpeed <> gspPause) then // this deals with deactivating assign-whilst-paused whilst in ClassicMode
       Game.ProcessSkillAssignment;
       if not GameParams.HideFrameskipping then
       if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
