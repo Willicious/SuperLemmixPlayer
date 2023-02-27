@@ -218,9 +218,16 @@ begin
     // draw text
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, TEXT_Y_POSITION);
 
+    if not GameParams.ClassicMode then
+    begin
     NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
     NewRegion.ShortcutKeys.Add(VK_RETURN);
     NewRegion.ShortcutKeys.Add(VK_SPACE);
+    end else begin;
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionContinue, BeginPlay);
+    NewRegion.ShortcutKeys.Add(VK_RETURN);
+    NewRegion.ShortcutKeys.Add(VK_SPACE);
+    end;
 
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
@@ -228,8 +235,11 @@ begin
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
     NewRegion.ShortcutKeys.Add(VK_F2);
 
+    if not GameParams.ClassicMode then
+    begin
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
     NewRegion.AddKeysFromFunction(lka_LoadReplay);
+    end;
 
     MakeHiddenOption(VK_F3, ShowConfigMenu);
     MakeHiddenOption(VK_LEFT, PreviousLevel);

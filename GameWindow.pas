@@ -1387,18 +1387,22 @@ begin
                         end else
                           fLastNukeKeyTime := CurrTime;
                       end;
-      lka_SaveState : begin
+      lka_SaveState : if not GameParams.ClassicMode then
+                      begin
                         fSaveStateFrame := fGame.CurrentIteration;
                         fSaveStateReplayStream.Clear;
                         Game.ReplayManager.SaveToStream(fSaveStateReplayStream, false, true);
                       end;
-      lka_LoadState : if fSaveStateFrame <> -1 then
+      lka_LoadState : if not GameParams.ClassicMode then
                       begin
-                        fSaveList.ClearAfterIteration(0);
-                        fSaveStateReplayStream.Position := 0;
-                        Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, true);
-                        GotoSaveState(fSaveStateFrame, 1);
+                        if fSaveStateFrame <> -1 then
+                        begin
+                          fSaveList.ClearAfterIteration(0);
+                          fSaveStateReplayStream.Position := 0;
+                          Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, true);
+                          GotoSaveState(fSaveStateFrame, 1);
                         if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+                        end;
                       end;
       lka_Cheat: Game.Cheat;
       lka_FastForward: begin
@@ -1415,11 +1419,11 @@ begin
                         end;
                       end;
       lka_SaveImage: SaveShot;
-      lka_LoadReplay: LoadReplay;
+      lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: GotoSaveState(0);
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
-      lka_SaveReplay: SaveReplay;
+      lka_SaveReplay: if not GameParams.ClassicMode then SaveReplay;
       lka_SkillRight: begin
                         sn := GetSelectedSkill;
                         if (sn >= 0) and (sn < MAX_SKILL_TYPES_PER_LEVEL - 1) and (fActiveSkills[sn + 1] <> spbNone) then
@@ -1476,8 +1480,8 @@ begin
                             SkillPanel.ShowUsedSkills := not SkillPanel.ShowUsedSkills
                           else
                             SkillPanel.ShowUsedSkills := true;
-      lka_EditReplay: ExecuteReplayEdit;
-      lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
+      lka_EditReplay: if not GameParams.ClassicMode then ExecuteReplayEdit;
+      lka_ReplayInsert: if not GameParams.ClassicMode then Game.ReplayInsert := not Game.ReplayInsert;
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
       lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
       lka_Scroll: begin

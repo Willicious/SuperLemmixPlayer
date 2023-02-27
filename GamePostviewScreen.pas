@@ -102,10 +102,18 @@ begin
       NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
       NewRegion.AddKeysFromFunction(lka_Restart);
     end else begin
+    if not GameParams.ClassicMode then
+    begin
       NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
       NewRegion.ShortcutKeys.Add(VK_RETURN);
       NewRegion.ShortcutKeys.Add(VK_SPACE);
       NewRegion.AddKeysFromFunction(lka_Restart);
+      end else begin;
+      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionRetryLevel, ReplaySameLevel);
+      NewRegion.ShortcutKeys.Add(VK_RETURN);
+      NewRegion.ShortcutKeys.Add(VK_SPACE);
+      NewRegion.AddKeysFromFunction(lka_Restart);
+      end;
     end;
 
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
@@ -114,8 +122,11 @@ begin
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
     NewRegion.ShortcutKeys.Add(VK_F2);
 
+    if not GameParams.ClassicMode then
+    begin
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
     NewRegion.AddKeysFromFunction(lka_SaveReplay);
+    end;
 
     MakeHiddenOption(VK_F3, ShowConfigMenu);
 
