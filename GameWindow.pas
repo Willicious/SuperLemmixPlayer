@@ -475,7 +475,7 @@ begin
   if fClearPhysics <> aValue then
     SetRedraw(rdRedraw);
   fClearPhysics := aValue;
-  SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
+  SkillPanel.DrawButtonSelector(spbSquiggle, fClearPhysics);
 end;
 
 function TGameWindow.GetClearPhysics: Boolean;
