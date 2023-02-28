@@ -191,8 +191,8 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', {Skills end here}
 
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
-    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_cpm_and_replay.png', 'icon_frameskip.png',
-    'icon_directional.png', 'squiggle.png',
+    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'squiggle.png', 'icon_cpm_and_replay.png', 'icon_frameskip.png',
+    'icon_directional.png',
 
     // These ones are placeholders - they're the bottom half of splits
     'icon_frameskip.png', 'icon_directional.png', 'icon_cpm_and_replay.png'
@@ -1012,10 +1012,10 @@ begin
     begin
       fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
       fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
-    end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
-    begin
-      fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
-      fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
+    //end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
+    //begin
+      //fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
+      //fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
     end else if ButtonList[i] > spbNone then
       fButtonRects[ButtonList[i]] := ButtonRect(i);
   end;
@@ -1594,7 +1594,7 @@ begin
         else if Button = mbMiddle then
           fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
       end;
-    spbClearPhysics: if not GameParams.HideClearPhysics then
+    spbSquiggle: if not GameParams.HideClearPhysics then
       fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
     spbDirLeft:
       begin

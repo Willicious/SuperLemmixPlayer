@@ -95,7 +95,7 @@ end;
 //First set of digits adust left & top pos of minimap frame, second set of digits adjusts left & top pos of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(370 * ResMod, 2 * ResMod, 438 * ResMod, 36 * ResMod);
+  Result := Rect(371 * ResMod, 2 * ResMod, 438 * ResMod, 36 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -120,8 +120,8 @@ begin
     Result[i] := Low(TSkillPanelButton); // placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbFastForward;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbNuke;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbRestart;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbNuke;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbSquiggle; //spbBackOneFrame; // and below: spbForwardOneFrame
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
@@ -140,9 +140,9 @@ begin
   TempBmp.Assign(MinimapRegion);
 
   //changing the first digit changes the right side of the minimap frame
-  if (MinimapRegion.Width <> 74 * ResMod) or (MinimapRegion.Height <> 40 * ResMod) then
+  if (MinimapRegion.Width <> 72 * ResMod) or (MinimapRegion.Height <> 40 * ResMod) then
   begin
-    MinimapRegion.SetSize(74 * ResMod, 40 * ResMod);
+    MinimapRegion.SetSize(72 * ResMod, 40 * ResMod);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
                   Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);

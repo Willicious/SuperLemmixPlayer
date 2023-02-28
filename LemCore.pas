@@ -122,10 +122,10 @@ type
 
     spbFastForward,
     spbRestart,
+    spbSquiggle,
+    spbClearPhysics,
     spbBackOneFrame,
     spbDirLeft,
-    spbClearPhysics,
-    spbSquiggle,
 
     // These three are the bottom part of a vertical split
     spbForwardOneFrame,
