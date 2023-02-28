@@ -244,14 +244,14 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if GameParams.PostviewJingles then
-    begin
-      SoundManager.PurgePackSounds;
-      if gRescued >= Level.Info.RescueCount then
-          SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
-      else
-          SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
-    end;
+    //if GameParams.PostviewJingles then
+    //begin
+      //SoundManager.PurgePackSounds;
+      //if gRescued >= Level.Info.RescueCount then
+          //SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
+      //else
+          //SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
+    //end;
 
     // init some local strings
     STarget := PadL(IntToStr(gToRescue), 4);

@@ -16,33 +16,30 @@ type
     Graphics: TTabSheet;
     TabSheet1: TTabSheet;
     lblUserName: TLabel;
-    GroupBox4: TGroupBox;
     lblIngameSaveReplay: TLabel;
     lblPostviewSaveReplay: TLabel;
+    ReplayOptions: TGroupBox;
     cbAutoSaveReplay: TCheckBox;
     cbAutoSaveReplayPattern: TComboBox;
     cbIngameSaveReplayPattern: TComboBox;
     cbPostviewSaveReplayPattern: TComboBox;
     btnHotkeys: TButton;
     ebUserName: TEdit;
-    TabSheet5: TTabSheet;
     cbNoAutoReplay: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
-    GroupBox3: TGroupBox;
     cbNoBackgrounds: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     cbClassicMode: TCheckbox;
+    btnClassicMode: TButton;
+    btnDeactivateClassicMode: TButton;
     cbHideShadows: TCheckBox;
     cbHideClearPhysics: TCheckBox;
     cbHideAdvancedSelect: TCheckBox;
     cbHideFrameskipping: TCheckBox;
     cbHideHelpers: TCheckBox;
     cbHideSkillQ: TCheckBox;
-    //cbForceDefaultLemmings: TCheckBox;
-    TabSheet4: TTabSheet;
     Label3: TLabel;
     Label5: TLabel;
-    Label6: TLabel;
     tbSoundVol: TTrackBar;
     tbMusicVol: TTrackBar;
     cbDisableTestplayMusic: TCheckBox;
@@ -68,7 +65,9 @@ type
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
-    procedure cbClassicModeClick(Sender: TObject);
+    //procedure cbClassicModeClick(Sender: TObject);
+    procedure btnClassicModeClick(Sender: TObject);
+    procedure btnDeactivateClassicModeClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -100,12 +99,14 @@ uses
   GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
 
 const
-  PRESET_REPLAY_PATTERNS: array[0..3] of String =
+  PRESET_REPLAY_PATTERNS: array[0..5] of String =
   (
     '{GROUP}_{GROUPPOS}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}',
     '{TITLE}__{TIMESTAMP}',
     '{GROUP}_{GROUPPOS}__{TITLE}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}',
-    '*{TITLE}__{TIMESTAMP}'
+    '{USERNAME}__{GROUP}_{GROUPPOS}__{TIMESTAMP}|{USERNAME}__{TITLE}__{TIMESTAMP}',
+    '{USERNAME}__{TITLE}__{TIMESTAMP}',
+    '{USERNAME}__{GROUP}_{GROUPPOS}__{TITLE}__{TIMESTAMP}|{USERNAME}__{TITLE}__{TIMESTAMP}'
   );
 
 {$R *.dfm}
@@ -410,33 +411,6 @@ begin
   OptionChanged(Sender);
 end;
 
-//----------Classic Mode-------------------------------------------------------
-procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
-begin
-  if cbClassicMode.Checked then
-  begin
-    cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
-    cbHideShadows.Enabled := false;
-    cbHideClearPhysics.Checked := true;
-    cbHideClearPhysics.Enabled := false;
-    cbHideAdvancedSelect.Checked := true;
-    cbHideAdvancedSelect.Enabled := false;
-    cbHideFrameskipping.Checked := true;
-    cbHideFrameskipping.Enabled := false;
-    cbHideHelpers.Checked := true;
-    cbHideHelpers.Enabled := false;
-    cbHideSkillQ.Checked := true;
-    cbHideSkillQ.Enabled := false;
-  end else begin
-    cbHideShadows.Enabled := true;
-    cbHideClearPhysics.Enabled := true;
-    cbHideAdvancedSelect.Enabled := true;
-    cbHideFrameskipping.Enabled := true;
-    cbHideHelpers.Enabled := true;
-    cbHideSkillQ.Enabled := true;
-  end;
-end;
-
 procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);
 var
   P: TComboBox;
@@ -454,6 +428,76 @@ end;
   //if not cbEnableOnline.Checked then cbUpdateCheck.Checked := false;
   //btnApply.Enabled := true;
 //end;
+
+//----------Classic Mode-------------------------------------------------------
+//procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
+//begin
+  //OptionChanged(Sender);
+  //if cbClassicMode.Checked then
+  //begin
+    //cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
+    //cbHideShadows.Enabled := false;
+    //cbHideClearPhysics.Checked := true;
+    //cbHideClearPhysics.Enabled := false;
+    //cbHideAdvancedSelect.Checked := true;
+    //cbHideAdvancedSelect.Enabled := false;
+    //cbHideFrameskipping.Checked := true;
+    //cbHideFrameskipping.Enabled := false;
+    //cbHideHelpers.Checked := true;
+    //cbHideHelpers.Enabled := false;
+    //cbHideSkillQ.Checked := true;
+    //cbHideSkillQ.Enabled := false;
+  //end else begin
+    //cbHideShadows.Checked := false;
+    //cbHideShadows.Enabled := true;
+    //cbHideClearPhysics.Checked := false;
+    //cbHideClearPhysics.Enabled := true;
+    //cbHideAdvancedSelect.Checked := false;
+    //cbHideAdvancedSelect.Enabled := true;
+    //cbHideFrameskipping.Checked := false;
+    //cbHideFrameskipping.Enabled := true;
+    //cbHideHelpers.Checked := false;
+    //cbHideHelpers.Enabled := true;
+    //cbHideSkillQ.Checked := false;
+    //cbHideSkillQ.Enabled := true;
+  //end;
+//end;
+
+procedure TFormNXConfig.btnClassicModeClick(Sender: TObject);
+begin
+  OptionChanged(Sender);
+  cbClassicMode.Checked := true;
+  cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
+  cbHideShadows.Enabled := false;
+  cbHideClearPhysics.Checked := true;
+  cbHideClearPhysics.Enabled := false;
+  cbHideAdvancedSelect.Checked := true;
+  cbHideAdvancedSelect.Enabled := false;
+  cbHideFrameskipping.Checked := true;
+  cbHideFrameskipping.Enabled := false;
+  cbHideHelpers.Checked := true;
+  cbHideHelpers.Enabled := false;
+  cbHideSkillQ.Checked := true;
+  cbHideSkillQ.Enabled := false;
+end;
+
+procedure TFormNXConfig.btnDeactivateClassicModeClick(Sender: TObject);
+begin
+  OptionChanged(Sender);
+  cbClassicMode.Checked := false;
+  cbHideShadows.Checked := false;
+  cbHideShadows.Enabled := true;
+  cbHideClearPhysics.Checked := false;
+  cbHideClearPhysics.Enabled := true;
+  cbHideAdvancedSelect.Checked := false;
+  cbHideAdvancedSelect.Enabled := true;
+  cbHideFrameskipping.Checked := false;
+  cbHideFrameskipping.Enabled := true;
+  cbHideHelpers.Checked := false;
+  cbHideHelpers.Enabled := true;
+  cbHideSkillQ.Checked := false;
+  cbHideSkillQ.Enabled := true;
+end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
 begin
