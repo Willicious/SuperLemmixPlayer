@@ -78,51 +78,51 @@ end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
 begin
-  Result := 39;
+  Result := 41;
 end;
 
 function TSkillPanelStandard.DrawStringTemplate: string;
 begin
-  Result := '.............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
+  Result := '...............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
 function TSkillPanelStandard.TimeLimitStartIndex: Integer;
 begin
-  Result := 33;
+  Result := 35;
 end;
 
-//this adjusts the position of the actual minimap within its frame, but also moves the frame around. Small adjustments are enough
+//First set of digits adust left & top pos of minimap frame, second set of digits adjusts left & top pos of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(354 * ResMod, 5 * ResMod, 436 * ResMod, 38 * ResMod);
+  Result := Rect(370 * ResMod, 2 * ResMod, 438 * ResMod, 36 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   SetInfoCursorLemming(1);
-  SetReplayMark(14);
-  SetInfoLemHatch(17);
-  SetInfoLemAlive(23);
-  SetInfoLemIn(29);
-  SetTimeLimit(34);
-  SetInfoTime(35, 38);
+  SetReplayMark(16);
+  SetInfoLemHatch(19);
+  SetInfoLemAlive(25);
+  SetInfoLemIn(31);
+  SetTimeLimit(36);
+  SetInfoTime(37, 40);
 end;
 
 function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
 begin
-  SetLength(Result, 22);
+  SetLength(Result, 23);
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (0 + MAX_SKILL_TYPES_PER_LEVEL -1) do
     Result[i] := Low(TSkillPanelButton); // placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbRestart;  //spbFastForward previously in place here
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbSquiggle;
-  //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbFastForward;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbNuke;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbSquiggle; //spbBackOneFrame; // and below: spbForwardOneFrame
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
 end;
@@ -139,10 +139,10 @@ begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  //this affects the size & rendering of the minimap frame
-  if (MinimapRegion.Width <> 90 * ResMod) or (MinimapRegion.Height <> 38 * ResMod) then
+  //changing the first digit changes the right side of the minimap frame
+  if (MinimapRegion.Width <> 74 * ResMod) or (MinimapRegion.Height <> 40 * ResMod) then
   begin
-    MinimapRegion.SetSize(90 * ResMod, 38 * ResMod);
+    MinimapRegion.SetSize(74 * ResMod, 40 * ResMod);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
                   Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
