@@ -95,7 +95,7 @@ end;
 //First set of digits adust left & top pos of minimap frame, second set of digits adjusts left & top pos of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(371 * ResMod, 2 * ResMod, 438 * ResMod, 36 * ResMod);
+  Result := Rect(371 * ResMod, 2 * ResMod, 437 * ResMod, 36 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -140,9 +140,9 @@ begin
   TempBmp.Assign(MinimapRegion);
 
   //changing the first digit changes the right side of the minimap frame
-  if (MinimapRegion.Width <> 72 * ResMod) or (MinimapRegion.Height <> 40 * ResMod) then
+  if (MinimapRegion.Width <> 72 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
   begin
-    MinimapRegion.SetSize(72 * ResMod, 40 * ResMod);
+    MinimapRegion.SetSize(72 * ResMod, 39 * ResMod);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
                   Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);

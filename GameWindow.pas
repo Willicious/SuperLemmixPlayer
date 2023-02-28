@@ -1356,10 +1356,16 @@ begin
 
     case func.Action of
       lka_ReleaseMouse: ReleaseMouse;
-      lka_ReleaseRateMax: SetSelectedSkill(spbFaster, True, True);
+      lka_ReleaseRateMax: if not GameParams.ClassicMode then
+                          begin
+                           SetSelectedSkill(spbFaster, True, True);
+                          end;
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
-      lka_ReleaseRateMin: SetSelectedSkill(spbSlower, True, True);
+      lka_ReleaseRateMin: if not GameParams.ClassicMode then
+                          begin
+                          SetSelectedSkill(spbSlower, True, True);
+                          end;
       lka_Pause: begin
                    if fGameSpeed = gspPause then
                      GameSpeed := gspNormal

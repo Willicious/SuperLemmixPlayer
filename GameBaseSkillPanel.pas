@@ -1538,15 +1538,26 @@ begin
 
   // Do button-specific actions
   case aButton of
-    spbSlower: Game.SetSelectedSkill(i, True, (Button = mbRight));
-    spbFaster: Game.SetSelectedSkill(i, True, (Button = mbRight));
-    spbPause:
-      begin
-        if fGameWindow.GameSpeed = gspPause then
-          fGameWindow.GameSpeed := gspNormal
-        else
-          fGameWindow.GameSpeed := gspPause;
-      end;
+    spbSlower:begin
+              if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
+                begin
+                Game.SetSelectedSkill(i, True);
+                end else
+                Game.SetSelectedSkill(i, True, (Button = mbRight));
+              end;
+    spbFaster:begin
+              if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
+                begin
+                Game.SetSelectedSkill(i, True);
+                end else
+                Game.SetSelectedSkill(i, True, (Button = mbRight));
+              end;
+    spbPause:begin
+              if fGameWindow.GameSpeed = gspPause then
+              fGameWindow.GameSpeed := gspNormal
+              else
+              fGameWindow.GameSpeed := gspPause;
+             end;
     spbNuke:
       begin
         Game.RegainControl;
@@ -1565,7 +1576,7 @@ begin
           fGameWindow.GameSpeed := gspFF;
       end;
     spbRestart:begin
-                if GameParams.ClassicMode then
+                if GameParams.ClassicMode then // cancels Replay after Restart in ClassicMode
                   begin
                     Game.CancelReplayAfterSkip := true;
                     fGameWindow.GotoSaveState(0);
@@ -1594,7 +1605,7 @@ begin
         else if Button = mbMiddle then
           fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
       end;
-    spbSquiggle: if not GameParams.HideClearPhysics then
+    spbSquiggle: if not GameParams.HideClearPhysics then  //formerly spbClearPhysics
       fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
     spbDirLeft:
       begin
