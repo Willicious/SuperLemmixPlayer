@@ -1289,10 +1289,10 @@ begin
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 7 + 64) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 7 + 32) * ResMod, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 7 + 64) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 7 + 32) * ResMod, 0);
       end;
     end;
   end;
