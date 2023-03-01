@@ -84,7 +84,7 @@ type
   );
 
 const
-  MAX_SKILL_TYPES_PER_LEVEL = 16;
+  MAX_SKILL_TYPES_PER_LEVEL = 14;
 
 type
   TSkillPanelButton = (

@@ -5,10 +5,10 @@
  
 #        Level info             
 # ----------------------------- 
- TITLE 16 Skills Part II
+ TITLE 14 Skills Part II
  AUTHOR WillLem
  ID x38D76D0F22553F8E
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,12 +25,10 @@
  $SKILLSET 
    WALKER 5
    JUMPER 5
-   SHIMMIER 5
    CLIMBER 5
    SWIMMER 5
    FLOATER 5
    FREEZER 5
-   BLOCKER 5
    BUILDER 5
    STACKER 5
    SPEARER 5
@@ -220,8 +218,8 @@
  $LEMMING
    X 57
    Y 64
-   NEUTRAL 
    BLOCKER 
+   NEUTRAL 
  $END
  
  

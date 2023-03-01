@@ -5,10 +5,10 @@
  
 #        Level info             
 # ----------------------------- 
- TITLE 16 Skills
+ TITLE 14 Skills
  AUTHOR WillLem
  ID x69FE49DB3715D768
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,13 +25,11 @@
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-   WALKER 16
-   JUMPER 15
-   SHIMMIER 14
-   CLIMBER 13
-   SWIMMER 12
-   FLOATER 11
-   DISARMER 10
+   WALKER 14
+   JUMPER 13
+   CLIMBER 12
+   SWIMMER 11
+   FLOATER 10
    BOMBER 9
    FREEZER 8
    BUILDER 7

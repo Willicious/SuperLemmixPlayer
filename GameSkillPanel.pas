@@ -68,7 +68,7 @@ end;
 
 function TSkillPanelStandard.PanelWidth: Integer;
 begin
-  Result := 442 * ResMod;
+  Result := 444 * ResMod;
 end;
 
 function TSkillPanelStandard.PanelHeight: Integer;
@@ -78,35 +78,36 @@ end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
 begin
-  Result := 46;
+  Result := 41;
 end;
 
 function TSkillPanelStandard.DrawStringTemplate: string;
 begin
-  Result := '....................' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
+  Result := '...............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
 function TSkillPanelStandard.TimeLimitStartIndex: Integer;
 begin
-  Result := 41;
+  Result := 36;
 end;
 
-//First set of digits adust left & top pos of minimap frame, second set of digits adjusts left & top pos of minimap itself
+//First set of digits adust left & top pos of minimap frame
+//Second set of digits adjusts width & height of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(371 * ResMod, 2 * ResMod, 437 * ResMod, 36 * ResMod);
+  Result := Rect(339 * ResMod, 2 * ResMod, 434 * ResMod, 36 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   SetInfoCursorLemming(1);
-  SetReplayMark(21);
-  SetInfoLemHatch(24);
-  SetInfoLemAlive(30);
-  SetInfoLemIn(36);
-  SetTimeLimit(41);
-  SetInfoTime(42, 45);
+  SetReplayMark(16);
+  SetInfoLemHatch(19);
+  SetInfoLemAlive(25);
+  SetInfoLemIn(31);
+  SetTimeLimit(36);
+  SetInfoTime(37, 40);
 end;
 
 function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
@@ -140,9 +141,9 @@ begin
   TempBmp.Assign(MinimapRegion);
 
   //changing the first digit changes the right side of the minimap frame
-  if (MinimapRegion.Width <> 72 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
+  if (MinimapRegion.Width <> 100 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
   begin
-    MinimapRegion.SetSize(72 * ResMod, 39 * ResMod);
+    MinimapRegion.SetSize(100 * ResMod, 39 * ResMod);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
                   Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
