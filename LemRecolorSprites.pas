@@ -62,6 +62,9 @@ type
 
 implementation
 
+uses
+  GameControl;
+
 constructor TRecolorImage.Create;
 begin
   inherited;
@@ -159,8 +162,12 @@ begin
         Mode := rcl_Zombie;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
 
+        // Selected lems are not highlighted in ClassicMode
         Mode := rcl_Selected;
-        Parser.MainSection.Section['state_recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+        if not GameParams.ClassicMode then
+        begin
+          Parser.MainSection.Section['state_recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+        end;
       end;
     end;
   finally
