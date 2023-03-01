@@ -2716,6 +2716,7 @@ begin
 
     fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
     fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
+  end;
 
     // And laserer!
     if GameParams.HighResolution then
@@ -2724,7 +2725,6 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser.png', fLaserGraphic);
 
     fHelpersAreHighRes := GameParams.HighResolution;
-  end;
 end;
 
 procedure TRenderer.LoadProjectileImages;
