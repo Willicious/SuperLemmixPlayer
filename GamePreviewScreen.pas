@@ -13,7 +13,7 @@ uses
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
-  LemCore, LemStrings, LemRendering, LemLevel,
+  LemCore, LemStrings, LemRendering, LemLevel, LemGame,
   LemGadgetsMeta, LemGadgets,
   LemTalisman,
   GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow;
@@ -454,6 +454,10 @@ begin
       Raise; // yet again, to be caught on TBaseDosForm
     end;
   end;
+  GlobalGame.ReplayManager.Clear(true); // this code clears the current-replay-in-memory
+                                        // when the level loads. A controversial decision to
+                                        // have this happen Globally, it might need to be
+                                        // optional
 end;
 
 end.
