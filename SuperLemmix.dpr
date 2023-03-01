@@ -80,5 +80,6 @@ begin
   Application.Initialize;
   Application.Title := 'SuperLemmix';
   Application.CreateForm(TMainForm, MainForm);
+  Application.HintHidePause := 100000;
   Application.Run;
 end.

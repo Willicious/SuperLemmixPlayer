@@ -56,7 +56,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 275
     Height = 369
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -229,7 +229,15 @@ object FormNXConfig: TFormNXConfig
         Top = 117
         Width = 150
         Height = 38
+        Hint = 
+          'Classic Mode deactivates all features listed below the button'#13#10'f' +
+          'or a more old-school Lemmings experience!'#13#10'It also deactivates a' +
+          'ssign-whilst-paused, jump to min/max'#13#10'release rate, and limits r' +
+          'eplay features to saving and loading'#13#10'on the level preview and p' +
+          'ostview screens only. Enjoy!'
         Caption = 'Activate Classic Mode'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 11
         OnClick = btnClassicModeClick
       end
