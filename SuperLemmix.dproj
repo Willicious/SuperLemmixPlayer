@@ -181,7 +181,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_Define>exp;rc;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_4_Win32)'!=''">
-        <Icon_MainIcon>NeoLemmix_Icon.ico</Icon_MainIcon>
+        <Icon_MainIcon>SuperLemmix_Icon.ico</Icon_MainIcon>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BT_BuildType>Debug</BT_BuildType>
     </PropertyGroup>
