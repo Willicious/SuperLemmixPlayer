@@ -185,7 +185,7 @@ object FormNXConfig: TFormNXConfig
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
-        TabOrder = 8
+        TabOrder = 0
         OnClick = OptionChanged
       end
       object cbNoAutoReplay: TCheckBox
@@ -194,7 +194,7 @@ object FormNXConfig: TFormNXConfig
         Width = 234
         Height = 17
         Caption = 'Replay After Backwards Frameskip'
-        TabOrder = 9
+        TabOrder = 1
         OnClick = OptionChanged
       end
       object cbPauseAfterBackwards: TCheckBox
@@ -203,7 +203,7 @@ object FormNXConfig: TFormNXConfig
         Width = 205
         Height = 17
         Caption = 'Pause After Backwards Frameskip'
-        TabOrder = 6
+        TabOrder = 5
         OnClick = OptionChanged
       end
       object cbNoBackgrounds: TCheckBox
@@ -215,14 +215,66 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 7
         OnClick = OptionChanged
       end
-      object cbClassicMode: TCheckBox
-        Left = 208
-        Top = 127
-        Width = 51
-        Height = 17
-        Caption = 'ACM'
-        TabOrder = 10
-        Visible = False
+      object ClassicMode: TGroupBox
+        Left = 25
+        Top = 136
+        Width = 205
+        Height = 177
+        TabOrder = 6
+        object cbHideShadows: TCheckBox
+          Left = 27
+          Top = 25
+          Width = 190
+          Height = 17
+          Caption = 'Deactivate Skill Shadows'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
+        object cbHideClearPhysics: TCheckBox
+          Left = 27
+          Top = 48
+          Width = 190
+          Height = 17
+          Caption = 'Deactivate Clear Physics'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbHideAdvancedSelect: TCheckBox
+          Left = 27
+          Top = 71
+          Width = 190
+          Height = 17
+          Caption = 'Deactivate Advanced Select'
+          TabOrder = 2
+          OnClick = OptionChanged
+        end
+        object cbHideFrameskipping: TCheckBox
+          Left = 27
+          Top = 94
+          Width = 190
+          Height = 17
+          Caption = 'Deactivate Frameskipping'
+          TabOrder = 3
+          OnClick = OptionChanged
+        end
+        object cbHideHelpers: TCheckBox
+          Left = 27
+          Top = 117
+          Width = 190
+          Height = 17
+          Caption = 'Deactivate Helper Overlays'
+          TabOrder = 5
+          OnClick = OptionChanged
+        end
+        object cbHideSkillQ: TCheckBox
+          Left = 27
+          Top = 140
+          Width = 190
+          Height = 17
+          Caption = 'Deactivate Skill Queueing'
+          TabOrder = 4
+          OnClick = OptionChanged
+        end
       end
       object btnClassicMode: TButton
         Left = 52
@@ -232,13 +284,13 @@ object FormNXConfig: TFormNXConfig
         Hint = 
           'Classic Mode deactivates all features listed below the button'#13#10'f' +
           'or a more old-school Lemmings experience!'#13#10'It also deactivates a' +
-          'ssign-whilst-paused, jump to min/max'#13#10'release rate, and limits r' +
-          'eplay features to saving and loading'#13#10'on the level preview and p' +
-          'ostview screens only. Enjoy!'
+          'ssign-whilst-paused, selected lemming recolouring, jump to min/m' +
+          'ax'#13#10'release rate, and limits replay features to saving and loadi' +
+          'ng'#13#10'on the level preview and postview screens only. Enjoy!'
         Caption = 'Activate Classic Mode'
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 11
+        TabOrder = 3
         OnClick = btnClassicModeClick
       end
       object btnDeactivateClassicMode: TButton
@@ -247,62 +299,17 @@ object FormNXConfig: TFormNXConfig
         Width = 150
         Height = 38
         Caption = 'Deactivate Classic Mode'
-        TabOrder = 12
+        TabOrder = 4
         OnClick = btnDeactivateClassicModeClick
       end
-      object cbHideShadows: TCheckBox
-        Left = 52
-        Top = 161
-        Width = 190
+      object cbClassicMode: TCheckBox
+        Left = 208
+        Top = 127
+        Width = 51
         Height = 17
-        Caption = 'Deactivate Skill Shadows'
-        TabOrder = 0
-        OnClick = OptionChanged
-      end
-      object cbHideClearPhysics: TCheckBox
-        Left = 52
-        Top = 184
-        Width = 190
-        Height = 17
-        Caption = 'Deactivate Clear Physics'
-        TabOrder = 1
-        OnClick = OptionChanged
-      end
-      object cbHideAdvancedSelect: TCheckBox
-        Left = 52
-        Top = 207
-        Width = 190
-        Height = 17
-        Caption = 'Deactivate Advanced Select'
+        Caption = 'ACM'
         TabOrder = 2
-        OnClick = OptionChanged
-      end
-      object cbHideFrameskipping: TCheckBox
-        Left = 52
-        Top = 230
-        Width = 190
-        Height = 17
-        Caption = 'Deactivate Frameskipping'
-        TabOrder = 3
-        OnClick = OptionChanged
-      end
-      object cbHideHelpers: TCheckBox
-        Left = 52
-        Top = 253
-        Width = 190
-        Height = 17
-        Caption = 'Deactivate Helper Overlays'
-        TabOrder = 5
-        OnClick = OptionChanged
-      end
-      object cbHideSkillQ: TCheckBox
-        Left = 52
-        Top = 276
-        Width = 190
-        Height = 17
-        Caption = 'Deactivate Skill Queueing'
-        TabOrder = 4
-        OnClick = OptionChanged
+        Visible = False
       end
     end
     object Graphics: TTabSheet
