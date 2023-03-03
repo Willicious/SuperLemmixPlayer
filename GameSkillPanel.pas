@@ -130,7 +130,7 @@ end;
 
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
 begin
-  Result := 21;
+  Result := 25;
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
@@ -141,9 +141,9 @@ begin
   TempBmp.Assign(MinimapRegion);
 
   //changing the first digit changes the right side of the minimap frame
-  if (MinimapRegion.Width <> 100 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
+  if (MinimapRegion.Width <> 107 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
   begin
-    MinimapRegion.SetSize(100 * ResMod, 39 * ResMod);
+    MinimapRegion.SetSize(107 * ResMod, 39 * ResMod);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
                   Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);

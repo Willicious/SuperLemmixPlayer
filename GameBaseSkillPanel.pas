@@ -1254,7 +1254,7 @@ begin
 
     if (CharID >= 0) then
     begin
-      if (i > LemmingCountStartIndex + 3) and (i <= LemmingCountStartIndex + 8) then
+      if (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
       begin
         if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
         begin
