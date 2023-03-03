@@ -521,7 +521,7 @@ var
     end;
 
     // If no WindowWidth or WindowHeight is specified, we want to set them so that they
-    // match 416x200 x ZoomLevel exactly.
+    // match 444x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
       TMainForm(MainForm).RestoreDefaultSize;
@@ -548,7 +548,7 @@ var
     //if CompactSkillPanel then
       //fPanelZoomLevel := Min(Screen.Width div 320 div ResMod, fPanelZoomLevel)
     //else
-      fPanelZoomLevel := Min(Screen.Width div 416 div ResMod, fPanelZoomLevel);
+      fPanelZoomLevel := Min(Screen.Width div 444 div ResMod, fPanelZoomLevel);
 
     if fPanelZoomLevel < 1 then
       fPanelZoomLevel := 1;
@@ -565,7 +565,7 @@ begin
     begin
       // When running under WINE without an existing config, let's default to windowed.
       FullScreen := false;
-      ZoomLevel := Max(Max((Screen.Width - 100) div 416 div ResMod, (Screen.Height - 100) div 200 div ResMod), 1);
+      ZoomLevel := Max(Max((Screen.Width - 100) div 444 div ResMod, (Screen.Height - 100) div 200 div ResMod), 1);
       TMainForm(GameParams.MainForm).RestoreDefaultSize;
       TMainForm(GameParams.MainForm).RestoreDefaultPosition;
     end;
@@ -833,7 +833,7 @@ begin
   fOneLevelMode := false;
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
-  fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 416);
+  fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
   fCursorResize := 1;
 
   LemDataInResource := True;

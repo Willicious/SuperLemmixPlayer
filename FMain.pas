@@ -150,7 +150,7 @@ begin
   //if GameParams.CompactSkillPanel then
     //ClientWidth := WindowScale * 320
   //else
-    ClientWidth := 1776;//Max(WindowScale * 320, 416 * ResMod);
+    ClientWidth := 1776;//Max(WindowScale * 320, 444 * ResMod);
 
   ClientHeight := 800;//ClientWidth * 9 div 16;
 end;
@@ -264,7 +264,7 @@ begin
   //if GameParams.CompactSkillPanel then
     //NewCW := Max(320 * ResMod, NewCW)
   //else
-    NewCW := Max(416 * ResMod, NewCW);
+    NewCW := Max(444 * ResMod, NewCW);
   NewCH := Max(200 * ResMod, NewCH);
 
   NewCW := Min(NewCW, Screen.Width - CWDiff);

@@ -16,14 +16,10 @@ type
     lblOptionsText2: TLabel;
     btnNext: TButton;
     btnExit: TButton;
-    lblHotkeys: TLabel;
-    cbHotkey: TComboBox;
     lblGraphics: TLabel;
     cbGraphics: TComboBox;
     lblUsername: TLabel;
     ebUserName: TEdit;
-    lblOnline: TLabel;
-    cbOnline: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
@@ -63,9 +59,9 @@ begin
   // Set desired default settings
   GameParams.UserName := ebUserName.Text;
 
-  case cbHotkey.ItemIndex of
-    0: GameParams.Hotkeys.SetDefaultsClassic;
-  end;
+  //case cbHotkey.ItemIndex of
+    //0: GameParams.Hotkeys.SetDefaultsClassic;
+  //end;
 
   case cbGraphics.ItemIndex of
     1, 3: begin
@@ -84,8 +80,8 @@ begin
   if GameParams.HighResolution then
     GameParams.ZoomLevel := Max(GameParams.ZoomLevel div 2, 1);
 
-  GameParams.EnableOnline := cbOnline.ItemIndex >= 1;
-  GameParams.CheckUpdates := cbOnline.ItemIndex >= 2;
+  //GameParams.EnableOnline := cbOnline.ItemIndex >= 1;
+  //GameParams.CheckUpdates := cbOnline.ItemIndex >= 2;
 
   Close;
 end;

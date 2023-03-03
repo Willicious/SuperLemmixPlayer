@@ -185,7 +185,7 @@ object FormNXConfig: TFormNXConfig
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
-        TabOrder = 0
+        TabOrder = 7
         OnClick = OptionChanged
       end
       object cbNoAutoReplay: TCheckBox
@@ -212,7 +212,7 @@ object FormNXConfig: TFormNXConfig
         Width = 205
         Height = 17
         Caption = 'Deactivate Background Images'
-        TabOrder = 7
+        TabOrder = 6
         OnClick = OptionChanged
       end
       object ClassicMode: TGroupBox
@@ -220,7 +220,7 @@ object FormNXConfig: TFormNXConfig
         Top = 136
         Width = 205
         Height = 177
-        TabOrder = 6
+        TabOrder = 0
         object cbHideShadows: TCheckBox
           Left = 27
           Top = 25

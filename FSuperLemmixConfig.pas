@@ -189,7 +189,7 @@ begin
   //if cbCompactSkillPanel.Checked then
     //MaxZoom := Max(MaxWidth div 320, 1)
   //else
-    MaxZoom := Max(MaxWidth div 416, 1);
+    MaxZoom := Max(MaxWidth div 444, 1);
 
   if cbHighResolution.Checked then
     MaxZoom := Max(1, MaxZoom div 2);

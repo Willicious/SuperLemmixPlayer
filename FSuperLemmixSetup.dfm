@@ -50,11 +50,11 @@ object FNLSetup: TFNLSetup
       object lblOptionsText1: TLabel
         Left = 24
         Top = 48
-        Width = 491
-        Height = 13
+        Width = 500
+        Height = 17
         Caption = 
-          'It appears that this is your first time using NeoLemmix, or that' +
-          ' your configuration file is missing.'
+          'It appears that this is your first time using SuperLemmix, or th' +
+          'at your configuration file is missing.'
       end
       object lblOptionsText2: TLabel
         Left = 24
@@ -65,56 +65,28 @@ object FNLSetup: TFNLSetup
           'Please select the desired options. You can always change them la' +
           'ter on.'
       end
-      object lblHotkeys: TLabel
-        Left = 24
-        Top = 139
-        Width = 83
-        Height = 13
-        Caption = 'Hotkey settings:'
-      end
       object lblGraphics: TLabel
         Left = 24
-        Top = 166
+        Top = 150
         Width = 87
         Height = 13
         Caption = 'Graphic settings:'
       end
       object lblUsername: TLabel
         Left = 24
-        Top = 112
+        Top = 118
         Width = 56
         Height = 13
         Caption = 'Your name:'
       end
-      object lblOnline: TLabel
-        Left = 24
-        Top = 193
-        Width = 82
-        Height = 13
-        Caption = 'Online settings:'
-      end
-      object cbHotkey: TComboBox
-        Left = 128
-        Top = 136
-        Width = 217
-        Height = 21
-        Style = csDropDownList
-        ItemIndex = 0
-        TabOrder = 1
-        Text = 'Grouped by function'
-        Items.Strings = (
-          'Grouped by function'
-          'Traditional layout'
-          'Minimalist configuration')
-      end
       object cbGraphics: TComboBox
         Left = 128
-        Top = 163
+        Top = 147
         Width = 217
         Height = 21
         Style = csDropDownList
         ItemIndex = 1
-        TabOrder = 2
+        TabOrder = 1
         Text = 'Low-resolution, enhancements'
         Items.Strings = (
           'Low-resolution, no enhancements'
@@ -124,25 +96,11 @@ object FNLSetup: TFNLSetup
       end
       object ebUserName: TEdit
         Left = 128
-        Top = 109
+        Top = 115
         Width = 217
         Height = 21
         TabOrder = 0
         Text = 'Anonymous'
-      end
-      object cbOnline: TComboBox
-        Left = 128
-        Top = 190
-        Width = 217
-        Height = 21
-        Style = csDropDownList
-        ItemIndex = 0
-        TabOrder = 3
-        Text = 'Online functions disabled'
-        Items.Strings = (
-          'Online functions disabled'
-          'Online functions enabled'
-          'Online + update check enabled')
       end
     end
   end
