@@ -5,7 +5,7 @@ interface
 uses
   Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls;
+  Dialogs, StdCtrls, ComCtrls, Vcl.ExtCtrls;
 
 type
   TFNLSetup = class(TForm)
@@ -20,6 +20,11 @@ type
     cbGraphics: TComboBox;
     lblUsername: TLabel;
     ebUserName: TEdit;
+    lblGameplay: TLabel;
+    cbGameplay: TComboBox;
+    lblHotkeys: TLabel;
+    cbHotkeys: TComboBox;
+    Image1: TImage;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
@@ -59,10 +64,6 @@ begin
   // Set desired default settings
   GameParams.UserName := ebUserName.Text;
 
-  //case cbHotkey.ItemIndex of
-    //0: GameParams.Hotkeys.SetDefaultsClassic;
-  //end;
-
   case cbGraphics.ItemIndex of
     1, 3: begin
          GameParams.MinimapHighQuality := true;
@@ -82,6 +83,32 @@ begin
 
   //GameParams.EnableOnline := cbOnline.ItemIndex >= 1;
   //GameParams.CheckUpdates := cbOnline.ItemIndex >= 2;
+
+  case cbGameplay.ItemIndex of
+    0: begin
+         GameParams.ClassicMode := true;
+         GameParams.HideShadows := true;
+         GameParams.HideClearPhysics := true;
+         GameParams.HideAdvancedSelect := true;
+         GameParams.HideFrameskipping := true;
+         GameParams.HideHelpers := true;
+         GameParams.HideSkillQ := true;
+       end;
+    1: begin
+         GameParams.ClassicMode := false;
+         GameParams.HideShadows := false;
+         GameParams.HideClearPhysics := false;
+         GameParams.HideAdvancedSelect := false;
+         GameParams.HideFrameskipping := false;
+         GameParams.HideHelpers := false;
+         GameParams.HideSkillQ := false;
+       end;
+  end;
+
+  case cbHotkeys.ItemIndex of
+    0: GameParams.Hotkeys.SetDefaultsClassic;
+    1: GameParams.Hotkeys.SetDefaultsAdvanced;
+  end;
 
   Close;
 end;

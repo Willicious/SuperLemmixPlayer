@@ -7,7 +7,7 @@ object FNLSetup: TFNLSetup
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Setup'
   ClientHeight = 283
-  ClientWidth = 473
+  ClientWidth = 427
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,14 +18,14 @@ object FNLSetup: TFNLSetup
   Position = poMainFormCenter
   OnCreate = FormCreate
   DesignSize = (
-    473
+    427
     283)
   PixelsPerInch = 96
   TextHeight = 13
   object SetupPages: TPageControl
     Left = 0
     Top = 0
-    Width = 473
+    Width = 427
     Height = 238
     ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
@@ -34,8 +34,8 @@ object FNLSetup: TFNLSetup
       Caption = 'TabSheet1'
       TabVisible = False
       object lblWelcome: TLabel
-        Left = 16
-        Top = 16
+        Left = 103
+        Top = 3
         Width = 206
         Height = 21
         Caption = 'Welcome to SuperLemmix!'
@@ -48,17 +48,17 @@ object FNLSetup: TFNLSetup
         OnClick = lblWelcomeClick
       end
       object lblOptionsText1: TLabel
-        Left = 24
-        Top = 48
-        Width = 500
-        Height = 17
+        Left = 63
+        Top = 40
+        Width = 287
+        Height = 26
         Caption = 
-          'It appears that this is your first time using SuperLemmix, or th' +
-          'at your configuration file is missing.'
+          'It appears that this is your first time using SuperLemmix,'#13#10'or t' +
+          'hat your configuration file is missing.'
       end
       object lblOptionsText2: TLabel
-        Left = 24
-        Top = 80
+        Left = 23
+        Top = 83
         Width = 366
         Height = 13
         Caption = 
@@ -66,38 +66,78 @@ object FNLSetup: TFNLSetup
           'ter on.'
       end
       object lblGraphics: TLabel
-        Left = 24
-        Top = 150
-        Width = 87
+        Left = 31
+        Top = 141
+        Width = 93
         Height = 13
-        Caption = 'Graphic settings:'
+        Caption = 'Graphics Settings:'
       end
       object lblUsername: TLabel
-        Left = 24
-        Top = 118
-        Width = 56
+        Left = 31
+        Top = 111
+        Width = 57
         Height = 13
-        Caption = 'Your name:'
+        Caption = 'Your Name:'
+      end
+      object lblGameplay: TLabel
+        Left = 31
+        Top = 171
+        Width = 98
+        Height = 13
+        Caption = 'Gameplay Options:'
+      end
+      object lblHotkeys: TLabel
+        Left = 31
+        Top = 201
+        Width = 84
+        Height = 13
+        Caption = 'Hotkey Options:'
       end
       object cbGraphics: TComboBox
-        Left = 128
-        Top = 147
-        Width = 217
+        Left = 135
+        Top = 138
+        Width = 240
         Height = 21
         Style = csDropDownList
-        ItemIndex = 1
+        ItemIndex = 3
         TabOrder = 1
-        Text = 'Low-resolution, enhancements'
+        Text = 'High-resolution, enhancements'
         Items.Strings = (
           'Low-resolution, no enhancements'
           'Low-resolution, enhancements'
           'High-resolution, no enhancements'
           'High-resolution, enhancements')
       end
+      object cbGameplay: TComboBox
+        Left = 135
+        Top = 168
+        Width = 240
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 1
+        TabOrder = 3
+        Text = 'Modern Mode'
+        Items.Strings = (
+          'Classic Mode'
+          'Modern Mode')
+      end
+      object cbHotkeys: TComboBox
+        Left = 136
+        Top = 198
+        Width = 240
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 1
+        TabOrder = 2
+        Text = 'Advanced Hotkeys'
+        Items.Strings = (
+          'Classic Hotkeys'
+          'Advanced Hotkeys')
+      end
       object ebUserName: TEdit
-        Left = 128
-        Top = 115
-        Width = 217
+        Left = 136
+        Top = 108
+        Width = 240
         Height = 21
         TabOrder = 0
         Text = 'Anonymous'
@@ -105,19 +145,19 @@ object FNLSetup: TFNLSetup
     end
   end
   object btnNext: TButton
-    Left = 384
-    Top = 245
-    Width = 75
+    Left = 107
+    Top = 244
+    Width = 151
     Height = 25
     Anchors = [akLeft, akBottom]
-    Caption = 'OK'
+    Caption = 'Save && Continue'
     Default = True
     TabOrder = 2
     OnClick = btnOKClick
   end
   object btnExit: TButton
-    Left = 304
-    Top = 245
+    Left = 264
+    Top = 244
     Width = 75
     Height = 25
     Anchors = [akLeft, akBottom]
