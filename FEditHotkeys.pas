@@ -41,6 +41,8 @@ type
     //procedure btnFunctionalLayoutClick(Sender: TObject);
     //procedure btnTraditionalLayoutClick(Sender: TObject);
     procedure btnClassicLayoutClick(Sender: TObject);
+    procedure btnAdvancedLayoutClick(Sender: TObject);
+    procedure btnClearAllKeysClick(Sender: TObject);
     //procedure btnMinimalLayoutClick(Sender: TObject);
   private
     fShownFindInfo: Boolean;
@@ -99,6 +101,7 @@ begin
                      Integer(spbFloater):    s := s + 'Floater';
                      Integer(spbGlider):     s := s + 'Glider';
                      Integer(spbDisarmer):   s := s + 'Disarmer';
+                     Integer (spbTimebomber):    s := s + 'Timebomber';
                      Integer(spbBomber):     s := s + 'Bomber';
                      Integer(spbFreezer):     s := s + 'Freezer';
                      Integer(spbBlocker):    s := s + 'Blocker';
@@ -373,6 +376,19 @@ procedure TFLemmixHotkeys.btnClassicLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsClassic;
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.btnAdvancedLayoutClick(Sender: TObject);
+begin
+  fHotkeys.ClearAllKeys;
+  fHotkeys.SetDefaultsAdvanced;
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.btnClearAllKeysClick(Sender: TObject);
+begin
+  fHotkeys.ClearAllKeys;
   RefreshList;
 end;
 

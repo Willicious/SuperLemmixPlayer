@@ -308,6 +308,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
                     <Source Name="MainSource">SuperLemmix.dpr</Source>
                 </Source>
                 <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\GR32_DXE8.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\GR32_DXE8.bpl not found</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k270.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp270.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>

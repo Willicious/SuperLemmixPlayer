@@ -43,44 +43,45 @@ const
 {•}
 
 type
-  TBasicLemmingAction = (
-    baNone,
-    baWalking,
-    baAscending,
-    baDigging,
-    baClimbing,
-    baDrowning,
-    baHoisting,
-    baBuilding,
-    baBashing,
-    baMining,
-    baFalling,
-    baFloating,
-    baSplatting,
-    baExiting,
-    baVaporizing,
-    baBlocking,
-    baShrugging,
-    baOhnoing,
-    baExploding,
-    baToWalking,
-    baPlatforming,
-    baStacking,
-    baFreezing,
-    baFreezeFinish,
-    baSwimming,
-    baGliding,
-    baFixing,
-    baCloning,
-    baFencing,
-    baReaching,
-    baShimmying,
-    baJumping,
-    baDehoisting,
-    baSliding,
-    baSpearing,
-    baGrenading,
-    baLasering
+  TBasicLemmingAction = (   //needs to match TBasicLemmingAction in LemStrings
+    baNone,            //1
+    baWalking,         //2
+    baAscending,       //3
+    baDigging,         //4
+    baClimbing,        //5
+    baDrowning,        //6
+    baHoisting,        //7
+    baBuilding,        //8
+    baBashing,         //9
+    baMining,          //10
+    baFalling,         //11
+    baFloating,        //12
+    baSplatting,       //13
+    baExiting,         //14
+    baVaporizing,      //15
+    baBlocking,        //16
+    baShrugging,       //17
+    baOhnoing,         //18
+    baTimebombing,     //19
+    baExploding,       //20
+    baToWalking,       //21
+    baPlatforming,     //22
+    baStacking,        //23
+    baFreezing,        //24
+    baFreezeFinish,    //25
+    baSwimming,        //26
+    baGliding,         //27
+    baFixing,          //28
+    baCloning,         //29
+    baFencing,         //30
+    baReaching,        //31
+    baShimmying,       //32
+    baJumping,         //33
+    baDehoisting,      //34
+    baSliding,         //35
+    baSpearing,        //36
+    baGrenading,       //37
+    baLasering         //38
   );
 
 const
@@ -99,6 +100,7 @@ type
     spbFloater,
     spbGlider,
     spbDisarmer,
+    spbTimebomber,
     spbBomber,
     spbFreezer,
     spbBlocker,
@@ -146,6 +148,7 @@ const
     'floater',
     'glider',
     'disarmer',
+    'timebomber',
     'bomber',
     'freezer',
     'blocker',
@@ -172,6 +175,7 @@ const
     'floaters',
     'gliders',
     'disarmers',
+    'timebombers',
     'bombers',
     'freezers',
     'blockers',
@@ -223,6 +227,7 @@ const
     baMining,
     baFloating,
     baBlocking,
+    baTimebombing,
     baExploding,
     baToWalking,
     baPlatforming,
@@ -261,6 +266,7 @@ const
     spbBlocker,
     spbNone,
     spbNone,
+    spbTimebomber,
     spbBomber,
     spbWalker,
     spbPlatformer,
@@ -294,6 +300,7 @@ const
     baFloating,
     baGliding,
     baFixing,
+    baTimebombing,
     baExploding,
     baFreezing,
     baBlocking,

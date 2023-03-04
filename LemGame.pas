@@ -218,7 +218,7 @@ type
     procedure CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: TColor32);    //right-facing fencer
     procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   //left-facing miner
     procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  //right-facing miner
-    procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber
+    procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber & timebomber
     procedure CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
 
@@ -372,6 +372,7 @@ type
     function MayAssignSwimmer(L: TLemming): Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
+    function MayAssignExploderTimebomber(L: TLemming): Boolean;
     function MayAssignExploderFreezer(L: TLemming): Boolean;
     function MayAssignBuilder(L: TLemming): Boolean;
     function MayAssignPlatformer(L: TLemming): Boolean;
@@ -978,6 +979,8 @@ begin
   NewSkillMethods[baBlocking]     := MayAssignBlocker;
   NewSkillMethods[baShrugging]    := nil;
   NewSkillMethods[baOhnoing]      := nil;
+  NewSkillMethods[baExploding]    := MayAssignExploderTimebomber;
+  NewSkillMethods[baTimebombing]  := MayAssignExploderTimebomber;
   NewSkillMethods[baExploding]    := MayAssignExploderFreezer;
   NewSkillMethods[baToWalking]    := MayAssignWalker;
   NewSkillMethods[baPlatforming]  := MayAssignPlatformer;
@@ -1444,43 +1447,44 @@ const
   // Number of physics frames for the various lemming actions.
   ANIM_FRAMECOUNT: array[TBasicLemmingAction] of Integer =
     (
-     0, //baNone,
-     4, //baWalking,
-     1, //baAscending,
-    16, //baDigging,
-     8, //baClimbing,
-    16, //baDrowning,
-     8, //baHoisting,
-    16, //baBuilding,
-    16, //baBashing,
-    24, //baMining,
-     4, //baFalling,
-    17, //baFloating,
-    16, //baSplatting,
-     8, //baExiting,
-    14, //baVaporizing,
-    16, //baBlocking,
-     8, //baShrugging,
-    16, //baOhnoing,
-     1, //baExploding,
-     0, //baToWalking,
-    16, //baPlatforming,
-     8, //baStacking,
-    16, //baFreezing,
-     1, //baFreezeFinish,
-     8, //baSwimming,
-    17, //baGliding,
-    16, //baFixing,
-     0, //baCloning,
-    16, //baFencing,
-     8, //baReaching,
-    20, //baShimmying
-    13, //baJumping
-     7, //baDehoisting
-     1, //baSliding
-    10, //baSpearing
-    10,  //baGrenading
-    12  //baLasering - it's, ironically, this high for rendering purposes
+     0, //1 baNone,
+     4, //2 baWalking,
+     1, //3 baAscending,
+    16, //4 baDigging,
+     8, //5 baClimbing,
+    16, //6 baDrowning,
+     8, //7 baHoisting,
+    16, //8 baBuilding,
+    16, //9 baBashing,
+    24, //10 baMining,
+     4, //11 baFalling,
+    17, //12 baFloating,
+    16, //13 baSplatting,
+     8, //14 baExiting,
+    14, //15 baVaporizing,
+    16, //16 baBlocking,
+     8, //17 baShrugging,
+    16, //18 baOhnoing,
+    16, //19 baTimebombing (ohno phase) - might need to be set to 1 instead for exploder phase
+     1, //20 baExploding,
+     0, //21 baToWalking,
+    16, //22 baPlatforming,
+     8, //23 baStacking,
+    16, //24 baFreezing,
+     1, //25 baFreezeFinish,
+     8, //26 baSwimming,
+    17, //27 baGliding,
+    16, //28 baFixing,
+     0, //29 baCloning,
+    16, //30 baFencing,
+     8, //31 baReaching,
+    20, //32 baShimmying
+    13, //33 baJumping
+     7, //34 baDehoisting
+     1, //35 baSliding
+    10, //36 baSpearing
+    10, //37 baGrenading
+    12  //38 baLasering - it's, ironically, this high for rendering purposes
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1629,6 +1633,7 @@ begin
 end;
 
 
+// Bookmark for Timebomber --- this code is referenced where is says Timebomber code here
 function TLemmingGame.UpdateExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
@@ -1968,6 +1973,12 @@ begin
     L.LemIsSwimmer := True;
     if L.LemAction = baDrowning then Transition(L, baSwimming);
   end
+  else if (NewSkill = baTimebombing) then   //Timebomber code here
+  begin
+    L.LemExplosionTimer := 85;
+    L.LemTimerToFreeze := False;
+    L.LemHideCountdown := False;
+  end
   else if (NewSkill = baExploding) then
   begin
     L.LemExplosionTimer := 1;
@@ -2248,6 +2259,14 @@ const
                baBashing, baFencing, baMining, baDigging, baLasering];
 begin
   Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
+end;
+
+function TLemmingGame.MayAssignExploderTimebomber(L: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baFreezing, baDrowning, baExploding, baFreezeFinish,
+               baVaporizing, baSplatting, baExiting];
+begin
+  Result := not (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.MayAssignExploderFreezer(L: TLemming): Boolean;
@@ -3251,7 +3270,7 @@ var
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
                     spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner,
-                    spbSpearer, spbGrenader, spbLaserer];
+                    spbSpearer, spbGrenader, spbLaserer];  //Timebomber not included by choice
 begin
   if fHyperSpeed then Exit;
 

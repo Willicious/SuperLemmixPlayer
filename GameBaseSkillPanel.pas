@@ -188,7 +188,8 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', {Skills end here}
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    {Skills end here}
 
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
     'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'squiggle.png', 'icon_cpm_and_replay.png', 'icon_frameskip.png',
@@ -720,6 +721,17 @@ begin
     DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 26);
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 26);
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 21);
+
+    ////Timebomber has its own graphic, not sure how to call it up yet though
+    ///if GameParams.HighResolution then
+      ///TPngInterface.LoadPngFile(AppPath + SFGraphicsPanelHighRes + 'icon_timebomber.png', TempBMP)
+    ///else
+      ///TPngInterface.LoadPngFile(AppPath + SFGraphicsPanel + 'icon_timebomber.png', TempBMP);
+
+      ///DrawMiscBmp(TempBMP, fSkillIcons[spbTimebomber], 5, 5, {something needs to go here but I don't know what});
+
+    // So, borrowing OHNOER graphic for now
+    DrawAnimationFrame(fSkillIcons[spbTimebomber], OHNOING, 6, 6, 21);
 
     // Bomber is drawn resized
     DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));

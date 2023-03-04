@@ -29,7 +29,7 @@ const
     pgGrenade, pgGrenadeExplode
   );
 
-  PROJECTILE_GRAPHIC_RECTS: array[TProjectileGraphic] of TRect =
+  PROJECTILE_GRAPHIC_RECTS: array[TProjectileGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
   (
     (Left: 11; Top: 20; Right: 25; Bottom: 22),
     (Left: 0; Top: 0; Right: 12; Bottom: 6),

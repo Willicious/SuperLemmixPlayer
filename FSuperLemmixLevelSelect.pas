@@ -104,6 +104,7 @@ const // Icon indexes
     11, // Floater
     12, // Glider
     13, // Disarmer
+    42, // Timebomber         //bookmark
     14, // Bomber
     15, // Freezer
     16, // Blocker

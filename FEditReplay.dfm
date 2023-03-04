@@ -23,7 +23,7 @@ object FReplayEditor: TFReplayEditor
   object lblLevelName: TLabel
     Left = 14
     Top = 8
-    Width = 5
+    Width = 3
     Height = 13
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText

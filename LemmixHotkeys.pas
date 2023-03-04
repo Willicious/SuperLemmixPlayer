@@ -144,6 +144,7 @@ begin
   SetKeyFunction($20, lka_ShowUsedSkills);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
+  //SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
   SetKeyFunction($33, lka_Skill, Integer(spbBomber));
   SetKeyFunction($34, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($35, lka_Skill, Integer(spbBuilder));
@@ -209,6 +210,7 @@ begin
   SetKeyFunction($54, lka_SaveImage);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
+  //SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
   SetKeyFunction($33, lka_Skill, Integer(spbBomber));
   SetKeyFunction($34, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($35, lka_Skill, Integer(spbBuilder));
@@ -217,6 +219,7 @@ begin
   SetKeyFunction($38, lka_Skill, Integer(spbDigger));
   SetKeyFunction($61, lka_Skill, Integer(spbClimber));
   SetKeyFunction($62, lka_Skill, Integer(spbFloater));
+  //SetKeyFunction($63, lka_Skill, Integer(spbTimebomber));
   SetKeyFunction($63, lka_Skill, Integer(spbBomber));
   SetKeyFunction($64, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($65, lka_Skill, Integer(spbBuilder));
@@ -286,6 +289,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else if s = 'floater' then Result := Integer(spbFloater)
     else if s = 'glider' then Result := Integer(spbGlider)
     else if s = 'disarmer' then Result := Integer(spbDisarmer)
+    else if s = 'timebomber' then Result := Integer(spbTimebomber)
     else if s = 'bomber' then Result := Integer(spbBomber)
     else if s = 'freezer' then Result := Integer(spbFreezer)
     else if s = 'blocker' then Result := Integer(spbBlocker)
@@ -439,8 +443,9 @@ var
                     Integer(spbFloater):    Result := 'Floater';
                     Integer(spbGlider):     Result := 'Glider';
                     Integer(spbDisarmer):   Result := 'Disarmer';
+                    Integer(spbTimebomber): Result := 'Timebomber';
                     Integer(spbBomber):     Result := 'Bomber';
-                    Integer(spbFreezer):     Result := 'Freezer';
+                    Integer(spbFreezer):    Result := 'Freezer';
                     Integer(spbBlocker):    Result := 'Blocker';
                     Integer(spbPlatformer): Result := 'Platformer';
                     Integer(spbBuilder):    Result := 'Builder';

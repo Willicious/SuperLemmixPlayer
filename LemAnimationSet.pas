@@ -95,44 +95,45 @@ const
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
   // I should change it... at some point.
-  AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
-    (0,0),
-    (WALKING, WALKING_RTL),                   // 1 baWalk,
-    (ASCENDING, ASCENDING_RTL),               // 2 baAscending,
-    (DIGGING, DIGGING_RTL),                   // 3 baDigging,
-    (CLIMBING, CLIMBING_RTL),                 // 4 baClimbing,
-    (DROWNING, DROWNING_RTL),                 // 5 baDrowning,
-    (HOISTING, HOISTING_RTL),                 // 6 baHoisting,
-    (BRICKLAYING, BRICKLAYING_RTL),           // 7 baBricklaying,
-    (BASHING, BASHING_RTL),                   // 8 baBashing,
-    (MINING, MINING_RTL),                     // 9 baMining,
-    (FALLING, FALLING_RTL),                   // 10 baFalling,
-    (UMBRELLA, UMBRELLA_RTL),                 // 11 baUmbrella,
-    (SPLATTING, SPLATTING_RTL),               // 12 baSplatting,
-    (EXITING, EXITING_RTL),                   // 13 baExiting,
-    (FRIED, FRIED_RTL),                       // 14 baFried,
-    (BLOCKING, BLOCKING_RTL),                 // 15 baBlocking,
-    (SHRUGGING, SHRUGGING_RTL),               // 16 baShrugging,
-    (OHNOING, OHNOING_RTL),                   // 17 baOhnoing,
-    (EXPLOSION, EXPLOSION_RTL),               // 18 baExploding
-    (0,0),                                    // 19 baToWalking. Should never happen.
-    (PLATFORMING, PLATFORMING_RTL),           // 20 baPlatforming
-    (STACKING, STACKING_RTL),                 // 21 baStacking
-    (OHNOING, OHNOING_RTL),                   // 22 baFreezeOhNoing <-- might be incorrect name so don't rely on this
-    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL),     // 23 baFreezeFinish
-    (SWIMMING, SWIMMING_RTL),                 // 24 baSwimming
-    (GLIDING, GLIDING_RTL),                   // 25 baGliding
-    (FIXING, FIXING_RTL),                     // 26 baFixing
-    (0,0),                                    // 27 baCloning? Another that should never happen
-    (FENCING, FENCING_RTL),                   // 28 baFencing
-    (REACHING, REACHING_RTL),                 // 29 baReaching (for shimmier)
-    (SHIMMYING, SHIMMYING_RTL),               // 30 baShimmying
-    (JUMPING, JUMPING_RTL),                   // 31 baJumping
-    (DEHOISTING, DEHOISTING_RTL),             // 32 baDehoisting
-    (SLIDING, SLIDING_RTL),                   // 33 baSliding
-    (THROWING, THROWING_RTL),                 // 35 baSpearing
-    (THROWING, THROWING_RTL),                 // 35 baGrenading
-    (LASERING, LASERING_RTL)                  // 34 baLasering
+  AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = ( //needs to match TBasicLemmingAction in LemCore / LemStrings
+    (0,0),                                    // 1 baNone
+    (WALKING, WALKING_RTL),                   // 2 baWalk,
+    (ASCENDING, ASCENDING_RTL),               // 3 baAscending,
+    (DIGGING, DIGGING_RTL),                   // 4 baDigging,
+    (CLIMBING, CLIMBING_RTL),                 // 5 baClimbing,
+    (DROWNING, DROWNING_RTL),                 // 6 baDrowning,
+    (HOISTING, HOISTING_RTL),                 // 7 baHoisting,
+    (BRICKLAYING, BRICKLAYING_RTL),           // 8 baBricklaying,
+    (BASHING, BASHING_RTL),                   // 9 baBashing,
+    (MINING, MINING_RTL),                     // 10 baMining,
+    (FALLING, FALLING_RTL),                   // 11 baFalling,
+    (UMBRELLA, UMBRELLA_RTL),                 // 12 baUmbrella,
+    (SPLATTING, SPLATTING_RTL),               // 13 baSplatting,
+    (EXITING, EXITING_RTL),                   // 14 baExiting,
+    (FRIED, FRIED_RTL),                       // 15 baFried,
+    (BLOCKING, BLOCKING_RTL),                 // 16 baBlocking,
+    (SHRUGGING, SHRUGGING_RTL),               // 17 baShrugging,
+    (OHNOING, OHNOING_RTL),                   // 18 baOhnoing,  --- SOhnoer doesn't exist in LemStrings, it's called SExploder instead
+    (EXPLOSION, EXPLOSION_RTL),               // 19 baTimebombing,
+    (EXPLOSION, EXPLOSION_RTL),               // 20 baExploding,
+    (0,0),                                    // 21 baToWalking. Should never happen.
+    (PLATFORMING, PLATFORMING_RTL),           // 22 baPlatforming
+    (STACKING, STACKING_RTL),                 // 23 baStacking
+    (OHNOING, OHNOING_RTL),                   // 24 baFreezeOhNoing <-- might be incorrect name so don't rely on this
+    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL), // 25 baFreezeFinish
+    (SWIMMING, SWIMMING_RTL),                 // 26 baSwimming
+    (GLIDING, GLIDING_RTL),                   // 27 baGliding
+    (FIXING, FIXING_RTL),                     // 28 baFixing
+    (0,0),                                    // 29 baCloning? Another that should never happen
+    (FENCING, FENCING_RTL),                   // 30 baFencing
+    (REACHING, REACHING_RTL),                 // 31 baReaching (for shimmier)
+    (SHIMMYING, SHIMMYING_RTL),               // 32 baShimmying
+    (JUMPING, JUMPING_RTL),                   // 33 baJumping
+    (DEHOISTING, DEHOISTING_RTL),             // 34 baDehoisting
+    (SLIDING, SLIDING_RTL),                   // 35 baSliding
+    (THROWING, THROWING_RTL),                 // 36 baSpearing
+    (THROWING, THROWING_RTL),                 // 37 baGrenading
+    (LASERING, LASERING_RTL)                  // 38 baLasering
   );
 
 type
@@ -192,7 +193,7 @@ const
                                          'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                          'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                          'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
-                                         'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER',
+                                         'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER', //TIMEBOMBER re-uses OHNOER and BOMBER animations
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
                                          'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER',
                                          'DEHOISTER', 'SLIDER', 'THROWER', 'LASERER');

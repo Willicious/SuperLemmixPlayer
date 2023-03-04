@@ -106,6 +106,7 @@ resourcestring
   SVaporizer = 'Frier';
   SBlocker = 'Blocker';
   SShrugger = 'Shrugger';
+  STimebomber = 'Timebomber';
   SExploder = 'Bomber';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';
@@ -156,44 +157,45 @@ resourcestring
   SOptionSaveReplay = 'Save replay';
 
 const
-  LemmingActionStrings: array[TBasicLemmingAction] of string = (
-    SDummyString,
-    SWalker,
-    SAscender,
-    SDigger,
-    SClimber,
-    SDrowner,
-    SHoister,
-    SBuilder,
-    SBasher,
-    SMiner,
-    SFaller,
-    SFloater,
-    SSplatter,
-    SExiter,
-    SVaporizer,
-    SBlocker,
-    SShrugger,
-    SExploder,
-    SExploder,
-    SDummyString,
-    SPlatformer,
-    SStacker,
-    SFreezer,
-    SFreezer,
-    SSwimmer,
-    SGlider,
-    SDisarmer,
-    SCloner,
-    SFencer,
-    SReacher,
-    SShimmier,
-    SJumper,
-    SDehoister,
-    SSlider,
-    SSpearer,
-    SGrenader,
-    SLaserer
+  LemmingActionStrings: array[TBasicLemmingAction] of string = (    //needs to match TBasicLemmingAction in LemCore
+    SDummyString, //1
+    SWalker,      //2
+    SAscender,    //3
+    SDigger,      //4
+    SClimber,     //5
+    SDrowner,     //6
+    SHoister,     //7
+    SBuilder,     //8
+    SBasher,      //9
+    SMiner,       //10
+    SFaller,      //11
+    SFloater,     //12
+    SSplatter,    //13
+    SExiter,      //14
+    SVaporizer,   //15
+    SBlocker,     //16
+    SShrugger,    //17
+    SExploder,    //18
+    STimebomber,  //19
+    SExploder,    //20
+    SDummyString, //21
+    SPlatformer,  //22
+    SStacker,     //23
+    SFreezer,     //24
+    SFreezer,     //25
+    SSwimmer,     //26
+    SGlider,      //27
+    SDisarmer,    //28
+    SCloner,      //29
+    SFencer,      //30
+    SReacher,     //31
+    SShimmier,    //32
+    SJumper,      //33
+    SDehoister,   //34
+    SSlider,      //35
+    SSpearer,     //36
+    SGrenader,    //37
+    SLaserer      //38
   );
 
 implementation

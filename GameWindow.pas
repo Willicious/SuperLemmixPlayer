@@ -584,8 +584,11 @@ begin
     GotoSaveState(Max(Game.CurrentIteration-1, 0));
   end;
 
+  // bookmark
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
+  //Superlemming := (fGameSpeed = gspSuperlemming);
+  //FastBackwards := (fGameSpeed = gspFB)
   Slow := (fGameSpeed = gspSlowMo);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   fForceUpdateOneFrame := (PanelFrameSkip > 0);
@@ -821,6 +824,7 @@ begin
       spbFloater: SL.Add('  fRenderInterface.SelectedSkill: Floater');
       spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
       spbDisarmer: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
+      spbTimebomber: SL.Add('  fRenderInterface.SelectedSkill: Timebomber');
       spbBomber: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
       spbFreezer: SL.Add('  fRenderInterface.SelectedSkill: Freezer');
       spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');

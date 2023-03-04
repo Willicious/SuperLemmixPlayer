@@ -8,7 +8,7 @@
  TITLE 14 Skills
  AUTHOR WillLem
  ID x69FE49DB3715D768
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -30,7 +30,7 @@
    CLIMBER 12
    SWIMMER 11
    FLOATER 10
-   BOMBER 9
+   TIMEBOMBER 9
    FREEZER 8
    BUILDER 7
    STACKER 6

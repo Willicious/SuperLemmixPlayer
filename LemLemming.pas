@@ -107,7 +107,7 @@ type
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
     LemTimerToFreeze               : Boolean;
-    LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Freezer
+    LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Freezer --- needs to be set to "False" for Timebomber
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
     LemDehoistPinY                : Integer; // The Y coordinate the lemming started dehoisting on
