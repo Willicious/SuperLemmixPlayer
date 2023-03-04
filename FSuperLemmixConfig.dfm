@@ -56,7 +56,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 275
     Height = 369
-    ActivePage = TabSheet2
+    ActivePage = Graphics
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -369,16 +369,16 @@ object FormNXConfig: TFormNXConfig
         Top = 113
         Width = 205
         Height = 17
-        Caption = 'Reset Window Position'
+        Caption = 'Position Window Centre-screen'
         TabOrder = 3
         OnClick = OptionChanged
       end
       object cbResetWindowSize: TCheckBox
         Left = 36
         Top = 136
-        Width = 205
+        Width = 223
         Height = 17
-        Caption = 'Reset Window Size'
+        Caption = 'Set Window to Recommended Size'
         TabOrder = 4
         OnClick = OptionChanged
       end

@@ -7,12 +7,13 @@
 # ----------------------------- 
  TITLE Timebomber Test
  AUTHOR WillLem
+ MUSIC orig_07_tim5_amiga
  ID x20D4A9CC00FC3EB5
- VERSION x0000000000000002
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 376
  HEIGHT 160
  THEME orig_dirt
  
@@ -23,7 +24,9 @@
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-   TIMEBOMBER 5
+   TIMEBOMBER 10
+   FREEZER 5
+   CLONER 5
  $END 
  
 #     Interactive objects       
@@ -31,7 +34,7 @@
  $GADGET
    STYLE orig_dirt
    PIECE window
-   X 39
+   X 95
    Y 105
    NO_OVERWRITE
  $END
@@ -39,8 +42,17 @@
  $GADGET
    STYLE orig_dirt
    PIECE exit
-   X 240
+   X 296
    Y 60
+   NO_OVERWRITE
+   LEMMINGS 10
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE exit
+   X 42
+   Y 62
    NO_OVERWRITE
  $END
  
@@ -50,7 +62,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 75
+   X 131
    Y 138
    ONE_WAY
  $END
@@ -58,7 +70,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 91
+   X 147
    Y 122
    ONE_WAY
  $END
@@ -66,7 +78,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 115
+   X 171
    Y 98
    ONE_WAY
  $END
@@ -74,7 +86,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 139
+   X 195
    Y 74
    ONE_WAY
  $END
@@ -82,7 +94,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 163
+   X 219
    Y 50
    ONE_WAY
  $END
@@ -90,7 +102,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 187
+   X 243
    Y 26
    ONE_WAY
  $END
@@ -98,7 +110,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 211
+   X 267
    Y 2
    ONE_WAY
  $END
@@ -106,7 +118,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 235
+   X 291
    Y -22
    ONE_WAY
  $END
@@ -114,7 +126,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_01
-   X 208
+   X 264
    Y 82
    ONE_WAY
  $END
@@ -122,7 +134,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_01
-   X 244
+   X 300
    Y 82
    ONE_WAY
  $END
@@ -130,8 +142,72 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_01
-   X 41
+   X 97
    Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 163
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 139
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 115
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 91
+   Y 10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 67
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 50
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 122
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 86
+   Y 84
    ONE_WAY
  $END
  

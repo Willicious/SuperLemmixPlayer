@@ -99,6 +99,7 @@ const
     moAutoReplaySave,
     moPauseAfterBackwards,
     moLinearResampleMenu,
+    moNoAutoReplayMode,
     moFullScreen,
     moMinimapHighQuality,
     moIncreaseZoom,
