@@ -722,16 +722,13 @@ begin
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 26);
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 21);
 
-    ////Timebomber has its own graphic, not sure how to call it up yet though
-    ///if GameParams.HighResolution then
-      ///TPngInterface.LoadPngFile(AppPath + SFGraphicsPanelHighRes + 'icon_timebomber.png', TempBMP)
-    ///else
-      ///TPngInterface.LoadPngFile(AppPath + SFGraphicsPanel + 'icon_timebomber.png', TempBMP);
+    //Timebomber has its own graphic
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsPanelHighRes + 'icon_timebomber.png', fIconBMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsPanel + 'icon_timebomber.png', fIconBMP);
 
-      ///DrawMiscBmp(TempBMP, fSkillIcons[spbTimebomber], 5, 5, {something needs to go here but I don't know what});
-
-    // So, borrowing OHNOER graphic for now
-    DrawAnimationFrame(fSkillIcons[spbTimebomber], OHNOING, 6, 6, 21);
+      fIconBmp.DrawTo(fSkillIcons[spbTimebomber], -2, 16);
 
     // Bomber is drawn resized
     DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));
