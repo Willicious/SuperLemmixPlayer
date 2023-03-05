@@ -528,12 +528,12 @@ var
 begin
   // Load first the characters
   GetGraphic('panel_font.png', fIconBmp);
-  SrcRect := Rect(0, 0, 7 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);          //bookmark
   for i := 0 to 37 do
   begin
-    fInfoFont[i].SetSize(7 * ResMod, 16 * ResMod);
+    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 7 * ResMod, 0);
+    OffsetRect(SrcRect, 8 * ResMod, 0);
   end;
 
   // Load now the icons for the text panel
@@ -1293,15 +1293,14 @@ begin
         SpecialCombine := false;
 
         //this changes the position of the game info string (lems, time limit, etc)
-        //change the *8 to *7 for slimmer font so small circle buttons can fit on
       if SpecialCombine then
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 7 + 32) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8) * ResMod, 0);         //bookmark
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 7 + 32) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8) * ResMod, 0);
       end;
     end;
   end;

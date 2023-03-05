@@ -78,18 +78,18 @@ end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
 begin
-  Result := 41;
+  Result := 40;
 end;
 
 function TSkillPanelStandard.DrawStringTemplate: string;
 begin
-  Result := '...............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
+  Result := '..............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
 function TSkillPanelStandard.TimeLimitStartIndex: Integer;
 begin
-  Result := 36;
+  Result := 35;
 end;
 
 //First set of digits adust left & top pos of minimap frame
@@ -103,11 +103,11 @@ procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   SetInfoCursorLemming(1);
   SetReplayMark(16);
-  SetInfoLemHatch(19);
-  SetInfoLemAlive(25);
-  SetInfoLemIn(31);
-  SetTimeLimit(36);
-  SetInfoTime(37, 40);
+  SetInfoLemHatch(18);
+  SetInfoLemAlive(24);
+  SetInfoLemIn(30);
+  SetTimeLimit(35);
+  SetInfoTime(36, 39);
 end;
 
 function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
@@ -130,7 +130,7 @@ end;
 
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
 begin
-  Result := 25;
+  Result := 24;
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
