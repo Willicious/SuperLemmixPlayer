@@ -324,6 +324,20 @@ $ANIMATIONS
       FOOT_Y 25
     $END
   $END
+  
+  $FREEZER
+    FRAMES 1
+
+    $RIGHT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+
+    $LEFT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+  $END
 
   $PLATFORMER
     FRAMES 16
@@ -477,6 +491,20 @@ $ANIMATIONS
 
     $LEFT
       FOOT_X 11
+      FOOT_Y 10
+    $END
+  $END
+  
+   $THROWER
+    FRAMES 6
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 7
       FOOT_Y 10
     $END
   $END

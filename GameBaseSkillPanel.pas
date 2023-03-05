@@ -728,7 +728,7 @@ begin
     else
       TPngInterface.LoadPngFile(AppPath + SFGraphicsPanel + 'icon_timebomber.png', fIconBMP);
 
-      fIconBmp.DrawTo(fSkillIcons[spbTimebomber], -2, 16);
+      fIconBmp.DrawTo(fSkillIcons[spbTimebomber], -1 * ResMod, 8 * ResMod);
 
     // Bomber is drawn resized
     DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));
