@@ -530,7 +530,7 @@ procedure TLevelInfoPanel.ShowPopup;
   begin
     Result := 0;
 
-    if (fTalisman.RescueCount > fLevel.Info.RescueCount) then
+    if (Talisman.RescueCount > fLevel.Info.RescueCount) then
       LocalAdd(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
     if (Talisman.TimeLimit > 0) and
@@ -560,6 +560,9 @@ procedure TLevelInfoPanel.ShowPopup;
             LocalAdd(ICON_SKILLS[Skill], TalCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
         end;
       end;
+
+      if (Talisman.RequireKillZombies) then
+        LocalAdd(ICON_KILL_ZOMBIES, '', false, pmMoveHorz);
   end;
 
   procedure RepositionExistingControls(aNewWidth: Integer);
@@ -648,8 +651,13 @@ begin
   if fLevel.Info.NeutralCount > 0 then
     Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, '', true, pmNextColumnSame);
 
-  if fLevel.Info.ZombieCount > 0 then
-    Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
+  if (fLevel.Info.ZombieCount > 0) or ((fTalisman <> nil) and (fTalisman.RequireKillZombies)) then
+  begin
+    if (fTalisman <> nil) and (fTalisman.RequireKillZombies) then
+      Add(ICON_KILL_ZOMBIES, fLevel.Info.ZombieCount, '', true, pmNextColumnSame)
+    else
+      Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
+  end;
 
   Reposition(pmNextRowLeft);
 

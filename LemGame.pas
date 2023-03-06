@@ -224,6 +224,7 @@ type
 
   { internal methods }
     procedure DoTalismanCheck;
+    function CheckAllZombiesKilled: Boolean;
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
@@ -833,6 +834,10 @@ var
     if (TotalSkills > aTalisman.TotalSkillLimit) and (aTalisman.TotalSkillLimit >= 0) then Exit;
     if (TotalSkillTypes > aTalisman.SkillTypeLimit) and (aTalisman.SkillTypeLimit >= 0) then Exit;
 
+    if (aTalisman.RequireKillZombies) then
+      if not CheckAllZombiesKilled then
+        Exit;
+
     Result := true;
   end;
 begin
@@ -849,6 +854,32 @@ begin
       GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
     end;
   end;
+end;
+
+function TLemmingGame.CheckAllZombiesKilled: Boolean;
+var
+  i: Integer;
+  ReleaseOffset: Integer;
+begin
+  Result := false;
+
+  if UserSetNuking then
+    Exit;
+
+  for i := 0 to LemmingList.Count-1 do
+    if LemmingList[i].LemIsZombie and not LemmingList[i].LemRemoved then
+      Exit;
+
+  ReleaseOffset := 0;
+  if (LemmingsToRelease - ReleaseOffset > 0) then
+  begin
+    i := Level.Info.SpawnOrder[Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease + ReleaseOffset];
+    if i >= 0 then
+      if Gadgets[i].IsPreassignedZombie then
+        Exit;
+  end;
+
+  Result := true;
 end;
 
 function TLemmingGame.Checkpass: Boolean;

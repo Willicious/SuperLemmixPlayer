@@ -557,6 +557,10 @@ begin
   if ReqText = 'Complete' then
     ReqText := 'Complete the level';
 
+  // And finally, add the note about killing zombies
+  if aTalisman.RequireKillZombies then
+    ReqText := ReqText + ', killing all zombies';
+
   ReqText := ReqText + '.';
 
   // Write values
