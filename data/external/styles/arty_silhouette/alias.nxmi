@@ -1,4 +1,0 @@
-$GADGET
-  FROM :pickup
-  TO default:pickup
-$END
