@@ -1,9 +1,0 @@
-EFFECT ENTRANCE
-TRIGGER_X 23
-TRIGGER_Y 14
-
-$PRIMARY_ANIMATION
-  FRAMES 10
-$END
-
-This object is from l2_polar, credit to IchoTolot

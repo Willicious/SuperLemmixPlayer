@@ -1,9 +1,0 @@
-$GADGET
-  FROM :OWW_left
-  TO default:owa_left
-$END
-
-$GADGET
-  FROM :OWW_right
-  TO default:owa_right
-$END
