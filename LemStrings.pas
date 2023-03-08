@@ -106,7 +106,7 @@ resourcestring
   SVaporizer = 'Frier';
   SBlocker = 'Blocker';
   SShrugger = 'Shrugger';
-  STimebomber = 'Timebomber';
+  STimebomber = 'Timebomber';   //bookmark timebomber
   SExploder = 'Bomber';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';
@@ -175,27 +175,28 @@ const
     SVaporizer,   //15
     SBlocker,     //16
     SShrugger,    //17
-    SExploder,    //18
+    STimebomber,  //18
     STimebomber,  //19
     SExploder,    //20
-    SDummyString, //21
-    SPlatformer,  //22
-    SStacker,     //23
-    SFreezer,     //24
+    SExploder,    //21
+    SDummyString, //22
+    SPlatformer,  //23
+    SStacker,     //24
     SFreezer,     //25
-    SSwimmer,     //26
-    SGlider,      //27
-    SDisarmer,    //28
-    SCloner,      //29
-    SFencer,      //30
-    SReacher,     //31
-    SShimmier,    //32
-    SJumper,      //33
-    SDehoister,   //34
-    SSlider,      //35
-    SSpearer,     //36
-    SGrenader,    //37
-    SLaserer      //38
+    SFreezer,     //26
+    SSwimmer,     //27
+    SGlider,      //28
+    SDisarmer,    //29
+    SCloner,      //30
+    SFencer,      //31
+    SReacher,     //32
+    SShimmier,    //33
+    SJumper,      //34
+    SDehoister,   //35
+    SSlider,      //36
+    SSpearer,     //37
+    SGrenader,    //38
+    SLaserer      //39
   );
 
 implementation

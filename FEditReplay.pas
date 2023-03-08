@@ -77,7 +77,7 @@ var
             baMining:      Result := 'Miner';
             baFloating:    Result := 'Floater';
             baBlocking:    Result := 'Blocker';
-            baTimebombing: Result := 'Timebomber';
+            baTimebombing: Result := 'Timebomber';  //bookmark timebomber
             baExploding:   Result := 'Bomber';
             baToWalking:   Result := 'Walker';
             baPlatforming: Result := 'Platformer';

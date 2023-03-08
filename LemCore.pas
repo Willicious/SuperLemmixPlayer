@@ -61,27 +61,28 @@ type
     baVaporizing,      //15
     baBlocking,        //16
     baShrugging,       //17
-    baOhnoing,         //18
-    baTimebombing,     //19
-    baExploding,       //20
-    baToWalking,       //21
-    baPlatforming,     //22
-    baStacking,        //23
-    baFreezing,        //24
-    baFreezeFinish,    //25
-    baSwimming,        //26
-    baGliding,         //27
-    baFixing,          //28
-    baCloning,         //29
-    baFencing,         //30
-    baReaching,        //31
-    baShimmying,       //32
-    baJumping,         //33
-    baDehoisting,      //34
-    baSliding,         //35
-    baSpearing,        //36
-    baGrenading,       //37
-    baLasering         //38
+    baTimebombing,     //18    //bookmark timebomber
+    baTimebombFinish,  //19
+    baOhnoing,         //20
+    baExploding,       //21
+    baToWalking,       //22
+    baPlatforming,     //23
+    baStacking,        //24
+    baFreezing,        //25
+    baFreezeFinish,    //26
+    baSwimming,        //27
+    baGliding,         //28
+    baFixing,          //29
+    baCloning,         //30
+    baFencing,         //31
+    baReaching,        //32
+    baShimmying,       //33
+    baJumping,         //34
+    baDehoisting,      //35
+    baSliding,         //36
+    baSpearing,        //37
+    baGrenading,       //38
+    baLasering         //39
   );
 
 const
@@ -100,7 +101,7 @@ type
     spbFloater,
     spbGlider,
     spbDisarmer,
-    spbTimebomber,
+    spbTimebomber,   //bookmark timebomber
     spbBomber,
     spbFreezer,
     spbBlocker,
@@ -148,7 +149,7 @@ const
     'floater',
     'glider',
     'disarmer',
-    'timebomber',
+    'timebomber',   //bookmark timebomber
     'bomber',
     'freezer',
     'blocker',
@@ -175,7 +176,7 @@ const
     'floaters',
     'gliders',
     'disarmers',
-    'timebombers',
+    'timebombers',    //bookmark timebomber
     'bombers',
     'freezers',
     'blockers',
@@ -227,7 +228,7 @@ const
     baMining,
     baFloating,
     baBlocking,
-    baTimebombing,
+    baTimebombing,     //bookmark timebomber
     baExploding,
     baToWalking,
     baPlatforming,
@@ -248,73 +249,74 @@ const
 
 const
   ActionToSkillPanelButton: array[TBasicLemmingAction] of TSkillPanelButton = (
-    spbNone,
-    spbWalker,
-    spbNone,
-    spbDigger,
-    spbClimber,
-    spbNone,
-    spbNone,
-    spbBuilder,
-    spbBasher,
-    spbMiner,
-    spbNone,
-    spbFloater,
-    spbNone,
-    spbNone,
-    spbNone,
-    spbBlocker,
-    spbNone,
-    spbNone,
-    spbTimebomber,
-    spbBomber,
-    spbWalker,
-    spbPlatformer,
-    spbStacker,
-    spbFreezer,
-    spbNone,
-    spbSwimmer,
-    spbGlider,
-    spbDisarmer,
-    spbCloner,
-    spbFencer,
-    spbNone,
-    spbShimmier,
-    spbJumper,
-    spbNone,
-    spbSlider,
-    spbSpearer,
-    spbGrenader,
-    spbLaserer
+    spbNone,        //1   baNone
+    spbWalker,      //2   baWalk
+    spbNone,        //3   baAscending
+    spbDigger,      //4   baDigging
+    spbClimber,     //5   baClimbing
+    spbNone,        //6   baHoisting
+    spbNone,        //7   baDrowning
+    spbBuilder,     //8   baBricklaying
+    spbBasher,      //9   baBashing
+    spbMiner,       //10  baMining
+    spbNone,        //11  baFalling
+    spbFloater,     //12  baUmbrella
+    spbNone,        //13  baSplatting
+    spbNone,        //14  baExiting
+    spbNone,        //15  baFried
+    spbBlocker,     //16  baBlocking
+    spbNone,        //17  baShrugging
+    spbTimebomber,  //18  baTimebombing       //bookmark timebomber
+    spbNone,        //19  baTimebombFinish
+    spbNone,        //20  baOhNoing
+    spbBomber,      //21  baExploding
+    spbWalker,      //22
+    spbPlatformer,  //23
+    spbStacker,     //24
+    spbFreezer,     //25  baFreezing
+    spbNone,        //26  baFreezeFinish
+    spbSwimmer,     //27
+    spbGlider,      //28
+    spbDisarmer,    //29
+    spbCloner,      //30
+    spbFencer,      //31
+    spbNone,        //32
+    spbShimmier,    //33
+    spbJumper,      //34
+    spbNone,        //35
+    spbSlider,      //36
+    spbSpearer,     //37
+    spbGrenader,    //38
+    spbLaserer      //39
   );
 
 const
   SkillPanelButtonToAction: array[TSkillPanelButton] of TBasicLemmingAction = (
 
-    baToWalking,
-    baJumping,
-    baShimmying,
-    baSliding,
-    baClimbing,
-    baSwimming,
-    baFloating,
-    baGliding,
-    baFixing,
-    baTimebombing,
-    baExploding,
-    baFreezing,
-    baBlocking,
-    baPlatforming,
-    baBuilding,
-    baStacking,
-    baSpearing,
-    baGrenading,
-    baLasering,
-    baBashing,
-    baFencing,
-    baMining,
-    baDigging,
-    baCloning,
+    baToWalking, //1
+    baJumping,   //2
+    baShimmying, //3
+    baSliding,   //4
+    baClimbing,  //5
+    baSwimming,  //6
+    baFloating,  //7
+    baGliding,   //8
+    baFixing,    //9
+    baTimebombing,  //10       //bookmark timebomber
+    baExploding,    //11
+    baFreezing,     //12
+    baBlocking,     //13
+    baPlatforming,  //14
+    baBuilding,     //15
+    baStacking,     //16
+    baSpearing,     //17
+    baGrenading,    //18
+    baLasering,     //19
+    baBashing,      //20
+    baFencing,      //21
+    baMining,       //22
+    baDigging,      //23
+    baCloning,      //24
     baNone, //Null
     baNone, //RR-
     baNone, //RR+

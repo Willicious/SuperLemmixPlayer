@@ -24,8 +24,8 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES     = 65;
-  NUM_LEM_SPRITE_TYPE = 32;
+  NUM_LEM_SPRITES     = 67;
+  NUM_LEM_SPRITE_TYPE = 33;
   WALKING             = 0;
   WALKING_RTL         = 1;
   ASCENDING           = 2;
@@ -90,7 +90,9 @@ const
   THROWING_RTL        = 61;
   LASERING            = 62;
   LASERING_RTL        = 63;
-  FROZEN              = 64; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
+  TIMEBOMBEXPLOSION   = 64;
+  TIMEBOMBEXPLOSION_RTL = 65;
+  FROZEN              = 66; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
@@ -113,27 +115,28 @@ const
     (FRIED, FRIED_RTL),                       // 15 baFried,
     (BLOCKING, BLOCKING_RTL),                 // 16 baBlocking,
     (SHRUGGING, SHRUGGING_RTL),               // 17 baShrugging,
-    (OHNOING, OHNOING_RTL),                   // 18 baOhnoing,  --- SOhnoer doesn't exist in LemStrings, it's called SExploder instead
-    (EXPLOSION, EXPLOSION_RTL),               // 19 baTimebombing,
-    (EXPLOSION, EXPLOSION_RTL),               // 20 baExploding,
-    (0,0),                                    // 21 baToWalking. Should never happen.
-    (PLATFORMING, PLATFORMING_RTL),           // 22 baPlatforming
-    (STACKING, STACKING_RTL),                 // 23 baStacking
-    (OHNOING, OHNOING_RTL),                   // 24 baFreezeOhNoing <-- might be incorrect name so don't rely on this
-    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL), // 25 baFreezeFinish
-    (SWIMMING, SWIMMING_RTL),                 // 26 baSwimming
-    (GLIDING, GLIDING_RTL),                   // 27 baGliding
-    (FIXING, FIXING_RTL),                     // 28 baFixing
-    (0,0),                                    // 29 baCloning? Another that should never happen
-    (FENCING, FENCING_RTL),                   // 30 baFencing
-    (REACHING, REACHING_RTL),                 // 31 baReaching (for shimmier)
-    (SHIMMYING, SHIMMYING_RTL),               // 32 baShimmying
-    (JUMPING, JUMPING_RTL),                   // 33 baJumping
-    (DEHOISTING, DEHOISTING_RTL),             // 34 baDehoisting
-    (SLIDING, SLIDING_RTL),                   // 35 baSliding
-    (THROWING, THROWING_RTL),                 // 36 baSpearing
-    (THROWING, THROWING_RTL),                 // 37 baGrenading
-    (LASERING, LASERING_RTL)                  // 38 baLasering
+    (OHNOING, OHNOING_RTL),                   // 18 baTimebombing,      //bookmark timebomber
+    (TIMEBOMBEXPLOSION, TIMEBOMBEXPLOSION_RTL), // 19 baTimebombFinish,
+    (OHNOING, OHNOING_RTL),                   // 20 baOhnoing,
+    (EXPLOSION, EXPLOSION_RTL),               // 21 baExploding,
+    (0,0),                                    // 22 baToWalking. Should never happen.
+    (PLATFORMING, PLATFORMING_RTL),           // 23 baPlatforming
+    (STACKING, STACKING_RTL),                 // 24 baStacking
+    (OHNOING, OHNOING_RTL),                   // 25 baFreezing
+    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL), // 26 baFreezeFinish
+    (SWIMMING, SWIMMING_RTL),                 // 27 baSwimming
+    (GLIDING, GLIDING_RTL),                   // 28 baGliding
+    (FIXING, FIXING_RTL),                     // 29 baFixing
+    (0,0),                                    // 30 baCloning? Another that should never happen
+    (FENCING, FENCING_RTL),                   // 31 baFencing
+    (REACHING, REACHING_RTL),                 // 32 baReaching (for shimmier)
+    (SHIMMYING, SHIMMYING_RTL),               // 33 baShimmying
+    (JUMPING, JUMPING_RTL),                   // 34 baJumping
+    (DEHOISTING, DEHOISTING_RTL),             // 35 baDehoisting
+    (SLIDING, SLIDING_RTL),                   // 36 baSliding
+    (THROWING, THROWING_RTL),                 // 37 baSpearing
+    (THROWING, THROWING_RTL),                 // 38 baGrenading
+    (LASERING, LASERING_RTL)                  // 39 baLasering
   );
 
 type
@@ -189,14 +192,15 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..31] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
+  ANIM_NAMES: array[0..32] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
                                          'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                          'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                          'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
-                                         'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER', //TIMEBOMBER re-uses OHNOER and BOMBER animations
+                                         'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER',
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
                                          'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER',
-                                         'DEHOISTER', 'SLIDER', 'THROWER', 'LASERER');
+                                         'DEHOISTER', 'SLIDER', 'THROWER', 'LASERER',
+                                         'TIMEBOMBER'); //bookmark timebomber
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
   Parser: TParser;

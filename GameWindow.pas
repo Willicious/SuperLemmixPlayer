@@ -824,7 +824,7 @@ begin
       spbFloater: SL.Add('  fRenderInterface.SelectedSkill: Floater');
       spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
       spbDisarmer: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
-      spbTimebomber: SL.Add('  fRenderInterface.SelectedSkill: Timebomber');
+      spbTimebomber: SL.Add('  fRenderInterface.SelectedSkill: Timebomber'); //bookmark timebomber
       spbBomber: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
       spbFreezer: SL.Add('  fRenderInterface.SelectedSkill: Freezer');
       spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
@@ -1899,13 +1899,14 @@ var
   Act1, Act2: TBasicLemmingAction;
   n: Integer;
 const
-  COMPATIBLE_ACTIONS: array[0..7] of array[0..1] of TBasicLemmingAction =
+  COMPATIBLE_ACTIONS: array[0..8] of array[0..1] of TBasicLemmingAction =
     ((baWalking, baAscending),
      (baDehoisting, baSliding),
      (baClimbing, baHoisting),
      (baFalling, baFloating),
      (baFalling, baGliding),
      (baOhnoing, baExploding),
+     (baTimebombing, baTimebombFinish),  //bookmark timebomber
      (baFreezing, baFreezeFinish),
      (baReaching, baShimmying)
     );

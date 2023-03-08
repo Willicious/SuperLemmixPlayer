@@ -1,0 +1,76 @@
+diff a/LemTalisman.pas b/LemTalisman.pas	(rejected hunks)
+@@ -1,74 +1,72 @@
+ unit LemTalisman;
+ 
+ interface
+ 
+ uses
+   LemCore,
+   LemNeoParser,
+   UMisc,
+   Classes, SysUtils;
+ 
+ type
+   TTalismanColor = (tcBronze, tcSilver, tcGold);
+ 
+   TTalisman = class
+   private
+     fTitle: String;
+     fData: Pointer; // unused when loaded in a TLevel; points to the owner TNeoLevelEntry when in a TNeoLevelEntry or TNeoLevelGroup
+     fID: LongWord;
+     fColor: TTalismanColor;
+     fRescueCount: Integer;
+     fTimeLimit: Integer;
+     fTotalSkillLimit: Integer;
+     fSkillLimits: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
+-    fRequireKillZombies: Boolean;
+ 
+     fLevelLemmingCount: Integer;
+ 
+     fRequirementText: String;
+ 
+     function GetSkillLimit(aSkill: TSkillPanelButton): Integer;
+     procedure SetSkillLimit(aSkill: TSkillPanelButton; aCount: Integer);
+   public
+     constructor Create;
+ 
+     procedure LoadFromSection(aSec: TParserSection);
+     procedure SaveToSection(aSec: TParserSection);
+ 
+     procedure SetRequirementText(aValue: String);
+     procedure Clone(aSrc: TTalisman);
+ 
+     property Title: String read fTitle write fTitle;
+     property ID: LongWord read fID write fID;
+     property Data: Pointer read fData write fData;
+     property Color: TTalismanColor read fColor write fColor;
+     property RescueCount: Integer read fRescueCount write fRescueCount;
+     property TimeLimit: Integer read fTimeLimit write fTimeLimit;
+     property TotalSkillLimit: Integer read fTotalSkillLimit write fTotalSkillLimit;
+     property SkillLimit[Index: TSkillPanelButton]: Integer read GetSkillLimit write SetSkillLimit;
+-    property RequireKillZombies: Boolean read fRequireKillZombies write fRequireKillZombies;
+     property RequirementText: String read fRequirementText;
+ 
+     property LevelLemmingCount: Integer read fLevelLemmingCount write fLevelLemmingCount;
+   end;
+ 
+ implementation
+ 
+ uses
+   Math;
+ 
+ procedure TTalisman.Clone(aSrc: TTalisman);
+ var
+   Skill: TSkillPanelButton;
+ begin
+   fTitle := aSrc.fTitle;
+   fData := aSrc.fData;
+   fID := aSrc.fID;
+   fColor := aSrc.fColor;
+   fRescueCount := aSrc.fRescueCount;
+   fTimeLimit := aSrc.fTimeLimit;
+   fTotalSkillLimit := aSrc.fTotalSkillLimit;
+ 
+   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+     fSkillLimits[Skill] := aSrc.fSkillLimits[Skill];
+ 

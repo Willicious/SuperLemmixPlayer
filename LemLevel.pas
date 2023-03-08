@@ -914,7 +914,7 @@ begin
   HandleSkill('floater', spbFloater);
   HandleSkill('glider', spbGlider);
   HandleSkill('disarmer', spbDisarmer);
-  HandleSkill('timebomber', spbTimebomber);
+  HandleSkill('timebomber', spbTimebomber);   //bookmark timebomber
   HandleSkill('bomber', spbBomber);
   HandleSkill('freezer', spbFreezer);
   HandleSkill('blocker', spbBlocker);
@@ -972,7 +972,7 @@ var
     if S = 'floater' then O.Skill := Integer(spbFloater);
     if S = 'glider' then O.Skill := Integer(spbGlider);
     if S = 'disarmer' then O.Skill := Integer(spbDisarmer);
-    if S = 'timebomber' then O.Skill := Integer(spbTimebomber);
+    if S = 'timebomber' then O.Skill := Integer(spbTimebomber);   //bookmark timebomber
     if S = 'bomber' then O.Skill := Integer(spbBomber);
     if S = 'freezer' then O.Skill := Integer(spbFreezer);
     if S = 'blocker' then O.Skill := Integer(spbBlocker);
@@ -1474,7 +1474,7 @@ begin
   HandleSkill('FLOATER', spbFloater);
   HandleSkill('GLIDER', spbGlider);
   HandleSkill('DISARMER', spbDisarmer);
-  HandleSkill('TIMEBOMBER', spbTimebomber);
+  HandleSkill('TIMEBOMBER', spbTimebomber);    //bookmark timebomber
   HandleSkill('BOMBER', spbBomber);
   HandleSkill('Freezer', spbFreezer);
   HandleSkill('BLOCKER', spbBlocker);
@@ -1527,7 +1527,7 @@ var
      spbFloater: s := 'FLOATER';
      spbGlider: s := 'GLIDER';
      spbDisarmer: s := 'DISARMER';
-     spbTimebomber: s := 'TIMEBOMBER';
+     spbTimebomber: s := 'TIMEBOMBER';    //bookmark timebomber
      spbBomber: s := 'BOMBER';
      spbFreezer: s := 'Freezer';
      spbBlocker: s := 'BLOCKER';

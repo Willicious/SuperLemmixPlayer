@@ -302,6 +302,20 @@ $ANIMATIONS
       FOOT_Y 10
     $END
   $END
+  
+  $TIMEBOMBER
+    FRAMES 1
+
+    $RIGHT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+
+    $LEFT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+  $END
 
   $BOMBER
     FRAMES 1

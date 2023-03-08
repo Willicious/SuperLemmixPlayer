@@ -1,0 +1,83 @@
+diff a/FLevelInfo.pas b/FLevelInfo.pas	(rejected hunks)
+@@ -498,80 +498,77 @@
+ 
+   function AddRequirements(aDry: Boolean): Integer;
+   var
+     Skill: TSkillPanelButton;
+ 
+     TalCount: Integer;
+     BaseCount: Integer;
+     PickupCount: Integer;
+ 
+     procedure LocalAdd(aIcon: Integer; aText: Integer; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+     begin
+       Inc(Result);
+       if not aDry then
+         Add(aIcon, aText, '', aTextOnRight, aMovement, aColor);
+     end;
+ 
+     procedure LocalAdd(aIcon: Integer; aText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+     begin
+       Inc(Result);
+       if not aDry then
+         Add(aIcon, aText, '', aTextOnRight, aMovement, aColor);
+     end;
+   begin
+     Result := 0;
+ 
+-    if (Talisman.RescueCount > fLevel.Info.RescueCount) then
++    if (fTalisman.RescueCount > fLevel.Info.RescueCount) then
+       LocalAdd(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+ 
+     if (Talisman.TimeLimit > 0) and
+        ((not fLevel.Info.HasTimeLimit) or (Talisman.TimeLimit < fLevel.Info.TimeLimit * 17)) then
+       LocalAdd(ICON_TIME_LIMIT,
+         IntToStr(Talisman.TimeLimit div (60 * 17)) + ':' + LeadZeroStr((Talisman.TimeLimit div 17) mod 60, 2) + '.' +
+           LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2),
+           false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+ 
+     if Talisman.TotalSkillLimit >= 0 then
+       LocalAdd(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+ 
+     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+       if Skill in fLevel.Info.Skillset then
+       begin
+         BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
+         PickupCount := fLevel.GetPickupSkillCount(Skill);
+ 
+         if (Talisman <> nil) and (Talisman.SkillLimit[Skill] >= 0) then
+         begin
+           TalCount := Talisman.SkillLimit[Skill];
+ 
+           if TalCount < BaseCount + PickupCount then
+             LocalAdd(ICON_SKILLS[Skill], TalCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+         end;
+       end;
+-
+-    if (Talisman.RequireKillZombies) then
+-      LocalAdd(ICON_KILL_ZOMBIES, '', false, pmMoveHorz);
+   end;
+ 
+   procedure RepositionExistingControls(aNewWidth: Integer);
+   var
+     i: Integer;
+     ExistingRect: TRect;
+ 
+     Target, Offset: Integer;
+   begin
+     if ControlCount = 0 then
+       Exit;
+ 
+     ExistingRect := Controls[0].BoundsRect;
+     for i := 1 to ControlCount-1 do
+     begin
+       ExistingRect.Left := Min(ExistingRect.Left, Controls[i].Left);
+       ExistingRect.Top := Min(ExistingRect.Top, Controls[i].Top);
+       ExistingRect.Right := Max(ExistingRect.Right, Controls[i].Left + Controls[i].Width);
+       ExistingRect.Bottom := Max(ExistingRect.Bottom, Controls[i].Top + Controls[i].Height);
+     end;
+ 
+     if ExistingRect.Width >= aNewWidth then
+       Exit;
+ 
+     Target := (aNewWidth - ExistingRect.Width) div 2;
