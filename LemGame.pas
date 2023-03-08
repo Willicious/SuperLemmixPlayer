@@ -140,7 +140,7 @@ type
     fLevel                     : TLevel; // ref to gameparams.level
 
   { masks }
-    TimebomberMask             : TBitmap32;   //bookmark timebomber
+    TimebomberMask             : TBitmap32;
     BomberMask                 : TBitmap32;
     FreezerMask                : TBitmap32;
     BasherMasks                : TBitmap32;
@@ -219,7 +219,7 @@ type
     procedure CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: TColor32);    //right-facing fencer
     procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   //left-facing miner
     procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  //right-facing miner
-    procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber & timebomber //bookmark timebomber
+    procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber & timebomber
     procedure CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
 
@@ -233,7 +233,7 @@ type
     procedure ApplyLaserMask(P: TPoint; L: TLemming);
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
-    procedure ApplyTimebombMask(L: TLemming);   //bookmark timebomber
+    procedure ApplyTimebombMask(L: TLemming);
     procedure ApplyExplosionMask(L: TLemming);
     procedure ApplyFreezeLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
@@ -340,7 +340,7 @@ type
     function HandleVaporizing(L: TLemming): Boolean;
     function HandleBlocking(L: TLemming): Boolean;
     function HandleShrugging(L: TLemming): Boolean;
-    function HandleTimebombing(L: TLemming): Boolean;    //bookmark timebomber
+    function HandleTimebombing(L: TLemming): Boolean;
     function HandleTimebombFinish(L: TLemming): Boolean;
     function HandleOhNoing(L: TLemming): Boolean;
     function HandleExploding(L: TLemming): Boolean;
@@ -377,7 +377,7 @@ type
     function MayAssignSwimmer(L: TLemming): Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
-    function MayAssignTimebomber(L: TLemming): Boolean;    //bookmark timebomber
+    function MayAssignTimebomber(L: TLemming): Boolean;
     function MayAssignExploderFreezer(L: TLemming): Boolean;
     function MayAssignBuilder(L: TLemming): Boolean;
     function MayAssignPlatformer(L: TLemming): Boolean;
@@ -574,7 +574,7 @@ const
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
   ActionListArray: array[0..23] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
-             baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,   //bookmark timebomber
+             baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading);
 
@@ -935,7 +935,7 @@ begin
   LemmingList    := TLemmingList.Create;
   ProjectileList := TProjectileList.Create;
 
-  TimebomberMask := TBitmap32.Create;   //bookmark timebomber
+  TimebomberMask := TBitmap32.Create;
   BomberMask     := TBitmap32.Create;
   FreezerMask    := TBitmap32.Create;
   BasherMasks    := TBitmap32.Create;
@@ -979,8 +979,8 @@ begin
   LemmingMethods[baShrugging]  := HandleShrugging;
   LemmingMethods[baOhnoing]    := HandleOhNoing;
   LemmingMethods[baExploding]  := HandleExploding;
-  LemmingMethods[baTimebombing] := HandleTimebombing;//HandleOhNoing; //same behaviour!  //bookmark timebomber
-  LemmingMethods[baTimebombFinish] := HandleTimebombFinish;//HandleExploding; //same behaviour!
+  LemmingMethods[baTimebombing] := HandleTimebombing;
+  LemmingMethods[baTimebombFinish] := HandleTimebombFinish;
   LemmingMethods[baToWalking]  := HandleWalking; //should never happen anyway
   LemmingMethods[baPlatforming] := HandlePlatforming;
   LemmingMethods[baStacking]   := HandleStacking;
@@ -1017,7 +1017,7 @@ begin
   NewSkillMethods[baBlocking]     := MayAssignBlocker;
   NewSkillMethods[baShrugging]    := nil;
   NewSkillMethods[baOhnoing]      := nil;
-  NewSkillMethods[baTimebombing]  := MayAssignTimebomber;   //bookmark timebomber
+  NewSkillMethods[baTimebombing]  := MayAssignTimebomber;
   NewSkillMethods[baExploding]    := MayAssignExploderFreezer;
   NewSkillMethods[baToWalking]    := MayAssignWalker;
   NewSkillMethods[baPlatforming]  := MayAssignPlatformer;
@@ -1047,7 +1047,7 @@ end;
 
 destructor TLemmingGame.Destroy;
 begin
-  TimebomberMask.Free;   //bookmark timebomber
+  TimebomberMask.Free;
   BomberMask.Free;
   FreezerMask.Free;
   GrenadeMask.Free;
@@ -1090,7 +1090,7 @@ begin
 
   if not fMasksLoaded then
   begin
-    LoadMask(TimebomberMask, 'timebomber.png', CombineMaskPixelsNeutral);   //bookmark timebomber
+    LoadMask(TimebomberMask, 'timebomber.png', CombineMaskPixelsNeutral);
     LoadMask(BomberMask, 'bomber.png', CombineMaskPixelsNeutral);
     LoadMask(FreezerMask, 'freezer.png', CombineNoOverwriteFreezer);
     LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Laserer, Basher, Fencer and Miner are set when used
@@ -1503,7 +1503,7 @@ const
     14, //15 baVaporizing,
     16, //16 baBlocking,
      8, //17 baShrugging,
-    16, //18 baTimebombing, - same as OhNoing     //bookmark timebomber
+    16, //18 baTimebombing, - same as OhNoing
      1, //19 baTimebombFinish - same as Exploding
     16, //20 baOhnoing,
      1, //21 baExploding,
@@ -1532,7 +1532,7 @@ begin
   //Switch from baToWalking to baWalking
   if NewAction = baToWalking then NewAction := baWalking;
 
-  if L.LemHasBlockerField and not (NewAction in [baTimebombing, baOhNoing, baFreezing]) then   //bookmark timebomber
+  if L.LemHasBlockerField and not (NewAction in [baTimebombing, baOhNoing, baFreezing]) then
   begin
     L.LemHasBlockerField := False;
     SetBlockerMap;
@@ -1650,7 +1650,7 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
-    baTimebombing :begin      //bookmark timebomber
+    baTimebombing :begin
                      CueSoundEffect(SFX_OHNO, L.Position);
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
@@ -1660,7 +1660,7 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
-    baTimebombFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);   //bookmark timebomber
+    baTimebombFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baExploding: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baFreezeFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
@@ -1695,8 +1695,8 @@ begin
     if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding,
                       baFalling, baSwimming, baReaching, baShimmying, baJumping] then
     begin
-      if L.LemTimerToBomb then Transition(L, baTimebombFinish);   //bookmark timebomber
-      if L.LemTimerToFreeze then
+      if L.LemIsTimebomber then Transition(L, baTimebombFinish)
+      else if L.LemTimerToFreeze then
         Transition(L, baFreezeFinish)
       else
         Transition(L, baExploding)
@@ -1704,8 +1704,8 @@ begin
 
 
     else begin
-      if L.LemTimerToBomb then Transition(L, baTimebombing);  //bookmark timebomber
-      if L.LemTimerToFreeze then
+      if L.LemIsTimebomber then Transition(L, baTimebombing)
+      else if L.LemTimerToFreeze then
         Transition(L, baFreezing)
       else
         Transition(L, baOhnoing)
@@ -2028,25 +2028,22 @@ begin
     L.LemIsSwimmer := True;
     if L.LemAction = baDrowning then Transition(L, baSwimming);
   end
-  else if (NewSkill = baTimebombing) then    //bookmark timebomber
+  else if (NewSkill = baTimebombing) then
   begin
-    //L.LemIsTimebomber := True;  //don't want to need this
+    L.LemIsTimebomber := True;
     L.LemExplosionTimer := 85;
-    L.LemTimerToBomb := True;
-    L.LemTimerToFreeze := False;
+    //L.LemTimerToFreeze := False;
     L.LemHideCountdown := False;
   end
   else if (NewSkill = baExploding) then
   begin
     L.LemExplosionTimer := 1;
-    L.LemTimerToBomb := False;
     L.LemTimerToFreeze := False;
     L.LemHideCountdown := True;
   end
   else if (NewSkill = baFreezing) then
   begin
     L.LemExplosionTimer := 1;
-    L.LemTimerToBomb := False;
     L.LemTimerToFreeze := True;
     L.LemHideCountdown := True;
   end
@@ -2274,8 +2271,8 @@ end;
 
 function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezeFinish,   //bookmark timebomber
+  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+               baTimebombFinish, baExploding, baFreezeFinish,
                baDrowning, baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
@@ -2283,8 +2280,8 @@ end;
 
 function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezeFinish,     //bookmark timebomber
+  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+               baTimebombFinish, baExploding, baFreezeFinish,
                baDrowning, baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
@@ -2292,8 +2289,8 @@ end;
 
 function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezeFinish,    //bookmark timebomber
+  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+               baTimebombFinish, baExploding, baFreezeFinish,
                baDrowning, baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not (L.LemIsFloater or L.LemIsGlider);
@@ -2301,8 +2298,8 @@ end;
 
 function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezeFinish,     //bookmark timebomber
+  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+               baTimebombFinish, baExploding, baFreezeFinish,
                baVaporizing, baSplatting, baExiting];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
@@ -2310,8 +2307,8 @@ end;
 
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
-  ActionSet = [baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezeFinish,    //bookmark timebomber
+  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+               baTimebombFinish, baExploding, baFreezeFinish,
                baDrowning, baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
@@ -2326,18 +2323,22 @@ begin
 end;
 
 
-//Timebomber can be assigned to all states except those in list     //bookmark timebomber
+//Timebomber can be assigned to all states except those in list
 function TLemmingGame.MayAssignTimebomber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
                baVaporizing, baSplatting, baExiting];
+               //putting baTimebombing in here doesn't work - why???
 begin
   Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
-  //comment this back in when you've solved the baTimebomber thing
+                                           //this code is needed to stop repeat
+                                           //timebomber assignments to same lem
+                                           //and to stop bomber/freezer assignments
+                                           //to timebomber
 end;
 
-//Exploders and freezers can be assigned to all states except those in list   //bookmark timebomber
+//Exploders and freezers can be assigned to all states except those in list
 function TLemmingGame.MayAssignExploderFreezer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
@@ -2346,7 +2347,10 @@ const
                //putting baTimebombing in here doesn't work - why???
 begin
   Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
-  //comment this back in when you've solved the baTimebomber thing
+                                           //this code is needed to stop repeat
+                                           //timebomber assignments to same lem
+                                           //and to stop bomber/freezer assignments
+                                           //to timebomber
 end;
 
 
@@ -3107,7 +3111,7 @@ end;
 function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
 const
   ActionSet = [baSwimming, baClimbing, baHoisting,
-               baTimebombing, baOhnoing, baFreezing,      //bookmark timebomber
+               baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
                baVaporizing, baExiting, baSplatting];
 begin
@@ -3134,7 +3138,7 @@ begin
     fRenderInterface.AddTerrainFreezer(X - 8, L.LemY -11);
 end;
 
-procedure TLemmingGame.ApplyTimebombMask(L: TLemming);  //bookmark timebomber
+procedure TLemmingGame.ApplyTimebombMask(L: TLemming);
 var
   PosX, PosY: Integer;
 begin
@@ -3358,7 +3362,7 @@ const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
                     spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner,
                     spbSpearer, spbGrenader, spbLaserer];  //Timebomber not included by choice
-begin                                                      //bookmark timebomber
+begin
   if fHyperSpeed then Exit;
 
   // Get correct skill to draw the shadow
@@ -3599,7 +3603,7 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 -------------------------------------------------------------------------------}
 const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
-                      baVaporizing, baShrugging, baTimebombing, baOhnoing,  //bookmark timebomber
+                      baVaporizing, baShrugging, baTimebombing, baOhnoing,
                       baExploding, baFreezing, baReaching, baDehoisting];
 begin
   // Remember old position and action for CheckTriggerArea
@@ -5446,7 +5450,7 @@ begin
 end;
 
 
-function TLemmingGame.HandleTimebombing(L: TLemming): Boolean;    //bookmark timebomber
+function TLemmingGame.HandleTimebombing(L: TLemming): Boolean;
 begin
   Result := True;
   if L.LemEndOfAnimation then
@@ -5469,7 +5473,7 @@ begin
 end;
 
 
-function TLemmingGame.HandleTimebombFinish(L: TLemming): Boolean;   //bookmark timebomber
+function TLemmingGame.HandleTimebombFinish(L: TLemming): Boolean;
 begin
   Result := False;
 

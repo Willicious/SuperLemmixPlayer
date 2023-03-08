@@ -106,7 +106,7 @@ resourcestring
   SVaporizer = 'Frier';
   SBlocker = 'Blocker';
   SShrugger = 'Shrugger';
-  STimebomber = 'Timebomber';   //bookmark timebomber
+  STimebomber = 'Timebomber';
   SExploder = 'Bomber';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';

@@ -61,7 +61,7 @@ type
     baVaporizing,      //15
     baBlocking,        //16
     baShrugging,       //17
-    baTimebombing,     //18    //bookmark timebomber
+    baTimebombing,     //18
     baTimebombFinish,  //19
     baOhnoing,         //20
     baExploding,       //21
@@ -101,7 +101,7 @@ type
     spbFloater,
     spbGlider,
     spbDisarmer,
-    spbTimebomber,   //bookmark timebomber
+    spbTimebomber,
     spbBomber,
     spbFreezer,
     spbBlocker,
@@ -149,7 +149,7 @@ const
     'floater',
     'glider',
     'disarmer',
-    'timebomber',   //bookmark timebomber
+    'timebomber',
     'bomber',
     'freezer',
     'blocker',
@@ -176,7 +176,7 @@ const
     'floaters',
     'gliders',
     'disarmers',
-    'timebombers',    //bookmark timebomber
+    'timebombers',
     'bombers',
     'freezers',
     'blockers',
@@ -228,7 +228,7 @@ const
     baMining,
     baFloating,
     baBlocking,
-    baTimebombing,     //bookmark timebomber
+    baTimebombing,
     baExploding,
     baToWalking,
     baPlatforming,
@@ -266,7 +266,7 @@ const
     spbNone,        //15  baFried
     spbBlocker,     //16  baBlocking
     spbNone,        //17  baShrugging
-    spbTimebomber,  //18  baTimebombing       //bookmark timebomber
+    spbTimebomber,  //18  baTimebombing
     spbNone,        //19  baTimebombFinish
     spbNone,        //20  baOhNoing
     spbBomber,      //21  baExploding
@@ -302,7 +302,7 @@ const
     baFloating,  //7
     baGliding,   //8
     baFixing,    //9
-    baTimebombing,  //10       //bookmark timebomber
+    baTimebombing,  //10
     baExploding,    //11
     baFreezing,     //12
     baBlocking,     //13

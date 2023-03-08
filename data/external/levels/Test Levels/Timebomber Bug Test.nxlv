@@ -8,7 +8,7 @@
  TITLE Timebomber Bug Test
  AUTHOR WillLem
  ID x6C47DCF97DB1FA45
- VERSION x0000000000000006
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,9 +24,11 @@
  
  $SKILLSET 
    CLIMBER 1
+   DISARMER 5
    TIMEBOMBER 10
    BOMBER 10
    FREEZER 10
+   STACKER 5
    CLONER 10
  $END 
  

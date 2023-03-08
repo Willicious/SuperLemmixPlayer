@@ -58,40 +58,40 @@ const
   BLOCKING_RTL        = 29;
   SHRUGGING           = 30;
   SHRUGGING_RTL       = 31;
-  OHNOING             = 32;
-  OHNOING_RTL         = 33;
-  EXPLOSION           = 34;
-  EXPLOSION_RTL       = 35;
-  PLATFORMING         = 36;
-  PLATFORMING_RTL     = 37;
-  FREEZEREXPLOSION     = 38;
-  FREEZEREXPLOSION_RTL = 39;
-  SWIMMING            = 40;
-  SWIMMING_RTL        = 41;
-  GLIDING             = 42;
-  GLIDING_RTL         = 43;
-  FIXING              = 44;
-  FIXING_RTL          = 45;
-  STACKING            = 46;
-  STACKING_RTL        = 47;
-  FENCING             = 48;
-  FENCING_RTL         = 49;
-  REACHING            = 50;
-  REACHING_RTL        = 51;
-  SHIMMYING           = 52;
-  SHIMMYING_RTL       = 53;
-  JUMPING             = 54;
-  JUMPING_RTL         = 55;
-  DEHOISTING          = 56;
-  DEHOISTING_RTL      = 57;
-  SLIDING             = 58;
-  SLIDING_RTL         = 59;
-  THROWING            = 60;
-  THROWING_RTL        = 61;
-  LASERING            = 62;
-  LASERING_RTL        = 63;
-  TIMEBOMBEXPLOSION   = 64;
-  TIMEBOMBEXPLOSION_RTL = 65;
+  TIMEBOMBEXPLOSION   = 32;
+  TIMEBOMBEXPLOSION_RTL = 33;
+  OHNOING             = 34;
+  OHNOING_RTL         = 35;
+  EXPLOSION           = 36;
+  EXPLOSION_RTL       = 37;
+  PLATFORMING         = 38;
+  PLATFORMING_RTL     = 39;
+  FREEZEREXPLOSION     = 40;
+  FREEZEREXPLOSION_RTL = 41;
+  SWIMMING            = 42;
+  SWIMMING_RTL        = 43;
+  GLIDING             = 44;
+  GLIDING_RTL         = 45;
+  FIXING              = 46;
+  FIXING_RTL          = 47;
+  STACKING            = 48;
+  STACKING_RTL        = 49;
+  FENCING             = 50;
+  FENCING_RTL         = 51;
+  REACHING            = 52;
+  REACHING_RTL        = 53;
+  SHIMMYING           = 54;
+  SHIMMYING_RTL       = 55;
+  JUMPING             = 56;
+  JUMPING_RTL         = 57;
+  DEHOISTING          = 58;
+  DEHOISTING_RTL      = 59;
+  SLIDING             = 60;
+  SLIDING_RTL         = 61;
+  THROWING            = 62;
+  THROWING_RTL        = 63;
+  LASERING            = 64;
+  LASERING_RTL        = 65;
   FROZEN              = 66; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
@@ -115,7 +115,7 @@ const
     (FRIED, FRIED_RTL),                       // 15 baFried,
     (BLOCKING, BLOCKING_RTL),                 // 16 baBlocking,
     (SHRUGGING, SHRUGGING_RTL),               // 17 baShrugging,
-    (OHNOING, OHNOING_RTL),                   // 18 baTimebombing,      //bookmark timebomber
+    (OHNOING, OHNOING_RTL),                   // 18 baTimebombing,
     (TIMEBOMBEXPLOSION, TIMEBOMBEXPLOSION_RTL), // 19 baTimebombFinish,
     (OHNOING, OHNOING_RTL),                   // 20 baOhnoing,
     (EXPLOSION, EXPLOSION_RTL),               // 21 baExploding,
@@ -192,15 +192,41 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..32] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
-                                         'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
-                                         'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
-                                         'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
-                                         'OHNOER', 'BOMBER', 'PLATFORMER', 'FREEZER',
-                                         'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
-                                         'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER',
-                                         'DEHOISTER', 'SLIDER', 'THROWER', 'LASERER',
-                                         'TIMEBOMBER'); //bookmark timebomber
+  ANIM_NAMES: array[0..32] of String =  (
+  'WALKER',        //1
+  'ASCENDER',      //2
+  'DIGGER',        //3
+  'CLIMBER',       //4
+  'DROWNER',       //5
+  'HOISTER',       //6
+  'BUILDER',       //7
+  'BASHER',        //8
+  'MINER',         //9
+  'FALLER',        //10
+  'FLOATER',       //11
+  'SPLATTER',      //12
+  'EXITER',        //13
+  'BURNER',        //14
+  'BLOCKER',       //15
+  'SHRUGGER',      //16
+  'TIMEBOMBER',    //17
+  'OHNOER',        //18         //it doesn't matter where you put this
+  'BOMBER',        //19         //it never shows up as a timebomber
+  'PLATFORMER',    //20         //because the code isn't actually using "timebomber" state
+  'FREEZER',       //21
+  'SWIMMER',       //22
+  'GLIDER',        //23
+  'DISARMER',      //24
+  'STACKER',       //25
+  'FENCER',        //26
+  'REACHER',       //27
+  'SHIMMIER',      //28
+  'JUMPER',        //29
+  'DEHOISTER',     //30
+  'SLIDER',        //31
+  'THROWER',       //32
+  'LASERER'        //33
+  );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
   Parser: TParser;

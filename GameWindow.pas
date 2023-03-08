@@ -824,7 +824,7 @@ begin
       spbFloater: SL.Add('  fRenderInterface.SelectedSkill: Floater');
       spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
       spbDisarmer: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
-      spbTimebomber: SL.Add('  fRenderInterface.SelectedSkill: Timebomber'); //bookmark timebomber
+      spbTimebomber: SL.Add('  fRenderInterface.SelectedSkill: Timebomber');
       spbBomber: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
       spbFreezer: SL.Add('  fRenderInterface.SelectedSkill: Freezer');
       spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
@@ -1906,7 +1906,7 @@ const
      (baFalling, baFloating),
      (baFalling, baGliding),
      (baOhnoing, baExploding),
-     (baTimebombing, baTimebombFinish),  //bookmark timebomber
+     (baTimebombing, baTimebombFinish),
      (baFreezing, baFreezeFinish),
      (baReaching, baShimmying)
     );

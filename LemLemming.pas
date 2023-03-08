@@ -97,7 +97,7 @@ type
     LemIsFloater                  : Boolean;
     LemIsGlider                   : Boolean;
     LemIsDisarmer                 : Boolean;
-    //LemIsTimebomber               : Boolean;    //bookmark timebomber
+    LemIsTimebomber               : Boolean;
     LemIsZombie                   : Boolean;
     LemIsNeutral                  : Boolean;
     LemHasBeenOhnoer              : Boolean;
@@ -107,7 +107,6 @@ type
     LemIsStartingAction           : Boolean; // replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemTimerToBomb                : Boolean; //bookmark timebomber
     LemTimerToFreeze              : Boolean;
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Freezer --- needs to be set to "False" for Timebomber
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
@@ -323,7 +322,6 @@ begin
   LemIsStartingAction := Source.LemIsStartingAction;
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
-  LemTimerToBomb := Source.LemTimerToBomb;
   LemTimerToFreeze := Source.LemTimerToFreeze;
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;

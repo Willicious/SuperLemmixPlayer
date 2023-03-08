@@ -722,7 +722,7 @@ begin
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 26);
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 21);
 
-    //Timebomber has its own graphic    //bookmark timebomber
+    //Timebomber has its own graphic
     if GameParams.HighResolution then
       TPngInterface.LoadPngFile(AppPath + SFGraphicsPanelHighRes + 'icon_timebomber.png', fIconBMP)
     else

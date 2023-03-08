@@ -655,7 +655,7 @@ begin
 end;
 
 
-//This code is used (or not) by Nuke, Bomber, Freezer and Timebomber    //bookmark timebomber
+//This code is used (or not) by Nuke, Bomber, Freezer and Timebomber
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
 var
   ShowCountdown, ShowHighlight: Boolean;

@@ -28,7 +28,7 @@ const
                                                ('WALKER', 'JUMPER', 'SHIMMIER',
                                                 'SLIDER', 'CLIMBER', 'SWIMMER',
                                                 'FLOATER', 'GLIDER', 'DISARMER',
-                                                'TIMEBOMBER', 'BOMBER', 'FREEZER',    //bookmark timebomber
+                                                'TIMEBOMBER', 'BOMBER', 'FREEZER',
                                                 'BLOCKER', 'PLATFORMER', 'BUILDER',
                                                 'STACKER', 'SPEARER', 'GRENADER',
                                                 'LASERER', 'BASHER', 'FENCER',
