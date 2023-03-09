@@ -1009,6 +1009,7 @@ begin
     GameSpeed := gspNormal
   else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
        or (PauseAfterSkip > 0) then
+    SkillPanel.DrawButtonSelector(spbPause, False);
     GameSpeed := gspPause;
 
   if (aTargetIteration <> Game.CurrentIteration) or fRanOneUpdate then
