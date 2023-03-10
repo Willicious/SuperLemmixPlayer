@@ -185,7 +185,7 @@ object FormNXConfig: TFormNXConfig
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
-        TabOrder = 7
+        TabOrder = 6
         OnClick = OptionChanged
       end
       object cbNoAutoReplay: TCheckBox
@@ -206,18 +206,9 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 5
         OnClick = OptionChanged
       end
-      object cbNoBackgrounds: TCheckBox
-        Left = 25
-        Top = 83
-        Width = 205
-        Height = 17
-        Caption = 'Deactivate Background Images'
-        TabOrder = 6
-        OnClick = OptionChanged
-      end
       object ClassicMode: TGroupBox
         Left = 25
-        Top = 136
+        Top = 116
         Width = 205
         Height = 177
         TabOrder = 0
@@ -278,7 +269,7 @@ object FormNXConfig: TFormNXConfig
       end
       object btnClassicMode: TButton
         Left = 52
-        Top = 117
+        Top = 97
         Width = 150
         Height = 38
         Hint = 
@@ -295,7 +286,7 @@ object FormNXConfig: TFormNXConfig
       end
       object btnDeactivateClassicMode: TButton
         Left = 52
-        Top = 297
+        Top = 277
         Width = 150
         Height = 38
         Caption = 'Deactivate Classic Mode'
@@ -304,7 +295,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbClassicMode: TCheckBox
         Left = 208
-        Top = 127
+        Top = 107
         Width = 51
         Height = 17
         Caption = 'ACM'
@@ -357,43 +348,43 @@ object FormNXConfig: TFormNXConfig
       end
       object cbFullScreen: TCheckBox
         Left = 36
-        Top = 90
+        Top = 93
         Width = 205
         Height = 17
         Caption = 'Full Screen'
         TabOrder = 2
         OnClick = cbFullScreenClick
       end
+      object cbHighResolution: TCheckBox
+        Left = 36
+        Top = 116
+        Width = 205
+        Height = 17
+        Caption = 'High Resolution'
+        TabOrder = 3
+        OnClick = OptionChanged
+      end
       object cbResetWindowPosition: TCheckBox
         Left = 36
-        Top = 113
+        Top = 139
         Width = 205
         Height = 17
         Caption = 'Position Window Centre-screen'
-        TabOrder = 3
+        TabOrder = 4
         OnClick = OptionChanged
       end
       object cbResetWindowSize: TCheckBox
         Left = 36
-        Top = 136
+        Top = 162
         Width = 223
         Height = 17
         Caption = 'Set Window to Recommended Size'
-        TabOrder = 4
-        OnClick = OptionChanged
-      end
-      object cbHighResolution: TCheckBox
-        Left = 36
-        Top = 159
-        Width = 205
-        Height = 17
-        Caption = 'High Resolution'
         TabOrder = 5
         OnClick = OptionChanged
       end
       object cbIncreaseZoom: TCheckBox
         Left = 36
-        Top = 182
+        Top = 185
         Width = 205
         Height = 17
         Caption = 'Increase Zoom On Small Levels'
@@ -402,7 +393,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbLinearResampleMenu: TCheckBox
         Left = 36
-        Top = 205
+        Top = 208
         Width = 205
         Height = 17
         Caption = 'Use Smooth Resampling In Menus'
@@ -411,7 +402,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbLinearResampleGame: TCheckBox
         Left = 36
-        Top = 229
+        Top = 232
         Width = 205
         Height = 17
         Caption = 'Use Smooth Resampling In Game'
@@ -420,11 +411,20 @@ object FormNXConfig: TFormNXConfig
       end
       object cbMinimapHighQuality: TCheckBox
         Left = 36
-        Top = 251
+        Top = 254
         Width = 153
         Height = 17
         Caption = 'High Quality Minimap'
         TabOrder = 9
+        OnClick = OptionChanged
+      end
+      object cbNoBackgrounds: TCheckBox
+        Left = 36
+        Top = 277
+        Width = 205
+        Height = 17
+        Caption = 'Deactivate Background Images'
+        TabOrder = 10
         OnClick = OptionChanged
       end
     end
