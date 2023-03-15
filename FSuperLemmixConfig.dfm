@@ -281,12 +281,21 @@ object FormNXConfig: TFormNXConfig
         Top = 108
         Width = 150
         Height = 38
-        Hint = 
-          'Classic Mode deactivates all features listed below the button'#13#10'f' +
-          'or a more old-school Lemmings experience!'#13#10'It also deactivates a' +
-          'ssign-whilst-paused, selected lemming recolouring, jump to min/m' +
-          'ax'#13#10'release rate, and limits replay features to saving and loadi' +
-          'ng'#13#10'on the level preview and postview screens only. Enjoy!'
+        Hint =
+          'Classic Mode implements all of the features listed below for a more traditional Lemmings experience!' +
+          ''#13#10'Deactivates Skill Shadows' +
+          ''#13#10'Deactivates Clear Physics' +
+          ''#13#10'Deactivates Advanced Select (Directional, Walkers-only and Highlighted Lemming)' +
+          ''#13#10'Deactivates Frameskipping (including Slow-motion)' +
+          ''#13#10'Deactivates Helper graphics (including the Fall Distance ruler)' +
+          ''#13#10'Deactivates Skill Queuing' +
+          ''#13#10'(The above features can also be toggled individually, whilst the following are exclusive to Classic Mode):' +
+          ''#13#10'Deactivates Assign-whilst-paused' +
+          ''#13#10'Deactivates Selected Lemming recolouring' +
+          ''#13#10'Deactivates jumping to Min/Max Release Rate' +
+          ''#13#10'Prefers Release Rate rather than Spawn Interval for displaying hatch speed' +
+          ''#13#10'Limits Replay features to saving and loading only from the level preview and postview screens.' +
+          ''#13#10'Enjoy!'
         Caption = 'Activate Classic Mode'
         ParentShowHint = False
         ShowHint = True

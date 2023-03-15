@@ -447,8 +447,9 @@ begin
   cbHideHelpers.Enabled := false;
   cbHideSkillQ.Checked := true;
   cbHideSkillQ.Enabled := false;
-  //cbSpawnInterval.Checked := false;   //this code is here to stop SI in Classic Mode
-  //cbSpawnInterval.Enabled := false;   //but users might try to circumvent this by
+  cbSpawnInterval.Checked := false;
+  //cbSpawnInterval.Enabled := false;   //this code is here to stop SI in Classic Mode
+                                        //but users might try to circumvent this by
                                         //individually checking the "deactivate" boxes,
                                         //thus missing out on actual Classic Mode
                                         //so, mayyybe make individual checkboxes
@@ -472,8 +473,9 @@ begin
   cbHideHelpers.Enabled := true;
   cbHideSkillQ.Checked := false;
   cbHideSkillQ.Enabled := true;
-  //cbSpawnInterval.Checked := false;   //this code is here to stop SI in Classic Mode
-  //cbSpawnInterval.Enabled := true;    //but users might try to circumvent this by
+  //cbSpawnInterval.Checked := false;
+  //cbSpawnInterval.Enabled := true;    //this code is here to stop SI in Classic Mode
+                                        //but users might try to circumvent this by
                                         //individually checking the "deactivate" boxes,
                                         //thus missing out on actual Classic Mode
                                         //so, mayyybe make individual checkboxes
