@@ -56,7 +56,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 275
     Height = 369
-    ActivePage = Graphics
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -181,16 +181,16 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 4
       object cbEdgeScrolling: TCheckBox
         Left = 25
-        Top = 14
+        Top = 10
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
-        TabOrder = 6
+        TabOrder = 7
         OnClick = OptionChanged
       end
       object cbNoAutoReplay: TCheckBox
         Left = 25
-        Top = 37
+        Top = 33
         Width = 234
         Height = 17
         Caption = 'Replay After Backwards Frameskip'
@@ -199,18 +199,27 @@ object FormNXConfig: TFormNXConfig
       end
       object cbPauseAfterBackwards: TCheckBox
         Left = 25
-        Top = 60
+        Top = 56
         Width = 205
         Height = 17
         Caption = 'Pause After Backwards Frameskip'
         TabOrder = 5
         OnClick = OptionChanged
       end
+      object cbSpawnInterval: TCheckBox
+        Left = 25
+        Top = 79
+        Width = 205
+        Height = 17
+        Caption = 'Activate Spawn Interval Display'
+        TabOrder = 6
+        OnClick = OptionChanged
+      end
       object ClassicMode: TGroupBox
         Left = 25
-        Top = 116
+        Top = 127
         Width = 205
-        Height = 177
+        Height = 186
         TabOrder = 0
         object cbHideShadows: TCheckBox
           Left = 27
@@ -254,7 +263,7 @@ object FormNXConfig: TFormNXConfig
           Width = 190
           Height = 17
           Caption = 'Deactivate Helper Overlays'
-          TabOrder = 5
+          TabOrder = 4
           OnClick = OptionChanged
         end
         object cbHideSkillQ: TCheckBox
@@ -263,13 +272,13 @@ object FormNXConfig: TFormNXConfig
           Width = 190
           Height = 17
           Caption = 'Deactivate Skill Queueing'
-          TabOrder = 4
+          TabOrder = 5
           OnClick = OptionChanged
         end
       end
       object btnClassicMode: TButton
         Left = 52
-        Top = 97
+        Top = 108
         Width = 150
         Height = 38
         Hint = 
@@ -286,7 +295,7 @@ object FormNXConfig: TFormNXConfig
       end
       object btnDeactivateClassicMode: TButton
         Left = 52
-        Top = 277
+        Top = 293
         Width = 150
         Height = 38
         Caption = 'Deactivate Classic Mode'
@@ -295,7 +304,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbClassicMode: TCheckBox
         Left = 208
-        Top = 107
+        Top = 118
         Width = 51
         Height = 17
         Caption = 'ACM'

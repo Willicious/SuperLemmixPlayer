@@ -27,6 +27,7 @@ type
     ebUserName: TEdit;
     cbNoAutoReplay: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
+    cbSpawnInterval: TCheckBox;
     cbNoBackgrounds: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     cbClassicMode: TCheckbox;
@@ -246,7 +247,7 @@ begin
     cbHideHelpers.Checked := GameParams.HideHelpers;
     cbHideSkillQ.Checked := GameParams.HideSkillQ;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
-    //cbSpawnInterval.Checked := GameParams.SpawnInterval;
+    cbSpawnInterval.Checked := GameParams.SpawnInterval;
     //cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
 
     cbFullScreen.Checked := GameParams.FullScreen;
@@ -315,7 +316,7 @@ begin
   GameParams.HideHelpers := cbHideHelpers.Checked;
   GameParams.HideSkillQ := cbHideSkillQ.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
-  //GameParams.SpawnInterval := cbSpawnInterval.Checked;
+  GameParams.SpawnInterval := cbSpawnInterval.Checked;
   //GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
@@ -430,39 +431,6 @@ end;
 //end;
 
 //----------Classic Mode-------------------------------------------------------
-//procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
-//begin
-  //OptionChanged(Sender);
-  //if cbClassicMode.Checked then
-  //begin
-    //cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
-    //cbHideShadows.Enabled := false;
-    //cbHideClearPhysics.Checked := true;
-    //cbHideClearPhysics.Enabled := false;
-    //cbHideAdvancedSelect.Checked := true;
-    //cbHideAdvancedSelect.Enabled := false;
-    //cbHideFrameskipping.Checked := true;
-    //cbHideFrameskipping.Enabled := false;
-    //cbHideHelpers.Checked := true;
-    //cbHideHelpers.Enabled := false;
-    //cbHideSkillQ.Checked := true;
-    //cbHideSkillQ.Enabled := false;
-  //end else begin
-    //cbHideShadows.Checked := false;
-    //cbHideShadows.Enabled := true;
-    //cbHideClearPhysics.Checked := false;
-    //cbHideClearPhysics.Enabled := true;
-    //cbHideAdvancedSelect.Checked := false;
-    //cbHideAdvancedSelect.Enabled := true;
-    //cbHideFrameskipping.Checked := false;
-    //cbHideFrameskipping.Enabled := true;
-    //cbHideHelpers.Checked := false;
-    //cbHideHelpers.Enabled := true;
-    //cbHideSkillQ.Checked := false;
-    //cbHideSkillQ.Enabled := true;
-  //end;
-//end;
-
 procedure TFormNXConfig.btnClassicModeClick(Sender: TObject);
 begin
   OptionChanged(Sender);
@@ -479,6 +447,13 @@ begin
   cbHideHelpers.Enabled := false;
   cbHideSkillQ.Checked := true;
   cbHideSkillQ.Enabled := false;
+  //cbSpawnInterval.Checked := false;   //this code is here to stop SI in Classic Mode
+  //cbSpawnInterval.Enabled := false;   //but users might try to circumvent this by
+                                        //individually checking the "deactivate" boxes,
+                                        //thus missing out on actual Classic Mode
+                                        //so, mayyybe make individual checkboxes
+                                        //for the other CM features as well
+                                        //and then you can include SI in the CM perams
 end;
 
 procedure TFormNXConfig.btnDeactivateClassicModeClick(Sender: TObject);
@@ -497,6 +472,13 @@ begin
   cbHideHelpers.Enabled := true;
   cbHideSkillQ.Checked := false;
   cbHideSkillQ.Enabled := true;
+  //cbSpawnInterval.Checked := false;   //this code is here to stop SI in Classic Mode
+  //cbSpawnInterval.Enabled := true;    //but users might try to circumvent this by
+                                        //individually checking the "deactivate" boxes,
+                                        //thus missing out on actual Classic Mode
+                                        //so, mayyybe make individual checkboxes
+                                        //for the other CM features as well
+                                        //and then you can include SI in the CM perams
 end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);

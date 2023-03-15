@@ -428,7 +428,7 @@ begin
   //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
-  //SaveBoolean('UseSpawnInterval', SpawnInterval);
+  SaveBoolean('UseSpawnInterval', SpawnInterval);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
   SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
