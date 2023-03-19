@@ -148,6 +148,7 @@ type
 
     function CheckHighlitLemmingChange: Boolean;
     procedure SetRedraw(aRedraw: TRedrawOption);
+
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -158,6 +159,7 @@ type
     IdealFrameTimeMS     : Cardinal;          // normal frame speed in milliseconds
     IdealFrameTimeMSFast : Cardinal;          // fast forward framespeed in milliseconds
     IdealFrameTimeMSSlow : Cardinal;
+    IdealFrameTimeMSRewind : Cardinal;
     IdealScrollTimeMS    : Cardinal;          // scroll speed in milliseconds
     PrevCallTime         : Cardinal;          // last time we did something in idle
     PrevScrollTime       : Cardinal;          // last time we scrolled in idle
@@ -204,7 +206,6 @@ type
     property DisplayHeight: Integer read GetDisplayHeight; // to staisfy IGameWindow
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
-
   end;
 
 implementation
@@ -218,6 +219,7 @@ begin
   fGameSpeed := aValue;
   SkillPanel.DrawButtonSelector(spbPause, fGameSpeed = gspPause);
   SkillPanel.DrawButtonSelector(spbFastForward, fGameSpeed = gspFF);
+  SkillPanel.DrawButtonSelector(spbRewind, fGameSpeed = gspRewind);
 end;
 
 function TGameWindow.GetGameSpeed: TGameSpeed;
@@ -542,6 +544,7 @@ begin
   ClipCursor(nil);
 end;
 
+
 procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
 {-------------------------------------------------------------------------------
   • Main heartbeat of the program.
@@ -555,7 +558,7 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-  Fast, Slow, ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
+  Fast, Slow, Rewind, ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame, TimeForScroll, TimeForRewind, Hyper, Pause: Boolean;
   PanelFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
@@ -588,19 +591,27 @@ begin
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
   //Superlemming := (fGameSpeed = gspSuperlemming);
-  //FastBackwards := (fGameSpeed = gspFB)
+  Rewind := (fGameSpeed = gspRewind);
   Slow := (fGameSpeed = gspSlowMo);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   fForceUpdateOneFrame := (PanelFrameSkip > 0);
   CurrTime := TimeGetTime;
   if Slow then
-    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
+    TimeForFrame := (not Pause) and (not Rewind) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
   else
-    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
+    TimeForFrame := (not Pause) and (not Rewind) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
+
   TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
+  TimeForRewind := Rewind and (CurrTime - PrevCallTime > IdealFrameTimeMSRewind);
   Hyper := IsHyperSpeed;
+
+  if TimeForRewind then      //bookmark
+  begin
+    if GameParams.ClassicMode then Game.CancelReplayAfterSkip := true;
+    GoToSaveState(Max(Game.CurrentIteration -3, 0));
+  end;
 
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
 
@@ -1005,12 +1016,15 @@ begin
     aForceBeforeIteration := aTargetIteration;
 
   CanPlay := False;
+
+  if not (fGameSpeed = gspRewind) then
+  begin
   if PauseAfterSkip < 0 then
     GameSpeed := gspNormal
   else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
        or (PauseAfterSkip > 0) then
-    SkillPanel.DrawButtonSelector(spbPause, False);
     GameSpeed := gspPause;
+  end;
 
   if (aTargetIteration <> Game.CurrentIteration) or fRanOneUpdate then
   begin
@@ -1809,6 +1823,7 @@ begin
   // set timers
   IdealFrameTimeMSFast := 10;
   IdealScrollTimeMS := 15;
+  IdealFrameTimeMSRewind := 22;        //bookmark
   IdealFrameTimeMS := 60; // normal
   IdealFrameTimeMSSlow := 240;
 

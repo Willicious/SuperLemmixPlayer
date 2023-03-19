@@ -125,6 +125,7 @@ type
 
     spbFastForward,
     spbRestart,
+    spbRewind,
     spbSquiggle,
     spbClearPhysics,
     spbBackOneFrame,
@@ -324,6 +325,7 @@ const
     baNone,  //Nuke
     baNone,  // FF
     baNone,  // Restart
+    baNone,  // Rewind
     baNone,  // Squiggle
     baNone,  // -1f
     baNone,  // +1f

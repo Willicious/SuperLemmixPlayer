@@ -114,7 +114,7 @@ function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
 begin
-  SetLength(Result, 23);
+  SetLength(Result, 24);
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (0 + MAX_SKILL_TYPES_PER_LEVEL -1) do
@@ -123,8 +123,8 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbFastForward;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbRestart;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbNuke;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbSquiggle; //spbBackOneFrame; // and below: spbForwardOneFrame
-  //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbRewind; //spbBackOneFrame; // and below: spbForwardOneFrame
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbSquiggle; //spbDirLeft; // and below: spbDirRight
   //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
 end;
 

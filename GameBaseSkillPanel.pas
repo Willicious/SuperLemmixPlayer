@@ -192,7 +192,8 @@ const
     {Skills end here}
 
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
-    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'squiggle.png', 'icon_cpm_and_replay.png', 'icon_frameskip.png',
+    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_rewind.png', 'squiggle.png',
+    'icon_cpm_and_replay.png', 'icon_frameskip.png',
     'icon_directional.png',
 
     // These ones are placeholders - they're the bottom half of splits
@@ -1579,8 +1580,15 @@ begin
       begin
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause] then
+        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspRewind] then //bookmark
           fGameWindow.GameSpeed := gspFF;
+      end;
+    spbRewind:
+      begin
+        if fGameWindow.GameSpeed = gspRewind then
+          fGameWindow.GameSpeed := gspNormal
+        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then //bookmark
+          fGameWindow.GameSpeed := gspRewind;
       end;
     spbRestart:begin
                 if GameParams.ClassicMode then // cancels Replay after Restart in ClassicMode
