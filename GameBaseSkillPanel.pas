@@ -880,7 +880,7 @@ var
     i: Integer;
   begin
     // We want to swap the order of + and - when displaying release rate
-    if GameParams.SpawnInterval then Exit;
+    if GameParams.SpawnInterval and not GameParams.ClassicMode then Exit;
 
     SlowerIndex := -1;
     FasterIndex := -1;
@@ -1791,7 +1791,7 @@ end;
 
 function TBaseSkillPanel.GetSpawnIntervalValue(aSI: Integer): Integer;
 begin
-  if GameParams.SpawnInterval then
+  if GameParams.SpawnInterval and not GameParams.ClassicMode then
     Result := aSI
   else
     Result := SpawnIntervalToReleaseRate(aSI);

@@ -666,7 +666,7 @@ begin
   else
     Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
 
-  if GameParams.SpawnInterval then
+  if GameParams.SpawnInterval and not GameParams.ClassicMode then
     SIVal := Level.Info.SpawnInterval
   else
     SIVal := SpawnIntervalToReleaseRate(Level.Info.SpawnInterval);

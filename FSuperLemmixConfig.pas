@@ -447,14 +447,6 @@ begin
   cbHideHelpers.Enabled := false;
   cbHideSkillQ.Checked := true;
   cbHideSkillQ.Enabled := false;
-  cbSpawnInterval.Checked := false;
-  //cbSpawnInterval.Enabled := false;   //this code is here to stop SI in Classic Mode
-                                        //but users might try to circumvent this by
-                                        //individually checking the "deactivate" boxes,
-                                        //thus missing out on actual Classic Mode
-                                        //so, mayyybe make individual checkboxes
-                                        //for the other CM features as well
-                                        //and then you can include SI in the CM perams
 end;
 
 procedure TFormNXConfig.btnDeactivateClassicModeClick(Sender: TObject);
@@ -473,14 +465,6 @@ begin
   cbHideHelpers.Enabled := true;
   cbHideSkillQ.Checked := false;
   cbHideSkillQ.Enabled := true;
-  //cbSpawnInterval.Checked := false;
-  //cbSpawnInterval.Enabled := true;    //this code is here to stop SI in Classic Mode
-                                        //but users might try to circumvent this by
-                                        //individually checking the "deactivate" boxes,
-                                        //thus missing out on actual Classic Mode
-                                        //so, mayyybe make individual checkboxes
-                                        //for the other CM features as well
-                                        //and then you can include SI in the CM perams
 end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
