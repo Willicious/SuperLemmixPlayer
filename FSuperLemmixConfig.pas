@@ -69,6 +69,7 @@ type
     //procedure cbClassicModeClick(Sender: TObject);
     procedure btnClassicModeClick(Sender: TObject);
     procedure btnDeactivateClassicModeClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -79,6 +80,7 @@ type
 
     procedure SetZoomDropdown(aValue: Integer = -1);
     procedure SetPanelZoomDropdown(aValue: Integer = -1);
+    procedure SetClassicModeCheckboxes;
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
 
@@ -393,9 +395,6 @@ begin
         NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
       end;
 
-    //if Sender = cbCompactSkillPanel then
-      //NewPanelZoom := cbPanelZoom.ItemIndex;
-
     if (Sender = cbFullScreen) and not GameParams.FullScreen then
       NewPanelZoom := cbPanelZoom.ItemIndex;
 
@@ -423,6 +422,11 @@ begin
     P.Text := PRESET_REPLAY_PATTERNS[P.ItemIndex];
 end;
 
+procedure TFormNXConfig.FormCreate(Sender: TObject);
+begin
+  SetClassicModeCheckboxes;
+end;
+
 //procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
 //begin
   //cbUpdateCheck.Enabled := cbEnableOnline.Checked;
@@ -436,16 +440,16 @@ begin
   OptionChanged(Sender);
   cbClassicMode.Checked := true;
   cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
-  cbHideShadows.Enabled := false;
   cbHideClearPhysics.Checked := true;
-  cbHideClearPhysics.Enabled := false;
   cbHideAdvancedSelect.Checked := true;
-  cbHideAdvancedSelect.Enabled := false;
   cbHideFrameskipping.Checked := true;
-  cbHideFrameskipping.Enabled := false;
   cbHideHelpers.Checked := true;
-  cbHideHelpers.Enabled := false;
   cbHideSkillQ.Checked := true;
+  cbHideShadows.Enabled := false;
+  cbHideClearPhysics.Enabled := false;
+  cbHideAdvancedSelect.Enabled := false;
+  cbHideFrameskipping.Enabled := false;
+  cbHideHelpers.Enabled := false;
   cbHideSkillQ.Enabled := false;
 end;
 
@@ -454,18 +458,31 @@ begin
   OptionChanged(Sender);
   cbClassicMode.Checked := false;
   cbHideShadows.Checked := false;
-  cbHideShadows.Enabled := true;
   cbHideClearPhysics.Checked := false;
-  cbHideClearPhysics.Enabled := true;
   cbHideAdvancedSelect.Checked := false;
-  cbHideAdvancedSelect.Enabled := true;
   cbHideFrameskipping.Checked := false;
-  cbHideFrameskipping.Enabled := true;
   cbHideHelpers.Checked := false;
-  cbHideHelpers.Enabled := true;
   cbHideSkillQ.Checked := false;
+  cbHideShadows.Enabled := true;
+  cbHideClearPhysics.Enabled := true;
+  cbHideAdvancedSelect.Enabled := true;
+  cbHideFrameskipping.Enabled := true;
+  cbHideHelpers.Enabled := true;
   cbHideSkillQ.Enabled := true;
 end;
+
+procedure TFormNXConfig.SetClassicModeCheckboxes;
+  begin
+    if GameParams.ClassicMode then
+      begin
+         cbHideShadows.Enabled := false;
+         cbHideClearPhysics.Enabled := false;
+         cbHideAdvancedSelect.Enabled := false;
+         cbHideFrameskipping.Enabled := false;
+         cbHideHelpers.Enabled := false;
+         cbHideSkillQ.Enabled := false;
+      end;
+  end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
 begin

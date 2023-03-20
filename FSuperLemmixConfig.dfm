@@ -16,6 +16,7 @@ object FormNXConfig: TFormNXConfig
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnCreate = FormCreate
   DesignSize = (
     275
     400)
