@@ -27,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20
@@ -55,7 +55,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X -32
    Y 144
    WIDTH 64
@@ -63,7 +63,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 32
    Y 144
    WIDTH 64
@@ -72,7 +72,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 96
    Y 144
    WIDTH 64
@@ -81,7 +81,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 160
    Y 144
    WIDTH 64
@@ -90,7 +90,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 224
    Y 144
    WIDTH 64
@@ -99,7 +99,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 288
    Y 144
    WIDTH 64
@@ -108,7 +108,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 352
    Y 144
    WIDTH 64
@@ -117,7 +117,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 480
    Y 144
    WIDTH 64
@@ -126,7 +126,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 416
    Y 144
    WIDTH 64
@@ -135,7 +135,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 544
    Y 144
    WIDTH 64
@@ -144,7 +144,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 608
    Y 144
    WIDTH 64
@@ -152,7 +152,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 672
    Y 144
    WIDTH 64
@@ -161,7 +161,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 736
    Y 144
    WIDTH 64
@@ -170,7 +170,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 800
    Y 144
    WIDTH 64
@@ -179,7 +179,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 864
    Y 144
    WIDTH 64

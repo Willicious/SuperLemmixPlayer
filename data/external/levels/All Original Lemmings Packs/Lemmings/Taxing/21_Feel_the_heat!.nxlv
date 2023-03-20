@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,14 @@
  TITLE Feel the heat!
  AUTHOR 
  ID xB5CF66E4B5CF66E4
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 384
+ WIDTH 392
  HEIGHT 160
- START_X 176
+ START_X 184
  START_Y 80
  THEME orig_fire
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 3
    FLOATER 3
-   BOMBER 3
+   TIMEBOMBER 3
    BLOCKER 3
    BUILDER 4
    BASHER 3

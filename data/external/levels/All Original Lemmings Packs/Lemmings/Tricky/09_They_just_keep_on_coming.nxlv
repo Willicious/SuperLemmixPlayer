@@ -1,23 +1,21 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE They just keep on coming
  AUTHOR 
- ID x0303031A0303031A
- VERSION x0000000000000000
+ ID xDFA0E17FDFA0E17F
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1072
+ WIDTH 1216
  HEIGHT 160
- START_X 570
+ START_X 624
  START_Y 80
  THEME orig_dirt
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20
@@ -42,7 +40,7 @@
  $GADGET
    STYLE orig_dirt
    PIECE window
-   X 542
+   X 592
    Y 20
    NO_OVERWRITE
  $END
@@ -50,7 +48,7 @@
  $GADGET
    STYLE orig_dirt
    PIECE exit
-   X 542
+   X 592
    Y 116
    NO_OVERWRITE
  $END
@@ -58,7 +56,7 @@
  $GADGET
    STYLE default
    PIECE owa_right
-   X 254
+   X 304
    Y 104
    WIDTH 32
    HEIGHT 32
@@ -68,47 +66,32 @@
  $GADGET
    STYLE orig_dirt
    PIECE water
-   X 1012
+   X 1024
    Y 144
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
  $GADGET
-   STYLE default
-   PIECE owa_left
-   X 805
-   Y 44
-   WIDTH 32
-   HEIGHT 32
-   ONLY_ON_TERRAIN
+   STYLE orig_dirt
+   PIECE water
+   X 1088
+   Y 144
+   WIDTH 64
  $END
  
  $GADGET
-   STYLE default
-   PIECE owa_left
-   X 797
-   Y 4
-   WIDTH 32
-   HEIGHT 32
-   ONLY_ON_TERRAIN
- $END
- 
- $GADGET
-   STYLE default
-   PIECE owa_left
-   X 829
-   Y 4
-   WIDTH 32
-   HEIGHT 32
-   ONLY_ON_TERRAIN
+   STYLE orig_dirt
+   PIECE water
+   X 1152
+   Y 144
+   WIDTH 64
  $END
  
  $GADGET
    STYLE default
    PIECE owa_right
-   X 222
+   X 272
    Y 104
    WIDTH 32
    HEIGHT 32
@@ -118,8 +101,8 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 797
-   Y 36
+   X 848
+   Y 32
    WIDTH 32
    HEIGHT 32
    ONLY_ON_TERRAIN
@@ -128,8 +111,8 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 829
-   Y 36
+   X 880
+   Y 32
    WIDTH 32
    HEIGHT 32
    ONLY_ON_TERRAIN
@@ -138,11 +121,18 @@
  $GADGET
    STYLE orig_dirt
    PIECE water
-   X -2
+   X 64
    Y 144
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE water
+   X 0
+   Y 144
+   WIDTH 64
  $END
  
  
@@ -150,143 +140,392 @@
 # ----------------------------- 
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_07
-   X 139
-   Y 141
+   PIECE steel_01
+   X 253
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 277
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 301
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 325
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 349
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 373
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 421
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 445
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 469
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 493
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 517
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 541
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 565
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 589
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 613
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 637
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 661
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 685
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 709
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 733
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 757
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 781
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 805
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 829
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 829
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 853
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 877
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 901
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 925
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 901
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 925
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 925
+   Y 44
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 949
+   Y 44
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_07
-   X 213
+   X 189
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 263
    Y 131
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 389
+   X 439
    Y 141
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 406
+   X 456
    Y 144
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_07
-   X 415
+   X 465
    Y 135
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 464
+   X 514
    Y 144
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_07
-   X 492
+   X 542
    Y 148
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_07
-   X 521
+   X 571
    Y 137
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_07
-   X 588
+   X 638
    Y 139
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 671
+   X 721
    Y 147
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 763
+   X 813
    Y 147
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 823
+   X 873
    Y 146
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_05
-   X 917
+   X 967
    Y 63
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_05
-   X 929
+   X 979
    Y 90
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 914
+   X 964
    Y 123
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 914
+   X 964
    Y 111
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 935
+   X 985
    Y 151
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_05
-   X 926
+   X 976
    Y 114
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 800
+   X 850
    Y 12
    NO_OVERWRITE
    ONE_WAY
@@ -295,7 +534,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 791
+   X 841
    Y -10
    ONE_WAY
  $END
@@ -303,7 +542,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 807
+   X 857
    Y -4
    NO_OVERWRITE
    ONE_WAY
@@ -312,7 +551,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 815
+   X 865
    Y -18
    NO_OVERWRITE
    ONE_WAY
@@ -321,127 +560,142 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 824
+   X 874
    Y -1
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 845
+   X 895
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 904
+   X 954
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 740
+   X 790
    Y -9
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 699
+   X 749
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 639
+   X 689
    Y -10
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 582
+   X 632
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 526
+   X 576
    Y -12
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 475
+   X 525
    Y -12
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 421
+   X 471
    Y -12
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 365
+   X 415
    Y -12
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 304
+   X 354
    Y -14
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 257
+   X 307
    Y -15
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 206
+   X 256
    Y -15
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 162
+   X 212
    Y -13
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE steel_02
-   X 555
+   X 605
    Y 114
    ERASE
  $END
@@ -449,85 +703,95 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_05
-   X 102
+   X 152
    Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_05
-   X 101
+   X 151
    Y 106
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 109
+   X 159
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 121
+   X 171
    Y -16
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_01
-   X 133
+   X 183
    Y -17
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 155
+   X 205
    Y -13
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 135
+   X 185
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 119
+   X 169
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 923
+   X 973
    Y 123
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_05
-   X 918
+   X 968
    Y 115
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 243
+   X 293
    Y 120
    NO_OVERWRITE
    ONE_WAY
@@ -536,7 +800,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 244
+   X 294
    Y 105
    NO_OVERWRITE
    ONE_WAY
@@ -545,1740 +809,1848 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 387
+   X 437
    Y 150
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 382
+   X 432
    Y 154
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 386
+   X 436
    Y 150
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 388
+   X 438
    Y 148
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 396
+   X 446
    Y 141
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 881
+   X 931
    Y 155
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 728
+   X 778
    Y 155
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 171
+   X 221
    Y 7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 182
+   X 232
    Y 6
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 208
+   X 258
    Y 5
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 227
+   X 277
    Y -3
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 250
+   X 300
    Y 0
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 268
+   X 318
    Y 1
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 308
+   X 358
    Y 4
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 359
+   X 409
    Y 3
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 354
+   X 404
    Y 1
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 394
+   X 444
    Y 6
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 421
+   X 471
    Y -14
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 425
+   X 475
    Y -12
    NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_01
-   X 461
-   Y 7
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_01
-   X 487
-   Y 3
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_01
-   X 564
-   Y 5
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_01
-   X 637
-   Y 1
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_01
-   X 704
-   Y 6
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_01
-   X 785
-   Y 6
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_02
-   X 738
-   Y 3
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_02
-   X 658
-   Y 4
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_02
-   X 599
-   Y 1
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE roots_01
-   X 505
-   Y 4
-   NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
    X 511
-   Y 2
+   Y 7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 678
+   X 537
+   Y 3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_01
+   X 614
+   Y 5
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_01
+   X 687
+   Y 1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_01
+   X 754
+   Y 6
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_01
+   X 835
+   Y 6
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_02
+   X 788
+   Y 3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_02
+   X 708
+   Y 4
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_02
+   X 649
+   Y 1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_01
+   X 555
+   Y 4
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_01
+   X 561
+   Y 2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE roots_01
+   X 728
    Y 8
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 197
+   X 247
    Y 3
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 243
+   X 293
    Y 3
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 295
+   X 345
    Y 5
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_05
-   X 344
+   X 394
    Y 8
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_06
-   X 382
+   X 432
    Y -5
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_06
-   X 263
+   X 313
    Y -11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_06
-   X 243
+   X 293
    Y -9
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_05
-   X 418
+   X 468
    Y 8
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 449
+   X 499
    Y 9
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 494
+   X 544
    Y 6
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 495
+   X 545
    Y 8
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 578
+   X 628
    Y 7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 309
+   X 359
    Y 4
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 625
+   X 675
    Y 7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 685
+   X 735
    Y 6
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 750
+   X 800
    Y 11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 719
+   X 769
    Y 4
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 790
+   X 840
    Y -3
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 683
+   X 733
    Y 5
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 527
+   X 577
    Y 1
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_05
-   X 442
+   X 492
    Y 11
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_05
-   X 434
+   X 484
    Y 9
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_05
-   X 410
+   X 460
    Y 8
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 374
+   X 424
    Y 7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 372
+   X 422
    Y 4
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 965
+   X 1015
    Y 2
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 954
+   X 1004
    Y -7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 945
+   X 995
    Y 6
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 909
+   X 959
    Y 2
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 920
+   X 970
    Y 7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 832
+   X 882
    Y 15
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 841
+   X 891
    Y 7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 873
+   X 923
    Y 3
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 897
+   X 947
    Y -7
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 151
+   X 201
    Y 125
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 170
+   X 220
    Y 138
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 176
+   X 226
    Y 140
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 199
+   X 249
    Y 142
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 206
+   X 256
    Y 146
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 218
+   X 268
    Y 138
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 223
+   X 273
    Y 134
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 233
+   X 283
    Y 128
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 272
+   X 322
    Y 135
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 283
+   X 333
    Y 140
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 292
+   X 342
    Y 142
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 375
+   X 425
    Y 151
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 382
+   X 432
    Y 144
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 395
+   X 445
    Y 143
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 398
+   X 448
    Y 141
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 411
+   X 461
    Y 142
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 417
+   X 467
    Y 140
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 411
+   X 461
    Y 140
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 404
+   X 454
    Y 140
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 400
+   X 450
    Y 140
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 429
+   X 479
    Y 136
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 445
+   X 495
    Y 134
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 447
+   X 497
    Y 132
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 513
+   X 563
    Y 145
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 531
+   X 581
    Y 139
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 503
+   X 553
    Y 147
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 493
+   X 543
    Y 144
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 489
+   X 539
    Y 142
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 479
+   X 529
    Y 142
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 470
+   X 520
    Y 135
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 547
+   X 597
    Y 138
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 580
+   X 630
    Y 141
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 593
+   X 643
    Y 147
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 597
+   X 647
    Y 142
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 606
+   X 656
    Y 137
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 625
+   X 675
    Y 137
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 663
+   X 713
    Y 148
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 646
+   X 696
    Y 139
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 682
+   X 732
    Y 146
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 687
+   X 737
    Y 146
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 695
+   X 745
    Y 146
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 707
+   X 757
    Y 149
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 702
+   X 752
    Y 147
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 877
+   X 927
    Y 149
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 872
+   X 922
    Y 150
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 859
+   X 909
    Y 148
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 851
+   X 901
    Y 147
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 846
+   X 896
    Y 145
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 840
+   X 890
    Y 145
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 809
+   X 859
    Y 149
    NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 885
+   Y 146
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 884
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
    X 835
-   Y 146
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 834
-   Y 147
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 785
    Y 148
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 779
+   X 829
    Y 147
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 775
+   X 825
    Y 146
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 772
+   X 822
    Y 149
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 770
+   X 820
    Y 150
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 789
+   X 839
    Y 145
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 780
+   X 830
    Y 145
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 776
+   X 826
    Y 145
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 871
+   X 921
    Y 154
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 868
+   X 918
    Y 151
    NO_OVERWRITE
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_06
-   X 204
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_06
-   X 275
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_05
-   X 299
-   Y 70
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 343
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 241
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_02
-   X 224
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 290
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 421
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 379
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 508
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_02
-   X 468
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_02
-   X 587
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_02
-   X 659
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 709
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 731
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_06
-   X 757
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_06
-   X 781
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 798
-   Y 88
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 781
-   Y 92
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 801
-   Y 92
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 819
-   Y 93
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_02
-   X 612
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_02
-   X 630
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 556
-   Y 75
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 540
-   Y 76
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 542
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 487
-   Y 75
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_02
-   X 431
+   X 261
    Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE moss_02
-   X 408
+   PIECE moss_05
+   X 362
    Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_04
+   X 374
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 291
+   Y 70
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 417
-   Y 69
+   X 284
+   Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 400
-   Y 88
+   X 557
+   Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE moss_01
-   X 374
-   Y 89
+   PIECE moss_02
+   X 517
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_02
+   X 637
+   Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 440
-   Y 88
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 561
-   Y 88
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 513
-   Y 89
+   X 761
+   Y 71
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 644
-   Y 89
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_05
-   X 682
-   Y 89
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_06
-   X 682
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_06
-   X 874
-   Y 69
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_06
-   X 877
-   Y 89
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_05
-   X 894
+   X 781
    Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_06
+   X 807
+   Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 883
-   Y 76
+   X 841
+   Y 89
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE moss_04
-   X 893
-   Y 80
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 897
-   Y 46
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 881
-   Y 45
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 851
+   PIECE moss_03
+   X 832
    Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_02
+   X 680
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 606
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 581
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 586
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 537
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_02
+   X 485
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_02
+   X 458
+   Y 71
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 839
+   X 450
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_01
+   X 424
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 490
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 611
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 563
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_04
+   X 694
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_05
+   X 732
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_06
+   X 729
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_06
+   X 921
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_06
+   X 914
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_05
+   X 932
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_04
+   X 933
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_04
+   X 936
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_04
+   X 945
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_01
+   X 889
    Y 113
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 779
+   X 831
    Y 106
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 854
-   Y 69
+   X 906
+   Y 71
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE bones_01
-   X 112
+   X 162
    Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_08
-   X 77
+   X 127
    Y 105
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_08
-   X 66
+   X 116
    Y 115
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_08
-   X 57
+   X 107
    Y 136
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_08
-   X 44
+   X 94
    Y 157
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 200
+   X 250
    Y 145
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 180
+   X 230
    Y 140
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 166
+   X 216
    Y 137
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 196
+   X 246
    Y 141
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 222
+   X 272
    Y 134
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 227
+   X 277
    Y 131
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 294
+   X 344
    Y 140
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 275
+   X 325
    Y 136
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 275
+   X 325
    Y 137
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 274
+   X 324
    Y 132
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 227
+   X 277
    Y 137
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 247
+   X 297
    Y 136
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 254
+   X 304
    Y 139
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 377
+   X 427
    Y 144
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 380
+   X 430
    Y 142
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 395
+   X 445
    Y 139
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 405
+   X 455
    Y 137
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 419
+   X 469
    Y 140
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 433
+   X 483
    Y 132
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 447
+   X 497
    Y 131
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 456
+   X 506
    Y 133
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 480
+   X 530
    Y 139
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 496
+   X 546
    Y 142
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 491
+   X 541
    Y 142
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 500
+   X 550
    Y 145
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 516
+   X 566
    Y 145
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 535
+   X 585
    Y 137
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 601
+   X 651
    Y 139
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 586
+   X 636
    Y 138
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_03
-   X 578
+   X 628
    Y 135
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 591
+   X 641
    Y 144
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 604
+   X 654
    Y 145
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 589
+   X 639
    Y 151
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 571
+   X 621
    Y 148
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_02
-   X 639
+   X 689
    Y 136
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 635
+   X 685
    Y 154
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 641
+   X 691
    Y 151
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 617
+   X 667
    Y 137
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 681
+   X 731
    Y 145
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 701
+   X 751
    Y 147
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 714
+   X 764
    Y 150
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 662
+   X 712
    Y 148
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 772
+   X 822
    Y 144
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 796
+   X 846
    Y 147
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 814
-   Y 148
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 832
-   Y 144
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 849
-   Y 146
+   ONE_WAY
  $END
  
  $TERRAIN
@@ -2286,511 +2658,607 @@
    PIECE grass_04
    X 864
    Y 148
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 818
-   Y 145
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_01
-   X 764
+   X 882
    Y 144
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE grass_01
-   X 762
-   Y 144
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_02
-   X 878
-   Y 149
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_02
-   X 466
-   Y 131
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_07
-   X 432
+   PIECE grass_04
+   X 899
    Y 146
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_07
-   X 420
-   Y 143
+   PIECE grass_04
+   X 914
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 868
+   Y 145
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 154
+   X 814
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_01
+   X 812
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_02
+   X 928
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_02
+   X 516
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 482
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 470
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_01
+   X 204
    Y 117
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_01
-   X 154
+   X 204
    Y 115
    FLIP_VERTICAL
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 472
+   X 522
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 336
+   X 386
    Y 8
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 301
+   X 351
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 287
+   X 337
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 242
+   X 292
    Y 4
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 211
+   X 261
    Y 3
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 164
+   X 214
    Y 13
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 163
+   X 213
    Y 22
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 544
+   X 594
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 574
+   X 624
    Y 11
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 553
+   X 603
    Y 7
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 544
+   X 594
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 486
+   X 536
    Y 8
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 376
+   X 426
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 272
+   X 322
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 306
+   X 356
    Y 8
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 302
+   X 352
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 216
+   X 266
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 182
+   X 232
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 170
+   X 220
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 162
+   X 212
    Y 12
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 258
+   X 308
    Y 4
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 356
+   X 406
    Y 6
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 356
+   X 406
    Y 14
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 356
+   X 406
    Y 21
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 357
+   X 407
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 355
+   X 405
    Y 6
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_06
-   X 624
+   X 674
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 616
+   X 666
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 611
+   X 661
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 667
+   X 717
    Y 12
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 654
+   X 704
    Y 11
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 696
+   X 746
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 728
+   X 778
    Y 11
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 789
+   X 839
    Y 12
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 761
+   X 811
    Y 11
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 862
+   X 912
    Y 17
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 883
+   X 933
    Y 14
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 909
+   X 959
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 899
+   X 949
    Y 5
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_03
-   X 927
+   X 977
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 896
+   X 946
    Y 8
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 924
+   X 974
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 925
+   X 975
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 912
+   X 962
    Y 7
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 894
+   X 944
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 894
+   X 944
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 865
+   X 915
    Y 19
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 801
-   Y 93
+   X 841
+   Y 94
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 798
-   Y 103
+   X 846
+   Y 102
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 892
-   Y 99
+   X 931
+   Y 95
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 702
+   X 752
    Y 75
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 488
-   Y 68
+   X 538
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 622
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 476
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 469
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 525
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 532
+   Y 7
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
    X 572
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 426
-   Y 4
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 419
-   Y 6
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 475
-   Y 6
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 482
    Y 7
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 522
-   Y 7
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_03
-   X 609
+   X 659
    Y 11
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 742
+   X 792
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 795
+   X 845
    Y 10
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 833
+   X 883
    Y 16
    ONE_WAY
  $END
@@ -2798,7 +3266,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 817
+   X 867
    Y 29
    ONE_WAY
  $END
@@ -2806,7 +3274,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 806
+   X 856
    Y 41
    ONE_WAY
  $END
@@ -2814,42 +3282,47 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 962
+   X 1012
    Y 7
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 966
+   X 1016
    Y 4
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 151
+   X 201
    Y 13
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 956
+   X 1006
    Y 9
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 840
+   X 890
    Y 18
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 835
+   X 885
    Y 28
    ERASE
    ONE_WAY
@@ -2858,7 +3331,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 838
+   X 888
    Y 26
    ERASE
    ONE_WAY
@@ -2867,21 +3340,21 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE steel_01
-   X 964
+   X 1014
    Y 141
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE steel_01
-   X 988
+   X 1038
    Y 141
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE steel_01
-   X 63
+   X 113
    Y 138
    NO_OVERWRITE
  $END
@@ -2889,247 +3362,33 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE steel_02
-   X 562
+   X 612
    Y 117
    ERASE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_04
-   X 787
-   Y -10
+   PIECE moss_02
+   X 340
+   Y 72
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE steel_01
-   X 203
-   Y 68
+   PIECE moss_03
+   X 689
+   Y 71
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE steel_01
-   X 227
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 251
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 275
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 299
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 323
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 371
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 395
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 419
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 443
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 467
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 491
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 515
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 539
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 563
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 587
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 611
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 635
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 659
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 683
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 707
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 731
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 755
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 779
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 779
-   Y 92
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 803
-   Y 92
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 827
-   Y 92
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 851
-   Y 92
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 875
-   Y 92
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 851
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 875
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 875
-   Y 44
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 899
-   Y 44
+   PIECE moss_04
+   X 939
+   Y 65
+   ONE_WAY
  $END
  
  

@@ -1,15 +1,15 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.40
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE What an AWESOME level
  AUTHOR 
- MUSIC awesome
+ MUSIC awesome_amiga
  ID xCBB73390CBB73390
- VERSION x0000000000000000
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
@@ -18,7 +18,6 @@
  START_X 176
  START_Y 80
  THEME orig_dirt
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -30,7 +29,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20
@@ -53,6 +52,7 @@
    PIECE exit_awesome
    X 896
    Y 4
+   NO_OVERWRITE
  $END
  
  

@@ -1,14 +1,13 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE X marks the spot
  AUTHOR 
- ID xA0D1E72FA0D1E72F
- VERSION x0000000000000000
+ ID xD28F87C6D28F87C6
  
 #       Level dimensions        
 # ----------------------------- 
@@ -17,7 +16,6 @@
  START_X 736
  START_Y 80
  THEME orig_fire
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -28,7 +26,7 @@
  
  $SKILLSET 
    CLIMBER 5
-   BOMBER 5
+   TIMEBOMBER 5
    BUILDER 20
    BASHER 5
    MINER 6
@@ -54,11 +52,10 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 752
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -813,14 +810,14 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 0
+   X 1
    Y 56
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 25
+   X 26
    Y 56
    NO_OVERWRITE
  $END
@@ -828,7 +825,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 50
+   X 51
    Y 56
    NO_OVERWRITE
  $END

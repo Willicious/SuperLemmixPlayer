@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,14 @@
  TITLE Come on over to my place
  AUTHOR 
  ID xE7524E3AE7524E3A
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1152
+ WIDTH 1408
  HEIGHT 160
  START_X 592
  START_Y 80
  THEME orig_marble
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -55,129 +53,152 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 448
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 384
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 320
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 256
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 192
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 128
    Y 136
    WIDTH 64
-   HEIGHT 25
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
-   X 64
-   Y 136
-   WIDTH 64
-   HEIGHT 25
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 832
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 896
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 960
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 1024
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 1088
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
+   X 1152
+   Y 136
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 1216
+   Y 136
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 1280
+   Y 136
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 1344
+   Y 136
+   WIDTH 64
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 64
+   Y 136
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
    X 0
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -1171,8 +1192,40 @@
  
  $TERRAIN
    STYLE orig_marble
+   PIECE bar_07
+   X 37
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_07
+   X 37
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_07
+   X 37
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_07
+   X 37
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
    PIECE bar_01
-   X 93
+   X 157
    Y 121
    ONE_WAY
  $END
@@ -1180,7 +1233,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 93
+   X 157
    Y 77
    ONE_WAY
  $END
@@ -1188,7 +1241,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_05
-   X 69
+   X 133
    Y 50
    ONE_WAY
  $END
@@ -1196,7 +1249,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_05
-   X 43
+   X 107
    Y 47
    FLIP_VERTICAL
    ONE_WAY
@@ -1205,7 +1258,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE rock_01
-   X 20
+   X 84
    Y 72
    ONE_WAY
  $END
@@ -1420,6 +1473,30 @@
  
  $TERRAIN
    STYLE orig_marble
+   PIECE structure_04
+   X 1216
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE structure_04
+   X 1216
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE structure_04
+   X 1311
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
    PIECE steel_02
    X 818
    Y 136
@@ -1483,14 +1560,6 @@
    PIECE rock_02
    X 932
    Y 145
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE rock_02
-   X 1088
-   Y 155
    ONE_WAY
  $END
  

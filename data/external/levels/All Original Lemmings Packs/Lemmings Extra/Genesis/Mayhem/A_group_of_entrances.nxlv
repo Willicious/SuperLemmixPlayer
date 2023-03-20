@@ -27,7 +27,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $SKILLSET 
    CLIMBER 1
-   BOMBER 2
+   TIMEBOMBER 2
    BLOCKER 2
    BUILDER 6
    BASHER 4
@@ -103,7 +103,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 152
    Y 136
    WIDTH 64
@@ -112,7 +112,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 216
    Y 136
    WIDTH 64

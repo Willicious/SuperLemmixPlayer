@@ -26,7 +26,7 @@
  
  $SKILLSET 
    CLIMBER 10
-   BOMBER 10
+   TIMEBOMBER 10
    BLOCKER 10
    BUILDER 5
    BASHER 1
@@ -53,7 +53,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 760
    Y 140
    WIDTH 64
@@ -62,7 +62,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 824
    Y 140
    WIDTH 64
@@ -71,7 +71,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 888
    Y 140
    WIDTH 64
@@ -80,7 +80,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 952
    Y 140
    WIDTH 64
@@ -89,7 +89,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 136
    Y 140
    WIDTH 64
@@ -98,7 +98,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 72
    Y 140
    WIDTH 64
@@ -107,7 +107,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 8
    Y 140
    WIDTH 64

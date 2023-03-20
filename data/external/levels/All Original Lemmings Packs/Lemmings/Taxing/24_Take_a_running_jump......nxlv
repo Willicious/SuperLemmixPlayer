@@ -1,23 +1,21 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Take a running jump.....
  AUTHOR 
- ID xEE9EB544EE9EB544
- VERSION x0000000000000000
+ ID xDECC2216DECC2216
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1352
+ WIDTH 1472
  HEIGHT 160
- START_X 424
+ START_X 384
  START_Y 80
  THEME orig_fire
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -50,111 +48,118 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 816
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 880
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 656
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 368
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 432
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 496
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
+   X 1216
+   Y 140
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 1280
+   Y 140
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
    X 160
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 96
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 32
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 1224
+   PIECE lava
+   X 1344
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 1288
+   PIECE lava
+   X 1408
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  

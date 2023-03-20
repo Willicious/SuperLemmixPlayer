@@ -2,7 +2,6 @@ TITLE Oh No! More Lemmings!
 AUTHOR By DMA Design
 
 $SCROLLER
-  LINE Version 1.0
   LINE Oh No! More Lemmings by DMA Design
   LINE Welcome to 100 new levels
   LINE Yet more elevator music
@@ -17,5 +16,7 @@ $SCROLLER
   LINE Play and Enjoy.
   LINE and remember....
   LINE PARTY ON LEMMING DUDES!
+  LINE Version 1.0
+  LINE Compiled by WillLem, Proxima and ericdekovits
 $END
 

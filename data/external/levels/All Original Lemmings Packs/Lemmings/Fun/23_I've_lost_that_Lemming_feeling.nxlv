@@ -1,14 +1,13 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE I've lost that Lemming feeling
  AUTHOR 
- ID x7A341A047A341A04
- VERSION x0000000000000000
+ ID xF7E4C402F7E4C402
  
 #       Level dimensions        
 # ----------------------------- 
@@ -17,7 +16,6 @@
  START_X 736
  START_Y 80
  THEME orig_fire
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20
@@ -57,11 +55,10 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 752
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -816,14 +813,14 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 0
+   X 1
    Y 56
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 25
+   X 26
    Y 56
    NO_OVERWRITE
  $END
@@ -831,7 +828,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 50
+   X 51
    Y 56
    NO_OVERWRITE
  $END

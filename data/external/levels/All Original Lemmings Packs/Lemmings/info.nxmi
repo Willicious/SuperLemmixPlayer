@@ -3,7 +3,6 @@ AUTHOR By DMA Design
 PANEL
 
 $SCROLLER
-  LINE Version 1.0
   LINE Lemmings by DMA Design
   LINE 120 levels
   LINE 21 Pieces of toe tapping music
@@ -24,5 +23,7 @@ $SCROLLER
   LINE Beware of playing against
   LINE Violent bad losers!
   LINE GOOD LUCK.
+  LINE Version 1.0
+  LINE Compiled by WillLem, Proxima and ericderkovits
 $END
 

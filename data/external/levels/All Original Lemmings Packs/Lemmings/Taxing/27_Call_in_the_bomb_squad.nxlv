@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,6 @@
  TITLE Call in the bomb squad
  AUTHOR 
  ID xCD343462CD343462
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
@@ -17,7 +16,6 @@
  START_X 736
  START_Y 80
  THEME orig_pillar
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -27,7 +25,7 @@
  MAX_SPAWN_INTERVAL 48
  
  $SKILLSET 
-   BOMBER 10
+   TIMEBOMBER 10
    BLOCKER 10
    BUILDER 10
  $END 
@@ -56,7 +54,6 @@
    X 576
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -65,7 +62,6 @@
    X 640
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -74,7 +70,6 @@
    X 704
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -83,7 +78,6 @@
    X 768
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -92,7 +86,6 @@
    X 832
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -101,7 +94,6 @@
    X 896
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -110,7 +102,6 @@
    X 960
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -119,7 +110,6 @@
    X 512
    Y 144
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -129,7 +119,6 @@
    X 480
    Y 12
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -139,7 +128,6 @@
    X 448
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -149,7 +137,6 @@
    X 512
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -159,7 +146,6 @@
    X 576
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -169,7 +155,6 @@
    X 640
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -179,7 +164,6 @@
    X 704
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -189,7 +173,6 @@
    X 768
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -199,7 +182,6 @@
    X 832
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -209,7 +191,6 @@
    X 896
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -219,7 +200,6 @@
    X 960
    Y 4
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -229,7 +209,6 @@
    X 960
    Y 24
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -239,7 +218,6 @@
    X 960
    Y 16
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -248,7 +226,6 @@
    X 960
    Y 8
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -258,7 +235,6 @@
    X 928
    Y 24
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -268,7 +244,6 @@
    X 928
    Y 16
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -278,7 +253,6 @@
    X 928
    Y 8
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -287,7 +261,6 @@
    X 448
    Y 24
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -297,7 +270,6 @@
    X 480
    Y 24
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -307,7 +279,6 @@
    X 448
    Y 16
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -317,7 +288,6 @@
    X 480
    Y 16
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -327,7 +297,6 @@
    X 448
    Y 12
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  

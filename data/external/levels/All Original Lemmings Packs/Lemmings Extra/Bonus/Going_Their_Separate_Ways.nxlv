@@ -57,7 +57,7 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 456
    Y 135
    WIDTH 64
@@ -65,7 +65,7 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 520
    Y 135
    WIDTH 64
@@ -73,7 +73,7 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 584
    Y 135
    WIDTH 64
@@ -81,7 +81,7 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 688
    Y 137
    WIDTH 64
@@ -90,7 +90,7 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 392
    Y 135
    WIDTH 64
@@ -99,7 +99,7 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 648
    Y 135
    WIDTH 64

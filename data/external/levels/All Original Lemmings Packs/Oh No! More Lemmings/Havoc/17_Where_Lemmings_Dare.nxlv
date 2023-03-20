@@ -27,7 +27,7 @@ BACKGROUND special:amiga_blue
  
  $SKILLSET 
    FLOATER 2
-   BOMBER 2
+   TIMEBOMBER 2
    BLOCKER 2
    BUILDER 7
    BASHER 1

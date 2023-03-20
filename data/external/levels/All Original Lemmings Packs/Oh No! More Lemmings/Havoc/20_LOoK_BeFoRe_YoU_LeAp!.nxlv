@@ -29,7 +29,7 @@ BACKGROUND special:amiga_blue
  $SKILLSET 
    CLIMBER 1
    FLOATER 1
-   BOMBER 40
+   TIMEBOMBER 40
    MINER 2
  $END 
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,14 @@
  TITLE Don't let your eyes deceive you
  AUTHOR 
  ID x0D547F7C0D547F7C
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1300
+ WIDTH 1292
  HEIGHT 160
  START_X 184
  START_Y 80
  THEME orig_pillar
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20

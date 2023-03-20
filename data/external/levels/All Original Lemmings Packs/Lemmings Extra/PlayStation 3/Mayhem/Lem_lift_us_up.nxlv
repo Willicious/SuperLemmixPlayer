@@ -1,0 +1,945 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Lem lift us up
+ AUTHOR Minim
+ ID x29E4447629E44476
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    640
+ HEIGHT   160
+ START_X  480
+ START_Y   80
+ THEME minim_ps3factory
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS        4
+ REQUIREMENT     4
+ TIME_LIMIT    600
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+    CLIMBER    1
+    FLOATER    0
+    BLOCKER    0
+    BUILDER    2
+     BASHER    0
+     DIGGER    0
+     CLONER    0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION minim_ps3factory
+   PIECE      entrance
+   X        547
+   Y        115
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        592
+   Y         97
+   NO_OVERWRITE
+   SKILL FLOATER
+ $END
+ 
+ $OBJECT
+   COLLECTION minim_ps3factory
+   PIECE      exit_01
+   X        496
+   Y        122
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        451
+   Y         67
+   NO_OVERWRITE
+   SKILL CLONER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        435
+   Y         11
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        405
+   Y         59
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_marble
+   PIECE      water
+   X        253
+   Y         30
+   WIDTH     64
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        266
+   Y        140
+   NO_OVERWRITE
+   SKILL BLOCKER
+ $END
+ 
+ $OBJECT
+   COLLECTION minim_ps3factory
+   PIECE      trap_01
+   X        154
+   Y         32
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION minim_ps3factory
+   PIECE      trap_01
+   X        175
+   Y         32
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        167
+   Y         60
+   NO_OVERWRITE
+   SKILL DIGGER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        155
+   Y         60
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        230
+   Y         21
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        230
+   Y         35
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        230
+   Y         49
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        230
+   Y         61
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        239
+   Y          5
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        255
+   Y          5
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        214
+   Y        139
+   NO_OVERWRITE
+   SKILL DIGGER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X         56
+   Y         71
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X         78
+   Y         63
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_06
+   X   583
+   Y   136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X   599
+   Y   112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X   599
+   Y    88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_small_01
+   X   591
+   Y    88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   559
+   Y   152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   535
+   Y   136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_03
+   X   535
+   Y   152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   535
+   Y   120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   535
+   Y   104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   524
+   Y    88
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   508
+   Y    88
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   492
+   Y    88
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_middle_01
+   X   490
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   492
+   Y   120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   492
+   Y   104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X   465
+   Y   136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X   433
+   Y   136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      semi_circle_terrain
+   X   433
+   Y   130
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X   441
+   Y    80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X   433
+   Y    80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_middle_01
+   X   365
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_end_right_01
+   X   413
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_end_left_01
+   X   333
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_04
+   X   312
+   Y   152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   288
+   Y   152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   262
+   Y   152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_03
+   X   214
+   Y   152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_02
+   X   294
+   Y   104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X   262
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_screw_03
+   X   293
+   Y   140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_end_left_01
+   X   281
+   Y   140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_end_right_01
+   X   301
+   Y   140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   281
+   Y   132
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      machine_part_05
+   X   294
+   Y    84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      machine_part_05
+   X   294
+   Y    72
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   253
+   Y    54
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   269
+   Y    54
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   285
+   Y    54
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   301
+   Y    54
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   317
+   Y    54
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   317
+   Y    38
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   317
+   Y    30
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   237
+   Y    54
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   237
+   Y    38
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      steel_small
+   X   237
+   Y    30
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X   262
+   Y   116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_small_02
+   X   294
+   Y   136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_screw_01
+   X   312
+   Y   135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_02
+   X   299
+   Y   135
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_screw_02
+   X   302
+   Y   144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_04
+   X   166
+   Y   148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   238
+   Y   152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   142
+   Y   148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   118
+   Y   148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X    94
+   Y   148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      semi_circle_terrain
+   X   103
+   Y   140
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_05
+   X    62
+   Y   132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X    62
+   Y   108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X    62
+   Y    84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X    54
+   Y    84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X    54
+   Y   132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X    54
+   Y   108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      belt_middle_01
+   X   147
+   Y    56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X   189
+   Y    54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X   123
+   Y    54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   170
+   Y    40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   170
+   Y    27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   170
+   Y    13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      machine_part_01
+   X   151
+   Y     0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   221
+   Y    19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   221
+   Y    35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   221
+   Y    48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   221
+   Y    64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_small_01
+   X   221
+   Y    78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      board_large_01
+   X    91
+   Y    54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_06
+   X   221
+   Y    70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_03
+   X   237
+   Y    18
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   261
+   Y    18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   285
+   Y    18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X   333
+   Y    46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_02
+   X   333
+   Y    22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      machine_part_01
+   X   264
+   Y     0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_gray_01
+   X   283
+   Y     8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X    86
+   Y   148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_05
+   X    54
+   Y   140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_04
+   X   158
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   134
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X   110
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X    78
+   Y   156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3factory
+   PIECE      beam_01
+   X    86
+   Y   156
+   ONE_WAY
+ $END
+ 
+ 

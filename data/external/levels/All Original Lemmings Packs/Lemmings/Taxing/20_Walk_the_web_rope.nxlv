@@ -1,14 +1,13 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Walk the web rope
  AUTHOR 
- ID xEF94293DEF94293D
- VERSION x0000000000000000
+ ID xF820F8A0F820F8A0
  
 #       Level dimensions        
 # ----------------------------- 
@@ -17,7 +16,6 @@
  START_X 320
  START_Y 80
  THEME orig_crystal
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20

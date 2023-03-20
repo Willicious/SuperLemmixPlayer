@@ -83,7 +83,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 420
    Y 64
    WIDTH 64
@@ -92,7 +92,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 420
    Y 124
    WIDTH 64

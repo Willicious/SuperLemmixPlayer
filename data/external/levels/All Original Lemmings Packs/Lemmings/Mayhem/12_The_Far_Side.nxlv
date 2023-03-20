@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.17
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -16,7 +16,6 @@
  START_X 360
  START_Y 80
  THEME orig_dirt
-BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -57,6 +56,63 @@ BACKGROUND special:amiga_blue
 # ----------------------------- 
  $TERRAIN
    STYLE orig_dirt
+   PIECE steel_04
+   X 314
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 328
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_04
+   X 352
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 328
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 328
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 328
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 328
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 328
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
    PIECE steel_01
    X 304
    Y 72
@@ -87,6 +143,13 @@ BACKGROUND special:amiga_blue
    STYLE orig_dirt
    PIECE steel_01
    X 232
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 208
    Y 48
  $END
  
@@ -1938,70 +2001,6 @@ BACKGROUND special:amiga_blue
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE moss_02
-   X 328
-   Y 137
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 338
-   Y 150
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 348
-   Y 97
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 347
-   Y 108
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 329
-   Y 73
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_05
-   X 335
-   Y 97
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 328
-   Y 104
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_04
-   X 342
-   Y 49
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
    PIECE clump_02
    X 51
    Y 52
@@ -2256,69 +2255,6 @@ BACKGROUND special:amiga_blue
    Y 111
    ERASE
    ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 208
-   Y 48
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 328
-   Y 136
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_04
-   X 314
-   Y 0
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 328
-   Y 0
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 328
-   Y 24
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 328
-   Y 48
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 328
-   Y 72
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 328
-   Y 96
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_04
-   X 352
-   Y 0
  $END
  
  

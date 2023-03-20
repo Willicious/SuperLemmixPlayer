@@ -1,23 +1,21 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Down, along, up. In that order
  AUTHOR 
- ID xDAEEF10EDAEEF10E
- VERSION x0000000000000000
+ ID xD2CA5F07D2CA5F07
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1000
+ WIDTH 1060
  HEIGHT 160
- START_X 504
+ START_X 528
  START_Y 80
  THEME orig_fire
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 2
    FLOATER 2
-   BOMBER 10
+   TIMEBOMBER 10
    BLOCKER 10
    BUILDER 5
    BASHER 1
@@ -41,7 +39,7 @@
  $GADGET
    STYLE orig_fire
    PIECE window
-   X 560
+   X 592
    Y 4
    NO_OVERWRITE
  $END
@@ -49,77 +47,71 @@
  $GADGET
    STYLE orig_fire
    PIECE exit
-   X 256
+   X 288
    Y 12
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 208
+   PIECE lava
+   X 240
    Y 140
    WIDTH 64
-   HEIGHT 20
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 144
+   PIECE lava
+   X 176
    Y 140
    WIDTH 64
-   HEIGHT 20
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 80
+   PIECE lava
+   X 112
    Y 140
    WIDTH 64
-   HEIGHT 20
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 624
+   PIECE lava
+   X 656
    Y 140
    WIDTH 64
-   HEIGHT 20
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 688
+   PIECE lava
+   X 720
    Y 140
    WIDTH 64
-   HEIGHT 20
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE water
-   X 752
+   PIECE lava
+   X 784
    Y 140
    WIDTH 64
-   HEIGHT 20
  $END
  
  $GADGET
    STYLE orig_fire
    PIECE flamethrower
-   X 464
+   X 496
    Y 48
  $END
  
  $GADGET
    STYLE orig_fire
    PIECE flamethrower_flip
-   X 336
+   X 368
    Y 48
    NO_OVERWRITE
  $END
@@ -127,14 +119,14 @@
  $GADGET
    STYLE orig_fire
    PIECE firepit
-   X 400
+   X 432
    Y 88
  $END
  
  $GADGET
    STYLE orig_fire
    PIECE firepit
-   X 448
+   X 480
    Y 88
  $END
  
@@ -144,7 +136,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 266
+   X 298
    Y 64
    ONE_WAY
  $END
@@ -152,7 +144,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 286
+   X 318
    Y 80
    ONE_WAY
  $END
@@ -160,7 +152,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 266
+   X 298
    Y 96
    ONE_WAY
  $END
@@ -168,7 +160,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 286
+   X 318
    Y 112
    ONE_WAY
  $END
@@ -176,7 +168,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 266
+   X 298
    Y 128
    ONE_WAY
  $END
@@ -184,7 +176,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 287
+   X 319
    Y 144
    ONE_WAY
  $END
@@ -192,107 +184,134 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
+   X 344
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 369
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 394
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 419
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 444
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 469
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 494
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 519
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 544
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 569
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 594
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 619
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_04
    X 312
-   Y 144
+   Y 145
+   NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_fire
-   PIECE bricks_01
-   X 337
-   Y 144
+   PIECE rock_04
+   X 340
+   Y 145
+   NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_fire
-   PIECE bricks_01
+   PIECE rock_04
    X 362
-   Y 144
+   Y 146
+   NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_fire
-   PIECE bricks_01
+   PIECE rock_04
    X 387
-   Y 144
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 412
-   Y 144
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 437
-   Y 144
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 462
-   Y 144
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 487
-   Y 144
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 512
-   Y 144
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 537
-   Y 144
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 562
-   Y 144
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_01
-   X 587
-   Y 144
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_04
-   X 280
    Y 145
    NO_OVERWRITE
    ONE_WAY
@@ -301,16 +320,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 308
-   Y 145
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_04
-   X 330
+   X 406
    Y 146
    NO_OVERWRITE
    ONE_WAY
@@ -319,7 +329,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 355
+   X 423
    Y 145
    NO_OVERWRITE
    ONE_WAY
@@ -328,7 +338,16 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 374
+   X 448
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_04
+   X 479
    Y 146
    NO_OVERWRITE
    ONE_WAY
@@ -337,34 +356,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 391
-   Y 145
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_04
-   X 416
-   Y 145
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_04
-   X 447
-   Y 146
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_04
-   X 462
+   X 494
    Y 144
    NO_OVERWRITE
    ONE_WAY
@@ -373,7 +365,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 488
+   X 520
    Y 144
    NO_OVERWRITE
    ONE_WAY
@@ -382,7 +374,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 513
+   X 545
    Y 145
    NO_OVERWRITE
    ONE_WAY
@@ -391,7 +383,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 531
+   X 563
    Y 144
    NO_OVERWRITE
    ONE_WAY
@@ -400,7 +392,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 550
+   X 582
    Y 147
    NO_OVERWRITE
    ONE_WAY
@@ -409,7 +401,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 577
+   X 609
    Y 146
    NO_OVERWRITE
    ONE_WAY
@@ -418,7 +410,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 586
+   X 618
    Y 145
    NO_OVERWRITE
    ONE_WAY
@@ -427,7 +419,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 262
+   X 294
    Y 143
    ERASE
  $END
@@ -435,7 +427,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 637
+   X 669
    Y 142
    ERASE
  $END
@@ -443,7 +435,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 558
+   X 590
    Y 45
    ONE_WAY
  $END
@@ -451,7 +443,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 583
+   X 615
    Y 45
    ONE_WAY
  $END
@@ -459,7 +451,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 558
+   X 590
    Y 65
    ONE_WAY
  $END
@@ -467,7 +459,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 583
+   X 615
    Y 65
    ONE_WAY
  $END
@@ -475,7 +467,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 558
+   X 590
    Y 85
    ONE_WAY
  $END
@@ -483,7 +475,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 583
+   X 615
    Y 85
    ONE_WAY
  $END
@@ -491,7 +483,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 558
+   X 590
    Y 105
    ONE_WAY
  $END
@@ -499,7 +491,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 583
+   X 615
    Y 105
    ONE_WAY
  $END
@@ -507,7 +499,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_05
-   X 561
+   X 593
    Y 68
    NO_OVERWRITE
    ONE_WAY
@@ -516,7 +508,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_05
-   X 561
+   X 593
    Y 36
    NO_OVERWRITE
    ONE_WAY
@@ -525,7 +517,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_05
-   X 602
+   X 634
    Y 68
    NO_OVERWRITE
    ONE_WAY
@@ -534,7 +526,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_05
-   X 602
+   X 634
    Y 37
    NO_OVERWRITE
    ONE_WAY
@@ -543,7 +535,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_05
-   X 561
+   X 593
    Y 81
    NO_OVERWRITE
    ONE_WAY
@@ -552,7 +544,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_05
-   X 602
+   X 634
    Y 80
    NO_OVERWRITE
    ONE_WAY
@@ -561,91 +553,91 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 328
+   X 360
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 353
+   X 385
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 378
+   X 410
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 403
+   X 435
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 428
+   X 460
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 453
+   X 485
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 478
+   X 510
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_02
-   X 409
+   X 441
    Y 86
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_02
-   X 409
+   X 441
    Y 61
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_02
-   X 409
+   X 441
    Y 36
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_02
-   X 409
+   X 441
    Y 11
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 404
+   X 436
    Y -3
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 321
+   X 353
    Y 84
    ERASE
    ONE_WAY
@@ -654,7 +646,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 360
+   X 392
    Y 80
    ERASE
    ONE_WAY
@@ -663,7 +655,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 397
+   X 429
    Y 76
    ERASE
    ONE_WAY
@@ -672,7 +664,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 436
+   X 468
    Y 83
    ERASE
    ONE_WAY
@@ -681,7 +673,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 465
+   X 497
    Y 75
    ERASE
    ONE_WAY
@@ -690,7 +682,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 392
+   X 424
    Y 44
    ERASE
    ONE_WAY
@@ -699,7 +691,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 391
+   X 423
    Y 10
    ERASE
    ONE_WAY
@@ -708,7 +700,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 394
+   X 426
    Y -24
    ERASE
    ONE_WAY
@@ -717,7 +709,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 336
+   X 368
    Y -5
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -727,7 +719,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 392
+   X 424
    Y -8
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -737,7 +729,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 405
+   X 437
    Y -19
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -747,7 +739,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 353
+   X 385
    Y -24
    FLIP_VERTICAL
    ONE_WAY
@@ -756,7 +748,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 375
+   X 407
    Y -1
    ONE_WAY
  $END
@@ -764,7 +756,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar_end
-   X 369
+   X 401
    Y 23
    FLIP_VERTICAL
    ONE_WAY
@@ -773,7 +765,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 309
+   X 341
    Y -13
    FLIP_VERTICAL
    ONE_WAY
@@ -782,7 +774,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 516
+   X 548
    Y -22
    FLIP_VERTICAL
    ONE_WAY
@@ -791,7 +783,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 638
+   X 670
    Y -3
    ONE_WAY
  $END
@@ -799,7 +791,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 638
+   X 670
    Y 21
    ONE_WAY
  $END
@@ -807,7 +799,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 638
+   X 670
    Y 45
    ONE_WAY
  $END
@@ -815,7 +807,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar_end
-   X 632
+   X 664
    Y 69
    FLIP_VERTICAL
    ONE_WAY
@@ -824,7 +816,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 470
+   X 502
    Y -8
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -834,7 +826,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 479
+   X 511
    Y -17
    FLIP_VERTICAL
    ONE_WAY
@@ -843,7 +835,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 491
+   X 523
    Y 3
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -853,7 +845,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 491
+   X 523
    Y -9
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -863,7 +855,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 504
+   X 536
    Y -31
    FLIP_VERTICAL
    ONE_WAY
@@ -872,7 +864,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar_end
-   X 198
+   X 230
    Y 69
    FLIP_VERTICAL
    ONE_WAY
@@ -881,7 +873,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 204
+   X 236
    Y 45
    FLIP_VERTICAL
    ONE_WAY
@@ -890,7 +882,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 204
+   X 236
    Y 21
    FLIP_VERTICAL
    ONE_WAY
@@ -899,7 +891,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 204
+   X 236
    Y -3
    FLIP_VERTICAL
    ONE_WAY
@@ -908,56 +900,56 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_02
-   X 612
+   X 644
    Y 144
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_02
-   X 272
+   X 304
    Y 144
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_04
-   X 613
+   X 645
    Y 159
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_04
-   X 273
+   X 305
    Y 159
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_04
-   X 273
+   X 305
    Y 159
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 816
+   X 848
    Y 141
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 55
+   X 87
    Y 141
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 416
+   X 448
    Y 58
    ONE_WAY
  $END
@@ -965,7 +957,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 416
+   X 448
    Y 67
    ONE_WAY
  $END
@@ -973,7 +965,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 416
+   X 448
    Y 49
    ONE_WAY
  $END
@@ -981,7 +973,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_01
-   X 422
+   X 454
    Y 56
    ONE_WAY
  $END
@@ -989,7 +981,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_01
-   X 448
+   X 480
    Y 56
    ONE_WAY
  $END
@@ -997,7 +989,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar_end
-   X 426
+   X 458
    Y 41
    FLIP_VERTICAL
    ONE_WAY
@@ -1006,7 +998,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 433
+   X 465
    Y 17
    FLIP_VERTICAL
    ONE_WAY
@@ -1015,7 +1007,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 433
+   X 465
    Y -7
    FLIP_VERTICAL
    ONE_WAY
@@ -1024,7 +1016,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_01
-   X 635
+   X 667
    Y 72
    NO_OVERWRITE
    ONE_WAY
@@ -1033,7 +1025,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 395
+   X 427
    Y 60
    NO_OVERWRITE
    ONE_WAY
@@ -1042,7 +1034,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 395
+   X 427
    Y 90
    FLIP_VERTICAL
    ONE_WAY
@@ -1051,7 +1043,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_02
-   X 450
+   X 482
    Y 91
    ERASE
    FLIP_VERTICAL
@@ -1061,7 +1053,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_02
-   X 453
+   X 485
    Y 91
    ERASE
    FLIP_VERTICAL
@@ -1071,7 +1063,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_02
-   X 402
+   X 434
    Y 92
    ERASE
    FLIP_VERTICAL
@@ -1081,7 +1073,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_02
-   X 405
+   X 437
    Y 91
    ERASE
    FLIP_VERTICAL
@@ -1091,7 +1083,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 427
+   X 459
    Y 90
    ERASE
    ONE_WAY
@@ -1100,7 +1092,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_01
-   X 427
+   X 459
    Y 95
    ERASE
    ONE_WAY
@@ -1109,7 +1101,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 432
+   X 464
    Y 77
    NO_OVERWRITE
    ONE_WAY
@@ -1118,7 +1110,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 734
+   X 766
    Y 67
    NO_OVERWRITE
    ONE_WAY
@@ -1127,7 +1119,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 722
+   X 754
    Y 60
    ONE_WAY
  $END
@@ -1135,7 +1127,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 710
+   X 742
    Y 52
    ONE_WAY
  $END
@@ -1143,7 +1135,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 739
+   X 771
    Y 52
    ONE_WAY
  $END
@@ -1151,7 +1143,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 698
+   X 730
    Y 45
    ONE_WAY
  $END
@@ -1159,7 +1151,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 742
+   X 774
    Y 44
    ONE_WAY
  $END
@@ -1167,7 +1159,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 704
+   X 736
    Y 39
    ONE_WAY
  $END
@@ -1175,7 +1167,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 686
+   X 718
    Y 35
    ONE_WAY
  $END
@@ -1183,7 +1175,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 767
+   X 799
    Y 35
    ONE_WAY
  $END
@@ -1191,7 +1183,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 728
+   X 760
    Y 26
    ONE_WAY
  $END
@@ -1199,7 +1191,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 685
+   X 717
    Y 28
    ONE_WAY
  $END
@@ -1207,7 +1199,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 670
+   X 702
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -1216,7 +1208,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 677
+   X 709
    Y 20
    ONE_WAY
  $END
@@ -1224,7 +1216,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 724
+   X 756
    Y 18
    ONE_WAY
  $END
@@ -1232,7 +1224,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 701
+   X 733
    Y 20
    ONE_WAY
  $END
@@ -1240,7 +1232,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 701
+   X 733
    Y 12
    ONE_WAY
  $END
@@ -1248,7 +1240,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 725
+   X 757
    Y 10
    ONE_WAY
  $END
@@ -1256,7 +1248,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 777
+   X 809
    Y 24
    ONE_WAY
  $END
@@ -1264,7 +1256,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 767
+   X 799
    Y 14
    ONE_WAY
  $END
@@ -1272,7 +1264,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 785
+   X 817
    Y 10
    ONE_WAY
  $END
@@ -1280,7 +1272,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 757
+   X 789
    Y 5
    ONE_WAY
  $END
@@ -1288,7 +1280,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 709
+   X 741
    Y 0
    ONE_WAY
  $END
@@ -1296,7 +1288,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 673
+   X 705
    Y 13
    ONE_WAY
  $END
@@ -1304,7 +1296,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 683
+   X 715
    Y 9
    ONE_WAY
  $END
@@ -1312,7 +1304,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 677
+   X 709
    Y 2
    ONE_WAY
  $END
@@ -1320,7 +1312,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 692
+   X 724
    Y 0
    ONE_WAY
  $END
@@ -1328,7 +1320,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 703
+   X 735
    Y -5
    ONE_WAY
  $END
@@ -1336,7 +1328,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 660
+   X 692
    Y -20
    ONE_WAY
  $END
@@ -1344,7 +1336,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 673
+   X 705
    Y -20
    ONE_WAY
  $END
@@ -1352,7 +1344,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 683
+   X 715
    Y -6
    ONE_WAY
  $END
@@ -1360,7 +1352,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 696
+   X 728
    Y 4
    ONE_WAY
  $END
@@ -1368,7 +1360,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 712
+   X 744
    Y 17
    ONE_WAY
  $END
@@ -1376,7 +1368,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 721
+   X 753
    Y 14
    ONE_WAY
  $END
@@ -1384,7 +1376,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 730
+   X 762
    Y 21
    ONE_WAY
  $END
@@ -1392,7 +1384,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 738
+   X 770
    Y 18
    ONE_WAY
  $END
@@ -1400,7 +1392,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 729
+   X 761
    Y 8
    ONE_WAY
  $END
@@ -1408,7 +1400,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 720
+   X 752
    Y 3
    ONE_WAY
  $END
@@ -1416,7 +1408,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 705
+   X 737
    Y 2
    ONE_WAY
  $END
@@ -1424,7 +1416,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 697
+   X 729
    Y -8
    ONE_WAY
  $END
@@ -1432,7 +1424,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 720
+   X 752
    Y 4
    ONE_WAY
  $END
@@ -1440,7 +1432,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 709
+   X 741
    Y -8
    ONE_WAY
  $END
@@ -1448,7 +1440,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 725
+   X 757
    Y -17
    ONE_WAY
  $END
@@ -1456,7 +1448,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 730
+   X 762
    Y -29
    ONE_WAY
  $END
@@ -1464,23 +1456,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 752
-   Y -13
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_06
-   X 756
-   Y -28
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_06
-   X 780
+   X 784
    Y -13
    ONE_WAY
  $END
@@ -1489,6 +1465,22 @@
    STYLE orig_fire
    PIECE rock_06
    X 788
+   Y -28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_06
+   X 812
+   Y -13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_06
+   X 820
    Y -21
    ONE_WAY
  $END
@@ -1496,7 +1488,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 805
+   X 837
    Y -22
    ONE_WAY
  $END
@@ -1504,7 +1496,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 781
+   X 813
    Y 22
    NO_OVERWRITE
    ONE_WAY
@@ -1513,7 +1505,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_05
-   X 812
+   X 844
    Y 23
    NO_OVERWRITE
    ONE_WAY
@@ -1522,7 +1514,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_05
-   X 825
+   X 857
    Y 3
    NO_OVERWRITE
    ONE_WAY
@@ -1531,7 +1523,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 829
+   X 861
    Y -21
    NO_OVERWRITE
    ONE_WAY
@@ -1540,7 +1532,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 198
+   X 230
    Y 51
    NO_OVERWRITE
    ONE_WAY
@@ -1549,7 +1541,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar_end
-   X 198
+   X 230
    Y 92
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1559,7 +1551,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_01
-   X 201
+   X 233
    Y 93
    NO_OVERWRITE
    ONE_WAY
@@ -1568,7 +1560,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_05
-   X 812
+   X 844
    Y 49
    NO_OVERWRITE
    ONE_WAY
@@ -1577,7 +1569,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_05
-   X 832
+   X 864
    Y 35
    NO_OVERWRITE
    ONE_WAY
@@ -1586,7 +1578,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 843
+   X 875
    Y 15
    NO_OVERWRITE
    ONE_WAY
@@ -1595,7 +1587,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 856
+   X 888
    Y -12
    NO_OVERWRITE
    ONE_WAY
@@ -1604,7 +1596,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_05
-   X 847
+   X 879
    Y 69
    NO_OVERWRITE
    ONE_WAY
@@ -1613,7 +1605,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 867
+   X 899
    Y 84
    NO_OVERWRITE
    ONE_WAY
@@ -1622,7 +1614,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 879
+   X 911
    Y 47
    NO_OVERWRITE
    ONE_WAY
@@ -1631,7 +1623,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 890
+   X 922
    Y 12
    NO_OVERWRITE
    ONE_WAY
@@ -1640,7 +1632,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_04
-   X 898
+   X 930
    Y -14
    NO_OVERWRITE
    ONE_WAY
@@ -1649,7 +1641,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_05
-   X 882
+   X 914
    Y 68
    NO_OVERWRITE
    ONE_WAY
@@ -1658,7 +1650,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_06
-   X 886
+   X 918
    Y 24
    NO_OVERWRITE
    ONE_WAY
@@ -1666,8 +1658,26 @@
  
  $TERRAIN
    STYLE orig_fire
+   PIECE rock_02
+   X 958
+   Y 20
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 956
+   Y 30
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
    PIECE rock_03
-   X 913
+   X 945
    Y -15
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1677,7 +1687,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 718
+   X 750
    Y 65
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1687,7 +1697,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 792
+   X 824
    Y 64
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1697,7 +1707,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 76
+   X 108
    Y 70
    NO_OVERWRITE
    ONE_WAY
@@ -1706,7 +1716,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 65
+   X 97
    Y 62
    ONE_WAY
  $END
@@ -1714,7 +1724,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 89
+   X 121
    Y 58
    ONE_WAY
  $END
@@ -1722,7 +1732,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 49
+   X 81
    Y 51
    ONE_WAY
  $END
@@ -1730,7 +1740,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 81
+   X 113
    Y 50
    ONE_WAY
  $END
@@ -1738,7 +1748,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 98
+   X 130
    Y 47
    ONE_WAY
  $END
@@ -1746,7 +1756,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 47
+   X 79
    Y 42
    ONE_WAY
  $END
@@ -1754,7 +1764,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 69
+   X 101
    Y 37
    ONE_WAY
  $END
@@ -1762,7 +1772,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 44
+   X 76
    Y 31
    ONE_WAY
  $END
@@ -1770,7 +1780,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 101
+   X 133
    Y 29
    ONE_WAY
  $END
@@ -1778,7 +1788,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 111
+   X 143
    Y 35
    ONE_WAY
  $END
@@ -1786,7 +1796,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 131
+   X 163
    Y 32
    ONE_WAY
  $END
@@ -1794,7 +1804,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 118
+   X 150
    Y 24
    ONE_WAY
  $END
@@ -1802,7 +1812,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 66
+   X 98
    Y 24
    ONE_WAY
  $END
@@ -1810,7 +1820,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 39
+   X 71
    Y 24
    ONE_WAY
  $END
@@ -1818,7 +1828,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 43
+   X 75
    Y 16
    ONE_WAY
  $END
@@ -1826,104 +1836,8 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 95
+   X 127
    Y 15
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 51
-   Y 11
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 123
-   Y 15
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 130
-   Y 6
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 111
-   Y 3
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 56
-   Y 3
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 20
-   Y 11
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 10
-   Y 1
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X -1
-   Y -7
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 64
-   Y 1
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 52
-   Y -9
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 7
-   Y -14
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_03
-   X 101
-   Y -8
    ONE_WAY
  $END
  
@@ -1931,6 +1845,102 @@
    STYLE orig_fire
    PIECE rock_03
    X 83
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 155
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 162
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 143
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 88
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 52
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 42
+   Y 1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 31
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 96
+   Y 1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 84
+   Y -9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 39
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 133
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 115
    Y -16
    ONE_WAY
  $END
@@ -1938,7 +1948,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 134
+   X 166
    Y -5
    ONE_WAY
  $END
@@ -1946,7 +1956,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 123
+   X 155
    Y -17
    ONE_WAY
  $END
@@ -1954,7 +1964,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 151
+   X 183
    Y 82
    ERASE
    ONE_WAY
@@ -1963,7 +1973,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 163
+   X 195
    Y 69
    ERASE
    ONE_WAY
@@ -1972,7 +1982,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_02
-   X 170
+   X 202
    Y 59
    ERASE
    ONE_WAY
@@ -1981,7 +1991,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 204
+   X 236
    Y 45
    FLIP_VERTICAL
    ONE_WAY
@@ -1990,7 +2000,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 204
+   X 236
    Y 21
    FLIP_VERTICAL
    ONE_WAY
@@ -1999,7 +2009,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
-   X 204
+   X 236
    Y -2
    FLIP_VERTICAL
    ONE_WAY
@@ -2008,7 +2018,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 175
+   X 207
    Y -19
    NO_OVERWRITE
    ONE_WAY
@@ -2017,7 +2027,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 170
+   X 202
    Y -13
    NO_OVERWRITE
    ONE_WAY
@@ -2026,7 +2036,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 161
+   X 193
    Y -8
    NO_OVERWRITE
    ONE_WAY
@@ -2035,7 +2045,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 164
+   X 196
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -2044,7 +2054,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 157
+   X 189
    Y 1
    NO_OVERWRITE
    ONE_WAY
@@ -2053,7 +2063,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 150
+   X 182
    Y 5
    NO_OVERWRITE
    ONE_WAY
@@ -2062,7 +2072,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 143
+   X 175
    Y 9
    NO_OVERWRITE
    ONE_WAY
@@ -2071,7 +2081,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 152
+   X 184
    Y 7
    NO_OVERWRITE
    ONE_WAY
@@ -2080,7 +2090,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE rock_03
-   X 143
+   X 175
    Y 13
    NO_OVERWRITE
    ONE_WAY
@@ -2089,7 +2099,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 167
+   X 199
    Y 49
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2099,7 +2109,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 96
+   X 128
    Y 82
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2109,7 +2119,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE chain_02
-   X 434
+   X 466
    Y 100
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2119,7 +2129,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE chain_02
-   X 396
+   X 428
    Y 100
    NO_OVERWRITE
    FLIP_VERTICAL

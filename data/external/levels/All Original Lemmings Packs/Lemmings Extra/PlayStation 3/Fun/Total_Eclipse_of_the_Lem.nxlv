@@ -1,0 +1,585 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Total Eclipse of the Lem
+ AUTHOR Minim
+ ID x8AC051CB8AC051CB
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   320
+ START_X  160
+ START_Y   80
+ THEME minim_ps3dark
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       10
+ REQUIREMENT     4
+ TIME_LIMIT    600
+ MAX_SPAWN_INTERVAL   48
+ 
+ $SKILLSET 
+    CLIMBER    4
+    FLOATER   10
+    BLOCKER    6
+    BUILDER    7
+     DIGGER    3
+ $END 
+ 
+ 
+ $TALISMAN 
+   TITLE 
+   ID 0
+   COLOR Bronze
+   SAVE 9
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION minim_ps3dark
+   PIECE      entrance
+   X         21
+   Y         73
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION minim_ps3dark
+   PIECE      exit
+   X        183
+   Y        239
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_fire
+   PIECE      water
+   X        256
+   Y        300
+   WIDTH     64
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_fire
+   PIECE      water
+   X          0
+   Y        300
+   WIDTH     64
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_fire
+   PIECE      water
+   X         64
+   Y        300
+   WIDTH     64
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_fire
+   PIECE      water
+   X        128
+   Y        300
+   WIDTH     64
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_fire
+   PIECE      water
+   X        192
+   Y        300
+   WIDTH     64
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    21
+   Y   119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    69
+   Y   119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    69
+   Y   143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    21
+   Y   143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    21
+   Y   167
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    69
+   Y   167
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      pillar
+   X    79
+   Y    68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      rock_02
+   X    74
+   Y    84
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      pillar
+   X    79
+   Y    44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      pillar
+   X    79
+   Y    20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      pillar
+   X    79
+   Y    -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_12
+   X   117
+   Y    59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_12
+   X   117
+   Y   107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_12
+   X   117
+   Y   155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    69
+   Y   179
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X    21
+   Y   179
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_10
+   X   135
+   Y   137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_10
+   X   135
+   Y   149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_10
+   X   141
+   Y   143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      ramp_06
+   X   117
+   Y    35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X   165
+   Y    35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X   213
+   Y    35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_01
+   X   261
+   Y    35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_01
+   X   255
+   Y    41
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   165
+   Y    41
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   190
+   Y    41
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   215
+   Y    41
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   261
+   Y    41
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   286
+   Y    41
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   286
+   Y    16
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_04
+   X   279
+   Y     2
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      platform
+   X   227
+   Y    57
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_01
+   X   270
+   Y   114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   270
+   Y   120
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   245
+   Y   120
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_02
+   X   230
+   Y   120
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   176
+   Y   120
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_02
+   X   201
+   Y   120
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   176
+   Y    95
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_04
+   X   194
+   Y    81
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_01
+   X   245
+   Y   114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_10
+   X   221
+   Y   114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_01
+   X   201
+   Y   114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_10
+   X   233
+   Y   114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      net_02
+   X   210
+   Y   119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      net_02
+   X   214
+   Y   119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X   165
+   Y   195
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION minim_ps3dark
+   PIECE      bricks_13
+   X   213
+   Y   195
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_01
+   X   261
+   Y   195
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_01
+   X   255
+   Y   201
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   165
+   Y   201
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   190
+   Y   201
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   215
+   Y   201
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   261
+   Y   201
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   286
+   Y   201
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_01
+   X   286
+   Y   176
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      steel_04
+   X   279
+   Y   162
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      platform
+   X   227
+   Y   217
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_05
+   X   200
+   Y   277
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_06
+   X   187
+   Y   278
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_fire
+   PIECE      bricks_05
+   X   180
+   Y   277
+   ONE_WAY
+ $END
+ 
+ 

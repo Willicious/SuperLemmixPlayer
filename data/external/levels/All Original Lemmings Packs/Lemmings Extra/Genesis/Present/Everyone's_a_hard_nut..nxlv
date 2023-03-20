@@ -27,7 +27,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $SKILLSET 
    CLIMBER 1
-   BOMBER 3
+   TIMEBOMBER 3
    BUILDER 6
    BASHER 4
    MINER 1

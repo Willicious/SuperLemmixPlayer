@@ -100,7 +100,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 152
    Y 136
    WIDTH 64
@@ -109,7 +109,7 @@ BACKGROUND orig_dirt_md:genesis_blue
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 216
    Y 136
    WIDTH 64

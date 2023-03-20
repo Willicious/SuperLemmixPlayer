@@ -1,14 +1,13 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Not as complicated as it looks
  AUTHOR 
- ID x470C318D470C318D
- VERSION x0000000000000000
+ ID xFD828CBBFD828CBB
  
 #       Level dimensions        
 # ----------------------------- 
@@ -17,7 +16,6 @@
  START_X 576
  START_Y 80
  THEME orig_pillar
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20
@@ -61,7 +59,6 @@
    X 960
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -70,7 +67,6 @@
    X 1024
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -79,7 +75,6 @@
    X 256
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -88,7 +83,6 @@
    X 320
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -97,7 +91,6 @@
    X 384
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -106,7 +99,6 @@
    X 448
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -115,7 +107,6 @@
    X 512
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -124,7 +115,6 @@
    X 576
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -133,7 +123,6 @@
    X 640
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -142,7 +131,6 @@
    X 704
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -151,7 +139,6 @@
    X 768
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -160,7 +147,6 @@
    X 832
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -169,7 +155,6 @@
    X 896
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -178,7 +163,6 @@
    X 1088
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -187,7 +171,6 @@
    X 1152
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -196,7 +179,6 @@
    X 1216
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -205,7 +187,6 @@
    X 1280
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -214,7 +195,6 @@
    X 1344
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -223,7 +203,6 @@
    X 1408
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -232,7 +211,6 @@
    X 1472
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -241,7 +219,6 @@
    X 1536
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -250,7 +227,6 @@
    X 0
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -259,7 +235,6 @@
    X 64
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -268,7 +243,6 @@
    X 128
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  $GADGET
@@ -277,7 +251,6 @@
    X 192
    Y 144
    WIDTH 64
-   HEIGHT 16
  $END
  
  

@@ -1,23 +1,21 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Bomboozal
  AUTHOR 
- ID xAADCD5A2AADCD5A2
- VERSION x0000000000000000
+ ID x8AC575AB8AC575AB
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 584
+ WIDTH 580
  HEIGHT 160
  START_X 184
  START_Y 80
  THEME orig_fire
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -27,7 +25,7 @@
  MAX_SPAWN_INTERVAL 13
  
  $SKILLSET 
-   BOMBER 15
+   TIMEBOMBER 15
  $END 
  
 #     Interactive objects       
@@ -78,7 +76,7 @@
    STYLE orig_fire
    PIECE exit
    X 504
-   Y 87
+   Y 88
    NO_OVERWRITE
  $END
  

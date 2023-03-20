@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,14 @@
  TITLE Let's block and blow
  AUTHOR 
  ID x1D1D1D701D1D1D70
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 584
+ WIDTH 580
  HEIGHT 160
  START_X 184
  START_Y 80
  THEME orig_fire
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -27,7 +25,7 @@
  MAX_SPAWN_INTERVAL 13
  
  $SKILLSET 
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
  $END 
  
@@ -97,6 +95,22 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_06
+   X 151
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 190
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
    X 229
    Y 50
    ONE_WAY
@@ -209,6 +223,14 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_06
+   X 307
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
    X 345
    Y 98
    ONE_WAY
@@ -218,6 +240,22 @@
    STYLE orig_fire
    PIECE bars_06
    X 151
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 190
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 229
    Y 118
    ONE_WAY
  $END
@@ -314,6 +352,22 @@
    STYLE orig_fire
    PIECE bars_06
    X 229
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 268
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 306
    Y 142
    ONE_WAY
  $END
@@ -841,62 +895,6 @@
    PIECE bars_03
    X 238
    Y 100
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 151
-   Y 50
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 190
-   Y 50
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 307
-   Y 98
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 190
-   Y 118
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 229
-   Y 118
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 268
-   Y 142
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 306
-   Y 142
    ONE_WAY
  $END
  

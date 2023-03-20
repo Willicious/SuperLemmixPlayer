@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,14 @@
  TITLE Patience
  AUTHOR 
  ID x0101011A0101011A
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 384
+ WIDTH 400
  HEIGHT 160
- START_X 192
+ START_X 200
  START_Y 80
  THEME orig_pillar
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 20
    BASHER 20
@@ -42,7 +40,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 32
+   X 40
    Y 76
    NO_OVERWRITE
  $END
@@ -50,7 +48,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 304
+   X 312
    Y 96
    NO_OVERWRITE
  $END
@@ -61,7 +59,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 161
+   X 169
    Y 125
    ONE_WAY
  $END
@@ -69,7 +67,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 181
+   X 189
    Y 125
    ONE_WAY
  $END
@@ -77,7 +75,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 201
+   X 209
    Y 125
    ONE_WAY
  $END
@@ -85,7 +83,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 161
+   X 169
    Y 83
    ONE_WAY
  $END
@@ -93,7 +91,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 181
+   X 189
    Y 83
    ONE_WAY
  $END
@@ -101,7 +99,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 201
+   X 209
    Y 83
    ONE_WAY
  $END
@@ -109,7 +107,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 161
+   X 169
    Y 41
    ONE_WAY
  $END
@@ -117,7 +115,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 181
+   X 189
    Y 41
    ONE_WAY
  $END
@@ -125,7 +123,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 201
+   X 209
    Y 41
    ONE_WAY
  $END
@@ -133,7 +131,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 119
+   X 127
    Y 140
    ONE_WAY
  $END
@@ -141,7 +139,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 77
+   X 85
    Y 140
    ONE_WAY
  $END
@@ -149,7 +147,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 77
+   X 85
    Y 120
    ONE_WAY
  $END
@@ -157,7 +155,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 35
+   X 43
    Y 120
    ONE_WAY
  $END
@@ -165,7 +163,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 35
+   X 43
    Y 140
    ONE_WAY
  $END
@@ -173,7 +171,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 221
+   X 229
    Y 140
    ONE_WAY
  $END
@@ -181,7 +179,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 263
+   X 271
    Y 140
    ONE_WAY
  $END
@@ -189,7 +187,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 305
+   X 313
    Y 140
    ONE_WAY
  $END
@@ -197,7 +195,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 263
+   X 271
    Y 120
    ONE_WAY
  $END
@@ -205,61 +203,8 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 305
+   X 313
    Y 120
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 110
-   Y 108
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 111
-   Y 108
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 112
-   Y 108
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 113
-   Y 108
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 114
-   Y 108
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE sandblock_03
-   X 110
-   Y 96
-   ERASE
    ONE_WAY
  $END
  
@@ -267,8 +212,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 118
-   Y 104
-   NO_OVERWRITE
+   Y 108
    ONE_WAY
  $END
  
@@ -276,7 +220,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 119
-   Y 104
+   Y 108
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -285,7 +229,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 120
-   Y 104
+   Y 108
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -294,7 +238,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 121
-   Y 104
+   Y 108
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -303,7 +247,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 122
-   Y 104
+   Y 108
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -311,8 +255,8 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 119
-   Y 92
+   X 118
+   Y 96
    ERASE
    ONE_WAY
  $END
@@ -321,7 +265,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 126
-   Y 100
+   Y 104
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -330,7 +274,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 127
-   Y 100
+   Y 104
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -339,7 +283,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 128
-   Y 100
+   Y 104
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -348,7 +292,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 129
-   Y 100
+   Y 104
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -357,7 +301,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 130
-   Y 100
+   Y 104
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -366,7 +310,7 @@
    STYLE orig_pillar
    PIECE sandblock_03
    X 127
-   Y 88
+   Y 92
    ERASE
    ONE_WAY
  $END
@@ -375,7 +319,8 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 134
-   Y 96
+   Y 100
+   NO_OVERWRITE
    ONE_WAY
  $END
  
@@ -383,7 +328,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 135
-   Y 96
+   Y 100
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -392,7 +337,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 136
-   Y 96
+   Y 100
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -401,7 +346,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 137
-   Y 96
+   Y 100
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -410,7 +355,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 138
-   Y 96
+   Y 100
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -419,7 +364,7 @@
    STYLE orig_pillar
    PIECE sandblock_03
    X 135
-   Y 84
+   Y 88
    ERASE
    ONE_WAY
  $END
@@ -428,8 +373,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 142
-   Y 92
-   NO_OVERWRITE
+   Y 96
    ONE_WAY
  $END
  
@@ -437,7 +381,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 143
-   Y 92
+   Y 96
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -446,7 +390,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 144
-   Y 92
+   Y 96
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -455,7 +399,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 145
-   Y 92
+   Y 96
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -464,6 +408,60 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 146
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE sandblock_03
+   X 143
+   Y 84
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 150
+   Y 92
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 151
+   Y 92
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 152
+   Y 92
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 153
+   Y 92
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 154
    Y 92
    NO_OVERWRITE
    ONE_WAY
@@ -472,7 +470,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 141
+   X 149
    Y 80
    ERASE
    ONE_WAY
@@ -481,7 +479,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 150
+   X 158
    Y 88
    NO_OVERWRITE
    ONE_WAY
@@ -490,7 +488,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 151
+   X 159
    Y 88
    NO_OVERWRITE
    ONE_WAY
@@ -499,7 +497,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 152
+   X 160
    Y 88
    NO_OVERWRITE
    ONE_WAY
@@ -508,7 +506,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 153
+   X 161
    Y 88
    NO_OVERWRITE
    ONE_WAY
@@ -517,7 +515,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 154
+   X 162
    Y 88
    NO_OVERWRITE
    ONE_WAY
@@ -526,7 +524,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 141
+   X 149
    Y 76
    ERASE
    ONE_WAY
@@ -535,7 +533,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 30
+   X 38
    Y 103
    ERASE
    ONE_WAY
@@ -544,7 +542,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 61
+   X 69
    Y 103
    ERASE
    ONE_WAY
@@ -553,7 +551,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 89
+   X 97
    Y 105
    ERASE
    ONE_WAY
@@ -562,7 +560,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 116
+   X 124
    Y 111
    ERASE
    ONE_WAY
@@ -571,7 +569,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 148
+   X 156
    Y 111
    ERASE
    ONE_WAY
@@ -580,7 +578,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 175
+   X 183
    Y 111
    ERASE
    ONE_WAY
@@ -589,7 +587,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 200
+   X 208
    Y 111
    ERASE
    ONE_WAY
@@ -598,7 +596,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 228
+   X 236
    Y 112
    ERASE
    ONE_WAY
@@ -607,7 +605,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 260
+   X 268
    Y 109
    ERASE
    ONE_WAY
@@ -616,7 +614,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 289
+   X 297
    Y 108
    ERASE
    ONE_WAY
@@ -625,7 +623,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 322
+   X 330
    Y 111
    ERASE
    ONE_WAY
@@ -634,7 +632,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 119
+   X 127
    Y 71
    ERASE
    ONE_WAY
@@ -643,7 +641,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 149
+   X 157
    Y 68
    ERASE
    ONE_WAY
@@ -652,7 +650,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 178
+   X 186
    Y 69
    ERASE
    ONE_WAY
@@ -661,7 +659,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 201
+   X 209
    Y 69
    ERASE
    ONE_WAY
@@ -670,7 +668,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 154
+   X 162
    Y 29
    ERASE
    ONE_WAY
@@ -679,7 +677,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 180
+   X 188
    Y 29
    ERASE
    ONE_WAY
@@ -688,7 +686,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 200
+   X 208
    Y 29
    ERASE
    ONE_WAY
@@ -697,7 +695,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 332
+   X 340
    Y 121
    ONE_WAY
  $END
@@ -705,7 +703,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 290
+   X 298
    Y 121
    ONE_WAY
  $END
@@ -713,7 +711,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 290
+   X 298
    Y 141
    ONE_WAY
  $END
@@ -721,7 +719,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 270
+   X 278
    Y 121
    ONE_WAY
  $END
@@ -729,7 +727,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 251
+   X 259
    Y 121
    ONE_WAY
  $END
@@ -737,7 +735,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 209
+   X 217
    Y 141
    ONE_WAY
  $END
@@ -745,7 +743,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 187
+   X 195
    Y 130
    ERASE
    ONE_WAY
@@ -754,7 +752,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 32
+   X 40
    Y 121
    ONE_WAY
  $END
@@ -762,7 +760,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 52
+   X 60
    Y 121
    ONE_WAY
  $END
@@ -770,7 +768,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 52
+   X 60
    Y 141
    ONE_WAY
  $END
@@ -778,7 +776,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 94
+   X 102
    Y 121
    ONE_WAY
  $END
@@ -786,7 +784,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 114
+   X 122
    Y 121
    ONE_WAY
  $END
@@ -794,7 +792,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 134
+   X 142
    Y 141
    ONE_WAY
  $END
@@ -802,7 +800,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 134
+   X 142
    Y 138
    ERASE
    ONE_WAY
@@ -811,7 +809,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_02
-   X 175
+   X 183
    Y 124
    ONE_WAY
  $END
@@ -819,7 +817,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_03
-   X 176
+   X 184
    Y 124
    ONE_WAY
  $END
@@ -827,7 +825,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 183
+   X 191
    Y 121
    ONE_WAY
  $END
@@ -835,7 +833,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 203
+   X 211
    Y 121
    ONE_WAY
  $END
@@ -843,7 +841,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 163
+   X 171
    Y 121
    ONE_WAY
  $END
@@ -851,7 +849,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 183
+   X 191
    Y 79
    ONE_WAY
  $END
@@ -859,7 +857,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 203
+   X 211
    Y 79
    ONE_WAY
  $END
@@ -867,7 +865,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 163
+   X 171
    Y 79
    ONE_WAY
  $END
@@ -875,7 +873,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 183
+   X 191
    Y 37
    ONE_WAY
  $END
@@ -883,7 +881,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 203
+   X 211
    Y 37
    ONE_WAY
  $END
@@ -891,7 +889,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 163
+   X 171
    Y 37
    ONE_WAY
  $END
@@ -899,72 +897,18 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 121
-   Y 141
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE sandblock_01
-   X 209
-   Y 141
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 125
-   Y 109
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 126
-   Y 109
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 127
-   Y 109
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
-   X 128
-   Y 109
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_01
    X 129
-   Y 109
+   Y 141
    NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_pillar
-   PIECE sandblock_03
-   X 127
-   Y 97
-   ERASE
+   PIECE sandblock_01
+   X 217
+   Y 141
+   NO_OVERWRITE
    ONE_WAY
  $END
  
@@ -972,7 +916,8 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 133
-   Y 105
+   Y 109
+   NO_OVERWRITE
    ONE_WAY
  $END
  
@@ -980,7 +925,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 134
-   Y 105
+   Y 109
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -989,7 +934,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 135
-   Y 105
+   Y 109
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -998,7 +943,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 136
-   Y 105
+   Y 109
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1007,7 +952,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 137
-   Y 105
+   Y 109
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1015,8 +960,8 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 133
-   Y 93
+   X 135
+   Y 97
    ERASE
    ONE_WAY
  $END
@@ -1025,7 +970,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 141
-   Y 101
+   Y 105
    ONE_WAY
  $END
  
@@ -1033,7 +978,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 142
-   Y 101
+   Y 105
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1042,7 +987,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 143
-   Y 101
+   Y 105
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1051,7 +996,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 144
-   Y 101
+   Y 105
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1060,7 +1005,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 145
-   Y 101
+   Y 105
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1069,7 +1014,7 @@
    STYLE orig_pillar
    PIECE sandblock_03
    X 141
-   Y 89
+   Y 93
    ERASE
    ONE_WAY
  $END
@@ -1078,8 +1023,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 149
-   Y 97
-   NO_OVERWRITE
+   Y 101
    ONE_WAY
  $END
  
@@ -1087,7 +1031,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 150
-   Y 97
+   Y 101
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1096,7 +1040,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 151
-   Y 97
+   Y 101
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1105,7 +1049,7 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 152
-   Y 97
+   Y 101
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1114,6 +1058,24 @@
    STYLE orig_pillar
    PIECE stairs_01
    X 153
+   Y 101
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE sandblock_03
+   X 149
+   Y 89
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 157
    Y 97
    NO_OVERWRITE
    ONE_WAY
@@ -1122,7 +1084,43 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 154
+   X 158
+   Y 97
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 159
+   Y 97
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 160
+   Y 97
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 161
+   Y 97
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 162
    Y 97
    NO_OVERWRITE
    ONE_WAY
@@ -1131,7 +1129,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 143
+   X 151
    Y 85
    ERASE
    ONE_WAY
@@ -1140,7 +1138,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_10
-   X 32
+   X 40
    Y 121
    ONE_WAY
  $END
@@ -1148,7 +1146,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 52
+   X 60
    Y 121
    ONE_WAY
  $END
@@ -1156,7 +1154,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 52
+   X 60
    Y 141
    ONE_WAY
  $END
@@ -1164,7 +1162,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_10
-   X 94
+   X 102
    Y 121
    ONE_WAY
  $END
@@ -1172,7 +1170,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 114
+   X 122
    Y 121
    ERASE
    ONE_WAY
@@ -1181,7 +1179,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 129
+   X 137
    Y 125
    ERASE
    ONE_WAY
@@ -1190,7 +1188,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_02
-   X 114
+   X 122
    Y 121
    ONE_WAY
  $END
@@ -1198,7 +1196,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 143
+   X 151
    Y 141
    ONE_WAY
  $END
@@ -1206,7 +1204,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_03
-   X 124
+   X 132
    Y 141
    ONE_WAY
  $END
@@ -1214,7 +1212,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 223
+   X 231
    Y 141
    ERASE
    ONE_WAY
@@ -1223,7 +1221,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 231
+   X 239
    Y 140
    ERASE
    ONE_WAY
@@ -1232,7 +1230,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_04
-   X 163
+   X 171
    Y 142
    ONE_WAY
  $END
@@ -1240,7 +1238,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_03
-   X 204
+   X 212
    Y 141
    ONE_WAY
  $END
@@ -1248,7 +1246,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_02
-   X 163
+   X 171
    Y 37
    ONE_WAY
  $END
@@ -1256,7 +1254,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_01
-   X 204
+   X 212
    Y 37
    ONE_WAY
  $END
@@ -1264,14 +1262,6 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_12
-   X 223
-   Y 141
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE wood_14
    X 231
    Y 141
    ONE_WAY
@@ -1279,8 +1269,16 @@
  
  $TERRAIN
    STYLE orig_pillar
+   PIECE wood_14
+   X 239
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
    PIECE stairs_04
-   X 235
+   X 243
    Y 149
    ONE_WAY
  $END
@@ -1288,7 +1286,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 223
+   X 231
    Y 149
    ONE_WAY
  $END
@@ -1296,7 +1294,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 183
+   X 191
    Y 37
    ONE_WAY
  $END
@@ -1304,7 +1302,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 183
+   X 191
    Y 57
    ONE_WAY
  $END
@@ -1312,7 +1310,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_02
-   X 183
+   X 191
    Y 99
    ONE_WAY
  $END
@@ -1320,7 +1318,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 183
+   X 191
    Y 141
    ONE_WAY
  $END
@@ -1328,7 +1326,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_04
-   X 251
+   X 259
    Y 141
    ONE_WAY
  $END
@@ -1336,7 +1334,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 143
+   X 151
    Y 141
    ERASE
    ONE_WAY
@@ -1345,7 +1343,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_14
-   X 143
+   X 151
    Y 141
    ONE_WAY
  $END
@@ -1353,7 +1351,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_thin_03
-   X 143
+   X 151
    Y 134
    ERASE
    ONE_WAY
@@ -1362,7 +1360,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_12
-   X 143
+   X 151
    Y 141
    NO_OVERWRITE
    ONE_WAY
@@ -1371,7 +1369,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 143
+   X 151
    Y 149
    NO_OVERWRITE
    ONE_WAY
@@ -1380,7 +1378,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 147
+   X 155
    Y 149
    NO_OVERWRITE
    ONE_WAY
@@ -1389,7 +1387,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_thin_01
-   X 291
+   X 299
    Y -12
    ONE_WAY
  $END
@@ -1397,7 +1395,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_thin_01
-   X 291
+   X 299
    Y 8
    ONE_WAY
  $END
@@ -1405,7 +1403,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 279
+   X 287
    Y 46
    ONE_WAY
  $END
@@ -1413,7 +1411,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_12
-   X 321
+   X 329
    Y 34
    ONE_WAY
  $END
@@ -1421,7 +1419,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_12
-   X 259
+   X 267
    Y 36
    ONE_WAY
  $END
@@ -1429,7 +1427,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 100
+   X 108
    Y 28
    ONE_WAY
  $END
@@ -1437,7 +1435,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_12
-   X 80
+   X 88
    Y 17
    ONE_WAY
  $END
@@ -1445,7 +1443,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 38
+   X 46
    Y 28
    ONE_WAY
  $END
@@ -1453,7 +1451,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_thin_01
-   X 82
+   X 90
    Y -11
    NO_OVERWRITE
    ONE_WAY
@@ -1462,7 +1460,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE bump_01
-   X 74
+   X 82
    Y -5
    ONE_WAY
  $END
@@ -1470,7 +1468,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE bump_01
-   X 283
+   X 291
    Y -1
    ONE_WAY
  $END
@@ -1478,7 +1476,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_13
-   X 69
+   X 77
    Y 34
    ONE_WAY
  $END
@@ -1486,7 +1484,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_11
-   X 78
+   X 86
    Y 34
    ONE_WAY
  $END
@@ -1494,7 +1492,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_15
-   X 100
+   X 108
    Y 34
    ONE_WAY
  $END
@@ -1502,7 +1500,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_13
-   X 267
+   X 275
    Y 52
    ONE_WAY
  $END
@@ -1510,7 +1508,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_15
-   X 273
+   X 281
    Y 52
    ONE_WAY
  $END
@@ -1518,7 +1516,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_15
-   X 312
+   X 320
    Y 52
    ONE_WAY
  $END
@@ -1526,7 +1524,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_12
-   X 302
+   X 310
    Y 52
    ONE_WAY
  $END
@@ -1534,49 +1532,49 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_04
-   X 45
+   X 53
    Y 14
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_04
-   X 62
+   X 70
    Y 14
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_04
-   X 51
+   X 59
    Y 0
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_04
-   X 122
+   X 130
    Y 14
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_04
-   X 266
+   X 274
    Y 22
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_04
-   X 319
+   X 327
    Y 20
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_04
-   X 323
+   X 331
    Y 6
  $END
  

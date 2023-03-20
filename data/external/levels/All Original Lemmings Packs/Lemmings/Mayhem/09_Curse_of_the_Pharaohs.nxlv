@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,6 @@
  TITLE Curse of the Pharaohs
  AUTHOR 
  ID xC3BA3935C3BA3935
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
@@ -17,7 +16,6 @@
  START_X 584
  START_Y 80
  THEME orig_pillar
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -27,7 +25,7 @@
  MAX_SPAWN_INTERVAL 8
  
  $SKILLSET 
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 1
    BUILDER 12
    BASHER 5
@@ -50,7 +48,6 @@
    X 600
    Y 144
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -60,7 +57,6 @@
    X 664
    Y 144
    WIDTH 64
-   HEIGHT 16
    NO_OVERWRITE
  $END
  

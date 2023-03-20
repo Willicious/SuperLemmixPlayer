@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#   Created with NLEditor 1.20
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,14 @@
  TITLE Lemmings in the attic
  AUTHOR 
  ID x0F0F0F300F0F0F30
- VERSION x0000000000000000
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 510
+ WIDTH 511
  HEIGHT 160
- START_X 352
+ START_X 350
  START_Y 80
  THEME orig_marble
- BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -29,7 +27,7 @@
  $SKILLSET 
    CLIMBER 20
    FLOATER 20
-   BOMBER 20
+   TIMEBOMBER 20
    BLOCKER 20
    BUILDER 50
    BASHER 20
@@ -57,31 +55,28 @@
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 318
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 382
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE water
+   PIECE poison
    X 446
    Y 136
    WIDTH 64
-   HEIGHT 25
    NO_OVERWRITE
  $END
  

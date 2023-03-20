@@ -50,7 +50,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 816
    Y 140
    WIDTH 64
@@ -60,7 +60,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 880
    Y 140
    WIDTH 64
@@ -70,7 +70,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 656
    Y 140
    WIDTH 64
@@ -80,7 +80,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 368
    Y 140
    WIDTH 64
@@ -90,7 +90,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 432
    Y 140
    WIDTH 64
@@ -100,7 +100,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 496
    Y 140
    WIDTH 64
@@ -110,7 +110,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 160
    Y 140
    WIDTH 64
@@ -120,7 +120,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 96
    Y 140
    WIDTH 64
@@ -130,7 +130,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 32
    Y 140
    WIDTH 64
@@ -140,7 +140,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 1224
    Y 140
    WIDTH 64
@@ -150,7 +150,7 @@
  
  $GADGET
    STYLE orig_fire
-   PIECE water
+   PIECE lava
    X 1288
    Y 140
    WIDTH 64
