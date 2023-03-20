@@ -191,13 +191,15 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     {Skills end here}
 
-    'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
-    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_rewind.png', 'squiggle.png'
-    //'icon_cpm_and_replay.png', 'icon_frameskip.png',
-    //'icon_directional.png',
-
-    //// These ones are placeholders - they're the bottom half of splits
-    //'icon_frameskip.png', 'icon_directional.png', 'icon_cpm_and_replay.png'
+    'empty_slot.png',
+    'icon_rr_plus.png',
+    'icon_rr_minus.png',
+    'icon_pause.png',
+    'icon_rewind.png',
+    'icon_ff.png',
+    'icon_restart.png',
+    'icon_nuke.png',
+    'squiggle.png'
     );
 
 
@@ -1014,21 +1016,8 @@ begin
   //The skill buttons are dealt with in SetSkillIcons
   for i := 0 to Length(ButtonList) - 1 do
   begin
-    //if ButtonList[i] in [spbDirLeft, spbDirRight] then
-    //begin
-      //fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
-      //fButtonRects[spbDirRight] := HalfButtonRect(i, false);
-    //end else if ButtonList[i] in [spbBackOneFrame, spbForwardOneFrame] then
-    //begin
-      //fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
-      //fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
-    //end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
-    //begin
-      //fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
-      //fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
-    //end else
     if ButtonList[i] > spbNone then
-      fButtonRects[ButtonList[i]] := ButtonRect(i);
+    fButtonRects[ButtonList[i]] := ButtonRect(i);
   end;
 end;
 
@@ -1540,33 +1529,36 @@ begin
 
   if Game.Replaying and not Level.Info.SpawnIntervalLocked then
   begin
-    if    ((aButton = spbSlower) and (Game.CurrentSpawnInterval < Level.Info.SpawnInterval))
-       or ((aButton = spbFaster) and (Game.CurrentSpawnInterval > MINIMUM_SI)) then
-      Game.RegainControl;
+    if ((aButton = spbSlower) and (Game.CurrentSpawnInterval < Level.Info.SpawnInterval))
+    or ((aButton = spbFaster) and (Game.CurrentSpawnInterval > MINIMUM_SI)) then
+    Game.RegainControl;
   end;
 
   // Do button-specific actions
   case aButton of
-    spbSlower:begin
-              if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
-                begin
-                Game.SetSelectedSkill(i, True);
-                end else
-                Game.SetSelectedSkill(i, True, (Button = mbRight));
-              end;
-    spbFaster:begin
-              if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
-                begin
-                Game.SetSelectedSkill(i, True);
-                end else
-                Game.SetSelectedSkill(i, True, (Button = mbRight));
-              end;
-    spbPause:begin
-              if fGameWindow.GameSpeed = gspPause then
-              fGameWindow.GameSpeed := gspNormal
-              else
-              fGameWindow.GameSpeed := gspPause;
-             end;
+    spbSlower:
+      begin
+        if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
+          begin
+            Game.SetSelectedSkill(i, True);
+          end else
+        Game.SetSelectedSkill(i, True, (Button = mbRight));
+      end;
+    spbFaster:
+      begin
+        if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
+          begin
+            Game.SetSelectedSkill(i, True);
+            end else
+        Game.SetSelectedSkill(i, True, (Button = mbRight));
+      end;
+    spbPause:
+      begin
+        if fGameWindow.GameSpeed = gspPause then
+        fGameWindow.GameSpeed := gspNormal
+        else
+        fGameWindow.GameSpeed := gspPause;
+      end;
     spbNuke:
       begin
         Game.RegainControl;
@@ -1591,63 +1583,20 @@ begin
         else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then //bookmark
           fGameWindow.GameSpeed := gspRewind;
       end;
-    spbRestart:begin
-                if GameParams.ClassicMode then // cancels Replay after Restart in ClassicMode
-                  begin
-                    Game.CancelReplayAfterSkip := true;
-                    fGameWindow.GotoSaveState(0);
-                  end else
-                    fGameWindow.GotoSaveState(0);
-               end;
-    //spbBackOneFrame:
-      //begin
-        //if Button = mbLeft then
-        //begin
-          //fGameWindow.GotoSaveState(Game.CurrentIteration - 1);
-          //fLastClickFrameskip := GetTickCount;
-        //end else if Button = mbRight then
-          //fGameWindow.GotoSaveState(Game.CurrentIteration - 17)
-        //else if Button = mbMiddle then
-          //fGameWindow.GotoSaveState(Game.CurrentIteration - 85);
-      //end;
-    //spbForwardOneFrame:
-      //begin
-        //if Button = mbLeft then
-        //begin
-          //fGameWindow.SetForceUpdateOneFrame(True);
-          //fLastClickFrameskip := GetTickCount;
-        //end else if Button = mbRight then
-          //fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 17)
-        //else if Button = mbMiddle then
-          //fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
-      //end;
-    spbSquiggle: if not GameParams.HideClearPhysics then  //formerly spbClearPhysics
-      fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
-    //spbDirLeft:
-      //begin
-        //if fSelectDx = -1 then
-        //begin
-          //fSelectDx := 0;
-          //DrawButtonSelector(spbDirLeft, false);
-        //end else begin
-          //fSelectDx := -1;
-          //DrawButtonSelector(spbDirLeft, true);
-          //DrawButtonSelector(spbDirRight, false);
-        //end;
-      //end;
-    //spbDirRight:
-      //begin
-        //if fSelectDx = 1 then
-        //begin
-          //fSelectDx := 0;
-          //DrawButtonSelector(spbDirRight, false);
-        //end else begin
-          //fSelectDx := 1;
-          //DrawButtonSelector(spbDirLeft, false);
-          //DrawButtonSelector(spbDirRight, true);
-        //end;
-      //end;
-    //spbLoadReplay: fGameWindow.LoadReplay;
+    spbRestart:
+      begin
+        if GameParams.ClassicMode then // cancels Replay after Restart in ClassicMode
+          begin
+            Game.CancelReplayAfterSkip := true;
+            fGameWindow.GotoSaveState(0);
+          end else
+            fGameWindow.GotoSaveState(0);
+      end;
+    spbSquiggle:
+      begin
+        if not GameParams.HideClearPhysics then  //formerly spbClearPhysics
+        fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
+      end;
     spbNone: {nothing};
   else // usual skill buttons
     Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
@@ -1721,16 +1670,6 @@ begin
   if GetKeyState(VK_LBUTTON) >= 0 then Exit;
 
   P := Image.ControlToBitmap(Image.ScreenToClient(Mouse.CursorPos));
-  //if PtInRect(fButtonRects[spbBackOneFrame], P) then
-  //begin
-    //Result := -1;
-    //fLastClickFrameskip := GetTickCount - 150;
-  //end
-  //else if PtInRect(fButtonRects[spbForwardOneFrame], P) then
-  //begin
-    //Result := 1;
-    //fLastClickFrameskip := GetTickCount - 150;
-  //end;
 end;
 
 {-----------------------------------------
