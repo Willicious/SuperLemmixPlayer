@@ -36,6 +36,7 @@ type
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
+                         lka_Rewind,
                          lka_SlowMotion,
                          lka_SaveImage,
                          lka_LoadReplay,
@@ -129,6 +130,7 @@ begin
   SetKeyFunction($4E, lka_Nuke);
   SetKeyFunction($52, lka_Restart);
   SetKeyFunction($46, lka_FastForward);
+  SetKeyFunction($42, lka_Rewind);
   SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($05, lka_ZoomIn);
   SetKeyFunction($06, lka_ZoomOut);
@@ -144,8 +146,8 @@ begin
   SetKeyFunction($20, lka_ShowUsedSkills);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
-  //SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
-  SetKeyFunction($33, lka_Skill, Integer(spbBomber));
+  SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
+  //SetKeyFunction($33, lka_Skill, Integer(spbBomber));
   SetKeyFunction($34, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($35, lka_Skill, Integer(spbBuilder));
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
@@ -162,12 +164,12 @@ begin
   SetKeyFunction($4E, lka_Nuke);
   SetKeyFunction($52, lka_Restart);
   SetKeyFunction($46, lka_FastForward);
+  SetKeyFunction($42, lka_Rewind);
   SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($05, lka_ZoomIn);
   SetKeyFunction($06, lka_ZoomOut);
   SetKeyFunction($02, lka_Scroll);
   SetKeyFunction($4D, lka_Music);
-  SetKeyFunction($58, lka_Sound);
   SetKeyFunction($5A, lka_Sound);
   SetKeyFunction($41, lka_ShowAthleteInfo);
   SetKeyFunction($BB, lka_ReleaseRateUp);
@@ -187,7 +189,6 @@ begin
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($BA, lka_ShowUsedSkills);
   SetKeyFunction($02, lka_Skip, -1);
-  SetKeyFunction($42, lka_Skip, -4);
   SetKeyFunction($08, lka_Skip, -25);
   SetKeyFunction($4A, lka_Skip, 20);
   SetKeyFunction($60, lka_Skip, 100);
@@ -210,8 +211,8 @@ begin
   SetKeyFunction($54, lka_SaveImage);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
-  //SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
-  SetKeyFunction($33, lka_Skill, Integer(spbBomber));
+  SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
+  //SetKeyFunction($33, lka_Skill, Integer(spbBomber));
   SetKeyFunction($34, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($35, lka_Skill, Integer(spbBuilder));
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
@@ -219,8 +220,8 @@ begin
   SetKeyFunction($38, lka_Skill, Integer(spbDigger));
   SetKeyFunction($61, lka_Skill, Integer(spbClimber));
   SetKeyFunction($62, lka_Skill, Integer(spbFloater));
-  //SetKeyFunction($63, lka_Skill, Integer(spbTimebomber));
-  SetKeyFunction($63, lka_Skill, Integer(spbBomber));
+  SetKeyFunction($63, lka_Skill, Integer(spbTimebomber));
+  //SetKeyFunction($63, lka_Skill, Integer(spbBomber));
   SetKeyFunction($64, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($65, lka_Skill, Integer(spbBuilder));
   SetKeyFunction($66, lka_Skill, Integer(spbBasher));
@@ -251,6 +252,7 @@ begin
   if s = 'skip' then Result := lka_Skip;
   if s = 'special_skip' then Result := lka_SpecialSkip;
   if s = 'fastforward' then Result := lka_FastForward;
+  if s = 'rewind' then Result := lka_Rewind;
   if s = 'slow_motion' then Result := lka_SlowMotion;
   if s = 'save_image' then Result := lka_SaveImage;
   if s = 'load_replay' then Result := lka_LoadReplay;
@@ -403,6 +405,7 @@ var
       lka_Skip:             Result := 'Skip';
       lka_SpecialSkip:      Result := 'Special_Skip';
       lka_FastForward:      Result := 'FastForward';
+      lka_Rewind:           Result := 'Rewind';
       lka_SlowMotion:       Result := 'Slow_Motion';
       lka_SaveImage:        Result := 'Save_Image';
       lka_LoadReplay:       Result := 'Load_Replay';
