@@ -610,6 +610,7 @@ begin
   if TimeForRewind then      //bookmark
   begin
     if GameParams.ClassicMode then Game.CancelReplayAfterSkip := true;
+    PrevCallTime := CurrTime;
     GoToSaveState(Max(Game.CurrentIteration -3, 0));
   end;
 
@@ -1322,6 +1323,7 @@ const
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
+                         lka_Rewind,
                          lka_SlowMotion,
                          lka_SaveImage,
                          lka_LoadReplay,
@@ -1432,14 +1434,20 @@ begin
       lka_Cheat: Game.Cheat;
       lka_FastForward: begin
                          case fGameSpeed of
-                           gspNormal, gspSlowMo, gspPause: GameSpeed := gspFF;
+                           gspNormal, gspSlowMo, gspPause, gspRewind: GameSpeed := gspFF;
                            gspFF: GameSpeed := gspNormal;
+                         end;
+                       end;
+      lka_Rewind: begin
+                    case fGameSpeed of
+                      gspNormal, gspSlowMo, gspPause, gspFF: GameSpeed := gspRewind;
+                      gspRewind: GameSpeed := gspNormal;
                          end;
                        end;
       lka_SlowMotion: if not GameParams.HideFrameskipping then
                       begin
                         case fGameSpeed of
-                          gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
+                          gspNormal, gspFF, gspPause, gspRewind: GameSpeed := gspSlowMo;
                           gspSlowMo: GameSpeed := gspNormal;
                         end;
                       end;

@@ -122,19 +122,18 @@ type
     spbFaster,
     spbPause,
     spbNuke,
-
     spbFastForward,
     spbRestart,
     spbRewind,
-    spbSquiggle,
-    spbClearPhysics,
-    spbBackOneFrame,
-    spbDirLeft,
+    spbSquiggle
+    //spbClearPhysics,
+    //spbBackOneFrame,
+    //spbDirLeft,
 
-    // These three are the bottom part of a vertical split
-    spbForwardOneFrame,
-    spbDirRight,
-    spbLoadReplay
+    //// These three are the bottom part of a vertical split
+    //spbForwardOneFrame,
+    //spbDirRight,
+    //spbLoadReplay
   );
 
 const
@@ -326,13 +325,13 @@ const
     baNone,  // FF
     baNone,  // Restart
     baNone,  // Rewind
-    baNone,  // Squiggle
-    baNone,  // -1f
-    baNone,  // +1f
-    baNone,  // Clear Physics
-    baNone,  // Dir Sel Left
-    baNone,  // Load Replay
-    baNone   // Dir Sel Right
+    baNone  // Squiggle
+    //baNone  // -1f
+    //baNone  // +1f
+    //baNone  // Clear Physics
+    //baNone  // Dir Sel Left
+    //baNone  // Load Replay
+    //baNone   // Dir Sel Right
   );
 
 const
