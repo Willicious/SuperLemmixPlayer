@@ -1858,11 +1858,11 @@ begin
   Img.OffsetHorz := Min(Max(-HorzStart, MinScroll), MaxScroll);
   Img.OffsetVert := Min(Max(-VertStart, MinVScroll), MaxVScroll);
 
-  if GameParams.LinearResampleGame then
-  begin
-    TLinearResampler.Create(Img.Bitmap);
-    TLinearResampler.Create(SkillPanel.Image.Bitmap);
-  end;
+  //if GameParams.LinearResampleGame then
+  //begin
+    //TLinearResampler.Create(Img.Bitmap);
+    //TLinearResampler.Create(SkillPanel.Image.Bitmap);
+  //end;
 
   InitializeCursor;
   if GameParams.EdgeScroll then ApplyMouseTrap;

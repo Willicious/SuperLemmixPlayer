@@ -5,7 +5,7 @@ interface
 uses
   Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, Vcl.ExtCtrls;
+  Dialogs, StdCtrls, ComCtrls, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
 
 type
   TFNLSetup = class(TForm)
@@ -24,7 +24,8 @@ type
     cbGameplay: TComboBox;
     lblHotkeys: TLabel;
     cbHotkeys: TComboBox;
-    Image1: TImage;
+    Floater: TImage;
+    L1Art: TImage;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
@@ -68,12 +69,12 @@ begin
     1, 3: begin
          GameParams.MinimapHighQuality := true;
          GameParams.LinearResampleMenu := true;
-         GameParams.LinearResampleGame := false;
+         //GameParams.LinearResampleGame := false;
        end;
     0, 2: begin
          GameParams.MinimapHighQuality := false;
          GameParams.LinearResampleMenu := false;
-         GameParams.LinearResampleGame := false;
+         //GameParams.LinearResampleGame := false;
        end;
   end;
 

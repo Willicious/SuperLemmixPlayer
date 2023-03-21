@@ -365,8 +365,8 @@ object FormNXConfig: TFormNXConfig
           '1x Zoom')
       end
       object cbFullScreen: TCheckBox
-        Left = 36
-        Top = 93
+        Left = 38
+        Top = 86
         Width = 205
         Height = 17
         Caption = 'Full Screen'
@@ -374,76 +374,83 @@ object FormNXConfig: TFormNXConfig
         OnClick = cbFullScreenClick
       end
       object cbHighResolution: TCheckBox
-        Left = 36
-        Top = 116
+        Left = 38
+        Top = 109
         Width = 205
         Height = 17
         Caption = 'High Resolution'
         TabOrder = 3
         OnClick = OptionChanged
       end
-      object cbResetWindowPosition: TCheckBox
-        Left = 36
-        Top = 139
-        Width = 205
-        Height = 17
-        Caption = 'Position Window Centre-screen'
-        TabOrder = 4
-        OnClick = OptionChanged
-      end
-      object cbResetWindowSize: TCheckBox
-        Left = 36
-        Top = 162
-        Width = 223
-        Height = 17
-        Caption = 'Set Window to Recommended Size'
-        TabOrder = 5
-        OnClick = OptionChanged
-      end
       object cbIncreaseZoom: TCheckBox
-        Left = 36
-        Top = 185
+        Left = 38
+        Top = 132
         Width = 205
         Height = 17
         Caption = 'Increase Zoom On Small Levels'
-        TabOrder = 6
+        TabOrder = 4
         OnClick = OptionChanged
       end
       object cbLinearResampleMenu: TCheckBox
-        Left = 36
-        Top = 208
+        Left = 38
+        Top = 155
         Width = 205
         Height = 17
         Caption = 'Use Smooth Resampling In Menus'
-        TabOrder = 7
-        OnClick = OptionChanged
-      end
-      object cbLinearResampleGame: TCheckBox
-        Left = 36
-        Top = 232
-        Width = 205
-        Height = 17
-        Caption = 'Use Smooth Resampling In Game'
-        TabOrder = 8
+        TabOrder = 5
         OnClick = OptionChanged
       end
       object cbMinimapHighQuality: TCheckBox
-        Left = 36
-        Top = 254
+        Left = 38
+        Top = 178
         Width = 153
         Height = 17
         Caption = 'High Quality Minimap'
-        TabOrder = 9
+        TabOrder = 6
         OnClick = OptionChanged
       end
       object cbNoBackgrounds: TCheckBox
-        Left = 36
-        Top = 277
+        Left = 38
+        Top = 201
         Width = 205
         Height = 17
         Caption = 'Deactivate Background Images'
-        TabOrder = 10
+        TabOrder = 7
         OnClick = OptionChanged
+      end
+      object ResetWindow: TGroupBox
+        Left = 41
+        Top = 249
+        Width = 179
+        Height = 81
+        TabOrder = 9
+        object cbResetWindowPosition: TCheckBox
+          Left = 24
+          Top = 23
+          Width = 145
+          Height = 17
+          Caption = 'Reset Window Position'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
+        object cbResetWindowSize: TCheckBox
+          Left = 24
+          Top = 46
+          Width = 128
+          Height = 17
+          Caption = 'Reset Window Size'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+      end
+      object btnResetWindow: TButton
+        Left = 65
+        Top = 231
+        Width = 135
+        Height = 34
+        Caption = 'Reset Window'
+        TabOrder = 8
+        OnClick = btnResetWindowClick
       end
     end
     object TabSheet3: TTabSheet

@@ -48,7 +48,6 @@ type
     Label2: TLabel;
     cbZoom: TComboBox;
     cbLinearResampleMenu: TCheckBox;
-    cbLinearResampleGame: TCheckBox;
     cbFullScreen: TCheckBox;
     cbMinimapHighQuality: TCheckBox;
     cbIncreaseZoom: TCheckBox;
@@ -56,6 +55,7 @@ type
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
     cbPanelZoom: TComboBox;
+    btnResetWindow: TButton;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -70,6 +70,7 @@ type
     procedure btnClassicModeClick(Sender: TObject);
     procedure btnDeactivateClassicModeClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnResetWindowClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -217,6 +218,12 @@ begin
   ModalResult := mrOK;
 end;
 
+procedure TFormNXConfig.btnResetWindowClick(Sender: TObject);
+begin
+  cbResetWindowSize.Checked := True;
+  cbResetWindowPosition.Checked := True;
+end;
+
 procedure TFormNXConfig.SetFromParams;
 begin
   fIsSetting := true;
@@ -260,7 +267,7 @@ begin
     cbHighResolution.Checked := GameParams.HighResolution; // must be done before SetZoomDropdown
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
     cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
-    cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
+    //cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
     //cbCompactSkillPanel.Checked := GameParams.CompactSkillPanel;
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
@@ -327,7 +334,7 @@ begin
   GameParams.HighResolution := cbHighResolution.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
-  GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
+  //GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
   //GameParams.CompactSkillPanel := cbCompactSkillPanel.Checked;
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
 

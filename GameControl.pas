@@ -76,7 +76,7 @@ type
     moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
-    moLinearResampleGame,
+    //moLinearResampleGame,
     moFullScreen,
     moMinimapHighQuality,
     moIncreaseZoom,
@@ -229,7 +229,7 @@ type
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
-    property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
+    //property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
@@ -446,7 +446,7 @@ begin
 
   SaveBoolean('HighResolution', HighResolution);
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
-  SaveBoolean('LinearResampleGame', LinearResampleGame);
+  //SaveBoolean('LinearResampleGame', LinearResampleGame);
 
   LevelSavePath := CurrentLevel.Path;
   if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
@@ -633,7 +633,7 @@ begin
     fLoadedWindowHeight := WindowHeight;
 
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
-    LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
+    //LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 
     //if LoadBoolean('VictoryJingle', false) or LoadBoolean('FailureJingle', false) then
       //PostviewJingles := true
@@ -824,7 +824,7 @@ begin
 
   MiscOptions := DEF_MISCOPTIONS;
 
-  UserName := 'Anonymous';
+  UserName := 'Player 1';
 
 
   SoundManager.MusicVolume := 50;
@@ -906,7 +906,7 @@ end;
 procedure TDosGameParams.SetUserName(aValue: String);
 begin
   if aValue = '' then
-    fUsername := 'Anonymous'
+    fUsername := 'Player 1'
   else
     fUsername := aValue;
 end;
