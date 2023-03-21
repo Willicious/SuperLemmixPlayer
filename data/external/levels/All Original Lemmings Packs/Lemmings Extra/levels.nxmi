@@ -27,37 +27,37 @@ $GROUP
 $END
 
 $GROUP
-  NAME Present
-  FOLDER Present
+  NAME Nintendo Entertainment System
+  FOLDER Nintendo Entertainment System
 $END
 
 $GROUP
-  NAME Sunsoft
-  FOLDER Sunsoft
+  NAME PlayStation Portable
+  FOLDER PlayStation Portable
 $END
 
 $GROUP
-  NAME SMS
-  FOLDER SMS
+  NAME PlayStation 3
+  FOLDER PlayStation 3
 $END
 
 $GROUP
-  NAME PSP
-  FOLDER PSP
+  NAME Sega Master System
+  FOLDER Sega Master System
 $END
 
 $GROUP
-  NAME NES
-  FOLDER NES
-$END
-
-$GROUP
-  NAME Xmas Lemmings
-  FOLDER Xmas Lemmings
+  NAME ZX Spectrum
+  FOLDER ZX Spectrum
 $END
 
 $GROUP
   NAME New Year Lemmings 1991-92
   FOLDER New Year Lemmings 1991-92
+$END
+
+$GROUP
+  NAME Xmas Lemmings
+  FOLDER Xmas Lemmings
 $END
 

@@ -335,6 +335,7 @@ begin
   Get('letsgo');
   Get('mousepre');
   Get('ohno');
+  Get('oing');
   Get('oing2');
   Get('slurp');
   Get('splash');

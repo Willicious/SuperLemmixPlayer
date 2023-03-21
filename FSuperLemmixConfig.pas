@@ -5,7 +5,7 @@ interface
 uses
   GameControl, GameSound, FEditHotkeys, FStyleManager, LemmixHotkeys, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls;
+  Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls;
 
 type
   TFormNXConfig = class(TForm)
@@ -56,6 +56,9 @@ type
     cbResetWindowPosition: TCheckBox;
     cbPanelZoom: TComboBox;
     btnResetWindow: TButton;
+    rgExitSound: TRadioGroup;
+    rbYippee: TRadioButton;
+    rbBoing: TRadioButton;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -286,6 +289,9 @@ begin
       tbMusicVol.Position := SoundManager.MusicVolume;
 
     cbDisableTestplayMusic.Checked := GameParams.DisableMusicInTestplay;
+    rbYippee.Checked := GameParams.PreferYippee;
+    rbBoing.Checked := not GameParams.PreferYippee;
+
     //cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
     btnApply.Enabled := false;
@@ -326,6 +332,7 @@ begin
   GameParams.HideSkillQ := cbHideSkillQ.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
+
   //GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
@@ -351,6 +358,8 @@ begin
     SoundManager.MusicVolume := tbMusicVol.Position;
 
   GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
+  GameParams.PreferYippee := rbYippee.Checked;
+
   //GameParams.PostviewJingles := cbPostviewJingles.Checked;
 
   btnApply.Enabled := false;

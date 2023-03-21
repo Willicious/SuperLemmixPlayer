@@ -57,7 +57,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 275
     Height = 369
-    ActivePage = TabSheet2
+    ActivePage = TabSheet3
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -458,21 +458,21 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 3
       object Label3: TLabel
         Left = 17
-        Top = 36
+        Top = 30
         Width = 34
         Height = 13
         Caption = 'Sound'
       end
       object Label5: TLabel
         Left = 21
-        Top = 75
+        Top = 69
         Width = 30
         Height = 13
         Caption = 'Music'
       end
       object tbSoundVol: TTrackBar
         Left = 51
-        Top = 32
+        Top = 26
         Width = 206
         Height = 33
         Max = 100
@@ -482,7 +482,7 @@ object FormNXConfig: TFormNXConfig
       end
       object tbMusicVol: TTrackBar
         Left = 51
-        Top = 71
+        Top = 65
         Width = 206
         Height = 33
         Max = 100
@@ -497,6 +497,32 @@ object FormNXConfig: TFormNXConfig
         Height = 17
         Caption = 'Disable Music When Testplaying'
         TabOrder = 2
+        OnClick = OptionChanged
+      end
+      object rgExitSound: TRadioGroup
+        Left = 72
+        Top = 156
+        Width = 113
+        Height = 81
+        Caption = 'Choose Exit Sound'
+        TabOrder = 3
+      end
+      object rbYippee: TRadioButton
+        Left = 98
+        Top = 180
+        Width = 65
+        Height = 17
+        Caption = 'Yippee!'
+        TabOrder = 4
+        OnClick = OptionChanged
+      end
+      object rbBoing: TRadioButton
+        Left = 98
+        Top = 203
+        Width = 65
+        Height = 17
+        Caption = 'Boing!'
+        TabOrder = 5
         OnClick = OptionChanged
       end
     end

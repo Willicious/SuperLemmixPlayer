@@ -87,9 +87,10 @@ type
     moSpawnInterval,
     moHideAdvanced,
     moFileCaching,
-    moPostviewJingles,
+    //moPostviewJingles,
     //moForceDefaultLemmings,
-    moDisableMusicInTestplay
+    moDisableMusicInTestplay,
+    moPreferYippee
   );
 
   TMiscOptions = set of TMiscOption;
@@ -103,7 +104,8 @@ const
     moFullScreen,
     moMinimapHighQuality,
     moIncreaseZoom,
-    moEdgeScroll
+    moEdgeScroll,
+    moPreferYippee
   ];
 
 type
@@ -239,13 +241,14 @@ type
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
     //property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
+    property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
 
     property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
-    property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
+    //property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
 
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
@@ -460,6 +463,7 @@ begin
   SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
   SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
   SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
+  SaveBoolean('Prefer Yippee', PreferYippee);
   //SaveBoolean('PostviewJingles', PostviewJingles);
 
   //SL.Add('');
@@ -600,6 +604,7 @@ begin
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
+    PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
