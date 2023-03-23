@@ -348,10 +348,7 @@ begin
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
 
-  if GameParams.CompactSkillPanel then
-    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 320 div ResMod)
-  else
-    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod);
+  SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod);
 
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
   Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40 * ResMod), GameParams.Level.Info.Height * fInternalZoom * ResMod);
@@ -558,7 +555,9 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-  Fast, Slow, Rewind, ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame, TimeForScroll, TimeForRewind, Hyper, Pause: Boolean;
+        Fast, Slow, Rewind, ForceOne, TimeForFrame, TimeForPausedRR,
+        TimeForFastForwardFrame, TimeForScroll, TimeForRewind,
+        Hyper, Pause: Boolean;
   PanelFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then

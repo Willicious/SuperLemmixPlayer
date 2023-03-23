@@ -203,7 +203,6 @@ type
     fHighlightLemmingID        : Integer;
     fTargetLemmingID           : Integer; // for replay skill assignments
     fCancelReplayAfterSkip     : Boolean;
-    fSquiggle                  : Boolean; // does nothing but looks cool B)
 
   { events }
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions

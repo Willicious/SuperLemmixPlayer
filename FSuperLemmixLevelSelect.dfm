@@ -7,7 +7,7 @@ object FLevelSelect: TFLevelSelect
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Level Select'
   ClientHeight = 528
-  ClientWidth = 1057
+  ClientWidth = 1058
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,8 +23,8 @@ object FLevelSelect: TFLevelSelect
   TextHeight = 13
   object lblName: TLabel
     Left = 308
-    Top = 8
-    Width = 621
+    Top = 9
+    Width = 592
     Height = 25
     AutoSize = False
     Caption = '<Name>'
@@ -38,7 +38,7 @@ object FLevelSelect: TFLevelSelect
   object lblPosition: TLabel
     Left = 308
     Top = 40
-    Width = 621
+    Width = 592
     Height = 16
     AutoSize = False
     Caption = '<Position>'
@@ -50,9 +50,9 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAuthor: TLabel
-    Left = 308
+    Left = 317
     Top = 62
-    Width = 621
+    Width = 583
     Height = 16
     AutoSize = False
     Caption = '<Author>'
@@ -66,7 +66,7 @@ object FLevelSelect: TFLevelSelect
   object lblCompletion: TLabel
     Left = 308
     Top = 84
-    Width = 621
+    Width = 592
     Height = 32
     AutoSize = False
     Caption = '<Completion>'
@@ -78,7 +78,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAdvancedOptions: TLabel
-    Left = 949
+    Left = 935
     Top = 17
     Width = 96
     Height = 13
@@ -99,100 +99,89 @@ object FLevelSelect: TFLevelSelect
     Indent = 19
     MultiSelectStyle = []
     ReadOnly = True
-    TabOrder = 0
+    TabOrder = 5
     OnClick = tvLevelSelectClick
   end
   object btnCancel: TButton
-    Left = 945
+    Left = 916
     Top = 495
-    Width = 105
+    Width = 134
     Height = 25
     Caption = 'Close'
     ModalResult = 2
-    TabOrder = 1
+    TabOrder = 7
   end
   object btnOK: TButton
-    Left = 300
+    Left = 294
     Top = 495
-    Width = 621
+    Width = 606
     Height = 25
     Caption = 'Play'
-    TabOrder = 2
+    TabOrder = 8
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
     Left = 300
     Top = 122
-    Width = 629
+    Width = 600
     Height = 369
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
-    TabOrder = 3
-  end
-  object btnMakeShortcut: TButton
-    Left = 945
-    Top = 65
-    Width = 105
-    Height = 25
-    Caption = 'Create Shortcut'
-    TabOrder = 4
-    OnClick = btnMakeShortcutClick
-  end
-  object sbAdvancedOptions: TScrollBox
-    Left = 945
-    Top = 94
-    Width = 110
-    Height = 117
-    VertScrollBar.Visible = False
-    BevelInner = bvNone
-    BevelOuter = bvNone
-    BorderStyle = bsNone
-    TabOrder = 5
-    object btnSaveImage: TButton
-      Left = 0
-      Top = 0
-      Width = 105
-      Height = 25
-      Caption = 'Screenshot'
-      TabOrder = 0
-      OnClick = btnSaveImageClick
-    end
-    object btnMassReplay: TButton
-      Left = 0
-      Top = 29
-      Width = 105
-      Height = 25
-      Caption = 'Mass Replay Check'
-      TabOrder = 1
-      OnClick = btnMassReplayClick
-    end
-    object btnCleanseLevels: TButton
-      Left = 0
-      Top = 58
-      Width = 105
-      Height = 25
-      Caption = 'Cleanse All Levels'
-      TabOrder = 2
-      OnClick = btnCleanseLevelsClick
-    end
-    object btnCleanseOne: TButton
-      Left = 0
-      Top = 87
-      Width = 105
-      Height = 25
-      Caption = 'Cleanse This Level'
-      TabOrder = 3
-      OnClick = btnCleanseOneClick
-    end
+    TabOrder = 9
   end
   object btnClearRecords: TButton
-    Left = 945
+    Left = 916
     Top = 36
-    Width = 105
+    Width = 134
     Height = 25
     Caption = 'Clear Records'
     TabOrder = 6
     OnClick = btnClearRecordsClick
+  end
+  object btnCleanseOne: TButton
+    Left = 916
+    Top = 193
+    Width = 134
+    Height = 25
+    Caption = 'Cleanse This Level'
+    TabOrder = 3
+    OnClick = btnCleanseOneClick
+  end
+  object btnCleanseLevels: TButton
+    Left = 916
+    Top = 162
+    Width = 134
+    Height = 25
+    Caption = 'Cleanse All Levels'
+    TabOrder = 2
+    OnClick = btnCleanseLevelsClick
+  end
+  object btnMassReplay: TButton
+    Left = 916
+    Top = 131
+    Width = 134
+    Height = 25
+    Caption = 'Mass Replay Check'
+    TabOrder = 1
+    OnClick = btnMassReplayClick
+  end
+  object btnSaveImage: TButton
+    Left = 916
+    Top = 100
+    Width = 134
+    Height = 25
+    Caption = 'Screenshot'
+    TabOrder = 0
+    OnClick = btnSaveImageClick
+  end
+  object btnMakeShortcut: TButton
+    Left = 916
+    Top = 67
+    Width = 134
+    Height = 25
+    Caption = 'Create Shortcut'
+    TabOrder = 4
+    OnClick = btnMakeShortcutClick
   end
   object ilStatuses: TImageList
   end

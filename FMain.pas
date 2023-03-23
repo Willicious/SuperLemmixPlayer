@@ -47,6 +47,7 @@ type
 
     procedure RestoreDefaultSize;
     procedure RestoreDefaultPosition;
+    //procedure GetLevelInfo(aCaption: string);    //unfinished
   end;
 
 var
@@ -147,9 +148,6 @@ begin
   if WindowScale < ResMod then
     WindowScale := ResMod;
 
-  //if GameParams.CompactSkillPanel then
-    //ClientWidth := WindowScale * 320
-  //else
   ClientWidth := Max(WindowScale * 444, 444 * ResMod);     //1776
   ClientHeight := ClientWidth * 50 div 111;                //800
 end;
@@ -239,6 +237,17 @@ begin
   end;
 end;
 
+//// Show level info on Window caption - unfinished
+//procedure TMainForm.GetLevelInfo(aCaption: string);
+//var
+//TMainForm: TForm;
+//begin
+  //with GameParams.Level.Info do
+  //begin
+    //TMainForm.Caption := 'SuperLemmix' + Title;
+  //end;
+//end;
+
 procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,
   NewHeight: Integer; var Resize: Boolean);
 var
@@ -260,10 +269,7 @@ begin
   NewCW := NewWidth - CWDiff;
   NewCH := NewHeight - CHDiff;
 
-  //if GameParams.CompactSkillPanel then
-    //NewCW := Max(320 * ResMod, NewCW)
-  //else
-    NewCW := Max(444 * ResMod, NewCW);
+  NewCW := Max(444 * ResMod, NewCW);
   NewCH := Max(200 * ResMod, NewCH);
 
   NewCW := Min(NewCW, Screen.Width - CWDiff);

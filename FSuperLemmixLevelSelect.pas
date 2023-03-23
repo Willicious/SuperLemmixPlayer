@@ -30,7 +30,6 @@ type
     ilStatuses: TImageList;
     lblCompletion: TLabel;
     btnMakeShortcut: TButton;
-    sbAdvancedOptions: TScrollBox;
     lblAdvancedOptions: TLabel;
     btnSaveImage: TButton;
     btnMassReplay: TButton;
@@ -271,13 +270,6 @@ begin
   fPackTalBox.Visible := false;
 
   pnLevelInfo.Visible := false;
-
-  if GameParams.HideAdvancedOptions then
-  begin
-    lblAdvancedOptions.Visible := false;
-    sbAdvancedOptions.Visible := false;
-    ClientWidth := sbAdvancedOptions.Left;
-  end;
 
   InitializeTreeview;
 end;
@@ -976,24 +968,18 @@ end;
 
 procedure TFLevelSelect.SetAdvancedOptionsGroup;
 begin
-  if not GameParams.HideAdvancedOptions then
-  begin
     btnSaveImage.Caption := 'Save Level Images';
     btnMassReplay.Enabled := true;
     btnCleanseLevels.Enabled := true;
     btnCleanseOne.Enabled := false;
-  end;
 end;
 
 procedure TFLevelSelect.SetAdvancedOptionsLevel;
 begin
-  if not GameParams.HideAdvancedOptions then
-  begin
     btnSaveImage.Caption := 'Save Image';
     btnMassReplay.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
     btnCleanseLevels.Enabled := btnMassReplay.Enabled;
     btnCleanseOne.Enabled := true;
-  end;
 end;
 
 procedure TFLevelSelect.btnSaveImageClick(Sender: TObject);
