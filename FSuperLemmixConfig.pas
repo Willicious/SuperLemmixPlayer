@@ -491,12 +491,12 @@ procedure TFormNXConfig.SetClassicModeCheckboxes;
   begin
     if GameParams.ClassicMode then
       begin
-         cbHideShadows.Enabled := false;
-         cbHideClearPhysics.Enabled := false;
-         cbHideAdvancedSelect.Enabled := false;
-         cbHideFrameskipping.Enabled := false;
-         cbHideHelpers.Enabled := false;
-         cbHideSkillQ.Enabled := false;
+        cbHideShadows.Enabled := false;
+        cbHideClearPhysics.Enabled := false;
+        cbHideAdvancedSelect.Enabled := false;
+        cbHideFrameskipping.Enabled := false;
+        cbHideHelpers.Enabled := false;
+        cbHideSkillQ.Enabled := false;
       end;
   end;
 

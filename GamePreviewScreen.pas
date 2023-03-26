@@ -115,8 +115,9 @@ begin
             end;
         end;
       end else
-        ShowMessage('Some pieces used by this level are missing. You will not be able to play this level. ' +
-                    'Download the missing styles manually, or enable online features in SuperLemmix config to try to auto-download them.');
+        ShowMessage('This level contains pieces which are missing from the styles folder. ' +
+                    'Please contact the level author or download the style manually ' +
+                    'via www.lemmingsforums.net.');
     end else begin
       GameParams.NextScreen2 := gstPlay;
       inherited CloseScreen(gstText);
