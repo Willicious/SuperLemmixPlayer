@@ -57,7 +57,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 275
     Height = 369
-    ActivePage = TabSheet3
+    ActivePage = Graphics
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -325,36 +325,36 @@ object FormNXConfig: TFormNXConfig
       Caption = 'Graphics'
       ImageIndex = 3
       object Label1: TLabel
-        Left = 62
-        Top = 21
+        Left = 66
+        Top = 16
         Width = 32
         Height = 13
         Caption = 'Zoom:'
       end
       object Label2: TLabel
-        Left = 62
-        Top = 53
+        Left = 67
+        Top = 43
         Width = 31
         Height = 13
         Caption = 'Panel:'
       end
       object cbZoom: TComboBox
-        Left = 100
-        Top = 18
-        Width = 97
+        Left = 104
+        Top = 13
+        Width = 81
         Height = 21
         Style = csDropDownList
         ItemIndex = 0
-        TabOrder = 0
+        TabOrder = 3
         Text = '1x Zoom'
         OnChange = OptionChanged
         Items.Strings = (
           '1x Zoom')
       end
       object cbPanelZoom: TComboBox
-        Left = 99
-        Top = 50
-        Width = 98
+        Left = 104
+        Top = 40
+        Width = 81
         Height = 21
         Style = csDropDownList
         ItemIndex = 0
@@ -366,7 +366,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbFullScreen: TCheckBox
         Left = 38
-        Top = 86
+        Top = 72
         Width = 205
         Height = 17
         Caption = 'Full Screen'
@@ -375,16 +375,16 @@ object FormNXConfig: TFormNXConfig
       end
       object cbHighResolution: TCheckBox
         Left = 38
-        Top = 109
+        Top = 95
         Width = 205
         Height = 17
         Caption = 'High Resolution'
-        TabOrder = 3
+        TabOrder = 6
         OnClick = OptionChanged
       end
       object cbIncreaseZoom: TCheckBox
         Left = 38
-        Top = 132
+        Top = 118
         Width = 205
         Height = 17
         Caption = 'Increase Zoom On Small Levels'
@@ -393,25 +393,60 @@ object FormNXConfig: TFormNXConfig
       end
       object cbLinearResampleMenu: TCheckBox
         Left = 38
-        Top = 155
+        Top = 141
         Width = 205
         Height = 17
         Caption = 'Use Smooth Resampling In Menus'
         TabOrder = 5
         OnClick = OptionChanged
       end
-      object cbMinimapHighQuality: TCheckBox
-        Left = 38
-        Top = 178
-        Width = 153
-        Height = 17
-        Caption = 'High Quality Minimap'
-        TabOrder = 6
-        OnClick = OptionChanged
+      object gbMinimapOptions: TGroupBox
+        Left = 24
+        Top = 198
+        Width = 219
+        Height = 48
+        Caption = 'Minimap Options'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        object cbMinimapHighQuality: TCheckBox
+          Left = 117
+          Top = 20
+          Width = 90
+          Height = 17
+          Caption = 'High Quality'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbShowMinimap: TCheckBox
+          Left = 14
+          Top = 20
+          Width = 97
+          Height = 17
+          Caption = 'Show Minimap'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Segoe UI'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          OnClick = cbShowMinimapClick
+        end
       end
       object cbNoBackgrounds: TCheckBox
         Left = 38
-        Top = 201
+        Top = 165
         Width = 205
         Height = 17
         Caption = 'Deactivate Background Images'
@@ -419,33 +454,33 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object ResetWindow: TGroupBox
-        Left = 41
-        Top = 249
-        Width = 179
-        Height = 81
+        Left = 24
+        Top = 268
+        Width = 219
+        Height = 49
         TabOrder = 9
         object cbResetWindowPosition: TCheckBox
-          Left = 24
-          Top = 23
-          Width = 145
+          Left = 14
+          Top = 21
+          Width = 97
           Height = 17
-          Caption = 'Reset Window Position'
+          Caption = 'Reset Position'
           TabOrder = 0
           OnClick = OptionChanged
         end
         object cbResetWindowSize: TCheckBox
-          Left = 24
-          Top = 46
-          Width = 128
+          Left = 117
+          Top = 21
+          Width = 90
           Height = 17
-          Caption = 'Reset Window Size'
+          Caption = 'Reset Size'
           TabOrder = 1
           OnClick = OptionChanged
         end
       end
       object btnResetWindow: TButton
         Left = 65
-        Top = 231
+        Top = 252
         Width = 135
         Height = 34
         Caption = 'Reset Window'

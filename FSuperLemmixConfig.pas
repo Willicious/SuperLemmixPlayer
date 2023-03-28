@@ -59,6 +59,7 @@ type
     rgExitSound: TRadioGroup;
     rbYippee: TRadioButton;
     rbBoing: TRadioButton;
+    cbShowMinimap: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -74,6 +75,7 @@ type
     procedure btnDeactivateClassicModeClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnResetWindowClick(Sender: TObject);
+    procedure cbShowMinimapClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -84,7 +86,7 @@ type
 
     procedure SetZoomDropdown(aValue: Integer = -1);
     procedure SetPanelZoomDropdown(aValue: Integer = -1);
-    procedure SetClassicModeCheckboxes;
+    procedure SetCheckboxes;
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
 
@@ -274,6 +276,8 @@ begin
     //cbCompactSkillPanel.Checked := GameParams.CompactSkillPanel;
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
+    cbShowMinimap.Checked := GameParams.ShowMinimap;
+
     // Zoom Dropdown
     SetZoomDropdown;
     SetPanelZoomDropdown;
@@ -344,6 +348,8 @@ begin
   //GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
   //GameParams.CompactSkillPanel := cbCompactSkillPanel.Checked;
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
+
+  GameParams.ShowMinimap := cbShowMinimap.Checked;
 
   // Zoom Dropdown
   GameParams.ZoomLevel := cbZoom.ItemIndex + 1;
@@ -438,9 +444,21 @@ begin
     P.Text := PRESET_REPLAY_PATTERNS[P.ItemIndex];
 end;
 
+procedure TFormNXConfig.cbShowMinimapClick(Sender: TObject);
+begin
+  if cbShowMinimap.Checked then
+  begin
+    cbMinimapHighQuality.Enabled := True;
+  end else begin
+    cbMinimapHighQuality.Checked := False;
+    cbMinimapHighQuality.Enabled := False;
+  end;
+  OptionChanged(Sender);
+end;
+
 procedure TFormNXConfig.FormCreate(Sender: TObject);
 begin
-  SetClassicModeCheckboxes;
+  SetCheckboxes;
 end;
 
 //procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
@@ -487,7 +505,7 @@ begin
   cbHideSkillQ.Enabled := true;
 end;
 
-procedure TFormNXConfig.SetClassicModeCheckboxes;
+procedure TFormNXConfig.SetCheckboxes;
   begin
     if GameParams.ClassicMode then
       begin
@@ -497,6 +515,11 @@ procedure TFormNXConfig.SetClassicModeCheckboxes;
         cbHideFrameskipping.Enabled := false;
         cbHideHelpers.Enabled := false;
         cbHideSkillQ.Enabled := false;
+      end;
+    if not GameParams.ShowMinimap then
+      begin
+        cbMinimapHighQuality.Checked := False;
+        cbMinimapHighQuality.Enabled := False;
       end;
   end;
 

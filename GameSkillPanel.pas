@@ -46,7 +46,12 @@ end;
 
 function TSkillPanelStandard.PanelWidth: Integer;
 begin
-  Result := 444 * ResMod;
+if GameParams.ShowMinimap then
+  begin
+    Result := 444 * ResMod;
+  end else begin
+    Result := 336 * ResMod;
+  end;
 end;
 
 function TSkillPanelStandard.PanelHeight: Integer;
@@ -74,7 +79,10 @@ end;
 //Second set of digits adjusts width & height of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(355 * ResMod, 2 * ResMod, 434 * ResMod, 36 * ResMod);
+if GameParams.ShowMinimap then
+  begin
+    Result := Rect(355 * ResMod, 2 * ResMod, 440 * ResMod, 36 * ResMod);
+  end;
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -114,19 +122,22 @@ procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
 var
   TempBmp: TBitmap32;
 begin
-  TempBmp := TBitmap32.Create;
-  TempBmp.Assign(MinimapRegion);
+if GameParams.ShowMinimap then
+  begin
+    TempBmp := TBitmap32.Create;
+    TempBmp.Assign(MinimapRegion);
 
   //changing the first digit changes the right side of the minimap frame
-  if (MinimapRegion.Width <> 91 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
-  begin
-    MinimapRegion.SetSize(91 * ResMod, 39 * ResMod);
-    MinimapRegion.Clear($FF000000);
-    DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
+    if (MinimapRegion.Width <> 91 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
+    begin
+      MinimapRegion.SetSize(91 * ResMod, 39 * ResMod);
+      MinimapRegion.Clear($FF000000);
+      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
                   Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
-  end;
+    end;
 
-  TempBmp.Free;
+    TempBmp.Free;
+  end;
 end;
 
 end.

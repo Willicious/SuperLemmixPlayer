@@ -67,11 +67,13 @@ begin
 
   case cbGraphics.ItemIndex of
     1, 3: begin
+         GameParams.ShowMinimap := true;
          GameParams.MinimapHighQuality := true;
          GameParams.LinearResampleMenu := true;
          //GameParams.LinearResampleGame := false;
        end;
     0, 2: begin
+         GameParams.ShowMinimap := true;
          GameParams.MinimapHighQuality := false;
          GameParams.LinearResampleMenu := false;
          //GameParams.LinearResampleGame := false;

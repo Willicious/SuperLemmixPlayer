@@ -79,6 +79,7 @@ type
     //moLinearResampleGame,
     moFullScreen,
     moMinimapHighQuality,
+    moShowMinimap,
     moIncreaseZoom,
     moLoadedConfig,
     moMatchBlankReplayUsername,
@@ -103,6 +104,7 @@ const
     moNoAutoReplayMode,
     moFullScreen,
     moMinimapHighQuality,
+    moShowMinimap,
     moIncreaseZoom,
     moEdgeScroll,
     moPreferYippee
@@ -234,6 +236,7 @@ type
     //property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
+    property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
@@ -430,6 +433,7 @@ begin
   SaveBoolean('HideSkillQ', HideSkillQ);
   //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
+  SaveBoolean('ShowMinimap', ShowMinimap);
   SaveBoolean('EdgeScrolling', EdgeScroll);
   SaveBoolean('UseSpawnInterval', SpawnInterval);
 
@@ -601,6 +605,7 @@ begin
     HideSkillQ := LoadBoolean('HideSkillQ', HideSkillQ);
     //CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
+    ShowMinimap := LoadBoolean('ShowMinimap', ShowMinimap);
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);

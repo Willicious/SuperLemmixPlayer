@@ -228,62 +228,68 @@ var
   i: Integer;
   L: TLemming;
 begin
-  if fRenderInterface.DisableDrawing then Exit;
-
-  if not LemmingsOnly then
+if GameParams.ShowMinimap then
   begin
-    Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
-    OldCombine := fPhysicsMap.OnPixelCombine;
-    OldMode := fPhysicsMap.DrawMode;
+    if fRenderInterface.DisableDrawing then Exit;
 
-    fPhysicsMap.DrawMode := dmCustom;
-    fPhysicsMap.OnPixelCombine := CombineMinimapPixels;
-
-    fPhysicsMap.DrawTo(Dst, Dst.BoundsRect, fPhysicsMap.BoundsRect);
-
-    fPhysicsMap.OnPixelCombine := OldCombine;
-    fPhysicsMap.DrawMode := OldMode;
-  end;
-
-  if fRenderInterface = nil then Exit;
-  if fRenderInterface.LemmingList = nil then Exit;
-
-  if GameParams.HighResolution then
-  begin
-    for i := 0 to fRenderInterface.LemmingList.Count-1 do
+    if not LemmingsOnly then
     begin
-      L := fRenderInterface.LemmingList[i];
-      if L.LemRemoved then Continue;
-      if L.LemIsZombie then
-      begin
-        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
-        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
-      end else begin
-        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
-        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
-      end;
+      Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
+      OldCombine := fPhysicsMap.OnPixelCombine;
+      OldMode := fPhysicsMap.DrawMode;
+
+      fPhysicsMap.DrawMode := dmCustom;
+      fPhysicsMap.OnPixelCombine := CombineMinimapPixels;
+
+      fPhysicsMap.DrawTo(Dst, Dst.BoundsRect, fPhysicsMap.BoundsRect);
+
+      fPhysicsMap.OnPixelCombine := OldCombine;
+      fPhysicsMap.DrawMode := OldMode;
     end;
-  end else begin
-    for i := 0 to fRenderInterface.LemmingList.Count-1 do
+
+    if fRenderInterface = nil then Exit;
+    if fRenderInterface.LemmingList = nil then Exit;
+
+    if GameParams.HighResolution then
     begin
-      L := fRenderInterface.LemmingList[i];
-      if L.LemRemoved then Continue;
-      if L.LemIsZombie then
-        Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FFFF0000
-      else
-        Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00FF00;
+      for i := 0 to fRenderInterface.LemmingList.Count-1 do
+        begin
+          L := fRenderInterface.LemmingList[i];
+        if L.LemRemoved then Continue;
+        if L.LemIsZombie then
+          begin
+            Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
+            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
+            Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
+            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
+          end else begin
+            Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
+            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
+            Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
+            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
+          end;
+        end;
+    end else begin
+      for i := 0 to fRenderInterface.LemmingList.Count-1 do
+      begin
+        L := fRenderInterface.LemmingList[i];
+        if L.LemRemoved then Continue;
+        if L.LemIsZombie then
+          Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FFFF0000
+        else
+          Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00FF00;
+      end;
     end;
   end;
 end;
 
 procedure TRenderer.CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
 begin
+if GameParams.ShowMinimap then
+  begin
   if (F and PM_SOLID) <> 0 then
     B := fTheme.Colors[MINIMAP_COLOR] or $FF000000;
+  end;
 end;
 
 // Lemming Drawing

@@ -917,11 +917,14 @@ begin
     AddButtonImage(BUTTON_TO_STRING[ButtonList[i]], i);
 
   // Draw minimap region
-  MinimapRegion := TBitmap32.Create;
-  GetGraphic('minimap_region.png', MinimapRegion);
-  ResizeMinimapRegion(MinimapRegion);
-  MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - (3 * ResMod), MinimapRect.Top - (2 * ResMod));
-  MinimapRegion.Free;
+  if GameParams.ShowMinimap then
+  begin
+    MinimapRegion := TBitmap32.Create;
+    GetGraphic('minimap_region.png', MinimapRegion);
+    ResizeMinimapRegion(MinimapRegion);
+    MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - (3 * ResMod), MinimapRect.Top - (2 * ResMod));
+    MinimapRegion.Free;
+  end;
 
   // Copy the created bitmap
   fImage.Bitmap.Assign(fOriginal);
@@ -1028,54 +1031,57 @@ var
   ViewRect: TRect;
   InnerViewRect: TRect;
 begin
-  if Parent = nil then Exit;
-
-  // Add some space for when the viewport rect lies on the very edges
-  fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
-  fMinimapTemp.Clear(0);
-  fMinimap.DrawTo(fMinimapTemp, 1 * ResMod, 1 * ResMod);
-
-  BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
-  BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
-
-  // Draw the visible area frame
-  ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
-  OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
-  fMinimapTemp.FrameRectS(ViewRect, fRectColor);
-
-  if GameParams.HighResolution then
+if GameParams.ShowMinimap then
   begin
-    InnerViewRect := ViewRect;
-    Inc(InnerViewRect.Left);
-    Inc(InnerViewRect.Top);
-    Dec(InnerViewRect.Bottom);
-    Dec(InnerViewRect.Right);
-    fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
-  end;
+    if Parent = nil then Exit;
 
-  fMinimapImage.Bitmap.Assign(fMinimapTemp);
+    // Add some space for when the viewport rect lies on the very edges
+    fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
+    fMinimapTemp.Clear(0);
+    fMinimap.DrawTo(fMinimapTemp, 1 * ResMod, 1 * ResMod);
 
-  if not fMinimapScrollFreeze then
-  begin
-    if fMinimapTemp.Width < MinimapWidth then
-      OH := (MinimapWidth - fMinimapTemp.Width) / 2
-    else begin
-      OH := BaseOffsetHoriz + (MinimapWidth - RectWidth(ViewRect)) / 2;
-      OH := Min(Max(OH, MinimapWidth - fMinimapTemp.Width), 0);
+    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
+    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
+
+    // Draw the visible area frame
+    ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
+    OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
+    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+
+    if GameParams.HighResolution then
+      begin
+        InnerViewRect := ViewRect;
+        Inc(InnerViewRect.Left);
+        Inc(InnerViewRect.Top);
+        Dec(InnerViewRect.Bottom);
+        Dec(InnerViewRect.Right);
+        fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
+      end;
+
+    fMinimapImage.Bitmap.Assign(fMinimapTemp);
+
+    if not fMinimapScrollFreeze then
+      begin
+        if fMinimapTemp.Width < MinimapWidth then
+        OH := (MinimapWidth - fMinimapTemp.Width) / 2
+      else begin
+        OH := BaseOffsetHoriz + (MinimapWidth - RectWidth(ViewRect)) / 2;
+        OH := Min(Max(OH, MinimapWidth - fMinimapTemp.Width), 0);
+      end;
+
+      if fMinimapTemp.Height < MinimapHeight then
+        OV := (MinimapHeight - fMinimapTemp.Height) / 2
+      else begin
+        OV := BaseOffsetVert + (MinimapHeight - RectHeight(ViewRect)) / 2;
+        OV := Min(Max(OV, MinimapHeight - fMinimapTemp.Height), 0);
+      end;
+
+      fMinimapImage.OffsetHorz := OH * fMinimapImage.Scale;
+      fMinimapImage.OffsetVert := OV * fMinimapImage.Scale;
     end;
 
-    if fMinimapTemp.Height < MinimapHeight then
-      OV := (MinimapHeight - fMinimapTemp.Height) / 2
-    else begin
-      OV := BaseOffsetVert + (MinimapHeight - RectHeight(ViewRect)) / 2;
-      OV := Min(Max(OV, MinimapHeight - fMinimapTemp.Height), 0);
-    end;
-
-    fMinimapImage.OffsetHorz := OH * fMinimapImage.Scale;
-    fMinimapImage.OffsetVert := OV * fMinimapImage.Scale;
+    fMinimapImage.Changed;
   end;
-
-  fMinimapImage.Changed;
 end;
 
 procedure TBaseSkillPanel.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -1680,6 +1686,7 @@ begin
   Result := GameParams.Level;
 end;
 
+////zooming code: this needs to be changed to resizing code
 procedure TBaseSkillPanel.SetZoom(NewZoom: Integer);
 begin
   if GameParams.HighResolution then
