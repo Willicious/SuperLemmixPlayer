@@ -1617,7 +1617,7 @@ begin
     baHoisting   : L.LemIsStartingAction := OldIsStartingAction; // it needs to know what the Climber's value was
     baSplatting  : begin
                      L.LemExplosionTimer := 0;
-                     CueSoundEffect(SFX_SPLAT, L.Position)
+                     CueSoundEffect(SFX_SPLAT, L.Position);
                    end;
     baBlocking   : begin
                      L.LemHasBlockerField := True;
@@ -5499,7 +5499,7 @@ function TLemmingGame.HandleOhNoing(L: TLemming): Boolean;
 begin
   Result := True;
   if L.LemEndOfAnimation then
-  begin                                     //bookmark
+  begin
     if L.LemAction = baOhNoing then
       Transition(L, baExploding)
     else if L.LemAction = baFreezing then
@@ -6623,6 +6623,11 @@ begin
   NewSI := CurrSpawnInterval + SpawnIntervalModifier;
   if CheckIfLegalSI(NewSI) then
     RecordSpawnInterval(NewSI);
+    CueSoundEffect(SFX_CHANGE_RR);      //bookmark
+                                        //placeholder for (SFX_ASSIGN_SKILL)
+                                        //this cues the sound effect
+                                        //with each number change. We now need
+                                        //bass_fx.dll to change the pitch
 end;
 
 procedure TLemmingGame.Finish(aReason: Integer);

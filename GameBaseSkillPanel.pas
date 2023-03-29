@@ -192,13 +192,13 @@ const
     {Skills end here}
 
     'empty_slot.png',
-    'icon_rr_plus.png',
-    'icon_rr_minus.png',
-    'icon_pause.png',
-    'icon_rewind.png',
-    'icon_ff.png',
-    'icon_restart.png',
-    'icon_nuke.png',
+    'button_rr_plus.png',
+    'button_rr_minus.png',
+    'button_pause.png',
+    'button_rewind.png',
+    'button_ff.png',
+    'button_restart.png',
+    'button_nuke.png',
     'squiggle.png'
     );
 
@@ -493,7 +493,7 @@ begin
   BlankPanel := TBitmap32.Create;
   BlankPanel.DrawMode := dmBlend;
   BlankPanel.CombineMode := cmMerge;
-  GetGraphic('skill_panels.png', BlankPanel);
+  GetGraphic('button.png', BlankPanel);
 
   SrcRect := BlankPanel.BoundsRect;
   SrcWidth := SrcRect.Right - SrcRect.Left;
@@ -541,12 +541,12 @@ begin
 
   // Load now the icons for the text panel
   GetGraphic('panel_icons.png', fIconBmp);
-  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 12 * ResMod, 16 * ResMod);
   for i := 38 to NUM_FONT_CHARS - 1 do
   begin
-    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
+    fInfoFont[i].SetSize(12 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8 * ResMod, 0);
+    OffsetRect(SrcRect, 12 * ResMod, 0);
   end;
 end;
 
@@ -1097,7 +1097,7 @@ begin
 
   RemoveHighlight(aButton);
   if Highlight then
-    DrawHighlight(aButton)
+  DrawHighlight(aButton);
 end;
 
 procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
@@ -1109,9 +1109,9 @@ begin
     BorderRect := fButtonRects[aButton];
     fHighlitSkill := aButton;
     if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
-      SoundManager.PlaySound(SFX_SKILLBUTTON);
+    SoundManager.PlaySound(SFX_SKILLBUTTON);
   end else
-    BorderRect := fButtonRects[aButton];
+  BorderRect := fButtonRects[aButton];
 
   Inc(BorderRect.Right, ResMod);
   Inc(BorderRect.Bottom, ResMod * 2);
