@@ -627,7 +627,7 @@ begin
     fRenderInterface.ForceUpdate := false;
 
     // only in paused mode adjust RR. If not paused it's updated per frame.
-    if TimeForPausedRR then
+    if TimeForPausedRR and not GameParams.ClassicMode then
     begin
       CheckAdjustSpawnInterval;
       PrevPausedRRTime := CurrTime;
