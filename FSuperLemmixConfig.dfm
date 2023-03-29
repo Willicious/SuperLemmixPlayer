@@ -410,7 +410,7 @@ object FormNXConfig: TFormNXConfig
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Segoe UI'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
         TabOrder = 0
         object cbMinimapHighQuality: TCheckBox
@@ -446,7 +446,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbNoBackgrounds: TCheckBox
         Left = 38
-        Top = 165
+        Top = 164
         Width = 205
         Height = 17
         Caption = 'Deactivate Background Images'
@@ -455,7 +455,7 @@ object FormNXConfig: TFormNXConfig
       end
       object ResetWindow: TGroupBox
         Left = 24
-        Top = 268
+        Top = 276
         Width = 219
         Height = 49
         TabOrder = 9
@@ -480,7 +480,7 @@ object FormNXConfig: TFormNXConfig
       end
       object btnResetWindow: TButton
         Left = 65
-        Top = 252
+        Top = 260
         Width = 135
         Height = 34
         Caption = 'Reset Window'

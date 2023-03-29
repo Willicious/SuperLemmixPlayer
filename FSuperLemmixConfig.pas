@@ -446,13 +446,20 @@ end;
 
 procedure TFormNXConfig.cbShowMinimapClick(Sender: TObject);
 begin
-  if cbShowMinimap.Checked then
+  if not fIsSetting then
   begin
-    cbMinimapHighQuality.Enabled := True;
-  end else begin
-    cbMinimapHighQuality.Checked := False;
-    cbMinimapHighQuality.Enabled := False;
+    if cbShowMinimap.Checked then
+    begin
+      cbMinimapHighQuality.Enabled := True;
+    end else begin
+      cbMinimapHighQuality.Checked := False;
+      cbMinimapHighQuality.Enabled := False;
+    end;
+
+    cbResetWindowPosition.State := cbChecked;
+    cbResetWindowSize.State := cbChecked;
   end;
+
   OptionChanged(Sender);
 end;
 
@@ -516,6 +523,7 @@ procedure TFormNXConfig.SetCheckboxes;
         cbHideHelpers.Enabled := false;
         cbHideSkillQ.Enabled := false;
       end;
+
     if not GameParams.ShowMinimap then
       begin
         cbMinimapHighQuality.Checked := False;

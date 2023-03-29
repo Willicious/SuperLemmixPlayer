@@ -148,8 +148,14 @@ begin
   if WindowScale < ResMod then
     WindowScale := ResMod;
 
-  ClientWidth := Max(WindowScale * 444, 444 * ResMod);     //1776
-  ClientHeight := ClientWidth * 50 div 111;                //800
+  if GameParams.ShowMinimap then
+  begin
+    ClientWidth := Max(WindowScale * 444, 444 * ResMod);     //1776
+    ClientHeight := ClientWidth * 50 div 111;                //800
+  end else begin
+    ClientWidth := Max(WindowScale * 340, 340 * ResMod);
+    ClientHeight := ClientWidth * 20 div 34;
+  end;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
