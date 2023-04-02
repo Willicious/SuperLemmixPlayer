@@ -194,7 +194,8 @@ begin
   W := TBitmap32.Create;
   ScreenImg.BeginUpdate;
   try
-    ScreenImg.Bitmap.FillRect(0, 0, 864, 160, $FF000000);
+    ////puts a black border either side of the level preview - see if we can do without it
+    //ScreenImg.Bitmap.FillRect(0, 0, 864, 160, $FF000000);   //bookmark
 
     Lw := GameParams.Level.Info.Width;
     Lh := GameParams.Level.Info.Height;

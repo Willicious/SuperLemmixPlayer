@@ -88,7 +88,7 @@ end;
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   SetInfoCursorLemming(1);
-  SetReplayMark(18);
+  SetReplayMark(17);
   SetInfoLemHatch(20);
   SetInfoLemAlive(26);
   SetInfoLemIn(32);
