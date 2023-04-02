@@ -233,10 +233,19 @@ var
 begin
   BMP := TBitmap32.Create;
   try
+    //if {we're on the postview screen} then     //bookmark - need code to check
+                                                 //for postview screen status
+    //begin
+    //if GameParams.HighResolution then
+      //TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/postview.png', BMP)
+    //else
+      //TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/postview.png', BMP);
+    //end else begin
     if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/standard.png', BMP)
+      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/amiga.png', BMP)
     else
-      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/standard.png', BMP);
+      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/amiga.png', BMP);
+    //end;
 
     fBasicCursor.LoadFromBitmap(BMP);
 
