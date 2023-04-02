@@ -604,9 +604,9 @@ begin
   fForceUpdateOneFrame := (PanelFrameSkip > 0);
   CurrTime := TimeGetTime;
   if Slow then
-    TimeForFrame := (not Pause) and (not Rewind) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
+    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
   else
-    TimeForFrame := (not Pause) and (not Rewind) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
+    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
 
   TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
