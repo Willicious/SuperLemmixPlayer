@@ -557,7 +557,12 @@ var
     //if CompactSkillPanel then
       //fPanelZoomLevel := Min(Screen.Width div 320 div ResMod, fPanelZoomLevel)
     //else
-      fPanelZoomLevel := Min(Screen.Width div 444 div ResMod, fPanelZoomLevel);
+      if GameParams.ShowMinimap then
+      begin
+        fPanelZoomLevel := Min(Screen.Width div 444 div ResMod, fPanelZoomLevel);
+      end else begin
+        fPanelZoomLevel := Min(Screen.Width div 336 div ResMod, fPanelZoomLevel);
+      end;
 
     if fPanelZoomLevel < 1 then
       fPanelZoomLevel := 1;

@@ -154,7 +154,7 @@ begin
     ClientHeight := ClientWidth * 50 div 111;                //800
   end else begin
     ClientWidth := Max(WindowScale * 340, 340 * ResMod);
-    ClientHeight := ClientWidth * 20 div 34;
+    ClientHeight := ClientWidth * 10 div 17;
   end;
 end;
 

@@ -348,7 +348,12 @@ begin
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
 
-  SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod);
+  if GameParams.ShowMinimap then
+  begin
+    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod);
+  end else begin
+    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 336 div ResMod);
+  end;
 
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
   Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40 * ResMod), GameParams.Level.Info.Height * fInternalZoom * ResMod);
