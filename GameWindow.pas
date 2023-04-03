@@ -1449,8 +1449,8 @@ begin
                     case fGameSpeed of
                       gspNormal, gspSlowMo, gspPause, gspFF: GameSpeed := gspRewind;
                       gspRewind: GameSpeed := gspNormal;
-                         end;
-                       end;
+                    end;
+                  end;
       lka_SlowMotion: if not GameParams.HideFrameskipping then
                       begin
                         case fGameSpeed of
