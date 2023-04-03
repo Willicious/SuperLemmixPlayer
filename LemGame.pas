@@ -5907,8 +5907,10 @@ begin
         if Level.Info.SpawnIntervalLocked or (CurrSpawnInterval = MINIMUM_SI) then Exit;
 
         if RightClick then
-          RecordSpawnInterval(MINIMUM_SI)
-        else
+        begin
+          RecordSpawnInterval(MINIMUM_SI);
+          //CueSoundEffect(SFX_CHANGE_RR); //bookmark placeholder for jump-to-max-RR sound
+        end else
           SpawnIntervalModifier := -1;
       end;
     spbSlower:
@@ -5922,8 +5924,10 @@ begin
         if Level.Info.SpawnIntervalLocked or (CurrSpawnInterval = Level.Info.SpawnInterval) then Exit;
 
         if RightClick then
-          RecordSpawnInterval(Level.Info.SpawnInterval)
-        else
+        begin
+          RecordSpawnInterval(Level.Info.SpawnInterval);
+          //CueSoundEffect(SFX_CHANGE_RR); //bookmark placeholder for jump-to-min-RR sound
+        end else
           SpawnIntervalModifier := 1;
       end;
     spbNuke:
@@ -6130,6 +6134,11 @@ procedure TLemmingGame.AdjustSpawnInterval(aSI: Integer);
 begin
   if (aSI <> currSpawnInterval) and CheckIfLegalSI(aSI) then
     currSpawnInterval := aSI;
+
+  CueSoundEffect(SFX_CHANGE_RR);
+  //bookmark - placeholder for (SFX_ASSIGN_SKILL or new CHANGE_RR sound)
+  //this cues the sound effect with each number change. We now need
+  //bass_fx.dll to change the pitch
 end;
 
 
@@ -6621,14 +6630,9 @@ begin
   if SpawnIntervalModifier = 0 then Exit;
 
   NewSI := CurrSpawnInterval + SpawnIntervalModifier;
-  if CheckIfLegalSI(NewSI) then
-    RecordSpawnInterval(NewSI);
-    CueSoundEffect(SFX_CHANGE_RR);      //bookmark
-                                        //placeholder for (SFX_ASSIGN_SKILL)
-                                        //this cues the sound effect
-                                        //with each number change. We now need
-                                        //bass_fx.dll to change the pitch
+  if CheckIfLegalSI(NewSI) then RecordSpawnInterval(NewSI);
 end;
+
 
 procedure TLemmingGame.Finish(aReason: Integer);
 begin

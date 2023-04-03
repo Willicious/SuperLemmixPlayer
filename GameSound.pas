@@ -158,10 +158,17 @@ begin
     Load_BASSDLL(AppPath + 'bass.dll');
     fIsBassLoaded := BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil);
     if not fIsBassLoaded then
-      ShowMessage('BASS.DLL could not initialize. SuperLemmix will run but music and sound will not play.');
+    ShowMessage('BASS.DLL could not initialize. SuperLemmix will run but music and sound will not play.');
   end else begin
     ShowMessage('BASS.DLL not found. SuperLemmix will run but music and sound will not play.');
     fIsBassLoaded := false;
+  end;
+
+  if FileExists(AppPath + 'bass_fx.dll') then      //bookmark
+  begin
+    Load_BASSDLL(AppPath + 'bass_fx.dll');
+  end else begin
+    ShowMessage('BASS_FX.DLL not found. SuperLemmix will run but music and sound will not play.');
   end;
 end;
 
