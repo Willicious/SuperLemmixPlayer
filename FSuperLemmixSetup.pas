@@ -111,6 +111,7 @@ begin
   case cbHotkeys.ItemIndex of
     0: GameParams.Hotkeys.SetDefaultsClassic;
     1: GameParams.Hotkeys.SetDefaultsAdvanced;
+    2: GameParams.Hotkeys.SetDefaultsAlternative;
   end;
 
   Close;

@@ -5,7 +5,7 @@ interface
 uses
   LemmixHotkeys, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls;
+  Dialogs, ComCtrls, StdCtrls, Vcl.Buttons;
 
 type
   TFLemmixHotkeys = class(TForm)
@@ -23,6 +23,7 @@ type
     cbHoldKey: TCheckBox;
     cbSpecialSkip: TComboBox;
     lblSkip: TLabel;
+    btnAlternativeLayout: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -42,6 +43,7 @@ type
     //procedure btnTraditionalLayoutClick(Sender: TObject);
     procedure btnClassicLayoutClick(Sender: TObject);
     procedure btnAdvancedLayoutClick(Sender: TObject);
+    procedure btnAlternativeLayoutClick(Sender: TObject);
     procedure btnClearAllKeysClick(Sender: TObject);
     //procedure btnMinimalLayoutClick(Sender: TObject);
   private
@@ -383,6 +385,13 @@ procedure TFLemmixHotkeys.btnAdvancedLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAdvanced;
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.btnAlternativeLayoutClick(Sender: TObject);
+begin
+  fHotkeys.ClearAllKeys;
+  fHotkeys.SetDefaultsAlternative;
   RefreshList;
 end;
 

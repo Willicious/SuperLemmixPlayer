@@ -13785,7 +13785,8 @@ object FNLSetup: TFNLSetup
         Text = 'Advanced Hotkeys'
         Items.Strings = (
           'Classic Hotkeys'
-          'Advanced Hotkeys')
+          'Advanced Hotkeys'
+          'Alternative Hotkeys')
       end
       object ebUserName: TEdit
         Left = 136

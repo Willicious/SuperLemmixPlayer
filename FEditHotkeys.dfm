@@ -3,12 +3,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
   Top = 125
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
-  AutoSize = True
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'Hotkeys'
-  ClientHeight = 425
-  ClientWidth = 513
+  ClientHeight = 448
+  ClientWidth = 519
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,24 +20,24 @@ object FLemmixHotkeys: TFLemmixHotkeys
   PixelsPerInch = 96
   TextHeight = 13
   object lblSkill: TLabel
-    Left = 347
-    Top = 261
+    Left = 341
+    Top = 288
     Width = 24
     Height = 13
     Caption = 'Skill:'
     Visible = False
   end
   object lblDuration: TLabel
-    Left = 327
-    Top = 285
+    Left = 321
+    Top = 312
     Width = 49
     Height = 13
     Caption = 'Duration:'
     Visible = False
   end
   object Label3: TLabel
-    Left = 320
-    Top = 216
+    Left = 321
+    Top = 234
     Width = 3
     Height = 13
     Alignment = taCenter
@@ -50,8 +49,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
     ParentFont = False
   end
   object lblSkip: TLabel
-    Left = 344
-    Top = 309
+    Left = 338
+    Top = 336
     Width = 25
     Height = 13
     Caption = 'Skip:'
@@ -61,7 +60,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Left = 0
     Top = 0
     Width = 311
-    Height = 425
+    Height = 448
     Columns = <
       item
         Caption = 'Key'
@@ -80,8 +79,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnSelectItem = lvHotkeysSelectItem
   end
   object cbFunctions: TComboBox
-    Left = 316
-    Top = 236
+    Left = 314
+    Top = 258
     Width = 197
     Height = 21
     Style = csDropDownList
@@ -132,17 +131,17 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Hold-To-Scroll')
   end
   object btnClose: TButton
-    Left = 343
-    Top = 374
+    Left = 342
+    Top = 392
     Width = 138
-    Height = 41
+    Height = 40
     Caption = 'Save && Close'
     ModalResult = 1
     TabOrder = 2
   end
   object cbSkill: TComboBox
-    Left = 379
-    Top = 258
+    Left = 373
+    Top = 285
     Width = 129
     Height = 21
     Style = csDropDownList
@@ -174,8 +173,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Cloner')
   end
   object cbShowUnassigned: TCheckBox
-    Left = 345
-    Top = 158
+    Left = 346
+    Top = 179
     Width = 145
     Height = 17
     Caption = 'Show Unassigned Keys'
@@ -183,8 +182,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnClick = cbShowUnassignedClick
   end
   object ebSkipDuration: TEdit
-    Left = 379
-    Top = 282
+    Left = 373
+    Top = 309
     Width = 129
     Height = 21
     Enabled = False
@@ -193,18 +192,18 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnChange = ebSkipDurationChange
   end
   object btnFindKey: TButton
-    Left = 347
-    Top = 114
+    Left = 342
+    Top = 134
     Width = 138
-    Height = 41
+    Height = 40
     Caption = 'Find Key'
     TabOrder = 6
     OnClick = btnFindKeyClick
     OnKeyDown = btnFindKeyKeyDown
   end
   object cbHardcodedNames: TCheckBox
-    Left = 345
-    Top = 181
+    Left = 346
+    Top = 202
     Width = 145
     Height = 17
     Caption = 'Use Hardcoded Names'
@@ -214,8 +213,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnClick = cbHardcodedNamesClick
   end
   object cbHoldKey: TCheckBox
-    Left = 379
-    Top = 342
+    Left = 378
+    Top = 367
     Width = 97
     Height = 17
     Caption = 'Hold Key'
@@ -224,8 +223,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnClick = cbHoldKeyClick
   end
   object cbSpecialSkip: TComboBox
-    Left = 379
-    Top = 306
+    Left = 373
+    Top = 333
     Width = 129
     Height = 21
     Style = csDropDownList
@@ -239,30 +238,39 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Highlit State Change')
   end
   object btnClassicLayout: TButton
-    Left = 347
-    Top = 37
-    Width = 138
+    Left = 322
+    Top = 51
+    Width = 178
     Height = 25
     Caption = 'Set to Classic Layout'
     TabOrder = 10
     OnClick = btnClassicLayoutClick
   end
   object btnAdvancedLayout: TButton
-    Left = 347
-    Top = 68
-    Width = 138
+    Left = 322
+    Top = 76
+    Width = 178
     Height = 25
     Caption = 'Set to Advanced Layout'
     TabOrder = 11
     OnClick = btnAdvancedLayoutClick
   end
   object btnClearAllKeys: TButton
-    Left = 347
-    Top = 6
+    Left = 342
+    Top = 5
     Width = 138
-    Height = 25
+    Height = 40
     Caption = 'Clear All Keys'
     TabOrder = 12
     OnClick = btnClearAllKeysClick
+  end
+  object btnAlternativeLayout: TBitBtn
+    Left = 322
+    Top = 102
+    Width = 178
+    Height = 25
+    Caption = 'Set to Alternative Layout'
+    TabOrder = 13
+    OnClick = btnAlternativeLayoutClick
   end
 end

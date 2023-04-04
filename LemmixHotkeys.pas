@@ -85,10 +85,9 @@ type
       procedure ClearAllKeys;
       procedure SaveFile;
 
-      //procedure SetDefaultsTraditional;
-      //procedure SetDefaultsFunctional;
       procedure SetDefaultsClassic;
       procedure SetDefaultsAdvanced;
+      procedure SetDefaultsAlternative;
 
       procedure SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
       function CheckKeyEffect(aKey: Word): TLemmixHotkey;
@@ -227,6 +226,65 @@ begin
   SetKeyFunction($66, lka_Skill, Integer(spbBasher));
   SetKeyFunction($67, lka_Skill, Integer(spbMiner));
   SetKeyFunction($68, lka_Skill, Integer(spbDigger));
+end;
+
+procedure TLemmixHotkeyManager.SetDefaultsAlternative;
+begin
+  ClearAllKeys;
+  SetKeyFunction($53, lka_DirLeft);
+  SetKeyFunction($46, lka_DirRight);
+  SetKeyFunction($25, lka_DirLeft);
+  SetKeyFunction($27, lka_DirRight);
+  SetKeyFunction($20, lka_Pause);
+  SetKeyFunction($70, lka_Restart);
+  SetKeyFunction($71, lka_LoadState);
+  SetKeyFunction($72, lka_SaveState);
+  SetKeyFunction($34, lka_FastForward);
+  SetKeyFunction($35, lka_FastForward);
+  SetKeyFunction($04, lka_Pause);
+  SetKeyFunction($05, lka_ZoomIn);
+  SetKeyFunction($06, lka_ZoomOut);
+  SetKeyFunction($1B, lka_Exit);
+  SetKeyFunction($02, lka_Scroll);
+  SetKeyFunction($75, lka_SaveReplay);
+  SetKeyFunction($76, lka_LoadReplay);
+  SetKeyFunction($11, lka_Highlight);
+  SetKeyFunction($19, lka_Highlight);
+  SetKeyFunction($4D, lka_Music);
+  SetKeyFunction($4E, lka_Sound);
+  SetKeyFunction($73, lka_ReleaseRateDown);
+  SetKeyFunction($74, lka_ReleaseRateUp);
+  SetKeyFunction($49, lka_FallDistance);
+  SetKeyFunction($50, lka_EditReplay);
+  SetKeyFunction($4F, lka_ReplayInsert);
+  SetKeyFunction($0D, lka_SaveImage);
+  SetKeyFunction($4A, lka_Scroll);
+  SetKeyFunction($BF, lka_ClearPhysics, 1);
+  SetKeyFunction($31, lka_Skip, -17);
+  SetKeyFunction($32, lka_Skip, -1);
+  SetKeyFunction($33, lka_Skip, 1);
+  SetKeyFunction($36, lka_Skip, 170);
+  SetKeyFunction($37, lka_SpecialSkip, 0);
+  SetKeyFunction($38, lka_SpecialSkip, 1);
+  SetKeyFunction($39, lka_SpecialSkip, 2);
+  SetKeyFunction($10, lka_SkillLeft);
+  SetKeyFunction($42, lka_SkillRight);
+  SetKeyFunction($44, lka_Skill, Integer(spbWalker));
+  SetKeyFunction($52, lka_Skill, Integer(spbJumper));
+  SetKeyFunction($12, lka_Skill, Integer(spbShimmier));
+  SetKeyFunction($48, lka_Skill, Integer(spbSlider));
+  SetKeyFunction($5A, lka_Skill, Integer(spbClimber));
+  SetKeyFunction($51, lka_Skill, Integer(spbFloater));
+  SetKeyFunction($09, lka_Skill, Integer(spbGlider));
+  SetKeyFunction($56, lka_Skill, Integer(spbBomber));
+  SetKeyFunction($58, lka_Skill, Integer(spbBlocker));
+  SetKeyFunction($54, lka_Skill, Integer(spbPlatformer));
+  SetKeyFunction($41, lka_Skill, Integer(spbBuilder));
+  SetKeyFunction($59, lka_Skill, Integer(spbLaserer));
+  SetKeyFunction($45, lka_Skill, Integer(spbBasher));
+  SetKeyFunction($43, lka_Skill, Integer(spbFencer));
+  SetKeyFunction($47, lka_Skill, Integer(spbMiner));
+  SetKeyFunction($57, lka_Skill, Integer(spbDigger));
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
