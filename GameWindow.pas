@@ -584,15 +584,14 @@ begin
     Exit;
   end;
 
-  //This might be able to be removed because Framestepping is no longer on the panel
   PanelFrameSkip := SkillPanel.FrameSkip;
 
-  if not GameParams.HideFrameskipping then
-  if PanelFrameSkip < 0 then
-  begin
-    if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
-    GotoSaveState(Max(Game.CurrentIteration-1, 0));
-  end;
+  //if not GameParams.HideFrameskipping then
+  //if PanelFrameSkip < 0 then
+  //begin
+    //if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+    //GotoSaveState(Max(Game.CurrentIteration-1, 0));
+  //end;
 
   // bookmark
   Pause := (fGameSpeed = gspPause);
@@ -1230,6 +1229,7 @@ begin
   Img.BitmapAlign := baCustom;
   Img.ScaleMode := smScale;
 
+  // create panel
   SkillPanel := TSkillPanelStandard.CreateWithWindow(Self, Self);
   SkillPanel.Parent := Self;
 

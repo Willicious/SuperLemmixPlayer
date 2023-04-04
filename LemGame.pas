@@ -1557,7 +1557,7 @@ begin
     L.LemTrueFallen := L.LemFallen;
   end;
 
-  if ((NewAction in [baShimmying, baJumping]) and (L.LemAction = baClimbing)) or
+  if ((NewAction in [baShimmying, baJumping]) and (L.LemAction = baClimbing)) or  //add baReaching here to allow climber to enter reacher state //bookmark
      ((NewAction = baJumping) and (L.LemAction = baSliding)) then
   begin
     // turn around and get out of the wall
@@ -1950,6 +1950,7 @@ begin
   // Queue skill assignment if current assignment is impossible
   if not Assigned(L) or not CheckSkillAvailable(Skill) then
   begin
+
   if not GameParams.HideSkillQ then
     begin
       if Assigned(LQueue) and not (Skill in PermSkillSet) then
@@ -2058,7 +2059,7 @@ begin
   end
   else if (NewSkill = baShimmying) then
   begin
-    if L.LemAction in [baClimbing, baSliding, baJumping, baDehoisting] then
+    if L.LemAction in [baClimbing, baSliding, baJumping, baDehoisting] then //bookmark - take out baClimbing here to add reacher state to climber>shimmier transition
       Transition(L, baShimmying)
     else
       Transition(L, baReaching);
@@ -2444,8 +2445,8 @@ end;
 
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baDigging, baLasering];
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, //baClimbing
+               baStacking, baBashing, baFencing, baMining, baDigging, baLasering];
 var
   CopyL: TLemming;
   i: Integer;

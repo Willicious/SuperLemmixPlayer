@@ -163,13 +163,13 @@ begin
   SetKeyFunction($4E, lka_Nuke);
   SetKeyFunction($52, lka_Restart);
   SetKeyFunction($46, lka_FastForward);
-  SetKeyFunction($42, lka_Rewind);
+  SetKeyFunction($44, lka_Rewind);
   SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($05, lka_ZoomIn);
   SetKeyFunction($06, lka_ZoomOut);
   SetKeyFunction($02, lka_Scroll);
   SetKeyFunction($4D, lka_Music);
-  SetKeyFunction($5A, lka_Sound);
+  SetKeyFunction($58, lka_Sound);
   SetKeyFunction($41, lka_ShowAthleteInfo);
   SetKeyFunction($BB, lka_ReleaseRateUp);
   SetKeyFunction($BD, lka_ReleaseRateDown);
@@ -182,8 +182,6 @@ begin
   SetKeyFunction($27, lka_DirRight);
   SetKeyFunction($26, lka_SkillLeft);
   SetKeyFunction($28, lka_SkillRight);
-  SetKeyFunction($11, lka_SkillLeft);
-  SetKeyFunction($12, lka_SkillRight);
   SetKeyFunction($49, lka_FallDistance);
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($BA, lka_ShowUsedSkills);
@@ -192,7 +190,7 @@ begin
   SetKeyFunction($4A, lka_Skip, 20);
   SetKeyFunction($60, lka_Skip, 100);
   SetKeyFunction($20, lka_Skip, 1000);
-  SetKeyFunction($0E, lka_SpecialSkip, 0);
+  SetKeyFunction($5A, lka_SpecialSkip, 0);
   SetKeyFunction($09, lka_SpecialSkip, 1);
   SetKeyFunction($10, lka_SpecialSkip, 1);
   SetKeyFunction($30, lka_SlowMotion);
@@ -207,7 +205,7 @@ begin
   SetKeyFunction($4F, lka_ReplayInsert);
   SetKeyFunction($47, lka_SaveState);
   SetKeyFunction($48, lka_LoadState);
-  SetKeyFunction($54, lka_SaveImage);
+  SetKeyFunction($79, lka_SaveImage);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
   SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
@@ -217,15 +215,15 @@ begin
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
   SetKeyFunction($37, lka_Skill, Integer(spbMiner));
   SetKeyFunction($38, lka_Skill, Integer(spbDigger));
-  SetKeyFunction($61, lka_Skill, Integer(spbClimber));
-  SetKeyFunction($62, lka_Skill, Integer(spbFloater));
-  SetKeyFunction($63, lka_Skill, Integer(spbTimebomber));
-  //SetKeyFunction($63, lka_Skill, Integer(spbBomber));
-  SetKeyFunction($64, lka_Skill, Integer(spbBlocker));
-  SetKeyFunction($65, lka_Skill, Integer(spbBuilder));
-  SetKeyFunction($66, lka_Skill, Integer(spbBasher));
-  SetKeyFunction($67, lka_Skill, Integer(spbMiner));
-  SetKeyFunction($68, lka_Skill, Integer(spbDigger));
+  SetKeyFunction($70, lka_Skill, Integer(spbClimber));
+  SetKeyFunction($71, lka_Skill, Integer(spbFloater));
+  SetKeyFunction($72, lka_Skill, Integer(spbTimebomber));
+  //SetKeyFunction($73, lka_Skill, Integer(spbBomber));
+  SetKeyFunction($73, lka_Skill, Integer(spbBlocker));
+  SetKeyFunction($74, lka_Skill, Integer(spbBuilder));
+  SetKeyFunction($75, lka_Skill, Integer(spbBasher));
+  SetKeyFunction($76, lka_Skill, Integer(spbMiner));
+  SetKeyFunction($77, lka_Skill, Integer(spbDigger));
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAlternative;

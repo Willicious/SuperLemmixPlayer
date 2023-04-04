@@ -173,7 +173,7 @@ type
     procedure DrawDiggerShadow(L: TLemming);
     procedure DrawExploderShadow(L: TLemming);
     procedure DrawProjectileShadow(L: TLemming);
-    procedure DrawProjectionShadow(L: TLemming);
+    procedure DrawProjectionShadow(L: TLemming); //bookmark - deprecated, need to remove associated code
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
