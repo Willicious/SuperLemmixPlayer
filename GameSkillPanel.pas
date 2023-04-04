@@ -79,7 +79,7 @@ end;
 //Second set of digits adjusts width & height of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-if GameParams.ShowMinimap then
+//if GameParams.ShowMinimap then
   begin
     Result := Rect(355 * ResMod, 2 * ResMod, 440 * ResMod, 36 * ResMod);
   end;
