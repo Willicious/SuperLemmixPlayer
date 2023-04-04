@@ -27,6 +27,8 @@ type
     fRescueCount    : Integer;
     fHasTimeLimit   : Boolean;
     fTimeLimit      : Integer;
+    //fSuperlemming   : Boolean;
+    //fKaroshi        : Boolean;
 
     fSkillset: TSkillset;
     fSkillCounts: TSkillCounts;
