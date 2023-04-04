@@ -412,11 +412,16 @@ begin
     NewZoom := -1;
     NewPanelZoom := -1;
 
-    if Sender = cbHighResolution then
+    if Sender = cbHighResolution then   //if going from low-res with minimap...
       if cbHighResolution.Checked then
       begin
         NewZoom := cbZoom.ItemIndex div 2;
         NewPanelZoom := cbPanelZoom.ItemIndex div 2;
+        if cbShowMinimap.Checked then  //...we might need to reset the window
+        begin
+        cbResetWindowSize.Checked := True;
+        cbResetWindowPosition.Checked := True;
+        end;
       end else begin
         NewZoom := cbZoom.ItemIndex * 2 + 1;
         NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
