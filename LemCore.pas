@@ -80,9 +80,10 @@ type
     baJumping,         //34
     baDehoisting,      //35
     baSliding,         //36
-    baSpearing,        //37
-    baGrenading,       //38
-    baLasering         //39
+    baDangling,        //37
+    baSpearing,        //38
+    baGrenading,       //39
+    baLasering         //40
   );
 
 const
@@ -277,9 +278,10 @@ const
     spbJumper,      //34
     spbNone,        //35
     spbSlider,      //36
-    spbSpearer,     //37
-    spbGrenader,    //38
-    spbLaserer      //39
+    spbNone,        //37
+    spbSpearer,     //38
+    spbGrenader,    //39
+    spbLaserer      //40
   );
 
 const

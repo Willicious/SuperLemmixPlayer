@@ -88,6 +88,8 @@ const
   DEHOISTING_RTL      = 59;
   SLIDING             = 60;
   SLIDING_RTL         = 61;
+  DANGLING            = 62;
+  DANGLING_RTL        = 63;
   THROWING            = 62;
   THROWING_RTL        = 63;
   LASERING            = 64;
@@ -134,9 +136,10 @@ const
     (JUMPING, JUMPING_RTL),                   // 34 baJumping
     (DEHOISTING, DEHOISTING_RTL),             // 35 baDehoisting
     (SLIDING, SLIDING_RTL),                   // 36 baSliding
-    (THROWING, THROWING_RTL),                 // 37 baSpearing
-    (THROWING, THROWING_RTL),                 // 38 baGrenading
-    (LASERING, LASERING_RTL)                  // 39 baLasering
+    (DANGLING, DANGLING_RTL),                 // 37 baDangling
+    (THROWING, THROWING_RTL),                 // 38 baSpearing
+    (THROWING, THROWING_RTL),                 // 39 baGrenading
+    (LASERING, LASERING_RTL)                  // 40 baLasering
   );
 
 type
@@ -192,7 +195,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..32] of String =  (
+  ANIM_NAMES: array[0..33] of String =  (
   'WALKER',        //1
   'ASCENDER',      //2
   'DIGGER',        //3
@@ -210,9 +213,9 @@ const
   'BLOCKER',       //15
   'SHRUGGER',      //16
   'TIMEBOMBER',    //17
-  'OHNOER',        //18         //it doesn't matter where you put this
-  'BOMBER',        //19         //it never shows up as a timebomber
-  'PLATFORMER',    //20         //because the code isn't actually using "timebomber" state
+  'OHNOER',        //18
+  'BOMBER',        //19
+  'PLATFORMER',    //20
   'FREEZER',       //21
   'SWIMMER',       //22
   'GLIDER',        //23
@@ -224,8 +227,9 @@ const
   'JUMPER',        //29
   'DEHOISTER',     //30
   'SLIDER',        //31
-  'THROWER',       //32
-  'LASERER'        //33
+  'DANGLER',       //32
+  'THROWER',       //33
+  'LASERER'        //34
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

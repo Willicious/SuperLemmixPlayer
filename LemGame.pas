@@ -357,6 +357,7 @@ type
       function LemCanDehoist(L: TLemming; AlreadyMovedX: Boolean): Boolean;
     function HandleSliding(L: TLemming) : Boolean;
       function LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;
+    function HandleDangling(L: TLemming) : Boolean;
     function HandleLasering(L: TLemming) : Boolean;
     function HandleThrowing(L: TLemming) : Boolean;
 
@@ -571,7 +572,7 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..23] of TBasicLemmingAction =
+  ActionListArray: array[0..23] of TBasicLemmingAction =       //bookmark - this will fix talisman bug pointed out by Proxima
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
@@ -994,13 +995,14 @@ begin
   LemmingMethods[baJumping]    := HandleJumping;
   LemmingMethods[baDehoisting] := HandleDehoisting;
   LemmingMethods[baSliding]    := HandleSliding;
+  LemmingMethods[baDangling]   := HandleDangling;
   LemmingMethods[baLasering]   := HandleLasering;
   LemmingMethods[baSpearing]   := HandleThrowing;
   LemmingMethods[baGrenading]  := HandleThrowing;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
-  NewSkillMethods[baAscending]      := nil;
+  NewSkillMethods[baAscending]    := nil;
   NewSkillMethods[baDigging]      := MayAssignDigger;
   NewSkillMethods[baClimbing]     := MayAssignClimber;
   NewSkillMethods[baDrowning]     := nil;
@@ -1031,6 +1033,7 @@ begin
   NewSkillMethods[baJumping]      := MayAssignJumper;
   NewSkillMethods[baDehoisting]   := nil;
   NewSkillMethods[baSliding]      := MayAssignSlider;
+  NewSkillMethods[baDangling]     := nil;
   NewSkillMethods[baLasering]     := MayAssignLaserer;
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
@@ -1521,9 +1524,10 @@ const
     13, //34 baJumping
      7, //35 baDehoisting
      1, //36 baSliding
-    10, //37 baSpearing
-    10, //38 baGrenading
-    12  //39 baLasering - it's, ironically, this high for rendering purposes
+    16, //37 baDangling
+    10, //38 baSpearing
+    10, //39 baGrenading
+    12  //40 baLasering - it's, ironically, this high for rendering purposes
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1556,8 +1560,8 @@ begin
     end;
     L.LemTrueFallen := L.LemFallen;
   end;
-
-  if ((NewAction in [baShimmying, baJumping]) and (L.LemAction = baClimbing)) or  //add baReaching here to allow climber to enter reacher state //bookmark
+                     //bookmark - baReaching here allows Climber to enter Reacher state
+  if ((NewAction in [baReaching, baShimmying, baJumping]) and (L.LemAction = baClimbing)) or
      ((NewAction = baJumping) and (L.LemAction = baSliding)) then
   begin
     // turn around and get out of the wall
@@ -1583,6 +1587,12 @@ begin
       Inc(L.LemY);
   end;
 
+  if (NewAction = baShimmying) and (L.LemAction = baDangling) then
+  begin
+    //bookmark - this is the transition code
+    //not sure exactly what to put here yet
+  end;
+
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
   begin
     for i := -1 to 3 do
@@ -1597,6 +1607,12 @@ begin
     L.LemDehoistPinY := L.LemY;
   if NewAction = baSliding then
     L.LemDehoistPinY := -1;
+
+  //if NewAction = baDangling then          //bookmark - not sure if any of this is needed
+    //L.LemDanglerPinY := L.LemY - 9;
+    //L.LemDanglerPinX := L.LemX - 1;
+  //if NewAction = baSliding then
+    //L.LemDanglerPinX := L.LemX - 1;
 
   // Change Action
   L.LemAction := NewAction;
@@ -2058,8 +2074,8 @@ begin
     GenerateClonedLem(L);
   end
   else if (NewSkill = baShimmying) then
-  begin
-    if L.LemAction in [baClimbing, baSliding, baJumping, baDehoisting] then //bookmark - take out baClimbing here to add reacher state to climber>shimmier transition
+  begin                //bookmark - baClimbing here stops climber>reacherer transition
+    if L.LemAction in [baSliding, baJumping, baDehoisting, baDangling] then
       Transition(L, baShimmying)
     else
       Transition(L, baReaching);
@@ -2269,7 +2285,7 @@ function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
                baStacking, baBashing, baFencing, baMining, baDigging,
-               baReaching, baShimmying, baLasering];
+               baReaching, baShimmying, baLasering, baDangling];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2278,16 +2294,16 @@ function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baVaporizing, baSplatting, baExiting];
+               baDrowning, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
 end;
 
 function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baVaporizing, baSplatting, baExiting];
+  ActionSet = [baTimebombing, baOhnoing, baFreezing, baTimebombFinish,
+               baExploding, baFreezeFinish, baDrowning,
+               baDangling, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
 end;
@@ -2296,7 +2312,7 @@ function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baVaporizing, baSplatting, baExiting];
+               baDrowning, baDangling, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not (L.LemIsFloater or L.LemIsGlider);
 end;
@@ -2305,7 +2321,7 @@ function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baVaporizing, baSplatting, baExiting];   // Does NOT contain baDrowning!
+               baDangling, baSplatting, baExiting];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
 end;
@@ -2314,7 +2330,7 @@ function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baVaporizing, baSplatting, baExiting];
+               baDrowning, baDangling, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
 end;
@@ -2333,7 +2349,7 @@ function TLemmingGame.MayAssignTimebomber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baVaporizing, baSplatting, baExiting];
+               baDangling, baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
   Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
@@ -2348,7 +2364,7 @@ function TLemmingGame.MayAssignExploderFreezer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baVaporizing, baSplatting, baExiting];
+               baDangling, baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
   Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
@@ -2438,7 +2454,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
-               baJumping, baLasering, baSpearing, baGrenading];
+               baJumping, baLasering, baSpearing, baGrenading, baDangling];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2446,7 +2462,8 @@ end;
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, //baClimbing
-               baStacking, baBashing, baFencing, baMining, baDigging, baLasering];
+               baStacking, baBashing, baFencing, baMining, baDigging, baLasering,
+               baDangling];
 var
   CopyL: TLemming;
   i: Integer;
@@ -2468,8 +2485,8 @@ begin
         Result := True;
 
     CopyL.Free;
-  end else if L.LemAction in [baSliding, baDehoisting] then
-  begin
+  end else if L.LemAction in [baDehoisting, baSliding] then//, baDangling] then
+  begin                       //bookmark - not sure if beDangling is needed here
     // Check whether the lemming would fall down the next frame
     CopyL := TLemming.Create;
     CopyL.Assign(L);
@@ -2480,6 +2497,7 @@ begin
 
     if (CopyL.LemAction <> OldAction) and (CopyL.LemDX = L.LemDX) and
        ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding)) then
+       //or (OldAction <> baDangling)) then <<<bookmark - not sure if this is needed
       Result := True;
 
     CopyL.Free;
@@ -2498,7 +2516,7 @@ function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing,
-               baClimbing, baSliding, baLasering];
+               baClimbing, baSliding, baDangling, baLasering];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2689,7 +2707,7 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
                          and not (L.LemAction = baBlocking)
                          and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
-    begin
+    begin                                   //bookmark - baDangling?
       NeedShiftPosition := (L.LemAction in [baClimbing, baSliding, baDehoisting]);
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
@@ -2846,8 +2864,9 @@ begin
   Gadget := Gadgets[GadgetID];
 
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
-     and not (L.LemAction in [baDehoisting, baSliding, baClimbing, baHoisting, baSwimming, baOhNoing, baJumping]) then
-  begin
+     and not (L.LemAction in [baDehoisting, baSliding, baClimbing, baHoisting,
+                              baSwimming, baOhNoing, baJumping, baDangling])
+  then begin                                                    //bookmark - is baDangling needed here?
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
     else L.LemActionNew := baWalking;
@@ -3062,7 +3081,7 @@ begin
     else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
       LayBrick(L)
     else if L.LemAction in [baClimbing, baSliding, baDehoisting] then
-    begin
+    begin                   //bookmark - baDangling?
       Inc(L.LemX, L.LemDx); // Move out of the wall
       if not L.LemIsStartingAction then Inc(L.LemY); // Don't move below original position
       Transition(L, baWalking);
@@ -3614,7 +3633,8 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baVaporizing, baShrugging, baTimebombing, baOhnoing,
-                      baExploding, baFreezing, baReaching, baDehoisting];
+                      baExploding, baFreezing, baReaching, baDehoisting,
+                      baDangling];  //bookmark - does Dangling need to go here?
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -3670,6 +3690,8 @@ begin
   Inc(L.LemX, L.LemDx);
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
+  //bookmark - do we need Dangler code anywhere here?
+
   if (LemDy > 0) and (L.LemIsSlider) and (LemCanDehoist(L, true)) then
   begin
     Dec(L.LemX, L.LemDX);
@@ -3677,6 +3699,7 @@ begin
     Exit;
   end;
 
+  
   if (LemDy < -6) then
   begin
     if L.LemIsClimber then
@@ -3860,6 +3883,22 @@ begin
 end;
 
 
+function TLemmingGame.HandleDangling(L: TLemming): Boolean;
+var
+  n: Integer;           //AFAIK, this is where the meat of the dangler code will be
+begin
+  //Result := True;    //what result? does this matter? I guess we'll find out
+  if L.LemEndOfAnimation then
+  begin
+      //if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
+      //RemoveLemming(L, RM_NEUTRAL) // shouldn't get to this point but just in case
+    //else if HasPixelAt(L.LemX, L.LemY) then         //bookmark
+      //Transition(L, baWalking)                      //not sure if all this is needed
+    //else
+      Transition(L, baFalling);
+  end;
+end;
+
 function TLemmingGame.HandleDehoisting(L: TLemming): Boolean;
 var
   n: Integer;
@@ -3872,7 +3911,7 @@ begin
     else if HasPixelAt(L.LemX, L.LemY - 7) then
       Transition(L, baSliding)
     else
-      Transition(L, baFalling);
+      Transition(L, baDangling);  //we don't want the dehoister to fall straightaway
   end else if L.LemPhysicsFrame >= 2 then
   begin
     for n := 0 to 1 do
@@ -3953,7 +3992,7 @@ begin
     Result := false;
   end else if not SliderHasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
   begin
-    Transition(L, baFalling);
+    Transition(L, baDangling); //we don't want the Slider to fall straightaway
     Result := false;
   end else if SliderHasPixelAt(L.LemX, L.LemY) then
   begin

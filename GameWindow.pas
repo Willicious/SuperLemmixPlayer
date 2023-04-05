@@ -593,7 +593,6 @@ begin
     //GotoSaveState(Max(Game.CurrentIteration-1, 0));
   //end;
 
-  // bookmark
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
   //Superlemming := (fGameSpeed = gspSuperlemming);
@@ -613,7 +612,7 @@ begin
   TimeForRewind := Rewind and (CurrTime - PrevCallTime > IdealFrameTimeMSRewind);
   Hyper := IsHyperSpeed;
 
-  if TimeForRewind then      //bookmark
+  if TimeForRewind then
   begin
     if GameParams.ClassicMode then Game.CancelReplayAfterSkip := true;
     PrevCallTime := CurrTime;
@@ -1839,7 +1838,7 @@ begin
   // set timers
   IdealFrameTimeMSFast := 10;
   IdealScrollTimeMS := 15;
-  IdealFrameTimeMSRewind := 22;        //bookmark
+  IdealFrameTimeMSRewind := 22;    //bookmark - may need to change this
   IdealFrameTimeMS := 60; // normal
   IdealFrameTimeMSSlow := 240;
 
@@ -1934,9 +1933,11 @@ var
   Act1, Act2: TBasicLemmingAction;
   n: Integer;
 const
-  COMPATIBLE_ACTIONS: array[0..8] of array[0..1] of TBasicLemmingAction =
+  COMPATIBLE_ACTIONS: array[0..10] of array[0..1] of TBasicLemmingAction =
     ((baWalking, baAscending),
      (baDehoisting, baSliding),
+     (baSliding, baDangling),     //might not need these - check later
+     (baDangling, baShimmying),   //array would need to be 0..10
      (baClimbing, baHoisting),
      (baFalling, baFloating),
      (baFalling, baGliding),

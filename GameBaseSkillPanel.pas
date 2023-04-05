@@ -531,7 +531,7 @@ var
 begin
   // Load first the characters
   GetGraphic('panel_font.png', fIconBmp);
-  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);          //bookmark
+  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
   for i := 0 to 37 do
   begin
     fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
@@ -1288,12 +1288,12 @@ begin
       end else
         SpecialCombine := false;
 
-        //this changes the position of the game info string (lems, time limit, etc)
+      //this changes the position of the game info string (lems, time limit, etc) - bookmark
       if SpecialCombine then
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8) * ResMod, 0);         //bookmark
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8) * ResMod, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
         fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8) * ResMod, 0);
@@ -1579,14 +1579,14 @@ begin
       begin
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspRewind] then //bookmark
+        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspRewind] then
           fGameWindow.GameSpeed := gspFF;
       end;
     spbRewind:
       begin
         if fGameWindow.GameSpeed = gspRewind then
           fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then //bookmark
+        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then
           fGameWindow.GameSpeed := gspRewind;
       end;
     spbRestart:

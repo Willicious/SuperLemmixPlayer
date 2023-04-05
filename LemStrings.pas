@@ -123,6 +123,7 @@ resourcestring
   SJumper = 'Jumper';
   SDehoister = 'Dehoister';
   SSlider = 'Slider';
+  SDangler = 'Dangler';
   SSpearer = 'Spearer';
   SGrenader = 'Grenader';
   SLaserer = 'Laserer';
@@ -196,9 +197,10 @@ const
     SJumper,      //34
     SDehoister,   //35
     SSlider,      //36
-    SSpearer,     //37
-    SGrenader,    //38
-    SLaserer      //39
+    SDangler,     //37
+    SSpearer,     //38
+    SGrenader,    //39
+    SLaserer      //40
   );
 
 implementation
