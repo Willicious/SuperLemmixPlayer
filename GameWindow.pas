@@ -1933,11 +1933,10 @@ var
   Act1, Act2: TBasicLemmingAction;
   n: Integer;
 const
-  COMPATIBLE_ACTIONS: array[0..10] of array[0..1] of TBasicLemmingAction =
+  COMPATIBLE_ACTIONS: array[0..9] of array[0..1] of TBasicLemmingAction =
     ((baWalking, baAscending),
      (baDehoisting, baSliding),
-     (baSliding, baDangling),     //might not need these - check later
-     (baDangling, baShimmying),   //array would need to be 0..10
+     (baDangling, baShimmying),   //bookmark: might not need this - check later
      (baClimbing, baHoisting),
      (baFalling, baFloating),
      (baFalling, baGliding),

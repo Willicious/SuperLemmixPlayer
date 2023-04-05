@@ -1587,10 +1587,14 @@ begin
       Inc(L.LemY);
   end;
 
+  if (NewAction = baDangling) and (L.LemAction in [baSliding, baDehoisting]) then
+  begin             //bookmark
+    Inc(L.LemY, 2); //this makes sure that the skill shadow is deplayed
+  end;
+
   if (NewAction = baShimmying) and (L.LemAction = baDangling) then
-  begin
-    //bookmark - this is the transition code
-    //not sure exactly what to put here yet
+  begin          //bookmark
+    Dec(L.LemY); //brings the lem back up 1px for the start of the shimmier animation
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
