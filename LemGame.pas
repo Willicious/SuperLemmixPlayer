@@ -2465,7 +2465,7 @@ end;
 
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, //baClimbing
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baClimbing,
                baStacking, baBashing, baFencing, baMining, baDigging, baLasering,
                baDangling];
 var
