@@ -1603,6 +1603,11 @@ begin
     Dec(L.LemY); //brings the lem back up 1px for the start of the walker animation if needed
   end;
 
+  if (NewAction = baFalling) and (L.LemAction = baDangling) then
+  begin          //bookmark
+    Inc(L.LemY, 2);
+  end;
+
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
   begin
     for i := -1 to 3 do
