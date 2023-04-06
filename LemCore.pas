@@ -149,13 +149,13 @@ const
     'platformer',
     'builder',
     'stacker',
+    'spearer',
+    'grenader',
     'laserer',
     'basher',
     'fencer',
     'miner',
     'digger',
-    'spearer',
-    'grenader',
     'cloner'
     );
 
@@ -176,13 +176,13 @@ const
     'platformers',
     'builders',
     'stackers',
+    'spearers',
+    'grenaders',
     'laserers',
     'bashers',
     'fencers',
     'miners',
     'diggers',
-    'spearers',
-    'grenaders',
     'cloners'
     );
 

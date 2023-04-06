@@ -579,7 +579,6 @@ const
              baJumping, baSliding, baLasering, baSpearing, baGrenading);
 
 
-
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
   Result := (RectWidth(A) = RectWidth(B))
