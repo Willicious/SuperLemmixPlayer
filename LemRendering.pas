@@ -794,7 +794,7 @@ const
                        baBuilding, baBashing, baMining, baFalling, baFloating,
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
                        baFixing, baFencing, baReaching, baShimmying, baJumping,
-                       baDehoisting, baSliding, baDangling, baLasering];
+                       baDehoisting, baSliding, baDangling, baLasering, baLooking];
                        //bookmark - is this projection code that needs to be removed?
 begin
   // Copy L to simulate the path

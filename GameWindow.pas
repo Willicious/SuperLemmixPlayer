@@ -1946,7 +1946,7 @@ const
      (baReaching, baShimmying)
     );
 
-  TREAT_AS_WALKING_ACTIONS = [baShrugging, baToWalking, baCloning];
+  TREAT_AS_WALKING_ACTIONS = [baShrugging, baLooking, baToWalking, baCloning];
 begin
   Result := true;
 

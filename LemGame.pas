@@ -360,6 +360,7 @@ type
     function HandleDangling(L: TLemming) : Boolean;
     function HandleLasering(L: TLemming) : Boolean;
     function HandleThrowing(L: TLemming) : Boolean;
+    function HandleLooking(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -998,6 +999,7 @@ begin
   LemmingMethods[baLasering]   := HandleLasering;
   LemmingMethods[baSpearing]   := HandleThrowing;
   LemmingMethods[baGrenading]  := HandleThrowing;
+  LemmingMethods[baLooking]    := HandleLooking;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -1036,6 +1038,7 @@ begin
   NewSkillMethods[baLasering]     := MayAssignLaserer;
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
+  NewSkillMethods[baLooking]      := nil;
 
   P := AppPath;
 
@@ -1526,7 +1529,8 @@ const
     16, //37 baDangling
     10, //38 baSpearing
     10, //39 baGrenading
-    12  //40 baLasering - it's, ironically, this high for rendering purposes
+    14, //40 baLooking
+    12  //41 baLasering - it's, ironically, this high for rendering purposes
     );
 begin
   if DoTurn then TurnAround(L);
@@ -2180,7 +2184,7 @@ var
       Perm    : Result :=     L.HasPermanentSkills;
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
                                                baPlatforming, baStacking, baBlocking, baShrugging,
-                                               baReaching, baShimmying, baLasering]);
+                                               baReaching, baShimmying, baLasering, baLooking]); //bookmark - baLooking?
       Walk    : Result :=     (L.LemAction in [baWalking, baAscending]);
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
@@ -2293,7 +2297,7 @@ function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
                baStacking, baBashing, baFencing, baMining, baDigging,
-               baReaching, baShimmying, baLasering, baDangling];
+               baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2346,7 +2350,7 @@ end;
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baDigging, baLasering];
+               baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
 end;
@@ -2386,7 +2390,7 @@ end;
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLasering, baBashing,
-               baFencing, baMining, baDigging];
+               baFencing, baMining, baDigging, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2394,7 +2398,7 @@ end;
 function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baBashing,
-               baFencing, baMining, baDigging, baLasering];
+               baFencing, baMining, baDigging, baLasering, baLooking];
 var
   n: Integer;
 begin
@@ -2411,7 +2415,7 @@ end;
 function TLemmingGame.MayAssignStacker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baBashing,
-               baFencing, baMining, baDigging, baLasering];
+               baFencing, baMining, baDigging, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2419,7 +2423,7 @@ end;
 function TLemmingGame.MayAssignThrowingSkill(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baDigging, baLasering];
+               baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2427,7 +2431,7 @@ end;
 function TLemmingGame.MayAssignBasher(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baFencing, baMining, baDigging, baLasering];
+               baFencing, baMining, baDigging, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2435,7 +2439,7 @@ end;
 function TLemmingGame.MayAssignFencer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baMining, baDigging, baLasering];
+               baBashing, baMining, baDigging, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2443,7 +2447,7 @@ end;
 function TLemmingGame.MayAssignMiner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baDigging, baLasering];
+               baBashing, baFencing, baDigging, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet)
             and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining)
@@ -2452,7 +2456,7 @@ end;
 function TLemmingGame.MayAssignDigger(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baLasering];
+               baBashing, baFencing, baMining, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet) and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baDigging);
 end;
@@ -2462,7 +2466,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
-               baJumping, baLasering, baSpearing, baGrenading, baDangling];
+               baJumping, baLasering, baSpearing, baGrenading, baDangling, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2471,7 +2475,7 @@ function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baClimbing,
                baStacking, baBashing, baFencing, baMining, baDigging, baLasering,
-               baDangling];
+               baDangling, baLooking];
 var
   CopyL: TLemming;
   i: Integer;
@@ -2524,7 +2528,7 @@ function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing,
-               baClimbing, baSliding, baDangling, baLasering];
+               baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2532,7 +2536,7 @@ end;
 function TLemmingGame.MayAssignLaserer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baDigging];
+               baBashing, baFencing, baMining, baDigging, baLooking];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -3640,9 +3644,9 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 -------------------------------------------------------------------------------}
 const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
-                      baVaporizing, baShrugging, baTimebombing, baOhnoing,
+                      baShrugging, baTimebombing, baOhnoing,
                       baExploding, baFreezing, baReaching, baDehoisting,
-                      baDangling];  //bookmark - does Dangling need to go here?
+                      baDangling, baLooking];  //bookmark - does Dangling need to go here?
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -5462,10 +5466,16 @@ begin
 
     6..8: if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
 
-    9: if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling) else Transition(L, baShrugging);
+    9: if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling) else Transition(L, baLooking);
   end;
 
   Result := true;
+end;
+
+function TLemmingGame.HandleLooking(L: TLemming): Boolean;
+begin
+  Result := True;
+  if L.LemEndOfAnimation then Transition(L, baWalking);
 end;
 
 function TLemmingGame.HandleSplatting(L: TLemming): Boolean;

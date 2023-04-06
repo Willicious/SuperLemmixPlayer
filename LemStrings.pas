@@ -126,6 +126,7 @@ resourcestring
   SDangler = 'Dangler';
   SSpearer = 'Spearer';
   SGrenader = 'Grenader';
+  SLooker = 'Looker';
   SLaserer = 'Laserer';
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
@@ -200,7 +201,8 @@ const
     SDangler,     //37
     SSpearer,     //38
     SGrenader,    //39
-    SLaserer      //40
+    SLooker,      //40
+    SLaserer      //41
   );
 
 implementation

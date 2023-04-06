@@ -24,8 +24,8 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES     = 69;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 34;        //num lem sprite types
+  NUM_LEM_SPRITES     = 71;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 35;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ASCENDING           = 2;    //3  //2
@@ -92,9 +92,11 @@ const
   DANGLING_RTL        = 63;   //64
   THROWING            = 64;   //65 //33
   THROWING_RTL        = 65;   //66
-  LASERING            = 66;   //67 //34
-  LASERING_RTL        = 67;   //68
-  FROZEN              = 68;   //69 this one does NOT need an RTL form;
+  LOOKING             = 66;   //67 //34
+  LOOKING_RTL         = 67;   //68
+  LASERING            = 68;   //69 //35
+  LASERING_RTL        = 69;   //70
+  FROZEN              = 70;   //71 this one does NOT need an RTL form;
                               //in fact in needs to be moved to the Masks section
                               //also, it's not counted as a "sprite type"
 
@@ -141,7 +143,8 @@ const
     (DANGLING, DANGLING_RTL),                 // 37 baDangling
     (THROWING, THROWING_RTL),                 // 38 baSpearing
     (THROWING, THROWING_RTL),                 // 39 baGrenading
-    (LASERING, LASERING_RTL)                  // 40 baLasering
+    (LOOKING, LOOKING_RTL),                   // 40 baLooking
+    (LASERING, LASERING_RTL)                  // 41 baLasering
   );
 
 type
@@ -197,7 +200,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..33] of String =  (
+  ANIM_NAMES: array[0..34] of String =  (
   'WALKER',        //1
   'ASCENDER',      //2
   'DIGGER',        //3
@@ -231,7 +234,8 @@ const
   'SLIDER',        //31
   'DANGLER',       //32
   'THROWER',       //33
-  'LASERER'        //34
+  'LOOKER',        //34
+  'LASERER'        //35
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

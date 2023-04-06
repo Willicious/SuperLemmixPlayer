@@ -83,7 +83,8 @@ type
     baDangling,        //37
     baSpearing,        //38
     baGrenading,       //39
-    baLasering         //40
+    baLooking,         //40
+    baLasering         //41
   );
 
 const
@@ -273,15 +274,16 @@ const
     spbDisarmer,    //29
     spbCloner,      //30
     spbFencer,      //31
-    spbNone,        //32
+    spbNone,        //32 baReaching
     spbShimmier,    //33
     spbJumper,      //34
-    spbNone,        //35
+    spbNone,        //35 baDehoisting
     spbSlider,      //36
-    spbNone,        //37
+    spbNone,        //37 baDangling
     spbSpearer,     //38
     spbGrenader,    //39
-    spbLaserer      //40
+    spbNone,        //40 baLooking
+    spbLaserer      //41
   );
 
 const
