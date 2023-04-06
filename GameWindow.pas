@@ -617,7 +617,8 @@ begin
     if GameParams.ClassicMode then Game.CancelReplayAfterSkip := true;
     PrevCallTime := CurrTime;
 
-    if Game.CurrentIteration = 0 then GameSpeed := gspPause
+    if Game.CurrentIteration = 0 then
+      GameSpeed := gspPause
     else begin
       GoToSaveState(Max(Game.CurrentIteration -3, 0));
       GameSpeed := gspRewind;
