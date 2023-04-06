@@ -164,12 +164,12 @@ begin
     fIsBassLoaded := false;
   end;
 
-  if FileExists(AppPath + 'bass_fx.dll') then      //bookmark
-  begin
-    Load_BASSDLL(AppPath + 'bass_fx.dll');
-  end else begin
-    ShowMessage('BASS_FX.DLL not found. SuperLemmix will run but music and sound will not play.');
-  end;
+  //if FileExists(AppPath + 'bass_fx.dll') then      //bookmark
+  //begin
+    //Load_BASSDLL(AppPath + 'bass_fx.dll');
+  //end else begin
+   // ShowMessage('BASS_FX.DLL not found. SuperLemmix will run but music and sound will not play.');
+  //end;
 end;
 
 destructor TSoundManager.Destroy;

@@ -112,8 +112,6 @@ type
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
     LemDehoistPinY                : Integer; // The Y coordinate the lemming started dehoisting on
-    //LemDanglerPinX                : Integer; //bookmark - needed?
-    //LemDanglerPinY                : Integer; //bookmark - needed?
     LemLaserHit                   : Boolean;
     LemLaserHitPoint              : TPoint;
     LemLaserRemainTime            : Integer;
@@ -329,8 +327,6 @@ begin
   LemStackLow := Source.LemStackLow;
   LemJumpProgress := Source.LemJumpProgress;
   LemDehoistPinY := Source.LemDehoistPinY;
-  //LemDanglerPinY := Source.LemDanglerPinY;   //bookmark - needed?
-  //LemDanglerPinX := Source.LemDanglerPinX;   //bookmark - needed?
   LemLaserHit := Source.LemLaserHit;
   LemLaserHitPoint := Source.LemLaserHitPoint;
   LemLaserRemainTime := Source.LemLaserRemainTime;

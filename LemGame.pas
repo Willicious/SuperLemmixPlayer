@@ -1612,12 +1612,6 @@ begin
   if NewAction = baSliding then
     L.LemDehoistPinY := -1;
 
-  //if NewAction = baDangling then          //bookmark - not sure if any of this is needed
-    //L.LemDanglerPinY := L.LemY - 9;
-    //L.LemDanglerPinX := L.LemX - 1;
-  //if NewAction = baSliding then
-    //L.LemDanglerPinX := L.LemX - 1;
-
   // Change Action
   L.LemAction := NewAction;
   L.LemFrame := 0;
@@ -3693,8 +3687,6 @@ begin
 
   Inc(L.LemX, L.LemDx);
   LemDy := FindGroundPixel(L.LemX, L.LemY);
-
-  //bookmark - do we need Dangler code anywhere here?
 
   if (LemDy > 0) and (L.LemIsSlider) and (LemCanDehoist(L, true)) then
   begin

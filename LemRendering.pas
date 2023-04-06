@@ -794,8 +794,8 @@ const
                        baBuilding, baBashing, baMining, baFalling, baFloating,
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
                        baFixing, baFencing, baReaching, baShimmying, baJumping,
-                       baDehoisting, baSliding, baLasering];  //bookmark - Dangling?
-                       //or, is this projection code that needs to be removed?
+                       baDehoisting, baSliding, baDangling, baLasering];
+                       //bookmark - is this projection code that needs to be removed?
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
