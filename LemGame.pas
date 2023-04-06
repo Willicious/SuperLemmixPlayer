@@ -1589,12 +1589,18 @@ begin
 
   if (NewAction = baDangling) and (L.LemAction in [baSliding, baDehoisting]) then
   begin             //bookmark
-    Inc(L.LemY, 2); //this makes sure that the skill shadow is deplayed
+    Inc(L.LemY, 2); //this makes sure that the shimmier skill shadow is displayed
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baDangling) then
   begin          //bookmark
     Dec(L.LemY); //brings the lem back up 1px for the start of the shimmier animation
+  end;
+
+  if (NewAction = baWalking) and (L.LemAction = baDangling) then
+  begin          //bookmark
+    if HasPixelAt(L.LemX, L.LemY -1) then
+    Dec(L.LemY); //brings the lem back up 1px for the start of the walker animation if needed
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
@@ -2072,7 +2078,7 @@ begin
     GenerateClonedLem(L);
   end
   else if (NewSkill = baShimmying) then
-  begin                //bookmark - baClimbing here stops climber>reacherer transition
+  begin                //bookmark - baClimbing here stops climber>reacher transition
     if L.LemAction in [baSliding, baJumping, baDehoisting, baDangling] then
       Transition(L, baShimmying)
     else
@@ -2483,7 +2489,7 @@ begin
         Result := True;
 
     CopyL.Free;
-  end else if L.LemAction in [baDehoisting, baSliding] then//, baDangling] then
+  end else if L.LemAction in [baDehoisting, baSliding, baDangling] then
   begin                       //bookmark - not sure if beDangling is needed here
     // Check whether the lemming would fall down the next frame
     CopyL := TLemming.Create;
@@ -2494,8 +2500,8 @@ begin
     SimulateLem(CopyL, False);
 
     if (CopyL.LemAction <> OldAction) and (CopyL.LemDX = L.LemDX) and
-       ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding)) then
-       //or (OldAction <> baDangling)) then <<<bookmark - not sure if this is needed
+       ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding)
+       or (OldAction <> baDangling)) then //bookmark - not sure if this is needed
       Result := True;
 
     CopyL.Free;
@@ -2864,7 +2870,7 @@ begin
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
      and not (L.LemAction in [baDehoisting, baSliding, baClimbing, baHoisting,
                               baSwimming, baOhNoing, baJumping, baDangling])
-  then begin                                                    //bookmark - is baDangling needed here?
+  then begin                                              //bookmark - is baDangling needed here?
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
     else L.LemActionNew := baWalking;
@@ -3879,18 +3885,17 @@ begin
 end;
 
 
-function TLemmingGame.HandleDangling(L: TLemming): Boolean;
-var
-  n: Integer;           //AFAIK, this is where the meat of the dangler code will be
+function TLemmingGame.HandleDangling(L: TLemming): Boolean; //bookmark
 begin
-  //Result := True;    //what result? does this matter? I guess we'll find out
+  Result := True;
+  if HasPixelAt(L.LemX, L.LemY) then
+      Transition(L, baWalking);
+
   if L.LemEndOfAnimation then
   begin
-      //if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
-      //RemoveLemming(L, RM_NEUTRAL) // shouldn't get to this point but just in case
-    //else if HasPixelAt(L.LemX, L.LemY) then         //bookmark
-      //Transition(L, baWalking)                      //not sure if all this is needed
-    //else
+    if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
+      RemoveLemming(L, RM_NEUTRAL) // shouldn't get to this point but just in case
+    else
       Transition(L, baFalling);
   end;
 end;
@@ -3900,6 +3905,7 @@ var
   n: Integer;
 begin
   Result := True;
+
   if L.LemEndOfAnimation then
   begin
     if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
@@ -3907,7 +3913,7 @@ begin
     else if HasPixelAt(L.LemX, L.LemY - 7) then
       Transition(L, baSliding)
     else
-      Transition(L, baDangling);  //we don't want the dehoister to fall straightaway
+      Transition(L, baDangling);  //we don't want the Dehoister to fall straightaway if there isn't
   end else if L.LemPhysicsFrame >= 2 then
   begin
     for n := 0 to 1 do
@@ -3988,7 +3994,10 @@ begin
     Result := false;
   end else if not SliderHasPixelAt(L.LemX, L.LemY - Min(MaxYCheckOffset, 7)) then
   begin
-    Transition(L, baDangling); //we don't want the Slider to fall straightaway
+  if SliderHasPixelAt(L.LemX, L.LemY) then
+    Transition(L, baWalking) //we don't want to enter Dangling state if there is terrain
+    else
+    Transition(L, baDangling); //we don't want the Slider to fall straightaway if there isn't
     Result := false;
   end else if SliderHasPixelAt(L.LemX, L.LemY) then
   begin

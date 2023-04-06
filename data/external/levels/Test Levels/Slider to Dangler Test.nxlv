@@ -8,11 +8,11 @@
  TITLE Slider to Dangler Test
  AUTHOR 
  ID x0652D4CC45F88611
- VERSION x0000000000000009
+ VERSION x000000000000002C
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 400
  HEIGHT 160
  THEME orig_crystal
  
@@ -43,6 +43,16 @@
    PIECE exit
    X 31
    Y 121
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 318
+   Y 91
+   WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -119,15 +129,7 @@
    STYLE orig_crystal
    PIECE bar_04
    X 212
-   Y 98
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 188
-   Y 98
+   Y 97
    ONE_WAY
  $END
  
@@ -175,7 +177,7 @@
    STYLE orig_crystal
    PIECE bar_04
    X 12
-   Y 27
+   Y 47
    ONE_WAY
  $END
  
@@ -183,8 +185,123 @@
    STYLE orig_crystal
    PIECE bar_04
    X 12
-   Y 28
+   Y 48
    ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 292
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 291
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 340
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 291
+   Y 75
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 269
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 20
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 265
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 231
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 12
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 12
+   Y 84
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 20
+   Y 91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 12
+   Y 10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 12
+   Y 11
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 20
+   Y 20
    ONE_WAY
  $END
  
@@ -207,9 +324,30 @@
  
  $LEMMING
    X 31
-   Y 27
+   Y 47
    SLIDER 
-   FLOATER 
+   GLIDER 
+ $END
+ 
+ $LEMMING
+   X 273
+   Y 27
+   SWIMMER 
+   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 31
+   Y 83
+   SLIDER 
+   GLIDER 
+ $END
+ 
+ $LEMMING
+   X 31
+   Y 10
+   SLIDER 
+   GLIDER 
  $END
  
  
