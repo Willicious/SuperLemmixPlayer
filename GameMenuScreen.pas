@@ -605,10 +605,10 @@ begin
   end;
 
   SizeRect := MenuFont.GetTextSize(S);
-  ScrollerText.SetSize(SizeRect.Width, SizeRect.Height);
+  ScrollerText.SetSize(SizeRect.Width, SizeRect.Height + 4);
   ScrollerText.Clear(0);
   ScrollerText.DrawMode := dmBlend;
-  MenuFont.DrawText(ScrollerText, S, 0, 0);
+  MenuFont.DrawText(ScrollerText, S, 0, 4);
 
   if (fReelForceDirection < 0) then
     fReelTextPos := -ScrollerText.Width
