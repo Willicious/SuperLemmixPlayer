@@ -22,6 +22,9 @@ const
   INTERNAL_SCREEN_WIDTH = 864;
   INTERNAL_SCREEN_HEIGHT = 486;
 
+  MINIMAP_SCREEN_WIDTH = 1080;
+  NO_MINIMAP_SCREEN_WIDTH = 826;
+
   FOOTER_OPTIONS_ONE_ROW_Y = 462;
 
   FOOTER_OPTIONS_TWO_ROWS_HIGH_Y = 443;
@@ -260,7 +263,13 @@ procedure TGameBaseMenuScreen.InitializeImage;
 begin
   with ScreenImg do
   begin
-    Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+    if GameParams.ShowMinimap then
+      begin
+        Bitmap.SetSize(MINIMAP_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+      end else begin
+        Bitmap.SetSize(NO_MINIMAP_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+      end;
+
     DrawBackground;
 
     BoundsRect := Rect(0, 0, ClientWidth, ClientHeight);
