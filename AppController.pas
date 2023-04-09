@@ -106,7 +106,7 @@ begin
     end;
 
   GameParams.MainForm.Caption := 'SuperLemmix';
-  Application.Title := GameParams.MainForm.Caption;
+  Application.Title := GameParams.MainForm.Caption;   //bookmark - title bar
 
   GameParams.Renderer.BackgroundColor := $000000;
 

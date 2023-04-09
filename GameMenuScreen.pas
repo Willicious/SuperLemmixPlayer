@@ -338,7 +338,7 @@ begin
     NewRegion.ShortcutKeys.Add(VK_F2);
 
     // Group sign
-    fGroupSignCenter := MakePosition(1, -0.5);
+    fGroupSignCenter := MakePosition(0.5, 0.5);
     GetGraphic('sign_group.png', BMP);
     NewRegion := MakeClickableImageAuto(fGroupSignCenter, BMP.BoundsRect, NextGroup, BMP);
     NewRegion.DrawInFrontWhenHighlit := false;
@@ -363,7 +363,7 @@ begin
 
     // Exit
     GetGraphic('sign_quit.png', BMP);
-    NewRegion := MakeClickableImageAuto(MakePosition(0.5, 0.5), BMP.BoundsRect, ExitGame, BMP);
+    NewRegion := MakeClickableImageAuto(MakePosition(1, -0.5), BMP.BoundsRect, ExitGame, BMP);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
     fFinishedMakingSigns := true;
