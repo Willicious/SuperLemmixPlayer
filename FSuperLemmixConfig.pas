@@ -412,20 +412,26 @@ begin
     NewZoom := -1;
     NewPanelZoom := -1;
 
-    if Sender = cbHighResolution then   //if going from low-res with minimap...
+    if Sender = cbHighResolution then
+    begin
       if cbHighResolution.Checked then
       begin
         NewZoom := cbZoom.ItemIndex div 2;
         NewPanelZoom := cbPanelZoom.ItemIndex div 2;
-        if cbShowMinimap.Checked then  //...we might need to reset the window
-        begin
-        cbResetWindowSize.Checked := True;
-        cbResetWindowPosition.Checked := True;
-        end;
       end else begin
         NewZoom := cbZoom.ItemIndex * 2 + 1;
         NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
       end;
+
+      //if going from {low res, 3x panel zoom w/minimap} to hi-res, we need to reset window
+      if cbShowMinimap.Checked then
+      begin
+        cbResetWindowPosition.Checked := True;
+        cbResetWindowSize.Checked := True;
+        cbResetWindowPosition.Enabled := False;
+        cbResetWindowSize.Enabled := False;
+      end;
+    end;
 
     if (Sender = cbFullScreen) and not GameParams.FullScreen then
       NewPanelZoom := cbPanelZoom.ItemIndex;
@@ -456,7 +462,7 @@ end;
 
 procedure TFormNXConfig.cbShowMinimapClick(Sender: TObject);
 begin
-  if not fIsSetting then
+  if not fIsSetting then   //bookmark - this needs to be in the ClassicMode stuff as well
   begin
     if cbShowMinimap.Checked then
     begin
@@ -468,6 +474,8 @@ begin
 
     cbResetWindowPosition.State := cbChecked;
     cbResetWindowSize.State := cbChecked;
+    cbResetWindowPosition.Enabled := False;
+    cbResetWindowSize.Enabled := False;
   end;
 
   OptionChanged(Sender);
@@ -522,7 +530,7 @@ begin
   cbHideSkillQ.Enabled := true;
 end;
 
-procedure TFormNXConfig.SetCheckboxes;
+procedure TFormNXConfig.SetCheckboxes;    //bookmark - might not need this
   begin
     if GameParams.ClassicMode then
       begin
