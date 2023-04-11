@@ -22,10 +22,11 @@ const
   INTERNAL_SCREEN_WIDTH = 836;
   INTERNAL_SCREEN_HEIGHT = 492;
 
-  //MM means Minimap - we need different sizes for when the Minimap is displayed
+  //MM = Minimap - we need different menu sizes for when the Minimap is or isn't displayed
   MM_INTERNAL_SCREEN_WIDTH = 1092;
-  //HOTBOOKMARK - we might even need separate values for FullScreen here as well
-  //IDEA: try to base these values on the actual client centre rather than an arbitrary internal width
+
+  //FS = FullScreen - we need different menu size for FullScreen mode
+  FS_INTERNAL_SCREEN_WIDTH = 874;
 
   FOOTER_OPTIONS_ONE_ROW_Y = 462;
 
@@ -33,21 +34,27 @@ const
   FOOTER_OPTIONS_TWO_ROWS_LOW_Y = 468;
 
   MM_FOOTER_ONE_OPTION_X = MM_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
+  FS_FOOTER_ONE_OPTION_X = FS_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
   FOOTER_ONE_OPTION_X = INTERNAL_SCREEN_WIDTH div 2;
 
   MM_FOOTER_TWO_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 5 div 16; //hotbookmark
+  FS_FOOTER_TWO_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 5 div 16; //hotbookmark
   FOOTER_TWO_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 5 div 16;
 
   MM_FOOTER_TWO_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 11 div 16; //hotbookmark
+  FS_FOOTER_TWO_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 11 div 16; //hotbookmark
   FOOTER_TWO_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 11 div 16;
 
   MM_FOOTER_THREE_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 3 div 16; //hotbookmark
+  FS_FOOTER_THREE_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 3 div 16; //hotbookmark
   FOOTER_THREE_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 3 div 16;
 
   MM_FOOTER_THREE_OPTIONS_X_MID = MM_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
+  FS_FOOTER_THREE_OPTIONS_X_MID = FS_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
   FOOTER_THREE_OPTIONS_X_MID = INTERNAL_SCREEN_WIDTH div 2;
 
   MM_FOOTER_THREE_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 13 div 16; //hotbookmark
+  FS_FOOTER_THREE_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 13 div 16; //hotbookmark
   FOOTER_THREE_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 13 div 16;
 
 type
@@ -274,10 +281,13 @@ procedure TGameBaseMenuScreen.InitializeImage;
 begin
   with ScreenImg do
   begin
-    if GameParams.ShowMinimap then
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
     Bitmap.SetSize(MM_INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
 
-    if not GameParams.ShowMinimap then
+    if GameParams.FullScreen then
+    Bitmap.SetSize(FS_INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+
+    if not GameParams.ShowMinimap and not GameParams.FullScreen then
     Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
 
     DrawBackground;

@@ -445,9 +445,17 @@ begin
 
       OutputText;
 
-      if GameParams.ShowMinimap then
+      if GameParams.ShowMinimap and not GameParams.FullScreen then
       begin
         with MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
+          begin
+            ShortcutKeys.Add(VK_RETURN);
+            ShortcutKeys.Add(VK_SPACE);
+          end;
+      end else
+      if GameParams.FullScreen then
+      begin
+        with MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
           begin
             ShortcutKeys.Add(VK_RETURN);
             ShortcutKeys.Add(VK_SPACE);
