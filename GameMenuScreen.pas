@@ -803,18 +803,16 @@ var
   F: TFNLSetup;
   OldFullScreen: Boolean;
   OldHighRes: Boolean;
-  OldShowMinimap: Boolean;
 begin
   F := TFNLSetup.Create(self);
   try
     OldFullScreen := GameParams.FullScreen;
     OldHighRes := GameParams.HighResolution;
-    OldShowMinimap := GameParams.ShowMinimap;
 
     F.ShowModal;
 
     // And apply the settings chosen
-    ApplyConfigChanges(OldFullScreen, OldHighRes, OldShowMinimap, false, false);
+    ApplyConfigChanges(OldFullScreen, OldHighRes, false, false);
   finally
     F.Free;
   end;
