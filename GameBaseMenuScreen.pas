@@ -127,7 +127,7 @@ type
       procedure SaveReplay;
 
       procedure ShowConfigMenu;
-      procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
+      procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false; aFromPackOnly: Boolean = false): Boolean;
@@ -906,10 +906,11 @@ end;
 procedure TGameBaseMenuScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
-  OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean;
+  OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean;
 begin
   OldFullScreen := GameParams.FullScreen;
   OldHighResolution := GameParams.HighResolution;
+  OldShowMinimap := GameParams.ShowMinimap;
 
   ConfigDlg := TFormNXConfig.Create(self);
   try
@@ -927,12 +928,12 @@ begin
   // transition to save them.
   GameParams.Save(scImportant);
 
-  ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos);
+  ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
 
   DoAfterConfig;
 end;
 
-procedure TGameBaseMenuScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
+procedure TGameBaseMenuScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
 begin
   if GameParams.FullScreen and not OldFullScreen then
   begin
@@ -951,6 +952,11 @@ begin
     if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
   end;
 
+  if GameParams.ShowMinimap <> OldShowMinimap then
+  begin
+    CloseScreen(gstMenu); //we need to re-draw the menu here
+    //this works but also generates an error dialog, so not ideal
+  end;
 
   if GameParams.HighResolution <> OldHighResolution then
     PieceManager.Clear;
