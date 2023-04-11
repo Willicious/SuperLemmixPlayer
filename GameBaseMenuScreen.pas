@@ -953,15 +953,17 @@ begin
     GameParams.MainForm.Top := 0;
     GameParams.MainForm.Width := Screen.Width;
     GameParams.MainForm.Height := Screen.Height;
-    CloseScreen(gstMenu); //hotbookmark
   end else if not GameParams.FullScreen then
   begin
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
-    CloseScreen(gstMenu); //hotbookmark
 
     if ResetWindowSize then TMainForm(GameParams.MainForm).RestoreDefaultSize;
     if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
+  end else
+  if GameParams.FullScreen <> OldFullScreen then
+  begin
+    CloseScreen(gstMenu);
   end;
 
   if GameParams.ShowMinimap <> OldShowMinimap then
