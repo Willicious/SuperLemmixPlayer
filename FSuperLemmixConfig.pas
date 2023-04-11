@@ -424,7 +424,7 @@ begin
       end;
 
       //if going from {low res, 3x panel zoom w/minimap} to hi-res, we need to reset window
-      if cbShowMinimap.Checked then
+      if cbShowMinimap.Checked and not GameParams.FullScreen then
       begin
         cbResetWindowPosition.Checked := True;
         cbResetWindowSize.Checked := True;
@@ -472,10 +472,13 @@ begin
       cbMinimapHighQuality.Enabled := False;
     end;
 
-    cbResetWindowPosition.State := cbChecked;
-    cbResetWindowSize.State := cbChecked;
-    cbResetWindowPosition.Enabled := False;
-    cbResetWindowSize.Enabled := False;
+    if not GameParams.FullScreen then
+    begin
+      cbResetWindowPosition.State := cbChecked;
+      cbResetWindowSize.State := cbChecked;
+      cbResetWindowPosition.Enabled := False;
+      cbResetWindowSize.Enabled := False;
+    end;
   end;
 
   OptionChanged(Sender);
