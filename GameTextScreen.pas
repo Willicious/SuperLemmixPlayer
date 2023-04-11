@@ -49,6 +49,9 @@ begin
   try
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
 
+    if GameParams.ShowMinimap then
+    NewOption := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionContinue, ToNextScreen);
+    if not GameParams.ShowMinimap then
     NewOption := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionContinue, ToNextScreen);
     NewOption.ShortcutKeys.Add(VK_RETURN);
     NewOption.ShortcutKeys.Add(VK_SPACE);

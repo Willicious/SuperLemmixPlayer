@@ -209,27 +209,45 @@ begin
     W.DrawMode := dmBlend;
     W.CombineMode := cmMerge;
 
-    // We have a 864x160 area in which to draw the level preview
-    LevelScale := 864 / lw;
-    if LevelScale > 160 / lh then LevelScale := 160 / lh;
+    //Draw the level preview
+    if GameParams.ShowMinimap then LevelScale := MM_INTERNAL_SCREEN_WIDTH / lw;
+    if not GameParams.ShowMinimap then LevelScale := INTERNAL_SCREEN_WIDTH / lw;
 
+    if LevelScale > 160 / lh then LevelScale := 160 / lh;
     DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
-    OffsetRect(DstRect, 432 - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
+
+    if GameParams.ShowMinimap then
+    OffsetRect(DstRect, (MM_INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
+
+    if not GameParams.ShowMinimap then
+    OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
     W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
     // draw text
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, TEXT_Y_POSITION);
 
+    if GameParams.ShowMinimap then
+    NewRegion := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
+    if not GameParams.ShowMinimap then
     NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
     NewRegion.ShortcutKeys.Add(VK_RETURN);
     NewRegion.ShortcutKeys.Add(VK_SPACE);
 
+    if GameParams.ShowMinimap then
+    NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
+    if not GameParams.ShowMinimap then
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
+    if GameParams.ShowMinimap then
+    NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+    if not GameParams.ShowMinimap then
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
     NewRegion.ShortcutKeys.Add(VK_F2);
 
+    if GameParams.ShowMinimap then
+    NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
+    if not GameParams.ShowMinimap then
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
     NewRegion.AddKeysFromFunction(lka_LoadReplay);
 

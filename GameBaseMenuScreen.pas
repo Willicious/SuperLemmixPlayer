@@ -19,21 +19,35 @@ uses
 
 const
   //this determines the size of the available window space
-  INTERNAL_SCREEN_WIDTH = 864;
-  INTERNAL_SCREEN_HEIGHT = 486;
+  INTERNAL_SCREEN_WIDTH = 836;
+  INTERNAL_SCREEN_HEIGHT = 492;
+
+  //MM means Minimap - we need different sizes for when the Minimap is displayed
+  MM_INTERNAL_SCREEN_WIDTH = 1092;
+  //HOTBOOKMARK - we might even need separate values for FullScreen here as well
+  //IDEA: try to base these values on the actual client centre rather than an arbitrary internal width
 
   FOOTER_OPTIONS_ONE_ROW_Y = 462;
 
   FOOTER_OPTIONS_TWO_ROWS_HIGH_Y = 443;
   FOOTER_OPTIONS_TWO_ROWS_LOW_Y = 468;
 
+  MM_FOOTER_ONE_OPTION_X = MM_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
   FOOTER_ONE_OPTION_X = INTERNAL_SCREEN_WIDTH div 2;
 
+  MM_FOOTER_TWO_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 5 div 16; //hotbookmark
   FOOTER_TWO_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 5 div 16;
+
+  MM_FOOTER_TWO_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 11 div 16; //hotbookmark
   FOOTER_TWO_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 11 div 16;
 
+  MM_FOOTER_THREE_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 3 div 16; //hotbookmark
   FOOTER_THREE_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 3 div 16;
+
+  MM_FOOTER_THREE_OPTIONS_X_MID = MM_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
   FOOTER_THREE_OPTIONS_X_MID = INTERNAL_SCREEN_WIDTH div 2;
+
+  MM_FOOTER_THREE_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 13 div 16; //hotbookmark
   FOOTER_THREE_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 13 div 16;
 
 type
@@ -260,7 +274,12 @@ procedure TGameBaseMenuScreen.InitializeImage;
 begin
   with ScreenImg do
   begin
+    if GameParams.ShowMinimap then
+    Bitmap.SetSize(MM_INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+
+    if not GameParams.ShowMinimap then
     Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+
     DrawBackground;
 
     BoundsRect := Rect(0, 0, ClientWidth, ClientHeight);

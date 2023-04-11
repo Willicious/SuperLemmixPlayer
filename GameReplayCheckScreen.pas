@@ -445,10 +445,19 @@ begin
 
       OutputText;
 
-      with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
+      if GameParams.ShowMinimap then
       begin
-        ShortcutKeys.Add(VK_RETURN);
-        ShortcutKeys.Add(VK_SPACE);
+        with MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
+          begin
+            ShortcutKeys.Add(VK_RETURN);
+            ShortcutKeys.Add(VK_SPACE);
+          end;
+      end else begin
+        with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
+          begin
+            ShortcutKeys.Add(VK_RETURN);
+            ShortcutKeys.Add(VK_SPACE);
+          end;
       end;
 
       DrawAllClickables;
