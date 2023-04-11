@@ -953,10 +953,12 @@ begin
     GameParams.MainForm.Top := 0;
     GameParams.MainForm.Width := Screen.Width;
     GameParams.MainForm.Height := Screen.Height;
+    CloseScreen(gstMenu); //hotbookmark
   end else if not GameParams.FullScreen then
   begin
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
+    CloseScreen(gstMenu); //hotbookmark
 
     if ResetWindowSize then TMainForm(GameParams.MainForm).RestoreDefaultSize;
     if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
@@ -964,7 +966,7 @@ begin
 
   if GameParams.ShowMinimap <> OldShowMinimap then
   begin
-    CloseScreen(gstMenu); //we need to re-draw the menu here
+    CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
     //this works but also generates an error dialog, so not ideal
   end;
 
