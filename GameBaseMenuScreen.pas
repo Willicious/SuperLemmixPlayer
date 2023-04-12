@@ -960,16 +960,16 @@ begin
 
     if ResetWindowSize then TMainForm(GameParams.MainForm).RestoreDefaultSize;
     if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
-  end else
+  end;
+
   if GameParams.FullScreen <> OldFullScreen then
   begin
-    CloseScreen(gstMenu);
+    CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
   end;
 
   if GameParams.ShowMinimap <> OldShowMinimap then
   begin
-    CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
-    //this works but also generates an error dialog, so not ideal
+    //CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
   end;
 
   if GameParams.HighResolution <> OldHighResolution then
