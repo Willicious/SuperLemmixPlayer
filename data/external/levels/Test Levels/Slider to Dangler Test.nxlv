@@ -8,13 +8,13 @@
  TITLE Slider to Dangler Test
  AUTHOR 
  ID x0652D4CC45F88611
- VERSION x000000000000002C
+ VERSION x0000000000000031
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 400
  HEIGHT 160
- THEME orig_crystal
+ THEME xmas
  
 #         Level stats           
 # ----------------------------- 
@@ -23,9 +23,12 @@
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-   WALKER 1
+   WALKER 2
+   JUMPER 2
    SHIMMIER 4
    BUILDER 1
+   SPEARER 5
+   GRENADER 5
  $END 
  
 #     Interactive objects       
@@ -332,8 +335,8 @@
  $LEMMING
    X 273
    Y 27
-   SWIMMER 
    SLIDER 
+   SWIMMER 
  $END
  
  $LEMMING

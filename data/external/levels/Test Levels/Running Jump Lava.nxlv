@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with NLEditor 1.40
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Take a running jump.....
  AUTHOR WillLem/DMA
  ID xEE9EB544EE9EB544
- VERSION x0000000000000004
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 424
  START_Y 80
- THEME orig_fire
+ THEME willlem_lemminas
  BACKGROUND special:amiga_blue
  
 #         Level stats           
@@ -41,8 +41,6 @@
    SPEARER 10
    GRENADER 10
    LASERER 10
-   BASHER 10
-   DIGGER 10
  $END 
  
 #     Interactive objects       
