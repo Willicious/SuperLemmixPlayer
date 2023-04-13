@@ -1657,7 +1657,9 @@ begin
                      if GameParams.PreferYippee then
                      begin
                       CueSoundEffect(SFX_YIPPEE, L.Position);
-                     end else begin
+                     end else
+                     if GameParams.PreferBoing then
+                     begin
                       CueSoundEffect(SFX_OING, L.Position);
                      end;
                    end;
@@ -3061,7 +3063,9 @@ begin
     if GameParams.PreferYippee then
     begin
       CueSoundEffect(SFX_YIPPEE, L.Position);
-    end else begin;
+    end else
+    if GameParams.PreferBoing then
+    begin
       CueSoundEffect(SFX_OING, L.Position);
     end;
   end;

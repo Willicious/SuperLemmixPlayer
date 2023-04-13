@@ -339,12 +339,12 @@ begin
 
   fDownloadStream := TMemoryStream.Create;
 
-  if not GameParams.EnableOnline then
-  begin
-    btnGetSelected.Enabled := false;
-    btnDownloadAll.Enabled := false;
-    btnUpdateAll.Enabled := false;
-  end;
+  //if not GameParams.EnableOnline then
+  //begin
+    //btnGetSelected.Enabled := false;
+    //btnDownloadAll.Enabled := false;
+    //btnUpdateAll.Enabled := false;
+  //end;
 end;
 
 procedure TFManageStyles.FormDestroy(Sender: TObject);
@@ -426,11 +426,11 @@ begin
       fLocalList.Delete(i);
 
   fWebList.Clear;
-  if GameParams.EnableOnline then
-  begin
-    DownloadThread := DownloadInThread(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, fWebList);
-    while not DownloadThread.Complete do {nothing};
-  end;
+  //if GameParams.EnableOnline then
+  //begin
+    //DownloadThread := DownloadInThread(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, fWebList);
+    //while not DownloadThread.Complete do {nothing};
+  //end;
 
   StyleList := TStringList.Create;
   try

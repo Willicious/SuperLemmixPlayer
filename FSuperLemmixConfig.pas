@@ -57,8 +57,6 @@ type
     cbPanelZoom: TComboBox;
     btnResetWindow: TButton;
     rgExitSound: TRadioGroup;
-    rbYippee: TRadioButton;
-    rbBoing: TRadioButton;
     cbShowMinimap: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
@@ -86,6 +84,7 @@ type
 
     procedure SetZoomDropdown(aValue: Integer = -1);
     procedure SetPanelZoomDropdown(aValue: Integer = -1);
+    procedure SetExitSoundRadioGroup(aValue: Integer);
     procedure SetCheckboxes;
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
@@ -298,10 +297,6 @@ begin
       tbMusicVol.Position := SoundManager.MusicVolume;
 
     cbDisableTestplayMusic.Checked := GameParams.DisableMusicInTestplay;
-    rbYippee.Checked := GameParams.PreferYippee;
-    rbBoing.Checked := not GameParams.PreferYippee;
-
-    //cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
     btnApply.Enabled := false;
   finally
@@ -369,9 +364,9 @@ begin
     SoundManager.MusicVolume := tbMusicVol.Position;
 
   GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
-  GameParams.PreferYippee := rbYippee.Checked;
 
-  //GameParams.PostviewJingles := cbPostviewJingles.Checked;
+  GameParams.PreferYippee := rgExitSound.ItemIndex = 0;
+  GameParams.PreferBoing := rgExitSound.ItemIndex = 1;
 
   btnApply.Enabled := false;
 end;
@@ -550,7 +545,16 @@ procedure TFormNXConfig.SetCheckboxes;    //bookmark - might not need this
         cbMinimapHighQuality.Checked := False;
         cbMinimapHighQuality.Enabled := False;
       end;
+
+    if GameParams.PreferYippee then rgExitSound.ItemIndex := 0;
+    if GameParams.PreferBoing then rgExitSound.ItemIndex := 1;
   end;
+
+procedure TFormNXConfig.SetExitSoundRadioGroup(aValue: Integer);
+begin
+  if rgExitSound.ItemIndex = 0 then GameParams.PreferYippee;
+  if rgExitSound.ItemIndex = 1 then GameParams.PreferBoing;
+end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
 begin

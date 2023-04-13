@@ -7,7 +7,7 @@ object FormNXConfig: TFormNXConfig
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Configuration'
   ClientHeight = 400
-  ClientWidth = 275
+  ClientWidth = 276
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,7 +18,7 @@ object FormNXConfig: TFormNXConfig
   Position = poMainFormCenter
   OnCreate = FormCreate
   DesignSize = (
-    275
+    276
     400)
   PixelsPerInch = 96
   TextHeight = 13
@@ -55,9 +55,9 @@ object FormNXConfig: TFormNXConfig
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
-    Width = 275
+    Width = 276
     Height = 369
-    ActivePage = Graphics
+    ActivePage = TabSheet3
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -491,6 +491,9 @@ object FormNXConfig: TFormNXConfig
     object TabSheet3: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
+      DesignSize = (
+        268
+        341)
       object Label3: TLabel
         Left = 17
         Top = 30
@@ -536,28 +539,15 @@ object FormNXConfig: TFormNXConfig
       end
       object rgExitSound: TRadioGroup
         Left = 72
-        Top = 156
+        Top = 160
         Width = 113
-        Height = 81
+        Height = 73
+        Anchors = []
         Caption = 'Choose Exit Sound'
+        Items.Strings = (
+          'Yippee!'
+          'Boing!')
         TabOrder = 3
-      end
-      object rbYippee: TRadioButton
-        Left = 98
-        Top = 180
-        Width = 65
-        Height = 17
-        Caption = 'Yippee!'
-        TabOrder = 4
-        OnClick = OptionChanged
-      end
-      object rbBoing: TRadioButton
-        Left = 98
-        Top = 203
-        Width = 65
-        Height = 17
-        Caption = 'Boing!'
-        TabOrder = 5
         OnClick = OptionChanged
       end
     end

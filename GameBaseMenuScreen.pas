@@ -969,7 +969,7 @@ begin
 
   if GameParams.ShowMinimap <> OldShowMinimap then
   begin
-    //CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
+    CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
   end;
 
   if GameParams.HighResolution <> OldHighResolution then

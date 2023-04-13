@@ -91,7 +91,8 @@ type
     //moPostviewJingles,
     //moForceDefaultLemmings,
     moDisableMusicInTestplay,
-    moPreferYippee
+    moPreferYippee,
+    moPreferBoing
   );
 
   TMiscOptions = set of TMiscOption;
@@ -245,6 +246,7 @@ type
     //property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
     property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
+    property PreferBoing: Boolean Index moPreferBoing read GetOptionFlag write SetOptionFlag;
 
     property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
@@ -467,8 +469,8 @@ begin
   SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
   SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
   SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
-  SaveBoolean('Prefer Yippee', PreferYippee);
-  //SaveBoolean('PostviewJingles', PostviewJingles);
+  SaveBoolean('PreferYippee', PreferYippee);
+  SaveBoolean('PreferBoing', PreferBoing);
 
   //SL.Add('');
   //SL.Add('# Online Options');
@@ -615,6 +617,7 @@ begin
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
     PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
+    PreferBoing := LoadBoolean('PreferBoing', PreferBoing);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
