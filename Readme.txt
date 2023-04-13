@@ -1,20 +1,18 @@
-** This file is out of date as hell.
-
 SuperLemmix
 
-by WillLem
-based on by Namida Verasche and Stephan Neupert,
-based on Lemmix by Eric Langedijk,
-inspired by Lemmings by DMA.
+by William James
+based on NeoLemmix by Namida Verasche and Stephan Neupert,
+itself based on Lemmix by Eric Langedijk,
+inspired by Lemmings by DMA Design.
 
 The main branch is "new-master", which gives users access to most data files 
 allowing them to easily mod their copy of the game.
-This branch has to be compiled on Delphi XE6. 
+This branch has to be compiled on Delphi XE6 or later. 
 
 The "master" branch contains preserves the older versions that stored everything
 in binary files (though the latest commits contain partial progress towards the
 new file system).
-Starting from commit 60368de the code compiles only on Delphi XE6.
+Starting from commit 60368de the code compiles only on Delphi XE6 or later.
 From commit 7b338fa to 60368de the code compiles both on Delphi XE6 and Delphi 7.
 Older commits only compile on Delphi 7.
 
@@ -35,17 +33,6 @@ Compile instructions for the SuperLemmix player:
 
 Further comments:
 - Compiled versions of SuperLemmix will be placed in the subfolder "bin".
-- All extrenal files needed to run SuperLemmix.exe are contained in "data/external".
+- All external files needed to run SuperLemmix.exe are contained in "data/external".
   Some of the files (like the ones in "styles") are optional and only required for playing
   certain levels.
-- NXPConverter: 
-  This is a tool to convert old binary level pack files to the new text-based file format.
-  The project file is "NXPConvert.dpr" in "Tools/NXPConvert".
-  Again no special build script is needed, though it uses several units from the main game.
-- GSConverter:
-  This is a tool to convert old binary graphic styles to the new .png-based file format.
-  The project file is "GSConvert.dpr" in "Tools/GSConvert".
-  Again no special build script is needed.
-
-
-
