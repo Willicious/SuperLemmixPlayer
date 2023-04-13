@@ -2308,7 +2308,7 @@ function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baSplatting, baExiting];
+               baDrowning, baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
 end;
@@ -2317,7 +2317,7 @@ function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing, baTimebombFinish,
                baExploding, baFreezeFinish, baDrowning,
-               baDangling, baSplatting, baExiting];
+               baDangling, baVaporizing, baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
 end;
@@ -2326,7 +2326,8 @@ function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baDangling, baSplatting, baExiting];
+               baDrowning, baDangling, baSplatting, baVaporizing,
+			   baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not (L.LemIsFloater or L.LemIsGlider);
 end;
@@ -2335,7 +2336,7 @@ function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDangling, baSplatting, baExiting];   // Does NOT contain baDrowning!
+               baDangling, baVaporizing, baSplatting, baExiting];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
 end;
@@ -2344,7 +2345,8 @@ function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baDangling, baSplatting, baExiting];
+               baDrowning, baDangling, baSplatting, baVaporizing,
+			   baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
 end;
@@ -2363,7 +2365,7 @@ function TLemmingGame.MayAssignTimebomber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDangling, baSplatting, baExiting];
+               baDangling, baVaporizing, baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
   Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
@@ -2378,7 +2380,7 @@ function TLemmingGame.MayAssignExploderFreezer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDangling, baSplatting, baExiting];
+               baDangling, baVaporizing, baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
   Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
@@ -3650,7 +3652,7 @@ const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baShrugging, baTimebombing, baOhnoing,
                       baExploding, baFreezing, baReaching, baDehoisting,
-                      baDangling, baLooking];  //bookmark - does Dangling need to go here?
+                      baVaporizing, baDangling, baLooking];  //bookmark - does Dangling need to go here?
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
