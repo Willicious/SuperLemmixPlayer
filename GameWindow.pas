@@ -160,6 +160,7 @@ type
     IdealFrameTimeMSFast : Cardinal;          // fast forward framespeed in milliseconds
     IdealFrameTimeMSSlow : Cardinal;
     IdealFrameTimeMSRewind : Cardinal;
+    IdealFrameTimeMSSuperLemming : Cardinal;
     IdealScrollTimeMS    : Cardinal;          // scroll speed in milliseconds
     PrevCallTime         : Cardinal;          // last time we did something in idle
     PrevScrollTime       : Cardinal;          // last time we scrolled in idle
@@ -563,8 +564,8 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-        Fast, Slow, Rewind, ForceOne, TimeForFrame, TimeForPausedRR,
-        TimeForFastForwardFrame, TimeForScroll, TimeForRewind,
+        Fast, SuperLemming, Slow, Rewind, ForceOne, TimeForFrame, TimeForPausedRR,
+        TimeForFastForwardFrame, TimeForScroll, TimeForRewind, TimeForSuperLemming,
         Hyper, Pause: Boolean;
   PanelFrameSkip: Integer;
 begin
@@ -595,7 +596,7 @@ begin
 
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
-  //Superlemming := (fGameSpeed = gspSuperlemming);
+  Superlemming := (fGameSpeed = gspSuperlemming);
   Rewind := (fGameSpeed = gspRewind);
   Slow := (fGameSpeed = gspSlowMo);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
@@ -610,6 +611,7 @@ begin
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
   TimeForRewind := Rewind and (CurrTime - PrevCallTime > IdealFrameTimeMSRewind);
+  TimeForSuperLemming := SuperLemming and (CurrTime - PrevCallTime > IdealFrameTimeMSSuperLemming);
   Hyper := IsHyperSpeed;
 
   if TimeForRewind then
@@ -624,6 +626,11 @@ begin
       GameSpeed := gspRewind;
     end;
 
+  end;
+
+  if TimeForSuperLemming then
+  begin
+    GameSpeed := gspSuperLemming;
   end;
 
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
@@ -1838,6 +1845,7 @@ begin
 
   // set timers
   IdealFrameTimeMSFast := 10;
+  IdealFrameTimeMSSuperLemming := 30;
   IdealScrollTimeMS := 15;
   IdealFrameTimeMSRewind := 22;    //bookmark - may need to change this
   IdealFrameTimeMS := 60; // normal

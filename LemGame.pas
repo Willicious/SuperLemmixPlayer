@@ -194,6 +194,7 @@ type
     fGameCheated               : Boolean;
     NextLemmingCountDown       : Integer;
     fFastForward               : Boolean;
+    fSuperLemming              : Boolean;
     fTargetIteration           : Integer; // this is used in hyperspeed
     fHyperSpeedCounter         : Integer; // no screenoutput
     fHyperSpeed                : Boolean; // we are at hyperspeed no targetbitmap output
@@ -1129,6 +1130,7 @@ begin
   fPauseOnHyperSpeedExit := False;
 
   fFastForward := False;
+  fSuperLemming := Level.Info.SuperLemming;
 
   fGameFinished := False;
   fGameCheated := False;

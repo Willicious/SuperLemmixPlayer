@@ -14,7 +14,7 @@ type
     gspPause,
     gspFF,
     gspRewind,
-    //gspSuperlemming, //superlemming
+    gspSuperlemming,
     gspSlowMo
   );
 
