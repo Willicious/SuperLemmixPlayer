@@ -26,7 +26,7 @@
  MAX_SPAWN_INTERVAL   38
  
  $SKILLSET 
-     BOMBER    1
+     TIMEBOMBER    1
     BLOCKER    2
     BUILDER    0
      DIGGER    1
@@ -72,7 +72,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        256
    Y        295
    WIDTH     64
@@ -81,7 +81,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        192
    Y        295
    WIDTH     64
@@ -90,7 +90,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        128
    Y        295
    WIDTH     64
@@ -99,7 +99,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X         64
    Y        295
    WIDTH     64
@@ -108,7 +108,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X          0
    Y        295
    WIDTH     64

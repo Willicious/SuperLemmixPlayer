@@ -27,7 +27,7 @@
  
  $SKILLSET 
     FLOATER   18
-     BOMBER    0
+     TIMEBOMBER    0
     BLOCKER    2
     BUILDER    1
      BASHER    0
@@ -55,7 +55,7 @@
  
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X         79
    Y        134
    WIDTH     64
@@ -153,7 +153,7 @@
    X        356
    Y        135
    NO_OVERWRITE
-   SKILL BOMBER
+   SKILL TIMEBOMBER
  $END
  
  

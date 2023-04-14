@@ -36,7 +36,7 @@
 # ----------------------------- 
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X          0
    Y        150
    WIDTH     64
@@ -44,7 +44,7 @@
  
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X         64
    Y        150
    WIDTH     64
@@ -52,7 +52,7 @@
  
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X        128
    Y        150
    WIDTH     64
@@ -60,7 +60,7 @@
  
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X        192
    Y        150
    WIDTH     64
@@ -68,7 +68,7 @@
  
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X        256
    Y        150
    WIDTH     64

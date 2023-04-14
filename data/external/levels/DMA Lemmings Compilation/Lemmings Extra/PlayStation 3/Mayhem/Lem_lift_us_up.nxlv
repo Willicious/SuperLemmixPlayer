@@ -92,7 +92,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        253
    Y         30
    WIDTH     64

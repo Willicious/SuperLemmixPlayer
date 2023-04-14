@@ -28,7 +28,7 @@
  $SKILLSET 
     CLIMBER    1
     FLOATER    1
-     BOMBER    1
+     TIMEBOMBER    1
     BLOCKER    0
     BUILDER    2
      BASHER    1
@@ -149,7 +149,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X          0
    Y        455
    WIDTH     64
@@ -157,7 +157,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X         64
    Y        455
    WIDTH     64
@@ -165,7 +165,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        128
    Y        455
    WIDTH     64
@@ -173,7 +173,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        192
    Y        455
    WIDTH     64
@@ -181,7 +181,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        256
    Y        455
    WIDTH     64

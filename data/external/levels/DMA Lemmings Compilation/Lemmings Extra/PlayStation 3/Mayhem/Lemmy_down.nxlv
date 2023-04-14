@@ -27,7 +27,7 @@
  
  $SKILLSET 
     FLOATER    0
-     BOMBER    0
+     TIMEBOMBER    0
     BLOCKER    1
     BUILDER    2
      BASHER    0
@@ -114,7 +114,7 @@
    X        439
    Y         56
    NO_OVERWRITE
-   SKILL BOMBER
+   SKILL TIMEBOMBER
  $END
  
  

@@ -5,7 +5,7 @@
  
 #        Level info             
 # ----------------------------- 
- TITLE Teach me bombers and blockers
+ TITLE Teach me TIMEBOMBERs and blockers
  AUTHOR Minim
  ID x553C726A553C726A
  AUTOSTEEL on 
@@ -26,7 +26,7 @@
  MAX_SPAWN_INTERVAL   48
  
  $SKILLSET 
-     BOMBER   10
+     TIMEBOMBER   10
     BLOCKER   10
  $END 
  
@@ -59,7 +59,7 @@
  
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X        345
    Y        140
    WIDTH     64
@@ -68,7 +68,7 @@
  
  $OBJECT
    COLLECTION orig_fire
-   PIECE      water
+   PIECE      lava
    X        409
    Y        140
    WIDTH     64

@@ -53,7 +53,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        384
    Y        135
    WIDTH     64
@@ -62,7 +62,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        320
    Y        135
    WIDTH     64
@@ -71,7 +71,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        256
    Y        135
    WIDTH     64
@@ -80,7 +80,7 @@
  
  $OBJECT
    COLLECTION orig_marble
-   PIECE      water
+   PIECE      poison
    X        448
    Y        135
    WIDTH     16

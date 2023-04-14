@@ -28,7 +28,7 @@
  $SKILLSET 
     CLIMBER    0
     FLOATER    3
-     BOMBER    0
+     TIMEBOMBER    0
     BLOCKER    1
     BUILDER    2
      BASHER    1
@@ -72,7 +72,7 @@
    X        751
    Y         55
    NO_OVERWRITE
-   SKILL BOMBER
+   SKILL TIMEBOMBER
  $END
  
  $OBJECT
