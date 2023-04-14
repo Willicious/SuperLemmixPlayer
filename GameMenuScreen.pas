@@ -574,12 +574,19 @@ begin
 end;
 
 procedure TGameMenuScreen.PrepareNextReelText;
+const
+  HUE_SHIFT = 0.250;
 var
   i, realI: Integer;
   S: String;
 
   SizeRect: TRect;
+  HueShift: TColorDiff;
+  x, y: Integer;
 begin
+  FillChar(HueShift, SizeOf(TColorDiff), 0);
+  HueShift.HShift := HUE_SHIFT;
+
   for i := 1 to fScrollerTextList.Count do
   begin
     if i = fScrollerTextList.Count then
@@ -609,6 +616,12 @@ begin
   ScrollerText.Clear(0);
   ScrollerText.DrawMode := dmBlend;
   MenuFont.DrawText(ScrollerText, S, 0, 4);
+
+  for y := 0 to ScrollerText.Height-1 do
+  for x := 0 to ScrollerText.Width-1 do
+       begin
+          ScrollerText[x, y] := ApplyColorShift(ScrollerText[x, y], HueShift);
+        end;
 
   if (fReelForceDirection < 0) then
     fReelTextPos := -ScrollerText.Width
