@@ -1591,7 +1591,7 @@ begin
       end;
     spbRestart:
       begin
-        if GameParams.ClassicMode or GameParams.NoAutoReplayMode then // cancels Replay after Restart in ClassicMode
+        if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then // cancels Replay after Restart in ClassicMode
           begin
             Game.CancelReplayAfterSkip := true;
             fGameWindow.GotoSaveState(0);

@@ -64,6 +64,7 @@ type
     moEnableOnline,
     moCheckUpdates,
     moNoAutoReplayMode,
+    moReplayAfterRestart,
     moPauseAfterBackwards,
     moNoBackgrounds,
     moClassicMode,
@@ -222,6 +223,7 @@ type
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
+    property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
@@ -423,6 +425,7 @@ begin
   SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
   //SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
+  SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   //SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
@@ -600,6 +603,7 @@ begin
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
 
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
+    ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
     //ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
