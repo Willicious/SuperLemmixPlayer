@@ -457,7 +457,7 @@ end;
 
 procedure TFormNXConfig.cbShowMinimapClick(Sender: TObject);
 begin
-  if not fIsSetting then   //bookmark - this needs to be in the ClassicMode stuff as well
+  if not fIsSetting then
   begin
     if cbShowMinimap.Checked then
     begin
@@ -528,7 +528,7 @@ begin
   cbHideSkillQ.Enabled := true;
 end;
 
-procedure TFormNXConfig.SetCheckboxes;    //bookmark - might not need this
+procedure TFormNXConfig.SetCheckboxes;
   begin
     if GameParams.ClassicMode then
       begin

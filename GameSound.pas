@@ -163,13 +163,6 @@ begin
     ShowMessage('BASS.DLL not found. SuperLemmix will run but music and sound will not play.');
     fIsBassLoaded := false;
   end;
-
-  //if FileExists(AppPath + 'bass_fx.dll') then      //bookmark
-  //begin
-    //Load_BASSDLL(AppPath + 'bass_fx.dll');
-  //end else begin
-   // ShowMessage('BASS_FX.DLL not found. SuperLemmix will run but music and sound will not play.');
-  //end;
 end;
 
 destructor TSoundManager.Destroy;
@@ -211,6 +204,11 @@ begin
     BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
   end;
 end;
+
+//procedure TSoundManager.AdjustPitch(aValue: Integer);
+//begin
+  //BASS_ChannelSetAttribute({sound channel goes here}, BASS_ATTRIB_FREQ, 0.25: Single);
+//end;      //bookmark - this needs to adjust pitch
 
 procedure TSoundManager.SetSoundVolume(aValue: Integer);
 begin
