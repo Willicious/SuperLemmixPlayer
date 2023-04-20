@@ -441,8 +441,8 @@ end;
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
   aText: String; aAction: TRegionAction): TClickableRegion;
 const
-  HUE_SHIFT_NORMAL = 0.610; //0.250 for blue
-  HUE_SHIFT_HOVER = 0.150; //0.150 for teal
+  HUE_SHIFT_NORMAL = 0.250;
+  HUE_SHIFT_HOVER = 0;
   VALUE_SHIFT_CLICK = -0.250;
 var
   tmpNormal, tmpHover, tmpClick: TBitmap32;

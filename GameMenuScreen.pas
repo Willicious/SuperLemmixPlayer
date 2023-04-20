@@ -621,7 +621,7 @@ begin
   for x := 0 to ScrollerText.Width-1 do
        begin
           ScrollerText[x, y] := ApplyColorShift(ScrollerText[x, y], HueShift);
-        end;
+       end;
 
   if (fReelForceDirection < 0) then
     fReelTextPos := -ScrollerText.Width

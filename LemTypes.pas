@@ -103,6 +103,7 @@ function ResMod: Integer; // Returns 1 when in low-res, 2 when in high-res
 function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
 function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32; overload;
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32; overload;
+procedure ApplyColorShift(bmp: TBitmap32; aDiff: TColorDiff); overload;
 
 procedure DoProjectileRecolor(aProjectileBmp: TBitmap32; aMaskColor: TColor32);
 
@@ -835,6 +836,19 @@ end;
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32;
 begin
   Result := ApplyColorShift(aBase, CalculateColorShift(aPrimary, aAlt));
+end;
+
+procedure ApplyColorShift(bmp: TBitmap32; aDiff: TColorDiff);
+var
+  y, x: Integer;
+  Color: TColor32;
+begin
+  for y := 0 to bmp.Height - 1 do
+    for x := 0 to bmp.Width do begin
+      Color := bmp.Pixel[x, y];
+      Color := ApplyColorShift(Color, aDiff);
+      bmp.Pixel[x, y] := Color;
+    end;
 end;
 
 procedure DoProjectileRecolor(aProjectileBmp: TBitmap32; aMaskColor: TColor32);

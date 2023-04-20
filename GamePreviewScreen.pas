@@ -14,7 +14,7 @@ uses
   GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
   LemCore, LemStrings, LemRendering, LemLevel, LemGame,
-  LemGadgetsMeta, LemGadgets,
+  LemGadgetsMeta, LemGadgets, LemMenuFont,
   LemTalisman,
   GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow;
 
@@ -24,7 +24,7 @@ type
       fTalRects: TList<TRect>;
       fTalismanImage: TBitmap32;
 
-      function GetScreenText: string;
+      function GetTextLineInfoArray: TextLineArray;
 
       procedure NextLevel;
       procedure PreviousLevel;
@@ -186,6 +186,7 @@ var
   Lw, Lh : Integer;
   LevelScale: Double;
   NewRegion: TClickableRegion;
+  Lines: TextLineArray;
 const
   TEXT_Y_POSITION = 170;
 begin
@@ -228,17 +229,20 @@ begin
       OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
     W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
-    // draw text
-    MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, TEXT_Y_POSITION);
 
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-    if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-    NewRegion.ShortcutKeys.Add(VK_RETURN);
-    NewRegion.ShortcutKeys.Add(VK_SPACE);
+    // draw text
+    Lines := GetTextLineInfoArray;
+        MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
+
+    //// I don't think we need to show "Continue" any more
+    //if GameParams.ShowMinimap and not GameParams.FullScreen then
+      //NewRegion := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
+    //if GameParams.FullScreen then
+      //NewRegion := MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
+    //if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      //NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
+    //NewRegion.ShortcutKeys.Add(VK_RETURN);
+    //NewRegion.ShortcutKeys.Add(VK_SPACE);
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
       NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
@@ -264,6 +268,8 @@ begin
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
     NewRegion.AddKeysFromFunction(lka_LoadReplay);
 
+    MakeHiddenOption(VK_SPACE, BeginPlay);
+    MakeHiddenOption(VK_RETURN, BeginPlay);
     MakeHiddenOption(VK_F3, ShowConfigMenu);
     MakeHiddenOption(VK_LEFT, PreviousLevel);
     MakeHiddenOption(VK_RIGHT, NextLevel);
@@ -332,47 +338,98 @@ begin
     CloseScreen(gstMenu);
 end;
 
-function TGamePreviewScreen.GetScreenText: string;
+function TGamePreviewScreen.GetTextLineInfoArray: TextLineArray;
+const
+  TITLE_SHIFT = 0.600;
+  GROUP_SHIFT = 0.600;
+  NUM_LEMS_SHIFT = 0.250;
+  RESCUE_LEMS_SHIFT = 0;
+  RELEASE_RATE_SHIFT = 0.800;
+  TIME_LIMIT_SHIFT = 0.150;
+  AUTHOR_SHIFT = 0.500;
+
+  LINE_Y_SPACING = 28;
+var
+  HueShift: TColorDiff;
+  Entry: TNeoLevelEntry;
+  Level: TLevel;
 begin
-  Assert(GameParams <> nil);
+  Entry := GameParams.CurrentLevel;
+  Level := GameParams.Level;
+  FillChar(HueShift, SizeOf(TColorDiff), 0);
 
-  with GameParams.Level.Info do
+  SetLength(Result, 7);
+
+  HueShift.HShift := TITLE_SHIFT;
+  Result[0].Line := Entry.Title;
+  Result[0].ColorShift := HueShift;
+  Result[0].yPos := 168;//hotbookmark
+
+  HueShift.HShift := GROUP_SHIFT;
+  Result[1].yPos := Result[0].yPos + 40;
+  Result[1].Line := Entry.Group.Name;
+  if Entry.Group.Parent = nil then
   begin
-    Result := Title + #13#12;
-
-    if GameParams.CurrentLevel.Group.Parent <> nil then
-    begin
-      Result := Result + GameParams.CurrentLevel.Group.Name;
-      if GameParams.CurrentLevel.Group.IsOrdered then
-        Result := Result + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
-    end;
-    Result := Result + #13#13#13;
-
-    if (NeutralCount > 0) or (ZombieCount > 0) then
-    begin
-      Result := Result + IntToStr(LemmingsCount - ZombieCount - NeutralCount) + ' Lemmings  + ';
-
-      if NeutralCount > 0 then
-        Result := Result + IntToStr(NeutralCount) + ' Neutrals';
-
-      if (NeutralCount > 0) and (ZombieCount > 0) then
-        Result := Result + ', ';
-
-      if ZombieCount > 0 then
-        Result := Result + IntToStr(ZombieCount) + ' Zombies';
-    end else
-      Result := Result + IntToStr(LemmingsCount) + SPreviewLemmings;
-
-    Result := Result + #13#12;
-
-    Result := Result + IntToStr(RescueCount) + SPreviewSave + #13#12;
-
-    if HasTimeLimit then
-      Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13 + #12;
-
-    if Author <> '' then
-      Result := Result + SPreviewAuthor + Author;
+    Result[1].Line := 'Levels'
+  end else
+  begin
+    if Entry.Group.IsOrdered then
+    Result[1].Line := Result[1].Line + ' ' + IntToStr(Entry.GroupIndex + 1);
   end;
+  Result[1].ColorShift := HueShift;
+
+  HueShift.HShift := NUM_LEMS_SHIFT;
+  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
+  if (Level.Info.NeutralCount > 0) or (Level.Info.ZombieCount > 0) then
+  begin
+    Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
+                                               - Level.Info.ZombieCount
+                                               - Level.Info.NeutralCount) + ' Lemmings + ';
+
+    if Level.Info.NeutralCount > 0 then
+    Result[2].Line := Result[2].Line + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
+
+    if (Level.Info.NeutralCount > 0) and (Level.Info.ZombieCount > 0) then
+    Result[2].Line := Result[2].Line + ', ';
+
+    if Level.Info.ZombieCount > 0 then
+    Result[2].Line := Result[2].Line + IntToStr(Level.Info.ZombieCount) + ' Zombies';
+  end else
+  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + SPreviewLemmings;;
+  Result[2].ColorShift := HueShift;
+
+  HueShift.HShift := RESCUE_LEMS_SHIFT;
+  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
+  Result[3].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
+  Result[3].ColorShift := HueShift;
+
+  HueShift.HShift := RELEASE_RATE_SHIFT;
+  Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
+  if Level.Info.SpawnIntervalLocked then
+  begin
+    Result[4].Line := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval) + SPreviewRRLocked;
+  end else
+  Result[4].Line := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
+  Result[4].ColorShift := HueShift;
+
+  HueShift.HShift := TIME_LIMIT_SHIFT;
+  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
+  if Level.Info.HasTimeLimit then
+  begin
+    Result[5].Line := SPreviewTimeLimit + IntToStr(Level.Info.TimeLimit div 60) + ':'
+                    + LeadZeroStr(Level.Info.TimeLimit mod 60, 2);
+  end else
+  Result[5].Line := 'Infinite Time';      //hotbookmark
+  Result[5].ColorShift := HueShift;
+
+  HueShift.HShift := AUTHOR_SHIFT;
+  Result[6].yPos := Result[5].yPos + LINE_Y_SPACING;
+  if Level.Info.Author <> '' then
+  begin
+    Result[6].Line := SPreviewAuthor + Level.Info.Author;
+  end else
+  Result[6].Line := SPreviewAuthor + ' Anonymous';
+  Result[6].ColorShift := HueShift;
 end;
 
 procedure TGamePreviewScreen.HandleTalismanClick;

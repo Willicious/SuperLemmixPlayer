@@ -78,7 +78,7 @@ resourcestring
   SPreviewSave = ' To Be Saved';
   SPreviewReleaseRate = 'Release Rate ';
   SPreviewSpawnInterval = 'Spawn Interval ';
-  SPreviewRRLocked = '  (Locked)';
+  SPreviewRRLocked = ' (Locked)';
   SPreviewTimeLimit = 'Time Limit ';
   SPreviewGroup = 'Group: ';
   SPreviewAuthor = 'Author: ';
