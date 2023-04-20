@@ -795,7 +795,6 @@ const
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
                        baFixing, baFencing, baReaching, baShimmying, baJumping,
                        baDehoisting, baSliding, baDangling, baLasering, baLooking];
-                       //bookmark - is this projection code that needs to be removed?
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
@@ -861,9 +860,10 @@ begin
     spbShimmier:
       if not DoProjection then
       begin
-        if CopyL.LemAction in [baClimbing, baJumping] then
+        if CopyL.LemAction in [baJumping] then
           fRenderInterface.SimulateTransitionLem(CopyL, baShimmying)
         else
+        if CopyL.LemAction in [baClimbing] then
           fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
         DrawShimmierShadow(CopyL);
       end;
