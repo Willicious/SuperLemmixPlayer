@@ -412,7 +412,7 @@ var
 
   KeepTalismans: Boolean;
 const
-  TALISMANS_Y_POSITION = 400;
+  TALISMANS_Y_POSITION = 408;
 begin
   if GameParams.Level.Talismans.Count = 0 then
     Exit;
