@@ -612,10 +612,10 @@ begin
   end;
 
   SizeRect := MenuFont.GetTextSize(S);
-  ScrollerText.SetSize(SizeRect.Width, SizeRect.Height + 4);
+  ScrollerText.SetSize(SizeRect.Width, SizeRect.Height + 5);
   ScrollerText.Clear(0);
   ScrollerText.DrawMode := dmBlend;
-  MenuFont.DrawText(ScrollerText, S, 0, 4);
+  MenuFont.DrawText(ScrollerText, S, 0, 5);
 
   for y := 0 to ScrollerText.Height-1 do
   for x := 0 to ScrollerText.Width-1 do
