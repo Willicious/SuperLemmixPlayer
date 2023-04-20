@@ -89,6 +89,7 @@ procedure TGamePostviewScreen.BuildScreen;
 var
   NewRegion: TClickableRegion;
 begin
+  fClickableRegions.Clear;
   ScreenImg.BeginUpdate;
   try
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);

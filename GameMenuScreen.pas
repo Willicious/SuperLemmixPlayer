@@ -325,6 +325,7 @@ var
 begin
   BMP := TBitmap32.Create;
   try
+    fClickableRegions.Clear;
     // Play
     GetGraphic('sign_play.png', BMP);
     NewRegion := MakeClickableImageAuto(MakePosition(-1, -0.5), BMP.BoundsRect, BeginGame, BMP);

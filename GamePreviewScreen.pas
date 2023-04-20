@@ -190,6 +190,7 @@ var
 const
   TEXT_Y_POSITION = 170;
 begin
+  fClickableRegions.Clear;
   Assert(GameParams <> nil);
 
   W := TBitmap32.Create;

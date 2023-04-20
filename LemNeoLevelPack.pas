@@ -677,6 +677,8 @@ begin
     fTalismans.Free;
   if fHasOwnScrollerList and (fScrollerList <> nil) then
     fScrollerList.Free;
+  if fHasOwnPostviewTexts then
+    fPostViewTexts.Free;
   inherited;
 end;
 

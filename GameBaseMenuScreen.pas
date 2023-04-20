@@ -104,7 +104,7 @@ type
 
       fBasicCursor: TNLCursor;
 
-      fClickableRegions: TObjectList<TClickableRegion>;
+
 
       procedure LoadBasicCursor;
       procedure SetBasicCursor;
@@ -128,6 +128,7 @@ type
       procedure SaveScreenImage;
       {$endif}{$endif}
     protected
+      fClickableRegions: TObjectList<TClickableRegion>;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
 
       procedure DoLevelSelect;
@@ -964,12 +965,14 @@ begin
 
   if GameParams.FullScreen <> OldFullScreen then
   begin
-    CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
+     InitializeImage;
+     BuildScreen;
   end;
 
   if GameParams.ShowMinimap <> OldShowMinimap then
   begin
-    CloseScreen(gstMenu); //hotbookmark - we need to re-draw the menu here
+     InitializeImage;
+     BuildScreen;
   end;
 
   if GameParams.HighResolution <> OldHighResolution then
