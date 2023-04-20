@@ -1090,6 +1090,8 @@ begin
   if aButton = spbNone then Exit;
   if (aButton <= LAST_SKILL_BUTTON) then
   begin
+    if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
+    SoundManager.PlaySound(SFX_SKILLBUTTON);
     if (fHighlitSkill = aButton) and Highlight then Exit;
     if (fHighlitSkill = spbNone) and not Highlight then Exit;
   end;
@@ -1097,7 +1099,7 @@ begin
 
   RemoveHighlight(aButton);
   if Highlight then
-  DrawHighlight(aButton);
+    DrawHighlight(aButton);
 end;
 
 procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
@@ -1108,8 +1110,6 @@ begin
   begin
     BorderRect := fButtonRects[aButton];
     fHighlitSkill := aButton;
-    if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
-    SoundManager.PlaySound(SFX_SKILLBUTTON);
   end else
   BorderRect := fButtonRects[aButton];
 
