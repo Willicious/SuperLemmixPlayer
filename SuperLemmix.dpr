@@ -77,6 +77,9 @@ uses
 {$R *.res}
 
 begin
+  {$ifdef debug}
+  ReportMemoryLeaksOnShutdown := True;
+  {$endif}
   Application.Initialize;
   Application.Title := 'SuperLemmix';
   Application.CreateForm(TMainForm, MainForm);

@@ -937,8 +937,8 @@ var
     else
       Result := Result + '0';
 
-    if Level.Info.SuperLemming then
-      Result := Result + Level.Info.SuperLemming;
+//    if Level.Info.SuperLemming then
+//      Result := Result + Level.Info.SuperLemming;
   end;
 
   function SkillsetString: String;
