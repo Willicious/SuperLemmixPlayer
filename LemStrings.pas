@@ -63,7 +63,6 @@ const
   SFX_FIXING = 'wrench';
   SFX_ZOMBIE = 'zombie';
   SFX_TIMEUP = 'timeup';
-  SFX_CHANGE_RR = 'boop';
 
 resourcestring
   SProgramName = 'SuperLemmix Player';

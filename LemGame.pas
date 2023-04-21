@@ -5977,7 +5977,6 @@ begin
         if RightClick then
         begin
           RecordSpawnInterval(MINIMUM_SI);
-          //CueSoundEffect(SFX_CHANGE_RR); //bookmark placeholder for jump-to-max-RR sound
         end else
           SpawnIntervalModifier := -1;
       end;
@@ -5994,7 +5993,6 @@ begin
         if RightClick then
         begin
           RecordSpawnInterval(Level.Info.SpawnInterval);
-          //CueSoundEffect(SFX_CHANGE_RR); //bookmark placeholder for jump-to-min-RR sound
         end else
           SpawnIntervalModifier := 1;
       end;
