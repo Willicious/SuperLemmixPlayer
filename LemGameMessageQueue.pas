@@ -40,6 +40,7 @@ const
   GAMEMSG_SOUND = 10;       // Plays a sound. DataStr: Filename of sound to play, without any extension.
   GAMEMSG_SOUND_BAL = 11;   // Plays a sound. DataStr: Filename of sound to play, without any extension. DataInt: X coordinate of origin.
   GAMEMSG_MUSIC = 12;       // Starts music if not already playing.
+  GAMEMSG_SOUND_FREQ = 13;
 
 type
   TGameMessage = record

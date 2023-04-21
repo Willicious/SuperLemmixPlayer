@@ -268,6 +268,7 @@ type
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSound: String); overload;
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
+    procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedGadgets;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -6165,6 +6166,16 @@ begin
   MessageQueue.Add(GAMEMSG_SOUND_BAL, aSound, aOrigin.X);
 end;
 
+procedure TLemmingGame.CueSoundEffectFrequency(aSound: String; aFrequency: Single);
+begin
+  if IsSimulating then Exit; // Not play sound in simulation mode
+
+  // Check that the sound was not yet played on this frame
+  if fSoundList.Contains(aSound) then Exit;
+
+  fSoundList.Add(aSound);
+  MessageQueue.Add(GAMEMSG_SOUND_FREQ, aSound, Int64(Trunc(aFrequency)));
+end;
 
 function TLemmingGame.GetHighlitLemming: TLemming;
 begin
@@ -6198,16 +6209,25 @@ begin
 end;
 
 procedure TLemmingGame.AdjustSpawnInterval(aSI: Integer);
+const
+  MinFreq: Single = 3200;
+  MedFreq: Single = 7418;
+  MaxFreq: Single = 24000;
+  MinRR: Integer = 1;  //SI 102
+  MedRR: Integer = 55; //SI 48           -/+ 377
+  MaxRR: Integer = 99; //SI 4
+var
+  RR: Integer;
+  MagicFrequencyCalculatedByWillAndEric: Single;
 begin
-  if (aSI <> currSpawnInterval) and CheckIfLegalSI(aSI) then
-    currSpawnInterval := aSI;
+  if (aSI <> CurrSpawnInterval) and CheckIfLegalSI(aSI) then
+  begin
+    RR := 103 - aSI;
+    CurrSpawnInterval := aSI;
+    MagicFrequencyCalculatedByWillAndEric := 210 * RR + MinFreq;
 
-  CueSoundEffect(SFX_CHANGE_RR);
-  //if aSI > currSpawnInterval then SoundManager.AdjustPitch := + 1;
-  //if aSI < currSpawnInterval then SoundManager.AdjustPitch := - 1;
-  //or, if you can't set it up in sound manager then put the pitch
-  //shifting code directly in this block
-  //this is where the pitch-shifting code needs to go //bookmark
+    CueSoundEffectFrequency(SFX_ASSIGN_SKILL, MagicFrequencyCalculatedByWillAndEric);
+  end;
 end;
 
 

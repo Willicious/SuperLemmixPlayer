@@ -92,7 +92,7 @@ type
 
       function FindSoundIndex(aName: String): Integer;
 
-      procedure InternalPlaySound(aIndex: Integer; aBalance: Integer);
+      procedure InternalPlaySound(aIndex: Integer; aBalance: Integer; aFrequency: Single);
     public
       constructor Create;
       destructor Destroy; override;
@@ -106,8 +106,8 @@ type
       procedure LoadMusicFromFile(aName: String);
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
 
-      procedure PlaySound(aName: String; aBalance: Integer = 0); // -100 = fully left, +100 = fully right
-      procedure PlayPackSound(aName: String; aLoadPath: String; aBalance: Integer = 0);
+      procedure PlaySound(aName: String; aBalance: Integer = 0; aFrequency: Single = 0); // -100 = fully left, +100 = fully right
+      procedure PlayPackSound(aName: String; aLoadPath: String; aBalance: Integer = 0; aFrequency: Single = 0);
       procedure PlayMusic;
       procedure StopMusic;
       procedure FreeMusic;
@@ -462,7 +462,7 @@ begin
   BASS_ChannelStop(fMusicChannel);
 end;
 
-procedure TSoundManager.PlaySound(aName: String; aBalance: Integer = 0);
+procedure TSoundManager.PlaySound(aName: String; aBalance: Integer = 0; aFrequency: Single = 0);
 var
   SoundIndex: Integer;
 begin
@@ -474,10 +474,10 @@ begin
   if SoundIndex = -1 then
     SoundIndex := LoadSoundFromFile(aName, seoStyle);
 
-  InternalPlaySound(SoundIndex, aBalance);
+  InternalPlaySound(SoundIndex, aBalance, aFrequency);
 end;
 
-procedure TSoundManager.PlayPackSound(aName, aLoadPath: String; aBalance: Integer = 0);
+procedure TSoundManager.PlayPackSound(aName, aLoadPath: String; aBalance: Integer = 0; aFrequency: Single = 0);
 var
   SoundIndex: Integer;
 begin
@@ -489,12 +489,13 @@ begin
   if SoundIndex = -1 then
     SoundIndex := LoadSoundFromFile(aName, seoPack, aLoadPath);
 
-  InternalPlaySound(SoundIndex, aBalance);
+  InternalPlaySound(SoundIndex, aBalance, aFrequency);
 end;
 
-procedure TSoundManager.InternalPlaySound(aIndex: Integer; aBalance: Integer);
+procedure TSoundManager.InternalPlaySound(aIndex: Integer; aBalance: Integer; aFrequency: Single);
 var
   SampleChannel: LongWord;
+  tmpFrequency: Single;
 begin
   if aBalance < -100 then aBalance := -100;
   if aBalance > 100 then aBalance := 100;
@@ -502,9 +503,17 @@ begin
   if aIndex <> -1 then
   begin
     SampleChannel := BASS_SampleGetChannel(fSoundEffects[aIndex].BassSample, true);
+
     if aBalance <> 0 then
       BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100));
-    BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_VOL, (fSoundVolume / 100));
+      BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_VOL, (fSoundVolume / 100));
+
+    if aFrequency <> 0 then
+    begin
+      BASS_ChannelGetAttribute(SampleChannel, BASS_ATTRIB_FREQ, tmpFrequency);
+      BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_FREQ, aFrequency);
+    end;
+
     BASS_ChannelPlay(SampleChannel, true);
   end;
 end;
