@@ -6208,23 +6208,29 @@ end;
 
 procedure TLemmingGame.AdjustSpawnInterval(aSI: Integer);
 const
-  MinFreq: Single = 3200;
-  MedFreq: Single = 7418;
-  MaxFreq: Single = 24000;
+  MinFreq: Single = 3300; //we don't want to go lower than this
+  MedFreq: Single = 7418; //original frequency of SFX_ASSIGN_SKILL
+  MaxFreq: Single = 24000; //we don't want to go higher than this
   MinRR: Integer = 1;  //SI 102
-  MedRR: Integer = 55; //SI 48           -/+ 377
+  MedRR: Integer = 55; //SI 48
   MaxRR: Integer = 99; //SI 4
 var
   RR: Integer;
+  MagicFrequencyAmiga: Single;
   MagicFrequencyCalculatedByWillAndEric: Single;
 begin
   if (aSI <> CurrSpawnInterval) and CheckIfLegalSI(aSI) then
   begin
     RR := 103 - aSI;
     CurrSpawnInterval := aSI;
+
+    //Linear pitch slide
     MagicFrequencyCalculatedByWillAndEric := 210 * RR + MinFreq;
 
-    CueSoundEffectFrequency(SFX_ASSIGN_SKILL, MagicFrequencyCalculatedByWillAndEric);
+    //Logarithmic pitch slide modelled on Amiga
+    MagicFrequencyAmiga := 3300 * (Power(1.02, RR));
+
+    CueSoundEffectFrequency(SFX_ASSIGN_SKILL, MagicFrequencyAmiga);
   end;
 end;
 
