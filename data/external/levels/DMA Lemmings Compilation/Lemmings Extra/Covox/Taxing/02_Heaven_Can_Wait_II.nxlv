@@ -1,0 +1,320 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Heaven Can Wait II
+ AUTHOR Covox
+ ID xA9BB9556A9BB9556
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 435
+ HEIGHT 160
+ START_X 192
+ START_Y 80
+ THEME ohno_brick
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 80
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 51
+ 
+ $SKILLSET 
+   CLIMBER 2
+   FLOATER 2
+   TIMEBOMBER 2
+   BLOCKER 2
+   BUILDER 20
+   BASHER 2
+   MINER 2
+   DIGGER 2
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_brick
+   PIECE water
+   X 224
+   Y 136
+   WIDTH 64
+   HEIGHT 24
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE water
+   X 288
+   Y 136
+   WIDTH 64
+   HEIGHT 24
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE water
+   X 160
+   Y 136
+   WIDTH 64
+   HEIGHT 24
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 48
+   Y 64
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE exit
+   X 352
+   Y 7
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_02
+   X 160
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_02
+   X 96
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_02
+   X 32
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_02
+   X 352
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_01
+   X 366
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 339
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 371
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_03
+   X 354
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_03
+   X 376
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 354
+   Y 66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 354
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 354
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 354
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_01
+   X 354
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 376
+   Y 66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 376
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 376
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 376
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_01
+   X 376
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_01
+   X 191
+   Y 136
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_01
+   X 192
+   Y 136
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_01
+   X 162
+   Y 136
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_01
+   X 113
+   Y 135
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_01
+   X 135
+   Y 135
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_02
+   X 96
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_tiny_02
+   X 32
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_tiny_02
+   X 64
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_tiny_02
+   X 96
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_tiny_02
+   X 128
+   Y 128
+   ONE_WAY
+ $END
+ 
+ 

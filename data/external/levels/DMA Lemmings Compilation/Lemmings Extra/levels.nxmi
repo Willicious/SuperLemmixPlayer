@@ -1,29 +1,18 @@
 BASE
 
-
 $GROUP
-  NAME 2P
-  FOLDER 2P
+  NAME New Year Lemmings 1991-92
+  FOLDER New Year Lemmings 1991-92
 $END
 
 $GROUP
-  NAME Bonus
-  FOLDER Bonus
+  NAME Xmas Lemmings
+  FOLDER Xmas Lemmings
 $END
 
 $GROUP
-  NAME Prima Lemmings
-  FOLDER Prima Lemmings
-$END
-
-$GROUP
-  NAME Covox Lemmings
-  FOLDER Covox Lemmings
-$END
-
-$GROUP
-  NAME Genesis
-  FOLDER Genesis
+  NAME Covox
+  FOLDER Covox
 $END
 
 $GROUP
@@ -42,22 +31,22 @@ $GROUP
 $END
 
 $GROUP
-  NAME Sega Master System
-  FOLDER Sega Master System
+  NAME Prima Publishing
+  FOLDER Prima Publishing
+$END
+
+$GROUP
+  NAME SEGA Master System
+  FOLDER SEGA Master System
+$END
+
+$GROUP
+  NAME SEGA Genesis
+  FOLDER SEGA Genesis
 $END
 
 $GROUP
   NAME ZX Spectrum
   FOLDER ZX Spectrum
-$END
-
-$GROUP
-  NAME New Year Lemmings 1991-92
-  FOLDER New Year Lemmings 1991-92
-$END
-
-$GROUP
-  NAME Xmas Lemmings
-  FOLDER Xmas Lemmings
 $END
 

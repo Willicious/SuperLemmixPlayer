@@ -1,0 +1,500 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.21
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Release is the word
+ AUTHOR Sony 
+ MUSIC !PSP/hell1_PSP;PSP/hell2_PSP;PSP/hell3_PSP
+ ID xFBF272B3FBF272B3
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 464
+ HEIGHT 160
+ START_X 304
+ START_Y 80
+ THEME orig_fire
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 8
+ SAVE_REQUIREMENT 6
+ TIME_LIMIT 120
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   FLOATER 8
+   BUILDER 3
+   MINER 1
+   DIGGER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_fire
+   PIECE exit
+   X 299
+   Y 94
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE window
+   X 352
+   Y 11
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_flip
+   X 305
+   Y 58
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 327
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 302
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 277
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 253
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 229
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 205
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 181
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 157
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 133
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 109
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 85
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 61
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_05
+   X 350
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_01
+   X 385
+   Y 135
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_04
+   X 364
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 366
+   Y 119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_05
+   X 391
+   Y 152
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 406
+   Y 126
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 385
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 385
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 385
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 385
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 409
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 361
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 449
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 441
+   Y -26
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 389
+   Y -10
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 421
+   Y -18
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_06
+   X 385
+   Y -43
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_05
+   X 349
+   Y -37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_05
+   X 327
+   Y -33
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 293
+   Y -18
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 265
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 172
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 84
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_06
+   X 90
+   Y -54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 93
+   Y -26
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 109
+   Y -34
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_04
+   X 141
+   Y -48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 157
+   Y -26
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar
+   X 61
+   Y 40
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 55
+   Y 64
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar
+   X 61
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar
+   X 61
+   Y -8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_01
+   X 57
+   Y 68
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar
+   X 81
+   Y 81
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 75
+   Y 138
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar
+   X 81
+   Y 105
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar
+   X 81
+   Y 121
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 47
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_04
+   X -14
+   Y 147
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 5
+   Y 113
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

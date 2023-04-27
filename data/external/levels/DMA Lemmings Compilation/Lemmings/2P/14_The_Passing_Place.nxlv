@@ -1,0 +1,451 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The Passing Place
+ AUTHOR DMA Design 
+ ID xACDB6D3EACDB6D3E
+ VERSION x0000000000000002
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 512
+ HEIGHT 160
+ START_X 260
+ START_Y 80
+ THEME orig_pillar
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 75
+ SAVE_REQUIREMENT 75
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 43
+ 
+ $SKILLSET 
+   CLIMBER 2
+   FLOATER 1
+   BUILDER 50
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 424
+   Y 48
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 40
+   Y 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 312
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE flag_blue
+   X 328
+   Y 54
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 152
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE flag_green
+   X 168
+   Y 54
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_01
+   X 249
+   Y 141
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_01
+   X 249
+   Y 117
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_01
+   X 249
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_01
+   X 249
+   Y 69
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_01
+   X 249
+   Y 21
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_01
+   X 249
+   Y -3
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_03
+   X 326
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_03
+   X 350
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_03
+   X 302
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_03
+   X 167
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_03
+   X 143
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_03
+   X 191
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_07
+   X 422
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_07
+   X 39
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_06
+   X 432
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_06
+   X 49
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_10
+   X 476
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_10
+   X 476
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_10
+   X 476
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_10
+   X 19
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_10
+   X 19
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_10
+   X 20
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_04
+   X 486
+   Y 19
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_03
+   X 467
+   Y 19
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_03
+   X 10
+   Y 20
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_04
+   X 29
+   Y 20
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 83
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 125
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 167
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 209
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 390
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 348
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 306
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 265
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 273
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 315
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 357
+   Y -7
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 399
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 207
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 165
+   Y -7
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 123
+   Y -8
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 81
+   Y -8
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_01
+   X 62
+   Y -6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_02
+   X 441
+   Y -6
+   ONE_WAY
+ $END
+ 
+ 

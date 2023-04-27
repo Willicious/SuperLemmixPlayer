@@ -1,0 +1,712 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Which one are you trying to get?
+ AUTHOR DMA Design
+ ID xA1828ED4A1828ED4
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 511
+ HEIGHT 160
+ START_X 256
+ START_Y 80
+ THEME orig_fire
+ BACKGROUND orig_dirt_md:genesis_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 30
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   CLIMBER 1
+   FLOATER 10
+   TIMEBOMBER 2
+   BLOCKER 1
+   BUILDER 4
+   BASHER 3
+   MINER 1
+   DIGGER 3
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_fire
+   PIECE exit
+   X 232
+   Y 97
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE exit
+   X 376
+   Y 97
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE water
+   X 152
+   Y 140
+   WIDTH 64
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE water
+   X 296
+   Y 140
+   WIDTH 64
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE exit
+   X 88
+   Y 97
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE window
+   X 88
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE window
+   X 232
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE window
+   X 376
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE window
+   X 232
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 122
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 50
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 266
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 240
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 241
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 239
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 242
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 217
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 237
+   Y 61
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 193
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 267
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 123
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 49
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 267
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 97
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 122
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 72
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 266
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_01
+   X 269
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 188
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 147
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 292
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 122
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 69
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 43
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 98
+   Y 57
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 95
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 239
+   Y 62
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 237
+   Y 63
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 93
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 194
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 213
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_01
+   X 216
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_01
+   X 125
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_01
+   X 72
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 338
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 410
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 337
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 411
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 243
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 382
+   Y 59
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_02
+   X 387
+   Y 57
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 357
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 410
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_01
+   X 360
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_01
+   X 413
+   Y 31
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 386
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 361
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 411
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 332
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 436
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 288
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 350
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 433
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 208
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 140
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_04
+   X 63
+   Y 145
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 341
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 449
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 305
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 196
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 161
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 52
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 44
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 153
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 188
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 297
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 333
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 441
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 436
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 43
+   Y 117
+   ONE_WAY
+ $END
+ 
+ 

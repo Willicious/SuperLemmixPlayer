@@ -1,711 +1,728 @@
-TITLE A TOWERING PROBLEM
-THEME ohno_brick
-BACKGROUND special:amiga_blue
-ID xCEB248ACCEB248AC
-LEMMINGS 50
-SAVE_REQUIREMENT 45
-TIME_LIMIT 240
-MAX_SPAWN_INTERVAL 53
-WIDTH 320
-HEIGHT 160
-START_X 160
-START_Y 80
-
-$SKILLSET
-  CLIMBER 5
-  FLOATER 2
-  TIMEBOMBER 5
-  BLOCKER 1
-  BUILDER 3
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE exit
-  X 246
-  Y 107
-  WIDTH 38
-  HEIGHT 48
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE window
-  X 22
-  Y 84
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 113
-  Y 116
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 113
-  Y 92
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 113
-  Y 68
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 113
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 113
-  Y 20
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 85
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 53
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 21
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 117
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 149
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 181
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 213
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 245
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 277
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 309
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 144
-  Y 116
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 144
-  Y 92
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 144
-  Y 68
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 177
-  Y 116
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 177
-  Y 92
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 209
-  Y 116
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 209
-  Y 92
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 209
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_02
-  X 225
-  Y 108
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_02
-  X 241
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_02
-  X 251
-  Y 108
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 267
-  Y 95
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 267
-  Y 79
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 267
-  Y 63
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 267
-  Y 79
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 267
-  Y 63
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 259
-  Y 47
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 275
-  Y 47
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 213
-  Y 138
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 228
-  Y 155
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 244
-  Y 155
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 260
-  Y 155
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 227
-  Y 135
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 239
-  Y 133
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 253
-  Y 137
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 265
-  Y 132
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 280
-  Y 132
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 287
-  Y 130
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 296
-  Y 130
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 304
-  Y 131
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 316
-  Y 131
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 5
-  Y 127
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 2
-  Y 20
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 21
-  Y 33
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 42
-  Y 15
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 68
-  Y 6
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 147
-  Y 8
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 164
-  Y 18
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 185
-  Y 22
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 204
-  Y 10
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 246
-  Y 9
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 279
-  Y 20
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_05
-  X 308
-  Y 13
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 5
-  Y -1
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 23
-  Y 12
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 23
-  Y -6
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 45
-  Y -7
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 71
-  Y -13
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 149
-  Y -13
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 167
-  Y -6
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 187
-  Y 0
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 206
-  Y -11
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 249
-  Y -11
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 282
-  Y -3
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_small_10
-  X 310
-  Y -10
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 0
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 32
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 64
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 96
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 128
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 160
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 192
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 224
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 256
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_large_03
-  X 288
-  Y -5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 276
-  Y 155
-  ONE_WAY
-$END
-
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE A TOWERING PROBLEM
+ AUTHOR DMA Design
+ ID xCEB248ACCEB248AC
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME ohno_brick
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 45
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 5
+   FLOATER 2
+   TIMEBOMBER 5
+   BLOCKER 1
+   BUILDER 3
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_brick
+   PIECE exit
+   X 246
+   Y 107
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 22
+   Y 84
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 113
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 113
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 113
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 113
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 113
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 85
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 53
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 21
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 117
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 149
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 181
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 213
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 245
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 277
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 309
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 144
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 144
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 144
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 177
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 177
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 209
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 209
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 209
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_02
+   X 225
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_02
+   X 241
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_02
+   X 251
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 267
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 267
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 267
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 267
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 267
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 259
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 275
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 213
+   Y 138
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 228
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 244
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 260
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 227
+   Y 135
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 239
+   Y 133
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 253
+   Y 137
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 265
+   Y 132
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 280
+   Y 132
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 287
+   Y 130
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 296
+   Y 130
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 304
+   Y 131
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 316
+   Y 131
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 5
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 2
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 21
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 42
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 68
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 147
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 164
+   Y 18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 185
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 204
+   Y 10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 246
+   Y 9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 279
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 308
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 5
+   Y -1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 23
+   Y 12
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 23
+   Y -6
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 45
+   Y -7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 71
+   Y -13
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 149
+   Y -13
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 167
+   Y -6
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 187
+   Y 0
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 206
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 249
+   Y -11
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 282
+   Y -3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_10
+   X 310
+   Y -10
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 0
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 32
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 64
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 96
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 128
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 160
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 192
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 224
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 256
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_03
+   X 288
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 276
+   Y 155
+   ONE_WAY
+ $END
+ 
+ 

@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE Lend a helping hand....
  AUTHOR DMA Design 
  ID xEF9C19E3EF9C19E3
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 840
  HEIGHT 160
- START_X 450
+ START_X 418
  START_Y 80
  THEME orig_pillar
  
@@ -89,6 +90,7 @@
    X 579
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -98,6 +100,7 @@
    X 643
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -106,6 +109,7 @@
    X 195
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -115,6 +119,7 @@
    X 131
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  

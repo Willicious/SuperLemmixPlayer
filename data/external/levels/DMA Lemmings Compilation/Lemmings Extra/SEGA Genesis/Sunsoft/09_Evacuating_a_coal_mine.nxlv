@@ -1,0 +1,596 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Evacuating a coal mine
+ AUTHOR DMA Design
+ ID x9A3C9AE99A3C9AE9
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 472
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_crystal
+ BACKGROUND orig_dirt_md:genesis_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 100
+ SAVE_REQUIREMENT 100
+ TIME_LIMIT 300
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   CLIMBER 1
+   BUILDER 3
+   BASHER 10
+   MINER 2
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 240
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 64
+   Y 40
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE trap_03
+   X 384
+   Y 124
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE owa_left
+   X 192
+   Y 80
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_02
+   X 61
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_03
+   X 52
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_03
+   X 49
+   Y 78
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_01
+   X 2
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_02
+   X 8
+   Y 91
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_04
+   X 20
+   Y 55
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_01
+   X -13
+   Y 126
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_02
+   X 20
+   Y 110
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_02
+   X 43
+   Y 117
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 66
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 129
+   Y 90
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 89
+   Y 105
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 120
+   Y 105
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 151
+   Y 105
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 89
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 120
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 151
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_08
+   X 182
+   Y 105
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 200
+   Y 107
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 165
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 149
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 136
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 130
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 128
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 128
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 179
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 188
+   Y 53
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 194
+   Y 67
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 136
+   Y 75
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_07
+   X 198
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_07
+   X 233
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_07
+   X 243
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_04
+   X 244
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_07
+   X 263
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 244
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 276
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 284
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 329
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 336
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 328
+   Y 137
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 360
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 392
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_03
+   X 333
+   Y 65
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 320
+   Y 68
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 352
+   Y 71
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 348
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 373
+   Y 32
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 372
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 404
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 344
+   Y 34
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_02
+   X 315
+   Y 9
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_02
+   X 285
+   Y 9
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_03
+   X 269
+   Y 39
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_03
+   X 244
+   Y 39
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 228
+   Y 30
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_01
+   X 203
+   Y 11
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_01
+   X 203
+   Y -14
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 219
+   Y 5
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 372
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 404
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 192
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X -30
+   Y 148
+   ERASE
+   ONE_WAY
+ $END
+ 
+ 

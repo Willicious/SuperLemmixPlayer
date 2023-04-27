@@ -1,513 +1,521 @@
-TITLE LoTs moRe wHeRe TheY caMe fRom
-THEME ohno_snow
-BACKGROUND special:amiga_blue
-ID xBD8B6BB6BD8B6BB6
-LEMMINGS 60
-SAVE_REQUIREMENT 50
-TIME_LIMIT 240
-MAX_SPAWN_INTERVAL 53
-WIDTH 512
-HEIGHT 160
-START_X 160
-START_Y 80
-
-$SKILLSET
-  CLIMBER 2
-  FLOATER 2
-  TIMEBOMBER 42
-  BUILDER 26
-  MINER 3
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE exit
-  X 400
-  Y 83
-  WIDTH 48
-  HEIGHT 58
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE window
-  X 16
-  Y 44
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE trap
-  X 255
-  Y 86
-  WIDTH 32
-  HEIGHT 54
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE water
-  X 320
-  Y 148
-  WIDTH 64
-  HEIGHT 18
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE water
-  X 384
-  Y 148
-  WIDTH 64
-  HEIGHT 18
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE exit_flag
-  X 432
-  Y 91
-  WIDTH 16
-  HEIGHT 16
-  NO_OVERWRITE
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_18
-  X 154
-  Y 111
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_04
-  X 159
-  Y 149
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_02
-  X 146
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 112
-  Y 111
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 80
-  Y 132
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_02
-  X 92
-  Y 144
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_04
-  X 131
-  Y 129
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_05
-  X 110
-  Y 134
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 434
-  Y 139
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_17
-  X 219
-  Y 103
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 178
-  Y 85
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_18
-  X 280
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_10
-  X 233
-  Y 6
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_11
-  X 214
-  Y 28
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_09
-  X 224
-  Y 62
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_08
-  X 241
-  Y 59
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_02
-  X 281
-  Y 59
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 247
-  Y 79
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 189
-  Y 76
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_12
-  X 267
-  Y 36
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_12
-  X 191
-  Y 47
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_13
-  X 282
-  Y 47
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_14
-  X 181
-  Y 59
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_04
-  X 97
-  Y 117
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_17
-  X 198
-  Y 131
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_17
-  X 254
-  Y 131
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_18
-  X 311
-  Y 138
-  FLIP_VERTICAL
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_17
-  X 387
-  Y 132
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 266
-  Y 150
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 227
-  Y 151
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE circle_03
-  X 189
-  Y 145
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE circle_03
-  X 213
-  Y 158
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE circle_03
-  X 229
-  Y 155
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_02
-  X 192
-  Y 150
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_03
-  X 173
-  Y 146
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 353
-  Y 139
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_10
-  X 304
-  Y 40
-  FLIP_VERTICAL
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE circle_03
-  X 176
-  Y 113
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE circle_03
-  X 274
-  Y 128
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_02
-  X 210
-  Y 124
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_02
-  X 308
-  Y 118
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_02
-  X 243
-  Y 125
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_10
-  X 177
-  Y 31
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 166
-  Y 39
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_12
-  X 197
-  Y 25
-  FLIP_VERTICAL
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_12
-  X 305
-  Y 5
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_02
-  X 211
-  Y 70
-  FLIP_VERTICAL
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_02
-  X 215
-  Y 25
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 87
-  Y 117
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 63
-  Y 117
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 39
-  Y 117
-  ONE_WAY
-$END
-
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE LoTs moRe wHeRe TheY caMe fRom
+ AUTHOR DMA Design
+ ID xBD8B6BB6BD8B6BB6
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 512
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME ohno_snow
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 60
+ SAVE_REQUIREMENT 50
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 2
+   FLOATER 2
+   TIMEBOMBER 42
+   BUILDER 26
+   MINER 3
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_snow
+   PIECE exit
+   X 400
+   Y 83
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE window
+   X 16
+   Y 44
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE trap
+   X 255
+   Y 86
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE water
+   X 320
+   Y 148
+   WIDTH 64
+   HEIGHT 18
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE water
+   X 384
+   Y 148
+   WIDTH 64
+   HEIGHT 18
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE exit_flag
+   X 432
+   Y 91
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X 154
+   Y 111
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_04
+   X 159
+   Y 149
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_02
+   X 146
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 112
+   Y 111
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 80
+   Y 132
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_02
+   X 92
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_04
+   X 131
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_05
+   X 110
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 434
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 219
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 178
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X 280
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_10
+   X 233
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_11
+   X 214
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_09
+   X 224
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_08
+   X 241
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_02
+   X 281
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 247
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 189
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_12
+   X 267
+   Y 36
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_12
+   X 191
+   Y 47
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_13
+   X 282
+   Y 47
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_14
+   X 181
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_04
+   X 97
+   Y 117
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 198
+   Y 131
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 254
+   Y 131
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X 311
+   Y 138
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 387
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 266
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 227
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE circle_03
+   X 189
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE circle_03
+   X 213
+   Y 158
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE circle_03
+   X 229
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_02
+   X 192
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_03
+   X 173
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 353
+   Y 139
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_10
+   X 304
+   Y 40
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE circle_03
+   X 176
+   Y 113
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE circle_03
+   X 274
+   Y 128
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_02
+   X 210
+   Y 124
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_02
+   X 308
+   Y 118
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_02
+   X 243
+   Y 125
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_10
+   X 177
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 166
+   Y 39
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_12
+   X 197
+   Y 25
+   ERASE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_12
+   X 305
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_02
+   X 211
+   Y 70
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_02
+   X 215
+   Y 25
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 87
+   Y 117
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 63
+   Y 117
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 39
+   Y 117
+ $END
+ 
+ 

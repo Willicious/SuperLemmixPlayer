@@ -1,0 +1,675 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Like an overflowing wave
+ AUTHOR DMA Design
+ ID xA2DE59DDA2DE59DD
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 511
+ HEIGHT 160
+ START_X 192
+ START_Y 80
+ THEME orig_pillar
+ BACKGROUND orig_dirt_md:genesis_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 50
+ TIME_LIMIT 300
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   BUILDER 5
+   BASHER 5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 32
+   Y 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 432
+   Y 79
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_04
+   X 20
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_03
+   X 20
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 24
+   Y 73
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 25
+   Y 69
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 27
+   Y 64
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 29
+   Y 61
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 34
+   Y 58
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 39
+   Y 56
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 43
+   Y 55
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 48
+   Y 55
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 53
+   Y 56
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 56
+   Y 57
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 59
+   Y 58
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 62
+   Y 62
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 65
+   Y 66
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 67
+   Y 73
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 67
+   Y 79
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 66
+   Y 82
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 64
+   Y 86
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 62
+   Y 90
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 59
+   Y 94
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 52
+   Y 97
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 47
+   Y 97
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 41
+   Y 97
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 37
+   Y 96
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 33
+   Y 94
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 31
+   Y 93
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 28
+   Y 90
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 26
+   Y 87
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 25
+   Y 83
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 24
+   Y 80
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 41
+   Y 80
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 41
+   Y 73
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 53
+   Y 70
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 52
+   Y 82
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 77
+   Y 87
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_02
+   X 108
+   Y 55
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_03
+   X 141
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_04
+   X 141
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 156
+   Y 48
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 157
+   Y 45
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 158
+   Y 43
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 161
+   Y 40
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 167
+   Y 40
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 170
+   Y 40
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 172
+   Y 41
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 174
+   Y 44
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 175
+   Y 47
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 175
+   Y 52
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 173
+   Y 56
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 171
+   Y 58
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 168
+   Y 59
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 161
+   Y 59
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 159
+   Y 58
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 157
+   Y 55
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE circle_01
+   X 156
+   Y 52
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 160
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 192
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 220
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 235
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 267
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 299
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 331
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 363
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE wood_11
+   X 395
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 427
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_14
+   X 469
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_02
+   X 460
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_02
+   X 460
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_02
+   X 460
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_02
+   X 460
+   Y 150
+   ONE_WAY
+ $END
+ 
+ 

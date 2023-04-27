@@ -1,280 +1,295 @@
-TITLE Dolly Dimple
-THEME ohno_brick
-BACKGROUND special:amiga_blue
-ID x94E8DBF494E8DBF4
-LEMMINGS 80
-SAVE_REQUIREMENT 80
-TIME_LIMIT 240
-MAX_SPAWN_INTERVAL 4
-WIDTH 320
-HEIGHT 160
-START_X 160
-START_Y 80
-
-$SKILLSET
-  CLIMBER 1
-  BUILDER 10
-  DIGGER 2
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE window
-  X 144
-  Y 12
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE window
-  X 240
-  Y 12
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE exit
-  X 16
-  Y 95
-  WIDTH 38
-  HEIGHT 48
-  NO_OVERWRITE
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_03
-  X 112
-  Y 50
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_03
-  X 144
-  Y 50
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_03
-  X 176
-  Y 50
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_03
-  X 208
-  Y 50
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_03
-  X 240
-  Y 50
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_03
-  X 272
-  Y 50
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 304
-  Y 40
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 304
-  Y 24
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 96
-  Y 40
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 96
-  Y 24
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 96
-  Y 56
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_01
-  X 96
-  Y 72
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_02
-  X 199
-  Y 76
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE arch_02
-  X 40
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE arch_02
-  X 24
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE arch_02
-  X 8
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_03
-  X 56
-  Y 144
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_03
-  X 88
-  Y 144
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_03
-  X 120
-  Y 144
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_03
-  X 152
-  Y 144
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_03
-  X 168
-  Y 144
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_04
-  X 196
-  Y 142
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_04
-  X 188
-  Y 142
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE bricks_diagonal_04
-  X 196
-  Y 150
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE girder_01
-  X 87
-  Y 24
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE girder_01
-  X 83
-  Y 24
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE girder_01
-  X 312
-  Y 20
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE girder_01
-  X 316
-  Y 20
-  ERASE
-  ONE_WAY
-$END
-
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Dolly Dimple
+ AUTHOR DMA Design
+ ID x94E8DBF494E8DBF4
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME ohno_brick
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 80
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   CLIMBER 1
+   BUILDER 10
+   DIGGER 2
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 144
+   Y 12
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 240
+   Y 12
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE exit
+   X 16
+   Y 95
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_03
+   X 112
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_03
+   X 144
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_03
+   X 176
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_03
+   X 208
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_03
+   X 240
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_03
+   X 272
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 304
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 304
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 96
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 96
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 96
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 96
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_02
+   X 199
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE arch_02
+   X 40
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE arch_02
+   X 24
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE arch_02
+   X 8
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 56
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 88
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 120
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 152
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 168
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_04
+   X 196
+   Y 142
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_04
+   X 188
+   Y 142
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_04
+   X 196
+   Y 150
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE girder_01
+   X 87
+   Y 24
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE girder_01
+   X 83
+   Y 24
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE girder_01
+   X 312
+   Y 20
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE girder_01
+   X 316
+   Y 20
+   ERASE
+   ONE_WAY
+ $END
+ 
+ 

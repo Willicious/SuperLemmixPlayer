@@ -1,0 +1,847 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Inside the bone
+ AUTHOR DMA Design
+ ID xE034E118E034E118
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 511
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_dirt
+ BACKGROUND orig_dirt_md:genesis_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 50
+ TIME_LIMIT 300
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   BUILDER 13
+   BASHER 2
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_dirt_md
+   PIECE window
+   X 64
+   Y 44
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt_md
+   PIECE exit
+   X 448
+   Y 43
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_09
+   X 43
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_09
+   X 45
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_09
+   X 58
+   Y 107
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_08
+   X 29
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE bones_02
+   X 87
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_05
+   X 110
+   Y -32
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_05
+   X 138
+   Y -20
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_05
+   X 122
+   Y 4
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_05
+   X 145
+   Y 12
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_05
+   X 162
+   Y -9
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_05
+   X 178
+   Y -31
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_05
+   X 169
+   Y -39
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_03
+   X 115
+   Y 14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_03
+   X 155
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_03
+   X 160
+   Y 54
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_04
+   X 92
+   Y -6
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_04
+   X 63
+   Y -16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_04
+   X 47
+   Y -19
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 313
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 333
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 291
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 255
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 253
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 220
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 186
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 308
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 356
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 352
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 378
+   Y 91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 404
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 415
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 442
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 447
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 359
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 197
+   Y -38
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_07
+   X 144
+   Y -15
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE moss_02
+   X 131
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE moss_02
+   X 103
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE moss_04
+   X 99
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE moss_04
+   X 202
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE moss_06
+   X 137
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE grass_01
+   X 306
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE grass_03
+   X 324
+   Y 40
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE grass_03
+   X 313
+   Y 47
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE grass_03
+   X 309
+   Y 49
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE grass_04
+   X 341
+   Y 37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE grass_04
+   X 345
+   Y 39
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE bones_03
+   X 446
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 146
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 155
+   Y 150
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 33
+   Y 141
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 86
+   Y 153
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 95
+   Y 153
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 98
+   Y 152
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 111
+   Y 152
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 124
+   Y 152
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 131
+   Y 152
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE sign_04
+   X 348
+   Y 27
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE sign_03
+   X 286
+   Y 92
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE bridge_04
+   X 175
+   Y 106
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE bridge_04
+   X 187
+   Y 118
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE bridge_04
+   X 128
+   Y 125
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE bridge_04
+   X 148
+   Y 105
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE sign_02
+   X 63
+   Y 70
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE rocks_05
+   X 439
+   Y 65
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE rocks_05
+   X 456
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 134
+   Y 151
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_02
+   X 64
+   Y 111
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 167
+   Y 148
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 163
+   Y 144
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 160
+   Y 143
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 153
+   Y 140
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 80
+   Y 121
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 104
+   Y 131
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 110
+   Y 135
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 111
+   Y 142
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 112
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 108
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 98
+   Y 133
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 99
+   Y 134
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 100
+   Y 136
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 126
+   Y 131
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 127
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 126
+   Y 139
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE circle_02
+   X 125
+   Y 146
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE sign_03
+   X 286
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE clump_10
+   X 193
+   Y 148
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE sign_03
+   X 286
+   Y 89
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE steel_04
+   X 282
+   Y 74
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE sign_03
+   X 286
+   Y 83
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt_md
+   PIECE steel_04
+   X 282
+   Y 73
+   ERASE
+ $END
+ 
+ 

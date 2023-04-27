@@ -1,0 +1,733 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The Undiscovered Country
+ AUTHOR DMA Design
+ ID xE79DDD46E79DDD46
+ VERSION x0000000000000002
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 888
+ HEIGHT 160
+ START_X 400
+ START_Y 80
+ THEME xmas
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 80
+ TIME_LIMIT 540
+ MAX_SPAWN_INTERVAL 48
+ 
+ $SKILLSET 
+   BASHER 10
+   MINER 10
+   DIGGER 10
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE xmas
+   PIECE window
+   X 376
+   Y -16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE xmas
+   PIECE exit
+   X 264
+   Y 102
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE xmas
+   PIECE snowman
+   X 72
+   Y 48
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE xmas
+   PIECE snowman
+   X 152
+   Y 48
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 544
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 544
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 544
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 544
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 544
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 544
+   Y 120
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 544
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 520
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 496
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 472
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 448
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 424
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 400
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 376
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 352
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 328
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 304
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 280
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 256
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 232
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 232
+   Y 120
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 232
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 232
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 232
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 232
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 232
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 256
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 280
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 304
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 328
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 352
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 376
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 400
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 424
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 448
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 520
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 496
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 472
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_03
+   X 323
+   Y 79
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_03
+   X 366
+   Y 79
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_03
+   X 404
+   Y 78
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 427
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 431
+   Y 71
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 341
+   Y 82
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 277
+   Y 86
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 228
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 239
+   Y 4
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 242
+   Y 38
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 258
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 430
+   Y -1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 400
+   Y 39
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 431
+   Y 32
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 591
+   Y 58
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 618
+   Y 58
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 603
+   Y 54
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 642
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 659
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 675
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 665
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 665
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 697
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 717
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 722
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 713
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 680
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 743
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 744
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 745
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 714
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 605
+   Y 51
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_24
+   X 634
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X 744
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 746
+   Y 66
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 734
+   Y 66
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 783
+   Y 66
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 804
+   Y 65
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 220
+   Y 92
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 149
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 127
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 91
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 56
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 18
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snowman
+   X 111
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_01
+   X 383
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

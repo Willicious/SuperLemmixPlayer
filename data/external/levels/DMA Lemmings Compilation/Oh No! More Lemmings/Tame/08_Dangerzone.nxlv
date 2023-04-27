@@ -1,901 +1,916 @@
-TITLE Dangerzone
-THEME ohno_bubble
-BACKGROUND special:amiga_blue
-ID xFA8660B7FA8660B7
-LEMMINGS 50
-SAVE_REQUIREMENT 25
-TIME_LIMIT 240
-MAX_SPAWN_INTERVAL 53
-WIDTH 544
-HEIGHT 160
-START_X 200
-START_Y 80
-
-$SKILLSET
-  CLIMBER 20
-  FLOATER 20
-  TIMEBOMBER 20
-  BLOCKER 20
-  BUILDER 20
-  BASHER 20
-  MINER 20
-  DIGGER 20
-$END
-
-$GADGET
-  STYLE ohno_bubble
-  PIECE window
-  X 120
-  Y 16
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_bubble
-  PIECE exit
-  X 312
-  Y 71
-  WIDTH 48
-  HEIGHT 40
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_bubble
-  PIECE spinning_arrow
-  X 328
-  Y 71
-  WIDTH 16
-  HEIGHT 8
-  NO_OVERWRITE
-  ANGLE 0
-  SPEED 0
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 109
-  Y 51
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 141
-  Y 51
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 173
-  Y 51
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 205
-  Y 51
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 234
-  Y 46
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 145
-  Y 81
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 177
-  Y 81
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 209
-  Y 81
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 241
-  Y 81
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 267
-  Y 76
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 175
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 207
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 239
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 271
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 303
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 335
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 361
-  Y 107
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 367
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 399
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 431
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 463
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 422
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 453
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 391
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 360
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 329
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 298
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 273
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 243
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 214
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 183
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 153
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 121
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 92
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 63
-  Y 143
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 159
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 129
-  Y 85
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 101
-  Y 55
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_12
-  X 97
-  Y 69
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_12
-  X 125
-  Y 99
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 150
-  Y 119
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_11
-  X 86
-  Y 95
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_10
-  X 102
-  Y 95
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 118
-  Y 124
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 105
-  Y 124
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_11
-  X 102
-  Y 124
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 52
-  Y 138
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 48
-  Y 106
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 48
-  Y 75
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 48
-  Y 68
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 52
-  Y 54
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 75
-  Y 54
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 45
-  Y 49
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_06
-  X 48
-  Y 54
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 29
-  Y 54
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 20
-  Y 70
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 5
-  Y 79
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 1
-  Y 93
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 1
-  Y 121
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 1
-  Y 137
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_12
-  X 80
-  Y 69
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_11
-  X 74
-  Y 94
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X -4
-  Y -15
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 20
-  Y -10
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 43
-  Y -14
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_03
-  X 69
-  Y -4
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 81
-  Y -15
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_03
-  X 104
-  Y -9
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 115
-  Y -29
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 139
-  Y -29
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 161
-  Y -23
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 171
-  Y -10
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 191
-  Y -15
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 215
-  Y -25
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_01
-  X 243
-  Y -24
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 269
-  Y -16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_01
-  X 288
-  Y -29
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 307
-  Y -22
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 336
-  Y -16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_01
-  X 361
-  Y -17
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 386
-  Y -23
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_01
-  X 413
-  Y -21
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_01
-  X 441
-  Y -13
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 466
-  Y -19
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 493
-  Y -13
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE bubbles_gold_02
-  X 517
-  Y -23
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 499
-  Y 78
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 482
-  Y 102
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_04
-  X 491
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 504
-  Y 47
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 504
-  Y 15
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 504
-  Y -12
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_01
-  X 485
-  Y 143
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_05
-  X 513
-  Y 138
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_12
-  X 518
-  Y 122
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_06
-  X 404
-  Y 102
-  FLIP_VERTICAL
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 404
-  Y 70
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 404
-  Y 38
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 404
-  Y 6
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 272
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 272
-  Y 14
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 239
-  Y 16
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_bubble
-  PIECE pipe_small_02
-  X 239
-  Y 0
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Dangerzone
+ AUTHOR DMA Design
+ ID xFA8660B7FA8660B7
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 544
+ HEIGHT 160
+ START_X 200
+ START_Y 80
+ THEME ohno_bubble
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 25
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 20
+   FLOATER 20
+   TIMEBOMBER 20
+   BLOCKER 20
+   BUILDER 20
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE window
+   X 120
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE exit
+   X 312
+   Y 71
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE spinning_arrow
+   X 328
+   Y 71
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 109
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 141
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 173
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 205
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 234
+   Y 46
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 145
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 177
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 209
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 241
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 267
+   Y 76
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 175
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 207
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 239
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 271
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 303
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 335
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 361
+   Y 107
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 367
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 399
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 431
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 463
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 422
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 453
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 391
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 360
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 329
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 298
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 273
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 243
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 214
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 183
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 153
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 121
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 92
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 63
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 159
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 129
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 101
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_12
+   X 97
+   Y 69
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_12
+   X 125
+   Y 99
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 150
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_11
+   X 86
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 102
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 118
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 105
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_11
+   X 102
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 52
+   Y 138
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 48
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 48
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 48
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 52
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 75
+   Y 54
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 45
+   Y 49
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_06
+   X 48
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 29
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 20
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 5
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 1
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 1
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 1
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_12
+   X 80
+   Y 69
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_11
+   X 74
+   Y 94
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X -4
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 20
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 43
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_03
+   X 69
+   Y -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 81
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_03
+   X 104
+   Y -9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 115
+   Y -29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 139
+   Y -29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 161
+   Y -23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 171
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 191
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 215
+   Y -25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_01
+   X 243
+   Y -24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 269
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_01
+   X 288
+   Y -29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 307
+   Y -22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 336
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_01
+   X 361
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 386
+   Y -23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_01
+   X 413
+   Y -21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_01
+   X 441
+   Y -13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 466
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 493
+   Y -13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE bubbles_gold_02
+   X 517
+   Y -23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 499
+   Y 78
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 482
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_04
+   X 491
+   Y 87
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 504
+   Y 47
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 504
+   Y 15
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 504
+   Y -12
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 485
+   Y 143
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_05
+   X 513
+   Y 138
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_12
+   X 518
+   Y 122
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_06
+   X 404
+   Y 102
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 404
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 404
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 404
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 272
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 272
+   Y 14
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 239
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_02
+   X 239
+   Y 0
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

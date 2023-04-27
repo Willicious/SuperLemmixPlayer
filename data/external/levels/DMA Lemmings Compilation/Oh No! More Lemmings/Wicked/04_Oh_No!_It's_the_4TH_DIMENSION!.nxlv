@@ -1,535 +1,546 @@
-TITLE Oh No! It's the 4TH DIMENSION!
-THEME ohno_brick
-BACKGROUND special:amiga_blue
-ID xB9A47887B9A47887
-LEMMINGS 50
-SAVE_REQUIREMENT 30
-TIME_LIMIT 240
-MAX_SPAWN_INTERVAL 53
-WIDTH 320
-HEIGHT 160
-START_X 160
-START_Y 80
-
-$SKILLSET
-  CLIMBER 4
-  FLOATER 2
-  TIMEBOMBER 14
-  BUILDER 18
-  BASHER 1
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE exit
-  X 136
-  Y 47
-  WIDTH 38
-  HEIGHT 48
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE window
-  X 8
-  Y 96
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE window
-  X 232
-  Y 84
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE window
-  X 24
-  Y 0
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE window
-  X 248
-  Y 16
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE water
-  X 88
-  Y 136
-  WIDTH 64
-  HEIGHT 24
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_brick
-  PIECE water
-  X 152
-  Y 136
-  WIDTH 64
-  HEIGHT 24
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE default
-  PIECE owa_right
-  X 216
-  Y 36
-  WIDTH 16
-  HEIGHT 32
-  ONLY_ON_TERRAIN
-$END
-
-$GADGET
-  STYLE default
-  PIECE owa_right
-  X 232
-  Y 36
-  WIDTH 16
-  HEIGHT 32
-  ONLY_ON_TERRAIN
-$END
-
-$GADGET
-  STYLE default
-  PIECE owa_right
-  X 216
-  Y 4
-  WIDTH 16
-  HEIGHT 32
-  ONLY_ON_TERRAIN
-$END
-
-$GADGET
-  STYLE default
-  PIECE owa_right
-  X 232
-  Y 4
-  WIDTH 16
-  HEIGHT 32
-  ONLY_ON_TERRAIN
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_03
-  X 154
-  Y 95
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_03
-  X 130
-  Y 95
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_01
-  X 216
-  Y 140
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_01
-  X 64
-  Y 140
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_03
-  X 260
-  Y 68
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_03
-  X 236
-  Y 68
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 222
-  Y 52
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 222
-  Y 36
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 222
-  Y 20
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 222
-  Y 4
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_03
-  X 212
-  Y 68
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_03
-  X 284
-  Y 68
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE barrel_02
-  X 292
-  Y 54
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 9
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 25
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 41
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 57
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 73
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_01
-  X 78
-  Y 38
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_01
-  X 8
-  Y 38
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_02
-  X 78
-  Y 23
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_02
-  X 8
-  Y 22
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_02
-  X 8
-  Y 7
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_02
-  X 8
-  Y 0
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_02
-  X 78
-  Y 9
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_02
-  X 78
-  Y 0
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_02
-  X 85
-  Y 108
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_03
-  X 71
-  Y 57
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_03
-  X 15
-  Y 57
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_01
-  X 15
-  Y 65
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE pole_red_01
-  X 71
-  Y 65
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 17
-  Y 73
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 33
-  Y 73
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 49
-  Y 73
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 65
-  Y 73
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 68
-  Y 108
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE stairs_02
-  X 99
-  Y 92
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE stairs_02
-  X 175
-  Y 76
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE stairs_02
-  X 184
-  Y 70
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_01
-  X 240
-  Y 140
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_01
-  X 264
-  Y 140
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_02
-  X 294
-  Y 82
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_02
-  X 294
-  Y 106
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_01
-  X 137
-  Y 140
-  NO_OVERWRITE
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_02
-  X 182
-  Y 140
-  NO_OVERWRITE
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE steel_02
-  X 105
-  Y 140
-  NO_OVERWRITE
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE blocks_02
-  X 221
-  Y 124
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 32
-  Y 157
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE platform_01
-  X 16
-  Y 157
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_brick
-  PIECE stairs_01
-  X 182
-  Y 92
-  ONE_WAY
-$END
-
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Oh No! It's the 4TH DIMENSION!
+ AUTHOR DMA Design
+ ID xB9A47887B9A47887
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME ohno_brick
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 30
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 4
+   FLOATER 2
+   TIMEBOMBER 14
+   BUILDER 18
+   BASHER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_brick
+   PIECE exit
+   X 136
+   Y 47
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 8
+   Y 96
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 232
+   Y 84
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 24
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 248
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE water
+   X 88
+   Y 136
+   WIDTH 64
+   HEIGHT 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE water
+   X 152
+   Y 136
+   WIDTH 64
+   HEIGHT 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_right
+   X 216
+   Y 36
+   WIDTH 16
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_right
+   X 232
+   Y 36
+   WIDTH 16
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_right
+   X 216
+   Y 4
+   WIDTH 16
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_right
+   X 232
+   Y 4
+   WIDTH 16
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 154
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 130
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_01
+   X 216
+   Y 140
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_01
+   X 64
+   Y 140
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 260
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 236
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 222
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 222
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 222
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 222
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 212
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 284
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_02
+   X 292
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 9
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 25
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 41
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 57
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 73
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_01
+   X 78
+   Y 38
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_01
+   X 8
+   Y 38
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 78
+   Y 23
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 8
+   Y 22
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 8
+   Y 7
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 8
+   Y 0
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 78
+   Y 9
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_02
+   X 78
+   Y 0
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_02
+   X 85
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_03
+   X 71
+   Y 57
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_03
+   X 15
+   Y 57
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_01
+   X 15
+   Y 65
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_red_01
+   X 71
+   Y 65
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 17
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 33
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 49
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 65
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 68
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 99
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 175
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 184
+   Y 70
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_01
+   X 240
+   Y 140
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_01
+   X 264
+   Y 140
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_02
+   X 294
+   Y 82
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_02
+   X 294
+   Y 106
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_01
+   X 137
+   Y 140
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_02
+   X 182
+   Y 140
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_02
+   X 105
+   Y 140
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_02
+   X 221
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 32
+   Y 157
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 16
+   Y 157
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_01
+   X 182
+   Y 92
+   ONE_WAY
+ $END
+ 
+ 

@@ -1,948 +1,935 @@
-TITLE Lemming Hotel
-THEME ohno_snow
-BACKGROUND special:amiga_blue
-ID xCCB09C4CCCB09C4C
-LEMMINGS 80
-SAVE_REQUIREMENT 60
-TIME_LIMIT 240
-MAX_SPAWN_INTERVAL 53
-WIDTH 910
-HEIGHT 160
-START_X 208
-START_Y 80
-
-$SKILLSET
-  CLIMBER 6
-  FLOATER 5
-  TIMEBOMBER 11
-  BLOCKER 4
-  BUILDER 9
-  BASHER 8
-  MINER 6
-  DIGGER 5
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE window
-  X 192
-  Y 0
-  WIDTH 48
-  HEIGHT 25
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE exit
-  X 848
-  Y 64
-  WIDTH 48
-  HEIGHT 58
-  NO_OVERWRITE
-$END
-
-$GADGET
-  STYLE ohno_snow
-  PIECE exit_flag
-  X 880
-  Y 72
-  WIDTH 16
-  HEIGHT 16
-  NO_OVERWRITE
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 177
-  Y 96
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 177
-  Y 58
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 177
-  Y 38
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 164
-  Y 100
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 164
-  Y 78
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 152
-  Y 122
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 152
-  Y 142
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_03
-  X 89
-  Y 124
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_02
-  X 121
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_02
-  X 93
-  Y 127
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_04
-  X 100
-  Y 97
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_04
-  X 79
-  Y 141
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_02
-  X 68
-  Y 105
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 197
-  Y 39
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 241
-  Y 53
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 205
-  Y 64
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_17
-  X 197
-  Y 36
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 250
-  Y 40
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 73
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_04
-  X 125
-  Y 101
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_04
-  X 107
-  Y 81
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_03
-  X 21
-  Y 119
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_04
-  X 46
-  Y 106
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 40
-  Y 95
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 24
-  Y 139
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X -6
-  Y 133
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_17
-  X 74
-  Y 80
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_18
-  X 32
-  Y 86
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_18
-  X -10
-  Y 112
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 117
-  Y 81
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_01
-  X 126
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_02
-  X 116
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 87
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 87
-  Y 24
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 87
-  Y 48
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 63
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 196
-  Y 106
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 211
-  Y 134
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 211
-  Y 112
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 196
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 313
-  Y 110
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 325
-  Y 110
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 313
-  Y 68
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 325
-  Y 68
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 313
-  Y 42
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 313
-  Y 19
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 325
-  Y 44
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_04
-  X 226
-  Y 127
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 237
-  Y 129
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 249
-  Y 121
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 266
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 276
-  Y 128
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 259
-  Y 100
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 351
-  Y 77
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 359
-  Y 101
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 351
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_05
-  X 381
-  Y 85
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_18
-  X 341
-  Y 71
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 379
-  Y 71
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_18
-  X 435
-  Y 74
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_19
-  X 475
-  Y 74
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 440
-  Y 93
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 460
-  Y 88
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 456
-  Y 100
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_01
-  X 352
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_01
-  X 363
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_01
-  X 431
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_01
-  X 157
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE icicle_01
-  X 41
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 337
-  Y 146
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 361
-  Y 146
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 400
-  Y 146
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 424
-  Y 146
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 448
-  Y 146
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 375
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 399
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 387
-  Y 24
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 250
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 274
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 472
-  Y 134
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 533
-  Y 134
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 594
-  Y 134
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 659
-  Y 101
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_16
-  X 730
-  Y 70
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 734
-  Y 98
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_06
-  X 660
-  Y 126
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 810
-  Y 104
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 810
-  Y 56
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 826
-  Y 109
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 826
-  Y 77
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 826
-  Y 57
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 810
-  Y 34
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_01
-  X 797
-  Y 125
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE pillar_02
-  X 797
-  Y 102
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE snow_10
-  X 676
-  Y 52
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 444
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 444
-  Y 14
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_04
-  X 467
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 468
-  Y 14
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 454
-  Y 28
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 756
-  Y 0
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 756
-  Y 24
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 838
-  Y 139
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 862
-  Y 139
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 886
-  Y 139
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 886
-  Y 115
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 863
-  Y 115
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_01
-  X 839
-  Y 115
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE steel_03
-  X 756
-  Y 47
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_02
-  X 63
-  Y 87
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE ohno_snow
-  PIECE rocks_02
-  X -7
-  Y 133
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Lemming Hotel
+ AUTHOR DMA Design
+ ID xCCB09C4CCCB09C4C
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 910
+ HEIGHT 160
+ START_X 208
+ START_Y 80
+ THEME ohno_snow
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 60
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 6
+   FLOATER 5
+   TIMEBOMBER 11
+   BLOCKER 4
+   BUILDER 9
+   BASHER 8
+   MINER 6
+   DIGGER 5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_snow
+   PIECE window
+   X 192
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE exit
+   X 848
+   Y 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE exit_flag
+   X 880
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 177
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 177
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 177
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 164
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 164
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 152
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 152
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_03
+   X 89
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_02
+   X 121
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_02
+   X 93
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_04
+   X 100
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_04
+   X 79
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_02
+   X 68
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 197
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 241
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 205
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 197
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 250
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 73
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_04
+   X 125
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_04
+   X 107
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_03
+   X 21
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_04
+   X 46
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 40
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 24
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X -6
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 74
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X 32
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X -10
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 117
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_01
+   X 126
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_02
+   X 116
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 87
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 87
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 87
+   Y 48
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 63
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 196
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 211
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 211
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 196
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 313
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 325
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 313
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 325
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 313
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 313
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 325
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_04
+   X 226
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 237
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 249
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 266
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 276
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 259
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 351
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 359
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 351
+   Y 87
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_05
+   X 381
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X 341
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 379
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_18
+   X 435
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_19
+   X 475
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 440
+   Y 93
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 460
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 456
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_01
+   X 352
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_01
+   X 363
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_01
+   X 431
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_01
+   X 157
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE icicle_01
+   X 41
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 337
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 361
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 400
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 424
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 448
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 375
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 399
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 387
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 250
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 274
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 472
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 533
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 594
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 659
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 730
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 734
+   Y 98
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_06
+   X 660
+   Y 126
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 810
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 810
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 826
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 826
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 826
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 810
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_01
+   X 797
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 797
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_10
+   X 676
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 444
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 444
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_04
+   X 467
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 468
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 454
+   Y 28
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 756
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 756
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 838
+   Y 139
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 862
+   Y 139
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 886
+   Y 139
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 886
+   Y 115
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 863
+   Y 115
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 839
+   Y 115
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 756
+   Y 47
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_02
+   X 63
+   Y 87
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE rocks_02
+   X -7
+   Y 133
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 

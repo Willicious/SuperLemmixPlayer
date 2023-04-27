@@ -1,0 +1,229 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Dolly Dimple?
+ AUTHOR Prima Publishing
+ ID x8B98901E8B98901E
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 432
+ HEIGHT 160
+ START_X 224
+ START_Y 80
+ THEME ohno_bubble
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 80
+ TIME_LIMIT 180
+ MAX_SPAWN_INTERVAL 41
+ 
+ $SKILLSET 
+   CLIMBER 1
+   FLOATER 1
+   TIMEBOMBER 1
+   BLOCKER 1
+   BUILDER 1
+   BASHER 1
+   DIGGER 1
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE exit
+   X 192
+   Y 111
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE window
+   X 208
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE window
+   X 292
+   Y 0
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE spinning_arrow
+   X 208
+   Y 111
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE water
+   X 240
+   Y 136
+   WIDTH 64
+   HEIGHT 31
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE water
+   X 304
+   Y 136
+   WIDTH 64
+   HEIGHT 31
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE water
+   X 368
+   Y 136
+   WIDTH 64
+   HEIGHT 31
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE water
+   X 64
+   Y 136
+   WIDTH 64
+   HEIGHT 31
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE water
+   X 0
+   Y 136
+   WIDTH 64
+   HEIGHT 31
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE balls_blue_01
+   X 115
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE balls_blue_01
+   X 159
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE balls_blue_01
+   X 203
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_04
+   X 321
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 289
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 257
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 226
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_01
+   X 194
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_12
+   X 192
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_12
+   X 340
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 259
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 291
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_11
+   X 243
+   Y 83
+   ONE_WAY
+ $END
+ 
+ 

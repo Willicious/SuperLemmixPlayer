@@ -23,3 +23,13 @@ $GROUP
   FOLDER Havoc
 $END
 
+$GROUP
+  NAME Bonus
+  FOLDER Bonus
+$END
+
+$GROUP
+  NAME 2-Player
+  FOLDER 2P
+$END
+

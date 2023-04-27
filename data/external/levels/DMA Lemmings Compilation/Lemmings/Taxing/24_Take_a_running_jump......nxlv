@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE Take a running jump.....
  AUTHOR DMA Design 
  ID xDECC2216DECC2216
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 1472
  HEIGHT 160
- START_X 384
+ START_X 464
  START_Y 80
  THEME orig_fire
  
@@ -52,6 +53,7 @@
    X 816
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -61,6 +63,7 @@
    X 880
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -70,6 +73,7 @@
    X 656
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -79,6 +83,7 @@
    X 368
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -88,6 +93,7 @@
    X 432
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -97,6 +103,7 @@
    X 496
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -106,6 +113,7 @@
    X 1216
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -115,6 +123,7 @@
    X 1280
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -124,6 +133,7 @@
    X 160
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -133,6 +143,7 @@
    X 96
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -142,6 +153,7 @@
    X 32
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -151,6 +163,7 @@
    X 1344
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -160,6 +173,7 @@
    X 1408
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  

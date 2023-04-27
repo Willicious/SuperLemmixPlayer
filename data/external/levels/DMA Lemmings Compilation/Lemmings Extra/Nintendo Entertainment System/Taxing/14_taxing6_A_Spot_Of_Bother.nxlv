@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.21
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -9,12 +9,13 @@
  AUTHOR DMA Design Ron Stard
  MUSIC orig_09tim6_nes
  ID x1A32736C1A32736C
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1584
+ WIDTH 720
  HEIGHT 160
- START_X 704
+ START_X 304
  START_Y 80
  THEME orig_crystal
  
@@ -41,7 +42,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE exit
-   X 488
+   X 64
    Y 104
    NO_OVERWRITE
  $END
@@ -49,7 +50,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE trap_03
-   X 808
+   X 384
    Y 116
    NO_OVERWRITE
  $END
@@ -57,7 +58,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE trap_03
-   X 840
+   X 416
    Y 116
    NO_OVERWRITE
  $END
@@ -65,7 +66,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 720
+   X 296
    Y 0
    NO_OVERWRITE
  $END
@@ -73,7 +74,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE owa_right
-   X 720
+   X 296
    Y 44
    WIDTH 32
    HEIGHT 32
@@ -83,7 +84,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE owa_right
-   X 736
+   X 312
    Y 108
    WIDTH 32
    HEIGHT 32
@@ -93,7 +94,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE owa_left
-   X 760
+   X 336
    Y 76
    WIDTH 32
    HEIGHT 32
@@ -106,49 +107,49 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 489
+   X 65
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 505
+   X 81
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 946
+   X 522
    Y 111
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 770
+   X 346
    Y 31
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 770
+   X 346
    Y 47
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 946
+   X 522
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 860
+   X 436
    Y 0
    ONE_WAY
  $END
@@ -156,7 +157,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 860
+   X 436
    Y 32
    ONE_WAY
  $END
@@ -164,7 +165,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 828
+   X 404
    Y 0
    ONE_WAY
  $END
@@ -172,7 +173,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 828
+   X 404
    Y 32
    ONE_WAY
  $END
@@ -180,42 +181,42 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 601
+   X 177
    Y 79
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 601
+   X 177
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 681
+   X 257
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 665
+   X 241
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 649
+   X 225
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 665
+   X 241
    Y 127
    ERASE
  $END
@@ -223,7 +224,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 649
+   X 225
    Y 127
    ERASE
  $END
@@ -231,7 +232,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 741
+   X 317
    Y 90
    ERASE
    ONE_WAY
@@ -240,7 +241,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 734
+   X 310
    Y 92
    ERASE
    ONE_WAY
@@ -249,7 +250,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE stars_01
-   X 740
+   X 316
    Y 93
    ERASE
    ONE_WAY
@@ -258,7 +259,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE stars_01
-   X 741
+   X 317
    Y 94
    ERASE
    ONE_WAY
@@ -267,7 +268,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 488
+   X 64
    Y -14
    FLIP_VERTICAL
    ONE_WAY
@@ -276,7 +277,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 508
+   X 84
    Y -41
    ONE_WAY
  $END
@@ -284,7 +285,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 528
+   X 104
    Y -29
    ONE_WAY
  $END
@@ -292,7 +293,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 564
+   X 140
    Y -50
    ONE_WAY
  $END
@@ -300,7 +301,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 590
+   X 166
    Y -51
    ONE_WAY
  $END
@@ -308,7 +309,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 874
+   X 450
    Y -43
    ONE_WAY
  $END
@@ -316,7 +317,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 1003
+   X 579
    Y -34
    ONE_WAY
  $END
@@ -324,7 +325,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 959
+   X 535
    Y -28
    FLIP_VERTICAL
    ONE_WAY
@@ -333,7 +334,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 926
+   X 502
    Y -9
    FLIP_VERTICAL
    ONE_WAY
@@ -342,7 +343,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_02
-   X 538
+   X 114
    Y 96
    ONE_WAY
  $END
@@ -350,112 +351,112 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 930
+   X 506
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 914
+   X 490
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 898
+   X 474
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 946
+   X 522
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 946
+   X 522
    Y 79
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 633
+   X 209
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 601
+   X 177
    Y 47
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 601
+   X 177
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 617
+   X 193
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 601
+   X 177
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 585
+   X 161
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 569
+   X 145
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 553
+   X 129
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 537
+   X 113
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 521
+   X 97
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 582
+   X 158
    Y -56
    FLIP_VERTICAL
    ONE_WAY
@@ -464,84 +465,84 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 681
+   X 257
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 697
+   X 273
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 834
+   X 410
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 866
+   X 442
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 818
+   X 394
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 617
+   X 193
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 633
+   X 209
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 649
+   X 225
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 665
+   X 241
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 681
+   X 257
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 697
+   X 273
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 823
+   X 399
    Y 64
    ONE_WAY
  $END
@@ -549,7 +550,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 829
+   X 405
    Y 32
    ONE_WAY
  $END
@@ -557,7 +558,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 829
+   X 405
    Y 0
    ONE_WAY
  $END
@@ -565,7 +566,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 855
+   X 431
    Y 64
    ONE_WAY
  $END
@@ -573,7 +574,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 861
+   X 437
    Y 32
    ONE_WAY
  $END
@@ -581,7 +582,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 861
+   X 437
    Y 0
    ONE_WAY
  $END
@@ -589,34 +590,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 830
-   Y 32
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 830
-   Y 0
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 827
-   Y 0
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 827
+   X 406
    Y 32
    ERASE
    ONE_WAY
@@ -625,7 +599,25 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 859
+   X 406
+   Y 0
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 403
+   Y 0
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 403
    Y 32
    ERASE
    ONE_WAY
@@ -634,7 +626,16 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 859
+   X 435
+   Y 32
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 435
    Y 0
    ERASE
    ONE_WAY
@@ -643,7 +644,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 862
+   X 438
    Y 0
    ERASE
    ONE_WAY
@@ -652,7 +653,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 862
+   X 438
    Y 32
    ERASE
    ONE_WAY
@@ -661,7 +662,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE stars_01
-   X 856
+   X 432
    Y 65
    ONE_WAY
  $END
@@ -669,7 +670,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE stars_01
-   X 824
+   X 400
    Y 65
    ONE_WAY
  $END
@@ -677,7 +678,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_01
-   X 779
+   X 355
    Y 127
    ONE_WAY
  $END
@@ -685,7 +686,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_02
-   X 810
+   X 386
    Y 127
    ONE_WAY
  $END
@@ -693,7 +694,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_02
-   X 873
+   X 449
    Y 127
    ONE_WAY
  $END
@@ -701,7 +702,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_01
-   X 842
+   X 418
    Y 127
    ONE_WAY
  $END
@@ -709,7 +710,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_01
-   X 811
+   X 387
    Y 127
    ONE_WAY
  $END
@@ -717,7 +718,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_02
-   X 841
+   X 417
    Y 127
    ONE_WAY
  $END
@@ -725,7 +726,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_03
-   X 790
+   X 366
    Y 126
    ONE_WAY
  $END
@@ -733,14 +734,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 786
+   X 362
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE line_03
-   X 826
+   X 402
    Y 126
    ONE_WAY
  $END
@@ -748,7 +749,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_03
-   X 858
+   X 434
    Y 126
    ONE_WAY
  $END
@@ -756,14 +757,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 882
+   X 458
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 826
+   X 402
    Y 111
    ERASE
    ONE_WAY
@@ -772,7 +773,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 784
+   X 360
    Y 111
    ERASE
    ONE_WAY
@@ -781,7 +782,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 856
+   X 432
    Y 105
    ERASE
    ONE_WAY
@@ -790,7 +791,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 854
+   X 430
    Y 105
    ERASE
    ONE_WAY
@@ -799,14 +800,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 850
+   X 426
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 521
+   X 97
    Y 143
    ERASE
    ONE_WAY
@@ -815,7 +816,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 521
+   X 97
    Y 144
    ERASE
    ONE_WAY
@@ -824,7 +825,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 866
+   X 442
    Y 111
    ERASE
    ONE_WAY
@@ -833,7 +834,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_01
-   X 726
+   X 302
    Y 47
    ONE_WAY
  $END
@@ -841,7 +842,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_01
-   X 733
+   X 309
    Y 47
    ONE_WAY
  $END
@@ -849,7 +850,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_01
-   X 719
+   X 295
    Y 47
    ONE_WAY
  $END
@@ -857,7 +858,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_01
-   X 712
+   X 288
    Y 47
    ONE_WAY
  $END
@@ -865,7 +866,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_01
-   X 740
+   X 316
    Y 47
    ONE_WAY
  $END
@@ -873,7 +874,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_01
-   X 740
+   X 316
    Y 54
    ONE_WAY
  $END
@@ -881,7 +882,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_01
-   X 712
+   X 288
    Y 54
    ONE_WAY
  $END
@@ -889,7 +890,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 707
+   X 283
    Y 47
    ONE_WAY
  $END
@@ -897,7 +898,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 736
+   X 312
    Y 47
    ONE_WAY
  $END
@@ -905,7 +906,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 712
+   X 288
    Y 46
    ERASE
    ONE_WAY
@@ -914,7 +915,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 709
+   X 285
    Y 49
    ERASE
    ONE_WAY
@@ -923,7 +924,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 706
+   X 282
    Y 49
    ERASE
    ONE_WAY
@@ -932,7 +933,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 709
+   X 285
    Y 46
    ERASE
    ONE_WAY
@@ -941,7 +942,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 706
+   X 282
    Y 46
    ERASE
    ONE_WAY
@@ -950,7 +951,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 705
+   X 281
    Y 46
    ERASE
    ONE_WAY
@@ -959,7 +960,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 701
+   X 277
    Y 41
    ERASE
    ONE_WAY
@@ -968,7 +969,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 746
+   X 322
    Y 44
    ERASE
    ONE_WAY
@@ -977,7 +978,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 751
+   X 327
    Y 49
    ERASE
    ONE_WAY
@@ -986,7 +987,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 751
+   X 327
    Y 47
    ERASE
    ONE_WAY
@@ -995,7 +996,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 753
+   X 329
    Y 47
    ERASE
    ONE_WAY
@@ -1004,7 +1005,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 753
+   X 329
    Y 45
    ERASE
    ONE_WAY
@@ -1013,7 +1014,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 753
+   X 329
    Y 44
    ERASE
    ONE_WAY
@@ -1022,7 +1023,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 724
+   X 300
    Y 37
    ONE_WAY
  $END
@@ -1030,7 +1031,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 736
+   X 312
    Y 37
    ONE_WAY
  $END
@@ -1038,7 +1039,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 755
+   X 331
    Y 40
    ERASE
    ONE_WAY
@@ -1047,14 +1048,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 729
+   X 305
    Y 31
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 773
+   X 349
    Y 79
    ONE_WAY
  $END
@@ -1062,7 +1063,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 778
+   X 354
    Y 79
    ONE_WAY
  $END
@@ -1070,7 +1071,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 768
+   X 344
    Y 79
    ONE_WAY
  $END
@@ -1078,7 +1079,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 768
+   X 344
    Y 84
    ONE_WAY
  $END
@@ -1086,7 +1087,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 778
+   X 354
    Y 84
    ONE_WAY
  $END
@@ -1094,7 +1095,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 787
+   X 363
    Y 84
    ONE_WAY
  $END
@@ -1102,7 +1103,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 759
+   X 335
    Y 84
    ONE_WAY
  $END
@@ -1110,7 +1111,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 759
+   X 335
    Y 89
    ONE_WAY
  $END
@@ -1118,7 +1119,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 787
+   X 363
    Y 89
    ONE_WAY
  $END
@@ -1126,7 +1127,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 782
+   X 358
    Y 89
    ONE_WAY
  $END
@@ -1134,7 +1135,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 777
+   X 353
    Y 89
    ONE_WAY
  $END
@@ -1142,7 +1143,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 772
+   X 348
    Y 89
    ONE_WAY
  $END
@@ -1150,7 +1151,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 767
+   X 343
    Y 89
    ONE_WAY
  $END
@@ -1158,7 +1159,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 750
+   X 326
    Y 89
    ONE_WAY
  $END
@@ -1166,7 +1167,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 796
+   X 372
    Y 89
    ONE_WAY
  $END
@@ -1174,7 +1175,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 763
+   X 339
    Y 79
    ONE_WAY
  $END
@@ -1182,7 +1183,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 782
+   X 358
    Y 79
    ONE_WAY
  $END
@@ -1190,7 +1191,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 748
+   X 324
    Y 79
    ONE_WAY
  $END
@@ -1198,7 +1199,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 777
+   X 353
    Y 79
    ONE_WAY
  $END
@@ -1206,7 +1207,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 703
+   X 279
    Y 63
    ERASE
    ONE_WAY
@@ -1215,7 +1216,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 754
+   X 330
    Y 95
    ERASE
    ONE_WAY
@@ -1224,7 +1225,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 729
+   X 305
    Y 95
    ERASE
    ONE_WAY
@@ -1233,21 +1234,21 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 697
+   X 273
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 713
+   X 289
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 744
+   X 320
    Y 75
    ERASE
    ONE_WAY
@@ -1256,21 +1257,21 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 745
+   X 321
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 729
+   X 305
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 745
+   X 321
    Y 79
    ERASE
    ONE_WAY
@@ -1279,7 +1280,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 747
+   X 323
    Y 79
    ERASE
    ONE_WAY
@@ -1288,7 +1289,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 749
+   X 325
    Y 80
    ERASE
    ONE_WAY
@@ -1297,7 +1298,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 752
+   X 328
    Y 79
    ERASE
    ONE_WAY
@@ -1306,7 +1307,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 750
+   X 326
    Y 81
    ERASE
    ONE_WAY
@@ -1315,7 +1316,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 798
+   X 374
    Y 75
    ERASE
    ONE_WAY
@@ -1324,21 +1325,21 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 729
+   X 305
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 802
+   X 378
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 796
+   X 372
    Y 78
    ERASE
    ONE_WAY
@@ -1347,7 +1348,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 795
+   X 371
    Y 80
    ERASE
    ONE_WAY
@@ -1356,7 +1357,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 795
+   X 371
    Y 81
    ERASE
    ONE_WAY
@@ -1365,7 +1366,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 793
+   X 369
    Y 81
    ERASE
    ONE_WAY
@@ -1374,7 +1375,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 792
+   X 368
    Y 81
    ERASE
    ONE_WAY
@@ -1383,7 +1384,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_02
-   X 788
+   X 364
    Y 77
    ERASE
    ONE_WAY
@@ -1392,7 +1393,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 782
+   X 358
    Y 74
    ONE_WAY
  $END
@@ -1400,14 +1401,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_03
-   X 761
+   X 337
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 746
+   X 322
    Y 111
    ONE_WAY
  $END
@@ -1415,7 +1416,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 751
+   X 327
    Y 111
    ONE_WAY
  $END
@@ -1423,7 +1424,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 741
+   X 317
    Y 111
    ONE_WAY
  $END
@@ -1431,7 +1432,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 752
+   X 328
    Y 118
    ONE_WAY
  $END
@@ -1439,7 +1440,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 747
+   X 323
    Y 118
    ONE_WAY
  $END
@@ -1447,7 +1448,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 742
+   X 318
    Y 118
    ONE_WAY
  $END
@@ -1455,7 +1456,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 736
+   X 312
    Y 117
    ONE_WAY
  $END
@@ -1463,7 +1464,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 757
+   X 333
    Y 118
    ONE_WAY
  $END
@@ -1471,7 +1472,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 736
+   X 312
    Y 118
    ONE_WAY
  $END
@@ -1479,7 +1480,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 739
+   X 315
    Y 118
    ONE_WAY
  $END
@@ -1487,7 +1488,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 729
+   X 305
    Y 118
    ONE_WAY
  $END
@@ -1495,7 +1496,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 734
+   X 310
    Y 113
    ONE_WAY
  $END
@@ -1503,7 +1504,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 738
+   X 314
    Y 111
    ONE_WAY
  $END
@@ -1511,7 +1512,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 762
+   X 338
    Y 118
    ONE_WAY
  $END
@@ -1519,7 +1520,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 767
+   X 343
    Y 118
    ONE_WAY
  $END
@@ -1527,7 +1528,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 756
+   X 332
    Y 111
    ONE_WAY
  $END
@@ -1535,7 +1536,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE circle_02
-   X 762
+   X 338
    Y 114
    ONE_WAY
  $END
@@ -1543,7 +1544,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 723
+   X 299
    Y 111
    ONE_WAY
  $END
@@ -1551,7 +1552,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 752
+   X 328
    Y 111
    ONE_WAY
  $END
@@ -1559,14 +1560,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 745
+   X 321
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 722
+   X 298
    Y 127
    ERASE
    ONE_WAY
@@ -1575,35 +1576,35 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 770
+   X 346
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_03
-   X 745
+   X 321
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 713
+   X 289
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 729
+   X 305
    Y 127
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 719
+   X 295
    Y 107
    ERASE
    ONE_WAY
@@ -1612,14 +1613,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 713
+   X 289
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 720
+   X 296
    Y 111
    ERASE
    ONE_WAY
@@ -1628,7 +1629,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 722
+   X 298
    Y 111
    ERASE
    ONE_WAY
@@ -1637,7 +1638,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 725
+   X 301
    Y 111
    ERASE
    ONE_WAY
@@ -1646,7 +1647,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 727
+   X 303
    Y 111
    ERASE
    ONE_WAY
@@ -1655,7 +1656,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 726
+   X 302
    Y 112
    ERASE
    ONE_WAY
@@ -1664,7 +1665,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 773
+   X 349
    Y 107
    ERASE
    ONE_WAY
@@ -1673,14 +1674,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 786
+   X 362
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 764
+   X 340
    Y 110
    ERASE
    ONE_WAY
@@ -1689,14 +1690,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_03
-   X 761
+   X 337
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 772
+   X 348
    Y 111
    ERASE
    ONE_WAY
@@ -1705,7 +1706,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 770
+   X 346
    Y 111
    ERASE
    ONE_WAY
@@ -1714,7 +1715,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 768
+   X 344
    Y 111
    ERASE
    ONE_WAY
@@ -1723,7 +1724,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 767
+   X 343
    Y 113
    ERASE
    ONE_WAY
@@ -1732,7 +1733,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_02
-   X 634
+   X 210
    Y 32
    ONE_WAY
  $END
@@ -1740,28 +1741,28 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 665
+   X 241
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 649
+   X 225
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 633
+   X 209
    Y 63
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 633
+   X 209
    Y 79
    ERASE
    ONE_WAY
@@ -1770,7 +1771,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_02
-   X 890
+   X 466
    Y 64
    FLIP_HORIZONTAL
    ONE_WAY
@@ -1779,28 +1780,28 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 882
+   X 458
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 898
+   X 474
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 914
+   X 490
    Y 95
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 882
+   X 458
    Y 111
    ERASE
    ONE_WAY

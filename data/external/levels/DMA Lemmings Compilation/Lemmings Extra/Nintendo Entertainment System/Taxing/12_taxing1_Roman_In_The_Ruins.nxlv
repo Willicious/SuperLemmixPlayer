@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.21
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -9,12 +9,13 @@
  AUTHOR DMA Design Ron Stard
  MUSIC orig_06tim3_nes
  ID x58B424EA58B424EA
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1584
+ WIDTH 600
  HEIGHT 160
- START_X 370
+ START_X 218
  START_Y 80
  THEME orig_pillar
  
@@ -41,7 +42,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 240
+   X 80
    Y 24
    NO_OVERWRITE
  $END
@@ -49,14 +50,14 @@
  $GADGET
    STYLE orig_pillar
    PIECE rope_trap
-   X 624
+   X 464
    Y 104
  $END
  
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 648
+   X 488
    Y 48
    NO_OVERWRITE
  $END
@@ -67,7 +68,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_08
-   X 419
+   X 259
    Y 129
    ONE_WAY
  $END
@@ -75,7 +76,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_08
-   X 519
+   X 359
    Y 129
    ONE_WAY
  $END
@@ -83,7 +84,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_01
-   X 429
+   X 269
    Y 43
    ONE_WAY
  $END
@@ -91,7 +92,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_01
-   X 529
+   X 369
    Y 30
    ONE_WAY
  $END
@@ -99,7 +100,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_02
-   X 399
+   X 239
    Y 102
    ONE_WAY
  $END
@@ -107,7 +108,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_02
-   X 499
+   X 339
    Y 102
    ONE_WAY
  $END
@@ -115,7 +116,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_03
-   X 459
+   X 299
    Y 102
    ONE_WAY
  $END
@@ -123,7 +124,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 388
+   X 228
    Y 142
    ONE_WAY
  $END
@@ -131,7 +132,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 304
+   X 144
    Y 141
    ONE_WAY
  $END
@@ -139,7 +140,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 262
+   X 102
    Y 141
    ONE_WAY
  $END
@@ -147,7 +148,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 260
+   X 100
    Y 74
    NO_OVERWRITE
    ONE_WAY
@@ -156,7 +157,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_07
-   X 250
+   X 90
    Y 71
    ONE_WAY
  $END
@@ -164,7 +165,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_08
-   X 250
+   X 90
    Y 128
    ONE_WAY
  $END
@@ -172,7 +173,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_10
-   X 306
+   X 146
    Y 99
    ONE_WAY
  $END
@@ -180,7 +181,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_06
-   X 326
+   X 166
    Y 121
    ONE_WAY
  $END
@@ -188,7 +189,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 255
+   X 95
    Y -10
    ONE_WAY
  $END
@@ -196,7 +197,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 297
+   X 137
    Y -10
    ONE_WAY
  $END
@@ -204,7 +205,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 339
+   X 179
    Y -10
    ONE_WAY
  $END
@@ -212,7 +213,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 381
+   X 221
    Y -10
    ONE_WAY
  $END
@@ -220,7 +221,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 423
+   X 263
    Y -10
    ONE_WAY
  $END
@@ -228,7 +229,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 465
+   X 305
    Y -10
    ONE_WAY
  $END
@@ -236,7 +237,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 507
+   X 347
    Y -10
    ONE_WAY
  $END
@@ -244,7 +245,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 549
+   X 389
    Y -10
    ONE_WAY
  $END
@@ -252,7 +253,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 591
+   X 431
    Y -10
    ONE_WAY
  $END
@@ -260,7 +261,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 633
+   X 473
    Y -10
    ONE_WAY
  $END
@@ -268,7 +269,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 675
+   X 515
    Y -10
    ONE_WAY
  $END
@@ -276,7 +277,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_03
-   X 223
+   X 63
    Y 141
    ONE_WAY
  $END
@@ -284,7 +285,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 213
+   X 53
    Y -10
    ONE_WAY
  $END
@@ -292,7 +293,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_04
-   X 346
+   X 186
    Y 141
    ONE_WAY
  $END
@@ -300,7 +301,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_06
-   X 242
+   X 82
    Y 141
    ONE_WAY
  $END
@@ -308,7 +309,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 300
+   X 140
    Y 92
    ONE_WAY
  $END
@@ -316,7 +317,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_06
-   X 312
+   X 152
    Y 92
    ONE_WAY
  $END
@@ -324,7 +325,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 332
+   X 172
    Y 92
    ERASE
    ONE_WAY
@@ -333,7 +334,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 472
+   X 312
    Y 142
    ONE_WAY
  $END
@@ -341,7 +342,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 430
+   X 270
    Y 142
    ONE_WAY
  $END
@@ -349,7 +350,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 514
+   X 354
    Y 142
    ONE_WAY
  $END
@@ -357,7 +358,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 556
+   X 396
    Y 142
    ONE_WAY
  $END
@@ -365,7 +366,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 429
+   X 269
    Y 65
    ONE_WAY
  $END
@@ -373,7 +374,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 396
+   X 236
    Y 130
    ONE_WAY
  $END
@@ -381,7 +382,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 480
+   X 320
    Y 130
    ONE_WAY
  $END
@@ -389,7 +390,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 496
+   X 336
    Y 130
    ONE_WAY
  $END
@@ -397,7 +398,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 559
+   X 399
    Y 102
    ONE_WAY
  $END
@@ -405,7 +406,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 529
+   X 369
    Y 51
    ONE_WAY
  $END
@@ -413,7 +414,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 529
+   X 369
    Y 65
    ONE_WAY
  $END
@@ -421,7 +422,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 565
+   X 405
    Y 110
    ONE_WAY
  $END
@@ -429,7 +430,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_06
-   X 578
+   X 418
    Y 122
    ONE_WAY
  $END
@@ -437,7 +438,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 595
+   X 435
    Y 110
    ONE_WAY
  $END
@@ -445,7 +446,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 598
+   X 438
    Y 106
    ONE_WAY
  $END
@@ -453,7 +454,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 640
+   X 480
    Y 142
    ONE_WAY
  $END
@@ -461,7 +462,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 628
+   X 468
    Y 85
    ONE_WAY
  $END
@@ -469,7 +470,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 682
+   X 522
    Y 142
    ONE_WAY
  $END
@@ -477,7 +478,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_04
-   X 713
+   X 553
    Y 142
    ONE_WAY
  $END
@@ -485,7 +486,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 697
+   X 537
    Y 130
    ONE_WAY
  $END
@@ -493,7 +494,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 694
+   X 534
    Y 126
    ONE_WAY
  $END
@@ -501,7 +502,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_10
-   X 666
+   X 506
    Y 134
    ONE_WAY
  $END
@@ -509,7 +510,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_08
-   X 690
+   X 530
    Y 122
    ONE_WAY
  $END
@@ -517,7 +518,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_10
-   X 658
+   X 498
    Y 134
    ONE_WAY
  $END
@@ -525,7 +526,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_08
-   X 666
+   X 506
    Y 122
    ONE_WAY
  $END
@@ -533,7 +534,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_08
-   X 650
+   X 490
    Y 122
    ONE_WAY
  $END
@@ -541,7 +542,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_02
-   X 650
+   X 490
    Y 90
    ONE_WAY
  $END
@@ -549,7 +550,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_01
-   X 638
+   X 478
    Y 73
    ONE_WAY
  $END
@@ -557,7 +558,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_10
-   X 658
+   X 498
    Y 73
    ONE_WAY
  $END
@@ -565,7 +566,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_12
-   X 650
+   X 490
    Y 106
    ONE_WAY
  $END
@@ -573,7 +574,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_15
-   X 678
+   X 518
    Y 73
    ONE_WAY
  $END
@@ -581,7 +582,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_02
-   X 690
+   X 530
    Y 90
    ONE_WAY
  $END
@@ -589,7 +590,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_02
-   X 690
+   X 530
    Y 75
    ONE_WAY
  $END
@@ -597,7 +598,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_15
-   X 678
+   X 518
    Y 106
    ONE_WAY
  $END
@@ -605,7 +606,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_10
-   X 658
+   X 498
    Y 106
    ONE_WAY
  $END
@@ -613,7 +614,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_05
-   X 666
+   X 506
    Y 106
    ONE_WAY
  $END
@@ -621,7 +622,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 657
+   X 497
    Y 94
    ONE_WAY
  $END
@@ -629,7 +630,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 654
+   X 494
    Y 90
    ONE_WAY
  $END
@@ -637,7 +638,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_02
-   X 650
+   X 490
    Y 73
    ONE_WAY
  $END
@@ -645,7 +646,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_12
-   X 650
+   X 490
    Y 73
    ONE_WAY
  $END
@@ -653,7 +654,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_01
-   X 713
+   X 553
    Y 141
    ERASE
    ONE_WAY
@@ -662,7 +663,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_05
-   X 624
+   X 464
    Y 139
    ONE_WAY
  $END
@@ -670,7 +671,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_05
-   X 617
+   X 457
    Y 141
    ONE_WAY
  $END
@@ -678,7 +679,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 598
+   X 438
    Y 142
    ONE_WAY
  $END

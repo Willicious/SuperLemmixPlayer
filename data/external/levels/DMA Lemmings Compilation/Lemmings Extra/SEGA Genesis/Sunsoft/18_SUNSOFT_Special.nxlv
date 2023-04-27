@@ -1,0 +1,70 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE SUNSOFT Special
+ AUTHOR DMA Design
+ MUSIC sunsoftspecial
+ ID xD8A5E2F1D8A5E2F1
+ VERSION x0000000000000001
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 511
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_dirt
+ BACKGROUND orig_dirt_md:genesis_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 60
+ SAVE_REQUIREMENT 48
+ TIME_LIMIT 180
+ MAX_SPAWN_INTERVAL 43
+ 
+ $SKILLSET 
+   CLIMBER 20
+   FLOATER 20
+   TIMEBOMBER 20
+   BLOCKER 20
+   BUILDER 20
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_dirt_md
+   PIECE window
+   X 0
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt_md
+   PIECE exit
+   X 432
+   Y 112
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE special
+   PIECE hebereke
+   X 3
+   Y 0
+   ONE_WAY
+ $END
+ 
+ 

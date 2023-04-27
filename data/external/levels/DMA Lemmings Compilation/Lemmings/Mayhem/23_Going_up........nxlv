@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE Going up.......
  AUTHOR DMA Design 
  ID xFB60527DFB60527D
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 1200
  HEIGHT 160
- START_X 1016
+ START_X 976
  START_Y 80
  THEME orig_crystal
  
@@ -56,6 +57,7 @@
    X 360
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -64,6 +66,7 @@
    X 424
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -72,6 +75,7 @@
    X 488
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -81,6 +85,7 @@
    X 552
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -90,6 +95,7 @@
    X 616
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -99,6 +105,7 @@
    X 680
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  

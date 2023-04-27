@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE Easy when you know how
  AUTHOR DMA Design 
  ID x141414A0141414A0
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 552
  HEIGHT 160
- START_X 200
+ START_X 232
  START_Y 80
  THEME orig_marble
  

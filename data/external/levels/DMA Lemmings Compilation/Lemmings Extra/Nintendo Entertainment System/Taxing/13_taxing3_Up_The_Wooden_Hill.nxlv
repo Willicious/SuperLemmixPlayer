@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.21
+#        SuperLemmix Level        
+#   Created with SLXEditor 1.3
 # ----------------------------- 
  
 #        Level info             
@@ -9,10 +9,11 @@
  AUTHOR DMA Design Ron Stard
  MUSIC orig_11_tim7_nes
  ID x5536C8865536C886
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1584
+ WIDTH 600
  HEIGHT 160
  START_X 160
  START_Y 80
@@ -42,6 +43,7 @@
    X 64
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -51,6 +53,7 @@
    X 0
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -76,6 +79,7 @@
    X 128
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -85,6 +89,7 @@
    X 192
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -94,6 +99,7 @@
    X 264
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -103,6 +109,7 @@
    X 328
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -112,6 +119,7 @@
    X 464
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
