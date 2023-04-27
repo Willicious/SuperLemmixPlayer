@@ -66,7 +66,7 @@ end;
 
 function TSkillPanelStandard.DrawStringTemplate: string;
 begin
-  Result := '................' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
+  Result := '...............' + '.' + '  ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
@@ -88,7 +88,7 @@ end;
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   SetInfoCursorLemming(1);
-  SetReplayMark(17);
+  SetReplayMark(16);
   SetInfoLemHatch(20);
   SetInfoLemAlive(26);
   SetInfoLemIn(32);
