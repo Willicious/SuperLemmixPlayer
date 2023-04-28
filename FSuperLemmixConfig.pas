@@ -108,14 +108,15 @@ uses
   GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
 
 const
-  PRESET_REPLAY_PATTERNS: array[0..5] of String =
+  PRESET_REPLAY_PATTERNS: array[0..6] of String =
   (
     '{GROUP}_{GROUPPOS}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}',
     '{TITLE}__{TIMESTAMP}',
     '{GROUP}_{GROUPPOS}__{TITLE}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}',
     '{USERNAME}__{GROUP}_{GROUPPOS}__{TIMESTAMP}|{USERNAME}__{TITLE}__{TIMESTAMP}',
     '{USERNAME}__{TITLE}__{TIMESTAMP}',
-    '{USERNAME}__{GROUP}_{GROUPPOS}__{TITLE}__{TIMESTAMP}|{USERNAME}__{TITLE}__{TIMESTAMP}'
+    '{USERNAME}__{GROUP}_{GROUPPOS}__{TITLE}__{TIMESTAMP}|{USERNAME}__{TITLE}__{TIMESTAMP}',
+    '*{USERNAME}__{TITLE}__{TIMESTAMP}'
   );
 
 {$R *.dfm}
