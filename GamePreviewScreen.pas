@@ -545,10 +545,9 @@ begin
       Raise; // yet again, to be caught on TBaseDosForm
     end;
   end;
-  GlobalGame.ReplayManager.Clear(true); // this code clears the current-replay-in-memory
-                                        // when the level loads. A controversial decision to
-                                        // have this happen Globally, it might need to be
-                                        // optional
+  if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
+    GlobalGame.ReplayManager.Clear(true);
+    // this clears the current-replay-in-memory when the level loads
 end;
 
 end.

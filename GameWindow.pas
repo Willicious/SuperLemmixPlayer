@@ -587,12 +587,12 @@ begin
 
   PanelFrameSkip := SkillPanel.FrameSkip;
 
-  //if not GameParams.HideFrameskipping then
-  //if PanelFrameSkip < 0 then
-  //begin
-    //if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
-    //GotoSaveState(Max(Game.CurrentIteration-1, 0));
-  //end;
+  if not GameParams.HideFrameskipping then
+  if PanelFrameSkip < 0 then
+  begin
+    if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+    GotoSaveState(Max(Game.CurrentIteration-1, 0));
+  end;
 
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
@@ -1473,7 +1473,7 @@ begin
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: begin
-                   if GameParams.ClassicMode then
+                   if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
                       begin
                         Game.CancelReplayAfterSkip := true;
                         GotoSaveState(0);

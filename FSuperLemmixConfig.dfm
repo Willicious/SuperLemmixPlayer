@@ -31,7 +31,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'OK'
     TabOrder = 0
     OnClick = btnOKClick
-    ExplicitTop = 371
   end
   object btnCancel: TButton
     Left = 97
@@ -42,7 +41,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 1
-    ExplicitTop = 371
   end
   object btnApply: TButton
     Left = 183
@@ -53,17 +51,15 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Apply'
     TabOrder = 2
     OnClick = btnApplyClick
-    ExplicitTop = 371
   end
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 276
     Height = 408
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
-    ExplicitHeight = 369
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -331,6 +327,7 @@ object FormNXConfig: TFormNXConfig
         Height = 17
         Caption = 'Replay After Level Restart'
         TabOrder = 8
+        OnClick = OptionChanged
       end
     end
     object Graphics: TTabSheet

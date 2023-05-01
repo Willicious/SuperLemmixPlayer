@@ -10,8 +10,8 @@ uses
 const
   FORMAT_VERSION = 2;
   CORE_VERSION = 0;
-  FEATURES_VERSION = 1;
-  HOTFIX_VERSION = 1; // or RC version
+  FEATURES_VERSION = 2;
+  HOTFIX_VERSION = 0; // or RC version
 
   STYLE_VERSION = '2.0/'; // For server usage - a new style version should only be used when backwards compatibility breaks.
                             // Make sure to include the trailing backslash.
