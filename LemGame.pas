@@ -6509,7 +6509,7 @@ begin
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
              and not L.LemIsDisarmer)
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit) and not LemWasJumping)
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
