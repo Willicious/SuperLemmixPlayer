@@ -100,6 +100,7 @@ object FLevelSelect: TFLevelSelect
     MultiSelectStyle = []
     ReadOnly = True
     TabOrder = 9
+    OnChange = tvLevelSelectChange
     OnClick = tvLevelSelectClick
   end
   object btnCancel: TButton

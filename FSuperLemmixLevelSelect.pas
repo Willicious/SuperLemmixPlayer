@@ -47,6 +47,7 @@ type
     procedure btnCleanseLevelsClick(Sender: TObject);
     procedure btnCleanseOneClick(Sender: TObject);
     procedure btnClearRecordsClick(Sender: TObject);
+    procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
   private
     fLastLevelPath: String;
 
@@ -455,6 +456,11 @@ begin
     if fDisplayRecords <> rdNone then
       fInfoForm.PrepareEmbedRecords(fDisplayRecords);
   end;
+end;
+
+procedure TFLevelSelect.tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
+begin
+  SetInfo;
 end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
