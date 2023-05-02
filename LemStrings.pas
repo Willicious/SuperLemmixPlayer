@@ -57,6 +57,7 @@ const
   SFX_HITS_STEEL = 'chink';
   SFX_OHNO = 'ohno';
   SFX_SKILLBUTTON = 'changeop';
+  SFX_CHANGE_RR = 'changerr';
   SFX_PICKUP = 'oing2';
   SFX_SWIMMING = 'splash';
   SFX_FALLOUT = 'die';
