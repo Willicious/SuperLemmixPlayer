@@ -6472,7 +6472,6 @@ function TLemmingGame.SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): 
 var
   HandleGadgets: Boolean;
   LemPosArray: TArrayArrayInt;
-  LemWasJumping: Boolean;
   i: Integer;
 begin
   // Start Simulation Mode
@@ -6488,7 +6487,6 @@ begin
   begin
     // Get positions to check
     LemPosArray := GetGadgetCheckPositions(L);
-    LemWasJumping := L.LemAction = baJumping;
 
     // Check for exit, traps and teleporters (but stop at teleporters!)
     for i := 0 to Length(LemPosArray[0]) do
