@@ -30,7 +30,9 @@ object FManageStyles: TFManageStyles
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
+    Cancel = True
     Caption = 'Exit'
+    ModalResult = 2
     TabOrder = 0
     OnClick = btnExitClick
   end

@@ -6,7 +6,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'Hotkeys'
-  ClientHeight = 448
+  ClientHeight = 474
   ClientWidth = 519
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -57,10 +57,10 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Visible = False
   end
   object lvHotkeys: TListView
-    Left = 0
+    Left = -3
     Top = 0
     Width = 311
-    Height = 448
+    Height = 468
     Columns = <
       item
         Caption = 'Key'
@@ -272,5 +272,15 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Caption = 'Set to Alternative Layout'
     TabOrder = 13
     OnClick = btnAlternativeLayoutClick
+  end
+  object BitBtn1: TBitBtn
+    Left = 360
+    Top = 438
+    Width = 97
+    Height = 30
+    Cancel = True
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 14
   end
 end

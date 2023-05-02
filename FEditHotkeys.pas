@@ -24,6 +24,7 @@ type
     cbSpecialSkip: TComboBox;
     lblSkip: TLabel;
     btnAlternativeLayout: TBitBtn;
+    BitBtn1: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);

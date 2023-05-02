@@ -55,10 +55,11 @@ object FReplayEditor: TFReplayEditor
     TabOrder = 0
   end
   object btnCancel: TButton
-    Left = 120
+    Left = 113
     Top = 400
     Width = 75
     Height = 25
+    Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 1

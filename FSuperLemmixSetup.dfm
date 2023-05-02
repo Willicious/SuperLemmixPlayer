@@ -13806,6 +13806,7 @@ object FNLSetup: TFNLSetup
     Anchors = [akLeft, akBottom]
     Caption = 'Save && Continue'
     Default = True
+    ModalResult = 2
     TabOrder = 2
     OnClick = btnOKClick
   end
@@ -13815,7 +13816,9 @@ object FNLSetup: TFNLSetup
     Width = 75
     Height = 25
     Anchors = [akLeft, akBottom]
+    Cancel = True
     Caption = 'Exit'
+    ModalResult = 2
     TabOrder = 1
     OnClick = btnExitClick
   end

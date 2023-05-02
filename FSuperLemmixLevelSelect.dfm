@@ -99,7 +99,7 @@ object FLevelSelect: TFLevelSelect
     Indent = 19
     MultiSelectStyle = []
     ReadOnly = True
-    TabOrder = 5
+    TabOrder = 9
     OnClick = tvLevelSelectClick
   end
   object btnCancel: TButton
@@ -107,9 +107,10 @@ object FLevelSelect: TFLevelSelect
     Top = 495
     Width = 134
     Height = 25
+    Cancel = True
     Caption = 'Close'
     ModalResult = 2
-    TabOrder = 7
+    TabOrder = 1
   end
   object btnOK: TButton
     Left = 294
@@ -117,7 +118,7 @@ object FLevelSelect: TFLevelSelect
     Width = 606
     Height = 25
     Caption = 'Play'
-    TabOrder = 8
+    TabOrder = 0
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
@@ -127,7 +128,7 @@ object FLevelSelect: TFLevelSelect
     Height = 369
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
-    TabOrder = 9
+    TabOrder = 8
   end
   object btnClearRecords: TButton
     Left = 916
@@ -135,7 +136,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Clear Records'
-    TabOrder = 6
+    TabOrder = 2
     OnClick = btnClearRecordsClick
   end
   object btnCleanseOne: TButton
@@ -144,7 +145,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Cleanse This Level'
-    TabOrder = 3
+    TabOrder = 7
     OnClick = btnCleanseOneClick
   end
   object btnCleanseLevels: TButton
@@ -153,7 +154,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Cleanse All Levels'
-    TabOrder = 2
+    TabOrder = 6
     OnClick = btnCleanseLevelsClick
   end
   object btnMassReplay: TButton
@@ -162,7 +163,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Mass Replay Check'
-    TabOrder = 1
+    TabOrder = 5
     OnClick = btnMassReplayClick
   end
   object btnSaveImage: TButton
@@ -171,7 +172,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Screenshot'
-    TabOrder = 0
+    TabOrder = 4
     OnClick = btnSaveImageClick
   end
   object btnMakeShortcut: TButton
@@ -180,7 +181,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Create Shortcut'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = btnMakeShortcutClick
   end
   object ilStatuses: TImageList
