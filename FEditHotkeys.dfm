@@ -273,14 +273,24 @@ object FLemmixHotkeys: TFLemmixHotkeys
     TabOrder = 13
     OnClick = btnAlternativeLayoutClick
   end
-  object BitBtn1: TBitBtn
-    Left = 360
+  object btnCancel: TBitBtn
+    Left = 415
     Top = 438
-    Width = 97
+    Width = 65
     Height = 30
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 14
+    OnClick = btnCancelClick
+  end
+  object btnReset: TBitBtn
+    Left = 342
+    Top = 438
+    Width = 67
+    Height = 30
+    Caption = 'Reset'
+    TabOrder = 15
+    OnClick = btnResetClick
   end
 end

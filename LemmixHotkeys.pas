@@ -392,7 +392,7 @@ begin
     else if FileExists(AppPath + 'SuperLemmixHotkeys.ini') then
       StringList.LoadFromFile(AppPath + 'SuperLemmixHotkeys.ini')
     else begin
-      SetDefaultsClassic;
+      SetDefaultsAdvanced;
       Exit;
     end;
     for i := 0 to MAX_KEY do

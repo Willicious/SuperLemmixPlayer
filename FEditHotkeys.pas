@@ -24,7 +24,8 @@ type
     cbSpecialSkip: TComboBox;
     lblSkip: TLabel;
     btnAlternativeLayout: TBitBtn;
-    BitBtn1: TBitBtn;
+    btnCancel: TBitBtn;
+    btnReset: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -46,6 +47,8 @@ type
     procedure btnAdvancedLayoutClick(Sender: TObject);
     procedure btnAlternativeLayoutClick(Sender: TObject);
     procedure btnClearAllKeysClick(Sender: TObject);
+    procedure btnResetClick(Sender: TObject);
+    procedure btnCancelClick(Sender: TObject);
     //procedure btnMinimalLayoutClick(Sender: TObject);
   private
     fShownFindInfo: Boolean;
@@ -180,6 +183,18 @@ procedure TFLemmixHotkeys.SetHotkeys(aValue: TLemmixHotkeyManager);
 begin
   fHotkeys := aValue;
   RefreshList;
+end;
+
+procedure TFLemmixHotkeys.btnResetClick(Sender: TObject);
+begin
+  //We need a ResetKeys function here that the Cancel button can also use;
+  //We want to re-load the user hotkeys before any changes were made
+end;
+
+procedure TFLemmixHotkeys.btnCancelClick(Sender: TObject);
+begin
+  //We need to call a ResetKeys function here
+  //Then Close the form
 end;
 
 procedure TFLemmixHotkeys.cbShowUnassignedClick(Sender: TObject);
