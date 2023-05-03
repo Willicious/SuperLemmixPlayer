@@ -1768,8 +1768,9 @@ begin
 
   if ((Level.Info.LemmingsCount + LemmingsCloned - fSpawnedDead) - (LemmingsRemoved) = 0) and (DelayEndFrames = 0) then
   begin
-    Finish(GM_FIN_LEMMINGS);
-    Exit;
+  {if not LevelHasKillZombiesTalisman then} //<<< hotbookmark - we need code for this here
+    //Finish(GM_FIN_LEMMINGS);
+    //Exit;
   end;
 
   if UserSetNuking and (LemmingsOut = 0) and (DelayEndFrames = 0) then
