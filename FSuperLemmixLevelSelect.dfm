@@ -102,6 +102,7 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 9
     OnChange = tvLevelSelectChange
     OnClick = tvLevelSelectClick
+    OnKeyDown = tvLevelSelectKeyDown
   end
   object btnCancel: TButton
     Left = 916

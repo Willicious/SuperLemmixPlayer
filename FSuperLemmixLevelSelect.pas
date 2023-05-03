@@ -48,6 +48,8 @@ type
     procedure btnCleanseOneClick(Sender: TObject);
     procedure btnClearRecordsClick(Sender: TObject);
     procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
+    procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     fLastLevelPath: String;
 
@@ -466,6 +468,15 @@ end;
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
 begin
   SetInfo;
+end;
+
+
+
+procedure TFLevelSelect.tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_RETURN then //hotbookmark
+  //we want to load the currently selected level here
 end;
 
 procedure TFLevelSelect.SetInfo;
