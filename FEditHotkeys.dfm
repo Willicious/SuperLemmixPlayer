@@ -130,7 +130,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Zoom Out'
       'Hold-To-Scroll')
   end
-  object btnClose: TButton
+  object btnSaveClose: TButton
     Left = 342
     Top = 392
     Width = 138
@@ -138,6 +138,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Caption = 'Save && Close'
     ModalResult = 1
     TabOrder = 2
+    OnClick = btnSaveCloseClick
   end
   object cbSkill: TComboBox
     Left = 373

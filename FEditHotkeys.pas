@@ -11,7 +11,7 @@ type
   TFLemmixHotkeys = class(TForm)
     lvHotkeys: TListView;
     cbFunctions: TComboBox;
-    btnClose: TButton;
+    btnSaveClose: TButton;
     cbSkill: TComboBox;
     lblSkill: TLabel;
     cbShowUnassigned: TCheckBox;
@@ -49,6 +49,7 @@ type
     procedure btnClearAllKeysClick(Sender: TObject);
     procedure btnResetClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
+    procedure btnSaveCloseClick(Sender: TObject);
     //procedure btnMinimalLayoutClick(Sender: TObject);
   private
     fShownFindInfo: Boolean;
@@ -186,15 +187,23 @@ begin
 end;
 
 procedure TFLemmixHotkeys.btnResetClick(Sender: TObject);
-begin
+begin //hotbookmark
   //We need a ResetKeys function here that the Cancel button can also use;
   //We want to re-load the user hotkeys before any changes were made
+  //so, we need to call LemmixHotkeys > LoadFile;
+end;
+
+procedure TFLemmixHotkeys.btnSaveCloseClick(Sender: TObject);
+begin //hotbookmark
+  //we want to save changes to hotkeys.ini file and then close the form
+  //so, we need to call LemmixHotkeys > SaveFile;
+  //then Close;
 end;
 
 procedure TFLemmixHotkeys.btnCancelClick(Sender: TObject);
-begin
+begin //hotbookmark
   //We need to call a ResetKeys function here
-  //Then Close the form
+  //Then Close;
 end;
 
 procedure TFLemmixHotkeys.cbShowUnassignedClick(Sender: TObject);
