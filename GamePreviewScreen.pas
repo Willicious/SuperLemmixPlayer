@@ -61,6 +61,7 @@ uses
   CustomPopup,
   FBaseDosForm,
   FLevelInfo,
+  LemNeoTheme,  //hotbookmark - we need this to read LemNames from the theme
   FStyleManager;
 
 const
@@ -385,7 +386,7 @@ begin
   begin
     Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
                                                - Level.Info.ZombieCount
-                                               - Level.Info.NeutralCount) + ' Lemmings + ';
+                                               - Level.Info.NeutralCount) + ' Lemmings + ';   //hotbookmark
 
     if Level.Info.NeutralCount > 0 then
     Result[2].Line := Result[2].Line + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
