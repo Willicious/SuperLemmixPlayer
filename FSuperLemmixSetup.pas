@@ -84,6 +84,7 @@ begin
   if GameParams.HighResolution then
     GameParams.ZoomLevel := Max(GameParams.ZoomLevel div 2, 1);
 
+  ////put these back when all online features are back in
   //GameParams.EnableOnline := cbOnline.ItemIndex >= 1;
   //GameParams.CheckUpdates := cbOnline.ItemIndex >= 2;
 

@@ -562,4 +562,13 @@ object FormNXConfig: TFormNXConfig
       end
     end
   end
+  object cbUpdateCheck: TCheckBox
+    Left = 79
+    Top = 360
+    Width = 122
+    Height = 17
+    Caption = 'Check For Updates'
+    TabOrder = 4
+    OnClick = OptionChanged
+  end
 end

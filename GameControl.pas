@@ -100,6 +100,7 @@ type
 
 const
   DEF_MISCOPTIONS = [
+    moCheckUpdates,
     moAutoReplaySave,
     moPauseAfterBackwards,
     moLinearResampleMenu,
@@ -480,7 +481,7 @@ begin
   //SL.Add('');
   //SL.Add('# Online Options');
   //SaveBoolean('EnableOnline', EnableOnline);
-  //SaveBoolean('UpdateCheck', CheckUpdates);
+  SaveBoolean('UpdateCheck', CheckUpdates);
 
   SL.Add('');
   SL.Add('# Technical Options');
@@ -628,7 +629,7 @@ begin
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
     //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-    //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
+    CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
     FileCaching := LoadBoolean('FileCaching', FileCaching);

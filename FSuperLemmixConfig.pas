@@ -59,6 +59,7 @@ type
     rgExitSound: TRadioGroup;
     cbShowMinimap: TCheckBox;
     cbReplayAfterRestart: TCheckBox;
+    cbUpdateCheck: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -69,7 +70,6 @@ type
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
-    //procedure cbClassicModeClick(Sender: TObject);
     procedure btnClassicModeClick(Sender: TObject);
     procedure btnDeactivateClassicModeClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -250,7 +250,7 @@ begin
     SetReplayPatternDropdown(cbIngameSaveReplayPattern, GameParams.IngameSaveReplayPattern);
     SetReplayPatternDropdown(cbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
 
-    //cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
+    cbUpdateCheck.Checked := GameParams.CheckUpdates;
     //cbEnableOnline.Checked := GameParams.EnableOnline;
 
     //// Page 2 (Interface Options) ////
@@ -321,7 +321,7 @@ begin
   GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
   //GameParams.EnableOnline := cbEnableOnline.Checked;
-  //GameParams.CheckUpdates := cbUpdateCheck.Checked;
+  GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
   //// Page 2 (Interface Options) ////
   // Checkboxes
