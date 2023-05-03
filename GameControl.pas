@@ -339,7 +339,9 @@ begin
     try
       SaveToIniFile;
       BaseLevelPack.SaveUserData;
-      Hotkeys.SaveFile;
+      Hotkeys.SaveFile; //hotbookmark
+      //hotbookmark - commenting line 342 out prevents permanent saving of hotkeys
+      //but, they are getting stored SOMEwhere temporarily. Question is, where??
       Success := true;
     except
       Sleep(50);
