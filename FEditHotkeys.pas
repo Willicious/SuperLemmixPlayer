@@ -187,23 +187,22 @@ begin
 end;
 
 procedure TFLemmixHotkeys.btnResetClick(Sender: TObject);
-begin //hotbookmark
-  //We need a ResetKeys function here that the Cancel button can also use;
-  //We want to re-load the user hotkeys before any changes were made
-  //so, we need to call LemmixHotkeys > LoadFile;
+begin
+  fHotkeys.LoadFile; //loads the previously saved hotkeys.ini file
+  RefreshList;
 end;
 
 procedure TFLemmixHotkeys.btnSaveCloseClick(Sender: TObject);
-begin //hotbookmark
-  //we want to save changes to hotkeys.ini file and then close the form
-  //so, we need to call LemmixHotkeys > SaveFile;
-  //then Close;
+begin
+  fHotkeys.SaveFile; //saves current layout to hotkeys.ini
+  Close;
 end;
 
 procedure TFLemmixHotkeys.btnCancelClick(Sender: TObject);
-begin //hotbookmark
-  //We need to call a ResetKeys function here
-  //Then Close;
+begin
+  fHotkeys.LoadFile; //loads previous hotkeys.ini file to prevent saving changes
+  RefreshList;
+  Close;
 end;
 
 procedure TFLemmixHotkeys.cbShowUnassignedClick(Sender: TObject);
