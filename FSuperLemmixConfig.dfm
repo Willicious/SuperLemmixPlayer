@@ -177,6 +177,15 @@ object FormNXConfig: TFormNXConfig
         Height = 21
         TabOrder = 0
       end
+      object cbUpdateCheck: TCheckBox
+        Left = 75
+        Top = 336
+        Width = 122
+        Height = 17
+        Caption = 'Check For Updates'
+        TabOrder = 3
+        OnClick = OptionChanged
+      end
     end
     object TabSheet2: TTabSheet
       Caption = 'Gameplay'
@@ -561,14 +570,5 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
     end
-  end
-  object cbUpdateCheck: TCheckBox
-    Left = 79
-    Top = 360
-    Width = 122
-    Height = 17
-    Caption = 'Check For Updates'
-    TabOrder = 4
-    OnClick = OptionChanged
   end
 end
