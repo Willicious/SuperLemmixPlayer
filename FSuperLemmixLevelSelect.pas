@@ -470,13 +470,12 @@ begin
   SetInfo;
 end;
 
-
-
+//when treeview is active, pressing return loads the currently selected level
 procedure TFLevelSelect.tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if Key = VK_RETURN then //hotbookmark
-  //we want to load the currently selected level here
+  if Key = VK_RETURN then
+  btnOK.Click;
 end;
 
 procedure TFLevelSelect.SetInfo;
