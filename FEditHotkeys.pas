@@ -108,9 +108,9 @@ begin
                      Integer(spbFloater):    s := s + 'Floater';
                      Integer(spbGlider):     s := s + 'Glider';
                      Integer(spbDisarmer):   s := s + 'Disarmer';
-                     Integer (spbTimebomber):    s := s + 'Timebomber';
+                     Integer(spbTimebomber): s := s + 'Timebomber';
                      Integer(spbBomber):     s := s + 'Bomber';
-                     Integer(spbFreezer):     s := s + 'Freezer';
+                     Integer(spbFreezer):    s := s + 'Freezer';
                      Integer(spbBlocker):    s := s + 'Blocker';
                      Integer(spbPlatformer): s := s + 'Platformer';
                      Integer(spbBuilder):    s := s + 'Builder';
