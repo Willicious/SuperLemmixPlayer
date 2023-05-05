@@ -461,7 +461,7 @@ begin
   if (Selected and aLemming.CannotReceiveSkills) or UsefulOnly or
      ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds) then
   begin
-    DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
+    if not GameParams.HideHelpers then DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
     fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
@@ -2230,8 +2230,6 @@ var
 
   DrawX, DrawY: Integer;
 begin
-  if not GameParams.HideHelpers then
-  begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
     MO := Gadget.MetaObj;
@@ -2355,7 +2353,6 @@ begin
           fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
         end;
     end;
-  end;
 end;
 
 procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
@@ -2363,8 +2360,6 @@ var
   numHelpers, indexHelper: Integer;
   DrawX, DrawY: Integer;
 begin
-  if not GameParams.HideHelpers then
-  begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
     Assert(Gadget.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
 
@@ -2434,7 +2429,6 @@ begin
     begin
       fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     end;
-  end;
 end;
 
 
@@ -2446,8 +2440,6 @@ const
   DRAW_ABOVE_MIN_Y = 19;
   DRAW_ABOVE_MIN_Y_CPM = 28;
 begin
-  if not GameParams.HideHelpers then
-  begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
     //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // why?
 
@@ -2514,7 +2506,6 @@ begin
     begin
       fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     end;
-  end;
 end;
 
 procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
@@ -2704,36 +2695,33 @@ procedure TRenderer.LoadHelperImages;
 var
   i: THelperIcon;
 begin
-  if not GameParams.HideHelpers then
+  for i := Low(THelperIcon) to High(THelperIcon) do
   begin
-    for i := Low(THelperIcon) to High(THelperIcon) do
-    begin
-      if i = hpi_None then Continue;
-      if fHelperImages[i] <> nil then
-        fHelperImages[i].Free;
+    if i = hpi_None then Continue;
+    if fHelperImages[i] <> nil then
+      fHelperImages[i].Free;
 
-      fHelperImages[i] := TBitmap32.Create;
+    fHelperImages[i] := TBitmap32.Create;
 
-      if GameParams.HighResolution and FileExists(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i]) then
-        TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i], fHelperImages[i])
-      else if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
-        TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
+    if GameParams.HighResolution and FileExists(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i]) then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i], fHelperImages[i])
+    else if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
 
-      fHelperImages[i].DrawMode := dmBlend;
-      fHelperImages[i].CombineMode := cmMerge;
-    end;
-
-    fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
-    fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
+    fHelperImages[i].DrawMode := dmBlend;
+    fHelperImages[i].CombineMode := cmMerge;
   end;
 
-    // And laserer!
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser-hr.png', fLaserGraphic)
-    else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser.png', fLaserGraphic);
+  fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
+  fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
 
-    fHelpersAreHighRes := GameParams.HighResolution;
+  // And laserer!
+  if GameParams.HighResolution then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser-hr.png', fLaserGraphic)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser.png', fLaserGraphic);
+
+  fHelpersAreHighRes := GameParams.HighResolution;
 end;
 
 procedure TRenderer.LoadProjectileImages;
@@ -2863,10 +2851,10 @@ begin
 
     fLayers.fIsEmpty[rlObjectHelpers] := false;
 
-    if Gadget.HasPreassignedSkills then
+    if Gadget.HasPreassignedSkills and not GameParams.HideHelpers then
       DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, false);
 
-    if DrawOtherHatchHelper then
+    if DrawOtherHatchHelper and not GameParams.HideHelpers then
       DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
 
     if fUsefulOnly then
@@ -2923,7 +2911,7 @@ begin
         Continue;
 
       // otherwise, draw its helper
-      DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
+      if not GameParams.HideHelpers then DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
 
       // if it's a teleporter or receiver, draw all paired helpers too
@@ -2931,7 +2919,7 @@ begin
         for i2 := 0 to Gadgets.Count-1 do
         begin
           if i = i2 then Continue;
-          if (Gadgets[i2].PairingId = Gadget.PairingId) then
+          if (Gadgets[i2].PairingId = Gadget.PairingId) and not GameParams.HideHelpers then
             DrawObjectHelpers(fLayers[rlObjectHelpers], Gadgets[i2]);
         end;
     end;
@@ -3044,7 +3032,7 @@ begin
   fLaserGraphic.DrawMode := dmCustom;
   fLaserGraphic.OnPixelCombine := CombineFixedColor;
 
-  LoadHelperImages;
+  if not GameParams.HideHelpers then LoadHelperImages;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := TResourceStream.Create(HInstance, 'particles', 'lemdata');
@@ -3460,7 +3448,7 @@ var
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
 
-  if GameParams.HighResolution <> fHelpersAreHighRes then
+  if GameParams.HighResolution <> fHelpersAreHighRes and not GameParams.HideHelpers then
     LoadHelperImages;
 
   RenderInfoRec.Level := aLevel;
