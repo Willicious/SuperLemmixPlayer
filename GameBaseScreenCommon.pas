@@ -35,6 +35,7 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
+    procedure FadeIn;
     procedure FadeOut;
 
     procedure MainFormResized; virtual; abstract;
@@ -94,8 +95,11 @@ end;
 constructor TGameBaseScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
+
   fScreenImg := TImage32.Create(Self);
   fScreenImg.Parent := Self;
+
+  //FadeIn;  //hotbookmark - not sure if this is where this procedure will eventually need to be called
 
   ScreenImg.Cursor := crNone;
 end;
@@ -103,6 +107,12 @@ end;
 destructor TGameBaseScreen.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TGameBaseScreen.FadeIn;
+begin
+  //draw a black canvas that's the same size as the screen
+  //gradually reduce the opacity of the canvas
 end;
 
 procedure TGameBaseScreen.FadeOut;
@@ -115,7 +125,7 @@ var
   RGBDiff: Integer;
 const
   TOTAL_STEPS = 32;
-  STEP_DELAY = 6;
+  STEP_DELAY = 12;
 begin
   Steps := 0;
   StartTickCount := GetTickCount;
