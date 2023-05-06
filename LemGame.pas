@@ -2359,8 +2359,18 @@ function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
+var
+  i: Integer;
+  OneWayFieldL: TTriggerTypes;
+  OneWayFieldR: TTriggerTypes;
 begin
-  Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
+  OneWayFieldL := trForceLeft;
+  OneWayFieldR := trForceRight;
+
+  Result := (L.LemAction in ActionSet)
+   and not CheckForOverlappingField(L)
+   and not HasTriggerAt(L.LemX, L.LemY, OneWayFieldL)
+   and not HasTriggerAt(L.LemX, L.LemY, OneWayFieldR);
 end;
 
 
