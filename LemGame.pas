@@ -395,6 +395,7 @@ type
     function MayAssignSlider(L: TLemming) : Boolean;
     function MayAssignLaserer(L: TLemming) : Boolean;
     function MayAssignThrowingSkill(L: TLemming) : Boolean;
+    procedure PlayAssignFailSound;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -1072,6 +1073,13 @@ begin
   fRenderInterface.Free;
   fSoundList.Free;
   inherited Destroy;
+end;
+
+procedure TLemmingGame.PlayAssignFailSound;
+begin
+  //if the player has tried to assign a skill
+  //and, for any reason, the lemming can't be assigned that skill on this frame
+  //CueSoundEffect(SFX_) need new sound effect for failed assignments
 end;
 
 procedure TLemmingGame.PlayMusic;
