@@ -3724,8 +3724,8 @@ end;
 function TLemmingGame.HandleWalking(L: TLemming): Boolean;
 var
   LemDy: Integer;
-  LemDXY: Integer;
-  LemDZY: Integer;
+  LemDXL: Integer;
+  LemDXR: Integer;
 begin
   Result := True;
 
@@ -3771,9 +3771,9 @@ begin
 
   //makes sure Walkers can ascend out of Freezer cubes
   LemDy := FindGroundPixel(L.LemX, L.LemY);
-  LemDXY := FindGroundPixel(L.LemX -1, L.LemY);
-  LemDZY := FindGroundPixel(L.LemX -1, L.LemY);
-  if (LemDy < -6) and (LemDXY < -6) and (LemDZY < -6)
+  LemDXL := FindGroundPixel(L.LemX -1, L.LemY);
+  LemDXR := FindGroundPixel(L.LemX +1, L.LemY);
+  if (LemDy < -6) and (LemDXL < -6) and (LemDXR < -6)
   //but, prevents ascending all the way through anything taller
   and not HasPixelAt(L.LemX, L.LemY -12)
   and not HasPixelAt(L.LemX -1, L.LemY -12)
