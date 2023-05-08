@@ -2367,18 +2367,9 @@ function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
-var
-  i: Integer;
-  OneWayFieldL: TTriggerTypes;
-  OneWayFieldR: TTriggerTypes;
-begin
-  OneWayFieldL := trForceLeft;
-  OneWayFieldR := trForceRight;
 
-  Result := (L.LemAction in ActionSet)
-   and not CheckForOverlappingField(L)
-   and not HasTriggerAt(L.LemX, L.LemY, OneWayFieldL)
-   and not HasTriggerAt(L.LemX, L.LemY, OneWayFieldR);
+begin
+  Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
 end;
 
 
@@ -2670,6 +2661,7 @@ var
 
   NeedShiftPosition: Boolean;
   SavePos: TPoint;
+  LemDY: Integer;
 begin
   // If this is a post-teleport check, (a) reset previous position and (b) remember new position
   if IsPostTeleportCheck then
@@ -2780,11 +2772,28 @@ begin
   // also not for Jumpers, as this is handled during movement
   if ((L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2])) and
      (L.LemAction <> baJumping) then
-  begin
-    if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
-      HandleForceField(L, -1)
-    else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
-      HandleForceField(L, 1);
+  begin //bookmark - testing needed
+    //checks specifically for contradictory vertical field/blocker
+    for LemDY := 0 to 10 do
+    //it might need fine-tuning, but it works
+    begin
+      if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L)
+      and not HasTriggerAt(L.LemX, L.LemY -LemDY, trForceRight) then
+        HandleForceField(L, -1);
+
+      if HasTriggerAt(L.LemX, L.LemY, trForceRight, L)
+      and not HasTriggerAt(L.LemX, L.LemY -LemDY, trForceLeft) then
+        HandleForceField(L, 1);
+
+      //This is so lems don't ignore Blockers on one-way fields
+      if HasTriggerAt(L.LemX, L.LemY, trForceLeft)
+      and HasTriggerAt(L.LemX, L.LemY -LemDY, trForceRight)
+      then Inc(L.LemX);
+
+      if HasTriggerAt(L.LemX, L.LemY, trForceRight)
+      and HasTriggerAt(L.LemX, L.LemY -LemDY, trForceLeft)
+      then Dec(L.LemX);
+    end;
   end;
 
   // And if this was a post-teleporter check, reset any position changes that may have occurred.

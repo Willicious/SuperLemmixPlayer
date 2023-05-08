@@ -1,0 +1,119 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.1
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Blocker OWF Test
+ AUTHOR 
+ ID x395644D72FB2EFF3
+ VERSION x0000000000000006
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   BLOCKER 10
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE willlem_special
+   PIECE conveyor_left
+   X 154
+   Y 99
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE conveyor_right
+   X 17
+   Y 99
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 93
+   Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 157
+   Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 221
+   Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 45
+   Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 13
+   Y 100
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 224
+   Y 100
+ $END
+ 
+ $LEMMING
+   X 240
+   Y 100
+ $END
+ 
+ $LEMMING
+   X 256
+   Y 100
+ $END
+ 
+ $LEMMING
+   X 72
+   Y 100
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 56
+   Y 100
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 40
+   Y 100
+   FLIP_HORIZONTAL
+ $END
+ 
+ 
