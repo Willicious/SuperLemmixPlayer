@@ -1765,6 +1765,11 @@ begin
   if fParticleFinishTimer > 0 then
     Exit;
 
+  //hotbookmark - stops single-lemming levels ending when the lemming dies
+  if (Level.Info.LemmingsCount = 1) and ((LemmingsRemoved) = 1) then
+      Exit;
+  //we probably want to do more here ^^^ - maybe auto-restart, or show a message
+
   if (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned) and (DelayEndFrames = 0) then
   begin
     Finish(GM_FIN_LEMMINGS);
