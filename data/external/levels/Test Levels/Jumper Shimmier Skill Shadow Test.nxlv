@@ -1,0 +1,108 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.0
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Jumper Shimmier Skill Shadow Test
+ AUTHOR WillLem
+ ID x173365DC146EA8B7
+ VERSION x0000000000000003
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ THEME willlem_lemminas_laracroft
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 4
+ SAVE_REQUIREMENT 4
+ MAX_SPAWN_INTERVAL 102
+ 
+ $SKILLSET 
+   JUMPER 99
+   SHIMMIER 99
+   BUILDER 99
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 37
+   Y 59
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 165
+   Y 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 109
+   Y 73
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 216
+   Y 50
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 27
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 83
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 139
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 187
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 235
+   Y 99
+   ONE_WAY
+ $END
+ 
+ 
