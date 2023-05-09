@@ -1771,9 +1771,11 @@ begin
     Exit;
   end;
 
-  if ((Level.Info.LemmingsCount + LemmingsCloned - fSpawnedDead) - (LemmingsRemoved) = 0) and (DelayEndFrames = 0) then
+  if ((Level.Info.LemmingsCount + LemmingsCloned - fSpawnedDead) - (LemmingsRemoved) = 0)
+  and (DelayEndFrames = 0)
+  //hotbookmark - stops level ending when only zombies remain
+  and CheckAllZombiesKilled = true then
   begin
-  {if not LevelHasKillZombiesTalisman then} //<<< hotbookmark - we need code for this here
     Finish(GM_FIN_LEMMINGS);
     Exit;
   end;
