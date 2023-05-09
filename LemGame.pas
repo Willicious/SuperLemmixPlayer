@@ -2768,7 +2768,7 @@ begin
      (L.LemAction <> baJumping) then
   begin //bookmark - testing needed
     //checks specifically for contradictory vertical field/blocker
-    for LemDY := 0 to 10 do
+    for LemDY := 0 to 4 do
     //it might need fine-tuning, but it works
     begin
       if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L)
