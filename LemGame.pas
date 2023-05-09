@@ -576,7 +576,7 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..23] of TBasicLemmingAction =       //bookmark - this will fix talisman bug pointed out by Proxima
+  ActionListArray: array[0..23] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
@@ -1602,23 +1602,23 @@ begin
   end;
 
   if (NewAction = baDangling) and (L.LemAction in [baSliding, baDehoisting]) then
-  begin             //bookmark
+  begin
     Inc(L.LemY, 2); //this makes sure that the shimmier skill shadow is displayed
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baDangling) then
-  begin          //bookmark
+  begin
     Dec(L.LemY); //brings the lem back up 1px for the start of the shimmier animation
   end;
 
   if (NewAction = baWalking) and (L.LemAction = baDangling) then
-  begin          //bookmark
+  begin
     if HasPixelAt(L.LemX, L.LemY -1) then
     Dec(L.LemY); //brings the lem back up 1px for the start of the walker animation if needed
   end;
 
   if (NewAction = baFalling) and (L.LemAction = baDangling) then
-  begin          //bookmark
+  begin
     Inc(L.LemY, 2);
   end;
 
@@ -1745,10 +1745,7 @@ begin
         Transition(L, baFreezeFinish)
       else
         Transition(L, baExploding)
-    end
-
-
-    else begin
+    end else begin
       if L.LemIsTimebomber then Transition(L, baTimebombing)
       else if L.LemTimerToFreeze then
         Transition(L, baFreezing)
@@ -2198,7 +2195,7 @@ var
       Perm    : Result :=     L.HasPermanentSkills;
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
                                                baPlatforming, baStacking, baBlocking, baShrugging,
-                                               baReaching, baShimmying, baLasering, baLooking]); //bookmark - baLooking?
+                                               baReaching, baShimmying, baLasering, baLooking]);
       Walk    : Result :=     (L.LemAction in [baWalking, baAscending]);
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
@@ -2381,11 +2378,9 @@ const
                baDangling, baVaporizing, baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
-  Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
-                                           //this code is needed to stop repeat
-                                           //timebomber assignments to same lem
-                                           //and to stop bomber/freezer assignments
-                                           //to timebomber
+  Result := not (L.LemAction in ActionSet)
+  and not (L.LemExplosionTimer > 0); //stops repeat timebomber assignments to same lem
+                                     //and bomber/freezer assignments to timebomber
 end;
 
 //Exploders and freezers can be assigned to all states except those in list
@@ -2396,11 +2391,10 @@ const
                baDangling, baVaporizing, baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
-  Result := not (L.LemAction in ActionSet) and not (L.LemExplosionTimer > 0);
-                                           //this code is needed to stop repeat
-                                           //timebomber assignments to same lem
-                                           //and to stop bomber/freezer assignments
-                                           //to timebomber
+  Result := not (L.LemAction in ActionSet)
+  and not (L.LemExplosionTimer > 0); //stops repeat timebomber assignments to same lem
+                                     //and bomber/freezer assignments to timebomber
+
 end;
 
 
@@ -2737,7 +2731,7 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
                          and not (L.LemAction = baBlocking)
                          and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
-    begin                                   //bookmark - baDangling?
+    begin
       NeedShiftPosition := (L.LemAction in [baClimbing, baSliding, baDehoisting]);
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
@@ -2913,7 +2907,7 @@ begin
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
      and not (L.LemAction in [baDehoisting, baSliding, baClimbing, baHoisting,
                               baSwimming, baOhNoing, baJumping, baDangling])
-  then begin                                              //bookmark - is baDangling needed here?
+  then begin
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
     else L.LemActionNew := baWalking;
@@ -3073,9 +3067,8 @@ var
 begin
   Result := False; // only see exit trigger area, if it actually used
 
-  if     (not L.LemIsZombie)
-     //and (not (L.LemAction in [baFalling, baSplatting, baJumping, baReaching]))
-     and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
+  if  (not L.LemIsZombie)
+  and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
     if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
       Exit;
@@ -3130,7 +3123,7 @@ begin
     else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
       LayBrick(L)
     else if L.LemAction in [baClimbing, baSliding, baDehoisting] then
-    begin                   //bookmark - baDangling?
+    begin
       Inc(L.LemX, L.LemDx); // Move out of the wall
       if not L.LemIsStartingAction then Inc(L.LemY); // Don't move below original position
       Transition(L, baWalking);
@@ -3212,7 +3205,7 @@ begin
 
   FreezerMask.DrawTo(PhysicsMap, X -8, L.LemY -11);
 
-  if not IsSimulating then // could happen as a result of slowfreeze objects!
+  //if not IsSimulating then // could happen as a result of slowfreeze objects!
     fRenderInterface.AddTerrainFreezer(X - 8, L.LemY -11);
 end;
 
@@ -3683,7 +3676,7 @@ const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baShrugging, baTimebombing, baOhnoing,
                       baExploding, baFreezing, baReaching, baDehoisting,
-                      baVaporizing, baDangling, baLooking];  //bookmark - does Dangling need to go here?
+                      baVaporizing, baDangling, baLooking];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -3950,7 +3943,7 @@ begin
 end;
 
 
-function TLemmingGame.HandleDangling(L: TLemming): Boolean; //bookmark
+function TLemmingGame.HandleDangling(L: TLemming): Boolean;
 begin
   Result := True;
   if HasPixelAt(L.LemX, L.LemY) then
@@ -6160,7 +6153,7 @@ begin
       CurrentLemming := LemmingList[Index_LemmingToBeNuked];
       with CurrentLemming do
       begin
-        if     (LemExplosionTimer = 0)
+        if         (LemExplosionTimer = 0)
            and not (LemAction in [baSplatting, baExploding]) then
           LemExplosionTimer := 84;
       end;
