@@ -1795,7 +1795,16 @@ begin
       Exit;
   //we probably want to do more here ^^^ - maybe auto-restart, or show a message
 
-  if (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned) and (DelayEndFrames = 0) then
+  //stops level continuing into overtime when time is up and save req is met
+  if (Level.Info.RescueCount <= LemmingsIn) and IsOutOfTime then
+  begin
+    Finish(GM_FIN_LEMMINGS);
+    Exit;
+  end;
+
+  //ends level if all lems are saved
+  if (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned)
+  and (DelayEndFrames = 0) then
   begin
     Finish(GM_FIN_LEMMINGS);
     Exit;
