@@ -3127,7 +3127,9 @@ begin
     end;
 
     Result := True;
-    Transition(L, baExiting);
+    if not IsOutOfTime then Transition(L, baExiting);
+    //we don't want the lems to appear to exit if time has run out
+
     if GameParams.PreferYippee then
     begin
       CueSoundEffect(SFX_YIPPEE, L.Position);
@@ -5582,8 +5584,7 @@ begin
 
   if IsOutOfTime then
   begin
-    Dec(L.LemFrame);
-    Dec(L.LemPhysicsFrame);
+    //hotbookmark - do we want to draw the clock graphic above the exit here?
 
     if UserSetNuking and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
       Transition(L, baOhnoing);
