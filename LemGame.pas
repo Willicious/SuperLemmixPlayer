@@ -241,6 +241,7 @@ type
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
+    procedure SetSkillsToInfinite; //hotbookmark - Practice mode?
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -1826,6 +1827,18 @@ begin
     Exit;
   end;
 
+end;
+
+procedure TLemmingGame.SetSkillsToInfinite;
+var
+Skill: TSkillPanelButton;
+begin
+with Level.Info do
+  begin
+    for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+    if SkillPanelButtonToAction[Skill] <> baNone then
+        CurrSkillCount[SkillPanelButtonToAction[Skill]] := 100;
+  end;
 end;
 
 //  SETTING SIZE OF OBJECT MAPS
