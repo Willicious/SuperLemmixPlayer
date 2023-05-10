@@ -1789,8 +1789,9 @@ begin
   if fParticleFinishTimer > 0 then
     Exit;
 
-  //hotbookmark - stops single-lemming levels ending when the lemming dies
-  if (Level.Info.LemmingsCount = 1) and ((LemmingsRemoved) = 1) then
+  //stops single-lemming levels ending when 1 lemming has been removed and 0 are saved
+  if (Level.Info.LemmingsCount = 1) and ((LemmingsRemoved) = 1)
+  and not (LemmingsIn >= 1) then
       Exit;
   //we probably want to do more here ^^^ - maybe auto-restart, or show a message
 
