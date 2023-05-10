@@ -225,7 +225,8 @@ type
 
   { internal methods }
     procedure DoTalismanCheck;
-    function CheckAllZombiesKilled: Boolean;
+    function CheckAllZombiesKilled: Boolean; //checks for remaining zombies, returning false if nuke is used or if zombies remain
+    function CheckIfZombiesRemain: Boolean; //slightly different - checks for remaining zombies, returns true if zombies remain
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
@@ -887,6 +888,29 @@ begin
   end;
 
   Result := true;
+end;
+
+function TLemmingGame.CheckIfZombiesRemain: Boolean;
+var
+  i: Integer;
+  ReleaseOffset: Integer;
+begin
+  Result := true;
+
+  for i := 0 to LemmingList.Count-1 do
+    if LemmingList[i].LemIsZombie and not LemmingList[i].LemRemoved then
+      Exit;
+
+  ReleaseOffset := 0;
+  if (LemmingsToRelease - ReleaseOffset > 0) then
+  begin
+    i := Level.Info.SpawnOrder[Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease + ReleaseOffset];
+    if i >= 0 then
+      if Gadgets[i].IsPreassignedZombie then
+        Exit;
+  end;
+
+  Result := false;
 end;
 
 function TLemmingGame.Checkpass: Boolean;
@@ -1776,16 +1800,17 @@ begin
     Exit;
   end;
 
+  //ends level if all lems have been removed, including zombies
   if ((Level.Info.LemmingsCount + LemmingsCloned - fSpawnedDead) - (LemmingsRemoved) = 0)
-  and (DelayEndFrames = 0)
-  //hotbookmark - stops level ending when only zombies remain
-  and CheckAllZombiesKilled = true then
+  and (CheckIfZombiesRemain = false) and (DelayEndFrames = 0) then
   begin
     Finish(GM_FIN_LEMMINGS);
     Exit;
   end;
 
-  if UserSetNuking and (LemmingsOut = 0) and (DelayEndFrames = 0) then
+  //checks for nuke and makes sure no lemmings or zombies remain in the level
+  if UserSetNuking and (LemmingsOut = 0) and (CheckIfZombiesRemain = false)
+  and (DelayEndFrames = 0) then
   begin
     Finish(GM_FIN_LEMMINGS);
     Exit;
