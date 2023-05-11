@@ -27,7 +27,7 @@ uses
   LemReplay,
   LemTalisman,
   LemGameMessageQueue,
-  GameControl;
+  GameControl, GameSound;
 
 const
   ParticleColorIndices: array[0..15] of Byte =
@@ -6327,7 +6327,8 @@ begin
     //Logarithmic pitch slide modelled on Amiga
     MagicFrequencyAmiga := 3300 * (Power(1.02, RR));
 
-    CueSoundEffectFrequency(SFX_CHANGE_RR, MagicFrequencyAmiga);
+    //cuesoundeffect can't be used here as the sound doesn't trigger whilst the game is paused
+    SoundManager.PlaySound(SFX_CHANGE_RR, 0, MagicFrequencyAmiga);
   end;
 end;
 
