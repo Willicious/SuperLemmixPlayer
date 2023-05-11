@@ -765,8 +765,8 @@ begin
                            SoundManager.PlaySound(Msg.MessageDataStr,
                            (Msg.MessageDataInt - Trunc(((Img.Width / 2) - Img.OffsetHorz) / Img.Scale)) div 2);
       GAMEMSG_MUSIC: SoundManager.PlayMusic;
-      GAMEMSG_SOUND_FREQ: if not IsHyperSpeed then
-                           SoundManager.PlaySound(Msg.MessageDataStr, 0, Msg.MessageDataInt);
+//      GAMEMSG_SOUND_FREQ: if not IsHyperSpeed then   //bookmark - follow this train
+//                           SoundManager.PlaySound(Msg.MessageDataStr, 0, Msg.MessageDataInt);
     end;
   end;
 end;

@@ -270,7 +270,7 @@ type
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSound: String); overload;
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
-    procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
+    //procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedGadgets;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -6268,16 +6268,17 @@ begin
   MessageQueue.Add(GAMEMSG_SOUND_BAL, aSound, aOrigin.X);
 end;
 
-procedure TLemmingGame.CueSoundEffectFrequency(aSound: String; aFrequency: Single);
-begin
-  if IsSimulating then Exit; // Not play sound in simulation mode
-
-  // Check that the sound was not yet played on this frame
-  if fSoundList.Contains(aSound) then Exit;
-
-  fSoundList.Add(aSound);
-  MessageQueue.Add(GAMEMSG_SOUND_FREQ, aSound, Int64(Trunc(aFrequency)));
-end;
+////bookmark - follow this train
+//procedure TLemmingGame.CueSoundEffectFrequency(aSound: String; aFrequency: Single);
+//begin
+//  if IsSimulating then Exit; // Not play sound in simulation mode
+//
+//  // Check that the sound was not yet played on this frame
+//  if fSoundList.Contains(aSound) then Exit;
+//
+//  fSoundList.Add(aSound);
+//  MessageQueue.Add(GAMEMSG_SOUND_FREQ, aSound, Int64(Trunc(aFrequency)));
+//end;
 
 function TLemmingGame.GetHighlitLemming: TLemming;
 begin
