@@ -1552,6 +1552,8 @@ begin
   case aButton of
     spbSlower:
       begin
+        DrawButtonSelector(spbSlower, true);
+
         if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
           begin
             Game.SetSelectedSkill(i, True);
@@ -1560,6 +1562,8 @@ begin
       end;
     spbFaster:
       begin
+        DrawButtonSelector(spbFaster, true);
+
         if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
           begin
             Game.SetSelectedSkill(i, True);
@@ -1599,6 +1603,8 @@ begin
       end;
     spbRestart:
       begin
+        DrawButtonSelector(spbRestart, true);
+
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then // cancels Replay after Restart in ClassicMode
           begin
             Game.CancelReplayAfterSkip := true;
@@ -1634,6 +1640,9 @@ procedure TBaseSkillPanel.ImgMouseUp(Sender: TObject; Button: TMouseButton;
 begin
   Game.SetSelectedSkill(spbSlower, False);
   Game.SetSelectedSkill(spbFaster, False);
+  DrawButtonSelector(spbSlower, false);
+  DrawButtonSelector(spbFaster, false);
+  DrawButtonSelector(spbRestart, false);
 end;
 
 procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
