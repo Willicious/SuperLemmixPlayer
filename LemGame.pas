@@ -1796,6 +1796,13 @@ begin
       Exit;
   //we probably want to do more here ^^^ - maybe auto-restart, or show a message
 
+  //ends the level when time runs out in Classic Mode
+  if IsOutOfTime and GameParams.ClassicMode then
+  begin
+    Finish(GM_FIN_LEMMINGS);
+    Exit;
+  end;
+
   //stops level continuing into overtime when time is up and save req is met
   if (Level.Info.RescueCount <= LemmingsIn) and IsOutOfTime then
   begin
