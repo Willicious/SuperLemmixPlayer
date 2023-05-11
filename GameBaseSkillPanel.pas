@@ -1096,7 +1096,7 @@ begin
     ButtonPos := Game.GetSelectedSkill + 1;
 
                    //pitch             //this makes sure the interval is 1 semitone
-    MagicFrequency := 6900 * (IntPower(1.06, ButtonPos));
+    MagicFrequency := 6900 * (IntPower(1.0595, ButtonPos));
                    //matches Amiga - lower might be better for levels with more skills?
     if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
     SoundManager.PlaySound(SFX_SKILLBUTTON, 0, MagicFrequency);
