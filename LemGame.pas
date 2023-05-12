@@ -181,7 +181,8 @@ type
     fLemJumpToHoistAdvance     : Boolean; // when using above with Jumper -> Hoister, whether to apply a frame offset
     fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
-    CurrSpawnInterval          : Integer;
+    CurrSpawnInterval          : Integer; //the current spawn interval, obviously
+    fSpawnIntervalChanged      : Boolean; //set to true in AdjustSpawnInterval when the SI has changed
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -270,7 +271,6 @@ type
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSound: String); overload;
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
-    //procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedGadgets;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -447,6 +447,7 @@ type
     function GetHighlitLemming: TLemming;
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
+    function SpawnIntervalChanged: Boolean;
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -6358,32 +6359,19 @@ begin
     Result := true;
 end;
 
+//called in GameBaseSkillPanel to cue the sound when the SI is changed
+function TLemmingGame.SpawnIntervalChanged: Boolean;
+begin
+  Result := fSpawnIntervalChanged;
+  fSpawnIntervalChanged := False;
+end;
+
 procedure TLemmingGame.AdjustSpawnInterval(aSI: Integer);
-const
-  MinFreq: Single = 3300; //we don't want to go lower than this
-  MedFreq: Single = 7418; //original frequency of SFX_CHANGE_RR
-  MaxFreq: Single = 24000; //we don't want to go higher than this
-  MinRR: Integer = 1;  //SI 102
-  MedRR: Integer = 55; //SI 48
-  MaxRR: Integer = 99; //SI 4
-var
-  RR: Integer;
-  MagicFrequencyAmiga: Single;
-  MagicFrequencyCalculatedByWillAndEric: Single;
 begin
   if (aSI <> CurrSpawnInterval) and CheckIfLegalSI(aSI) then
   begin
-    RR := 103 - aSI;
     CurrSpawnInterval := aSI;
-
-    //Linear pitch slide
-    MagicFrequencyCalculatedByWillAndEric := 210 * RR + MinFreq;
-
-    //Logarithmic pitch slide modelled on Amiga
-    MagicFrequencyAmiga := 3300 * (Power(1.02, RR));
-
-    //cuesoundeffect can't be used here as the sound doesn't trigger whilst the game is paused
-    SoundManager.PlaySound(SFX_CHANGE_RR, 0, MagicFrequencyAmiga);
+    fSpawnIntervalChanged := True;
   end;
 end;
 

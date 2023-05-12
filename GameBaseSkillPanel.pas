@@ -159,6 +159,7 @@ type
 
     property Image: TImage32 read fImage;
 
+    procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawMinimap; virtual;
 
@@ -936,6 +937,31 @@ begin
   LoadSkillFont;
 end;
 
+procedure TBaseSkillPanel.PlayReleaseRateSound;
+//  Minimum Freq = 3300 (we don't want to go lower than this)
+//  Original Freq = 7418 (original frequency of SFX_CHANGE_RR)
+//  Maximum Freq = 24000 (we don't want to go higher than this)
+//  Minimum RR = 1 (SI 102)
+//  Maximum RR = 99 (SI 4)
+var
+  RR: Integer;
+  MagicFrequencyAmiga: Single;
+  MagicFrequencyCalculatedByWillAndEric: Single;
+begin
+  if Game.SpawnIntervalChanged then
+  begin
+    RR := (103 - Game.CurrentSpawnInterval);
+
+    //Linear pitch slide
+    MagicFrequencyCalculatedByWillAndEric := 210 * RR + 3300;
+
+    //Logarithmic pitch slide modelled on Amiga
+    MagicFrequencyAmiga := 3300 * (Power(1.02, RR));
+
+    SoundManager.PlaySound(SFX_CHANGE_RR, 0, MagicFrequencyAmiga);
+  end;
+end;
+
 procedure TBaseSkillPanel.PrepareForGame;
 begin
   // Sets game-dependant properties of the skill panel:
@@ -1325,6 +1351,7 @@ begin
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
     DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
+    PlayReleaseRateSound;
 
     // Highlight selected button
     if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
