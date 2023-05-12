@@ -3151,8 +3151,13 @@ begin
     end;
 
     Result := True;
-    if not IsOutOfTime then Transition(L, baExiting);
-    //we don't want the lems to appear to exit if time has run out
+    if not IsOutOfTime
+      then Transition(L, baExiting)
+      else begin
+        //we don't want the lems to appear to exit if time has run out
+        Transition(L, baSleeping);
+        Exit;
+      end;
 
     if GameParams.PreferYippee then
     begin
@@ -5625,8 +5630,6 @@ begin
 
   if IsOutOfTime then
   begin
-    //hotbookmark - do we want to draw the clock graphic above the exit here?
-
     if UserSetNuking and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
       Transition(L, baOhnoing);
   end else
