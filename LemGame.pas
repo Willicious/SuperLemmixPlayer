@@ -1807,6 +1807,13 @@ begin
     Exit;
   end;
 
+  //ends the level when no time or lemmings (including zombies) remain
+  if IsOutOfTime and (LemmingsOut = 0) and (CheckIfZombiesRemain = false) then
+   begin
+    Finish(GM_FIN_LEMMINGS);
+    Exit;
+  end;
+
   //stops level continuing into overtime when time is up and save req is met
   if (Level.Info.RescueCount <= LemmingsIn) and IsOutOfTime then
   begin
