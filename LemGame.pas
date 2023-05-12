@@ -2639,7 +2639,7 @@ var
     Inc(n);
   end;
 
-  procedure MoveHoizontal;
+  procedure MoveHorizontal;
   begin
     while CurrPosX <> L.LemX do
     begin
@@ -2699,14 +2699,14 @@ begin
       Inc(CurrPosY);
       SaveCheckPos;
     end;
-    MoveHoizontal;
+    MoveHorizontal;
     MoveVertical;
   end
 
   // lem moves up or is faller; exception is made for builders!
   else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
   begin
-    MoveHoizontal;
+    MoveHorizontal;
     MoveVertical;
   end
 
@@ -2714,7 +2714,7 @@ begin
   else
   begin
     MoveVertical;
-    MoveHoizontal;
+    MoveHorizontal;
   end;
 end;
 
