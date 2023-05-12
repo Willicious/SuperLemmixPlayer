@@ -365,6 +365,7 @@ type
     function HandleLasering(L: TLemming) : Boolean;
     function HandleThrowing(L: TLemming) : Boolean;
     function HandleLooking(L: TLemming) : Boolean;
+    function HandleSleeping(L: TLemming): Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -1028,6 +1029,7 @@ begin
   LemmingMethods[baSpearing]   := HandleThrowing;
   LemmingMethods[baGrenading]  := HandleThrowing;
   LemmingMethods[baLooking]    := HandleLooking;
+  LemmingMethods[baSleeping]   := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -1067,6 +1069,7 @@ begin
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
+  NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
 
@@ -1566,7 +1569,8 @@ const
     10, //38 baSpearing
     10, //39 baGrenading
     14, //40 baLooking
-    12  //41 baLasering - it's, ironically, this high for rendering purposes
+    12, //41 baLasering - it's, ironically, this high for rendering purposes
+    24  //42 baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -4098,6 +4102,23 @@ begin
       Break;
     end;
   end;
+end;
+
+function TLemmingGame.HandleSleeping(L: TLemming): Boolean;
+begin
+   Result := True;
+   L.LemIsNeutral := True;
+
+   if L.LemFrame = 1 then Dec(LemmingsOut);
+
+   if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
+    RemoveLemming(L, RM_NEUTRAL); // shouldn't get to this point but just in case
+
+   // let lemming fall
+   if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then
+    Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 2]))
+   else
+    Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 3]));
 end;
 
 function TLemmingGame.LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;

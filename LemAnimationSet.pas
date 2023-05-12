@@ -24,8 +24,8 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES     = 71;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 35;        //num lem sprite types
+  NUM_LEM_SPRITES     = 73;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 36;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ASCENDING           = 2;    //3  //2
@@ -96,7 +96,9 @@ const
   LOOKING_RTL         = 67;   //68
   LASERING            = 68;   //69 //35
   LASERING_RTL        = 69;   //70
-  FROZEN              = 70;   //71 this one does NOT need an RTL form;
+  SLEEPING            = 70;   //71 //36
+  SLEEPING_RTL        = 71;   //72
+  FROZEN              = 72;   //73 this one does NOT need an RTL form;
                               //in fact in needs to be moved to the Masks section
                               //also, it's not counted as a "sprite type"
 
@@ -144,7 +146,8 @@ const
     (THROWING, THROWING_RTL),                 // 38 baSpearing
     (THROWING, THROWING_RTL),                 // 39 baGrenading
     (LOOKING, LOOKING_RTL),                   // 40 baLooking
-    (LASERING, LASERING_RTL)                  // 41 baLasering
+    (LASERING, LASERING_RTL),                 // 41 baLasering
+    (SLEEPING, SLEEPING_RTL)                  // 42 baSleeping
   );
 
 type
@@ -200,7 +203,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..34] of String =  (
+  ANIM_NAMES: array[0..35] of String =  (
   'WALKER',        //1
   'ASCENDER',      //2
   'DIGGER',        //3
@@ -235,7 +238,8 @@ const
   'DANGLER',       //32
   'THROWER',       //33
   'LOOKER',        //34
-  'LASERER'        //35
+  'LASERER',       //35
+  'SLEEPER'        //36
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
