@@ -384,7 +384,8 @@ type
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignTimebomber(L: TLemming): Boolean;
-    function MayAssignExploderFreezer(L: TLemming): Boolean;
+    function MayAssignExploder(L: TLemming): Boolean;
+    function MayAssignFreezer(L: TLemming): Boolean;
     function MayAssignBuilder(L: TLemming): Boolean;
     function MayAssignPlatformer(L: TLemming): Boolean;
     function MayAssignStacker(L: TLemming): Boolean;
@@ -1050,11 +1051,11 @@ begin
   NewSkillMethods[baShrugging]    := nil;
   NewSkillMethods[baOhnoing]      := nil;
   NewSkillMethods[baTimebombing]  := MayAssignTimebomber;
-  NewSkillMethods[baExploding]    := MayAssignExploderFreezer;
+  NewSkillMethods[baExploding]    := MayAssignExploder;
   NewSkillMethods[baToWalking]    := MayAssignWalker;
   NewSkillMethods[baPlatforming]  := MayAssignPlatformer;
   NewSkillMethods[baStacking]     := MayAssignStacker;
-  NewSkillMethods[baFreezing]     := MayAssignExploderFreezer;
+  NewSkillMethods[baFreezing]     := MayAssignFreezer;
   NewSkillMethods[baSwimming]     := MayAssignSwimmer;
   NewSkillMethods[baGliding]      := MayAssignFloaterGlider;
   NewSkillMethods[baFixing]       := MayAssignDisarmer;
@@ -2457,7 +2458,7 @@ begin
 end;
 
 //Exploders and freezers can be assigned to all states except those in list
-function TLemmingGame.MayAssignExploderFreezer(L: TLemming): Boolean;
+function TLemmingGame.MayAssignExploder(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
@@ -2470,6 +2471,21 @@ begin
 
 end;
 
+function TLemmingGame.MayAssignFreezer(L: TLemming): Boolean;
+const
+  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+               baTimebombFinish, baExploding, baFreezeFinish,
+               baDangling, baVaporizing, baSplatting, baExiting];
+               //putting baTimebombing in here doesn't work - why???
+begin
+  //non-assignable from the top of the level
+  if L.LemY <= 0 then Exit;
+
+  Result := not (L.LemAction in ActionSet)
+  and not (L.LemExplosionTimer > 0); //stops repeat timebomber assignments to same lem
+                                     //and bomber/freezer assignments to timebomber
+
+end;
 
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
 const
