@@ -1518,8 +1518,8 @@ var
 
   function IsOutOfBounds: Boolean;
   begin
-    Result := (Proj.X < -8) or (Proj.X >= LevelWidth + 8) or
-              (Proj.Y < -8) or (Proj.Y >= LevelHeight + 8);
+    Result := (Proj.X < -108) or (Proj.X >= LevelWidth + 108) or
+              (Proj.Y < -108) or (Proj.Y >= LevelHeight + 108);
   end;
 begin
   fLayers.fIsEmpty[rlLowShadows] := False;

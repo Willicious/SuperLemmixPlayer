@@ -5892,8 +5892,8 @@ var
 
   function IsOutOfBounds(P: TProjectile): Boolean;
   begin
-    Result := (P.X < -8) or (P.X >= Level.Info.Width + 8) or
-              (P.Y < -8) or (P.Y >= Level.Info.Height + 8);
+    Result := (P.X < -108) or (P.X >= Level.Info.Width + 108) or
+              (P.Y < -108) or (P.Y >= Level.Info.Height + 108);
   end;
 begin
   for i := ProjectileList.Count-1 downto 0 do
