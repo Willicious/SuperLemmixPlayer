@@ -3848,10 +3848,21 @@ begin
     Result := False;
   end;
 
-  //Sides
-  if (L.LemX <= 0) or (L.LemX >= PhysicsMap.Width) then
+  //Left Side
+  if (L.LemX <= 1) then
   begin
     TurnAround(L);
+    Inc(L.LemX);
+    Transition(L, baWalking);
+    Result := True;
+  end;
+
+    //Right Side
+  if (L.LemX >= PhysicsMap.Width -1) then
+  begin
+    TurnAround(L);
+    Dec(L.LemX);
+    Transition(L, baWalking);
     Result := True;
   end;
 end;
