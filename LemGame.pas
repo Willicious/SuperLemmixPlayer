@@ -2493,6 +2493,9 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLasering, baBashing,
                baFencing, baMining, baDigging, baLooking];
 begin
+  //non-assignable from the top of the level
+  if L.LemY <= 0 then Exit;
+
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -2518,6 +2521,9 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baBashing,
                baFencing, baMining, baDigging, baLasering, baLooking];
 begin
+  //non-assignable from the top of the level
+  if L.LemY <= 0 then Exit;
+
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -2534,6 +2540,9 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baFencing, baMining, baDigging, baLasering, baLooking];
 begin
+  //non-assignable from the top of the level
+  if L.LemY <= 0 then Exit;
+
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -2542,6 +2551,9 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baMining, baDigging, baLasering, baLooking];
 begin
+  //non-assignable from the top of the level
+  if L.LemY <= 0 then Exit;
+
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -2582,6 +2594,9 @@ var
   i: Integer;
   OldAction: TBasicLemmingAction;
 begin
+  //non-assignable from the top of the level
+  if L.LemY <= 0 then Exit;
+
   Result := (L.LemAction in ActionSet);
   if L.LemAction = baClimbing then
   begin
@@ -2639,6 +2654,9 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baLooking];
 begin
+  //non-assignable from the top of the level
+  if L.LemY <= 0 then Exit;
+
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -3805,17 +3823,36 @@ function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
 // Check for both sides and the bottom
 begin
   Result := True;
-  // Top and Bottom
-  if (L.LemY <= 0) or (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
+
+//Top
+  if (L.LemY <= 0) then
+  begin
+    //jumpers should complete their arc above the level boundary
+    //timebombers should still detonate if they're above the level
+    //all tasks here can still be performed from above the level
+    if L.LemAction in [baJumping, baDehoisting, baBlocking,
+                       baOhnoing, baExploding, baTimebombing,
+                       baPlatforming, baSpearing, baGrenading,
+                       baMining, baDigging]
+    then Exit;
+
+    //all other non-permanent skills are cancelled
+    Transition(L, baWalking);
+    Result := True;
+  end;
+
+  //Bottom
+  if (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
   begin
     RemoveLemming(L, RM_NEUTRAL);
     Result := False;
   end;
-  // Sides
-  if (L.LemX < 0) or (L.LemX >= PhysicsMap.Width) then
+
+  //Sides
+  if (L.LemX <= 0) or (L.LemX >= PhysicsMap.Width) then
   begin
-    RemoveLemming(L, RM_NEUTRAL);
-    Result := False;
+    TurnAround(L);
+    Result := True;
   end;
 end;
 
