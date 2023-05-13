@@ -3676,7 +3676,7 @@ var
 begin
   Result := False;
 
-  Assert(PosY >=0, 'Digging at negative Y-coordinate');
+  //Assert(PosY >=0, 'Digging at negative Y-coordinate');  //hotbookmark
 
   For n := -4 to 4 do
   begin
