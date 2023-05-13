@@ -18,7 +18,7 @@ type
     lblDuration: TLabel;
     ebSkipDuration: TEdit;
     btnFindKey: TButton;
-    Label3: TLabel;
+    lblFindKey: TLabel;
     cbHardcodedNames: TCheckBox;
     cbHoldKey: TCheckBox;
     cbSpecialSkip: TComboBox;
@@ -34,15 +34,12 @@ type
     procedure ebSkipDurationChange(Sender: TObject);
     procedure lvHotkeysSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
-    procedure btnFindKeyKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure btnFindKeyKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnFindKeyClick(Sender: TObject);
     procedure cbHardcodedNamesClick(Sender: TObject);
     procedure cbHoldKeyClick(Sender: TObject);
     procedure SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
     procedure cbSpecialSkipChange(Sender: TObject);
-    //procedure btnFunctionalLayoutClick(Sender: TObject);
-    //procedure btnTraditionalLayoutClick(Sender: TObject);
     procedure btnClassicLayoutClick(Sender: TObject);
     procedure btnAdvancedLayoutClick(Sender: TObject);
     procedure btnAlternativeLayoutClick(Sender: TObject);
@@ -50,15 +47,15 @@ type
     procedure btnResetClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure btnSaveCloseClick(Sender: TObject);
-    //procedure btnMinimalLayoutClick(Sender: TObject);
   private
-    fShownFindInfo: Boolean;
     fKeyNames: TKeyNameArray;
     fHotkeys: TLemmixHotkeyManager;
+    fEditingKey: Boolean;
     procedure SetWindowPosition;
     procedure RefreshList;
     procedure SetHotkeys(aValue: TLemmixHotkeyManager);
     function FindKeyFromList(aValue: Integer): Integer;
+    procedure HandleCaptions(Sender: TObject);
   public
     property HotkeyManager: TLemmixHotkeyManager write SetHotkeys;
   end;
@@ -72,9 +69,131 @@ implementation
 
 procedure TFLemmixHotkeys.FormCreate(Sender: TObject);
 begin
-  fShownFindInfo := false;
   SetWindowPosition;
   fKeyNames := TLemmixHotkeyManager.GetKeyNames(true);
+  fEditingKey := false;
+  HandleCaptions(Self);
+end;
+
+procedure TFLemmixHotkeys.HandleCaptions(Sender: TObject);
+var
+i: Integer;
+begin
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if i = -1 then
+  begin
+    btnFindKey.Caption := 'Find Key';
+    lblFindKey.Caption := '';
+    Exit;
+  end;
+
+  if fEditingKey then
+  begin
+    btnFindKey.Caption := 'Find Key';
+    lblFindKey.Caption := 'Editing key: ' + fKeyNames[i];
+  end else Exit;
+end;
+
+procedure TFLemmixHotkeys.lvHotkeysClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  fEditingKey := true;
+  HandleCaptions(Self);
+
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if i = -1 then
+  begin
+    cbFunctions.ItemIndex := -1;
+    cbSkill.ItemIndex := -1;
+    ebSkipDuration.Text := '';
+    cbFunctions.Enabled := false;
+    cbSkill.Enabled := false;
+    ebSkipDuration.Enabled := false;
+    Exit;
+  end;
+  cbFunctions.Enabled := true;
+  cbFunctions.ItemIndex := Integer(fHotkeys.CheckKeyEffect(i).Action);
+  case fHotkeys.CheckKeyEffect(i).Action of
+    lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
+    lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
+    lka_ClearPhysics,
+    lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
+  end;
+
+  // Scroll to selected key in the displayed list
+  lvHotkeys.Selected.MakeVisible(False);
+
+  cbFunctionsChange(self);
+end;
+
+
+function TFLemmixHotkeys.FindKeyFromList(aValue: Integer): Integer;
+var
+  i: Integer;
+begin
+  Result := -1;
+  if aValue = -1 then Exit;
+  for i := 0 to MAX_KEY do
+    if fKeyNames[i] = lvHotkeys.Items[aValue].Caption then
+    begin
+      Result := i;
+      Exit;
+    end;
+end;
+
+procedure TFLemmixHotkeys.btnFindKeyKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  i: Integer;
+  KeyName: String;
+  SpaceAssigned: Boolean;
+begin
+  fEditingKey := true;
+  HandleCaptions(Self);
+
+  if Key = VK_SPACE then
+  begin
+    Key := 0;
+    for i := 0 to lvHotkeys.Items.Count - 1 do
+    begin
+      if lvHotkeys.Items[i].Caption = 'Space' then
+        begin
+          lvHotkeys.SetFocus;
+          lvHotkeys.ItemIndex := i;
+          Exit;
+        end;
+    end;
+  end;
+
+  if Key > MAX_KEY then
+  begin
+    ShowMessage('This key is not supported.');
+    Exit;
+  end;
+  KeyName := fKeyNames[Key];
+  for i := 0 to lvHotkeys.Items.Count-1 do
+    if KeyName = lvHotkeys.Items[i].Caption then
+    begin
+      lvHotkeys.SetFocus;
+      lvHotkeys.ItemIndex := i;
+      Exit;
+    end;
+  if cbShowUnassigned.Checked = false then
+  begin
+    cbShowUnassigned.Checked := true;
+    btnFindKeyKeyDown(Sender, Key, Shift);
+  end else
+    ShowMessage('Could not find the key.');
+end;
+
+procedure TFLemmixHotkeys.btnFindKeyClick(Sender: TObject);
+var
+i: Integer;
+begin
+  fEditingKey := false;
+  btnFindKey.Caption := 'Finding Key...';
+  lblFindKey.Caption := 'Press any key to edit...';
 end;
 
 procedure TFLemmixHotkeys.SetWindowPosition;
@@ -140,14 +259,6 @@ begin
                           s := 'Clear Physics Mode (toggle)'
                         else
                           s := 'Clear Physics Mode (hold)';
-      //lka_Projection: if Hotkey.Modifier = 0 then
-                        //s := 'Projection (toggle)'
-                      //else
-                        //s := 'Projection (hold)';
-      //lka_SkillProjection: if Hotkey.Modifier = 0 then
-                             //s := 'Skill Projection (toggle)'
-                           //else
-                             //s := 'Skill Projection (hold)';
       lka_ShowUsedSkills: if Hotkey.Modifier = 0 then
                             s := 'Show Used Skills (toggle)'
                           else
@@ -236,8 +347,6 @@ begin
                 ebSkipDuration.Enabled := true;
               end;
     lka_ClearPhysics,
-    //lka_Projection,
-    //lka_SkillProjection,
     lka_ShowUsedSkills: begin
                           cbHoldKey.Visible := true;
                           cbHoldKey.Enabled := true;
@@ -248,50 +357,6 @@ begin
                        cbSpecialSkip.Enabled := true;
                      end;
   end;
-end;
-
-procedure TFLemmixHotkeys.lvHotkeysClick(Sender: TObject);
-var
-  i: Integer;
-begin
-  i := FindKeyFromList(lvHotkeys.ItemIndex);
-  if i = -1 then
-  begin
-    cbFunctions.ItemIndex := -1;
-    cbSkill.ItemIndex := -1;
-    ebSkipDuration.Text := '';
-    cbFunctions.Enabled := false;
-    cbSkill.Enabled := false;
-    ebSkipDuration.Enabled := false;
-    Label3.Caption := '';
-    Exit;
-  end;
-  cbFunctions.Enabled := true;
-  cbFunctions.ItemIndex := Integer(fHotkeys.CheckKeyEffect(i).Action);
-  case fHotkeys.CheckKeyEffect(i).Action of
-    lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
-    lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
-    lka_ClearPhysics,
-    //lka_Projection,
-    //lka_SkillProjection,
-    lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
-  end;
-  Label3.Caption := 'Editing key: ' + fKeyNames[i];
-  cbFunctionsChange(self);
-end;
-
-function TFLemmixHotkeys.FindKeyFromList(aValue: Integer): Integer;
-var
-  i: Integer;
-begin
-  Result := -1;
-  if aValue = -1 then Exit;
-  for i := 0 to MAX_KEY do
-    if fKeyNames[i] = lvHotkeys.Items[aValue].Caption then
-    begin
-      Result := i;
-      Exit;
-    end;
 end;
 
 procedure TFLemmixHotkeys.cbFunctionsChange(Sender: TObject);
@@ -314,8 +379,6 @@ begin
                        fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
                      end;
     lka_ClearPhysics,
-    //lka_Projection,
-    //lka_SkillProjection,
     lka_ShowUsedSkills: if cbHoldKey.Checked then
                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
                         else
@@ -364,44 +427,11 @@ begin
   lvHotkeysClick(Sender);
 end;
 
-procedure TFLemmixHotkeys.btnFindKeyKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-var
-  i: Integer;
-  KeyName: String;
-begin
-  if Key > MAX_KEY then
-  begin
-    ShowMessage('This key is not supported.');
-    Exit;
-  end;
-  KeyName := fKeyNames[Key];
-  for i := 0 to lvHotkeys.Items.Count-1 do
-    if KeyName = lvHotkeys.Items[i].Caption then
-    begin
-      lvHotkeys.SetFocus;
-      lvHotkeys.ItemIndex := i;
-      Exit;
-    end;
-  if cbShowUnassigned.Checked = false then
-  begin
-    cbShowUnassigned.Checked := true;
-    btnFindKeyKeyDown(Sender, Key, Shift);
-  end else
-    ShowMessage('Could not find the key.');
-end;
-
-//procedure TFLemmixHotkeys.btnFunctionalLayoutClick(Sender: TObject);
-//begin
-  //fHotkeys.ClearAllKeys;
-  //fHotkeys.SetDefaultsFunctional;
-  //RefreshList;
-//end;
-
 procedure TFLemmixHotkeys.btnClassicLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsClassic;
+  cbShowUnassigned.Checked := false;
   RefreshList;
 end;
 
@@ -409,6 +439,7 @@ procedure TFLemmixHotkeys.btnAdvancedLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAdvanced;
+  cbShowUnassigned.Checked := false;
   RefreshList;
 end;
 
@@ -416,29 +447,15 @@ procedure TFLemmixHotkeys.btnAlternativeLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAlternative;
+  cbShowUnassigned.Checked := false;
   RefreshList;
 end;
 
 procedure TFLemmixHotkeys.btnClearAllKeysClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
+  cbShowUnassigned.Checked := true;
   RefreshList;
-end;
-
-//procedure TFLemmixHotkeys.btnTraditionalLayoutClick(Sender: TObject);
-//begin
-  //fHotkeys.ClearAllKeys;
-  //fHotkeys.SetDefaultsTraditional;
-  //RefreshList;
-//end;
-
-procedure TFLemmixHotkeys.btnFindKeyClick(Sender: TObject);
-begin
-  if not fShownFindInfo then
-  begin
-    fShownFindInfo := true;
-    ShowMessage('After clicking Find Key, press any key to jump to that key in the list.');
-  end;
 end;
 
 procedure TFLemmixHotkeys.cbHardcodedNamesClick(Sender: TObject);
@@ -454,7 +471,7 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; //safety; should never happen
 
-  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics, //lka_Projection, lka_SkillProjection,
+  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics,
   lka_ShowUsedSkills]) then Exit;
 
   if cbHoldKey.Checked then

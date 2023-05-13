@@ -21,7 +21,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   TextHeight = 13
   object lblSkill: TLabel
     Left = 341
-    Top = 288
+    Top = 263
     Width = 24
     Height = 13
     Caption = 'Skill:'
@@ -29,15 +29,23 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblDuration: TLabel
     Left = 321
-    Top = 312
+    Top = 287
     Width = 49
     Height = 13
     Caption = 'Duration:'
     Visible = False
   end
-  object Label3: TLabel
+  object lblSkip: TLabel
+    Left = 338
+    Top = 311
+    Width = 25
+    Height = 13
+    Caption = 'Skip:'
+    Visible = False
+  end
+  object lblFindKey: TLabel
     Left = 321
-    Top = 234
+    Top = 212
     Width = 3
     Height = 13
     Alignment = taCenter
@@ -48,13 +56,15 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object lblSkip: TLabel
-    Left = 338
-    Top = 336
-    Width = 25
-    Height = 13
-    Caption = 'Skip:'
-    Visible = False
+  object btnFindKey: TButton
+    Left = 342
+    Top = 133
+    Width = 138
+    Height = 40
+    Caption = 'Find Key'
+    TabOrder = 6
+    OnClick = btnFindKeyClick
+    OnKeyDown = btnFindKeyKeyDown
   end
   object lvHotkeys: TListView
     Left = -3
@@ -80,10 +90,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbFunctions: TComboBox
     Left = 314
-    Top = 258
+    Top = 233
     Width = 197
     Height = 21
     Style = csDropDownList
+    DropDownCount = 14
     Enabled = False
     TabOrder = 1
     OnChange = cbFunctionsChange
@@ -132,7 +143,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnSaveClose: TButton
     Left = 342
-    Top = 392
+    Top = 390
     Width = 138
     Height = 40
     Caption = 'Save && Close'
@@ -142,10 +153,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSkill: TComboBox
     Left = 373
-    Top = 285
+    Top = 260
     Width = 129
     Height = 21
     Style = csDropDownList
+    DropDownCount = 12
     Enabled = False
     TabOrder = 3
     Visible = False
@@ -177,8 +189,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Cloner')
   end
   object cbShowUnassigned: TCheckBox
-    Left = 346
-    Top = 179
+    Left = 343
+    Top = 181
     Width = 145
     Height = 17
     Caption = 'Show Unassigned Keys'
@@ -187,7 +199,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object ebSkipDuration: TEdit
     Left = 373
-    Top = 309
+    Top = 284
     Width = 129
     Height = 21
     Enabled = False
@@ -195,30 +207,22 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Visible = False
     OnChange = ebSkipDurationChange
   end
-  object btnFindKey: TButton
-    Left = 342
-    Top = 134
-    Width = 138
-    Height = 40
-    Caption = 'Find Key'
-    TabOrder = 6
-    OnClick = btnFindKeyClick
-    OnKeyDown = btnFindKeyKeyDown
-  end
   object cbHardcodedNames: TCheckBox
-    Left = 346
-    Top = 202
+    Left = 343
+    Top = 367
     Width = 145
     Height = 17
     Caption = 'Use Hardcoded Names'
     Checked = True
+    Enabled = False
     State = cbChecked
     TabOrder = 7
+    Visible = False
     OnClick = cbHardcodedNamesClick
   end
   object cbHoldKey: TCheckBox
     Left = 378
-    Top = 367
+    Top = 342
     Width = 97
     Height = 17
     Caption = 'Hold Key'
@@ -228,7 +232,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSpecialSkip: TComboBox
     Left = 373
-    Top = 333
+    Top = 308
     Width = 129
     Height = 21
     Style = csDropDownList
@@ -279,10 +283,9 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnCancel: TBitBtn
     Left = 415
-    Top = 438
+    Top = 436
     Width = 65
     Height = 30
-    Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 14
@@ -290,7 +293,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnReset: TBitBtn
     Left = 342
-    Top = 438
+    Top = 436
     Width = 67
     Height = 30
     Caption = 'Reset'
