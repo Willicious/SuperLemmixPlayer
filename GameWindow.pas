@@ -1338,6 +1338,7 @@ const
                          lka_DirRight,
                          lka_ForceWalker,
                          lka_Cheat,
+                         lka_InfiniteSkills,
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
@@ -1355,9 +1356,6 @@ const
                          lka_ReleaseMouse,
                          lka_Nuke,          // nuke also cancels, but requires double-press to do so so handled elsewhere
                          lka_ClearPhysics,
-                         //lka_ToggleShadows,
-                         //lka_Projection,
-                         //lka_SkillProjection,
                          lka_ShowUsedSkills,
                          lka_ZoomIn,
                          lka_ZoomOut,
@@ -1450,6 +1448,9 @@ begin
                         end;
                       end;
       lka_Cheat: Game.Cheat;
+      lka_InfiniteSkills: begin
+                            Game.SetSkillsToInfinite;
+                          end;
       lka_FastForward: begin
                          case fGameSpeed of
                            gspNormal, gspSlowMo, gspPause, gspRewind: GameSpeed := gspFF;

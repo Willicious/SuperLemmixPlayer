@@ -242,7 +242,6 @@ type
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
-    procedure SetSkillsToInfinite; //hotbookmark - Practice mode?
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -448,6 +447,7 @@ type
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
     function SpawnIntervalChanged: Boolean;
+    procedure SetSkillsToInfinite; //hotbookmark
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
