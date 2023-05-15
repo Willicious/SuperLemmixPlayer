@@ -127,7 +127,10 @@ type
                  hpi_Skill_Zombie, hpi_Skill_Neutral, hpi_Skill_Slider, hpi_Skill_Climber,
                  hpi_Skill_Floater, hpi_Skill_Glider, hpi_Skill_Swimmer, hpi_Skill_Disarmer);
 
+  TVisualSFX = (vfx_blank, vfx_letsgo, vfx_chink, vfx_oops, vfx_yippee);
+
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
+  TVisualSFXImages = array[Low(TVisualSFX)..High(TVisualSFX)] of TBitmap32;
 
   TRenderInterface = class // Used for communication between GameWindow, LemGame and LemRendering.
     private
@@ -251,6 +254,13 @@ const
                               'skill_glider.png',
                               'skill_swimmer.png',
                               'skill_disarmer.png');
+
+  VisualSFXFilenames: array[Low(TVisualSFX)..High(TVisualSFX)] of String =
+                             ('blank.png', //placeholder
+                              'letsgo.png',
+                              'chink.png',
+                              'oops.png',
+                              'yippee.png');
 implementation
 
 uses

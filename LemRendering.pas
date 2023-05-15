@@ -58,6 +58,7 @@ type
     RenderInfoRec       : TRenderInfoRec;
     fTheme              : TNeoTheme;
     fHelperImages       : THelperImages;
+    fVisualSFXImages    : TVisualSFXImages;
     fAni                : TBaseAnimationSet;
     fBgColor            : TColor32;
     fParticles          : TParticleTable; // all particle offsets
@@ -69,7 +70,8 @@ type
     fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
     fPhysicsRenderingType: TPhysicsRenderingType;
 
-    fHelpersAreHighRes: Boolean;
+    fHelpersAreHighRes:   Boolean;
+    fVisualSFXAreHighRes: Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
@@ -132,6 +134,7 @@ type
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
 
     procedure LoadHelperImages;
+    procedure LoadVisualSFXImages;
     procedure LoadProjectileImages;
 
     function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
@@ -2738,6 +2741,31 @@ begin
   fProjectileImage.OnPixelCombine := CombineTerrainNoOverwrite;
 end;
 
+procedure TRenderer.LoadVisualSFXImages;
+var
+  i: TVisualSFX;
+begin
+  for i := Low(TVisualSFX) to High(TVisualSFX) do
+  begin
+    if i = vfx_blank then Continue;
+    if fVisualSFXImages[i] <> nil then
+      fVisualSFXImages[i].Free;
+
+    fVisualSFXImages[i] := TBitmap32.Create;
+
+    if GameParams.HighResolution and FileExists(AppPath + SFVisualSFXHighRes + VisualSFXFilenames[i]) then
+      TPngInterface.LoadPngFile(AppPath + SFVisualSFXHighRes + VisualSFXFilenames[i], fVisualSFXImages[i])
+    else
+    if FileExists(AppPath + SFGraphicsHelpers + VisualSFXFilenames[i]) then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + VisualSFXFilenames[i], fVisualSFXImages[i]);
+
+    fVisualSFXImages[i].DrawMode := dmBlend;
+    fVisualSFXImages[i].CombineMode := cmMerge;
+  end;
+
+  fVisualSFXAreHighRes := GameParams.HighResolution;
+end;
+
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
 var
   Dst: TBitmap32;
@@ -3450,6 +3478,9 @@ begin
 
   if GameParams.HighResolution <> fHelpersAreHighRes and not GameParams.HideHelpers then
     LoadHelperImages;
+
+  if GameParams.HighResolution <> fVisualSFXAreHighRes then
+    LoadVisualSFXImages;
 
   RenderInfoRec.Level := aLevel;
 
