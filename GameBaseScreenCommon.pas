@@ -95,12 +95,8 @@ end;
 constructor TGameBaseScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-
   fScreenImg := TImage32.Create(Self);
   fScreenImg.Parent := Self;
-
-  //FadeIn;  //hotbookmark - not sure if this is where this procedure will eventually need to be called
-
   ScreenImg.Cursor := crNone;
 end;
 
@@ -110,9 +106,28 @@ begin
 end;
 
 procedure TGameBaseScreen.FadeIn;
+//var
+//  TempBitmap: TBitmap32;
+//  Steps: Integer;
+//  i: Integer;
 begin
-  //draw a black canvas that's the same size as the screen
-  //gradually reduce the opacity of the canvas
+//  Steps := 32;
+//  TempBitmap := TBitmap32.Create;
+//  try
+//    TempBitmap.SetSize(ScreenImg.Bitmap.Width, ScreenImg.Bitmap.Height);
+//    TempBitmap.Clear(clBlack32);
+//
+//    for i := 1 to Steps do
+//    begin
+//      TempBitmap.ResetAlpha($FF * i div Steps);
+//      TempBitmap.DrawTo(ScreenImg.Bitmap, 0, 0);
+//      Changed;
+//      Update;
+//      Sleep(20);
+//    end;
+//  finally
+//    TempBitmap.Free;
+//  end;
 end;
 
 procedure TGameBaseScreen.FadeOut;
