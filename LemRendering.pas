@@ -155,6 +155,9 @@ type
     procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 
+    // VisualSFX rendering
+    procedure DrawVisualSFX(Dst: TBitmap32; Gadget: TGadget; Lemming: TLemming);
+
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
     procedure DrawLemmingLaser(aLemming: TLemming);
@@ -209,6 +212,9 @@ implementation
 uses
   SharedGlobals,
   GameControl;
+
+var                     //hotbookmark
+  fStartTime: Cardinal; //used to set start time for drawing VisualSFX
 
 { TRenderer }
 
@@ -2227,10 +2233,40 @@ begin
 end;
 
 
+procedure TRenderer.DrawVisualSFX(Dst: TBitmap32; Gadget: TGadget; Lemming: TLemming);
+//var
+//  MO: TGadgetMetaAccessor;
+//  DrawX, DrawY: Integer;
+//  ElapsedTime: Cardinal;
+begin
+//  MO := Gadget.MetaObj;
+//
+//  // Set base drawing position
+//  DrawX := (Gadget.Left + (Gadget.Width div 4)) * ResMod;
+//  DrawY := (Gadget.TriggerRect.Top) * ResMod;
+//
+//  ElapsedTime := GetTickCount - fStartTime; //fStartTime set during Create procedure for now
+                                              //this does make the graphic only display for 4000ms
+                                              //but, it starts it from the preview screen
+                                              //so - we need to find a way to start displaying the
+                                              //graphic when it's actually relevant
+//
+//  // Draw image if less than 4 seconds have passed
+//  if GetTickCount - fStartTime < 4000 then  //works (ish), but we need to be able to set the start time correctly
+//  begin
+//    case MO.TriggerEffect of
+//      DOM_WINDOW:
+//      begin
+//        fVisualSFXImages[vfx_letsgo].DrawTo(Dst, Dst.Width div 2 -(25 * ResMod), Dst.Height div 2);
+//      end;
+//    end;
+//  end;
+end;
+
+
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
 var
   MO: TGadgetMetaAccessor;
-
   DrawX, DrawY: Integer;
 begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
@@ -3055,6 +3091,7 @@ begin
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
   fTempLemmingList := TLemmingList.Create(false);
+  fStartTime := GetTickCount; //hotbookmark - this seems to start the timer on the preview screen ???
 
   fLaserGraphic := TBitmap32.Create;
   fLaserGraphic.DrawMode := dmCustom;
