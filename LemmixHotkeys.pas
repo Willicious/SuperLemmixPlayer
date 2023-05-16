@@ -186,7 +186,7 @@ begin
   SetKeyFunction($49, lka_FallDistance);
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($BA, lka_ShowUsedSkills);
-  SetKeyFunction($02, lka_Skip, -1);
+  //SetKeyFunction($02, lka_Skip, -1);
   SetKeyFunction($08, lka_Skip, -25);
   SetKeyFunction($4A, lka_Skip, 20);
   SetKeyFunction($60, lka_Skip, 100);
@@ -245,7 +245,7 @@ begin
   SetKeyFunction($05, lka_ZoomIn);
   SetKeyFunction($06, lka_ZoomOut);
   SetKeyFunction($1B, lka_Exit);
-  SetKeyFunction($02, lka_Scroll);
+  //SetKeyFunction($02, lka_Scroll);
   SetKeyFunction($75, lka_SaveReplay);
   SetKeyFunction($76, lka_LoadReplay);
   SetKeyFunction($11, lka_Highlight);
@@ -602,7 +602,7 @@ begin
   // Whoever wrote it got it slightly wrong though!!!
   if aUseHardcoded then
   begin
-    Result[$02] := 'Right-Click';
+    //Result[$02] := 'Right-Click';
     Result[$04] := 'Middle-Click';
     Result[$05] := 'Wheel Up';
     Result[$06] := 'Wheel Down';

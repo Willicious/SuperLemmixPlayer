@@ -33,8 +33,6 @@ type
 
     fCombineHueShift : Single;
 
-    function CheckFrameSkip: Integer; // Checks the duration since the last click on the panel.
-
     procedure LoadPanelFont;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
@@ -57,7 +55,6 @@ type
     fMinimapTemp          : TBitmap32; // temp image, to create fMinimapImage from fMinimap
 
     fMinimapScrollFreeze  : Boolean;
-    fLastClickFrameskip   : Cardinal;
 
     fSkillFont            : TFontBitmapArray;
     fSkillFontInvert      : TFontBitmapArray;
@@ -169,9 +166,9 @@ type
     property Zoom: Integer read GetZoom write SetZoom;
     property MaxZoom: Integer read GetMaxZoom;
 
-    property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
+    function CursorOverClickableItem: Boolean;
   end;
 
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
@@ -240,8 +237,6 @@ begin
   Color := $000000;
   ParentBackground := false;
   DoubleBuffered := true;
-
-  fLastClickFrameskip := GetTickCount;
 
   // Initialize images
   fImage := TImage32.Create(Self);
@@ -1710,16 +1705,26 @@ begin
   DrawMinimap;
 end;
 
-
-function TBaseSkillPanel.CheckFrameSkip: Integer;
+function TBaseSkillPanel.CursorOverClickableItem: Boolean;
 var
+  CursorPos: TPoint;
   P: TPoint;
+  Button: TSkillPanelButton;
 begin
-  Result := 0;
-  if GetTickCount - fLastClickFrameskip < 250 then Exit;
-  if GetKeyState(VK_LBUTTON) >= 0 then Exit;
+  CursorPos := Mouse.CursorPos;
 
-  P := Image.ControlToBitmap(Image.ScreenToClient(Mouse.CursorPos));
+  for Button := Low(fButtonRects) to High(fButtonRects) do
+  begin
+    P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+    //Check if the cursor is over a panel button or the minimap
+    if (PtInRect(fButtonRects[Button], P)) or Assigned(fOnMinimapClick) then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
+
+  Result := False;
 end;
 
 {-----------------------------------------

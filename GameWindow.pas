@@ -148,7 +148,6 @@ type
 
     function CheckHighlitLemmingChange: Boolean;
     procedure SetRedraw(aRedraw: TRedrawOption);
-
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -175,6 +174,8 @@ type
     fSaveStateFrame      : Integer;      // list of savestates (only first is used)
     fLastNukeKeyTime     : Cardinal;
     fScrollSpeed         : Integer;
+    fMouseClickFrameskip : Cardinal;
+    fLastMousePress      : Cardinal;
   { overridden}
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
@@ -207,6 +208,7 @@ type
     property DisplayHeight: Integer read GetDisplayHeight; // to staisfy IGameWindow
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
+    function MouseFrameSkip: Integer; //Performs repeated skips when mouse buttons are held
   end;
 
 implementation
@@ -567,7 +569,7 @@ var
         Fast, SuperLemming, Slow, Rewind, ForceOne, TimeForFrame, TimeForPausedRR,
         TimeForFastForwardFrame, TimeForScroll, TimeForRewind, TimeForSuperLemming,
         Hyper, Pause: Boolean;
-  PanelFrameSkip: Integer;
+  MouseClickFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
   begin
@@ -585,10 +587,10 @@ begin
     Exit;
   end;
 
-  PanelFrameSkip := SkillPanel.FrameSkip;
+  MouseClickFrameSkip := MouseFrameSkip;
 
   if not GameParams.HideFrameskipping then
-  if PanelFrameSkip < 0 then
+  if MouseClickFrameSkip < 0 then
   begin
     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
     GotoSaveState(Max(Game.CurrentIteration-1, 0));
@@ -600,7 +602,7 @@ begin
   Rewind := (fGameSpeed = gspRewind);
   Slow := (fGameSpeed = gspSlowMo);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
-  fForceUpdateOneFrame := (PanelFrameSkip > 0);
+  fForceUpdateOneFrame := (MouseClickFrameSkip > 0);
   CurrTime := TimeGetTime;
   if Slow then
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
@@ -1274,6 +1276,7 @@ begin
   fSuspensions := TList<TSuspendState>.Create;
 
   fHighlitStartCopyLemming := TLemming.Create;
+  fMouseClickFrameskip := GetTickCount;
 end;
 
 destructor TGameWindow.Destroy;
@@ -1686,9 +1689,9 @@ begin
     // handling has more in common with that than with mouse handling
     PassKey := 0;
     if (Button = mbMiddle) then
-      PassKey := $04
-    else if (Button = mbRight) then
-      PassKey := $02;
+      PassKey := $04;
+    //else if (Button = mbRight) then  //hotbookmark - not needed if mouse is used for skips
+      //PassKey := $02;
 
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
@@ -1700,7 +1703,8 @@ begin
       Game.ProcessSkillAssignment;
       if not GameParams.HideFrameskipping then
       if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
-    end;
+    end else if (Button = mbRight) and not GameParams.HideFrameskipping then
+      GoToSaveState(Max(Game.CurrentIteration -1, 0));
 
     if Game.IsHighlightHotkey then
     begin
@@ -1713,6 +1717,7 @@ begin
     if fGameSpeed = gspPause then
       DoDraw;
 
+    fLastMousePress := GetTickCount;
   end;
 end;
 
@@ -1752,6 +1757,7 @@ procedure TGameWindow.Img_MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
   CheckShifts(Shift);
+  fMouseClickFrameskip := GetTickCount;
 end;
 
 procedure TGameWindow.InitializeCursor;
@@ -2255,6 +2261,39 @@ procedure TGameWindow.SetRedraw(aRedraw: TRedrawOption);
 begin
   if (fNeedRedraw = rdNone) or (aRedraw = rdRedraw) then
     fNeedRedraw := aRedraw;
+end;
+
+//Mouse performs repeated forwards and backwards frameskips when held
+function TGameWindow.MouseFrameSkip: Integer;
+begin
+  Result := 0;
+  if GetTickCount - fMouseClickFrameskip < 650 then Exit;
+
+  //Game must be paused
+  if (GameSpeed = gspPause)
+  //Cursor must not be over a clickable item in the skill panel
+  //at the moment, lems are allowed, but we could disallow it for lems as well
+  and not SkillPanel.CursorOverClickableItem
+  then
+  begin
+  if (GetKeyState(VK_LBUTTON) < 0) and (GetKeyState(VK_RBUTTON) >= 0) then
+    begin
+      //we always want to wait a bit before repeated skips
+      if GetTickCount - fLastMousePress > 650 then
+      begin
+        Result := 1;
+        fMouseClickFrameskip := GetTickCount -500;
+      end;
+    end
+  else if (GetKeyState(VK_RBUTTON) < 0) and (GetKeyState(VK_LBUTTON) >= 0) then
+    begin
+      if GetTickCount - fLastMousePress > 650 then
+      begin
+        Result := -1;
+        fMouseClickFrameskip := GetTickCount -500;
+      end;
+    end;
+  end;
 end;
 
 end.
