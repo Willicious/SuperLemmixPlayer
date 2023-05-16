@@ -447,7 +447,7 @@ type
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
     function SpawnIntervalChanged: Boolean;
-    procedure SetSkillsToInfinite; //hotbookmark
+    //procedure SetSkillsToInfinite; //hotbookmark
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -1848,17 +1848,17 @@ begin
 
 end;
 
-procedure TLemmingGame.SetSkillsToInfinite;
-var
-Skill: TSkillPanelButton;
-begin
-  with Level.Info do
-  begin
-    for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
-    if SkillPanelButtonToAction[Skill] <> baNone then
-        CurrSkillCount[SkillPanelButtonToAction[Skill]] := 100;
-  end;
-end;
+//procedure TLemmingGame.SetSkillsToInfinite;
+//var
+//Skill: TSkillPanelButton;
+//begin
+//  with Level.Info do
+//  begin
+//    for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+//    if SkillPanelButtonToAction[Skill] <> baNone then
+//        CurrSkillCount[SkillPanelButtonToAction[Skill]] := 100;
+//  end;
+//end;
 
 //  SETTING SIZE OF OBJECT MAPS
 

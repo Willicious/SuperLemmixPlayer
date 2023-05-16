@@ -1338,7 +1338,7 @@ const
                          lka_DirRight,
                          lka_ForceWalker,
                          lka_Cheat,
-                         lka_InfiniteSkills,
+                         //lka_InfiniteSkills,
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
@@ -1448,9 +1448,9 @@ begin
                         end;
                       end;
       lka_Cheat: Game.Cheat;
-      lka_InfiniteSkills: begin
-                            Game.SetSkillsToInfinite;
-                          end;
+//      lka_InfiniteSkills: begin
+//                            Game.SetSkillsToInfinite;
+//                          end;
       lka_FastForward: begin
                          case fGameSpeed of
                            gspNormal, gspSlowMo, gspPause, gspRewind: GameSpeed := gspFF;
