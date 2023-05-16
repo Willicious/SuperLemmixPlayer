@@ -8,7 +8,7 @@
  TITLE Top Of Level Test
  AUTHOR 
  ID x395644D72FB2EFF3
- VERSION x0000000000000009
+ VERSION x0000000000000015
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,18 +23,20 @@
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-   JUMPER 5
-   CLIMBER 5
-   SWIMMER 5
-   GLIDER 5
-   DISARMER 5
-   TIMEBOMBER 5
-   PLATFORMER 5
-   BUILDER 5
-   BASHER 5
-   FENCER 5
-   MINER 5
-   DIGGER 5
+   JUMPER 99
+   SLIDER 99
+   CLIMBER 99
+   FLOATER 99
+   FREEZER 99
+   PLATFORMER 99
+   BUILDER 99
+   STACKER 99
+   SPEARER 99
+   GRENADER 99
+   LASERER 99
+   BASHER 99
+   FENCER 99
+   CLONER 99
  $END 
  
 #     Interactive objects       
@@ -98,6 +100,69 @@
    STYLE orig_crystal
    PIECE bar_04
    X 147
+   Y 116
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 47
+   Y -8
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X -12
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 323
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 279
+   Y -7
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 169
+   Y -25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 146
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 116
+   Y 116
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 188
    Y 116
  $END
  
