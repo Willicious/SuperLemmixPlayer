@@ -101,6 +101,7 @@ type
     LemIsZombie                   : Boolean;
     LemIsNeutral                  : Boolean;
     LemHasBeenOhnoer              : Boolean;
+    LemHasTurned                  : Boolean;
     LemPlacedBrick                : Boolean; // placed useful brick during this cycle (plaformer and stacker)
     LemInFlipper                  : Integer;
     LemHasBlockerField            : Boolean; // for blockers, even during ohno
@@ -315,6 +316,7 @@ begin
   LemIsDisarmer := Source.LemIsDisarmer;
   LemIsZombie := Source.LemIsZombie;
   LemHasBeenOhnoer := Source.LemHasBeenOhnoer;
+  LemHasTurned := Source.LemHasTurned;
   LemIsNeutral := Source.LemIsNeutral;
   LemPlacedBrick := Source.LemPlacedBrick;
   LemInFlipper := Source.LemInFlipper;
