@@ -1717,7 +1717,8 @@ begin
   begin
     P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
     //Check if the cursor is over a panel button or the minimap
-    if (PtInRect(fButtonRects[Button], P)) or Assigned(fOnMinimapClick) then
+    if PtInRect(fButtonRects[Button], P)
+    or PtInRect(MinimapRect, P) then
     begin
       Result := True;
       Exit;
