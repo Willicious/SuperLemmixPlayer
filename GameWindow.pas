@@ -91,6 +91,7 @@ type
     fHoldScrollData: THoldScrollData;
 
     fSuspensions: TList<TSuspendState>;
+    HotkeyManager: TLemmixHotkeyManager;
 
   { game eventhandler}
     procedure Game_Finished;
@@ -1224,15 +1225,12 @@ begin
   Color := $200020;
 
   fNeedResetMouseTrap := true;
-
   fSaveStateReplayStream := TMemoryStream.Create;
 
   // create game
   fGame := GlobalGame; // set ref to GlobalGame
   fScrollSpeed := 1;
-
   fSaveStateFrame := -1;
-
   fHyperSpeedTarget := -1;
 
   Img := ScreenImg; // set ref to inherited screenimg (just for a short name)
@@ -1265,17 +1263,13 @@ begin
   Application.OnIdle := Application_Idle;
 
   fSaveList := TLemmingGameSavedStateList.Create(true);
-
   fReplayKilled := false;
-
   fMinimapBuffer := TBitmap32.Create;
   TLinearResampler.Create(fMinimapBuffer);
-
   DoubleBuffered := true;
-
   fSuspensions := TList<TSuspendState>.Create;
-
   fHighlitStartCopyLemming := TLemming.Create;
+  HotkeyManager := TLemmixHotkeyManager.Create;
   fMouseClickFrameskip := GetTickCount;
 end;
 
@@ -1288,17 +1282,12 @@ begin
     SkillPanel.SetGame(nil);
 
   fSaveList.Free;
-
   fSaveStateReplayStream.Free;
-
   FreeCursors;
-
   fMinimapBuffer.Free;
-
   fSuspensions.Free;
-
   fHighlitStartCopyLemming.Free;
-
+  HotkeyManager.Free;
   inherited Destroy;
 end;
 
@@ -1674,6 +1663,7 @@ procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
 var
   PassKey: Word;
   OldHighlightLemming: TLemming;
+  RightMouseUnassigned: Boolean;
 begin
   if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
@@ -1689,12 +1679,15 @@ begin
     // handling has more in common with that than with mouse handling
     PassKey := 0;
     if (Button = mbMiddle) then
-      PassKey := $04;
-    //else if (Button = mbRight) then  //hotbookmark - not needed if mouse is used for skips
-      //PassKey := $02;
+      PassKey := $04
+    else if (Button = mbRight) then
+      PassKey := $02;
 
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
+
+    //we need to make sure the right mouse button is unassigned
+    RightMouseUnassigned := HotkeyManager.CheckKeyAssigned(lka_Null, 2);
 
     if (Button = mbLeft) and not Game.IsHighlightHotkey then
     begin
@@ -1703,7 +1696,8 @@ begin
       Game.ProcessSkillAssignment;
       if not GameParams.HideFrameskipping then
       if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
-    end else if (Button = mbRight) and not GameParams.HideFrameskipping then
+    end else if (Button = mbRight) and RightMouseUnassigned
+    and not GameParams.HideFrameskipping then
       GoToSaveState(Max(Game.CurrentIteration -1, 0));
 
     if Game.IsHighlightHotkey then
@@ -2265,38 +2259,38 @@ end;
 
 //Mouse performs repeated forwards and backwards frameskips when held
 function TGameWindow.MouseFrameSkip: Integer;
+var
+  RightMouseUnassigned: Boolean;
 begin
   Result := 0;
-  if GetTickCount - fMouseClickFrameskip < 650 then Exit;
+  if GameParams.HideFrameskipping then Exit;
 
-  //Game must be paused
-  if (GameSpeed = gspPause)
-  //Cursor must not be over a clickable item in the skill panel
-  //at the moment, lems are allowed, but we could disallow it for lems as well
-  and not SkillPanel.CursorOverClickableItem
-  then
+  if GetTickCount - fMouseClickFrameskip < 650 then
+    Exit;
+
+  // we need to make sure the right mouse button is unassigned
+  RightMouseUnassigned := HotkeyManager.CheckKeyAssigned(lka_Null, 2);
+
+  if (GameSpeed = gspPause) and not SkillPanel.CursorOverClickableItem then
   begin
-  if (GetKeyState(VK_LBUTTON) < 0) and (GetKeyState(VK_RBUTTON) >= 0) then
+    if (GetKeyState(VK_LBUTTON) < 0) and (GetKeyState(VK_RBUTTON) >= 0) then
     begin
-      //we always want to wait a bit before repeated skips
       if GetTickCount - fLastMousePress > 650 then
       begin
         Result := 1;
-        fMouseClickFrameskip := GetTickCount -500;
+        fMouseClickFrameskip := GetTickCount - 500;
       end;
     end
-  else if (GetKeyState(VK_RBUTTON) < 0) and (GetKeyState(VK_LBUTTON) >= 0) then
+    else if (GetKeyState(VK_RBUTTON) < 0) and (GetKeyState(VK_LBUTTON) >= 0)
+    and RightMouseUnassigned then
     begin
       if GetTickCount - fLastMousePress > 650 then
       begin
         Result := -1;
-        fMouseClickFrameskip := GetTickCount -500;
+        fMouseClickFrameskip := GetTickCount - 500;
       end;
     end;
   end;
 end;
 
 end.
-
-
-
