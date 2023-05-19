@@ -31,7 +31,7 @@ type
     fIsBlinkFrame         : Boolean;
     fOnMinimapClick       : TMinimapClickEvent; // event handler for minimap
 
-    fCombineHueShift : Single;
+    fCombineHueShift      : Single;
 
     procedure LoadPanelFont;
     procedure LoadSkillIcons;
@@ -83,7 +83,6 @@ type
     // Helper functions for positioning
     function FirstButtonRect: TRect; virtual;
     function ButtonRect(Index: Integer): TRect;
-    function HalfButtonRect(Index: Integer; IsUpper: Boolean): TRect;
     function MinimapRect: TRect; virtual; abstract;
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
@@ -378,16 +377,6 @@ function TBaseSkillPanel.ButtonRect(Index: Integer): TRect;
 begin
   Result := FirstButtonRect;
   OffsetRect(Result, Index * 16 * ResMod, 0);
-end;
-
-function TBaseSkillPanel.HalfButtonRect(Index: Integer; IsUpper: Boolean): TRect;
-begin
-  Result := FirstButtonRect;
-  OffsetRect(Result, Index * 16 * ResMod, 0);
-  if IsUpper then
-    Result.Bottom := (Result.Top + Result.Bottom) div 2 - ResMod
-  else
-    Result.Top := (Result.Top + Result.Bottom) div 2 + ResMod;
 end;
 
 function TBaseSkillPanel.FirstSkillButtonIndex: Integer;
@@ -941,14 +930,14 @@ procedure TBaseSkillPanel.PlayReleaseRateSound;
 var
   RR: Integer;
   MagicFrequencyAmiga: Single;
-  MagicFrequencyCalculatedByWillAndEric: Single;
+  //MagicFrequencyCalculatedByWillAndEric: Single;
 begin
   if Game.SpawnIntervalChanged then
   begin
     RR := (103 - Game.CurrentSpawnInterval);
 
     //Linear pitch slide
-    MagicFrequencyCalculatedByWillAndEric := 210 * RR + 3300;
+    //MagicFrequencyCalculatedByWillAndEric := 210 * RR + 3300;
 
     //Logarithmic pitch slide modelled on Amiga
     MagicFrequencyAmiga := 3300 * (Power(1.02, RR));

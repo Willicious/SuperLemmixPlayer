@@ -147,7 +147,6 @@ procedure TFLemmixHotkeys.btnFindKeyKeyDown(Sender: TObject; var Key: Word;
 var
   i: Integer;
   KeyName: String;
-  SpaceAssigned: Boolean;
 begin
   fEditingKey := true;
   HandleCaptions(Self);
@@ -188,8 +187,6 @@ begin
 end;
 
 procedure TFLemmixHotkeys.btnFindKeyClick(Sender: TObject);
-var
-i: Integer;
 begin
   fEditingKey := false;
   btnFindKey.Caption := 'Finding Key...';

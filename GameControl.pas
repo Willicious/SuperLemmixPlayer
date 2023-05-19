@@ -291,7 +291,6 @@ type
     property AutoSaveReplayPattern: String read fAutoSaveReplayPattern write fAutoSaveReplayPattern;
     property IngameSaveReplayPattern: String read fIngameSaveReplayPattern write fIngameSaveReplayPattern;
     property PostviewSaveReplayPattern: String read fPostviewSaveReplayPattern write fPostviewSaveReplayPattern;
-
     property DisableSaveOptions: Boolean read fDisableSaveOptions write fDisableSaveOptions;
   published
   end;
