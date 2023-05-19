@@ -1,0 +1,136 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.1
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Sleeper Test
+ AUTHOR 
+ ID x75B245C846063EB5
+ VERSION x0000000000000021
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ THEME willlem_lemminas_laracroft
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 20
+ TIME_LIMIT 60
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   WALKER 4
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 94
+   Y 53
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 180
+   Y 53
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 135
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 71
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 193
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 17
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 249
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 13
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 301
+   Y 53
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 44
+   Y 76
+   BLOCKER 
+ $END
+ 
+ $LEMMING
+   X 284
+   Y 76
+   FLIP_HORIZONTAL
+   BLOCKER 
+ $END
+ 
+ $LEMMING
+   X 21
+   Y 53
+   BLOCKER 
+ $END
+ 
+ $LEMMING
+   X 309
+   Y 53
+   FLIP_HORIZONTAL
+   BLOCKER 
+ $END
+ 
+ 

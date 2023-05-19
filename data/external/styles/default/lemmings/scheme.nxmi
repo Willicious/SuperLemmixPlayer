@@ -559,8 +559,8 @@ $ANIMATIONS
   $END
   
   $SLEEPER
-    FRAMES 24
-	LOOP_TO_FRAME 16
+    FRAMES 20
+	LOOP_TO_FRAME 19
 
     $RIGHT
       FOOT_X 6
@@ -568,7 +568,7 @@ $ANIMATIONS
     $END
 
     $LEFT
-      FOOT_X 7
+      FOOT_X 8
       FOOT_Y 13
     $END
   $END
