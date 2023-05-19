@@ -2391,6 +2391,11 @@ begin
         begin
           fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
         end;
+
+      DOM_BLASTICINE:
+        begin
+          fHelperImages[hpi_Blasticine].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
     end;
 end;
 

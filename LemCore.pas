@@ -210,7 +210,8 @@ type
     trFlipper,
     trNoSplat,
     trSplat,
-    trZombie
+    trZombie,
+    trBlasticine
   );
 
 
@@ -329,7 +330,7 @@ const
 const
   // All objects that don't have trigger areas got mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..35] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..36] of TTriggerTypes = (
     trZombie,                 // no-object
     trZombie,                 // no trigger area
     trExit,                   // exit
@@ -366,7 +367,8 @@ const
     trZombie,                 // background image - unused
     trOWUp,                   // OWW up
     trZombie,                 // paint
-    trAnim                    // once animation
+    trAnim,                   // once animation
+    trBlasticine              // lems become instabombers on contact
   );
 
 type

@@ -40,6 +40,7 @@ const
   DOM_ONEWAYUP         = 33;
   DOM_PAINT            = 34;
   DOM_ANIMONCE         = 35;
+  DOM_BLASTICINE       = 36;
 
 implementation
 

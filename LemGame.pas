@@ -35,7 +35,8 @@ const
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
-        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND, DOM_PAINT];
+        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND, DOM_PAINT,
+        DOM_BLASTICINE];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie);
@@ -132,6 +133,7 @@ type
     ForceLeftMap               : TArrayArrayBoolean;
     ForceRightMap              : TArrayArrayBoolean;
     AnimMap                    : TArrayArrayBoolean;
+    BlasticineMap              : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
 
@@ -259,6 +261,7 @@ type
       function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleWaterDrown(L: TLemming): Boolean;
       function HandleWaterSwim(L: TLemming): Boolean;
+      function HandleBlasticine(L: TLemming): Boolean;
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForQueuedAction;
@@ -567,7 +570,9 @@ const
   DOM_BGIMAGE          = 32; // no longer used!!
   DOM_ONEWAYUP         = 33;
   DOM_PAINT            = 34;
-  DOM_ANIMONCE         = 35; *)
+  DOM_ANIMONCE         = 35;
+  DOM_BLASTICINE       = 36; //lems become instabombers on contact
+  *)
 
   // removal modes
   RM_NEUTRAL           = 0;
@@ -1894,6 +1899,8 @@ begin
   SetLength(ForceRightMap, Level.Info.Width, Level.Info.Height);
   SetLength(AnimMap, 0, 0);
   SetLength(AnimMap, Level.Info.Width, Level.Info.Height);
+  SetLength(BlasticineMap, 0, 0);
+  SetLength(BlasticineMap, Level.Info.Width, Level.Info.Height);
 
   BlockerMap.SetSize(Level.Info.Width, Level.Info.Height);
   BlockerMap.Clear(DOM_NONE);
@@ -2037,6 +2044,7 @@ begin
       DOM_FORCERIGHT: WriteTriggerMap(ForceRightMap, Gadgets[i].TriggerRect);
       DOM_ANIMATION:  WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
       DOM_ANIMONCE:   WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
+      DOM_BLASTICINE: WriteTriggerMap(BlasticineMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -2892,6 +2900,10 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trButton) then
       HandleButton(L, CheckPos[0, i], CheckPos[1, i]);
 
+    // Blasticine
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trBlasticine) then
+      HandleBlasticine(L);
+
     // Fire
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
       AbortChecks := HandleFire(L);
@@ -3018,6 +3030,7 @@ begin
     trNoSplat:    Result :=     ReadTriggerMap(X, Y, NoSplatMap);
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
+    trBlasticine: Result :=     ReadTriggerMap(X, Y, BlasticineMap);
   end;
 end;
 
@@ -3390,7 +3403,14 @@ begin
   end;
 end;
 
-
+function TLemmingGame.HandleBlasticine(L: TLemming): Boolean;
+begin
+  Result := True;
+  if not (L.LemAction in [baFreezeFinish, baExiting]) then
+  begin
+    Transition(L, baExploding);
+  end;
+end;
 
 procedure TLemmingGame.ApplyFreezeLemming(L: TLemming);
 var
@@ -5914,7 +5934,9 @@ function TLemmingGame.HandleExploding(L: TLemming): Boolean;
 begin
   Result := False;
 
-  if L.LemAction = baExploding then
+  if (L.LemAction = baExploding)
+  //hotbookmark - not sure yet if we want blasticine to cause terrain destruction
+  and not (HasTriggerAt(L.LemX, L.LemY, trBlasticine)) then
     ApplyExplosionMask(L)
   else if L.LemAction = baFreezeFinish then
     ApplyFreezeLemming(L);
