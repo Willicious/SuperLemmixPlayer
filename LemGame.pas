@@ -36,7 +36,7 @@ const
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
         DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND, DOM_PAINT,
-        DOM_BLASTICINE];
+        DOM_BLASTICINE, DOM_VINEWATER];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie);
@@ -134,6 +134,7 @@ type
     ForceRightMap              : TArrayArrayBoolean;
     AnimMap                    : TArrayArrayBoolean;
     BlasticineMap              : TArrayArrayBoolean;
+    VinewaterMap              : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
 
@@ -262,6 +263,7 @@ type
       function HandleWaterDrown(L: TLemming): Boolean;
       function HandleWaterSwim(L: TLemming): Boolean;
       function HandleBlasticine(L: TLemming): Boolean;
+      function HandleVinewater(L: TLemming): Boolean;
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForQueuedAction;
@@ -343,6 +345,7 @@ type
     function HandleSplatting(L: TLemming): Boolean;
     function HandleExiting(L: TLemming): Boolean;
     function HandleVaporizing(L: TLemming): Boolean;
+    function HandleVinetrapping(L: TLemming): Boolean;
     function HandleBlocking(L: TLemming): Boolean;
     function HandleShrugging(L: TLemming): Boolean;
     function HandleTimebombing(L: TLemming): Boolean;
@@ -572,6 +575,7 @@ const
   DOM_PAINT            = 34;
   DOM_ANIMONCE         = 35;
   DOM_BLASTICINE       = 36; //lems become instabombers on contact
+  DOM_VINEWATER        = 37; //triggers vinetrapper instead of drowner
   *)
 
   // removal modes
@@ -995,47 +999,48 @@ begin
   fRenderInterface.SetGetHighlitRoutine(GetHighlitLemming);
   fRenderInterface.SetIsStartingSecondsRoutine(IsStartingSeconds);
 
-  LemmingMethods[baNone]       := nil;
-  LemmingMethods[baWalking]    := HandleWalking;
-  LemmingMethods[baAscending]    := HandleAscending;
-  LemmingMethods[baDigging]    := HandleDigging;
-  LemmingMethods[baClimbing]   := HandleClimbing;
-  LemmingMethods[baDrowning]   := HandleDrowning;
-  LemmingMethods[baHoisting]   := HandleHoisting;
-  LemmingMethods[baBuilding]   := HandleBuilding;
-  LemmingMethods[baBashing]    := HandleBashing;
-  LemmingMethods[baMining]     := HandleMining;
-  LemmingMethods[baFalling]    := HandleFalling;
-  LemmingMethods[baFloating]   := HandleFloating;
-  LemmingMethods[baSplatting]  := HandleSplatting;
-  LemmingMethods[baExiting]    := HandleExiting;
-  LemmingMethods[baVaporizing] := HandleVaporizing;
-  LemmingMethods[baBlocking]   := HandleBlocking;
-  LemmingMethods[baShrugging]  := HandleShrugging;
-  LemmingMethods[baOhnoing]    := HandleOhNoing;
-  LemmingMethods[baExploding]  := HandleExploding;
-  LemmingMethods[baTimebombing] := HandleTimebombing;
-  LemmingMethods[baTimebombFinish] := HandleTimebombFinish;
-  LemmingMethods[baToWalking]  := HandleWalking; //should never happen anyway
-  LemmingMethods[baPlatforming] := HandlePlatforming;
-  LemmingMethods[baStacking]   := HandleStacking;
-  LemmingMethods[baFreezing]    := HandleOhNoing; // same behavior!
-  LemmingMethods[baFreezeFinish] := HandleExploding; // same behavior, except applied mask!
-  LemmingMethods[baSwimming]   := HandleSwimming;
-  LemmingMethods[baGliding]    := HandleGliding;
-  LemmingMethods[baFixing]     := HandleDisarming;
-  LemmingMethods[baFencing]    := HandleFencing;
-  LemmingMethods[baReaching]   := HandleReaching;
-  LemmingMethods[baShimmying]  := HandleShimmying;
-  LemmingMethods[baJumping]    := HandleJumping;
-  LemmingMethods[baDehoisting] := HandleDehoisting;
-  LemmingMethods[baSliding]    := HandleSliding;
-  LemmingMethods[baDangling]   := HandleDangling;
-  LemmingMethods[baLasering]   := HandleLasering;
-  LemmingMethods[baSpearing]   := HandleThrowing;
-  LemmingMethods[baGrenading]  := HandleThrowing;
-  LemmingMethods[baLooking]    := HandleLooking;
-  LemmingMethods[baSleeping]   := HandleSleeping;
+  LemmingMethods[baNone]          := nil;
+  LemmingMethods[baWalking]       := HandleWalking;
+  LemmingMethods[baAscending]     := HandleAscending;
+  LemmingMethods[baDigging]       := HandleDigging;
+  LemmingMethods[baClimbing]      := HandleClimbing;
+  LemmingMethods[baDrowning]      := HandleDrowning;
+  LemmingMethods[baHoisting]      := HandleHoisting;
+  LemmingMethods[baBuilding]      := HandleBuilding;
+  LemmingMethods[baBashing]       := HandleBashing;
+  LemmingMethods[baMining]        := HandleMining;
+  LemmingMethods[baFalling]       := HandleFalling;
+  LemmingMethods[baFloating]      := HandleFloating;
+  LemmingMethods[baSplatting]     := HandleSplatting;
+  LemmingMethods[baExiting]       := HandleExiting;
+  LemmingMethods[baVaporizing]    := HandleVaporizing;
+  LemmingMethods[baVinetrapping]  := HandleVinetrapping;
+  LemmingMethods[baBlocking]      := HandleBlocking;
+  LemmingMethods[baShrugging]     := HandleShrugging;
+  LemmingMethods[baOhnoing]       := HandleOhNoing;
+  LemmingMethods[baExploding]     := HandleExploding;
+  LemmingMethods[baTimebombing]   := HandleTimebombing;
+  LemmingMethods[baTimebombFinish]:= HandleTimebombFinish;
+  LemmingMethods[baToWalking]     := HandleWalking; //should never happen anyway
+  LemmingMethods[baPlatforming]   := HandlePlatforming;
+  LemmingMethods[baStacking]      := HandleStacking;
+  LemmingMethods[baFreezing]      := HandleOhNoing; // same behavior!
+  LemmingMethods[baFreezeFinish]  := HandleExploding; // same behavior, except applied mask!
+  LemmingMethods[baSwimming]      := HandleSwimming;
+  LemmingMethods[baGliding]       := HandleGliding;
+  LemmingMethods[baFixing]        := HandleDisarming;
+  LemmingMethods[baFencing]       := HandleFencing;
+  LemmingMethods[baReaching]      := HandleReaching;
+  LemmingMethods[baShimmying]     := HandleShimmying;
+  LemmingMethods[baJumping]       := HandleJumping;
+  LemmingMethods[baDehoisting]    := HandleDehoisting;
+  LemmingMethods[baSliding]       := HandleSliding;
+  LemmingMethods[baDangling]      := HandleDangling;
+  LemmingMethods[baLasering]      := HandleLasering;
+  LemmingMethods[baSpearing]      := HandleThrowing;
+  LemmingMethods[baGrenading]     := HandleThrowing;
+  LemmingMethods[baLooking]       := HandleLooking;
+  LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -1052,6 +1057,7 @@ begin
   NewSkillMethods[baSplatting]    := nil;
   NewSkillMethods[baExiting]      := nil;
   NewSkillMethods[baVaporizing]   := nil;
+  NewSkillMethods[baVinetrapping] := nil;
   NewSkillMethods[baBlocking]     := MayAssignBlocker;
   NewSkillMethods[baShrugging]    := nil;
   NewSkillMethods[baOhnoing]      := nil;
@@ -1550,33 +1556,34 @@ const
     16, //13 baSplatting,
      8, //14 baExiting,
     14, //15 baVaporizing,
-    16, //16 baBlocking,
-     8, //17 baShrugging,
-    16, //18 baTimebombing, - same as OhNoing
-     1, //19 baTimebombFinish - same as Exploding
-    16, //20 baOhnoing,
-     1, //21 baExploding,
-     0, //22 baToWalking,
-    16, //23 baPlatforming,
-     8, //24 baStacking,
-    16, //25 baFreezing - same as OhNoing
-     1, //26 baFreezeFinish same as Exploding
-     8, //27 baSwimming,
-    17, //28 baGliding,
-    16, //29 baFixing,
-     0, //30 baCloning,
-    16, //31 baFencing,
-     8, //32 baReaching,
-    20, //33 baShimmying
-    13, //34 baJumping
-     7, //35 baDehoisting
-     1, //36 baSliding
-    16, //37 baDangling
-    10, //38 baSpearing
-    10, //39 baGrenading
-    14, //40 baLooking
-    12, //41 baLasering - it's, ironically, this high for rendering purposes
-    20  //42 baSleeping
+     9, //16 baVinetrapping,
+    16, //17 baBlocking,
+     8, //18 baShrugging,
+    16, //19 baTimebombing, - same as OhNoing
+     1, //20 baTimebombFinish - same as Exploding
+    16, //21 baOhnoing,
+     1, //22 baExploding,
+     0, //23 baToWalking,
+    16, //24 baPlatforming,
+     8, //25 baStacking,
+    16, //26 baFreezing - same as OhNoing
+     1, //27 baFreezeFinish same as Exploding
+     8, //28 baSwimming,
+    17, //29 baGliding,
+    16, //30 baFixing,
+     0, //31 baCloning,
+    16, //32 baFencing,
+     8, //33 baReaching,
+    20, //34 baShimmying
+    13, //35 baJumping
+     7, //36 baDehoisting
+     1, //37 baSliding
+    16, //38 baDangling
+    10, //39 baSpearing
+    10, //40 baGrenading
+    14, //41 baLooking
+    12, //42 baLasering - it's, ironically, this high for rendering purposes
+    20  //43 baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1709,7 +1716,8 @@ begin
                       CueSoundEffect(SFX_OING, L.Position);
                      end;
                    end;
-    baVaporizing : L.LemExplosionTimer := 0;
+    baVaporizing   : L.LemExplosionTimer := 0;
+    baVinetrapping : L.LemExplosionTimer := 0;
     baBuilding   : begin
                      L.LemNumberOfBricksLeft := 12;
                      L.LemConstructivePositionFreeze := false;
@@ -1772,7 +1780,7 @@ begin
   Dec(L.LemExplosionTimer);
   if L.LemExplosionTimer = 0 then
   begin
-    if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding,
+    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
                       baFalling, baSwimming, baReaching, baShimmying, baJumping] then
     begin
       if L.LemIsTimebomber then Transition(L, baTimebombFinish)
@@ -1901,6 +1909,8 @@ begin
   SetLength(AnimMap, Level.Info.Width, Level.Info.Height);
   SetLength(BlasticineMap, 0, 0);
   SetLength(BlasticineMap, Level.Info.Width, Level.Info.Height);
+  SetLength(VinewaterMap, 0, 0);
+  SetLength(VinewaterMap, Level.Info.Width, Level.Info.Height);
 
   BlockerMap.SetSize(Level.Info.Width, Level.Info.Height);
   BlockerMap.Clear(DOM_NONE);
@@ -2045,6 +2055,7 @@ begin
       DOM_ANIMATION:  WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
       DOM_ANIMONCE:   WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
       DOM_BLASTICINE: WriteTriggerMap(BlasticineMap, Gadgets[i].TriggerRect);
+      DOM_VINEWATER:  WriteTriggerMap(VinewaterMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -2404,7 +2415,8 @@ function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDrowning, baVaporizing, baSplatting, baExiting];
+               baDrowning, baVaporizing, baVinetrapping, baSplatting,
+               baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
 end;
@@ -2413,7 +2425,8 @@ function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing, baTimebombFinish,
                baExploding, baFreezeFinish, baDrowning,
-               baDangling, baVaporizing, baSplatting, baExiting];
+               baDangling, baVaporizing, baVinetrapping, baSplatting,
+               baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
 end;
@@ -2423,7 +2436,7 @@ const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
                baDrowning, baDangling, baSplatting, baVaporizing,
-			   baExiting];
+               baVinetrapping, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not (L.LemIsFloater or L.LemIsGlider);
 end;
@@ -2432,7 +2445,8 @@ function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDangling, baVaporizing, baSplatting, baExiting];   // Does NOT contain baDrowning!
+               baDangling, baVaporizing, baVinetrapping,
+               baSplatting, baExiting];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
 end;
@@ -2442,7 +2456,7 @@ const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
                baDrowning, baDangling, baSplatting, baVaporizing,
-			   baExiting];
+			         baVinetrapping, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
 end;
@@ -2468,7 +2482,8 @@ function TLemmingGame.MayAssignTimebomber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDangling, baVaporizing, baSplatting, baExiting];
+               baDangling, baVaporizing, baVinetrapping,
+               baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
   //non-assignable from the top of the level
@@ -2488,7 +2503,8 @@ function TLemmingGame.MayAssignExploder(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDangling, baVaporizing, baSplatting, baExiting];
+               baDangling, baVaporizing, baVinetrapping, baSplatting,
+               baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
   //non-assignable from the top of the level
@@ -2507,7 +2523,8 @@ function TLemmingGame.MayAssignFreezer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baDangling, baVaporizing, baSplatting, baExiting];
+               baDangling, baVaporizing, baVinetrapping,
+               baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
 begin
     //non-assignable from the top of the level
@@ -2904,6 +2921,10 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trBlasticine) then
       HandleBlasticine(L);
 
+    // Vinewater
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trVinewater) then
+      HandleVinewater(L);
+
     // Fire
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
       AbortChecks := HandleFire(L);
@@ -3031,6 +3052,7 @@ begin
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
     trBlasticine: Result :=     ReadTriggerMap(X, Y, BlasticineMap);
+    trVinewater:  Result :=     ReadTriggerMap(X, Y, VinewaterMap);
   end;
 end;
 
@@ -3373,7 +3395,8 @@ end;
 
 function TLemmingGame.HandleWaterDrown(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baExploding, baFreezeFinish, baVaporizing, baExiting, baSplatting];
+  ActionSet = [baSwimming, baExploding, baFreezeFinish, baVaporizing,
+               baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
   if not L.LemIsSwimmer then
@@ -3393,7 +3416,7 @@ const
   ActionSet = [baSwimming, baClimbing, baHoisting,
                baTimebombing, baOhnoing, baFreezing,
                baTimebombFinish, baExploding, baFreezeFinish,
-               baVaporizing, baExiting, baSplatting];
+               baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
   if L.LemIsSwimmer and not (L.LemAction in ActionSet) then
@@ -3409,6 +3432,16 @@ begin
   if not (L.LemAction in [baFreezeFinish, baExiting]) then
   begin
     Transition(L, baExploding);
+  end;
+end;
+
+function TLemmingGame.HandleVinewater(L: TLemming): Boolean;
+begin
+  Result := True;
+  if not (L.LemAction in [baFreezeFinish, baExiting]) then
+  begin
+    Transition(L, baVinetrapping);
+    CueSoundEffect(SFX_VINETRAPPING, L.Position);
   end;
 end;
 
@@ -3890,7 +3923,7 @@ const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baShrugging, baTimebombing, baOhnoing,
                       baExploding, baFreezing, baReaching, baDehoisting,
-                      baVaporizing, baDangling, baLooking];
+                      baVaporizing, baVinetrapping, baDangling, baLooking];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -5850,6 +5883,12 @@ begin
 end;
 
 function TLemmingGame.HandleVaporizing(L: TLemming): Boolean;
+begin
+  Result := False;
+  if L.LemEndOfAnimation then RemoveLemming(L, RM_KILL);
+end;
+
+function TLemmingGame.HandleVinetrapping(L: TLemming): Boolean;
 begin
   Result := False;
   if L.LemEndOfAnimation then RemoveLemming(L, RM_KILL);

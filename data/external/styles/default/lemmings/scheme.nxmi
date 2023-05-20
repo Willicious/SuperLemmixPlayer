@@ -260,6 +260,20 @@ $ANIMATIONS
       FOOT_Y 14
     $END
   $END
+  
+  $VINETRAPPER
+    FRAMES 9
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 15
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 15
+    $END
+  $END
 
   $BLOCKER
     FRAMES 16

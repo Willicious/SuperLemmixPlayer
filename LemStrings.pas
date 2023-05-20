@@ -54,6 +54,7 @@ const
   SFX_ENTRANCE = 'door';
   SFX_EXIT_OPEN = 'exitopen';
   SFX_VAPORIZING = 'fire';
+  SFX_VINETRAPPING = 'weedgulp';
   SFX_DROWNING = 'glug';
   SFX_EXPLOSION = 'explode';
   SFX_HITS_STEEL = 'chink';
@@ -107,7 +108,8 @@ resourcestring
   SFloater = 'Floater';
   SSplatter = 'Splatter';
   SExiter = 'Exiter';
-  SVaporizer = 'Frier';
+  SVaporizer = 'Vaporizer';
+  SVinetrapper = 'Vinetrapper';
   SBlocker = 'Blocker';
   SShrugger = 'Shrugger';
   STimebomber = 'Timebomber';
@@ -180,33 +182,34 @@ const
     SSplatter,    //13
     SExiter,      //14
     SVaporizer,   //15
-    SBlocker,     //16
-    SShrugger,    //17
-    STimebomber,  //18
+    SVinetrapper, //16
+    SBlocker,     //17
+    SShrugger,    //18
     STimebomber,  //19
-    SExploder,    //20
+    STimebomber,  //20
     SExploder,    //21
-    SDummyString, //22
-    SPlatformer,  //23
-    SStacker,     //24
-    SFreezer,     //25
+    SExploder,    //22
+    SDummyString, //23
+    SPlatformer,  //24
+    SStacker,     //25
     SFreezer,     //26
-    SSwimmer,     //27
-    SGlider,      //28
-    SDisarmer,    //29
-    SCloner,      //30
-    SFencer,      //31
-    SReacher,     //32
-    SShimmier,    //33
-    SJumper,      //34
-    SDehoister,   //35
-    SSlider,      //36
-    SDangler,     //37
-    SSpearer,     //38
-    SGrenader,    //39
-    SLooker,      //40
-    SLaserer,     //41
-    SSleeper      //42
+    SFreezer,     //27
+    SSwimmer,     //28
+    SGlider,      //29
+    SDisarmer,    //30
+    SCloner,      //31
+    SFencer,      //32
+    SReacher,     //33
+    SShimmier,    //34
+    SJumper,      //35
+    SDehoister,   //36
+    SSlider,      //37
+    SDangler,     //38
+    SSpearer,     //39
+    SGrenader,    //40
+    SLooker,      //41
+    SLaserer,     //42
+    SSleeper      //43
   );
 
 implementation

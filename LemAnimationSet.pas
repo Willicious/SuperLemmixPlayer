@@ -24,8 +24,10 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES     = 73;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 36;        //num lem sprite types
+  //MUST MATCH BELOW (not the next list, the one after that)
+  //And don't forget to update the numbers! ;P
+  NUM_LEM_SPRITES     = 75;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 37;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ASCENDING           = 2;    //3  //2
@@ -52,60 +54,60 @@ const
   SPLATTING_RTL       = 23;   //24
   EXITING             = 24;   //25 //13
   EXITING_RTL         = 25;   //26
-  FRIED               = 26;   //27 //14
-  FRIED_RTL           = 27;   //28
-  BLOCKING            = 28;   //29 //15
-  BLOCKING_RTL        = 29;   //30
-  SHRUGGING           = 30;   //31 //16
-  SHRUGGING_RTL       = 31;   //32
-  TIMEBOMBEXPLOSION   = 32;   //33 //17
-  TIMEBOMBEXPLOSION_RTL = 33; //34
-  OHNOING             = 34;   //35 //18
-  OHNOING_RTL         = 35;   //36
-  EXPLOSION           = 36;   //37 //19
-  EXPLOSION_RTL       = 37;   //38
-  PLATFORMING         = 38;   //39 //20
-  PLATFORMING_RTL     = 39;   //40
-  FREEZEREXPLOSION     = 40;  //41 //21
-  FREEZEREXPLOSION_RTL = 41;  //42
-  SWIMMING            = 42;   //43 //22
-  SWIMMING_RTL        = 43;   //44
-  GLIDING             = 44;   //45 //23
-  GLIDING_RTL         = 45;   //46
-  FIXING              = 46;   //47 //24
-  FIXING_RTL          = 47;   //48
-  STACKING            = 48;   //49 //25
-  STACKING_RTL        = 49;   //50
-  FENCING             = 50;   //51 //26
-  FENCING_RTL         = 51;   //52
-  REACHING            = 52;   //53 //27
-  REACHING_RTL        = 53;   //54
-  SHIMMYING           = 54;   //55 //28
-  SHIMMYING_RTL       = 55;   //56
-  JUMPING             = 56;   //57 //29
-  JUMPING_RTL         = 57;   //58
-  DEHOISTING          = 58;   //59 //30
-  DEHOISTING_RTL      = 59;   //60
-  SLIDING             = 60;   //61 //31
-  SLIDING_RTL         = 61;   //62
-  DANGLING            = 62;   //63 //32
-  DANGLING_RTL        = 63;   //64
-  THROWING            = 64;   //65 //33
-  THROWING_RTL        = 65;   //66
-  LOOKING             = 66;   //67 //34
-  LOOKING_RTL         = 67;   //68
-  LASERING            = 68;   //69 //35
-  LASERING_RTL        = 69;   //70
-  SLEEPING            = 70;   //71 //36
-  SLEEPING_RTL        = 71;   //72
-  FROZEN              = 72;   //73 this one does NOT need an RTL form;
+  VAPORIZING          = 26;   //27 //14
+  VAPORIZING_RTL      = 27;   //28
+  VINETRAPPING        = 28;   //29 //15
+  VINETRAPPING_RTL    = 29;   //30
+  BLOCKING            = 30;   //31 //16
+  BLOCKING_RTL        = 31;   //32
+  SHRUGGING           = 32;   //33 //17
+  SHRUGGING_RTL       = 33;   //34
+  TIMEBOMBEXPLOSION   = 34;   //35 //18
+  TIMEBOMBEXPLOSION_RTL = 35; //36
+  OHNOING             = 36;   //37 //19
+  OHNOING_RTL         = 37;   //38
+  EXPLOSION           = 38;   //39 //20
+  EXPLOSION_RTL       = 39;   //40
+  PLATFORMING         = 40;   //41 //21
+  PLATFORMING_RTL     = 41;   //42
+  FREEZEREXPLOSION     = 42;  //43 //22
+  FREEZEREXPLOSION_RTL = 43;  //44
+  SWIMMING            = 44;   //45 //23
+  SWIMMING_RTL        = 45;   //46
+  GLIDING             = 46;   //47 //24
+  GLIDING_RTL         = 47;   //48
+  FIXING              = 48;   //49 //25
+  FIXING_RTL          = 49;   //50
+  STACKING            = 50;   //51 //26
+  STACKING_RTL        = 51;   //52
+  FENCING             = 52;   //53 //27
+  FENCING_RTL         = 53;   //54
+  REACHING            = 54;   //55 //28
+  REACHING_RTL        = 55;   //56
+  SHIMMYING           = 56;   //57 //29
+  SHIMMYING_RTL       = 57;   //58
+  JUMPING             = 58;   //59 //30
+  JUMPING_RTL         = 59;   //60
+  DEHOISTING          = 60;   //61 //31
+  DEHOISTING_RTL      = 61;   //62
+  SLIDING             = 62;   //63 //32
+  SLIDING_RTL         = 63;   //64
+  DANGLING            = 64;   //65 //33
+  DANGLING_RTL        = 65;   //66
+  THROWING            = 66;   //67 //34
+  THROWING_RTL        = 67;   //68
+  LOOKING             = 68;   //69 //35
+  LOOKING_RTL         = 69;   //70
+  LASERING            = 70;   //71 //36
+  LASERING_RTL        = 71;   //72
+  SLEEPING            = 72;   //73 //37
+  SLEEPING_RTL        = 73;   //74
+  FROZEN              = 74;   //75 this one does NOT need an RTL form;
                               //in fact in needs to be moved to the Masks section
                               //also, it's not counted as a "sprite type"
 
-  // never made sense to me why it lists the right-facing on the left
-  // and the left-facing on the right. Is this standard practice? Maybe
-  // I should change it... at some point.
-  AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = ( //needs to match TBasicLemmingAction in LemCore / LemStrings
+  //This one must match TBasicLemmingAction in LemCore / LemStrings
+  AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
     (0,0),                                    // 1 baNone
     (WALKING, WALKING_RTL),                   // 2 baWalk,
     (ASCENDING, ASCENDING_RTL),               // 3 baAscending,
@@ -120,34 +122,35 @@ const
     (UMBRELLA, UMBRELLA_RTL),                 // 12 baUmbrella,
     (SPLATTING, SPLATTING_RTL),               // 13 baSplatting,
     (EXITING, EXITING_RTL),                   // 14 baExiting,
-    (FRIED, FRIED_RTL),                       // 15 baFried,
-    (BLOCKING, BLOCKING_RTL),                 // 16 baBlocking,
-    (SHRUGGING, SHRUGGING_RTL),               // 17 baShrugging,
-    (OHNOING, OHNOING_RTL),                   // 18 baTimebombing,
-    (TIMEBOMBEXPLOSION, TIMEBOMBEXPLOSION_RTL), // 19 baTimebombFinish,
-    (OHNOING, OHNOING_RTL),                   // 20 baOhnoing,
-    (EXPLOSION, EXPLOSION_RTL),               // 21 baExploding,
-    (0,0),                                    // 22 baToWalking. Should never happen.
-    (PLATFORMING, PLATFORMING_RTL),           // 23 baPlatforming
-    (STACKING, STACKING_RTL),                 // 24 baStacking
-    (OHNOING, OHNOING_RTL),                   // 25 baFreezing
-    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL), // 26 baFreezeFinish
-    (SWIMMING, SWIMMING_RTL),                 // 27 baSwimming
-    (GLIDING, GLIDING_RTL),                   // 28 baGliding
-    (FIXING, FIXING_RTL),                     // 29 baFixing
-    (0,0),                                    // 30 baCloning? Another that should never happen
-    (FENCING, FENCING_RTL),                   // 31 baFencing
-    (REACHING, REACHING_RTL),                 // 32 baReaching (for shimmier)
-    (SHIMMYING, SHIMMYING_RTL),               // 33 baShimmying
-    (JUMPING, JUMPING_RTL),                   // 34 baJumping
-    (DEHOISTING, DEHOISTING_RTL),             // 35 baDehoisting
-    (SLIDING, SLIDING_RTL),                   // 36 baSliding
-    (DANGLING, DANGLING_RTL),                 // 37 baDangling
-    (THROWING, THROWING_RTL),                 // 38 baSpearing
-    (THROWING, THROWING_RTL),                 // 39 baGrenading
-    (LOOKING, LOOKING_RTL),                   // 40 baLooking
-    (LASERING, LASERING_RTL),                 // 41 baLasering
-    (SLEEPING, SLEEPING_RTL)                  // 42 baSleeping
+    (VAPORIZING, VAPORIZING_RTL),             // 15 baVaporizing,
+    (VINETRAPPING, VINETRAPPING_RTL),         // 16 baVinetrapping,
+    (BLOCKING, BLOCKING_RTL),                 // 17 baBlocking,
+    (SHRUGGING, SHRUGGING_RTL),               // 18 baShrugging,
+    (OHNOING, OHNOING_RTL),                   // 19 baTimebombing,
+    (TIMEBOMBEXPLOSION, TIMEBOMBEXPLOSION_RTL), // 20 baTimebombFinish,
+    (OHNOING, OHNOING_RTL),                   // 21 baOhnoing,
+    (EXPLOSION, EXPLOSION_RTL),               // 22 baExploding,
+    (0,0),                                    // 23 baToWalking. Should never happen.
+    (PLATFORMING, PLATFORMING_RTL),           // 24 baPlatforming
+    (STACKING, STACKING_RTL),                 // 25 baStacking
+    (OHNOING, OHNOING_RTL),                   // 26 baFreezing
+    (FREEZEREXPLOSION, FREEZEREXPLOSION_RTL), // 27 baFreezeFinish
+    (SWIMMING, SWIMMING_RTL),                 // 28 baSwimming
+    (GLIDING, GLIDING_RTL),                   // 29 baGliding
+    (FIXING, FIXING_RTL),                     // 30 baFixing
+    (0,0),                                    // 31 baCloning? Another that should never happen
+    (FENCING, FENCING_RTL),                   // 32 baFencing
+    (REACHING, REACHING_RTL),                 // 33 baReaching (for shimmier)
+    (SHIMMYING, SHIMMYING_RTL),               // 34 baShimmying
+    (JUMPING, JUMPING_RTL),                   // 35 baJumping
+    (DEHOISTING, DEHOISTING_RTL),             // 36 baDehoisting
+    (SLIDING, SLIDING_RTL),                   // 37 baSliding
+    (DANGLING, DANGLING_RTL),                 // 38 baDangling
+    (THROWING, THROWING_RTL),                 // 39 baSpearing
+    (THROWING, THROWING_RTL),                 // 40 baGrenading
+    (LOOKING, LOOKING_RTL),                   // 41 baLooking
+    (LASERING, LASERING_RTL),                 // 42 baLasering
+    (SLEEPING, SLEEPING_RTL)                  // 43 baSleeping
   );
 
 type
@@ -201,9 +204,9 @@ uses
 
 procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TShadeDict);
 const
-  // These match the order these are stored by this class. They do NOT have to be in this
-  // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..35] of String =  (
+// MUST MATCH ABOVE (not the next list, the one after that)
+// They also need to appear in "scheme.nxmi", but the order doesn't matter there
+  ANIM_NAMES: array[0..36] of String =  (
   'WALKER',        //1
   'ASCENDER',      //2
   'DIGGER',        //3
@@ -217,29 +220,30 @@ const
   'FLOATER',       //11
   'SPLATTER',      //12
   'EXITER',        //13
-  'BURNER',        //14
-  'BLOCKER',       //15
-  'SHRUGGER',      //16
-  'TIMEBOMBER',    //17
-  'OHNOER',        //18
-  'BOMBER',        //19
-  'PLATFORMER',    //20
-  'FREEZER',       //21
-  'SWIMMER',       //22
-  'GLIDER',        //23
-  'DISARMER',      //24
-  'STACKER',       //25
-  'FENCER',        //26
-  'REACHER',       //27
-  'SHIMMIER',      //28
-  'JUMPER',        //29
-  'DEHOISTER',     //30
-  'SLIDER',        //31
-  'DANGLER',       //32
-  'THROWER',       //33
-  'LOOKER',        //34
-  'LASERER',       //35
-  'SLEEPER'        //36
+  'BURNER',        //14 //aka Vaporizer
+  'VINETRAPPER',   //15
+  'BLOCKER',       //16
+  'SHRUGGER',      //17
+  'TIMEBOMBER',    //18
+  'OHNOER',        //19
+  'BOMBER',        //20
+  'PLATFORMER',    //21
+  'FREEZER',       //22
+  'SWIMMER',       //23
+  'GLIDER',        //24
+  'DISARMER',      //25
+  'STACKER',       //26
+  'FENCER',        //27
+  'REACHER',       //28
+  'SHIMMIER',      //29
+  'JUMPER',        //30
+  'DEHOISTER',     //31
+  'SLIDER',        //32
+  'DANGLER',       //33
+  'THROWER',       //34
+  'LOOKER',        //35
+  'LASERER',       //36
+  'SLEEPER'        //37
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

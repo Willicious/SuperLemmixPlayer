@@ -59,33 +59,34 @@ type
     baSplatting,       //13
     baExiting,         //14
     baVaporizing,      //15
-    baBlocking,        //16
-    baShrugging,       //17
-    baTimebombing,     //18
-    baTimebombFinish,  //19
-    baOhnoing,         //20
-    baExploding,       //21
-    baToWalking,       //22
-    baPlatforming,     //23
-    baStacking,        //24
-    baFreezing,        //25
-    baFreezeFinish,    //26
-    baSwimming,        //27
-    baGliding,         //28
-    baFixing,          //29
-    baCloning,         //30
-    baFencing,         //31
-    baReaching,        //32
-    baShimmying,       //33
-    baJumping,         //34
-    baDehoisting,      //35
-    baSliding,         //36
-    baDangling,        //37
-    baSpearing,        //38
-    baGrenading,       //39
-    baLooking,         //40
-    baLasering,        //41
-    baSleeping         //42
+    baVinetrapping,    //16
+    baBlocking,        //17
+    baShrugging,       //18
+    baTimebombing,     //19
+    baTimebombFinish,  //20
+    baOhnoing,         //21
+    baExploding,       //22
+    baToWalking,       //23
+    baPlatforming,     //24
+    baStacking,        //25
+    baFreezing,        //26
+    baFreezeFinish,    //27
+    baSwimming,        //28
+    baGliding,         //29
+    baFixing,          //30
+    baCloning,         //31
+    baFencing,         //32
+    baReaching,        //33
+    baShimmying,       //34
+    baJumping,         //35
+    baDehoisting,      //36
+    baSliding,         //37
+    baDangling,        //38
+    baSpearing,        //39
+    baGrenading,       //40
+    baLooking,         //41
+    baLasering,        //42
+    baSleeping         //43
   );
 
 const
@@ -211,7 +212,8 @@ type
     trNoSplat,
     trSplat,
     trZombie,
-    trBlasticine
+    trBlasticine,
+    trVinewater
   );
 
 
@@ -259,34 +261,35 @@ const
     spbFloater,     //12  baUmbrella
     spbNone,        //13  baSplatting
     spbNone,        //14  baExiting
-    spbNone,        //15  baFried
-    spbBlocker,     //16  baBlocking
-    spbNone,        //17  baShrugging
-    spbTimebomber,  //18  baTimebombing
-    spbNone,        //19  baTimebombFinish
-    spbNone,        //20  baOhNoing
-    spbBomber,      //21  baExploding
-    spbWalker,      //22
-    spbPlatformer,  //23
-    spbStacker,     //24
-    spbFreezer,     //25  baFreezing
-    spbNone,        //26  baFreezeFinish
-    spbSwimmer,     //27
-    spbGlider,      //28
-    spbDisarmer,    //29
-    spbCloner,      //30
-    spbFencer,      //31
-    spbNone,        //32 baReaching
-    spbShimmier,    //33
-    spbJumper,      //34
-    spbNone,        //35 baDehoisting
-    spbSlider,      //36
-    spbNone,        //37 baDangling
-    spbSpearer,     //38
-    spbGrenader,    //39
-    spbNone,        //40 baLooking
-    spbLaserer,     //41
-    spbNone         //42 baSleeping
+    spbNone,        //15  baVaporizing
+    spbNone,        //16  baVinetrapping
+    spbBlocker,     //17  baBlocking
+    spbNone,        //18  baShrugging
+    spbTimebomber,  //19  baTimebombing
+    spbNone,        //20  baTimebombFinish
+    spbNone,        //21  baOhNoing
+    spbBomber,      //22  baExploding
+    spbWalker,      //23
+    spbPlatformer,  //24
+    spbStacker,     //25
+    spbFreezer,     //26  baFreezing
+    spbNone,        //27  baFreezeFinish
+    spbSwimmer,     //28
+    spbGlider,      //29
+    spbDisarmer,    //30
+    spbCloner,      //31
+    spbFencer,      //32
+    spbNone,        //33 baReaching
+    spbShimmier,    //34
+    spbJumper,      //35
+    spbNone,        //36 baDehoisting
+    spbSlider,      //37
+    spbNone,        //38 baDangling
+    spbSpearer,     //39
+    spbGrenader,    //40
+    spbNone,        //41 baLooking
+    spbLaserer,     //42
+    spbNone         //43 baSleeping
   );
 
 const
@@ -330,7 +333,7 @@ const
 const
   // All objects that don't have trigger areas got mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..36] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..37] of TTriggerTypes = (
     trZombie,                 // no-object
     trZombie,                 // no trigger area
     trExit,                   // exit
@@ -368,7 +371,8 @@ const
     trOWUp,                   // OWW up
     trZombie,                 // paint
     trAnim,                   // once animation
-    trBlasticine              // lems become instabombers on contact
+    trBlasticine,             // lems become instabombers on contact
+    trVinewater               // triggers vinetrapper instead of drowner
   );
 
 type

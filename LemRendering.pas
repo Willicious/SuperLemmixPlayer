@@ -2396,6 +2396,11 @@ begin
         begin
           fHelperImages[hpi_Blasticine].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
         end;
+
+      DOM_VINEWATER:
+        begin
+          fHelperImages[hpi_Vinewater].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
     end;
 end;
 
