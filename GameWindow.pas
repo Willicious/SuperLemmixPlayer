@@ -1954,7 +1954,7 @@ const
      (baFalling, baGliding),
      (baOhnoing, baExploding),
      (baTimebombing, baTimebombFinish),
-     (baFreezing, baFreezeFinish),
+     (baFreezing, baFreezerExplosion),
      (baReaching, baShimmying)
     );
 

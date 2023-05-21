@@ -372,6 +372,20 @@ $ANIMATIONS
       FOOT_Y 25
     $END
   $END
+  
+  $FROZEN
+    FRAMES 1
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+  $END
 
   $SWIMMER
     FRAMES 8

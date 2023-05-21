@@ -723,7 +723,7 @@ begin
 
     // Freezer is tricky - the goal is an outlined frozen lemming over a freezer explosion graphic
     // Explosion graphic currently commented out
-    DrawAnimationFrame(fSkillIcons[spbFreezer], FROZEN, 0, 8, 21);
+    DrawAnimationFrame(fSkillIcons[spbFreezer], ICECUBE, 0, 8, 21);
     Outline(fSkillIcons[spbFreezer]);
     TempBmp.Assign(fSkillIcons[spbFreezer]);
     fSkillIcons[spbFreezer].Clear(0);

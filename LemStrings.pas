@@ -194,22 +194,23 @@ const
     SStacker,     //25
     SFreezer,     //26
     SFreezer,     //27
-    SSwimmer,     //28
-    SGlider,      //29
-    SDisarmer,    //30
-    SCloner,      //31
-    SFencer,      //32
-    SReacher,     //33
-    SShimmier,    //34
-    SJumper,      //35
-    SDehoister,   //36
-    SSlider,      //37
-    SDangler,     //38
-    SSpearer,     //39
-    SGrenader,    //40
-    SLooker,      //41
-    SLaserer,     //42
-    SSleeper      //43
+    SFreezer,     //28
+    SSwimmer,     //29
+    SGlider,      //30
+    SDisarmer,    //31
+    SCloner,      //32
+    SFencer,      //33
+    SReacher,     //34
+    SShimmier,    //35
+    SJumper,      //36
+    SDehoister,   //37
+    SSlider,      //38
+    SDangler,     //39
+    SSpearer,     //40
+    SGrenader,    //41
+    SLooker,      //42
+    SLaserer,     //43
+    SSleeper      //44
   );
 
 implementation
