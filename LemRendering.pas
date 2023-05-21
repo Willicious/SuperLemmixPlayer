@@ -125,6 +125,7 @@ type
     property Recolorer: TRecolorImage read GetRecolorer;
   protected
   public
+    fIsFreezerExplosion: Boolean;
     constructor Create;
     destructor Destroy; override;
 
@@ -710,6 +711,9 @@ begin
     begin
       X := L.LemX + X;
       Y := L.LemY + Y;
+      if fIsFreezerExplosion then
+      fLayers[rlParticles].PixelS[X, Y] := PARTICLE_FREEZER_COLORS[i mod 8]
+      else
       fLayers[rlParticles].PixelS[X, Y] := PARTICLE_COLORS[i mod 8];
     end;
   end;
@@ -1712,9 +1716,9 @@ end;
 
 procedure TRenderer.AddFreezer(X, Y: Integer);
 begin
-  fAni.LemmingAnimations[FROZEN].DrawMode := dmCustom;
-  fAni.LemmingAnimations[FROZEN].OnPixelCombine := CombineTerrainNoOverwrite;
-  fAni.LemmingAnimations[FROZEN].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
+  fAni.LemmingAnimations[ICECUBE].DrawMode := dmCustom;
+  fAni.LemmingAnimations[ICECUBE].OnPixelCombine := CombineTerrainNoOverwrite;
+  fAni.LemmingAnimations[ICECUBE].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
 end;
 
 function TRenderer.FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
