@@ -1733,14 +1733,9 @@ begin
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing,
     baFreezing    : begin
+                     //hotbookmark - this is going to become a different state
                      CueSoundEffect(SFX_OHNO, L.Position);
-                     L.LemIsSlider := false;
-                     L.LemIsClimber := false;
-                     L.LemIsSwimmer := false;
-                     L.LemIsFloater := false;
-                     L.LemIsGlider := false;
-                     L.LemIsDisarmer := false;
-                     L.LemHasBeenOhnoer := true;
+                     L.LemHasBeenOhnoer := false;
                    end;
     baTimebombing :begin
                      CueSoundEffect(SFX_OHNO, L.Position);
