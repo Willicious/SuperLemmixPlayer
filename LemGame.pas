@@ -3465,7 +3465,7 @@ begin
 
   FreezerMask.DrawTo(PhysicsMap, X -8, L.LemY -11);
 
-  //if not IsSimulating then // could happen as a result of slowfreeze objects!
+  if not IsSimulating then // could happen as a result of slowfreeze objects!
     fRenderInterface.AddTerrainFreezer(X - 8, L.LemY -11);
 end;
 
@@ -5999,11 +5999,10 @@ end;
 
 function TLemmingGame.HandleFreezing(L: TLemming): Boolean;
 begin
-  Result := True; //hotbookmark - what is true, exactly?
+  Result := True;
   if L.LemEndOfAnimation then
   begin
-    if L.LemAction = baFreezing then
-      Transition(L, baFreezerExplosion);
+    Transition(L, baFreezerExplosion);
     L.LemHasBlockerField := False; // remove blocker field
     SetBlockerMap;
     Result := False;
@@ -6022,8 +6021,8 @@ end;
 
 function TLemmingGame.HandleFreezerExplosion(L: TLemming): Boolean;
 begin
-  Renderer.fIsFreezerExplosion := true; //sets explosion particle colours
-  Result := false; //hotbookmark - what is false, exactly?
+  Renderer.fIsFreezerExplosion := true;
+  Result := false;
 
   if (L.LemAction = baFreezerExplosion) then
   begin
@@ -6046,12 +6045,10 @@ function TLemmingGame.HandleFrozen(L: TLemming): Boolean;
 var
 i: Integer;
 begin
-  Result := false; //hotbookmark - what is false, exactly?
+  Result := true;
 
   if L.LemAction = baFrozen then
   begin
-    Result := True; //hotbookmark - what is true, exactly?
-
     for i := 1 to 7 do
 
     if not HasPixelAt(L.LemX, L.LemY -i)
@@ -6065,10 +6062,13 @@ end;
 
 function TLemmingGame.HandleUnfreezing(L: TLemming): Boolean;
 begin
-  Result := False; //hotbookmark - what is true, exactly?
+  Result := true;
 
-  if L.LemEndOfAnimation then  //hotbookmark
-  Transition(L, baWalking); //might want to fall instead, do some terrain checks
+  if L.LemEndOfAnimation then
+  begin
+    if HasPixelAt(L.LemX, L.LemY) then Transition(L, baWalking)
+    else Transition(L, baFalling);
+  end;
 end;
 
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
