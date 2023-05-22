@@ -1755,7 +1755,9 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
-    //baFreezing - might want to add some stuff for this state here //hotbookmark
+    baFreezing: begin
+                  L.LemExplosionTimer := 0;
+                end; //hotbookmark
     baTimebombFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baExploding: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baFreezerExplosion: CueSoundEffect(SFX_EXPLOSION, L.Position);
@@ -6023,13 +6025,20 @@ begin
   Renderer.fIsFreezerExplosion := true; //sets explosion particle colours
   Result := false; //hotbookmark - what is false, exactly?
 
-  if L.LemAction = baFreezerExplosion then
+  if (L.LemAction = baFreezerExplosion) then
   begin
-    ApplyFreezeLemming(L);
-    Transition(L, baFrozen);
-    //particles are for show - lem doesn't actually explode
-    L.LemParticleTimer := PARTICLE_FRAMECOUNT;
-    fParticleFinishTimer := PARTICLE_FRAMECOUNT;
+    if not UserSetNuking then
+    begin
+      ApplyFreezeLemming(L);
+      Transition(L, baFrozen);
+      //particles recoloured like ice water
+      L.LemParticleTimer := PARTICLE_FRAMECOUNT;
+      fParticleFinishTimer := PARTICLE_FRAMECOUNT;
+    end else begin
+      //normal explosion & particle colours for nuked Freezers
+      Transition(L, baExploding);
+      Renderer.fIsFreezerExplosion := false;
+    end;
   end;
 end;
 
@@ -6050,6 +6059,8 @@ begin
     and not HasPixelAt(L.LemX +1, L.LemY -i) then
     Transition(L, baUnfreezing);
   end;
+
+  if UserSetNuking then L.LemHideCountdown := false;
 end;
 
 function TLemmingGame.HandleUnfreezing(L: TLemming): Boolean;
