@@ -1787,9 +1787,10 @@ begin
 
   Dec(L.LemExplosionTimer);
   if L.LemExplosionTimer = 0 then
-  begin
+  begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baFalling, baSwimming, baReaching, baShimmying, baJumping] then
+                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
+                      baFrozen] then
     begin
       if L.LemIsTimebomber then Transition(L, baTimebombFinish)
       else if L.LemTimerToFreeze then
