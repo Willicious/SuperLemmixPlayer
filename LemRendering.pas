@@ -1510,20 +1510,33 @@ begin
 end;
 
 procedure TRenderer.DrawFreezerShadow(L: TLemming);
+const
+  // This encodes only the left half of the freezer mask. The rest is obtained by mirroring it
+  FreezerShadow: array[0..52, 0..1] of Integer = (
+     (-1, -1), (-1, -2), (-1, -3), (-1, -4), (-1, -5), (-1, -6),
+     (-1, -7), (-1, -8), (-1, -9), (-1, -10), (-1, -11),
+     (-2, -1), (-2, -2), (-2, -3), (-2, -4), (-2, -5), (-2, -6),
+     (-2, -7), (-2, -8), (-2, -9), (-2, -10), (-2, -11),
+     (-3, -1), (-3, -2), (-3, -3), (-3, -4), (-3, -5), (-3, -6),
+     (-3, -7), (-3, -8), (-3, -9), (-3, -10), (-3, -11),
+     (-4, -1), (-4, -2), (-4, -3), (-4, -4), (-4, -5), (-4, -6),
+     (-4, -7), (-4, -8), (-4, -9), (-4, -10), (-4, -11),
+     (-5, -2), (-5, -3), (-5, -4), (-5, -5), (-5, -6),
+     (-5, -7), (-5, -8), (-5, -9), (-5, -10)
+   );
 var
-  FreezerShadow: TBitmap32;
+  i: Integer;
+  PosX: Integer;
 begin
-  FreezerShadow := TBitmap32.Create;
+  fLayers.fIsEmpty[rlLowShadows] := False;
 
-  try
-    //we need to use low res mask for both resolutions to be physics-accurate
-    FreezerShadow.LoadFromFile(AppPath + SFGraphicsMasks + 'freezer.png');
+  PosX := L.LemX;
+  if L.LemDx = 1 then Inc(PosX);
 
-    fLayers.fIsEmpty[rlLowShadows] := False;
-    FreezerShadow.DrawMode := dmCustom;
-    FreezerShadow.DrawTo(fLayers[rlLowShadows], L.LemX -7, L.LemY -11);
-  finally
-    FreeAndNil(FreezerShadow);
+  for i := 0 to Length(FreezerShadow) - 1 do
+  begin
+    SetLowShadowPixel(PosX + FreezerShadow[i, 0], L.LemY + FreezerShadow[i, 1]);
+    SetLowShadowPixel(PosX - FreezerShadow[i, 0] - 1, L.LemY + FreezerShadow[i, 1]);
   end;
 end;
 
