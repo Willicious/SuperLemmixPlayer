@@ -54,6 +54,7 @@ const
   SFX_ENTRANCE = 'door';
   SFX_EXIT_OPEN = 'exitopen';
   SFX_VAPORIZING = 'fire';
+  SFX_FREEZING = 'ice';
   SFX_VINETRAPPING = 'weedgulp';
   SFX_DROWNING = 'glug';
   SFX_EXPLOSION = 'explode';

@@ -1572,10 +1572,10 @@ const
      0, //23 baToWalking,
     16, //24 baPlatforming,
      8, //25 baStacking,
-     4, //26 baFreezing,
+     8, //26 baFreezing,
      1, //27 baFreezerExplosion,
      1, //28 baFrozen,
-     4, //29 baUnfreezing,
+    12, //29 baUnfreezing,
      8, //30 baSwimming,
     17, //31 baGliding,
     16, //32 baFixing,
@@ -1755,9 +1755,7 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
-    baFreezing: begin
-                  L.LemExplosionTimer := 0;
-                end; //hotbookmark
+    baFreezing: CueSoundEffect(SFX_FREEZING, L.Position);
     baTimebombFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baExploding: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baFreezerExplosion: CueSoundEffect(SFX_EXPLOSION, L.Position);
