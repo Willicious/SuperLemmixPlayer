@@ -6906,7 +6906,9 @@ begin
       // Zombies
       if     (ReadZombieMap(LemX, LemY) and 1 <> 0)
          and (LemAction <> baExiting)
-         and not CurrentLemming.LemIsZombie then
+         and not CurrentLemming.LemIsZombie
+         //freezers are protected
+         and not (LemAction = baFrozen) then
         RemoveLemming(CurrentLemming, RM_ZOMBIE);
     end;
   end;
