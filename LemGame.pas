@@ -3691,7 +3691,7 @@ var
   ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
-                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner,
+                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer,
                     spbSpearer, spbGrenader, spbLaserer];  //Timebomber not included by choice
 begin
   if fHyperSpeed then Exit;

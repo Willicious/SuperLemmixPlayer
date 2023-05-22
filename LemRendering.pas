@@ -179,6 +179,7 @@ type
     procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
     procedure DrawExploderShadow(L: TLemming);
+    procedure DrawFreezerShadow(L: TLemming);
     procedure DrawProjectileShadow(L: TLemming);
     procedure DrawProjectionShadow(L: TLemming); //bookmark - deprecated, need to remove associated code
     procedure ClearShadows;
@@ -928,6 +929,11 @@ begin
         DrawExploderShadow(CopyL);
       end;
 
+    spbFreezer:
+      begin
+        DrawFreezerShadow(CopyL);
+      end;
+
     spbGlider:
       if not DoProjection then
       begin
@@ -1500,6 +1506,24 @@ begin
   begin
     SetHighShadowPixel(PosX + BomberShadow[i, 0], L.LemY + BomberShadow[i, 1]);
     SetHighShadowPixel(PosX - BomberShadow[i, 0] - 1, L.LemY + BomberShadow[i, 1]);
+  end;
+end;
+
+procedure TRenderer.DrawFreezerShadow(L: TLemming);
+var
+  FreezerShadow: TBitmap32;
+begin
+  FreezerShadow := TBitmap32.Create;
+
+  try
+    //we need to use low res mask for both resolutions to be physics-accurate
+    FreezerShadow.LoadFromFile(AppPath + SFGraphicsMasks + 'freezer.png');
+
+    fLayers.fIsEmpty[rlLowShadows] := False;
+    FreezerShadow.DrawMode := dmCustom;
+    FreezerShadow.DrawTo(fLayers[rlLowShadows], L.LemX -7, L.LemY -11);
+  finally
+    FreeAndNil(FreezerShadow);
   end;
 end;
 
