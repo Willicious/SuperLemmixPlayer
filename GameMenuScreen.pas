@@ -336,7 +336,7 @@ begin
     if not GetGraphic('sign_code.png', BMP, true) then // Deprecated
       GetGraphic('sign_level_select.png', BMP);
     NewRegion := MakeClickableImageAuto(MakePosition(0, -0.5), BMP.BoundsRect, DoLevelSelect, BMP);
-    NewRegion.ShortcutKeys.Add(VK_F2);
+    NewRegion.ShortcutKeys.Add(VK_F3);
 
     // Group sign
     fGroupSignCenter := MakePosition(0.5, 0.5);
@@ -360,7 +360,7 @@ begin
     // Config
     GetGraphic('sign_config.png', BMP);
     NewRegion := MakeClickableImageAuto(MakePosition(-0.5, 0.5), BMP.BoundsRect, ShowConfigMenu, BMP);
-    NewRegion.ShortcutKeys.Add(VK_F3);
+    NewRegion.ShortcutKeys.Add(VK_F2);
 
     // Exit
     GetGraphic('sign_quit.png', BMP);

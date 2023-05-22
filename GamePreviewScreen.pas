@@ -260,7 +260,7 @@ begin
       NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
     if not GameParams.ShowMinimap and not GameParams.FullScreen then
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    NewRegion.ShortcutKeys.Add(VK_F2);
+    NewRegion.ShortcutKeys.Add(VK_F3);
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
       NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
@@ -272,7 +272,7 @@ begin
 
     MakeHiddenOption(VK_SPACE, BeginPlay);
     MakeHiddenOption(VK_RETURN, BeginPlay);
-    MakeHiddenOption(VK_F3, ShowConfigMenu);
+    MakeHiddenOption(VK_F2, ShowConfigMenu);
     MakeHiddenOption(VK_LEFT, PreviousLevel);
     MakeHiddenOption(VK_RIGHT, NextLevel);
     MakeHiddenOption(VK_DOWN, PreviousRank);
