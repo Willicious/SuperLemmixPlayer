@@ -1,0 +1,94 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE 
+ AUTHOR 
+ ID x19240723406DF015
+ VERSION x0000000000000003
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_rock
+   PIECE water
+   X 104
+   Y 79
+   WIDTH 64
+   HEIGHT 24
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 51
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 102
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 165
+   Y 96
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 90
+   Y 96
+ $END
+ 
+ $LEMMING
+   X 218
+   Y 96
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 119
+   Y 70
+ $END
+ 
+ $LEMMING
+   X 154
+   Y 69
+   FLIP_HORIZONTAL
+ $END
+ 
+ 

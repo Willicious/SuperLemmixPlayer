@@ -1,0 +1,143 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Blasticine Vinewater Test
+ AUTHOR 
+ ID x54AD42C90436F483
+ VERSION x0000000000000008
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   JUMPER 5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE water
+   X 67
+   Y 53
+   WIDTH 64
+   HEIGHT 31
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_rock
+   PIECE water
+   X 142
+   Y 60
+   WIDTH 64
+   HEIGHT 24
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 40
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 104
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 167
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 171
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 45
+   Y 81
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 104
+   Y 40
+ $END
+ 
+ $LEMMING
+   X 183
+   Y 50
+ $END
+ 
+ $LEMMING
+   X 165
+   Y 40
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 86
+   Y 50
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 128
+   Y 97
+ $END
+ 
+ $LEMMING
+   X 152
+   Y 97
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 51
+   Y 81
+ $END
+ 
+ $LEMMING
+   X 217
+   Y 81
+   FLIP_HORIZONTAL
+ $END
+ 
+ 

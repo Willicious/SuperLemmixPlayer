@@ -6965,6 +6965,8 @@ begin
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
+         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trBlasticine)
+         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trVinewater)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
          then
