@@ -352,8 +352,10 @@ type
     function HandleTimebombFinish(L: TLemming): Boolean;
     function HandleOhNoing(L: TLemming): Boolean;
     function HandleExploding(L: TLemming): Boolean;
+    function HandleFreezing(L: TLemming): Boolean;
     function HandleFreezerExplosion(L: TLemming): Boolean;
     function HandleFrozen(L: TLemming): Boolean;
+    function HandleUnfreezing(L: TLemming): Boolean;
     function HandlePlatforming(L: TLemming): Boolean;
     function LemCanPlatform(L: TLemming): Boolean;
     function HandleStacking(L: TLemming): Boolean;
@@ -1026,9 +1028,10 @@ begin
   LemmingMethods[baToWalking]     := HandleWalking; //should never happen anyway
   LemmingMethods[baPlatforming]   := HandlePlatforming;
   LemmingMethods[baStacking]      := HandleStacking;
-  LemmingMethods[baFreezing]      := HandleOhNoing; // same behavior!
+  LemmingMethods[baFreezing]      := HandleFreezing;
   LemmingMethods[baFreezerExplosion]  := HandleFreezerExplosion;
   LemmingMethods[baFrozen]        := HandleFrozen;
+  LemmingMethods[baUnfreezing]    := HandleUnfreezing;
   LemmingMethods[baSwimming]      := HandleSwimming;
   LemmingMethods[baGliding]       := HandleGliding;
   LemmingMethods[baFixing]        := HandleDisarming;
@@ -1569,25 +1572,26 @@ const
      0, //23 baToWalking,
     16, //24 baPlatforming,
      8, //25 baStacking,
-    16, //26 baFreezing - same as OhNoing
-     1, //27 baFreezerExplosion
-     1, //28 baFrozen
-     8, //29 baSwimming,
-    17, //30 baGliding,
-    16, //31 baFixing,
-     0, //32 baCloning,
-    16, //33 baFencing,
-     8, //34 baReaching,
-    20, //35 baShimmying
-    13, //36 baJumping
-     7, //37 baDehoisting
-     1, //38 baSliding
-    16, //39 baDangling
-    10, //40 baSpearing
-    10, //41 baGrenading
-    14, //42 baLooking
-    12, //43 baLasering - it's, ironically, this high for rendering purposes
-    20  //44 baSleeping
+     4, //26 baFreezing,
+     1, //27 baFreezerExplosion,
+     1, //28 baFrozen,
+     4, //29 baUnfreezing,
+     8, //30 baSwimming,
+    17, //31 baGliding,
+    16, //32 baFixing,
+     0, //33 baCloning,
+    16, //34 baFencing,
+     8, //35 baReaching,
+    20, //36 baShimmying
+    13, //37 baJumping
+     7, //38 baDehoisting
+     1, //39 baSliding
+    16, //40 baDangling
+    10, //41 baSpearing
+    10, //42 baGrenading
+    14, //43 baLooking
+    12, //44 baLasering - it's, ironically, this high for rendering purposes
+    20  //45 baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1731,11 +1735,15 @@ begin
                      L.LemConstructivePositionFreeze := false;
                    end;
     baStacking   : L.LemNumberOfBricksLeft := 8;
-    baOhnoing,
-    baFreezing    : begin
-                     //hotbookmark - this is going to become a different state
+    baOhnoing    : begin
                      CueSoundEffect(SFX_OHNO, L.Position);
-                     L.LemHasBeenOhnoer := false;
+                     L.LemIsSlider := false;
+                     L.LemIsClimber := false;
+                     L.LemIsSwimmer := false;
+                     L.LemIsFloater := false;
+                     L.LemIsGlider := false;
+                     L.LemIsDisarmer := false;
+                     L.LemHasBeenOhnoer := true;
                    end;
     baTimebombing :begin
                      CueSoundEffect(SFX_OHNO, L.Position);
@@ -1747,6 +1755,7 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
+    //baFreezing - might want to add some stuff for this state here //hotbookmark
     baTimebombFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baExploding: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baFreezerExplosion: CueSoundEffect(SFX_EXPLOSION, L.Position);
@@ -2412,8 +2421,8 @@ end;
 
 function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezerExplosion,
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDrowning, baVaporizing, baVinetrapping, baSplatting,
                baExiting];
 begin
@@ -2422,18 +2431,18 @@ end;
 
 function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing, baTimebombFinish,
-               baExploding, baFreezerExplosion, baDrowning,
-               baDangling, baVaporizing, baVinetrapping, baSplatting,
-               baExiting];
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+               baDrowning, baDangling, baVaporizing, baVinetrapping,
+               baSplatting, baExiting];
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
 end;
 
 function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezerExplosion,
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDrowning, baDangling, baSplatting, baVaporizing,
                baVinetrapping, baExiting];
 begin
@@ -2442,8 +2451,8 @@ end;
 
 function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezerExplosion,
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping,
                baSplatting, baExiting];   // Does NOT contain baDrowning!
 begin
@@ -2452,8 +2461,8 @@ end;
 
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezerExplosion,
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDrowning, baDangling, baSplatting, baVaporizing,
 			         baVinetrapping, baExiting];
 begin
@@ -2479,7 +2488,7 @@ end;
 //Timebomber can be assigned to all states except those in list
 function TLemmingGame.MayAssignTimebomber(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+  ActionSet = [baTimebombing, baOhnoing, //baFreezing, hotbookmark - we may want to allow this
                baTimebombFinish, baExploding, baFreezerExplosion,
                baDangling, baVaporizing, baVinetrapping,
                baSplatting, baExiting];
@@ -2500,7 +2509,7 @@ end;
 //Exploders and freezers can be assigned to all states except those in list
 function TLemmingGame.MayAssignExploder(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
+  ActionSet = [baTimebombing, baOhnoing, //baFreezing, hotbookmark - we may want to allow this
                baTimebombFinish, baExploding, baFreezerExplosion,
                baDangling, baVaporizing, baVinetrapping, baSplatting,
                baExiting];
@@ -2520,8 +2529,8 @@ end;
 
 function TLemmingGame.MayAssignFreezer(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezerExplosion,
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping,
                baSplatting, baExiting];
                //putting baTimebombing in here doesn't work - why???
@@ -3413,8 +3422,8 @@ end;
 function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
 const
   ActionSet = [baSwimming, baClimbing, baHoisting,
-               baTimebombing, baOhnoing, baFreezing,
-               baTimebombFinish, baExploding, baFreezerExplosion,
+               baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
@@ -3919,10 +3928,12 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
   o Do *not* call this method for a removed lemming
 -------------------------------------------------------------------------------}
 const
+  //these are any lemming actions which don't repeat the animation
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
-                      baShrugging, baTimebombing, baOhnoing,
-                      baExploding, baFreezing, baReaching, baDehoisting,
-                      baVaporizing, baVinetrapping, baDangling, baLooking];
+                      baShrugging, baTimebombing, baOhnoing, baExploding,
+                      baFreezerExplosion, baFreezing, baFrozen, baUnfreezing,
+                      baReaching, baDehoisting, baVaporizing, baVinetrapping,
+                      baDangling, baLooking];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -5983,10 +5994,33 @@ begin
   fParticleFinishTimer := PARTICLE_FRAMECOUNT;
 end;
 
+function TLemmingGame.HandleFreezing(L: TLemming): Boolean;
+begin
+  Result := True; //hotbookmark - what is true, exactly?
+  if L.LemEndOfAnimation then
+  begin
+    if L.LemAction = baFreezing then
+      Transition(L, baFreezerExplosion);
+    L.LemHasBlockerField := False; // remove blocker field
+    SetBlockerMap;
+    Result := False;
+  end
+  else if not HasPixelAt(L.LemX, L.LemY) then
+  begin
+    L.LemHasBlockerField := False; // remove blocker field
+    SetBlockerMap;
+    // let lemming fall
+    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then
+      Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 2]))
+    else
+      Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 3]));
+  end;
+end;
+
 function TLemmingGame.HandleFreezerExplosion(L: TLemming): Boolean;
 begin
-  Renderer.fIsFreezerExplosion := true;
-  Result := false;
+  Renderer.fIsFreezerExplosion := true; //sets explosion particle colours
+  Result := false; //hotbookmark - what is false, exactly?
 
   if L.LemAction = baFreezerExplosion then
   begin
@@ -6002,19 +6036,27 @@ function TLemmingGame.HandleFrozen(L: TLemming): Boolean;
 var
 i: Integer;
 begin
-  Result := false;
+  Result := false; //hotbookmark - what is false, exactly?
 
   if L.LemAction = baFrozen then
   begin
-    Result := True;
+    Result := True; //hotbookmark - what is true, exactly?
 
     for i := 1 to 7 do
 
     if not HasPixelAt(L.LemX, L.LemY -i)
     and not HasPixelAt(L.LemX -1, L.LemY -i)
-    and not HasPixelAt(L.LemX +1, L.LemY -i)
-    then Transition(L, baWalking);
+    and not HasPixelAt(L.LemX +1, L.LemY -i) then
+    Transition(L, baUnfreezing);
   end;
+end;
+
+function TLemmingGame.HandleUnfreezing(L: TLemming): Boolean;
+begin
+  Result := False; //hotbookmark - what is true, exactly?
+
+  if L.LemEndOfAnimation then  //hotbookmark
+  Transition(L, baWalking); //might want to fall instead, do some terrain checks
 end;
 
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);

@@ -195,22 +195,23 @@ const
     SFreezer,     //26
     SFreezer,     //27
     SFreezer,     //28
-    SSwimmer,     //29
-    SGlider,      //30
-    SDisarmer,    //31
-    SCloner,      //32
-    SFencer,      //33
-    SReacher,     //34
-    SShimmier,    //35
-    SJumper,      //36
-    SDehoister,   //37
-    SSlider,      //38
-    SDangler,     //39
-    SSpearer,     //40
-    SGrenader,    //41
-    SLooker,      //42
-    SLaserer,     //43
-    SSleeper      //44
+    SFreezer,     //29
+    SSwimmer,     //30
+    SGlider,      //31
+    SDisarmer,    //32
+    SCloner,      //33
+    SFencer,      //34
+    SReacher,     //35
+    SShimmier,    //36
+    SJumper,      //37
+    SDehoister,   //38
+    SSlider,      //39
+    SDangler,     //40
+    SSpearer,     //41
+    SGrenader,    //42
+    SLooker,      //43
+    SLaserer,     //44
+    SSleeper      //45
   );
 
 implementation

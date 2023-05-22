@@ -72,22 +72,23 @@ type
     baFreezing,        //26
     baFreezerExplosion,//27
     baFrozen,          //28
-    baSwimming,        //29
-    baGliding,         //30
-    baFixing,          //31
-    baCloning,         //32
-    baFencing,         //33
-    baReaching,        //34
-    baShimmying,       //35
-    baJumping,         //36
-    baDehoisting,      //37
-    baSliding,         //38
-    baDangling,        //39
-    baSpearing,        //40
-    baGrenading,       //41
-    baLooking,         //42
-    baLasering,        //43
-    baSleeping         //44
+    baUnfreezing,      //29
+    baSwimming,        //30
+    baGliding,         //31
+    baFixing,          //32
+    baCloning,         //33
+    baFencing,         //34
+    baReaching,        //35
+    baShimmying,       //36
+    baJumping,         //37
+    baDehoisting,      //38
+    baSliding,         //39
+    baDangling,        //40
+    baSpearing,        //41
+    baGrenading,       //42
+    baLooking,         //43
+    baLasering,        //44
+    baSleeping         //45
   );
 
 const
@@ -276,22 +277,23 @@ const
     spbFreezer,     //26  baFreezing
     spbNone,        //27  baFreezerExplosion
     spbNone,        //28  baFrozen
-    spbSwimmer,     //29
-    spbGlider,      //30
-    spbDisarmer,    //31
-    spbCloner,      //32
-    spbFencer,      //33
-    spbNone,        //34 baReaching
-    spbShimmier,    //35
-    spbJumper,      //36
-    spbNone,        //37 baDehoisting
-    spbSlider,      //38
-    spbNone,        //39 baDangling
-    spbSpearer,     //40
-    spbGrenader,    //41
-    spbNone,        //42 baLooking
-    spbLaserer,     //43
-    spbNone         //44 baSleeping
+    spbNone,        //29  baUnfreezing
+    spbSwimmer,     //30
+    spbGlider,      //31
+    spbDisarmer,    //32
+    spbCloner,      //33
+    spbFencer,      //34
+    spbNone,        //35 baReaching
+    spbShimmier,    //36
+    spbJumper,      //37
+    spbNone,        //38 baDehoisting
+    spbSlider,      //39
+    spbNone,        //40 baDangling
+    spbSpearer,     //41
+    spbGrenader,    //42
+    spbNone,        //43 baLooking
+    spbLaserer,     //44
+    spbNone         //45 baSleeping
   );
 
 const
