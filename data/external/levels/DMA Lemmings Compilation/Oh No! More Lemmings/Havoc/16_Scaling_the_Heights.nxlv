@@ -53,7 +53,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 304
    Y 128
    WIDTH 64

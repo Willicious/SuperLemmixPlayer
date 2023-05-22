@@ -73,7 +73,7 @@
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 240
    Y 136
    WIDTH 64
@@ -83,7 +83,7 @@
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 304
    Y 136
    WIDTH 64
@@ -92,7 +92,7 @@
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 368
    Y 136
    WIDTH 64
@@ -101,7 +101,7 @@
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 64
    Y 136
    WIDTH 64
@@ -111,7 +111,7 @@
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 0
    Y 136
    WIDTH 64

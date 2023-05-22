@@ -35,7 +35,7 @@
 # ----------------------------- 
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 688
    Y 112
    WIDTH 64
@@ -44,7 +44,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 736
    Y 112
    WIDTH 64

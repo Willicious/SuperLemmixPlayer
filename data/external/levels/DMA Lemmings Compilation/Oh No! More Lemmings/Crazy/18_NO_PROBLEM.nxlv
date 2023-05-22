@@ -39,7 +39,7 @@ BACKGROUND special:amiga_blue
 # ----------------------------- 
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 32
    Y 129
    WIDTH 64
@@ -49,7 +49,7 @@ BACKGROUND special:amiga_blue
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 96
    Y 129
    WIDTH 64
@@ -59,7 +59,7 @@ BACKGROUND special:amiga_blue
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 464
    Y 132
    WIDTH 64
@@ -93,7 +93,7 @@ BACKGROUND special:amiga_blue
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 1392
    Y 132
    WIDTH 64
@@ -121,7 +121,7 @@ BACKGROUND special:amiga_blue
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 1456
    Y 132
    WIDTH 64
@@ -139,7 +139,7 @@ BACKGROUND special:amiga_blue
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X -32
    Y 129
    WIDTH 64

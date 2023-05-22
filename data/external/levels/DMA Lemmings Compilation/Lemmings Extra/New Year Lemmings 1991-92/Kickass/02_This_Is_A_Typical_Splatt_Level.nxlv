@@ -47,7 +47,7 @@
  
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 592
    Y 116
    WIDTH 64

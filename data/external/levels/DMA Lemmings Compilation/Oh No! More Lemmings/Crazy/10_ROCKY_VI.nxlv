@@ -47,7 +47,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 240
    Y 52
    WIDTH 64
@@ -57,7 +57,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 176
    Y 52
    WIDTH 64

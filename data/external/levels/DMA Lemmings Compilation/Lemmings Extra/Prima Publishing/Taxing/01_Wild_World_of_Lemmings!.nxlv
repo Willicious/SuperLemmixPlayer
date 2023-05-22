@@ -55,7 +55,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 1016
    Y 136
    WIDTH 64
@@ -64,7 +64,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 1080
    Y 136
    WIDTH 64
@@ -73,7 +73,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 584
    Y 140
    WIDTH 64
@@ -83,7 +83,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 728
    Y 140
    WIDTH 64
@@ -93,7 +93,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 520
    Y 136
    WIDTH 64
@@ -103,7 +103,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 392
    Y 136
    WIDTH 64
@@ -113,7 +113,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 456
    Y 136
    WIDTH 64
@@ -123,7 +123,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 264
    Y 136
    WIDTH 64
@@ -133,7 +133,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 200
    Y 136
    WIDTH 64
