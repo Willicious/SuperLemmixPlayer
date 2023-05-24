@@ -1793,13 +1793,13 @@ begin
                       baFrozen] then
     begin
       if L.LemIsTimebomber then Transition(L, baTimebombFinish)
-      else if L.LemTimerToFreeze then
+      else if L.LemTimerToFreeze and not UserSetNuking then
         Transition(L, baFreezerExplosion)
       else
         Transition(L, baExploding)
     end else begin
       if L.LemIsTimebomber then Transition(L, baTimebombing)
-      else if L.LemTimerToFreeze then
+      else if L.LemTimerToFreeze and not UserSetNuking then
         Transition(L, baFreezing)
       else
         Transition(L, baOhnoing)
@@ -2178,7 +2178,7 @@ begin
   begin
     L.LemIsTimebomber := True;
     L.LemExplosionTimer := 85;
-    //L.LemTimerToFreeze := False;
+    L.LemTimerToFreeze := False;
     L.LemHideCountdown := False;
   end
   else if (NewSkill = baExploding) then
@@ -5959,10 +5959,7 @@ begin
   Result := True;
   if L.LemEndOfAnimation then
   begin
-    if L.LemAction = baOhNoing then
-      Transition(L, baExploding)
-    else if L.LemAction = baFreezing then
-      Transition(L, baFreezerExplosion);
+    Transition(L, baExploding);
     L.LemHasBlockerField := False; // remove blocker field
     SetBlockerMap;
     Result := False;
@@ -6024,18 +6021,10 @@ begin
 
   if (L.LemAction = baFreezerExplosion) then
   begin
-    if not UserSetNuking then
-    begin
-      ApplyFreezeLemming(L);
-      Transition(L, baFrozen);
-      //particles recoloured like ice water
-      L.LemParticleTimer := PARTICLE_FRAMECOUNT;
-      fParticleFinishTimer := PARTICLE_FRAMECOUNT;
-    end else begin
-      //normal explosion & particle colours for nuked Freezers
-      Transition(L, baExploding);
-      Renderer.fIsFreezerExplosion := false;
-    end;
+    ApplyFreezeLemming(L);
+    Transition(L, baFrozen);
+    L.LemParticleTimer := PARTICLE_FRAMECOUNT;
+    fParticleFinishTimer := PARTICLE_FRAMECOUNT;
   end;
 end;
 
