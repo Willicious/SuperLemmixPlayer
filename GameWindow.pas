@@ -204,9 +204,9 @@ type
     property HyperSpeedTarget: Integer read fHyperSpeedTarget write fHyperSpeedTarget;
     property IsHyperSpeed: Boolean read GetIsHyperSpeed;
 
-    function ScreenImage: TImage32; // to staisfy IGameWindow, should be moved to TGameBaseScreen, but it causes bugs there.
-    property DisplayWidth: Integer read GetDisplayWidth; // to staisfy IGameWindow
-    property DisplayHeight: Integer read GetDisplayHeight; // to staisfy IGameWindow
+    function ScreenImage: TImage32; // to satisfy IGameWindow, should be moved to TGameBaseScreen, but it causes bugs there.
+    property DisplayWidth: Integer read GetDisplayWidth; // to satisfy IGameWindow
+    property DisplayHeight: Integer read GetDisplayHeight; // to satisfy IGameWindow
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
     function MouseFrameSkip: Integer; //Performs repeated skips when mouse buttons are held

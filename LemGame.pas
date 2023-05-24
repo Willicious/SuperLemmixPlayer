@@ -185,7 +185,6 @@ type
     fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval          : Integer; //the current spawn interval, obviously
-    fSpawnIntervalChanged      : Boolean; //set to true in AdjustSpawnInterval when the SI has changed
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -426,6 +425,7 @@ type
     fActiveSkills              : array[0..MAX_SKILL_TYPES_PER_LEVEL-1] of TSkillPanelButton;
     LastHitCount               : Integer;
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
+    fSpawnIntervalChanged      : Boolean; //set to true in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
 
     constructor Create(aOwner: TComponent); override;
