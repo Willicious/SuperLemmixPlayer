@@ -140,7 +140,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-
   $END
 
   $DIGGER
@@ -155,7 +154,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 12
     $END
-
   $END
 
   $CLIMBER
@@ -170,7 +168,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 12
     $END
-
   $END
 
   $DROWNER
@@ -185,7 +182,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-
   $END
 
   $HOISTER
@@ -200,7 +196,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 12
     $END
-
   $END
 
   $BUILDER
@@ -215,7 +210,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 13
     $END
-
   $END
 
   $BASHER
@@ -230,7 +224,6 @@ $ANIMATIONS
       FOOT_X 7
       FOOT_Y 10
     $END
-
   $END
 
   $MINER
@@ -245,7 +238,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 13
     $END
-
   $END
 
   $FALLER
@@ -260,7 +252,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-
   $END
 
   $FLOATER
@@ -276,7 +267,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 16
     $END
-
   $END
 
   $SPLATTER
@@ -291,7 +281,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 10
     $END
-
   $END
 
   $EXITER
@@ -306,7 +295,6 @@ $ANIMATIONS
       FOOT_X 7
       FOOT_Y 13
     $END
-
   $END
 
   $BURNER
@@ -321,7 +309,20 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 14
     $END
+  $END
+  
+  $VINETRAPPER
+    FRAMES 9
 
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 15
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 15
+    $END
   $END
 
   $BLOCKER
@@ -336,7 +337,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 13
     $END
-
   $END
 
   $SHRUGGER
@@ -351,7 +351,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 10
     $END
-
   $END
 
   $OHNOER
@@ -366,7 +365,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 10
     $END
-
   $END
   
   $TIMEBOMBER
@@ -395,7 +393,6 @@ $ANIMATIONS
       FOOT_X 16
       FOOT_Y 25
     $END
-
   $END
 
   $PLATFORMER
@@ -410,7 +407,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 13
     $END
-
   $END
 
   $FREEZER
@@ -425,7 +421,48 @@ $ANIMATIONS
       FOOT_X 16
       FOOT_Y 25
     $END
+  $END
+  
+  $FROZEN
+    FRAMES 1
 
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+  $END
+  
+  $FREEZING
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+  $END
+  
+  $UNFREEZING
+    FRAMES 12
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
   $END
 
   $SWIMMER
@@ -440,7 +477,6 @@ $ANIMATIONS
       FOOT_X 7
       FOOT_Y 8
     $END
-
   $END
 
   $GLIDER
@@ -456,7 +492,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 16
     $END
-
   $END
 
   $DISARMER
@@ -471,7 +506,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 11
     $END
-
   $END
 
   $STACKER
@@ -486,7 +520,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 13
     $END
-
   $END
   
   $FENCER
@@ -501,7 +534,6 @@ $ANIMATIONS
       FOOT_X 7
       FOOT_Y 10
     $END
-    
   $END
 
   $REACHER
@@ -515,8 +547,7 @@ $ANIMATIONS
     $LEFT
       FOOT_X 9
       FOOT_Y 10
-    $END
-    
+    $END 
   $END
 
   $SHIMMIER

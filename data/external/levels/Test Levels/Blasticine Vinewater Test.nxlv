@@ -8,7 +8,7 @@
  TITLE Blasticine Vinewater Test
  AUTHOR 
  ID x54AD42C90436F483
- VERSION x0000000000000008
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -26,13 +26,16 @@
  
  $SKILLSET 
    JUMPER 5
+   CLIMBER 5
+   FREEZER 5
+   GRENADER 5
  $END 
  
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
    STYLE ohno_bubble
-   PIECE water
+   PIECE blasticine
    X 67
    Y 53
    WIDTH 64
@@ -42,7 +45,7 @@
  
  $GADGET
    STYLE ohno_rock
-   PIECE water
+   PIECE vinewater
    X 142
    Y 60
    WIDTH 64
@@ -93,6 +96,38 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 231
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 0
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X -6
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 287
+   Y 73
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
@@ -135,9 +170,20 @@
  $END
  
  $LEMMING
-   X 217
+   X 256
+   Y 97
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 216
    Y 81
    FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 27
+   Y 97
  $END
  
  

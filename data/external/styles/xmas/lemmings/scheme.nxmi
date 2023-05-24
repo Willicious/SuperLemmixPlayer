@@ -261,6 +261,20 @@ $ANIMATIONS
       FOOT_Y 14
     $END
   $END
+  
+  $VINETRAPPER
+    FRAMES 9
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 15
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 15
+    $END
+  $END
 
   $BLOCKER
     FRAMES 32
@@ -343,6 +357,48 @@ $ANIMATIONS
     $LEFT
       FOOT_X 16
       FOOT_Y 25
+    $END
+  $END
+  
+  $FROZEN
+    FRAMES 1
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+  $END
+  
+  $FREEZING
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+  $END
+  
+  $UNFREEZING
+    FRAMES 12
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
     $END
   $END
 
