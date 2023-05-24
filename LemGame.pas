@@ -644,6 +644,7 @@ var
     MINUTE_IN_FRAMES = 17 * 60;
     HALF_MINUTE_IN_FRAMES = 17 * 30;
     TEN_SECONDS_IN_FRAMES = 17 * 10;
+    //ONE_SECOND_IN_FRAMES = 17;
   begin
     Result := false;
     if Items[aStateIndex].CurrentIteration = 0 then
@@ -656,6 +657,10 @@ var
     if (Items[aStateIndex].CurrentIteration mod TEN_SECONDS_IN_FRAMES = 0)
     and (aCurrentIteration - Items[aStateIndex].CurrentIteration <= MINUTE_IN_FRAMES) then
       Result := true;
+//    // If saving every second, delete every three
+//    if (Items[aStateIndex].CurrentIteration mod ONE_SECOND_IN_FRAMES = 0)
+//    and (aCurrentIteration - Items[aStateIndex].CurrentIteration <= ONE_SECOND_IN_FRAMES * 3) then
+//      Result := True;
   end;
 begin
   // What we want to save:
@@ -1235,6 +1240,7 @@ begin
   with Level.Info do
   begin
     CurrSpawnInterval := SpawnInterval;
+    fSpawnIntervalChanged := false;
 
     // Set available skills
     for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -6698,8 +6704,7 @@ procedure TLemmingGame.RecordSpawnInterval(aSI: Integer);
 var
   E: TReplayChangeSpawnInterval;
 begin
-  if not fPlaying then
-    Exit;
+  if not fPlaying then Exit;
 
   E := TReplayChangeSpawnInterval.Create;
   E.Frame := fCurrentIteration;

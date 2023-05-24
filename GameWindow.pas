@@ -682,6 +682,13 @@ begin
         fSaveList.TidyList(Game.CurrentIteration);
       end;
 
+//      // Save current state every second   //bookmark
+//      if (Game.CurrentIteration mod 17 = 0) then
+//      begin
+//        AddSaveState;
+//        fSaveList.TidyList(Game.CurrentIteration);
+//      end;
+
       fRanOneUpdate := true;
     end;
 
