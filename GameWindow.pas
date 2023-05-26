@@ -625,7 +625,7 @@ begin
     if Game.CurrentIteration = 0 then
       GameSpeed := gspPause
     else begin
-      GoToSaveState(Max(Game.CurrentIteration -3, 0));
+      GoToSaveState(Max(Game.CurrentIteration -1, 0));
       GameSpeed := gspRewind;
     end;
 
@@ -1872,7 +1872,7 @@ begin
   IdealFrameTimeMSFast := 10;
   IdealFrameTimeMSSuperLemming := 30;
   IdealScrollTimeMS := 15;
-  IdealFrameTimeMSRewind := 22;    //bookmark - may need to change this
+  IdealFrameTimeMSRewind := 8;    //bookmark - may need to change this
   IdealFrameTimeMS := 60; // normal
   IdealFrameTimeMSSlow := 240;
 
