@@ -730,7 +730,7 @@ begin
     TempBmp.DrawTo(fSkillIcons[spbFreezer], 0, 0);
 
     // Blocker is simple
-    DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 0, 7, 21);
+    DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 4, 7, 21);
 
     // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
     // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
