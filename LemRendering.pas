@@ -2612,7 +2612,7 @@ var
     fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
-  procedure DrawNumberWithCountdownDigits(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  procedure DrawNumberWithHatchNumbers(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
     DigitsWidth: Integer;
 
@@ -2632,7 +2632,7 @@ var
 
     Y := Y - 2; // to center
 
-    DigitsWidth := Length(aDigitString) * 6;
+    DigitsWidth := Length(aDigitString) * 5;
     if aAlignment < 0 then
       CurX := X
     else if aAlignment > 0 then
@@ -2643,19 +2643,19 @@ var
     for n := 1 to Length(aDigitString) do
     begin
       Digit := StrToInt(aDigitString[n]);
-      SrcRect := SizedRect(Digit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
+      SrcRect := SizedRect(Digit * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
 
-      fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
-      fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
+      fAni.HatchNumbersBitmap.DrawMode := dmCustom;
+      fAni.HatchNumbersBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
+      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
+      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
+      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
 
-      fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
-      fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
-      CurX := CurX + 7;
+      fAni.HatchNumbersBitmap.DrawMode := dmBlend;
+      fAni.HatchNumbersBitmap.CombineMode := cmMerge;
+      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
+      CurX := CurX + 5;
     end;
 
     fFixedDrawColor := OldDrawColor;
@@ -2681,7 +2681,7 @@ var
 
     if Gadget.MetaObj.DigitAnimation = nil then
     begin
-      DrawNumberWithCountdownDigits(X, Y, DigitString, aAlignment);
+      DrawNumberWithHatchNumbers(X, Y, DigitString, aAlignment);
       Exit;
     end;
 
