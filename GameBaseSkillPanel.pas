@@ -931,6 +931,11 @@ var
   MagicFrequencyAmiga: Single;
   //MagicFrequencyCalculatedByWillAndEric: Single;
 begin
+  //stops the sound cueing during backwards framesteps
+  if Game.IsBackstepping
+    //unless the change is at the current frame
+    and not (Game.ReplayManager.HasRRChangeAt(Game.CurrentIteration)) then Exit;
+
   if Game.SpawnIntervalChanged then
   begin
     RR := (103 - Game.CurrentSpawnInterval);
@@ -1583,9 +1588,11 @@ begin
     spbPause:
       begin
         if fGameWindow.GameSpeed = gspPause then
-        fGameWindow.GameSpeed := gspNormal
-        else
-        fGameWindow.GameSpeed := gspPause;
+        begin
+         fGameWindow.GameSpeed := gspNormal;
+         Game.IsBackstepping := False;
+        end else
+         fGameWindow.GameSpeed := gspPause;
       end;
     spbNuke:
       begin
@@ -1603,6 +1610,7 @@ begin
           fGameWindow.GameSpeed := gspNormal
         else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspRewind] then
           fGameWindow.GameSpeed := gspFF;
+        Game.IsBackstepping := False;
       end;
     spbRewind:
       begin
@@ -1610,6 +1618,7 @@ begin
           fGameWindow.GameSpeed := gspNormal
         else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then
           fGameWindow.GameSpeed := gspRewind;
+        Game.IsBackstepping := True;
       end;
     spbRestart:
       begin

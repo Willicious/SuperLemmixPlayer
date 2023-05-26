@@ -156,6 +156,7 @@ type
       procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false; aInternal: Boolean = false);
       procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
+      function HasRRChangeAt(aFrame: Integer): Boolean;
       function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
@@ -456,6 +457,24 @@ function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
 begin
   Result := CheckForAction(fAssignments)
          or CheckForAction(fSpawnIntervalChanges);
+end;
+
+function TReplay.HasRRChangeAt(aFrame: Integer): Boolean;
+
+  function CheckForRRChange(aList: TReplayItemList): Boolean;
+  var
+    i: Integer;
+  begin
+    Result := false;
+    for i := 0 to aList.Count-1 do
+      if aList[i].Frame = aFrame then
+      begin
+        Result := true;
+        Exit;
+      end;
+  end;
+begin
+  Result := CheckForRRChange(fSpawnIntervalChanges);
 end;
 
 function TReplay.IsThisLatestAction(aAction: TBaseReplayItem): Boolean;

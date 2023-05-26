@@ -1053,8 +1053,10 @@ begin
   if not (fGameSpeed = gspRewind) then
   begin
   if PauseAfterSkip < 0 then
-    GameSpeed := gspNormal
-  else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
+  begin
+    GameSpeed := gspNormal;
+    Game.IsBackstepping := False;
+  end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
        or (PauseAfterSkip > 0) then
     GameSpeed := gspPause;
   end;
@@ -1072,8 +1074,10 @@ begin
     // Load save state or restart the level
     if UseSaveState >= 0 then
       Game.LoadSavedState(fSaveList[UseSaveState])
-    else
+    else begin
       Game.Start(true);
+      Game.IsBackstepping := False;
+    end;
   end;
 
   fSaveList.ClearAfterIteration(Game.CurrentIteration);
@@ -1404,8 +1408,10 @@ begin
                           end;
       lka_Pause: begin
                    if fGameSpeed = gspPause then
-                     GameSpeed := gspNormal
-                   else
+                   begin
+                     GameSpeed := gspNormal;
+                     Game.IsBackstepping := False;
+                   end else
                      GameSpeed := gspPause;
                  end;
       lka_Nuke: begin
@@ -1455,12 +1461,14 @@ begin
                            gspNormal, gspSlowMo, gspPause, gspRewind: GameSpeed := gspFF;
                            gspFF: GameSpeed := gspNormal;
                          end;
+                         Game.IsBackstepping := False;
                        end;
       lka_Rewind: begin
                     case fGameSpeed of
                       gspNormal, gspSlowMo, gspPause, gspFF: GameSpeed := gspRewind;
                       gspRewind: GameSpeed := gspNormal;
                     end;
+                    Game.IsBackstepping := True;
                   end;
       lka_SlowMotion: if not GameParams.HideFrameskipping then
                       begin
@@ -1468,6 +1476,7 @@ begin
                           gspNormal, gspFF, gspPause, gspRewind: GameSpeed := gspSlowMo;
                           gspSlowMo: GameSpeed := gspNormal;
                         end;
+                        Game.IsBackstepping := False;
                       end;
       lka_SaveImage: SaveShot;
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
@@ -1507,8 +1516,10 @@ begin
                   begin
                     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                     if CurrentIteration > (func.Modifier * -1) then
-                      GotoSaveState(CurrentIteration + func.Modifier)
-                    else
+                    begin
+                      GotoSaveState(CurrentIteration + func.Modifier);
+                      Game.IsBackstepping := True;
+                    end else
                       GotoSaveState(0);
                   end else if func.Modifier > 1 then
                   begin
@@ -1705,7 +1716,10 @@ begin
       if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
     end else if (Button = mbRight) and RightMouseUnassigned
     and not GameParams.HideFrameskipping then
+    begin
       GoToSaveState(Max(Game.CurrentIteration -1, 0));
+      Game.IsBackstepping := True;
+    end;
 
     if Game.IsHighlightHotkey then
     begin
@@ -2012,6 +2026,7 @@ begin
                 'will attempt to play the replay anyway.');
 
   GameSpeed := gspNormal;
+  Game.IsBackstepping := False;
   GotoSaveState(0, -1);
   CanPlay := True;
 end;

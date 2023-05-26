@@ -427,6 +427,7 @@ type
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     fSpawnIntervalChanged      : Boolean; //set to true in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
+    IsBackstepping             : Boolean;
 
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
