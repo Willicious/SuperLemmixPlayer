@@ -365,10 +365,10 @@ begin
 
   HueShift.HShift := GROUP_SHIFT;
   Result[1].yPos := Result[0].yPos + 40;
-  Result[1].Line := Entry.Group.Name;
+  Result[1].Line := SPreviewGroup + Entry.Group.Name;
   if Entry.Group.Parent = nil then
   begin
-    Result[1].Line := 'Levels'
+    Result[1].Line := 'Group: Levels'
   end else
   begin
     if Entry.Group.IsOrdered then
@@ -380,26 +380,23 @@ begin
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   if (Level.Info.NeutralCount > 0) or (Level.Info.ZombieCount > 0) then
   begin
-    Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
-                                               - Level.Info.ZombieCount
-                                               - Level.Info.NeutralCount)
-                                               + ' ' + GameParams.Renderer.Theme.LemNames;
+    Result[2].Line := Result[2].Line + GameParams.Renderer.Theme.LemNames + ': '
+                                     + IntToStr(Level.Info.LemmingsCount
+                                     - Level.Info.ZombieCount - Level.Info.NeutralCount);
 
     if Level.Info.NeutralCount > 0 then
-    Result[2].Line := Result[2].Line + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
-
-    if (Level.Info.NeutralCount > 0) and (Level.Info.ZombieCount > 0) then
-    Result[2].Line := Result[2].Line + ', ';
+    Result[2].Line := Result[2].Line + ', Neutrals: ' + IntToStr(Level.Info.NeutralCount);
 
     if Level.Info.ZombieCount > 0 then
-    Result[2].Line := Result[2].Line + IntToStr(Level.Info.ZombieCount) + ' Zombies';
+    Result[2].Line := Result[2].Line + ', Zombies: ' + IntToStr(Level.Info.ZombieCount);
   end else
-  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNames;
+  Result[2].Line := 'Number of ' + GameParams.Renderer.Theme.LemNames + ': '
+                    + IntToStr(Level.Info.LemmingsCount);
   Result[2].ColorShift := HueShift;
 
   HueShift.HShift := RESCUE_LEMS_SHIFT;
   Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
-  Result[3].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
+  Result[3].Line := SPreviewSave + IntToStr(Level.Info.RescueCount);
   Result[3].ColorShift := HueShift;
 
   HueShift.HShift := RELEASE_RATE_SHIFT;
@@ -418,7 +415,7 @@ begin
     Result[5].Line := SPreviewTimeLimit + IntToStr(Level.Info.TimeLimit div 60) + ':'
                     + LeadZeroStr(Level.Info.TimeLimit mod 60, 2);
   end else
-  Result[5].Line := 'Infinite Time';      //hotbookmark
+  Result[5].Line := 'Infinite Time';
   Result[5].ColorShift := HueShift;
 
   HueShift.HShift := AUTHOR_SHIFT;
