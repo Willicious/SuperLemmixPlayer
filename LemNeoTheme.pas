@@ -29,8 +29,8 @@ type
   TNeoTheme = class
     private
       fColors: array of TNeoThemeColor;
-      fLemmings: String;          // Which lemming graphics to use
-      fLemNames: String;    //hotbookmark      // What to call the lemmings in menu screens
+      fLemmings: String; // Which lemming graphics to use
+      fLemNames: String; // What to call the lemmings in menu screens
       function GetColor(Name: String): TColor32;
       function FindColorIndex(Name: String): Integer;
     public
@@ -42,7 +42,7 @@ type
       function DoesColorExist(Name: String): Boolean;
 
       property Lemmings: String read fLemmings write fLemmings;
-      property LemNames: String read fLemNames write fLemNames; //hotbookmark
+      property LemNames: String read fLemNames write fLemNames;
       property Colors[Name: String]: TColor32 read GetColor;
   end;
 
@@ -87,7 +87,7 @@ begin
     fLemmings := Parser.MainSection.LineString['lemmings'];
     if fLemmings = '' then fLemmings := 'default';
 
-    fLemNames := Parser.MainSection.LineString['names'];  //hotbookmark
+    fLemNames := Parser.MainSection.LineString['names'];
     if fLemNames = '' then fLemNames := 'Lemmings';
 
 

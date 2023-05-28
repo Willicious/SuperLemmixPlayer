@@ -78,7 +78,7 @@ resourcestring
   {-------------------------------------------------------------------------------
     PreviewScreen
   -------------------------------------------------------------------------------}
-  SPreviewLemmings = ' Lemmings';
+  //SPreviewLemmings = ' Lemmings'; //not currently used
   SPreviewSave = ' To Be Saved';
   SPreviewReleaseRate = 'Release Rate ';
   SPreviewSpawnInterval = 'Spawn Interval ';
@@ -93,8 +93,8 @@ resourcestring
 
   SAthlete = 'Athlete';
   STriathlete = 'Triathlete';
-  SQuadathlete = 'X-Athlete';
-  SQuintathlete = 'Jock';
+  SQuadathlete = 'Superstar';
+  SQuintathlete = 'Legend';
 
   SWalker = 'Walker';
   SAscender = 'Ascender';
@@ -145,8 +145,8 @@ resourcestring
   SYourTimeIsUp =
     'Your time is up!';
 
-  SAllLemmingsAccountedFor =
-    'All lemmings accounted for.';
+  //SAllLemmingsAccountedFor =
+    //'All lemmings accounted for.'; //not currently used
 
   STalismanUnlocked =
     'You unlocked a talisman!';

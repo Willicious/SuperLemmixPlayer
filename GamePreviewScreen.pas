@@ -58,11 +58,7 @@ type
 implementation
 
 uses
-  CustomPopup,
-  FBaseDosForm,
-  FLevelInfo,
-  LemNeoTheme,  //hotbookmark - we need this to read LemNames from the theme
-  FStyleManager;
+  CustomPopup, FBaseDosForm, FLevelInfo, FStyleManager;
 
 const
   TALISMAN_PADDING = 8;
@@ -386,7 +382,8 @@ begin
   begin
     Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
                                                - Level.Info.ZombieCount
-                                               - Level.Info.NeutralCount) + ' Lemmings + ';   //hotbookmark
+                                               - Level.Info.NeutralCount)
+                                               + ' ' + GameParams.Renderer.Theme.LemNames;
 
     if Level.Info.NeutralCount > 0 then
     Result[2].Line := Result[2].Line + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
@@ -397,7 +394,7 @@ begin
     if Level.Info.ZombieCount > 0 then
     Result[2].Line := Result[2].Line + IntToStr(Level.Info.ZombieCount) + ' Zombies';
   end else
-  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + SPreviewLemmings;;
+  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNames;
   Result[2].ColorShift := HueShift;
 
   HueShift.HShift := RESCUE_LEMS_SHIFT;
