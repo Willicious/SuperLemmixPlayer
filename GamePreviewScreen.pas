@@ -365,10 +365,10 @@ begin
 
   HueShift.HShift := GROUP_SHIFT;
   Result[1].yPos := Result[0].yPos + 40;
-  Result[1].Line := SPreviewGroup + Entry.Group.Name;
+  Result[1].Line := Entry.Group.Name;
   if Entry.Group.Parent = nil then
   begin
-    Result[1].Line := 'Group: Levels'
+    Result[1].Line := 'Miscellaneous Levels'
   end else
   begin
     if Entry.Group.IsOrdered then
@@ -380,23 +380,33 @@ begin
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   if (Level.Info.NeutralCount > 0) or (Level.Info.ZombieCount > 0) then
   begin
-    Result[2].Line := Result[2].Line + GameParams.Renderer.Theme.LemNames + ': '
-                                     + IntToStr(Level.Info.LemmingsCount
-                                     - Level.Info.ZombieCount - Level.Info.NeutralCount);
+    if Level.Info.LemmingsCount = 1 then
+    Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
+                                     - Level.Info.ZombieCount - Level.Info.NeutralCount)
+                                     + ' ' + GameParams.Renderer.Theme.LemNamesSingular
+    else if Level.Info.LemmingsCount > 1 then
+    Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
+                                     - Level.Info.ZombieCount - Level.Info.NeutralCount)
+                                     + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
 
-    if Level.Info.NeutralCount > 0 then
-    Result[2].Line := Result[2].Line + ', Neutrals: ' + IntToStr(Level.Info.NeutralCount);
+    if (Level.Info.NeutralCount = 1) then
+    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
+    else if (Level.Info.NeutralCount > 1) then
+    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
 
-    if Level.Info.ZombieCount > 0 then
-    Result[2].Line := Result[2].Line + ', Zombies: ' + IntToStr(Level.Info.ZombieCount);
-  end else
-  Result[2].Line := 'Number of ' + GameParams.Renderer.Theme.LemNames + ': '
-                    + IntToStr(Level.Info.LemmingsCount);
+    if (Level.Info.ZombieCount = 1) then
+    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombie'
+    else if (Level.Info.ZombieCount > 1) then
+    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
+  end else if Level.Info.LemmingsCount = 1 then
+  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesSingular
+  else
+  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
   Result[2].ColorShift := HueShift;
 
   HueShift.HShift := RESCUE_LEMS_SHIFT;
   Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
-  Result[3].Line := SPreviewSave + IntToStr(Level.Info.RescueCount);
+  Result[3].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
   Result[3].ColorShift := HueShift;
 
   HueShift.HShift := RELEASE_RATE_SHIFT;

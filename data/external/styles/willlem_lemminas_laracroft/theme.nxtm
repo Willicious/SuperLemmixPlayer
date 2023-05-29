@@ -1,5 +1,6 @@
 LEMMINGS willlem_lemminas_laracroft
-NAMES Lemminara Crofts
+NAMES_PLURAL Lemminaras
+NAMES_SINGULAR Lemminara
 
 $COLORS
   MASK xF0F069

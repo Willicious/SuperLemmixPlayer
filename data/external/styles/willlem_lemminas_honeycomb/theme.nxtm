@@ -1,5 +1,6 @@
 LEMMINGS willlem_lemminas_honeycomb
-NAMES Lemminas
+NAMES_PLURAL Lemminas
+NAMES_SINGULAR Lemmina
 
 $COLORS
   MASK xF0BE69

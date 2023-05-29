@@ -285,7 +285,7 @@ begin
     else if gTimeIsUp then
         Add(SYourTimeIsUp)
     else
-        Add('All ' + GameParams.Renderer.Theme.LemNames + ' accounted for.');
+        Add('All ' + GameParams.Renderer.Theme.LemNamesPlural + ' accounted for.');
 
     LF(2);
 
