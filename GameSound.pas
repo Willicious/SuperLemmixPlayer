@@ -337,6 +337,7 @@ begin
   Get('electric');
   Get('explode');
   Get('fire');
+  Get('ice');
   Get('glug');
   Get('letsgo');
   Get('mousepre');
