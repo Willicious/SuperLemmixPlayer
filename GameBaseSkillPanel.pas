@@ -1567,6 +1567,7 @@ begin
     spbSlower:
       begin
         DrawButtonSelector(spbSlower, true);
+        Game.IsBackstepping := False;
 
         if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
           begin
@@ -1577,6 +1578,7 @@ begin
     spbFaster:
       begin
         DrawButtonSelector(spbFaster, true);
+        Game.IsBackstepping := False;
 
         if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
           begin
@@ -1590,9 +1592,10 @@ begin
         begin
          fGameWindow.GameSpeed := gspNormal;
          Game.IsBackstepping := False;
-        end else
+        end else begin
          fGameWindow.GameSpeed := gspPause;
          Game.IsBackstepping := True;
+        end;
       end;
     spbNuke:
       begin
@@ -1606,19 +1609,24 @@ begin
       end;
     spbFastForward:
       begin
+        if Game.IsBackstepping then Game.IsBackstepping := False;
+
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
         else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspRewind] then
           fGameWindow.GameSpeed := gspFF;
-        Game.IsBackstepping := False;
       end;
     spbRewind:
       begin
         if fGameWindow.GameSpeed = gspRewind then
-          fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then
+        begin
+          fGameWindow.GameSpeed := gspNormal;
+          Game.IsBackstepping := False;
+        end else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then
+        begin
           fGameWindow.GameSpeed := gspRewind;
-        Game.IsBackstepping := True;
+          Game.IsBackstepping := True;
+        end;
       end;
     spbRestart:
       begin

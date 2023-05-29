@@ -1057,8 +1057,11 @@ begin
     GameSpeed := gspNormal;
     Game.IsBackstepping := False;
   end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
-       or (PauseAfterSkip > 0) then
-    GameSpeed := gspPause;
+    or (PauseAfterSkip > 0) then
+    begin
+      GameSpeed := gspPause;
+      Game.IsBackstepping := True;
+    end;
   end;
 
   if (aTargetIteration <> Game.CurrentIteration) or fRanOneUpdate then
@@ -1386,7 +1389,10 @@ begin
       Game.RegainControl(true); // force the cancel even if in Replay Insert mode
 
     if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
-      Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
+      begin
+        Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
+        Game.IsBackstepping := False;
+      end;
 
     if func.Action = lka_Skill then
     begin
@@ -1411,9 +1417,10 @@ begin
                    begin
                      GameSpeed := gspNormal;
                      Game.IsBackstepping := False;
-                   end else
+                   end else begin
                      GameSpeed := gspPause;
                      Game.IsBackstepping := True;
+                   end;
                  end;
       lka_Nuke: begin
                   // double keypress needed to prevent accidently nuking
@@ -1458,26 +1465,31 @@ begin
 //                            Game.SetSkillsToInfinite;
 //                          end;
       lka_FastForward: begin
+                         if Game.IsBackstepping then Game.IsBackstepping := False;
+
                          case fGameSpeed of
                            gspNormal, gspSlowMo, gspPause, gspRewind: GameSpeed := gspFF;
                            gspFF: GameSpeed := gspNormal;
                          end;
-                         Game.IsBackstepping := False;
                        end;
       lka_Rewind: begin
-                    case fGameSpeed of
-                      gspNormal, gspSlowMo, gspPause, gspFF: GameSpeed := gspRewind;
-                      gspRewind: GameSpeed := gspNormal;
+                    if fGameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then
+                    begin
+                      GameSpeed := gspRewind;
+                      Game.IsBackstepping := True;
+                    end else begin
+                      GameSpeed := gspNormal;
+                      Game.IsBackstepping := False;
                     end;
-                    Game.IsBackstepping := True;
                   end;
       lka_SlowMotion: if not GameParams.HideFrameskipping then
                       begin
+                        if Game.IsBackstepping then Game.IsBackstepping := False;
+
                         case fGameSpeed of
                           gspNormal, gspFF, gspPause, gspRewind: GameSpeed := gspSlowMo;
                           gspSlowMo: GameSpeed := gspNormal;
                         end;
-                        Game.IsBackstepping := False;
                       end;
       lka_SaveImage: SaveShot;
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
@@ -1520,11 +1532,14 @@ begin
                     begin
                       GotoSaveState(CurrentIteration + func.Modifier);
                       Game.IsBackstepping := True;
-                    end else
+                    end else begin
                       GotoSaveState(0);
+                      Game.IsBackstepping := False;
+                    end;
                   end else if func.Modifier > 1 then
                   begin
                     fHyperSpeedTarget := CurrentIteration + func.Modifier;
+                    Game.IsBackstepping := False;
                   end else
                     if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
