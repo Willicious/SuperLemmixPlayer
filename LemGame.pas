@@ -6074,8 +6074,10 @@ begin
     Assert(RemMode <> RM_SAVE, 'Zombie removed with RM_SAVE removal type!');
     Assert(RemMode <> RM_ZOMBIE, 'Zombie removed with RM_ZOMBIE removal type!');
     L.LemRemoved := True;
-    if (RemMode = RM_NEUTRAL) and not Silent then
-      CueSoundEffect(SFX_FALLOUT, L.Position);
+    if L.LemIsZombie and (RemMode = RM_NEUTRAL) and not Silent then
+      CueSoundEffect(SFX_ZOMBIE_DIE, L.Position)
+    else if (RemMode = RM_NEUTRAL) and not Silent then
+      CueSoundEffect(SFX_FALLOUT, L.Position)
   end
 
   else if not L.LemRemoved then // usual and living lemming
@@ -6094,7 +6096,9 @@ begin
                 end;
                 UpdateLevelRecords;
               end;
-    RM_NEUTRAL: if not Silent then
+    RM_NEUTRAL: if L.LemIsZombie and not Silent then
+                  CueSoundEffect(SFX_ZOMBIE_DIE, L.Position)
+                else if not Silent then
                   CueSoundEffect(SFX_FALLOUT, L.Position);
     RM_ZOMBIE: begin
                  if not Silent then

@@ -356,6 +356,7 @@ begin
   Get('wrench');
   Get('yippee');
   Get('zombie');
+  Get('zombiedie');
 end;
 
 function TSoundManager.FindSoundIndex(aName: String): Integer;

@@ -67,6 +67,7 @@ const
   SFX_FALLOUT = 'die';
   SFX_FIXING = 'wrench';
   SFX_ZOMBIE = 'zombie';
+  SFX_ZOMBIE_DIE = 'zombiedie';
   SFX_TIMEUP = 'timeup';
 
 resourcestring
