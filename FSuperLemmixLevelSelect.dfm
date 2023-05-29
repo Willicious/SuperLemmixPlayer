@@ -50,7 +50,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAuthor: TLabel
-    Left = 317
+    Left = 308
     Top = 62
     Width = 583
     Height = 16

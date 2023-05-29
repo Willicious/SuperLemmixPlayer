@@ -611,7 +611,7 @@ begin
     lblPosition.Caption := GetLevelPositionText;
 
     if L.Author <> '' then
-      lblAuthor.Caption := 'By ' + L.Author
+      lblAuthor.Caption := 'Author: ' + L.Author
     else
       lblAuthor.Caption := '';
 
