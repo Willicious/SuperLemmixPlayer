@@ -6045,9 +6045,7 @@ begin
   begin
     for i := 1 to 7 do
 
-    if not HasPixelAt(L.LemX, L.LemY -i)
-    and not HasPixelAt(L.LemX -1, L.LemY -i)
-    and not HasPixelAt(L.LemX +1, L.LemY -i) then
+    if not HasPixelAt(L.LemX, L.LemY -i) then
     Transition(L, baUnfreezing);
   end;
 
