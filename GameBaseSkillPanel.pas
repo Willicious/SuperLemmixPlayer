@@ -1593,6 +1593,7 @@ begin
          Game.IsBackstepping := False;
         end else
          fGameWindow.GameSpeed := gspPause;
+         Game.IsBackstepping := True;
       end;
     spbNuke:
       begin

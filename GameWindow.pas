@@ -1413,6 +1413,7 @@ begin
                      Game.IsBackstepping := False;
                    end else
                      GameSpeed := gspPause;
+                     Game.IsBackstepping := True;
                  end;
       lka_Nuke: begin
                   // double keypress needed to prevent accidently nuking
