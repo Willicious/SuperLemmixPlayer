@@ -70,6 +70,8 @@ type
     fHighlitSkill         : TSkillPanelButton;
     fLastHighlitSkill     : TSkillPanelButton; // to avoid sounds when shouldn't be played
 
+    fRewindPressed        : Boolean;
+
     fLastDrawnStr         : String;
     fNewDrawStr           : String;
 
@@ -159,6 +161,7 @@ type
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawMinimap; virtual;
 
+    property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
@@ -266,6 +269,8 @@ begin
   fMinimapImage.OnMouseDown := MinimapMouseDown;
   fMinimapImage.OnMouseMove := MinimapMouseMove;
   fMinimapImage.OnMouseUp := MinimapMouseUp;
+
+  fRewindPressed := False;
 
   // Create font and skill panel images (but do not yet load them)
   SetLength(fInfoFont, NUM_FONT_CHARS);
@@ -1588,6 +1593,8 @@ begin
       end;
     spbPause:
       begin
+        if RewindPressed then fRewindPressed := False;
+
         if fGameWindow.GameSpeed = gspPause then
         begin
          fGameWindow.GameSpeed := gspNormal;
@@ -1609,23 +1616,28 @@ begin
       end;
     spbFastForward:
       begin
+        if RewindPressed then fRewindPressed := False;
+
         if Game.IsBackstepping then Game.IsBackstepping := False;
 
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspRewind] then
+        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause] then
           fGameWindow.GameSpeed := gspFF;
       end;
     spbRewind:
       begin
-        if fGameWindow.GameSpeed = gspRewind then
-        begin
+        if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
           fGameWindow.GameSpeed := gspNormal;
-          Game.IsBackstepping := False;
-        end else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause, gspFF] then
+
+        if not RewindPressed then
         begin
-          fGameWindow.GameSpeed := gspRewind;
+          fRewindPressed := True;
           Game.IsBackstepping := True;
+        end else if RewindPressed then
+        begin
+          fRewindPressed := False;
+          Game.IsBackstepping := False;
         end;
       end;
     spbRestart:
