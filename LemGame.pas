@@ -274,6 +274,7 @@ type
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSound: String); overload;
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
+    procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedGadgets;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -407,7 +408,6 @@ type
     function MayAssignSlider(L: TLemming) : Boolean;
     function MayAssignLaserer(L: TLemming) : Boolean;
     function MayAssignThrowingSkill(L: TLemming) : Boolean;
-    procedure PlayAssignFailSound;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -458,6 +458,7 @@ type
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
     function SpawnIntervalChanged: Boolean;
+    procedure PlayAssignFailSound;
     //procedure SetSkillsToInfinite; //hotbookmark
 
   { properties }
@@ -1128,10 +1129,23 @@ begin
 end;
 
 procedure TLemmingGame.PlayAssignFailSound;
+var
+L: TLemming;
+SelectedLemming: TLemming;
+
 begin
-  //if the player has tried to assign a skill
-  //and, for any reason, the lemming can't be assigned that skill on this frame
-  //CueSoundEffect(SFX_) need new sound effect for failed assignments
+  SelectedLemming := fRenderInterface.SelectedLemming;
+
+  //no idea why this has to be "not" L = Selected,
+  //I thought it would be the other way around...???
+  if not (L = SelectedLemming) and not ProcessSkillAssignment(False) then
+  begin
+    if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then
+      CueSoundEffect(SFX_HITS_STEEL)
+    else
+      CueSoundEffectFrequency(SFX_BUILDER_WARNING, 6000);
+          //placeholder for dedicated assign fail sound
+  end;
 end;
 
 procedure TLemmingGame.PlayMusic;
@@ -6636,17 +6650,17 @@ begin
   MessageQueue.Add(GAMEMSG_SOUND_BAL, aSound, aOrigin.X);
 end;
 
-////bookmark - follow this train
-//procedure TLemmingGame.CueSoundEffectFrequency(aSound: String; aFrequency: Single);
-//begin
-//  if IsSimulating then Exit; // Not play sound in simulation mode
-//
-//  // Check that the sound was not yet played on this frame
-//  if fSoundList.Contains(aSound) then Exit;
-//
-//  fSoundList.Add(aSound);
-//  MessageQueue.Add(GAMEMSG_SOUND_FREQ, aSound, Int64(Trunc(aFrequency)));
-//end;
+//bookmark - follow this train
+procedure TLemmingGame.CueSoundEffectFrequency(aSound: String; aFrequency: Single);
+begin
+  if IsSimulating then Exit; // Not play sound in simulation mode
+
+  // Check that the sound was not yet played on this frame
+  if fSoundList.Contains(aSound) then Exit;
+
+  fSoundList.Add(aSound);
+  MessageQueue.Add(GAMEMSG_SOUND_FREQ, aSound, Int64(Trunc(aFrequency)));
+end;
 
 function TLemmingGame.GetHighlitLemming: TLemming;
 begin
