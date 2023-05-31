@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.1
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Sleeper Test
  AUTHOR 
  ID x75B245C846063EB5
- VERSION x0000000000000021
+ VERSION x000000000000002E
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 320
  HEIGHT 160
- THEME willlem_lemminas_laracroft
+ THEME xmas
  
 #         Level stats           
 # ----------------------------- 
