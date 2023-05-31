@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.40
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,13 +9,13 @@
  AUTHOR DMA Design 
  MUSIC awesome_amiga
  ID xCBB73390CBB73390
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1008
+ WIDTH 1080
  HEIGHT 160
- START_X 176
+ START_X 216
  START_Y 80
  THEME orig_dirt
  
@@ -42,7 +42,7 @@
  $GADGET
    STYLE special
    PIECE window_awesome
-   X 64
+   X 104
    Y 4
    NO_OVERWRITE
  $END
@@ -50,7 +50,7 @@
  $GADGET
    STYLE special
    PIECE exit_awesome
-   X 896
+   X 936
    Y 4
    NO_OVERWRITE
  $END
@@ -61,7 +61,7 @@
  $TERRAIN
    STYLE special
    PIECE awesome
-   X 33
+   X 73
    Y 0
    ONE_WAY
  $END

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Alternate Route
  AUTHOR Prima Publishing
  ID xD6C74550D6C74550
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 640
+ WIDTH 704
  HEIGHT 160
- START_X 176
+ START_X 208
  START_Y 80
  THEME ohno_brick
  
@@ -41,7 +41,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 592
+   X 624
    Y 88
    NO_OVERWRITE
  $END
@@ -49,16 +49,8 @@
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 16
+   X 48
    Y 52
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE ohno_brick
-   PIECE trap_01
-   X 112
-   Y 80
    NO_OVERWRITE
  $END
  
@@ -150,13 +142,21 @@
    NO_OVERWRITE
  $END
  
+ $GADGET
+   STYLE ohno_brick
+   PIECE trap_01
+   X 496
+   Y 80
+   NO_OVERWRITE
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 0
+   X 32
    Y 112
    ONE_WAY
  $END
@@ -164,7 +164,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 64
+   X 96
    Y 112
    ONE_WAY
  $END
@@ -172,211 +172,211 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 128
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_large_01
-   X 192
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_large_01
-   X 256
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_large_01
-   X 320
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_large_01
-   X 384
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_large_01
-   X 448
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_large_02
-   X 512
-   Y 136
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_large_02
-   X 576
-   Y 136
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 112
-   Y 66
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 136
-   Y 66
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
    X 160
-   Y 66
+   Y 112
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE ohno_brick
-   PIECE steel_03
-   X 184
-   Y 66
+   PIECE bricks_large_01
+   X 224
+   Y 112
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE ohno_brick
-   PIECE steel_03
-   X 208
-   Y 66
+   PIECE bricks_large_01
+   X 288
+   Y 112
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE ohno_brick
-   PIECE steel_03
-   X 232
-   Y 66
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 256
-   Y 66
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 280
-   Y 66
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 304
-   Y 66
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 328
-   Y 66
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
+   PIECE bricks_large_01
    X 352
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_01
+   X 416
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_01
+   X 480
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_02
+   X 544
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_02
+   X 608
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 144
    Y 66
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 376
+   X 168
    Y 66
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 400
+   X 192
    Y 66
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 424
+   X 216
    Y 66
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 448
+   X 240
    Y 66
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 472
+   X 264
    Y 66
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 112
+   X 288
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 312
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 336
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 360
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 384
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 408
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 432
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 456
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 480
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 504
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 144
    Y 52
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 112
+   X 144
    Y 38
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 112
+   X 144
    Y 24
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 112
+   X 144
    Y 11
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 112
+   X 144
    Y -3
  $END
  

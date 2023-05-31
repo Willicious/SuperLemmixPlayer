@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE Tightrope City
  AUTHOR DMA Design 
  ID x96EA785696EA7856
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 824
  HEIGHT 160
- START_X 160
+ START_X 168
  START_Y 80
  THEME orig_marble
  
@@ -40,7 +41,7 @@
  $GADGET
    STYLE orig_marble
    PIECE window
-   X 112
+   X 120
    Y 44
    NO_OVERWRITE
  $END
@@ -48,7 +49,7 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X 640
+   X 648
    Y 52
    NO_OVERWRITE
  $END
@@ -59,7 +60,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 108
+   X 116
    Y 94
    ONE_WAY
  $END
@@ -67,7 +68,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 156
+   X 164
    Y 94
    ONE_WAY
  $END
@@ -75,7 +76,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 204
+   X 212
    Y 94
    ONE_WAY
  $END
@@ -83,7 +84,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 252
+   X 260
    Y 94
    ONE_WAY
  $END
@@ -91,7 +92,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 300
+   X 308
    Y 94
    ONE_WAY
  $END
@@ -99,7 +100,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 348
+   X 356
    Y 94
    ONE_WAY
  $END
@@ -107,7 +108,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 396
+   X 404
    Y 94
    ONE_WAY
  $END
@@ -115,7 +116,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 444
+   X 452
    Y 94
    ONE_WAY
  $END
@@ -123,7 +124,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 492
+   X 500
    Y 94
    ONE_WAY
  $END
@@ -131,7 +132,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 540
+   X 548
    Y 94
    ONE_WAY
  $END
@@ -139,7 +140,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 588
+   X 596
    Y 94
    ONE_WAY
  $END
@@ -147,7 +148,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 649
+   X 657
    Y 75
    ONE_WAY
  $END
@@ -155,7 +156,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 683
+   X 691
    Y 75
    ERASE
    ONE_WAY

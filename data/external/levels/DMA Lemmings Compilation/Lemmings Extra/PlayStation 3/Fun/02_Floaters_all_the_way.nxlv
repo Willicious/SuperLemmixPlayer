@@ -32,71 +32,71 @@
  
 #     Interactive objects       
 # ----------------------------- 
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      entrance
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE entrance
    X         43
    Y         64
    NO_OVERWRITE
    DIRECTION right
  $END
  
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      entrance
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE entrance
    X         91
    Y          6
    NO_OVERWRITE
    DIRECTION right
  $END
  
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      entrance
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE entrance
    X        147
    Y          6
    NO_OVERWRITE
    DIRECTION right
  $END
  
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      entrance
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE entrance
    X        203
    Y          6
    NO_OVERWRITE
    DIRECTION right
  $END
  
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      exit
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE exit
    X        236
    Y         98
    NO_OVERWRITE
  $END
  
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
+ $GADGET
+   STYLE default
+   PIECE pickup
    X        103
    Y        123
    NO_OVERWRITE
    SKILL FLOATER
  $END
  
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
+ $GADGET
+   STYLE default
+   PIECE pickup
    X        155
    Y        123
    NO_OVERWRITE
    SKILL FLOATER
  $END
  
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
+ $GADGET
+   STYLE default
+   PIECE pickup
    X        203
    Y        123
    NO_OVERWRITE
@@ -107,64 +107,64 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
+   STYLE minim_ps3dark
+   PIECE bricks_13
    X     0
    Y   136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
+   STYLE minim_ps3dark
+   PIECE bricks_13
    X    48
    Y   136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
+   STYLE minim_ps3dark
+   PIECE bricks_13
    X    96
    Y   136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
+   STYLE minim_ps3dark
+   PIECE bricks_13
    X   144
    Y   136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
+   STYLE minim_ps3dark
+   PIECE bricks_13
    X   192
    Y   136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
+   STYLE minim_ps3dark
+   PIECE bricks_13
    X   240
    Y   136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
+   STYLE minim_ps3dark
+   PIECE bricks_13
    X   288
    Y   136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      platform
+   STYLE orig_fire
+   PIECE platform
    X    92
    Y    88
    ROTATE
@@ -174,72 +174,72 @@
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X     2
    Y    97
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X    18
    Y    97
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X     2
    Y    58
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X    18
    Y    58
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X     2
    Y    19
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X    18
    Y    19
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X     2
    Y     3
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X    18
    Y     3
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_01
+   STYLE orig_fire
+   PIECE bricks_01
    X     5
    Y     6
    FLIP_HORIZONTAL
@@ -247,8 +247,8 @@
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_01
+   STYLE orig_fire
+   PIECE bricks_01
    X    18
    Y     0
    FLIP_HORIZONTAL
@@ -256,8 +256,8 @@
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_01
+   STYLE orig_fire
+   PIECE bricks_01
    X    -7
    Y     0
    FLIP_HORIZONTAL
@@ -265,72 +265,72 @@
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   287
    Y    97
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   303
    Y    97
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   287
    Y    58
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   303
    Y    58
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   287
    Y    19
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   303
    Y    19
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   287
    Y     3
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bars_04
+   STYLE orig_fire
+   PIECE bars_04
    X   303
    Y     3
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_01
+   STYLE orig_fire
+   PIECE bricks_01
    X   290
    Y     6
    FLIP_HORIZONTAL
@@ -338,8 +338,8 @@
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_01
+   STYLE orig_fire
+   PIECE bricks_01
    X   303
    Y     0
    FLIP_HORIZONTAL
@@ -347,8 +347,8 @@
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_01
+   STYLE orig_fire
+   PIECE bricks_01
    X   278
    Y     0
    FLIP_HORIZONTAL

@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,11 +8,11 @@
  TITLE 24 hour Lemathon
  AUTHOR DMA Design 
  ID xE19FF7C0E19FF7C0
- VERSION x0000000000000000
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 400
+ WIDTH 424
  HEIGHT 160
  START_X 200
  START_Y 80
@@ -36,7 +36,7 @@
  $GADGET
    STYLE ohno_rock
    PIECE window
-   X 40
+   X 56
    Y 24
    NO_OVERWRITE
  $END
@@ -44,7 +44,7 @@
  $GADGET
    STYLE ohno_rock
    PIECE exit
-   X 248
+   X 264
    Y 60
    NO_OVERWRITE
  $END
@@ -55,7 +55,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 244
+   X 260
    Y 91
    ONE_WAY
  $END
@@ -63,7 +63,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 251
+   X 267
    Y 91
    ONE_WAY
  $END
@@ -71,7 +71,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 258
+   X 274
    Y 91
    ONE_WAY
  $END
@@ -79,7 +79,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 265
+   X 281
    Y 91
    ONE_WAY
  $END
@@ -87,7 +87,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 273
+   X 289
    Y 91
    ONE_WAY
  $END
@@ -95,7 +95,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_01
-   X 56
+   X 72
    Y 57
    ONE_WAY
  $END
@@ -103,7 +103,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_01
-   X 113
+   X 129
    Y 60
    ONE_WAY
  $END
@@ -111,7 +111,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_01
-   X 181
+   X 197
    Y 61
    ONE_WAY
  $END
@@ -119,23 +119,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 248
-   Y 92
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_rock
-   PIECE crystal_07
-   X 255
-   Y 92
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_rock
-   PIECE crystal_06
-   X 263
+   X 264
    Y 92
    ONE_WAY
  $END
@@ -151,7 +135,23 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 260
+   X 279
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_rock
+   PIECE crystal_07
+   X 287
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_rock
+   PIECE crystal_06
+   X 276
    Y 102
    ONE_WAY
  $END
@@ -159,7 +159,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_07
-   X 277
+   X 293
    Y 103
    ONE_WAY
  $END
@@ -167,7 +167,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 272
+   X 288
    Y 105
    ONE_WAY
  $END
@@ -175,7 +175,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_07
-   X 255
+   X 271
    Y 111
    ONE_WAY
  $END
@@ -183,7 +183,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 268
+   X 284
    Y 116
    ONE_WAY
  $END
@@ -191,7 +191,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_07
-   X 279
+   X 295
    Y 120
    ONE_WAY
  $END
@@ -199,7 +199,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_07
-   X 281
+   X 297
    Y 128
    ONE_WAY
  $END
@@ -207,7 +207,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 279
+   X 295
    Y 133
    ONE_WAY
  $END
@@ -215,7 +215,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_07
-   X 285
+   X 301
    Y 117
    ONE_WAY
  $END
@@ -223,7 +223,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 285
+   X 301
    Y 99
    ONE_WAY
  $END
@@ -231,7 +231,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_07
-   X 293
+   X 309
    Y 118
    ONE_WAY
  $END
@@ -239,7 +239,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 291
+   X 307
    Y 129
    ONE_WAY
  $END
@@ -247,7 +247,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_07
-   X 292
+   X 308
    Y 141
    ONE_WAY
  $END
@@ -255,7 +255,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_06
-   X 292
+   X 308
    Y 148
    ONE_WAY
  $END
@@ -263,7 +263,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_02
-   X 291
+   X 307
    Y 97
    ONE_WAY
  $END
@@ -271,7 +271,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_03
-   X 300
+   X 316
    Y 110
    ONE_WAY
  $END
@@ -279,7 +279,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 67
+   X 83
    Y 133
    NO_OVERWRITE
    ONE_WAY
@@ -288,7 +288,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_09
-   X 130
+   X 146
    Y 83
    NO_OVERWRITE
    ONE_WAY
@@ -297,7 +297,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_10
-   X 123
+   X 139
    Y 84
    NO_OVERWRITE
    ONE_WAY
@@ -306,7 +306,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 20
+   X 36
    Y -24
    ONE_WAY
  $END
@@ -314,7 +314,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 105
+   X 121
    Y -21
    ONE_WAY
  $END
@@ -322,7 +322,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 190
+   X 206
    Y -19
    ONE_WAY
  $END
@@ -330,7 +330,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 268
+   X 284
    Y -5
    ONE_WAY
  $END
@@ -338,7 +338,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_09
-   X 286
+   X 302
    Y 16
    ONE_WAY
  $END
@@ -346,7 +346,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_10
-   X 322
+   X 338
    Y 27
    ONE_WAY
  $END
@@ -354,7 +354,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_09
-   X 304
+   X 320
    Y 49
    ONE_WAY
  $END
@@ -362,7 +362,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_04
-   X 33
+   X 49
    Y 116
    ONE_WAY
  $END
@@ -370,7 +370,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_09
-   X 2
+   X 18
    Y 116
    NO_OVERWRITE
    ONE_WAY
@@ -379,7 +379,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_05
-   X 308
+   X 324
    Y 47
    NO_OVERWRITE
    ONE_WAY
@@ -388,7 +388,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_10
-   X 303
+   X 319
    Y 44
    ONE_WAY
  $END
@@ -396,7 +396,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_10
-   X 309
+   X 325
    Y 38
    ONE_WAY
  $END
@@ -404,7 +404,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_06
-   X 313
+   X 329
    Y 42
    NO_OVERWRITE
    ONE_WAY
@@ -413,7 +413,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_06
-   X 297
+   X 313
    Y 89
    NO_OVERWRITE
    ONE_WAY
@@ -422,7 +422,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_06
-   X 311
+   X 327
    Y 94
    NO_OVERWRITE
    ONE_WAY
@@ -431,7 +431,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_04
-   X 150
+   X 166
    Y 122
    NO_OVERWRITE
    ONE_WAY
@@ -440,7 +440,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_03
-   X 168
+   X 184
    Y 125
    NO_OVERWRITE
    ONE_WAY
@@ -449,7 +449,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_08
-   X 144
+   X 160
    Y 115
    ONE_WAY
  $END
@@ -457,7 +457,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_10
-   X 164
+   X 180
    Y 121
    ONE_WAY
  $END
@@ -465,7 +465,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_11
-   X 294
+   X 310
    Y 87
    ONE_WAY
  $END
@@ -473,7 +473,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_10
-   X 307
+   X 323
    Y 91
    ONE_WAY
  $END
@@ -481,7 +481,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_03
-   X 47
+   X 63
    Y 107
    NO_OVERWRITE
    ONE_WAY
@@ -490,7 +490,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE tree_03
-   X 34
+   X 50
    Y 111
    NO_OVERWRITE
    ONE_WAY
@@ -499,7 +499,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_10
-   X 31
+   X 47
    Y 107
    ONE_WAY
  $END
@@ -507,7 +507,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE grass_10
-   X 43
+   X 59
    Y 103
    ONE_WAY
  $END
@@ -515,7 +515,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_04
-   X 16
+   X 32
    Y 124
    NO_OVERWRITE
    ONE_WAY
@@ -524,7 +524,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_04
-   X 334
+   X 350
    Y 4
    NO_OVERWRITE
    ONE_WAY

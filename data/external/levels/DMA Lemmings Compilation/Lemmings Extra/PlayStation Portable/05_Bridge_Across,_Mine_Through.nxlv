@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,10 +9,11 @@
  AUTHOR Sony 
  MUSIC !PSP/crystal1_PSP;PSP/crystal2_PSP;PSP/crystal3_PSP
  ID x8799D1678799D167
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 656
+ WIDTH 720
  HEIGHT 160
  START_X 203
  START_Y 80
@@ -35,7 +36,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 106
+   X 122
    Y 6
    NO_OVERWRITE
  $END
@@ -43,7 +44,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE exit
-   X 557
+   X 573
    Y 111
    NO_OVERWRITE
  $END
@@ -54,21 +55,21 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
-   X 88
+   X 104
    Y -1
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
-   X 88
+   X 104
    Y 23
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE orb
-   X 81
+   X 97
    Y 45
    ONE_WAY
  $END
@@ -76,7 +77,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 107
+   X 123
    Y 52
    NO_OVERWRITE
    ONE_WAY
@@ -85,21 +86,21 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
-   X 192
+   X 208
    Y -1
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
-   X 192
+   X 208
    Y 23
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE orb
-   X 185
+   X 201
    Y 45
    ONE_WAY
  $END
@@ -107,7 +108,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 139
+   X 155
    Y 52
    NO_OVERWRITE
    ONE_WAY
@@ -116,7 +117,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_01
-   X 57
+   X 73
    Y -8
    FLIP_VERTICAL
    ONE_WAY
@@ -125,7 +126,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_04
-   X 6
+   X 22
    Y -34
    FLIP_VERTICAL
    ONE_WAY
@@ -134,7 +135,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_02
-   X 155
+   X 171
    Y -28
    FLIP_VERTICAL
    ONE_WAY
@@ -143,49 +144,49 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
-   X 40
+   X 56
    Y 137
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 56
+   X 72
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 81
+   X 97
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 106
+   X 122
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 131
+   X 147
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 156
+   X 172
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 116
+   X 132
    Y 131
    NO_OVERWRITE
    ONE_WAY
@@ -194,70 +195,70 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 181
+   X 197
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 205
+   X 221
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 230
+   X 246
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 255
+   X 271
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 279
+   X 295
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 304
+   X 320
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 329
+   X 345
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 354
+   X 370
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 378
+   X 394
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 146
+   X 162
    Y 131
    NO_OVERWRITE
    ONE_WAY
@@ -266,7 +267,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 266
+   X 282
    Y 121
    NO_OVERWRITE
    ONE_WAY
@@ -275,14 +276,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_03
-   X 274
+   X 290
    Y 106
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 45
+   X 61
    Y 111
    NO_OVERWRITE
    ONE_WAY
@@ -291,7 +292,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 56
+   X 72
    Y 125
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -301,7 +302,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 95
+   X 111
    Y 121
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -311,21 +312,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 321
+   X 337
    Y 100
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_04
-   X 336
-   Y 100
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE steel_04
-   X 351
+   X 352
    Y 100
  $END
  
@@ -338,37 +332,37 @@
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE steel_01
-   X 403
-   Y 151
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE steel_01
-   X 428
-   Y 151
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE steel_01
-   X 453
-   Y 151
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE steel_01
-   X 478
-   Y 151
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
    PIECE steel_04
-   X 405
+   X 383
    Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_01
+   X 419
+   Y 151
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_01
+   X 444
+   Y 151
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_01
+   X 469
+   Y 151
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_01
+   X 494
+   Y 151
  $END
  
  $TERRAIN
@@ -394,43 +388,50 @@
  
  $TERRAIN
    STYLE orig_crystal
+   PIECE steel_04
+   X 469
+   Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
    PIECE steel_01
-   X 503
+   X 519
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 528
+   X 544
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 552
+   X 568
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 576
+   X 592
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_01
-   X 600
+   X 616
    Y 151
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 492
+   X 508
    Y 100
    ONE_WAY
  $END
@@ -438,7 +439,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_01
-   X 540
+   X 556
    Y 89
    NO_OVERWRITE
    ONE_WAY
@@ -447,7 +448,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_01
-   X 540
+   X 556
    Y 65
    ONE_WAY
  $END
@@ -455,17 +456,9 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_01
-   X 604
+   X 620
    Y 89
    NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 540
-   Y 65
    ONE_WAY
  $END
  
@@ -479,8 +472,16 @@
  
  $TERRAIN
    STYLE orig_crystal
+   PIECE bar_04
+   X 572
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
    PIECE bar_01
-   X 604
+   X 620
    Y 73
    NO_OVERWRITE
    ONE_WAY
@@ -489,7 +490,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE orb
-   X 563
+   X 579
    Y 59
    ONE_WAY
  $END
@@ -497,7 +498,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE block
-   X 548
+   X 564
    Y 134
    NO_OVERWRITE
    ONE_WAY
@@ -506,7 +507,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE block
-   X 580
+   X 596
    Y 134
    NO_OVERWRITE
    ONE_WAY
@@ -515,7 +516,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 578
+   X 594
    Y 104
    ONE_WAY
  $END
@@ -523,7 +524,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 602
+   X 618
    Y 92
    FLIP_VERTICAL
    ONE_WAY
@@ -532,7 +533,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 605
+   X 621
    Y 50
    NO_OVERWRITE
    ONE_WAY
@@ -541,7 +542,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 589
+   X 605
    Y 24
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -551,7 +552,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 577
+   X 593
    Y 35
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -561,7 +562,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 604
+   X 620
    Y 127
    ONE_WAY
  $END
@@ -569,7 +570,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 608
+   X 624
    Y -10
    NO_OVERWRITE
    ONE_WAY
@@ -578,7 +579,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 575
+   X 591
    Y -25
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -588,7 +589,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_04
-   X 631
+   X 647
    Y -25
    FLIP_VERTICAL
    ONE_WAY
@@ -597,7 +598,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_02
-   X 533
+   X 549
    Y -17
    FLIP_VERTICAL
    ONE_WAY
@@ -606,7 +607,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 473
+   X 489
    Y -25
    ONE_WAY
  $END
@@ -614,7 +615,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 419
+   X 435
    Y -27
    FLIP_VERTICAL
    ONE_WAY
@@ -623,7 +624,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 377
+   X 393
    Y -33
    ONE_WAY
  $END
@@ -631,7 +632,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 329
+   X 345
    Y -33
    ONE_WAY
  $END
@@ -639,7 +640,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_04
-   X 424
+   X 440
    Y -33
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -649,7 +650,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 268
+   X 284
    Y -31
    FLIP_VERTICAL
    ONE_WAY
@@ -658,7 +659,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 237
+   X 253
    Y -26
    ONE_WAY
  $END
@@ -666,7 +667,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 189
+   X 205
    Y -34
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -676,7 +677,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE clump_01
-   X 188
+   X 204
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -685,7 +686,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 236
+   X 252
    Y 121
    NO_OVERWRITE
    ONE_WAY
@@ -694,7 +695,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 206
+   X 222
    Y 121
    NO_OVERWRITE
    ONE_WAY
@@ -703,7 +704,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 176
+   X 192
    Y 121
    NO_OVERWRITE
    ONE_WAY
@@ -712,7 +713,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 251
+   X 267
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -721,7 +722,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 221
+   X 237
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -730,7 +731,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 191
+   X 207
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -739,7 +740,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 161
+   X 177
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -748,7 +749,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 131
+   X 147
    Y 106
    ONE_WAY
  $END
@@ -756,7 +757,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 101
+   X 117
    Y 106
    ONE_WAY
  $END
@@ -764,7 +765,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 86
+   X 102
    Y 131
    NO_OVERWRITE
    ONE_WAY
@@ -773,7 +774,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 56
+   X 72
    Y 131
    NO_OVERWRITE
    ONE_WAY
@@ -782,7 +783,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 71
+   X 87
    Y 106
    ONE_WAY
  $END
@@ -790,7 +791,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 41
+   X 57
    Y 106
    ONE_WAY
  $END
@@ -798,14 +799,14 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
-   X 40
+   X 56
    Y 112
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
-   X 40
+   X 56
    Y 87
  $END
  

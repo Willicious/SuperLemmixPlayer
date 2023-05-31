@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,10 +8,11 @@
  TITLE The Art Gallery
  AUTHOR DMA Design 
  ID xEA19C02CEA19C02C
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1344
+ WIDTH 1600
  HEIGHT 160
  START_X 576
  START_Y 80
@@ -48,6 +49,7 @@
    X 704
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -56,6 +58,7 @@
    X 768
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -64,6 +67,7 @@
    X 832
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -72,6 +76,7 @@
    X 896
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -80,6 +85,7 @@
    X 640
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -89,6 +95,7 @@
    X 576
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -97,6 +104,7 @@
    X 512
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -106,6 +114,7 @@
    X 448
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -114,6 +123,7 @@
    X 384
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -123,6 +133,7 @@
    X 320
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -131,6 +142,7 @@
    X 960
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -139,6 +151,7 @@
    X 1024
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -148,6 +161,7 @@
    X 1088
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -156,6 +170,7 @@
    X 1152
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -164,6 +179,7 @@
    X 1216
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -172,6 +188,7 @@
    X 1280
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -188,7 +205,44 @@
    X 256
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 1344
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 1408
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 1472
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 1536
+   Y 144
+   WIDTH 64
+   HEIGHT 16
  $END
  
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Just for fun or to the death?
  AUTHOR DMA Design
  ID xFDFB7016FDFB7016
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 752
+ WIDTH 1000
  HEIGHT 160
- START_X 408
+ START_X 510
  START_Y 80
  THEME orig_pillar
  
@@ -40,7 +40,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 344
+   X 456
    Y 112
    NO_OVERWRITE
  $END
@@ -48,7 +48,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 408
+   X 520
    Y 112
    NO_OVERWRITE
  $END
@@ -56,7 +56,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 600
+   X 712
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -65,7 +65,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 664
+   X 776
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -74,7 +74,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 24
+   X 136
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -83,7 +83,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 88
+   X 200
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -92,7 +92,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 152
+   X 264
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -101,7 +101,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 216
+   X 328
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -110,7 +110,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 280
+   X 392
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -119,7 +119,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 344
+   X 456
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -128,7 +128,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 408
+   X 520
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -137,7 +137,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 472
+   X 584
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -146,7 +146,7 @@
  $GADGET
    STYLE default
    PIECE water
-   X 536
+   X 648
    Y 144
    WIDTH 64
    HEIGHT 16
@@ -155,7 +155,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 616
+   X 728
    Y 0
    NO_OVERWRITE
    FLIP_HORIZONTAL
@@ -164,14 +164,14 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 184
+   X 296
    Y 0
  $END
  
  $GADGET
    STYLE default
    PIECE flag_blue
-   X 360
+   X 472
    Y 98
    NO_OVERWRITE
    SPEED 0
@@ -181,7 +181,7 @@
  $GADGET
    STYLE default
    PIECE flag_green
-   X 424
+   X 536
    Y 98
    NO_OVERWRITE
    SPEED 0
@@ -194,7 +194,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_04
-   X 386
+   X 498
    Y 97
    ONE_WAY
  $END
@@ -202,7 +202,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 386
+   X 498
    Y 33
    ONE_WAY
  $END
@@ -210,7 +210,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 386
+   X 498
    Y -18
    ONE_WAY
  $END
@@ -218,7 +218,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 420
+   X 532
    Y 31
    ONE_WAY
  $END
@@ -226,7 +226,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 462
+   X 574
    Y 31
    ONE_WAY
  $END
@@ -234,7 +234,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 504
+   X 616
    Y 31
    ONE_WAY
  $END
@@ -242,7 +242,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 546
+   X 658
    Y 31
    ONE_WAY
  $END
@@ -250,7 +250,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 588
+   X 700
    Y 31
    ONE_WAY
  $END
@@ -258,7 +258,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 344
+   X 456
    Y 31
    ONE_WAY
  $END
@@ -266,7 +266,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 302
+   X 414
    Y 31
    ONE_WAY
  $END
@@ -274,7 +274,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 260
+   X 372
    Y 31
    ONE_WAY
  $END
@@ -282,7 +282,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 218
+   X 330
    Y 31
    ONE_WAY
  $END
@@ -290,7 +290,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 176
+   X 288
    Y 31
    ONE_WAY
  $END
@@ -298,7 +298,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 134
+   X 246
    Y 31
    ONE_WAY
  $END
@@ -306,7 +306,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 630
+   X 742
    Y 31
    ONE_WAY
  $END
@@ -314,42 +314,42 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_03
-   X 391
+   X 503
    Y 137
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_03
-   X 415
+   X 527
    Y 137
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_03
-   X 439
+   X 551
    Y 137
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_03
-   X 367
+   X 479
    Y 137
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_03
-   X 343
+   X 455
    Y 137
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 672
+   X 784
    Y 31
    ONE_WAY
  $END
@@ -357,7 +357,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 92
+   X 204
    Y 31
    ONE_WAY
  $END
@@ -365,7 +365,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_thin_01
-   X 687
+   X 799
    Y -7
    ONE_WAY
  $END
@@ -373,7 +373,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_thin_01
-   X 105
+   X 217
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -382,7 +382,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_01
-   X 0
+   X 112
    Y 140
    NO_OVERWRITE
  $END
@@ -390,7 +390,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_01
-   X 728
+   X 840
    Y 139
    NO_OVERWRITE
  $END
@@ -398,7 +398,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE circle_01
-   X 219
+   X 331
    Y 149
    ONE_WAY
  $END

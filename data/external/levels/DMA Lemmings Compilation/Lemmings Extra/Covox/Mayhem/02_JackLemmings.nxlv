@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE JackLemmings
  AUTHOR Covox
  ID xC6D5C1C5C6D5C1C5
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 416
+ WIDTH 496
  HEIGHT 160
- START_X 208
+ START_X 248
  START_Y 80
  THEME ohno_brick
  
@@ -49,42 +49,42 @@
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 57
+   X 97
    Y 0
  $END
  
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 169
+   X 209
    Y 0
  $END
  
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 281
+   X 321
    Y 0
  $END
  
  $GADGET
    STYLE ohno_brick
    PIECE trap_01
-   X 121
+   X 161
    Y 10
  $END
  
  $GADGET
    STYLE ohno_brick
    PIECE trap_01
-   X 233
+   X 273
    Y 10
  $END
  
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 169
+   X 209
    Y 87
  $END
  
@@ -94,7 +94,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 112
+   X 152
    Y 43
    ONE_WAY
  $END
@@ -102,7 +102,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 80
+   X 120
    Y 43
    ONE_WAY
  $END
@@ -110,7 +110,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 48
+   X 88
    Y 43
    ONE_WAY
  $END
@@ -118,7 +118,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 144
+   X 184
    Y 43
    ONE_WAY
  $END
@@ -126,7 +126,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 176
+   X 216
    Y 43
    ONE_WAY
  $END
@@ -134,7 +134,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 208
+   X 248
    Y 43
    ONE_WAY
  $END
@@ -142,7 +142,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 240
+   X 280
    Y 43
    ONE_WAY
  $END
@@ -150,7 +150,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 272
+   X 312
    Y 43
    ONE_WAY
  $END
@@ -158,7 +158,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 304
+   X 344
    Y 43
    ONE_WAY
  $END
@@ -166,7 +166,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 336
+   X 376
    Y 43
    ONE_WAY
  $END
@@ -174,7 +174,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_01
-   X 180
+   X 220
    Y 135
    ONE_WAY
  $END
@@ -182,7 +182,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_01
-   X 196
+   X 236
    Y 135
    ONE_WAY
  $END
@@ -190,7 +190,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_01
-   X 164
+   X 204
    Y 135
    ONE_WAY
  $END
@@ -198,7 +198,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_03
-   X 194
+   X 234
    Y 151
    ONE_WAY
  $END
@@ -206,7 +206,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_03
-   X 169
+   X 209
    Y 151
    ONE_WAY
  $END
@@ -214,7 +214,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 164
+   X 204
    Y 85
    ONE_WAY
  $END
@@ -222,7 +222,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 201
+   X 241
    Y 85
    ONE_WAY
  $END

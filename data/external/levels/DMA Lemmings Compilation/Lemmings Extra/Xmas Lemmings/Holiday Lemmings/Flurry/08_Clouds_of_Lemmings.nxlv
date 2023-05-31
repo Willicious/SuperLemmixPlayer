@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Clouds of Lemmings
  AUTHOR DMA Design
  ID xCEB94DA3CEB94DA3
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 624
+ WIDTH 688
  HEIGHT 160
- START_X 228
+ START_X 268
  START_Y 80
  THEME xmas
  
@@ -41,21 +41,21 @@
  $GADGET
    STYLE xmas
    PIECE exit
-   X 500
+   X 540
    Y -6
  $END
  
  $GADGET
    STYLE xmas
    PIECE window
-   X 100
+   X 140
    Y 0
  $END
  
  $GADGET
    STYLE xmas
    PIECE snowman
-   X 12
+   X 52
    Y 8
    SPEED 0
    ANGLE 0
@@ -64,7 +64,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 420
+   X 460
    Y 108
    WIDTH 64
    SPEED 0
@@ -74,7 +74,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 484
+   X 524
    Y 108
    WIDTH 64
    SPEED 0
@@ -84,7 +84,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 548
+   X 588
    Y 108
    WIDTH 64
    SPEED 0
@@ -97,7 +97,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_05
-   X 108
+   X 148
    Y 77
    ONE_WAY
  $END
@@ -105,7 +105,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 241
+   X 281
    Y 122
    ONE_WAY
  $END
@@ -113,7 +113,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 324
+   X 364
    Y 92
    ONE_WAY
  $END
@@ -121,7 +121,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 171
+   X 211
    Y 90
    ONE_WAY
  $END
@@ -129,7 +129,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 409
+   X 449
    Y 51
    ONE_WAY
  $END
@@ -137,7 +137,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 493
+   X 533
    Y 36
    ONE_WAY
  $END
@@ -145,7 +145,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 417
+   X 457
    Y 108
    FLIP_VERTICAL
    ONE_WAY
@@ -154,7 +154,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 481
+   X 521
    Y 109
    FLIP_VERTICAL
    ONE_WAY
@@ -163,7 +163,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 545
+   X 585
    Y 108
    FLIP_VERTICAL
    ONE_WAY
@@ -172,7 +172,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 609
+   X 649
    Y 108
    FLIP_VERTICAL
    ONE_WAY
@@ -181,21 +181,21 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_01
-   X 0
+   X 40
    Y 56
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_01
-   X 24
+   X 64
    Y 56
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_01
-   X 48
+   X 88
    Y 56
  $END
  

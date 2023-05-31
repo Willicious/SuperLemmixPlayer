@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Bridge Away!
  AUTHOR Covox
  ID xCFD0D805CFD0D805
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 352
  HEIGHT 160
- START_X 160
+ START_X 176
  START_Y 80
  THEME ohno_brick
  
@@ -41,7 +41,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 272
+   X 288
    Y 6
    NO_OVERWRITE
  $END
@@ -49,7 +49,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 47
+   X 63
    Y 0
    NO_OVERWRITE
  $END
@@ -60,7 +60,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 0
+   X 16
    Y 112
    ONE_WAY
  $END
@@ -68,7 +68,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 64
+   X 80
    Y 112
    ONE_WAY
  $END
@@ -76,7 +76,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 128
+   X 144
    Y 112
    ONE_WAY
  $END
@@ -84,7 +84,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 192
+   X 208
    Y 112
    ONE_WAY
  $END
@@ -92,7 +92,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 255
+   X 271
    Y 112
    ONE_WAY
  $END
@@ -100,7 +100,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_09
-   X 0
+   X 16
    Y -2
    ONE_WAY
  $END
@@ -108,7 +108,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_08
-   X 287
+   X 303
    Y -2
    ONE_WAY
  $END
@@ -116,7 +116,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 65
+   X 81
    Y 54
    ONE_WAY
  $END
@@ -124,7 +124,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 0
+   X 16
    Y 30
    ONE_WAY
  $END
@@ -132,7 +132,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 0
+   X 16
    Y 54
    ONE_WAY
  $END
@@ -140,7 +140,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 0
+   X 16
    Y 78
    ONE_WAY
  $END
@@ -148,7 +148,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 315
+   X 331
    Y 29
    NO_OVERWRITE
    ONE_WAY
@@ -157,7 +157,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 315
+   X 331
    Y 53
    NO_OVERWRITE
    ONE_WAY
@@ -166,7 +166,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 315
+   X 331
    Y 77
    NO_OVERWRITE
    ONE_WAY
@@ -175,95 +175,95 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE barrel_01
+   X 319
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_01
+   X 16
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 97
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 129
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 161
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 193
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_02
+   X 224
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_01
+   X 302
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_01
+   X 285
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_01
+   X 311
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_01
+   X 294
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_01
    X 303
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE barrel_01
-   X 0
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE stairs_02
-   X 81
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE stairs_02
-   X 113
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE stairs_02
-   X 145
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE stairs_02
-   X 177
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE stairs_02
-   X 208
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE barrel_01
-   X 286
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE barrel_01
-   X 269
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE barrel_01
-   X 295
-   Y 76
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE barrel_01
-   X 278
-   Y 76
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE barrel_01
-   X 287
    Y 58
    ONE_WAY
  $END
@@ -271,7 +271,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 283
+   X 299
    Y 54
    ONE_WAY
  $END
@@ -279,7 +279,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 283
+   X 299
    Y 54
    ONE_WAY
  $END
@@ -287,7 +287,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 251
+   X 267
    Y 54
    ONE_WAY
  $END
@@ -295,7 +295,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE chain_03
-   X 251
+   X 267
    Y 22
    ONE_WAY
  $END
@@ -303,7 +303,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE chain_03
-   X 251
+   X 267
    Y -2
    ONE_WAY
  $END
@@ -311,7 +311,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE hook_01
-   X 248
+   X 264
    Y 58
    ONE_WAY
  $END
@@ -319,7 +319,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 315
+   X 331
    Y 101
    NO_OVERWRITE
    ONE_WAY
@@ -328,7 +328,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 0
+   X 16
    Y 102
    NO_OVERWRITE
    ONE_WAY

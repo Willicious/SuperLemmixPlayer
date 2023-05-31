@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +8,7 @@
  TITLE Lemming Lament
  AUTHOR DMA Design 
  ID x89FD557589FD5575
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
@@ -57,6 +58,7 @@
    X 760
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -66,6 +68,7 @@
    X 824
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -75,6 +78,7 @@
    X 888
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -84,6 +88,7 @@
    X 952
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -93,6 +98,7 @@
    X 136
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -102,6 +108,7 @@
    X 72
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -111,6 +118,7 @@
    X 8
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  

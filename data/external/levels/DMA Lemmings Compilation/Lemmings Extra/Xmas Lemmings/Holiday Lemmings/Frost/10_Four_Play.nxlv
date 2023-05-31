@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,11 +8,11 @@
  TITLE Four Play
  AUTHOR DMA Design
  ID xD5AC2B98D5AC2B98
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 648
+ WIDTH 688
  HEIGHT 160
  START_X 328
  START_Y 80

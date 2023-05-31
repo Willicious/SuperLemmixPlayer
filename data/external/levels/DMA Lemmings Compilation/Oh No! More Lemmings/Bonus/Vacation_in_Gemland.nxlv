@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,10 +8,11 @@
  TITLE Vacation in Gemland
  AUTHOR DMA Design 
  ID x99E2F3E899E2F3E8
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 800
+ WIDTH 832
  HEIGHT 160
  START_X 272
  START_Y 80
@@ -39,6 +40,7 @@
    X 688
    Y 112
    WIDTH 64
+   HEIGHT 24
    NO_OVERWRITE
  $END
  
@@ -48,6 +50,7 @@
    X 736
    Y 112
    WIDTH 64
+   HEIGHT 24
    NO_OVERWRITE
  $END
  

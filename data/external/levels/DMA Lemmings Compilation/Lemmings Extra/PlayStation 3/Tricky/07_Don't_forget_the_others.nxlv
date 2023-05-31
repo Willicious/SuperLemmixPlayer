@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.6
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,403 +8,433 @@
  TITLE Don't forget the others
  AUTHOR Sony / Minim
  ID xAC34B234AC34B234
- AUTOSTEEL on 
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH    320
- HEIGHT   160
- START_X  160
- START_Y   80
+ WIDTH 384
+ HEIGHT 160
+ START_X 160
+ START_Y 80
  THEME minim_ps3dark
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS       40
- REQUIREMENT    40
- TIME_LIMIT    480
- MAX_SPAWN_INTERVAL   48
+ LEMMINGS 40
+ SAVE_REQUIREMENT 1
+ TIME_LIMIT 480
+ MAX_SPAWN_INTERVAL 48
  
  $SKILLSET 
-    CLIMBER    1
-    FLOATER    1
-    BUILDER    4
-     BASHER    3
+   CLIMBER 1
+   FLOATER 1
+   BUILDER 4
+   BASHER 3
  $END 
  
 #     Interactive objects       
 # ----------------------------- 
- $OBJECT
-   COLLECTION orig_fire
-   PIECE      lava
-   X          0
-   Y        150
-   WIDTH     64
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 24
+   Y 150
+   WIDTH 64
+   HEIGHT 20
  $END
  
- $OBJECT
-   COLLECTION orig_fire
-   PIECE      lava
-   X         64
-   Y        150
-   WIDTH     64
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 88
+   Y 150
+   WIDTH 64
+   HEIGHT 20
  $END
  
- $OBJECT
-   COLLECTION orig_fire
-   PIECE      lava
-   X        128
-   Y        150
-   WIDTH     64
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 152
+   Y 150
+   WIDTH 64
+   HEIGHT 20
  $END
  
- $OBJECT
-   COLLECTION orig_fire
-   PIECE      lava
-   X        192
-   Y        150
-   WIDTH     64
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 216
+   Y 150
+   WIDTH 64
+   HEIGHT 20
  $END
  
- $OBJECT
-   COLLECTION orig_fire
-   PIECE      lava
-   X        256
-   Y        150
-   WIDTH     64
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 280
+   Y 150
+   WIDTH 64
+   HEIGHT 20
  $END
  
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      entrance
-   X         61
-   Y          1
-   NO_OVERWRITE
-   DIRECTION right
- $END
- 
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      exit
-   X        180
-   Y         74
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE entrance
+   X 85
+   Y 1
    NO_OVERWRITE
  $END
  
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      teleporter_in
-   X        114
-   Y        136
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE exit
+   X 204
+   Y 74
    NO_OVERWRITE
-   PAIRING    0
  $END
  
- $OBJECT
-   COLLECTION minim_ps3dark
-   PIECE      teleporter_out
-   X        290
-   Y        100
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE teleporter_in
+   X 138
+   Y 136
    NO_OVERWRITE
-   PAIRING    0
+   PAIRING 0
+ $END
+ 
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE teleporter_out
+   X 314
+   Y 100
+   NO_OVERWRITE
+   PAIRING 0
  $END
  
  
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_03
-   X     0
-   Y    26
+   STYLE orig_fire
+   PIECE bricks_03
+   X 24
+   Y 26
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_03
-   X     0
-   Y    98
+   STYLE orig_fire
+   PIECE bricks_03
+   X 24
+   Y 98
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_03
-   X     0
-   Y   134
+   STYLE orig_fire
+   PIECE bricks_03
+   X 24
+   Y 134
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_03
-   X     0
-   Y    62
+   STYLE orig_fire
+   PIECE bricks_03
+   X 24
+   Y 62
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X    36
-   Y   148
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 60
+   Y 148
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X    48
-   Y   100
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 72
+   Y 100
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X    48
-   Y    52
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 72
+   Y 52
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_10
-   X    48
-   Y    46
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 72
+   Y 46
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_10
-   X    48
-   Y    40
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 72
+   Y 40
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X    72
-   Y    52
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 96
+   Y 52
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X    96
-   Y    52
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 120
+   Y 52
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X   120
-   Y    52
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 144
+   Y 52
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X    84
-   Y   148
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 108
+   Y 148
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X   132
-   Y   112
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 156
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X   132
-   Y    64
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 156
+   Y 64
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_11
-   X   144
-   Y    52
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 168
+   Y 52
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_11
-   X   144
-   Y    40
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 168
+   Y 40
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   180
-   Y   136
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 204
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   180
-   Y   112
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 204
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   228
-   Y   112
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 252
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   228
-   Y   136
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 252
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   276
-   Y   136
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 300
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   276
-   Y   112
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 300
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X   307
-   Y    70
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 331
+   Y 70
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_12
-   X   307
-   Y    22
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 331
+   Y 22
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   260
-   Y    22
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 284
+   Y 22
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   212
-   Y    22
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 236
+   Y 22
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   164
-   Y    10
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 188
+   Y 10
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   140
-   Y    10
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 164
+   Y 10
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_11
-   X   128
-   Y    22
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 152
+   Y 22
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_11
-   X   128
-   Y    10
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 152
+   Y 10
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   212
-   Y    10
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 236
+   Y 10
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   260
-   Y    10
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 284
+   Y 10
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_13
-   X   308
-   Y    10
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 332
+   Y 10
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      ramp_04
-   X   283
-   Y    46
+   STYLE minim_ps3dark
+   PIECE ramp_04
+   X 307
+   Y 46
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3dark
-   PIECE      bricks_11
-   X    25
-   Y    14
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 49
+   Y 14
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION orig_fire
-   PIECE      bricks_02
-   X     0
-   Y    14
+   STYLE orig_fire
+   PIECE bricks_02
+   X 24
+   Y 14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 331
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 355
+   Y 3
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 357
+   Y 3
+   ERASE
    ONE_WAY
  $END
  

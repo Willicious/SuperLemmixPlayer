@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE The Final Frontier
  AUTHOR DMA Design
  ID xF58F2131F58F2131
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1000
+ WIDTH 1064
  HEIGHT 160
- START_X 160
+ START_X 200
  START_Y 80
  THEME xmas
  
@@ -41,14 +41,14 @@
  $GADGET
    STYLE xmas
    PIECE exit
-   X 574
+   X 622
    Y 57
  $END
  
  $GADGET
    STYLE xmas
    PIECE fireplace
-   X 16
+   X 64
    Y 72
    SPEED 0
    ANGLE 0
@@ -57,7 +57,7 @@
  $GADGET
    STYLE xmas
    PIECE window
-   X 96
+   X 144
    Y -36
  $END
  
@@ -67,7 +67,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 912
+   X 960
    Y 37
    ONE_WAY
  $END
@@ -75,7 +75,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 828
+   X 876
    Y 19
    ONE_WAY
  $END
@@ -83,7 +83,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 790
+   X 838
    Y 64
    ONE_WAY
  $END
@@ -91,7 +91,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 711
+   X 759
    Y 18
    ONE_WAY
  $END
@@ -99,7 +99,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 633
+   X 681
    Y 60
    ONE_WAY
  $END
@@ -107,7 +107,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 559
+   X 607
    Y 21
    FLIP_VERTICAL
    ONE_WAY
@@ -116,7 +116,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 632
+   X 680
    Y 28
    FLIP_VERTICAL
    ONE_WAY
@@ -125,7 +125,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 511
+   X 559
    Y 61
    FLIP_VERTICAL
    ONE_WAY
@@ -134,7 +134,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 430
+   X 478
    Y 22
    FLIP_VERTICAL
    ONE_WAY
@@ -143,7 +143,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 380
+   X 428
    Y 67
    FLIP_VERTICAL
    ONE_WAY
@@ -152,7 +152,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 285
+   X 333
    Y 16
    FLIP_VERTICAL
    ONE_WAY
@@ -161,7 +161,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 304
+   X 352
    Y 68
    FLIP_VERTICAL
    ONE_WAY
@@ -170,7 +170,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 181
+   X 229
    Y 66
    FLIP_VERTICAL
    ONE_WAY
@@ -179,7 +179,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 158
+   X 206
    Y 12
    FLIP_VERTICAL
    ONE_WAY
@@ -188,7 +188,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 104
+   X 152
    Y 48
    FLIP_VERTICAL
    ONE_WAY
@@ -197,58 +197,9 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 574
+   X 622
    Y 100
    ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 460
-   Y 32
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 460
-   Y 56
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 460
-   Y 80
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 460
-   Y 104
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 460
-   Y 128
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 460
-   Y 152
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 484
-   Y 32
  $END
  
  $TERRAIN
@@ -261,31 +212,66 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_01
+   X 508
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 508
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 508
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 508
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 508
+   Y 152
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
    X 532
    Y 32
  $END
  
  $TERRAIN
    STYLE ohno_snow
-   PIECE snow_22
+   PIECE steel_01
+   X 556
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
    X 580
+   Y 32
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_22
+   X 628
    Y 97
    NO_OVERWRITE
    ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 0
-   Y 136
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 24
-   Y 136
  $END
  
  $TERRAIN
@@ -297,8 +283,22 @@
  
  $TERRAIN
    STYLE ohno_snow
+   PIECE steel_01
+   X 72
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 96
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
    PIECE snow_16
-   X 708
+   X 756
    Y 22
    ONE_WAY
  $END
@@ -306,7 +306,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 99
+   X 147
    Y 104
    ONE_WAY
  $END
@@ -314,7 +314,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 197
+   X 245
    Y 119
    ONE_WAY
  $END
@@ -322,7 +322,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 320
+   X 368
    Y 109
    ONE_WAY
  $END
@@ -330,7 +330,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 390
+   X 438
    Y 138
    ONE_WAY
  $END
@@ -338,7 +338,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 495
+   X 543
    Y 91
    ONE_WAY
  $END
@@ -346,7 +346,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 501
+   X 549
    Y 136
    ONE_WAY
  $END
@@ -354,7 +354,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 593
+   X 641
    Y 139
    FLIP_VERTICAL
    ONE_WAY
@@ -363,7 +363,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 671
+   X 719
    Y 109
    ONE_WAY
  $END
@@ -371,7 +371,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 774
+   X 822
    Y 127
    FLIP_VERTICAL
    ONE_WAY
@@ -380,7 +380,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 870
+   X 918
    Y 82
    FLIP_VERTICAL
    ONE_WAY
@@ -389,7 +389,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 917
+   X 965
    Y 131
    FLIP_VERTICAL
    ONE_WAY
@@ -398,7 +398,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 1
+   X 49
    Y 18
    ONE_WAY
  $END
@@ -406,7 +406,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 26
+   X 74
    Y 30
    ONE_WAY
  $END

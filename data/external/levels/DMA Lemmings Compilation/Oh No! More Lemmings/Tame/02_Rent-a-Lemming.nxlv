@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Rent-a-Lemming
  AUTHOR DMA Design 
  ID xDAA4B886DAA4B886
- VERSION x0000000000000000
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 432
+ WIDTH 464
  HEIGHT 160
- START_X 164
+ START_X 180
  START_Y 80
  THEME ohno_rock
  BACKGROUND special:amiga_blue
@@ -42,7 +42,7 @@
  $GADGET
    STYLE ohno_rock
    PIECE window
-   X 44
+   X 60
    Y 84
    NO_OVERWRITE
  $END
@@ -50,7 +50,7 @@
  $GADGET
    STYLE ohno_rock
    PIECE exit
-   X 300
+   X 316
    Y 68
    NO_OVERWRITE
  $END
@@ -61,7 +61,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 23
+   X 39
    Y 137
    NO_OVERWRITE
    ONE_WAY
@@ -70,7 +70,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 127
+   X 143
    Y 134
    NO_OVERWRITE
    ONE_WAY
@@ -79,7 +79,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 199
+   X 215
    Y 146
    NO_OVERWRITE
    ONE_WAY
@@ -88,7 +88,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 292
+   X 308
    Y 138
    NO_OVERWRITE
    ONE_WAY
@@ -97,7 +97,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 209
+   X 225
    Y 124
    NO_OVERWRITE
    ONE_WAY
@@ -106,7 +106,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_09
-   X 94
+   X 110
    Y 126
    NO_OVERWRITE
    ONE_WAY
@@ -115,7 +115,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_09
-   X 111
+   X 127
    Y 119
    NO_OVERWRITE
    ONE_WAY
@@ -124,7 +124,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 139
+   X 155
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -133,7 +133,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 157
+   X 173
    Y 94
    NO_OVERWRITE
    ONE_WAY
@@ -142,7 +142,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 235
+   X 251
    Y 101
    NO_OVERWRITE
    ONE_WAY
@@ -151,7 +151,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_03
-   X 320
+   X 336
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -160,7 +160,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_11
-   X 188
+   X 204
    Y 77
    NO_OVERWRITE
    ONE_WAY
@@ -169,7 +169,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_01
-   X 226
+   X 242
    Y 78
    NO_OVERWRITE
    ONE_WAY
@@ -178,7 +178,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_03
-   X 265
+   X 281
    Y 73
    NO_OVERWRITE
    ONE_WAY
@@ -187,7 +187,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_02
-   X 273
+   X 289
    Y 58
    NO_OVERWRITE
    ONE_WAY
@@ -196,7 +196,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE crystal_02
-   X 273
+   X 289
    Y 70
    NO_OVERWRITE
    ONE_WAY
@@ -205,7 +205,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_01
-   X 12
+   X 28
    Y 64
    NO_OVERWRITE
    ONE_WAY
@@ -214,7 +214,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_01
-   X 10
+   X 26
    Y 4
    NO_OVERWRITE
    ONE_WAY
@@ -223,7 +223,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_05
-   X 3
+   X 19
    Y 110
    NO_OVERWRITE
    ONE_WAY
@@ -232,7 +232,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 20
+   X 36
    Y -10
    NO_OVERWRITE
    ONE_WAY
@@ -241,7 +241,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 120
+   X 136
    Y -10
    NO_OVERWRITE
    ONE_WAY
@@ -250,7 +250,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_09
-   X 216
+   X 232
    Y -10
    NO_OVERWRITE
    ONE_WAY
@@ -259,7 +259,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_08
-   X 275
+   X 291
    Y -20
    NO_OVERWRITE
    ONE_WAY
@@ -268,7 +268,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_01
-   X 335
+   X 351
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -277,7 +277,16 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE rocks_02
-   X 351
+   X 367
+   Y 99
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_rock
+   PIECE platform_02
+   X 342
    Y 99
    NO_OVERWRITE
    ONE_WAY
@@ -304,16 +313,7 @@
  $TERRAIN
    STYLE ohno_rock
    PIECE platform_02
-   X 294
-   Y 99
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_rock
-   PIECE platform_02
-   X 281
+   X 297
    Y 99
    NO_OVERWRITE
    ONE_WAY

@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +8,7 @@
  TITLE Go for it!
  AUTHOR DMA Design 
  ID xB0C452B9B0C452B9
+ VERSION x0000000000000003
  
 #       Level dimensions        
 # ----------------------------- 
@@ -69,6 +70,7 @@
    X 64
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -78,6 +80,7 @@
    X 0
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -87,6 +90,7 @@
    X 848
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -96,6 +100,7 @@
    X 928
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  

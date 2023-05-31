@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE Going Their Separate Ways
  AUTHOR DMA Design
  ID xEC2C7566EC2C7566
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 800
+ WIDTH 880
  HEIGHT 160
- START_X 384
+ START_X 416
  START_Y 80
  THEME orig_marble
  
@@ -34,7 +35,7 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X 56
+   X 88
    Y 129
    NO_OVERWRITE
  $END
@@ -42,7 +43,7 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X 584
+   X 616
    Y 29
    NO_OVERWRITE
  $END
@@ -50,7 +51,7 @@
  $GADGET
    STYLE orig_marble
    PIECE window
-   X 344
+   X 376
    Y 17
    NO_OVERWRITE
  $END
@@ -58,65 +59,63 @@
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 456
+   X 488
    Y 135
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 520
+   X 552
    Y 135
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 584
+   X 616
    Y 135
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 688
+   X 720
    Y 137
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 392
+   X 424
    Y 135
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 648
+   X 680
    Y 135
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
  
 #        Terrain pieces         
 # ----------------------------- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_05
-   X 49
-   Y 153
-   ONE_WAY
- $END
- 
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
@@ -143,30 +142,6 @@
  
  $TERRAIN
    STYLE orig_marble
-   PIECE brick_small_03
-   X 177
-   Y 149
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 173
-   Y 149
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 173
-   Y 145
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
    PIECE brick_small_05
    X 177
    Y 153
@@ -175,8 +150,8 @@
  
  $TERRAIN
    STYLE orig_marble
-   PIECE brick_small_04
-   X 189
+   PIECE brick_small_03
+   X 209
    Y 149
    ONE_WAY
  $END
@@ -184,214 +159,16 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_04
-   X 185
+   X 205
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 205
    Y 145
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 177
-   Y 137
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 185
-   Y 141
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 181
-   Y 141
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 185
-   Y 145
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 173
-   Y 141
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 173
-   Y 133
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 181
-   Y 137
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 169
-   Y 129
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 177
-   Y 133
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 173
-   Y 129
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 165
-   Y 125
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 161
-   Y 121
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 161
-   Y 129
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 161
-   Y 133
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 169
-   Y 125
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 165
-   Y 121
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 189
-   Y 133
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 185
-   Y 129
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 181
-   Y 125
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 177
-   Y 121
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 173
-   Y 121
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 181
-   Y 121
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 185
-   Y 125
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_03
-   X 185
-   Y 129
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_04
-   X 189
-   Y 121
-   NO_OVERWRITE
    ONE_WAY
  $END
  
@@ -405,7 +182,178 @@
  
  $TERRAIN
    STYLE orig_marble
-   PIECE brick_small_05
+   PIECE brick_small_04
+   X 221
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 217
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 209
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 217
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 213
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 217
+   Y 145
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 205
+   Y 141
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 205
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 213
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 201
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 209
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 205
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 197
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 193
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 193
+   Y 129
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 193
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 201
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 197
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 221
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 217
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 213
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
    X 209
    Y 121
    ONE_WAY
@@ -413,10 +361,44 @@
  
  $TERRAIN
    STYLE orig_marble
-   PIECE pillar_04
-   X 208
-   Y 137
-   ERASE
+   PIECE brick_small_04
+   X 205
+   Y 121
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 213
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 217
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_03
+   X 217
+   Y 129
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_04
+   X 221
+   Y 121
+   NO_OVERWRITE
    ONE_WAY
  $END
  
@@ -431,15 +413,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 273
-   Y 153
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_05
-   X 257
+   X 241
    Y 121
    ONE_WAY
  $END
@@ -447,7 +421,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE pillar_04
-   X 256
+   X 240
    Y 137
    ERASE
    ONE_WAY
@@ -456,7 +430,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 305
+   X 273
    Y 153
    ONE_WAY
  $END
@@ -465,6 +439,14 @@
    STYLE orig_marble
    PIECE brick_small_05
    X 305
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_05
+   X 289
    Y 121
    ONE_WAY
  $END
@@ -472,7 +454,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE pillar_04
-   X 304
+   X 288
    Y 137
    ERASE
    ONE_WAY
@@ -489,7 +471,32 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 353
+   X 337
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE pillar_04
+   X 336
+   Y 137
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_05
+   X 369
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_05
+   X 385
    Y 121
    ONE_WAY
  $END
@@ -497,14 +504,14 @@
  $TERRAIN
    STYLE orig_marble
    PIECE steel_01
-   X 373
+   X 405
    Y 136
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 365
+   X 397
    Y 117
    NO_OVERWRITE
    ONE_WAY
@@ -513,7 +520,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 353
+   X 385
    Y 153
    NO_OVERWRITE
    ONE_WAY
@@ -522,7 +529,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 365
+   X 397
    Y 85
    ONE_WAY
  $END
@@ -530,24 +537,8 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 365
-   Y 53
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_05
    X 397
    Y 53
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_05
-   X 397
-   Y 21
    ONE_WAY
  $END
  
@@ -561,10 +552,9 @@
  
  $TERRAIN
    STYLE orig_marble
-   PIECE pillar_04
-   X 417
-   Y 37
-   ERASE
+   PIECE brick_small_05
+   X 429
+   Y 21
    ONE_WAY
  $END
  
@@ -578,16 +568,8 @@
  
  $TERRAIN
    STYLE orig_marble
-   PIECE brick_small_05
-   X 445
-   Y 21
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
    PIECE pillar_04
-   X 465
+   X 449
    Y 37
    ERASE
    ONE_WAY
@@ -604,8 +586,17 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 493
+   X 477
    Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE pillar_04
+   X 497
+   Y 37
+   ERASE
    ONE_WAY
  $END
  
@@ -620,16 +611,16 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 557
-   Y 53
+   X 525
+   Y 21
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 541
-   Y 21
+   X 557
+   Y 53
    ONE_WAY
  $END
  
@@ -644,6 +635,14 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
+   X 573
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE brick_small_05
    X 621
    Y 53
    ONE_WAY
@@ -651,8 +650,16 @@
  
  $TERRAIN
    STYLE orig_marble
+   PIECE brick_small_05
+   X 653
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
    PIECE pillar_04
-   X 513
+   X 545
    Y 37
    ERASE
    ONE_WAY
@@ -661,7 +668,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE pillar_04
-   X 561
+   X 593
    Y 37
    ERASE
    ONE_WAY
@@ -670,7 +677,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE rock_02
-   X 739
+   X 771
    Y 125
    ONE_WAY
  $END
@@ -678,7 +685,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 221
+   X 253
    Y -6
    ONE_WAY
  $END
@@ -686,7 +693,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 285
+   X 317
    Y -26
    ONE_WAY
  $END
@@ -694,7 +701,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 265
+   X 297
    Y -18
    ONE_WAY
  $END
@@ -702,7 +709,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 249
+   X 281
    Y -12
    ONE_WAY
  $END
@@ -710,7 +717,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 239
+   X 271
    Y -17
    ONE_WAY
  $END
@@ -718,7 +725,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 220
+   X 252
    Y -18
    ONE_WAY
  $END
@@ -726,7 +733,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 196
+   X 228
    Y -3
    ONE_WAY
  $END
@@ -734,7 +741,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 178
+   X 210
    Y 1
    ONE_WAY
  $END
@@ -742,7 +749,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 198
+   X 230
    Y -15
    ONE_WAY
  $END
@@ -750,7 +757,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 190
+   X 222
    Y -25
    ONE_WAY
  $END
@@ -758,7 +765,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 189
+   X 221
    Y -17
    ONE_WAY
  $END
@@ -766,7 +773,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 178
+   X 210
    Y -28
    ONE_WAY
  $END
@@ -774,7 +781,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 141
+   X 173
    Y 0
    ONE_WAY
  $END
@@ -782,7 +789,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 133
+   X 165
    Y 8
    ONE_WAY
  $END
@@ -790,7 +797,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 143
+   X 175
    Y -11
    ONE_WAY
  $END
@@ -798,7 +805,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 104
+   X 136
    Y 10
    ONE_WAY
  $END
@@ -806,7 +813,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 110
+   X 142
    Y 3
    ONE_WAY
  $END
@@ -814,7 +821,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 115
+   X 147
    Y -6
    ONE_WAY
  $END
@@ -822,7 +829,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 119
+   X 151
    Y -12
    ONE_WAY
  $END
@@ -830,7 +837,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 126
+   X 158
    Y -15
    ONE_WAY
  $END
@@ -838,8 +845,24 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 132
+   X 164
    Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE stuff_02
+   X 172
+   Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE stuff_02
+   X 148
+   Y 2
    ONE_WAY
  $END
  
@@ -847,22 +870,6 @@
    STYLE orig_marble
    PIECE stuff_02
    X 140
-   Y -20
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE stuff_02
-   X 116
-   Y 2
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE stuff_02
-   X 108
    Y 11
    ONE_WAY
  $END
@@ -870,7 +877,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 79
+   X 111
    Y 0
    ONE_WAY
  $END
@@ -878,7 +885,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 91
+   X 123
    Y 2
    ONE_WAY
  $END
@@ -886,7 +893,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 83
+   X 115
    Y -7
    ONE_WAY
  $END
@@ -894,7 +901,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 90
+   X 122
    Y -11
    ONE_WAY
  $END
@@ -902,7 +909,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 98
+   X 130
    Y -15
    ONE_WAY
  $END
@@ -910,7 +917,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 66
+   X 98
    Y -11
    ONE_WAY
  $END
@@ -918,7 +925,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 53
+   X 85
    Y -13
    ONE_WAY
  $END
@@ -926,7 +933,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 44
+   X 76
    Y -13
    ONE_WAY
  $END
@@ -934,7 +941,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 34
+   X 66
    Y -12
    ONE_WAY
  $END
@@ -942,7 +949,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 23
+   X 55
    Y -13
    ONE_WAY
  $END
@@ -950,7 +957,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 14
+   X 46
    Y -13
    ONE_WAY
  $END
@@ -958,7 +965,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 5
+   X 37
    Y -17
    ONE_WAY
  $END
@@ -966,7 +973,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X -2
+   X 30
    Y -20
    ONE_WAY
  $END
@@ -974,7 +981,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X -10
+   X 22
    Y -24
    ONE_WAY
  $END
@@ -982,7 +989,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 709
+   X 741
    Y -5
    ONE_WAY
  $END
@@ -990,7 +997,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 630
+   X 662
    Y -17
    ONE_WAY
  $END
@@ -998,7 +1005,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 639
+   X 671
    Y -16
    ONE_WAY
  $END
@@ -1006,7 +1013,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 653
+   X 685
    Y -8
    ONE_WAY
  $END
@@ -1014,7 +1021,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 664
+   X 696
    Y -8
    ONE_WAY
  $END
@@ -1022,7 +1029,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 674
+   X 706
    Y -7
    ONE_WAY
  $END
@@ -1030,7 +1037,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 681
+   X 713
    Y -1
    ONE_WAY
  $END
@@ -1038,7 +1045,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 682
+   X 714
    Y -8
    ONE_WAY
  $END
@@ -1046,7 +1053,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 689
+   X 721
    Y -1
    ONE_WAY
  $END
@@ -1054,7 +1061,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 690
+   X 722
    Y -9
    ONE_WAY
  $END
@@ -1062,7 +1069,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 706
+   X 738
    Y -16
    ONE_WAY
  $END
@@ -1070,7 +1077,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 692
+   X 724
    Y -19
    ONE_WAY
  $END
@@ -1078,7 +1085,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 732
+   X 764
    Y -17
    ONE_WAY
  $END
@@ -1086,7 +1093,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 735
+   X 767
    Y -16
    ONE_WAY
  $END
@@ -1094,7 +1101,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 760
+   X 792
    Y -28
    ONE_WAY
  $END
@@ -1102,7 +1109,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 771
+   X 803
    Y -29
    ONE_WAY
  $END

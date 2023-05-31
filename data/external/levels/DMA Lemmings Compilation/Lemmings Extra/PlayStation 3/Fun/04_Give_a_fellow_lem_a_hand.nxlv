@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.6
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,91 +8,89 @@
  TITLE Give a fellow lem a hand
  AUTHOR Sony / Minim
  ID x8AC13B638AC13B63
- AUTOSTEEL on 
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH    592
- HEIGHT   160
- START_X  160
- START_Y   80
+ WIDTH 624
+ HEIGHT 160
+ START_X 184
+ START_Y 80
  THEME minim_ps3factory
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS        2
- REQUIREMENT     2
- TIME_LIMIT    600
- MAX_SPAWN_INTERVAL   53
+ LEMMINGS 2
+ SAVE_REQUIREMENT 1
+ TIME_LIMIT 600
+ MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-    CLIMBER    1
-    FLOATER    1
-    BUILDER    0
-     BASHER    0
-     DIGGER    0
+   CLIMBER 1
+   FLOATER 1
+   BUILDER 0
+   BASHER 0
+   DIGGER 0
  $END 
  
 #     Interactive objects       
 # ----------------------------- 
- $OBJECT
-   COLLECTION minim_ps3factory
-   PIECE      entrance
-   X         15
-   Y         24
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE entrance
+   X 39
+   Y 24
    NO_OVERWRITE
-   DIRECTION right
  $END
  
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X         58
-   Y         59
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 82
+   Y 59
    NO_OVERWRITE
    SKILL DIGGER
  $END
  
- $OBJECT
-   COLLECTION minim_ps3factory
-   PIECE      exit_01
-   X        270
-   Y         94
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE exit_01
+   X 294
+   Y 94
    NO_OVERWRITE
  $END
  
- $OBJECT
-   COLLECTION minim_ps3factory
-   PIECE      entrance
-   X        436
-   Y         34
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE entrance
+   X 460
+   Y 34
    NO_OVERWRITE
-   DIRECTION right
  $END
  
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X        503
-   Y        115
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 527
+   Y 115
    NO_OVERWRITE
    SKILL BUILDER
  $END
  
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X        294
-   Y         24
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 318
+   Y 24
    NO_OVERWRITE
    SKILL BASHER
  $END
  
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X        294
-   Y         40
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 318
+   Y 40
    NO_OVERWRITE
    SKILL BASHER
  $END
@@ -101,714 +99,714 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_gray_02
-   X   512
-   Y    88
+   STYLE minim_ps3factory
+   PIECE beam_gray_02
+   X 536
+   Y 88
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_gray_02
-   X   496
-   Y    88
+   STYLE minim_ps3factory
+   PIECE beam_gray_02
+   X 520
+   Y 88
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_gray_02
-   X   480
-   Y    88
+   STYLE minim_ps3factory
+   PIECE beam_gray_02
+   X 504
+   Y 88
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_gray_02
-   X   464
-   Y    88
+   STYLE minim_ps3factory
+   PIECE beam_gray_02
+   X 488
+   Y 88
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X     0
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 24
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X    24
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 48
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X    32
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 56
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X     0
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 24
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X     0
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 24
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_01
-   X   192
-   Y    80
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 216
+   Y 80
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X    56
-   Y   104
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 80
+   Y 104
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X    24
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 48
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X    48
-   Y   136
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 72
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X    48
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 72
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   168
-   Y    80
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 192
+   Y 80
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   152
-   Y   112
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 176
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_row_01
-   X   120
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_small_row_01
+   X 144
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_row_01
-   X   184
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_small_row_01
+   X 208
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   240
-   Y    80
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 264
+   Y 80
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   192
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 216
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_01
-   X   216
-   Y   112
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 240
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_01
-   X   224
-   Y   104
+   STYLE minim_ps3factory
+   PIECE board_small_01
+   X 248
+   Y 104
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_01
-   X   224
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_small_01
+   X 248
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   216
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 240
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X   192
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 216
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X    80
-   Y   136
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 104
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_row_01
-   X   192
-   Y   152
+   STYLE minim_ps3factory
+   PIECE board_small_row_01
+   X 216
+   Y 152
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X   224
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 248
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   256
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 280
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      machine_part_06
-   X   248
-   Y    72
+   STYLE minim_ps3factory
+   PIECE machine_part_06
+   X 272
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   160
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 184
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   160
-   Y    80
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 184
+   Y 80
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X    40
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 64
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_01
-   X    32
-   Y    88
+   STYLE minim_ps3factory
+   PIECE board_small_01
+   X 56
+   Y 88
    NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      semi_circle_terrain
-   X   168
-   Y    58
+   STYLE minim_ps3factory
+   PIECE semi_circle_terrain
+   X 192
+   Y 58
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_01
-   X   280
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 304
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_01
-   X   280
-   Y   144
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 304
+   Y 144
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   317
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 341
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_02
-   X   317
-   Y    48
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 341
+   Y 48
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      machine_part_06
-   X   301
-   Y    72
+   STYLE minim_ps3factory
+   PIECE machine_part_06
+   X 325
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_02
-   X   301
-   Y    24
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 325
+   Y 24
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X   317
-   Y    24
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 341
+   Y 24
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_02
-   X   333
-   Y    48
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 357
+   Y 48
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_02
-   X   341
-   Y    96
+   STYLE minim_ps3factory
+   PIECE beam_02
+   X 365
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_05
-   X   341
-   Y   112
+   STYLE minim_ps3factory
+   PIECE beam_05
+   X 365
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X   328
-   Y   136
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 352
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_blue_02
-   X   349
-   Y    27
+   STYLE minim_ps3factory
+   PIECE beam_blue_02
+   X 373
+   Y 27
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_06
-   X   317
-   Y   112
+   STYLE minim_ps3factory
+   PIECE beam_06
+   X 341
+   Y 112
    NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_01
-   X   365
-   Y   128
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 389
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X   360
-   Y   136
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 384
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   392
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 416
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_01
-   X   416
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 440
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_01
-   X   432
-   Y   144
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 456
+   Y 144
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   416
-   Y   144
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 440
+   Y 144
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   424
-   Y   144
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 448
+   Y 144
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_05
-   X   464
-   Y   120
+   STYLE minim_ps3factory
+   PIECE beam_05
+   X 488
+   Y 120
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_02
-   X   464
-   Y    96
+   STYLE minim_ps3factory
+   PIECE beam_02
+   X 488
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_04
-   X   512
-   Y   136
+   STYLE minim_ps3factory
+   PIECE beam_04
+   X 536
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_01
-   X   480
-   Y   144
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 504
+   Y 144
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_01
-   X   488
-   Y   136
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 512
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_row_01
-   X   472
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_small_row_01
+   X 496
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      pipe
-   X   544
-   Y   105
+   STYLE minim_ps3factory
+   PIECE pipe
+   X 568
+   Y 105
    FLIP_VERTICAL
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      pipe
-   X   544
-   Y   153
+   STYLE minim_ps3factory
+   PIECE pipe
+   X 568
+   Y 153
    FLIP_VERTICAL
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_row_02
-   X   536
-   Y   128
+   STYLE minim_ps3factory
+   PIECE board_small_row_02
+   X 560
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      machine_part_06
-   X   452
-   Y    81
+   STYLE minim_ps3factory
+   PIECE machine_part_06
+   X 476
+   Y 81
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      machine_part_06
-   X   484
-   Y    81
+   STYLE minim_ps3factory
+   PIECE machine_part_06
+   X 508
+   Y 81
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      machine_part_06
-   X   516
-   Y    81
+   STYLE minim_ps3factory
+   PIECE machine_part_06
+   X 540
+   Y 81
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      pipe_end
-   X   544
-   Y    57
+   STYLE minim_ps3factory
+   PIECE pipe_end
+   X 568
+   Y 57
    FLIP_VERTICAL
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      machine_part_02
-   X   522
-   Y    41
+   STYLE minim_ps3factory
+   PIECE machine_part_02
+   X 546
+   Y 41
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_01
-   X   389
-   Y   128
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 413
+   Y 128
    NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_03
-   X    48
-   Y    96
+   STYLE minim_ps3factory
+   PIECE beam_03
+   X 72
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_02
-   X    48
-   Y   120
+   STYLE minim_ps3factory
+   PIECE beam_02
+   X 72
+   Y 120
    NO_OVERWRITE
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_04
-   X    64
-   Y    96
+   STYLE minim_ps3factory
+   PIECE beam_04
+   X 88
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_05
-   X    80
-   Y   112
+   STYLE minim_ps3factory
+   PIECE beam_05
+   X 104
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   112
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 136
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X    80
-   Y    72
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 104
+   Y 72
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X    88
-   Y    96
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 112
+   Y 96
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X   112
-   Y   104
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 136
+   Y 104
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_01
-   X   104
-   Y   128
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 128
+   Y 128
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      beam_06
-   X   128
-   Y   112
+   STYLE minim_ps3factory
+   PIECE beam_06
+   X 152
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   136
-   Y    80
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 160
+   Y 80
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      belt_screw_03
-   X   134
-   Y   102
+   STYLE minim_ps3factory
+   PIECE belt_screw_03
+   X 158
+   Y 102
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_narrow_02
-   X   176
-   Y   112
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 200
+   Y 112
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_01
-   X   112
-   Y   136
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 136
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_large_02
-   X   152
-   Y   144
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 176
+   Y 144
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   144
-   Y   136
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 168
+   Y 136
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   144
-   Y   147
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 168
+   Y 147
    ERASE
    ONE_WAY
  $END
  
  $TERRAIN
-   COLLECTION minim_ps3factory
-   PIECE      board_small_02
-   X   144
-   Y   144
+   STYLE minim_ps3factory
+   PIECE board_small_02
+   X 168
+   Y 144
    NO_OVERWRITE
    ONE_WAY
  $END

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Dolly Dimple?
  AUTHOR Prima Publishing
  ID x8B98901E8B98901E
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 432
+ WIDTH 496
  HEIGHT 160
- START_X 224
+ START_X 256
  START_Y 80
  THEME ohno_bubble
  
@@ -40,7 +40,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE exit
-   X 192
+   X 224
    Y 111
    NO_OVERWRITE
  $END
@@ -48,7 +48,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE window
-   X 208
+   X 240
    Y 0
    NO_OVERWRITE
  $END
@@ -56,7 +56,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE window
-   X 292
+   X 324
    Y 0
    NO_OVERWRITE
    FLIP_HORIZONTAL
@@ -65,7 +65,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE spinning_arrow
-   X 208
+   X 240
    Y 111
    SPEED 0
    ANGLE 0
@@ -74,7 +74,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE blasticine
-   X 240
+   X 272
    Y 136
    WIDTH 64
    HEIGHT 31
@@ -84,7 +84,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE blasticine
-   X 304
+   X 336
    Y 136
    WIDTH 64
    HEIGHT 31
@@ -93,7 +93,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE blasticine
-   X 368
+   X 400
    Y 136
    WIDTH 64
    HEIGHT 31
@@ -102,7 +102,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE blasticine
-   X 64
+   X 96
    Y 136
    WIDTH 64
    HEIGHT 31
@@ -112,11 +112,30 @@
  $GADGET
    STYLE ohno_bubble
    PIECE blasticine
-   X 0
+   X 32
    Y 136
    WIDTH 64
    HEIGHT 31
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X -32
+   Y 136
+   WIDTH 64
+   HEIGHT 31
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 464
+   Y 136
+   WIDTH 64
+   HEIGHT 31
  $END
  
  
@@ -125,7 +144,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE balls_blue_01
-   X 115
+   X 147
    Y 147
    ONE_WAY
  $END
@@ -133,7 +152,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE balls_blue_01
-   X 159
+   X 191
    Y 147
    ONE_WAY
  $END
@@ -141,7 +160,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE balls_blue_01
-   X 203
+   X 235
    Y 147
    ONE_WAY
  $END
@@ -149,8 +168,16 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_04
-   X 321
+   X 353
    Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 321
+   Y 47
    ONE_WAY
  $END
  
@@ -165,15 +192,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 257
-   Y 47
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_09
-   X 226
+   X 258
    Y 47
    ONE_WAY
  $END
@@ -181,7 +200,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_01
-   X 194
+   X 226
    Y 29
    ONE_WAY
  $END
@@ -189,7 +208,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_12
-   X 192
+   X 224
    Y 24
    ONE_WAY
  $END
@@ -197,7 +216,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_12
-   X 340
+   X 372
    Y 24
    ONE_WAY
  $END
@@ -205,14 +224,6 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_01
-   X 259
-   Y 83
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_small_10
    X 291
    Y 83
    ONE_WAY
@@ -220,8 +231,16 @@
  
  $TERRAIN
    STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 323
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
    PIECE pipe_small_11
-   X 243
+   X 275
    Y 83
    ONE_WAY
  $END

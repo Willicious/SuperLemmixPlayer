@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE In the thick of the fray
  AUTHOR DMA Design
  ID xA0D7E44DA0D7E44D
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 528
+ WIDTH 600
  HEIGHT 160
- START_X 264
+ START_X 300
  START_Y 80
  THEME orig_marble
  
@@ -41,7 +41,7 @@
  $GADGET
    STYLE orig_marble
    PIECE window
-   X 241
+   X 277
    Y 84
    NO_OVERWRITE
  $END
@@ -49,7 +49,7 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X 477
+   X 513
    Y 44
    NO_OVERWRITE
  $END
@@ -57,7 +57,7 @@
  $GADGET
    STYLE default
    PIECE flag_blue
-   X 494
+   X 530
    Y 30
    NO_OVERWRITE
    SPEED 0
@@ -67,7 +67,7 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X -3
+   X 33
    Y 44
    NO_OVERWRITE
  $END
@@ -75,7 +75,7 @@
  $GADGET
    STYLE default
    PIECE flag_green
-   X 14
+   X 50
    Y 30
    NO_OVERWRITE
    SPEED 0
@@ -85,7 +85,7 @@
  $GADGET
    STYLE orig_marble
    PIECE window
-   X 241
+   X 277
    Y 84
    NO_OVERWRITE
    FLIP_HORIZONTAL
@@ -97,7 +97,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 240
+   X 276
    Y 133
    ONE_WAY
  $END
@@ -105,7 +105,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 288
+   X 324
    Y 133
    ONE_WAY
  $END
@@ -113,7 +113,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 288
+   X 324
    Y 117
    ONE_WAY
  $END
@@ -121,7 +121,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 336
+   X 372
    Y 133
    ONE_WAY
  $END
@@ -129,7 +129,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 336
+   X 372
    Y 117
    ONE_WAY
  $END
@@ -137,7 +137,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 336
+   X 372
    Y 101
    ONE_WAY
  $END
@@ -145,7 +145,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 133
    ONE_WAY
  $END
@@ -153,7 +153,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 117
    ONE_WAY
  $END
@@ -161,7 +161,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 101
    ONE_WAY
  $END
@@ -169,7 +169,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 85
    ONE_WAY
  $END
@@ -177,7 +177,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 133
    ONE_WAY
  $END
@@ -185,7 +185,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 117
    ONE_WAY
  $END
@@ -193,7 +193,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 101
    ONE_WAY
  $END
@@ -201,7 +201,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 85
    ONE_WAY
  $END
@@ -209,7 +209,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 69
    ONE_WAY
  $END
@@ -217,7 +217,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 192
+   X 228
    Y 133
    ONE_WAY
  $END
@@ -225,7 +225,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 144
+   X 180
    Y 133
    ONE_WAY
  $END
@@ -233,7 +233,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 144
+   X 180
    Y 117
    ONE_WAY
  $END
@@ -241,7 +241,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 133
    ONE_WAY
  $END
@@ -249,7 +249,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 117
    ONE_WAY
  $END
@@ -257,7 +257,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 101
    ONE_WAY
  $END
@@ -265,7 +265,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 133
    ONE_WAY
  $END
@@ -273,7 +273,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 117
    ONE_WAY
  $END
@@ -281,7 +281,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 101
    ONE_WAY
  $END
@@ -289,7 +289,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 85
    ONE_WAY
  $END
@@ -297,7 +297,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 133
    ONE_WAY
  $END
@@ -305,7 +305,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 117
    ONE_WAY
  $END
@@ -313,7 +313,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 101
    ONE_WAY
  $END
@@ -321,7 +321,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 85
    ONE_WAY
  $END
@@ -329,7 +329,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 69
    ONE_WAY
  $END
@@ -337,7 +337,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 192
+   X 228
    Y 117
    ONE_WAY
  $END
@@ -345,7 +345,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 144
+   X 180
    Y 101
    ONE_WAY
  $END
@@ -353,7 +353,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 85
    ONE_WAY
  $END
@@ -361,7 +361,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 69
    ONE_WAY
  $END
@@ -369,7 +369,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 69
    ONE_WAY
  $END
@@ -377,7 +377,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 85
    ONE_WAY
  $END
@@ -385,7 +385,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 101
    ONE_WAY
  $END
@@ -393,7 +393,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 117
    ONE_WAY
  $END
@@ -401,7 +401,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 133
    ONE_WAY
  $END
@@ -409,161 +409,161 @@
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 0
+   X 36
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 24
+   X 60
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 48
+   X 84
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 72
+   X 108
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 96
+   X 132
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 120
+   X 156
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 144
+   X 180
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 168
+   X 204
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 192
+   X 228
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 216
+   X 252
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 240
+   X 276
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 264
+   X 300
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 288
+   X 324
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 312
+   X 348
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 336
+   X 372
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 360
+   X 396
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 384
+   X 420
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 408
+   X 444
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 432
+   X 468
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 456
+   X 492
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 480
+   X 516
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE steel_03
-   X 504
+   X 540
    Y 149
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 132
    ONE_WAY
  $END
@@ -571,7 +571,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 116
    ONE_WAY
  $END
@@ -579,7 +579,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 100
    ONE_WAY
  $END
@@ -587,7 +587,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 84
    ONE_WAY
  $END
@@ -595,7 +595,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 0
+   X 36
    Y 68
    ONE_WAY
  $END
@@ -603,7 +603,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 132
    ONE_WAY
  $END
@@ -611,7 +611,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 116
    ONE_WAY
  $END
@@ -619,7 +619,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 100
    ONE_WAY
  $END
@@ -627,7 +627,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 84
    ONE_WAY
  $END
@@ -635,7 +635,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 48
+   X 84
    Y 68
    ONE_WAY
  $END
@@ -643,7 +643,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 132
    ONE_WAY
  $END
@@ -651,7 +651,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 116
    ONE_WAY
  $END
@@ -659,7 +659,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 100
    ONE_WAY
  $END
@@ -667,7 +667,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 96
+   X 132
    Y 84
    ONE_WAY
  $END
@@ -675,7 +675,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 144
+   X 180
    Y 132
    ONE_WAY
  $END
@@ -683,7 +683,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 144
+   X 180
    Y 116
    ONE_WAY
  $END
@@ -691,7 +691,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 144
+   X 180
    Y 100
    ONE_WAY
  $END
@@ -699,7 +699,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 192
+   X 228
    Y 132
    ONE_WAY
  $END
@@ -707,7 +707,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 192
+   X 228
    Y 116
    ONE_WAY
  $END
@@ -715,7 +715,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 240
+   X 276
    Y 132
    ONE_WAY
  $END
@@ -723,7 +723,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 288
+   X 324
    Y 132
    ONE_WAY
  $END
@@ -731,7 +731,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 288
+   X 324
    Y 116
    ONE_WAY
  $END
@@ -739,7 +739,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 336
+   X 372
    Y 132
    ONE_WAY
  $END
@@ -747,7 +747,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 336
+   X 372
    Y 116
    ONE_WAY
  $END
@@ -755,7 +755,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 336
+   X 372
    Y 100
    ONE_WAY
  $END
@@ -763,7 +763,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 132
    ONE_WAY
  $END
@@ -771,7 +771,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 116
    ONE_WAY
  $END
@@ -779,7 +779,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 100
    ONE_WAY
  $END
@@ -787,7 +787,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 384
+   X 420
    Y 84
    ONE_WAY
  $END
@@ -795,7 +795,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 132
    ONE_WAY
  $END
@@ -803,7 +803,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 116
    ONE_WAY
  $END
@@ -811,7 +811,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 100
    ONE_WAY
  $END
@@ -819,7 +819,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 84
    ONE_WAY
  $END
@@ -827,7 +827,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 432
+   X 468
    Y 68
    ONE_WAY
  $END
@@ -835,7 +835,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 132
    ONE_WAY
  $END
@@ -843,7 +843,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 116
    ONE_WAY
  $END
@@ -851,7 +851,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 100
    ONE_WAY
  $END
@@ -859,7 +859,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 84
    ONE_WAY
  $END
@@ -867,7 +867,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_02
-   X 480
+   X 516
    Y 68
    ONE_WAY
  $END
@@ -875,7 +875,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE structure_04
-   X 237
+   X 273
    Y -41
    ONE_WAY
  $END
@@ -883,7 +883,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE structure_04
-   X 148
+   X 184
    Y -59
    ONE_WAY
  $END
@@ -891,7 +891,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE structure_04
-   X 334
+   X 370
    Y -59
    ONE_WAY
  $END
@@ -899,7 +899,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 223
+   X 259
    Y -11
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -909,7 +909,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 197
+   X 233
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -919,7 +919,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 205
+   X 241
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -929,7 +929,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 195
+   X 231
    Y -23
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -939,7 +939,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 202
+   X 238
    Y -22
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -949,7 +949,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 158
+   X 194
    Y -23
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -959,7 +959,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 149
+   X 185
    Y -23
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -969,7 +969,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 256
+   X 292
    Y -13
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -979,7 +979,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 271
+   X 307
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -989,7 +989,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 255
+   X 291
    Y -22
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -999,7 +999,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 269
+   X 305
    Y -15
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1009,7 +1009,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 305
+   X 341
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1019,7 +1019,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 297
+   X 333
    Y -23
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1029,7 +1029,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 277
+   X 313
    Y -17
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1039,7 +1039,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 288
+   X 324
    Y -17
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1049,7 +1049,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 295
+   X 331
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1059,7 +1059,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 335
+   X 371
    Y -14
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1069,7 +1069,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 330
+   X 366
    Y -19
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1079,7 +1079,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 322
+   X 358
    Y -23
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1089,7 +1089,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 357
+   X 393
    Y -17
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1099,7 +1099,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 134
+   X 170
    Y -21
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1109,7 +1109,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 145
+   X 181
    Y -22
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1119,7 +1119,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 247
+   X 283
    Y -21
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1129,7 +1129,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 230
+   X 266
    Y -18
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1139,7 +1139,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 225
+   X 261
    Y -23
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1149,7 +1149,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_06
-   X 395
+   X 431
    Y -16
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1159,7 +1159,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_07
-   X 432
+   X 468
    Y -16
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1169,7 +1169,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_07
-   X 99
+   X 135
    Y -15
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1179,7 +1179,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_06
-   X 62
+   X 98
    Y -15
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1189,7 +1189,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 113
+   X 149
    Y -19
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1199,7 +1199,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 124
+   X 160
    Y -19
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1209,7 +1209,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 120
+   X 156
    Y -22
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1219,7 +1219,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 353
+   X 389
    Y -19
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1229,7 +1229,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_01
-   X 357
+   X 393
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1239,7 +1239,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 390
+   X 426
    Y -15
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1249,7 +1249,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 386
+   X 422
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1259,7 +1259,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 380
+   X 416
    Y -25
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1269,7 +1269,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE stuff_02
-   X 404
+   X 440
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL

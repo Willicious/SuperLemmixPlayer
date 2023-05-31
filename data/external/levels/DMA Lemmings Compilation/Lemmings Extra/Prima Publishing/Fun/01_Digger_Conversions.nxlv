@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Digger Conversions
  AUTHOR Prima Publishing
  ID x8E9799FC8E9799FC
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 384
+ WIDTH 448
  HEIGHT 160
- START_X 176
+ START_X 192
  START_Y 80
  THEME ohno_brick
  
@@ -36,7 +36,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 336
+   X 368
    Y 88
    NO_OVERWRITE
  $END
@@ -44,7 +44,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 16
+   X 48
    Y 0
    NO_OVERWRITE
  $END
@@ -55,7 +55,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 0
+   X 32
    Y 112
    ONE_WAY
  $END
@@ -63,7 +63,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 0
+   X 32
    Y 64
    ONE_WAY
  $END
@@ -71,7 +71,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 64
+   X 96
    Y 64
    ONE_WAY
  $END
@@ -79,7 +79,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 64
+   X 96
    Y 112
    ONE_WAY
  $END
@@ -87,7 +87,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 128
+   X 160
    Y 64
    ONE_WAY
  $END
@@ -95,7 +95,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 128
+   X 160
    Y 112
    ONE_WAY
  $END
@@ -103,7 +103,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 192
+   X 224
    Y 136
    ONE_WAY
  $END
@@ -111,7 +111,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 256
+   X 288
    Y 136
    ONE_WAY
  $END
@@ -119,7 +119,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 320
+   X 352
    Y 136
    ONE_WAY
  $END
@@ -127,7 +127,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 128
+   X 160
    Y 40
    ONE_WAY
  $END
@@ -135,7 +135,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 64
+   X 96
    Y 40
    ONE_WAY
  $END
@@ -143,7 +143,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 0
+   X 32
    Y 40
    ONE_WAY
  $END
@@ -151,7 +151,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 188
+   X 220
    Y 16
    ONE_WAY
  $END
@@ -159,7 +159,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_10
-   X 0
+   X 32
    Y 16
    ONE_WAY
  $END

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Looks a Bit Nippy Out There
  AUTHOR DMA Design
  ID xEB9D9073EB9D9073
- VERSION x0000000000000001
+ VERSION x0000000000000003
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 496
+ WIDTH 528
  HEIGHT 160
- START_X 278
+ START_X 294
  START_Y 80
  THEME ohno_snow
  BACKGROUND special:amiga_blue
@@ -39,7 +39,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE exit
-   X 134
+   X 158
    Y -12
    NO_OVERWRITE
  $END
@@ -47,7 +47,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE window
-   X 342
+   X 366
    Y 4
    NO_OVERWRITE
  $END
@@ -55,7 +55,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE water
-   X 294
+   X 318
    Y 144
    WIDTH 64
    HEIGHT 18
@@ -65,7 +65,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE trap
-   X 374
+   X 398
    Y 89
    NO_OVERWRITE
  $END
@@ -73,7 +73,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE trap
-   X 390
+   X 414
    Y 89
    NO_OVERWRITE
  $END
@@ -81,7 +81,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE exit_flag
-   X 166
+   X 190
    Y -4
    NO_OVERWRITE
  $END
@@ -89,7 +89,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE iceblower
-   X 166
+   X 190
    Y 68
    NO_OVERWRITE
  $END
@@ -97,7 +97,7 @@
  $GADGET
    STYLE ohno_snow
    PIECE iceblower
-   X 163
+   X 187
    Y 84
    NO_OVERWRITE
  $END
@@ -108,7 +108,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_15
-   X 339
+   X 363
    Y 33
    ONE_WAY
  $END
@@ -116,7 +116,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_11
-   X 369
+   X 393
    Y 31
    NO_OVERWRITE
    ONE_WAY
@@ -125,7 +125,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 338
+   X 362
    Y 61
    NO_OVERWRITE
    ONE_WAY
@@ -134,7 +134,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 345
+   X 369
    Y 72
    NO_OVERWRITE
    ONE_WAY
@@ -143,7 +143,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 368
+   X 392
    Y 99
    ONE_WAY
  $END
@@ -151,7 +151,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_09
-   X 332
+   X 356
    Y 45
    NO_OVERWRITE
    ONE_WAY
@@ -160,7 +160,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_09
-   X 322
+   X 346
    Y 61
    NO_OVERWRITE
    ONE_WAY
@@ -169,7 +169,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 311
+   X 335
    Y 73
    NO_OVERWRITE
    ONE_WAY
@@ -178,7 +178,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 377
+   X 401
    Y 71
    NO_OVERWRITE
    ONE_WAY
@@ -187,7 +187,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 373
+   X 397
    Y 47
    ONE_WAY
  $END
@@ -195,7 +195,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 353
+   X 377
    Y 144
    ONE_WAY
  $END
@@ -203,7 +203,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 389
+   X 413
    Y 143
    ONE_WAY
  $END
@@ -211,7 +211,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 348
+   X 372
    Y 143
    FLIP_VERTICAL
    ONE_WAY
@@ -220,7 +220,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 369
+   X 393
    Y 87
    ONE_WAY
  $END
@@ -228,7 +228,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 392
+   X 416
    Y 90
    NO_OVERWRITE
    ONE_WAY
@@ -237,7 +237,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 259
+   X 283
    Y 142
    FLIP_VERTICAL
    ONE_WAY
@@ -246,7 +246,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 376
+   X 400
    Y 141
    NO_OVERWRITE
    ONE_WAY
@@ -255,7 +255,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 303
+   X 327
    Y 99
    NO_OVERWRITE
    ONE_WAY
@@ -264,7 +264,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_01
-   X 101
+   X 125
    Y 48
    ONE_WAY
  $END
@@ -272,7 +272,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_06
-   X 127
+   X 151
    Y 139
    NO_OVERWRITE
    ONE_WAY
@@ -281,7 +281,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_06
-   X 176
+   X 200
    Y 139
    NO_OVERWRITE
    ONE_WAY
@@ -290,7 +290,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_05
-   X 134
+   X 158
    Y 108
    NO_OVERWRITE
    ONE_WAY
@@ -299,7 +299,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_04
-   X 123
+   X 147
    Y 62
    ERASE
    ONE_WAY
@@ -308,7 +308,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_06
-   X 94
+   X 118
    Y 70
    NO_OVERWRITE
    ONE_WAY
@@ -317,7 +317,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_01
-   X 82
+   X 106
    Y 70
    ERASE
  $END
@@ -325,7 +325,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 124
+   X 148
    Y 33
    ONE_WAY
  $END
@@ -333,7 +333,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 148
+   X 172
    Y 34
    FLIP_VERTICAL
    ONE_WAY
@@ -342,7 +342,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 128
+   X 152
    Y 25
    ONE_WAY
  $END
@@ -350,7 +350,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 145
+   X 169
    Y 29
    ONE_WAY
  $END
@@ -358,7 +358,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_05
-   X 46
+   X 70
    Y -28
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -368,7 +368,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 407
+   X 431
    Y -14
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -378,7 +378,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 430
+   X 454
    Y 30
    NO_OVERWRITE
    ONE_WAY
@@ -387,7 +387,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 434
+   X 458
    Y 39
    NO_OVERWRITE
    ONE_WAY
@@ -396,7 +396,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 429
+   X 453
    Y 66
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -406,7 +406,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_02
-   X 429
+   X 453
    Y 125
    NO_OVERWRITE
    ONE_WAY
@@ -415,7 +415,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 276
+   X 300
    Y 153
    ONE_WAY
  $END
@@ -423,7 +423,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 320
+   X 344
    Y 151
    ONE_WAY
  $END
@@ -431,7 +431,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_05
-   X 136
+   X 160
    Y 135
    ONE_WAY
  $END
@@ -439,7 +439,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_05
-   X 148
+   X 172
    Y 150
    ONE_WAY
  $END
@@ -447,7 +447,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_05
-   X 170
+   X 194
    Y 138
    ONE_WAY
  $END
@@ -455,7 +455,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_03
-   X 100
+   X 124
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -464,7 +464,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 138
+   X 162
    Y 37
    NO_OVERWRITE
    ONE_WAY
@@ -473,7 +473,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 127
+   X 151
    Y 34
    ONE_WAY
  $END
@@ -481,7 +481,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 317
+   X 341
    Y 11
    ERASE
    ONE_WAY
@@ -490,7 +490,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 167
+   X 191
    Y 35
    NO_OVERWRITE
    ONE_WAY
@@ -499,7 +499,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 225
+   X 249
    Y 2
    NO_OVERWRITE
    ONE_WAY
@@ -508,7 +508,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_15
-   X 72
+   X 96
    Y 11
    NO_OVERWRITE
    ONE_WAY
@@ -517,7 +517,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 296
+   X 320
    Y -7
    FLIP_VERTICAL
    ONE_WAY
@@ -526,7 +526,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_09
-   X 139
+   X 163
    Y 43
    ERASE
    ONE_WAY
@@ -535,7 +535,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 142
+   X 166
    Y 31
    FLIP_VERTICAL
    ONE_WAY
@@ -544,7 +544,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 134
+   X 158
    Y 31
    NO_OVERWRITE
    ONE_WAY
@@ -553,7 +553,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 143
+   X 167
    Y 53
    ERASE
    ONE_WAY
@@ -562,7 +562,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 149
+   X 173
    Y 52
    ERASE
    ONE_WAY
@@ -571,7 +571,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 145
+   X 169
    Y 49
    ERASE
    ONE_WAY
@@ -580,7 +580,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 152
+   X 176
    Y 51
    ERASE
    ONE_WAY
@@ -589,7 +589,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 161
+   X 185
    Y 52
    ERASE
    ONE_WAY
@@ -598,7 +598,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 152
+   X 176
    Y 50
    ERASE
    ONE_WAY
@@ -607,7 +607,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_04
-   X 127
+   X 151
    Y 69
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -617,7 +617,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 162
+   X 186
    Y 52
    ERASE
    ONE_WAY
@@ -626,7 +626,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 138
+   X 162
    Y 94
    ERASE
    ONE_WAY
@@ -635,7 +635,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 138
+   X 162
    Y 103
    ERASE
    ONE_WAY
@@ -644,7 +644,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 138
+   X 162
    Y 100
    ERASE
    ONE_WAY
@@ -653,28 +653,28 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 142
+   X 166
    Y 73
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 142
+   X 166
    Y 87
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 142
+   X 166
    Y 101
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_02
-   X 125
+   X 149
    Y 80
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -684,7 +684,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_02
-   X 134
+   X 158
    Y 71
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -694,7 +694,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 74
+   X 98
    Y 51
    NO_OVERWRITE
    ONE_WAY
@@ -703,7 +703,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 52
+   X 76
    Y 31
    NO_OVERWRITE
    ONE_WAY
@@ -712,7 +712,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 74
+   X 98
    Y 109
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -722,7 +722,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 52
+   X 76
    Y 89
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -732,7 +732,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 79
+   X 103
    Y 23
    FLIP_VERTICAL
    ONE_WAY
@@ -741,7 +741,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_07
-   X 53
+   X 77
    Y -2
    ONE_WAY
  $END
@@ -749,7 +749,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 207
+   X 231
    Y -11
    FLIP_VERTICAL
    ONE_WAY
@@ -758,7 +758,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 322
+   X 346
    Y 16
    ERASE
    ONE_WAY
@@ -767,7 +767,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 265
+   X 289
    Y 30
    ERASE
    ONE_WAY
@@ -776,7 +776,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_11
-   X 257
+   X 281
    Y 30
    ERASE
    ONE_WAY
@@ -785,7 +785,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_11
-   X 228
+   X 252
    Y 29
    ERASE
    ONE_WAY
@@ -794,7 +794,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 235
+   X 259
    Y 31
    ERASE
    ONE_WAY
@@ -803,7 +803,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 285
+   X 309
    Y 30
    ERASE
    ONE_WAY
@@ -812,7 +812,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 231
+   X 255
    Y 11
    NO_OVERWRITE
    ONE_WAY
@@ -821,7 +821,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 258
+   X 282
    Y 16
    NO_OVERWRITE
    ONE_WAY
@@ -830,7 +830,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 240
+   X 264
    Y 24
    NO_OVERWRITE
    ONE_WAY
@@ -839,7 +839,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 255
+   X 279
    Y 18
    NO_OVERWRITE
    ONE_WAY
@@ -848,7 +848,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 268
+   X 292
    Y 24
    NO_OVERWRITE
    ONE_WAY
@@ -857,7 +857,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 281
+   X 305
    Y 13
    NO_OVERWRITE
    ONE_WAY
@@ -866,7 +866,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 290
+   X 314
    Y 30
    NO_OVERWRITE
    ONE_WAY
@@ -875,7 +875,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 300
+   X 324
    Y 32
    ERASE
    FLIP_VERTICAL
@@ -885,7 +885,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 254
+   X 278
    Y 30
    ERASE
    ONE_WAY
@@ -894,7 +894,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 287
+   X 311
    Y 27
    ERASE
    ONE_WAY
@@ -903,7 +903,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 268
+   X 292
    Y 27
    ERASE
    ONE_WAY
@@ -912,7 +912,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 310
+   X 334
    Y 27
    ERASE
    FLIP_VERTICAL
@@ -922,7 +922,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 267
+   X 291
    Y 29
    ERASE
    FLIP_VERTICAL
@@ -932,7 +932,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 253
+   X 277
    Y 29
    ERASE
    FLIP_VERTICAL
@@ -942,7 +942,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 237
+   X 261
    Y 30
    ERASE
    FLIP_VERTICAL
@@ -952,7 +952,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 287
+   X 311
    Y 28
    ERASE
    FLIP_VERTICAL
@@ -962,7 +962,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 251
+   X 275
    Y 10
    NO_OVERWRITE
    ONE_WAY
@@ -971,7 +971,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 317
+   X 341
    Y 2
    NO_OVERWRITE
    ONE_WAY
@@ -980,7 +980,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_04
-   X 141
+   X 165
    Y 74
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -990,7 +990,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 449
+   X 473
    Y 112
    NO_OVERWRITE
    ONE_WAY
@@ -999,7 +999,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 389
+   X 413
    Y 40
    ERASE
    ONE_WAY
@@ -1008,7 +1008,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 391
+   X 415
    Y 59
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1018,7 +1018,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_01
-   X 198
+   X 222
    Y 107
    NO_OVERWRITE
    ONE_WAY
@@ -1027,7 +1027,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_02
-   X 166
+   X 190
    Y 113
    FLIP_VERTICAL
    ONE_WAY
@@ -1036,7 +1036,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_04
-   X 182
+   X 206
    Y 111
    FLIP_VERTICAL
    ONE_WAY
@@ -1045,7 +1045,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 224
+   X 248
    Y 18
    NO_OVERWRITE
    ONE_WAY
@@ -1054,7 +1054,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 253
+   X 277
    Y 17
    NO_OVERWRITE
    ONE_WAY
@@ -1063,7 +1063,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 362
+   X 386
    Y 119
    ERASE
    ONE_WAY
@@ -1072,7 +1072,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 370
+   X 394
    Y 139
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1082,7 +1082,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 362
+   X 386
    Y 105
    ERASE
    ONE_WAY
@@ -1091,7 +1091,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 375
+   X 399
    Y 123
    ERASE
    ONE_WAY
@@ -1100,7 +1100,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 436
+   X 460
    Y 73
    FLIP_VERTICAL
    ONE_WAY
@@ -1109,7 +1109,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_09
-   X 195
+   X 219
    Y 17
    ERASE
    ONE_WAY
@@ -1118,7 +1118,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 217
+   X 241
    Y 22
    ERASE
    ONE_WAY
@@ -1127,7 +1127,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 219
+   X 243
    Y 30
    ERASE
    ONE_WAY
@@ -1136,7 +1136,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 319
+   X 343
    Y 29
    ERASE
    ONE_WAY
@@ -1145,7 +1145,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 362
+   X 386
    Y 99
    NO_OVERWRITE
    ONE_WAY
@@ -1154,7 +1154,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 307
+   X 331
    Y 99
    NO_OVERWRITE
    ONE_WAY
@@ -1163,7 +1163,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 248
+   X 272
    Y 25
    NO_OVERWRITE
    ONE_WAY
@@ -1172,7 +1172,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 262
+   X 286
    Y 12
    NO_OVERWRITE
    ONE_WAY
@@ -1181,7 +1181,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 275
+   X 299
    Y 29
    NO_OVERWRITE
    ONE_WAY
@@ -1190,7 +1190,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 282
+   X 306
    Y 4
    NO_OVERWRITE
    ONE_WAY
@@ -1199,7 +1199,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 233
+   X 257
    Y -6
    NO_OVERWRITE
    ONE_WAY
@@ -1208,7 +1208,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 297
+   X 321
    Y 10
    NO_OVERWRITE
    ONE_WAY
@@ -1217,7 +1217,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 259
+   X 283
    Y 39
    NO_OVERWRITE
    ONE_WAY
@@ -1226,7 +1226,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 356
+   X 380
    Y 58
    ERASE
    ONE_WAY
@@ -1235,7 +1235,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_11
-   X 368
+   X 392
    Y 43
    NO_OVERWRITE
    ONE_WAY
@@ -1244,7 +1244,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 367
+   X 391
    Y 58
    ERASE
    ONE_WAY
@@ -1253,7 +1253,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 367
+   X 391
    Y 61
    ERASE
    ONE_WAY
@@ -1262,7 +1262,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 366
+   X 390
    Y 62
    ERASE
    ONE_WAY
@@ -1271,7 +1271,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 368
+   X 392
    Y 89
    ERASE
    ONE_WAY
@@ -1280,7 +1280,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_06
-   X 175
+   X 199
    Y 135
    NO_OVERWRITE
    ONE_WAY
@@ -1289,7 +1289,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 363
+   X 387
    Y 100
    NO_OVERWRITE
    ONE_WAY
@@ -1298,7 +1298,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 365
+   X 389
    Y 106
    NO_OVERWRITE
    ONE_WAY
@@ -1307,7 +1307,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 364
+   X 388
    Y 108
    NO_OVERWRITE
    ONE_WAY
@@ -1316,7 +1316,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 364
+   X 388
    Y 101
    NO_OVERWRITE
    ONE_WAY
@@ -1325,7 +1325,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 364
+   X 388
    Y 104
    NO_OVERWRITE
    ONE_WAY
@@ -1334,7 +1334,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 370
+   X 394
    Y 107
    ERASE
    ONE_WAY
@@ -1343,7 +1343,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 369
+   X 393
    Y 111
    ERASE
    ONE_WAY
@@ -1352,7 +1352,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 369
+   X 393
    Y 113
    ERASE
    ONE_WAY
@@ -1361,7 +1361,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 363
+   X 387
    Y 79
    ERASE
    ONE_WAY
@@ -1370,7 +1370,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 363
+   X 387
    Y 80
    ERASE
    ONE_WAY
@@ -1379,7 +1379,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 366
+   X 390
    Y 84
    ERASE
    ONE_WAY
@@ -1388,7 +1388,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 367
+   X 391
    Y 54
    ERASE
    ONE_WAY
@@ -1397,7 +1397,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 363
+   X 387
    Y 55
    ERASE
    ONE_WAY
@@ -1406,7 +1406,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 367
+   X 391
    Y 56
    ERASE
    ONE_WAY
@@ -1415,7 +1415,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 368
+   X 392
    Y 86
    ERASE
    ONE_WAY
@@ -1424,7 +1424,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 364
+   X 388
    Y 83
    ERASE
    ONE_WAY
@@ -1433,7 +1433,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 322
+   X 346
    Y 12
    ERASE
    ONE_WAY
@@ -1442,7 +1442,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 326
+   X 350
    Y 10
    ERASE
    ONE_WAY
@@ -1451,7 +1451,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X -2
+   X 22
    Y -11
    NO_OVERWRITE
    ONE_WAY
@@ -1460,7 +1460,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 22
+   X 46
    Y 6
    NO_OVERWRITE
    ONE_WAY
@@ -1469,7 +1469,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 22
+   X 46
    Y 65
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1479,7 +1479,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 3
+   X 27
    Y 10
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1489,7 +1489,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 91
+   X 115
    Y 90
    ERASE
    ONE_WAY
@@ -1498,7 +1498,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 407
+   X 431
    Y -11
    ERASE
    FLIP_VERTICAL
@@ -1508,7 +1508,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 430
+   X 454
    Y 30
    ERASE
    ONE_WAY
@@ -1517,7 +1517,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 434
+   X 458
    Y 39
    ERASE
    ONE_WAY
@@ -1526,7 +1526,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 429
+   X 453
    Y 66
    ERASE
    FLIP_VERTICAL
@@ -1536,7 +1536,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 427
+   X 451
    Y 68
    ERASE
    FLIP_VERTICAL
@@ -1546,21 +1546,21 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 142
+   X 166
    Y 143
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 142
+   X 166
    Y 157
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 256
+   X 280
    Y 27
    ERASE
    ONE_WAY
@@ -1569,7 +1569,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 256
+   X 280
    Y 34
    ERASE
    ONE_WAY
@@ -1578,7 +1578,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 275
+   X 299
    Y 45
    ERASE
    ONE_WAY
@@ -1587,7 +1587,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 282
+   X 306
    Y 45
    ERASE
    ONE_WAY
@@ -1596,7 +1596,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 292
+   X 316
    Y 51
    ERASE
    ONE_WAY
@@ -1605,7 +1605,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 296
+   X 320
    Y 51
    ERASE
    ONE_WAY
@@ -1614,7 +1614,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 260
+   X 284
    Y 59
    ERASE
    ONE_WAY
@@ -1623,7 +1623,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 259
+   X 283
    Y 51
    ERASE
    ONE_WAY
@@ -1632,7 +1632,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 257
+   X 281
    Y 50
    ERASE
    ONE_WAY
@@ -1641,7 +1641,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 253
+   X 277
    Y 21
    NO_OVERWRITE
    ONE_WAY
@@ -1650,7 +1650,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_09
-   X 301
+   X 325
    Y 29
    ERASE
    ONE_WAY
@@ -1659,7 +1659,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 256
+   X 280
    Y 17
    NO_OVERWRITE
    ONE_WAY
@@ -1668,7 +1668,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 262
+   X 286
    Y 18
    FLIP_VERTICAL
    ONE_WAY
@@ -1677,7 +1677,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 246
+   X 270
    Y 16
    ONE_WAY
  $END
@@ -1685,7 +1685,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_02
-   X 229
+   X 253
    Y -10
    FLIP_VERTICAL
    ONE_WAY
@@ -1694,7 +1694,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 248
+   X 272
    Y 38
    ERASE
    ONE_WAY
@@ -1703,7 +1703,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 240
+   X 264
    Y 38
    ERASE
    ONE_WAY
@@ -1712,7 +1712,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 233
+   X 257
    Y 2
    NO_OVERWRITE
    ONE_WAY
@@ -1721,7 +1721,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 241
+   X 265
    Y 2
    NO_OVERWRITE
    ONE_WAY
@@ -1730,7 +1730,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 231
+   X 255
    Y 63
    ERASE
    ONE_WAY
@@ -1739,7 +1739,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 241
+   X 265
    Y 63
    ERASE
    ONE_WAY
@@ -1748,7 +1748,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 233
+   X 257
    Y 5
    ONE_WAY
  $END
@@ -1756,7 +1756,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 249
+   X 273
    Y 23
    NO_OVERWRITE
    ONE_WAY
@@ -1765,7 +1765,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 257
+   X 281
    Y 17
    NO_OVERWRITE
    ONE_WAY
@@ -1774,7 +1774,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 224
+   X 248
    Y -1
    ONE_WAY
  $END
@@ -1782,7 +1782,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 368
+   X 392
    Y 97
    ERASE
    ONE_WAY
@@ -1791,7 +1791,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 369
+   X 393
    Y 101
    ERASE
    ONE_WAY
@@ -1800,7 +1800,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 369
+   X 393
    Y 104
    ERASE
    ONE_WAY
@@ -1809,7 +1809,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 368
+   X 392
    Y 108
    ERASE
    ONE_WAY
@@ -1818,7 +1818,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 366
+   X 390
    Y 113
    ERASE
    ONE_WAY
@@ -1827,7 +1827,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 365
+   X 389
    Y 117
    ERASE
    ONE_WAY
@@ -1836,7 +1836,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 370
+   X 394
    Y 105
    ERASE
    ONE_WAY
@@ -1845,7 +1845,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 378
+   X 402
    Y 109
    NO_OVERWRITE
    ONE_WAY
@@ -1854,7 +1854,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 363
+   X 387
    Y 98
    NO_OVERWRITE
    ONE_WAY
@@ -1863,7 +1863,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 363
+   X 387
    Y 101
    NO_OVERWRITE
    ONE_WAY
@@ -1872,7 +1872,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_11
-   X 380
+   X 404
    Y 49
    NO_OVERWRITE
    ONE_WAY
@@ -1881,7 +1881,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 408
+   X 432
    Y 45
    ERASE
    ONE_WAY
@@ -1890,7 +1890,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 394
+   X 418
    Y 73
    NO_OVERWRITE
    ONE_WAY
@@ -1899,7 +1899,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_11
-   X 413
+   X 437
    Y 53
    NO_OVERWRITE
    ONE_WAY
@@ -1908,7 +1908,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_13
-   X 412
+   X 436
    Y 66
    ERASE
    FLIP_VERTICAL
@@ -1918,7 +1918,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_13
-   X 414
+   X 438
    Y 51
    ERASE
    FLIP_VERTICAL
@@ -1928,7 +1928,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_13
-   X 417
+   X 441
    Y 79
    ERASE
    FLIP_VERTICAL
@@ -1938,7 +1938,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_13
-   X 377
+   X 401
    Y 52
    NO_OVERWRITE
    ONE_WAY
@@ -1947,7 +1947,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_13
-   X 375
+   X 399
    Y 56
    ONE_WAY
  $END
@@ -1955,7 +1955,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_13
-   X 204
+   X 228
    Y 14
    ONE_WAY
  $END
@@ -1963,7 +1963,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_13
-   X 210
+   X 234
    Y -6
    NO_OVERWRITE
    ONE_WAY
@@ -1972,7 +1972,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_18
-   X 175
+   X 199
    Y 34
    NO_OVERWRITE
    ONE_WAY
@@ -1981,7 +1981,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 207
+   X 231
    Y 34
    NO_OVERWRITE
    ONE_WAY
@@ -1990,7 +1990,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 250
+   X 274
    Y 27
    NO_OVERWRITE
    ONE_WAY
@@ -1999,7 +1999,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 195
+   X 219
    Y 33
    ONE_WAY
  $END
@@ -2007,7 +2007,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 229
+   X 253
    Y 23
    ONE_WAY
  $END
@@ -2015,7 +2015,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 154
+   X 178
    Y 35
    ONE_WAY
  $END
@@ -2023,7 +2023,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 208
+   X 232
    Y 15
    ONE_WAY
  $END
@@ -2031,7 +2031,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 391
+   X 415
    Y 125
    ERASE
    ONE_WAY
@@ -2040,7 +2040,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 404
+   X 428
    Y 124
    ERASE
    ONE_WAY
@@ -2049,7 +2049,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 416
+   X 440
    Y 125
    ERASE
    ONE_WAY
@@ -2058,7 +2058,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_02
-   X 395
+   X 419
    Y 127
    ERASE
    ONE_WAY
@@ -2067,7 +2067,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 408
+   X 432
    Y 88
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2077,7 +2077,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 369
+   X 393
    Y 63
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2087,7 +2087,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 371
+   X 395
    Y 67
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2097,7 +2097,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 369
+   X 393
    Y 49
    ONE_WAY
  $END
@@ -2105,7 +2105,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 203
+   X 227
    Y 27
    ERASE
    ONE_WAY
@@ -2114,7 +2114,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_04
-   X 104
+   X 128
    Y 77
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2124,7 +2124,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 136
+   X 160
    Y 65
    ERASE
    ONE_WAY
@@ -2133,7 +2133,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 220
+   X 244
    Y 15
    NO_OVERWRITE
    ONE_WAY
@@ -2142,7 +2142,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 238
+   X 262
    Y 16
    NO_OVERWRITE
    ONE_WAY
@@ -2151,7 +2151,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 241
+   X 265
    Y 40
    NO_OVERWRITE
    ONE_WAY
@@ -2160,7 +2160,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 245
+   X 269
    Y 45
    NO_OVERWRITE
    ONE_WAY
@@ -2169,7 +2169,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 252
+   X 276
    Y 34
    NO_OVERWRITE
    ONE_WAY
@@ -2178,7 +2178,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 272
+   X 296
    Y 33
    NO_OVERWRITE
    ONE_WAY
@@ -2187,7 +2187,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 288
+   X 312
    Y 27
    NO_OVERWRITE
    ONE_WAY
@@ -2196,7 +2196,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 261
+   X 285
    Y 46
    NO_OVERWRITE
    ONE_WAY
@@ -2205,7 +2205,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 207
+   X 231
    Y 15
    NO_OVERWRITE
    ONE_WAY
@@ -2214,7 +2214,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 207
+   X 231
    Y 24
    NO_OVERWRITE
    ONE_WAY
@@ -2223,7 +2223,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 206
+   X 230
    Y 23
    NO_OVERWRITE
    ONE_WAY
@@ -2232,7 +2232,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 206
+   X 230
    Y 22
    NO_OVERWRITE
    ONE_WAY
@@ -2241,7 +2241,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 209
+   X 233
    Y 29
    NO_OVERWRITE
    ONE_WAY
@@ -2250,35 +2250,35 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_04
-   X 374
+   X 398
    Y 39
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_04
-   X 382
+   X 406
    Y 53
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_04
-   X 390
+   X 414
    Y 67
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_04
-   X 376
+   X 400
    Y 67
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 374
+   X 398
    Y 31
    NO_OVERWRITE
    ONE_WAY
@@ -2287,7 +2287,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 378
+   X 402
    Y 35
    NO_OVERWRITE
    ONE_WAY
@@ -2296,7 +2296,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 382
+   X 406
    Y 39
    NO_OVERWRITE
    ONE_WAY
@@ -2305,7 +2305,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 384
+   X 408
    Y 42
    NO_OVERWRITE
    ONE_WAY
@@ -2314,7 +2314,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 388
+   X 412
    Y 50
    NO_OVERWRITE
    ONE_WAY
@@ -2323,7 +2323,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 388
+   X 412
    Y 48
    NO_OVERWRITE
    ONE_WAY
@@ -2332,7 +2332,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 392
+   X 416
    Y 54
    NO_OVERWRITE
    ONE_WAY
@@ -2341,7 +2341,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 396
+   X 420
    Y 59
    NO_OVERWRITE
    ONE_WAY
@@ -2350,7 +2350,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 398
+   X 422
    Y 64
    NO_OVERWRITE
    ONE_WAY
@@ -2359,7 +2359,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 369
+   X 393
    Y 49
    ONE_WAY
  $END
@@ -2367,7 +2367,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 373
+   X 397
    Y 25
    ONE_WAY
  $END
@@ -2375,14 +2375,14 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 374
+   X 398
    Y 38
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 373
+   X 397
    Y 24
    ERASE
  $END
@@ -2390,7 +2390,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_15
-   X 202
+   X 226
    Y 28
    ONE_WAY
  $END
@@ -2398,7 +2398,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_11
-   X 206
+   X 230
    Y -20
    ONE_WAY
  $END
@@ -2406,7 +2406,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 311
+   X 335
    Y 14
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2416,7 +2416,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 307
+   X 331
    Y 19
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -2426,44 +2426,8 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 390
+   X 414
    Y 38
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE pillar_02
-   X 394
-   Y 43
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE pillar_02
-   X 398
-   Y 50
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE pillar_02
-   X 413
-   Y 79
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE pillar_02
-   X 416
-   Y 85
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -2472,7 +2436,7 @@
    STYLE ohno_snow
    PIECE pillar_02
    X 418
-   Y 91
+   Y 43
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -2480,8 +2444,8 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 414
-   Y 71
+   X 422
+   Y 50
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -2489,7 +2453,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 417
+   X 437
    Y 79
    NO_OVERWRITE
    ONE_WAY
@@ -2498,7 +2462,43 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 419
+   X 440
+   Y 85
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 442
+   Y 91
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 438
+   Y 71
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 441
+   Y 79
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE pillar_02
+   X 443
    Y 87
    NO_OVERWRITE
    ONE_WAY
@@ -2507,21 +2507,21 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_01
-   X 374
+   X 398
    Y 38
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_01
-   X 374
+   X 398
    Y 62
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 373
+   X 397
    Y 34
    NO_OVERWRITE
    ONE_WAY
@@ -2530,7 +2530,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 376
+   X 400
    Y 33
    NO_OVERWRITE
    ONE_WAY
@@ -2539,7 +2539,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 379
+   X 403
    Y 33
    NO_OVERWRITE
    ONE_WAY
@@ -2548,7 +2548,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 383
+   X 407
    Y 34
    NO_OVERWRITE
    ONE_WAY
@@ -2557,7 +2557,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 384
+   X 408
    Y 34
    NO_OVERWRITE
    ONE_WAY
@@ -2566,7 +2566,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 387
+   X 411
    Y 35
    NO_OVERWRITE
    ONE_WAY
@@ -2575,7 +2575,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 420
+   X 444
    Y 92
    NO_OVERWRITE
    ONE_WAY
@@ -2584,7 +2584,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 451
+   X 475
    Y 112
    NO_OVERWRITE
    ONE_WAY
@@ -2593,7 +2593,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 453
+   X 477
    Y 114
    NO_OVERWRITE
    ONE_WAY
@@ -2602,7 +2602,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 456
+   X 480
    Y 119
    NO_OVERWRITE
    ONE_WAY
@@ -2611,7 +2611,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 459
+   X 483
    Y 124
    NO_OVERWRITE
    ONE_WAY
@@ -2620,7 +2620,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 409
+   X 433
    Y 32
    ERASE
    ONE_WAY
@@ -2629,7 +2629,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 205
+   X 229
    Y 0
    FLIP_VERTICAL
    ONE_WAY
@@ -2638,7 +2638,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 205
+   X 229
    Y 8
    FLIP_VERTICAL
    ONE_WAY
@@ -2647,7 +2647,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 202
+   X 226
    Y 31
    ERASE
    ONE_WAY
@@ -2656,7 +2656,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 202
+   X 226
    Y 34
    ERASE
    ONE_WAY
@@ -2665,7 +2665,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_02
-   X 258
+   X 282
    Y 54
    ERASE
  $END
@@ -2673,7 +2673,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_02
-   X 260
+   X 284
    Y 30
    NO_OVERWRITE
    ONE_WAY
@@ -2682,7 +2682,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 201
+   X 225
    Y 41
    NO_OVERWRITE
    ONE_WAY
@@ -2691,7 +2691,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 229
+   X 253
    Y 32
    NO_OVERWRITE
    ONE_WAY
@@ -2700,7 +2700,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE rocks_05
-   X 176
+   X 200
    Y 114
    FLIP_VERTICAL
    ONE_WAY
@@ -2709,7 +2709,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_14
-   X 215
+   X 239
    Y -1
    ONE_WAY
  $END
@@ -2717,7 +2717,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 284
+   X 308
    Y -24
    ONE_WAY
  $END
@@ -2725,7 +2725,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_09
-   X 250
+   X 274
    Y 1
    ONE_WAY
  $END
@@ -2733,7 +2733,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_08
-   X 215
+   X 239
    Y -4
    ONE_WAY
  $END
@@ -2741,7 +2741,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 224
+   X 248
    Y 30
    ONE_WAY
  $END
@@ -2749,7 +2749,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X 236
+   X 260
    Y -14
    ONE_WAY
  $END
@@ -2757,7 +2757,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE icicle_01
-   X 408
+   X 432
    Y 28
    ERASE
    ONE_WAY
@@ -2766,7 +2766,14 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE steel_03
-   X 289
+   X 313
+   Y 30
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_03
+   X 290
    Y 30
  $END
  
@@ -2786,15 +2793,8 @@
  
  $TERRAIN
    STYLE ohno_snow
-   PIECE steel_03
-   X 218
-   Y 30
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
    PIECE circle_03
-   X 363
+   X 387
    Y 76
    ERASE
    ONE_WAY

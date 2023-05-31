@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,12 +9,13 @@
  AUTHOR Sony 
  MUSIC !PSP/earth1_PSP;PSP/earth2_PSP;PSP/earth3_PSP
  ID xCFC0C6C5CFC0C6C5
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 512
+ WIDTH 520
  HEIGHT 160
- START_X 160
+ START_X 184
  START_Y 80
  THEME orig_dirt
  

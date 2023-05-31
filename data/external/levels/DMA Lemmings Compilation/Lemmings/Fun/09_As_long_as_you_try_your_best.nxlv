@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE As long as you try your best
  AUTHOR DMA Design 
  ID xC93C9D7FC93C9D7F
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 352
  HEIGHT 160
- START_X 160
+ START_X 176
  START_Y 80
  THEME orig_marble
  
@@ -40,7 +41,7 @@
  $GADGET
    STYLE orig_marble
    PIECE window
-   X 64
+   X 80
    Y 80
    NO_OVERWRITE
  $END
@@ -48,7 +49,7 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X 208
+   X 224
    Y 100
    NO_OVERWRITE
  $END
@@ -56,65 +57,70 @@
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 64
+   X 80
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
    STYLE orig_marble
    PIECE poison
-   X 128
-   Y 136
-   WIDTH 64
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE poison
-   X 192
-   Y 136
-   WIDTH 64
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE poison
-   X 256
-   Y 136
-   WIDTH 64
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE poison
-   X 0
-   Y 136
-   WIDTH 64
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE shredder
-   X 256
-   Y 108
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE shredder
-   X 48
-   Y 108
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE shredder
    X 144
+   Y 136
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 208
+   Y 136
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 272
+   Y 136
+   WIDTH 64
+   HEIGHT 25
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 16
+   Y 136
+   WIDTH 64
+   HEIGHT 25
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 272
+   Y 108
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 64
+   Y 108
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 160
    Y 48
    NO_OVERWRITE
  $END
@@ -125,7 +131,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 64
+   X 80
    Y 124
    ONE_WAY
  $END
@@ -133,7 +139,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 112
+   X 128
    Y 124
    ONE_WAY
  $END
@@ -141,7 +147,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 160
+   X 176
    Y 124
    ONE_WAY
  $END
@@ -149,7 +155,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 208
+   X 224
    Y 124
    ONE_WAY
  $END
@@ -157,7 +163,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE structure_04
-   X 135
+   X 151
    Y 64
    NO_OVERWRITE
    ONE_WAY
@@ -166,7 +172,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_03
-   X 135
+   X 151
    Y 140
    ERASE
    ONE_WAY
@@ -175,7 +181,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE pillar_03
-   X 151
+   X 167
    Y 129
    ERASE
    ONE_WAY
@@ -184,7 +190,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_06
-   X 283
+   X 299
    Y 123
    ONE_WAY
  $END
@@ -192,7 +198,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_09
-   X 283
+   X 299
    Y 0
    ONE_WAY
  $END
@@ -200,7 +206,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_07
-   X 0
+   X 16
    Y 123
    ONE_WAY
  $END
@@ -208,7 +214,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_06
-   X 127
+   X 143
    Y 124
    NO_OVERWRITE
    ONE_WAY
@@ -217,7 +223,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_06
-   X 101
+   X 117
    Y 150
    NO_OVERWRITE
    ONE_WAY
@@ -226,7 +232,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_05
-   X 163
+   X 179
    Y 126
    NO_OVERWRITE
    ONE_WAY
@@ -235,7 +241,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_05
-   X 189
+   X 205
    Y 152
    NO_OVERWRITE
    ONE_WAY
@@ -244,7 +250,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_06
-   X 154
+   X 170
    Y 146
    NO_OVERWRITE
    ONE_WAY
@@ -253,7 +259,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_05
-   X 132
+   X 148
    Y 145
    NO_OVERWRITE
    ONE_WAY
@@ -262,7 +268,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 156
+   X 172
    Y 128
    NO_OVERWRITE
    ONE_WAY
@@ -271,7 +277,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 251
+   X 267
    Y 129
    NO_OVERWRITE
    ONE_WAY
@@ -280,7 +286,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 64
+   X 80
    Y 129
    NO_OVERWRITE
    ONE_WAY
@@ -289,7 +295,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 84
+   X 100
    Y 127
    NO_OVERWRITE
    ONE_WAY
@@ -298,7 +304,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 103
+   X 119
    Y 129
    NO_OVERWRITE
    ONE_WAY
@@ -307,7 +313,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 232
+   X 248
    Y 129
    NO_OVERWRITE
    ONE_WAY
@@ -316,7 +322,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_01
-   X 211
+   X 227
    Y 127
    NO_OVERWRITE
    ONE_WAY
@@ -325,7 +331,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_04
-   X 56
+   X 72
    Y 124
    ONE_WAY
  $END
@@ -333,7 +339,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_04
-   X 253
+   X 269
    Y 124
    ONE_WAY
  $END
@@ -341,7 +347,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_04
-   X 264
+   X 280
    Y 124
    ONE_WAY
  $END
@@ -349,7 +355,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_04
-   X 50
+   X 66
    Y 124
    ONE_WAY
  $END
@@ -357,7 +363,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_05
-   X -1
+   X 15
    Y 81
    NO_OVERWRITE
    ONE_WAY
@@ -366,7 +372,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_05
-   X -1
+   X 15
    Y 37
    NO_OVERWRITE
    ONE_WAY
@@ -375,7 +381,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_05
-   X 317
+   X 333
    Y 79
    NO_OVERWRITE
    ONE_WAY
@@ -384,7 +390,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_05
-   X 317
+   X 333
    Y 35
    NO_OVERWRITE
    ONE_WAY
@@ -393,7 +399,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE block_08
-   X 0
+   X 16
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -402,7 +408,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_07
-   X 37
+   X 53
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -411,7 +417,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_07
-   X 83
+   X 99
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -420,7 +426,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_07
-   X 129
+   X 145
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -429,7 +435,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_07
-   X 171
+   X 187
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -438,7 +444,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_07
-   X 219
+   X 235
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -447,7 +453,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_07
-   X 241
+   X 257
    Y 0
    NO_OVERWRITE
    ONE_WAY

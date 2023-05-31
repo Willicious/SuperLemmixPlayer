@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,12 +8,13 @@
  TITLE The Crossroads
  AUTHOR DMA Design 
  ID x93EF075193EF0751
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 600
+ WIDTH 700
  HEIGHT 160
- START_X 160
+ START_X 192
  START_Y 80
  THEME orig_crystal
  
@@ -34,14 +35,14 @@
  $GADGET
    STYLE orig_crystal
    PIECE exit
-   X 464
+   X 496
    Y 132
  $END
  
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 112
+   X 144
    Y 100
  $END
  
@@ -51,7 +52,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 187
+   X 219
    Y 131
    ONE_WAY
  $END
@@ -59,7 +60,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 218
+   X 250
    Y 131
    ONE_WAY
  $END
@@ -67,7 +68,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 187
+   X 219
    Y 100
    ONE_WAY
  $END
@@ -75,7 +76,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 218
+   X 250
    Y 100
    ONE_WAY
  $END
@@ -83,40 +84,8 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 249
+   X 281
    Y 101
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE mesh_06
-   X 279
-   Y 101
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE mesh_06
-   X 310
-   Y 101
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE mesh_06
-   X 249
-   Y 131
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE mesh_06
-   X 280
-   Y 132
    ONE_WAY
  $END
  
@@ -124,6 +93,38 @@
    STYLE orig_crystal
    PIECE mesh_06
    X 311
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 342
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 281
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 312
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_06
+   X 343
    Y 132
    ONE_WAY
  $END
@@ -131,7 +132,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 239
+   X 271
    Y 70
    ONE_WAY
  $END
@@ -139,7 +140,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 269
+   X 301
    Y 70
    ONE_WAY
  $END
@@ -147,7 +148,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 208
+   X 240
    Y 70
    ONE_WAY
  $END
@@ -155,7 +156,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 238
+   X 270
    Y 39
    ONE_WAY
  $END
@@ -163,7 +164,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 300
+   X 332
    Y 70
    ONE_WAY
  $END
@@ -171,7 +172,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 269
+   X 301
    Y 39
    ONE_WAY
  $END
@@ -179,7 +180,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 300
+   X 332
    Y 39
    ONE_WAY
  $END
@@ -187,7 +188,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 208
+   X 240
    Y 39
    ONE_WAY
  $END
@@ -195,7 +196,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 178
+   X 210
    Y 39
    ONE_WAY
  $END
@@ -203,7 +204,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_08
-   X 331
+   X 363
    Y 29
    ONE_WAY
  $END
@@ -211,7 +212,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 341
+   X 373
    Y 91
    ONE_WAY
  $END
@@ -219,7 +220,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 372
+   X 404
    Y 91
    ONE_WAY
  $END
@@ -227,7 +228,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 342
+   X 374
    Y 122
    ONE_WAY
  $END
@@ -235,7 +236,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 373
+   X 405
    Y 122
    ONE_WAY
  $END
@@ -243,7 +244,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 342
+   X 374
    Y 152
    ONE_WAY
  $END
@@ -251,7 +252,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 373
+   X 405
    Y 153
    ONE_WAY
  $END
@@ -259,7 +260,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 393
+   X 425
    Y 60
    ONE_WAY
  $END
@@ -267,7 +268,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_07
-   X 393
+   X 425
    Y 29
    ONE_WAY
  $END
@@ -275,7 +276,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_06
-   X 403
+   X 435
    Y 91
    ONE_WAY
  $END
@@ -283,7 +284,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 125
+   X 157
    Y 141
    ONE_WAY
  $END
@@ -291,7 +292,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 66
+   X 98
    Y 141
    ONE_WAY
  $END
@@ -299,7 +300,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE crystal_04
-   X 40
+   X 72
    Y 100
    ONE_WAY
  $END
@@ -307,7 +308,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE thread_01
-   X 177
+   X 209
    Y 68
    ONE_WAY
  $END
@@ -315,7 +316,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE thread_02
-   X 146
+   X 178
    Y 39
    ONE_WAY
  $END
@@ -323,7 +324,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE thread_02
-   X 218
+   X 250
    Y 7
    ONE_WAY
  $END
@@ -331,7 +332,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE spider_web
-   X 421
+   X 453
    Y 24
    ONE_WAY
  $END
@@ -339,7 +340,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_01
-   X 424
+   X 456
    Y 7
    ONE_WAY
  $END
@@ -347,7 +348,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_01
-   X 550
+   X 582
    Y 2
    ONE_WAY
  $END
@@ -355,7 +356,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_01
-   X 562
+   X 594
    Y -10
    ONE_WAY
  $END
@@ -363,7 +364,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_02
-   X 545
+   X 577
    Y 39
    ONE_WAY
  $END
@@ -371,7 +372,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_02
-   X 568
+   X 600
    Y 62
    ONE_WAY
  $END
@@ -379,7 +380,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_01
-   X 555
+   X 587
    Y 81
    ONE_WAY
  $END
@@ -387,7 +388,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 423
+   X 455
    Y 81
    ONE_WAY
  $END
@@ -395,7 +396,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 423
+   X 455
    Y 71
    ONE_WAY
  $END
@@ -403,7 +404,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 423
+   X 455
    Y 60
    ONE_WAY
  $END
@@ -411,7 +412,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 423
+   X 455
    Y 49
    ONE_WAY
  $END
@@ -419,7 +420,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 404
+   X 436
    Y 122
    ONE_WAY
  $END
@@ -427,7 +428,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 404
+   X 436
    Y 132
    ONE_WAY
  $END
@@ -435,7 +436,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 404
+   X 436
    Y 142
    ONE_WAY
  $END
@@ -443,7 +444,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 394
+   X 426
    Y 152
    ONE_WAY
  $END
@@ -451,16 +452,8 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_01
-   X 404
+   X 436
    Y 152
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 460
-   Y 155
    ONE_WAY
  $END
  
@@ -475,7 +468,15 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_03
-   X 429
+   X 524
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 461
    Y 155
    ONE_WAY
  $END
@@ -483,7 +484,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 424
+   X 456
    Y 56
    ONE_WAY
  $END
@@ -491,7 +492,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 423
+   X 455
    Y 46
    ONE_WAY
  $END
@@ -499,7 +500,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 423
+   X 455
    Y 68
    ONE_WAY
  $END
@@ -507,7 +508,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_04
-   X 422
+   X 454
    Y 79
    ONE_WAY
  $END
@@ -515,7 +516,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE mesh_03
-   X 410
+   X 442
    Y 25
    ONE_WAY
  $END
@@ -523,7 +524,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 413
+   X 445
    Y -1
    ONE_WAY
  $END
@@ -531,7 +532,7 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE thread_03
-   X 413
+   X 445
    Y -10
    ONE_WAY
  $END

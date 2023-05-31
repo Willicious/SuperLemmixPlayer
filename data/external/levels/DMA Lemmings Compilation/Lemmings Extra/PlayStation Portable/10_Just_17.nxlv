@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,12 +9,13 @@
  AUTHOR Sony 
  MUSIC !PSP/egypt1_PSP;PSP/egypt2_PSP;PSP/egypt3_PSP
  ID xE1F092CDE1F092CD
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 735
+ WIDTH 815
  HEIGHT 160
- START_X 575
+ START_X 615
  START_Y 80
  THEME orig_pillar
  
@@ -41,7 +42,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 604
+   X 644
    Y 77
    NO_OVERWRITE
  $END
@@ -49,7 +50,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE rope_trap
-   X 344
+   X 384
    Y 30
    NO_OVERWRITE
  $END
@@ -57,7 +58,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 78
+   X 118
    Y 47
    NO_OVERWRITE
  $END
@@ -68,9 +69,17 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_06
-   X 346
+   X 386
    Y 65
    NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 682
+   Y 150
    ONE_WAY
  $END
  
@@ -85,15 +94,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 602
-   Y 150
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_07
-   X 578
+   X 618
    Y 150
    NO_OVERWRITE
    ONE_WAY
@@ -102,7 +103,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 655
+   X 695
    Y 131
    ONE_WAY
  $END
@@ -110,7 +111,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 613
+   X 653
    Y 131
    ONE_WAY
  $END
@@ -118,7 +119,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 571
+   X 611
    Y 131
    ONE_WAY
  $END
@@ -126,7 +127,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 573
+   X 613
    Y 104
    ONE_WAY
  $END
@@ -134,7 +135,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 573
+   X 613
    Y 80
    ONE_WAY
  $END
@@ -142,7 +143,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_01
-   X 573
+   X 613
    Y 64
    ONE_WAY
  $END
@@ -150,7 +151,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 563
+   X 603
    Y 131
    NO_OVERWRITE
    ONE_WAY
@@ -159,7 +160,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 524
+   X 564
    Y 150
    ONE_WAY
  $END
@@ -167,7 +168,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 504
+   X 544
    Y 150
    ONE_WAY
  $END
@@ -175,7 +176,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_08
-   X 450
+   X 490
    Y 149
    ONE_WAY
  $END
@@ -183,7 +184,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_03
-   X 518
+   X 558
    Y 116
    NO_OVERWRITE
    ONE_WAY
@@ -192,7 +193,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 504
+   X 544
    Y 130
    ONE_WAY
  $END
@@ -200,7 +201,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 475
+   X 515
    Y 116
    NO_OVERWRITE
    ONE_WAY
@@ -209,7 +210,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 474
+   X 514
    Y 137
    ONE_WAY
  $END
@@ -217,7 +218,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_01
-   X 474
+   X 514
    Y 115
    ONE_WAY
  $END
@@ -225,7 +226,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_03
-   X 497
+   X 537
    Y 89
    NO_OVERWRITE
    ONE_WAY
@@ -234,7 +235,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 466
+   X 506
    Y 97
    NO_OVERWRITE
    ONE_WAY
@@ -243,7 +244,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 459
+   X 499
    Y 116
    NO_OVERWRITE
    ONE_WAY
@@ -252,7 +253,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_06
-   X 455
+   X 495
    Y 133
    NO_OVERWRITE
    ONE_WAY
@@ -261,7 +262,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 401
+   X 441
    Y 122
    ONE_WAY
  $END
@@ -269,7 +270,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 401
+   X 441
    Y 96
    ONE_WAY
  $END
@@ -277,7 +278,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_01
-   X 401
+   X 441
    Y 74
    ONE_WAY
  $END
@@ -285,7 +286,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 402
+   X 442
    Y 0
    ONE_WAY
  $END
@@ -293,7 +294,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_04
-   X 402
+   X 442
    Y 58
    ONE_WAY
  $END
@@ -301,7 +302,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 425
+   X 465
    Y 64
    NO_OVERWRITE
    ONE_WAY
@@ -310,7 +311,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_11
-   X 473
+   X 513
    Y 89
    ONE_WAY
  $END
@@ -318,7 +319,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 385
+   X 425
    Y 58
    NO_OVERWRITE
    ONE_WAY
@@ -327,7 +328,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 610
+   X 650
    Y 20
    ONE_WAY
  $END
@@ -335,7 +336,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 589
+   X 629
    Y 0
    ONE_WAY
  $END
@@ -343,7 +344,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 589
+   X 629
    Y 0
    ONE_WAY
  $END
@@ -351,7 +352,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 631
+   X 671
    Y 0
    ONE_WAY
  $END
@@ -359,7 +360,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 673
+   X 713
    Y 0
    ONE_WAY
  $END
@@ -367,7 +368,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 693
+   X 733
    Y 0
    ONE_WAY
  $END
@@ -375,7 +376,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 630
+   X 670
    Y 20
    ONE_WAY
  $END
@@ -383,7 +384,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 672
+   X 712
    Y 20
    ONE_WAY
  $END
@@ -391,7 +392,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 692
+   X 732
    Y 20
    ONE_WAY
  $END
@@ -399,7 +400,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 425
+   X 465
    Y 44
    NO_OVERWRITE
    ONE_WAY
@@ -408,7 +409,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 434
+   X 474
    Y 24
    NO_OVERWRITE
    ONE_WAY
@@ -417,7 +418,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 451
+   X 491
    Y 5
    ONE_WAY
  $END
@@ -425,7 +426,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 409
+   X 449
    Y 5
    NO_OVERWRITE
    ONE_WAY
@@ -434,9 +435,18 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_06
-   X 493
+   X 533
    Y -5
    FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 491
+   Y -11
+   NO_OVERWRITE
    ONE_WAY
  $END
  
@@ -451,17 +461,8 @@
  
  $TERRAIN
    STYLE orig_pillar
-   PIECE block_07
-   X 411
-   Y -11
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
    PIECE pillar_02
-   X 385
+   X 425
    Y 112
    ONE_WAY
  $END
@@ -469,7 +470,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_01
-   X 385
+   X 425
    Y 96
    ONE_WAY
  $END
@@ -477,7 +478,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 363
+   X 403
    Y -11
    NO_OVERWRITE
    ONE_WAY
@@ -486,10 +487,18 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 331
+   X 371
    Y -11
    NO_OVERWRITE
    FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_08
+   X 386
+   Y 146
    ONE_WAY
  $END
  
@@ -503,16 +512,8 @@
  
  $TERRAIN
    STYLE orig_pillar
-   PIECE block_08
-   X 306
-   Y 146
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
    PIECE block_05
-   X 349
+   X 389
    Y 127
    NO_OVERWRITE
    ONE_WAY
@@ -521,7 +522,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 367
+   X 407
    Y 137
    NO_OVERWRITE
    ONE_WAY
@@ -530,7 +531,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 339
+   X 379
    Y 107
    ONE_WAY
  $END
@@ -538,7 +539,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 339
+   X 379
    Y 88
    ONE_WAY
  $END
@@ -546,8 +547,97 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 343
+   X 383
    Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_08
+   X 349
+   Y 127
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_05
+   X 385
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 403
+   Y 8
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 424
+   Y 68
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 401
+   Y 58
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 426
+   Y 49
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 355
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_07
+   X 342
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_03
+   X 315
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_02
+   X 299
+   Y 111
    ONE_WAY
  $END
  
@@ -562,97 +652,8 @@
  
  $TERRAIN
    STYLE orig_pillar
-   PIECE block_05
-   X 345
-   Y 8
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_07
-   X 363
-   Y 8
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_07
-   X 384
-   Y 68
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_07
-   X 361
-   Y 58
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_07
-   X 386
-   Y 49
-   NO_OVERWRITE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_07
-   X 315
-   Y 88
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_07
-   X 302
-   Y 107
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE stairs_03
-   X 275
-   Y 73
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_02
-   X 259
-   Y 111
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
    PIECE block_08
-   X 269
-   Y 127
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_08
-   X 266
+   X 306
    Y 146
    NO_OVERWRITE
    ONE_WAY
@@ -661,7 +662,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 231
+   X 271
    Y 112
    ONE_WAY
  $END
@@ -669,7 +670,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 231
+   X 271
    Y 48
    ONE_WAY
  $END
@@ -677,7 +678,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 231
+   X 271
    Y 16
    ONE_WAY
  $END
@@ -685,7 +686,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_03
-   X 258
+   X 298
    Y 49
    NO_OVERWRITE
    ONE_WAY
@@ -694,7 +695,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_05
-   X 211
+   X 251
    Y 52
    NO_OVERWRITE
    ONE_WAY
@@ -703,7 +704,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_10
-   X 211
+   X 251
    Y 72
    NO_OVERWRITE
    ONE_WAY
@@ -712,7 +713,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_10
-   X 211
+   X 251
    Y 112
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -722,7 +723,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_10
-   X 211
+   X 251
    Y 152
    NO_OVERWRITE
    ONE_WAY
@@ -731,7 +732,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_08
-   X 158
+   X 198
    Y 73
    ONE_WAY
  $END
@@ -739,7 +740,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 176
+   X 216
    Y 92
    NO_OVERWRITE
    ONE_WAY
@@ -748,7 +749,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_07
-   X 176
+   X 216
    Y 112
    NO_OVERWRITE
    ONE_WAY
@@ -757,7 +758,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 176
+   X 216
    Y 132
    NO_OVERWRITE
    ONE_WAY
@@ -766,7 +767,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_01
-   X 176
+   X 216
    Y 151
    NO_OVERWRITE
    ONE_WAY
@@ -775,7 +776,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 156
+   X 196
    Y 132
    NO_OVERWRITE
    ONE_WAY
@@ -784,7 +785,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE sandblock_03
-   X 156
+   X 196
    Y 148
    NO_OVERWRITE
    ONE_WAY
@@ -793,7 +794,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 160
+   X 200
    Y 121
    NO_OVERWRITE
    ONE_WAY
@@ -802,7 +803,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_04
-   X 124
+   X 164
    Y 77
    ONE_WAY
  $END
@@ -810,7 +811,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 83
+   X 123
    Y 72
    ONE_WAY
  $END
@@ -818,7 +819,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_02
-   X 51
+   X 91
    Y 85
    NO_OVERWRITE
    ONE_WAY
@@ -827,7 +828,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 86
+   X 126
    Y 86
    NO_OVERWRITE
    ONE_WAY
@@ -836,7 +837,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 86
+   X 126
    Y 118
    NO_OVERWRITE
    ONE_WAY
@@ -845,7 +846,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_08
-   X 196
+   X 236
    Y 73
    NO_OVERWRITE
    ONE_WAY
@@ -854,7 +855,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE stairs_02
-   X 29
+   X 69
    Y 113
    NO_OVERWRITE
    ONE_WAY
@@ -863,7 +864,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 0
+   X 40
    Y 141
    ONE_WAY
  $END
@@ -879,7 +880,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X -7
+   X 33
    Y 121
    ONE_WAY
  $END
@@ -887,7 +888,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_04
-   X 108
+   X 148
    Y 31
    ONE_WAY
  $END
@@ -895,7 +896,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 108
+   X 148
    Y -33
    ONE_WAY
  $END
@@ -903,7 +904,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 66
+   X 106
    Y 0
    ONE_WAY
  $END
@@ -911,7 +912,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 46
+   X 86
    Y 0
    ONE_WAY
  $END
@@ -919,7 +920,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 122
+   X 162
    Y 0
    NO_OVERWRITE
    ONE_WAY
@@ -928,7 +929,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 57
+   X 97
    Y 20
    ONE_WAY
  $END

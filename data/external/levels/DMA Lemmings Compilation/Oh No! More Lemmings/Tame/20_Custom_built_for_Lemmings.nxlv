@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Custom built for Lemmings
  AUTHOR DMA Design
  ID xCBB77C64CBB77C64
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 520
+ WIDTH 552
  HEIGHT 160
- START_X 240
+ START_X 256
  START_Y 80
  THEME ohno_bubble
  BACKGROUND special:amiga_blue
@@ -42,7 +42,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE window
-   X 96
+   X 112
    Y 44
    NO_OVERWRITE
  $END
@@ -50,7 +50,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE exit
-   X 352
+   X 368
    Y 31
    NO_OVERWRITE
  $END
@@ -58,7 +58,7 @@
  $GADGET
    STYLE ohno_bubble
    PIECE spinning_arrow
-   X 368
+   X 384
    Y 31
    NO_OVERWRITE
    SPEED 0
@@ -71,7 +71,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 114
+   X 130
    Y 128
    ONE_WAY
  $END
@@ -79,7 +79,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 146
+   X 162
    Y 128
    ONE_WAY
  $END
@@ -87,7 +87,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 178
+   X 194
    Y 128
    ONE_WAY
  $END
@@ -95,7 +95,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 210
+   X 226
    Y 128
    ONE_WAY
  $END
@@ -103,7 +103,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 242
+   X 258
    Y 128
    ONE_WAY
  $END
@@ -111,7 +111,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 274
+   X 290
    Y 128
    ONE_WAY
  $END
@@ -119,7 +119,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 306
+   X 322
    Y 128
    ONE_WAY
  $END
@@ -127,15 +127,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 338
-   Y 128
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE fence_blue_02
-   X 82
+   X 354
    Y 128
    ONE_WAY
  $END
@@ -143,7 +135,15 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_02
-   X 114
+   X 98
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE fence_blue_02
+   X 130
    Y 96
    ONE_WAY
  $END
@@ -151,7 +151,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 146
+   X 162
    Y 96
    ONE_WAY
  $END
@@ -159,7 +159,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 178
+   X 194
    Y 96
    ONE_WAY
  $END
@@ -167,7 +167,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 210
+   X 226
    Y 96
    ONE_WAY
  $END
@@ -175,7 +175,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 242
+   X 258
    Y 96
    ONE_WAY
  $END
@@ -183,7 +183,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 274
+   X 290
    Y 96
    ONE_WAY
  $END
@@ -191,7 +191,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 306
+   X 322
    Y 96
    ONE_WAY
  $END
@@ -199,7 +199,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_02
-   X 146
+   X 162
    Y 64
    ONE_WAY
  $END
@@ -207,7 +207,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 178
+   X 194
    Y 64
    ONE_WAY
  $END
@@ -215,7 +215,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_01
-   X 210
+   X 226
    Y 64
    ONE_WAY
  $END
@@ -223,7 +223,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_02
-   X 178
+   X 194
    Y 32
    ONE_WAY
  $END
@@ -231,7 +231,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_03
-   X 210
+   X 226
    Y 32
    ONE_WAY
  $END
@@ -239,7 +239,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_03
-   X 242
+   X 258
    Y 64
    ONE_WAY
  $END
@@ -247,7 +247,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_02
-   X 274
+   X 290
    Y 64
    ONE_WAY
  $END
@@ -255,7 +255,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_03
-   X 306
+   X 322
    Y 64
    ONE_WAY
  $END
@@ -263,7 +263,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_03
-   X 338
+   X 354
    Y 96
    ONE_WAY
  $END
@@ -271,7 +271,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE fence_blue_03
-   X 370
+   X 386
    Y 128
    ONE_WAY
  $END
@@ -279,7 +279,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_01
-   X 348
+   X 364
    Y 67
    NO_OVERWRITE
    ONE_WAY
@@ -288,7 +288,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_01
-   X 380
+   X 396
    Y 67
    NO_OVERWRITE
    ONE_WAY
@@ -297,7 +297,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_11
-   X 335
+   X 351
    Y 67
    NO_OVERWRITE
    ONE_WAY
@@ -306,7 +306,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_05
-   X 412
+   X 428
    Y 62
    NO_OVERWRITE
    ONE_WAY
@@ -315,7 +315,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_02
-   X 417
+   X 433
    Y 33
    ONE_WAY
  $END
@@ -323,7 +323,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_02
-   X 417
+   X 433
    Y 2
    ONE_WAY
  $END
@@ -331,7 +331,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_02
-   X 417
+   X 433
    Y -7
    ONE_WAY
  $END
@@ -339,7 +339,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_03
-   X 417
+   X 433
    Y 19
    ONE_WAY
  $END
@@ -347,7 +347,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_05
-   X 433
+   X 449
    Y 14
    ONE_WAY
  $END
@@ -355,7 +355,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_04
-   X 401
+   X 417
    Y 14
    FLIP_VERTICAL
    ONE_WAY
@@ -364,7 +364,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_06
-   X 428
+   X 444
    Y 30
    ERASE
    ONE_WAY
@@ -373,7 +373,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_06
-   X 405
+   X 421
    Y 30
    ERASE
    ONE_WAY
@@ -382,7 +382,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_02
-   X 397
+   X 413
    Y -14
    FLIP_VERTICAL
    ONE_WAY
@@ -391,7 +391,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_small_02
-   X 438
+   X 454
    Y -12
    FLIP_VERTICAL
    ONE_WAY
@@ -400,7 +400,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_07
-   X 72
+   X 88
    Y 75
    ONE_WAY
  $END
@@ -408,7 +408,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 104
+   X 120
    Y 83
    ONE_WAY
  $END
@@ -416,7 +416,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 136
+   X 152
    Y 83
    ONE_WAY
  $END
@@ -424,7 +424,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 167
+   X 183
    Y 83
    ONE_WAY
  $END
@@ -432,7 +432,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_04
-   X 193
+   X 209
    Y 65
    ONE_WAY
  $END
@@ -440,7 +440,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_02
-   X 214
+   X 230
    Y 53
    ONE_WAY
  $END
@@ -448,7 +448,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_04
-   X 241
+   X 257
    Y 32
    ONE_WAY
  $END
@@ -456,7 +456,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_05
-   X 252
+   X 268
    Y 9
    ONE_WAY
  $END
@@ -464,7 +464,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_04
-   X 284
+   X 300
    Y -12
    ONE_WAY
  $END
@@ -472,7 +472,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_01
-   X 222
+   X 238
    Y -12
    ONE_WAY
  $END
@@ -480,7 +480,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_06
-   X 180
+   X 196
    Y 86
    ONE_WAY
  $END
@@ -488,7 +488,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_01
-   X 190
+   X 206
    Y 112
    ONE_WAY
  $END
@@ -496,7 +496,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_05
-   X 221
+   X 237
    Y 133
    ONE_WAY
  $END
@@ -504,7 +504,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 253
+   X 269
    Y 130
    ONE_WAY
  $END
@@ -512,7 +512,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 282
+   X 298
    Y 130
    ONE_WAY
  $END
@@ -520,7 +520,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 313
+   X 329
    Y 130
    ONE_WAY
  $END
@@ -528,7 +528,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 345
+   X 361
    Y 130
    ONE_WAY
  $END
@@ -536,7 +536,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 376
+   X 392
    Y 130
    ONE_WAY
  $END
@@ -544,7 +544,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 408
+   X 424
    Y 130
    ONE_WAY
  $END
@@ -552,7 +552,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_05
-   X 415
+   X 431
    Y 133
    ONE_WAY
  $END
@@ -560,7 +560,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_09
-   X 447
+   X 463
    Y 130
    ONE_WAY
  $END
@@ -568,7 +568,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_04
-   X 478
+   X 494
    Y 112
    ONE_WAY
  $END
@@ -576,7 +576,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_03
-   X 478
+   X 494
    Y 80
    ONE_WAY
  $END
@@ -584,7 +584,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_02
-   X 448
+   X 464
    Y 80
    ONE_WAY
  $END
@@ -592,7 +592,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_12
-   X 446
+   X 462
    Y 106
    FLIP_VERTICAL
    ONE_WAY
@@ -601,7 +601,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_07
-   X 42
+   X 58
    Y 75
    ONE_WAY
  $END
@@ -609,7 +609,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 81
+   X 97
    Y 43
    ONE_WAY
  $END
@@ -617,7 +617,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 81
+   X 97
    Y 11
    ONE_WAY
  $END
@@ -625,7 +625,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 81
+   X 97
    Y -18
    ONE_WAY
  $END
@@ -633,7 +633,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 81
+   X 97
    Y 106
    ONE_WAY
  $END
@@ -641,7 +641,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 81
+   X 97
    Y 132
    ONE_WAY
  $END
@@ -649,7 +649,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 51
+   X 67
    Y 107
    ONE_WAY
  $END
@@ -657,7 +657,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 51
+   X 67
    Y 137
    ONE_WAY
  $END
@@ -665,7 +665,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 51
+   X 67
    Y 45
    ONE_WAY
  $END
@@ -673,7 +673,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 51
+   X 67
    Y 15
    ONE_WAY
  $END
@@ -681,7 +681,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_08
-   X 51
+   X 67
    Y -15
    ONE_WAY
  $END
@@ -689,7 +689,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_01
-   X 10
+   X 26
    Y 65
    ONE_WAY
  $END
@@ -697,7 +697,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE pipe_large_12
-   X 8
+   X 24
    Y 50
    ONE_WAY
  $END
@@ -705,7 +705,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_01
-   X 54
+   X 70
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -714,7 +714,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_01
-   X 71
+   X 87
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -723,7 +723,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_01
-   X 97
+   X 113
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -732,7 +732,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_01
-   X 127
+   X 143
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -741,7 +741,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 150
+   X 166
    Y -23
    NO_OVERWRITE
    ONE_WAY
@@ -750,7 +750,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 77
+   X 93
    Y -15
    NO_OVERWRITE
    ONE_WAY
@@ -759,7 +759,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_01
-   X 99
+   X 115
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -768,7 +768,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 118
+   X 134
    Y -9
    NO_OVERWRITE
    ONE_WAY
@@ -777,7 +777,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 168
+   X 184
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -786,7 +786,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 186
+   X 202
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -795,7 +795,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 210
+   X 226
    Y -16
    NO_OVERWRITE
    ONE_WAY
@@ -804,7 +804,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 230
+   X 246
    Y -10
    NO_OVERWRITE
    ONE_WAY
@@ -813,7 +813,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 252
+   X 268
    Y -15
    NO_OVERWRITE
    ONE_WAY
@@ -822,7 +822,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 277
+   X 293
    Y -11
    NO_OVERWRITE
    ONE_WAY
@@ -831,7 +831,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 296
+   X 312
    Y -11
    NO_OVERWRITE
    ONE_WAY
@@ -840,7 +840,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 314
+   X 330
    Y -14
    NO_OVERWRITE
    ONE_WAY
@@ -849,7 +849,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 332
+   X 348
    Y -18
    NO_OVERWRITE
    ONE_WAY
@@ -858,7 +858,7 @@
  $TERRAIN
    STYLE ohno_bubble
    PIECE bubbles_blue_02
-   X 353
+   X 369
    Y -23
    NO_OVERWRITE
    ONE_WAY

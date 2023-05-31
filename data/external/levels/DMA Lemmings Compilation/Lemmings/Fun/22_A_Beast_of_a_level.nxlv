@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.40
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,13 +9,13 @@
  AUTHOR DMA Design 
  MUSIC beasti_amiga
  ID xC1BD3995C1BD3995
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1016
+ WIDTH 1200
  HEIGHT 160
- START_X 160
+ START_X 256
  START_Y 80
  THEME orig_dirt
  
@@ -42,7 +42,7 @@
  $GADGET
    STYLE special
    PIECE window_beast
-   X 64
+   X 160
    Y 80
    NO_OVERWRITE
  $END
@@ -50,7 +50,7 @@
  $GADGET
    STYLE special
    PIECE exit_beast
-   X 800
+   X 896
    Y 45
    NO_OVERWRITE
  $END
@@ -61,7 +61,7 @@
  $TERRAIN
    STYLE special
    PIECE beasti
-   X 33
+   X 129
    Y 0
    ONE_WAY
  $END

@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.40
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE All the 6's ........
  AUTHOR DMA Design 
  ID x971A69BD971A69BD
- VERSION x0000000000000002
+ VERSION x0000000000000003
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 1600
  HEIGHT 160
- START_X 760
+ START_X 776
  START_Y 80
  THEME orig_fire
  

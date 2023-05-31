@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE The North Poles
  AUTHOR DMA Design
  ID xACBB7D5CACBB7D5C
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1264
+ WIDTH 1400
  HEIGHT 160
- START_X 752
+ START_X 792
  START_Y 80
  THEME xmas
  
@@ -47,21 +47,21 @@
  $GADGET
    STYLE xmas
    PIECE window
-   X 592
+   X 640
    Y 0
  $END
  
  $GADGET
    STYLE xmas
    PIECE exit
-   X 848
+   X 896
    Y 114
  $END
  
  $GADGET
    STYLE xmas
    PIECE jack_box
-   X 112
+   X 160
    Y 84
    SPEED 0
    ANGLE 0
@@ -70,7 +70,7 @@
  $GADGET
    STYLE xmas
    PIECE jack
-   X 112
+   X 160
    Y 84
    SPEED 0
    ANGLE 0
@@ -79,7 +79,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 48
+   X 96
    Y 12
    WIDTH 64
    SPEED 0
@@ -89,7 +89,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 112
+   X 160
    Y 16
    WIDTH 64
    SPEED 0
@@ -99,7 +99,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 176
+   X 224
    Y 12
    WIDTH 64
    SPEED 0
@@ -109,7 +109,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 240
+   X 288
    Y 16
    WIDTH 64
    SPEED 0
@@ -119,7 +119,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 304
+   X 352
    Y 12
    WIDTH 64
    SPEED 0
@@ -129,7 +129,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 368
+   X 416
    Y 16
    WIDTH 64
    SPEED 0
@@ -139,7 +139,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 432
+   X 480
    Y 12
    WIDTH 64
    SPEED 0
@@ -149,7 +149,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 864
+   X 912
    Y 16
    WIDTH 64
    SPEED 0
@@ -159,7 +159,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 496
+   X 544
    Y 16
    WIDTH 64
    SPEED 0
@@ -169,7 +169,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 928
+   X 976
    Y 12
    WIDTH 64
    SPEED 0
@@ -179,7 +179,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 992
+   X 1040
    Y 16
    WIDTH 64
    SPEED 0
@@ -189,7 +189,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 1056
+   X 1104
    Y 12
    WIDTH 64
    SPEED 0
@@ -199,7 +199,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 1120
+   X 1168
    Y 16
    WIDTH 64
    SPEED 0
@@ -209,7 +209,7 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 1184
+   X 1232
    Y 12
    WIDTH 64
    SPEED 0
@@ -219,18 +219,9 @@
  $GADGET
    STYLE xmas
    PIECE lights
-   X 1248
+   X 1296
    Y 16
    WIDTH 64
-   SPEED 0
-   ANGLE 0
- $END
- 
- $GADGET
-   STYLE xmas
-   PIECE snowman
-   X 1056
-   Y 60
    SPEED 0
    ANGLE 0
  $END
@@ -256,7 +247,16 @@
  $GADGET
    STYLE xmas
    PIECE snowman
-   X 320
+   X 1200
+   Y 60
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE xmas
+   PIECE snowman
+   X 368
    Y 68
    SPEED 0
    ANGLE 0
@@ -265,7 +265,7 @@
  $GADGET
    STYLE xmas
    PIECE fireplace
-   X 432
+   X 480
    Y 48
    SPEED 0
    ANGLE 0
@@ -277,7 +277,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 611
+   X 659
    Y 98
    ONE_WAY
  $END
@@ -285,7 +285,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 611
+   X 659
    Y 64
    ONE_WAY
  $END
@@ -293,7 +293,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 649
+   X 697
    Y 110
    ONE_WAY
  $END
@@ -301,7 +301,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 649
+   X 697
    Y 88
    ONE_WAY
  $END
@@ -309,7 +309,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 684
+   X 732
    Y 99
    ONE_WAY
  $END
@@ -317,7 +317,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 684
+   X 732
    Y 60
    ONE_WAY
  $END
@@ -325,7 +325,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 684
+   X 732
    Y 40
    ONE_WAY
  $END
@@ -333,7 +333,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 710
+   X 758
    Y 117
    ONE_WAY
  $END
@@ -341,7 +341,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 710
+   X 758
    Y 95
    ONE_WAY
  $END
@@ -349,7 +349,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 743
+   X 791
    Y 97
    ONE_WAY
  $END
@@ -357,7 +357,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 743
+   X 791
    Y 60
    ONE_WAY
  $END
@@ -365,7 +365,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 743
+   X 791
    Y 37
    ONE_WAY
  $END
@@ -373,7 +373,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 791
+   X 839
    Y 103
    ONE_WAY
  $END
@@ -381,7 +381,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 791
+   X 839
    Y 65
    ONE_WAY
  $END
@@ -389,7 +389,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_02
-   X 791
+   X 839
    Y 50
    ONE_WAY
  $END
@@ -397,7 +397,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 824
+   X 872
    Y 122
    ONE_WAY
  $END
@@ -405,7 +405,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_18
-   X 694
+   X 742
    Y -5
    ONE_WAY
  $END
@@ -413,7 +413,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 731
+   X 779
    Y -5
    ONE_WAY
  $END
@@ -421,7 +421,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 789
+   X 837
    Y -5
    ONE_WAY
  $END
@@ -429,7 +429,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 849
+   X 897
    Y -5
    ONE_WAY
  $END
@@ -437,7 +437,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 895
+   X 943
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -446,7 +446,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 952
+   X 1000
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -455,7 +455,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 1008
+   X 1056
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -464,7 +464,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 1061
+   X 1109
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -473,7 +473,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 1116
+   X 1164
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -482,7 +482,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 1176
+   X 1224
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -491,16 +491,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 1217
-   Y -5
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE snow_05
-   X -13
+   X 1265
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -509,7 +500,16 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_05
-   X -12
+   X 35
+   Y -5
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_05
+   X 36
    Y 69
    NO_OVERWRITE
    ONE_WAY
@@ -518,7 +518,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X -3
+   X 45
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -527,7 +527,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 40
+   X 88
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -536,7 +536,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 90
+   X 138
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -545,7 +545,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 146
+   X 194
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -554,7 +554,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 197
+   X 245
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -563,7 +563,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 257
+   X 305
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -572,7 +572,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 302
+   X 350
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -581,7 +581,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 362
+   X 410
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -590,7 +590,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 415
+   X 463
    Y -4
    NO_OVERWRITE
    ONE_WAY
@@ -599,7 +599,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 466
+   X 514
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -608,7 +608,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 512
+   X 560
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -617,7 +617,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 878
+   X 926
    Y 157
    ONE_WAY
  $END
@@ -625,7 +625,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 871
+   X 919
    Y 157
    ONE_WAY
  $END
@@ -633,7 +633,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 863
+   X 911
    Y 157
    ONE_WAY
  $END
@@ -641,7 +641,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 856
+   X 904
    Y 157
    ONE_WAY
  $END
@@ -649,7 +649,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE pillar_01
-   X 853
+   X 901
    Y 157
    ONE_WAY
  $END
@@ -657,7 +657,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 20
+   X 68
    Y 114
    ONE_WAY
  $END
@@ -665,7 +665,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 92
+   X 140
    Y 116
    ONE_WAY
  $END
@@ -673,7 +673,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 154
+   X 202
    Y 116
    ONE_WAY
  $END
@@ -681,7 +681,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 245
+   X 293
    Y 121
    ONE_WAY
  $END
@@ -689,7 +689,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 243
+   X 291
    Y 114
    ONE_WAY
  $END
@@ -697,7 +697,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 326
+   X 374
    Y 108
    ONE_WAY
  $END
@@ -705,7 +705,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 423
+   X 471
    Y 112
    ONE_WAY
  $END
@@ -713,7 +713,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 454
+   X 502
    Y 116
    ONE_WAY
  $END
@@ -721,7 +721,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 930
+   X 978
    Y 122
    ONE_WAY
  $END
@@ -729,7 +729,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 1009
+   X 1057
    Y 116
    ONE_WAY
  $END
@@ -737,7 +737,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 1069
+   X 1117
    Y 114
    ONE_WAY
  $END
@@ -745,7 +745,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 1172
+   X 1220
    Y 123
    ONE_WAY
  $END
@@ -753,7 +753,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 1144
+   X 1192
    Y 117
    ONE_WAY
  $END
@@ -761,7 +761,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 52
+   X 100
    Y 117
    FLIP_VERTICAL
    ONE_WAY
@@ -770,7 +770,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snowman
-   X 212
+   X 260
    Y 90
    ONE_WAY
  $END
@@ -778,7 +778,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_21
-   X 315
+   X 363
    Y 116
    FLIP_VERTICAL
    ONE_WAY
@@ -787,7 +787,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_21
-   X 333
+   X 381
    Y 116
    FLIP_VERTICAL
    ONE_WAY
@@ -796,7 +796,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 228
+   X 276
    Y 112
    ONE_WAY
  $END
@@ -804,7 +804,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_15
-   X 443
+   X 491
    Y 113
    FLIP_VERTICAL
    ONE_WAY
@@ -813,7 +813,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_15
-   X 428
+   X 476
    Y 113
    FLIP_VERTICAL
    ONE_WAY
@@ -822,7 +822,7 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_15
-   X 412
+   X 460
    Y 113
    FLIP_VERTICAL
    ONE_WAY
@@ -831,23 +831,9 @@
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_15
-   X 427
+   X 475
    Y 117
    ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 1044
-   Y 108
- $END
- 
- $TERRAIN
-   STYLE ohno_snow
-   PIECE steel_01
-   X 1068
-   Y 108
  $END
  
  $TERRAIN
@@ -876,6 +862,29 @@
    PIECE steel_01
    X 1164
    Y 108
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 1188
+   Y 108
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE steel_01
+   X 1212
+   Y 108
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 1321
+   Y -5
+   NO_OVERWRITE
+   ONE_WAY
  $END
  
  

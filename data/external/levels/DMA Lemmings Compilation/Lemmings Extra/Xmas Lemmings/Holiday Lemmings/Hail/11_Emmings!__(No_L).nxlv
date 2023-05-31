@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,11 +8,11 @@
  TITLE Emmings!  (No L)
  AUTHOR DMA Design
  ID xE49550EFE49550EF
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 960
+ WIDTH 1056
  HEIGHT 160
  START_X 560
  START_Y 80
@@ -138,6 +138,16 @@
    Y 24
    WIDTH 64
    NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE xmas
+   PIECE lights
+   X 960
+   Y 0
+   WIDTH 64
    SPEED 0
    ANGLE 0
  $END

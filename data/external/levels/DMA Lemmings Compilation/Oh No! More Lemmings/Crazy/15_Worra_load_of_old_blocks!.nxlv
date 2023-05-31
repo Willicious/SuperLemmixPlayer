@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,16 @@
  TITLE Worra load of old blocks!
  AUTHOR DMA Design 
  ID xF5850730F5850730
- VERSION x0000000000000000
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 576
+ WIDTH 640
  HEIGHT 160
- START_X 208
+ START_X 240
  START_Y 80
  THEME ohno_brick
-BACKGROUND special:amiga_blue
+ BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -38,7 +38,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE trap_01
-   X 448
+   X 480
    Y 32
    NO_OVERWRITE
  $END
@@ -46,7 +46,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 256
+   X 288
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -55,7 +55,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 320
+   X 352
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -64,7 +64,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 384
+   X 416
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -73,7 +73,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 448
+   X 480
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -82,7 +82,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 512
+   X 544
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -92,7 +92,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE trap_01
-   X 416
+   X 448
    Y 32
    NO_OVERWRITE
  $END
@@ -100,14 +100,14 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 272
+   X 304
    Y 0
  $END
  
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 192
+   X 224
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -116,7 +116,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 128
+   X 160
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -125,7 +125,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 64
+   X 96
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -134,7 +134,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 0
+   X 32
    Y 140
    WIDTH 64
    HEIGHT 24
@@ -144,7 +144,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 272
+   X 304
    Y 0
    NO_OVERWRITE
  $END
@@ -152,7 +152,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 80
+   X 112
    Y 96
    NO_OVERWRITE
  $END
@@ -163,7 +163,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_03
-   X 296
+   X 328
    Y 65
    ONE_WAY
  $END
@@ -171,7 +171,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_03
-   X 326
+   X 358
    Y 65
    ONE_WAY
  $END
@@ -179,7 +179,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_03
-   X 355
+   X 387
    Y 65
    ONE_WAY
  $END
@@ -187,7 +187,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 344
+   X 376
    Y 144
    NO_OVERWRITE
  $END
@@ -195,7 +195,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 320
+   X 352
    Y 144
    NO_OVERWRITE
  $END
@@ -203,7 +203,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 296
+   X 328
    Y 144
    NO_OVERWRITE
  $END
@@ -211,7 +211,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 272
+   X 304
    Y 144
    NO_OVERWRITE
  $END
@@ -219,7 +219,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 248
+   X 280
    Y 144
    NO_OVERWRITE
  $END
@@ -227,14 +227,14 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 224
+   X 256
    Y 144
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 176
+   X 208
    Y 144
    NO_OVERWRITE
  $END
@@ -242,7 +242,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 152
+   X 184
    Y 144
    NO_OVERWRITE
  $END
@@ -250,7 +250,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 239
+   X 271
    Y 38
    ERASE
    ONE_WAY
@@ -259,7 +259,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 239
+   X 271
    Y 43
    ERASE
    ONE_WAY
@@ -268,7 +268,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 239
+   X 271
    Y 44
    ERASE
    ONE_WAY
@@ -277,7 +277,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 272
+   X 304
    Y 37
    ERASE
    ONE_WAY
@@ -286,7 +286,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 272
+   X 304
    Y 42
    ERASE
    ONE_WAY
@@ -295,7 +295,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 272
+   X 304
    Y 44
    ERASE
    ONE_WAY
@@ -304,7 +304,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 207
+   X 239
    Y 38
    ERASE
    ONE_WAY
@@ -313,7 +313,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 206
+   X 238
    Y 43
    ERASE
    ONE_WAY
@@ -322,7 +322,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 206
+   X 238
    Y 44
    ERASE
    ONE_WAY
@@ -331,7 +331,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 272
+   X 304
    Y 82
    ERASE
    ONE_WAY
@@ -340,7 +340,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_05
-   X 272
+   X 304
    Y 80
    ERASE
    ONE_WAY
@@ -349,7 +349,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 128
+   X 160
    Y 144
    NO_OVERWRITE
  $END
@@ -357,7 +357,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 104
+   X 136
    Y 144
    NO_OVERWRITE
  $END
@@ -365,7 +365,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 80
+   X 112
    Y 144
    NO_OVERWRITE
  $END
@@ -373,7 +373,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_03
-   X 385
+   X 417
    Y 65
    ONE_WAY
  $END
@@ -381,7 +381,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_03
-   X 415
+   X 447
    Y 65
    ONE_WAY
  $END
@@ -389,7 +389,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_03
-   X 445
+   X 477
    Y 65
    ONE_WAY
  $END
@@ -397,63 +397,63 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 443
+   X 475
    Y 108
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 467
+   X 499
    Y 108
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 491
+   X 523
    Y 108
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 491
+   X 523
    Y 84
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 491
+   X 523
    Y 60
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 491
+   X 523
    Y 36
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 491
+   X 523
    Y 12
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 491
+   X 523
    Y -12
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_03
-   X 464
+   X 496
    Y 65
    NO_OVERWRITE
    ONE_WAY
@@ -462,91 +462,91 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 280
+   X 312
    Y 89
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 280
+   X 312
    Y 65
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 280
+   X 312
    Y 41
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 244
+   X 276
    Y 89
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 244
+   X 276
    Y 65
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 244
+   X 276
    Y 41
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 208
+   X 240
    Y 89
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 208
+   X 240
    Y 65
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 208
+   X 240
    Y 41
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 172
+   X 204
    Y 89
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 172
+   X 204
    Y 65
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 172
+   X 204
    Y 41
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_02
-   X 264
+   X 296
    Y 53
    NO_OVERWRITE
    ONE_WAY
@@ -555,7 +555,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_02
-   X 228
+   X 260
    Y 59
    NO_OVERWRITE
    ONE_WAY
@@ -564,7 +564,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_02
-   X 191
+   X 223
    Y 65
    NO_OVERWRITE
    ONE_WAY
@@ -573,7 +573,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_02
-   X 233
+   X 265
    Y 53
    NO_OVERWRITE
    ONE_WAY
@@ -582,7 +582,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_02
-   X 191
+   X 223
    Y 53
    NO_OVERWRITE
    ONE_WAY
@@ -591,63 +591,63 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 388
+   X 420
    Y 30
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 412
+   X 444
    Y 30
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 436
+   X 468
    Y 30
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 460
+   X 492
    Y 30
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 388
+   X 420
    Y 6
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 412
+   X 444
    Y 6
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 436
+   X 468
    Y 6
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 460
+   X 492
    Y 6
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_04
-   X 228
+   X 260
    Y 53
    NO_OVERWRITE
    ONE_WAY
@@ -656,7 +656,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 200
+   X 232
    Y 144
    NO_OVERWRITE
  $END
@@ -664,7 +664,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_02
-   X 429
+   X 461
    Y 108
    NO_OVERWRITE
  $END
@@ -672,7 +672,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 489
+   X 521
    Y -9
    NO_OVERWRITE
  $END
@@ -680,18 +680,9 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 494
+   X 526
    Y -9
    NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_small_02
-   X 191
-   Y 41
-   NO_OVERWRITE
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -706,7 +697,16 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_small_02
-   X 264
+   X 255
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_02
+   X 296
    Y 41
    NO_OVERWRITE
    ONE_WAY
@@ -715,14 +715,14 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 0
+   X 32
    Y 136
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 552
+   X 584
    Y 136
  $END
  

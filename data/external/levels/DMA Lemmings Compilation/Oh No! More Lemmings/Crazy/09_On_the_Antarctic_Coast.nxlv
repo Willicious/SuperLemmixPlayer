@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,16 @@
  TITLE On the Antarctic Coast
  AUTHOR DMA Design 
  ID xB8CF8E95B8CF8E95
- VERSION x0000000000000000
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1176
+ WIDTH 1424
  HEIGHT 160
- START_X 160
+ START_X 208
  START_Y 80
  THEME ohno_snow
-BACKGROUND special:amiga_blue
+ BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -42,14 +42,14 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_snow
    PIECE window
-   X 64
+   X 272
    Y 32
  $END
  
  $GADGET
    STYLE ohno_snow
    PIECE exit
-   X 1088
+   X 1296
    Y 24
    NO_OVERWRITE
  $END
@@ -57,14 +57,14 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_snow
    PIECE exit_flag
-   X 1120
+   X 1328
    Y 32
  $END
  
  $GADGET
    STYLE ohno_snow
    PIECE trap
-   X 576
+   X 784
    Y 84
    NO_OVERWRITE
  $END
@@ -72,7 +72,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_snow
    PIECE water
-   X 64
+   X 272
    Y 140
    WIDTH 64
    HEIGHT 18
@@ -82,7 +82,27 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_snow
    PIECE water
-   X 0
+   X 208
+   Y 140
+   WIDTH 64
+   HEIGHT 18
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE water
+   X 144
+   Y 140
+   WIDTH 64
+   HEIGHT 18
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE water
+   X 80
    Y 140
    WIDTH 64
    HEIGHT 18
@@ -92,7 +112,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_snow
    PIECE iceblower
-   X 878
+   X 1088
    Y 36
    NO_OVERWRITE
  $END
@@ -103,7 +123,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 135
+   X 343
    Y 111
    ONE_WAY
  $END
@@ -111,7 +131,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 223
+   X 431
    Y 115
    ONE_WAY
  $END
@@ -119,7 +139,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 282
+   X 490
    Y 132
    ONE_WAY
  $END
@@ -127,7 +147,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 370
+   X 578
    Y 122
    ONE_WAY
  $END
@@ -135,7 +155,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 432
+   X 640
    Y 128
    ONE_WAY
  $END
@@ -143,7 +163,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 520
+   X 728
    Y 129
    ONE_WAY
  $END
@@ -151,7 +171,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 609
+   X 817
    Y 116
    ONE_WAY
  $END
@@ -159,7 +179,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 695
+   X 903
    Y 118
    ONE_WAY
  $END
@@ -167,7 +187,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 780
+   X 988
    Y 119
    ONE_WAY
  $END
@@ -175,7 +195,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 859
+   X 1067
    Y 116
    ONE_WAY
  $END
@@ -183,7 +203,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 939
+   X 1147
    Y 109
    ONE_WAY
  $END
@@ -191,7 +211,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_02
-   X 265
+   X 473
    Y 103
    NO_OVERWRITE
    ONE_WAY
@@ -200,7 +220,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 161
+   X 369
    Y -17
    NO_OVERWRITE
    ONE_WAY
@@ -209,7 +229,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 208
+   X 416
    Y -13
    NO_OVERWRITE
    ONE_WAY
@@ -218,7 +238,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 255
+   X 463
    Y -5
    NO_OVERWRITE
    ONE_WAY
@@ -227,7 +247,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 300
+   X 508
    Y -3
    NO_OVERWRITE
    ONE_WAY
@@ -236,7 +256,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 345
+   X 553
    Y -21
    NO_OVERWRITE
    ONE_WAY
@@ -245,7 +265,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 389
+   X 597
    Y -12
    NO_OVERWRITE
    ONE_WAY
@@ -254,7 +274,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 440
+   X 648
    Y -23
    NO_OVERWRITE
    ONE_WAY
@@ -263,7 +283,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 459
+   X 667
    Y -31
    NO_OVERWRITE
    ONE_WAY
@@ -272,7 +292,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 505
+   X 713
    Y -23
    NO_OVERWRITE
    ONE_WAY
@@ -281,7 +301,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 542
+   X 750
    Y -24
    NO_OVERWRITE
    ONE_WAY
@@ -290,7 +310,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 577
+   X 785
    Y -13
    NO_OVERWRITE
    ONE_WAY
@@ -299,7 +319,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 631
+   X 839
    Y -10
    NO_OVERWRITE
    ONE_WAY
@@ -308,7 +328,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 668
+   X 876
    Y -20
    NO_OVERWRITE
    ONE_WAY
@@ -317,7 +337,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_16
-   X 699
+   X 907
    Y -25
    NO_OVERWRITE
    ONE_WAY
@@ -326,7 +346,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_05
-   X 456
+   X 664
    Y 56
    NO_OVERWRITE
    ONE_WAY
@@ -335,7 +355,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_05
-   X 654
+   X 862
    Y 102
    NO_OVERWRITE
    ONE_WAY
@@ -344,7 +364,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_02
-   X 663
+   X 871
    Y 84
    NO_OVERWRITE
    ONE_WAY
@@ -353,7 +373,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_07
-   X 682
+   X 890
    Y 58
    NO_OVERWRITE
    ONE_WAY
@@ -362,7 +382,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_09
-   X 699
+   X 907
    Y 52
    NO_OVERWRITE
    ONE_WAY
@@ -371,7 +391,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_07
-   X 706
+   X 914
    Y 45
    NO_OVERWRITE
    ONE_WAY
@@ -380,7 +400,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 714
+   X 922
    Y 45
    NO_OVERWRITE
    ONE_WAY
@@ -389,7 +409,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 750
+   X 958
    Y 44
    NO_OVERWRITE
    ONE_WAY
@@ -398,7 +418,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 789
+   X 997
    Y 43
    NO_OVERWRITE
    ONE_WAY
@@ -407,7 +427,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 824
+   X 1032
    Y 44
    NO_OVERWRITE
    ONE_WAY
@@ -416,7 +436,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 751
+   X 959
    Y -11
    ONE_WAY
  $END
@@ -424,7 +444,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 795
+   X 1003
    Y -17
    ONE_WAY
  $END
@@ -432,7 +452,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 84
+   X 292
    Y 105
    ONE_WAY
  $END
@@ -440,7 +460,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 39
+   X 247
    Y 67
    ONE_WAY
  $END
@@ -448,7 +468,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 982
+   X 1190
    Y 76
    NO_OVERWRITE
    ONE_WAY
@@ -457,7 +477,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 1026
+   X 1234
    Y 71
    NO_OVERWRITE
    ONE_WAY
@@ -466,7 +486,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_02
-   X 1031
+   X 1239
    Y 52
    NO_OVERWRITE
    ONE_WAY
@@ -475,7 +495,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_12
-   X 1045
+   X 1253
    Y 22
    NO_OVERWRITE
    ONE_WAY
@@ -484,7 +504,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 1073
+   X 1281
    Y 75
    NO_OVERWRITE
    ONE_WAY
@@ -493,7 +513,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_04
-   X 1097
+   X 1305
    Y 75
    NO_OVERWRITE
    ONE_WAY
@@ -502,7 +522,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_10
-   X 190
+   X 398
    Y 62
    NO_OVERWRITE
    ONE_WAY
@@ -511,7 +531,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 520
+   X 728
    Y 37
    ONE_WAY
  $END
@@ -519,7 +539,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 476
+   X 684
    Y -9
    ONE_WAY
  $END
@@ -527,7 +547,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 576
+   X 784
    Y 30
    FLIP_VERTICAL
    ONE_WAY
@@ -536,7 +556,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 627
+   X 835
    Y -14
    FLIP_VERTICAL
    ONE_WAY
@@ -545,7 +565,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 556
+   X 764
    Y 5
    FLIP_VERTICAL
    ONE_WAY
@@ -554,7 +574,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 592
+   X 800
    Y -20
    FLIP_VERTICAL
    ONE_WAY
@@ -563,7 +583,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 550
+   X 758
    Y -20
    FLIP_VERTICAL
    ONE_WAY
@@ -572,7 +592,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 519
+   X 727
    Y -35
    FLIP_VERTICAL
    ONE_WAY
@@ -581,7 +601,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 496
+   X 704
    Y -45
    FLIP_VERTICAL
    ONE_WAY
@@ -589,17 +609,32 @@ BACKGROUND special:amiga_blue
  
  $TERRAIN
    STYLE ohno_snow
+   PIECE snow_05
+   X 39
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
    PIECE snow_17
-   X -26
-   Y -12
-   NO_OVERWRITE
+   X 87
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_17
+   X 132
+   Y 152
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_03
-   X -42
+   X 166
    Y 149
    ONE_WAY
  $END
@@ -607,7 +642,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X -8
+   X 200
    Y 151
    ONE_WAY
  $END
@@ -615,7 +650,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 27
+   X 235
    Y 150
    ONE_WAY
  $END
@@ -623,7 +658,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 56
+   X 264
    Y 150
    ONE_WAY
  $END
@@ -631,15 +666,31 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 85
+   X 293
    Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_04
+   X 135
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_04
+   X 100
+   Y 149
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_01
-   X 1042
+   X 1250
    Y 113
    ONE_WAY
  $END
@@ -647,7 +698,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_02
-   X 1025
+   X 1233
    Y 14
    ONE_WAY
  $END
@@ -655,7 +706,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_06
-   X 988
+   X 1196
    Y -9
    NO_OVERWRITE
    ONE_WAY
@@ -664,7 +715,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_07
-   X 1048
+   X 1256
    Y -8
    NO_OVERWRITE
    ONE_WAY
@@ -673,7 +724,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_07
-   X 1024
+   X 1232
    Y -30
    NO_OVERWRITE
    ONE_WAY
@@ -682,7 +733,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 1052
+   X 1260
    Y 12
    NO_OVERWRITE
    ONE_WAY
@@ -691,7 +742,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 1076
+   X 1284
    Y 3
    NO_OVERWRITE
    ONE_WAY
@@ -700,7 +751,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 1064
+   X 1272
    Y -7
    NO_OVERWRITE
    ONE_WAY
@@ -709,7 +760,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 1106
+   X 1314
    Y -7
    NO_OVERWRITE
    ONE_WAY
@@ -718,7 +769,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_04
-   X 1038
+   X 1246
    Y 17
    NO_OVERWRITE
    ONE_WAY
@@ -727,7 +778,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 873
+   X 1081
    Y 51
    NO_OVERWRITE
    ONE_WAY
@@ -736,7 +787,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE circle_03
-   X 871
+   X 1079
    Y 50
    NO_OVERWRITE
    ONE_WAY
@@ -745,7 +796,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_07
-   X 569
+   X 777
    Y 59
    NO_OVERWRITE
    ONE_WAY
@@ -754,7 +805,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 106
+   X 314
    Y -9
    NO_OVERWRITE
    ONE_WAY
@@ -763,7 +814,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 59
+   X 267
    Y -13
    NO_OVERWRITE
    ONE_WAY
@@ -772,7 +823,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_snow
    PIECE snow_17
-   X 14
+   X 222
    Y -12
    NO_OVERWRITE
    ONE_WAY

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Cross-over Point
  AUTHOR DMA Design
  ID xCEB91F6FCEB91F6F
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 480
+ WIDTH 680
  HEIGHT 160
- START_X 232
+ START_X 326
  START_Y 80
  THEME orig_pillar
  
@@ -39,7 +39,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 88
+   X 180
    Y 132
    NO_OVERWRITE
  $END
@@ -47,7 +47,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 328
+   X 420
    Y 132
    NO_OVERWRITE
  $END
@@ -55,7 +55,7 @@
  $GADGET
    STYLE default
    PIECE flag_blue
-   X 344
+   X 436
    Y 118
    NO_OVERWRITE
    SPEED 0
@@ -65,7 +65,7 @@
  $GADGET
    STYLE default
    PIECE flag_green
-   X 104
+   X 196
    Y 118
    NO_OVERWRITE
    SPEED 0
@@ -75,7 +75,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 328
+   X 420
    Y 16
    NO_OVERWRITE
  $END
@@ -83,7 +83,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 88
+   X 180
    Y 16
    NO_OVERWRITE
    FLIP_HORIZONTAL
@@ -95,7 +95,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 172
+   X 264
    Y 66
    ONE_WAY
  $END
@@ -103,7 +103,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 236
+   X 328
    Y 66
    ONE_WAY
  $END
@@ -111,7 +111,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 108
+   X 200
    Y 66
    ONE_WAY
  $END
@@ -119,7 +119,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 300
+   X 392
    Y 66
    ONE_WAY
  $END
@@ -127,7 +127,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE bump_04
-   X 94
+   X 186
    Y 67
    ONE_WAY
  $END
@@ -135,7 +135,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE bump_03
-   X 364
+   X 456
    Y 66
    ONE_WAY
  $END
@@ -143,7 +143,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 218
+   X 310
    Y 49
    ONE_WAY
  $END
@@ -151,7 +151,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 218
+   X 310
    Y -14
    ONE_WAY
  $END
@@ -159,7 +159,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 218
+   X 310
    Y 103
    ONE_WAY
  $END
@@ -167,7 +167,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 291
+   X 383
    Y 100
    NO_OVERWRITE
    ONE_WAY
@@ -176,7 +176,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 291
+   X 383
    Y 42
    NO_OVERWRITE
    ONE_WAY
@@ -185,7 +185,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 291
+   X 383
    Y -14
    NO_OVERWRITE
    ONE_WAY
@@ -194,7 +194,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 148
+   X 240
    Y -14
    NO_OVERWRITE
    ONE_WAY
@@ -203,7 +203,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 148
+   X 240
    Y 46
    NO_OVERWRITE
    ONE_WAY
@@ -212,7 +212,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 148
+   X 240
    Y 108
    NO_OVERWRITE
    ONE_WAY
@@ -221,7 +221,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_13
-   X 88
+   X 180
    Y 157
    ONE_WAY
  $END
@@ -229,7 +229,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_13
-   X 325
+   X 417
    Y 157
    ONE_WAY
  $END
@@ -237,7 +237,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_11
-   X 105
+   X 197
    Y 157
    ONE_WAY
  $END
@@ -245,7 +245,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_11
-   X 339
+   X 431
    Y 157
    ONE_WAY
  $END
@@ -253,7 +253,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_15
-   X 363
+   X 455
    Y 157
    ONE_WAY
  $END
@@ -261,7 +261,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE wood_15
-   X 129
+   X 221
    Y 157
    ONE_WAY
  $END
@@ -269,7 +269,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE bump_04
-   X 204
+   X 296
    Y 67
    ONE_WAY
  $END
@@ -277,7 +277,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE bump_03
-   X 252
+   X 344
    Y 67
    ONE_WAY
  $END
@@ -285,7 +285,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_07
-   X 208
+   X 300
    Y 0
    ONE_WAY
  $END
@@ -293,7 +293,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_08
-   X 208
+   X 300
    Y 147
    ONE_WAY
  $END
@@ -301,7 +301,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 215
+   X 307
    Y 84
    ONE_WAY
  $END
@@ -309,7 +309,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_13
-   X 215
+   X 307
    Y 64
    ONE_WAY
  $END
@@ -317,7 +317,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 225
+   X 317
    Y 73
    ONE_WAY
  $END
@@ -325,7 +325,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 364
+   X 456
    Y 66
    ONE_WAY
  $END
@@ -333,7 +333,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_06
-   X 428
+   X 520
    Y 56
    NO_OVERWRITE
    ONE_WAY
@@ -342,7 +342,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 44
+   X 136
    Y 66
    ONE_WAY
  $END
@@ -350,7 +350,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_05
-   X 31
+   X 123
    Y 56
    ONE_WAY
  $END

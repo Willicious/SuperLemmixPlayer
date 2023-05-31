@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,16 +8,16 @@
  TITLE And now, the end is near...
  AUTHOR DMA Design 
  ID xF48208DAF48208DA
- VERSION x0000000000000000
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 668
+ WIDTH 732
  HEIGHT 160
- START_X 400
+ START_X 432
  START_Y 80
  THEME ohno_brick
-BACKGROUND special:amiga_blue
+ BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -39,7 +39,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 310
+   X 342
    Y 64
    NO_OVERWRITE
  $END
@@ -47,7 +47,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 406
+   X 438
    Y 91
    NO_OVERWRITE
  $END
@@ -55,7 +55,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE trap_02
-   X 470
+   X 502
    Y 84
    NO_OVERWRITE
  $END
@@ -63,7 +63,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE trap_02
-   X 150
+   X 182
    Y 84
    NO_OVERWRITE
  $END
@@ -71,7 +71,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 518
+   X 550
    Y 136
    WIDTH 64
    HEIGHT 24
@@ -81,7 +81,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 582
+   X 614
    Y 136
    WIDTH 64
    HEIGHT 24
@@ -91,7 +91,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 86
+   X 118
    Y 136
    WIDTH 64
    HEIGHT 24
@@ -101,7 +101,7 @@ BACKGROUND special:amiga_blue
  $GADGET
    STYLE ohno_brick
    PIECE water
-   X 22
+   X 54
    Y 136
    WIDTH 64
    HEIGHT 24
@@ -114,7 +114,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 392
+   X 424
    Y 139
    ONE_WAY
  $END
@@ -122,7 +122,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 328
+   X 360
    Y 115
    ONE_WAY
  $END
@@ -130,7 +130,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 264
+   X 296
    Y 115
    ONE_WAY
  $END
@@ -138,7 +138,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_02
-   X 200
+   X 232
    Y 139
    ONE_WAY
  $END
@@ -146,7 +146,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 136
+   X 168
    Y 115
    ONE_WAY
  $END
@@ -154,7 +154,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_01
-   X 456
+   X 488
    Y 115
    ONE_WAY
  $END
@@ -162,63 +162,63 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 368
+   X 400
    Y 91
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 368
+   X 400
    Y 67
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 368
+   X 400
    Y 43
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 368
+   X 400
    Y 19
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 264
+   X 296
    Y 91
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 264
+   X 296
    Y 67
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 264
+   X 296
    Y 43
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 264
+   X 296
    Y 19
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 73
+   X 105
    Y 50
    ONE_WAY
  $END
@@ -226,7 +226,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE stairs_02
-   X 100
+   X 132
    Y 32
    ONE_WAY
  $END
@@ -234,7 +234,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 127
+   X 159
    Y 28
    ONE_WAY
  $END
@@ -242,7 +242,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE stairs_01
-   X 154
+   X 186
    Y 31
    ONE_WAY
  $END
@@ -250,7 +250,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 176
+   X 208
    Y 49
    ONE_WAY
  $END
@@ -258,7 +258,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_01
-   X 75
+   X 107
    Y 42
    ONE_WAY
  $END
@@ -266,7 +266,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 75
+   X 107
    Y 27
    ONE_WAY
  $END
@@ -274,7 +274,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 75
+   X 107
    Y 14
    ONE_WAY
  $END
@@ -282,7 +282,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 75
+   X 107
    Y 0
    ONE_WAY
  $END
@@ -290,7 +290,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_05
-   X 57
+   X 89
    Y 50
    ONE_WAY
  $END
@@ -298,7 +298,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_01
-   X 59
+   X 91
    Y 42
    ONE_WAY
  $END
@@ -306,7 +306,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 59
+   X 91
    Y 26
    ONE_WAY
  $END
@@ -314,7 +314,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 59
+   X 91
    Y 13
    ONE_WAY
  $END
@@ -322,7 +322,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 59
+   X 91
    Y -1
    ONE_WAY
  $END
@@ -330,7 +330,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 207
+   X 239
    Y -10
    ONE_WAY
  $END
@@ -338,7 +338,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 207
+   X 239
    Y 5
    ONE_WAY
  $END
@@ -346,7 +346,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_01
-   X 207
+   X 239
    Y 15
    ONE_WAY
  $END
@@ -354,7 +354,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 205
+   X 237
    Y 23
    ONE_WAY
  $END
@@ -362,7 +362,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 452
+   X 484
    Y 38
    ONE_WAY
  $END
@@ -370,7 +370,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_01
-   X 454
+   X 486
    Y 30
    ONE_WAY
  $END
@@ -378,7 +378,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 454
+   X 486
    Y 15
    ONE_WAY
  $END
@@ -386,7 +386,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 454
+   X 486
    Y 2
    ONE_WAY
  $END
@@ -394,7 +394,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 445
+   X 477
    Y 71
    ONE_WAY
  $END
@@ -402,7 +402,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE stairs_01
-   X 417
+   X 449
    Y 53
    ONE_WAY
  $END
@@ -410,7 +410,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 413
+   X 445
    Y 37
    ONE_WAY
  $END
@@ -418,7 +418,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE stairs_02
-   X 472
+   X 504
    Y 53
    ONE_WAY
  $END
@@ -426,7 +426,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_04
-   X 498
+   X 530
    Y 49
    ONE_WAY
  $END
@@ -434,7 +434,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_01
-   X 515
+   X 547
    Y 41
    ONE_WAY
  $END
@@ -442,7 +442,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_01
-   X 500
+   X 532
    Y 41
    ONE_WAY
  $END
@@ -450,7 +450,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 500
+   X 532
    Y 26
    ONE_WAY
  $END
@@ -458,7 +458,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 500
+   X 532
    Y 14
    ONE_WAY
  $END
@@ -466,7 +466,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 500
+   X 532
    Y -1
    ONE_WAY
  $END
@@ -474,7 +474,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 500
+   X 532
    Y -6
    ONE_WAY
  $END
@@ -482,7 +482,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 515
+   X 547
    Y 25
    ONE_WAY
  $END
@@ -490,7 +490,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 515
+   X 547
    Y 10
    ONE_WAY
  $END
@@ -498,7 +498,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 515
+   X 547
    Y -5
    ONE_WAY
  $END
@@ -506,7 +506,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
-   X 515
+   X 547
    Y -8
    ONE_WAY
  $END
@@ -514,21 +514,21 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 136
+   X 168
    Y 136
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 496
+   X 528
    Y 136
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_02
-   X 513
+   X 545
    Y -9
    ONE_WAY
  $END
@@ -536,7 +536,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_02
-   X 497
+   X 529
    Y -3
    ONE_WAY
  $END
@@ -544,7 +544,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_02
-   X 451
+   X 483
    Y -8
    ONE_WAY
  $END
@@ -552,7 +552,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_02
-   X 205
+   X 237
    Y -12
    ONE_WAY
  $END
@@ -560,7 +560,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_02
-   X 73
+   X 105
    Y -9
    ONE_WAY
  $END
@@ -568,7 +568,7 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_02
-   X 57
+   X 89
    Y -5
    ONE_WAY
  $END
@@ -576,14 +576,14 @@ BACKGROUND special:amiga_blue
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 644
+   X 676
    Y 136
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_01
-   X 0
+   X 32
    Y 136
  $END
  

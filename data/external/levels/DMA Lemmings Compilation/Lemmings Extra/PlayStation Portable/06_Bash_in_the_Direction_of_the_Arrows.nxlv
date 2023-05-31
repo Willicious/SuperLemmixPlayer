@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,12 +9,13 @@
  AUTHOR Sony 
  MUSIC !PSP/earth1_PSP;PSP/earth2_PSP;PSP/earth3_PSP
  ID xA6A93AEFA6A93AEF
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 572
+ WIDTH 668
  HEIGHT 160
- START_X 172
+ START_X 220
  START_Y 80
  THEME orig_dirt
  
@@ -35,7 +36,7 @@
  $GADGET
    STYLE orig_dirt
    PIECE window
-   X 139
+   X 187
    Y 12
    NO_OVERWRITE
  $END
@@ -43,7 +44,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 195
+   X 243
    Y -1
    WIDTH 32
    HEIGHT 32
@@ -52,7 +53,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 195
+   X 243
    Y 31
    WIDTH 32
    HEIGHT 32
@@ -62,7 +63,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 195
+   X 243
    Y 47
    WIDTH 32
    HEIGHT 32
@@ -72,7 +73,7 @@
  $GADGET
    STYLE orig_dirt
    PIECE exit
-   X 269
+   X 317
    Y 51
    NO_OVERWRITE
  $END
@@ -80,7 +81,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 195
+   X 243
    Y -1
    WIDTH 32
    HEIGHT 32
@@ -89,7 +90,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 308
+   X 356
    Y 50
    WIDTH 32
    HEIGHT 32
@@ -99,7 +100,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 308
+   X 356
    Y 18
    WIDTH 32
    HEIGHT 32
@@ -109,7 +110,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 195
+   X 243
    Y -1
    WIDTH 32
    HEIGHT 32
@@ -119,7 +120,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 308
+   X 356
    Y -14
    WIDTH 32
    HEIGHT 32
@@ -129,7 +130,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 211
+   X 259
    Y -1
    WIDTH 32
    HEIGHT 32
@@ -139,7 +140,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 211
+   X 259
    Y 31
    WIDTH 32
    HEIGHT 32
@@ -149,7 +150,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 211
+   X 259
    Y 47
    WIDTH 32
    HEIGHT 32
@@ -159,7 +160,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 324
+   X 372
    Y 18
    WIDTH 32
    HEIGHT 32
@@ -169,7 +170,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 324
+   X 372
    Y -14
    WIDTH 32
    HEIGHT 32
@@ -179,7 +180,7 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 324
+   X 372
    Y 50
    WIDTH 32
    HEIGHT 32
@@ -192,7 +193,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X -6
+   X 42
    Y 140
    NO_OVERWRITE
  $END
@@ -200,7 +201,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 38
+   X 86
    Y 141
    FLIP_VERTICAL
  $END
@@ -208,35 +209,35 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X -8
+   X 40
    Y 142
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 15
+   X 63
    Y 142
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE rocks_01
-   X -3
+   X 45
    Y 113
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE rocks_05
-   X -4
+   X 44
    Y 138
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_01
-   X -10
+   X 38
    Y 149
    NO_OVERWRITE
  $END
@@ -244,7 +245,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 47
+   X 95
    Y 145
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -253,21 +254,21 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 62
+   X 110
    Y 142
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 85
+   X 133
    Y 141
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 88
+   X 136
    Y 144
    FLIP_VERTICAL
  $END
@@ -275,28 +276,28 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 108
+   X 156
    Y 140
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_04
-   X 119
+   X 167
    Y 140
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 131
+   X 179
    Y 140
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 151
+   X 199
    Y 142
    FLIP_VERTICAL
  $END
@@ -304,7 +305,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X -6
+   X 42
    Y 40
    NO_OVERWRITE
  $END
@@ -312,7 +313,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 64
+   X 112
    Y 77
    NO_OVERWRITE
  $END
@@ -320,7 +321,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X -6
+   X 42
    Y 24
    NO_OVERWRITE
  $END
@@ -328,7 +329,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 96
+   X 144
    Y 77
    NO_OVERWRITE
  $END
@@ -336,7 +337,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 86
+   X 134
    Y 89
    NO_OVERWRITE
  $END
@@ -344,7 +345,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 87
+   X 135
    Y 74
    NO_OVERWRITE
  $END
@@ -352,7 +353,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 128
+   X 176
    Y 77
    NO_OVERWRITE
  $END
@@ -360,7 +361,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 119
+   X 167
    Y 74
    NO_OVERWRITE
  $END
@@ -368,7 +369,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 119
+   X 167
    Y 90
    NO_OVERWRITE
  $END
@@ -376,7 +377,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 68
+   X 116
    Y 95
    NO_OVERWRITE
  $END
@@ -384,7 +385,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_06
-   X 92
+   X 140
    Y 95
    NO_OVERWRITE
  $END
@@ -392,7 +393,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 80
+   X 128
    Y 94
    NO_OVERWRITE
  $END
@@ -400,7 +401,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 152
+   X 200
    Y 77
    NO_OVERWRITE
  $END
@@ -408,7 +409,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_01
-   X 134
+   X 182
    Y 93
    NO_OVERWRITE
  $END
@@ -416,7 +417,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_01
-   X 133
+   X 181
    Y 114
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -425,7 +426,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 140
+   X 188
    Y 111
    NO_OVERWRITE
  $END
@@ -433,7 +434,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 117
+   X 165
    Y 134
    NO_OVERWRITE
  $END
@@ -441,7 +442,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 113
+   X 161
    Y 101
    NO_OVERWRITE
  $END
@@ -449,7 +450,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 122
+   X 170
    Y 102
    NO_OVERWRITE
  $END
@@ -457,33 +458,9 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 102
+   X 150
    Y 98
    NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_04
-   X 159
-   Y 144
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 173
-   Y 142
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 195
-   Y 144
-   FLIP_VERTICAL
  $END
  
  $TERRAIN
@@ -497,8 +474,9 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 219
+   X 221
    Y 142
+   FLIP_VERTICAL
  $END
  
  $TERRAIN
@@ -520,16 +498,16 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 263
+   X 267
    Y 142
-   FLIP_VERTICAL
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 287
+   X 291
    Y 144
+   FLIP_VERTICAL
  $END
  
  $TERRAIN
@@ -545,19 +523,42 @@
    PIECE grass_04
    X 311
    Y 142
+   FLIP_VERTICAL
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
    X 335
+   Y 144
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_04
+   X 351
+   Y 144
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 359
+   Y 142
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 383
    Y 145
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_06
-   X 97
+   X 145
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -566,7 +567,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 176
+   X 224
    Y 77
    NO_OVERWRITE
  $END
@@ -574,7 +575,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 151
+   X 199
    Y 75
    NO_OVERWRITE
  $END
@@ -582,7 +583,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 175
+   X 223
    Y 75
    NO_OVERWRITE
  $END
@@ -590,7 +591,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 208
+   X 256
    Y 77
    NO_OVERWRITE
  $END
@@ -598,7 +599,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 199
+   X 247
    Y 75
    NO_OVERWRITE
  $END
@@ -606,7 +607,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 199
+   X 247
    Y 88
    NO_OVERWRITE
  $END
@@ -614,7 +615,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_02
-   X 240
+   X 288
    Y 77
    NO_OVERWRITE
  $END
@@ -622,7 +623,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 231
+   X 279
    Y 75
    NO_OVERWRITE
  $END
@@ -630,7 +631,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 231
+   X 279
    Y 88
    NO_OVERWRITE
  $END
@@ -638,7 +639,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 68
+   X 116
    Y 75
    FLIP_VERTICAL
  $END
@@ -646,21 +647,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE grass_04
-   X 90
-   Y 73
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 113
-   Y 73
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 137
+   X 138
    Y 73
  $END
  
@@ -694,98 +681,6 @@
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_06
-   X 193
-   Y -20
-   NO_OVERWRITE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 272
-   Y 77
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_10
-   X 263
-   Y 75
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_10
-   X 263
-   Y 88
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_10
-   X 223
-   Y 93
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 250
-   Y 84
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_04
-   X 343
-   Y 144
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 304
-   Y 77
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_10
-   X 295
-   Y 75
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_10
-   X 295
-   Y 88
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_06
-   X 241
-   Y -20
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
    PIECE grass_04
    X 257
    Y 73
@@ -800,54 +695,8 @@
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE grass_04
-   X 305
-   Y 73
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_03
-   X 204
-   Y 134
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 336
-   Y 77
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_10
-   X 327
-   Y 75
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_10
-   X 327
-   Y 88
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 329
-   Y 73
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
    PIECE clump_06
-   X 313
+   X 241
    Y -20
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -856,34 +705,50 @@
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_01
-   X 363
-   Y 132
+   PIECE clump_02
+   X 320
+   Y 77
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_01
-   X 278
+   PIECE clump_10
+   X 311
+   Y 75
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_10
+   X 311
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_10
+   X 271
    Y 93
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_01
-   X 277
-   Y 114
+   PIECE clump_02
+   X 298
+   Y 84
    NO_OVERWRITE
    FLIP_VERTICAL
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_02
-   X 284
-   Y 111
+   PIECE clump_04
+   X 391
+   Y 144
    NO_OVERWRITE
  $END
  
@@ -898,9 +763,40 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_10
-   X 351
+   X 343
    Y 75
    NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_10
+   X 343
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_06
+   X 289
+   Y -20
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 305
+   Y 73
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 329
+   Y 73
  $END
  
  $TERRAIN
@@ -912,518 +808,307 @@
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE grass_04
-   X 355
-   Y 143
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 379
-   Y 143
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_04
-   X 391
-   Y 144
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 402
-   Y 141
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 419
-   Y 143
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 400
-   Y 108
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 408
-   Y 116
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 432
-   Y 92
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 424
-   Y 84
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 448
-   Y 84
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 440
-   Y 92
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 432
-   Y 100
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 424
-   Y 108
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 416
-   Y 116
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 408
-   Y 124
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 424
-   Y 116
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 448
-   Y 92
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 432
-   Y 84
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 400
-   Y 84
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 400
-   Y 100
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 400
-   Y 116
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 440
-   Y 116
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 440
-   Y 124
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 416
-   Y 84
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 440
-   Y 84
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 456
-   Y 84
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 456
-   Y 100
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 472
-   Y 84
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 464
-   Y 100
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 456
-   Y 108
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 448
-   Y 116
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 408
-   Y 84
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 400
-   Y 92
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_04
-   X 431
-   Y 144
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 442
-   Y 141
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 462
-   Y 143
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 474
-   Y 145
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 456
-   Y 116
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 464
-   Y 84
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 472
-   Y 100
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
    PIECE clump_03
-   X 495
+   X 252
+   Y 134
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 384
+   Y 77
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_10
+   X 375
+   Y 75
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_10
+   X 375
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 377
+   Y 73
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_06
+   X 361
+   Y -20
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_01
+   X 411
+   Y 132
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_01
+   X 326
+   Y 93
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_01
+   X 325
+   Y 114
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 332
    Y 111
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
+   PIECE clump_02
+   X 400
+   Y 77
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_10
+   X 399
+   Y 75
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 401
+   Y 73
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 403
+   Y 143
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 427
+   Y 143
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
    PIECE clump_04
-   X 447
+   X 439
    Y 144
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 508
-   Y 114
+   PIECE grass_04
+   X 450
+   Y 141
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 467
+   Y 143
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 448
+   Y 108
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 513
-   Y 72
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_03
-   X 536
-   Y 38
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 537
-   Y 59
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 540
-   Y 49
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_03
-   X 523
-   Y 118
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_03
-   X 539
+   PIECE bridge_04
+   X 456
    Y 116
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 530
-   Y 79
+   PIECE bridge_04
+   X 480
+   Y 92
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 544
-   Y 72
+   PIECE bridge_04
+   X 472
+   Y 84
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 555
-   Y 117
+   PIECE bridge_04
+   X 496
+   Y 84
    NO_OVERWRITE
+   FLIP_VERTICAL
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 538
-   Y 7
+   PIECE bridge_04
+   X 488
+   Y 92
    NO_OVERWRITE
+   FLIP_VERTICAL
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_02
-   X 549
-   Y -8
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 557
-   Y 16
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 557
-   Y 37
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_03
-   X 563
-   Y 48
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 557
-   Y 62
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 510
-   Y 123
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 542
-   Y 131
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_03
-   X 571
-   Y 117
-   NO_OVERWRITE
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE clump_02
-   X 562
+   PIECE bridge_04
+   X 480
    Y 100
+   NO_OVERWRITE
+   FLIP_VERTICAL
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 569
-   Y 87
+   PIECE bridge_04
+   X 472
+   Y 108
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 464
+   Y 116
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 456
+   Y 124
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 472
+   Y 116
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_02
-   X 534
-   Y -5
+   PIECE bridge_04
+   X 496
+   Y 92
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 480
+   Y 84
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 448
+   Y 84
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 448
+   Y 100
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 448
+   Y 116
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 488
+   Y 116
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 488
+   Y 124
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 464
+   Y 84
+   NO_OVERWRITE
+   FLIP_VERTICAL
  $END
  
  $TERRAIN
@@ -1437,17 +1122,32 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 480
+   X 504
    Y 84
    NO_OVERWRITE
-   FLIP_VERTICAL
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 472
-   Y 92
+   X 504
+   Y 100
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 520
+   Y 84
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 512
+   Y 100
    NO_OVERWRITE
    FLIP_VERTICAL
  $END
@@ -1455,7 +1155,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 472
+   X 504
    Y 108
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1464,7 +1164,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 480
+   X 496
    Y 116
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1473,32 +1173,333 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 472
-   Y 124
-   NO_OVERWRITE
-   FLIP_VERTICAL
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE bridge_04
-   X 472
-   Y 116
+   X 456
+   Y 84
    NO_OVERWRITE
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
-   X 480
-   Y 124
+   X 448
+   Y 92
    NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_04
+   X 479
+   Y 144
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 490
+   Y 141
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 510
+   Y 143
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 522
+   Y 145
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE bridge_04
    X 504
+   Y 116
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 512
+   Y 84
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 520
+   Y 100
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 543
+   Y 111
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_04
+   X 495
+   Y 144
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 556
+   Y 114
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 561
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 584
+   Y 38
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 585
+   Y 59
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 588
+   Y 49
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 571
+   Y 118
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 587
+   Y 116
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 578
+   Y 79
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 592
+   Y 72
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 603
+   Y 117
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 586
+   Y 7
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 597
+   Y -8
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 605
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 605
+   Y 37
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 611
+   Y 48
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 605
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 558
+   Y 123
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 590
+   Y 131
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 619
+   Y 117
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 610
+   Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 617
+   Y 87
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_02
+   X 582
+   Y -5
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 536
+   Y 84
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 528
+   Y 84
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 520
+   Y 92
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 520
+   Y 108
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 528
+   Y 116
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 520
+   Y 124
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 520
+   Y 116
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 528
+   Y 124
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 552
    Y 92
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1507,7 +1508,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 554
+   X 602
    Y 71
    NO_OVERWRITE
  $END
@@ -1515,7 +1516,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 184
+   X 232
    Y 94
    NO_OVERWRITE
  $END
@@ -1523,7 +1524,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_06
-   X 204
+   X 252
    Y 95
    NO_OVERWRITE
  $END
@@ -1531,7 +1532,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_01
-   X 337
+   X 385
    Y 75
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -1540,7 +1541,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 238
+   X 286
    Y 95
    NO_OVERWRITE
  $END
@@ -1548,7 +1549,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_02
-   X 250
+   X 298
    Y 101
    NO_OVERWRITE
  $END
@@ -1556,14 +1557,14 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_01
-   X 224
+   X 272
    Y 102
  $END
  
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 321
+   X 369
    Y 98
    NO_OVERWRITE
  $END
@@ -1571,7 +1572,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE roots_04
-   X 354
+   X 402
    Y 97
    NO_OVERWRITE
  $END
@@ -1579,7 +1580,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 344
+   X 392
    Y 105
    NO_OVERWRITE
  $END
@@ -1587,7 +1588,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE clump_03
-   X 197
+   X 245
    Y 140
    NO_OVERWRITE
  $END

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE Game on!  Choose your tactics.
  AUTHOR DMA Design
  ID xD5F180ACD5F180AC
- VERSION x0000000000000002
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 832
+ WIDTH 1000
  HEIGHT 160
- START_X 392
+ START_X 480
  START_Y 80
  THEME orig_fire
  
@@ -41,7 +41,7 @@
  $GADGET
    STYLE orig_fire
    PIECE window
-   X 232
+   X 321
    Y 0
    NO_OVERWRITE
  $END
@@ -49,7 +49,7 @@
  $GADGET
    STYLE orig_fire
    PIECE window
-   X 504
+   X 593
    Y 0
    NO_OVERWRITE
    FLIP_HORIZONTAL
@@ -58,7 +58,7 @@
  $GADGET
    STYLE orig_fire
    PIECE exit
-   X 232
+   X 321
    Y 96
    NO_OVERWRITE
  $END
@@ -66,7 +66,7 @@
  $GADGET
    STYLE default
    PIECE flag_blue
-   X 248
+   X 337
    Y 92
    NO_OVERWRITE
    SPEED 0
@@ -76,7 +76,7 @@
  $GADGET
    STYLE orig_fire
    PIECE exit
-   X 504
+   X 593
    Y 96
    NO_OVERWRITE
  $END
@@ -84,7 +84,7 @@
  $GADGET
    STYLE default
    PIECE flag_green
-   X 520
+   X 609
    Y 92
    NO_OVERWRITE
    SPEED 0
@@ -97,7 +97,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 217
+   X 306
    Y 38
    ONE_WAY
  $END
@@ -105,7 +105,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 237
+   X 326
    Y 38
    ONE_WAY
  $END
@@ -113,7 +113,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 257
+   X 346
    Y 38
    ONE_WAY
  $END
@@ -121,7 +121,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 277
+   X 366
    Y 38
    ONE_WAY
  $END
@@ -129,7 +129,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 297
+   X 386
    Y 38
    ONE_WAY
  $END
@@ -137,7 +137,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 317
+   X 406
    Y 38
    ONE_WAY
  $END
@@ -145,7 +145,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 337
+   X 426
    Y 38
    ONE_WAY
  $END
@@ -153,7 +153,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 357
+   X 446
    Y 38
    ONE_WAY
  $END
@@ -161,7 +161,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 377
+   X 466
    Y 38
    ONE_WAY
  $END
@@ -169,7 +169,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 397
+   X 486
    Y 38
    ONE_WAY
  $END
@@ -177,7 +177,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 417
+   X 506
    Y 38
    ONE_WAY
  $END
@@ -185,47 +185,63 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
+   X 526
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_07
+   X 546
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_07
+   X 566
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_07
+   X 586
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_07
+   X 606
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 341
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
+   X 389
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE platform
    X 437
-   Y 38
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_07
-   X 457
-   Y 38
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_07
-   X 477
-   Y 38
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_07
-   X 497
-   Y 38
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_07
-   X 517
-   Y 38
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE platform
-   X 252
    Y 148
    ONE_WAY
  $END
@@ -233,7 +249,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 300
+   X 485
    Y 148
    ONE_WAY
  $END
@@ -241,7 +257,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 348
+   X 533
    Y 148
    ONE_WAY
  $END
@@ -249,7 +265,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 396
+   X 581
    Y 148
    ONE_WAY
  $END
@@ -257,7 +273,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 444
+   X 629
    Y 148
    ONE_WAY
  $END
@@ -265,23 +281,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE platform
-   X 492
-   Y 148
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE platform
-   X 540
-   Y 148
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE platform
-   X 204
+   X 293
    Y 148
    ONE_WAY
  $END
@@ -289,7 +289,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_06
-   X 295
+   X 384
    Y 38
    ONE_WAY
  $END
@@ -297,7 +297,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_06
-   X 375
+   X 464
    Y 38
    ONE_WAY
  $END
@@ -305,7 +305,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_06
-   X 415
+   X 504
    Y 38
    ONE_WAY
  $END
@@ -313,7 +313,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 537
+   X 626
    Y 38
    ONE_WAY
  $END
@@ -321,21 +321,21 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 242
+   X 331
    Y 148
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_01
-   X 514
+   X 603
    Y 148
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_05
-   X 280
+   X 369
    Y -2
    ONE_WAY
  $END
@@ -343,16 +343,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_05
-   X 340
-   Y -2
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_05
-   X 400
+   X 429
    Y -2
    NO_OVERWRITE
    ONE_WAY
@@ -361,7 +352,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_05
-   X 420
+   X 489
    Y -2
    NO_OVERWRITE
    ONE_WAY
@@ -370,7 +361,16 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_05
-   X 289
+   X 509
+   Y -2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_05
+   X 378
    Y -3
    NO_OVERWRITE
    ONE_WAY
@@ -379,7 +379,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_05
-   X 349
+   X 438
    Y -3
    NO_OVERWRITE
    ONE_WAY
@@ -388,7 +388,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_05
-   X 409
+   X 498
    Y -3
    NO_OVERWRITE
    ONE_WAY
@@ -397,7 +397,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 557
+   X 646
    Y 38
    ONE_WAY
  $END
@@ -405,7 +405,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 577
+   X 666
    Y 38
    ONE_WAY
  $END
@@ -413,7 +413,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 597
+   X 686
    Y 38
    ONE_WAY
  $END
@@ -421,7 +421,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 617
+   X 706
    Y 38
    ONE_WAY
  $END
@@ -429,7 +429,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 637
+   X 726
    Y 38
    ONE_WAY
  $END
@@ -437,7 +437,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 657
+   X 746
    Y 38
    ONE_WAY
  $END
@@ -445,7 +445,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 677
+   X 766
    Y 38
    ONE_WAY
  $END
@@ -453,7 +453,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 697
+   X 786
    Y 38
    ONE_WAY
  $END
@@ -461,7 +461,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 717
+   X 806
    Y 38
    ONE_WAY
  $END
@@ -469,7 +469,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 737
+   X 826
    Y 38
    ONE_WAY
  $END
@@ -477,7 +477,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 197
+   X 286
    Y 38
    ONE_WAY
  $END
@@ -485,7 +485,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 177
+   X 266
    Y 38
    ONE_WAY
  $END
@@ -493,7 +493,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 157
+   X 246
    Y 38
    ONE_WAY
  $END
@@ -501,7 +501,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 137
+   X 226
    Y 38
    ONE_WAY
  $END
@@ -509,7 +509,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 117
+   X 206
    Y 38
    ONE_WAY
  $END
@@ -517,7 +517,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 97
+   X 186
    Y 38
    ONE_WAY
  $END
@@ -525,7 +525,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 77
+   X 166
    Y 38
    ONE_WAY
  $END
@@ -533,7 +533,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 57
+   X 146
    Y 38
    ONE_WAY
  $END
@@ -541,7 +541,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_07
-   X 37
+   X 126
    Y 38
    ONE_WAY
  $END
@@ -549,7 +549,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bricks_04
-   X 758
+   X 847
    Y 38
    ONE_WAY
  $END

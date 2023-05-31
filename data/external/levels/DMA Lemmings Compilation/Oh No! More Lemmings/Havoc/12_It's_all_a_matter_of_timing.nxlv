@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,13 +8,13 @@
  TITLE It's all a matter of timing
  AUTHOR DMA Design
  ID xF388A059F388A059
- VERSION x0000000000000001
+ VERSION x0000000000000003
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 416
  HEIGHT 160
- START_X 160
+ START_X 192
  START_Y 80
  THEME ohno_brick
  BACKGROUND special:amiga_blue
@@ -35,7 +35,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 64
+   X 112
    Y 64
    NO_OVERWRITE
  $END
@@ -43,7 +43,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 96
+   X 144
    Y 32
    NO_OVERWRITE
  $END
@@ -51,7 +51,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE window
-   X 128
+   X 176
    Y 0
    NO_OVERWRITE
  $END
@@ -59,7 +59,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 80
+   X 128
    Y 103
    NO_OVERWRITE
  $END
@@ -70,7 +70,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 80
+   X 128
    Y 99
    ONE_WAY
  $END
@@ -78,7 +78,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 112
+   X 160
    Y 99
    ONE_WAY
  $END
@@ -86,7 +86,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 110
+   X 158
    Y 64
    ONE_WAY
  $END
@@ -94,7 +94,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 142
+   X 190
    Y 64
    ONE_WAY
  $END
@@ -102,7 +102,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 142
+   X 190
    Y 32
    ONE_WAY
  $END
@@ -110,7 +110,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE platform_01
-   X 174
+   X 222
    Y 32
    ONE_WAY
  $END
@@ -118,7 +118,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_03
-   X 146
+   X 194
    Y 131
    ONE_WAY
  $END
@@ -126,7 +126,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_03
-   X 176
+   X 224
    Y 99
    ONE_WAY
  $END
@@ -134,7 +134,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_03
-   X 208
+   X 256
    Y 62
    ONE_WAY
  $END
@@ -142,7 +142,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 146
+   X 194
    Y 139
    ONE_WAY
  $END
@@ -150,7 +150,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 146
+   X 194
    Y 155
    ONE_WAY
  $END
@@ -158,7 +158,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 176
+   X 224
    Y 107
    ONE_WAY
  $END
@@ -166,7 +166,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 176
+   X 224
    Y 123
    ONE_WAY
  $END
@@ -174,7 +174,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 176
+   X 224
    Y 139
    ONE_WAY
  $END
@@ -182,7 +182,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 176
+   X 224
    Y 155
    ONE_WAY
  $END
@@ -190,7 +190,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 208
+   X 256
    Y 70
    ONE_WAY
  $END
@@ -198,7 +198,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 208
+   X 256
    Y 86
    ONE_WAY
  $END
@@ -206,7 +206,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 208
+   X 256
    Y 102
    ONE_WAY
  $END
@@ -214,7 +214,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 208
+   X 256
    Y 118
    ONE_WAY
  $END
@@ -222,7 +222,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 208
+   X 256
    Y 134
    ONE_WAY
  $END
@@ -230,7 +230,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 208
+   X 256
    Y 150
    ONE_WAY
  $END
@@ -238,7 +238,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 144
    ONE_WAY
  $END
@@ -246,7 +246,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 128
    ONE_WAY
  $END
@@ -254,7 +254,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 112
    ONE_WAY
  $END
@@ -262,7 +262,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 96
    ONE_WAY
  $END
@@ -270,7 +270,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 80
    ONE_WAY
  $END
@@ -278,7 +278,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 64
    ONE_WAY
  $END
@@ -286,7 +286,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 48
    ONE_WAY
  $END
@@ -294,7 +294,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 32
    ONE_WAY
  $END
@@ -302,7 +302,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 16
    ONE_WAY
  $END
@@ -310,7 +310,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE pole_red_02
-   X 240
+   X 288
    Y 0
    ONE_WAY
  $END
@@ -318,7 +318,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_03
-   X 108
+   X 156
    Y 151
    ONE_WAY
  $END
@@ -326,7 +326,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_03
-   X 76
+   X 124
    Y 151
    ONE_WAY
  $END
@@ -334,7 +334,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_large_03
-   X 44
+   X 92
    Y 151
    ONE_WAY
  $END
@@ -342,7 +342,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_03
-   X 249
+   X 297
    Y 0
    FLIP_VERTICAL
    ONE_WAY
@@ -351,7 +351,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_03
-   X 281
+   X 329
    Y 0
    FLIP_VERTICAL
    ONE_WAY
@@ -360,7 +360,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 309
+   X 357
    Y -4
    FLIP_VERTICAL
    ONE_WAY
@@ -369,7 +369,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 309
+   X 357
    Y 4
    FLIP_VERTICAL
    ONE_WAY
@@ -378,7 +378,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 317
+   X 365
    Y -4
    FLIP_VERTICAL
    ONE_WAY
@@ -387,7 +387,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_03
-   X 249
+   X 297
    Y 144
    NO_OVERWRITE
    ONE_WAY
@@ -396,7 +396,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_03
-   X 281
+   X 329
    Y 144
    NO_OVERWRITE
    ONE_WAY
@@ -405,7 +405,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 309
+   X 357
    Y 151
    NO_OVERWRITE
    ONE_WAY
@@ -414,7 +414,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 309
+   X 357
    Y 143
    NO_OVERWRITE
    ONE_WAY
@@ -423,47 +423,9 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 317
+   X 365
    Y 151
    NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_diagonal_03
-   X 12
-   Y 144
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_diagonal_03
-   X -4
-   Y 144
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_diagonal_03
-   X -4
-   Y 0
-   NO_OVERWRITE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE bricks_diagonal_03
-   X 28
-   Y 0
-   NO_OVERWRITE
-   FLIP_VERTICAL
    ONE_WAY
  $END
  
@@ -471,6 +433,24 @@
    STYLE ohno_brick
    PIECE bricks_diagonal_03
    X 60
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 44
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 44
    Y 0
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -482,6 +462,26 @@
    PIECE bricks_diagonal_03
    X 76
    Y 0
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 108
+   Y 0
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_diagonal_03
+   X 124
+   Y 0
    FLIP_VERTICAL
    ONE_WAY
  $END
@@ -489,7 +489,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 104
+   X 152
    Y 4
    FLIP_VERTICAL
    ONE_WAY
@@ -498,7 +498,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 112
+   X 160
    Y -4
    FLIP_VERTICAL
    ONE_WAY
@@ -507,7 +507,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 104
+   X 152
    Y -4
    FLIP_VERTICAL
    ONE_WAY
@@ -516,7 +516,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 40
+   X 88
    Y 143
    ONE_WAY
  $END
@@ -524,7 +524,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 48
+   X 96
    Y 151
    ONE_WAY
  $END
@@ -532,7 +532,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X 40
+   X 88
    Y 151
    ONE_WAY
  $END
@@ -540,7 +540,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 0
+   X 48
    Y 0
    ONE_WAY
  $END
@@ -548,7 +548,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 16
+   X 64
    Y 0
    ONE_WAY
  $END
@@ -556,7 +556,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE girder_01
-   X 9
+   X 57
    Y 16
    ONE_WAY
  $END
@@ -564,7 +564,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 17
+   X 65
    Y 80
    ONE_WAY
  $END
@@ -572,7 +572,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 1
+   X 49
    Y 80
    ONE_WAY
  $END
@@ -580,7 +580,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 8
+   X 56
    Y 96
    ONE_WAY
  $END
@@ -588,7 +588,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 268
+   X 316
    Y 144
    ONE_WAY
  $END
@@ -596,7 +596,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 284
+   X 332
    Y 144
    ONE_WAY
  $END
@@ -604,7 +604,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE girder_01
-   X 276
+   X 324
    Y 80
    ONE_WAY
  $END
@@ -612,7 +612,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 268
+   X 316
    Y 64
    ONE_WAY
  $END
@@ -620,7 +620,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 284
+   X 332
    Y 64
    ONE_WAY
  $END
@@ -628,7 +628,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE crate
-   X 275
+   X 323
    Y 48
    ONE_WAY
  $END
@@ -636,7 +636,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X -8
+   X 40
    Y 143
    ONE_WAY
  $END
@@ -644,7 +644,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X -8
+   X 40
    Y 151
    ONE_WAY
  $END
@@ -652,7 +652,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X -8
+   X 40
    Y 4
    NO_OVERWRITE
    FLIP_VERTICAL
@@ -662,7 +662,7 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE bricks_diagonal_04
-   X -9
+   X 39
    Y -3
    NO_OVERWRITE
    FLIP_VERTICAL

@@ -1,20 +1,20 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
- TITLE and the winner is.....
+ TITLE And the winner is.....
  AUTHOR DMA Design
  ID xD0A738A7D0A738A7
- VERSION x0000000000000001
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 600
  HEIGHT 160
- START_X 160
+ START_X 284
  START_Y 80
  THEME orig_pillar
  
@@ -41,7 +41,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 136
+   X 261
    Y 0
    NO_OVERWRITE
  $END
@@ -49,7 +49,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 264
+   X 389
    Y 24
    NO_OVERWRITE
  $END
@@ -57,7 +57,7 @@
  $GADGET
    STYLE default
    PIECE flag_blue
-   X 280
+   X 405
    Y 10
    NO_OVERWRITE
    SPEED 0
@@ -67,7 +67,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE exit
-   X 8
+   X 133
    Y 24
    NO_OVERWRITE
  $END
@@ -75,7 +75,7 @@
  $GADGET
    STYLE default
    PIECE flag_green
-   X 24
+   X 149
    Y 10
    NO_OVERWRITE
    SPEED 0
@@ -85,7 +85,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 137
+   X 262
    Y 0
    NO_OVERWRITE
    FLIP_HORIZONTAL
@@ -97,7 +97,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_07
-   X 7
+   X 132
    Y 49
    ONE_WAY
  $END
@@ -105,7 +105,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 17
+   X 142
    Y 66
    NO_OVERWRITE
    ONE_WAY
@@ -114,7 +114,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_03
-   X 135
+   X 260
    Y 31
    ONE_WAY
  $END
@@ -122,7 +122,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_07
-   X 133
+   X 258
    Y 49
    ONE_WAY
  $END
@@ -130,7 +130,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_04
-   X 167
+   X 292
    Y 32
    NO_OVERWRITE
    ONE_WAY
@@ -139,21 +139,21 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_03
-   X 136
+   X 261
    Y 68
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_03
-   X 160
+   X 285
    Y 68
  $END
  
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_03
-   X 62
+   X 187
    Y 83
    FLIP_VERTICAL
    ONE_WAY
@@ -162,7 +162,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_03
-   X 62
+   X 187
    Y 48
    ONE_WAY
  $END
@@ -170,7 +170,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_03
-   X 189
+   X 314
    Y 48
    ONE_WAY
  $END
@@ -178,7 +178,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_03
-   X 189
+   X 314
    Y 83
    FLIP_VERTICAL
    ONE_WAY
@@ -187,7 +187,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_end_08
-   X 259
+   X 384
    Y 49
    FLIP_VERTICAL
    ONE_WAY
@@ -196,7 +196,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 269
+   X 394
    Y 62
    ONE_WAY
  $END
@@ -204,7 +204,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_04
-   X 17
+   X 142
    Y 125
    ONE_WAY
  $END
@@ -212,7 +212,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_04
-   X 233
+   X 358
    Y 125
    ONE_WAY
  $END
@@ -220,16 +220,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 51
-   Y 125
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_01
-   X 205
+   X 176
    Y 125
    ERASE
    ONE_WAY
@@ -238,7 +229,16 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 51
+   X 330
+   Y 125
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 176
    Y 126
    ONE_WAY
  $END
@@ -246,7 +246,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 115
+   X 240
    Y 126
    ONE_WAY
  $END
@@ -254,7 +254,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 179
+   X 304
    Y 126
    ONE_WAY
  $END
@@ -262,7 +262,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_01
-   X 205
+   X 330
    Y 126
    ONE_WAY
  $END
@@ -270,7 +270,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE pillar_02
-   X 143
+   X 268
    Y 67
    NO_OVERWRITE
    ONE_WAY

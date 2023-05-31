@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.40
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,13 +9,13 @@
  AUTHOR DMA Design 
  MUSIC menace_amiga
  ID xDBA72CCBDBA72CCB
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 992
+ WIDTH 1080
  HEIGHT 160
- START_X 160
+ START_X 200
  START_Y 80
  THEME orig_dirt
  
@@ -42,7 +42,7 @@
  $GADGET
    STYLE special
    PIECE window_menacing
-   X 48
+   X 88
    Y 88
    NO_OVERWRITE
  $END
@@ -50,7 +50,7 @@
  $GADGET
    STYLE special
    PIECE exit_menacing
-   X 896
+   X 936
    Y 60
    NO_OVERWRITE
  $END
@@ -61,7 +61,7 @@
  $TERRAIN
    STYLE special
    PIECE menace
-   X 16
+   X 56
    Y 0
    ONE_WAY
  $END
