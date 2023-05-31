@@ -555,7 +555,8 @@ end;
 
 procedure TGameWindow.DoRewind(Sender: TObject);
 begin
-  if Game.CurrentIteration = 0 then
+  //start-of-level check needs to give a few frames' grace
+  if Game.CurrentIteration <= 10 then
   begin
     RewindTimer.Enabled := False;
     SkillPanel.RewindPressed := False;
@@ -1424,12 +1425,15 @@ begin
                           SetSelectedSkill(spbSlower, True, True);
                           end;
       lka_Pause: begin
-                   if fGameSpeed = gspPause then
+                 if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
+
+                 if fGameSpeed = gspPause then
                    begin
                      GameSpeed := gspNormal;
                      Game.IsBackstepping := False;
                    end else begin
                      GameSpeed := gspPause;
+                     SkillPanel.RewindPressed := False;
                      Game.IsBackstepping := True;
                    end;
                  end;

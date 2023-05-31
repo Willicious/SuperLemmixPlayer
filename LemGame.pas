@@ -6276,10 +6276,14 @@ begin
   // hard coded dos frame numbers
   case CurrentIteration of
     15:
-      if UseZombieSound then
-        CueSoundEffect(SFX_ZOMBIE)
-      else
-        CueSoundEffect(SFX_LETSGO);
+      //prevents double-triggering the sound when Rewinding to the start
+      if not IsBackstepping then
+      begin
+        if UseZombieSound then
+          CueSoundEffect(SFX_ZOMBIE)
+        else
+          CueSoundEffect(SFX_LETSGO);
+      end;
     35:
       begin
         HatchesOpened := False;
