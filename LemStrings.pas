@@ -47,6 +47,7 @@ const
   // Sound effect files
   SFX_BUILDER_WARNING = 'ting';
   SFX_ASSIGN_SKILL = 'mousepre';
+  SFX_ASSIGN_FAIL = 'assignfail';
   SFX_YIPPEE = 'yippee';
   SFX_OING = 'oing';
   SFX_SPLAT = 'splat';

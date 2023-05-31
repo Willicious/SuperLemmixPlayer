@@ -1136,15 +1136,13 @@ SelectedLemming: TLemming;
 begin
   SelectedLemming := fRenderInterface.SelectedLemming;
 
-  //no idea why this has to be "not" L = Selected,
-  //I thought it would be the other way around...???
+  //L deliberately not initialised to prevent infinite loop
   if not (L = SelectedLemming) and not ProcessSkillAssignment(False) then
   begin
     if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then
-      CueSoundEffect(SFX_HITS_STEEL)
+      CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
     else
-      CueSoundEffectFrequency(SFX_BUILDER_WARNING, 6000);
-          //placeholder for dedicated assign fail sound
+      CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
   end;
 end;
 
