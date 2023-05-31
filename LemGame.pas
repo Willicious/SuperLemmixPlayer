@@ -3977,11 +3977,17 @@ begin
   //jumpers complete their arc above the level
   if (L.LemY <= 0) and (L.LemAction = baJumping) then Exit;
 
-  //prevents climbers accessing level top
-  if (L.LemY <= 7) and (L.LemAction in [baClimbing, baHoisting]) then
+  //prevents climbers and hoisters accessing level top
+  if ((L.LemY <= 7) and (L.LemAction = baClimbing) and HasPixelAt(L.LemX, 0))
+  or ((L.LemY <= 3) and (L.LemAction = baHoisting) and HasPixelAt(L.LemX, 0)) then
     begin
       if L.LemIsSlider then
       begin
+        if L.LemAction = baHoisting then
+          begin
+            Transition(L, baDehoisting);
+            Exit;
+          end else
         Dec(L.LemY);
         Transition(L, baSliding);
       end else begin

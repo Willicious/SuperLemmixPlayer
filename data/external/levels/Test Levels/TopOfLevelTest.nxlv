@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.1
+#   Created with SLXEditor 2.0
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Top Of Level Test
  AUTHOR 
  ID x395644D72FB2EFF3
- VERSION x0000000000000015
+ VERSION x0000000000000018
  
 #       Level dimensions        
 # ----------------------------- 
@@ -164,6 +164,23 @@
    PIECE bar_04
    X 188
    Y 116
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 62
+   Y -15
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 176
+   Y -63
+   ERASE
+   ONE_WAY
  $END
  
  
