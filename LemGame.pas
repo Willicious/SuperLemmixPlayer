@@ -2440,9 +2440,9 @@ end;
 function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDrowning, baVaporizing, baVinetrapping, baSplatting,
-               baExiting];
+               baFreezerExplosion, baDrowning, baVaporizing, baVinetrapping,
+               baSplatting, baExiting, baSleeping];
+
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
 end;
@@ -2450,9 +2450,9 @@ end;
 function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDrowning, baDangling, baVaporizing, baVinetrapping,
-               baSplatting, baExiting];
+               baFreezerExplosion, baDrowning, baDangling, baVaporizing,
+               baVinetrapping, baSplatting, baExiting, baSleeping];
+
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsClimber;
 end;
@@ -2460,9 +2460,9 @@ end;
 function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDrowning, baDangling, baSplatting, baVaporizing,
-               baVinetrapping, baExiting];
+               baFreezerExplosion, baDrowning, baDangling, baSplatting,
+               baVaporizing, baVinetrapping, baExiting, baSleeping];
+
 begin
   Result := (not (L.LemAction in ActionSet)) and not (L.LemIsFloater or L.LemIsGlider);
 end;
@@ -2470,9 +2470,8 @@ end;
 function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDangling, baVaporizing, baVinetrapping,
-               baSplatting, baExiting];   // Does NOT contain baDrowning!
+               baFreezerExplosion, baDangling, baVaporizing, baVinetrapping,
+               baSplatting, baExiting, baSleeping];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
 end;
@@ -2480,9 +2479,9 @@ end;
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDrowning, baDangling, baSplatting, baVaporizing,
-			         baVinetrapping, baExiting];
+               baFreezerExplosion, baDrowning, baDangling, baSplatting,
+               baVaporizing, baVinetrapping, baExiting, baSleeping];
+
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
 end;
@@ -2509,7 +2508,7 @@ const
   ActionSet = [baTimebombing, baOhnoing, //baFreezing, hotbookmark - we may want to allow this
                baTimebombFinish, baExploding, baFreezerExplosion,
                baDangling, baVaporizing, baVinetrapping,
-               baSplatting, baExiting];
+               baSplatting, baExiting, baSleeping];
                //putting baTimebombing in here doesn't work - why???
 begin
   //non-assignable from the top of the level
@@ -2530,7 +2529,7 @@ const
   ActionSet = [baTimebombing, baOhnoing, //baFreezing, hotbookmark - we may want to allow this
                baTimebombFinish, baExploding, baFreezerExplosion,
                baDangling, baVaporizing, baVinetrapping, baSplatting,
-               baExiting];
+               baExiting, baSleeping];
                //putting baTimebombing in here doesn't work - why???
 begin
   //non-assignable from the top of the level
@@ -2550,7 +2549,7 @@ const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping,
-               baSplatting, baExiting];
+               baSplatting, baExiting, baSleeping];
                //putting baTimebombing in here doesn't work - why???
 begin
     //non-assignable from the top of the level
@@ -4392,7 +4391,6 @@ end;
 function TLemmingGame.HandleSleeping(L: TLemming): Boolean;
 begin
    Result := True;
-   L.LemIsNeutral := True;
 
    if L.LemFrame = 1 then Dec(LemmingsOut);
 
