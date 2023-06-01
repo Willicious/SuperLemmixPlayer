@@ -458,7 +458,7 @@ type
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
     function SpawnIntervalChanged: Boolean;
-    procedure PlayAssignFailSound;
+    //procedure PlayAssignFailSound;
     //procedure SetSkillsToInfinite; //hotbookmark
 
   { properties }
@@ -1128,23 +1128,23 @@ begin
   inherited Destroy;
 end;
 
-procedure TLemmingGame.PlayAssignFailSound;
-var
-L: TLemming;
-SelectedLemming: TLemming;
-
-begin
-  SelectedLemming := fRenderInterface.SelectedLemming;
-
-  //L deliberately not initialised to prevent infinite loop
-  if not (L = SelectedLemming) and not ProcessSkillAssignment(False) then
-  begin
-    if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then
-      CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
-    else
-      CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
-  end;
-end;
+//procedure TLemmingGame.PlayAssignFailSound;
+//var
+//L: TLemming;
+//SelectedLemming: TLemming;
+//
+//begin
+//  SelectedLemming := fRenderInterface.SelectedLemming;
+//
+//  //L deliberately not initialised to prevent infinite loop
+//  if not (L = SelectedLemming) and not ProcessSkillAssignment(False) then
+//  begin
+//    if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then
+//      CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
+//    else
+//      CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
+//  end;
+//end;
 
 procedure TLemmingGame.PlayMusic;
 begin

@@ -1732,7 +1732,7 @@ begin
     SetAdjustedGameCursorPoint(Img.ControlToBitmap(Point(X, Y)));
 
     CheckShifts(Shift);
-    Game.PlayAssignFailSound;
+    //Game.PlayAssignFailSound;
 
     // Middle or Right clicks get passed to the keyboard handler, because their
     // handling has more in common with that than with mouse handling
