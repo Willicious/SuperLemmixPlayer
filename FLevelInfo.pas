@@ -620,7 +620,7 @@ begin
     AddClose;
     ApplySize;
 
-    Left := TForm(Owner).Left + ((TForm(Owner).Width - Width) div 2);
+    Left := TForm(Owner).Left + ((TForm(Owner).Width - (Width div 2)) div 2);
     Top := TForm(Owner).Top + ((TForm(Owner).Height - Height) div 2);
     ShowModal;
   end;
