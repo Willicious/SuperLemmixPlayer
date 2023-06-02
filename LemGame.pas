@@ -5925,6 +5925,9 @@ begin
   begin
     if UserSetNuking and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
       Transition(L, baOhnoing);
+
+    //lems that have started exiting should be saved
+    if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
   end else
   if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
 end;
