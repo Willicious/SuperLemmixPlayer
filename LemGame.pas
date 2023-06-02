@@ -185,6 +185,7 @@ type
     fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval          : Integer; //the current spawn interval, obviously
+    LemIsAsleep                : Boolean;
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -1852,7 +1853,7 @@ begin
   end;
 
   //ends the level when no time or lemmings (including zombies) remain
-  if IsOutOfTime and (LemmingsOut = 0) and (CheckIfZombiesRemain = false) then
+  if IsOutOfTime and (LemmingsOut = 0) and (LemIsAsleep) and (CheckIfZombiesRemain = false) then
    begin
     Finish(GM_FIN_LEMMINGS);
     Exit;
@@ -4397,6 +4398,16 @@ begin
    Result := True;
 
    if L.LemFrame = 1 then Dec(LemmingsOut);
+
+   //ensures the animation finishes before the level ends
+   if LemmingsOut = 0 then
+   begin
+      if L.LemFrame < 20 then
+     begin
+        LemIsAsleep := False
+     end else
+        LemIsAsleep := True;
+   end;
 
    if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
     RemoveLemming(L, RM_NEUTRAL); // shouldn't get to this point but just in case
