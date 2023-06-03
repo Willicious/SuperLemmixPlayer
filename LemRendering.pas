@@ -877,7 +877,6 @@ begin
         if CopyL.LemAction in [baJumping, baDangling] then
           fRenderInterface.SimulateTransitionLem(CopyL, baShimmying)
         else
-        if CopyL.LemAction in [baClimbing] then
           fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
         DrawShimmierShadow(CopyL);
       end;
