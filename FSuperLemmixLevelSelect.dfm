@@ -5,7 +5,7 @@ object FLevelSelect: TFLevelSelect
   VertScrollBar.Visible = False
   BorderIcons = []
   BorderStyle = bsToolWindow
-  Caption = 'NeoLemmix Level Select'
+  Caption = 'SuperLemmix Level Select'
   ClientHeight = 528
   ClientWidth = 1058
   Color = clBtnFace
