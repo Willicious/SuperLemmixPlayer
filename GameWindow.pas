@@ -2182,6 +2182,7 @@ begin
   if s <> '' then
   begin
     StartReplay(s);
+    Game.fReplayWasLoaded := True;
     exit;
   end;
 end;
