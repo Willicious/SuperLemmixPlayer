@@ -312,6 +312,8 @@ var
   LemmingList: TLemmingList;
 begin
   if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
+  if not fLayers.fIsEmpty[rlCountdown] then fLayers[rlCountdown].Clear(0);
+  
   fLayers[rlLemmings].Clear(0);
 
   LemmingList := fTempLemmingList;
@@ -692,11 +694,11 @@ begin
     n := (aLemming.LemExplosionTimer div 17) + 1;
     SrcRect := SizedRect(n * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
     if aLemming.LemDX < 0 then
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 3) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect)
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 3) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect)
     else
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
+    fAni.HighlightBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);

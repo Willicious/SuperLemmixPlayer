@@ -62,7 +62,8 @@ type
                   rlHighShadows,
                   rlObjectHelpers,
                   rlParticles,
-                  rlLemmings);
+                  rlLemmings,
+                  rlCountdown);
 
 const
   SCALE_ON_MERGE_LAYERS = [rlLowShadows, rlHighShadows, rlParticles];
@@ -480,9 +481,10 @@ begin
     fIsEmpty[i] := True;
   end;
 
-  // Always draw rlBackground, rlTerrain and rlLemmings
+  // Always draw rlBackground, rlTerrain, rlCountdown and rlLemmings
   fIsEmpty[rlBackground] := False;
   fIsEmpty[rlTerrain] := False;
+  fIsEmpty[rlCountdown] := False;
   fIsEmpty[rlLemmings] := False;
 end;
 
