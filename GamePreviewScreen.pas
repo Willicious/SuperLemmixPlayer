@@ -551,8 +551,11 @@ begin
     end;
   end;
   if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
-    GlobalGame.ReplayManager.Clear(true);
+  begin
     // this clears the current-replay-in-memory when the level loads
+    GlobalGame.ReplayManager.Clear(true);
+    GlobalGame.fReplayWasLoaded := False;
+  end;
 end;
 
 end.

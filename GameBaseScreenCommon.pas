@@ -229,6 +229,7 @@ begin
       s:=Dlg.filename;
       LastReplayDir := ExtractFilePath(s);
       Result := true;
+      GlobalGame.fReplayWasLoaded := True;
     end else
       Result := false;
   finally

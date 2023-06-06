@@ -23,6 +23,8 @@ type
     fSkillTypeLimit: Integer;
     fSkillLimits: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
     fRequireKillZombies: Boolean;
+    fRequireClassicMode: Boolean;
+    fRequireNoPause: Boolean;
 
     fLevelLemmingCount: Integer;
 
@@ -49,6 +51,8 @@ type
     property SkillTypeLimit: Integer read fSkillTypeLimit write fSkillTypeLimit;
     property SkillLimit[Index: TSkillPanelButton]: Integer read GetSkillLimit write SetSkillLimit;
     property RequireKillZombies: Boolean read fRequireKillZombies write fRequireKillZombies;
+    property RequireClassicMode: Boolean read fRequireClassicMode write fRequireClassicMode;
+    property RequireNoPause: Boolean read fRequireNoPause write fRequireNoPause;
     property RequirementText: String read fRequirementText;
 
     property LevelLemmingCount: Integer read fLevelLemmingCount write fLevelLemmingCount;
@@ -160,6 +164,12 @@ begin
   if aSec.Line['kill_zombies'] <> nil then
     fRequireKillZombies := true;
 
+  if aSec.Line['classic_mode'] <> nil then
+    fRequireClassicMode := true;
+
+  if aSec.Line['no_pause'] <> nil then
+    fRequireNoPause := true;
+
 end;
 
 procedure TTalisman.SaveToSection(aSec: TParserSection);
@@ -192,6 +202,11 @@ begin
   if fRequireKillZombies then
     aSec.AddLine('kill_zombies');
 
+  if fRequireClassicMode then
+    aSec.AddLine('classic_mode');
+
+  if fRequireNoPause then
+    aSec.AddLine('no_pause');
 end;
 
 end.

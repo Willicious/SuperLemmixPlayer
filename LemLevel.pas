@@ -563,9 +563,17 @@ begin
   if ReqText = 'Complete' then
     ReqText := 'Complete the level';
 
-  // And finally, add the note about killing zombies
+  // Add the note about pressing pause
+  if aTalisman.RequireNoPause then
+    ReqText := ReqText + ', without pressing pause';
+
+  // Add the note about killing zombies
   if aTalisman.RequireKillZombies then
     ReqText := ReqText + ', killing all zombies';
+
+  // Add the note about Classic Mode
+  if aTalisman.RequireClassicMode then
+    ReqText := ReqText + ', in Classic Mode';
 
   ReqText := ReqText + '.';
 

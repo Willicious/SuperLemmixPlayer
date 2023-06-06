@@ -563,6 +563,12 @@ procedure TLevelInfoPanel.ShowPopup;
 
       if (Talisman.RequireKillZombies) then
         LocalAdd(ICON_KILL_ZOMBIES, '', false, pmMoveHorz);
+
+      if (Talisman.RequireClassicMode) then
+        LocalAdd(ICON_CLASSIC_MODE, '', false, pmMoveHorz);
+
+      if (Talisman.RequireNoPause) then
+        LocalAdd(ICON_NO_PAUSE, '', false, pmMoveHorz);
   end;
 
   procedure RepositionExistingControls(aNewWidth: Integer);
@@ -658,6 +664,12 @@ begin
     else
       Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
   end;
+
+  if ((fTalisman <> nil) and (fTalisman.RequireClassicMode)) then
+      Add(ICON_CLASSIC_MODE, '', '', true, pmNextColumnSame);
+
+  if ((fTalisman <> nil) and (fTalisman.RequireNoPause)) then
+      Add(ICON_NO_PAUSE, '', '', true, pmNextColumnSame);
 
   Reposition(pmNextRowLeft);
 

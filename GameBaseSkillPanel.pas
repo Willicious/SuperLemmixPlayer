@@ -1593,6 +1593,7 @@ begin
       end;
     spbPause:
       begin
+        Game.PauseWasPressed := True;
         if RewindPressed then fRewindPressed := False;
 
         if fGameWindow.GameSpeed = gspPause then

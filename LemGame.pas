@@ -231,6 +231,8 @@ type
     procedure DoTalismanCheck;
     function CheckAllZombiesKilled: Boolean; //checks for remaining zombies, returning false if nuke is used or if zombies remain
     function CheckIfZombiesRemain: Boolean; //slightly different - checks for remaining zombies, returns true if zombies remain
+    function CheckForClassicMode: Boolean; //checks if classic mode is activated
+    function CheckNoPause: Boolean; //checks if pause has been pressed at any time
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
@@ -429,6 +431,8 @@ type
     fSpawnIntervalChanged      : Boolean; //set to true in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
     IsBackstepping             : Boolean;
+    fReplayWasLoaded           : Boolean;
+    fPauseWasPressed           : Boolean;
 
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -479,6 +483,8 @@ type
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
     property Replaying: Boolean read GetIsReplaying;
+    property ReplayWasLoaded: Boolean read fReplayWasLoaded; //write fReplayWasLoaded;
+    property PauseWasPressed: Boolean read fPauseWasPressed write fPauseWasPressed;
     property ReplayingNoRR[isPaused: Boolean]: Boolean read GetIsReplayingNoRR;
     property ReplayManager: TReplay read fReplayManager;
     property IsSelectWalkerHotkey: Boolean read fIsSelectWalkerHotkey write fIsSelectWalkerHotkey;
@@ -871,6 +877,14 @@ var
       if not CheckAllZombiesKilled then
         Exit;
 
+    if (aTalisman.RequireClassicMode) then
+      if not CheckForClassicMode then
+        Exit;
+
+    if (aTalisman.RequireNoPause) then
+      if not CheckNoPause then
+        Exit;
+
     Result := true;
   end;
 begin
@@ -887,6 +901,31 @@ begin
       GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
     end;
   end;
+end;
+
+function TLemmingGame.CheckForClassicMode: Boolean;
+begin
+  Result := false;
+
+  //check if a replay has been loaded
+  if ReplayWasLoaded then Exit;
+
+  //classic mode has to be active
+  if GameParams.ClassicMode then
+    Result := true;
+end;
+
+function TLemmingGame.CheckNoPause: Boolean;
+begin
+  Result := false;
+
+  //check if a replay has been loaded
+  if ReplayWasLoaded then Exit;
+
+  //check if pause was pressed
+  if PauseWasPressed then Exit;
+
+  Result := true;
 end;
 
 function TLemmingGame.CheckAllZombiesKilled: Boolean;
@@ -1206,6 +1245,8 @@ begin
 
   fGameFinished := False;
   fGameCheated := False;
+  fPauseWasPressed := False;
+
   LemmingsToRelease := Level.Info.LemmingsCount;
   LemmingsCloned := 0;
   TimePlay := Level.Info.TimeLimit;

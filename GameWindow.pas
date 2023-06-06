@@ -1425,6 +1425,7 @@ begin
                           SetSelectedSkill(spbSlower, True, True);
                           end;
       lka_Pause: begin
+                 Game.PauseWasPressed := True;
                  if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
 
                  if fGameSpeed = gspPause then
