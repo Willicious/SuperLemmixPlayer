@@ -630,10 +630,7 @@ begin
   begin
     SkillPanel.DrawButtonSelector(spbRewind, True);
     if GameParams.ClassicMode then
-      begin
-        Game.CancelReplayAfterSkip := true;
-        GameParams.PauseAfterBackwardsSkip := false;
-      end;
+      Game.CancelReplayAfterSkip := true;
 
     if not RewindTimer.Enabled then
       RewindTimer.Enabled := True;
