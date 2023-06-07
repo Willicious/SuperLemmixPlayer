@@ -3196,8 +3196,9 @@ begin
   Gadget := Gadgets[GadgetID];
 
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
-     and not (L.LemAction in [baDehoisting, baSliding, baClimbing, baHoisting,
-                              baSwimming, baOhNoing, baJumping, baDangling])
+     and not (L.LemAction in [baDehoisting, baSliding, baClimbing, baHoisting, baSwimming,
+                              baOhNoing, baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+                              baJumping, baDangling])
   then begin
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
@@ -3208,6 +3209,9 @@ begin
   end
   else
   begin
+    //traps don't affect lems in any of the freezer states
+    if L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing] then Exit;
+    
     // trigger trap
     Gadget.Triggered := True;
     Gadget.ZombieMode := L.LemIsZombie;
