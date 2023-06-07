@@ -8,7 +8,7 @@
  TITLE One Lem To Free Them All
  AUTHOR WillLem
  ID x771BAB8F451C16C9
- VERSION x0000000000000006
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 
@@ -26,6 +26,9 @@
  
  $SKILLSET 
    TIMEBOMBER 1
+   BUILDER 1
+   GRENADER 1
+   BASHER 1
  $END 
  
 #     Interactive objects       
@@ -206,7 +209,6 @@
    PIECE steel_02
    X 200
    Y 72
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -214,7 +216,6 @@
    PIECE steel_02
    X 70
    Y 72
-   ONE_WAY
  $END
  
  

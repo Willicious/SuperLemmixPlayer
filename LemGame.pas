@@ -654,7 +654,6 @@ var
     MINUTE_IN_FRAMES = 17 * 60;
     HALF_MINUTE_IN_FRAMES = 17 * 30;
     TEN_SECONDS_IN_FRAMES = 17 * 10;
-    //ONE_SECOND_IN_FRAMES = 17;
   begin
     Result := false;
     if Items[aStateIndex].CurrentIteration = 0 then
@@ -667,10 +666,6 @@ var
     if (Items[aStateIndex].CurrentIteration mod TEN_SECONDS_IN_FRAMES = 0)
     and (aCurrentIteration - Items[aStateIndex].CurrentIteration <= MINUTE_IN_FRAMES) then
       Result := true;
-//    // If saving every second, delete every three
-//    if (Items[aStateIndex].CurrentIteration mod ONE_SECOND_IN_FRAMES = 0)
-//    and (aCurrentIteration - Items[aStateIndex].CurrentIteration <= ONE_SECOND_IN_FRAMES * 3) then
-//      Result := True;
   end;
 begin
   // What we want to save:
@@ -4778,8 +4773,6 @@ begin
       Transition(L, baShrugging);
   end;
 end;
-
-
 
 function TLemmingGame.HandleBashing(L: TLemming): Boolean;
 var

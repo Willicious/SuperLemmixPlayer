@@ -8,7 +8,7 @@
  TITLE Sleeper & Freezer Assignability Test
  AUTHOR WillLem
  ID x5B27E3A1026EE60F
- VERSION x000000000000000A
+ VERSION x0000000000000019
  
 #       Level dimensions        
 # ----------------------------- 
@@ -26,6 +26,7 @@
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
+   WALKER 5
    SLIDER 5
    CLIMBER 5
    SWIMMER 5
@@ -102,13 +103,23 @@
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 74
+   X 126
    Y 96
  $END
  
  $LEMMING
-   X 221
-   Y 61
+   X 150
+   Y 96
+ $END
+ 
+ $LEMMING
+   X 99
+   Y 96
+ $END
+ 
+ $LEMMING
+   X 61
+   Y 96
  $END
  
  
