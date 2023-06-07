@@ -198,7 +198,7 @@ type
     fGameCheated               : Boolean;
     NextLemmingCountDown       : Integer;
     fFastForward               : Boolean;
-    fSuperLemming              : Boolean;
+    fSuperlemming              : Boolean;
     fTargetIteration           : Integer; // this is used in hyperspeed
     fHyperSpeedCounter         : Integer; // no screenoutput
     fHyperSpeed                : Boolean; // we are at hyperspeed no targetbitmap output
@@ -495,6 +495,7 @@ type
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property IsOutOfTime: Boolean read GetOutOfTime;
+    property IsSuperlemming: Boolean read fSuperlemming;
 
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
@@ -1241,7 +1242,7 @@ begin
   fPauseOnHyperSpeedExit := False;
 
   fFastForward := False;
-  fSuperLemming := Level.Info.SuperLemming;
+  fSuperlemming := Level.Info.SuperLemming;
 
   fGameFinished := False;
   fGameCheated := False;
@@ -6339,12 +6340,20 @@ begin
   if fParticleFinishTimer > 0 then
     Dec(fParticleFinishTimer);
 
-  if fClockFrame = 17 then
+  if IsSuperlemming then
   begin
-    fClockFrame := 0;
-    if TimePlay > -5999 then Dec(TimePlay);
-    if TimePlay = 0 then CueSoundEffect(SFX_TIMEUP);
-  end;
+    if fClockFrame = 50 then
+    begin
+      fClockFrame := 0;
+      if TimePlay > -5999 then Dec(TimePlay);
+      if TimePlay = 0 then CueSoundEffect(SFX_TIMEUP);
+    end;
+  end else if fClockFrame = 17 then
+    begin
+      fClockFrame := 0;
+      if TimePlay > -5999 then Dec(TimePlay);
+      if TimePlay = 0 then CueSoundEffect(SFX_TIMEUP);
+    end;
 
   // hard coded dos frame numbers
   case CurrentIteration of

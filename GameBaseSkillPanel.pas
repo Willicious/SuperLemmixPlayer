@@ -1489,11 +1489,17 @@ const
 begin
   if Level.Info.HasTimeLimit then
   begin
-    Time := Level.Info.TimeLimit - Game.CurrentIteration div 17;
+    if Game.IsSuperlemming then
+      Time := Level.Info.TimeLimit - Game.CurrentIteration div 50 //hotbookmark
+    else
+      Time := Level.Info.TimeLimit - Game.CurrentIteration div 17;
     if Time < 0 then
       Time := 0 - Time;
   end else
-    Time := Game.CurrentIteration div 17;
+    if Game.IsSuperlemming then
+      Time := Game.CurrentIteration div 50 //hotbookmark
+    else
+      Time := Game.CurrentIteration div 17;
 
   // Minutes
   S := PadL(IntToStr(Time div 60), 2);
@@ -1574,7 +1580,8 @@ begin
         DrawButtonSelector(spbSlower, true);
         Game.IsBackstepping := False;
 
-        if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
+        //deactivates min/max RR jumping in Superlemming/ClassicMode
+        if GameParams.ClassicMode or Game.IsSuperlemming then
           begin
             Game.SetSelectedSkill(i, True);
           end else
@@ -1585,7 +1592,8 @@ begin
         DrawButtonSelector(spbFaster, true);
         Game.IsBackstepping := False;
 
-        if GameParams.ClassicMode then //deactivates min/max RR jumping in ClassicMode
+        //deactivates min/max RR jumping in Superlemming/ClassicMode
+        if GameParams.ClassicMode or Game.IsSuperlemming then
           begin
             Game.SetSelectedSkill(i, True);
             end else
@@ -1593,6 +1601,8 @@ begin
       end;
     spbPause:
       begin
+        if Game.IsSuperLemming then Exit;
+
         Game.PauseWasPressed := True;
         if RewindPressed then fRewindPressed := False;
 
@@ -1617,6 +1627,8 @@ begin
       end;
     spbFastForward:
       begin
+        if Game.IsSuperLemming then Exit;
+
         if RewindPressed then fRewindPressed := False;
 
         if Game.IsBackstepping then Game.IsBackstepping := False;
@@ -1628,6 +1640,8 @@ begin
       end;
     spbRewind:
       begin
+        if Game.IsSuperLemming then Exit;
+
         if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
           fGameWindow.GameSpeed := gspNormal;
 

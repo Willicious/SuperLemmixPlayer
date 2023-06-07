@@ -159,7 +159,7 @@ type
     IdealFrameTimeMS     : Cardinal;          // normal frame speed in milliseconds
     IdealFrameTimeMSFast : Cardinal;          // fast forward framespeed in milliseconds
     IdealFrameTimeMSSlow : Cardinal;
-    IdealFrameTimeMSSuperLemming : Cardinal;
+    IdealFrameTimeSuper  : Cardinal;
     IdealScrollTimeMS    : Cardinal;          // scroll speed in milliseconds
     RewindTimer          : TTimer;
     PrevCallTime         : Cardinal;          // last time we did something in idle
@@ -495,7 +495,7 @@ procedure TGameWindow.RenderMinimap;
 begin
 if GameParams.ShowMinimap then
   begin
-    if GameParams.MinimapHighQuality then
+    if GameParams.MinimapHighQuality and not Game.IsSuperlemming then
       begin
         fMinimapBuffer.Clear(0);
         Img.Bitmap.DrawTo(fMinimapBuffer);
@@ -578,9 +578,8 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-        Fast, SuperLemming, Slow, ForceOne, TimeForFrame, TimeForPausedRR,
-        TimeForFastForwardFrame, TimeForScroll, TimeForSuperLemming,
-        Hyper, Pause: Boolean;
+      Fast, Slow, Superlemming, ForceOne, TimeForFrame, TimeForPausedRR,
+      TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
   MouseClickFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
@@ -601,7 +600,7 @@ begin
 
   MouseClickFrameSkip := MouseFrameSkip;
 
-  if not GameParams.HideFrameskipping then
+  if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
   if MouseClickFrameSkip < 0 then
   begin
     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
@@ -610,20 +609,21 @@ begin
 
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
-  Superlemming := (fGameSpeed = gspSuperlemming);
   Slow := (fGameSpeed = gspSlowMo);
+  Superlemming := (fGameSpeed = gspSuperlemming);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   fForceUpdateOneFrame := (MouseClickFrameSkip > 0);
   CurrTime := TimeGetTime;
   if Slow then
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
+  else if Superlemming then
+    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeSuper)
   else
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
 
   TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
-  TimeForSuperLemming := SuperLemming and (CurrTime - PrevCallTime > IdealFrameTimeMSSuperLemming);
   Hyper := IsHyperSpeed;
 
   if SkillPanel.RewindPressed then //hotbookmark
@@ -642,9 +642,12 @@ begin
       RewindTimer.Enabled := False;
   end;
 
-  if TimeForSuperLemming then
+  if Game.IsSuperlemming then
   begin
-    GameSpeed := gspSuperLemming;
+    GameSpeed := gspSuperlemming;
+    SkillPanel.DrawButtonSelector(spbPause, true);
+    SkillPanel.DrawButtonSelector(spbRewind, true);
+    SkillPanel.DrawButtonSelector(spbFastForward, true);
   end;
 
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
@@ -670,7 +673,7 @@ begin
       PrevScrollTime := CurrTime;
       if CheckScroll then
       begin
-        if GameParams.MinimapHighQuality then
+        if GameParams.MinimapHighQuality and not Game.IsSuperlemming then
           SetRedraw(rdRefresh)
         else
           SetRedraw(rdRedraw);
@@ -969,7 +972,7 @@ begin
       fRenderer.DrawLemmings(fClearPhysics);
       fRenderer.DrawProjectiles;
 
-      if GameParams.MinimapHighQuality or (GameSpeed = gspPause) then
+      if GameParams.MinimapHighQuality or (GameSpeed = gspPause) or not Game.IsSuperlemming then
         DrawRect := Img.Bitmap.BoundsRect
       else begin
         DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
@@ -1411,17 +1414,19 @@ begin
 
     case func.Action of
       lka_ReleaseMouse: ReleaseMouse;
-      lka_ReleaseRateMax: if not GameParams.ClassicMode then
+      lka_ReleaseRateMax: if not (GameParams.ClassicMode or Game.IsSuperlemming) then
                           begin
                            SetSelectedSkill(spbFaster, True, True);
                           end;
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
-      lka_ReleaseRateMin: if not GameParams.ClassicMode then
+      lka_ReleaseRateMin: if not (GameParams.ClassicMode or Game.IsSuperlemming) then
                           begin
                           SetSelectedSkill(spbSlower, True, True);
                           end;
       lka_Pause: begin
+                 if Game.IsSuperLemming then Exit;
+
                  Game.PauseWasPressed := True;
                  if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
 
@@ -1478,6 +1483,8 @@ begin
 //                            Game.SetSkillsToInfinite;
 //                          end;
       lka_FastForward: begin
+                       if Game.IsSuperLemming then Exit;
+
                          if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
 
                          if Game.IsBackstepping then Game.IsBackstepping := False;
@@ -1488,6 +1495,8 @@ begin
                          end;
                        end;
       lka_Rewind: begin
+                  if Game.IsSuperLemming then Exit;
+
                     case fGameSpeed of
                       gspSlowMo, gspPause, gspFF: GameSpeed := gspNormal;
                     end;
@@ -1502,7 +1511,7 @@ begin
                       Game.IsBackstepping := False;
                     end;
                   end;
-      lka_SlowMotion: if not GameParams.HideFrameskipping then
+      lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
                       begin
                         if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
 
@@ -1546,7 +1555,7 @@ begin
                         end;
                       end;
       lka_Skip: if Game.Playing then
-                  if not GameParams.HideFrameskipping then
+                  if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
                   if func.Modifier < 0 then
                   begin
                     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
@@ -1615,7 +1624,7 @@ var
   TargetFrame: Integer;
   HasSuitableSkill: Boolean;
 begin
-  if not GameParams.HideFrameskipping then
+  if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
   begin
     TargetFrame := 0; // fallback
     fSpecialStartIteration := Game.CurrentIteration;
@@ -1750,11 +1759,11 @@ begin
     begin
       Game.RegainControl;
       if (not GameParams.ClassicMode) or (fGameSpeed <> gspPause) then // this deals with deactivating assign-whilst-paused whilst in ClassicMode
-      Game.ProcessSkillAssignment;
-      if not GameParams.HideFrameskipping then
-      if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
+        Game.ProcessSkillAssignment;
+      if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+        if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
     end else if (Button = mbRight) and RightMouseUnassigned
-    and not GameParams.HideFrameskipping then
+    and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
     begin
       GoToSaveState(Max(Game.CurrentIteration -1, 0));
       Game.IsBackstepping := True;
@@ -1909,10 +1918,10 @@ begin
 
   // set timers
   IdealFrameTimeMSFast := 10;
-  IdealFrameTimeMSSuperLemming := 30;
   IdealScrollTimeMS := 15;
   IdealFrameTimeMS := 60; // normal
   IdealFrameTimeMSSlow := 240;
+  IdealFrameTimeSuper := 20; //hotbookmark
 
   Img.Scale := Sca;
 
@@ -2324,7 +2333,7 @@ var
   RightMouseUnassigned: Boolean;
 begin
   Result := 0;
-  if GameParams.HideFrameskipping then Exit;
+  if (GameParams.HideFrameskipping or Game.IsSuperlemming) then Exit;
 
   if GetTickCount - fMouseClickFrameskip < 650 then
     Exit;
