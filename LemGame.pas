@@ -5373,7 +5373,8 @@ begin
         Exit;
       end else if L.LemY >= Level.Info.Height + 8 then
       begin
-        RemoveLemming(L, RM_NEUTRAL);
+        //RemoveLemming(L, RM_NEUTRAL);
+        Transition(L, baFalling);
         Exit;
       end;
     end;
