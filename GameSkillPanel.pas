@@ -24,6 +24,7 @@ type
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
     function LemmingCountStartIndex: Integer; override;
+    function LemmingSavedStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -116,6 +117,11 @@ end;
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
 begin
   Result := 26;
+end;
+
+function TSkillPanelStandard.LemmingSavedStartIndex: Integer;
+begin
+  Result := 32;
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);

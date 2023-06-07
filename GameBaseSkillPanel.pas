@@ -110,6 +110,7 @@ type
 
     procedure DrawNewStr;
       function LemmingCountStartIndex: Integer; virtual; abstract;
+      function LemmingSavedStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetInfoCursorLemming(Pos: Integer);
@@ -1301,6 +1302,14 @@ begin
             fCombineHueShift := 1 / 6;
         end else
           SpecialCombine := false;
+      end else if (i > LemmingSavedStartIndex) and (i <= LemmingSavedStartIndex + 4) then     //poo
+      begin
+        if Game.LemmingsSaved < Level.Info.RescueCount then
+        begin
+          SpecialCombine := true;
+          fCombineHueShift := -1 / 3;
+        end else
+          SpecialCombine := false;
       end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := true;
@@ -1472,7 +1481,7 @@ var
 const
   LEN = 4;
 begin
-  S := IntToStr(Game.LemmingsSaved - Level.Info.RescueCount);
+  S := IntToStr(Game.LemmingsSaved); // - Level.Info.RescueCount);
 
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
