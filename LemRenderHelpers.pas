@@ -62,7 +62,8 @@ type
                   rlHighShadows,
                   rlObjectHelpers,
                   rlParticles,
-                  rlLemmings,
+                  rlLemmingsLow,
+                  rlLemmingsHigh,
                   rlCountdown);
 
 const
@@ -485,7 +486,8 @@ begin
   fIsEmpty[rlBackground] := False;
   fIsEmpty[rlTerrain] := False;
   fIsEmpty[rlCountdown] := False;
-  fIsEmpty[rlLemmings] := False;
+  fIsEmpty[rlLemmingsLow] := False;
+  fIsEmpty[rlLemmingsHigh] := False;
 end;
 
 procedure TRenderBitmaps.CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);

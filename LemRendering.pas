@@ -314,7 +314,8 @@ begin
   if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
   if not fLayers.fIsEmpty[rlCountdown] then fLayers[rlCountdown].Clear(0);
   
-  fLayers[rlLemmings].Clear(0);
+  if not fLayers.fIsEmpty[rlLemmingsLow] then fLayers[rlLemmingsLow].Clear(0);
+  fLayers[rlLemmingsHigh].Clear(0);
 
   LemmingList := fTempLemmingList;
 
@@ -468,7 +469,12 @@ begin
   DstRect := GetLocationBounds;
   SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
-  SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
+  if aLemming.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+                            baOhNoing, baExploding, baTimebombing, baTimebombFinish]
+  then
+    SrcAnim.DrawTo(fLayers[rlLemmingsLow], DstRect, SrcRect)
+  else
+    SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
 
   // Helper for selected lemming
   if (Selected and aLemming.CannotReceiveSkills) or UsefulOnly or
@@ -562,37 +568,37 @@ begin
         end;
     end;
 
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y,
       Target.X, Target.Y,
       LaserColors[0], true);
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y - 1,
       Target.X - aLemming.LemDX, Target.Y,
       LaserColors[0], true);
-    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X + aLemming.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
       LaserColors[0], true);
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y - 2,
       Target.X - (aLemming.LemDX * 2), Target.Y,
       LaserColors[1], true);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
       Target.X, Target.Y + 2,
       LaserColors[1], true);
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 3,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y - 3,
       Target.X - (aLemming.LemDX * 3), Target.Y,
       LaserColors[2], true);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 3), Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X + (aLemming.LemDX * 3), Origin.Y,
       Target.X, Target.Y + 3,
       LaserColors[2], true);
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 4,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y - 4,
       Target.X - (aLemming.LemDX * 4), Target.Y,
       LaserColors[3], true);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 4), Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X + (aLemming.LemDX * 4), Origin.Y,
       Target.X, Target.Y + 4,
       LaserColors[3], true);
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 5,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y - 5,
       Target.X - (aLemming.LemDX * 5), Target.Y,
       LaserColors[4], true);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 5), Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X + (aLemming.LemDX * 5), Origin.Y,
       Target.X, Target.Y + 5,
       LaserColors[4], true);
   end else begin
@@ -615,19 +621,19 @@ begin
 
     // LaserColors[3] and [4] are unused in low-res
 
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y,
       Target.X, Target.Y,
       LaserColors[0], true);
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y - 1,
       Target.X - aLemming.LemDX, Target.Y,
       LaserColors[1], true);
-    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X + aLemming.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
       LaserColors[1], true);
-    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
+    fLayers[rlLemmingsHigh].LineS(Origin.X, Origin.Y - 2,
       Target.X - (aLemming.LemDX * 2), Target.Y,
       LaserColors[2], true);
-    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
+    fLayers[rlLemmingsHigh].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
       Target.X, Target.Y + 2,
       LaserColors[2], true);
   end;
@@ -658,7 +664,7 @@ begin
       if BLAST_COLORS[CIndex] <> $00000000 then
       begin
         fFixedDrawColor := BLAST_COLORS[CIndex];
-        fLaserGraphic.DrawTo(fLayers[rlLemmings], Dst, Src);
+        fLaserGraphic.DrawTo(fLayers[rlLemmingsHigh], Dst, Src);
       end;
 
       MoveRect(Src, -13 * ResMod, 0);
@@ -669,7 +675,7 @@ begin
     end;
 
     fFixedDrawColor := WHITE_COLOR;
-    fLaserGraphic.DrawTo(fLayers[rlLemmings], Dst, Src);
+    fLaserGraphic.DrawTo(fLayers[rlLemmingsHigh], Dst, Src);
   end;
 end;
 
@@ -1014,7 +1020,7 @@ begin
   end;
 
   if Graphic = pgGrenadeExplode then
-    fProjectileImage.DrawTo(fLayers[rlLemmings], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect)
+    fProjectileImage.DrawTo(fLayers[rlLemmingsHigh], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect)
   else
     fProjectileImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
