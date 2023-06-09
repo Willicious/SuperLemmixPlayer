@@ -347,13 +347,13 @@ end;
 
 function TGamePreviewScreen.GetTextLineInfoArray: TextLineArray;
 const
-  TITLE_SHIFT = 0.600;
-  GROUP_SHIFT = 0.600;
-  NUM_LEMS_SHIFT = 0.250;
-  RESCUE_LEMS_SHIFT = 0;
-  RELEASE_RATE_SHIFT = 0.800;
-  TIME_LIMIT_SHIFT = 0.150;
-  AUTHOR_SHIFT = 0.500;
+  TITLE_SHIFT = 0.600;        //red
+  GROUP_SHIFT = 0.600;        //red
+  NUM_LEMS_SHIFT = 0.250;     //blue
+  RESCUE_LEMS_SHIFT = 0;      //green (default)
+  RELEASE_RATE_SHIFT = 0.800; //yellow
+  TIME_LIMIT_SHIFT = 0.150;   //teal
+  AUTHOR_SHIFT = 0.500;       //violet
 
   LINE_Y_SPACING = 28;
 var

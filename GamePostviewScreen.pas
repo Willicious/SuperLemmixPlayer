@@ -166,6 +166,11 @@ begin
 end;
 
 function TGamePostviewScreen.GetScreenText: string;
+//const
+//  TOP_TEXT_SHIFT = 0.150;      //teal
+//  RESCUE_RESULT_SHIFT = 0.500; //violet
+//  COMMENT_SHIFT = 0.600;       //red
+//  TIME_RECORD_SHIFT = 0.800;   //yellow
 var
   WhichText: TPostviewText;
   i: Integer;
@@ -290,6 +295,7 @@ begin
 
     LF(2);
 
+    // rescue result
     Add(SYouRescued + SDone);
     LF(0.5);
     Add(SYouNeeded + STarget);
@@ -304,6 +310,7 @@ begin
 
     LF(2);
 
+    // postview comment
     WhichText := GameParams.CurrentLevel.Group.PostviewTexts[GetResultIndex];
     for i := 0 to 6 do
     begin
@@ -311,6 +318,7 @@ begin
         Add(WhichText.Text[i]);
     end;
 
+    // time record
     if gSuccess then
     begin
       LF(2);
