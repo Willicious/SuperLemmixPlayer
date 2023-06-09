@@ -5341,7 +5341,7 @@ begin
       end;
     end;
     // Check whether we fall down due to a wall
-    for i := 6 to 7 do
+    for i := 5 to 6 do
     begin
       if HasPixelAt(L.LemX + L.LemDX, L.LemY - i) then
       begin
