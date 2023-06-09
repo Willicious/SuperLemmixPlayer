@@ -2253,6 +2253,16 @@ begin
   end
   else if (NewSkill = baFreezing) then
   begin
+    if L.LemIsTimebomber then
+      begin
+        CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
+        if L.LemAction in [baDrowning, baFloating, baGliding, baFalling,
+                           baSwimming, baReaching, baShimmying, baJumping] then
+          Transition(L, baFreezerExplosion)
+        else
+          Transition(L, baFreezing);
+        Exit;
+      end;
     L.LemExplosionTimer := 1;
     L.LemTimerToFreeze := True;
     L.LemHideCountdown := True;
@@ -2595,9 +2605,7 @@ function TLemmingGame.MayAssignFreezer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDangling, baVaporizing, baVinetrapping,
-               baSplatting, baExiting, baSleeping];
-               //putting baTimebombing in here doesn't work - why???
+               baVaporizing, baVinetrapping, baSplatting, baExiting, baSleeping];
 begin
     //non-assignable from the top of the level
   if L.LemY <= 0 then
@@ -2606,9 +2614,6 @@ begin
       Exit;
     end else
   Result := not (L.LemAction in ActionSet)
-  //stops repeat timebomber assignments to same lem
-  //and bomber/freezer assignments to timebomber
-  and not (L.LemExplosionTimer > 0);
 end;
 
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
