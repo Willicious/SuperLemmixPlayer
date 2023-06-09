@@ -2562,11 +2562,9 @@ end;
 //Timebomber can be assigned to all states except those in list
 function TLemmingGame.MayAssignTimebomber(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, //baFreezing, hotbookmark - we may want to allow this
-               baTimebombFinish, baExploding, baFreezerExplosion,
-               baDangling, baVaporizing, baVinetrapping,
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezerExplosion, baDangling, baVaporizing, baVinetrapping,
                baSplatting, baExiting, baSleeping];
-               //putting baTimebombing in here doesn't work - why???
 begin
   //non-assignable from the top of the level
   if L.LemY <= 0 then
@@ -2575,19 +2573,16 @@ begin
       Exit;
     end else
   Result := not (L.LemAction in ActionSet)
-  //stops repeat timebomber assignments to same lem
-  //and bomber/freezer assignments to timebomber
+  //stops repeat timebomber assignments to same lem, and bomber/freezer assignments to timebomber
   and not (L.LemExplosionTimer > 0);
 end;
 
 //Exploders and freezers can be assigned to all states except those in list
 function TLemmingGame.MayAssignExploder(L: TLemming): Boolean;
 const
-  ActionSet = [baTimebombing, baOhnoing, //baFreezing, hotbookmark - we may want to allow this
-               baTimebombFinish, baExploding, baFreezerExplosion,
-               baDangling, baVaporizing, baVinetrapping, baSplatting,
-               baExiting, baSleeping];
-               //putting baTimebombing in here doesn't work - why???
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezerExplosion, baDangling, baVaporizing, baVinetrapping,
+               baSplatting, baExiting, baSleeping];
 begin
   //non-assignable from the top of the level
   if L.LemY <= 0 then
@@ -2596,8 +2591,7 @@ begin
       Exit;
     end else
   Result := not (L.LemAction in ActionSet)
-  //stops repeat timebomber assignments to same lem
-  //and bomber/freezer assignments to timebomber
+  //stops repeat timebomber assignments to same lem, and bomber/freezer assignments to timebomber
   and not (L.LemExplosionTimer > 0);
 end;
 
