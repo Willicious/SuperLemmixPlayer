@@ -187,6 +187,15 @@ var
 const
   TEXT_Y_POSITION = 170;
 begin
+  if GameParams.Level.Info.LemmingsCount = 1 then
+    GameParams.MainForm.Caption :=
+      'SuperLemmix - ' + GameParams.Level.Info.Title + ' - Save ' + IntToStr(GameParams.Level.Info.RescueCount)
+      + ' of ' + IntToStr(GameParams.Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesSingular
+  else
+    GameParams.MainForm.Caption :=
+      'SuperLemmix - ' + GameParams.Level.Info.Title + ' - Save ' + IntToStr(GameParams.Level.Info.RescueCount)
+      + ' of ' + IntToStr(GameParams.Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
+
   fClickableRegions.Clear;
   Assert(GameParams <> nil);
 

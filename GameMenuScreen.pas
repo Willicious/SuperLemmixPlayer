@@ -150,6 +150,7 @@ begin
   fGroupGraphic := TBitmap32.Create;
 
   fScrollerTextList := TStringList.Create;
+  GameParams.MainForm.Caption := 'SuperLemmix';
 end;
 
 destructor TGameMenuScreen.Destroy;

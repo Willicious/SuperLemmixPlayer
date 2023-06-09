@@ -47,7 +47,6 @@ type
 
     procedure RestoreDefaultSize;
     procedure RestoreDefaultPosition;
-    //procedure GetLevelInfo(aCaption: string);    //unfinished
   end;
 
 var
@@ -242,17 +241,6 @@ begin
     GameParams.MainForm.ClientHeight := Screen.Height;
   end;
 end;
-
-//// Show level info on Window caption - unfinished
-//procedure TMainForm.GetLevelInfo(aCaption: string);
-//var
-//TMainForm: TForm;
-//begin
-  //with GameParams.Level.Info do
-  //begin
-    //TMainForm.Caption := 'SuperLemmix' + Title;
-  //end;
-//end;
 
 procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,
   NewHeight: Integer; var Resize: Boolean);
