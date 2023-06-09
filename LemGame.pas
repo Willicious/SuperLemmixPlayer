@@ -4088,10 +4088,13 @@ begin
   //Left Side
   if (L.LemX <= 1) then
   begin
-//this code makes the sides solid
-    TurnAround(L);
-    Inc(L.LemX);
-    Transition(L, baWalking);
+    //this makes the sides behave like one-way forcefields
+    HandleForceField(L, 1);
+
+//    //we want to cancel certain actions
+//    if L.LemAction in [baPlatforming, baBashing, baFencing] then
+//      Transition(L, baWalking);
+
     Result := True;
 
 ////this code makes the sides into exits!
@@ -4103,16 +4106,20 @@ begin
 //    end;
 
 ////in theory, this should teleport them to the right, but it doesn't work
-//  L.LemX := PhysicsMap.Width -8;
+//  L.LemX := PhysicsMap.Width -2;
+//  L.LemTeleporting := True;
   end;
 
     //Right Side
   if (L.LemX >= PhysicsMap.Width -2) then
   begin
-//this code makes the sides solid
-    TurnAround(L);
-    Dec(L.LemX);
-    Transition(L, baWalking);
+    //this makes the sides behave like one-way forcefields
+    HandleForceField(L, -1);
+
+//    //we want to cancel certain actions
+//    if L.LemAction in [baPlatforming, baBashing, baFencing] then
+//      Transition(L, baWalking);
+
     Result := True;
 
 ////this code makes the sides into exits!
