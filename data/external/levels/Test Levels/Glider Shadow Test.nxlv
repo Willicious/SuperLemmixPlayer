@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.3
+#   Created with SLXEditor 2.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,11 +8,11 @@
  TITLE Skill Shadow & Sides Test
  AUTHOR 
  ID x7E5077FC4D0D686E
- VERSION x000000000000000E
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 448
  HEIGHT 160
  START_X 160
  START_Y 80
@@ -54,6 +54,22 @@
    X 225
    Y 113
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas_slushworld
+   PIECE owf_left
+   X 418
+   Y 21
+   HEIGHT 96
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas_slushworld
+   PIECE owf_right
+   X 313
+   Y 21
+   HEIGHT 96
  $END
  
  
@@ -110,8 +126,8 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 298
-   Y -4
+   X 297
+   Y -8
    ONE_WAY
  $END
  
@@ -127,14 +143,6 @@
    STYLE orig_crystal
    PIECE bar_04
    X 10
-   Y 74
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 250
    Y 74
    ONE_WAY
  $END
@@ -179,8 +187,156 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 315
-   Y 8
+   X 338
+   Y 23
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 304
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X -10
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X -22
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 273
+   Y -57
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 137
+   Y -53
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 178
+   Y -51
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 65
+   Y -57
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 329
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 378
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 313
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 394
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 338
+   Y 20
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 362
+   Y -25
+   ERASE
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 323
+   Y -25
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 307
+   Y -25
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 401
+   Y -25
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 417
+   Y -25
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 353
+   Y 52
    ONE_WAY
  $END
  
@@ -188,13 +344,13 @@
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 78
+   X 110
    Y 20
    FLIP_HORIZONTAL
  $END
  
  $LEMMING
-   X 258
+   X 229
    Y 20
  $END
  
@@ -205,8 +361,9 @@
  $END
  
  $LEMMING
-   X 282
-   Y 74
+   X 397
+   Y 52
+   FLIP_HORIZONTAL
  $END
  
  $LEMMING
@@ -218,6 +375,11 @@
    X 183
    Y 51
    FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 346
+   Y 52
  $END
  
  

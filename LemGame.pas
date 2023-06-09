@@ -4090,48 +4090,15 @@ begin
   begin
     //this makes the sides behave like one-way forcefields
     HandleForceField(L, 1);
-
-//    //we want to cancel certain actions
-//    if L.LemAction in [baPlatforming, baBashing, baFencing] then
-//      Transition(L, baWalking);
-
     Result := True;
-
-////this code makes the sides into exits!
-//  Transition(L, baJumping);
-//  if (L.LemX <= 1) then
-//    begin
-//      RemoveLemming(L, RM_SAVE);
-//      CueSoundEffect(SFX_YIPPEE, L.Position);
-//    end;
-
-////in theory, this should teleport them to the right, but it doesn't work
-//  L.LemX := PhysicsMap.Width -2;
-//  L.LemTeleporting := True;
   end;
 
-    //Right Side
+  //Right Side
   if (L.LemX >= PhysicsMap.Width -2) then
   begin
     //this makes the sides behave like one-way forcefields
     HandleForceField(L, -1);
-
-//    //we want to cancel certain actions
-//    if L.LemAction in [baPlatforming, baBashing, baFencing] then
-//      Transition(L, baWalking);
-
     Result := True;
-
-////this code makes the sides into exits!
-//  Transition(L, baJumping);
-//  If L.LemX >= PhysicsMap.Width -1 then
-//    begin
-//      RemoveLemming(L, RM_SAVE);
-//      CueSoundEffect(SFX_YIPPEE, L.Position);
-//    end;
-
-////this teleports them to the left side, and works, but crashes the game
-//  L.LemX := 8;
   end;
 end;
 
