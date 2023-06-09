@@ -3410,6 +3410,10 @@ begin
   begin
     Result := True;
 
+    // We want to cancel certain actions first
+    if L.LemAction in [baPlatforming, baBashing, baFencing] then
+      Transition(L, baWalking);
+
     TurnAround(L);
 
     // Zombies always infect a blocker they bounce off
@@ -3425,8 +3429,7 @@ begin
         ApplyMinerMask(L, 1, -2*L.LemDx, -1);
     end
     // Required for turned builders not to walk into air
-    // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
-    else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
+    else if (L.LemAction = baBuilding) and (L.LemPhysicsFrame >= 9) then
       LayBrick(L)
     else if L.LemAction in [baClimbing, baSliding, baDehoisting] then
     begin
