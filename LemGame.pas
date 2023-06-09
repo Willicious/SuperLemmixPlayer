@@ -5489,8 +5489,9 @@ const
                   Inc(L.LemX, L.LemDX);
                   fLemNextAction := baSliding;
                 end else begin
-                  L.LemDX := -L.LemDX;
-                  fLemNextAction := baFalling;
+                  TurnAround(L);
+                  //L.LemDX := -L.LemDX;
+                  //fLemNextAction := baFalling;
                 end;
               end;
               Exit;
