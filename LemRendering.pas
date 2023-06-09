@@ -215,8 +215,8 @@ uses
   SharedGlobals,
   GameControl;
 
-var                     //hotbookmark
-  fStartTime: Cardinal; //used to set start time for drawing VisualSFX
+//var                     //hotbookmark
+//  fStartTime: Cardinal; //used to set start time for drawing VisualSFX
 
 { TRenderer }
 
@@ -3155,7 +3155,7 @@ begin
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
   fTempLemmingList := TLemmingList.Create(false);
-  fStartTime := GetTickCount; //hotbookmark - this seems to start the timer on the preview screen ???
+  //fStartTime := GetTickCount; //hotbookmark - this seems to start the timer on the preview screen ???
 
   fLaserGraphic := TBitmap32.Create;
   fLaserGraphic.DrawMode := dmCustom;
