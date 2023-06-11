@@ -13,8 +13,7 @@ type
     gspNormal,
     gspPause,
     gspFF,
-    gspSlowMo,
-    gspSuperlemming
+    gspSlowMo
   );
 
   IGameWindow = Interface(IInterface)

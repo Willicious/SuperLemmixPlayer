@@ -1589,8 +1589,8 @@ begin
         DrawButtonSelector(spbSlower, true);
         Game.IsBackstepping := False;
 
-        //deactivates min/max RR jumping in Superlemming/ClassicMode
-        if GameParams.ClassicMode or Game.IsSuperlemming then
+        //deactivates min/max RR jumping in ClassicMode
+        if GameParams.ClassicMode then
           begin
             Game.SetSelectedSkill(i, True);
           end else
@@ -1601,8 +1601,8 @@ begin
         DrawButtonSelector(spbFaster, true);
         Game.IsBackstepping := False;
 
-        //deactivates min/max RR jumping in Superlemming/ClassicMode
-        if GameParams.ClassicMode or Game.IsSuperlemming then
+        //deactivates min/max RR jumping in ClassicMode
+        if GameParams.ClassicMode then
           begin
             Game.SetSelectedSkill(i, True);
             end else
@@ -1610,8 +1610,6 @@ begin
       end;
     spbPause:
       begin
-        if Game.IsSuperLemming then Exit;
-
         Game.PauseWasPressed := True;
         if RewindPressed then fRewindPressed := False;
 

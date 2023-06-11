@@ -578,7 +578,7 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-      Fast, Slow, Superlemming, ForceOne, TimeForFrame, TimeForPausedRR,
+      Fast, Slow, ForceOne, TimeForFrame, TimeForPausedRR,
       TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
   MouseClickFrameSkip: Integer;
 begin
@@ -610,14 +610,11 @@ begin
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
   Slow := (fGameSpeed = gspSlowMo);
-  Superlemming := (fGameSpeed = gspSuperlemming);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   fForceUpdateOneFrame := (MouseClickFrameSkip > 0);
   CurrTime := TimeGetTime;
   if Slow then
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
-  else if Superlemming then
-    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeSuper)
   else
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
 
@@ -644,8 +641,7 @@ begin
 
   if Game.IsSuperlemming then
   begin
-    GameSpeed := gspSuperlemming;
-    SkillPanel.DrawButtonSelector(spbPause, true);
+    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeSuper);
     SkillPanel.DrawButtonSelector(spbRewind, true);
     SkillPanel.DrawButtonSelector(spbFastForward, true);
   end;
@@ -1414,19 +1410,17 @@ begin
 
     case func.Action of
       lka_ReleaseMouse: ReleaseMouse;
-      lka_ReleaseRateMax: if not (GameParams.ClassicMode or Game.IsSuperlemming) then
+      lka_ReleaseRateMax: if not GameParams.ClassicMode then
                           begin
                            SetSelectedSkill(spbFaster, True, True);
                           end;
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
-      lka_ReleaseRateMin: if not (GameParams.ClassicMode or Game.IsSuperlemming) then
+      lka_ReleaseRateMin: if not GameParams.ClassicMode then
                           begin
                           SetSelectedSkill(spbSlower, True, True);
                           end;
       lka_Pause: begin
-                 if Game.IsSuperLemming then Exit;
-
                  Game.PauseWasPressed := True;
                  if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
 
