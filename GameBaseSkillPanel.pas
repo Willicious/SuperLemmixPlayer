@@ -1670,9 +1670,12 @@ begin
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then // cancels Replay after Restart in ClassicMode
           begin
             Game.CancelReplayAfterSkip := true;
+            Game.fReplayWasLoaded := false;
             fGameWindow.GotoSaveState(0);
-          end else
+          end else begin
             fGameWindow.GotoSaveState(0);
+            Game.fReplayWasLoaded := true;
+          end;
       end;
     spbSquiggle:
       begin

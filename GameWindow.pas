@@ -1524,9 +1524,12 @@ begin
                    if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
                       begin
                         Game.CancelReplayAfterSkip := true;
+                        Game.fReplayWasLoaded := false;
                         GotoSaveState(0);
-                      end else
+                      end else begin
                         GotoSaveState(0);
+                        Game.fReplayWasLoaded := true;
+                      end;
                    end;
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
       lka_SaveReplay: if not GameParams.ClassicMode then SaveReplay;
