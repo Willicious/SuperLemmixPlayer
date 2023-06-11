@@ -1884,8 +1884,8 @@ begin
     Exit;
 
   //stops single-lemming levels ending when 1 lemming has been removed and 0 are saved
-  if (Level.Info.LemmingsCount = 1) and ((LemmingsRemoved) = 1)
-  and not (LemmingsIn >= 1) then
+  if ((Level.Info.LemmingsCount = 1) and ((LemmingsRemoved) = 1))
+  and not (LemmingsIn >= 1) and not GameParams.ClassicMode then
       Exit;
   //we probably want to do more here ^^^ - maybe auto-restart, or show a message
 
