@@ -1171,6 +1171,8 @@ SelectedLemming: TLemming;
 begin
   SelectedLemming := fRenderInterface.SelectedLemming;
 
+  if IsHighlightHotkey then Exit;
+
   if (SelectedLemming <> nil) and not ProcessSkillAssignment(False) then
   begin
     if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then

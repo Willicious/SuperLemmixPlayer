@@ -1733,7 +1733,6 @@ begin
     SetAdjustedGameCursorPoint(Img.ControlToBitmap(Point(X, Y)));
 
     CheckShifts(Shift);
-    Game.PlayAssignFailSound;
 
     // Middle or Right clicks get passed to the keyboard handler, because their
     // handling has more in common with that than with mouse handling
@@ -1751,11 +1750,15 @@ begin
 
     if (Button = mbLeft) and not Game.IsHighlightHotkey then
     begin
+      // deactivates assign-whilst-paused in ClassicMode
+      if ((fGameSpeed = gspPause) and GameParams.ClassicMode) then Exit;
+
       Game.RegainControl;
-      if (not GameParams.ClassicMode) or (fGameSpeed <> gspPause) then // this deals with deactivating assign-whilst-paused whilst in ClassicMode
-        Game.ProcessSkillAssignment;
+      Game.ProcessSkillAssignment;
+
       if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
         if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
+
     end else if (Button = mbRight) and RightMouseUnassigned
     and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
     begin
@@ -1775,6 +1778,7 @@ begin
       DoDraw;
 
     fLastMousePress := GetTickCount;
+    Game.PlayAssignFailSound;
   end;
 end;
 
