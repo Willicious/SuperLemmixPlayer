@@ -64,6 +64,7 @@ type
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
     fSkillSelected        : TBitmap32;
+    fTurboHighlight       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
     fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
@@ -71,6 +72,7 @@ type
     fLastHighlitSkill     : TSkillPanelButton; // to avoid sounds when shouldn't be played
 
     fRewindPressed        : Boolean;
+    fTurboPressed         : Boolean;
 
     fLastDrawnStr         : String;
     fNewDrawStr           : String;
@@ -160,9 +162,11 @@ type
 
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
+    procedure DrawTurboHighlight;
     procedure DrawMinimap; virtual;
 
     property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
+    property TurboPressed: Boolean read fTurboPressed write fTurboPressed;
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
@@ -272,6 +276,7 @@ begin
   fMinimapImage.OnMouseUp := MinimapMouseUp;
 
   fRewindPressed := False;
+  fTurboPressed := False;
 
   // Create font and skill panel images (but do not yet load them)
   SetLength(fInfoFont, NUM_FONT_CHARS);
@@ -306,6 +311,10 @@ begin
   fSkillSelected := TBitmap32.Create;
   fSkillSelected.DrawMode := dmBlend;
   fSkillSelected.CombineMode := cmMerge;
+
+  fTurboHighlight := TBitmap32.Create;
+  fTurboHighlight.DrawMode := dmBlend;
+  fTurboHighlight.CombineMode := cmMerge;
 
   fSkillCountErase := TBitmap32.Create;
   fSkillCountErase.DrawMode := dmBlend;
@@ -356,6 +365,7 @@ begin
 
   fSkillInfinite.Free;
   fSkillSelected.Free;
+  fTurboHighlight.Free;
   fSkillCountErase.Free;
   fSkillCountEraseInvert.Free;
   fSkillLock.Free;
@@ -671,6 +681,7 @@ begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
   GetGraphic('skill_selected.png', fSkillSelected);
+  GetGraphic('turbo_highlight.png', fTurboHighlight);
 
   fSkillCountEraseInvert.Assign(fSkillCountErase);
   for y := 0 to fSkillCountEraseInvert.Height-1 do
@@ -1146,6 +1157,25 @@ begin
   DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fSkillSelected);
 end;
 
+procedure TBaseSkillPanel.DrawTurboHighlight;
+var
+  BorderRect: TRect;
+  aButton: TSkillPanelButton;
+begin
+  aButton := spbFastForward;
+  BorderRect := fButtonRects[aButton];
+
+  if TurboPressed then
+  begin
+    Inc(BorderRect.Right, ResMod);
+    Inc(BorderRect.Bottom, ResMod * 2);
+
+    DrawNineSlice(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect,
+      Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fTurboHighlight);
+  end else if not (TurboPressed or (fGameWindow.GameSpeed = gspFF)) then
+    RemoveHighlight(spbFastForward);
+end;
+
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
 var
   BorderRect, EraseRect: TRect;
@@ -1302,7 +1332,7 @@ begin
             fCombineHueShift := 1 / 6;
         end else
           SpecialCombine := false;
-      end else if (i > LemmingSavedStartIndex) and (i <= LemmingSavedStartIndex + 4) then     //poo
+      end else if (i > LemmingSavedStartIndex) and (i <= LemmingSavedStartIndex + 4) then
       begin
         if Game.LemmingsSaved < Level.Info.RescueCount then
         begin
@@ -1613,6 +1643,7 @@ begin
         // 1 second grace to prevent restart from failing the NoPause talisman
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
         if RewindPressed then fRewindPressed := False;
+        if TurboPressed then fTurboPressed := False;
 
         if fGameWindow.GameSpeed = gspPause then
         begin
@@ -1636,10 +1667,20 @@ begin
     spbFastForward:
       begin
         if Game.IsSuperLemming then Exit;
-
         if RewindPressed then fRewindPressed := False;
-
         if Game.IsBackstepping then Game.IsBackstepping := False;
+
+        if GameParams.TurboFF then
+        begin
+          if ((fGameWindow.GameSpeed = gspFF) or TurboPressed) then fGameWindow.GameSpeed := gspNormal;
+
+          if not TurboPressed then fTurboPressed := True
+            else fTurboPressed := False;
+
+          Exit;
+        end;
+
+        if TurboPressed then fTurboPressed := False;
 
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
@@ -1653,6 +1694,7 @@ begin
         if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
           fGameWindow.GameSpeed := gspNormal;
 
+        if TurboPressed then fTurboPressed := False;
         if not RewindPressed then
         begin
           fRewindPressed := True;

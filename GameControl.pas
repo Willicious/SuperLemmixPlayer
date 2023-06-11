@@ -66,6 +66,7 @@ type
     moNoAutoReplayMode,
     moReplayAfterRestart,
     moPauseAfterBackwards,
+    moTurboFF,
     moNoBackgrounds,
     moClassicMode,
     moHideShadows,
@@ -226,6 +227,7 @@ type
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
+    property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
@@ -432,6 +434,7 @@ begin
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
+  SaveBoolean('TurboFastForward', TurboFF);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   //SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
   SaveBoolean('ClassicMode', ClassicMode);
@@ -610,6 +613,7 @@ begin
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
+    TurboFF := LoadBoolean('TurboFastForward', TurboFF);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
     //ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);

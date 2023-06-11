@@ -59,6 +59,7 @@ type
     rgExitSound: TRadioGroup;
     cbShowMinimap: TCheckBox;
     cbReplayAfterRestart: TCheckBox;
+    cbTurboFF: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -283,6 +284,7 @@ begin
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
     cbShowMinimap.Checked := GameParams.ShowMinimap;
+    cbTurboFF.Checked := GameParams.TurboFF;
 
     // Zoom Dropdown
     SetZoomDropdown;
@@ -353,6 +355,7 @@ begin
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
 
   GameParams.ShowMinimap := cbShowMinimap.Checked;
+  GameParams.TurboFF := cbTurboFF.Checked;
 
   // Zoom Dropdown
   GameParams.ZoomLevel := cbZoom.ItemIndex + 1;

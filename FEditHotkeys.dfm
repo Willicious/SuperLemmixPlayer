@@ -120,6 +120,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Time Skip'
       'Special Skip'
       'Fast Forward'
+      'Turbo Forward'
       'Rewind'
       'Slow Motion'
       'Save Image'

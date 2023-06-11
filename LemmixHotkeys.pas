@@ -37,6 +37,7 @@ type
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
+                         lka_Turbo,
                          lka_Rewind,
                          lka_SlowMotion,
                          lka_SaveImage,
@@ -132,6 +133,7 @@ begin
   SetKeyFunction($4E, lka_Nuke);
   SetKeyFunction($52, lka_Restart);
   SetKeyFunction($46, lka_FastForward);
+  SetKeyFunction($54, lka_Turbo);
   SetKeyFunction($42, lka_Rewind);
   SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($05, lka_ZoomIn);
@@ -165,6 +167,7 @@ begin
   SetKeyFunction($4E, lka_Nuke);
   SetKeyFunction($52, lka_Restart);
   SetKeyFunction($46, lka_FastForward);
+  SetKeyFunction($54, lka_Turbo);
   SetKeyFunction($44, lka_Rewind);
   SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($05, lka_ZoomIn);
@@ -239,7 +242,7 @@ begin
   SetKeyFunction($71, lka_LoadState);
   SetKeyFunction($72, lka_SaveState);
   SetKeyFunction($34, lka_FastForward);
-  SetKeyFunction($35, lka_FastForward);
+  SetKeyFunction($35, lka_Turbo);
   SetKeyFunction($04, lka_Pause);
   SetKeyFunction($05, lka_ZoomIn);
   SetKeyFunction($06, lka_ZoomOut);
@@ -309,6 +312,7 @@ begin
   if s = 'skip' then Result := lka_Skip;
   if s = 'special_skip' then Result := lka_SpecialSkip;
   if s = 'fastforward' then Result := lka_FastForward;
+  if s = 'turboforward' then Result := lka_Turbo;
   if s = 'rewind' then Result := lka_Rewind;
   if s = 'slow_motion' then Result := lka_SlowMotion;
   if s = 'save_image' then Result := lka_SaveImage;
@@ -463,6 +467,7 @@ var
       lka_Skip:             Result := 'Skip';
       lka_SpecialSkip:      Result := 'Special_Skip';
       lka_FastForward:      Result := 'FastForward';
+      lka_Turbo:            Result := 'TurboForward';
       lka_Rewind:           Result := 'Rewind';
       lka_SlowMotion:       Result := 'Slow_Motion';
       lka_SaveImage:        Result := 'Save_Image';

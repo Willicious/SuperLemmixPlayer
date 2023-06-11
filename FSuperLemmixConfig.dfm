@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Configuration'
-  ClientHeight = 439
+  ClientHeight = 470
   ClientWidth = 276
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,12 +19,12 @@ object FormNXConfig: TFormNXConfig
   OnCreate = FormCreate
   DesignSize = (
     276
-    439)
+    470)
   PixelsPerInch = 96
   TextHeight = 13
   object btnOK: TButton
     Left = 11
-    Top = 410
+    Top = 441
     Width = 80
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -34,7 +34,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 97
-    Top = 410
+    Top = 441
     Width = 80
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -45,7 +45,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 183
-    Top = 410
+    Top = 441
     Width = 80
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -57,8 +57,8 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 276
-    Height = 408
-    ActivePage = TabSheet1
+    Height = 439
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -187,7 +187,16 @@ object FormNXConfig: TFormNXConfig
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
-        TabOrder = 7
+        TabOrder = 0
+        OnClick = OptionChanged
+      end
+      object cbReplayAfterRestart: TCheckBox
+        Left = 25
+        Top = 35
+        Width = 217
+        Height = 17
+        Caption = 'Auto-Replay After Restarting Level'
+        TabOrder = 1
         OnClick = OptionChanged
       end
       object cbNoAutoReplay: TCheckBox
@@ -196,7 +205,7 @@ object FormNXConfig: TFormNXConfig
         Width = 234
         Height = 17
         Caption = 'Auto-Replay After Backwards Frameskip'
-        TabOrder = 1
+        TabOrder = 2
         OnClick = OptionChanged
       end
       object cbPauseAfterBackwards: TCheckBox
@@ -205,24 +214,33 @@ object FormNXConfig: TFormNXConfig
         Width = 205
         Height = 17
         Caption = 'Pause After Backwards Frameskip'
-        TabOrder = 5
+        TabOrder = 3
+        OnClick = OptionChanged
+      end
+      object cbTurboFF: TCheckBox
+        Left = 25
+        Top = 104
+        Width = 177
+        Height = 17
+        Caption = 'Activate Turbo Fast-Forward'
+        TabOrder = 4
         OnClick = OptionChanged
       end
       object cbSpawnInterval: TCheckBox
         Left = 25
-        Top = 104
+        Top = 127
         Width = 205
         Height = 17
         Caption = 'Activate Spawn Interval Display'
-        TabOrder = 6
+        TabOrder = 5
         OnClick = OptionChanged
       end
       object ClassicMode: TGroupBox
         Left = 25
-        Top = 157
+        Top = 189
         Width = 205
         Height = 186
-        TabOrder = 0
+        TabOrder = 7
         object cbHideShadows: TCheckBox
           Left = 27
           Top = 25
@@ -278,9 +296,27 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
       end
+      object btnDeactivateClassicMode: TButton
+        Left = 52
+        Top = 355
+        Width = 150
+        Height = 38
+        Caption = 'Deactivate Classic Mode'
+        TabOrder = 8
+        OnClick = btnDeactivateClassicModeClick
+      end
+      object cbClassicMode: TCheckBox
+        Left = 208
+        Top = 180
+        Width = 51
+        Height = 17
+        Caption = 'ACM'
+        TabOrder = 9
+        Visible = False
+      end
       object btnClassicMode: TButton
         Left = 52
-        Top = 138
+        Top = 170
         Width = 150
         Height = 38
         Hint = 
@@ -300,35 +336,8 @@ object FormNXConfig: TFormNXConfig
         Caption = 'Activate Classic Mode'
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 3
+        TabOrder = 6
         OnClick = btnClassicModeClick
-      end
-      object btnDeactivateClassicMode: TButton
-        Left = 52
-        Top = 323
-        Width = 150
-        Height = 38
-        Caption = 'Deactivate Classic Mode'
-        TabOrder = 4
-        OnClick = btnDeactivateClassicModeClick
-      end
-      object cbClassicMode: TCheckBox
-        Left = 208
-        Top = 148
-        Width = 51
-        Height = 17
-        Caption = 'ACM'
-        TabOrder = 2
-        Visible = False
-      end
-      object cbReplayAfterRestart: TCheckBox
-        Left = 25
-        Top = 35
-        Width = 217
-        Height = 17
-        Caption = 'Auto-Replay After Restarting Level'
-        TabOrder = 8
-        OnClick = OptionChanged
       end
     end
     object Graphics: TTabSheet
@@ -503,7 +512,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 3
       DesignSize = (
         268
-        380)
+        411)
       object Label3: TLabel
         Left = 17
         Top = 32
@@ -549,7 +558,7 @@ object FormNXConfig: TFormNXConfig
       end
       object rgExitSound: TRadioGroup
         Left = 72
-        Top = 184
+        Top = 202
         Width = 113
         Height = 65
         Anchors = []
