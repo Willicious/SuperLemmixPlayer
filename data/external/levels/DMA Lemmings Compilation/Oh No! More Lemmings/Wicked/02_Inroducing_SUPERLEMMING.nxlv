@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC Acorn ONML/AcornONMLSuperLem
  ID xFF86647EFF86647E
- VERSION x0000000000000002
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,8 +34,30 @@
    BASHER 6
    MINER 2
    DIGGER 6
- $END 
+ $END
  
+ $TALISMAN
+   TITLE Bronze Talisman
+   ID 2
+   COLOR Bronze
+   CLASSIC_MODE 0
+ $END
+
+ $TALISMAN
+   TITLE Silver Talisman
+   ID 0
+   COLOR Silver
+   NO_PAUSE 0
+ $END
+
+  $TALISMAN
+   TITLE Gold Talisman
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+   NO_PAUSE 0
+ $END
+
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
