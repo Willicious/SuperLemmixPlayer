@@ -84,6 +84,8 @@ end;
 procedure TGamePostviewScreen.ReplaySameLevel;
 begin
   CloseScreen(gstPreview);
+  if GameParams.ReplayAfterRestart then
+    GlobalGame.fReplayWasLoaded := True;
 end;
 
 procedure TGamePostviewScreen.BuildScreen;
