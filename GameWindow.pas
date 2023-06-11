@@ -495,7 +495,8 @@ procedure TGameWindow.RenderMinimap;
 begin
 if GameParams.ShowMinimap then
   begin
-    if GameParams.MinimapHighQuality and not Game.IsSuperlemming then
+    if GameParams.MinimapHighQuality
+    and not (Game.IsSuperlemming or SkillPanel.RewindPressed or (fGameSpeed = gspFF)) then
       begin
         fMinimapBuffer.Clear(0);
         Img.Bitmap.DrawTo(fMinimapBuffer);
@@ -669,7 +670,8 @@ begin
       PrevScrollTime := CurrTime;
       if CheckScroll then
       begin
-        if GameParams.MinimapHighQuality and not Game.IsSuperlemming then
+        if GameParams.MinimapHighQuality
+        and not (Game.IsSuperlemming or SkillPanel.RewindPressed or (fGameSpeed = gspFF)) then
           SetRedraw(rdRefresh)
         else
           SetRedraw(rdRedraw);
@@ -968,7 +970,8 @@ begin
       fRenderer.DrawLemmings(fClearPhysics);
       fRenderer.DrawProjectiles;
 
-      if GameParams.MinimapHighQuality or (GameSpeed = gspPause) or not Game.IsSuperlemming then
+      if GameParams.MinimapHighQuality or (GameSpeed = gspPause)
+      and not (Game.IsSuperlemming or SkillPanel.RewindPressed or (fGameSpeed = gspFF)) then
         DrawRect := Img.Bitmap.BoundsRect
       else begin
         DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
