@@ -21,6 +21,13 @@ $SKILLSET
   DIGGER 20
 $END
 
+ $TALISMAN
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END
+
 $GADGET
   STYLE orig_fire
   PIECE water

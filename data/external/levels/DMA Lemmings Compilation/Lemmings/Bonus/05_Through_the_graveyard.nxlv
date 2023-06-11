@@ -19,6 +19,13 @@ $SKILLSET
   MINER 2
 $END
 
+ $TALISMAN
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END
+
 $GADGET
   STYLE orig_dirt
   PIECE water

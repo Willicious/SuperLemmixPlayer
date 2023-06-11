@@ -34,6 +34,13 @@
      CLONER    0
  $END 
  
+ $TALISMAN
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END
+
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
