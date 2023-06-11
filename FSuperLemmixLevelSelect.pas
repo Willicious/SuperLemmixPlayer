@@ -36,6 +36,7 @@ type
     btnCleanseLevels: TButton;
     btnCleanseOne: TButton;
     btnClearRecords: TButton;
+    btnResetTalismans: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -50,6 +51,7 @@ type
     procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
     procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnResetTalismansClick(Sender: TObject);
   private
     fLastLevelPath: String;
 
@@ -277,6 +279,7 @@ begin
   pnLevelInfo.Visible := false;
 
   InitializeTreeview;
+  btnResetTalismans.Enabled := false;
 end;
 
 procedure TFLevelSelect.FormShow(Sender: TObject);
@@ -397,6 +400,29 @@ procedure TFLevelSelect.btnOKClick(Sender: TObject);
 begin
   WriteToParams;
   ModalResult := mrOk;
+end;
+
+procedure TFLevelSelect.btnResetTalismansClick(Sender: TObject);
+var
+  Obj: TObject;
+  L: TNeoLevelEntry absolute Obj;
+  N: TTreeNode;
+  ImgBMP, MaskBMP: TBitmap;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit; // safeguard
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then Exit;
+
+  if MessageDlg('Are you sure you want to reset talismans for the level "' + L.Title + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+  begin
+    L.ResetTalismans;
+    InitializeTreeview;
+    tvLevelSelectClick(tvLevelSelect);
+  end;
 end;
 
 procedure TFLevelSelect.WriteToParams;
@@ -547,6 +573,7 @@ begin
   if N = nil then
   begin
     btnOk.Enabled := false;
+    btnResetTalismans.Enabled := false;
     Exit;
   end;
 
@@ -603,6 +630,7 @@ begin
     fInfoForm.Visible := false;
 
     btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
+    btnResetTalismans.Enabled := false;
 
     ClearTalismanButtons;
     SetAdvancedOptionsGroup;
@@ -625,6 +653,11 @@ begin
     fPackTalBox.Visible := false;
 
     btnOk.Enabled := true;
+
+    if (L.Talismans.Count <> 0) then
+      btnResetTalismans.Enabled := true
+    else
+      btnResetTalismans.Enabled := false;
 
     SetAdvancedOptionsLevel;
   end;

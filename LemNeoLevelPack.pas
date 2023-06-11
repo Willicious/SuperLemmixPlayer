@@ -108,6 +108,7 @@ type
 
       procedure WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);
       procedure WipeRecords;
+      procedure ResetTalismans;
 
       property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
@@ -604,6 +605,13 @@ procedure TNeoLevelEntry.WipeRecords;
 begin
   UserRecords.Wipe;
   WorldRecords.Wipe;
+end;
+
+procedure TNeoLevelEntry.ResetTalismans;
+var
+aIndex: Cardinal;
+begin
+  SetTalismanStatus(aIndex, False);
 end;
 
 procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);

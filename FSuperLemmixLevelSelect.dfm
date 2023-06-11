@@ -143,7 +143,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnCleanseOne: TButton
     Left = 916
-    Top = 193
+    Top = 224
     Width = 134
     Height = 25
     Caption = 'Cleanse This Level'
@@ -152,7 +152,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnCleanseLevels: TButton
     Left = 916
-    Top = 162
+    Top = 193
     Width = 134
     Height = 25
     Caption = 'Cleanse All Levels'
@@ -161,7 +161,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnMassReplay: TButton
     Left = 916
-    Top = 131
+    Top = 162
     Width = 134
     Height = 25
     Caption = 'Mass Replay Check'
@@ -170,7 +170,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnSaveImage: TButton
     Left = 916
-    Top = 100
+    Top = 131
     Width = 134
     Height = 25
     Caption = 'Screenshot'
@@ -179,12 +179,21 @@ object FLevelSelect: TFLevelSelect
   end
   object btnMakeShortcut: TButton
     Left = 916
-    Top = 67
+    Top = 98
     Width = 134
     Height = 25
     Caption = 'Create Shortcut'
     TabOrder = 3
     OnClick = btnMakeShortcutClick
+  end
+  object btnResetTalismans: TBitBtn
+    Left = 916
+    Top = 67
+    Width = 134
+    Height = 25
+    Caption = 'Reset Talismans'
+    TabOrder = 10
+    OnClick = btnResetTalismansClick
   end
   object ilStatuses: TImageList
   end
