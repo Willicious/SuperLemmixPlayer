@@ -1421,7 +1421,8 @@ begin
                           SetSelectedSkill(spbSlower, True, True);
                           end;
       lka_Pause: begin
-                 Game.PauseWasPressed := True;
+                 // 1 second grace to prevent restart from failing the NoPause talisman
+                 if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
                  if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
 
                  if fGameSpeed = gspPause then

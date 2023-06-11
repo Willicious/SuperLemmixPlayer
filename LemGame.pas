@@ -7181,6 +7181,9 @@ begin
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;
 
   fReplayManager.Cut(fCurrentIteration, CurrSpawnInterval);
+
+  // For NoPause talisman - allows replay to be cancelled before music starts
+  if (CurrentIteration < 55) then fReplayWasLoaded := False;
 end;
 
 
