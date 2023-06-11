@@ -52,6 +52,7 @@ type
     procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
+    procedure tvLevelSelectDblClick(Sender: TObject);
   private
     fLastLevelPath: String;
 
@@ -407,7 +408,6 @@ var
   Obj: TObject;
   L: TNeoLevelEntry absolute Obj;
   N: TTreeNode;
-  ImgBMP, MaskBMP: TBitmap;
 begin
   N := tvLevelSelect.Selected;
   if N = nil then Exit; // safeguard
@@ -494,6 +494,11 @@ begin
 end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
+begin
+  SetInfo;
+end;
+
+procedure TFLevelSelect.tvLevelSelectDblClick(Sender: TObject);
 begin
   SetInfo;
 end;
