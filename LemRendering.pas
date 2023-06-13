@@ -992,7 +992,6 @@ begin
     for i := 0 to fRenderInterface.ProjectileList.Count-1 do
       DrawThisProjectile(fRenderInterface.ProjectileList[i]);
   end;
-
 end;
 
 procedure TRenderer.DrawThisProjectile(aProjectile: TProjectile);
@@ -1020,7 +1019,7 @@ begin
   end;
 
   if Graphic = pgGrenadeExplode then
-    fProjectileImage.DrawTo(fLayers[rlLemmingsHigh], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect)
+    fProjectileImage.DrawTo(fLayers[rlLemmingsLow], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect)
   else
     fProjectileImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
