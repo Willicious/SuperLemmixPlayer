@@ -1346,7 +1346,9 @@ begin
 
         if Game.IsOutOfTime then
           fCombineHueShift := 1 / 2
-        else if Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17} then
+        else if (Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17}) and not Game.IsSuperLemming then
+          fCombineHueShift := -1 / 3
+        else if (Level.Info.TimeLimit * 50 < Game.CurrentIteration + 750 {15 * 50}) and Game.IsSuperLemming then
           fCombineHueShift := -1 / 3
         else
           fCombineHueShift := -1 / 6;
