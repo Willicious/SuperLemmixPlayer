@@ -1,0 +1,22 @@
+BASE
+
+$GROUP
+  NAME Frost
+  FOLDER Frost
+$END
+
+$GROUP
+  NAME Hail
+  FOLDER Hail
+$END
+
+$GROUP
+  NAME Flurry
+  FOLDER Flurry
+$END
+
+$GROUP
+  NAME Blizzard
+  FOLDER Blizzard
+$END
+

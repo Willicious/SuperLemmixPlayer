@@ -1,0 +1,122 @@
+# Level file modified by NL QuickMod
+
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.3
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Talisman Test
+ AUTHOR 
+#  ID x2432456B15824FC8
+ VERSION x0000000000000004
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME willlem_lemminas
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 53
+ 
+#  $SKILLSET 
+#    JUMPER 10
+#    BUILDER 1
+#  $END 
+ 
+ $TALISMAN 
+   TITLE Bronze
+   ID 0
+   COLOR Bronze
+   CLASSIC_MODE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver
+   ID 1
+   COLOR Silver
+   NO_PAUSE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold
+   ID 2
+   COLOR Gold
+   JUMPER_LIMIT 5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE exit
+   X 198
+   Y 33
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE window
+   X 46
+   Y 54
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_light_02
+   X 61
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_01
+   X 103
+   Y 73
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_01
+   X 189
+   Y 73
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ 
+
+# NL QuickMod modifications
+
+ID x432456B15824FC81
+$SKILLSET
+  WALKER 5
+  JUMPER 5
+  SHIMMIER 5
+  SLIDER 5
+  CLIMBER 5
+  SWIMMER 5
+  FLOATER 5
+  TIMEBOMBER 5
+  FREEZER 5
+  PLATFORMER 5
+  BUILDER 5
+  GRENADER 5
+  LASERER 5
+  MINER 5
+$END
