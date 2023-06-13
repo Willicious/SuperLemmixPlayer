@@ -672,7 +672,7 @@ begin
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
 
   // relax CPU
-  if not Hyper or Fast then
+  if not (Hyper or Fast or Game.IsSuperlemming) then
     Sleep(1);
 
   if TimeForFrame or TimeForScroll or TimeForPausedRR then
