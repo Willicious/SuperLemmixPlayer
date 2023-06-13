@@ -7,14 +7,14 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes, StrUtils;
 
 const
-  SKILL_COUNT = 19;
+  SKILL_COUNT = 24;
   SKILLS: array[0..SKILL_COUNT-1] of String =
-   ('Walker', 'Jumper', 'Shimmier',
-    'Climber', 'Swimmer', 'Floater', 'Glider', 'Disarmer',
-    'Bomber', 'Stoner', 'Blocker',
-    'Platformer', 'Builder', 'Stacker',
-    'Basher', 'Fencer', 'Miner', 'Digger',
-    'Cloner');
+   ('Walker', 'Jumper', 'Shimmier', 'Slider',
+    'Climber', 'Swimmer', 'Floater', 'Glider',
+    'Disarmer', 'Timebomber', 'Bomber', 'Freezer',
+    'Blocker', 'Platformer', 'Builder', 'Stacker',
+    'Spearer', 'Grenader', 'Laserer', 'Basher',
+    'Fencer', 'Miner', 'Digger', 'Cloner');
 
 type
   TSkillInputComponents = record
@@ -183,15 +183,14 @@ end;
 procedure TFQuickmodMain.CreateSkillInputs;
 var
   i: Integer;
-  AddHeight: Integer;
   ThisInput: TSkillInputComponents;
 const
-  ORIGIN_X = 8;
-  ORIGIN_Y = 49;
-  SPACING_X = 119;
-  SPACING_Y = 27;
-  LABEL_WIDTH = 56;
-  EDIT_WIDTH = 36;
+  ORIGIN_X = 24;
+  ORIGIN_Y = 70;
+  SPACING_X = 170;
+  SPACING_Y = 30;
+  LABEL_WIDTH = 100;
+  EDIT_WIDTH = 40;
 begin
   gbSkillset.Anchors := [akLeft, akTop, akRight, akBottom];
 
@@ -204,8 +203,8 @@ begin
     begin
       Parent := gbSkillset;
       Caption := SKILLS[i];
-      Height := 13;
-      Left := ORIGIN_X + (SPACING_X * (i mod 2));
+      Height := 22;
+      Left := ORIGIN_X + (SPACING_X * (i mod 2)) + EDIT_WIDTH + 8;
       Top := ORIGIN_Y + (SPACING_Y * (i div 2)) + 2;
       Width := LABEL_WIDTH;
     end;
@@ -214,20 +213,16 @@ begin
     begin
       Parent := gbSkillset;
       Enabled := false;
-      Height := 21;
-      Left := ORIGIN_X + (SPACING_X * (i mod 2)) + LABEL_WIDTH + 8;
+      Height := 22;
+      Left := ORIGIN_X + (SPACING_X * (i mod 2));
       NumbersOnly := true;
       Text := '0';
       Top := ORIGIN_Y + (SPACING_Y * (i div 2));
       Width := EDIT_WIDTH;
-
-      AddHeight := (Top + Height) - ORIGIN_Y;
     end;
 
     fSkillInputs[i] := ThisInput;
   end;
-
-  ClientHeight := ClientHeight + AddHeight;
 end;
 
 procedure TFQuickmodMain.FormCreate(Sender: TObject);

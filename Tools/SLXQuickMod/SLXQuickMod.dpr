@@ -1,4 +1,4 @@
-program NLQuickMod;
+program SLXQuickMod;
 
 uses
   Vcl.Forms,

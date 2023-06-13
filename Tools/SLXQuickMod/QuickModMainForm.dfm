@@ -1,46 +1,49 @@
 object FQuickmodMain: TFQuickmodMain
   Left = 0
   Top = 0
+  Anchors = []
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'NL QuickMod'
-  ClientHeight = 411
-  ClientWidth = 251
+  Caption = 'SuperLemmix QuickMod'
+  ClientHeight = 365
+  ClientWidth = 556
   Color = clBtnFace
+  DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDefault
+  Position = poScreenCenter
   OnCreate = FormCreate
   DesignSize = (
-    251
-    411)
+    556
+    365)
   PixelsPerInch = 96
   TextHeight = 13
   object lblPack: TLabel
-    Left = 8
-    Top = 11
+    Left = 12
+    Top = 10
     Width = 22
     Height = 13
     Caption = 'Pack'
   end
   object lblVersion: TLabel
-    Left = 215
-    Top = 390
-    Width = 28
+    Left = 515
+    Top = 344
+    Width = 22
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v0.03'
-    ExplicitTop = 336
+    Caption = 'v1.0'
+    ExplicitLeft = 453
+    ExplicitTop = 330
   end
   object cbPack: TComboBox
-    Left = 48
-    Top = 8
-    Width = 195
+    Left = 40
+    Top = 7
+    Width = 508
     Height = 21
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
@@ -48,13 +51,12 @@ object FQuickmodMain: TFQuickmodMain
   end
   object gbStats: TGroupBox
     Left = 8
-    Top = 43
-    Width = 235
-    Height = 264
+    Top = 34
+    Width = 257
+    Height = 292
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
-    ExplicitHeight = 210
     object cbLemCount: TCheckBox
       Left = 16
       Top = 24
@@ -114,7 +116,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbLockRR: TCheckBox
       Left = 32
-      Top = 103
+      Top = 105
       Width = 81
       Height = 17
       Caption = 'Lock All RR'#39's'
@@ -123,7 +125,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbUnlockRR: TCheckBox
       Left = 119
-      Top = 103
+      Top = 105
       Width = 90
       Height = 17
       Caption = 'Unlock All RR'#39's'
@@ -132,7 +134,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbTimeLimit: TCheckBox
       Left = 16
-      Top = 128
+      Top = 133
       Width = 130
       Height = 17
       Caption = 'Set Time Limit:'
@@ -141,7 +143,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebTimeLimit: TEdit
       Left = 152
-      Top = 126
+      Top = 131
       Width = 57
       Height = 21
       Enabled = False
@@ -151,7 +153,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemoveTalismans: TCheckBox
       Left = 16
-      Top = 155
+      Top = 160
       Width = 130
       Height = 17
       Caption = 'Remove Talismans'
@@ -160,7 +162,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbChangeID: TCheckBox
       Left = 16
-      Top = 236
+      Top = 241
       Width = 130
       Height = 17
       Caption = 'Change Level IDs'
@@ -169,8 +171,8 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemoveSpecialLemmings: TCheckBox
       Left = 16
-      Top = 209
-      Width = 201
+      Top = 214
+      Width = 217
       Height = 17
       Caption = 'Remove Zombies, Neutrals, Lem Caps'
       TabOrder = 12
@@ -178,7 +180,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemovePreplaced: TCheckBox
       Left = 16
-      Top = 182
+      Top = 187
       Width = 161
       Height = 17
       Caption = 'Remove Preplaced Lemmings'
@@ -187,14 +189,13 @@ object FQuickmodMain: TFQuickmodMain
     end
   end
   object gbSkillset: TGroupBox
-    Left = 8
-    Top = 315
-    Width = 235
-    Height = 57
+    Left = 279
+    Top = 34
+    Width = 269
+    Height = 292
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Level Skillset'
     TabOrder = 2
-    ExplicitTop = 261
     object cbCustomSkillset: TCheckBox
       Left = 16
       Top = 20
@@ -206,14 +207,13 @@ object FQuickmodMain: TFQuickmodMain
     end
   end
   object btnApply: TButton
-    Left = 83
-    Top = 378
-    Width = 75
+    Left = 76
+    Top = 332
+    Width = 388
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 324
   end
 end
