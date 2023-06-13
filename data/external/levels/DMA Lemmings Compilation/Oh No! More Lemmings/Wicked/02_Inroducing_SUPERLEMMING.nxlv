@@ -51,7 +51,7 @@
  $END
 
   $TALISMAN
-   TITLE Gold Talisman
+   TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0

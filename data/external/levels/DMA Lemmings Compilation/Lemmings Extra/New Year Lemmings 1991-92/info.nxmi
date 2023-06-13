@@ -4,15 +4,12 @@ AUTHOR by Gaston^Splatt
 $SCROLLER 
   LINE Thanks to...
   LINE DMA for the original game
+  LINE Minim and Ron Stard for ports & conversions
+  LINE ericderkovits and Proxima for compilation support
   LINE EricLang & ccexplore for Lemmix
-  LINE namida & Nepster for NeoLemmix
-  LINE Alex A. Denisov for Graphics32
-  LINE base2 technologies for ZLibEx
-  LINE Un4seen Development for Bass.dll
+  LINE namida for NeoLemmix
   LINE The Lemmings Forums community at
   LINE http://www.lemmingsforums.net
-  LINE Volker Oth and Mindless for
-  LINE sharing sourcecode and information
   LINE What are you waiting for?
   LINE Go play the game already!
 $END 
