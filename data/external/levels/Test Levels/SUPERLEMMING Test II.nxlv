@@ -1,3 +1,5 @@
+# Level file modified by NL QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
 #   Created with SLXEditor 2.2
@@ -7,7 +9,7 @@
 # ----------------------------- 
  TITLE Superlemming Test II
  AUTHOR WillLem
- ID x70B0DCCF17FC7173
+#  ID x70B0DCCF17FC7173
  VERSION x0000000000000008
  
 #       Level dimensions        
@@ -26,10 +28,10 @@
  MAX_SPAWN_INTERVAL 53
  SUPERLEMMING
  
- $SKILLSET 
-   JUMPER 20
-   BUILDER 20
- $END 
+#  $SKILLSET 
+#    JUMPER 20
+#    BUILDER 20
+#  $END 
  
 #     Interactive objects       
 # ----------------------------- 
@@ -93,3 +95,23 @@
  $END
  
  
+
+# NL QuickMod modifications
+
+ID x0B0DCCF17FC71736
+$SKILLSET
+  WALKER 5
+  JUMPER 5
+  SHIMMIER 5
+  SLIDER 5
+  CLIMBER 5
+  SWIMMER 5
+  FLOATER 5
+  TIMEBOMBER 5
+  FREEZER 5
+  PLATFORMER 5
+  BUILDER 5
+  GRENADER 5
+  LASERER 5
+  MINER 5
+$END

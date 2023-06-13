@@ -1,3 +1,5 @@
+# Level file modified by NL QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
 #   Created with SLXEditor 2.3
@@ -7,7 +9,7 @@
 # ----------------------------- 
  TITLE Timebomber Freezer Bomber Test
  AUTHOR 
- ID x196A01462E76FBDF
+#  ID x196A01462E76FBDF
  VERSION x0000000000000002
  
 #       Level dimensions        
@@ -24,11 +26,11 @@
  SAVE_REQUIREMENT 20
  MAX_SPAWN_INTERVAL 53
  
- $SKILLSET 
-   TIMEBOMBER 10
-   BOMBER 10
-   FREEZER 10
- $END 
+#  $SKILLSET 
+#    TIMEBOMBER 10
+#    BOMBER 10
+#    FREEZER 10
+#  $END 
  
 #     Interactive objects       
 # ----------------------------- 
@@ -76,3 +78,23 @@
  $END
  
  
+
+# NL QuickMod modifications
+
+ID x96A01462E76FBDF0
+$SKILLSET
+  WALKER 5
+  JUMPER 5
+  SHIMMIER 5
+  SLIDER 5
+  CLIMBER 5
+  SWIMMER 5
+  FLOATER 5
+  TIMEBOMBER 5
+  FREEZER 5
+  PLATFORMER 5
+  BUILDER 5
+  GRENADER 5
+  LASERER 5
+  MINER 5
+$END
