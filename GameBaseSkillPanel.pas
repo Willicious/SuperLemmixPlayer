@@ -778,7 +778,7 @@ begin
     DoProjectileRecolor(TempBMP, BrickColor);
 
     DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], 2, 7, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
-    DrawMiscBmp(TempBMP, fSkillIcons[spbGrenader], 10, 7, PROJECTILE_GRAPHIC_RECTS[pgGrenade]);
+    DrawMiscBmp(TempBMP, fSkillIcons[spbGrenader], 10, 7, PROJECTILE_GRAPHIC_RECTS[pgGrenadeU]);
 
     DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 2, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 3, 3, 20);

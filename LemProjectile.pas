@@ -16,7 +16,8 @@ type
      pgSpearSlightTLBR, pgSpearSlightBLTR,
      pgSpear45TLBR, pgSpear45BLTR,
      pgSpearSteepTLBR, pgSpearSteepBLTR,
-     pgGrenade, pgGrenadeExplode
+     pgGrenadeU, pgGrenadeR, pgGrenadeD,
+     pgGrenadeL, pgGrenadeExplode
    );
 
 const
@@ -26,20 +27,24 @@ const
     pgSpearSlightBLTR, pgSpearSlightTLBR,
     pgSpear45BLTR, pgSpear45TLBR,
     pgSpearSteepBLTR, pgSpearSteepTLBR,
-    pgGrenade, pgGrenadeExplode
+    pgGrenadeU, pgGrenadeL, pgGrenadeD,
+    pgGrenadeR, pgGrenadeExplode
   );
 
   PROJECTILE_GRAPHIC_RECTS: array[TProjectileGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
   (
-    (Left: 11; Top: 20; Right: 25; Bottom: 22),
-    (Left: 0; Top: 0; Right: 12; Bottom: 6),
-    (Left: 13; Top: 0; Right: 25; Bottom: 6),
-    (Left: 0; Top: 7; Right: 10; Bottom: 17),
-    (Left: 0; Top: 18; Right: 10; Bottom: 28),
-    (Left: 11; Top: 7; Right: 17; Bottom: 19),
-    (Left: 18; Top: 7; Right: 24; Bottom: 19),
-    (Left: 11; Top: 23; Right: 15; Bottom: 28),
-    (Left: 0; Top: 29; Right: 32; Bottom: 61)
+    (Left: 11; Top: 20; Right: 25; Bottom: 22), //pgSpearFlat
+    (Left: 0; Top: 0; Right: 12; Bottom: 6),    //pgSpearSlightTLBR
+    (Left: 13; Top: 0; Right: 25; Bottom: 6),   //pgSpearSlightBLTR
+    (Left: 0; Top: 7; Right: 10; Bottom: 17),   //pgSpear45TLBR
+    (Left: 0; Top: 18; Right: 10; Bottom: 28),  //pgSpear45BLTR
+    (Left: 11; Top: 7; Right: 17; Bottom: 19),  //pgSpearSteepTLBR
+    (Left: 18; Top: 7; Right: 24; Bottom: 19),  //pgSpearSteepBLTR
+    (Left: 26; Top: 17; Right: 31; Bottom: 22), //pgGrenadeU
+    (Left: 11; Top: 23; Right: 16; Bottom: 28), //pgGrenadeR
+    (Left: 17; Top: 23; Right: 22; Bottom: 28), //pgGrenadeD
+    (Left: 23; Top: 23; Right: 28; Bottom: 28), //pgGrenadeL
+    (Left: 0; Top: 29; Right: 32; Bottom: 61)   //pgGrenadeExplode
   );
 
 type
@@ -243,13 +248,29 @@ begin
 end;
 
 function TProjectile.GetGraphic: TProjectileGraphic;
+var
+i: Integer;
 begin
   if fIsGrenade then
   begin
     if fHit then
       Result := pgGrenadeExplode
-    else
-      Result := pgGrenade;
+      else begin
+        if fFired then
+        case fOffsetX of
+          0..5:     Result := pgGrenadeU; //equiv 1 frame
+          6..15:    Result := pgGrenadeR; //equiv 1 frame
+          16..30:   Result := pgGrenadeD; //equiv 2 frames
+          31..50:   Result := pgGrenadeL; //equiv 2 frames
+          51..75:   Result := pgGrenadeU; //equiv 3 frames
+          76..100:  Result := pgGrenadeR; //equiv 3 frames
+          101..130: Result := pgGrenadeD; //equiv 3 frames
+          131..169: Result := pgGrenadeL; //equiv 4 frames
+          else
+          Result := pgGrenadeU; //let it stay upright after 2 complete spins
+        end else
+        Result := pgGrenadeU; //and at any other time, e.g. before thrown
+      end;
   end else begin
     if not fFired then
       case fLemming.LemPhysicsFrame of
@@ -283,7 +304,8 @@ begin
   CurGraphic := Graphic;
   ImgRect := PROJECTILE_GRAPHIC_RECTS[CurGraphic];
 
-  if CurGraphic in [pgGrenade, pgGrenadeExplode] then
+  if CurGraphic in
+  [pgGrenadeU, pgGrenadeR, pgGrenadeD, pgGrenadeL, pgGrenadeExplode] then
   begin
     Result := Point(ImgRect.Width div 2, ImgRect.Height div 2);
     Exit;

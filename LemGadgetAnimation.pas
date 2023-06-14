@@ -506,7 +506,7 @@ begin
     DoProjectileRecolor(NewBMP, $FFFFFFFF);
 
     DrawMiscBmp(NewBMP, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
-    DrawMiscBmp(NewBMP, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgGrenade]);
+    DrawMiscBmp(NewBMP, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgGrenadeU]);
   finally
     NewBMP.Free;
   end;
