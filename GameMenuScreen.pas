@@ -720,14 +720,20 @@ end;
 
 procedure TGameMenuScreen.PrevGroup;
 begin
-  GameParams.PrevGroup;
-  UpdateGroupSign;
+  if not GameParams.CurrentLevel.Group.IsLowestGroup then
+  begin
+    GameParams.PrevGroup;
+    UpdateGroupSign;
+  end;
 end;
 
 procedure TGameMenuScreen.NextGroup;
 begin
-  GameParams.NextGroup;
-  UpdateGroupSign;
+  if not GameParams.CurrentLevel.Group.IsHighestGroup then
+  begin
+    GameParams.NextGroup;
+    UpdateGroupSign;
+  end;
 end;
 
 procedure TGameMenuScreen.UpdateGroupSign(aRedraw: Boolean);

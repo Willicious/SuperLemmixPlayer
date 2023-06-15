@@ -143,14 +143,20 @@ end;
 
 procedure TGamePreviewScreen.NextRank;
 begin
-  GameParams.NextGroup;
-  CloseScreen(gstPreview);
+  if not GameParams.CurrentLevel.Group.IsHighestGroup then
+  begin
+    GameParams.NextGroup;
+    CloseScreen(gstPreview);
+  end;
 end;
 
 procedure TGamePreviewScreen.PreviousRank;
 begin
-  GameParams.PrevGroup;
-  CloseScreen(gstPreview);
+  if not GameParams.CurrentLevel.Group.IsLowestGroup then
+  begin
+    GameParams.PrevGroup;
+    CloseScreen(gstPreview);
+  end;
 end;
 
 procedure TGamePreviewScreen.AfterCancelLevelSelect;
