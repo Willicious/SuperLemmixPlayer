@@ -184,8 +184,8 @@ begin
   SetKeyFunction($57, lka_ForceWalker);
   SetKeyFunction($25, lka_DirLeft);
   SetKeyFunction($27, lka_DirRight);
-  SetKeyFunction($26, lka_SkillLeft);
-  SetKeyFunction($28, lka_SkillRight);
+  SetKeyFunction($28, lka_SkillLeft);
+  SetKeyFunction($26, lka_SkillRight);
   SetKeyFunction($49, lka_FallDistance);
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($BA, lka_ShowUsedSkills);
