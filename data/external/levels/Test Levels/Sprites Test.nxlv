@@ -8,7 +8,7 @@
  TITLE Sprites Test
  AUTHOR 
  ID x00EDFD375AB7C7BD
- VERSION x0000000000000008
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 160
  START_Y 80
- THEME flopsy_soniclems
+ THEME gigalem_millas
  
 #         Level stats           
 # ----------------------------- 
@@ -66,6 +66,15 @@
    WIDTH 168
    HEIGHT 16
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 292
+   Y 92
+   NO_OVERWRITE
+   SKILL GRENADER
  $END
  
  

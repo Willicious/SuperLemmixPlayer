@@ -432,6 +432,31 @@ var
     Src.DrawTo(Dst, dstX, dstY, SrcRect);
   end;
 
+  procedure LoadProjectileImages;
+  var
+  CustomStyle: String;
+  CustomProjectileImages: String;
+  HRCustomProjectileImages: String;
+  begin
+    CustomStyle := (GameParams.Level.Info.GraphicSetName + '\mask\');
+
+    CustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles.png';
+    HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles-hr.png';
+
+    if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
+    begin
+      if GameParams.HighResolution then
+        TPngInterface.LoadPngFile(HRCustomProjectileImages, NewBMP)
+      else
+        TPngInterface.LoadPngFile(CustomProjectileImages, NewBMP);
+    end else
+
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', NewBMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', NewBMP);
+  end;
+
 const
   PICKUP_MID = (PICKUP_AUTO_GFX_SIZE div 2) - 1;
   PICKUP_BASELINE = (PICKUP_AUTO_GFX_SIZE div 2) + 7;
@@ -495,14 +520,10 @@ begin
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 6);
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 7);
 
- // Projectiles are messy.
+  // Projectiles need to load from custom graphics, if applicable (see LoadProjectileImages, above)
   NewBMP := TBitmap32.Create;
   try
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', NewBMP)
-    else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', NewBMP);
-
+    LoadProjectileImages;
     DoProjectileRecolor(NewBMP, $FFFFFFFF);
 
     DrawMiscBmp(NewBMP, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);

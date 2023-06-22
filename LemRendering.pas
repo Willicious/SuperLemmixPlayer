@@ -2827,7 +2827,24 @@ begin
 end;
 
 procedure TRenderer.LoadProjectileImages;
+var
+CustomStyle: String;
+CustomProjectileImages: String;
+HRCustomProjectileImages: String;
 begin
+  CustomStyle := (GameParams.Level.Info.GraphicSetName + '\mask\');
+
+  CustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles.png';
+  HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles-hr.png';
+
+  if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
+  begin
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(HRCustomProjectileImages, fProjectileImage)
+    else
+      TPngInterface.LoadPngFile(CustomProjectileImages, fProjectileImage);
+  end else
+
   if GameParams.HighResolution then
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', fProjectileImage)
   else

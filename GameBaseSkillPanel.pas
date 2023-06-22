@@ -677,6 +677,31 @@ var
     Src.DrawTo(Dst, dstX, dstY, SrcRect);
   end;
 
+  procedure LoadProjectileImages;
+  var
+  CustomStyle: String;
+  CustomProjectileImages: String;
+  HRCustomProjectileImages: String;
+  begin
+    CustomStyle := (GameParams.Level.Info.GraphicSetName + '\mask\');
+
+    CustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles.png';
+    HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles-hr.png';
+
+    if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
+    begin
+      if GameParams.HighResolution then
+        TPngInterface.LoadPngFile(HRCustomProjectileImages, TempBMP)
+      else
+        TPngInterface.LoadPngFile(CustomProjectileImages, TempBMP);
+    end else
+
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', TempBMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', TempBMP);
+  end;
+
 begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
@@ -769,12 +794,8 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
     DrawBrick(fSkillIcons[spbStacker], 10, 16);
 
-    // Projectiles are messy.
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', TempBMP)
-    else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', TempBMP);
-
+    // Projectiles need to load from custom graphics, if applicable (see LoadProjectileImages, above)
+    LoadProjectileImages;
     DoProjectileRecolor(TempBMP, BrickColor);
 
     DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], 2, 7, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
