@@ -998,7 +998,6 @@ end;
 
 procedure TRenderer.DrawThisProjectile(P: TProjectile);
 var
-  Grenade: TGrenadeGraphic;
   SrcRectSpear: TRect;
   SrcRectGrenade: TRect;
   SpearHotspot: TPoint;
@@ -1038,7 +1037,7 @@ begin
 
   if P.IsGrenade then
   begin
-    if Grenade = pgGrenadeExplode then
+    if P.GrenadeGraphic = pgGrenadeExplode then
       fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
     else
       fGrenadeImage.DrawTo(fLayers[rlProjectiles], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
