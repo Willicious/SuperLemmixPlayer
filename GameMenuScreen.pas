@@ -129,6 +129,7 @@ uses
   CustomPopup,
   FStyleManager,
   FSuperLemmixSetup,
+  GameSound,
   LemGame, // to clear replay
   LemVersion,
   PngInterface;
@@ -151,6 +152,10 @@ begin
 
   fScrollerTextList := TStringList.Create;
   GameParams.MainForm.Caption := 'SuperLemmix';
+
+  //hotbookmark - use the postview jingle code to play a "menu" sound here
+  //SoundManager.PlaySound(SFX_YIPPEE, 0, 0);  //works, but we want music really
+  //GlobalGame.PlayMusic;  //doesn't work - why??
 end;
 
 destructor TGameMenuScreen.Destroy;
