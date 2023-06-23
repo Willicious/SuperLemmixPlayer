@@ -677,29 +677,37 @@ var
     Src.DrawTo(Dst, dstX, dstY, SrcRect);
   end;
 
-  procedure LoadProjectileImages;
+  procedure LoadGrenadeImages;
   var
   CustomStyle: String;
-  CustomProjectileImages: String;
-  HRCustomProjectileImages: String;
+  CustomGrenadeImages: String;
+  HRCustomGrenadeImages: String;
   begin
-    CustomStyle := (GameParams.Level.Info.GraphicSetName + '\mask\');
+    CustomStyle := (GameParams.Level.Info.GraphicSetName + '\grenades\');
 
-    CustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles.png';
-    HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles-hr.png';
+    CustomGrenadeImages := AppPath + SFStyles + CustomStyle + 'grenades.png';
+    HRCustomGrenadeImages := AppPath + SFStyles + CustomStyle + 'grenades-hr.png';
 
-    if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
+    if (FileExists(CustomGrenadeImages) and FileExists(HRCustomGrenadeImages)) then
     begin
       if GameParams.HighResolution then
-        TPngInterface.LoadPngFile(HRCustomProjectileImages, TempBMP)
+        TPngInterface.LoadPngFile(HRCustomGrenadeImages, TempBMP)
       else
-        TPngInterface.LoadPngFile(CustomProjectileImages, TempBMP);
+        TPngInterface.LoadPngFile(CustomGrenadeImages, TempBMP);
     end else
 
     if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', TempBMP)
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades-hr.png', TempBMP)
     else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', TempBMP);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades.png', TempBMP);
+  end;
+
+  procedure LoadSpearImages;
+  begin
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', TempBMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', TempBMP);
   end;
 
 begin
@@ -794,15 +802,16 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
     DrawBrick(fSkillIcons[spbStacker], 10, 16);
 
-    // Projectiles need to load from custom graphics, if applicable (see LoadProjectileImages, above)
-    LoadProjectileImages;
-    DoProjectileRecolor(TempBMP, BrickColor);
-
-    DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], 2, 7, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    // Projectiles need to be loaded separately
+    LoadGrenadeImages;
     DrawMiscBmp(TempBMP, fSkillIcons[spbGrenader], 10, 7, PROJECTILE_GRAPHIC_RECTS[pgGrenadeU]);
 
-    DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 2, 6, 20);
+    LoadSpearImages;
+    DoProjectileRecolor(TempBMP, BrickColor);
+    DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], 2, 7, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+
     DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 3, 3, 20);
+    DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 2, 6, 20);
 
     // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
     // For Digger, we just have to accept some particles.

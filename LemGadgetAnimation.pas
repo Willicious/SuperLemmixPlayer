@@ -432,29 +432,37 @@ var
     Src.DrawTo(Dst, dstX, dstY, SrcRect);
   end;
 
-  procedure LoadProjectileImages;
+  procedure LoadGrenadeImages;
   var
   CustomStyle: String;
-  CustomProjectileImages: String;
-  HRCustomProjectileImages: String;
+  CustomGrenadeImages: String;
+  HRCustomGrenadeImages: String;
   begin
-    CustomStyle := (GameParams.Level.Info.GraphicSetName + '\mask\');
+    CustomStyle := (GameParams.Level.Info.GraphicSetName + '\grenades\');
 
-    CustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles.png';
-    HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + 'projectiles-hr.png';
+    CustomGrenadeImages := AppPath + SFStyles + CustomStyle + 'grenades.png';
+    HRCustomGrenadeImages := AppPath + SFStyles + CustomStyle + 'grenades-hr.png';
 
-    if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
+    if (FileExists(CustomGrenadeImages) and FileExists(HRCustomGrenadeImages)) then
     begin
       if GameParams.HighResolution then
-        TPngInterface.LoadPngFile(HRCustomProjectileImages, NewBMP)
+        TPngInterface.LoadPngFile(HRCustomGrenadeImages, NewBmp)
       else
-        TPngInterface.LoadPngFile(CustomProjectileImages, NewBMP);
+        TPngInterface.LoadPngFile(CustomGrenadeImages, NewBmp);
     end else
 
     if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', NewBMP)
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades-hr.png', NewBmp)
     else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', NewBMP);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades.png', NewBmp);
+  end;
+
+  procedure LoadSpearImages;
+  begin
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', NewBmp)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', NewBmp);
   end;
 
 const
@@ -520,16 +528,22 @@ begin
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 6);
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 7);
 
-  // Projectiles need to load from custom graphics, if applicable (see LoadProjectileImages, above)
-  NewBMP := TBitmap32.Create;
+  // Projectiles need to be loaded separately
+  NewBmp := TBitmap32.Create;
   try
-    LoadProjectileImages;
-    DoProjectileRecolor(NewBMP, $FFFFFFFF);
-
-    DrawMiscBmp(NewBMP, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
-    DrawMiscBmp(NewBMP, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgGrenadeU]);
+    LoadGrenadeImages;
+    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgGrenadeU]);
   finally
-    NewBMP.Free;
+    NewBmp.Free;
+  end;
+
+  NewBmp := TBitmap32.Create;
+  try
+    LoadSpearImages;
+    DoProjectileRecolor(NewBmp, $FFFFFFFF);
+    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+  finally
+    NewBmp.Free;
   end;
 
   DrawAnimationFrame(SkillIcons[Integer(spbSpearer)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE);
