@@ -149,8 +149,7 @@ type
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
     MinerMasks                 : TBitmap32;
-    GrenadeAnimationMasks      : TBitmap32;
-    GrenadeExplosionMask       : TBitmap32;
+    GrenadeMask                : TBitmap32;
     SpearMasks                 : TBitmap32;
     LaserMask                  : TBitmap32;
     fMasksLoaded               : Boolean;
@@ -1028,8 +1027,7 @@ begin
   BasherMasks             := TBitmap32.Create;
   FencerMasks             := TBitmap32.Create;
   MinerMasks              := TBitmap32.Create;
-  GrenadeAnimationMasks   := TBitmap32.Create;
-  GrenadeExplosionMask    := TBitmap32.Create;
+  GrenadeMask             := TBitmap32.Create;
   SpearMasks              := TBitmap32.Create;
   LaserMask               := TBitmap32.Create;
 
@@ -1148,8 +1146,7 @@ begin
   TimebomberMask.Free;
   BomberMask.Free;
   FreezerMask.Free;
-  GrenadeAnimationMasks.Free;
-  GrenadeExplosionMask.Free;
+  GrenadeMask.Free;
   SpearMasks.Free;
   LaserMask.Free;
   BasherMasks.Free;
@@ -1213,8 +1210,7 @@ begin
     LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Laserer, Basher, Fencer and Miner are set when used
     LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
-    LoadMask(GrenadeAnimationMasks, 'grenades.png', CombineNoOverwriteMask);
-    LoadMask(GrenadeExplosionMask, 'grenader.png', CombineMaskPixelsNeutral);
+    LoadMask(GrenadeMask, 'grenader.png', CombineMaskPixelsNeutral);
     LoadMask(SpearMasks, 'spears.png', CombineNoOverwriteMask);
     LoadMask(LaserMask, 'laser.png', CombineMaskPixelsNeutral);
     fMasksLoaded := true;
@@ -3590,10 +3586,10 @@ end;
 
 procedure TLemmingGame.ApplyGrenadeExplosionMask(P: TProjectile);
 begin
-  GrenadeExplosionMask.DrawTo(PhysicsMap, P.X - 9, P.Y - 9);
+  GrenadeMask.DrawTo(PhysicsMap, P.X - 9, P.Y - 9);
 
   if not IsSimulating then
-    fRenderInterface.RemoveTerrain(P.X - 9, P.Y - 9, GrenadeExplosionMask.Width, GrenadeExplosionMask.Height);
+    fRenderInterface.RemoveTerrain(P.X - 9, P.Y - 9, GrenadeMask.Width, GrenadeMask.Height);
 end;
 
 procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);

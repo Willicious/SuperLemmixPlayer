@@ -683,10 +683,10 @@ var
   CustomGrenadeImages: String;
   HRCustomGrenadeImages: String;
   begin
-    CustomStyle := (GameParams.Level.Info.GraphicSetName + '\grenades\');
+    CustomStyle := GameParams.Level.Info.GraphicSetName;
 
-    CustomGrenadeImages := AppPath + SFStyles + CustomStyle + 'grenades.png';
-    HRCustomGrenadeImages := AppPath + SFStyles + CustomStyle + 'grenades-hr.png';
+    CustomGrenadeImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades.png';
+    HRCustomGrenadeImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades-hr.png';
 
     if (FileExists(CustomGrenadeImages) and FileExists(HRCustomGrenadeImages)) then
     begin
@@ -697,9 +697,9 @@ var
     end else
 
     if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades-hr.png', TempBMP)
+      TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades-hr.png', TempBMP)
     else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades.png', TempBMP);
+      TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades.png', TempBMP);
   end;
 
   procedure LoadSpearImages;

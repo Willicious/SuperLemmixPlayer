@@ -2852,10 +2852,10 @@ CustomStyle: String;
 CustomProjectileImages: String;
 HRCustomProjectileImages: String;
 begin
-  CustomStyle := (GameParams.Level.Info.GraphicSetName + '\grenades\');
+  CustomStyle := GameParams.Level.Info.GraphicSetName;
 
-  CustomProjectileImages := AppPath + SFStyles + CustomStyle + 'grenades.png';
-  HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + 'grenades-hr.png';
+  CustomProjectileImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades.png';
+  HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades-hr.png';
 
   if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
   begin
@@ -2866,9 +2866,9 @@ begin
   end else
 
   if GameParams.HighResolution then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades-hr.png', fGrenadeImage)
+    TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades-hr.png', fGrenadeImage)
   else
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades.png', fGrenadeImage);
+    TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades.png', fGrenadeImage);
 
   fGrenadeImage.DrawMode := dmCustom;
   fGrenadeImage.OnPixelCombine := CombineTerrainNoOverwrite;

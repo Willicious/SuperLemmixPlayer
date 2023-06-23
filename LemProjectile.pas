@@ -52,11 +52,11 @@ const
 
   GRENADE_GRAPHIC_RECTS: array[TGrenadeGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
   (
-    (Left: 26; Top: 17; Right: 31; Bottom: 22), //pgGrenadeU
-    (Left: 11; Top: 23; Right: 16; Bottom: 28), //pgGrenadeR
-    (Left: 17; Top: 23; Right: 22; Bottom: 28), //pgGrenadeD
-    (Left: 23; Top: 23; Right: 28; Bottom: 28), //pgGrenadeL
-    (Left: 0; Top: 29; Right: 32; Bottom: 61)   //pgGrenadeExplode
+    (Left: 1; Top: 7; Right: 6; Bottom: 12), //pgGrenadeU
+    (Left: 7; Top: 7; Right: 12; Bottom: 12), //pgGrenadeR
+    (Left: 13; Top: 7; Right: 18; Bottom: 12), //pgGrenadeD
+    (Left: 19; Top: 7; Right: 24; Bottom: 12), //pgGrenadeL
+    (Left: 0; Top: 13; Right: 32; Bottom: 45)   //pgGrenadeExplode
   );
 
 type
@@ -264,8 +264,6 @@ begin
 end;
 
 function TProjectile.GetGrenadeGraphic: TGrenadeGraphic;
-var
-i: Integer;
 begin
   if fIsGrenade then
   begin
