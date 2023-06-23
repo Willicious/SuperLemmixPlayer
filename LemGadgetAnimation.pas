@@ -532,7 +532,7 @@ begin
   NewBmp := TBitmap32.Create;
   try
     LoadGrenadeImages;
-    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgGrenadeU]);
+    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
   finally
     NewBmp.Free;
   end;
@@ -541,7 +541,7 @@ begin
   try
     LoadSpearImages;
     DoProjectileRecolor(NewBmp, $FFFFFFFF);
-    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
   finally
     NewBmp.Free;
   end;

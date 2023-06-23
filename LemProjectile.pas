@@ -10,28 +10,36 @@ uses
   Classes, SysUtils, Math, Types;
 
 type
-  TProjectileGraphic =
+  TSpearGraphic =
    (
      pgSpearFlat,
      pgSpearSlightTLBR, pgSpearSlightBLTR,
      pgSpear45TLBR, pgSpear45BLTR,
-     pgSpearSteepTLBR, pgSpearSteepBLTR,
+     pgSpearSteepTLBR, pgSpearSteepBLTR
+   );
+
+  TGrenadeGraphic =
+   (
      pgGrenadeU, pgGrenadeR, pgGrenadeD,
      pgGrenadeL, pgGrenadeExplode
    );
 
 const
-  PROJECTILE_FLIP: array[TProjectileGraphic] of TProjectileGraphic =
+  SPEAR_FLIP: array[TSpearGraphic] of TSpearGraphic =
   (
     pgSpearFlat,
     pgSpearSlightBLTR, pgSpearSlightTLBR,
     pgSpear45BLTR, pgSpear45TLBR,
-    pgSpearSteepBLTR, pgSpearSteepTLBR,
+    pgSpearSteepBLTR, pgSpearSteepTLBR
+  );
+
+  GRENADE_FLIP: array[TGrenadeGraphic] of TGrenadeGraphic =
+  (
     pgGrenadeU, pgGrenadeL, pgGrenadeD,
     pgGrenadeR, pgGrenadeExplode
   );
 
-  PROJECTILE_GRAPHIC_RECTS: array[TProjectileGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
+  SPEAR_GRAPHIC_RECTS: array[TSpearGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
   (
     (Left: 11; Top: 20; Right: 25; Bottom: 22), //pgSpearFlat
     (Left: 0; Top: 0; Right: 12; Bottom: 6),    //pgSpearSlightTLBR
@@ -39,7 +47,11 @@ const
     (Left: 0; Top: 7; Right: 10; Bottom: 17),   //pgSpear45TLBR
     (Left: 0; Top: 18; Right: 10; Bottom: 28),  //pgSpear45BLTR
     (Left: 11; Top: 7; Right: 17; Bottom: 19),  //pgSpearSteepTLBR
-    (Left: 18; Top: 7; Right: 24; Bottom: 19),  //pgSpearSteepBLTR
+    (Left: 18; Top: 7; Right: 24; Bottom: 19)   //pgSpearSteepBLTR
+  );
+
+  GRENADE_GRAPHIC_RECTS: array[TGrenadeGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
+  (
     (Left: 26; Top: 17; Right: 31; Bottom: 22), //pgGrenadeU
     (Left: 11; Top: 23; Right: 16; Bottom: 28), //pgGrenadeR
     (Left: 17; Top: 23; Right: 22; Bottom: 28), //pgGrenadeD
@@ -77,7 +89,8 @@ type
       procedure Discard;
       procedure SetPositionFromLemming;
 
-      function GetGraphic: TProjectileGraphic;
+      function GetSpearGraphic: TSpearGraphic;
+      function GetGrenadeGraphic: TGrenadeGraphic;
       function GetGraphicHotspot: TPoint;
     public
       constructor CreateAssign(aSrc: TProjectile);
@@ -97,7 +110,8 @@ type
       property Hit: Boolean read fHit;
 
       property Hotspot: TPoint read GetGraphicHotspot;
-      property Graphic: TProjectileGraphic read GetGraphic;
+      property SpearGraphic: TSpearGraphic read GetSpearGraphic;
+      property GrenadeGraphic: TGrenadeGraphic read GetGrenadeGraphic;
 
       property IsSpear: Boolean read fIsSpear;
       property IsGrenade: Boolean read fIsGrenade;
@@ -247,7 +261,7 @@ begin
   fLemming.LemHoldingProjectileIndex := -1;
 end;
 
-function TProjectile.GetGraphic: TProjectileGraphic;
+function TProjectile.GetGrenadeGraphic: TGrenadeGraphic;
 var
 i: Integer;
 begin
@@ -271,7 +285,18 @@ begin
         end else
         Result := pgGrenadeU; //and at any other time, e.g. before thrown
       end;
-  end else begin
+  end;
+
+    if fDX < 0 then
+      Result := GRENADE_FLIP[Result];
+end;
+
+function TProjectile.GetSpearGraphic: TSpearGraphic;
+var
+i: Integer;
+begin
+  if fIsSpear then
+  begin
     if not fFired then
       case fLemming.LemPhysicsFrame of
         0..3: Result := pgSpearSteepBLTR;
@@ -291,27 +316,25 @@ begin
       end;
 
     if fDX < 0 then
-      Result := PROJECTILE_FLIP[Result];
+      Result := SPEAR_FLIP[Result];
   end;
 end;
 
 function TProjectile.GetGraphicHotspot: TPoint;
 var
-  CurGraphic: TProjectileGraphic;
   ImgRect: TRect;
   AtTop: Boolean;
 begin
-  CurGraphic := Graphic;
-  ImgRect := PROJECTILE_GRAPHIC_RECTS[CurGraphic];
-
-  if CurGraphic in
+  ImgRect := GRENADE_GRAPHIC_RECTS[GrenadeGraphic];
+  if GrenadeGraphic in
   [pgGrenadeU, pgGrenadeR, pgGrenadeD, pgGrenadeL, pgGrenadeExplode] then
   begin
     Result := Point(ImgRect.Width div 2, ImgRect.Height div 2);
     Exit;
   end;
 
-  case CurGraphic of
+  ImgRect := SPEAR_GRAPHIC_RECTS[SpearGraphic];
+  case SpearGraphic of
     pgSpearFlat: AtTop := false; // Counterintuitively (due to small height of this one) it DOES put it at the top pixel
 
     pgSpearSlightTLBR,
