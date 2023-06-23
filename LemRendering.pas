@@ -51,7 +51,8 @@ type
     fLaserGraphic: TBitmap32;
 
     fPhysicsMap         : TBitmap32;
-    fProjectileImage    : TBitmap32;
+    fGrenadeImage       : TBitmap32;
+    fSpearImage         : TBitmap32;
     fLayers             : TRenderBitmaps;
 
     TempBitmap          : TBitmap32;
@@ -997,32 +998,44 @@ end;
 
 procedure TRenderer.DrawThisProjectile(aProjectile: TProjectile);
 var
-  Graphic: TProjectileGraphic;
-  SrcRect: TRect;
+  SpearGraphic: TSpearGraphic;
+  GrenadeGraphic: TGrenadeGraphic;
+  SrcRectSpear: TRect;
+  SrcRectGrenade: TRect;
   Hotspot: TPoint;
   Target: TPoint;
 begin
-  Graphic := aProjectile.Graphic;
-  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  SpearGraphic := aProjectile.SpearGraphic;
+  GrenadeGraphic := aProjectile.GrenadeGraphic;
+  SrcRectSpear := SPEAR_GRAPHIC_RECTS[SpearGraphic];
+  SrcRectGrenade := GRENADE_GRAPHIC_RECTS[GrenadeGraphic];
   Hotspot := aProjectile.Hotspot;
   Target := Point(aProjectile.X, aProjectile.Y);
 
   if GameParams.HighResolution then
   begin
-    SrcRect.Left := SrcRect.Left * 2;
-    SrcRect.Top := SrcRect.Top * 2;
-    SrcRect.Right := SrcRect.Right * 2;
-    SrcRect.Bottom := SrcRect.Bottom * 2;
+    SrcRectSpear.Left := SrcRectSpear.Left * 2;
+    SrcRectSpear.Top := SrcRectSpear.Top * 2;
+    SrcRectSpear.Right := SrcRectSpear.Right * 2;
+    SrcRectSpear.Bottom := SrcRectSpear.Bottom * 2;
+
+    SrcRectGrenade.Left := SrcRectGrenade.Left * 2;
+    SrcRectGrenade.Top := SrcRectGrenade.Top * 2;
+    SrcRectGrenade.Right := SrcRectGrenade.Right * 2;
+    SrcRectGrenade.Bottom := SrcRectGrenade.Bottom * 2;
+
     Hotspot.X := Hotspot.X * 2;
     Hotspot.Y := Hotspot.Y * 2;
     Target.X := Target.X * 2;
     Target.Y := Target.Y * 2;
   end;
 
-  if Graphic = pgGrenadeExplode then
-    fProjectileImage.DrawTo(fLayers[rlLemmingsLow], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect)
-  else
-    fProjectileImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+  if GrenadeGraphic = pgGrenadeExplode then
+    fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectGrenade)
+  else begin
+    fGrenadeImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectGrenade);
+    fSpearImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectSpear);
+  end;
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
@@ -1739,13 +1752,11 @@ end;
 
 procedure TRenderer.AddSpear(P: TProjectile);
 var
-  Graphic: TProjectileGraphic;
   SrcRect: TRect;
   Hotspot: TPoint;
   Target: TPoint;
 begin
-  Graphic := P.Graphic;
-  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  SrcRect := SPEAR_GRAPHIC_RECTS[P.SpearGraphic];
   Hotspot := P.Hotspot;
   Target := Point(P.X, P.Y);
 
@@ -1761,7 +1772,7 @@ begin
     Target.Y := Target.Y * 2;
   end;
 
-  fProjectileImage.DrawTo(fLayers[rlTerrain], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+  fSpearImage.DrawTo(fLayers[rlTerrain], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
 
 procedure TRenderer.AddFreezer(X, Y: Integer);
@@ -2841,32 +2852,32 @@ begin
   if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
   begin
     if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(HRCustomProjectileImages, fProjectileImage)
+      TPngInterface.LoadPngFile(HRCustomProjectileImages, fGrenadeImage)
     else
-      TPngInterface.LoadPngFile(CustomProjectileImages, fProjectileImage);
+      TPngInterface.LoadPngFile(CustomProjectileImages, fGrenadeImage);
   end else
 
   if GameParams.HighResolution then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades-hr.png', fProjectileImage)
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades-hr.png', fGrenadeImage)
   else
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades.png', fProjectileImage);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'grenades.png', fGrenadeImage);
 
-  fProjectileImage.DrawMode := dmCustom;
-  fProjectileImage.OnPixelCombine := CombineTerrainNoOverwrite;
+  fGrenadeImage.DrawMode := dmCustom;
+  fGrenadeImage.OnPixelCombine := CombineTerrainNoOverwrite;
 end;
 
 procedure TRenderer.LoadSpearImages;
 begin
   if GameParams.HighResolution then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', fProjectileImage)
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', fSpearImage)
   else
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', fProjectileImage);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', fSpearImage);
 
     if fTheme <> nil then
-    DoProjectileRecolor(fProjectileImage, fTheme.Colors['MASK']);
+    DoProjectileRecolor(fSpearImage, fTheme.Colors['MASK']);
 
-  fProjectileImage.DrawMode := dmCustom;
-  fProjectileImage.OnPixelCombine := CombineTerrainNoOverwrite;
+  fSpearImage.DrawMode := dmCustom;
+  fSpearImage.OnPixelCombine := CombineTerrainNoOverwrite;
 end;
 
 procedure TRenderer.LoadVisualSFXImages;
@@ -3178,7 +3189,8 @@ begin
   fTheme := TNeoTheme.Create;
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
-  fProjectileImage := TBitmap32.Create;
+  fGrenadeImage := TBitmap32.Create;
+  fSpearImage := TBitmap32.Create;
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
@@ -3206,7 +3218,8 @@ var
   iIcon: THelperIcon;
 begin
   TempBitmap.Free;
-  fProjectileImage.Free;
+  fGrenadeImage.Free;
+  fSpearImage.Free;
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
