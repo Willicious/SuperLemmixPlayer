@@ -149,8 +149,9 @@ type
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
     MinerMasks                 : TBitmap32;
-    ProjectileMasks            : TBitmap32;
-    GrenadeMask                : TBitmap32;
+    GrenadeAnimationMasks      : TBitmap32;
+    GrenadeExplosionMask       : TBitmap32;
+    SpearMasks                 : TBitmap32;
     LaserMask                  : TBitmap32;
     fMasksLoaded               : Boolean;
 
@@ -236,7 +237,7 @@ type
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
-    procedure ApplyGrenadeMask(P: TProjectile);
+    procedure ApplyGrenadeExplosionMask(P: TProjectile);
     procedure ApplyLaserMask(P: TPoint; L: TLemming);
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
@@ -1021,15 +1022,16 @@ begin
   LemmingList    := TLemmingList.Create;
   ProjectileList := TProjectileList.Create;
 
-  TimebomberMask := TBitmap32.Create;
-  BomberMask     := TBitmap32.Create;
-  FreezerMask    := TBitmap32.Create;
-  BasherMasks    := TBitmap32.Create;
-  FencerMasks    := TBitmap32.Create;
-  MinerMasks     := TBitmap32.Create;
-  GrenadeMask    := TBitmap32.Create;
-  ProjectileMasks := TBitmap32.Create;
-  LaserMask      := TBitmap32.Create;
+  TimebomberMask          := TBitmap32.Create;
+  BomberMask              := TBitmap32.Create;
+  FreezerMask             := TBitmap32.Create;
+  BasherMasks             := TBitmap32.Create;
+  FencerMasks             := TBitmap32.Create;
+  MinerMasks              := TBitmap32.Create;
+  GrenadeAnimationMasks   := TBitmap32.Create;
+  GrenadeExplosionMask    := TBitmap32.Create;
+  SpearMasks              := TBitmap32.Create;
+  LaserMask               := TBitmap32.Create;
 
   Gadgets        := TGadgetList.Create;
   BlockerMap     := TBitmap32.Create;
@@ -1146,8 +1148,9 @@ begin
   TimebomberMask.Free;
   BomberMask.Free;
   FreezerMask.Free;
-  GrenadeMask.Free;
-  ProjectileMasks.Free;
+  GrenadeAnimationMasks.Free;
+  GrenadeExplosionMask.Free;
+  SpearMasks.Free;
   LaserMask.Free;
   BasherMasks.Free;
   FencerMasks.Free;
@@ -1210,8 +1213,9 @@ begin
     LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Laserer, Basher, Fencer and Miner are set when used
     LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
-    LoadMask(ProjectileMasks, 'projectiles.png', CombineNoOverwriteMask);
-    LoadMask(GrenadeMask, 'grenader.png', CombineMaskPixelsNeutral);
+    LoadMask(GrenadeAnimationMasks, 'grenades.png', CombineNoOverwriteMask);
+    LoadMask(GrenadeExplosionMask, 'grenader.png', CombineMaskPixelsNeutral);
+    LoadMask(SpearMasks, 'spears.png', CombineNoOverwriteMask);
     LoadMask(LaserMask, 'laser.png', CombineMaskPixelsNeutral);
     fMasksLoaded := true;
   end;
@@ -3578,18 +3582,18 @@ begin
   Hotspot := P.Hotspot;
   Target := Point(P.X, P.Y);
 
-  ProjectileMasks.DrawTo(PhysicsMap, Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+  SpearMasks.DrawTo(PhysicsMap, Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 
   if not IsSimulating then
     fRenderInterface.AddTerrainSpear(P);
 end;
 
-procedure TLemmingGame.ApplyGrenadeMask(P: TProjectile);
+procedure TLemmingGame.ApplyGrenadeExplosionMask(P: TProjectile);
 begin
-  GrenadeMask.DrawTo(PhysicsMap, P.X - 9, P.Y - 9);
+  GrenadeExplosionMask.DrawTo(PhysicsMap, P.X - 9, P.Y - 9);
 
   if not IsSimulating then
-    fRenderInterface.RemoveTerrain(P.X - 9, P.Y - 9, GrenadeMask.Width, GrenadeMask.Height);
+    fRenderInterface.RemoveTerrain(P.X - 9, P.Y - 9, GrenadeExplosionMask.Width, GrenadeExplosionMask.Height);
 end;
 
 procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
@@ -6288,7 +6292,7 @@ begin
         ApplySpear(P);
         ProjectileList.Delete(i);
       end else begin
-        ApplyGrenadeMask(P);
+        ApplyGrenadeExplosionMask(P);
         CueSoundEffect(SFX_EXPLOSION, Point(P.X, P.Y));
       end;
     end;
