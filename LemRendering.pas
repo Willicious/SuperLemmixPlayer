@@ -1003,13 +1003,15 @@ var
   SrcRectGrenade: TRect;
   SpearHotspot: TPoint;
   GrenadeHotspot: TPoint;
-  Target: TPoint;
+  SpearTarget: TPoint;
+  GrenadeTarget: TPoint;
 begin
   SrcRectSpear := SPEAR_GRAPHIC_RECTS[P.SpearGraphic];
   SrcRectGrenade := GRENADE_GRAPHIC_RECTS[P.GrenadeGraphic];
   SpearHotspot := P.SpearHotspot;
   GrenadeHotspot := P.GrenadeHotspot;
-  Target := Point(P.X, P.Y);
+  SpearTarget := Point(P.X, P.Y);
+  GrenadeTarget := Point(P.X, P.Y);
 
   if GameParams.HighResolution then
   begin
@@ -1025,23 +1027,23 @@ begin
 
     SpearHotspot.X := SpearHotspot.X * 2;
     SpearHotspot.Y := SpearHotspot.Y * 2;
-    SpearHotspot.X := SpearHotspot.X * 2;
-    SpearHotspot.Y := SpearHotspot.Y * 2;
+    SpearTarget.X := SpearTarget.X * 2;
+    SpearTarget.Y := SpearTarget.Y * 2;
 
     GrenadeHotspot.X := GrenadeHotspot.X * 2;
     GrenadeHotspot.Y := GrenadeHotspot.Y * 2;
-    GrenadeHotspot.X := GrenadeHotspot.X * 2;
-    GrenadeHotspot.Y := GrenadeHotspot.Y * 2;
+    GrenadeTarget.X := GrenadeTarget.X * 2;
+    GrenadeTarget.Y := GrenadeTarget.Y * 2;
   end;
 
   if P.IsGrenade then
   begin
     if Grenade = pgGrenadeExplode then
-      fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], Target.X - GrenadeHotspot.X, Target.Y - GrenadeHotspot.Y, SrcRectGrenade)
+      fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
     else
-      fGrenadeImage.DrawTo(fLayers[rlProjectiles], Target.X - GrenadeHotspot.X, Target.Y - GrenadeHotspot.Y, SrcRectGrenade);
+      fGrenadeImage.DrawTo(fLayers[rlProjectiles], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
   end else
-    fSpearImage.DrawTo(fLayers[rlProjectiles], Target.X - SpearHotspot.X, Target.Y - SpearHotspot.Y, SrcRectSpear);
+    fSpearImage.DrawTo(fLayers[rlProjectiles], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
