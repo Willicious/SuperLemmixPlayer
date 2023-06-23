@@ -3572,13 +3572,13 @@ end;
 
 procedure TLemmingGame.ApplySpear(P: TProjectile);
 var
-  Graphic: TProjectileGraphic;
+  Graphic: TSpearGraphic;
   SrcRect: TRect;
   Hotspot: TPoint;
   Target: TPoint;
 begin
-  Graphic := P.Graphic;
-  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  Graphic := P.SpearGraphic;
+  SrcRect := SPEAR_GRAPHIC_RECTS[Graphic];
   Hotspot := P.Hotspot;
   Target := Point(P.X, P.Y);
 
