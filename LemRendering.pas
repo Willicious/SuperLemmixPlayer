@@ -189,7 +189,7 @@ type
     procedure SetHighShadowPixel(X, Y: Integer);
 
     procedure DrawProjectiles;
-    procedure DrawThisProjectile(aProjectile: TProjectile);
+    procedure DrawThisProjectile(P: TProjectile);
 
     procedure RenderWorld(World: TBitmap32; DoBackground: Boolean);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
@@ -996,17 +996,18 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawThisProjectile(aProjectile: TProjectile);
+procedure TRenderer.DrawThisProjectile(P: TProjectile);
 var
+  Grenade: TGrenadeGraphic;
   SrcRectSpear: TRect;
   SrcRectGrenade: TRect;
   Hotspot: TPoint;
   Target: TPoint;
 begin
-  SrcRectSpear := SPEAR_GRAPHIC_RECTS[aProjectile.SpearGraphic];
-  SrcRectGrenade := GRENADE_GRAPHIC_RECTS[aProjectile.GrenadeGraphic];
-  Hotspot := aProjectile.Hotspot;
-  Target := Point(aProjectile.X, aProjectile.Y);
+  SrcRectSpear := SPEAR_GRAPHIC_RECTS[P.SpearGraphic];
+  SrcRectGrenade := GRENADE_GRAPHIC_RECTS[P.GrenadeGraphic];
+  Hotspot := P.Hotspot;
+  Target := Point(P.X, P.Y);
 
   if GameParams.HighResolution then
   begin
@@ -1026,9 +1027,9 @@ begin
     Target.Y := Target.Y * 2;
   end;
 
-  if aProjectile.IsGrenade then
+  if P.IsGrenade then
   begin
-    if aProjectile.GrenadeGraphic = pgGrenadeExplode then
+    if Grenade = pgGrenadeExplode then
       fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectGrenade)
     else
       fGrenadeImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectGrenade);

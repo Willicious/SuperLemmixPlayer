@@ -8,7 +8,7 @@
  TITLE Sprites Test
  AUTHOR 
  ID x00EDFD375AB7C7BD
- VERSION x000000000000000E
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 160
  START_Y 80
- THEME gigalem_millas
+ THEME orig_pillar
  
 #         Level stats           
 # ----------------------------- 
@@ -225,6 +225,23 @@
    CLIMBER 
    SWIMMER 
    BLOCKER 
+ $END
+ 
+ 
+#           Sketches            
+# ----------------------------- 
+ $SKETCH
+   INDEX 15
+   PIECE grenader
+   X 113
+   Y 58
+ $END
+ 
+ $SKETCH
+   INDEX 16
+   PIECE spearer
+   X 109
+   Y 55
  $END
  
  
