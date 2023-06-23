@@ -3579,7 +3579,7 @@ var
 begin
   Graphic := P.SpearGraphic;
   SrcRect := SPEAR_GRAPHIC_RECTS[Graphic];
-  Hotspot := P.Hotspot;
+  Hotspot := P.SpearHotspot;
   Target := Point(P.X, P.Y);
 
   SpearMasks.DrawTo(PhysicsMap, Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);

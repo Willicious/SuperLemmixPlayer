@@ -90,8 +90,9 @@ type
       procedure SetPositionFromLemming;
 
       function GetSpearGraphic: TSpearGraphic;
+      function GetSpearHotspot: TPoint;
       function GetGrenadeGraphic: TGrenadeGraphic;
-      function GetGraphicHotspot: TPoint;
+      function GetGrenadeHotspot: TPoint;
     public
       constructor CreateAssign(aSrc: TProjectile);
       constructor CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
@@ -109,9 +110,10 @@ type
       property Fired: Boolean read fFired;
       property Hit: Boolean read fHit;
 
-      property Hotspot: TPoint read GetGraphicHotspot;
       property SpearGraphic: TSpearGraphic read GetSpearGraphic;
+      property SpearHotspot: TPoint read GetSpearHotspot;
       property GrenadeGraphic: TGrenadeGraphic read GetGrenadeGraphic;
+      property GrenadeHotspot: TPoint read GetGrenadeHotspot;
 
       property IsSpear: Boolean read fIsSpear;
       property IsGrenade: Boolean read fIsGrenade;
@@ -292,8 +294,6 @@ begin
 end;
 
 function TProjectile.GetSpearGraphic: TSpearGraphic;
-var
-i: Integer;
 begin
   if fIsSpear then
   begin
@@ -320,19 +320,23 @@ begin
   end;
 end;
 
-function TProjectile.GetGraphicHotspot: TPoint;
+function TProjectile.GetGrenadeHotspot: TPoint;
 var
   ImgRect: TRect;
-  AtTop: Boolean;
 begin
   ImgRect := GRENADE_GRAPHIC_RECTS[GrenadeGraphic];
   if GrenadeGraphic in
   [pgGrenadeU, pgGrenadeR, pgGrenadeD, pgGrenadeL, pgGrenadeExplode] then
   begin
     Result := Point(ImgRect.Width div 2, ImgRect.Height div 2);
-    Exit;
   end;
+end;
 
+function TProjectile.GetSpearHotspot: TPoint;
+var
+  ImgRect: TRect;
+  AtTop: Boolean;
+begin
   ImgRect := SPEAR_GRAPHIC_RECTS[SpearGraphic];
   case SpearGraphic of
     pgSpearFlat: AtTop := false; // Counterintuitively (due to small height of this one) it DOES put it at the top pixel

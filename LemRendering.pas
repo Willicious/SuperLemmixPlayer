@@ -1001,12 +1001,14 @@ var
   Grenade: TGrenadeGraphic;
   SrcRectSpear: TRect;
   SrcRectGrenade: TRect;
-  Hotspot: TPoint;
+  SpearHotspot: TPoint;
+  GrenadeHotspot: TPoint;
   Target: TPoint;
 begin
   SrcRectSpear := SPEAR_GRAPHIC_RECTS[P.SpearGraphic];
   SrcRectGrenade := GRENADE_GRAPHIC_RECTS[P.GrenadeGraphic];
-  Hotspot := P.Hotspot;
+  SpearHotspot := P.SpearHotspot;
+  GrenadeHotspot := P.GrenadeHotspot;
   Target := Point(P.X, P.Y);
 
   if GameParams.HighResolution then
@@ -1021,20 +1023,25 @@ begin
     SrcRectGrenade.Right := SrcRectGrenade.Right * 2;
     SrcRectGrenade.Bottom := SrcRectGrenade.Bottom * 2;
 
-    Hotspot.X := Hotspot.X * 2;
-    Hotspot.Y := Hotspot.Y * 2;
-    Target.X := Target.X * 2;
-    Target.Y := Target.Y * 2;
+    SpearHotspot.X := SpearHotspot.X * 2;
+    SpearHotspot.Y := SpearHotspot.Y * 2;
+    SpearHotspot.X := SpearHotspot.X * 2;
+    SpearHotspot.Y := SpearHotspot.Y * 2;
+
+    GrenadeHotspot.X := GrenadeHotspot.X * 2;
+    GrenadeHotspot.Y := GrenadeHotspot.Y * 2;
+    GrenadeHotspot.X := GrenadeHotspot.X * 2;
+    GrenadeHotspot.Y := GrenadeHotspot.Y * 2;
   end;
 
   if P.IsGrenade then
   begin
     if Grenade = pgGrenadeExplode then
-      fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectGrenade)
+      fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], Target.X - GrenadeHotspot.X, Target.Y - GrenadeHotspot.Y, SrcRectGrenade)
     else
-      fGrenadeImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectGrenade);
+      fGrenadeImage.DrawTo(fLayers[rlProjectiles], Target.X - GrenadeHotspot.X, Target.Y - GrenadeHotspot.Y, SrcRectGrenade);
   end else
-    fSpearImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRectSpear);
+    fSpearImage.DrawTo(fLayers[rlProjectiles], Target.X - SpearHotspot.X, Target.Y - SpearHotspot.Y, SrcRectSpear);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
@@ -1756,7 +1763,7 @@ var
   Target: TPoint;
 begin
   SrcRect := SPEAR_GRAPHIC_RECTS[P.SpearGraphic];
-  Hotspot := P.Hotspot;
+  Hotspot := P.SpearHotspot;
   Target := Point(P.X, P.Y);
 
   if GameParams.HighResolution then
