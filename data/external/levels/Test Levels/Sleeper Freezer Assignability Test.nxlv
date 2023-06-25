@@ -1,16 +1,14 @@
-# Level file modified by NL QuickMod
-
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.4
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Sleeper & Freezer Assignability Test
  AUTHOR WillLem
-#  ID x5B27E3A1026EE60F
- VERSION x0000000000000019
+ ID xB27E3A1026EE60F4
+ VERSION x000000000000001A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -27,18 +25,22 @@
  TIME_LIMIT 1
  MAX_SPAWN_INTERVAL 53
  
-#  $SKILLSET 
-#    WALKER 5
-#    SLIDER 5
-#    CLIMBER 5
-#    SWIMMER 5
-#    FLOATER 5
-#    GLIDER 5
-#    DISARMER 5
-#    TIMEBOMBER 5
-#    BOMBER 5
-#    FREEZER 5
-#  $END 
+ $SKILLSET 
+   WALKER 5
+   JUMPER 5
+   SHIMMIER 5
+   SLIDER 5
+   CLIMBER 5
+   SWIMMER 5
+   FLOATER 5
+   TIMEBOMBER 5
+   FREEZER 5
+   PLATFORMER 5
+   BUILDER 5
+   GRENADER 5
+   LASERER 5
+   MINER 5
+ $END 
  
 #     Interactive objects       
 # ----------------------------- 
@@ -47,6 +49,56 @@
    PIECE exit
    X 134
    Y 71
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 1
+   Y 128
+   WIDTH 64
+   HEIGHT 31
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_rock
+   PIECE vinewater
+   X 101
+   Y 135
+   WIDTH 64
+   HEIGHT 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 256
+   Y 134
+   WIDTH 64
+   HEIGHT 25
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 182
+   Y 139
+   WIDTH 64
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 190
+   Y 12
+   WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -125,23 +177,3 @@
  $END
  
  
-
-# NL QuickMod modifications
-
-ID xB27E3A1026EE60F4
-$SKILLSET
-  WALKER 5
-  JUMPER 5
-  SHIMMIER 5
-  SLIDER 5
-  CLIMBER 5
-  SWIMMER 5
-  FLOATER 5
-  TIMEBOMBER 5
-  FREEZER 5
-  PLATFORMER 5
-  BUILDER 5
-  GRENADER 5
-  LASERER 5
-  MINER 5
-$END
