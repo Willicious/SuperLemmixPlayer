@@ -153,9 +153,18 @@ begin
   fScrollerTextList := TStringList.Create;
   GameParams.MainForm.Caption := 'SuperLemmix';
 
-  //hotbookmark - use the postview jingle code to play a "menu" sound here
-  //SoundManager.PlaySound(SFX_YIPPEE, 0, 0);  //works, but we want music really
-  //GlobalGame.PlayMusic;  //doesn't work - why??
+  if GameParams.MenuMusic then
+  begin
+    SoundManager.LoadMusicFromFile('menu'); //this can load the music file called 'menu'
+                                             //but we still need to make this pack-customisable
+                                             //try making a new procedure "load menu music"
+                                             //which looks for 'menu.ogg' in level pack folder
+    SoundManager.PlayMusic;
+
+    ////this works, but the sound keeps playing even after the game has started
+    //SoundManager.PurgePackSounds;
+    //SoundManager.PlayPackSound('menu', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('menu.ogg')))
+  end;
 end;
 
 destructor TGameMenuScreen.Destroy;
