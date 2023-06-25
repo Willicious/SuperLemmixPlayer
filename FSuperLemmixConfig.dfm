@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 276
     Height = 439
-    ActivePage = TabSheet2
+    ActivePage = TabSheet3
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -558,7 +558,7 @@ object FormNXConfig: TFormNXConfig
       end
       object rgExitSound: TRadioGroup
         Left = 72
-        Top = 202
+        Top = 168
         Width = 113
         Height = 65
         Anchors = []
@@ -568,6 +568,32 @@ object FormNXConfig: TFormNXConfig
           'Boing!')
         TabOrder = 3
         OnClick = OptionChanged
+      end
+      object gbMenuSounds: TGroupBox
+        Left = 37
+        Top = 256
+        Width = 185
+        Height = 81
+        Caption = 'Menu Sounds'
+        TabOrder = 4
+        object cbPostviewJingles: TCheckBox
+          Left = 14
+          Top = 24
+          Width = 155
+          Height = 17
+          Caption = 'Activate Postview Jingles'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
+        object cbMenuMusic: TCheckBox
+          Left = 14
+          Top = 47
+          Width = 155
+          Height = 17
+          Caption = 'Activate Menu Music'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
       end
     end
   end

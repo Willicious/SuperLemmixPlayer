@@ -78,7 +78,6 @@ type
     moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
-    //moLinearResampleGame,
     moFullScreen,
     moMinimapHighQuality,
     moShowMinimap,
@@ -88,10 +87,9 @@ type
     moCompactSkillPanel,
     moEdgeScroll,
     moSpawnInterval,
-    moHideAdvanced,
     moFileCaching,
-    //moPostviewJingles,
-    //moForceDefaultLemmings,
+    moPostviewJingles,
+    moMenuMusic,
     moDisableMusicInTestplay,
     moPreferYippee,
     moPreferBoing
@@ -239,7 +237,6 @@ type
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
-    //property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
@@ -248,17 +245,16 @@ type
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
-    //property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
     property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
     property PreferBoing: Boolean Index moPreferBoing read GetOptionFlag write SetOptionFlag;
-
-    property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
+    property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
+    property MenuMusic: Boolean Index moMenuMusic read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
-    //property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
+
 
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
@@ -430,13 +426,11 @@ begin
   SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
   SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
   SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
-  //SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('TurboFastForward', TurboFF);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
-  //SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('HideClearPhysics', HideClearPhysics);
@@ -444,7 +438,6 @@ begin
   SaveBoolean('HideFrameskipping', HideFrameskipping);
   SaveBoolean('HideHelpers', HideHelpers);
   SaveBoolean('HideSkillQ', HideSkillQ);
-  //SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('ShowMinimap', ShowMinimap);
   SaveBoolean('EdgeScrolling', EdgeScroll);
@@ -466,7 +459,6 @@ begin
 
   SaveBoolean('HighResolution', HighResolution);
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
-  //SaveBoolean('LinearResampleGame', LinearResampleGame);
 
   LevelSavePath := CurrentLevel.Path;
   if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
@@ -482,6 +474,8 @@ begin
   SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
   SaveBoolean('PreferYippee', PreferYippee);
   SaveBoolean('PreferBoing', PreferBoing);
+  SaveBoolean('PostviewJingles', PostviewJingles);
+  SaveBoolean('MenuMusic', MenuMusic);
 
   //SL.Add('');
   //SL.Add('# Online Options');
@@ -567,9 +561,6 @@ var
     if fPanelZoomLevel < 0 then
       fPanelZoomLevel := fZoomLevel;
 
-    //if CompactSkillPanel then
-      //fPanelZoomLevel := Min(Screen.Width div 320 div ResMod, fPanelZoomLevel)
-    //else
       if GameParams.ShowMinimap then
       begin
         fPanelZoomLevel := Min(Screen.Width div 444 div ResMod, fPanelZoomLevel);
@@ -599,8 +590,6 @@ begin
 
     UserName := SL.Values['UserName'];
 
-    HideAdvancedOptions := LoadBoolean('HideAdvancedOptions', HideAdvancedOptions);
-
     AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
     AutoSaveReplayPattern := SL.Values['AutoSaveReplayPattern'];
     IngameSaveReplayPattern := SL.Values['IngameSaveReplayPattern'];
@@ -615,7 +604,6 @@ begin
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
-    //ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     HideClearPhysics := LoadBoolean('HideClearPhysics', HideClearPhysics);
@@ -623,7 +611,6 @@ begin
     HideFrameskipping := LoadBoolean('HideFrameskipping', HideFrameskipping);
     HideHelpers := LoadBoolean('HideHelpers', HideHelpers);
     HideSkillQ := LoadBoolean('HideSkillQ', HideSkillQ);
-    //CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     ShowMinimap := LoadBoolean('ShowMinimap', ShowMinimap);
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
@@ -664,12 +651,9 @@ begin
     fLoadedWindowHeight := WindowHeight;
 
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
-    //LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 
-    //if LoadBoolean('VictoryJingle', false) or LoadBoolean('FailureJingle', false) then
-      //PostviewJingles := true
-    //else
-      //PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
+    PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
+    MenuMusic := LoadBoolean('MenuMusic', MenuMusic);
 
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
