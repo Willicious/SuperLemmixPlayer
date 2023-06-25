@@ -58,7 +58,7 @@ type
 implementation
 
 uses
-  CustomPopup, FBaseDosForm, FLevelInfo, FStyleManager;
+  CustomPopup, FBaseDosForm, FLevelInfo, FStyleManager, GameSound;
 
 const
   TALISMAN_PADDING = 8;
@@ -163,6 +163,8 @@ end;
 procedure TGamePreviewScreen.BeginPlay;
 begin
   CloseScreen(gstPlay);
+  if GameParams.MenuMusic and not SoundManager.MuteMusic then
+    SoundManager.StopMusic;
 end;
 
 procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;

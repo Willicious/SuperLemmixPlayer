@@ -423,11 +423,10 @@ begin
 
   aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
-////hotbookmark - for some reason, this isn't working - aPath is correct, and the file is there,
-///  but we get an exception when it tries to load
-//  if FileExists(GameParams.CurrentLevel.Group.FindFile('menu.ogg')) then
-//    F := TFileStream.Create(AppPath + SFLevels + aPath + '\' + aName + Ext, fmOpenRead)
-//  else
+  //hotbookmark - works, but only if the file is in .ogg format
+  if FileExists(GameParams.CurrentLevel.Group.FindFile(aName + Ext)) then
+    F := TFileStream.Create(aPath + aName + Ext, fmOpenRead)
+  else
     F := TFileStream.Create(AppPath + SFMusic + aName + Ext, fmOpenRead);
   try
     LoadMusicFromStream(F, aName);
