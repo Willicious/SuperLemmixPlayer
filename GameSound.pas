@@ -103,6 +103,7 @@ type
       procedure PurgeNonDefaultSounds;
       procedure PurgePackSounds;
 
+      procedure LoadMenuMusic;
       procedure LoadMusicFromFile(aName: String);
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
 
@@ -143,6 +144,11 @@ const
   LAST_SOUND_EXT = '.mp3'; // anything beyond this entry can only be used for music, not sfx
 
 implementation
+
+uses
+//
+GameControl, LemNeoLevelPack;      //hotbookmark - these may not be needed
+//                                      if I can find a way to load the menu music file some other way
 
 (* --- TSoundManager --- *)
 
@@ -205,11 +211,6 @@ begin
     BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
   end;
 end;
-
-//procedure TSoundManager.AdjustPitch(aValue: Integer);
-//begin
-  //BASS_ChannelSetAttribute({sound channel goes here}, BASS_ATTRIB_FREQ, 0.25: Single);
-//end;      //bookmark - this needs to adjust pitch
 
 procedure TSoundManager.SetSoundVolume(aValue: Integer);
 begin
@@ -400,6 +401,39 @@ begin
   for i := fSoundEffects.Count-1 downto 0 do
     if fSoundEffects[i].Origin = seoPack then
       fSoundEffects.Delete(i);
+end;
+
+procedure TSoundManager.LoadMenuMusic;
+var
+  aName: String;
+  aPath: String;  //hotbookmark
+  F: TFileStream;
+  Ext: String;
+begin
+  if not fIsBassLoaded then Exit;
+
+  aName := 'menu';
+
+  Ext := FindExtension(aName, true);
+  if Ext = '' then
+  begin
+    FreeMusic;
+    Exit;
+  end;
+
+  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
+
+////hotbookmark - for some reason, this isn't working - aPath is correct, and the file is there,
+///  but we get an exception when it tries to load
+//  if FileExists(GameParams.CurrentLevel.Group.FindFile('menu.ogg')) then
+//    F := TFileStream.Create(AppPath + SFLevels + aPath + '\' + aName + Ext, fmOpenRead)
+//  else
+    F := TFileStream.Create(AppPath + SFMusic + aName + Ext, fmOpenRead);
+  try
+    LoadMusicFromStream(F, aName);
+  finally
+    F.Free;
+  end;
 end;
 
 procedure TSoundManager.LoadMusicFromFile(aName: String);

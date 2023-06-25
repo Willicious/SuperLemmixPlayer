@@ -155,15 +155,8 @@ begin
 
   if GameParams.MenuMusic then
   begin
-    SoundManager.LoadMusicFromFile('menu'); //this can load the music file called 'menu'
-                                             //but we still need to make this pack-customisable
-                                             //try making a new procedure "load menu music"
-                                             //which looks for 'menu.ogg' in level pack folder
+    SoundManager.LoadMenuMusic;
     SoundManager.PlayMusic;
-
-    ////this works, but the sound keeps playing even after the game has started
-    //SoundManager.PurgePackSounds;
-    //SoundManager.PlayPackSound('menu', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('menu.ogg')))
   end;
 end;
 
