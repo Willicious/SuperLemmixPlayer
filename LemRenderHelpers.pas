@@ -129,7 +129,7 @@ type
                  hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation,
                  hpi_Exit, hpi_Exit_Lock, hpi_Fire, hpi_Trap, hpi_Trap_Disabled, hpi_Updraft,
                  hpi_Flipper, hpi_Button, hpi_Force, hpi_NoSplat, hpi_Splat,
-                 hpi_Water, hpi_Blasticine, hpi_Vinewater,
+                 hpi_Water, hpi_Blasticine, hpi_Vinewater, hpi_Poison,
                  hpi_FallDist,
                  hpi_Skill_Zombie, hpi_Skill_Neutral, hpi_Skill_Slider, hpi_Skill_Climber,
                  hpi_Skill_Floater, hpi_Skill_Glider, hpi_Skill_Swimmer, hpi_Skill_Disarmer);
@@ -254,6 +254,7 @@ const
                               'water.png',
                               'blasticine.png',
                               'vinewater.png',
+                              'poison.png',
                               'fall_distance.png',
                               'skill_zombie.png',
                               'skill_neutral.png',

@@ -42,6 +42,7 @@ const
   DOM_ANIMONCE         = 35;
   DOM_BLASTICINE       = 36;
   DOM_VINEWATER        = 37;
+  DOM_POISON           = 38;
 
 implementation
 

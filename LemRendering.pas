@@ -2473,6 +2473,11 @@ begin
         begin
           fHelperImages[hpi_Vinewater].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
         end;
+
+      DOM_POISON:
+        begin
+          fHelperImages[hpi_Poison].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
     end;
 end;
 
