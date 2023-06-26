@@ -1649,7 +1649,7 @@ begin
     spbSlower:
       begin
         DrawButtonSelector(spbSlower, true);
-        Game.IsBackstepping := False;
+        Game.fIsBackstepping := False;
 
         //deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1661,7 +1661,7 @@ begin
     spbFaster:
       begin
         DrawButtonSelector(spbFaster, true);
-        Game.IsBackstepping := False;
+        Game.fIsBackstepping := False;
 
         //deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1680,10 +1680,10 @@ begin
         if fGameWindow.GameSpeed = gspPause then
         begin
          fGameWindow.GameSpeed := gspNormal;
-         Game.IsBackstepping := False;
+         Game.fIsBackstepping := False;
         end else begin
          fGameWindow.GameSpeed := gspPause;
-         Game.IsBackstepping := True;
+         Game.fIsBackstepping := True;
         end;
       end;
     spbNuke:
@@ -1701,6 +1701,7 @@ begin
         if Game.IsSuperLemming then Exit;
         if RewindPressed then fRewindPressed := False;
         if Game.IsBackstepping then Game.IsBackstepping := False;
+        if Game.IsBackstepping then Game.fIsBackstepping := False;
 
         if GameParams.TurboFF then
         begin

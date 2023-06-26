@@ -563,7 +563,7 @@ begin
   begin
     RewindTimer.Enabled := False;
     SkillPanel.RewindPressed := False;
-    Game.IsBackstepping := False;
+    Game.fIsBackstepping := False;
   end else
     GoToSaveState(Game.CurrentIteration - 3); //hotbookmark
 end;
@@ -1105,10 +1105,8 @@ begin
     // Load save state or restart the level
     if UseSaveState >= 0 then
       Game.LoadSavedState(fSaveList[UseSaveState])
-    else begin
+    else
       Game.Start(true);
-      Game.IsBackstepping := False;
-    end;
   end;
 
   fSaveList.ClearAfterIteration(Game.CurrentIteration);
@@ -1429,7 +1427,7 @@ begin
     if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       begin
         Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
-        Game.IsBackstepping := False;
+        Game.fIsBackstepping := False;
       end;
 
     if func.Action = lka_Skill then
@@ -1459,11 +1457,11 @@ begin
                  if fGameSpeed = gspPause then
                    begin
                      GameSpeed := gspNormal;
-                     Game.IsBackstepping := False;
+                     Game.fIsBackstepping := False;
                    end else begin
                      GameSpeed := gspPause;
                      SkillPanel.RewindPressed := False;  // needed?
-                     Game.IsBackstepping := True;
+                     Game.fIsBackstepping := True;
                    end;
                  end;
       lka_Nuke: begin
@@ -1511,7 +1509,7 @@ begin
       lka_Turbo: begin
                    if Game.IsSuperLemming then Exit;
                    if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
-                   if Game.IsBackstepping then Game.IsBackstepping := False;
+                   if Game.IsBackstepping then Game.fIsBackstepping := False;
 
                     case fGameSpeed of
                       gspFF, gspSlowMo, gspPause: GameSpeed := gspNormal;
@@ -1527,7 +1525,7 @@ begin
 
                          if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
                          if SkillPanel.TurboPressed then SkillPanel.TurboPressed := False;
-                         if Game.IsBackstepping then Game.IsBackstepping := False;
+                         if Game.IsBackstepping then Game.fIsBackstepping := False;
 
                          case fGameSpeed of
                            gspNormal, gspSlowMo, gspPause: GameSpeed := gspFF;
@@ -1558,7 +1556,7 @@ begin
                         if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
                         if SkillPanel.TurboPressed then SkillPanel.TurboPressed := False;
 
-                        if Game.IsBackstepping then Game.IsBackstepping := False;
+                        if Game.IsBackstepping then Game.fIsBackstepping := False;
 
                         case fGameSpeed of
                           gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
@@ -1608,15 +1606,15 @@ begin
                     if CurrentIteration > (func.Modifier * -1) then
                     begin
                       GotoSaveState(CurrentIteration + func.Modifier);
-                      Game.IsBackstepping := True;
+                      Game.fIsBackstepping := True;
                     end else begin
                       GotoSaveState(0);
-                      Game.IsBackstepping := False;
+                      Game.fIsBackstepping := False;
                     end;
                   end else if func.Modifier > 1 then
                   begin
                     fHyperSpeedTarget := CurrentIteration + func.Modifier;
-                    Game.IsBackstepping := False;
+                    Game.fIsBackstepping := False;
                   end else
                     if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
@@ -1815,7 +1813,7 @@ begin
     and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
     begin
       GoToSaveState(Max(Game.CurrentIteration -1, 0));
-      Game.IsBackstepping := True;
+      Game.fIsBackstepping := True;
     end;
 
     if Game.IsHighlightHotkey then
@@ -2123,7 +2121,7 @@ begin
                 'will attempt to play the replay anyway.');
 
   GameSpeed := gspNormal;
-  Game.IsBackstepping := False;
+  Game.fIsBackstepping := False;
   GotoSaveState(0, -1);
   CanPlay := True;
 end;

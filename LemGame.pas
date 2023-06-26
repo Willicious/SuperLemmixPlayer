@@ -1143,7 +1143,6 @@ begin
   ButtonsRemain := 0;
   fHitTestAutoFail := false;
 
-  fIsBackstepping := False;
   fSimulationDepth := 0;
   fSoundList := TList<string>.Create();
 end;
@@ -1248,6 +1247,7 @@ begin
   fFastForward := False;
   fSuperlemming := Level.Info.SuperLemming;
 
+  fIsBackstepping := False;
   fGameFinished := False;
   fGameCheated := False;
   fPauseWasPressed := False;
