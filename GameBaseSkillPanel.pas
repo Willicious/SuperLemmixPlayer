@@ -71,9 +71,6 @@ type
     fHighlitSkill         : TSkillPanelButton;
     fLastHighlitSkill     : TSkillPanelButton; // to avoid sounds when shouldn't be played
 
-    fRewindPressed        : Boolean;
-    fTurboPressed         : Boolean;
-
     fLastDrawnStr         : String;
     fNewDrawStr           : String;
 
@@ -165,8 +162,6 @@ type
     procedure DrawTurboHighlight;
     procedure DrawMinimap; virtual;
 
-    property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
-    property TurboPressed: Boolean read fTurboPressed write fTurboPressed;
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
@@ -274,9 +269,6 @@ begin
   fMinimapImage.OnMouseDown := MinimapMouseDown;
   fMinimapImage.OnMouseMove := MinimapMouseMove;
   fMinimapImage.OnMouseUp := MinimapMouseUp;
-
-  fRewindPressed := False;
-  fTurboPressed := False;
 
   // Create font and skill panel images (but do not yet load them)
   SetLength(fInfoFont, NUM_FONT_CHARS);

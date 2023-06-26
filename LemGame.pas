@@ -435,6 +435,8 @@ type
     fSpawnIntervalChanged      : Boolean; //set to true in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
     fIsBackstepping            : Boolean;
+    fRewindPressed             : Boolean;
+    fTurboPressed              : Boolean;
     fReplayWasLoaded           : Boolean;
     fPauseWasPressed           : Boolean;
 
@@ -489,6 +491,8 @@ type
     property Replaying: Boolean read GetIsReplaying;
     property ReplayWasLoaded: Boolean read fReplayWasLoaded; //write fReplayWasLoaded;
     property PauseWasPressed: Boolean read fPauseWasPressed write fPauseWasPressed;
+    property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
+    property TurboPressed: Boolean read fTurboPressed write fTurboPressed;
     property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
     property ReplayingNoRR[isPaused: Boolean]: Boolean read GetIsReplayingNoRR;
     property ReplayManager: TReplay read fReplayManager;
@@ -1244,13 +1248,16 @@ begin
   fLeavingHyperSpeed := False;
   fPauseOnHyperSpeedExit := False;
 
-  fFastForward := False;
   fSuperlemming := Level.Info.SuperLemming;
 
+  fFastForward := False;
+  fRewindPressed := False;
+  fTurboPressed := False;
   fIsBackstepping := False;
+  fPauseWasPressed := False;
+
   fGameFinished := False;
   fGameCheated := False;
-  fPauseWasPressed := False;
 
   LemmingsToRelease := Level.Info.LemmingsCount;
   LemmingsCloned := 0;
