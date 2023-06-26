@@ -1678,6 +1678,7 @@ begin
                             if Game.ReplayManager.HasAnyActionAt(i) then
                               TargetFrame := i;
                         GotoSaveState(Max(TargetFrame - 1, 0));
+                        Game.fIsBackstepping := True;
                      end;
       ssc_NextShrugger: begin
                           HasSuitableSkill := false;
