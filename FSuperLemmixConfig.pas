@@ -221,6 +221,14 @@ end;
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
 begin
   SaveToParams;
+
+  // do this here so the effect is instant
+  if not GameParams.MenuMusic then
+  begin
+    SoundManager.StopMusic;
+    SoundManager.MenuMusicPlaying := False;
+  end else
+    SoundManager.HandleMenuMusic;
 end;
 
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
