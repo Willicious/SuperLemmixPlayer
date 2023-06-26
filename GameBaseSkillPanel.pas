@@ -1640,8 +1640,8 @@ begin
   case aButton of
     spbSlower:
       begin
-        DrawButtonSelector(spbSlower, true);
         Game.fIsBackstepping := False;
+        DrawButtonSelector(spbSlower, true);
 
         //deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1652,8 +1652,8 @@ begin
       end;
     spbFaster:
       begin
-        DrawButtonSelector(spbFaster, true);
         Game.fIsBackstepping := False;
+        DrawButtonSelector(spbFaster, true);
 
         //deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1671,11 +1671,11 @@ begin
 
         if fGameWindow.GameSpeed = gspPause then
         begin
-         fGameWindow.GameSpeed := gspNormal;
-         Game.fIsBackstepping := False;
+          Game.fIsBackstepping := False;
+          fGameWindow.GameSpeed := gspNormal;
         end else begin
-         fGameWindow.GameSpeed := gspPause;
-         Game.fIsBackstepping := True;
+          Game.fIsBackstepping := True;
+          fGameWindow.GameSpeed := gspPause;
         end;
       end;
     spbNuke:

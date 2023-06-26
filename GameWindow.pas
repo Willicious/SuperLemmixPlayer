@@ -1082,8 +1082,8 @@ begin
   begin
   if PauseAfterSkip < 0 then
   begin
-    GameSpeed := gspNormal;
     Game.fIsBackstepping := False;
+    GameSpeed := gspNormal;
   end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
     or (PauseAfterSkip > 0) then
     begin
@@ -1425,8 +1425,8 @@ begin
 
     if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       begin
-        Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
         Game.fIsBackstepping := False;
+        Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
       end;
 
     if func.Action = lka_Skill then
@@ -1455,12 +1455,12 @@ begin
 
                  if fGameSpeed = gspPause then
                    begin
-                     GameSpeed := gspNormal;
                      Game.fIsBackstepping := False;
+                     GameSpeed := gspNormal;
                    end else begin
-                     GameSpeed := gspPause;
-                     Game.RewindPressed := False;  // needed?
+                     Game.RewindPressed := False; //hotbookmark - needed?
                      Game.fIsBackstepping := True;
+                     GameSpeed := gspPause;
                    end;
                  end;
       lka_Nuke: begin
@@ -1549,7 +1549,6 @@ begin
                       begin
                         if Game.RewindPressed then Game.fRewindPressed := False;
                         if Game.TurboPressed then Game.fTurboPressed := False;
-
                         if Game.IsBackstepping then Game.fIsBackstepping := False;
 
                         case fGameSpeed of
@@ -1599,16 +1598,16 @@ begin
                     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                     if CurrentIteration > (func.Modifier * -1) then
                     begin
-                      GotoSaveState(CurrentIteration + func.Modifier);
                       Game.fIsBackstepping := True;
+                      GotoSaveState(CurrentIteration + func.Modifier);
                     end else begin
-                      GotoSaveState(0);
                       Game.fIsBackstepping := False;
+                      GotoSaveState(0);
                     end;
                   end else if func.Modifier > 1 then
                   begin
-                    fHyperSpeedTarget := CurrentIteration + func.Modifier;
                     Game.fIsBackstepping := False;
+                    fHyperSpeedTarget := CurrentIteration + func.Modifier;
                   end else
                     if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
@@ -1677,8 +1676,9 @@ begin
                           for i := 0 to Game.CurrentIteration do
                             if Game.ReplayManager.HasAnyActionAt(i) then
                               TargetFrame := i;
-                        GotoSaveState(Max(TargetFrame - 1, 0));
+
                         Game.fIsBackstepping := True;
+                        GotoSaveState(Max(TargetFrame - 1, 0));
                      end;
       ssc_NextShrugger: begin
                           HasSuitableSkill := false;
@@ -1807,8 +1807,8 @@ begin
     end else if (Button = mbRight) and RightMouseUnassigned
     and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
     begin
-      GoToSaveState(Max(Game.CurrentIteration -1, 0));
       Game.fIsBackstepping := True;
+      GoToSaveState(Max(Game.CurrentIteration -1, 0));
     end;
 
     if Game.IsHighlightHotkey then
