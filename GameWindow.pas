@@ -1298,7 +1298,7 @@ begin
   Img.OnMouseUp := Img_MouseUp;
 
   RewindTimer := TTimer.Create(Self);
-  RewindTimer.Interval := 50; // hotbookmark
+  RewindTimer.Interval := 59; // hotbookmark
   RewindTimer.OnTimer := DoRewind;
 
   TurboTimer := TTimer.Create(Self);
