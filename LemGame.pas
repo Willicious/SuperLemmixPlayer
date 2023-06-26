@@ -434,7 +434,7 @@ type
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     fSpawnIntervalChanged      : Boolean; //set to true in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
-    IsBackstepping             : Boolean;
+    fIsBackstepping            : Boolean;
     fReplayWasLoaded           : Boolean;
     fPauseWasPressed           : Boolean;
 
@@ -489,6 +489,7 @@ type
     property Replaying: Boolean read GetIsReplaying;
     property ReplayWasLoaded: Boolean read fReplayWasLoaded; //write fReplayWasLoaded;
     property PauseWasPressed: Boolean read fPauseWasPressed write fPauseWasPressed;
+    property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
     property ReplayingNoRR[isPaused: Boolean]: Boolean read GetIsReplayingNoRR;
     property ReplayManager: TReplay read fReplayManager;
     property IsSelectWalkerHotkey: Boolean read fIsSelectWalkerHotkey write fIsSelectWalkerHotkey;
@@ -1142,6 +1143,7 @@ begin
   ButtonsRemain := 0;
   fHitTestAutoFail := false;
 
+  fIsBackstepping := False;
   fSimulationDepth := 0;
   fSoundList := TList<string>.Create();
 end;
