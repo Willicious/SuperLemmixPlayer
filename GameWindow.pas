@@ -693,7 +693,7 @@ begin
       if CheckScroll then
       begin
         if GameParams.MinimapHighQuality
-        and not (Game.IsSuperlemming or SkillPanel.RewindPressed or SkillPanel.TurboPressed or (fGameSpeed = gspFF)) then
+        and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)) then
           SetRedraw(rdRefresh)
         else
           SetRedraw(rdRedraw);
@@ -993,7 +993,7 @@ begin
       fRenderer.DrawProjectiles;
 
       if GameParams.MinimapHighQuality or (GameSpeed = gspPause)
-      and not (Game.IsSuperlemming or SkillPanel.RewindPressed or SkillPanel.TurboPressed or (fGameSpeed = gspFF)) then
+      and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)) then
         DrawRect := Img.Bitmap.BoundsRect
       else begin
         DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
@@ -1078,12 +1078,12 @@ begin
 
   CanPlay := False;
 
-  if not SkillPanel.RewindPressed then
+  if not Game.RewindPressed then
   begin
   if PauseAfterSkip < 0 then
   begin
     GameSpeed := gspNormal;
-    Game.IsBackstepping := False;
+    Game.fIsBackstepping := False;
   end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
     or (PauseAfterSkip > 0) then
     begin
@@ -1451,8 +1451,8 @@ begin
       lka_Pause: begin
                  // 1 second grace to prevent restart from failing the NoPause talisman
                  if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
-                 if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
-                 if SkillPanel.TurboPressed then SkillPanel.TurboPressed := False;
+                 if Game.RewindPressed then Game.fRewindPressed := False;
+                 if Game.TurboPressed then Game.fTurboPressed := False;
 
                  if fGameSpeed = gspPause then
                    begin
@@ -1460,7 +1460,7 @@ begin
                      Game.fIsBackstepping := False;
                    end else begin
                      GameSpeed := gspPause;
-                     SkillPanel.RewindPressed := False;  // needed?
+                     Game.RewindPressed := False;  // needed?
                      Game.fIsBackstepping := True;
                    end;
                  end;
@@ -1508,23 +1508,23 @@ begin
 //                          end;
       lka_Turbo: begin
                    if Game.IsSuperLemming then Exit;
-                   if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
+                   if Game.RewindPressed then Game.fRewindPressed := False;
                    if Game.IsBackstepping then Game.fIsBackstepping := False;
 
                     case fGameSpeed of
                       gspFF, gspSlowMo, gspPause: GameSpeed := gspNormal;
                     end;
 
-                   if not SkillPanel.TurboPressed then
-                      SkillPanel.TurboPressed := True
-                   else if SkillPanel.TurboPressed then
-                      SkillPanel.TurboPressed := False;
+                   if not Game.TurboPressed then
+                      Game.fTurboPressed := True
+                   else if Game.TurboPressed then
+                      Game.fTurboPressed := False;
                  end;
       lka_FastForward: begin
                        if Game.IsSuperLemming then Exit;
 
-                         if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
-                         if SkillPanel.TurboPressed then SkillPanel.TurboPressed := False;
+                         if Game.RewindPressed then Game.fRewindPressed := False;
+                         if Game.TurboPressed then Game.fTurboPressed := False;
                          if Game.IsBackstepping then Game.fIsBackstepping := False;
 
                          case fGameSpeed of
@@ -1539,7 +1539,7 @@ begin
                       gspSlowMo, gspPause, gspFF: GameSpeed := gspNormal;
                     end;
 
-                    if SkillPanel.TurboPressed then SkillPanel.TurboPressed := False;
+                    if Game.TurboPressed then Game.fTurboPressed := False;
 
                     if not SkillPanel.RewindPressed then
                     begin
@@ -1553,8 +1553,8 @@ begin
                   end;
       lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
                       begin
-                        if SkillPanel.RewindPressed then SkillPanel.RewindPressed := False;
-                        if SkillPanel.TurboPressed then SkillPanel.TurboPressed := False;
+                        if Game.RewindPressed then Game.fRewindPressed := False;
+                        if Game.TurboPressed then Game.fTurboPressed := False;
 
                         if Game.IsBackstepping then Game.fIsBackstepping := False;
 

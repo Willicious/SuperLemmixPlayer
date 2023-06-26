@@ -1187,14 +1187,14 @@ begin
   aButton := spbFastForward;
   BorderRect := fButtonRects[aButton];
 
-  if TurboPressed then
+  if Game.TurboPressed then
   begin
     Inc(BorderRect.Right, ResMod);
     Inc(BorderRect.Bottom, ResMod * 2);
 
     DrawNineSlice(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect,
       Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fTurboHighlight);
-  end else if not (TurboPressed or (fGameWindow.GameSpeed = gspFF)) then
+  end else if not (Game.TurboPressed or (fGameWindow.GameSpeed = gspFF)) then
     RemoveHighlight(spbFastForward);
 end;
 
@@ -1666,8 +1666,8 @@ begin
       begin
         // 1 second grace to prevent restart from failing the NoPause talisman
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
-        if RewindPressed then fRewindPressed := False;
-        if TurboPressed then fTurboPressed := False;
+        if Game.RewindPressed then Game.fRewindPressed := False;
+        if Game.TurboPressed then Game.fTurboPressed := False;
 
         if fGameWindow.GameSpeed = gspPause then
         begin
@@ -1691,21 +1691,22 @@ begin
     spbFastForward:
       begin
         if Game.IsSuperLemming then Exit;
-        if RewindPressed then fRewindPressed := False;
-        if Game.IsBackstepping then Game.IsBackstepping := False;
+        if Game.RewindPressed then Game.fRewindPressed := False;
         if Game.IsBackstepping then Game.fIsBackstepping := False;
 
         if GameParams.TurboFF then
         begin
-          if ((fGameWindow.GameSpeed = gspFF) or TurboPressed) then fGameWindow.GameSpeed := gspNormal;
+          if ((fGameWindow.GameSpeed = gspFF) or Game.TurboPressed) then fGameWindow.GameSpeed := gspNormal;
 
-          if not TurboPressed then fTurboPressed := True
-            else fTurboPressed := False;
+          if not Game.TurboPressed then
+            Game.fTurboPressed := True
+          else if Game.TurboPressed then
+            Game.fTurboPressed := False;
 
           Exit;
         end;
 
-        if TurboPressed then fTurboPressed := False;
+        if Game.TurboPressed then Game.fTurboPressed := False;
 
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
@@ -1719,7 +1720,6 @@ begin
         if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
           fGameWindow.GameSpeed := gspNormal;
 
-        if TurboPressed then fTurboPressed := False;
         if not RewindPressed then
         begin
           fRewindPressed := True;
@@ -1729,6 +1729,7 @@ begin
           fRewindPressed := False;
           Game.IsBackstepping := False;
         end;
+        if Game.TurboPressed then Game.fTurboPressed := False;
       end;
     spbRestart:
       begin
