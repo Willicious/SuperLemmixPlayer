@@ -1087,8 +1087,7 @@ begin
   end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
     or (PauseAfterSkip > 0) then
     begin
-      GameSpeed := gspPause;
-      Game.IsBackstepping := True;
+      if Game.fIsBackstepping then GameSpeed := gspPause;
     end;
   end;
 
@@ -1541,15 +1540,10 @@ begin
 
                     if Game.TurboPressed then Game.fTurboPressed := False;
 
-                    if not SkillPanel.RewindPressed then
-                    begin
-                      SkillPanel.RewindPressed := True;
-                      Game.IsBackstepping := True;
-                    end else if SkillPanel.RewindPressed then
-                    begin
-                      SkillPanel.RewindPressed := False;
-                      Game.IsBackstepping := False;
-                    end;
+                    if not Game.RewindPressed then
+                      Game.fRewindPressed := True
+                    else if Game.RewindPressed then
+                      Game.fRewindPressed := False;
                   end;
       lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
                       begin

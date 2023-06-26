@@ -6411,7 +6411,7 @@ begin
   case CurrentIteration of
     15:
       //prevents double-triggering the sound when Rewinding to the start
-      if not IsBackstepping then
+      if not IsBackstepping or not RewindPressed then
       begin
         if UseZombieSound then
           CueSoundEffect(SFX_ZOMBIE)
