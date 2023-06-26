@@ -162,9 +162,12 @@ end;
 
 procedure TGamePreviewScreen.BeginPlay;
 begin
-  CloseScreen(gstPlay);
   if GameParams.MenuMusic and not SoundManager.MuteMusic then
+  begin
     SoundManager.StopMusic;
+    SoundManager.MenuMusicPlaying := False;
+  end;
+  CloseScreen(gstPlay);
 end;
 
 procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;
