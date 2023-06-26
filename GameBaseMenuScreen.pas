@@ -178,7 +178,7 @@ type
 implementation
 
 uses
-  LemGame, LemReplay,
+  LemGame, LemReplay, GameSound,
   FMain, FSuperLemmixLevelSelect, FSuperLemmixConfig,
   PngInterface;
 
@@ -907,9 +907,12 @@ begin
   end else begin
     GameParams.ShownText := false;
 
-    if LoadAsPack then
-      CloseScreen(gstMenu)
-    else
+    if LoadAsPack then begin
+       CloseScreen(gstMenu);
+       SoundManager.StopMusic;
+       SoundManager.MenuMusicPlaying := False;
+       SoundManager.HandleMenuMusic;
+    end else
       CloseScreen(gstPreview);
   end;
 end;
@@ -938,9 +941,7 @@ begin
   // config dialog, rather than waiting for a quit or a screen
   // transition to save them.
   GameParams.Save(scImportant);
-
   ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
-
   DoAfterConfig;
 end;
 
