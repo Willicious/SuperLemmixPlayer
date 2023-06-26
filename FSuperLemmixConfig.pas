@@ -227,13 +227,16 @@ begin
   begin
     SoundManager.StopMusic;
     SoundManager.MenuMusicPlaying := False;
-  end else
-    SoundManager.HandleMenuMusic;
+  end;
 end;
 
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
 begin
   SaveToParams;
+
+  // do this here to mitigate sudden volume changes
+  SoundManager.HandleMenuMusic;
+
   ModalResult := mrOK;
 end;
 
