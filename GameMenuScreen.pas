@@ -152,12 +152,6 @@ begin
 
   fScrollerTextList := TStringList.Create;
   GameParams.MainForm.Caption := 'SuperLemmix';
-
-  if GameParams.MenuMusic then
-  begin
-    SoundManager.LoadMenuMusic;
-    SoundManager.PlayMusic;
-  end;
 end;
 
 destructor TGameMenuScreen.Destroy;
@@ -275,6 +269,7 @@ begin
   DrawLogo;
   MakePanels;
   MakeFooterText;
+  SoundManager.HandleMenuMusic;
 
   LoadScrollerGraphics;
   DrawScroller;

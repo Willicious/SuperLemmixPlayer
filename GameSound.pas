@@ -81,6 +81,7 @@ type
       fMusicStream: TMemoryStream;
       fMusicChannel: LongWord;
       fMusicPlaying: Boolean;
+      fMenuMusicPlaying: Boolean;
 
       fIsBassLoaded: Boolean;
 
@@ -107,6 +108,7 @@ type
       procedure LoadMusicFromFile(aName: String);
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
 
+      procedure HandleMenuMusic;
       procedure PlaySound(aName: String; aBalance: Integer = 0; aFrequency: Single = 0); // -100 = fully left, +100 = fully right
       procedure PlayPackSound(aName: String; aLoadPath: String; aBalance: Integer = 0; aFrequency: Single = 0);
       procedure PlayMusic;
@@ -121,6 +123,7 @@ type
       property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
       property MuteSound: Boolean read fMuteSound write fMuteSound;
       property MuteMusic: Boolean read fMuteMusic write SetMusicMute;
+      property MenuMusicPlaying: Boolean read fMenuMusicPlaying write fMenuMusicPlaying;
   end;
 
 var
@@ -146,9 +149,7 @@ const
 implementation
 
 uses
-//
-GameControl, LemNeoLevelPack;      //hotbookmark - these may not be needed
-//                                      if I can find a way to load the menu music file some other way
+GameControl, LemNeoLevelPack;
 
 (* --- TSoundManager --- *)
 
@@ -194,6 +195,22 @@ begin
   fMusicChannel := $FFFFFFFF;
   fMusicStream.Clear;
   fMusicName := '';
+end;
+
+procedure TSoundManager.HandleMenuMusic;
+begin
+if GameParams.MenuMusic then
+  begin
+    if not MenuMusicPlaying then
+    begin
+      LoadMenuMusic;
+      PlayMusic;
+      fMenuMusicPlaying := True;
+    end;
+  end else begin
+    StopMusic;
+    fMenuMusicPlaying := False;
+  end;
 end;
 
 procedure TSoundManager.ObtainMusicBassChannel;
