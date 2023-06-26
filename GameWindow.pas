@@ -498,7 +498,7 @@ begin
 if GameParams.ShowMinimap then
   begin
     if GameParams.MinimapHighQuality
-    and not (Game.IsSuperlemming or SkillPanel.RewindPressed or SkillPanel.TurboPressed or (fGameSpeed = gspFF)) then
+    and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)) then
       begin
         fMinimapBuffer.Clear(0);
         Img.Bitmap.DrawTo(fMinimapBuffer);
@@ -562,7 +562,7 @@ begin
   if Game.CurrentIteration <= 10 then
   begin
     RewindTimer.Enabled := False;
-    SkillPanel.RewindPressed := False;
+    Game.RewindPressed := False;
     Game.fIsBackstepping := False;
   end else
     GoToSaveState(Game.CurrentIteration - 3); //hotbookmark
@@ -631,7 +631,7 @@ begin
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
   Hyper := IsHyperSpeed;
 
-  if SkillPanel.RewindPressed then //hotbookmark
+  if Game.RewindPressed then //hotbookmark
   begin
     SkillPanel.DrawButtonSelector(spbRewind, True);
     if GameParams.ClassicMode then
@@ -640,21 +640,21 @@ begin
     if not RewindTimer.Enabled then
       RewindTimer.Enabled := True;
 
-  end else if not SkillPanel.RewindPressed then
+  end else if not Game.RewindPressed then
   begin
     SkillPanel.DrawButtonSelector(spbRewind, False);
     if RewindTimer.Enabled then
       RewindTimer.Enabled := False;
   end;
 
-  if SkillPanel.TurboPressed then //hotbookmark
+  if Game.TurboPressed then //hotbookmark
   begin
     SkillPanel.DrawTurboHighlight;
 
     if not TurboTimer.Enabled then
       TurboTimer.Enabled := True;
 
-  end else if not SkillPanel.TurboPressed then
+  end else if not Game.TurboPressed then
   begin
     SkillPanel.DrawTurboHighlight;
 
