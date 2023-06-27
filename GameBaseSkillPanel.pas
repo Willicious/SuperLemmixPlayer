@@ -1575,7 +1575,8 @@ end;
 
 procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
 begin
-  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+  if GameParams.ClassicMode //we never want to draw Replay mark in Classic Mode
+  or not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert then
     fNewDrawStr[Pos] := #97
