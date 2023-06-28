@@ -6479,13 +6479,15 @@ begin
   Result := False;
 
   // Prevents overwriting same-frame assignments in ReplayInsert Mode
-  if ReplayInsert and ReplayManager.HasAssignmentAt(CurrentIteration) then Exit;
+  if not (ReplayInsert and ReplayManager.HasAssignmentAt(CurrentIteration)) then
+  begin
+    // convert buttontype to skilltype
+    Sel := SkillPanelButtonToAction[fSelectedSkill];
+    if Sel = baNone then Exit;
 
-  // convert buttontype to skilltype
-  Sel := SkillPanelButtonToAction[fSelectedSkill];
-  if Sel = baNone then Exit;
+    Result := AssignNewSkill(Sel, IsHighlight);
+  end;
 
-  Result := AssignNewSkill(Sel, IsHighlight);
   if not Result then PlayAssignFailSound;
 
   if Result then
