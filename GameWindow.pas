@@ -1795,11 +1795,11 @@ begin
 
     if (Button = mbLeft) and not Game.IsHighlightHotkey then
     begin
-      // deactivates assign-whilst-paused in ClassicMode
-      if ((fGameSpeed = gspPause) and GameParams.ClassicMode) then Exit;
-
       Game.RegainControl;
-      Game.ProcessSkillAssignment;
+
+      // Deactivates assign-whilst-paused in ClassicMode
+      if not ((GameSpeed = gspPause) and GameParams.ClassicMode) then
+        Game.ProcessSkillAssignment;
 
       if (fGameSpeed = gspPause)
       and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then

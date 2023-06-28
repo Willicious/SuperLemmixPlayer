@@ -1180,8 +1180,6 @@ SelectedLemming: TLemming;
 begin
   SelectedLemming := fRenderInterface.SelectedLemming;
 
-  if IsHighlightHotkey then Exit;
-
   if (SelectedLemming <> nil) then
   begin
     if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then
@@ -6620,14 +6618,8 @@ begin
 
         if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
         begin
-          L := GetHighlitLemming;
-
           if ProcessSkillAssignment(true) then
             fRenderInterface.ForceUpdate := true
-          else if HasSteelAt(L.LemX, L.LemY) then
-            CueSoundEffect(SFX_HITS_STEEL, L.Position)
-          else
-            CueSoundEffect(SFX_ASSIGN_FAIL, L.Position);
         end;
       end;
   end;
