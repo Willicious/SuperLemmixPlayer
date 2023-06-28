@@ -1177,8 +1177,10 @@ end;
 procedure TLemmingGame.PlayAssignFailSound;
 var
 SelectedLemming: TLemming;
+HighlitLemming: TLemming;
 begin
   SelectedLemming := fRenderInterface.SelectedLemming;
+  HighlitLemming := GetHighlitLemming;
 
   if (SelectedLemming <> nil) then
   begin
@@ -1186,6 +1188,12 @@ begin
       CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
     else
       CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
+  end else if (GetHighlitLemming <> nil) then
+    begin
+    if HasSteelAt(HighlitLemming.LemX, HighlitLemming.LemY) then
+      CueSoundEffect(SFX_HITS_STEEL, HighlitLemming.Position)
+    else
+      CueSoundEffect(SFX_ASSIGN_FAIL, HighlitLemming.Position);
   end;
 end;
 
@@ -6622,6 +6630,8 @@ begin
         begin
           if ProcessSkillAssignment(true) then
             fRenderInterface.ForceUpdate := true
+          else
+            PlayAssignFailSound;
         end;
       end;
   end;
