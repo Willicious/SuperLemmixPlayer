@@ -1182,7 +1182,7 @@ begin
 
   if IsHighlightHotkey then Exit;
 
-  if (SelectedLemming <> nil) and not ProcessSkillAssignment(False) then
+  if (SelectedLemming <> nil) then
   begin
     if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then
       CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
@@ -6488,6 +6488,7 @@ begin
   if Sel = baNone then Exit;
 
   Result := AssignNewSkill(Sel, IsHighlight);
+  if not Result then PlayAssignFailSound;
 
   if Result then
     CheckForNewShadow;        // probably unneeded now?

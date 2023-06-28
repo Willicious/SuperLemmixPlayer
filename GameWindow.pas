@@ -1824,7 +1824,6 @@ begin
       DoDraw;
 
     fLastMousePress := GetTickCount;
-    Game.PlayAssignFailSound;
   end;
 end;
 
