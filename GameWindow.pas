@@ -1801,8 +1801,9 @@ begin
       Game.RegainControl;
       Game.ProcessSkillAssignment;
 
-      if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
-        if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
+      if (fGameSpeed = gspPause)
+      and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+        fForceUpdateOneFrame := True;
 
     end else if (Button = mbRight) and RightMouseUnassigned
     and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then

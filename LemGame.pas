@@ -1177,7 +1177,6 @@ end;
 procedure TLemmingGame.PlayAssignFailSound;
 var
 SelectedLemming: TLemming;
-
 begin
   SelectedLemming := fRenderInterface.SelectedLemming;
 
