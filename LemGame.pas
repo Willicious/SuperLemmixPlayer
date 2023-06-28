@@ -6481,6 +6481,9 @@ var
 begin
   Result := False;
 
+  // Prevents overwriting same-frame assignments in ReplayInsert Mode
+  if ReplayInsert and ReplayManager.HasAssignmentAt(CurrentIteration) then Exit;
+
   // convert buttontype to skilltype
   Sel := SkillPanelButtonToAction[fSelectedSkill];
   if Sel = baNone then Exit;
