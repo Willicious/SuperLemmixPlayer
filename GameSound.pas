@@ -82,6 +82,7 @@ type
       fMusicChannel: LongWord;
       fMusicPlaying: Boolean;
       fMenuMusicPlaying: Boolean;
+      fLookingForCustomMenuMusicExt: Boolean;
 
       fIsBassLoaded: Boolean;
 
@@ -264,8 +265,12 @@ var
   BasePath: String;
 begin
   if aIsMusic then
-    BasePath := AppPath + SFMusic
-  else
+  begin
+    if fLookingForCustomMenuMusicExt then
+      BasePath := GameParams.CurrentLevel.Group.ParentBasePack.Path
+    else
+      BasePath := AppPath + SFMusic;
+  end else
     BasePath := AppPath + SFSounds;
 
   Result := FindExtension(aName, BasePath, aIsMusic);
@@ -423,28 +428,34 @@ end;
 procedure TSoundManager.LoadMenuMusic;
 var
   aName: String;
-  aPath: String;  //hotbookmark
+  aPath: String;
   F: TFileStream;
   Ext: String;
+
+  procedure GetExtension;
+  begin
+    Ext := FindExtension(aName, true);
+    if Ext = '' then
+    begin
+      FreeMusic;
+      Exit;
+    end;
+  end;
 begin
   if not fIsBassLoaded then Exit;
 
   aName := 'menu';
-
-  Ext := FindExtension(aName, true);
-  if Ext = '' then
-  begin
-    FreeMusic;
-    Exit;
-  end;
-
   aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
+  fLookingForCustomMenuMusicExt := True;
+  GetExtension;
 
-  //hotbookmark - works, but only if the file is in .ogg format
   if FileExists(GameParams.CurrentLevel.Group.FindFile(aName + Ext)) then
     F := TFileStream.Create(aPath + aName + Ext, fmOpenRead)
-  else
+  else begin
+    fLookingForCustomMenuMusicExt := False;
+    GetExtension;
     F := TFileStream.Create(AppPath + SFMusic + aName + Ext, fmOpenRead);
+  end;
   try
     LoadMusicFromStream(F, aName);
   finally
