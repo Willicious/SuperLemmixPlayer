@@ -87,6 +87,7 @@ type
     procedure SetAdvancedOptionsLevel;
   public
     property LoadAsPack: Boolean read fLoadAsPack;
+    procedure LoadIcons;
   end;
 
 const // Icon indexes
@@ -258,12 +259,32 @@ begin
   end;
 end;
 
+procedure TFLevelSelect.LoadIcons;
+var
+IconsImg: String;
+aStyle: String;
+aStylePath: String;
+aPath: String;
+begin
+  IconsImg := 'levelinfo_icons.png';
+  aStyle := GameParams.Level.Info.GraphicSetName;
+  aStylePath := AppPath + SFStyles + aStyle + '\levelinfo\';
+  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
+
+  if FileExists(aStylePath + IconsImg) then //check styles folder first
+    TPNGInterface.LoadPngFile(aStylePath + IconsImg, fIconBMP)
+  else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then //then levelpack folder
+    TPNGInterface.LoadPngFile(aPath + IconsImg, fIconBMP)
+  else
+    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIconBMP);
+end;
+
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
   fTalismanButtons := TObjectList<TSpeedButton>.Create;
 
   fIconBMP := TBitmap32.Create;
-  TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIconBMP);
+  LoadIcons;
   fIconBMP.DrawMode := dmBlend;
 
   fInfoForm := TLevelInfoPanel.Create(self, fIconBMP);
@@ -572,6 +593,7 @@ var
   end;
 
 begin
+  LoadIcons;
   LoadNodeLabels;
 
   N := tvLevelSelect.Selected;

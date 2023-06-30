@@ -102,6 +102,11 @@ const
 { TLevelInfoPanel }
 
 constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32; fTalismanOverrideBMP: TBitmap32 = nil);
+var
+IconsImg: String;
+aStyle: String;
+aStylePath: String;
+aPath: String;
 begin
   inherited Create(aOwner);
 
@@ -112,7 +117,18 @@ begin
   if aIconBMP = nil then
   begin
     fIcons := TBitmap32.Create;
-    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIcons);
+
+    IconsImg := 'levelinfo_icons.png';
+    aStyle := GameParams.Level.Info.GraphicSetName;
+    aStylePath := AppPath + SFStyles + aStyle + '\levelinfo\';
+    aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
+
+    if FileExists(aStylePath + IconsImg) then //check styles folder first
+      TPNGInterface.LoadPngFile(aStylePath + IconsImg, fIcons)
+    else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then //then levelpack folder
+      TPNGInterface.LoadPngFile(aPath + IconsImg, fIcons)
+    else
+      TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIcons);
     fIcons.DrawMode := dmBlend;
     fOwnIcons := true;
   end else if fTalismanOverrideBMP <> nil then
