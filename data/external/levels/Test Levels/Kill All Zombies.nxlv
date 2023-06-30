@@ -1,16 +1,14 @@
-# Level file modified by NL QuickMod
-
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.4
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Kill All Zombies
  AUTHOR WillLem
-#  ID x0DA4E2B370FC2267
- VERSION x000000000000000F
+ ID xDA4E2B370FC2267F
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -18,7 +16,7 @@
  HEIGHT 160
  START_X 200
  START_Y 80
- THEME orig_fire
+ THEME willlem_lemminas_classic
  
 #         Level stats           
 # ----------------------------- 
@@ -26,18 +24,22 @@
  SAVE_REQUIREMENT 20
  MAX_SPAWN_INTERVAL 53
  
-#  $SKILLSET 
-#    WALKER 10
-#    JUMPER 10
-#    FLOATER 10
-#    TIMEBOMBER 10
-#    FREEZER 10
-#    PLATFORMER 10
-#    BUILDER 10
-#    SPEARER 10
-#    GRENADER 10
-#    LASERER 10
-#  $END 
+ $SKILLSET 
+   WALKER 5
+   JUMPER 5
+   SHIMMIER 5
+   SLIDER 5
+   CLIMBER 5
+   SWIMMER 5
+   FLOATER 5
+   TIMEBOMBER 5
+   FREEZER 5
+   PLATFORMER 5
+   BUILDER 5
+   GRENADER 5
+   LASERER 5
+   MINER 5
+ $END 
  
  $TALISMAN 
    TITLE Kill All Zombies
@@ -407,23 +409,3 @@
  $END
  
  
-
-# NL QuickMod modifications
-
-ID xDA4E2B370FC2267F
-$SKILLSET
-  WALKER 5
-  JUMPER 5
-  SHIMMIER 5
-  SLIDER 5
-  CLIMBER 5
-  SWIMMER 5
-  FLOATER 5
-  TIMEBOMBER 5
-  FREEZER 5
-  PLATFORMER 5
-  BUILDER 5
-  GRENADER 5
-  LASERER 5
-  MINER 5
-$END
