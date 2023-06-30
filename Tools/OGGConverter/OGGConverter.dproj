@@ -101,8 +101,8 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
-        <DCC_ExeOutput>C:\Users\will3\Documents\Embarcadero\Studio\Projects\OGGConverter\Output\</DCC_ExeOutput>
-        <DCC_DcuOutput>C:\Users\will3\Documents\Embarcadero\Studio\Projects\OGGConverter\Output\</DCC_DcuOutput>
+        <DCC_ExeOutput>C:\Users\will3\Documents\superlemmixplayer\Tools\OGGConverter\Output\</DCC_ExeOutput>
+        <DCC_DcuOutput>C:\Users\will3\Documents\superlemmixplayer\Tools\OGGConverter\Output\</DCC_DcuOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>

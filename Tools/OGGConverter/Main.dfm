@@ -14,11 +14,11 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object lblStatus: TLabel
-    Left = 136
+    Left = 40
     Top = 141
-    Width = 75
+    Width = 48
     Height = 13
-    Caption = 'Current Status:'
+    Caption = '                '
   end
   object btnConvert: TBitBtn
     Left = 160
@@ -45,21 +45,9 @@ object Form1: TForm1
     TabOrder = 2
     OnClick = btnOpenClick
   end
-  object btnSave: TButton
-    Left = 288
-    Top = 24
-    Width = 75
-    Height = 25
-    Caption = 'Save'
-    TabOrder = 3
-    OnClick = btnSaveClick
-  end
   object Open: TOpenDialog
+    Options = [ofHideReadOnly, ofAllowMultiSelect, ofEnableSizing]
     Left = 16
-    Top = 24
-  end
-  object Save: TSaveDialog
-    Left = 376
     Top = 24
   end
 end
