@@ -167,6 +167,7 @@ type
     procedure DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
     procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
+    procedure DrawUnfreezingOverlay(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
     procedure DrawJumperShadow(L: TLemming);
@@ -369,6 +370,9 @@ begin
 
     if LemmingList[i].LemAction = baLasering then
       DrawLemmingLaser(LemmingList[i]);
+
+    if LemmingList[i].LemAction = baUnfreezing then
+      DrawUnfreezingOverlay(LemmingList[i]);
   end;
 
   for i := 0 to LemmingList.Count-1 do
@@ -681,6 +685,12 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawUnfreezingOverlay(L: TLemming);
+begin
+  //hotbookmark - draws, but doesn't animate, the unfreezing overlay
+
+  fAni.UnfreezingOverlay.DrawTo(fLayers[rlCountdown], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod);
+end;
 
 //This code is used (or not) by Nuke, Bomber, Freezer and Timebomber
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);

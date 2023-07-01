@@ -171,6 +171,7 @@ type
     fLemmingAnimations     : TBitmaps; // the list of lemmings bitmaps
 
     fCountDownDigitsBitmap  : TBitmap32;
+    fUnfreezingOverlay      : TBitmap32;
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
     fTheme                  : TNeoTheme;
@@ -196,6 +197,7 @@ type
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
+    property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
@@ -477,6 +479,9 @@ begin
     fCountDownDigitsBitmap.DrawMode := dmBlend;
     fCountDownDigitsBitmap.CombineMode := cmMerge;
 
+    fUnfreezingOverlay.DrawMode := dmBlend;
+    fUnfreezingOverlay.CombineMode := cmMerge;
+
     fHatchNumbersBitmap.DrawMode := dmBlend;
     fHatchNumbersBitmap.CombineMode := cmMerge;
 
@@ -486,11 +491,13 @@ begin
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'unfreezing-hr.png', fUnfreezingOverlay);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers-hr.png', fHatchNumbersBitmap);
     end else begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer.png', fLemmingAnimations[ICECUBE]);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'unfreezing.png', fUnfreezingOverlay);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers.png', fHatchNumbersBitmap);
@@ -513,6 +520,7 @@ begin
   fLemmingAnimations.Clear;
   fMetaLemmingAnimations.Clear;
   fCountDownDigitsBitmap.Clear;
+  fUnfreezingOverlay.Clear;
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
   fHasZombieColor := false;
@@ -527,6 +535,7 @@ begin
   fLemmingAnimations := TBitmaps.Create;
   fRecolorer := TRecolorImage.Create;
   fCountDownDigitsBitmap := TBitmap32.Create;
+  fUnfreezingOverlay := TBitmap32.Create;
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
 end;
@@ -536,6 +545,7 @@ begin
   fMetaLemmingAnimations.Free;
   fLemmingAnimations.Free;
   fCountDownDigitsBitmap.Free;
+  fUnfreezingOverlay.Free;
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
   fRecolorer.Free;
