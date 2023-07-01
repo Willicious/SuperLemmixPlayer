@@ -1797,9 +1797,10 @@ begin
     begin
       Game.RegainControl;
 
-      // Deactivates assign-whilst-paused in ClassicMode
-      if not ((GameSpeed = gspPause) and GameParams.ClassicMode) then
-        Game.ProcessSkillAssignment;
+      // Deactivates assign-whilst-paused in ClassicMode or Superlemming
+      if not ((GameSpeed = gspPause) and
+        (GameParams.ClassicMode or Game.IsSuperlemming)) then
+          Game.ProcessSkillAssignment;
 
       if (fGameSpeed = gspPause)
       and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
