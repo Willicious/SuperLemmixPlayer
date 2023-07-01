@@ -48,12 +48,21 @@ const
 constructor TForm1.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
+  // Initialize the BASS library
+  if not BASS_Init(-1, 44100, 0, Handle, nil) then
+  begin
+    ShowMessage('BASS initialization failed!');
+    Exit;
+  end;
+
   Application.Title := 'OGG Converter';
   FSourceFiles := TStringList.Create;
 end;
 
 destructor TForm1.Destroy;
 begin
+  BASS_Free;
   FSourceFiles.Free;
   inherited Destroy;
 end;
@@ -78,27 +87,28 @@ end;
 
 procedure TForm1.btnOpenClick(Sender: TObject);
 var
-  I: Integer;
+  i: Integer;
 begin
   // Show the Open dialog to select the input files
   if Open.Execute then
   begin
     FSourceFiles.Clear;
-    for I := 0 to Open.Files.Count - 1 do
-      FSourceFiles.Add(Open.Files[I]);
+    for i := 0 to Open.Files.Count - 1 do
+      FSourceFiles.Add(Open.Files[i]);
     lblStatus.Caption := 'Selected Files: ' + IntToStr(FSourceFiles.Count);
   end;
 end;
 
 procedure TForm1.ConvertFilesToOGG;
 var
-  I: Integer;
+  i: Integer;
+  n: Integer;
   FileExt, TargetFile: string;
   StreamHandle: HSTREAM;
   ProgressData: TProgressData;
   ErrorCode: Integer;
   ConversionDetails: TStringList;
-  TotalFiles: Integer;
+  ErrorOccurred: Boolean;
 
   procedure UpdateProgressCallback(handle: HENCODE; progress: DWORD; user: Pointer); {$IFDEF MSWINDOWS}stdcall{$ELSE}cdecl{$ENDIF};
   begin
@@ -114,31 +124,26 @@ var
   end;
 
 begin
-  // Initialize the BASS library
-  if not BASS_Init(-1, 44100, 0, Handle, nil) then
-  begin
-    ShowMessage('BASS initialization failed!');
-    Exit;
-  end;
+  ErrorOccurred := False;
 
   ConversionDetails := TStringList.Create;
   try
     // Process each selected source file
-    for I := 0 to FSourceFiles.Count - 1 do
+    for i := 0 to FSourceFiles.Count - 1 do
     begin
-      FileExt := LowerCase(ExtractFileExt(FSourceFiles[I]));
-      TargetFile := ChangeFileExt(FSourceFiles[I], '.ogg');
+      FileExt := LowerCase(ExtractFileExt(FSourceFiles[i]));
+      TargetFile := ChangeFileExt(FSourceFiles[i], '.ogg');
 
       // Load the source audio file with the BASS_STREAM_DECODE flag
-      if FileExt = '.mod' then
-        StreamHandle := BASS_MusicLoad(False, PChar(FSourceFiles[I]), 0, 0, BASS_UNICODE or BASS_STREAM_DECODE, 44100)
-      else
-        StreamHandle := BASS_StreamCreateFile(False, PChar(FSourceFiles[I]), 0, 0, BASS_UNICODE or BASS_STREAM_DECODE);
-
+      StreamHandle := BASS_StreamCreateFile(False, PChar(FSourceFiles[i]), 0, 0, BASS_UNICODE or BASS_STREAM_DECODE);
       if StreamHandle = 0 then
       begin
+        ErrorOccurred := True;
         ErrorCode := BASS_ErrorGetCode;
-        ConversionDetails.Add(Format('Error loading source audio file "%s"! Error code: %d', [FSourceFiles[I], ErrorCode]));
+        if (FileExt = '.mod') or (FileExt = '.it') then
+          ConversionDetails.Add(Format('Unsupported format: "%s" Error code: %d', [ExtractFileName(FSourceFiles[i]), ErrorCode]))
+        else
+          ConversionDetails.Add(Format('Error loading source audio file: "%s" Error code: %d', [ExtractFileName(FSourceFiles[i]), ErrorCode]));
         Continue; // Move to the next file
       end;
 
@@ -146,13 +151,14 @@ begin
         // Start the conversion process
         if BASS_Encode_OGG_StartFile(StreamHandle, nil, BASS_ENCODE_AUTOFREE or BASS_UNICODE, PChar(TargetFile)) = 0 then
         begin
+          ErrorOccurred := True;
           ErrorCode := BASS_ErrorGetCode;
-          ConversionDetails.Add(Format('Error starting the conversion for file "%s"! Error code: %d', [FSourceFiles[I], ErrorCode]));
+          ConversionDetails.Add(Format('Error starting the conversion for file "%s" Error code: %d', [ExtractFileName(FSourceFiles[i]), ErrorCode]));
           Continue; // Move to the next file
         end;
 
         // Conversion in progress
-        lblStatus.Caption := 'Converting file ' + IntToStr(I + 1) + ' of ' + IntToStr(FSourceFiles.Count) + '...';
+        lblStatus.Caption := 'Converting file ' + IntToStr(i + 1) + ' of ' + IntToStr(FSourceFiles.Count) + '...';
         btnConvert.Enabled := False;
 
         // Set progress bar properties
@@ -169,7 +175,7 @@ begin
         end;
 
         // Conversion completed for the current file
-        ConversionDetails.Add(Format('Conversion successful for file "%s"! File saved as: %s', [FSourceFiles[I], TargetFile]));
+        ConversionDetails.Add(Format('Conversion successful for file "%s" File saved as: %s', [ExtractFileName(FSourceFiles[i]), ExtractFileName(TargetFile)]));
       finally
         // Cleanup
         BASS_Encode_Stop(StreamHandle);
@@ -177,21 +183,14 @@ begin
       end;
     end;
 
-    TotalFiles := FSourceFiles.Count;
-
-    // Check if any files could not be converted
-    if ConversionDetails.Count <> TotalFiles then
-    begin
-      ShowMessage('Some files could not be converted. See details below:' + sLineBreak + sLineBreak + ConversionDetails.Text);
-    end
+    // Some files couldn't be converted
+    if ErrorOccurred then
+      ShowMessage('Some files could not be converted. See details below:' + sLineBreak + sLineBreak + ConversionDetails.Text)
     else
-    begin
       // All files successfully converted
       ShowMessage('Files successfully converted!' + sLineBreak + sLineBreak + ConversionDetails.Text);
-    end;
   finally
     ConversionDetails.Free;
-    BASS_Free;
     ResetProgramState;
   end;
 end;
