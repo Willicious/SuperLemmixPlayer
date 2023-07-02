@@ -57,6 +57,7 @@ begin
   end;
 
   Application.Title := 'OGG Converter';
+  lblStatus.Alignment := taCenter;
   FSourceFiles := TStringList.Create;
 end;
 
@@ -95,7 +96,8 @@ begin
     FSourceFiles.Clear;
     for i := 0 to Open.Files.Count - 1 do
       FSourceFiles.Add(Open.Files[i]);
-    lblStatus.Caption := 'Selected Files: ' + IntToStr(FSourceFiles.Count);
+    lblStatus.Caption := 'Selected Files: '
+      + (IntToStr(FSourceFiles.Count)) + ' - Click "Convert" to proceed';
   end;
 end;
 
@@ -118,7 +120,7 @@ var
 
   procedure ResetProgramState;
   begin
-    lblStatus.Caption := 'Ready';
+    lblStatus.Caption := 'Ready! Click "Select Files" to convert more files';
     btnConvert.Enabled := True;
     pbProgress.Position := 0;
   end;
@@ -133,6 +135,14 @@ begin
     begin
       FileExt := LowerCase(ExtractFileExt(FSourceFiles[i]));
       TargetFile := ChangeFileExt(FSourceFiles[i], '.ogg');
+
+      // Check if the source file is already in .ogg format
+      if FileExt = '.ogg' then
+      begin
+        ErrorOccurred := True;
+        ConversionDetails.Add(Format('Skipped file "%s": Already in .ogg format', [ExtractFileName(FSourceFiles[i])]));
+        Continue; // Skip this file and move to the next
+      end;
 
       // Load the source audio file with the BASS_STREAM_DECODE flag
       StreamHandle := BASS_StreamCreateFile(False, PChar(FSourceFiles[i]), 0, 0, BASS_UNICODE or BASS_STREAM_DECODE);
@@ -182,6 +192,8 @@ begin
         BASS_StreamFree(StreamHandle);
       end;
     end;
+
+    lblStatus.Caption := 'Finished!';
 
     // Some files couldn't be converted
     if ErrorOccurred then

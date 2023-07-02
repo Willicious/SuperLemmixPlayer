@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'OGG Converter'
-  ClientHeight = 186
+  ClientHeight = 173
   ClientWidth = 418
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,18 +11,26 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
+  DesignSize = (
+    418
+    173)
   PixelsPerInch = 96
   TextHeight = 13
   object lblStatus: TLabel
-    Left = 40
+    Left = 0
     Top = 141
-    Width = 48
+    Width = 417
     Height = 13
-    Caption = '                '
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 
+      'Welcome! Click "Select Files" to load the files you wish to conv' +
+      'ert'
   end
   object btnConvert: TBitBtn
     Left = 160
-    Top = 16
+    Top = 50
     Width = 105
     Height = 41
     Caption = 'Convert'
@@ -30,24 +38,25 @@ object Form1: TForm1
     OnClick = btnConvertClick
   end
   object pbProgress: TProgressBar
-    Left = 40
+    Left = 32
     Top = 104
-    Width = 337
+    Width = 361
     Height = 17
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
   end
   object btnOpen: TButton
-    Left = 64
-    Top = 24
-    Width = 75
+    Left = 160
+    Top = 16
+    Width = 105
     Height = 25
-    Caption = 'Open'
+    Caption = 'Select Files'
     TabOrder = 2
     OnClick = btnOpenClick
   end
   object Open: TOpenDialog
     Options = [ofHideReadOnly, ofAllowMultiSelect, ofEnableSizing]
-    Left = 16
-    Top = 24
+    Left = 32
+    Top = 8
   end
 end
