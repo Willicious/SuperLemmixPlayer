@@ -160,6 +160,7 @@ resourcestring
 
   SYourTime =       'Your time taken is  ';
   SYourTimeRecord = 'Your record time is ';
+  SYourFewestSkills = 'Your fewest total skills is ';
 
   SOptionNextLevel = 'Next level';
   SOptionRetryLevel = 'Retry level';
