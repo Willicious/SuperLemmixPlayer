@@ -75,6 +75,7 @@ type
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
+    LemFreezingTimer              : Integer; // 8 downto 0
     LemUnfreezingTimer            : Integer; // 12 downto 0
     LemDisarmingFrames            : Integer;
     LemFrame                      : Integer; // current animationframe
@@ -295,6 +296,7 @@ begin
   LemTrueFallen := Source.LemTrueFallen;
   LemInitialFall := Source.LemInitialFall;
   LemExplosionTimer := Source.LemExplosionTimer;
+  LemFreezingTimer := Source.LemFreezingTimer;
   LemUnfreezingTimer := Source.LemUnfreezingTimer;
   LemDisarmingFrames := Source.LemDisarmingFrames;
   LemFrame := Source.LemFrame;

@@ -322,6 +322,7 @@ type
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
+    procedure UpdateFreezingTimer(L: TLemming);
     procedure UpdateUnfreezingTimer(L: TLemming);
     procedure UpdateGadgets;
 
@@ -1895,6 +1896,12 @@ begin
   end;
 end;
 
+procedure TLemmingGame.UpdateFreezingTimer(L: TLemming);
+begin
+  if L.LemFreezingTimer > 0 then
+    Dec(L.LemFreezingTimer);
+end;
+
 procedure TLemmingGame.UpdateUnfreezingTimer(L: TLemming);
 begin
   if L.LemUnfreezingTimer > 0 then
@@ -2284,6 +2291,8 @@ begin
   end
   else if (NewSkill = baFreezing) then
   begin
+    L.LemFreezingTimer := 8;
+
     if L.LemIsTimebomber then
       begin
         CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
@@ -2294,6 +2303,7 @@ begin
           Transition(L, baFreezing);
         Exit;
       end;
+
     L.LemExplosionTimer := 1;
     L.LemTimerToFreeze := True;
     L.LemHideCountdown := True;
@@ -7037,6 +7047,10 @@ begin
       // Explosion-Countdown
       if ContinueWithLem and (LemExplosionTimer <> 0) then
         ContinueWithLem := not UpdateExplosionTimer(CurrentLemming);
+
+      // Freezing
+      if ContinueWithLem and (LemFreezingTimer <> 0) then
+        UpdateFreezingTimer(CurrentLemming);
 
       // Unfreezing
       if ContinueWithLem and (LemUnfreezingTimer <> 0) then

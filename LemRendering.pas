@@ -167,6 +167,7 @@ type
     procedure DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
     procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
+    procedure DrawFreezingOverlay(L: TLemming);
     procedure DrawUnfreezingOverlay(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
@@ -370,6 +371,9 @@ begin
 
     if LemmingList[i].LemAction = baLasering then
       DrawLemmingLaser(LemmingList[i]);
+
+    if LemmingList[i].LemAction = baFreezing then
+      DrawFreezingOverlay(LemmingList[i]);
 
     if LemmingList[i].LemAction = baUnfreezing then
       DrawUnfreezingOverlay(LemmingList[i]);
@@ -683,6 +687,25 @@ begin
     fFixedDrawColor := WHITE_COLOR;
     fLaserGraphic.DrawTo(fLayers[rlLemmingsHigh], Dst, Src);
   end;
+end;
+
+procedure TRenderer.DrawFreezingOverlay(L: TLemming);
+var
+FrameIndex: Integer;
+FrameRect: TRect;
+begin
+  OutputDebugString(PChar('DrawFreezingOverlay: ' + IntToStr(L.LemFreezingTimer)));
+  FrameIndex := (8 - L.LemFreezingTimer) mod 8;
+
+  FrameRect.Left := 0;
+  FrameRect.Right := FrameRect.Left + 16 * ResMod;
+  FrameRect.Top := FrameIndex * (10 * ResMod);
+  FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
+
+  if L.LemDX < 0 then
+    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+  else
+    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawUnfreezingOverlay(L: TLemming);

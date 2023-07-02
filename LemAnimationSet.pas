@@ -171,6 +171,7 @@ type
     fLemmingAnimations     : TBitmaps; // the list of lemmings bitmaps
 
     fCountDownDigitsBitmap  : TBitmap32;
+    fFreezingOverlay        : TBitmap32;
     fUnfreezingOverlay      : TBitmap32;
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
@@ -197,6 +198,7 @@ type
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
+    property FreezingOverlay       : TBitmap32 read fFreezingOverlay;
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
@@ -392,6 +394,10 @@ var
   TempBitmap: TBitmap32;
   iAnimation: Integer;
   MLA: TMetaLemmingAnimation;
+  Freeze, Unfreeze: String;
+  FreezingOverlay, CustomFreezingOverlay: String;
+  UnfreezingOverlay, CustomUnfreezingOverlay: String;
+  HRCustomFreezerOverlay: String;
   X: Integer;
 
   SrcFolder: String;
@@ -480,6 +486,9 @@ begin
     fCountDownDigitsBitmap.DrawMode := dmBlend;
     fCountDownDigitsBitmap.CombineMode := cmMerge;
 
+    fFreezingOverlay.DrawMode := dmBlend;
+    fFreezingOverlay.CombineMode := cmMerge;
+
     fUnfreezingOverlay.DrawMode := dmBlend;
     fUnfreezingOverlay.CombineMode := cmMerge;
 
@@ -492,16 +501,36 @@ begin
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'unfreezing-hr.png', fUnfreezingOverlay);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers-hr.png', fHatchNumbersBitmap);
     end else begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer.png', fLemmingAnimations[ICECUBE]);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'unfreezing.png', fUnfreezingOverlay);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers.png', fHatchNumbersBitmap);
+    end;
+
+    // Load the freezing & unfreezing overlays
+    Freeze := 'freezing_overlay.png';
+    Unfreeze := 'unfreezing_overlay.png';
+    FreezingOverlay := MetaSrcFolder + Freeze;
+    CustomFreezingOverlay := ImgSrcFolder + Freeze;
+    UnfreezingOverlay := MetaSrcFolder + Unfreeze;
+    CustomUnfreezingOverlay := ImgSrcFolder + Unfreeze;
+
+    if FileExists(CustomFreezingOverlay) then
+      TPngInterface.LoadPngFile(CustomFreezingOverlay, fFreezingOverlay)
+    else begin
+      TPngInterface.LoadPngFile(FreezingOverlay, fFreezingOverlay);
+      UpscalePieces;
+    end;
+
+    if FileExists(CustomUnfreezingOverlay) then
+      TPngInterface.LoadPngFile(CustomUnfreezingOverlay, fUnfreezingOverlay)
+    else begin
+      TPngInterface.LoadPngFile(UnfreezingOverlay, fUnfreezingOverlay);
+      UpscalePieces;
     end;
 
     fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
@@ -521,6 +550,7 @@ begin
   fLemmingAnimations.Clear;
   fMetaLemmingAnimations.Clear;
   fCountDownDigitsBitmap.Clear;
+  fFreezingOverlay.Clear;
   fUnfreezingOverlay.Clear;
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
@@ -536,6 +566,7 @@ begin
   fLemmingAnimations := TBitmaps.Create;
   fRecolorer := TRecolorImage.Create;
   fCountDownDigitsBitmap := TBitmap32.Create;
+  fFreezingOverlay := TBitmap32.Create;
   fUnfreezingOverlay := TBitmap32.Create;
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
@@ -546,6 +577,7 @@ begin
   fMetaLemmingAnimations.Free;
   fLemmingAnimations.Free;
   fCountDownDigitsBitmap.Free;
+  fFreezingOverlay.Free;
   fUnfreezingOverlay.Free;
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
