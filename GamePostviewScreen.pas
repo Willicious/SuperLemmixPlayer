@@ -341,6 +341,9 @@ begin
         LF(1)
       else
         Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.UserRecords.TimeTaken.Value), 8));
+
+      LF(2);
+      Add(SYourFewestSkills + PadL(IntToStr(GameParams.CurrentLevel.UserRecords.TotalSkills.Value), 1));
     end;
   end;
 end;
