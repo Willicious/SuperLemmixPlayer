@@ -686,10 +686,21 @@ begin
 end;
 
 procedure TRenderer.DrawUnfreezingOverlay(L: TLemming);
+var
+FrameIndex: Integer;
+FrameRect: TRect;
 begin
-  //hotbookmark - draws, but doesn't animate, the unfreezing overlay
+  FrameIndex := (12 - L.LemUnfreezingTimer) mod 12;
 
-  fAni.UnfreezingOverlay.DrawTo(fLayers[rlCountdown], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod);
+  FrameRect.Left := 0;
+  FrameRect.Right := FrameRect.Left + 16 * ResMod;
+  FrameRect.Top := FrameIndex * (10 * ResMod);
+  FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
+
+  if L.LemDX < 0 then
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+  else
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 //This code is used (or not) by Nuke, Bomber, Freezer and Timebomber

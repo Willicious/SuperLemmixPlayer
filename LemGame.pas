@@ -322,6 +322,7 @@ type
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
+    procedure UpdateUnfreezingTimer(L: TLemming);
     procedure UpdateGadgets;
 
     procedure UpdateProjectiles;
@@ -1894,6 +1895,11 @@ begin
   end;
 end;
 
+procedure TLemmingGame.UpdateUnfreezingTimer(L: TLemming);
+begin
+  if L.LemUnfreezingTimer > 0 then
+    Dec(L.LemUnfreezingTimer);
+end;
 
 procedure TLemmingGame.CheckForGameFinished;
 begin
@@ -6177,7 +6183,10 @@ begin
     for i := 1 to 7 do
 
     if not HasPixelAt(L.LemX, L.LemY -i) then
-    Transition(L, baUnfreezing);
+    begin
+      Transition(L, baUnfreezing);
+      L.LemUnfreezingTimer := 12;
+    end;
   end;
 
   if UserSetNuking then L.LemHideCountdown := false;
@@ -7028,6 +7037,10 @@ begin
       // Explosion-Countdown
       if ContinueWithLem and (LemExplosionTimer <> 0) then
         ContinueWithLem := not UpdateExplosionTimer(CurrentLemming);
+
+      // Unfreezing
+      if ContinueWithLem and (LemUnfreezingTimer <> 0) then
+        UpdateUnfreezingTimer(CurrentLemming);
 
       // Let lemmings move
       if ContinueWithLem then
