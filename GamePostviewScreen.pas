@@ -28,6 +28,7 @@ type
     private
       fAdvanceLevel: Boolean;
       function GetPostviewText: TextLineArray;
+      function GetResultIndex: Integer;
       procedure NextLevel;
       procedure ReplaySameLevel;
       procedure ExitToMenu;
@@ -174,33 +175,14 @@ begin
     CloseScreen(gstMenu);
 end;
 
-function TGamePostviewScreen.GetPostviewText: TextLineArray;
-const
-TOP_TEXT_SHIFT = 0.150;      //teal
-RESCUE_RESULT_SHIFT = 0.500; //violet
-COMMENT_SHIFT = 0.600;       //red
-TIME_RECORD_SHIFT = 0.800;   //yellow
-SKILLS_RECORD_SHIFT = 0;     //green (default)
-
-LINE_Y_SPACING = 28;
-
+function TGamePostviewScreen.GetResultIndex: Integer;
 var
-HueShift: TColorDiff;
-Entry: TNeoLevelEntry;
-Level: TLevel;
-WhichText: TPostviewText;
-i: Integer;
-STarget: string;
-SDone: string;
-
-  function GetResultIndex: Integer;
-  var
   i: Integer;
   AdjLemCount: Integer;
   CurrentMin: Integer;
 
-    function ConditionMet(aText: TPostviewText): Boolean;
-    var
+  function ConditionMet(aText: TPostviewText): Boolean;
+  var
     NewMin: Integer;
       begin
         with GameParams.GameResult do
@@ -222,46 +204,65 @@ SDone: string;
             Result := false;
         end;
       end;
-    begin
-      AdjLemCount := GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount;
+begin
+  AdjLemCount := GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount;
 
-      if spbCloner in GameParams.Level.Info.Skillset then
-        AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
+  if spbCloner in GameParams.Level.Info.Skillset then
+    AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
 
-      for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
-        if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
-          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then
-            Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
+  for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
+    if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
+      if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then
+        Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
 
-      Result := 0;
-      CurrentMin := -1;
+  Result := 0;
+  CurrentMin := -1;
 
-      for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
-        if ConditionMet(GameParams.CurrentLevel.Group.PostviewTexts[i]) then
-          Result := i;
-    end;
+  for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
+    if ConditionMet(GameParams.CurrentLevel.Group.PostviewTexts[i]) then
+      Result := i;
+end;
 
-    function MakeTimeString(aFrames: Integer): String;
-    const
+function TGamePostviewScreen.GetPostviewText: TextLineArray;
+const
+  TOP_TEXT_SHIFT = 0.150;      //teal
+  RESCUE_RESULT_SHIFT = 0.500; //violet
+  COMMENT_SHIFT = 0.600;       //red
+  TIME_RECORD_SHIFT = 0.800;   //yellow
+  SKILLS_RECORD_SHIFT = 0;     //green (default)
+
+  LINE_Y_SPACING = 28;
+
+var
+  HueShift: TColorDiff;
+  Entry: TNeoLevelEntry;
+  Level: TLevel;
+  WhichText: TPostviewText;
+  i: Integer;
+  STarget: string;
+  SDone: string;
+
+  function MakeTimeString(aFrames: Integer): String;
+  const
     CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18', '24', '29', '35', '41', '47',
                                             '53', '59', '65', '71', '76', '82', '88', '94');
-    begin
-      if aFrames < 0 then
-        Result := '0:00.00'
-      else begin
-        Result := IntToStr(aFrames div (17 * 60));
-        Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
-        Result := Result + '.' + CENTISECONDS[aFrames mod 17];
-      end;
+  begin
+    if aFrames < 0 then
+      Result := '0:00.00'
+    else begin
+      Result := IntToStr(aFrames div (17 * 60));
+      Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
+      Result := Result + '.' + CENTISECONDS[aFrames mod 17];
     end;
+  end;
 
-    function GetSkillRecordValue(aNewValue, aOldValue: Integer): Integer;
-    begin
-      if (aOldValue < 0) or (aNewValue < aOldValue) then
-        Result := aNewValue
-      else
-        Result := aOldValue;
-    end;
+  function GetSkillRecordValue(aNewValue, aOldValue: Integer): Integer;
+  begin
+    if (aOldValue < 0) or (aNewValue < aOldValue) then
+      Result := aNewValue
+    else
+      Result := aOldValue;
+  end;
 begin
   with GameParams, GameResult do
   begin
