@@ -317,9 +317,10 @@ var
 begin
   if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
   if not fLayers.fIsEmpty[rlCountdown] then fLayers[rlCountdown].Clear(0);
-  
   if not fLayers.fIsEmpty[rlLemmingsLow] then fLayers[rlLemmingsLow].Clear(0);
-  fLayers[rlLemmingsHigh].Clear(0);
+  if not fLayers.fIsEmpty[rlLemmingsHigh] then fLayers[rlLemmingsHigh].Clear(0);
+  if not fLayers.fIsEmpty[rlFreezerLow] then fLayers[rlFreezerLow].Clear(0);
+  if not fLayers.fIsEmpty[rlFreezerHigh] then fLayers[rlFreezerHigh].Clear(0);
 
   LemmingList := fTempLemmingList;
 
@@ -479,9 +480,14 @@ begin
   DstRect := GetLocationBounds;
   SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
-  if aLemming.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-                            baOhNoing, baExploding, baTimebombing, baTimebombFinish]
-  then
+
+  // freezer states are drawn behind terrain
+  if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing] then
+    SrcAnim.DrawTo(fLayers[rlFreezerLow], DstRect, SrcRect)
+
+  // explosion graphics or about-to-explode lems are drawn behind active lems
+  else if aLemming.LemAction in [baFreezerExplosion, baOhNoing, baExploding,
+                                 baTimebombing, baTimebombFinish] then
     SrcAnim.DrawTo(fLayers[rlLemmingsLow], DstRect, SrcRect)
   else
     SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
@@ -703,9 +709,9 @@ begin
   FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
 
   if L.LemDX < 0 then
-    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+    fAni.FreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
   else
-    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
+    fAni.FreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawUnfreezingOverlay(L: TLemming);
@@ -721,9 +727,9 @@ begin
   FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
 
   if L.LemDX < 0 then
-    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
   else
-    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 //This code is used (or not) by Nuke, Bomber, Freezer and Timebomber

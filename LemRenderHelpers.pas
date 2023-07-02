@@ -54,6 +54,8 @@ type
                   rlGadgetsLow,
                   rlLowShadows,
                   rlProjectiles,
+                  rlFreezerLow,
+                  rlFreezerHigh,
                   rlTerrain,
                   rlOnTerrainGadgets,
                   rlOneWayArrows,
@@ -489,6 +491,8 @@ begin
   fIsEmpty[rlCountdown] := False;
   fIsEmpty[rlLemmingsLow] := False;
   fIsEmpty[rlLemmingsHigh] := False;
+  fIsEmpty[rlFreezerLow] := False;
+  fIsEmpty[rlFreezerHigh] := False;
 end;
 
 procedure TRenderBitmaps.CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
