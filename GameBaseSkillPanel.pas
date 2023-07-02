@@ -763,9 +763,9 @@ begin
     // Bomber is drawn resized
     DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 22));
 
-    // Freezer is tricky - the goal is an outlined frozen lemming over an ice cube
-    DrawAnimationFrame(fSkillIcons[spbFreezer], ICECUBE, 0, 8, 20);
+    // Freezer is tricky - the goal is an outlined ice cube over a frozen lemming
     DrawAnimationFrame(fSkillIcons[spbFreezer], FROZEN, 0, 7, 21);
+    DrawAnimationFrame(fSkillIcons[spbFreezer], ICECUBE, 0, 8, 20);
     TempBmp.Assign(fSkillIcons[spbFreezer]);
     fSkillIcons[spbFreezer].Clear(0);
     TempBmp.DrawTo(fSkillIcons[spbFreezer], 0, 0);
