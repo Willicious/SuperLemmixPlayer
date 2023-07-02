@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.3
+#   Created with SLXEditor 2.4
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Sprites Test
  AUTHOR 
  ID x00EDFD375AB7C7BD
- VERSION x0000000000000012
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -225,23 +225,6 @@
    CLIMBER 
    SWIMMER 
    BLOCKER 
- $END
- 
- 
-#           Sketches            
-# ----------------------------- 
- $SKETCH
-   INDEX 15
-   PIECE grenader
-   X 113
-   Y 58
- $END
- 
- $SKETCH
-   INDEX 16
-   PIECE spearer
-   X 109
-   Y 55
  $END
  
  
