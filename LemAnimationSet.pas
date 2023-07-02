@@ -401,6 +401,12 @@ var
   MetaSrcFolder, ImgSrcFolder: String;
 
   Info: TUpscaleInfo;
+
+  procedure UpscalePieces;
+  begin
+    Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
+    UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Settings);
+  end;
 begin
   TempBitmap := TBitmap32.Create;
   ColorDict := TColorDict.Create;
@@ -437,12 +443,7 @@ begin
         TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap)
       else begin
         TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);
-
-        Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
-        UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Settings);
-
-        // I don't think it would EVER be useful to have the TileHorizontal / TileVertical on lemming sprites, but
-        // let's keep support just for consistency.
+        UpscalePieces;
       end;
 
       MLA.Width := TempBitmap.Width div 2;
