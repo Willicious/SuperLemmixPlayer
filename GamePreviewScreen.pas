@@ -24,7 +24,7 @@ type
       fTalRects: TList<TRect>;
       fTalismanImage: TBitmap32;
 
-      function GetTextLineInfoArray: TextLineArray;
+      function GetPreviewText: TextLineArray;
 
       procedure NextLevel;
       procedure PreviousLevel;
@@ -243,8 +243,8 @@ begin
     W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
 
     // draw text
-    Lines := GetTextLineInfoArray;
-        MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
+    Lines := GetPreviewText;
+    MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
     //// I don't think we need to show "Continue" any more
     //if GameParams.ShowMinimap and not GameParams.FullScreen then
@@ -350,7 +350,7 @@ begin
     CloseScreen(gstMenu);
 end;
 
-function TGamePreviewScreen.GetTextLineInfoArray: TextLineArray;
+function TGamePreviewScreen.GetPreviewText: TextLineArray;
 const
   TITLE_SHIFT = 0.600;        //red
   GROUP_SHIFT = 0.600;        //red
