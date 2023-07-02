@@ -13,8 +13,8 @@ uses
   Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
   LemTypes,
-  LemStrings,
-  LemGame,
+  LemStrings, LemMenuFont,
+  LemLevel, LemGame,
   LemGadgetsConstants,
   GameControl,
   GameSound,
@@ -27,7 +27,7 @@ type
   TGamePostviewScreen = class(TGameBaseMenuScreen)
     private
       fAdvanceLevel: Boolean;
-      function GetScreenText: string;
+      function GetPostviewText: TextLineArray;
       procedure NextLevel;
       procedure ReplaySameLevel;
       procedure ExitToMenu;
@@ -91,11 +91,18 @@ end;
 procedure TGamePostviewScreen.BuildScreen;
 var
   NewRegion: TClickableRegion;
+  Lines: TextLineArray;
+const
+  TEXT_Y_POSITION = 28;
 begin
   fClickableRegions.Clear;
   ScreenImg.BeginUpdate;
   try
-    MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
+    // draw text
+    Lines := GetPostviewText;
+    MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
+
+    //MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
 
     if GameParams.GameResult.gSuccess then
     begin
@@ -167,40 +174,34 @@ begin
     CloseScreen(gstMenu);
 end;
 
-function TGamePostviewScreen.GetScreenText: string;
-//const
-//  TOP_TEXT_SHIFT = 0.150;      //teal
-//  RESCUE_RESULT_SHIFT = 0.500; //violet
-//  COMMENT_SHIFT = 0.600;       //red
-//  TIME_RECORD_SHIFT = 0.800;   //yellow
+function TGamePostviewScreen.GetPostviewText: TextLineArray;
+const
+TOP_TEXT_SHIFT = 0.150;      //teal
+RESCUE_RESULT_SHIFT = 0.500; //violet
+COMMENT_SHIFT = 0.600;       //red
+TIME_RECORD_SHIFT = 0.800;   //yellow
+SKILLS_RECORD_SHIFT = 0;     //green (default)
+
+LINE_Y_SPACING = 28;
+
 var
-  WhichText: TPostviewText;
+HueShift: TColorDiff;
+Entry: TNeoLevelEntry;
+Level: TLevel;
+WhichText: TPostviewText;
+i: Integer;
+STarget: string;
+SDone: string;
+
+  function GetResultIndex: Integer;
+  var
   i: Integer;
-  STarget: string;
-  SDone: string;
+  AdjLemCount: Integer;
+  CurrentMin: Integer;
 
-    procedure Add(const S: string);
-    begin
-      Result := Result + S + #13;
-    end;
-
-    procedure LF(aCount: Double);
-    begin
-      if aCount >= 1 then
-        Result := Result + StringOfChar(#13, Floor(aCount));
-      if Floor(aCount) <> Ceil(aCount) then
-        Result := Result + #12;
-    end;
-
-    function GetResultIndex: Integer;
+    function ConditionMet(aText: TPostviewText): Boolean;
     var
-      i: Integer;
-      AdjLemCount: Integer;
-      CurrentMin: Integer;
-
-      function ConditionMet(aText: TPostviewText): Boolean;
-      var
-        NewMin: Integer;
+    NewMin: Integer;
       begin
         with GameParams.GameResult do
         begin
@@ -211,14 +212,9 @@ var
             pvc_Relative: NewMin := gToRescue + aText.ConditionValue;
             pvc_RelativePercent: NewMin := gToRescue + (gToRescue * aText.ConditionValue div 100);
           end;
-          if (gRescued >= NewMin)
-             and
-            ((NewMin > CurrentMin)
-             or
-             ((aText.ConditionType in [pvc_Relative, pvc_RelativePercent]) and (aText.ConditionValue = 0))
-             or
-             ((aText.ConditionType = pvc_Percent) and (aText.ConditionValue = 100))
-             ) then
+          if (gRescued >= NewMin) and
+            ((NewMin > CurrentMin) or ((aText.ConditionType in [pvc_Relative, pvc_RelativePercent]) and (aText.ConditionValue = 0))
+            or ((aText.ConditionType = pvc_Percent) and (aText.ConditionValue = 100))) then
           begin
             Result := true;
             CurrentMin := NewMin;
@@ -228,12 +224,18 @@ var
       end;
     begin
       AdjLemCount := GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount;
-      if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
+
+      if spbCloner in GameParams.Level.Info.Skillset then
+        AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
+
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
         if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
-          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
+          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then
+            Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
+
       Result := 0;
       CurrentMin := -1;
+
       for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
         if ConditionMet(GameParams.CurrentLevel.Group.PostviewTexts[i]) then
           Result := i;
@@ -241,11 +243,8 @@ var
 
     function MakeTimeString(aFrames: Integer): String;
     const
-      CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18',
-                                              '24', '29', '35', '41',
-                                              '47', '53', '59', '65',
-                                              '71', '76', '82', '88',
-                                              '94');
+    CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18', '24', '29', '35', '41', '47',
+                                            '53', '59', '65', '71', '76', '82', '88', '94');
     begin
       if aFrames < 0 then
         Result := '0:00.00'
@@ -256,17 +255,14 @@ var
       end;
     end;
 
-  function GetSkillRecordValue(aNewValue, aOldValue: Integer): Integer;
-  begin
-    if (aOldValue < 0) or (aNewValue < aOldValue) then
-      Result := aNewValue
-    else
-      Result := aOldValue;
-  end;
-    
+    function GetSkillRecordValue(aNewValue, aOldValue: Integer): Integer;
+    begin
+      if (aOldValue < 0) or (aNewValue < aOldValue) then
+        Result := aNewValue
+      else
+        Result := aOldValue;
+    end;
 begin
-
-  Result := '';
   with GameParams, GameResult do
   begin
     if GameParams.OneLevelMode then
@@ -292,60 +288,85 @@ begin
       else
         SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
     end;
-
-    // init some local strings
-    STarget := PadL(IntToStr(gToRescue), 4);
-    SDone := PadL(IntToStr(gRescued), 4);
-
-    // top text
-    if gGotNewTalisman then
-        Add(STalismanUnlocked)
-    else if gTimeIsUp then
-        Add(SYourTimeIsUp)
-    else
-        Add('All ' + GameParams.Renderer.Theme.LemNamesPlural + ' accounted for.');
-
-    LF(2);
-
-    // rescue result
-    Add(SYouRescued + SDone);
-    LF(0.5);
-    Add(SYouNeeded + STarget);
-    LF(0.5);
-
-    if GameParams.TestModeLevel <> nil then
-      LF(1)
-    else if GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value < 0 then
-      Add(SYourRecord + PadL('0', 4))
-    else
-      Add(SYourRecord + PadL(IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value), 4));
-
-    LF(2);
-
-    // postview comment
-    WhichText := GameParams.CurrentLevel.Group.PostviewTexts[GetResultIndex];
-    for i := 0 to 6 do
-    begin
-      if i < WhichText.Text.Count then
-        Add(WhichText.Text[i]);
-    end;
-
-    // time record
-    if gSuccess then
-    begin
-      LF(2);
-
-      Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
-      LF(0.5);
-      if (GameParams.TestModeLevel <> nil) then
-        LF(1)
-      else
-        Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.UserRecords.TimeTaken.Value), 8));
-
-      LF(2);
-      Add(SYourFewestSkills + PadL(IntToStr(GameParams.CurrentLevel.UserRecords.TotalSkills.Value), 1));
-    end;
   end;
+
+  Entry := GameParams.CurrentLevel;
+  Level := GameParams.Level;
+  FillChar(HueShift, SizeOf(TColorDiff), 0);
+
+  SetLength(Result, 9);
+
+  // init some local strings
+  STarget := IntToStr(GameParams.GameResult.gToRescue);
+  SDone := IntToStr(GameParams.GameResult.gRescued);
+
+  //top text
+  HueShift.HShift := TOP_TEXT_SHIFT;
+  if GameParams.GameResult.gGotTalisman then
+    Result[0].Line := STalismanUnlocked
+  else if GameParams.GameResult.gTimeIsUp then
+    Result[0].Line := SYourTimeIsUp
+  else
+    Result[0].Line := 'All ' + GameParams.Renderer.Theme.LemNamesPlural + ' accounted for.';
+  Result[0].ColorShift := HueShift;
+  Result[0].yPos := 0 + LINE_Y_SPACING;
+
+  //rescue result rescued
+  HueShift.HShift := RESCUE_RESULT_SHIFT;
+  Result[1].Line := SYouRescued + SDone;
+  Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
+  Result[1].ColorShift := HueShift;
+
+  //rescue result needed
+  Result[2].Line := SYouNeeded + STarget;
+  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
+  Result[2].ColorShift := HueShift;
+
+  //rescue result record
+  if GameParams.TestModeLevel <> nil then
+    Result[3].Line := ''
+  else if GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value < 0 then
+    Result[3].Line := SYourRecord + '0'
+  else
+    Result[3].Line := SYourRecord + IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value);
+  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
+  Result[3].ColorShift := HueShift;
+
+  //comment - we allocate 2 lines for this
+  HueShift.HShift := COMMENT_SHIFT;
+  WhichText := GameParams.CurrentLevel.Group.PostviewTexts[GetResultIndex];
+  Result[4].Line := WhichText.Text[i];
+  Result[5].Line := WhichText.Text[i + 1];
+  Result[4].yPos := Result[3].yPos + (LINE_Y_SPACING * 2);
+  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
+  Result[4].ColorShift := HueShift;
+  Result[5].ColorShift := HueShift;
+
+  //time taken
+  HueShift.HShift := TIME_RECORD_SHIFT;
+  if GameParams.GameResult.gSuccess then
+    Result[6].Line := SYourTime + MakeTimeString(GameParams.GameResult.gLastRescueIteration)
+  else
+    Result[6].Line := '';
+  Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
+  Result[6].ColorShift := HueShift;
+
+  //time record
+  if (GameParams.TestModeLevel <> nil) or not (GameParams.GameResult.gSuccess) then
+    Result[7].Line := ''
+  else
+    Result[7].Line := SYourTimeRecord + MakeTimeString(GameParams.CurrentLevel.UserRecords.TimeTaken.Value);
+  Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
+  Result[7].ColorShift := HueShift;
+
+  //skills record
+  HueShift.HShift := SKILLS_RECORD_SHIFT;
+  if GameParams.GameResult.gSuccess then
+    Result[8].Line := SYourFewestSkills + IntToStr(GameParams.CurrentLevel.UserRecords.TotalSkills.Value)
+  else
+    Result[8].Line := '';
+  Result[8].yPos := Result[7].yPos + (LINE_Y_SPACING * 2);
+  Result[8].ColorShift := HueShift;
 end;
 
 procedure TGamePostviewScreen.DoAfterConfig;
