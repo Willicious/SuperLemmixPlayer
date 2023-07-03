@@ -17,8 +17,8 @@ const
     SFGraphicsMenu = SFGraphics + 'menu\';
     SFGraphicsPanel = SFGraphics + 'panel\';
     SFGraphicsPanelHighRes = SFGraphics + 'panel-hr\';
-    SFVisualSFX = SFGraphics + 'visualsfx\';
-    SFVisualSFXHighRes = SFGraphics + 'visualsfx-hr\';
+    //SFVisualSFX = SFGraphics + 'visualsfx\';
+    //SFVisualSFXHighRes = SFGraphics + 'visualsfx-hr\';
 
   SFStyles = 'styles\';
       SFDefaultStyle = 'default';

@@ -4712,8 +4712,10 @@ begin
   end
 
   else if (L.LemPhysicsFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
-    CueSoundEffect(SFX_BUILDER_WARNING, L.Position)
-
+  begin
+    CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+    //fRenderer.VisualSFXTimer := 10;
+  end
   else if L.LemPhysicsFrame = 15 then
   begin
     if not L.LemPlacedBrick then
@@ -4771,8 +4773,10 @@ begin
     LayBrick(L)
 
   else if (L.LemPhysicsFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
-    CueSoundEffect(SFX_BUILDER_WARNING, L.Position)
-
+  begin
+    CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+    //fRenderer.VisualSFXTimer := 10;
+  end
   else if L.LemPhysicsFrame = 0 then
   begin
     Dec(L.LemNumberOfBricksLeft);
@@ -4837,8 +4841,12 @@ begin
   begin
     Dec(L.LemNumberOfBricksLeft);
 
-    // sound on last three bricks
-    if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+    // sound and VisualSFX on last three bricks
+    if L.LemNumberOfBricksLeft < 3 then
+    begin
+      CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+      //fRenderer.VisualSFXTimer := 10;
+    end;
 
     if not L.LemPlacedBrick then
     begin
@@ -6301,6 +6309,11 @@ begin
 
   DrawAnimatedGadgets;
 
+  // Update the VisualSFX timer when necessary
+//  if (fRenderer.VisualSFXTimer <> 0) then
+//    fRenderer.UpdateVisualSFXTimer;
+//  OutputDebugString(PChar(IntToStr(fRenderer.VisualSFXTimer)));
+
   // Check lemmings under cursor
   HitTest;
   fSoundList.Clear(); // Clear list of played sound effects - just to be safe
@@ -6437,6 +6450,7 @@ begin
       //prevents double-triggering the sound when Rewinding to the start
       if not IsBackstepping or not RewindPressed then
       begin
+        //fRenderer.VisualSFXTimer := 17;
         if UseZombieSound then
           CueSoundEffect(SFX_ZOMBIE)
         else

@@ -397,7 +397,6 @@ var
   Freeze, Unfreeze: String;
   FreezingOverlay, CustomFreezingOverlay: String;
   UnfreezingOverlay, CustomUnfreezingOverlay: String;
-  HRCustomFreezerOverlay: String;
   X: Integer;
 
   SrcFolder: String;
