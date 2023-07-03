@@ -2361,7 +2361,6 @@ begin
   end;
 end;
 
-
 function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
                                           NewSkillOrig: TBasicLemmingAction;
                                           MousePos: TPoint;
@@ -6164,6 +6163,7 @@ end;
 
 function TLemmingGame.HandleExploding(L: TLemming): Boolean;
 begin
+  Renderer.IsFreezerExplosion := False;
   Result := False;
 
   if (L.LemAction = baExploding)
@@ -6201,7 +6201,7 @@ end;
 
 function TLemmingGame.HandleFreezerExplosion(L: TLemming): Boolean;
 begin
-  Renderer.fIsFreezerExplosion := true;
+  Renderer.IsFreezerExplosion := true;
   Result := false;
 
   if (L.LemAction = baFreezerExplosion) then

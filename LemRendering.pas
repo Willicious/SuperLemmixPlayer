@@ -66,6 +66,7 @@ type
     fParticles          : TParticleTable; // all particle offsets
     fPreviewGadgets     : TGadgetList; // For rendering from Preview screen
     fDoneBackgroundDraw : Boolean;
+    fIsFreezerExplosion : Boolean;
 
     fTempLemmingList: TLemmingList;
 
@@ -127,7 +128,6 @@ type
     property Recolorer: TRecolorImage read GetRecolorer;
   protected
   public
-    fIsFreezerExplosion: Boolean;
     constructor Create;
     destructor Destroy; override;
 
@@ -209,6 +209,7 @@ type
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
     property Theme: TNeoTheme read fTheme;
     property LemmingAnimations: TBaseAnimationSet read fAni;
+    property IsFreezerExplosion: Boolean read fIsFreezerExplosion write fIsFreezerExplosion;
     //property VisualSFXTimer: Integer read fVisualSFXTimer write fVisualSFXTimer;
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
@@ -776,9 +777,9 @@ begin
       X := L.LemX + X;
       Y := L.LemY + Y;
       if fIsFreezerExplosion then
-      fLayers[rlParticles].PixelS[X, Y] := PARTICLE_FREEZER_COLORS[i mod 8]
+        fLayers[rlParticles].PixelS[X, Y] := PARTICLE_FREEZER_COLORS[i mod 8]
       else
-      fLayers[rlParticles].PixelS[X, Y] := PARTICLE_COLORS[i mod 8];
+        fLayers[rlParticles].PixelS[X, Y] := PARTICLE_COLORS[i mod 8];
     end;
   end;
 
