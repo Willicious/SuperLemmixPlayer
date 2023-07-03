@@ -4118,6 +4118,22 @@ begin
 end;
 
 function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
+//var
+//WrapPosX, WrapPosY: Integer;
+
+//    procedure GenerateWrapLem;
+//    var
+//      NewL: TLemming;
+//    begin
+//      NewL := TLemming.Create;
+//      NewL.Assign(L);
+//      NewL.LemIndex := LemmingList.Count;
+//      NewL.LemIdentifier := 'W' + IntToStr(CurrentIteration);
+//      LemmingList.Add(NewL);
+//      NewL.LemX := WrapPosX;
+//      NewL.LemY := WrapPosY;
+//      Inc(LemmingsOut);
+//    end;
 begin
   Result := True;
 
@@ -4167,6 +4183,13 @@ begin
   //Bottom
   if (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
   begin
+//    // this works for wrap, but the lem doesn't appear in a consistent spot each time
+//    WrapPosX := L.LemX;                                    //the -6 is to make sure they're at 0
+//    WrapPosY := L.LemY - LEMMING_MAX_Y - PhysicsMap.Height - 3;
+//    Inc(LemmingsCloned);
+//    GenerateWrapLem;
+//    if Wrap then RemoveLemming(L, RM_NEUTRAL, true); else (the "true" is needed to mute the sound)
+
     RemoveLemming(L, RM_NEUTRAL);
     Result := False;
   end;
