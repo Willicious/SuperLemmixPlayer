@@ -6416,6 +6416,7 @@ begin
       if P.IsSpear then
       begin
         ApplySpear(P);
+        CueSoundEffect(SFX_SPEAR_HIT);
         ProjectileList.Delete(i);
       end else begin
         ApplyGrenadeExplosionMask(P);
