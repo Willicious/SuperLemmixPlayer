@@ -2545,6 +2545,16 @@ begin
         begin
           fHelperImages[hpi_Poison].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
         end;
+
+      DOM_RADIATION:
+        begin
+          fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
+
+      DOM_SLOWFREEZE:
+        begin
+          fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
     end;
 end;
 

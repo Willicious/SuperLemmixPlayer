@@ -36,7 +36,7 @@ const
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
         DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND, DOM_PAINT,
-        DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON];
+        DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_RADIATION, DOM_SLOWFREEZE];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie);
@@ -136,6 +136,8 @@ type
     BlasticineMap              : TArrayArrayBoolean;
     VinewaterMap               : TArrayArrayBoolean;
     PoisonMap                  : TArrayArrayBoolean;
+    RadiationMap               : TArrayArrayBoolean;
+    SlowfreezeMap              : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
 
@@ -269,6 +271,8 @@ type
       function HandleVinewater(L: TLemming): Boolean;
       function HandlePoisonDrown(L: TLemming): Boolean;
       function HandlePoisonSwim(L: TLemming): Boolean;
+      function HandleRadiation(L: TLemming): Boolean;
+      function HandleSlowfreeze(L: TLemming): Boolean;
 
 
     function CheckForOverlappingField(L: TLemming): Boolean;
@@ -581,11 +585,11 @@ const
   DOM_SECRET           = 16; // no longer used!!
   DOM_SKETCH           = 16;
   DOM_BUTTON           = 17;
-  DOM_RADIATION        = 18; // no longer used!!
+  DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
   DOM_FLIPPER          = 21;
-  DOM_SLOWFREEZE       = 22; // no longer used!!
+  DOM_SLOWFREEZE       = 22;
   DOM_WINDOW           = 23;
   DOM_ANIMATION        = 24; // no longer used!!
   DOM_HINT             = 25;
@@ -2021,6 +2025,10 @@ begin
   SetLength(VinewaterMap, Level.Info.Width, Level.Info.Height);
   SetLength(PoisonMap, 0, 0);
   SetLength(PoisonMap, Level.Info.Width, Level.Info.Height);
+  SetLength(RadiationMap, 0, 0);
+  SetLength(RadiationMap, Level.Info.Width, Level.Info.Height);
+  SetLength(SlowfreezeMap, 0, 0);
+  SetLength(SlowfreezeMap, Level.Info.Width, Level.Info.Height);
 
   BlockerMap.SetSize(Level.Info.Width, Level.Info.Height);
   BlockerMap.Clear(DOM_NONE);
@@ -2167,6 +2175,8 @@ begin
       DOM_BLASTICINE: WriteTriggerMap(BlasticineMap, Gadgets[i].TriggerRect);
       DOM_VINEWATER:  WriteTriggerMap(VinewaterMap, Gadgets[i].TriggerRect);
       DOM_POISON:     WriteTriggerMap(PoisonMap, Gadgets[i].TriggerRect);
+      DOM_RADIATION:  WriteTriggerMap(RadiationMap, Gadgets[i].TriggerRect);
+      DOM_SLOWFREEZE: WriteTriggerMap(SlowfreezeMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -3041,6 +3051,14 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
       AbortChecks := HandleFire(L);
 
+    // Radiation
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
+      HandleRadiation(L);
+
+    // Slowfreeze
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
+      HandleSlowfreeze(L);
+
     // Water - Check only for drowning here!
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
       AbortChecks := HandleWaterDrown(L);
@@ -3174,6 +3192,8 @@ begin
     trBlasticine: Result :=     ReadTriggerMap(X, Y, BlasticineMap);
     trVinewater:  Result :=     ReadTriggerMap(X, Y, VinewaterMap);
     trPoison:     Result :=     ReadTriggerMap(X, Y, PoisonMap);
+    trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap);
+    trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);
   end;
 end;
 
@@ -3605,6 +3625,38 @@ begin
   begin
     Transition(L, baVinetrapping);
     CueSoundEffect(SFX_VINETRAPPING, L.Position);
+  end;
+end;
+
+function TLemmingGame.HandleRadiation(L: TLemming): Boolean;
+begin
+  Result := True;
+  //prevents repeatedly assigning to the same lemming whilst in trigger area
+  if (L.LemExplosionTimer = 0)
+  // disallowed actions
+  and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+                          baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
+  begin
+    L.LemExplosionTimer := 152;
+    L.LemHideCountdown := False;
+    L.LemTimerToFreeze := False;
+    //LemIsRadiating := True;
+  end;
+end;
+
+function TLemmingGame.HandleSlowfreeze(L: TLemming): Boolean;
+begin
+  Result := True;
+  //prevents repeatedly assigning to the same lemming whilst in trigger area
+  if (L.LemExplosionTimer = 0)
+  // disallowed actions
+  and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+                          baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
+  begin
+    L.LemExplosionTimer := 152;
+    L.LemHideCountdown := False;
+    L.LemTimerToFreeze := True;
+    //LemIsSlowfreezing := True;
   end;
 end;
 

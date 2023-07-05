@@ -216,7 +216,9 @@ type
     trZombie,
     trBlasticine,
     trVinewater,
-    trPoison
+    trPoison,
+    trRadiation,
+    trSlowfreeze
   );
 
 
@@ -358,11 +360,11 @@ const
     trExit,                   // locked exit
     trZombie,                 // sketch item
     trButton,                 // button
-    trZombie,                 // radiation - unused
+    trRadiation,              // radiation
     trOWDown,                 // OWW down
     trUpdraft,                // updraft
     trFlipper,                // flipper
-    trZombie,                 // slowfreeze - unused
+    trSlowfreeze,             // slowfreeze
     trZombie,                 // hatch
     trAnim,                   // triggered animation
     trZombie,                 // hint
@@ -378,7 +380,7 @@ const
     trAnim,                   // once animation
     trBlasticine,             // lems become instabombers on contact
     trVinewater,              // triggers vinetrapper instead of drowner
-    trPoison                 // turns lems into zombies
+    trPoison                  // turns lems into zombies
   );
 
 type
