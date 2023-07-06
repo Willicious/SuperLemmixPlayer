@@ -741,7 +741,8 @@ procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
 var
   ShowCountdown, ShowHighlight: Boolean;
   SrcRect: TRect;
-  n: Integer;
+  n, tensDigit, onesDigit: Integer;
+  xPosition: Integer;
 begin
   if aLemming.LemRemoved then Exit;
 
@@ -754,12 +755,45 @@ begin
   if ShowCountdown then
   begin
     n := (aLemming.LemExplosionTimer div 17) + 1;
-    SrcRect := SizedRect(n * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
-    if aLemming.LemDX < 0 then
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 3) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect)
-    else
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
-  end else if ShowHighlight then
+
+    // Extract tens and ones digit from n
+    tensDigit := n div 10;
+    onesDigit := n mod 10;
+
+    // Calculate X-coordinate for drawing
+    if tensDigit = 0 then
+    begin
+      if aLemming.LemDX < 0 then
+        xPosition := (aLemming.LemX - 3) * ResMod  // Center single-digit for left-facing lem
+      else
+        xPosition := (aLemming.LemX - 2) * ResMod; // Center single-digit
+    end else if tensDigit = 1 then
+    begin
+      if aLemming.LemDX < 0 then
+        xPosition := (aLemming.LemX - 6) * ResMod  // Center "1"-leading double-digit for left-facing lem
+      else
+        xPosition := (aLemming.LemX - 5) * ResMod; // Center "1"-leading double-digit
+    end else if aLemming.LemDX < 0 then
+        xPosition := (aLemming.LemX - 7) * ResMod  // Center all other double-digits for left-facing lem
+      else
+        xPosition := (aLemming.LemX - 6) * ResMod; // Center all other double-digits
+
+    // Draw tens digit
+    if tensDigit <> 0 then
+    begin
+      SrcRect := SizedRect(tensDigit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], xPosition, (aLemming.LemY - 17) * ResMod, SrcRect);
+      if tensDigit = 1 then
+        Inc(xPosition, 6 * ResMod)
+      else
+        Inc(xPosition, 7 * ResMod); // Nudge the second digit across, add 1px space
+    end;
+
+    // Draw ones digit
+    SrcRect := SizedRect(onesDigit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
+    fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], xPosition, (aLemming.LemY - 17) * ResMod, SrcRect);
+  end
+  else if ShowHighlight then
     fAni.HighlightBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
 
