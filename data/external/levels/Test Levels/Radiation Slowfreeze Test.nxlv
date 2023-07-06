@@ -8,7 +8,7 @@
  TITLE Radiation Slowfreeze Test
  AUTHOR 
  ID x21081BBB4343A5C5
- VERSION x0000000000000002
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -27,6 +27,10 @@
  $SKILLSET 
    WALKER 10
    JUMPER 10
+   TIMEBOMBER 10
+   BOMBER 10
+   FREEZER 10
+   CLONER 10
  $END 
  
 #     Interactive objects       
@@ -48,26 +52,26 @@
  $END
  
  $GADGET
-   STYLE 1_systemtest
-   PIECE radiation
-   X 43
-   Y 62
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE 1_systemtest
-   PIECE slowfreeze
-   X 123
-   Y 23
-   NO_OVERWRITE
- $END
- 
- $GADGET
    STYLE orig_crystal
    PIECE window
    X 73
    Y -1
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE radiation
+   X 62
+   Y 46
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE slowfreeze
+   X 129
+   Y 7
    NO_OVERWRITE
  $END
  
