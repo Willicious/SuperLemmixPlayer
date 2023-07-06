@@ -104,6 +104,7 @@ type
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
     function GetRemainingLemmingsCount: Integer;
+    //function GetCountdownLength: Integer;  //hotbookmark
 
     function GetCurrentFrame: Integer; // Just remaps to primary animation. This allows LemGame to control
     procedure SetCurrentFrame(aValue: Integer); // the primary animation directly, as it always has.
@@ -589,6 +590,12 @@ begin
   Result := Obj.TarLev;
 end;
 
+//function TGadget.GetCountdownLength: Integer;
+//begin
+//  Assert(MetaObj.TriggerEffect = DOM_SLOWFREEZE, 'GetCountdownLenth called for an object that isn''t Slowfreeze!');
+//  Assert(MetaObj.TriggerEffect = DOM_RADIATION, 'GetCountdownLenth called for an object that isn''t Radiation!');
+//  Result := Obj.TarLev; //hotbookmark - the radiation & slowfreeze countdowns need to be stored in level info
+//end;
 
 function TGadget.GetTriggerEffectBase: Integer;
 begin
