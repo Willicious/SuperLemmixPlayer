@@ -109,7 +109,8 @@ const
     moShowMinimap,
     moIncreaseZoom,
     moEdgeScroll,
-    moPreferYippee
+    moPreferYippee,
+    moMenuMusic
   ];
 
 type
