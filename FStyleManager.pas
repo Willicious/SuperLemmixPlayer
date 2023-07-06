@@ -403,7 +403,7 @@ var
   NewItem: TListItem;
   NewString: String;
 
-  DownloadThread: TDownloadThread;
+  //DownloadThread: TDownloadThread;
 begin
   if FileExists(AppPath + SFSaveData + 'styletimes.ini') then
     fLocalList.LoadFromFile(AppPath + SFSaveData + 'styletimes.ini')

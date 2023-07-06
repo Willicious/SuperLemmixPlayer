@@ -88,7 +88,6 @@ type
 
     procedure SetZoomDropdown(aValue: Integer = -1);
     procedure SetPanelZoomDropdown(aValue: Integer = -1);
-    procedure SetExitSoundRadioGroup(aValue: Integer);
     procedure SetCheckboxes;
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
@@ -562,12 +561,6 @@ procedure TFormNXConfig.SetCheckboxes;
     if GameParams.PreferYippee then rgExitSound.ItemIndex := 0;
     if GameParams.PreferBoing then rgExitSound.ItemIndex := 1;
   end;
-
-procedure TFormNXConfig.SetExitSoundRadioGroup(aValue: Integer);
-begin
-  if rgExitSound.ItemIndex = 0 then GameParams.PreferYippee;
-  if rgExitSound.ItemIndex = 1 then GameParams.PreferBoing;
-end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
 begin

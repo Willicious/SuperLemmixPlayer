@@ -617,7 +617,6 @@ end;
 procedure TNeoLevelEntry.ResetTalismans;
 var
 aIndex: Cardinal;
-i: Integer;
 begin
   for aIndex := 0 to fTalismans.Count do
   SetTalismanStatus(aIndex, False);

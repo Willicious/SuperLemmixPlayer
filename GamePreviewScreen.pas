@@ -207,9 +207,6 @@ begin
   W := TBitmap32.Create;
   ScreenImg.BeginUpdate;
   try
-    ////puts a black border either side of the level preview - see if we can do without it
-    //ScreenImg.Bitmap.FillRect(0, 0, 864, 160, $FF000000);   //bookmark
-
     Lw := GameParams.Level.Info.Width;
     Lh := GameParams.Level.Info.Height;
 
@@ -224,20 +221,20 @@ begin
 
     //Draw the level preview
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      LevelScale := MM_INTERNAL_SCREEN_WIDTH / lw;
-    if GameParams.FullScreen then
-      LevelScale := FS_INTERNAL_SCREEN_WIDTH / lw;
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      LevelScale := MM_INTERNAL_SCREEN_WIDTH / lw
+    else if GameParams.FullScreen then
+      LevelScale := FS_INTERNAL_SCREEN_WIDTH / lw
+    else
       LevelScale := INTERNAL_SCREEN_WIDTH / lw;
 
     if LevelScale > 160 / lh then LevelScale := 160 / lh;
     DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      OffsetRect(DstRect, (MM_INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
-    if GameParams.FullScreen then
-      OffsetRect(DstRect, (FS_INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      OffsetRect(DstRect, (MM_INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2))
+    else if GameParams.FullScreen then
+      OffsetRect(DstRect, (FS_INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2))
+    else
       OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
     W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
@@ -246,37 +243,27 @@ begin
     Lines := GetPreviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
-    //// I don't think we need to show "Continue" any more
-    //if GameParams.ShowMinimap and not GameParams.FullScreen then
-      //NewRegion := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-    //if GameParams.FullScreen then
-      //NewRegion := MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-    //if not GameParams.ShowMinimap and not GameParams.FullScreen then
-      //NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-    //NewRegion.ShortcutKeys.Add(VK_RETURN);
-    //NewRegion.ShortcutKeys.Add(VK_SPACE);
-
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
+    else if GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
+    else
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+    else if GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+    else
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
     NewRegion.ShortcutKeys.Add(VK_F3);
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
-    if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
+    else if GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
+    else
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
     NewRegion.AddKeysFromFunction(lka_LoadReplay);
 

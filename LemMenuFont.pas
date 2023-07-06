@@ -272,8 +272,6 @@ begin
       var LineInfo: TextlineInfo := Lines[i];
       var X := (Dst.Width - CHARACTER_WIDTH * Length(LineInfo.Line)) div 2;
       DrawTextColored(Dst, LineInfo.ColorShift, LineInfo.Line, X, LineInfo.yPos, aRestoreBuffer, EraseOnly);
-      Inc(Y, CHARACTER_HEIGHT);
-      Inc(Y, HALF_LINE_FEED);
     end;
 end;
 

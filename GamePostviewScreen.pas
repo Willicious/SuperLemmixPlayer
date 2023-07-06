@@ -108,27 +108,27 @@ begin
     if GameParams.GameResult.gSuccess then
     begin
       if GameParams.ShowMinimap and not GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
-      if GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
-      if not GameParams.ShowMinimap and not GameParams.FullScreen then
+        NewRegion := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
+      else if GameParams.FullScreen then
+        NewRegion := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
+      else
         NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
       NewRegion.ShortcutKeys.Add(VK_RETURN);
       NewRegion.ShortcutKeys.Add(VK_SPACE);
 
       if GameParams.ShowMinimap and not GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      if GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      if not GameParams.ShowMinimap and not GameParams.FullScreen then
+        NewRegion := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
+      else if GameParams.FullScreen then
+        NewRegion := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
+      else
         NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
       NewRegion.AddKeysFromFunction(lka_Restart);
     end else begin
       if GameParams.ShowMinimap and not GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      if GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      if not GameParams.ShowMinimap and not GameParams.FullScreen then
+        NewRegion := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
+      else if GameParams.FullScreen then
+        NewRegion := MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
+      else
         NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
       NewRegion.ShortcutKeys.Add(VK_RETURN);
       NewRegion.ShortcutKeys.Add(VK_SPACE);
@@ -136,26 +136,26 @@ begin
     end;
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
+    else if GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
+    else
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+    else if GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+    else
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
     NewRegion.ShortcutKeys.Add(VK_F3);
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
-    if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
+    else if GameParams.FullScreen then
+      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
+    else
       NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
     NewRegion.AddKeysFromFunction(lka_SaveReplay);
 
@@ -235,10 +235,9 @@ const
 
 var
   HueShift: TColorDiff;
+  Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
-  Level: TLevel;
   WhichText: TPostviewText;
-  i: Integer;
   STarget: string;
   SDone: string;
 
@@ -264,7 +263,14 @@ var
       Result := aOldValue;
   end;
 begin
-  with GameParams, GameResult do
+  Results := GameParams.GameResult;
+  Entry := GameParams.CurrentLevel;
+  FillChar(HueShift, SizeOf(TColorDiff), 0);
+  SetLength(Result, 9);
+  STarget := IntToStr(Results.gToRescue);
+  SDone := IntToStr(Results.gRescued);
+
+  with GameParams, Results do
   begin
     if GameParams.OneLevelMode then
     begin
@@ -291,21 +297,11 @@ begin
     end;
   end;
 
-  Entry := GameParams.CurrentLevel;
-  Level := GameParams.Level;
-  FillChar(HueShift, SizeOf(TColorDiff), 0);
-
-  SetLength(Result, 9);
-
-  // init some local strings
-  STarget := IntToStr(GameParams.GameResult.gToRescue);
-  SDone := IntToStr(GameParams.GameResult.gRescued);
-
   //top text
   HueShift.HShift := TOP_TEXT_SHIFT;
-  if GameParams.GameResult.gGotTalisman then
+  if Results.gGotTalisman then
     Result[0].Line := STalismanUnlocked
-  else if GameParams.GameResult.gTimeIsUp then
+  else if Results.gTimeIsUp then
     Result[0].Line := SYourTimeIsUp
   else
     Result[0].Line := 'All ' + GameParams.Renderer.Theme.LemNamesPlural + ' accounted for.';
@@ -326,7 +322,7 @@ begin
   //rescue result record
   if GameParams.TestModeLevel <> nil then
     Result[3].Line := ''
-  else if GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value < 0 then
+  else if Entry.UserRecords.LemmingsRescued.Value < 0 then
     Result[3].Line := SYourRecord + '0'
   else
     Result[3].Line := SYourRecord + IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value);
@@ -335,9 +331,9 @@ begin
 
   //comment - we allocate 2 lines for this
   HueShift.HShift := COMMENT_SHIFT;
-  WhichText := GameParams.CurrentLevel.Group.PostviewTexts[GetResultIndex];
-  Result[4].Line := WhichText.Text[i];
-  Result[5].Line := WhichText.Text[i + 1];
+  WhichText := Entry.Group.PostviewTexts[GetResultIndex];
+  Result[4].Line := WhichText.Text[0];
+  Result[5].Line := WhichText.Text[1];
   Result[4].yPos := Result[3].yPos + (LINE_Y_SPACING * 2);
   Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
   Result[4].ColorShift := HueShift;
@@ -345,25 +341,25 @@ begin
 
   //time taken
   HueShift.HShift := TIME_RECORD_SHIFT;
-  if GameParams.GameResult.gSuccess then
-    Result[6].Line := SYourTime + MakeTimeString(GameParams.GameResult.gLastRescueIteration)
+  if Results.gSuccess then
+    Result[6].Line := SYourTime + MakeTimeString(Results.gLastRescueIteration)
   else
     Result[6].Line := '';
   Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
   Result[6].ColorShift := HueShift;
 
   //time record
-  if (GameParams.TestModeLevel <> nil) or not (GameParams.GameResult.gSuccess) then
+  if (GameParams.TestModeLevel <> nil) or not (Results.gSuccess) then
     Result[7].Line := ''
   else
-    Result[7].Line := SYourTimeRecord + MakeTimeString(GameParams.CurrentLevel.UserRecords.TimeTaken.Value);
+    Result[7].Line := SYourTimeRecord + MakeTimeString(Entry.UserRecords.TimeTaken.Value);
   Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
   Result[7].ColorShift := HueShift;
 
   //skills record
   HueShift.HShift := SKILLS_RECORD_SHIFT;
-  if GameParams.GameResult.gSuccess then
-    Result[8].Line := SYourFewestSkills + IntToStr(GameParams.CurrentLevel.UserRecords.TotalSkills.Value)
+  if Results.gSuccess then
+    Result[8].Line := SYourFewestSkills + IntToStr(Entry.UserRecords.TotalSkills.Value)
   else
     Result[8].Line := '';
   Result[8].yPos := Result[7].yPos + (LINE_Y_SPACING * 2);

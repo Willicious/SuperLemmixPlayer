@@ -6674,8 +6674,6 @@ end;
 
 
 procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Boolean = True; RightClick: Boolean = False);
-var
-L: TLemming;
   function CheckSkillInSet(Value: TSkillPanelButton): Boolean;
   var
     i: Integer;

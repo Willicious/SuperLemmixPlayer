@@ -285,10 +285,11 @@ begin
         end else
         Result := pgGrenadeU; //and at any other time, e.g. before thrown
       end;
-  end;
+  end else
+    Result := pgGrenadeU; // shouldn't happen
 
-    if fDX < 0 then
-      Result := GRENADE_FLIP[Result];
+  if fDX < 0 then
+    Result := GRENADE_FLIP[Result];
 end;
 
 function TProjectile.GetSpearGraphic: TSpearGraphic;
@@ -301,7 +302,8 @@ begin
         4: Result := pgSpear45BLTR;
         5: Result := pgSpearSlightBLTR;
 
-        else Result := pgSpearFlat; // shouldn't happen
+        else
+        Result := pgSpearFlat; // shouldn't happen
       end
     else
       case fOffsetX of
@@ -312,10 +314,11 @@ begin
         else if fOffsetX < SPEAR_SLIGHT_UP_BEGIN then Result := pgSpear45BLTR
         else Result := pgSpearSteepTLBR;
       end;
+  end else
+    Result := pgSpearFlat; // shouldn't happen
 
-    if fDX < 0 then
-      Result := SPEAR_FLIP[Result];
-  end;
+  if fDX < 0 then
+    Result := SPEAR_FLIP[Result];
 end;
 
 function TProjectile.GetGrenadeHotspot: TPoint;
