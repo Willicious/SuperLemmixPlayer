@@ -3640,7 +3640,7 @@ begin
     L.LemExplosionTimer := 152;
     L.LemHideCountdown := False;
     L.LemTimerToFreeze := False;
-    //LemIsRadiating := True;
+    L.LemIsTimebomber := True; //allows Freezers to be assigned without stopping the countdown
   end;
 end;
 
@@ -3656,7 +3656,6 @@ begin
     L.LemExplosionTimer := 152;
     L.LemHideCountdown := False;
     L.LemTimerToFreeze := True;
-    //LemIsSlowfreezing := True;
   end;
 end;
 
@@ -4234,7 +4233,6 @@ begin
   //Bottom
   if (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
   begin
-//    // this works for wrap, but the lem doesn't appear in a consistent spot each time
 //    WrapPosX := L.LemX;                                    //the -6 is to make sure they're at 0
 //    WrapPosY := L.LemY - LEMMING_MAX_Y - PhysicsMap.Height - 3;
 //    Inc(LemmingsCloned);
