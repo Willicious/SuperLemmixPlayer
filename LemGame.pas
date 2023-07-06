@@ -3637,7 +3637,7 @@ begin
   and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                           baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
   begin
-    L.LemExplosionTimer := 152;
+    L.LemExplosionTimer := 169;
     L.LemHideCountdown := False;
     L.LemTimerToFreeze := False;
     L.LemIsTimebomber := True; //allows Freezers to be assigned without stopping the countdown
@@ -3653,7 +3653,7 @@ begin
   and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                           baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
   begin
-    L.LemExplosionTimer := 152;
+    L.LemExplosionTimer := 169;
     L.LemHideCountdown := False;
     L.LemTimerToFreeze := True;
   end;
