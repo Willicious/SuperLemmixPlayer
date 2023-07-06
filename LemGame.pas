@@ -1860,7 +1860,10 @@ begin
                    end;
     baFixing     : L.LemDisarmingFrames := 42;
     baJumping    : L.LemJumpProgress := 0;
-    baLasering   : L.LemLaserRemainTime := 10;
+    baLasering   : begin
+                     L.LemLaserRemainTime := 10;
+                     CueSoundEffect(SFX_LASER, L.Position);
+                    end;
   end;
 end;
 

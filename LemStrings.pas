@@ -72,6 +72,7 @@ const
   SFX_ZOMBIE_DIE = 'zombiedie';
   SFX_TIMEUP = 'timeup';
   SFX_SPEAR_HIT = 'spearhit';
+  SFX_LASER = 'laser';
 
 resourcestring
   SProgramName = 'SuperLemmix Player';
