@@ -1987,7 +1987,7 @@ begin
     end;
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
-    dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSteel);
+    dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
     dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
   end;
 
