@@ -51,6 +51,7 @@ type
       ProjectileList: TProjectileList;
       SelectedSkill: TSkillPanelButton;
       TerrainLayer: TBitmap32;  // the visual terrain image
+      TerrainHighLayer: TBitmap32;
       PhysicsMap: TBitmap32;    // the actual physics
       ZombieMap: TByteMap; // Still needed for now, because there is no proper method to set the ZombieMap
       CurrentIteration: Integer;
@@ -645,6 +646,7 @@ begin
   ProjectileList := TProjectileList.Create(true);
   Gadgets := TGadgetList.Create(true);
   TerrainLayer := TBitmap32.Create;
+  TerrainHighLayer := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
   ZombieMap := TByteMap.Create;
 end;
@@ -655,6 +657,7 @@ begin
   ProjectileList.Free;
   Gadgets.Free;
   TerrainLayer.Free;
+  TerrainHighLayer.Free;
   PhysicsMap.Free;
   ZombieMap.Free;
   inherited;
@@ -741,6 +744,7 @@ begin
   // Simple stuff
   aState.SelectedSkill := fSelectedSkill;
   aState.TerrainLayer.Assign(fRenderer.TerrainLayer);
+  aState.TerrainHighLayer.Assign(fRenderer.TerrainHighLayer);
   aState.PhysicsMap.Assign(PhysicsMap);
   aState.ZombieMap.Assign(ZombieMap);
   aState.CurrentIteration := fCurrentIteration;
@@ -796,6 +800,7 @@ var
 begin
   // Simple stuff
   fRenderer.TerrainLayer.Assign(aState.TerrainLayer);
+  fRenderer.TerrainHighLayer.Assign(aState.TerrainHighLayer);
   PhysicsMap.Assign(aState.PhysicsMap);
   ZombieMap.Assign(aState.ZombieMap);
   fCurrentIteration := aState.CurrentIteration;

@@ -112,6 +112,7 @@ type
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
     function GetTerrainLayer: TBitmap32;
+    function GetTerrainHighLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
 
     // Were sub-procedures or part of DrawAllObjects
@@ -213,6 +214,7 @@ type
     //property VisualSFXTimer: Integer read fVisualSFXTimer write fVisualSFXTimer;
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
+    property TerrainHighLayer: TBitmap32 read GetTerrainHighLayer;
     property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them
 
     property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
@@ -829,6 +831,11 @@ begin
   Result := fLayers[rlTerrain];
 end;
 
+function TRenderer.GetTerrainHighLayer: TBitmap32;
+begin
+  Result := fLayers[rlTerrainHigh];
+end;
+
 function TRenderer.GetParticleLayer: TBitmap32;
 begin
   Result := fLayers[rlParticles];
@@ -863,7 +870,7 @@ end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
 var
-  PhysicsArrPtr, TerrLayerArrPtr: PColor32Array;
+  PhysicsArrPtr, TerrLayerArrPtr, TerrHighLayerArrPtr: PColor32Array;
   cx, cy: Integer;
   MapWidth: Integer; // Width of the total PhysicsMap
 begin
@@ -873,6 +880,7 @@ begin
 
   PhysicsArrPtr := PhysicsMap.Bits;
   TerrLayerArrPtr := fLayers[rlTerrain].Bits;
+  TerrHighLayerArrPtr := fLayers[rlTerrainHigh].Bits;
 
   MapWidth := PhysicsMap.Width;
 
@@ -893,8 +901,15 @@ begin
           TerrLayerArrPtr[(cy * MapWidth * 4) + (cx * 2) + 1] := 0;
           TerrLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2)] := 0;
           TerrLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2) + 1] := 0;
-        end else
+
+          TerrHighLayerArrPtr[(cy * MapWidth * 4) + (cx * 2)] := 0;
+          TerrHighLayerArrPtr[(cy * MapWidth * 4) + (cx * 2) + 1] := 0;
+          TerrHighLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2)] := 0;
+          TerrHighLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2) + 1] := 0;
+        end else begin
           TerrLayerArrPtr[cy * MapWidth + cx] := 0;
+          TerrHighLayerArrPtr[cy * MapWidth + cx] := 0;
+        end;
       end;
     end;
   end;
@@ -1879,7 +1894,7 @@ procedure TRenderer.AddFreezer(X, Y: Integer);
 begin
   fAni.LemmingAnimations[ICECUBE].DrawMode := dmCustom;
   fAni.LemmingAnimations[ICECUBE].OnPixelCombine := CombineTerrainNoOverwrite;
-  fAni.LemmingAnimations[ICECUBE].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
+  fAni.LemmingAnimations[ICECUBE].DrawTo(fLayers[rlTerrainHigh], X * ResMod, Y * ResMod);
 end;
 
 function TRenderer.FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
