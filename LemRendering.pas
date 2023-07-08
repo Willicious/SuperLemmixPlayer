@@ -746,7 +746,9 @@ var
 begin
   if aLemming.LemRemoved then Exit;
 
-  ShowCountdown := (aLemming.LemExplosionTimer > 0) and not aLemming.LemHideCountdown;
+  ShowCountdown := ((aLemming.LemFreezerExplosionTimer > 0)
+                 or (aLemming.LemExplosionTimer > 0))
+             and not aLemming.LemHideCountdown;
   ShowHighlight := (aLemming = fRenderInterface.HighlitLemming);
 
   if ShowCountdown and ShowHighlight then
@@ -754,7 +756,10 @@ begin
 
   if ShowCountdown then
   begin
-    n := (aLemming.LemExplosionTimer div 17) + 1;
+    if aLemming.LemExplosionTimer > 0 then
+      n := (aLemming.LemExplosionTimer div 17) + 1
+    else if aLemming.LemFreezerExplosionTimer > 0 then
+      n := (aLemming.LemFreezerExplosionTimer div 17) + 1;
 
     // Extract tens and ones digit from n
     tensDigit := n div 10;

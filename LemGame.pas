@@ -326,6 +326,7 @@ type
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
+    function UpdateFreezerExplosionTimer(L: TLemming): Boolean;
     procedure UpdateFreezingTimer(L: TLemming);
     procedure UpdateUnfreezingTimer(L: TLemming);
     procedure UpdateGadgets;
@@ -1797,6 +1798,7 @@ begin
     baHoisting   : L.LemIsStartingAction := OldIsStartingAction; // it needs to know what the Climber's value was
     baSplatting  : begin
                      L.LemExplosionTimer := 0;
+                     L.LemFreezerExplosionTimer := 0;
                      CueSoundEffect(SFX_SPLAT, L.Position);
                    end;
     baBlocking   : begin
@@ -1805,18 +1807,23 @@ begin
                    end;
     baExiting    : begin
                      if not IsOutOfTime then
+                     begin
                        L.LemExplosionTimer := 0;
-                     if GameParams.PreferYippee then
-                     begin
-                      CueSoundEffect(SFX_YIPPEE, L.Position);
-                     end else
-                     if GameParams.PreferBoing then
-                     begin
-                      CueSoundEffect(SFX_OING, L.Position);
+                       L.LemFreezerExplosionTimer := 0;
                      end;
+                     if GameParams.PreferYippee then
+                      CueSoundEffect(SFX_YIPPEE, L.Position)
+                     else if GameParams.PreferBoing then
+                      CueSoundEffect(SFX_OING, L.Position);
                    end;
-    baVaporizing   : L.LemExplosionTimer := 0;
-    baVinetrapping : L.LemExplosionTimer := 0;
+    baVaporizing   : begin
+                       L.LemExplosionTimer := 0;
+                       L.LemFreezerExplosionTimer := 0;
+                     end;
+    baVinetrapping : begin
+                       L.LemExplosionTimer := 0;
+                       L.LemFreezerExplosionTimer := 0;
+                     end;
     baBuilding   : begin
                      L.LemNumberOfBricksLeft := 12;
                      L.LemConstructivePositionFreeze := false;
@@ -1888,16 +1895,33 @@ begin
                       baFreezing, baFrozen] then
     begin
       if L.LemIsTimebomber then Transition(L, baTimebombFinish)
-      else if L.LemTimerToFreeze and not UserSetNuking then
-        Transition(L, baFreezerExplosion)
       else
         Transition(L, baExploding)
     end else begin
       if L.LemIsTimebomber then Transition(L, baTimebombing)
-      else if L.LemTimerToFreeze and not UserSetNuking then
-        Transition(L, baFreezing)
       else
         Transition(L, baOhnoing)
+    end;
+    Result := True;
+  end;
+end;
+
+function TLemmingGame.UpdateFreezerExplosionTimer(L: TLemming): Boolean;
+begin
+  Result := False;
+
+  Dec(L.LemFreezerExplosionTimer);
+  if L.LemFreezerExplosionTimer = 0 then
+  begin               //all these states bypass ohno phase
+    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
+                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
+                      baFreezing, baFrozen] then
+    begin
+      if not UserSetNuking then
+        Transition(L, baFreezerExplosion);
+    end else begin
+      if not UserSetNuking then
+        Transition(L, baFreezing);
     end;
     Result := True;
   end;
@@ -2293,33 +2317,18 @@ begin
   begin
     L.LemIsTimebomber := True;
     L.LemExplosionTimer := 85;
-    L.LemTimerToFreeze := False;
     L.LemHideCountdown := False;
   end
   else if (NewSkill = baExploding) then
   begin
     L.LemExplosionTimer := 1;
-    L.LemTimerToFreeze := False;
     L.LemHideCountdown := True;
   end
   else if (NewSkill = baFreezing) then
   begin
     L.LemFreezingTimer := 8;
-
-    if L.LemIsTimebomber then
-      begin
-        CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
-        if L.LemAction in [baDrowning, baFloating, baGliding, baFalling,
-                           baSwimming, baReaching, baShimmying, baJumping] then
-          Transition(L, baFreezerExplosion)
-        else
-          Transition(L, baFreezing);
-        Exit;
-      end;
-
-    L.LemExplosionTimer := 1;
-    L.LemTimerToFreeze := True;
-    L.LemHideCountdown := True;
+    L.LemFreezerExplosionTimer := 1;
+    if not L.LemIsTimebomber then L.LemHideCountdown := True;
   end
   else if (NewSkill = baCloning) then
   begin
@@ -2612,7 +2621,7 @@ begin
 end;
 
 
-//Timebomber can be assigned to all states except those in list
+// Timebomber can be assigned to all states except those in list
 function TLemmingGame.MayAssignTimebomber(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
@@ -2626,11 +2635,11 @@ begin
       Exit;
     end else
   Result := not (L.LemAction in ActionSet)
-  //stops repeat timebomber assignments to same lem, and bomber/freezer assignments to timebomber
+  //stops repeat timebomber assignments to same lem, and bomber assignments to timebomber
   and not (L.LemExplosionTimer > 0);
 end;
 
-//Exploders and freezers can be assigned to all states except those in list
+// Bomber can be assigned to all states except those in list
 function TLemmingGame.MayAssignExploder(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
@@ -2644,7 +2653,7 @@ begin
       Exit;
     end else
   Result := not (L.LemAction in ActionSet)
-  //stops repeat timebomber assignments to same lem, and bomber/freezer assignments to timebomber
+  //stops repeat bomber assignments to same lem, and bomber assignments to timebomber
   and not (L.LemExplosionTimer > 0);
 end;
 
@@ -2654,7 +2663,7 @@ const
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baVaporizing, baVinetrapping, baSplatting, baExiting, baSleeping];
 begin
-    //non-assignable from the top of the level
+  //non-assignable from the top of the level
   if L.LemY <= 0 then
     begin
       Result := (L.LemAction = baNone);
@@ -3634,15 +3643,16 @@ end;
 function TLemmingGame.HandleRadiation(L: TLemming): Boolean;
 begin
   Result := True;
-  //prevents repeatedly assigning to the same lemming whilst in trigger area
+  // prevents repeatedly assigning to the same lemming whilst in trigger area
   if (L.LemExplosionTimer = 0)
+  // radiation doesn't work on slowfreezing lems
+  and not (L.LemFreezerExplosionTimer > 0)
   // disallowed actions
   and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                           baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
   begin
     L.LemExplosionTimer := 169;
     L.LemHideCountdown := False;
-    L.LemTimerToFreeze := False;
     L.LemIsTimebomber := True; //allows Freezers to be assigned without stopping the countdown
   end;
 end;
@@ -3650,15 +3660,16 @@ end;
 function TLemmingGame.HandleSlowfreeze(L: TLemming): Boolean;
 begin
   Result := True;
-  //prevents repeatedly assigning to the same lemming whilst in trigger area
-  if (L.LemExplosionTimer = 0)
+  // prevents repeatedly assigning to the same lemming whilst in trigger area
+  if (L.LemFreezerExplosionTimer = 0)
+  // slowfreeze doesn't work on radiating lems
+  and not (L.LemExplosionTimer > 0)
   // disallowed actions
   and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                           baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
   begin
-    L.LemExplosionTimer := 169;
+    L.LemFreezerExplosionTimer := 169;
     L.LemHideCountdown := False;
-    L.LemTimerToFreeze := True;
   end;
 end;
 
@@ -7136,6 +7147,10 @@ begin
       // Explosion-Countdown
       if ContinueWithLem and (LemExplosionTimer <> 0) then
         ContinueWithLem := not UpdateExplosionTimer(CurrentLemming);
+
+      // FreezerExplosion-Countdown
+      if ContinueWithLem and (LemFreezerExplosionTimer <> 0) then
+        ContinueWithLem := not UpdateFreezerExplosionTimer(CurrentLemming);
 
       // Freezing
       if ContinueWithLem and (LemFreezingTimer <> 0) then

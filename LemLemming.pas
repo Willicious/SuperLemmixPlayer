@@ -75,6 +75,7 @@ type
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
+    LemFreezerExplosionTimer      : Integer; // 0 unless slowfreeze
     LemFreezingTimer              : Integer; // 8 downto 0
     LemUnfreezingTimer            : Integer; // 12 downto 0
     LemDisarmingFrames            : Integer;
@@ -110,7 +111,6 @@ type
     LemIsStartingAction           : Boolean; // replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemTimerToFreeze              : Boolean;
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Freezer --- needs to be set to "False" for Timebomber
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
@@ -296,6 +296,7 @@ begin
   LemTrueFallen := Source.LemTrueFallen;
   LemInitialFall := Source.LemInitialFall;
   LemExplosionTimer := Source.LemExplosionTimer;
+  LemFreezerExplosionTimer := Source.LemFreezerExplosionTimer;
   LemFreezingTimer := Source.LemFreezingTimer;
   LemUnfreezingTimer := Source.LemUnfreezingTimer;
   LemDisarmingFrames := Source.LemDisarmingFrames;
@@ -328,7 +329,6 @@ begin
   LemIsStartingAction := Source.LemIsStartingAction;
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
-  LemTimerToFreeze := Source.LemTimerToFreeze;
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
   LemJumpProgress := Source.LemJumpProgress;
