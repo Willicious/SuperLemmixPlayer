@@ -23,6 +23,7 @@ type
     fGame                 : TLemmingGame;
     fIconBmp              : TBitmap32;   // for temporary storage
     fShowUsedSkills       : Boolean;
+    fRRIsPressed          : Boolean;
 
     fSetInitialZoom       : Boolean;
 
@@ -1575,13 +1576,12 @@ end;
 
 procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
 begin
-  if GameParams.ClassicMode //we never want to draw Replay mark in Classic Mode
-  or not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert then
-    fNewDrawStr[Pos] := #97
-  else
-    fNewDrawStr[Pos] := #91;
+    fNewDrawStr[Pos] := #97 // Blue "R"
+  else if not fRRIsPressed then
+    fNewDrawStr[Pos] := #91; // Red "R"
 end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
@@ -1642,6 +1642,7 @@ begin
     spbSlower:
       begin
         Game.fIsBackstepping := False;
+        fRRIsPressed := True;
         DrawButtonSelector(spbSlower, true);
 
         //deactivates min/max RR jumping in ClassicMode
@@ -1654,6 +1655,7 @@ begin
     spbFaster:
       begin
         Game.fIsBackstepping := False;
+        fRRIsPressed := True;
         DrawButtonSelector(spbFaster, true);
 
         //deactivates min/max RR jumping in ClassicMode
@@ -1773,6 +1775,7 @@ begin
   DrawButtonSelector(spbSlower, false);
   DrawButtonSelector(spbFaster, false);
   DrawButtonSelector(spbRestart, false);
+  fRRIsPressed := False;
 end;
 
 procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
