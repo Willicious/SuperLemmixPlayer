@@ -634,6 +634,7 @@ begin
   if Game.RewindPressed then //hotbookmark
   begin
     SkillPanel.DrawButtonSelector(spbRewind, True);
+
     if GameParams.ClassicMode then
       Game.CancelReplayAfterSkip := true;
 
@@ -643,6 +644,7 @@ begin
   end else if not Game.RewindPressed then
   begin
     SkillPanel.DrawButtonSelector(spbRewind, False);
+
     if RewindTimer.Enabled then
       RewindTimer.Enabled := False;
   end;

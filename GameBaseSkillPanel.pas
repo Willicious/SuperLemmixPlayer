@@ -1734,7 +1734,8 @@ begin
       begin
         DrawButtonSelector(spbRestart, true);
 
-        if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then // cancels Replay after Restart in ClassicMode
+        // cancels Replay after Restart in ClassicMode
+        if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
           begin
             Game.CancelReplayAfterSkip := true;
             Game.fReplayWasLoaded := false;

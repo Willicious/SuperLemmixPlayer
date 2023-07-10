@@ -8,7 +8,7 @@
  TITLE Poison Test
  AUTHOR WillLem
  ID x6A9F098C0B166333
- VERSION x000000000000000D
+ VERSION x000000000000000F
  
 #       Level dimensions        
 # ----------------------------- 
@@ -106,7 +106,16 @@
    X 173
    Y 1
    NO_OVERWRITE
-   SWIMMER 
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE poison
+   X 309
+   Y 48
+   WIDTH 24
+   HEIGHT 17
+   NO_OVERWRITE
  $END
  
  
