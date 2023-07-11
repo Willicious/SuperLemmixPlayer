@@ -1672,8 +1672,8 @@ begin
   begin
   if L.LemIsSwimmer then
   begin
-    SetLowShadowPixel(PosX + FreezerShadow[i, 0], (L.LemY +2) + FreezerShadow[i, 1]);
-    SetLowShadowPixel(PosX - FreezerShadow[i, 0] - 1, (L.LemY +2) + FreezerShadow[i, 1]);
+    SetLowShadowPixel(PosX + FreezerShadow[i, 0], (L.LemY + 3) + FreezerShadow[i, 1]);
+    SetLowShadowPixel(PosX - FreezerShadow[i, 0] - 1, (L.LemY + 3) + FreezerShadow[i, 1]);
   end else begin
     SetLowShadowPixel(PosX + FreezerShadow[i, 0], L.LemY + FreezerShadow[i, 1]);
     SetLowShadowPixel(PosX - FreezerShadow[i, 0] - 1, L.LemY + FreezerShadow[i, 1]);

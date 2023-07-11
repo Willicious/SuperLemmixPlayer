@@ -1776,7 +1776,7 @@ begin
 
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
   begin
-    L.LemY := L.LemY + 2;
+    L.LemY := L.LemY + 3;
   end;
 
   if NewAction = baDehoisting then
