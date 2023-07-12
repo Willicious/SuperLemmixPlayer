@@ -88,7 +88,8 @@ type
     baGrenading,       //42
     baLooking,         //43
     baLasering,        //44
-    baSleeping         //45
+    baSleeping,        //45
+    baZombieWalking    //46
   );
 
 const
@@ -296,7 +297,8 @@ const
     spbGrenader,    //42
     spbNone,        //43 baLooking
     spbLaserer,     //44
-    spbNone         //45 baSleeping
+    spbNone,        //45 baSleeping
+    spbNone         //46 baZombieWalking
   );
 
 const

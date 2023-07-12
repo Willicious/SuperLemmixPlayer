@@ -463,6 +463,16 @@ begin
     i := AnimationIndices[aLemming.LemAction, false]
   else
     i := AnimationIndices[aLemming.LemAction, true];
+
+  // Get the alternative Walker sprite for Zombies
+  if aLemming.LemIsZombie and (aLemming.LemAction = baWalking) then
+  begin
+    if aLemming.LemDX > 0 then
+    i := AnimationIndices[baZombieWalking, false]
+  else
+    i := AnimationIndices[baZombieWalking, true];
+  end;
+
   SrcAnim := fAni.LemmingAnimations[i];
   SrcMetaAnim := fAni.MetaLemmingAnimations[i];
 

@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   //MUST MATCH BELOW (not the next list, the one after that)
   //And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 81;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 40;        //num lem sprite types
+  NUM_LEM_SPRITES     = 83;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 41;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ASCENDING           = 2;    //3  //2
@@ -108,14 +108,16 @@ const
   LASERING_RTL        = 77;   //78
   SLEEPING            = 78;   //79 //40
   SLEEPING_RTL        = 79;   //80
-  ICECUBE             = 80;   //81 this one does NOT need an RTL form;
+  ZOMBIEWALKING       = 80;   //81 //41
+  ZOMBIEWALKING_RTL   = 81;   //82
+  ICECUBE             = 82;   //83 this one does NOT need an RTL form;
                               //in fact in needs to be moved to the Masks section
                               //also, it's not counted as a "sprite type"
 
   //This one must match TBasicLemmingAction in LemCore / LemStrings
   AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
     (0,0),                                    // 1 baNone
-    (WALKING, WALKING_RTL),                   // 2 baWalk,
+    (WALKING, WALKING_RTL),                   // 2 baWalking,
     (ASCENDING, ASCENDING_RTL),               // 3 baAscending,
     (DIGGING, DIGGING_RTL),                   // 4 baDigging,
     (CLIMBING, CLIMBING_RTL),                 // 5 baClimbing,
@@ -158,7 +160,8 @@ const
     (THROWING, THROWING_RTL),                 // 42 baGrenading
     (LOOKING, LOOKING_RTL),                   // 43 baLooking
     (LASERING, LASERING_RTL),                 // 44 baLasering
-    (SLEEPING, SLEEPING_RTL)                  // 45 baSleeping
+    (SLEEPING, SLEEPING_RTL),                 // 45 baSleeping
+    (ZOMBIEWALKING, ZOMBIEWALKING_RTL)        // 46 baZombieWalking
   );
 
 type
@@ -220,7 +223,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..39] of String =  (
+  ANIM_NAMES: array[0..40] of String =  (
   'WALKER',        //1
   'ASCENDER',      //2
   'DIGGER',        //3
@@ -260,7 +263,8 @@ const
   'THROWER',       //37
   'LOOKER',        //38
   'LASERER',       //39
-  'SLEEPER'        //40
+  'SLEEPER',       //40
+  'ZOMBIEWALKER'   //41
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

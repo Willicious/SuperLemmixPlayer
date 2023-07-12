@@ -8,7 +8,7 @@
  TITLE Kill All Zombies
  AUTHOR WillLem
  ID xDA4E2B370FC2267F
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 200
  START_Y 80
- THEME willlem_lemminas_classic
+ THEME orig_crystal
  
 #         Level stats           
 # ----------------------------- 

@@ -1683,7 +1683,8 @@ const
     10, //42 baGrenading
     14, //43 baLooking
     12, //44 baLasering - it's, ironically, this high for rendering purposes
-    20  //45 baSleeping
+    20, //45 baSleeping
+    8   //46 baZombieWalking
     );
 begin
   if DoTurn then TurnAround(L);
