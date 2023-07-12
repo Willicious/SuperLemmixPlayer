@@ -1670,7 +1670,7 @@ begin
 
   for i := 0 to Length(FreezerShadow) - 1 do
   begin
-  if L.LemIsSwimmer then
+  if L.LemAction = baSwimming then
   begin
     SetLowShadowPixel(PosX + FreezerShadow[i, 0], (L.LemY + 3) + FreezerShadow[i, 1]);
     SetLowShadowPixel(PosX - FreezerShadow[i, 0] - 1, (L.LemY + 3) + FreezerShadow[i, 1]);
