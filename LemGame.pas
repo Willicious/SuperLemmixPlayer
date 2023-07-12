@@ -274,6 +274,7 @@ type
       function HandlePoisonSwim(L: TLemming): Boolean;
       function HandleRadiation(L: TLemming): Boolean;
       function HandleSlowfreeze(L: TLemming): Boolean;
+      function HandleTrampolene(L: TLemming): Boolean;
 
 
     function CheckForOverlappingField(L: TLemming): Boolean;
@@ -3598,7 +3599,12 @@ const
                baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
-  if not L.LemIsSwimmer then
+
+  if not (L.LemIsSwimmer) //or HasPixelAt(L.LemX, L.LemY))
+  then                    //hotbookmark - the commented out code here
+                          //allows poison to be used as a walkable trigger
+                          //but only if the lem walks into the trigger
+                          // - if they fall onto it, they will still "drown"
   begin
     Result := True;
 
@@ -3608,6 +3614,9 @@ begin
       CueSoundEffect(SFX_DROWNING, L.Position);
       if not L.LemIsZombie then RemoveLemming(L, RM_ZOMBIE);
     end;
+//  end else begin
+//    Result := True;
+//    if not L.LemIsZombie then RemoveLemming(L, RM_ZOMBIE);
   end;
 end;
 
@@ -3677,6 +3686,13 @@ begin
     L.LemFreezerExplosionTimer := 169;
     L.LemHideCountdown := False;
   end;
+end;
+
+function TLemmingGame.HandleTrampolene;
+begin
+  Result := True;
+
+
 end;
 
 procedure TLemmingGame.ApplyFreezeLemming(L: TLemming);
@@ -4289,7 +4305,14 @@ var
 begin
   Result := True;
 
-  Inc(L.LemX, L.LemDx);
+  OutputDebugString(PChar(IntToStr(L.LemPhysicsFrame)));
+  if L.LemIsZombie then
+  begin
+    if L.LemPhysicsFrame in [0, 2] then
+      Inc(L.LemX, L.LemDx);
+  end else
+    Inc(L.LemX, L.LemDx);
+
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
   if (LemDy > 0) and (L.LemIsSlider) and (LemCanDehoist(L, true)) then

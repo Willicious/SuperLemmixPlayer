@@ -77,6 +77,20 @@ $ANIMATIONS
       FOOT_Y 10
     $END
   $END
+  
+  $ZOMBIEWALKER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+  $END
 
   $ASCENDER
     FRAMES 1

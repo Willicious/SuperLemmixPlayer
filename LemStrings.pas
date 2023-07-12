@@ -218,7 +218,8 @@ const
     SGrenader,    //42
     SLooker,      //43
     SLaserer,     //44
-    SSleeper      //45
+    SSleeper,     //45
+    SDummyString  //46
   );
 
 implementation
