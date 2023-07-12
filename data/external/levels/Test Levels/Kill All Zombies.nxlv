@@ -8,7 +8,7 @@
  TITLE Kill All Zombies
  AUTHOR WillLem
  ID xDA4E2B370FC2267F
- VERSION x0000000000000011
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,11 +34,11 @@
    FLOATER 5
    TIMEBOMBER 5
    FREEZER 5
-   PLATFORMER 5
    BUILDER 5
+   STACKER 5
    GRENADER 5
    LASERER 5
-   MINER 5
+   CLONER 5
  $END 
  
  $TALISMAN 
