@@ -73,6 +73,7 @@ const
   SFX_TIMEUP = 'timeup';
   SFX_SPEAR_HIT = 'spearhit';
   SFX_LASER = 'laser';
+  //SFX_BALLOON_POP = 'balloon_pop';
 
 resourcestring
   SProgramName = 'SuperLemmix Player';
@@ -141,6 +142,7 @@ resourcestring
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
+  SBallooner = 'Ballooner';
   SSleeper = 'Sleeper';
 
 
@@ -218,8 +220,9 @@ const
     SGrenader,    //42
     SLooker,      //43
     SLaserer,     //44
-    SSleeper,     //45
-    SDummyString  //46
+    SBallooner,   //45
+    SSleeper,     //46
+    SDummyString  //47
   );
 
 implementation

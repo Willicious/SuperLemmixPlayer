@@ -495,6 +495,7 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbSlider)], SLIDING_RTL, 0, PICKUP_MID - 2, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, PICKUP_MID + 3, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, PICKUP_MID + 1, PICKUP_BASELINE - 6);
+  DrawAnimationFrame(SkillIcons[Integer(spbBallooner)], BALLOONING, 4, PICKUP_MID + 1, PICKUP_BASELINE - 6);
   DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
   DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
   DrawAnimationFrame(SkillIcons[Integer(spbDisarmer)], FIXING, 6, PICKUP_MID - 2, PICKUP_BASELINE - 3);

@@ -94,6 +94,7 @@ var
             baSpearing:    Result := 'Spearer';
             baGrenading:   Result := 'Grenader';
             baLasering:    Result := 'Laserer';
+            baBallooning:  Result := 'Ballooner';
         else Result := '(Invalid skill)';
       end;
     end;

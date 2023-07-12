@@ -357,6 +357,7 @@ type
     function HandleBashing(L: TLemming): Boolean;
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
+    function HandleBallooning(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
     function HandleSplatting(L: TLemming): Boolean;
     function HandleExiting(L: TLemming): Boolean;
@@ -406,6 +407,7 @@ type
     function MayAssignClimber(L: TLemming): Boolean;
     function MayAssignFloaterGlider(L: TLemming): Boolean;
     function MayAssignSwimmer(L: TLemming): Boolean;
+    function MayAssignBallooner(L: TLemming) : Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignTimebomber(L: TLemming): Boolean;
@@ -623,11 +625,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..23] of TBasicLemmingAction =
+  ActionListArray: array[0..24] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping, baSliding, baLasering, baSpearing, baGrenading);
+             baJumping, baSliding, baLasering, baSpearing, baGrenading, baBallooning);
 
 
 function CheckRectCopy(const A, B: TRect): Boolean;
@@ -1112,6 +1114,7 @@ begin
   LemmingMethods[baSpearing]      := HandleThrowing;
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
+  LemmingMethods[baBallooning]    := HandleBallooning;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1153,6 +1156,7 @@ begin
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
+  NewSkillMethods[baBallooning]   := MayAssignBallooner;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1684,8 +1688,9 @@ const
     10, //42 baGrenading
     14, //43 baLooking
     12, //44 baLasering - it's, ironically, this high for rendering purposes
-    20, //45 baSleeping
-    8   //46 baZombieWalking
+    17, //45 baBallooning
+    20, //46 baSleeping
+    8   //47 baZombieWalking
     );
 begin
   if DoTurn then TurnAround(L);
@@ -2600,6 +2605,16 @@ const
                baSplatting, baExiting, baSleeping];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
+end;
+
+function TLemmingGame.MayAssignBallooner(L: TLemming): Boolean;
+const
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+               baDangling, baVaporizing, baVinetrapping, baDrowning,
+               baSplatting, baExiting, baSleeping];
+begin
+  Result := (not (L.LemAction in ActionSet));
 end;
 
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
@@ -4192,8 +4207,8 @@ begin
   if L.LemPhysicsFrame > L.LemMaxPhysicsFrame then
   begin
     L.LemPhysicsFrame := 0;
-    // Floater and Glider start cycle at frame 9!
-    if L.LemAction in [baFloating, baGliding] then L.LemPhysicsFrame := 9;
+    // Floater, Glider and Ballooner start cycle at frame 9!
+    if L.LemAction in [baFloating, baGliding, baBallooning] then L.LemPhysicsFrame := 9;
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
@@ -4305,7 +4320,6 @@ var
 begin
   Result := True;
 
-  OutputDebugString(PChar(IntToStr(L.LemPhysicsFrame)));
   if L.LemIsZombie then
   begin
     if L.LemPhysicsFrame in [0, 2] then
@@ -5926,6 +5940,26 @@ begin
   end;
 end;
 
+function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
+begin
+  Result := True;
+  OutputDebugString(PChar(IntToStr(L.LemPhysicsFrame)));
+
+  if L.LemPhysicsFrame >= 9 then
+    Dec(L.LemY);
+  if L.LemPhysicsFrame in [10, 12, 14, 16] then
+  begin
+    if L.LemDX = -1 then
+      Dec(L.LemX)
+    else
+      Inc(L.LemX);
+  end;
+
+  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY, 2);
+
+  if HasPixelAt(L.LemX, L.LemY - 30) then
+    Transition(L, baFalling);
+end;
 
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
@@ -6193,7 +6227,6 @@ begin
   Result := True;
   if L.LemEndOfAnimation then Transition(L, baWalking);
 end;
-
 
 function TLemmingGame.HandleTimebombing(L: TLemming): Boolean;
 begin
