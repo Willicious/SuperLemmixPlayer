@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   //MUST MATCH BELOW (not the next list, the one after that)
   //And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 83;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 41;        //num lem sprite types
+  NUM_LEM_SPRITES     = 85;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 42;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ASCENDING           = 2;    //3  //2
@@ -106,11 +106,13 @@ const
   LOOKING_RTL         = 75;   //76
   LASERING            = 76;   //77 //39
   LASERING_RTL        = 77;   //78
-  SLEEPING            = 78;   //79 //40
-  SLEEPING_RTL        = 79;   //80
-  ZOMBIEWALKING       = 80;   //81 //41
-  ZOMBIEWALKING_RTL   = 81;   //82
-  ICECUBE             = 82;   //83 this one does NOT need an RTL form;
+  BALLOONING          = 78;   //79 //40
+  BALLOONING_RTL      = 79;   //80
+  SLEEPING            = 80;   //81 //41
+  SLEEPING_RTL        = 81;   //82
+  ZOMBIEWALKING       = 82;   //83 //42
+  ZOMBIEWALKING_RTL   = 83;   //84
+  ICECUBE             = 84;   //85 this one does NOT need an RTL form;
                               //in fact in needs to be moved to the Masks section
                               //also, it's not counted as a "sprite type"
 
@@ -160,8 +162,9 @@ const
     (THROWING, THROWING_RTL),                 // 42 baGrenading
     (LOOKING, LOOKING_RTL),                   // 43 baLooking
     (LASERING, LASERING_RTL),                 // 44 baLasering
-    (SLEEPING, SLEEPING_RTL),                 // 45 baSleeping
-    (ZOMBIEWALKING, ZOMBIEWALKING_RTL)        // 46 baZombieWalking
+    (BALLOONING, BALLOONING_RTL),             // 45 baBallooning
+    (SLEEPING, SLEEPING_RTL),                 // 46 baSleeping
+    (ZOMBIEWALKING, ZOMBIEWALKING_RTL)        // 47 baZombieWalking
   );
 
 type
@@ -178,6 +181,7 @@ type
     fUnfreezingOverlay      : TBitmap32;
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
+    fBalloonPopBitmap       : TBitmap32;
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -205,6 +209,7 @@ type
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
+    property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
     property HasZombieColor: Boolean read fHasZombieColor;
@@ -223,7 +228,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..40] of String =  (
+  ANIM_NAMES: array[0..41] of String =  (
   'WALKER',        //1
   'ASCENDER',      //2
   'DIGGER',        //3
@@ -263,8 +268,9 @@ const
   'THROWER',       //37
   'LOOKER',        //38
   'LASERER',       //39
-  'SLEEPER',       //40
-  'ZOMBIEWALKER'   //41
+  'BALLOONER',     //40
+  'SLEEPER',       //41
+  'ZOMBIEWALKER'   //42
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
@@ -398,6 +404,7 @@ var
   TempBitmap: TBitmap32;
   iAnimation: Integer;
   MLA: TMetaLemmingAnimation;
+  BalloonPop, BalloonPopGraphic, CustomBalloonPopGraphic: String;
   Freeze, Unfreeze: String;
   FreezingOverlay, CustomFreezingOverlay: String;
   UnfreezingOverlay, CustomUnfreezingOverlay: String;
@@ -501,6 +508,9 @@ begin
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
 
+    fBalloonPopBitmap.DrawMode := dmBlend;
+    fBalloonPopBitmap.CombineMode := cmMerge;
+
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
@@ -536,6 +546,18 @@ begin
       UpscalePieces;
     end;
 
+    // Load the balloon pop graphic
+    BalloonPop := 'balloon_pop.png';
+    BalloonPopGraphic := MetaSrcFolder + BalloonPop;
+    CustomBalloonPopGraphic := ImgSrcFolder + BalloonPop;
+
+    if FileExists(CustomBalloonPopGraphic) then
+      TPngInterface.LoadPngFile(CustomBalloonPopGraphic, fBalloonPopBitmap)
+    else begin
+      TPngInterface.LoadPngFile(BalloonPopGraphic, fBalloonPopBitmap);
+      UpscalePieces;
+    end;
+
     fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
     fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
     fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
@@ -557,6 +579,7 @@ begin
   fUnfreezingOverlay.Clear;
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
+  fBalloonPopBitmap.Clear;
   fHasZombieColor := false;
   fHasNeutralColor := false;
   fTheme := nil;
@@ -573,6 +596,7 @@ begin
   fUnfreezingOverlay := TBitmap32.Create;
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
+  fBalloonPopBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -584,6 +608,7 @@ begin
   fUnfreezingOverlay.Free;
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
+  fBalloonPopBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;
 end;

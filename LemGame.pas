@@ -331,6 +331,7 @@ type
     function UpdateFreezerExplosionTimer(L: TLemming): Boolean;
     procedure UpdateFreezingTimer(L: TLemming);
     procedure UpdateUnfreezingTimer(L: TLemming);
+    procedure UpdateBalloonPopTimer(L: TLemming);
     procedure UpdateGadgets;
 
     procedure UpdateProjectiles;
@@ -357,6 +358,7 @@ type
     function HandleBashing(L: TLemming): Boolean;
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
+    function HandleBallooning(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
     function HandleSplatting(L: TLemming): Boolean;
     function HandleExiting(L: TLemming): Boolean;
@@ -406,6 +408,7 @@ type
     function MayAssignClimber(L: TLemming): Boolean;
     function MayAssignFloaterGlider(L: TLemming): Boolean;
     function MayAssignSwimmer(L: TLemming): Boolean;
+    function MayAssignBallooner(L: TLemming) : Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignTimebomber(L: TLemming): Boolean;
@@ -623,11 +626,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..23] of TBasicLemmingAction =
+  ActionListArray: array[0..24] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping, baSliding, baLasering, baSpearing, baGrenading);
+             baJumping, baSliding, baLasering, baSpearing, baGrenading, baBallooning);
 
 
 function CheckRectCopy(const A, B: TRect): Boolean;
@@ -1112,6 +1115,7 @@ begin
   LemmingMethods[baSpearing]      := HandleThrowing;
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
+  LemmingMethods[baBallooning]    := HandleBallooning;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1153,6 +1157,7 @@ begin
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
+  NewSkillMethods[baBallooning]   := MayAssignBallooner;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1684,8 +1689,9 @@ const
     10, //42 baGrenading
     14, //43 baLooking
     12, //44 baLasering - it's, ironically, this high for rendering purposes
-    20, //45 baSleeping
-    8   //46 baZombieWalking
+    17, //45 baBallooning
+    20, //46 baSleeping
+    8   //47 baZombieWalking
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1709,6 +1715,14 @@ begin
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
+    if L.LemAction = baBallooning then
+    begin
+      if L.LemDx < 0 then
+        Dec(L.LemX, 2)
+      else
+        Inc(L.LemX);
+    end;
+
     if L.LemAction <> baSwimming then // for Swimming it's set in HandleSwimming as there is no single universal value
     begin
       L.LemFallen := 1;
@@ -1878,6 +1892,9 @@ begin
                      L.LemLaserRemainTime := 10;
                      CueSoundEffect(SFX_LASER, L.Position);
                     end;
+    baBallooning :begin
+                    CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
+                  end;
   end;
 end;
 
@@ -1898,7 +1915,7 @@ begin
   if L.LemExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
+                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
       if L.LemIsTimebomber then Transition(L, baTimebombFinish)
@@ -1921,7 +1938,7 @@ begin
   if L.LemFreezerExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
+                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
       if not UserSetNuking then
@@ -1944,6 +1961,12 @@ procedure TLemmingGame.UpdateUnfreezingTimer(L: TLemming);
 begin
   if L.LemUnfreezingTimer > 0 then
     Dec(L.LemUnfreezingTimer);
+end;
+
+procedure TLemmingGame.UpdateBalloonPopTimer(L: TLemming);
+begin
+  if L.LemBalloonPopTimer > 0 then
+    Dec(L.LemBalloonPopTimer);
 end;
 
 procedure TLemmingGame.CheckForGameFinished;
@@ -2309,6 +2332,14 @@ begin
     end;
   end;
 
+  // hotbookmark - not sure why, but the balloon pop timer isn't updating for Walkers, Jumpers or Shimmyers
+  if (NewSkill in [baToWalking, baJumping, baShimmying, baExploding, baFreezing])
+    and (L.LemAction = baBallooning) then
+  begin
+    L.LemBalloonPopTimer := 1;
+    CueSoundEffect(SFX_BALLOON_POP, L.Position);
+  end;
+
   // Special behavior of permament skills.
   if (NewSkill = baSliding) then L.LemIsSlider := True
   else if (NewSkill = baClimbing) then L.LemIsClimber := True
@@ -2552,7 +2583,7 @@ end;
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
-               baStacking, baBashing, baFencing, baMining, baDigging,
+               baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
                baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2600,6 +2631,16 @@ const
                baSplatting, baExiting, baSleeping];   // Does NOT contain baDrowning!
 begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
+end;
+
+function TLemmingGame.MayAssignBallooner(L: TLemming): Boolean;
+const
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+               baDangling, baVaporizing, baVinetrapping, baDrowning,
+               baSplatting, baExiting, baSleeping, baBallooning];
+begin
+  Result := (not (L.LemAction in ActionSet));
 end;
 
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
@@ -2822,7 +2863,7 @@ function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baClimbing,
                baStacking, baBashing, baFencing, baMining, baDigging, baLasering,
-               baDangling, baLooking];
+               baDangling, baLooking, baBallooning];
 var
   CopyL: TLemming;
   i: Integer;
@@ -2880,7 +2921,7 @@ end;
 function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
-               baShrugging, baPlatforming, baStacking, baFencing,
+               baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
                baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -4192,8 +4233,8 @@ begin
   if L.LemPhysicsFrame > L.LemMaxPhysicsFrame then
   begin
     L.LemPhysicsFrame := 0;
-    // Floater and Glider start cycle at frame 9!
-    if L.LemAction in [baFloating, baGliding] then L.LemPhysicsFrame := 9;
+    // Floater, Glider and Ballooner start cycle at frame 9!
+    if L.LemAction in [baFloating, baGliding, baBallooning] then L.LemPhysicsFrame := 9;
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
@@ -4305,7 +4346,6 @@ var
 begin
   Result := True;
 
-  OutputDebugString(PChar(IntToStr(L.LemPhysicsFrame)));
   if L.LemIsZombie then
   begin
     if L.LemPhysicsFrame in [0, 2] then
@@ -5926,6 +5966,29 @@ begin
   end;
 end;
 
+function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
+begin
+  Result := True;
+
+  if L.LemPhysicsFrame >= 9 then
+    Dec(L.LemY);
+  if L.LemPhysicsFrame in [10, 12, 14, 16] then
+  begin
+    if L.LemDX = -1 then
+      Dec(L.LemX)
+    else
+      Inc(L.LemX);
+  end;
+
+  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY, 2);
+
+  if HasPixelAt(L.LemX, L.LemY - 30) then
+  begin
+    L.LemBalloonPopTimer := 1;
+    CueSoundEffect(SFX_BALLOON_POP, L.Position);
+    Transition(L, baFalling);
+  end;
+end;
 
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
@@ -6193,7 +6256,6 @@ begin
   Result := True;
   if L.LemEndOfAnimation then Transition(L, baWalking);
 end;
-
 
 function TLemmingGame.HandleTimebombing(L: TLemming): Boolean;
 begin
@@ -7188,6 +7250,11 @@ begin
       // Unfreezing
       if ContinueWithLem and (LemUnfreezingTimer <> 0) then
         UpdateUnfreezingTimer(CurrentLemming);
+
+      // Balloon Pop
+      if ContinueWithLem and (LemBalloonPopTimer <> 0) then
+        UpdateBalloonPopTimer(CurrentLemming);
+      //OutputDebugString(PChar(IntToStr(CurrentLemming.LemBalloonPopTimer)));
 
       // Let lemmings move
       if ContinueWithLem then
