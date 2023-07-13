@@ -373,7 +373,9 @@ begin
       DrawLemmingParticles(LemmingList[i]);
       fLayers.fIsEmpty[rlParticles] := False;
     end;
+
     DrawLemmingCountdown(LemmingList[i]);
+    DrawBalloonPop(LemmingList[i]);
 
     ////hotbookmark - not ready yet, but this is the place to call it from
     //DrawVisualSFXLemmings(LemmingList[i]);
@@ -386,8 +388,6 @@ begin
 
     if LemmingList[i].LemAction = baUnfreezing then
       DrawUnfreezingOverlay(LemmingList[i]);
-
-    DrawBalloonPop(LemmingList[i]);
   end;
 
   for i := 0 to LemmingList.Count-1 do

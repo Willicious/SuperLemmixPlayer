@@ -1918,11 +1918,19 @@ begin
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
-      if L.LemIsTimebomber then Transition(L, baTimebombFinish)
+      if L.LemAction = baBallooning then
+        begin
+          L.LemBalloonPopTimer := 1;
+          CueSoundEffect(SFX_BALLOON_POP, L.Position);
+        end;
+
+      if L.LemIsTimebomber then
+        Transition(L, baTimebombFinish)
       else
         Transition(L, baExploding)
     end else begin
-      if L.LemIsTimebomber then Transition(L, baTimebombing)
+      if L.LemIsTimebomber then
+        Transition(L, baTimebombing)
       else
         Transition(L, baOhnoing)
     end;
@@ -1941,6 +1949,12 @@ begin
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
+      if L.LemAction = baBallooning then
+        begin
+          L.LemBalloonPopTimer := 1;
+          CueSoundEffect(SFX_BALLOON_POP, L.Position);
+        end;
+
       if not UserSetNuking then
         Transition(L, baFreezerExplosion);
     end else begin
@@ -2332,12 +2346,14 @@ begin
     end;
   end;
 
-  // hotbookmark - not sure why, but the balloon pop timer isn't updating for Walkers, Jumpers or Shimmyers
-  if (NewSkill in [baToWalking, baJumping, baShimmying, baExploding, baFreezing])
-    and (L.LemAction = baBallooning) then
+  if L.LemAction = baBallooning then
   begin
-    L.LemBalloonPopTimer := 1;
-    CueSoundEffect(SFX_BALLOON_POP, L.Position);
+    if (NewSkill in [baToWalking, baJumping, baShimmying]) then
+    begin
+      // Needs to be 2 because timer gets updated on same frame for these actions
+      L.LemBalloonPopTimer := 2;
+      CueSoundEffect(SFX_BALLOON_POP, L.Position);
+    end;
   end;
 
   // Special behavior of permament skills.
@@ -7254,7 +7270,6 @@ begin
       // Balloon Pop
       if ContinueWithLem and (LemBalloonPopTimer <> 0) then
         UpdateBalloonPopTimer(CurrentLemming);
-      //OutputDebugString(PChar(IntToStr(CurrentLemming.LemBalloonPopTimer)));
 
       // Let lemmings move
       if ContinueWithLem then
