@@ -73,7 +73,8 @@ const
   SFX_TIMEUP = 'timeup';
   SFX_SPEAR_HIT = 'spearhit';
   SFX_LASER = 'laser';
-  //SFX_BALLOON_POP = 'balloon_pop';
+  SFX_BALLOON_INFLATE = 'balloon';
+  SFX_BALLOON_POP = 'balloonpop';
 
 resourcestring
   SProgramName = 'SuperLemmix Player';

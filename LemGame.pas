@@ -1892,6 +1892,9 @@ begin
                      L.LemLaserRemainTime := 10;
                      CueSoundEffect(SFX_LASER, L.Position);
                     end;
+    baBallooning :begin
+                    CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
+                  end;
   end;
 end;
 
