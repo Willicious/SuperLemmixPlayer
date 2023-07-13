@@ -8,14 +8,14 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000010
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 384
- HEIGHT 160
+ HEIGHT 232
  START_X 192
- START_Y 80
+ START_Y 144
  THEME orig_crystal
  
 #         Level stats           
@@ -23,358 +23,177 @@
  LEMMINGS 200
  SAVE_REQUIREMENT 199
  TIME_LIMIT 180
- MAX_SPAWN_INTERVAL 102
+ MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-   WALKER 10
-   JUMPER 10
-   SHIMMIER 10
-   FLOATER 10
-   TIMEBOMBER 10
-   BOMBER 10
-   FREEZER 10
-   BUILDER 10
-   SPEARER 10
-   GRENADER 10
-   LASERER 10
-   MINER 10
-   CLONER 10
-   BALLOONER 10
+   WALKER 50
+   JUMPER 50
+   SHIMMIER 50
+   FLOATER 50
+   TIMEBOMBER 50
+   BOMBER 50
+   FREEZER 50
+   BUILDER 50
+   SPEARER 50
+   GRENADER 50
+   LASERER 50
+   MINER 50
+   CLONER 50
+   BALLOONER 50
  $END 
  
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_crystal
+   STYLE orig_marble
    PIECE window
-   X 165
-   Y 102
+   X 234
+   Y 164
    NO_OVERWRITE
+   FLOATER 
  $END
  
  $GADGET
-   STYLE orig_crystal
-   PIECE exit_vortex
+   STYLE orig_marble
+   PIECE exit
    X 168
-   Y 33
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_crystal
-   PIECE trap_03
-   X 144
-   Y 59
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_crystal
-   PIECE water
-   X 309
-   Y 26
-   WIDTH 64
-   HEIGHT 16
+   Y 75
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
-   PIECE teleporter
-   X 206
-   Y 5
+   PIECE window
+   X 106
+   Y 164
    NO_OVERWRITE
-   PAIRING 0
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE receiver
-   X 30
-   Y 88
-   NO_OVERWRITE
-   PAIRING 0
- $END
- 
- $GADGET
-   STYLE default
-   PIECE updraft
-   X 52
-   Y 44
-   WIDTH 32
-   HEIGHT 16
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE default
-   PIECE updraft
-   X 52
-   Y 28
-   WIDTH 32
-   HEIGHT 16
-   NO_OVERWRITE
- $END
- 
- 
-#        Terrain groups         
-# ----------------------------- 
- $TERRAINGROUP
-   NAME Group-634027990
-   
-   $TERRAIN
-     STYLE orig_crystal
-     PIECE line_03
-     X 94
-     Y 79
-     ONE_WAY
-   $END
-   
-   $TERRAIN
-     STYLE orig_crystal
-     PIECE line_03
-     X 94
-     Y 81
-     FLIP_HORIZONTAL
-     ONE_WAY
-   $END
-   
-   $TERRAIN
-     STYLE orig_crystal
-     PIECE line_03
-     X 94
-     Y 83
-     FLIP_VERTICAL
-     ONE_WAY
-   $END
-   
+   GLIDER 
  $END
  
  
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_02
-   X 114
-   Y 146
+   STYLE orig_marble
+   PIECE structure_04
+   X 11
+   Y 126
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_03
-   X 212
-   Y 146
+   STYLE orig_marble
+   PIECE structure_04
+   X 325
+   Y 126
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 159
-   Y 146
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group-634027990
-   X 94
-   Y 79
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group-634027990
-   X 258
-   Y 79
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group-634027990
-   X 271
-   Y 66
+   STYLE orig_marble
+   PIECE pillar_02
+   X 341
+   Y 46
    ROTATE
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_02
-   X 127
-   Y 116
+   STYLE orig_marble
+   PIECE pillar_02
+   X 27
+   Y 46
+   ROTATE
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_01
-   X 223
-   Y 116
+   STYLE orig_marble
+   PIECE pillar_02
+   X -1
+   Y 216
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 97
-   Y 116
+   STYLE orig_marble
+   PIECE pillar_02
+   X 79
+   Y 216
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_02
-   X 66
-   Y 85
+   STYLE orig_marble
+   PIECE pillar_02
+   X 159
+   Y 216
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_01
-   X 285
-   Y 85
+   STYLE orig_marble
+   PIECE pillar_02
+   X 239
+   Y 216
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 254
-   Y 116
+   STYLE orig_marble
+   PIECE pillar_02
+   X 319
+   Y 216
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 348
-   Y 53
+   STYLE orig_marble
+   PIECE pillar_02
+   X 399
+   Y 144
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_02
-   X 286
-   Y 53
+   STYLE orig_marble
+   PIECE steps_01
+   X 218
+   Y 71
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 318
-   Y 83
+   STYLE orig_marble
+   PIECE bar_03
+   X 170
+   Y 99
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 256
-   Y 53
+   STYLE orig_marble
+   PIECE pillar_02
+   X 341
+   Y -34
+   ROTATE
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 232
-   Y 53
+   STYLE orig_marble
+   PIECE pillar_02
+   X 27
+   Y -34
+   ROTATE
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 36
-   Y 85
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 36
-   Y 55
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_01
-   X 67
-   Y 54
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 97
-   Y 54
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_03
-   X 117
-   Y 54
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 26
-   Y -2
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 82
-   Y -2
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 138
-   Y -2
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 202
-   Y -2
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 258
-   Y -2
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 298
-   Y -2
+   STYLE orig_marble
+   PIECE bar_03
+   X 140
+   Y 99
    ONE_WAY
  $END
  

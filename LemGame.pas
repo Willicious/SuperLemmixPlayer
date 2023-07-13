@@ -4312,6 +4312,17 @@ begin
       Exit;
     end;
 
+  if (L.LemAction = baBallooning) and (L.LemY < 30) then
+    begin
+      //ballooners bob around at the top infinitely
+      Inc(L.LemY, 3);
+
+      //balloons pop on ceiling
+//      L.LemBalloonPopTimer := 1;
+//      CueSoundEffect(SFX_BALLOON_POP, L.Position);
+//      Transition(L, baFalling);
+    end;
+
   if (L.LemY <= 0) then
     begin
       if not L.LemHasTurned then //prevents infinite turning
@@ -5983,26 +5994,107 @@ begin
 end;
 
 function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
-begin
-  Result := True;
+var
+YChecks: Integer;
+XChecks: Integer;
 
-  if L.LemPhysicsFrame >= 9 then
-    Dec(L.LemY);
-  if L.LemPhysicsFrame in [10, 12, 14, 16] then
-  begin
-    if L.LemDX = -1 then
-      Dec(L.LemX)
-    else
-      Inc(L.LemX);
-  end;
-
-  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY, (3 div 2));
-
-  if HasPixelAt(L.LemX, L.LemY - 30) then
+  procedure PopBalloon;
   begin
     L.LemBalloonPopTimer := 1;
     CueSoundEffect(SFX_BALLOON_POP, L.Position);
     Transition(L, baFalling);
+  end;
+begin
+  Result := True;
+
+  if L.LemPhysicsFrame >= 9 then
+  begin
+    Dec(L.LemY);
+
+    if L.LemPhysicsFrame in [10, 12, 14, 16] then
+    begin
+      if L.LemDX = -1 then
+        Dec(L.LemX)
+      else
+        Inc(L.LemX);
+    end;
+
+    // Move upwards faster in an updraft
+    for YChecks := 0 to 30 do
+    begin
+      if HasTriggerAt(L.LemX, L.LemY - YChecks, trUpdraft) then
+        Dec(L.LemY, (3 div 2));
+    end;
+
+    // Bounce off terrain and turn around
+    for YChecks := 15 to 28 do
+    begin
+      for XChecks := 4 to 7 do
+      begin
+        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
+        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
+        then
+          TurnAround(L);
+      end;
+    end;
+
+    // Pop the balloon
+    for XChecks := -4 to 4 do
+    begin
+      for YChecks := 29 to 30 do
+      begin
+        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
+        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
+        and not HasPixelAt(L.LemX, L.LemY) then
+          PopBalloon;
+      end;
+
+      for YChecks := 11 to 14 do
+      begin
+        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
+        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
+        and not HasPixelAt(L.LemX, L.LemY) then
+          PopBalloon;
+      end;
+    end;
+
+    // Hoist or Walk onto terrain at lem position
+    for XChecks := 0 to 1 do
+    begin
+      for YChecks := 4 to 10 do
+      begin
+        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
+        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
+        //and not HasPixelAt(L.LemX, L.LemY) then
+        then begin
+          if L.LemDX > 0 then
+            Inc(L.LemX)
+          else
+            Dec(L.LemX);
+
+          Dec(L.LemY, 2);
+          PopBalloon;
+          Transition(L, baHoisting);
+        end;
+      end;
+
+      for YChecks := 0 to 3 do
+      begin
+        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
+        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
+        //and not HasPixelAt(L.LemX, L.LemY) then
+        then begin
+          if L.LemDX > 0 then
+            Inc(L.LemX)
+          else
+            Dec(L.LemX);
+
+          Dec(L.LemY, 2);
+          PopBalloon;
+          Transition(L, baWalking);
+        end;
+      end;
+    end;
   end;
 end;
 

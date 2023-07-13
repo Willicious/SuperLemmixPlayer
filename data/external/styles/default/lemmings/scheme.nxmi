@@ -243,7 +243,7 @@ $ANIMATIONS
     $END
 
     $LEFT
-      FOOT_X 9
+      FOOT_X 8
       FOOT_Y 30
     $END
   $END
