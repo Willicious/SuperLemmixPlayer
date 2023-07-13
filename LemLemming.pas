@@ -78,6 +78,7 @@ type
     LemFreezerExplosionTimer      : Integer; // 0 unless slowfreeze
     LemFreezingTimer              : Integer; // 8 downto 0
     LemUnfreezingTimer            : Integer; // 12 downto 0
+    LemBalloonPopTimer            : Integer; // 1 single frame
     LemDisarmingFrames            : Integer;
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
@@ -299,6 +300,7 @@ begin
   LemFreezerExplosionTimer := Source.LemFreezerExplosionTimer;
   LemFreezingTimer := Source.LemFreezingTimer;
   LemUnfreezingTimer := Source.LemUnfreezingTimer;
+  LemBalloonPopTimer := Source.LemBalloonPopTimer;
   LemDisarmingFrames := Source.LemDisarmingFrames;
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
