@@ -2861,7 +2861,7 @@ end;
 
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baBallooning,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
                baJumping, baLasering, baSpearing, baGrenading, baDangling, baLooking];
@@ -5996,7 +5996,7 @@ begin
       Inc(L.LemX);
   end;
 
-  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY, 2);
+  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY, (3 div 2));
 
   if HasPixelAt(L.LemX, L.LemY - 30) then
   begin
