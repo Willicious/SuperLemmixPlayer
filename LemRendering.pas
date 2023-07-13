@@ -1338,6 +1338,38 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawShimmierShadow(L: TLemming);
+var
+  FrameCount: Integer;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
+const
+  MAX_FRAME_COUNT = 2000;
+begin
+  fLayers.fIsEmpty[rlLowShadows] := false;
+  FrameCount := 0;
+  LemPosArray := nil;
+
+  SetLowShadowPixel(L.LemX, L.LemY - 1);
+
+  // We simulate as long as the lemming is reaching, shimmying or falling
+  while (FrameCount < MAX_FRAME_COUNT)
+    and Assigned(L)
+    and (L.LemAction in [baReaching, baShimmying, baFalling]) do
+  begin
+    Inc(FrameCount);
+
+    if Assigned(LemPosArray) then
+      for i := 0 to Length(LemPosArray[0]) do
+      begin
+        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+      end;
+
+    LemPosArray := fRenderInterface.SimulateLem(L);
+  end;
+end;
+
 procedure TRenderer.DrawBuilderShadow(L: TLemming);
 var
   i: Integer;
