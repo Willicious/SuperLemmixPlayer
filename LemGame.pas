@@ -1715,6 +1715,14 @@ begin
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
+    if L.LemAction = baBallooning then
+    begin
+      if L.LemDx < 0 then
+        Dec(L.LemX, 2)
+      else
+        Inc(L.LemX);
+    end;
+
     if L.LemAction <> baSwimming then // for Swimming it's set in HandleSwimming as there is no single universal value
     begin
       L.LemFallen := 1;
@@ -1904,7 +1912,7 @@ begin
   if L.LemExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
+                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
       if L.LemIsTimebomber then Transition(L, baTimebombFinish)
@@ -1927,7 +1935,7 @@ begin
   if L.LemFreezerExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
+                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
       if not UserSetNuking then
@@ -2572,7 +2580,7 @@ end;
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
-               baStacking, baBashing, baFencing, baMining, baDigging,
+               baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
                baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2627,7 +2635,7 @@ const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping, baDrowning,
-               baSplatting, baExiting, baSleeping];
+               baSplatting, baExiting, baSleeping, baBallooning];
 begin
   Result := (not (L.LemAction in ActionSet));
 end;
@@ -2852,7 +2860,7 @@ function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baClimbing,
                baStacking, baBashing, baFencing, baMining, baDigging, baLasering,
-               baDangling, baLooking];
+               baDangling, baLooking, baBallooning];
 var
   CopyL: TLemming;
   i: Integer;
@@ -2910,7 +2918,7 @@ end;
 function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
-               baShrugging, baPlatforming, baStacking, baFencing,
+               baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
                baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -5958,7 +5966,6 @@ end;
 function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
 begin
   Result := True;
-  OutputDebugString(PChar(IntToStr(L.LemPhysicsFrame)));
 
   if L.LemPhysicsFrame >= 9 then
     Dec(L.LemY);
