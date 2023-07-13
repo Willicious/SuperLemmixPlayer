@@ -331,6 +331,7 @@ type
     function UpdateFreezerExplosionTimer(L: TLemming): Boolean;
     procedure UpdateFreezingTimer(L: TLemming);
     procedure UpdateUnfreezingTimer(L: TLemming);
+    procedure UpdateBalloonPopTimer(L: TLemming);
     procedure UpdateGadgets;
 
     procedure UpdateProjectiles;
@@ -1951,6 +1952,12 @@ begin
     Dec(L.LemUnfreezingTimer);
 end;
 
+procedure TLemmingGame.UpdateBalloonPopTimer(L: TLemming);
+begin
+  if L.LemBalloonPopTimer > 0 then
+    Dec(L.LemBalloonPopTimer);
+end;
+
 procedure TLemmingGame.CheckForGameFinished;
 begin
   if fGameFinished then
@@ -2312,6 +2319,14 @@ begin
       // unless the Lem will fall down (which is handles already in Transition)
       if HasPixelAt(L.LemX, L.LemY) then Dec(L.LemX, L.LemDx);
     end;
+  end;
+
+  // hotbookmark - not sure why, but the balloon pop timer isn't updating for Walkers, Jumpers or Shimmyers
+  if (NewSkill in [baToWalking, baJumping, baShimmying, baExploding, baFreezing])
+    and (L.LemAction = baBallooning) then
+  begin
+    L.LemBalloonPopTimer := 1;
+    CueSoundEffect(SFX_BALLOON_POP, L.Position);
   end;
 
   // Special behavior of permament skills.
@@ -5958,7 +5973,11 @@ begin
   if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY, 2);
 
   if HasPixelAt(L.LemX, L.LemY - 30) then
+  begin
+    L.LemBalloonPopTimer := 1;
+    CueSoundEffect(SFX_BALLOON_POP, L.Position);
     Transition(L, baFalling);
+  end;
 end;
 
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
@@ -7221,6 +7240,11 @@ begin
       // Unfreezing
       if ContinueWithLem and (LemUnfreezingTimer <> 0) then
         UpdateUnfreezingTimer(CurrentLemming);
+
+      // Balloon Pop
+      if ContinueWithLem and (LemBalloonPopTimer <> 0) then
+        UpdateBalloonPopTimer(CurrentLemming);
+      //OutputDebugString(PChar(IntToStr(CurrentLemming.LemBalloonPopTimer)));
 
       // Let lemmings move
       if ContinueWithLem then
