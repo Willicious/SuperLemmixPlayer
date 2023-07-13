@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x000000000000000C
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,20 +25,22 @@
  TIME_LIMIT 180
  MAX_SPAWN_INTERVAL 102
  
-  $SKILLSET 
-    WALKER 10
-    JUMPER 10
-	SHIMMIER 10
-    FLOATER 10
-    TIMEBOMBER 10
-	BOMBER 10
-    FREEZER 10
-    BALLOONER 10
-    BUILDER 10
-    SPEARER 10
-    GRENADER 10
-    LASERER 10
-  $END 
+ $SKILLSET 
+   WALKER 10
+   JUMPER 10
+   SHIMMIER 10
+   FLOATER 10
+   TIMEBOMBER 10
+   BOMBER 10
+   FREEZER 10
+   BUILDER 10
+   SPEARER 10
+   GRENADER 10
+   LASERER 10
+   MINER 10
+   CLONER 10
+   BALLOONER 10
+ $END 
  
 #     Interactive objects       
 # ----------------------------- 
@@ -47,6 +49,70 @@
    PIECE window
    X 165
    Y 102
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit_vortex
+   X 168
+   Y 33
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE trap_03
+   X 144
+   Y 59
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 309
+   Y 26
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE teleporter
+   X 206
+   Y 5
+   NO_OVERWRITE
+   PAIRING 0
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE receiver
+   X 30
+   Y 88
+   NO_OVERWRITE
+   PAIRING 0
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 52
+   Y 44
+   WIDTH 32
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 52
+   Y 28
+   WIDTH 32
+   HEIGHT 16
    NO_OVERWRITE
  $END
  

@@ -177,8 +177,9 @@ type
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
     procedure DrawJumperShadow(L: TLemming);
-    procedure DrawShimmierShadow(L: TLemming);
+    procedure DrawBalloonerShadow(L: TLemming);
     procedure DrawGliderShadow(L: TLemming);
+    procedure DrawShimmierShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
@@ -957,7 +958,7 @@ const
   PROJECTION_STATES = [baWalking, baAscending, baDigging, baClimbing, baHoisting,
                        baBuilding, baBashing, baMining, baFalling, baFloating,
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
-                       baFixing, baFencing, baReaching, baShimmying, baJumping,
+                       baFixing, baFencing, baReaching, baShimmying, baJumping, baBallooning,
                        baDehoisting, baSliding, baDangling, baLasering, baLooking];
 begin
   // Copy L to simulate the path
@@ -1020,6 +1021,12 @@ begin
         DrawJumperShadow(CopyL);
       end;
 
+    spbBallooner:
+      if not DoProjection then
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baBallooning);
+        DrawBalloonerShadow(CopyL);
+      end;
 
     spbShimmier:
       if not DoProjection then
@@ -1259,7 +1266,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawShimmierShadow(L: TLemming);
+procedure TRenderer.DrawBalloonerShadow(L: TLemming);
 var
   FrameCount: Integer;
   LemPosArray: TArrayArrayInt;
@@ -1268,26 +1275,28 @@ const
   MAX_FRAME_COUNT = 2000;
 begin
   fLayers.fIsEmpty[rlLowShadows] := false;
+  fLayers.fIsEmpty[rlHighShadows] := false;
   FrameCount := 0;
   LemPosArray := nil;
 
   SetLowShadowPixel(L.LemX, L.LemY - 1);
 
-  // We simulate as long as the lemming is either reaching or shimmying
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
-    and (L.LemAction in [baReaching, baShimmying]) do
+    // We simulate as long as the lemming is ballooning, plus any associated actions thereafter
+    and (L.LemAction in [baBallooning, baFalling, baGliding, baFloating]) do
   begin
     Inc(FrameCount);
+
+    LemPosArray := fRenderInterface.SimulateLem(L);
 
     if Assigned(LemPosArray) then
       for i := 0 to Length(LemPosArray[0]) do
       begin
         SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
         if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
       end;
-
-    LemPosArray := fRenderInterface.SimulateLem(L);
   end;
 end;
 
