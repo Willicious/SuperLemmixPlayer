@@ -181,6 +181,7 @@ type
     fUnfreezingOverlay      : TBitmap32;
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
+    fBalloonPopBitmap       : TBitmap32;
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -208,6 +209,7 @@ type
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
+    property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
     property HasZombieColor: Boolean read fHasZombieColor;
@@ -402,6 +404,7 @@ var
   TempBitmap: TBitmap32;
   iAnimation: Integer;
   MLA: TMetaLemmingAnimation;
+  BalloonPop, BalloonPopGraphic, CustomBalloonPopGraphic: String;
   Freeze, Unfreeze: String;
   FreezingOverlay, CustomFreezingOverlay: String;
   UnfreezingOverlay, CustomUnfreezingOverlay: String;
@@ -505,6 +508,9 @@ begin
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
 
+    fBalloonPopBitmap.DrawMode := dmBlend;
+    fBalloonPopBitmap.CombineMode := cmMerge;
+
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
@@ -540,6 +546,18 @@ begin
       UpscalePieces;
     end;
 
+    // Load the balloon pop graphic
+    BalloonPop := 'balloon_pop.png';
+    BalloonPopGraphic := MetaSrcFolder + BalloonPop;
+    CustomBalloonPopGraphic := ImgSrcFolder + BalloonPop;
+
+    if FileExists(CustomBalloonPopGraphic) then
+      TPngInterface.LoadPngFile(CustomBalloonPopGraphic, fBalloonPopBitmap)
+    else begin
+      TPngInterface.LoadPngFile(BalloonPopGraphic, fBalloonPopBitmap);
+      UpscalePieces;
+    end;
+
     fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
     fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
     fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
@@ -561,6 +579,7 @@ begin
   fUnfreezingOverlay.Clear;
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
+  fBalloonPopBitmap.Clear;
   fHasZombieColor := false;
   fHasNeutralColor := false;
   fTheme := nil;
@@ -577,6 +596,7 @@ begin
   fUnfreezingOverlay := TBitmap32.Create;
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
+  fBalloonPopBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -588,6 +608,7 @@ begin
   fUnfreezingOverlay.Free;
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
+  fBalloonPopBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;
 end;

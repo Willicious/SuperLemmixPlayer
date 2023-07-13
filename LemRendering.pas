@@ -48,7 +48,7 @@ type
     fDisableBackground  : Boolean;
     fTransparentBackground: Boolean;
 
-    fLaserGraphic: TBitmap32;
+    fLaserGraphic       : TBitmap32;
 
     fPhysicsMap         : TBitmap32;
     fGrenadeImage       : TBitmap32;
@@ -173,6 +173,7 @@ type
     procedure DrawLemmingParticles(L: TLemming);
     procedure DrawFreezingOverlay(L: TLemming);
     procedure DrawUnfreezingOverlay(L: TLemming);
+    procedure DrawBalloonPop(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
     procedure DrawJumperShadow(L: TLemming);
@@ -385,6 +386,8 @@ begin
 
     if LemmingList[i].LemAction = baUnfreezing then
       DrawUnfreezingOverlay(LemmingList[i]);
+
+    DrawBalloonPop(LemmingList[i]);
   end;
 
   for i := 0 to LemmingList.Count-1 do
@@ -746,6 +749,25 @@ begin
     fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
   else
     fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
+end;
+
+procedure TRenderer.DrawBalloonPop(L: TLemming);
+var
+  NewAction: TBasicLemmingAction;
+  FrameRect: TRect;
+begin
+  if L.LemBalloonPopTimer > 0 then
+  begin
+    FrameRect.Left := 0;
+    FrameRect.Right := FrameRect.Left + (48 * ResMod);
+    FrameRect.Top := 0;
+    FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
+
+    if L.LemDX < 0 then      //in front of terrain, and behind all lems except Freezers
+      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
+    else
+      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
+  end;
 end;
 
 //This code is used (or not) by Nuke, Bomber, Freezer and Timebomber
