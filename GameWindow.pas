@@ -639,7 +639,10 @@ begin
     if GameParams.ClassicMode then
       Game.CancelReplayAfterSkip := true;
 
-    if not RewindTimer.Enabled then
+    // ensures that rendering has caught up before the next backwards skip is performed
+    if IsHyperSpeed then
+      RewindTimer.Enabled := False
+    else
       RewindTimer.Enabled := True;
 
   end else
