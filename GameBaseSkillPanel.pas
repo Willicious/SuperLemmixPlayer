@@ -1615,7 +1615,11 @@ var
   i: TSkillPanelButton;
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
-  if fGameWindow.IsHyperSpeed then Exit;
+
+  // Although we don't want to attempt game control whilst in HyperSpeed,
+  // we do want the Rewind and Turbo keys to respond
+  if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
+    Exit;
 
   // Get pressed button
   aButton := spbNone;
@@ -1729,7 +1733,7 @@ begin
 
         if not Game.RewindPressed then
           Game.fRewindPressed := True
-        else if Game.RewindPressed then
+        else
           Game.fRewindPressed := False;
       end;
     spbRestart:

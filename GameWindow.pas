@@ -631,7 +631,8 @@ begin
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
   Hyper := IsHyperSpeed;
 
-  if Game.RewindPressed then //hotbookmark
+  // Rewind mode
+  if Game.RewindPressed then
   begin
     SkillPanel.DrawButtonSelector(spbRewind, True);
 
@@ -641,7 +642,7 @@ begin
     if not RewindTimer.Enabled then
       RewindTimer.Enabled := True;
 
-  end else if not Game.RewindPressed then
+  end else
   begin
     SkillPanel.DrawButtonSelector(spbRewind, False);
 
@@ -649,14 +650,15 @@ begin
       RewindTimer.Enabled := False;
   end;
 
-  if Game.TurboPressed then //hotbookmark
+  // Turbo mode
+  if Game.TurboPressed then
   begin
     SkillPanel.DrawTurboHighlight;
 
     if not TurboTimer.Enabled then
       TurboTimer.Enabled := True;
 
-  end else if not Game.TurboPressed then
+  end else
   begin
     SkillPanel.DrawTurboHighlight;
 
@@ -664,6 +666,7 @@ begin
       TurboTimer.Enabled := False;
   end;
 
+  // Superlemming mode
   if Game.IsSuperlemming then
   begin
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeSuper);
@@ -673,7 +676,7 @@ begin
 
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
 
-  // relax CPU
+  // Relax CPU
   if not (Hyper or Fast or Game.IsSuperlemming) then
     Sleep(1);
 
@@ -1414,12 +1417,12 @@ begin
     Exit;
   end;
 
-  if not Game.Playing then
-    Exit;
+  if not Game.Playing then Exit;
 
-  // this is quite important: no gamecontrol if going fast
-  if IsHyperSpeed then
-     Exit;
+  // Although we don't want to attempt game control whilst in HyperSpeed,
+  // we do want the Rewind and Turbo keys to respond
+  if IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
+    Exit;
 
   with Game do
   begin
@@ -1545,7 +1548,7 @@ begin
 
                     if not Game.RewindPressed then
                       Game.fRewindPressed := True
-                    else if Game.RewindPressed then
+                    else
                       Game.fRewindPressed := False;
                   end;
       lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
