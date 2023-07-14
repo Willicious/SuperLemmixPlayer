@@ -1422,10 +1422,10 @@ begin
 
   if not Game.Playing then Exit;
 
-  // Although we don't want to attempt game control whilst in HyperSpeed,
-  // we do want the Rewind and Turbo keys to respond
-  if IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
-    Exit;
+//  // Although we don't want to attempt game control whilst in HyperSpeed,
+//  // we do want the Rewind and Turbo keys to respond
+//  if IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
+//    Exit;
 
   with Game do
   begin
