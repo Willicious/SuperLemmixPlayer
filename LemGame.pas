@@ -6735,7 +6735,7 @@ begin
   case CurrentIteration of
     15:
       //prevents double-triggering the sound when Rewinding to the start
-      if not IsBackstepping or not RewindPressed then
+      if not (IsBackstepping or RewindPressed) then
       begin
         //fRenderer.VisualSFXTimer := 17;
         if UseZombieSound then

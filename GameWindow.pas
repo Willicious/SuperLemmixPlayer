@@ -558,14 +558,17 @@ end;
 
 procedure TGameWindow.DoRewind(Sender: TObject);
 begin
-  //start-of-level check needs to give a few frames' grace
-  if Game.CurrentIteration <= 10 then
+  //start-of-level check needs to give a few frames' grace to prevent infinite rewinding
+  if Game.CurrentIteration <= 8 then
   begin
     RewindTimer.Enabled := False;
     Game.RewindPressed := False;
     Game.fIsBackstepping := False;
-  end else
-    GoToSaveState(Game.CurrentIteration - 3); //hotbookmark
+    GameSpeed := gspNormal; //return speed to Normal at start of game
+  end else begin
+    GoToSaveState(Game.CurrentIteration - 3);
+    GameSpeed := gspPause; //prevents forwards-motion during Rewind mode
+  end;
 end;
 
 procedure TGameWindow.DoTurbo(Sender: TObject);
@@ -644,13 +647,9 @@ begin
       RewindTimer.Enabled := False
     else
       RewindTimer.Enabled := True;
-
-  end else
-  begin
+  end else begin
     SkillPanel.DrawButtonSelector(spbRewind, False);
-
-    if RewindTimer.Enabled then
-      RewindTimer.Enabled := False;
+    RewindTimer.Enabled := False;
   end;
 
   // Turbo mode
@@ -1307,7 +1306,7 @@ begin
   Img.OnMouseUp := Img_MouseUp;
 
   RewindTimer := TTimer.Create(Self);
-  RewindTimer.Interval := 59; // hotbookmark
+  RewindTimer.Interval := 60; // hotbookmark
   RewindTimer.OnTimer := DoRewind;
 
   TurboTimer := TTimer.Create(Self);
