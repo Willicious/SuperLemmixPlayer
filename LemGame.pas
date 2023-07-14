@@ -274,7 +274,7 @@ type
       function HandlePoisonSwim(L: TLemming): Boolean;
       function HandleRadiation(L: TLemming): Boolean;
       function HandleSlowfreeze(L: TLemming): Boolean;
-      function HandleTrampolene(L: TLemming): Boolean;
+      //function HandleTrampolene(L: TLemming): Boolean;
 
 
     function CheckForOverlappingField(L: TLemming): Boolean;
@@ -331,7 +331,7 @@ type
     function UpdateFreezerExplosionTimer(L: TLemming): Boolean;
     procedure UpdateFreezingTimer(L: TLemming);
     procedure UpdateUnfreezingTimer(L: TLemming);
-    procedure UpdateBalloonPopTimer(L: TLemming);
+    //procedure UpdateBalloonPopTimer(L: TLemming);
     procedure UpdateGadgets;
 
     procedure UpdateProjectiles;
@@ -358,7 +358,7 @@ type
     function HandleBashing(L: TLemming): Boolean;
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
-    function HandleBallooning(L: TLemming): Boolean;
+    //function HandleBallooning(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
     function HandleSplatting(L: TLemming): Boolean;
     function HandleExiting(L: TLemming): Boolean;
@@ -408,7 +408,7 @@ type
     function MayAssignClimber(L: TLemming): Boolean;
     function MayAssignFloaterGlider(L: TLemming): Boolean;
     function MayAssignSwimmer(L: TLemming): Boolean;
-    function MayAssignBallooner(L: TLemming) : Boolean;
+    //function MayAssignBallooner(L: TLemming) : Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignTimebomber(L: TLemming): Boolean;
@@ -626,11 +626,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..24] of TBasicLemmingAction =
+  ActionListArray: array[0..23] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping, baSliding, baLasering, baSpearing, baGrenading, baBallooning);
+             baJumping, baSliding, baLasering, baSpearing, baGrenading); //, baBallooning);
 
 
 function CheckRectCopy(const A, B: TRect): Boolean;
@@ -1115,7 +1115,7 @@ begin
   LemmingMethods[baSpearing]      := HandleThrowing;
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
-  LemmingMethods[baBallooning]    := HandleBallooning;
+  //LemmingMethods[baBallooning]    := HandleBallooning;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1157,7 +1157,7 @@ begin
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
-  NewSkillMethods[baBallooning]   := MayAssignBallooner;
+  //NewSkillMethods[baBallooning]   := MayAssignBallooner;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1689,9 +1689,9 @@ const
     10, //42 baGrenading
     14, //43 baLooking
     12, //44 baLasering - it's, ironically, this high for rendering purposes
-    17, //45 baBallooning
-    20, //46 baSleeping
-    8   //47 baZombieWalking
+    //17, //45 baBallooning
+    20 //46 baSleeping
+    //8   //47 baZombieWalking
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1715,13 +1715,13 @@ begin
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
-    if L.LemAction = baBallooning then
-    begin
-      if L.LemDx < 0 then
-        Dec(L.LemX, 2)
-      else
-        Inc(L.LemX);
-    end;
+//    if L.LemAction = baBallooning then      //hotbookmark - why is this here again??
+//    begin
+//      if L.LemDx < 0 then
+//        Dec(L.LemX, 2)
+//      else
+//        Inc(L.LemX);
+//    end;
 
     if L.LemAction <> baSwimming then // for Swimming it's set in HandleSwimming as there is no single universal value
     begin
@@ -1892,9 +1892,9 @@ begin
                      L.LemLaserRemainTime := 10;
                      CueSoundEffect(SFX_LASER, L.Position);
                     end;
-    baBallooning :begin
-                    CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
-                  end;
+//    baBallooning :begin
+//                    CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
+//                  end;
   end;
 end;
 
@@ -1914,15 +1914,15 @@ begin
   Dec(L.LemExplosionTimer);
   if L.LemExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
-    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
+    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding, //baBallooning,
+                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
-      if L.LemAction = baBallooning then
-        begin
-          L.LemBalloonPopTimer := 1;
-          CueSoundEffect(SFX_BALLOON_POP, L.Position);
-        end;
+//      if L.LemAction = baBallooning then
+//        begin
+//          L.LemBalloonPopTimer := 1;
+//          CueSoundEffect(SFX_BALLOON_POP, L.Position);
+//        end;
 
       if L.LemIsTimebomber then
         Transition(L, baTimebombFinish)
@@ -1945,15 +1945,15 @@ begin
   Dec(L.LemFreezerExplosionTimer);
   if L.LemFreezerExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
-    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
+    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding, //baBallooning,
+                      baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
-      if L.LemAction = baBallooning then
-        begin
-          L.LemBalloonPopTimer := 1;
-          CueSoundEffect(SFX_BALLOON_POP, L.Position);
-        end;
+//      if L.LemAction = baBallooning then
+//        begin
+//          L.LemBalloonPopTimer := 1;
+//          CueSoundEffect(SFX_BALLOON_POP, L.Position);
+//        end;
 
       if not UserSetNuking then
         Transition(L, baFreezerExplosion);
@@ -1977,11 +1977,11 @@ begin
     Dec(L.LemUnfreezingTimer);
 end;
 
-procedure TLemmingGame.UpdateBalloonPopTimer(L: TLemming);
-begin
-  if L.LemBalloonPopTimer > 0 then
-    Dec(L.LemBalloonPopTimer);
-end;
+//procedure TLemmingGame.UpdateBalloonPopTimer(L: TLemming);
+//begin
+//  if L.LemBalloonPopTimer > 0 then
+//    Dec(L.LemBalloonPopTimer);
+//end;
 
 procedure TLemmingGame.CheckForGameFinished;
 begin
@@ -2346,15 +2346,15 @@ begin
     end;
   end;
 
-  if L.LemAction = baBallooning then
-  begin
-    if (NewSkill in [baToWalking, baJumping, baShimmying]) then
-    begin
-      // Needs to be 2 because timer gets updated on same frame for these actions
-      L.LemBalloonPopTimer := 2;
-      CueSoundEffect(SFX_BALLOON_POP, L.Position);
-    end;
-  end;
+//  if L.LemAction = baBallooning then
+//  begin
+//    if (NewSkill in [baToWalking, baJumping, baShimmying]) then
+//    begin
+//      // Needs to be 2 because timer gets updated on same frame for these actions
+//      L.LemBalloonPopTimer := 2;
+//      CueSoundEffect(SFX_BALLOON_POP, L.Position);
+//    end;
+//  end;
 
   // Special behavior of permament skills.
   if (NewSkill = baSliding) then L.LemIsSlider := True
@@ -2599,7 +2599,7 @@ end;
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
-               baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
+               baStacking, baBashing, baFencing, baMining, baDigging, //baBallooning,
                baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2649,15 +2649,15 @@ begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
 end;
 
-function TLemmingGame.MayAssignBallooner(L: TLemming): Boolean;
-const
-  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDangling, baVaporizing, baVinetrapping, baDrowning,
-               baSplatting, baExiting, baSleeping, baBallooning];
-begin
-  Result := (not (L.LemAction in ActionSet));
-end;
+//function TLemmingGame.MayAssignBallooner(L: TLemming): Boolean;
+//const
+//  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+//               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+//               baDangling, baVaporizing, baVinetrapping, baDrowning,
+//               baSplatting, baExiting, baSleeping, baBallooning];
+//begin
+//  Result := (not (L.LemAction in ActionSet));
+//end;
 
 function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
@@ -2861,7 +2861,7 @@ end;
 
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baBallooning,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, //baBallooning,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
                baJumping, baLasering, baSpearing, baGrenading, baDangling, baLooking];
@@ -2879,7 +2879,7 @@ function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baClimbing,
                baStacking, baBashing, baFencing, baMining, baDigging, baLasering,
-               baDangling, baLooking, baBallooning];
+               baDangling, baLooking]; //, baBallooning];
 var
   CopyL: TLemming;
   i: Integer;
@@ -2937,7 +2937,7 @@ end;
 function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
-               baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
+               baShrugging, baPlatforming, baStacking, baFencing, //baBallooning,
                baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -3745,12 +3745,12 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleTrampolene;
-begin
-  Result := True;
-
-
-end;
+//function TLemmingGame.HandleTrampolene;
+//begin
+//  Result := True;
+//
+//
+//end;
 
 procedure TLemmingGame.ApplyFreezeLemming(L: TLemming);
 var
@@ -3988,7 +3988,7 @@ var
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
                     spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer,
-                    spbSpearer, spbGrenader, spbLaserer, spbBallooner];  //Timebomber not included by choice
+                    spbSpearer, spbGrenader, spbLaserer]; //, spbBallooner];  //Timebomber not included by choice
 begin
   if fHyperSpeed then Exit;
 
@@ -4250,7 +4250,7 @@ begin
   begin
     L.LemPhysicsFrame := 0;
     // Floater, Glider and Ballooner start cycle at frame 9!
-    if L.LemAction in [baFloating, baGliding, baBallooning] then L.LemPhysicsFrame := 9;
+    if L.LemAction in [baFloating, baGliding] then L.LemPhysicsFrame := 9; //, baBallooning] then L.LemPhysicsFrame := 9;
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
@@ -4312,16 +4312,16 @@ begin
       Exit;
     end;
 
-  if (L.LemAction = baBallooning) and (L.LemY < 30) then
-    begin
-      //ballooners bob around at the top infinitely
-      Inc(L.LemY, 3);
-
-      //balloons pop on ceiling
-//      L.LemBalloonPopTimer := 1;
-//      CueSoundEffect(SFX_BALLOON_POP, L.Position);
-//      Transition(L, baFalling);
-    end;
+//  if (L.LemAction = baBallooning) and (L.LemY < 30) then
+//    begin
+//      //ballooners bob around at the top infinitely
+//      Inc(L.LemY, 3);
+//
+//      //balloons pop on ceiling
+////      L.LemBalloonPopTimer := 1;
+////      CueSoundEffect(SFX_BALLOON_POP, L.Position);
+////      Transition(L, baFalling);
+//    end;
 
   if (L.LemY <= 0) then
     begin
@@ -4373,11 +4373,11 @@ var
 begin
   Result := True;
 
-  if L.LemIsZombie then
-  begin
-    if L.LemPhysicsFrame in [0, 2] then
-      Inc(L.LemX, L.LemDx);
-  end else
+//  if L.LemIsZombie then
+//  begin
+//    if L.LemPhysicsFrame in [0, 2] then
+//      Inc(L.LemX, L.LemDx);
+//  end else
     Inc(L.LemX, L.LemDx);
 
   LemDy := FindGroundPixel(L.LemX, L.LemY);
@@ -5993,110 +5993,110 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
-var
-YChecks: Integer;
-XChecks: Integer;
-
-  procedure PopBalloon;
-  begin
-    L.LemBalloonPopTimer := 1;
-    CueSoundEffect(SFX_BALLOON_POP, L.Position);
-    Transition(L, baFalling);
-  end;
-begin
-  Result := True;
-
-  if L.LemPhysicsFrame >= 9 then
-  begin
-    Dec(L.LemY);
-
-    if L.LemPhysicsFrame in [10, 12, 14, 16] then
-    begin
-      if L.LemDX = -1 then
-        Dec(L.LemX)
-      else
-        Inc(L.LemX);
-    end;
-
-    // Move upwards faster in an updraft
-    for YChecks := 0 to 30 do
-    begin
-      if HasTriggerAt(L.LemX, L.LemY - YChecks, trUpdraft) then
-        Dec(L.LemY, (3 div 2));
-    end;
-
-    // Bounce off terrain and turn around
-    for YChecks := 15 to 28 do
-    begin
-      for XChecks := 4 to 7 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
-        then
-          TurnAround(L);
-      end;
-    end;
-
-    // Pop the balloon
-    for XChecks := -4 to 4 do
-    begin
-      for YChecks := 29 to 30 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
-        and not HasPixelAt(L.LemX, L.LemY) then
-          PopBalloon;
-      end;
-
-      for YChecks := 11 to 14 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
-        and not HasPixelAt(L.LemX, L.LemY) then
-          PopBalloon;
-      end;
-    end;
-
-    // Hoist or Walk onto terrain at lem position
-    for XChecks := 0 to 1 do
-    begin
-      for YChecks := 4 to 10 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
-        //and not HasPixelAt(L.LemX, L.LemY) then
-        then begin
-          if L.LemDX > 0 then
-            Inc(L.LemX)
-          else
-            Dec(L.LemX);
-
-          Dec(L.LemY, 2);
-          PopBalloon;
-          Transition(L, baHoisting);
-        end;
-      end;
-
-      for YChecks := 0 to 3 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
-        //and not HasPixelAt(L.LemX, L.LemY) then
-        then begin
-          if L.LemDX > 0 then
-            Inc(L.LemX)
-          else
-            Dec(L.LemX);
-
-          Dec(L.LemY, 2);
-          PopBalloon;
-          Transition(L, baWalking);
-        end;
-      end;
-    end;
-  end;
-end;
+//function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
+//var
+//YChecks: Integer;
+//XChecks: Integer;
+//
+//  procedure PopBalloon;
+//  begin
+//    L.LemBalloonPopTimer := 1;
+//    CueSoundEffect(SFX_BALLOON_POP, L.Position);
+//    Transition(L, baFalling);
+//  end;
+//begin
+//  Result := True;
+//
+//  if L.LemPhysicsFrame >= 9 then
+//  begin
+//    Dec(L.LemY);
+//
+//    if L.LemPhysicsFrame in [10, 12, 14, 16] then
+//    begin
+//      if L.LemDX = -1 then
+//        Dec(L.LemX)
+//      else
+//        Inc(L.LemX);
+//    end;
+//
+//    // Move upwards faster in an updraft
+//    for YChecks := 0 to 30 do
+//    begin
+//      if HasTriggerAt(L.LemX, L.LemY - YChecks, trUpdraft) then
+//        Dec(L.LemY, (3 div 2));
+//    end;
+//
+//    // Bounce off terrain and turn around
+//    for YChecks := 15 to 28 do
+//    begin
+//      for XChecks := 4 to 7 do
+//      begin
+//        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
+//        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
+//        then
+//          TurnAround(L);
+//      end;
+//    end;
+//
+//    // Pop the balloon
+//    for XChecks := -4 to 4 do
+//    begin
+//      for YChecks := 29 to 30 do
+//      begin
+//        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
+//        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
+//        and not HasPixelAt(L.LemX, L.LemY) then
+//          PopBalloon;
+//      end;
+//
+//      for YChecks := 11 to 14 do
+//      begin
+//        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
+//        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
+//        and not HasPixelAt(L.LemX, L.LemY) then
+//          PopBalloon;
+//      end;
+//    end;
+//
+//    // Hoist or Walk onto terrain at lem position
+//    for XChecks := 0 to 1 do
+//    begin
+//      for YChecks := 4 to 10 do
+//      begin
+//        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
+//        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
+//        //and not HasPixelAt(L.LemX, L.LemY) then
+//        then begin
+//          if L.LemDX > 0 then
+//            Inc(L.LemX)
+//          else
+//            Dec(L.LemX);
+//
+//          Dec(L.LemY, 2);
+//          PopBalloon;
+//          Transition(L, baHoisting);
+//        end;
+//      end;
+//
+//      for YChecks := 0 to 3 do
+//      begin
+//        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
+//        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
+//        //and not HasPixelAt(L.LemX, L.LemY) then
+//        then begin
+//          if L.LemDX > 0 then
+//            Inc(L.LemX)
+//          else
+//            Dec(L.LemX);
+//
+//          Dec(L.LemY, 2);
+//          PopBalloon;
+//          Transition(L, baWalking);
+//        end;
+//      end;
+//    end;
+//  end;
+//end;
 
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
@@ -7359,9 +7359,9 @@ begin
       if ContinueWithLem and (LemUnfreezingTimer <> 0) then
         UpdateUnfreezingTimer(CurrentLemming);
 
-      // Balloon Pop
-      if ContinueWithLem and (LemBalloonPopTimer <> 0) then
-        UpdateBalloonPopTimer(CurrentLemming);
+//      // Balloon Pop
+//      if ContinueWithLem and (LemBalloonPopTimer <> 0) then
+//        UpdateBalloonPopTimer(CurrentLemming);
 
       // Let lemmings move
       if ContinueWithLem then

@@ -173,11 +173,11 @@ type
     procedure DrawLemmingParticles(L: TLemming);
     procedure DrawFreezingOverlay(L: TLemming);
     procedure DrawUnfreezingOverlay(L: TLemming);
-    procedure DrawBalloonPop(L: TLemming);
+    //procedure DrawBalloonPop(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
     procedure DrawJumperShadow(L: TLemming);
-    procedure DrawBalloonerShadow(L: TLemming);
+    //procedure DrawBalloonerShadow(L: TLemming);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawShimmierShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
@@ -376,7 +376,7 @@ begin
     end;
 
     DrawLemmingCountdown(LemmingList[i]);
-    DrawBalloonPop(LemmingList[i]);
+    //DrawBalloonPop(LemmingList[i]);
 
     ////hotbookmark - not ready yet, but this is the place to call it from
     //DrawVisualSFXLemmings(LemmingList[i]);
@@ -468,14 +468,14 @@ begin
   else
     i := AnimationIndices[aLemming.LemAction, true];
 
-  // Get the alternative Walker sprite for Zombies
-  if aLemming.LemIsZombie and (aLemming.LemAction = baWalking) then
-  begin
-    if aLemming.LemDX > 0 then
-    i := AnimationIndices[baZombieWalking, false]
-  else
-    i := AnimationIndices[baZombieWalking, true];
-  end;
+//  // Get the alternative Walker sprite for Zombies
+//  if aLemming.LemIsZombie and (aLemming.LemAction = baWalking) then
+//  begin
+//    if aLemming.LemDX > 0 then
+//    i := AnimationIndices[baZombieWalking, false]
+//  else
+//    i := AnimationIndices[baZombieWalking, true];
+//  end;
 
   SrcAnim := fAni.LemmingAnimations[i];
   SrcMetaAnim := fAni.MetaLemmingAnimations[i];
@@ -752,24 +752,23 @@ begin
     fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
-procedure TRenderer.DrawBalloonPop(L: TLemming);
-var
-  NewAction: TBasicLemmingAction;
-  FrameRect: TRect;
-begin
-  if L.LemBalloonPopTimer > 0 then
-  begin
-    FrameRect.Left := 0;
-    FrameRect.Right := FrameRect.Left + (48 * ResMod);
-    FrameRect.Top := 0;
-    FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
-
-    if L.LemDX < 0 then      //in front of terrain, and behind all lems except Freezers
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
-    else
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
-  end;
-end;
+//procedure TRenderer.DrawBalloonPop(L: TLemming);
+//var
+//  FrameRect: TRect;
+//begin
+//  if L.LemBalloonPopTimer > 0 then
+//  begin
+//    FrameRect.Left := 0;
+//    FrameRect.Right := FrameRect.Left + (48 * ResMod);
+//    FrameRect.Top := 0;
+//    FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
+//
+//    if L.LemDX < 0 then      //in front of terrain, and behind all lems except Freezers
+//      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
+//    else
+//      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
+//  end;
+//end;
 
 //This code is used (or not) by Nuke, Bomber, Freezer and Timebomber
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
@@ -958,7 +957,7 @@ const
   PROJECTION_STATES = [baWalking, baAscending, baDigging, baClimbing, baHoisting,
                        baBuilding, baBashing, baMining, baFalling, baFloating,
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
-                       baFixing, baFencing, baReaching, baShimmying, baJumping, baBallooning,
+                       baFixing, baFencing, baReaching, baShimmying, baJumping, //baBallooning,
                        baDehoisting, baSliding, baDangling, baLasering, baLooking];
 begin
   // Copy L to simulate the path
@@ -1021,12 +1020,12 @@ begin
         DrawJumperShadow(CopyL);
       end;
 
-    spbBallooner:
-      if not DoProjection then
-      begin
-        fRenderInterface.SimulateTransitionLem(CopyL, baBallooning);
-        DrawBalloonerShadow(CopyL);
-      end;
+//    spbBallooner:
+//      if not DoProjection then
+//      begin
+//        fRenderInterface.SimulateTransitionLem(CopyL, baBallooning);
+//        DrawBalloonerShadow(CopyL);
+//      end;
 
     spbShimmier:
       if not DoProjection then
@@ -1266,39 +1265,39 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawBalloonerShadow(L: TLemming);
-var
-  FrameCount: Integer;
-  LemPosArray: TArrayArrayInt;
-  i: Integer;
-const
-  MAX_FRAME_COUNT = 2000;
-begin
-  fLayers.fIsEmpty[rlLowShadows] := false;
-  fLayers.fIsEmpty[rlHighShadows] := false;
-  FrameCount := 0;
-  LemPosArray := nil;
-
-  SetLowShadowPixel(L.LemX, L.LemY - 1);
-
-  while (FrameCount < MAX_FRAME_COUNT)
-    and Assigned(L)
-    // We simulate as long as the lemming is ballooning, plus any associated actions thereafter
-    and (L.LemAction in [baBallooning, baFalling, baGliding, baFloating]) do
-  begin
-    Inc(FrameCount);
-
-    LemPosArray := fRenderInterface.SimulateLem(L);
-
-    if Assigned(LemPosArray) then
-      for i := 0 to Length(LemPosArray[0]) do
-      begin
-        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
-        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
-        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
-      end;
-  end;
-end;
+//procedure TRenderer.DrawBalloonerShadow(L: TLemming);
+//var
+//  FrameCount: Integer;
+//  LemPosArray: TArrayArrayInt;
+//  i: Integer;
+//const
+//  MAX_FRAME_COUNT = 2000;
+//begin
+//  fLayers.fIsEmpty[rlLowShadows] := false;
+//  fLayers.fIsEmpty[rlHighShadows] := false;
+//  FrameCount := 0;
+//  LemPosArray := nil;
+//
+//  SetLowShadowPixel(L.LemX, L.LemY - 1);
+//
+//  while (FrameCount < MAX_FRAME_COUNT)
+//    and Assigned(L)
+//    // We simulate as long as the lemming is ballooning, plus any associated actions thereafter
+//    and (L.LemAction in [baBallooning, baFalling, baGliding, baFloating]) do
+//  begin
+//    Inc(FrameCount);
+//
+//    LemPosArray := fRenderInterface.SimulateLem(L);
+//
+//    if Assigned(LemPosArray) then
+//      for i := 0 to Length(LemPosArray[0]) do
+//      begin
+//        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+//        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+//        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+//      end;
+//  end;
+//end;
 
 procedure TRenderer.DrawGliderShadow(L: TLemming);
 var

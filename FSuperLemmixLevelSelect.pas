@@ -107,7 +107,7 @@ const // Icon indexes
     38, // Slider
     9, // Climber
     10, // Swimmer
-    46, // Ballooner
+    //46, // Ballooner
     11, // Floater
     12, // Glider
     13, // Disarmer

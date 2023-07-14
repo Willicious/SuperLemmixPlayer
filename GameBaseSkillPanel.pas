@@ -190,7 +190,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png',
+    //'empty_slot.png',
     {Skills end here}
 
     'empty_slot.png',
@@ -750,7 +750,7 @@ begin
     TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
 
     // Ballooner, Floater, Glider, Disarmer - all simple
-    DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
+    //DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
     DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 23);
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 25);
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 20);
