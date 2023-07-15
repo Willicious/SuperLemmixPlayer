@@ -1283,8 +1283,8 @@ begin
 
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
-    // We simulate as long as the lemming is ballooning, plus any associated actions thereafter
-    and (L.LemAction in [baBallooning, baFalling, baGliding, baFloating]) do
+    // We simulate as long as the lemming is ballooning
+    and (L.LemAction = baBallooning) do
   begin
     Inc(FrameCount);
 
