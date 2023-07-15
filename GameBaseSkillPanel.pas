@@ -1616,10 +1616,10 @@ var
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
 
-//  // Although we don't want to attempt game control whilst in HyperSpeed,
-//  // we do want the Rewind and Turbo keys to respond
-//  if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
-//    Exit;
+  // Although we don't want to attempt game control whilst in HyperSpeed,
+  // we do want the Rewind and Turbo keys to respond
+  if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
+    Exit;
 
   // Get pressed button
   aButton := spbNone;
