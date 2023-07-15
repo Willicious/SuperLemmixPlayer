@@ -1716,14 +1716,6 @@ begin
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
-    if L.LemAction = baBallooning then
-    begin
-      if L.LemDx < 0 then
-        Dec(L.LemX, 2)
-      else
-        Inc(L.LemX);
-    end;
-
     if L.LemAction <> baSwimming then // for Swimming it's set in HandleSwimming as there is no single universal value
     begin
       L.LemFallen := 1;
@@ -5997,18 +5989,21 @@ end;
 
 function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
 var
-YChecks: Integer;
-XChecks: Integer;
+i, XChecks, YChecks: Integer;
 begin
   Result := True;
 
   if L.LemPhysicsFrame >= 9 then
   begin
+    // Always ascend
     Dec(L.LemY);
 
-    if L.LemPhysicsFrame in [10, 12, 14, 16] then
+    // Slight diagonal drift every 2 frames
+    if (L.LemPhysicsFrame in [10, 12, 14, 16])
+    // Unless there is terrain at foot position, in which case we only ascend
+    and not HasPixelAt(L.LemX, L.LemY) then
     begin
-      if L.LemDX = -1 then
+      if L.LemDX < 0 then
         Dec(L.LemX)
       else
         Inc(L.LemX);
@@ -6021,73 +6016,32 @@ begin
         Dec(L.LemY, (3 div 2));
     end;
 
-    // Bounce off terrain and turn around
-    for YChecks := 15 to 28 do
+    // Pop the balloon when there is terrain overhead
+    for YChecks := 29 to 30 do
+    begin
+      for XChecks := -4 to 4 do
+      begin
+        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
+        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
+        and not HasPixelAt(L.LemX, L.LemY) then
+          PopBalloon(L, 1, baFalling);
+      end;
+    end;
+
+    // Bounce and turn when there is terrain at the side of the balloon
+    for YChecks := 20 to 28 do
     begin
       for XChecks := 4 to 7 do
       begin
         if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
-        then
+        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks)) then
           TurnAround(L);
       end;
     end;
 
-    // Pop the balloon
-    for XChecks := -4 to 4 do
-    begin
-      for YChecks := 29 to 30 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
-        and not HasPixelAt(L.LemX, L.LemY) then
-          PopBalloon(L, 1, baFalling);
-      end;
-
-      for YChecks := 11 to 14 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
-        and not HasPixelAt(L.LemX, L.LemY) then
-          PopBalloon(L, 1, baFalling);
-      end;
-    end;
-
-    // Hoist or Walk onto terrain at lem position
-    for XChecks := 0 to 1 do
-    begin
-      for YChecks := 4 to 10 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
-        //and not HasPixelAt(L.LemX, L.LemY) then
-        then begin
-          if L.LemDX > 0 then
-            Inc(L.LemX)
-          else
-            Dec(L.LemX);
-
-          Dec(L.LemY, 2);
-          PopBalloon(L, 1, baHoisting);
-        end;
-      end;
-
-      for YChecks := 0 to 3 do
-      begin
-        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks))
-        //and not HasPixelAt(L.LemX, L.LemY) then
-        then begin
-          if L.LemDX > 0 then
-            Inc(L.LemX)
-          else
-            Dec(L.LemX);
-
-          Dec(L.LemY, 2);
-          PopBalloon(L, 1, baWalking);
-        end;
-      end;
-    end;
+    // Walk onto terrain if there is a clear platform of at least 1px
+    if HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY - 1) then
+      PopBalloon(L, 1, baWalking);
   end;
 end;
 

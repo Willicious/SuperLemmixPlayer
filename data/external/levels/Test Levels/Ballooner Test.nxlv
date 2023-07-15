@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000012
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -22,7 +22,7 @@
 # ----------------------------- 
  LEMMINGS 200
  SAVE_REQUIREMENT 199
- TIME_LIMIT INFINITE
+ TIME_LIMIT 0
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
@@ -194,6 +194,50 @@
    PIECE bar_03
    X 140
    Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_03
+   X 169
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE pillar_02
+   X 43
+   Y 130
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE pillar_02
+   X 43
+   Y 132
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE pillar_02
+   X 325
+   Y 130
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE pillar_02
+   X 325
+   Y 132
+   ROTATE
    ONE_WAY
  $END
  
