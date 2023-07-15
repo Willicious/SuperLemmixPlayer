@@ -1351,10 +1351,10 @@ begin
 
   SetLowShadowPixel(L.LemX, L.LemY - 1);
 
-  // We simulate as long as the lemming is reaching, shimmying //or falling
+  // We simulate as long as the lemming is reaching, shimmying
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
-    and (L.LemAction in [baReaching, baShimmying]) do //, baFalling]) do
+    and (L.LemAction in [baReaching, baShimmying]) do
   begin
     Inc(FrameCount);
 
