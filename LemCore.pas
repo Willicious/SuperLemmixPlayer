@@ -88,9 +88,9 @@ type
     baGrenading,       //42
     baLooking,         //43
     baLasering,        //44
-    //baBallooning,      //45
-    baSleeping        //46
-    //baZombieWalking    //47
+    baBallooning,      //45
+    baSleeping,        //46
+    baZombieWalking    //47
   );
 
 const
@@ -106,7 +106,7 @@ type
     spbSlider,
     spbClimber,
     spbSwimmer,
-    //spbBallooner,
+    spbBallooner,
     spbFloater,
     spbGlider,
     spbDisarmer,
@@ -147,7 +147,7 @@ const
     'slider',
     'climber',
     'swimmer',
-    //'ballooner',
+    'ballooner',
     'floater',
     'glider',
     'disarmer',
@@ -175,7 +175,7 @@ const
     'sliders',
     'climbers',
     'swimmers',
-    //'ballooners',
+    'ballooners',
     'floaters',
     'gliders',
     'disarmers',
@@ -252,8 +252,8 @@ const
     baSliding,
     baSpearing,
     baGrenading,
-    baLasering
-    //baBallooning
+    baLasering,
+    baBallooning
   ];
 
 const
@@ -302,9 +302,9 @@ const
     spbGrenader,    //42
     spbNone,        //43 baLooking
     spbLaserer,     //44
-    //spbBallooner,   //45
-    spbNone        //46 baSleeping
-    //spbNone         //47 baZombieWalking
+    spbBallooner,   //45
+    spbNone,        //46 baSleeping
+    spbNone         //47 baZombieWalking
   );
 
 const
@@ -316,7 +316,7 @@ const
     baSliding,   //4
     baClimbing,  //5
     baSwimming,  //6
-    //baBallooning,//7
+    baBallooning,//7
     baFloating,  //8
     baGliding,   //9
     baFixing,    //10

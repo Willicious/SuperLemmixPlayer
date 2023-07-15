@@ -221,7 +221,7 @@ begin
                      Integer(spbSlider):     s := s + 'Slider';
                      Integer(spbClimber):    s := s + 'Climber';
                      Integer(spbSwimmer):    s := s + 'Swimmer';
-                     //Integer(spbBallooner):  s := s + 'Ballooner';
+                     Integer(spbBallooner):  s := s + 'Ballooner';
                      Integer(spbFloater):    s := s + 'Floater';
                      Integer(spbGlider):     s := s + 'Glider';
                      Integer(spbDisarmer):   s := s + 'Disarmer';

@@ -39,6 +39,7 @@
    LASERER 50
    MINER 50
    CLONER 50
+   BALLOONER 50
  $END 
  
 #     Interactive objects       
