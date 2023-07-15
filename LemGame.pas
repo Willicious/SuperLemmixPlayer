@@ -482,6 +482,7 @@ type
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
     function SpawnIntervalChanged: Boolean;
     procedure PlayAssignFailSound;
+    procedure PopBalloon(L: TLemming; BalloonPopTimerValue: Integer; NewAction: TBasicLemmingAction);
     //procedure SetSkillsToInfinite; //hotbookmark
 
   { properties }
@@ -1919,20 +1920,20 @@ begin
                       baFreezing, baFrozen] then
     begin
       if L.LemAction = baBallooning then
-        begin
-          L.LemBalloonPopTimer := 1;
-          CueSoundEffect(SFX_BALLOON_POP, L.Position);
-        end;
-
-      if L.LemIsTimebomber then
+      begin
+        if L.LemIsTimebomber then
+          PopBalloon(L, 1, baTimebombFinish)
+        else
+          PopBalloon(L, 1, baExploding);
+      end else if L.LemIsTimebomber then
         Transition(L, baTimebombFinish)
       else
-        Transition(L, baExploding)
+        Transition(L, baExploding);
     end else begin
       if L.LemIsTimebomber then
         Transition(L, baTimebombing)
       else
-        Transition(L, baOhnoing)
+        Transition(L, baOhnoing);
     end;
     Result := True;
   end;
@@ -1949,14 +1950,13 @@ begin
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
-      if L.LemAction = baBallooning then
-        begin
-          L.LemBalloonPopTimer := 1;
-          CueSoundEffect(SFX_BALLOON_POP, L.Position);
-        end;
-
       if not UserSetNuking then
-        Transition(L, baFreezerExplosion);
+      begin
+        if L.LemAction = baBallooning then
+          PopBalloon(L, 1, baFreezerExplosion)
+        else
+          Transition(L, baFreezerExplosion);
+      end;
     end else begin
       if not UserSetNuking then
         Transition(L, baFreezing);
@@ -2349,11 +2349,8 @@ begin
   if L.LemAction = baBallooning then
   begin
     if (NewSkill in [baToWalking, baJumping, baShimmying]) then
-    begin
       // Needs to be 2 because timer gets updated on same frame for these actions
-      L.LemBalloonPopTimer := 2;
-      CueSoundEffect(SFX_BALLOON_POP, L.Position);
-    end;
+      PopBalloon(L, 2, NewSkill);
   end;
 
   // Special behavior of permament skills.
@@ -4317,10 +4314,8 @@ begin
       //ballooners bob around at the top infinitely
       Inc(L.LemY, 3);
 
-      //balloons pop on ceiling
-//      L.LemBalloonPopTimer := 1;
-//      CueSoundEffect(SFX_BALLOON_POP, L.Position);
-//      Transition(L, baFalling);
+//      //balloons pop on ceiling
+//      PopBalloon(L, 1, baFalling);
     end;
 
   if (L.LemY <= 0) then
@@ -5993,17 +5988,17 @@ begin
   end;
 end;
 
+procedure TLemmingGame.PopBalloon(L: TLemming; BalloonPopTimerValue: Integer; NewAction: TBasicLemmingAction);
+begin
+  L.LemBalloonPopTimer := BalloonPopTimerValue;
+  CueSoundEffect(SFX_BALLOON_POP, L.Position);
+  Transition(L, NewAction);
+end;
+
 function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
 var
 YChecks: Integer;
 XChecks: Integer;
-
-  procedure PopBalloon;
-  begin
-    L.LemBalloonPopTimer := 1;
-    CueSoundEffect(SFX_BALLOON_POP, L.Position);
-    Transition(L, baFalling);
-  end;
 begin
   Result := True;
 
@@ -6046,7 +6041,7 @@ begin
         if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
         or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
         and not HasPixelAt(L.LemX, L.LemY) then
-          PopBalloon;
+          PopBalloon(L, 1, baFalling);
       end;
 
       for YChecks := 11 to 14 do
@@ -6054,7 +6049,7 @@ begin
         if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
         or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
         and not HasPixelAt(L.LemX, L.LemY) then
-          PopBalloon;
+          PopBalloon(L, 1, baFalling);
       end;
     end;
 
@@ -6073,8 +6068,7 @@ begin
             Dec(L.LemX);
 
           Dec(L.LemY, 2);
-          PopBalloon;
-          Transition(L, baHoisting);
+          PopBalloon(L, 1, baHoisting);
         end;
       end;
 
@@ -6090,8 +6084,7 @@ begin
             Dec(L.LemX);
 
           Dec(L.LemY, 2);
-          PopBalloon;
-          Transition(L, baWalking);
+          PopBalloon(L, 1, baWalking);
         end;
       end;
     end;
