@@ -3,7 +3,7 @@ unit FSuperLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, FEditHotkeys, FStyleManager, LemmixHotkeys, Math,
+  GameControl, GameSound, LemStrings, FEditHotkeys, FStyleManager, LemmixHotkeys, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls;
 
@@ -232,6 +232,7 @@ end;
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
 begin
   SaveToParams;
+  SoundManager.PlaySound(SFX_OK);
 
   // do this here to mitigate sudden volume changes
   SoundManager.HandleMenuMusic;

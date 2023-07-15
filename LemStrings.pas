@@ -75,6 +75,7 @@ const
   SFX_LASER = 'laser';
   //SFX_BALLOON_INFLATE = 'balloon';
   //SFX_BALLOON_POP = 'balloonpop';
+  SFX_OK = 'OK';
 
 resourcestring
   SProgramName = 'SuperLemmix Player';

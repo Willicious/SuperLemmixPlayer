@@ -3,7 +3,7 @@ unit FSuperLemmixLevelSelect;
 interface
 
 uses
-  GameControl,
+  GameControl, GameSound,
   LemNeoLevelPack,
   LemStrings,
   LemTypes,
@@ -422,6 +422,7 @@ end;
 procedure TFLevelSelect.btnOKClick(Sender: TObject);
 begin
   WriteToParams;
+  SoundManager.PlaySound(SFX_LETSGO);
   ModalResult := mrOk;
 end;
 
