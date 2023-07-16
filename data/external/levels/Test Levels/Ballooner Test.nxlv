@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.4
+#   Created with SLXEditor 2.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -30,6 +30,7 @@
    JUMPER 50
    SHIMMIER 50
    FLOATER 50
+   BALLOONER 50
    TIMEBOMBER 50
    BOMBER 50
    FREEZER 50
@@ -39,7 +40,6 @@
    LASERER 50
    MINER 50
    CLONER 50
-   BALLOONER 50
  $END 
  
 #     Interactive objects       
@@ -68,6 +68,15 @@
    Y 164
    NO_OVERWRITE
    GLIDER 
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 186
+   Y 139
+   NO_OVERWRITE
+   SKILL BALLOONER
  $END
  
  

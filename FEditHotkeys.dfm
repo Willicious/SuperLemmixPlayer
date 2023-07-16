@@ -167,6 +167,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Walker'
       'Jumper'
       'Shimmier'
+      'Ballooner'
       'Slider'
       'Climber'
       'Swimmer'

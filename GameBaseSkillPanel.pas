@@ -733,10 +733,11 @@ begin
     ///  This code is mostly copied to LemGadgetAnimation. ///
     //////////////////////////////////////////////////////////
 
-    // Walker, Jumper, Shimmier, Slider, Climber, - all simple
+    // Walker, Jumper, Shimmier, Ballooner, Slider, Climber, - all simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 19);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 19);
+    DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
     DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 5, 21);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 20);
 
@@ -749,8 +750,7 @@ begin
     fSkillIcons[spbSwimmer].FillRect(0, 18 * ResMod, 15 * ResMod, 22 * ResMod, $FF0000FF);
     TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
 
-    // Ballooner, Floater, Glider, Disarmer - all simple
-    DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
+    // Floater, Glider, Disarmer - all simple
     DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 23);
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 25);
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 20);

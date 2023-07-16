@@ -103,10 +103,10 @@ type
     spbWalker,
     spbJumper,
     spbShimmier,
+    spbBallooner,
     spbSlider,
     spbClimber,
     spbSwimmer,
-    spbBallooner,
     spbFloater,
     spbGlider,
     spbDisarmer,
@@ -144,10 +144,10 @@ const
     'walker',
     'jumper',
     'shimmier',
+    'ballooner',
     'slider',
     'climber',
     'swimmer',
-    'ballooner',
     'floater',
     'glider',
     'disarmer',
@@ -172,10 +172,10 @@ const
     'walkers',
     'jumpers',
     'shimmiers',
+    'ballooners',
     'sliders',
     'climbers',
     'swimmers',
-    'ballooners',
     'floaters',
     'gliders',
     'disarmers',
@@ -310,13 +310,14 @@ const
 const
   SkillPanelButtonToAction: array[TSkillPanelButton] of TBasicLemmingAction = (
 
+    //this needs to match the order of the skill on the panel
     baToWalking, //1
     baJumping,   //2
     baShimmying, //3
-    baSliding,   //4
-    baClimbing,  //5
-    baSwimming,  //6
-    baBallooning,//7
+    baBallooning,//4
+    baSliding,   //5
+    baClimbing,  //6
+    baSwimming,  //7
     baFloating,  //8
     baGliding,   //9
     baFixing,    //10
