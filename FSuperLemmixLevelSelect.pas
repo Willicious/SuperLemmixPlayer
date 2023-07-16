@@ -91,66 +91,65 @@ type
   end;
 
 const // Icon indexes
+  ICON_BLANK = -1;
+
   ICON_NORMAL_LEMMING = 0;
   ICON_ZOMBIE_LEMMING = 1;
   ICON_NEUTRAL_LEMMING = 2;
+  ICON_SAVE_REQUIREMENT = 3;
 
-  ICON_SAVE_REQUIREMENT = 34;
   ICON_RELEASE_RATE = 4;
-  ICON_RELEASE_RATE_LOCKED = 33;
-  ICON_TIME_LIMIT = 5;
+  ICON_RELEASE_RATE_LOCKED = 5;
+  ICON_TIME_LIMIT = 6;
+  ICON_TIMER = 7;
 
-  ICON_SKILLS: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer = (
-    6, // Walker
-    7, // Jumper
-    8, // Shimmier
-    38, // Slider
-    9, // Climber
-    10, // Swimmer
-    46, // Ballooner
-    11, // Floater
-    12, // Glider
-    13, // Disarmer
-    42, // Timebomber
-    14, // Bomber
-    15, // Freezer
-    16, // Blocker
-    17, // Platformer
-    18, // Builder
-    19, // Stacker
-    40, // Spearer
-    41, // Grenader
-    37, // Laserer
-    20, // Basher
-    21, // Fencer
-    22, // Miner
-    23, // Digger
-    24  // Cloner
-  );
-
-  ICON_BRONZE_TALISMAN = 25;
-  ICON_SILVER_TALISMAN = 26;
-  ICON_GOLD_TALISMAN = 27;
+  ICON_BRONZE_TALISMAN = 8;
+  ICON_SILVER_TALISMAN = 9;
+  ICON_GOLD_TALISMAN = 10;
+  ICON_RECORDS = 11;
 
   ICON_TALISMAN: array[tcBronze..tcGold] of Integer =
     ( ICON_BRONZE_TALISMAN, ICON_SILVER_TALISMAN, ICON_GOLD_TALISMAN );
+  ICON_TALISMAN_UNOBTAINED_OFFSET = 4;
+  ICON_WORLD_RECORDS = 15;
 
-  ICON_TALISMAN_UNOBTAINED_OFFSET = 3;
+  ICON_SELECTED_TALISMAN = 16;
+  ICON_MAX_SKILLS = 17;
+  ICON_MAX_SKILL_TYPES = 18;
+  // 19 is currently blank
 
-  ICON_SELECTED_TALISMAN = 31;
+  ICON_CLASSIC_MODE = 20;
+  ICON_NO_PAUSE = 21;
+  ICON_KILL_ZOMBIES = 22;
+  // 23 is currently blank
 
-  ICON_MAX_SKILLS = 32;
-  ICON_MAX_SKILL_TYPES = 3;
-
-  ICON_KILL_ZOMBIES = 43;
-  ICON_CLASSIC_MODE = 44;
-  ICON_NO_PAUSE = 45;
-
-  ICON_RECORDS = 35;
-  ICON_WORLD_RECORDS = 39;
-  ICON_TIMER = 36;
-
-  ICON_BLANK = -1;
+  ICON_SKILLS: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer = (
+    24, // 0 Walker
+    25, // 1 Jumper
+    26, // 2 Shimmier
+    27, // 3 Ballooner
+    28, // 4 Slider
+    29, // 5 Climber
+    30, // 6 Swimmer
+    31, // 7 Floater
+    32, // 8 Glider
+    33, // 9 Disarmer
+    34, // 10 Timebomber
+    35, // 11 Bomber
+    36, // 12 Freezer
+    37, // 13 Blocker
+    38, // 14 Platformer
+    39, // 15 Builder
+    40, // 16 Stacker
+    41, // 17 Spearer
+    42, // 18 Grenader
+    43, // 19 Laserer
+    44, // 20 Basher
+    45, // 21 Fencer
+    46, // 22 Miner
+    47, // 23 Digger
+    51  // 24 Cloner
+  );
 
 implementation
 

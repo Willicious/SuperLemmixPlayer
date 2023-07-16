@@ -169,31 +169,31 @@ const
     );
 
   SKILL_PLURAL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
-    'walkers',
-    'jumpers',
-    'shimmiers',
-    'ballooners',
-    'sliders',
-    'climbers',
-    'swimmers',
-    'floaters',
-    'gliders',
-    'disarmers',
-    'timebombers',
-    'bombers',
-    'freezers',
-    'blockers',
-    'platformers',
-    'builders',
-    'stackers',
-    'spearers',
-    'grenaders',
-    'laserers',
-    'bashers',
-    'fencers',
-    'miners',
-    'diggers',
-    'cloners'
+    'walkers',     //0
+    'jumpers',     //1
+    'shimmiers',   //2
+    'ballooners',  //3
+    'sliders',     //4
+    'climbers',    //5
+    'swimmers',    //6
+    'floaters',    //7
+    'gliders',     //8
+    'disarmers',   //9
+    'timebombers', //10
+    'bombers',     //11
+    'freezers',    //12
+    'blockers',    //13
+    'platformers', //14
+    'builders',    //15
+    'stackers',    //16
+    'spearers',    //17
+    'grenaders',   //18
+    'laserers',    //19
+    'bashers',     //20
+    'fencers',     //21
+    'miners',      //22
+    'diggers',     //23
+    'cloners'      //24
     );
 
 type
