@@ -23,7 +23,7 @@ type
     cbHoldKey: TCheckBox;
     cbSpecialSkip: TComboBox;
     lblSkip: TLabel;
-    btnAlternativeLayout: TBitBtn;
+    btnNeoLemmixLayout: TBitBtn;
     btnCancel: TBitBtn;
     btnReset: TBitBtn;
     procedure FormCreate(Sender: TObject);
@@ -42,7 +42,7 @@ type
     procedure cbSpecialSkipChange(Sender: TObject);
     procedure btnClassicLayoutClick(Sender: TObject);
     procedure btnAdvancedLayoutClick(Sender: TObject);
-    procedure btnAlternativeLayoutClick(Sender: TObject);
+    procedure btnNeoLemmixLayoutClick(Sender: TObject);
     procedure btnClearAllKeysClick(Sender: TObject);
     procedure btnResetClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -441,7 +441,7 @@ begin
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnAlternativeLayoutClick(Sender: TObject);
+procedure TFLemmixHotkeys.btnNeoLemmixLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAlternative;

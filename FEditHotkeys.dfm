@@ -274,14 +274,14 @@ object FLemmixHotkeys: TFLemmixHotkeys
     TabOrder = 12
     OnClick = btnClearAllKeysClick
   end
-  object btnAlternativeLayout: TBitBtn
+  object btnNeoLemmixLayout: TBitBtn
     Left = 322
-    Top = 102
+    Top = 101
     Width = 178
     Height = 25
-    Caption = 'Set to Alternative Layout'
+    Caption = 'Set to NeoLemmix Layout'
     TabOrder = 13
-    OnClick = btnAlternativeLayoutClick
+    OnClick = btnNeoLemmixLayoutClick
   end
   object btnCancel: TBitBtn
     Left = 415
