@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x000000000000001A
+ VERSION x000000000000001B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -42,18 +42,10 @@
  $END 
  
  $TALISMAN 
-   TITLE Sliders
-   ID 1
-   COLOR Bronze
-   SLIDER_LIMIT 25
- $END 
- 
- $TALISMAN 
-   TITLE Ballooners & Walkers
+   TITLE Gold Talisman
    ID 0
    COLOR Gold
-   WALKER_LIMIT 25
-   BALLOONER_LIMIT 25
+   BALLOONER_LIMIT 49
  $END 
  
 #     Interactive objects       
