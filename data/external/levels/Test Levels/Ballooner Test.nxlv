@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000014
+ VERSION x000000000000001A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -22,24 +22,38 @@
 # ----------------------------- 
  LEMMINGS 200
  SAVE_REQUIREMENT 199
- TIME_LIMIT 0
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
    WALKER 50
    JUMPER 50
    SHIMMIER 50
-   FLOATER 50
    BALLOONER 50
+   SLIDER 50
+   FLOATER 50
    TIMEBOMBER 50
    BOMBER 50
    FREEZER 50
    BUILDER 50
    SPEARER 50
    GRENADER 50
-   LASERER 50
    MINER 50
    CLONER 50
+ $END 
+ 
+ $TALISMAN 
+   TITLE Sliders
+   ID 1
+   COLOR Bronze
+   SLIDER_LIMIT 25
+ $END 
+ 
+ $TALISMAN 
+   TITLE Ballooners & Walkers
+   ID 0
+   COLOR Gold
+   WALKER_LIMIT 25
+   BALLOONER_LIMIT 25
  $END 
  
 #     Interactive objects       
