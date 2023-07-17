@@ -215,31 +215,32 @@ begin
       lka_Skill: begin
                    s := 'Select Skill: ';
                    case Hotkey.Modifier of
-                     Integer(spbWalker):     s := s + 'Walker';      //0
-                     Integer(spbJumper):     s := s + 'Jumper';      //1
-                     Integer(spbShimmier):   s := s + 'Shimmier';    //2
-                     Integer(spbBallooner):  s := s + 'Ballooner';   //3
-                     Integer(spbSlider):     s := s + 'Slider';      //4
-                     Integer(spbClimber):    s := s + 'Climber';     //5
-                     Integer(spbSwimmer):    s := s + 'Swimmer';     //6
-                     Integer(spbFloater):    s := s + 'Floater';     //7
-                     Integer(spbGlider):     s := s + 'Glider';      //8
-                     Integer(spbDisarmer):   s := s + 'Disarmer';    //9
-                     Integer(spbTimebomber): s := s + 'Timebomber';  //10
-                     Integer(spbBomber):     s := s + 'Bomber';      //11
-                     Integer(spbFreezer):    s := s + 'Freezer';     //12
-                     Integer(spbBlocker):    s := s + 'Blocker';     //13
-                     Integer(spbPlatformer): s := s + 'Platformer';  //14
-                     Integer(spbBuilder):    s := s + 'Builder';     //15
-                     Integer(spbStacker):    s := s + 'Stacker';     //16
-                     Integer(spbSpearer):    s := s + 'Spearer';     //17
-                     Integer(spbGrenader):   s := s + 'Grenader';    //18
-                     Integer(spbLaserer):    s := s + 'Laserer';     //19
-                     Integer(spbBasher):     s := s + 'Basher';      //20
-                     Integer(spbFencer):     s := s + 'Fencer';      //21
-                     Integer(spbMiner):      s := s + 'Miner';       //22
-                     Integer(spbDigger):     s := s + 'Digger';      //23
-                     Integer(spbCloner):     s := s + 'Cloner';      //24
+                     Integer(spbWalker):       s := s + 'Walker';      //0
+                     Integer(spbJumper):       s := s + 'Jumper';      //1
+                     Integer(spbShimmier):     s := s + 'Shimmier';    //2
+                     Integer(spbBallooner):    s := s + 'Ballooner';   //3
+                     Integer(spbHoverboarder): s := s + 'Hoverboarder';//4
+                     Integer(spbSlider):       s := s + 'Slider';      //5
+                     Integer(spbClimber):      s := s + 'Climber';     //6
+                     Integer(spbSwimmer):      s := s + 'Swimmer';     //7
+                     Integer(spbFloater):      s := s + 'Floater';     //8
+                     Integer(spbGlider):       s := s + 'Glider';      //9
+                     Integer(spbDisarmer):     s := s + 'Disarmer';    //10
+                     Integer(spbTimebomber):   s := s + 'Timebomber';  //11
+                     Integer(spbBomber):       s := s + 'Bomber';      //12
+                     Integer(spbFreezer):      s := s + 'Freezer';     //13
+                     Integer(spbBlocker):      s := s + 'Blocker';     //14
+                     Integer(spbPlatformer):   s := s + 'Platformer';  //15
+                     Integer(spbBuilder):      s := s + 'Builder';     //16
+                     Integer(spbStacker):      s := s + 'Stacker';     //17
+                     Integer(spbSpearer):      s := s + 'Spearer';     //18
+                     Integer(spbGrenader):     s := s + 'Grenader';    //19
+                     Integer(spbLaserer):      s := s + 'Laserer';     //20
+                     Integer(spbBasher):       s := s + 'Basher';      //21
+                     Integer(spbFencer):       s := s + 'Fencer';      //22
+                     Integer(spbMiner):        s := s + 'Miner';       //23
+                     Integer(spbDigger):       s := s + 'Digger';      //24
+                     Integer(spbCloner):       s := s + 'Cloner';      //25
                      else s := s + '???';
                    end;
                  end;

@@ -190,7 +190,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png',
+    'empty_slot.png', 'empty_slot.png',
     {Skills end here}
 
     'empty_slot.png',
@@ -733,11 +733,12 @@ begin
     ///  This code is mostly copied to LemGadgetAnimation. ///
     //////////////////////////////////////////////////////////
 
-    // Walker, Jumper, Shimmier, Ballooner, Slider, Climber, - all simple
+    // Walker, Jumper, Shimmier, Ballooner, Hoverboarder, Slider, Climber, - all simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 19);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 19);
     DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
+    DrawAnimationFrame(fSkillIcons[spbHoverboarder], HOVERBOARDING, 2, 7, 20);
     DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 5, 21);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 20);
 

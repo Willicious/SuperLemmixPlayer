@@ -75,6 +75,7 @@ const
   SFX_LASER = 'laser';
   SFX_BALLOON_INFLATE = 'balloon';
   SFX_BALLOON_POP = 'balloonpop';
+  SFX_HOVERBOARD = 'l2_teleport'; //hotbookmark - placeholder
   SFX_OK = 'OK';
 
 resourcestring
@@ -145,6 +146,7 @@ resourcestring
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
   SBallooner = 'Ballooner';
+  SHoverboarder = 'Hoverboarder';
   SSleeper = 'Sleeper';
 
 
@@ -180,51 +182,52 @@ const
   LemmingActionStrings: array[TBasicLemmingAction] of string = (    //needs to match TBasicLemmingAction in LemCore
     SDummyString, //1
     SWalker,      //2
-    SAscender,    //3
-    SDigger,      //4
-    SClimber,     //5
-    SDrowner,     //6
-    SHoister,     //7
-    SBuilder,     //8
-    SBasher,      //9
-    SMiner,       //10
-    SFaller,      //11
-    SFloater,     //12
-    SSplatter,    //13
-    SExiter,      //14
-    SVaporizer,   //15
-    SVinetrapper, //16
-    SBlocker,     //17
-    SShrugger,    //18
-    STimebomber,  //19
+    SDummyString, //3
+    SAscender,    //4
+    SDigger,      //5
+    SClimber,     //6
+    SDrowner,     //7
+    SHoister,     //8
+    SBuilder,     //9
+    SBasher,      //10
+    SMiner,       //11
+    SFaller,      //12
+    SFloater,     //13
+    SSplatter,    //14
+    SExiter,      //15
+    SVaporizer,   //16
+    SVinetrapper, //17
+    SBlocker,     //18
+    SShrugger,    //19
     STimebomber,  //20
-    SExploder,    //21
+    STimebomber,  //21
     SExploder,    //22
-    SDummyString, //23
-    SPlatformer,  //24
-    SStacker,     //25
-    SFreezer,     //26
+    SExploder,    //23
+    SDummyString, //24
+    SPlatformer,  //25
+    SStacker,     //26
     SFreezer,     //27
     SFreezer,     //28
     SFreezer,     //29
-    SSwimmer,     //30
-    SGlider,      //31
-    SDisarmer,    //32
-    SCloner,      //33
-    SFencer,      //34
-    SReacher,     //35
-    SShimmier,    //36
-    SJumper,      //37
-    SDehoister,   //38
-    SSlider,      //39
-    SDangler,     //40
-    SSpearer,     //41
-    SGrenader,    //42
-    SLooker,      //43
-    SLaserer,     //44
-    SBallooner,   //45
-    SSleeper,     //46
-    SDummyString  //47
+    SFreezer,     //30
+    SSwimmer,     //31
+    SGlider,      //32
+    SDisarmer,    //33
+    SCloner,      //34
+    SFencer,      //35
+    SReacher,     //36
+    SShimmier,    //37
+    SJumper,      //38
+    SDehoister,   //39
+    SSlider,      //40
+    SDangler,     //41
+    SSpearer,     //42
+    SGrenader,    //43
+    SLooker,      //44
+    SLaserer,     //45
+    SBallooner,   //46
+    SHoverboarder,//47
+    SSleeper      //48
   );
 
 implementation

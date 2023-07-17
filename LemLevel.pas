@@ -922,6 +922,7 @@ begin
   HandleSkill('jumper', spbJumper);
   HandleSkill('shimmier', spbShimmier);
   HandleSkill('ballooner', spbBallooner);
+  HandleSkill('hoverboarder', spbHoverboarder);
   HandleSkill('slider', spbSlider);
   HandleSkill('climber', spbClimber);
   HandleSkill('swimmer', spbSwimmer);
@@ -981,6 +982,7 @@ var
     if S = 'jumper' then O.Skill := Integer(spbJumper);    
     if S = 'shimmier' then O.Skill := Integer(spbShimmier);
     if S = 'ballooner' then O.Skill := Integer(spbBallooner);
+    if S = 'hoverboarder' then O.Skill := Integer(spbHoverboarder);
     if S = 'slider' then O.Skill := Integer(spbSlider);
     if S = 'climber' then O.Skill := Integer(spbClimber);
     if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
@@ -1487,6 +1489,7 @@ begin
   HandleSkill('JUMPER', spbJumper);
   HandleSkill('SHIMMIER', spbShimmier);
   HandleSkill('BALLOONER', spbBallooner);
+  HandleSkill('HOVERBOARDER', spbHoverboarder);
   HandleSkill('SLIDER', spbSlider);
   HandleSkill('CLIMBER', spbClimber);
   HandleSkill('SWIMMER', spbSwimmer);
@@ -1541,6 +1544,7 @@ var
      spbJumper: s := 'JUMPER';
      spbShimmier: s := 'SHIMMIER';
      spbBallooner: s := 'BALLOONER';
+     spbHoverboarder: s := 'HOVERBOARDER';
      spbSwimmer: s := 'SWIMMER';
      spbSlider: s := 'SLIDER';
      spbClimber: s := 'CLIMBER';

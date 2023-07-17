@@ -347,6 +347,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else if s = 'jumper' then Result := Integer(spbJumper)
     else if s = 'shimmier' then Result := Integer(spbShimmier)
     else if s = 'ballooner' then Result := Integer(spbBallooner)
+    else if s = 'hoverboarder' then Result := Integer(spbHoverboarder)
     else if s = 'slider' then Result := Integer(spbSlider)
     else if s = 'climber' then Result := Integer(spbClimber)
     else if s = 'swimmer' then Result := Integer(spbSwimmer)
@@ -501,31 +502,32 @@ var
   begin
     case aMain of
       lka_Skill:  case aValue of
-                    Integer(spbWalker):     Result := 'Walker';
-                    Integer(spbJumper):     Result := 'Jumper';
-                    Integer(spbShimmier):   Result := 'Shimmier';
-                    Integer(spbBallooner):  Result := 'Ballooner';
-                    Integer(spbSlider):     Result := 'Slider';
-                    Integer(spbClimber):    Result := 'Climber';
-                    Integer(spbSwimmer):    Result := 'Swimmer';
-                    Integer(spbFloater):    Result := 'Floater';
-                    Integer(spbGlider):     Result := 'Glider';
-                    Integer(spbDisarmer):   Result := 'Disarmer';
-                    Integer(spbTimebomber): Result := 'Timebomber';
-                    Integer(spbBomber):     Result := 'Bomber';
-                    Integer(spbFreezer):    Result := 'Freezer';
-                    Integer(spbBlocker):    Result := 'Blocker';
-                    Integer(spbPlatformer): Result := 'Platformer';
-                    Integer(spbBuilder):    Result := 'Builder';
-                    Integer(spbStacker):    Result := 'Stacker';
-                    Integer(spbSpearer):    Result := 'Spearer';
-                    Integer(spbGrenader):   Result := 'Grenader';
-                    Integer(spbLaserer):    Result := 'Laserer';
-                    Integer(spbBasher):     Result := 'Basher';
-                    Integer(spbFencer):     Result := 'Fencer';
-                    Integer(spbMiner):      Result := 'Miner';
-                    Integer(spbDigger):     Result := 'Digger';
-                    Integer(spbCloner):     Result := 'Cloner';
+                    Integer(spbWalker):       Result := 'Walker';
+                    Integer(spbJumper):       Result := 'Jumper';
+                    Integer(spbShimmier):     Result := 'Shimmier';
+                    Integer(spbBallooner):    Result := 'Ballooner';
+                    Integer(spbHoverboarder): Result := 'Hoverboarder';
+                    Integer(spbSlider):       Result := 'Slider';
+                    Integer(spbClimber):      Result := 'Climber';
+                    Integer(spbSwimmer):      Result := 'Swimmer';
+                    Integer(spbFloater):      Result := 'Floater';
+                    Integer(spbGlider):       Result := 'Glider';
+                    Integer(spbDisarmer):     Result := 'Disarmer';
+                    Integer(spbTimebomber):   Result := 'Timebomber';
+                    Integer(spbBomber):       Result := 'Bomber';
+                    Integer(spbFreezer):      Result := 'Freezer';
+                    Integer(spbBlocker):      Result := 'Blocker';
+                    Integer(spbPlatformer):   Result := 'Platformer';
+                    Integer(spbBuilder):      Result := 'Builder';
+                    Integer(spbStacker):      Result := 'Stacker';
+                    Integer(spbSpearer):      Result := 'Spearer';
+                    Integer(spbGrenader):     Result := 'Grenader';
+                    Integer(spbLaserer):      Result := 'Laserer';
+                    Integer(spbBasher):       Result := 'Basher';
+                    Integer(spbFencer):       Result := 'Fencer';
+                    Integer(spbMiner):        Result := 'Miner';
+                    Integer(spbDigger):       Result := 'Digger';
+                    Integer(spbCloner):       Result := 'Cloner';
                   end;
       lka_SpecialSkip:  case aValue of
                           0: Result := 'LastSkill';

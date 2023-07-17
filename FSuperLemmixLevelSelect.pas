@@ -128,27 +128,28 @@ const // Icon indexes
     25, // 1 Jumper
     26, // 2 Shimmier
     27, // 3 Ballooner
-    28, // 4 Slider
-    29, // 5 Climber
-    30, // 6 Swimmer
-    31, // 7 Floater
-    32, // 8 Glider
-    33, // 9 Disarmer
-    34, // 10 Timebomber
-    35, // 11 Bomber
-    36, // 12 Freezer
-    37, // 13 Blocker
-    38, // 14 Platformer
-    39, // 15 Builder
-    40, // 16 Stacker
-    41, // 17 Spearer
-    42, // 18 Grenader
-    43, // 19 Laserer
-    44, // 20 Basher
-    45, // 21 Fencer
-    46, // 22 Miner
-    47, // 23 Digger
-    51  // 24 Cloner
+    28, // 4 Hoverboarder
+    29, // 5 Slider
+    30, // 6 Climber
+    31, // 7 Swimmer
+    32, // 8 Floater
+    33, // 9 Glider
+    34, // 10 Disarmer
+    35, // 11 Timebomber
+    36, // 12 Bomber
+    37, // 13 Freezer
+    38, // 14 Blocker
+    39, // 15 Platformer
+    40, // 16 Builder
+    41, // 17 Stacker
+    42, // 18 Spearer
+    43, // 19 Grenader
+    44, // 20 Laserer
+    45, // 21 Basher
+    46, // 22 Fencer
+    47, // 23 Miner
+    48, // 24 Digger
+    51  // 25 Cloner
   );
 
 implementation

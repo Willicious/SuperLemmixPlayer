@@ -46,51 +46,52 @@ type
   TBasicLemmingAction = (   //needs to match TBasicLemmingAction in LemStrings
     baNone,            //1
     baWalking,         //2
-    baAscending,       //3
-    baDigging,         //4
-    baClimbing,        //5
-    baDrowning,        //6
-    baHoisting,        //7
-    baBuilding,        //8
-    baBashing,         //9
-    baMining,          //10
-    baFalling,         //11
-    baFloating,        //12
-    baSplatting,       //13
-    baExiting,         //14
-    baVaporizing,      //15
-    baVinetrapping,    //16
-    baBlocking,        //17
-    baShrugging,       //18
-    baTimebombing,     //19
-    baTimebombFinish,  //20
-    baOhnoing,         //21
-    baExploding,       //22
-    baToWalking,       //23
-    baPlatforming,     //24
-    baStacking,        //25
-    baFreezing,        //26
-    baFreezerExplosion,//27
-    baFrozen,          //28
-    baUnfreezing,      //29
-    baSwimming,        //30
-    baGliding,         //31
-    baFixing,          //32
-    baCloning,         //33
-    baFencing,         //34
-    baReaching,        //35
-    baShimmying,       //36
-    baJumping,         //37
-    baDehoisting,      //38
-    baSliding,         //39
-    baDangling,        //40
-    baSpearing,        //41
-    baGrenading,       //42
-    baLooking,         //43
-    baLasering,        //44
-    baBallooning,      //45
-    baSleeping,        //46
-    baZombieWalking    //47
+    baZombieWalking,   //3
+    baAscending,       //4
+    baDigging,         //5
+    baClimbing,        //6
+    baDrowning,        //7
+    baHoisting,        //8
+    baBuilding,        //9
+    baBashing,         //10
+    baMining,          //11
+    baFalling,         //12
+    baFloating,        //13
+    baSplatting,       //14
+    baExiting,         //15
+    baVaporizing,      //16
+    baVinetrapping,    //17
+    baBlocking,        //18
+    baShrugging,       //19
+    baTimebombing,     //20
+    baTimebombFinish,  //21
+    baOhnoing,         //22
+    baExploding,       //23
+    baToWalking,       //24
+    baPlatforming,     //25
+    baStacking,        //26
+    baFreezing,        //27
+    baFreezerExplosion,//28
+    baFrozen,          //29
+    baUnfreezing,      //30
+    baSwimming,        //31
+    baGliding,         //32
+    baFixing,          //33
+    baCloning,         //34
+    baFencing,         //35
+    baReaching,        //36
+    baShimmying,       //37
+    baJumping,         //38
+    baDehoisting,      //39
+    baSliding,         //40
+    baDangling,        //41
+    baSpearing,        //42
+    baGrenading,       //43
+    baLooking,         //44
+    baLasering,        //45
+    baBallooning,      //46
+    baHoverboarding,   //47
+    baSleeping         //48
   );
 
 const
@@ -104,6 +105,7 @@ type
     spbJumper,
     spbShimmier,
     spbBallooner,
+    spbHoverboarder,
     spbSlider,
     spbClimber,
     spbSwimmer,
@@ -145,6 +147,7 @@ const
     'jumper',
     'shimmier',
     'ballooner',
+    'hoverboarder',
     'slider',
     'climber',
     'swimmer',
@@ -169,31 +172,32 @@ const
     );
 
   SKILL_PLURAL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
-    'walkers',     //0
-    'jumpers',     //1
-    'shimmiers',   //2
-    'ballooners',  //3
-    'sliders',     //4
-    'climbers',    //5
-    'swimmers',    //6
-    'floaters',    //7
-    'gliders',     //8
-    'disarmers',   //9
-    'timebombers', //10
-    'bombers',     //11
-    'freezers',    //12
-    'blockers',    //13
-    'platformers', //14
-    'builders',    //15
-    'stackers',    //16
-    'spearers',    //17
-    'grenaders',   //18
-    'laserers',    //19
-    'bashers',     //20
-    'fencers',     //21
-    'miners',      //22
-    'diggers',     //23
-    'cloners'      //24
+    'walkers',
+    'jumpers',
+    'shimmiers',
+    'ballooners',
+    'hoverboarders',
+    'sliders',
+    'climbers',
+    'swimmers',
+    'floaters',
+    'gliders',
+    'disarmers',
+    'timebombers',
+    'bombers',
+    'freezers',
+    'blockers',
+    'platformers',
+    'builders',
+    'stackers',
+    'spearers',
+    'grenaders',
+    'laserers',
+    'bashers',
+    'fencers',
+    'miners',
+    'diggers',
+    'cloners'
     );
 
 type
@@ -253,89 +257,92 @@ const
     baSpearing,
     baGrenading,
     baLasering,
-    baBallooning
+    baBallooning,
+    baHoverboarding
   ];
 
 const
   ActionToSkillPanelButton: array[TBasicLemmingAction] of TSkillPanelButton = (
     spbNone,        //1   baNone
-    spbWalker,      //2   baWalk
-    spbNone,        //3   baAscending
-    spbDigger,      //4   baDigging
-    spbClimber,     //5   baClimbing
-    spbNone,        //6   baHoisting
-    spbNone,        //7   baDrowning
-    spbBuilder,     //8   baBricklaying
-    spbBasher,      //9   baBashing
-    spbMiner,       //10  baMining
-    spbNone,        //11  baFalling
-    spbFloater,     //12  baUmbrella
-    spbNone,        //13  baSplatting
-    spbNone,        //14  baExiting
-    spbNone,        //15  baVaporizing
-    spbNone,        //16  baVinetrapping
-    spbBlocker,     //17  baBlocking
-    spbNone,        //18  baShrugging
-    spbTimebomber,  //19  baTimebombing
-    spbNone,        //20  baTimebombFinish
-    spbNone,        //21  baOhNoing
-    spbBomber,      //22  baExploding
-    spbWalker,      //23
-    spbPlatformer,  //24
-    spbStacker,     //25
-    spbFreezer,     //26  baFreezing
-    spbNone,        //27  baFreezerExplosion
-    spbNone,        //28  baFrozen
-    spbNone,        //29  baUnfreezing
-    spbSwimmer,     //30
-    spbGlider,      //31
-    spbDisarmer,    //32
-    spbCloner,      //33
-    spbFencer,      //34
-    spbNone,        //35 baReaching
-    spbShimmier,    //36
-    spbJumper,      //37
-    spbNone,        //38 baDehoisting
-    spbSlider,      //39
-    spbNone,        //40 baDangling
-    spbSpearer,     //41
-    spbGrenader,    //42
-    spbNone,        //43 baLooking
-    spbLaserer,     //44
-    spbBallooner,   //45
-    spbNone,        //46 baSleeping
-    spbNone         //47 baZombieWalking
+    spbWalker,      //2   baWalking
+    spbNone,        //3   baZombieWalking
+    spbNone,        //4   baAscending
+    spbDigger,      //5   baDigging
+    spbClimber,     //6   baClimbing
+    spbNone,        //7   baHoisting
+    spbNone,        //8   baDrowning
+    spbBuilder,     //9   baBricklaying
+    spbBasher,      //10  baBashing
+    spbMiner,       //11  baMining
+    spbNone,        //12  baFalling
+    spbFloater,     //13  baUmbrella
+    spbNone,        //14  baSplatting
+    spbNone,        //15  baExiting
+    spbNone,        //16  baVaporizing
+    spbNone,        //17  baVinetrapping
+    spbBlocker,     //18  baBlocking
+    spbNone,        //19  baShrugging
+    spbTimebomber,  //20  baTimebombing
+    spbNone,        //21  baTimebombFinish
+    spbNone,        //22  baOhNoing
+    spbBomber,      //23  baExploding
+    spbWalker,      //24
+    spbPlatformer,  //25
+    spbStacker,     //26
+    spbFreezer,     //27  baFreezing
+    spbNone,        //28  baFreezerExplosion
+    spbNone,        //29  baFrozen
+    spbNone,        //30  baUnfreezing
+    spbSwimmer,     //31
+    spbGlider,      //32
+    spbDisarmer,    //33
+    spbCloner,      //34
+    spbFencer,      //35
+    spbNone,        //36 baReaching
+    spbShimmier,    //37
+    spbJumper,      //38
+    spbNone,        //39 baDehoisting
+    spbSlider,      //40
+    spbNone,        //41 baDangling
+    spbSpearer,     //42
+    spbGrenader,    //43
+    spbNone,        //44 baLooking
+    spbLaserer,     //45
+    spbBallooner,   //46
+    spbHoverboarder,//47
+    spbNone         //48 baSleeping
   );
 
 const
   SkillPanelButtonToAction: array[TSkillPanelButton] of TBasicLemmingAction = (
 
     //this needs to match the order of the skill on the panel
-    baToWalking, //1
-    baJumping,   //2
-    baShimmying, //3
-    baBallooning,//4
-    baSliding,   //5
-    baClimbing,  //6
-    baSwimming,  //7
-    baFloating,  //8
-    baGliding,   //9
-    baFixing,    //10
-    baTimebombing,  //11
-    baExploding,    //12
-    baFreezing,     //13
-    baBlocking,     //14
-    baPlatforming,  //15
-    baBuilding,     //16
-    baStacking,     //17
-    baSpearing,     //18
-    baGrenading,    //19
-    baLasering,     //20
-    baBashing,      //21
-    baFencing,      //22
-    baMining,       //23
-    baDigging,      //24
-    baCloning,      //25
+    baToWalking,    //1
+    baJumping,      //2
+    baShimmying,    //3
+    baBallooning,   //4
+    baHoverboarding,//5
+    baSliding,      //6
+    baClimbing,     //7
+    baSwimming,     //8
+    baFloating,     //9
+    baGliding,      //10
+    baFixing,       //11
+    baTimebombing,  //12
+    baExploding,    //13
+    baFreezing,     //14
+    baBlocking,     //15
+    baPlatforming,  //16
+    baBuilding,     //17
+    baStacking,     //18
+    baSpearing,     //19
+    baGrenading,    //20
+    baLasering,     //21
+    baBashing,      //22
+    baFencing,      //23
+    baMining,       //24
+    baDigging,      //25
+    baCloning,      //26
     baNone, //Null
     baNone, //RR-
     baNone, //RR+

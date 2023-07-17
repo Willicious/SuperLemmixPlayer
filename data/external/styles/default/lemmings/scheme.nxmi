@@ -105,6 +105,20 @@ $ANIMATIONS
       FOOT_Y 10
     $END
   $END
+  
+  $HOVERBOARDER
+    FRAMES 4
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+  $END
 
   $DIGGER
     FRAMES 16
