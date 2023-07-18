@@ -4482,8 +4482,6 @@ begin
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
   // Always move twice the distance of regular lems
-  // Unless there is terrain at foot position, in which case we only ascend
-  if not HasPixelAt(L.LemX, L.LemY) then
   begin
     if L.LemDX < 0 then
       Dec(L.LemX, 2)
@@ -4507,7 +4505,9 @@ begin
       begin
         TurnAround(L);
         Inc(L.LemX, L.LemDx);
-      end;
+      end else
+    if (LemDy < -2) then
+      Dec(L.LemY);
   end;
 
   // Get new ground pixel again in case the Lem has turned
