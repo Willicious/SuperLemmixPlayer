@@ -1893,9 +1893,8 @@ begin
                      L.LemLaserRemainTime := 10;
                      CueSoundEffect(SFX_LASER, L.Position);
                     end;
-    baBallooning :begin
-                    CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
-                  end;
+    baBallooning : CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
+    baHoverboarding : CueSoundEffect(SFX_HOVERBOARD, L.Position);
   end;
 end;
 
@@ -6351,7 +6350,12 @@ begin
 
     0, 2, 3: L.LemFrame := 0;
 
-    6..8: if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
+    6: begin
+         CueSoundEffect(SFX_SPEAR_THROW, L.Position);
+         if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
+       end;
+
+    7..8: if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
 
     9: if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling) else Transition(L, baLooking);
   end;
