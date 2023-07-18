@@ -1917,7 +1917,7 @@ begin
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
-                      baFreezing, baFrozen] then
+                      baFreezing, baFrozen, baHoverboarding] then
     begin
       if L.LemAction = baBallooning then
       begin
@@ -1945,10 +1945,10 @@ begin
 
   Dec(L.LemFreezerExplosionTimer);
   if L.LemFreezerExplosionTimer = 0 then
-  begin               //all these states bypass ohno phase
+  begin               //all these states bypass freezing phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
-                      baFreezing, baFrozen] then
+                      baFreezing, baFrozen, baHoverboarding] then
     begin
       if not UserSetNuking then
       begin
