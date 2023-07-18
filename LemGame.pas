@@ -1699,7 +1699,7 @@ const
     14, //44 baLooking
     12, //45 baLasering - it's, ironically, this high for rendering purposes
     17, //46 baBallooning
-    4,  //47 baHoverboarding
+    8,  //47 baHoverboarding
     20  //48 baSleeping
     );
 begin
@@ -4269,6 +4269,8 @@ begin
   if L.LemPhysicsFrame > L.LemMaxPhysicsFrame then
   begin
     L.LemPhysicsFrame := 0;
+    // Hoverboarder starts cycle at frame 4!
+    if L.LemAction = baHoverboarding then L.LemPhysicsFrame := 4;
     // Floater, Glider and Ballooner start cycle at frame 9!
     if L.LemAction in [baFloating, baGliding, baBallooning] then L.LemPhysicsFrame := 9;
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
@@ -4476,48 +4478,55 @@ var
   LemDy: Integer;
   XChecks, YChecks: Integer;
 begin
+  if L.LemPhysicsFrame = 3 then CueSoundEffect(SFX_HOVERBOARD, L.Position);
+
   Result := True;
 
   // Initialise terrain check
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-  // Always move twice the distance of regular lems
+  if L.LemPhysicsFrame >= 4 then
   begin
-    if L.LemDX < 0 then
-      Dec(L.LemX, 2)
-    else
-      Inc(L.LemX, 2);
-  end;
+    // Always move twice the distance of regular lems
+    begin
+      if L.LemDX < 0 then
+        Dec(L.LemX, 2)
+      else
+        Inc(L.LemX, 2);
+    end;
 
-  // Always hover 2px above ground
-  if not (LemDy >= 2) then
-    Dec(L.LemY);
-
-  // Look ahead to see if there's a wall
-  for XChecks := 0 to 1 do
-  begin
-    if (L.LemDX < 0) then
-      LemDy := FindGroundPixel(L.LemX - XChecks, L.LemY)
-    else
-      LemDy := FindGroundPixel(L.LemX + XChecks, L.LemY);
-
-    if (LemDy < -6) then
-      begin
-        TurnAround(L);
-        Inc(L.LemX, L.LemDx);
-      end else
-    if (LemDy < -2) then
+    // Always hover 2px above ground
+    if not (LemDy >= 2) then
       Dec(L.LemY);
-  end;
 
-  // Get new ground pixel again in case the Lem has turned
-  LemDy := FindGroundPixel(L.LemX, L.LemY);
+    // Look ahead to see if there's a wall
+    for XChecks := 0 to 1 do
+    begin
+      if (L.LemDX < 0) then
+        LemDy := FindGroundPixel(L.LemX - XChecks, L.LemY)
+      else
+        LemDy := FindGroundPixel(L.LemX + XChecks, L.LemY);
 
-  // Hoverboarders don't fall, instead they glide downwards
-  if (LemDy > 3) then
-  begin
-    Inc(L.LemY, 3);
-  end;
+      if (LemDy < -6) then
+        begin
+          TurnAround(L);
+          Inc(L.LemX, L.LemDx);
+        end else
+      if (LemDy < -2) then
+        Dec(L.LemY);
+    end;
+
+    // Get new ground pixel again in case the Lem has turned
+    LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+    // Hoverboarders don't fall, instead they glide downwards
+    if (LemDy >= 7) then
+    begin
+      Inc(L.LemY, 2);
+    end else if LemDy >= 3 then
+      Inc(L.LemY);
+  end else if not HasPixelAt(L.LemX, L.LemY) then
+    Inc(L.LemY);
 
   EscapeFreezerCube(L);
 end;
