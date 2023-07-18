@@ -5903,18 +5903,18 @@ end;
 function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
 begin
   // Find the new ground pixel
-  // If Result = 4, then at least 4 pixels are air below (X, Y)
-  // If Result = -7, then at least 7 pixels are terrain above (X, Y)
+  // If Result = 10, then at least 10 pixels are air below (X, Y)
+  // If Result = -10, then at least 10 pixels are terrain above (X, Y)
   Result := 0;
   if HasPixelAt(x, y) then
   begin
-    while HasPixelAt(x, y + Result - 1) and (Result > -7) do
+    while HasPixelAt(x, y + Result - 1) and (Result > -10) do
       Dec(Result);
   end
   else
   begin
     Inc(Result);
-    while (not HasPixelAt(x, y + Result)) and (Result < 4) do
+    while (not HasPixelAt(x, y + Result)) and (Result < 10) do
       Inc(Result);
   end;
 end;
