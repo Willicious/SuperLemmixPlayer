@@ -178,6 +178,7 @@ type
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
     procedure DrawJumperShadow(L: TLemming);
     procedure DrawBalloonerShadow(L: TLemming);
+    procedure DrawHoverboarderShadow(L: TLemming);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawShimmierShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
@@ -987,6 +988,7 @@ begin
                    else
                      fRenderInterface.SimulateTransitionLem(CopyL, baToWalking);
         spbShimmier: fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
+        spbHoverboarder: CopyL.LemIsHoverboarder := true;
         spbSlider: CopyL.LemIsSlider := true;
         spbClimber: CopyL.LemIsClimber := true;
         spbSwimmer: CopyL.LemIsSwimmer := true;
@@ -1026,6 +1028,13 @@ begin
       begin
         fRenderInterface.SimulateTransitionLem(CopyL, baBallooning);
         DrawBalloonerShadow(CopyL);
+      end;
+
+    spbHoverboarder:
+      if not DoProjection then
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baHoverboarding);
+        DrawHoverboarderShadow(CopyL);
       end;
 
     spbShimmier:
@@ -1251,6 +1260,40 @@ begin
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
     and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding, baSliding]) do
+  begin
+    Inc(FrameCount);
+
+    LemPosArray := fRenderInterface.SimulateLem(L);
+
+    if Assigned(LemPosArray) then
+      for i := 0 to Length(LemPosArray[0]) do
+      begin
+        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+      end;
+  end;
+end;
+
+procedure TRenderer.DrawHoverboarderShadow(L: TLemming);
+var
+  FrameCount: Integer;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
+const
+  MAX_FRAME_COUNT = 50; // only simulate a few seconds of movement
+begin
+  fLayers.fIsEmpty[rlLowShadows] := false;
+  fLayers.fIsEmpty[rlHighShadows] := false;
+  FrameCount := 0;
+  LemPosArray := nil;
+
+  SetLowShadowPixel(L.LemX, L.LemY - 1);
+
+  while (FrameCount < MAX_FRAME_COUNT)
+    and Assigned(L)
+    // We simulate as long as the lemming is hoverboarding
+    and (L.LemAction = baHoverboarding) do
   begin
     Inc(FrameCount);
 

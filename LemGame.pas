@@ -4008,7 +4008,7 @@ var
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
                     spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer,
-                    spbSpearer, spbGrenader, spbLaserer, spbBallooner];  //Timebomber not included by choice
+                    spbSpearer, spbGrenader, spbLaserer, spbBallooner, spbHoverboarder];  //Timebomber not included by choice
 begin
   if fHyperSpeed then Exit;
 
