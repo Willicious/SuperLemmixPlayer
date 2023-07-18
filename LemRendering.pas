@@ -2738,6 +2738,7 @@ begin
 
     // Count number of helper icons to be displayed.
     numHelpers := 0;
+    // Hoverboarder not needed here because it's obvious that they're hoverboarding!
     if Gadget.IsPreassignedSlider then Inc(numHelpers);
     if Gadget.IsPreassignedClimber then Inc(numHelpers);
     if Gadget.IsPreassignedSwimmer then Inc(numHelpers);

@@ -250,7 +250,7 @@ end;
 
 function TLemming.CheckForPermanentSkills: Boolean;
 begin
-  Result := (LemIsSlider or LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsDisarmer);
+  Result := (LemIsHoverboarder or LemIsSlider or LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsDisarmer);
 end;
 
 procedure TLemming.SetFromPreplaced(Source: TPreplacedLemming);
@@ -265,7 +265,8 @@ begin
   LemIsGlider := Source.IsGlider;
   LemIsDisarmer := Source.IsDisarmer;
   LemIsNeutral := Source.IsNeutral;
-  // Hoverboarder, Shimmier, Blocker and Zombie must be handled by the calling routine
+  LemIsHoverboarder := Source.IsHoverboarder;
+  // Shimmier, Blocker and Zombie must be handled by the calling routine
 end;
 
 function TLemming.GetCannotReceiveSkills: Boolean;

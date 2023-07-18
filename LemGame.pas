@@ -7051,6 +7051,7 @@ begin
           LemDX := 1;
           if Gadgets[ix].IsFlipPhysics then TurnAround(NewLemming);
 
+          // Hoverboarder not needed here because it's obvious that they're hoverboarding!
           LemIsSlider := Gadgets[ix].IsPreassignedSlider;
           LemIsClimber := Gadgets[ix].IsPreassignedClimber;
           LemIsSwimmer := Gadgets[ix].IsPreassignedSwimmer;
