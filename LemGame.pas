@@ -5833,12 +5833,12 @@ const
 
             if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
             begin
-              if L.LemIsClimber then
+              if L.LemIsClimber and not L.LemIsHoverboarder then
               begin
                 L.LemX := CheckX;
                 fLemNextAction := baClimbing;
               end else begin
-                if L.LemIsSlider then
+                if L.LemIsSlider and not L.LemIsHoverboarder then
                 begin
                   Inc(L.LemX, L.LemDX);
                   fLemNextAction := baSliding;
@@ -5889,8 +5889,10 @@ begin
   if MakeJumpMovement then
   begin
     Inc(L.LemJumpProgress);
-    if (L.LemJumpProgress >= 8) and (L.LemIsGlider) then
+    if (L.LemJumpProgress >= 8) and (L.LemIsGlider) and not (L.LemIsHoverboarder) then
       fLemNextAction := baGliding
+    else if (L.LemJumpProgress >= 10) and (L.LemIsHoverboarder) then
+      fLemNextAction := baHoverboarding
     else if L.LemJumpProgress = JUMPER_ARC_FRAMES then
       fLemNextAction := baWalking;
   end;
