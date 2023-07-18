@@ -2328,6 +2328,13 @@ begin
      and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
     L.LemY := L.LemY - 1;
 
+  // Walkers cancel Hoverboarder action and state
+  if (NewSkill = baToWalking) and L.LemIsHoverboarder then
+  begin
+    L.LemIsHoverboarder := False;
+    Transition(L, baWalking);
+  end;
+
   // Turn around walking lem, if assigned a walker
   if (NewSkill = baToWalking) and (L.LemAction = baWalking) then
   begin
@@ -2350,6 +2357,12 @@ begin
       // Needs to be 2 because timer gets updated on same frame for these actions
       PopBalloon(L, 2, NewSkill);
   end;
+
+  if (NewSkill = baHoverboarding) then
+    begin
+      L.LemIsHoverboarder := True; // Semi-permanent - can be set to false using Walker
+      Transition(L, baHoverboarding);
+    end;
 
   // Special behavior of permament skills.
   if (NewSkill = baSliding) then L.LemIsSlider := True
@@ -4401,6 +4414,13 @@ var
 begin
   Result := True;
 
+  if L.LemIsHoverboarder then
+  begin
+    Transition(L, baHoverboarding);
+    Exit;
+  end;
+
+  // Zombies walk at half the speed of regular lems
   if L.LemIsZombie then
   begin
     if L.LemPhysicsFrame in [0, 2] then

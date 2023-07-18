@@ -1459,19 +1459,21 @@ begin
 
   if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
-    Result := '-------';
-    if L.LemIsSlider then Result[1] := 'L';    
-    if L.LemIsClimber then Result[2] := 'C';
-    if L.LemIsSwimmer then Result[3] := 'S';
-    if L.LemIsFloater then Result[4] := 'F';
-    if L.LemIsGlider then Result[4] := 'G';
-    if L.LemIsDisarmer then Result[5] := 'D';
-    if L.LemIsZombie then Result[6] := 'Z';
-    if L.LemIsNeutral then Result[7] := 'N';
+    Result := '--------';
+    if L.LemIsHoverboarder then Result[1] := 'H';
+    if L.LemIsSlider then Result[2] := 'L';
+    if L.LemIsClimber then Result[3] := 'C';
+    if L.LemIsSwimmer then Result[4] := 'S';
+    if L.LemIsFloater then Result[5] := 'F';
+    if L.LemIsGlider then Result[6] := 'G';
+    if L.LemIsDisarmer then Result[7] := 'D';
+    if L.LemIsZombie then Result[8] := 'Z';
+    if L.LemIsNeutral then Result[9] := 'N';
   end
   else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baLasering, baBashing, baMining, baDigging, baBlocking]) then
   begin
     i := 0;
+    if L.LemIsHoverboarder then DoInc(SHoverboarder);
     if L.LemIsSlider then DoInc(SSlider);
     if L.LemIsClimber then DoInc(SClimber);
     if L.LemIsSwimmer then DoInc(SSwimmer);

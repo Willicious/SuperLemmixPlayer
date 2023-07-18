@@ -95,6 +95,8 @@ type
                                              // equal to (LemFrame > LemMaxFrame)
     LemIsPhysicsSimulation        : Boolean; // for simulations that are used for physics (eg. the Basher / Fencer checks) as opposed
                                              // to simulations to determine shadows
+
+    LemIsHoverboarder             : Boolean; //the state is semi-permanent, but needs permanent-style implementation
     LemIsSlider                   : Boolean;
     LemIsClimber                  : Boolean;
     LemIsSwimmer                  : Boolean;
@@ -315,6 +317,7 @@ begin
   LemTeleporting := Source.LemTeleporting;
   LemEndOfAnimation := Source.LemEndOfAnimation;
   LemIsPhysicsSimulation := Source.LemIsPhysicsSimulation;
+  LemIsHoverboarder := Source.LemIsHoverboarder;
   LemIsSlider := Source.LemIsSlider;
   LemIsClimber := Source.LemIsClimber;
   LemIsSwimmer := Source.LemIsSwimmer;
