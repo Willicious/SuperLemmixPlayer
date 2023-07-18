@@ -1857,6 +1857,7 @@ begin
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing    : begin
                      CueSoundEffect(SFX_OHNO, L.Position);
+                     L.LemIsHoverboarder := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -1867,6 +1868,7 @@ begin
                    end;
     baTimebombing :begin
                      CueSoundEffect(SFX_OHNO, L.Position);
+                     L.LemIsHoverboarder := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -1894,7 +1896,6 @@ begin
                      CueSoundEffect(SFX_LASER, L.Position);
                     end;
     baBallooning : CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
-    baHoverboarding : CueSoundEffect(SFX_HOVERBOARD, L.Position);
   end;
 end;
 
@@ -2362,7 +2363,7 @@ begin
   if (NewSkill = baHoverboarding) then
     begin
       L.LemIsHoverboarder := True; // Semi-permanent - can be set to false using Walker
-      Transition(L, baHoverboarding);
+      Transition(L, baHoverboarding); // We want the action to start staightaway
     end;
 
   // Special behavior of permament skills.
