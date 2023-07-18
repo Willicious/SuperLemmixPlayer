@@ -1431,7 +1431,7 @@ begin
       else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
       else if Lem.IsHoverboarder then
-        Transition(L, baHoverboarding)
+        Transition(L, baLooking) // We want to wait a few frames before starting
       else
         Transition(L, baWalking);
 
