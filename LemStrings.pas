@@ -76,7 +76,7 @@ const
   SFX_LASER = 'laser';
   SFX_BALLOON_INFLATE = 'balloon';
   SFX_BALLOON_POP = 'balloonpop';
-  SFX_HOVERBOARD = 'l2_teleport'; //hotbookmark - placeholder
+  SFX_HOVERBOARD = 'hoverboard';
   SFX_OK = 'OK';
 
 resourcestring
