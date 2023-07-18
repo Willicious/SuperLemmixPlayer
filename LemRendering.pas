@@ -3765,6 +3765,8 @@ begin
       L.LemAction := baFalling
     else if Lem.IsBlocker then
       L.LemAction := baBlocking
+    else if Lem.IsHoverboarder then
+      L.LemAction := baHoverboarding
     else
       L.LemAction := baWalking;
 

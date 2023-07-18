@@ -15,16 +15,17 @@ type
       fX: Integer;
       fY: Integer;
       fDx: Integer;
-      fIsSlider:   Boolean;
-      fIsClimber:  Boolean;
-      fIsSwimmer:  Boolean;
-      fIsFloater:  Boolean;
-      fIsGlider:   Boolean;
-      fIsDisarmer: Boolean;
-      fIsShimmier: Boolean;
-      fIsBlocker:  Boolean;
-      fIsZombie:   Boolean;
-      fIsNeutral:  Boolean;
+      fIsSlider:       Boolean;
+      fIsClimber:      Boolean;
+      fIsSwimmer:      Boolean;
+      fIsFloater:      Boolean;
+      fIsGlider:       Boolean;
+      fIsDisarmer:     Boolean;
+      fIsShimmier:     Boolean;
+      fIsHoverboarder: Boolean;
+      fIsBlocker:      Boolean;
+      fIsZombie:       Boolean;
+      fIsNeutral:      Boolean;
     public
       constructor Create;
       procedure Assign(aSrc: TPreplacedLemming);
@@ -38,6 +39,7 @@ type
       property IsGlider: Boolean read fIsGlider write fIsGlider;
       property IsDisarmer: Boolean read fIsDisarmer write fIsDisarmer;
       property IsShimmier: Boolean read fIsShimmier write fIsShimmier;
+      property IsHoverboarder: Boolean read fIsHoverboarder write fIsHoverboarder;
       property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
       property IsZombie: Boolean read fIsZombie write fIsZombie;
       property IsNeutral: Boolean read fIsNeutral write fIsNeutral;
@@ -193,6 +195,7 @@ begin
   IsGlider := aSrc.IsGlider;
   IsDisarmer := aSrc.IsDisarmer;
   IsShimmier := aSrc.IsShimmier;
+  IsHoverboarder := aSrc.IsHoverboarder;
   IsBlocker := aSrc.IsBlocker;
   IsZombie := aSrc.IsZombie;
   IsNeutral := aSrc.IsNeutral;
@@ -262,7 +265,7 @@ begin
   LemIsGlider := Source.IsGlider;
   LemIsDisarmer := Source.IsDisarmer;
   LemIsNeutral := Source.IsNeutral;
-  // Shimmier, Blocker and Zombie must be handled by the calling routine
+  // Hoverboarder, Shimmier, Blocker and Zombie must be handled by the calling routine
 end;
 
 function TLemming.GetCannotReceiveSkills: Boolean;

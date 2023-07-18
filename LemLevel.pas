@@ -1148,16 +1148,17 @@ begin
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
                // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
-  L.IsShimmier := (aSection.Line['shimmier'] <> nil);
-  L.IsSlider   := (aSection.Line['slider'] <> nil);
-  L.IsClimber  := (aSection.Line['climber']  <> nil);
-  L.IsSwimmer  := (aSection.Line['swimmer']  <> nil);
-  L.IsFloater  := (aSection.Line['floater']  <> nil);
-  L.IsGlider   := (aSection.Line['glider']   <> nil);
-  L.IsDisarmer := (aSection.Line['disarmer'] <> nil);
-  L.IsZombie   := (aSection.Line['zombie']   <> nil);
-  L.IsNeutral  := (aSection.Line['neutral']  <> nil);
-  L.IsBlocker  := (aSection.Line['blocker']  <> nil);
+  L.IsHoverboarder := (aSection.Line['hoverboarder'] <> nil);
+  L.IsShimmier     := (aSection.Line['shimmier'] <> nil);
+  L.IsSlider       := (aSection.Line['slider'] <> nil);
+  L.IsClimber      := (aSection.Line['climber']  <> nil);
+  L.IsSwimmer      := (aSection.Line['swimmer']  <> nil);
+  L.IsFloater      := (aSection.Line['floater']  <> nil);
+  L.IsGlider       := (aSection.Line['glider']   <> nil);
+  L.IsDisarmer     := (aSection.Line['disarmer'] <> nil);
+  L.IsZombie       := (aSection.Line['zombie']   <> nil);
+  L.IsNeutral      := (aSection.Line['neutral']  <> nil);
+  L.IsBlocker      := (aSection.Line['blocker']  <> nil);
 end;
 
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
@@ -1704,6 +1705,7 @@ begin
     if L.Dx < 0 then
       Sec.AddLine('FLIP_HORIZONTAL');
 
+    if L.IsHoverboarder then Sec.AddLine('HOVERBOARDER');
     if L.IsShimmier then Sec.AddLine('SHIMMIER');
     if L.IsSlider then Sec.AddLine('SLIDER');
     if L.IsClimber then Sec.AddLine('CLIMBER');

@@ -1430,6 +1430,8 @@ begin
         Transition(L, baFalling)
       else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
+      else if Lem.IsHoverboarder then
+        Transition(L, baHoverboarding)
       else
         Transition(L, baWalking);
 
