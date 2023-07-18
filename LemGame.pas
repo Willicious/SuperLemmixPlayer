@@ -411,6 +411,7 @@ type
     function MayAssignFloaterGlider(L: TLemming): Boolean;
     function MayAssignSwimmer(L: TLemming): Boolean;
     function MayAssignBallooner(L: TLemming) : Boolean;
+    function MayAssignHoverboarder(L: TLemming) : Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignTimebomber(L: TLemming): Boolean;
@@ -629,12 +630,12 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..24] of TBasicLemmingAction =
+  ActionListArray: array[0..25] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping, baSliding, baLasering, baSpearing, baGrenading, baBallooning);
-
+             baJumping, baSliding, baLasering, baSpearing, baGrenading,
+             baBallooning, baHoverboarding);
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1162,6 +1163,7 @@ begin
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
   NewSkillMethods[baBallooning]   := MayAssignBallooner;
+  NewSkillMethods[baHoverboarding]:= MayAssignHoverboarder;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -2591,7 +2593,7 @@ end;
 
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baHoverboarding, baShrugging, baBlocking, baPlatforming, baBuilding,
                baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
                baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
@@ -2648,6 +2650,16 @@ const
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping, baDrowning,
                baSplatting, baExiting, baSleeping, baBallooning];
+begin
+  Result := (not (L.LemAction in ActionSet));
+end;
+
+function TLemmingGame.MayAssignHoverboarder(L: TLemming): Boolean;
+const
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+               baDangling, baVaporizing, baVinetrapping, baDrowning,
+               baSplatting, baExiting, baSleeping, baHoverboarding];
 begin
   Result := (not (L.LemAction in ActionSet));
 end;
@@ -2854,10 +2866,11 @@ end;
 
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baBallooning,
-               baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
-               baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
-               baJumping, baLasering, baSpearing, baGrenading, baDangling, baLooking];
+  ActionSet = [baWalking, baHoverboarding, baShrugging, baPlatforming, baBuilding,
+               baStacking, baBallooning, baBashing, baFencing, baMining, baDigging,
+               baAscending, baFalling, baFloating, baSwimming, baGliding, baFixing,
+               baReaching, baShimmying, baJumping, baLasering, baSpearing, baGrenading,
+               baDangling, baLooking];
 begin
   //non-assignable from the top of the level
   if L.LemY <= 0 then
@@ -2870,9 +2883,9 @@ end;
 
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baClimbing,
-               baStacking, baBashing, baFencing, baMining, baDigging, baLasering,
-               baDangling, baLooking, baBallooning];
+  ActionSet = [baWalking, baHoverboarding, baShrugging, baPlatforming, baBuilding,
+               baClimbing, baStacking, baBashing, baFencing, baMining,
+               baDigging, baLasering, baDangling, baLooking, baBallooning];
 var
   CopyL: TLemming;
   i: Integer;
@@ -2929,7 +2942,7 @@ end;
 
 function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
+  ActionSet = [baWalking, baHoverboarding, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
                baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
