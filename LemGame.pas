@@ -359,6 +359,7 @@ type
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
     function HandleBallooning(L: TLemming): Boolean;
+    function HandleHoverboarding(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
     function HandleSplatting(L: TLemming): Boolean;
     function HandleExiting(L: TLemming): Boolean;
@@ -396,6 +397,7 @@ type
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
+    procedure EscapeFreezerCube(L: TLemming);
     procedure GenerateClonedLem(L: TLemming);
     function GetPriorityLemming(out PriorityLem: TLemming;
                                   NewSkillOrig: TBasicLemmingAction;
@@ -1117,6 +1119,7 @@ begin
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
   LemmingMethods[baBallooning]    := HandleBallooning;
+  LemmingMethods[baHoverboarding] := HandleHoverboarding;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1648,51 +1651,52 @@ const
     (
      0, //1 baNone,
      4, //2 baWalking,
-     1, //3 baAscending,
-    16, //4 baDigging,
-     8, //5 baClimbing,
-    16, //6 baDrowning,
-     8, //7 baHoisting,
-    16, //8 baBuilding,
-    16, //9 baBashing,
-    24, //10 baMining,
-     4, //11 baFalling,
-    17, //12 baFloating,
-    16, //13 baSplatting,
-     8, //14 baExiting,
-    14, //15 baVaporizing,
-     9, //16 baVinetrapping,
-    16, //17 baBlocking,
-     8, //18 baShrugging,
-    16, //19 baTimebombing, - same as OhNoing
-     1, //20 baTimebombFinish - same as Exploding
-    16, //21 baOhnoing,
-     1, //22 baExploding,
-     0, //23 baToWalking,
-    16, //24 baPlatforming,
-     8, //25 baStacking,
-     8, //26 baFreezing,
-     1, //27 baFreezerExplosion,
-     1, //28 baFrozen,
-    12, //29 baUnfreezing,
-     8, //30 baSwimming,
-    17, //31 baGliding,
-    16, //32 baFixing,
-     0, //33 baCloning,
-    16, //34 baFencing,
-     8, //35 baReaching,
-    20, //36 baShimmying
-    13, //37 baJumping
-     7, //38 baDehoisting
-     1, //39 baSliding
-    16, //40 baDangling
-    10, //41 baSpearing
-    10, //42 baGrenading
-    14, //43 baLooking
-    12, //44 baLasering - it's, ironically, this high for rendering purposes
-    17, //45 baBallooning
-    20, //46 baSleeping
-    8   //47 baZombieWalking
+     8, //3 baZombieWalking
+     1, //4 baAscending,
+    16, //5 baDigging,
+     8, //6 baClimbing,
+    16, //7 baDrowning,
+     8, //8 baHoisting,
+    16, //9 baBuilding,
+    16, //10 baBashing,
+    24, //11 baMining,
+     4, //12 baFalling,
+    17, //13 baFloating,
+    16, //14 baSplatting,
+     8, //15 baExiting,
+    14, //16 baVaporizing,
+     9, //17 baVinetrapping,
+    16, //18 baBlocking,
+     8, //19 baShrugging,
+    16, //20 baTimebombing, - same as OhNoing
+     1, //21 baTimebombFinish - same as Exploding
+    16, //22 baOhnoing,
+     1, //23 baExploding,
+     0, //24 baToWalking,
+    16, //25 baPlatforming,
+     8, //26 baStacking,
+     8, //27 baFreezing,
+     1, //28 baFreezerExplosion,
+     1, //29 baFrozen,
+    12, //30 baUnfreezing,
+     8, //31 baSwimming,
+    17, //32 baGliding,
+    16, //33 baFixing,
+     0, //34 baCloning,
+    16, //35 baFencing,
+     8, //36 baReaching,
+    20, //37 baShimmying
+    13, //38 baJumping
+     7, //39 baDehoisting
+     1, //40 baSliding
+    16, //41 baDangling
+    10, //42 baSpearing
+    10, //43 baGrenading
+    14, //44 baLooking
+    12, //45 baLasering - it's, ironically, this high for rendering purposes
+    17, //46 baBallooning
+    4,  //47 baHoverboarding
+    20  //48 baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -4351,12 +4355,36 @@ begin
   end;
 end;
 
-
-function TLemmingGame.HandleWalking(L: TLemming): Boolean;
+procedure TLemmingGame.EscapeFreezerCube(L: TLemming);
 var
   LemDy: Integer;
   LemDXL: Integer;
   LemDXR: Integer;
+begin
+  //ideally, we can create a new function for HasLemmingAt which specifically
+  //detects the presence of a Freezer lem within range of the ice cube's width/2
+  //for now, though, this will do
+
+  //makes sure Walkers & Hoverboarders can ascend out of Freezer cubes
+  LemDy := FindGroundPixel(L.LemX, L.LemY);
+  LemDXL := FindGroundPixel(L.LemX -1, L.LemY);
+  LemDXR := FindGroundPixel(L.LemX +1, L.LemY);
+  if (LemDy < -6) and (LemDXL < -6) and (LemDXR < -6)
+  //but, prevents ascending all the way through anything taller
+  and not HasPixelAt(L.LemX, L.LemY -12)
+  and not HasPixelAt(L.LemX -1, L.LemY -12)
+  and not HasPixelAt(L.LemX +1, L.LemY -12)
+  then
+  begin
+    TurnAround(L); //keeps the lem facing the same way, ironically
+    Dec(L.LemY, 6); //initial 6px boost to make the transition as smooth as possible
+    Transition(L, baAscending);
+  end;
+end;
+
+function TLemmingGame.HandleWalking(L: TLemming): Boolean;
+var
+  LemDy: Integer;
 begin
   Result := True;
 
@@ -4406,24 +4434,59 @@ begin
   else if (LemDy > 0) then
     Inc(L.LemY, LemDy);
 
-  //makes sure Walkers can ascend out of Freezer cubes
-  LemDy := FindGroundPixel(L.LemX, L.LemY);
-  LemDXL := FindGroundPixel(L.LemX -1, L.LemY);
-  LemDXR := FindGroundPixel(L.LemX +1, L.LemY);
-  if (LemDy < -6) and (LemDXL < -6) and (LemDXR < -6)
-  //but, prevents ascending all the way through anything taller
-  and not HasPixelAt(L.LemX, L.LemY -12)
-  and not HasPixelAt(L.LemX -1, L.LemY -12)
-  and not HasPixelAt(L.LemX +1, L.LemY -12)
-  then
-  begin
-    TurnAround(L); //keeps the lem facing the same way, ironically
-    Dec(L.LemY, 6); //initial 6px boost to make the transition as smooth as possible
-    Transition(L, baAscending);
-  end;
+  EscapeFreezerCube(L);
 end;
 
+function TLemmingGame.HandleHoverboarding(L: TLemming): Boolean;
+var
+  LemDy: Integer;
+  XChecks, YChecks: Integer;
+begin
+  Result := True;
 
+  // Initialise terrain check
+  LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+  // Always move twice the distance of regular lems
+  // Unless there is terrain at foot position, in which case we only ascend
+  if not HasPixelAt(L.LemX, L.LemY) then
+  begin
+    if L.LemDX < 0 then
+      Dec(L.LemX, 2)
+    else
+      Inc(L.LemX, 2);
+  end;
+
+  // Always hover 2px above ground
+  if not (LemDy >= 2) then
+    Dec(L.LemY);
+
+  // Look ahead to see if there's a wall
+  for XChecks := 0 to 1 do
+  begin
+    if (L.LemDX < 0) then
+      LemDy := FindGroundPixel(L.LemX - XChecks, L.LemY)
+    else
+      LemDy := FindGroundPixel(L.LemX + XChecks, L.LemY);
+
+    if (LemDy < -6) then
+      begin
+        TurnAround(L);
+        Inc(L.LemX, L.LemDx);
+      end;
+  end;
+
+  // Get new ground pixel again in case the Lem has turned
+  LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+  // Hoverboarders don't fall, instead they glide downwards
+  if (LemDy > 3) then
+  begin
+    Inc(L.LemY, 3);
+  end;
+
+  EscapeFreezerCube(L);
+end;
 
 function TLemmingGame.HandleSwimming(L: TLemming): Boolean;
 var
