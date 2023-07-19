@@ -230,7 +230,8 @@ const
     SBallooner,   //46
     SHoverboarder,//47
     SDrifter,     //48
-    SSleeper      //49
+    SBlocker,     //49 - for SwimBlocking
+    SSleeper      //50
   );
 
 implementation

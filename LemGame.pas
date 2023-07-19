@@ -1702,6 +1702,7 @@ const
     17, //46 baBallooning
     8,  //47 baHoverboarding
     8,  //48 baDrifting
+    16, //49 baSwimBlocking
     20  //48 baSleeping
     );
 begin
@@ -2697,7 +2698,7 @@ end;
 
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baSwimming,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 
 begin
@@ -3660,7 +3661,7 @@ end;
 
 function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baClimbing, baHoisting,
+  ActionSet = [baSwimming, baClimbing, baHoisting, baBlocking,
                baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baVaporizing, baVinetrapping, baExiting, baSplatting];
@@ -3675,7 +3676,7 @@ end;
 
 function TLemmingGame.HandlePoison(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baDrifting, baClimbing, baHoisting,
+  ActionSet = [baSwimming, baDrifting, baClimbing, baHoisting, baBlocking,
                baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baVaporizing, baVinetrapping, baExiting, baSplatting];
@@ -5878,7 +5879,7 @@ const
       if (Pattern[i][0] <> 0) then // Wall check
       begin
         CheckX := L.LemX + L.LemDX;
-        if HasPixelAt(CheckX, L.LemY) then
+        if HasPixelAt(CheckX, L.LemY) or (HasTriggerAt(CheckX, L.LemY, trWater) and L.LemIsSwimmer) then
         begin
           for n := 1 to 8 do
           begin
@@ -6489,7 +6490,8 @@ end;
 function TLemmingGame.HandleBlocking(L: TLemming): Boolean;
 begin
   Result := True;
-  if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
+  if not (HasPixelAt(L.LemX, L.LemY) or HasTriggerAt(L.LemX, L.LemY, trWater)) then
+    Transition(L, baFalling);
 end;
 
 function TLemmingGame.HandleShrugging(L: TLemming): Boolean;

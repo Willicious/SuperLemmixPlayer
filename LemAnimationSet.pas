@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   //MUST MATCH BELOW (not the next list, the one after that)
   //And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 89;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 44;        //num lem sprite types
+  NUM_LEM_SPRITES     = 91;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 45;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ZOMBIEWALKING       = 2;    //3  //2
@@ -114,9 +114,11 @@ const
   HOVERBOARDING_RTL   = 83;   //84
   DRIFTING            = 84;   //85 //43
   DRIFTING_RTL        = 85;   //86
-  SLEEPING            = 86;   //87 //44
-  SLEEPING_RTL        = 87;   //88
-  ICECUBE             = 88;   //89 this one does NOT need an RTL form;
+  SWIMBLOCKING        = 86;   //87 //44
+  SWIMBLOCKING_RTL    = 87;   //88
+  SLEEPING            = 88;   //89 //45
+  SLEEPING_RTL        = 89;   //90
+  ICECUBE             = 90;   //91 this one does NOT need an RTL form;
                              //in fact in needs to be moved to the Masks section
                              //also, it's not counted as a "sprite type"
 
@@ -170,6 +172,7 @@ const
     (BALLOONING, BALLOONING_RTL),             // 46 baBallooning
     (HOVERBOARDING, HOVERBOARDING_RTL),       // 47 baHoverboarding
     (DRIFTING, DRIFTING_RTL),                 // 48 baDrifting
+    (SWIMBLOCKING, SWIMBLOCKING_RTL),         // 49 baSwimblocking
     (SLEEPING, SLEEPING_RTL)                  // 48 baSleeping
   );
 
@@ -234,7 +237,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..43] of String =  (
+  ANIM_NAMES: array[0..44] of String =  (
   'WALKER',        //1
   'ZOMBIEWALKER',  //2
   'ASCENDER',      //3
@@ -278,7 +281,8 @@ const
   'BALLOONER',     //41
   'HOVERBOARDER',  //42
   'DRIFTER',       //43
-  'SLEEPER'        //44
+  'SWIMBLOCKER',   //44
+  'SLEEPER'        //45
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

@@ -478,6 +478,15 @@ begin
     i := AnimationIndices[baZombieWalking, true];
   end;
 
+  // And the alternative Blocker sprite for Swimmers
+  if aLemming.LemIsSwimmer and (aLemming.LemAction = baBlocking) then
+  begin
+    if aLemming.LemDX > 0 then
+    i := AnimationIndices[baSwimBlocking, false]
+  else
+    i := AnimationIndices[baSwimBlocking, true];
+  end;
+
   SrcAnim := fAni.LemmingAnimations[i];
   SrcMetaAnim := fAni.MetaLemmingAnimations[i];
 

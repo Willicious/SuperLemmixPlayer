@@ -8,7 +8,7 @@
  TITLE 
  AUTHOR 
  ID x58A8FBA05B7FAC75
- VERSION x0000000000000001
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -21,13 +21,13 @@
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 5
- SAVE_REQUIREMENT 3
+ SAVE_REQUIREMENT 5
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
+   WALKER 5
    JUMPER 5
    SHIMMIER 5
-   FREEZER 5
    BLOCKER 5
  $END 
  
@@ -66,8 +66,8 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X 237
-   Y 88
+   X 244
+   Y 47
    NO_OVERWRITE
  $END
  
@@ -76,6 +76,14 @@
    PIECE shredder
    X 19
    Y 55
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 195
+   Y 52
    NO_OVERWRITE
  $END
  
@@ -102,24 +110,41 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 165
-   Y 57
+   X 158
+   Y 52
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 195
-   Y 57
+   X 245
+   Y 71
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 238
-   Y 112
+   X 189
+   Y 52
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_06
+   X 186
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_03
+   X 212
+   Y 28
    ONE_WAY
  $END
  

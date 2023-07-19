@@ -92,7 +92,8 @@ type
     baBallooning,      //46
     baHoverboarding,   //47
     baDrifting,        //48
-    baSleeping         //49
+    baSwimBlocking,    //49
+    baSleeping         //50
   );
 
 const
@@ -312,7 +313,8 @@ const
     spbBallooner,   //46
     spbHoverboarder,//47
     spbNone,        //48 baDrifting
-    spbNone         //48 baSleeping
+    spbNone,        //49 baSwimBlocking - set via Swimming method
+    spbNone         //50 baSleeping
   );
 
 const
