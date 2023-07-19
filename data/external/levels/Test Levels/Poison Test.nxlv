@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.4
+#   Created with SLXEditor 2.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Poison Test
  AUTHOR WillLem
  ID x6A9F098C0B166333
- VERSION x000000000000000F
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -106,6 +106,7 @@
    X 173
    Y 1
    NO_OVERWRITE
+   CLIMBER 
  $END
  
  $GADGET

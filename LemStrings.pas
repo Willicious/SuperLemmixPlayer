@@ -148,6 +148,7 @@ resourcestring
   SNeutralZombie = 'N-Zombie';
   SBallooner = 'Ballooner';
   SHoverboarder = 'Hoverboarder';
+  SDrifter = 'Drifter';
   SSleeper = 'Sleeper';
 
 
@@ -228,7 +229,8 @@ const
     SLaserer,     //45
     SBallooner,   //46
     SHoverboarder,//47
-    SSleeper      //48
+    SDrifter,     //48
+    SSleeper      //49
   );
 
 implementation

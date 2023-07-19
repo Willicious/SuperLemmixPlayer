@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   //MUST MATCH BELOW (not the next list, the one after that)
   //And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 87;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 43;        //num lem sprite types
+  NUM_LEM_SPRITES     = 89;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 44;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ZOMBIEWALKING       = 2;    //3  //2
@@ -112,9 +112,11 @@ const
   BALLOONING_RTL      = 81;   //82
   HOVERBOARDING       = 82;   //83 //42
   HOVERBOARDING_RTL   = 83;   //84
-  SLEEPING            = 84;   //85 //43
-  SLEEPING_RTL        = 85;   //86
-  ICECUBE             = 86;   //87 this one does NOT need an RTL form;
+  DRIFTING            = 84;   //85 //43
+  DRIFTING_RTL        = 85;   //86
+  SLEEPING            = 86;   //87 //44
+  SLEEPING_RTL        = 87;   //88
+  ICECUBE             = 88;   //89 this one does NOT need an RTL form;
                              //in fact in needs to be moved to the Masks section
                              //also, it's not counted as a "sprite type"
 
@@ -166,8 +168,9 @@ const
     (LOOKING, LOOKING_RTL),                   // 44 baLooking
     (LASERING, LASERING_RTL),                 // 45 baLasering
     (BALLOONING, BALLOONING_RTL),             // 46 baBallooning
-    (HOVERBOARDING, HOVERBOARDING_RTL),       // 46 baBallooning
-    (SLEEPING, SLEEPING_RTL)                  // 47 baSleeping
+    (HOVERBOARDING, HOVERBOARDING_RTL),       // 47 baHoverboarding
+    (DRIFTING, DRIFTING_RTL),                 // 48 baDrifting
+    (SLEEPING, SLEEPING_RTL)                  // 48 baSleeping
   );
 
 type
@@ -231,7 +234,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..42] of String =  (
+  ANIM_NAMES: array[0..43] of String =  (
   'WALKER',        //1
   'ZOMBIEWALKER',  //2
   'ASCENDER',      //3
@@ -274,7 +277,8 @@ const
   'LASERER',       //40
   'BALLOONER',     //41
   'HOVERBOARDER',  //42
-  'SLEEPER'        //43
+  'DRIFTER',       //43
+  'SLEEPER'        //44
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

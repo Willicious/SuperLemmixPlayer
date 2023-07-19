@@ -270,8 +270,7 @@ type
       function HandleWaterSwim(L: TLemming): Boolean;
       function HandleBlasticine(L: TLemming): Boolean;
       function HandleVinewater(L: TLemming): Boolean;
-      function HandlePoisonDrown(L: TLemming): Boolean;
-      function HandlePoisonSwim(L: TLemming): Boolean;
+      function HandlePoison(L: TLemming): Boolean;
       function HandleRadiation(L: TLemming): Boolean;
       function HandleSlowfreeze(L: TLemming): Boolean;
       function HandleTrampolene(L: TLemming): Boolean;
@@ -379,6 +378,7 @@ type
     function LemCanPlatform(L: TLemming): Boolean;
     function HandleStacking(L: TLemming): Boolean;
     function HandleSwimming(L: TLemming): Boolean;
+    function HandleDrifting(L: TLemming): Boolean;
     function HandleGliding(L: TLemming): Boolean;
     function HandleDisarming(L: TLemming): Boolean;
     function HandleFencing(L: TLemming): Boolean;
@@ -1106,6 +1106,7 @@ begin
   LemmingMethods[baFrozen]        := HandleFrozen;
   LemmingMethods[baUnfreezing]    := HandleUnfreezing;
   LemmingMethods[baSwimming]      := HandleSwimming;
+  LemmingMethods[baDrifting]      := HandleDrifting;
   LemmingMethods[baGliding]       := HandleGliding;
   LemmingMethods[baFixing]        := HandleDisarming;
   LemmingMethods[baFencing]       := HandleFencing;
@@ -1700,6 +1701,7 @@ const
     12, //45 baLasering - it's, ironically, this high for rendering purposes
     17, //46 baBallooning
     8,  //47 baHoverboarding
+    8,  //48 baDrifting
     20  //48 baSleeping
     );
 begin
@@ -1724,7 +1726,8 @@ begin
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
-    if L.LemAction <> baSwimming then // for Swimming it's set in HandleSwimming as there is no single universal value
+     // for Swimming/Drifting it's set in HandleSwimming/Drifting as there is no single universal value
+    if not (L.LemAction in [baSwimming, baDrifting]) then
     begin
       L.LemFallen := 1;
       if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
@@ -3160,10 +3163,6 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
       AbortChecks := HandleWaterDrown(L);
 
-    // Poison - Check only for drowning here!
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPoison) then
-      AbortChecks := HandlePoisonDrown(L);
-
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
     begin
@@ -3214,9 +3213,9 @@ begin
   if HasTriggerAt(L.LemX, L.LemY, trWater) then
     HandleWaterSwim(L);
 
-  // Check for poison to transition to swimmer only at final position
+  // Check for poison to transition to swimmer/drifter only at final position
   if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPoison) then
-    HandlePoisonSwim(L);
+    HandlePoison(L);
 
   // Check for blocker fields and force-fields
   // but not for miners removing terrain, see http://www.lemmingsforums.net/index.php?topic=2710.0
@@ -3671,46 +3670,25 @@ begin
   end;
 end;
 
-function TLemmingGame.HandlePoisonDrown(L: TLemming): Boolean;
+function TLemmingGame.HandlePoison(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baExploding, baFreezerExplosion, baVaporizing,
-               baVinetrapping, baExiting, baSplatting];
-begin
-  Result := False;
-
-  if not (L.LemIsSwimmer) //or HasPixelAt(L.LemX, L.LemY))
-  then                    //hotbookmark - the commented out code here
-                          //allows poison to be used as a walkable trigger
-                          //but only if the lem walks into the trigger
-                          // - if they fall onto it, they will still "drown"
-  begin
-    Result := True;
-
-    if not (L.LemAction in ActionSet) then
-    begin
-      Transition(L, baDrowning);
-      CueSoundEffect(SFX_DROWNING, L.Position);
-      if not L.LemIsZombie then RemoveLemming(L, RM_ZOMBIE);
-    end;
-//  end else begin
-//    Result := True;
-//    if not L.LemIsZombie then RemoveLemming(L, RM_ZOMBIE);
-  end;
-end;
-
-function TLemmingGame.HandlePoisonSwim(L: TLemming): Boolean;
-const
-  ActionSet = [baSwimming, baClimbing, baHoisting,
+  ActionSet = [baSwimming, baDrifting, baClimbing, baHoisting,
                baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
-  if L.LemIsSwimmer and not (L.LemAction in ActionSet) then
+  if not (L.LemAction in ActionSet) then
   begin
     if not L.LemIsZombie then RemoveLemming(L, RM_ZOMBIE);
-    Transition(L, baSwimming);
-    CueSoundEffect(SFX_SWIMMING, L.Position);
+    if L.LemIsSwimmer then
+    begin
+      Transition(L, baSwimming);
+      CueSoundEffect(SFX_SWIMMING, L.Position);
+    end else begin
+      Transition(L, baDrifting);
+      CueSoundEffect(SFX_SWIMMING, L.Position);
+    end;
   end;
 end;
 
@@ -4557,7 +4535,7 @@ var
 
 begin
   Result := True;
-  L.LemFallen := 0; // Transition expects HandleSwimming to set this for swimmers, as it's not constant.
+  L.LemFallen := 0; // Transition expects HandleSwimming to set this for Swimmers, as it's not constant.
                     // 0 is the fallback value that's correct for *most* situations. Transition will
                     // still set LemTrueFallen so we don't need to worry about that one.
 
@@ -4627,7 +4605,98 @@ begin
 
 end;
 
+// This is a very specific LemAction that only takes place if a non-Swimmer-Zombie is in poison!
+function TLemmingGame.HandleDrifting(L: TLemming): Boolean;
+var
+  LemDy: Integer;
+  DiveDist: Integer;
 
+  function LemDive(L: TLemming): Integer;
+  // Returns 0 if the lem may not dive down
+  // Otherwise return the amount of pixels the lem dives
+  begin
+    Result := 1;
+    while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= 4) do
+    begin
+      Inc(Result);
+      Inc(L.LemFallen);
+      if HasTriggerAt(L.LemX, L.LemY + Result, trPoison)
+        then L.LemFallen := 0;
+      if L.LemY + Result >= PhysicsMap.Height then Break;
+    end;
+
+    if Result > 4 then Result := 0; // too much terrain to dive
+  end;
+
+begin
+  Result := True;
+  L.LemFallen := 0; // Transition expects HandleDrifting to set this
+
+  OutputDebugString(PChar('Current Frame: ' + IntToStr(L.LemPhysicsFrame)));
+
+  // Moves at half the speed of a Swimmer
+  if L.LemPhysicsFrame in [0, 2, 4, 6] then
+    Inc(L.LemX, L.LemDx);
+
+  if HasTriggerAt(L.LemX, L.LemY, trPoison) or HasPixelAt(L.LemX, L.LemY) then
+  begin
+    LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+    // Rise if there is poison above the lemming
+    if (LemDy >= -1) and HasTriggerAt(L.LemX, L.LemY -1, trPoison)
+                     and not HasPixelAt(L.LemX, L.LemY - 1) then
+      Dec(L.LemY)
+
+    else if LemDy < -6 then
+    begin
+      DiveDist := LemDive(L);
+
+      if DiveDist > 0 then
+      begin
+        Inc(L.LemY, DiveDist); // Dive below the terrain
+        if not HasTriggerAt(L.LemX, L.LemY, trPoison) then
+          Transition(L, baWalking);
+      end else if L.LemIsClimber
+        and not HasTriggerAt(L.LemX, L.LemY, trPoison) then
+      // Only transition to climber, if the lemming is not under poison
+        Transition(L, baClimbing)
+      else begin
+        TurnAround(L);
+        Inc(L.LemX, L.LemDx); // Move lemming back
+      end
+    end
+
+    else if LemDy <= -3 then
+    begin
+      Transition(L, baAscending);
+      Dec(L.LemY, 2);
+    end
+
+    // see http://www.lemmingsforums.net/index.php?topic=3380.0
+    // And the swimmer should not yet stop if the poison and terrain overlaps
+    else if (LemDy <= -1)
+    or ((LemDy = 0) and not HasTriggerAt(L.LemX, L.LemY, trPoison)) then
+    begin
+      Transition(L, baWalking);
+      Inc(L.LemY, LemDy);
+    end;
+  end
+
+  else // if no poison or terrain on current position
+  begin
+    LemDy := FindGroundPixel(L.LemX, L.LemY);
+    If LemDy > 1 then
+    begin
+      Inc(L.LemY);
+      Transition(L, baFalling);
+    end
+    else // if LemDy = 0 or 1
+    begin
+      Inc(L.LemY, LemDy);
+      Transition(L, baWalking);
+    end;
+  end;
+end;
 
 function TLemmingGame.HandleAscending(L: TLemming): Boolean;
 var

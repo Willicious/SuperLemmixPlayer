@@ -91,7 +91,8 @@ type
     baLasering,        //45
     baBallooning,      //46
     baHoverboarding,   //47
-    baSleeping         //48
+    baDrifting,        //48
+    baSleeping         //49
   );
 
 const
@@ -310,6 +311,7 @@ const
     spbLaserer,     //45
     spbBallooner,   //46
     spbHoverboarder,//47
+    spbNone,        //48 baDrifting
     spbNone         //48 baSleeping
   );
 
