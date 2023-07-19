@@ -2902,7 +2902,7 @@ end;
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baHoverboarding, baShrugging, baPlatforming, baBuilding,
-               baClimbing, baStacking, baBashing, baFencing, baMining,
+               baClimbing, baSwimming, baStacking, baBashing, baFencing, baMining,
                baDigging, baLasering, baDangling, baLooking, baBallooning];
 var
   CopyL: TLemming;
@@ -2962,7 +2962,7 @@ function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baHoverboarding, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
-               baClimbing, baSliding, baDangling, baLasering, baLooking];
+               baSwimming, baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
   if L.LemY <= 0 then
