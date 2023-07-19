@@ -1723,6 +1723,9 @@ begin
   // Should not happen, except for assigning walkers to walkers
   if L.LemAction = NewAction then Exit;
 
+  if (NewAction = baJumping) and (L.LemAction = baSwimming) then
+    Dec(L.LemY);  // Makes sure that the Jumper skill shadow is displayed
+
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
