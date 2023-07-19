@@ -1470,7 +1470,7 @@ begin
     if L.LemIsZombie then Result[8] := 'Z';
     if L.LemIsNeutral then Result[9] := 'N';
   end
-  else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baLasering, baBashing, baMining, baDigging, baBlocking]) then
+  else if (L.LemAction in [baWalking, baAscending, baFalling]) then
   begin
     i := 0;
     if L.LemIsHoverboarder then DoInc(SHoverboarder);
@@ -1483,7 +1483,10 @@ begin
     if L.LemIsZombie then Result := SZombie;
     if L.LemIsNeutral then Result := SNeutral;
     if L.LemIsZombie and L.LemIsNeutral then Result := SNeutralZombie;
-  end;
+  end else
+    if L.LemIsZombie then Result := 'Z-' + Result;
+    if L.LemIsNeutral then Result := 'N-' + Result;
+    if L.LemIsZombie and L.LemIsNeutral then Result := 'ZN-' + Result;
 end;
 
 procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);
