@@ -4775,12 +4775,10 @@ begin
 
   if L.LemEndOfAnimation then
   begin
-    if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
-      RemoveLemming(L, RM_NEUTRAL) // shouldn't get to this point but just in case
-    else if HasPixelAt(L.LemX, L.LemY - 7) then
+    if HasPixelAt(L.LemX, L.LemY - 7) then
       Transition(L, baSliding)
     else
-      Transition(L, baDangling);  //we don't want the Dehoister to fall straightaway if there isn't
+      Transition(L, baDangling);
   end else if L.LemPhysicsFrame >= 2 then
   begin
     for n := 0 to 1 do
