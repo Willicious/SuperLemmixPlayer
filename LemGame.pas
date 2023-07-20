@@ -1767,25 +1767,15 @@ begin
       Inc(L.LemY);
   end;
 
-  if (NewAction = baDangling) and (L.LemAction in [baSliding, baDehoisting]) then
-  begin
-    Inc(L.LemY, 2); //this makes sure that the shimmier skill shadow is displayed
-  end;
-
   if (NewAction = baShimmying) and (L.LemAction = baDangling) then
   begin
-    Dec(L.LemY); //brings the lem back up 1px for the start of the shimmier animation
-  end;
-
-  if (NewAction = baWalking) and (L.LemAction = baDangling) then
-  begin
-    if HasPixelAt(L.LemX, L.LemY -1) then
-    Dec(L.LemY); //brings the lem back up 1px for the start of the walker animation if needed
-  end;
-
-  if (NewAction = baFalling) and (L.LemAction = baDangling) then
-  begin
-    Inc(L.LemY, 2);
+    // Adjust starting position of Shimmier according to Dangler position
+    if L.LemPhysicsFrame = 0 then
+      Inc(L.LemY)
+    else if L.LemPhysicsFrame = 2 then
+      Dec(L.LemY)
+    else if L.LemPhysicsFrame >= 3 then
+      Dec(L.LemY, 2);
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
@@ -4765,16 +4755,16 @@ end;
 function TLemmingGame.HandleDangling(L: TLemming): Boolean;
 begin
   Result := True;
-  if HasPixelAt(L.LemX, L.LemY) then
-      Transition(L, baWalking);
 
-  if L.LemEndOfAnimation then
+  if L.LemPhysicsFrame in [0 .. 3] then
+    Inc(L.LemY);
+
+  if HasPixelAt(L.LemX, L.LemY) then
   begin
-    if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
-      RemoveLemming(L, RM_NEUTRAL) // shouldn't get to this point but just in case
-    else
-      Transition(L, baFalling);
-  end;
+    Transition(L, baWalking);
+    Exit;
+  end else if L.LemEndOfAnimation then
+    Transition(L, baFalling);
 end;
 
 function TLemmingGame.HandleDehoisting(L: TLemming): Boolean;
