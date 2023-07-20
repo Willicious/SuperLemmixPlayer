@@ -2685,7 +2685,7 @@ end;
 
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baSwimming,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 
 begin
@@ -3646,10 +3646,9 @@ end;
 
 function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baClimbing, baHoisting, baBlocking,
-               baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baVaporizing, baVinetrapping, baExiting, baSplatting];
+  ActionSet = [baSwimming, baClimbing, baHoisting, baTimebombing, baTimebombFinish,
+               baOhnoing, baExploding, baFreezing, baFreezerExplosion, baFrozen,
+               baUnfreezing, baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
   if L.LemIsSwimmer and not (L.LemAction in ActionSet) then
@@ -3661,9 +3660,8 @@ end;
 
 function TLemmingGame.HandlePoison(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baDrifting, baClimbing, baHoisting, baBlocking,
-               baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+  ActionSet = [baSwimming, baDrifting, baClimbing, baHoisting, baTimebombing, baTimebombFinish,
+               baOhnoing, baExploding, baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;

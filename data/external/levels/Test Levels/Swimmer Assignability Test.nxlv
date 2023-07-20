@@ -8,7 +8,7 @@
  TITLE Swimmer Assignability Test
  AUTHOR WillLem
  ID x58A8FBA05B7FAC75
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -114,7 +114,7 @@
    STYLE orig_marble
    PIECE bar_02
    X 171
-   Y 68
+   Y 62
    ONE_WAY
  $END
  
@@ -165,16 +165,6 @@
    X 17
    Y 107
    ONE_WAY
- $END
- 
- 
-#      Preplaced lemmings       
-# ----------------------------- 
- $LEMMING
-   X 141
-   Y 88
-   BLOCKER 
-   SWIMMER 
  $END
  
  
