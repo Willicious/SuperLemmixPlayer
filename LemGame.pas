@@ -3536,8 +3536,7 @@ var
 begin
   Result := False; // only see exit trigger area, if it actually used
 
-  if  (not L.LemIsZombie)
-  and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
+  if (not L.LemIsZombie) then
   begin
     if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
       Exit;
