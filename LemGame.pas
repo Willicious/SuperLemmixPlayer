@@ -1740,7 +1740,7 @@ begin
     end;
     L.LemTrueFallen := L.LemFallen;
   end;
-                     //bookmark - baReaching here allows Climber to enter Reacher state
+                     // baReaching here allows Climber to enter Reacher state
   if ((NewAction in [baReaching, baShimmying, baJumping]) and (L.LemAction = baClimbing)) or
      ((NewAction = baJumping) and (L.LemAction = baSliding)) then
   begin
@@ -1789,9 +1789,7 @@ begin
   end;
 
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
-  begin
     L.LemY := L.LemY + 3;
-  end;
 
   if NewAction = baDehoisting then
     L.LemDehoistPinY := L.LemY;
@@ -2926,7 +2924,7 @@ begin
 
     CopyL.Free;
   end else if L.LemAction in [baDehoisting, baSliding, baDangling] then
-  begin                       //bookmark - not sure if beDangling is needed here
+  begin
     // Check whether the lemming would fall down the next frame
     CopyL := TLemming.Create;
     CopyL.Assign(L);
@@ -2936,8 +2934,7 @@ begin
     SimulateLem(CopyL, False);
 
     if (CopyL.LemAction <> OldAction) and (CopyL.LemDX = L.LemDX) and
-       ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding)
-       or (OldAction <> baDangling)) then //bookmark - not sure if this is needed
+       ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding) or (OldAction <> baDangling)) then
       Result := True;
 
     CopyL.Free;
@@ -4624,8 +4621,6 @@ var
 begin
   Result := True;
   L.LemFallen := 0; // Transition expects HandleDrifting to set this
-
-  OutputDebugString(PChar('Current Frame: ' + IntToStr(L.LemPhysicsFrame)));
 
   // Moves at half the speed of a Swimmer
   if L.LemPhysicsFrame in [0, 2, 4, 6] then

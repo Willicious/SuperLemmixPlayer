@@ -977,12 +977,8 @@ begin
 
   if (fRenderInterface.ProjectionType <> 0) and
      ((L.LemAction in PROJECTION_STATES) or
-        (
-          (L.LemAction = baDrowning) and
-          (fRenderInterface.ProjectionType = 2) and
-          (SelectedSkill = spbSwimmer)
-        )
-      ) then
+        ((L.LemAction = baDrowning) and (fRenderInterface.ProjectionType = 2) and
+          (SelectedSkill = spbSwimmer))) then
   begin
     DoProjection := true;
 
