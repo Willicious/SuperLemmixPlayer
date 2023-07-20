@@ -1702,7 +1702,6 @@ const
     17, //46 baBallooning
     8,  //47 baHoverboarding
     8,  //48 baDrifting
-    16, //49 baSwimBlocking
     20  //48 baSleeping
     );
 begin
@@ -6472,7 +6471,7 @@ end;
 function TLemmingGame.HandleBlocking(L: TLemming): Boolean;
 begin
   Result := True;
-  if not (HasPixelAt(L.LemX, L.LemY) or HasTriggerAt(L.LemX, L.LemY, trWater)) then
+  if not HasPixelAt(L.LemX, L.LemY) then
     Transition(L, baFalling);
 end;
 

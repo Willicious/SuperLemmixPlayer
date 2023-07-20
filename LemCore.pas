@@ -92,8 +92,7 @@ type
     baBallooning,      //46
     baHoverboarding,   //47
     baDrifting,        //48
-    baSwimBlocking,    //49
-    baSleeping         //50
+    baSleeping         //49
   );
 
 const
@@ -288,33 +287,32 @@ const
     spbNone,        //21  baTimebombFinish
     spbNone,        //22  baOhNoing
     spbBomber,      //23  baExploding
-    spbWalker,      //24
-    spbPlatformer,  //25
-    spbStacker,     //26
+    spbWalker,      //24  baToWalking
+    spbPlatformer,  //25  baPlatforming
+    spbStacker,     //26  baStacking
     spbFreezer,     //27  baFreezing
     spbNone,        //28  baFreezerExplosion
     spbNone,        //29  baFrozen
     spbNone,        //30  baUnfreezing
-    spbSwimmer,     //31
-    spbGlider,      //32
-    spbDisarmer,    //33
-    spbCloner,      //34
-    spbFencer,      //35
-    spbNone,        //36 baReaching
-    spbShimmier,    //37
-    spbJumper,      //38
-    spbNone,        //39 baDehoisting
-    spbSlider,      //40
-    spbNone,        //41 baDangling
-    spbSpearer,     //42
-    spbGrenader,    //43
-    spbNone,        //44 baLooking
-    spbLaserer,     //45
-    spbBallooner,   //46
-    spbHoverboarder,//47
-    spbNone,        //48 baDrifting
-    spbNone,        //49 baSwimBlocking - set via Swimming method
-    spbNone         //50 baSleeping
+    spbSwimmer,     //31  baSwimming
+    spbGlider,      //32  baGliding
+    spbDisarmer,    //33  baFixing
+    spbCloner,      //34  baCloning
+    spbFencer,      //35  baFencing
+    spbNone,        //36  baReaching
+    spbShimmier,    //37  baShimmying
+    spbJumper,      //38  baJumping
+    spbNone,        //39  baDehoisting
+    spbSlider,      //40  baGliding
+    spbNone,        //41  baDangling
+    spbSpearer,     //42  baSpearing
+    spbGrenader,    //43  baGrenading
+    spbNone,        //44  baLooking
+    spbLaserer,     //45  baLasering
+    spbBallooner,   //46  baBallooning
+    spbHoverboarder,//47  baHoverboarding
+    spbNone,        //48  baDrifting
+    spbNone         //49  baSleeping
   );
 
 const

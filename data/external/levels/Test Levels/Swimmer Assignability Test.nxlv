@@ -5,16 +5,16 @@
  
 #        Level info             
 # ----------------------------- 
- TITLE 
- AUTHOR 
+ TITLE Swimmer Assignability Test
+ AUTHOR WillLem
  ID x58A8FBA05B7FAC75
- VERSION x0000000000000009
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 352
  HEIGHT 160
- START_X 160
+ START_X 176
  START_Y 80
  THEME orig_marble
  
@@ -29,6 +29,8 @@
    JUMPER 5
    SHIMMIER 5
    BLOCKER 5
+   GRENADER 5
+   MINER 5
  $END 
  
 #     Interactive objects       
@@ -36,8 +38,8 @@
  $GADGET
    STYLE orig_marble
    PIECE water
-   X 43
-   Y 71
+   X 83
+   Y 69
    WIDTH 160
    HEIGHT 16
    NO_OVERWRITE
@@ -46,7 +48,7 @@
  $GADGET
    STYLE orig_marble
    PIECE water
-   X 61
+   X 101
    Y 78
    WIDTH 128
    HEIGHT 20
@@ -56,7 +58,7 @@
  $GADGET
    STYLE orig_marble
    PIECE window
-   X 83
+   X 123
    Y 36
    NO_OVERWRITE
    FLIP_HORIZONTAL
@@ -66,7 +68,7 @@
  $GADGET
    STYLE orig_marble
    PIECE exit
-   X 244
+   X 284
    Y 47
    NO_OVERWRITE
  $END
@@ -74,17 +76,26 @@
  $GADGET
    STYLE orig_marble
    PIECE shredder
-   X 19
-   Y 55
+   X 59
+   Y 56
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_marble
    PIECE shredder
-   X 195
-   Y 52
+   X 234
+   Y 56
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE exit
+   X 15
+   Y 84
+   NO_OVERWRITE
+   LEMMINGS 1
  $END
  
  
@@ -93,7 +104,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE arch
-   X 27
+   X 67
    Y 70
    FLIP_VERTICAL
    ONE_WAY
@@ -102,7 +113,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_02
-   X 131
+   X 171
    Y 68
    ONE_WAY
  $END
@@ -110,7 +121,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 158
+   X 198
    Y 52
    ONE_WAY
  $END
@@ -118,7 +129,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 245
+   X 285
    Y 71
    ONE_WAY
  $END
@@ -126,7 +137,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 189
+   X 229
    Y 52
    ERASE
    ONE_WAY
@@ -135,7 +146,7 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_06
-   X 186
+   X 226
    Y 28
    ONE_WAY
  $END
@@ -143,9 +154,27 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 212
+   X 252
    Y 28
    ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_03
+   X 17
+   Y 107
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 141
+   Y 88
+   BLOCKER 
+   SWIMMER 
  $END
  
  

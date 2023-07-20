@@ -352,20 +352,6 @@ $ANIMATIONS
       FOOT_Y 13
     $END
   $END
-  
-  $SWIMBLOCKER
-    FRAMES 16
-
-    $RIGHT
-      FOOT_X 8
-      FOOT_Y 7
-    $END
-
-    $LEFT
-      FOOT_X 9
-      FOOT_Y 7
-    $END
-  $END
 
   $SHRUGGER
     FRAMES 8
