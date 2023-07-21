@@ -1019,6 +1019,11 @@ var
       O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
   end;
 
+  procedure GetRadiationSlowfreezeData;
+  begin
+    O.CountdownLength := aSection.LineNumeric['countdown'];
+  end;
+
   procedure GetWindowData;
   begin
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
@@ -1098,6 +1103,7 @@ begin
     DOM_WINDOW: GetWindowData;
     DOM_BACKGROUND: GetMovingBackgroundData;
     DOM_EXIT, DOM_LOCKEXIT: GetExitData;
+    DOM_SLOWFREEZE, DOM_RADIATION: GetRadiationSlowfreezeData;
   end;
 
   if MO.TriggerEffect in NO_FLIP_HORIZONTAL_TYPES then O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;

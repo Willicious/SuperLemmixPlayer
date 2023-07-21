@@ -3699,8 +3699,17 @@ begin
 end;
 
 function TLemmingGame.HandleRadiation(L: TLemming): Boolean;
+var
+  PosX, PosY: Integer;
+  GadgetID: Word;
+  Gadget: TGadget;
 begin
   Result := True;
+
+  GadgetID := FindGadgetID(PosX, PosY, trRadiation);
+  if GadgetID = 65535 then Exit;
+  Gadget := Gadgets[GadgetID];
+
   // prevents repeatedly assigning to the same lemming whilst in trigger area
   if (L.LemExplosionTimer = 0)
   // radiation doesn't work on slowfreezing lems
@@ -3709,15 +3718,27 @@ begin
   and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                           baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
   begin
-    L.LemExplosionTimer := 169;
+    if (Gadget.SRCountdownLength <> 0) then
+      L.LemFreezerExplosionTimer := ((Gadget.SRCountdownLength * 17) - 1)
+    else
+      L.LemFreezerExplosionTimer := 169;
     L.LemHideCountdown := False;
     L.LemIsTimebomber := True; //allows Freezers to be assigned without stopping the countdown
   end;
 end;
 
 function TLemmingGame.HandleSlowfreeze(L: TLemming): Boolean;
+var
+  PosX, PosY: Integer;
+  GadgetID: Word;
+  Gadget: TGadget;
 begin
   Result := True;
+
+  GadgetID := FindGadgetID(PosX, PosY, trSlowfreeze);
+  if GadgetID = 65535 then Exit;
+  Gadget := Gadgets[GadgetID];
+
   // prevents repeatedly assigning to the same lemming whilst in trigger area
   if (L.LemFreezerExplosionTimer = 0)
   // slowfreeze doesn't work on radiating lems
@@ -3726,7 +3747,10 @@ begin
   and not (L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                           baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
   begin
-    L.LemFreezerExplosionTimer := 169;
+    if (Gadget.SRCountdownLength <> 0) then
+      L.LemFreezerExplosionTimer := ((Gadget.SRCountdownLength * 17) - 1)
+    else
+      L.LemFreezerExplosionTimer := 169;
     L.LemHideCountdown := False;
   end;
 end;

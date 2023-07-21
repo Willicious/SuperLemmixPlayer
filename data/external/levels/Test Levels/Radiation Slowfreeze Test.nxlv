@@ -65,6 +65,7 @@
    X 62
    Y 46
    NO_OVERWRITE
+   COUNTDOWN 30
  $END
  
  $GADGET
@@ -73,6 +74,7 @@
    X 129
    Y 7
    NO_OVERWRITE
+   COUNTDOWN 30
  $END
  
  

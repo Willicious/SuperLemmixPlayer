@@ -29,6 +29,7 @@ type
                       //        and the speed of movable backgrounds.
                       //        and the skill amount for pick-up skills
     fLemmingCap: Integer;
+    fCountdownLength: Integer;
     procedure SetInvert(aValue: Boolean); override;
     function GetInvert: Boolean; override;
   public
@@ -39,6 +40,7 @@ type
     property Skill : Integer read fSkill write fSkill;
     property TarLev : Integer read fTarLev write fTarLev;
     property LemmingCap: Integer read fLemmingCap write fLemmingCap;
+    property CountdownLength: Integer read fCountdownLength write fCountdownLength;
   end;
 
 type
@@ -127,6 +129,7 @@ begin
     Skill := O.Skill;
     TarLev := O.TarLev;
     LemmingCap := O.LemmingCap;
+    CountdownLength := O.CountdownLength;
   end;
 end;
 

@@ -77,6 +77,8 @@ type
     sRemainingLemmingsCount: Integer;
     sShowRemainingLemmings: Boolean;
 
+    sCountdownLength: Integer;
+
     Obj            : TGadgetModel;
 
     procedure CreateAnimationInstances;
@@ -104,7 +106,7 @@ type
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
     function GetRemainingLemmingsCount: Integer;
-    //function GetCountdownLength: Integer;  //hotbookmark
+    function GetCountdownLength: Integer;
 
     function GetCurrentFrame: Integer; // Just remaps to primary animation. This allows LemGame to control
     procedure SetCurrentFrame(aValue: Integer); // the primary animation directly, as it always has.
@@ -167,6 +169,7 @@ type
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
     property RemainingLemmingsCount: Integer read GetRemainingLemmingsCount write sRemainingLemmingsCount;
     property ShowRemainingLemmings: Boolean read sShowRemainingLemmings write sShowRemainingLemmings;
+    property SRCountdownLength: Integer read GetCountdownLength write sCountdownLength;
 
     property AnimationFlag[Flag: TGadgetAnimationTriggerCondition]: Boolean read GetAnimFlagState;
 
@@ -266,6 +269,8 @@ begin
 
   HoldActive := False;
   ZombieMode := False;
+
+  sCountdownLength := 0;
 end;
 
 procedure TGadget.CreateAnimationInstances;
@@ -522,6 +527,19 @@ begin
   Result := sRemainingLemmingsCount;
 end;
 
+function TGadget.GetCountdownLength: Integer;
+begin
+  if sCountdownLength = 0 then
+  begin
+    if Obj.CountdownLength > 0 then
+      sCountdownLength := Obj.CountdownLength
+    else
+      sCountdownLength := 0;
+  end;
+
+  Result := sCountdownLength;
+end;
+
 function TGadget.GetHasPreassignedSkills: Boolean;
 begin
   Assert(MetaObj.TriggerEffect in [DOM_WINDOW], 'Preassigned skill called for object not a hatch');
@@ -590,13 +608,6 @@ begin
   Result := Obj.TarLev;
 end;
 
-//function TGadget.GetCountdownLength: Integer;
-//begin
-//  Assert(MetaObj.TriggerEffect = DOM_SLOWFREEZE, 'GetCountdownLenth called for an object that isn''t Slowfreeze!');
-//  Assert(MetaObj.TriggerEffect = DOM_RADIATION, 'GetCountdownLenth called for an object that isn''t Radiation!');
-//  Result := Obj.TarLev; //hotbookmark - the radiation & slowfreeze countdowns need to be stored in level info
-//end;
-
 function TGadget.GetTriggerEffectBase: Integer;
 begin
   Result := MetaObj.TriggerEffect;
@@ -620,6 +631,7 @@ begin
   NewObj.HoldActive := HoldActive;
   NewObj.ZombieMode := ZombieMode;
   NewObj.sRemainingLemmingsCount := sRemainingLemmingsCount;
+  NewObj.sCountdownLength := sCountdownLength;
 end;
 
 procedure TGadget.UnifyFlippingFlagsOfTeleporter();
