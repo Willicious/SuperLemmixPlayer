@@ -1209,13 +1209,15 @@ begin
 
   if (SelectedLemming <> nil) then
   begin
-    if HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY) then
+    if  (HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY)
+    and (RenderInterface.SelectedSkill in [spbMiner, spbDigger])) then
       CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
     else
       CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
   end else if (GetHighlitLemming <> nil) then
     begin
-    if HasSteelAt(HighlitLemming.LemX, HighlitLemming.LemY) then
+    if  (HasSteelAt(HighlitLemming.LemX, HighlitLemming.LemY)
+    and (RenderInterface.SelectedSkill in [spbMiner, spbDigger])) then
       CueSoundEffect(SFX_HITS_STEEL, HighlitLemming.Position)
     else
       CueSoundEffect(SFX_ASSIGN_FAIL, HighlitLemming.Position);
