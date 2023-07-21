@@ -2714,7 +2714,8 @@ begin
     end else
   Result := not (L.LemAction in ActionSet)
   //stops repeat timebomber assignments to same lem, and bomber assignments to timebomber
-  and not (L.LemExplosionTimer > 0);
+  //also prevents assigning timebombers to slowfreezing & radiating lems
+  and not ((L.LemExplosionTimer > 0) or (L.LemFreezerExplosionTimer > 0));
 end;
 
 // Bomber can be assigned to all states except those in list
@@ -3719,9 +3720,9 @@ begin
                           baOhnoing, baTimebombing, baExploding, baTimebombfinish]) then
   begin
     if (Gadget.SRCountdownLength <> 0) then
-      L.LemFreezerExplosionTimer := ((Gadget.SRCountdownLength * 17) - 1)
+      L.LemExplosionTimer := ((Gadget.SRCountdownLength * 17) - 1)
     else
-      L.LemFreezerExplosionTimer := 169;
+      L.LemExplosionTimer := 169;
     L.LemHideCountdown := False;
     L.LemIsTimebomber := True; //allows Freezers to be assigned without stopping the countdown
   end;
