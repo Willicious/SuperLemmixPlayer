@@ -4691,7 +4691,7 @@ begin
         if not HasTriggerAt(L.LemX, L.LemY, trPoison) then
           Transition(L, baWalking);
       end else if L.LemIsClimber
-        and not HasTriggerAt(L.LemX, L.LemY, trPoison) then
+        and not HasTriggerAt(L.LemX, L.LemY -1, trPoison) then
       // Only transition to climber, if the lemming is not under poison
         Transition(L, baClimbing)
       else begin
@@ -4707,7 +4707,7 @@ begin
     end
 
     // see http://www.lemmingsforums.net/index.php?topic=3380.0
-    // And the swimmer should not yet stop if the poison and terrain overlaps
+    // And the drifter should not yet stop if the poison and terrain overlaps
     else if (LemDy <= -1)
     or ((LemDy = 0) and not HasTriggerAt(L.LemX, L.LemY, trPoison)) then
     begin
