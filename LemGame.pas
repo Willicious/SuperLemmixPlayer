@@ -4488,15 +4488,18 @@ end;
 
 function TLemmingGame.HandleHoverboarding(L: TLemming): Boolean;
 var
-  LemDy: Integer;
+  i: Integer;
+  LemGPY: Integer;
+  LemWPY: Integer;
   XChecks, YChecks: Integer;
 begin
   if L.LemPhysicsFrame = 3 then CueSoundEffect(SFX_HOVERBOARD, L.Position);
 
   Result := True;
 
-  // Initialise terrain check
-  LemDy := FindGroundPixel(L.LemX, L.LemY);
+  // Initialise terrain and water check
+  LemGPY := FindGroundPixel(L.LemX, L.LemY);
+  LemWPY := FindWaterPixel(L.LemX, L.LemY);
 
   if L.LemPhysicsFrame >= 4 then
   begin
@@ -4508,37 +4511,39 @@ begin
         Inc(L.LemX, 2);
     end;
 
-    // Always hover 2px above ground
-    if not (LemDy >= 2) then
+    // Always hover 2px above ground and water
+    if not ((LemGPY >= 2) and (LemWPY >= 2)) then
       Dec(L.LemY);
 
     // Look ahead to see if there's a wall
     for XChecks := 0 to 1 do
     begin
       if (L.LemDX < 0) then
-        LemDy := FindGroundPixel(L.LemX - XChecks, L.LemY)
+        LemGPY := FindGroundPixel(L.LemX - XChecks, L.LemY)
       else
-        LemDy := FindGroundPixel(L.LemX + XChecks, L.LemY);
+        LemGPY := FindGroundPixel(L.LemX + XChecks, L.LemY);
 
-      if (LemDy < -6) then
+      if (LemGPY < -6) then
         begin
           TurnAround(L);
           Inc(L.LemX, L.LemDx);
         end else
-      if (LemDy < -2) then
+      if (LemGPY < -2) then
         Dec(L.LemY);
     end;
 
-    // Get new ground pixel again in case the Lem has turned
-    LemDy := FindGroundPixel(L.LemX, L.LemY);
+    // Get new ground and water pixel again in case the Lem has turned
+    LemGPY := FindGroundPixel(L.LemX, L.LemY);
+    LemWPY := FindWaterPixel(L.LemX, L.LemY);
 
     // Hoverboarders don't fall, instead they glide downwards
-    if (LemDy >= 7) then
+    if (LemGPY >= 7) and (LemWPY >= 7) then
     begin
       Inc(L.LemY, 2);
-    end else if LemDy >= 3 then
+    end else if (LemGPY >= 3) and (LemWPY >= 3) then
       Inc(L.LemY);
-  end else if not HasPixelAt(L.LemX, L.LemY) then
+  end else if not HasPixelAt(L.LemX, L.LemY)
+          and not HasWaterObjectAt(L.LemX, L.LemY, True, False) then
     Inc(L.LemY);
 
   EscapeFreezerCube(L);
