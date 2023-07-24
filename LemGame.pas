@@ -1899,8 +1899,7 @@ begin
     baFreezerExplosion: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
-                     while (i < 4) and (HasTriggerAt(L.LemX, L.LemY - i - 1, trWater)
-                                     or HasTriggerAt(L.LemX, L.LemY - i - 1, trPoison))
+                     while (i < 4) and HasWaterObjectAt(L.LemX, L.LemY - i - 1, False, True)
                                    and not HasPixelAt(L.LemX, L.LemY - i - 1) do
                        Inc(i);
                      Dec(L.LemY, i);
@@ -3131,7 +3130,7 @@ begin
     // Except if we try to splat and there is water at the lemming position - then let this take precedence.
     if (fLemNextAction <> baNone) and ([CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY])
       and ((fLemNextAction <> baSplatting)
-      or not HasTriggerAt(L.LemX, L.LemY, trWater) or not HasTriggerAt(L.LemX, L.LemY, trPoison)) then
+      or not HasWaterObjectAt(L.LemX, L.LemY, False, True)) then
     begin
       Transition(L, fLemNextAction);
       if fLemJumpToHoistAdvance then
@@ -4563,8 +4562,7 @@ var
     begin
       Inc(Result);
       Inc(L.LemFallen);
-      if (HasTriggerAt(L.LemX, L.LemY + Result, trWater)
-       or HasTriggerAt(L.LemX, L.LemY + Result, trPoison))
+      if HasWaterObjectAt(L.LemX, L.LemY + Result, False, True)
         then L.LemFallen := 0;
       if L.LemY + Result >= PhysicsMap.Height then Break;
     end;
@@ -4580,14 +4578,13 @@ begin
 
   Inc(L.LemX, L.LemDx);
 
-  if HasTriggerAt(L.LemX, L.LemY, trWater) or HasTriggerAt(L.LemX, L.LemY, trPoison)
+  if HasWaterObjectAt(L.LemX, L.LemY, False, True)
   or HasPixelAt(L.LemX, L.LemY) then
   begin
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
     // Rise if there is water above the lemming
-    if (LemDy >= -1) and (HasTriggerAt(L.LemX, L.LemY -1, trWater)
-                       or HasTriggerAt(L.LemX, L.LemY -1, trPoison))
+    if (LemDy >= -1) and HasWaterObjectAt(L.LemX, L.LemY - 1, False, True)
                      and not HasPixelAt(L.LemX, L.LemY - 1) then
       Dec(L.LemY)
 
@@ -4598,10 +4595,10 @@ begin
       if DiveDist > 0 then
       begin
         Inc(L.LemY, DiveDist); // Dive below the terrain
-        if not (HasTriggerAt(L.LemX, L.LemY, trWater) or HasTriggerAt(L.LemX, L.LemY, trPoison)) then
+        if not HasWaterObjectAt(L.LemX, L.LemY, False, True) then
           Transition(L, baWalking);
       end else if L.LemIsClimber
-        and not (HasTriggerAt(L.LemX, L.LemY - 1, trWater) or HasTriggerAt(L.LemX, L.LemY, trPoison)) then
+        and not HasWaterObjectAt(L.LemX, L.LemY -1, False, True) then
       // Only transition to climber, if the lemming is not under water
         Transition(L, baClimbing)
       else begin
@@ -4620,7 +4617,7 @@ begin
     // And the swimmer should not yet stop if the water and terrain overlaps
     else if (LemDy <= -1)
     or ((LemDy = 0)
-     and not (HasTriggerAt(L.LemX, L.LemY, trWater) or HasTriggerAt(L.LemX, L.LemY, trPoison))) then
+     and not HasWaterObjectAt(L.LemX, L.LemY, False, True)) then
     begin
       Transition(L, baWalking);
       Inc(L.LemY, LemDy);
@@ -7667,11 +7664,10 @@ begin
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
              and not L.LemIsDisarmer)
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
+         or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], False, True) and not L.LemIsSwimmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trBlasticine)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trVinewater)
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPoison) and not L.LemIsSwimmer)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
          then
@@ -7681,15 +7677,14 @@ begin
         Break;
       end;
 
-      if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater)
-      or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPoison)) and L.LemIsSwimmer then
-        fLemNextAction := baSwimming;
+      if HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], False, True)
+        and L.LemIsSwimmer then
+          fLemNextAction := baSwimming;
 
       if HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap) and
          HasPixelAt(LemPosArray[0, i], LemPosArray[1, i]) and
          L.LemIsDisarmer then
         fLemNextAction := baFixing;
-
 
       // End this loop when we have reached the lemming position
       if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
