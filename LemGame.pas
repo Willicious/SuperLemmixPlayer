@@ -3179,7 +3179,7 @@ begin
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
     begin
-      AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
+      if not L.LemIsHoverboarder then AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
       // Disarmers move always to final X-position, see http://www.lemmingsforums.net/index.php?topic=3004.0
       if (L.LemAction = baFixing) then CheckPos[0, i] := L.LemX;
     end;
