@@ -572,6 +572,24 @@ const
     (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1))  // occurs twice
   );
 
+  SUPER_JUMP_PATTERNS: array[0..14] of TJumpPattern =
+  (
+   (( 0, -1), ( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)),
+   (( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1)),
+   (( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)),
+   (( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0)), // occurs 3 times
+   (( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1)),
+   (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0)),
+   (( 1,  0), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0)),
+   (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0)),
+   (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0)),
+   (( 0,  1), ( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0,  1)),
+   (( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 1,  0)),
+   (( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0)), // occurs 3 times
+   (( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1)),
+   (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0)),
+   (( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1), ( 0,  1), ( 0,  0))
+  );
 const
   // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
   // Here only for refence.
@@ -1693,7 +1711,7 @@ const
     16, //35 baFencing,
      8, //36 baReaching,
     20, //37 baShimmying
-    13, //38 baJumping
+    19, //38 baJumping //hotbookmark
      7, //39 baDehoisting
      1, //40 baSliding
     16, //41 baDangling
@@ -5827,8 +5845,8 @@ begin
 end;
 
 function TLemmingGame.HandleJumping(L: TLemming): Boolean;
-const
-  JUMPER_ARC_FRAMES = 13;
+var
+JumperArcFrames: Integer;
 
   procedure DoJumperTriggerChecks;
   begin
@@ -5861,16 +5879,36 @@ const
   begin
     Result := false;
 
-    case L.LemJumpProgress of
-      0..1: PatternIndex := 0;
-      2..3: PatternIndex := 1;
-      4..8: PatternIndex := L.LemJumpProgress - 2;
-      9..10: PatternIndex := 7;
-      11..12: PatternIndex := 8;
-      else Exit;
+    if L.LemIsHoverboarder then
+    begin
+      JumperArcFrames := 19;
+
+      case L.LemJumpProgress of
+        0..2: PatternIndex := L.LemJumpProgress;
+        3..5: PatternIndex := 3;
+        6..12: PatternIndex := L.LemJumpProgress -2;
+        13..15: PatternIndex := 11;
+        16..18: PatternIndex := L.LemJumpProgress -4;
+        else Exit;
+      end;
+
+      Pattern := SUPER_JUMP_PATTERNS[PatternIndex];
+    end else begin
+      JumperArcFrames := 13;
+
+      case L.LemJumpProgress of
+        0..1: PatternIndex := 0;
+        2..3: PatternIndex := 1;
+        4..8: PatternIndex := L.LemJumpProgress -2;
+        9..10: PatternIndex := 7;
+        11..12: PatternIndex := 8;
+        else Exit;
+      end;
+
+      Pattern := JUMP_PATTERNS[PatternIndex];
     end;
 
-    Pattern := JUMP_PATTERNS[PatternIndex];
+
     FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
 
     FirstStepSpecialHandling := (L.LemJumpProgress = 0);
@@ -5970,9 +6008,9 @@ begin
     Inc(L.LemJumpProgress);
     if (L.LemJumpProgress >= 8) and (L.LemIsGlider) and not (L.LemIsHoverboarder) then
       fLemNextAction := baGliding
-    else if (L.LemJumpProgress >= 10) and (L.LemIsHoverboarder) then
-      fLemNextAction := baHoverboarding
-    else if L.LemJumpProgress = JUMPER_ARC_FRAMES then
+    else if (L.LemJumpProgress >= 16) and (L.LemIsHoverboarder) then
+      fLemNextAction := baHoverboarding // hotbookmark - use JumpToHoist to go to a particular frame in the Hoverboarding animation
+    else if L.LemJumpProgress = JumperArcFrames then
       fLemNextAction := baWalking;
   end;
 
