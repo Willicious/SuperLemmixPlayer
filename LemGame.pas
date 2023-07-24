@@ -340,6 +340,8 @@ type
 
   { lemming actions }
     function FindGroundPixel(x, y: Integer): Integer;
+    function FindWaterPixel(x, y: Integer): Integer;
+    function HasWaterObjectAt(x, y: Integer; AnyType: Boolean; SwimmableOnly: Boolean): Boolean;
     function HasSteelAt(x, y: Integer): Boolean;
     function HasIndestructibleAt(x, y, Direction: Integer;
                                      Skill: TBasicLemmingAction): Boolean;
@@ -6036,6 +6038,39 @@ begin
   end;
 end;
 
+function TLemmingGame.FindWaterPixel(x, y: Integer): Integer;
+begin
+  // Find the new water pixel
+  // If Result = 10, then at least 10 pixels are air below (X, Y)
+  // If Result = -10, then at least 10 pixels are water above (X, Y)
+  Result := 0;
+  if HasWaterObjectAt(x, y, True, False) then
+  begin
+    while HasWaterObjectAt(x, y + Result - 1, True, False) and (Result > -10) do
+      Dec(Result);
+  end
+  else
+  begin
+    Inc(Result);
+    while (not HasWaterObjectAt(x, y + Result, True, False)) and (Result < 10) do
+      Inc(Result);
+  end;
+end;
+
+function TLemmingGame.HasWaterObjectAt(x, y: Integer; AnyType: Boolean;
+                                       SwimmableOnly: Boolean): Boolean;
+begin
+  if AnyType then
+    Result := HasTriggerAt(x, y, trWater)
+           or HasTriggerAt(x, y, trPoison)
+           or HasTriggerAt(x, y, trVinewater)
+           or HasTriggerAt(x, y, trBlasticine)
+  else if SwimmableOnly then
+    Result := HasTriggerAt(x, y, trWater)
+           or HasTriggerAt(x, y, trPoison)
+  else
+    Result := False;
+end;
 
 function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
                                           Skill: TBasicLemmingAction): Boolean;
