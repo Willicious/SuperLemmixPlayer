@@ -3514,26 +3514,23 @@ begin
   // Exit if there is no Object
   if GadgetID = 65535 then Exit;
 
-  if not L.LemIsZombie then
-  begin
-    Gadget := Gadgets[GadgetID];
-    CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
-    Gadget.Triggered := True;
-    Dec(ButtonsRemain);
+  Gadget := Gadgets[GadgetID];
+  CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
+  Gadget.Triggered := True;
+  Dec(ButtonsRemain);
 
-    if ButtonsRemain = 0 then
-    begin
-      for n := 0 to (Gadgets.Count - 1) do
-        if Gadgets[n].TriggerEffect = DOM_LOCKEXIT then
-        begin
-          Gadget := Gadgets[n];
-          Gadget.Triggered := True;
-          if Gadget.SoundEffectActivate = '' then
-            CueSoundEffect(SFX_EXIT_OPEN, Gadget.Center)
-          else
-            CueSoundEffect(Gadget.SoundEffectActivate, Gadget.Center);
-        end;
-    end;
+  if ButtonsRemain = 0 then
+  begin
+    for n := 0 to (Gadgets.Count - 1) do
+      if Gadgets[n].TriggerEffect = DOM_LOCKEXIT then
+      begin
+        Gadget := Gadgets[n];
+        Gadget.Triggered := True;
+        if Gadget.SoundEffectActivate = '' then
+          CueSoundEffect(SFX_EXIT_OPEN, Gadget.Center)
+        else
+          CueSoundEffect(Gadget.SoundEffectActivate, Gadget.Center);
+      end;
   end;
 end;
 
