@@ -2354,11 +2354,12 @@ begin
      and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
     L.LemY := L.LemY - 1;
 
-  // Walkers cancel Hoverboarder action and state
-  if (NewSkill = baToWalking) and L.LemIsHoverboarder then
+  // Walkers cancel Runner action and state
+  if (NewSkill = baToWalking) and L.LemIsRunner then
   begin
-    L.LemIsHoverboarder := False;
+    L.LemIsRunner := False;
     Transition(L, baWalking);
+    TurnAround(L); // This actually keeps them facing the same way
   end;
 
   // Turn around walking lem, if assigned a walker
@@ -2377,18 +2378,21 @@ begin
     end;
   end;
 
+  if (NewSkill = baRunning) then
+  begin
+    if L.LemIsRunner then TurnAround(L) //assigning a Runner to a Runner turns the lem
+    else begin
+      L.LemIsRunner := True; // Semi-permanent - can be set to false using Walker
+      Transition(L, baRunning); // We want the action to start staightaway
+    end;
+  end;
+
   if L.LemAction = baBallooning then
   begin
     if (NewSkill in [baToWalking, baJumping, baShimmying]) then
       // Needs to be 2 because timer gets updated on same frame for these actions
       PopBalloon(L, 2, NewSkill);
   end;
-
-  if (NewSkill = baHoverboarding) then
-    begin
-      L.LemIsHoverboarder := True; // Semi-permanent - can be set to false using Walker
-      Transition(L, baHoverboarding); // We want the action to start staightaway
-    end;
 
   // Special behavior of permament skills.
   if (NewSkill = baSliding) then L.LemIsSlider := True
@@ -4428,9 +4432,9 @@ var
 begin
   Result := True;
 
-  if L.LemIsHoverboarder then
+  if L.LemIsRunner then
   begin
-    Transition(L, baHoverboarding);
+    Transition(L, baRunning);
     Exit;
   end;
 
