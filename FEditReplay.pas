@@ -74,7 +74,7 @@ var
             baJumping:       Result := 'Jumper';
             baShimmying:     Result := 'Shimmier';
             baBallooning:    Result := 'Ballooner';
-            baHoverboarding: Result := 'Hoverboarder';
+            baRunning:       Result := 'Runner';
             baSliding:       Result := 'Slider';
             baClimbing:      Result := 'Climber';
             baSwimming:      Result := 'Swimmer';

@@ -900,7 +900,7 @@ begin
       spbClimber: SL.Add('  fRenderInterface.SelectedSkill: Climber');
       spbSwimmer: SL.Add('  fRenderInterface.SelectedSkill: Swimmer');
       spbBallooner: SL.Add('  fRenderInterface.SelectedSkill: Ballooner');
-      spbHoverboarder: SL.Add('  fRenderInterface.SelectedSkill: Hoverboarder');
+      spbRunner: SL.Add('  fRenderInterface.SelectedSkill: Runner');
       spbFloater: SL.Add('  fRenderInterface.SelectedSkill: Floater');
       spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
       spbDisarmer: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');

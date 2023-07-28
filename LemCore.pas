@@ -90,7 +90,7 @@ type
     baLooking,         //44
     baLasering,        //45
     baBallooning,      //46
-    baHoverboarding,   //47
+    baRunning,         //47
     baDrifting,        //48
     baSleeping         //49
   );
@@ -106,7 +106,7 @@ type
     spbJumper,
     spbShimmier,
     spbBallooner,
-    spbHoverboarder,
+    spbRunner,
     spbSlider,
     spbClimber,
     spbSwimmer,
@@ -148,7 +148,7 @@ const
     'jumper',
     'shimmier',
     'ballooner',
-    'hoverboarder',
+    'runner',
     'slider',
     'climber',
     'swimmer',
@@ -177,7 +177,7 @@ const
     'jumpers',
     'shimmiers',
     'ballooners',
-    'hoverboarders',
+    'runners',
     'sliders',
     'climbers',
     'swimmers',
@@ -259,7 +259,7 @@ const
     baGrenading,
     baLasering,
     baBallooning,
-    baHoverboarding
+    baRunning
   ];
 
 const
@@ -310,7 +310,7 @@ const
     spbNone,        //44  baLooking
     spbLaserer,     //45  baLasering
     spbBallooner,   //46  baBallooning
-    spbHoverboarder,//47  baHoverboarding
+    spbRunner,      //47  baRunning
     spbNone,        //48  baDrifting
     spbNone         //49  baSleeping
   );
@@ -323,7 +323,7 @@ const
     baJumping,      //2
     baShimmying,    //3
     baBallooning,   //4
-    baHoverboarding,//5
+    baRunning,      //5
     baSliding,      //6
     baClimbing,     //7
     baSwimming,     //8

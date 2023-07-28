@@ -219,7 +219,7 @@ begin
                      Integer(spbJumper):       s := s + 'Jumper';      //1
                      Integer(spbShimmier):     s := s + 'Shimmier';    //2
                      Integer(spbBallooner):    s := s + 'Ballooner';   //3
-                     Integer(spbHoverboarder): s := s + 'Hoverboarder';//4
+                     Integer(spbRunner):       s := s + 'Runner';      //4
                      Integer(spbSlider):       s := s + 'Slider';      //5
                      Integer(spbClimber):      s := s + 'Climber';     //6
                      Integer(spbSwimmer):      s := s + 'Swimmer';     //7

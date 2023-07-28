@@ -128,7 +128,7 @@ const // Icon indexes
     25, // 1 Jumper
     26, // 2 Shimmier
     27, // 3 Ballooner
-    28, // 4 Hoverboarder
+    28, // 4 Runner
     29, // 5 Slider
     30, // 6 Climber
     31, // 7 Swimmer

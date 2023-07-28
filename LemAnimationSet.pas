@@ -110,8 +110,8 @@ const
   LASERING_RTL        = 79;   //80
   BALLOONING          = 80;   //81 //41
   BALLOONING_RTL      = 81;   //82
-  HOVERBOARDING       = 82;   //83 //42
-  HOVERBOARDING_RTL   = 83;   //84
+  RUNNING             = 82;   //83 //42
+  RUNNING_RTL         = 83;   //84
   DRIFTING            = 84;   //85 //43
   DRIFTING_RTL        = 85;   //86
   SLEEPING            = 86;   //87 //44
@@ -168,7 +168,7 @@ const
     (LOOKING, LOOKING_RTL),                   // 44 baLooking
     (LASERING, LASERING_RTL),                 // 45 baLasering
     (BALLOONING, BALLOONING_RTL),             // 46 baBallooning
-    (HOVERBOARDING, HOVERBOARDING_RTL),       // 47 baHoverboarding
+    (RUNNING, RUNNING_RTL),                   // 47 baRunning
     (DRIFTING, DRIFTING_RTL),                 // 48 baDrifting
     (SLEEPING, SLEEPING_RTL)                  // 49 baSleeping
   );
@@ -276,7 +276,7 @@ const
   'LOOKER',        //39
   'LASERER',       //40
   'BALLOONER',     //41
-  'HOVERBOARDER',  //42
+  'RUNNER',        //42
   'DRIFTER',       //43
   'SLEEPER'        //44
   );

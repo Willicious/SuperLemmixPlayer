@@ -126,9 +126,8 @@ $ANIMATIONS
     $END
   $END
   
-  $HOVERBOARDER
+  $RUNNER
     FRAMES 8
-	LOOP_TO_FRAME 4
 
     $RIGHT
       FOOT_X 8

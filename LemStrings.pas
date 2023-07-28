@@ -76,7 +76,6 @@ const
   SFX_LASER = 'laser';
   SFX_BALLOON_INFLATE = 'balloon';
   SFX_BALLOON_POP = 'balloonpop';
-  SFX_HOVERBOARD = 'hoverboard';
   SFX_OK = 'OK';
 
 resourcestring
@@ -147,7 +146,7 @@ resourcestring
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
   SBallooner = 'Ballooner';
-  SHoverboarder = 'Hoverboarder';
+  SRunner = 'Runner';
   SDrifter = 'Drifter';
   SSleeper = 'Sleeper';
 
@@ -228,7 +227,7 @@ const
     SLooker,      //44
     SLaserer,     //45
     SBallooner,   //46
-    SHoverboarder,//47
+    SRunner,      //47
     SDrifter,     //48
     SSleeper      //49
   );
