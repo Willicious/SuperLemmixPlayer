@@ -4484,65 +4484,58 @@ begin
   EscapeFreezerCube(L);
 end;
 
-function TLemmingGame.HandleHoverboarding(L: TLemming): Boolean;
+function TLemmingGame.HandleRunning(L: TLemming): Boolean;
 var
-  i: Integer;
-  LemGPY: Integer;
-  LemWPY: Integer;
+  LemDy: Integer;
   XChecks, YChecks: Integer;
 begin
-  if L.LemPhysicsFrame = 3 then CueSoundEffect(SFX_HOVERBOARD, L.Position);
-
   Result := True;
 
-  // Initialise terrain and water check
-  LemGPY := FindGroundPixel(L.LemX, L.LemY);
-  LemWPY := FindWaterPixel(L.LemX, L.LemY);
+  // Initialise terrain check
+  LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-  if L.LemPhysicsFrame >= 4 then
+  // Always move twice the distance of regular lems
   begin
-    // Always move twice the distance of regular lems
+    if L.LemDX < 0 then
+      Dec(L.LemX, 2)
+    else
+      Inc(L.LemX, 2);
+  end;
+
+  // Look ahead to see if there's a wall
+  for XChecks := 0 to 1 do
+  begin
+    if (L.LemDX < 0) then
+      LemDy := FindGroundPixel(L.LemX - XChecks, L.LemY)
+    else
+      LemDy := FindGroundPixel(L.LemX + XChecks, L.LemY);
+
+    if (LemDy < -6) then
     begin
-      if L.LemDX < 0 then
-        Dec(L.LemX, 2)
+      if L.LemIsClimber then
+        Transition(L, baClimbing)
       else
-        Inc(L.LemX, 2);
-    end;
+      begin
+        TurnAround(L);
+        Inc(L.LemX, L.LemDx);
+      end;
+    end
+    else if (LemDy < -2) then
+      Inc(L.LemY, LemDy)
+  end;
 
-    // Always hover 2px above ground and water
-    if not ((LemGPY >= 2) and (LemWPY >= 2)) then
-      Dec(L.LemY);
+  // Get new ground pixel again in case the Lem has turned
+  LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-    // Look ahead to see if there's a wall
-    for XChecks := 0 to 1 do
-    begin
-      if (L.LemDX < 0) then
-        LemGPY := FindGroundPixel(L.LemX - XChecks, L.LemY)
-      else
-        LemGPY := FindGroundPixel(L.LemX + XChecks, L.LemY);
-
-      if (LemGPY < -6) then
-        begin
-          TurnAround(L);
-          Inc(L.LemX, L.LemDx);
-        end else
-      if (LemGPY < -2) then
-        Dec(L.LemY);
-    end;
-
-    // Get new ground and water pixel again in case the Lem has turned
-    LemGPY := FindGroundPixel(L.LemX, L.LemY);
-    LemWPY := FindWaterPixel(L.LemX, L.LemY);
-
-    // Hoverboarders don't fall, instead they glide downwards
-    if (LemGPY >= 7) and (LemWPY >= 7) then
-    begin
-      Inc(L.LemY, 2);
-    end else if (LemGPY >= 3) and (LemWPY >= 3) then
-      Inc(L.LemY);
-  end else if not HasPixelAt(L.LemX, L.LemY)
-          and not HasWaterObjectAt(L.LemX, L.LemY, True, False) then
-    Inc(L.LemY);
+  // Runners don't fall straightaway
+  if (LemDy > 0) and not (LemDy > 7) then
+    Inc(L.LemY, LemDy)
+  else if LemDy > 7 then
+  begin
+    fRunnerHopFromEdge := true;
+    Transition(L, baJumping);
+  end else
+    fRunnerHopFromEdge := false;
 
   EscapeFreezerCube(L);
 end;
