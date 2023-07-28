@@ -273,8 +273,6 @@ type
       function HandlePoison(L: TLemming): Boolean;
       function HandleRadiation(L: TLemming): Boolean;
       function HandleSlowfreeze(L: TLemming): Boolean;
-      function HandleTrampolene(L: TLemming): Boolean;
-
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForQueuedAction;
@@ -592,6 +590,7 @@ const
    (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0)),
    (( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1), ( 0,  1), ( 0,  0))
   );
+
 const
   // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
   // Here only for refence.
@@ -3772,13 +3771,6 @@ begin
       L.LemFreezerExplosionTimer := 169;
     L.LemHideCountdown := False;
   end;
-end;
-
-function TLemmingGame.HandleTrampolene;
-begin
-  Result := True;
-
-
 end;
 
 procedure TLemmingGame.ApplyFreezeLemming(L: TLemming);
