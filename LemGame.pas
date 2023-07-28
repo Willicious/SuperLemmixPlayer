@@ -358,7 +358,7 @@ type
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
     function HandleBallooning(L: TLemming): Boolean;
-    function HandleHoverboarding(L: TLemming): Boolean;
+    function HandleRunning(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
     function HandleSplatting(L: TLemming): Boolean;
     function HandleExiting(L: TLemming): Boolean;
@@ -411,7 +411,7 @@ type
     function MayAssignFloaterGlider(L: TLemming): Boolean;
     function MayAssignSwimmer(L: TLemming): Boolean;
     function MayAssignBallooner(L: TLemming) : Boolean;
-    function MayAssignHoverboarder(L: TLemming) : Boolean;
+    function MayAssignRunner(L: TLemming) : Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignTimebomber(L: TLemming): Boolean;
@@ -654,7 +654,7 @@ const
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
-             baBallooning, baHoverboarding);
+             baBallooning, baRunning);
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1140,7 +1140,7 @@ begin
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
   LemmingMethods[baBallooning]    := HandleBallooning;
-  LemmingMethods[baHoverboarding] := HandleHoverboarding;
+  LemmingMethods[baRunning]       := HandleRunning;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1183,7 +1183,7 @@ begin
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
   NewSkillMethods[baBallooning]   := MayAssignBallooner;
-  NewSkillMethods[baHoverboarding]:= MayAssignHoverboarder;
+  NewSkillMethods[baRunning]      := MayAssignRunner;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1452,7 +1452,7 @@ begin
         Transition(L, baFalling)
       else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
-      else if Lem.IsHoverboarder then
+      else if Lem.IsRunner then
         Transition(L, baLooking) // We want to wait a few frames before starting
       else
         Transition(L, baWalking);
@@ -1721,9 +1721,9 @@ const
     14, //44 baLooking
     12, //45 baLasering - it's, ironically, this high for rendering purposes
     17, //46 baBallooning
-    8,  //47 baHoverboarding
+    8,  //47 baRunning
     8,  //48 baDrifting
-    20  //48 baSleeping
+    20  //49 baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1872,7 +1872,7 @@ begin
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing    : begin
                      CueSoundEffect(SFX_OHNO, L.Position);
-                     L.LemIsHoverboarder := false;
+                     L.LemIsRunner := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -1883,7 +1883,7 @@ begin
                    end;
     baTimebombing :begin
                      CueSoundEffect(SFX_OHNO, L.Position);
-                     L.LemIsHoverboarder := false;
+                     L.LemIsRunner := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -1931,7 +1931,7 @@ begin
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
-                      baFreezing, baFrozen, baHoverboarding] then
+                      baFreezing, baFrozen] then
     begin
       if L.LemAction = baBallooning then
       begin
@@ -1962,7 +1962,7 @@ begin
   begin               //all these states bypass freezing phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
-                      baFreezing, baFrozen, baHoverboarding] then
+                      baFreezing, baFrozen] then
     begin
       if not UserSetNuking then
       begin
@@ -2622,7 +2622,7 @@ end;
 
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baHoverboarding, baShrugging, baBlocking, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baRunning, baShrugging, baBlocking, baPlatforming, baBuilding,
                baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
                baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
@@ -2683,12 +2683,12 @@ begin
   Result := (not (L.LemAction in ActionSet));
 end;
 
-function TLemmingGame.MayAssignHoverboarder(L: TLemming): Boolean;
+function TLemmingGame.MayAssignRunner(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping, baDrowning,
-               baSplatting, baExiting, baSleeping, baHoverboarding];
+               baSplatting, baExiting, baSleeping];
 begin
   Result := (not (L.LemAction in ActionSet));
 end;
@@ -2896,7 +2896,7 @@ end;
 
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baHoverboarding, baShrugging, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baRunning, baShrugging, baPlatforming, baBuilding,
                baStacking, baBallooning, baBashing, baFencing, baMining, baDigging,
                baAscending, baFalling, baFloating, baSwimming, baGliding, baFixing,
                baReaching, baShimmying, baJumping, baLasering, baSpearing, baGrenading,
@@ -2913,7 +2913,7 @@ end;
 
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baHoverboarding, baShrugging, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baRunning, baShrugging, baPlatforming, baBuilding,
                baClimbing, baSwimming, baStacking, baBashing, baFencing, baMining,
                baDigging, baLasering, baDangling, baLooking, baBallooning];
 var
@@ -2971,7 +2971,7 @@ end;
 
 function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baHoverboarding, baDigging, baBuilding, baBashing, baMining,
+  ActionSet = [baWalking, baRunning, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
                baSwimming, baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
