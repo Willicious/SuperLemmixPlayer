@@ -3191,7 +3191,7 @@ begin
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
     begin
-      if not L.LemIsHoverboarder then AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
+      AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
       // Disarmers move always to final X-position, see http://www.lemmingsforums.net/index.php?topic=3004.0
       if (L.LemAction = baFixing) then CheckPos[0, i] := L.LemX;
     end;
@@ -4023,7 +4023,7 @@ var
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
                     spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer,
-                    spbSpearer, spbGrenader, spbLaserer, spbBallooner, spbHoverboarder];  //Timebomber not included by choice
+                    spbSpearer, spbGrenader, spbLaserer, spbBallooner];  //Timebomber not included by choice
 begin
   if fHyperSpeed then Exit;
 
@@ -4284,8 +4284,6 @@ begin
   if L.LemPhysicsFrame > L.LemMaxPhysicsFrame then
   begin
     L.LemPhysicsFrame := 0;
-    // Hoverboarder starts cycle at frame 4!
-    if L.LemAction = baHoverboarding then L.LemPhysicsFrame := 4;
     // Floater, Glider and Ballooner start cycle at frame 9!
     if L.LemAction in [baFloating, baGliding, baBallooning] then L.LemPhysicsFrame := 9;
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
@@ -4409,7 +4407,7 @@ begin
   //detects the presence of a Freezer lem within range of the ice cube's width/2
   //for now, though, this will do
 
-  //makes sure Walkers & Hoverboarders can ascend out of Freezer cubes
+  //makes sure Walkers & Runners can ascend out of Freezer cubes
   LemDy := FindGroundPixel(L.LemX, L.LemY);
   LemDXL := FindGroundPixel(L.LemX -1, L.LemY);
   LemDXR := FindGroundPixel(L.LemX +1, L.LemY);
@@ -6182,7 +6180,6 @@ begin
   end;
 end;
 
-
 function TLemmingGame.HandleFalling(L: TLemming): Boolean;
 var
   CurrFallDist: Integer;
@@ -7214,7 +7211,7 @@ begin
           LemDX := 1;
           if Gadgets[ix].IsFlipPhysics then TurnAround(NewLemming);
 
-          // Hoverboarder not needed here because it's obvious that they're hoverboarding!
+          // Runner not needed here because it's obvious that they're running!
           LemIsSlider := Gadgets[ix].IsPreassignedSlider;
           LemIsClimber := Gadgets[ix].IsPreassignedClimber;
           LemIsSwimmer := Gadgets[ix].IsPreassignedSwimmer;
@@ -7662,6 +7659,7 @@ begin
           Inc(L.LemFrame, 2);
           Inc(L.LemPhysicsFrame, 2);
         end;
+
         fLemNextAction := baNone;
         fLemJumpToHoistAdvance := false;
       end;
