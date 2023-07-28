@@ -186,6 +186,7 @@ type
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     fLemJumpToHoistAdvance     : Boolean; // when using above with Jumper -> Hoister, whether to apply a frame offset
+    fRunnerHopFromEdge         : Boolean; // the Runner makes a short hop when exiting a platform
     fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval          : Integer; //the current spawn interval, obviously
@@ -590,6 +591,15 @@ const
    (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0)),
    (( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1), ( 0,  1), ( 0,  0))
   );
+
+  HOP_JUMP_PATTERNS: array[0..3] of TJumpPattern =
+    (
+   (( 1,  0), ( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0)),
+   (( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1)),
+   (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1)),
+   (( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1), ( 0,  1), ( 0,  1))
+  );
+
 
 const
   // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
@@ -5872,20 +5882,32 @@ JumperArcFrames: Integer;
   begin
     Result := false;
 
-    if L.LemIsHoverboarder then
+    if L.LemIsRunner then
     begin
-      JumperArcFrames := 19;
+      if fRunnerHopFromEdge then
+      begin
+        JumperArcFrames := 4;
 
-      case L.LemJumpProgress of
-        0..2: PatternIndex := L.LemJumpProgress;
-        3..5: PatternIndex := 3;
-        6..12: PatternIndex := L.LemJumpProgress -2;
-        13..15: PatternIndex := 11;
-        16..18: PatternIndex := L.LemJumpProgress -4;
-        else Exit;
+        case L.LemJumpProgress of
+          0..3: PatternIndex := L.LemJumpProgress;
+          else Exit;
+        end;
+
+        Pattern := HOP_JUMP_PATTERNS[PatternIndex];
+      end else begin
+        JumperArcFrames := 19;
+
+        case L.LemJumpProgress of
+          0..2: PatternIndex := L.LemJumpProgress;
+          3..5: PatternIndex := 3;
+          6..12: PatternIndex := L.LemJumpProgress -2;
+          13..15: PatternIndex := 11;
+          16..18: PatternIndex := L.LemJumpProgress -4;
+          else Exit;
+        end;
+
+        Pattern := SUPER_JUMP_PATTERNS[PatternIndex];
       end;
-
-      Pattern := SUPER_JUMP_PATTERNS[PatternIndex];
     end else begin
       JumperArcFrames := 13;
 
@@ -5900,7 +5922,6 @@ JumperArcFrames: Integer;
 
       Pattern := JUMP_PATTERNS[PatternIndex];
     end;
-
 
     FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
 
@@ -5943,12 +5964,12 @@ JumperArcFrames: Integer;
 
             if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
             begin
-              if L.LemIsClimber and not L.LemIsHoverboarder then
+              if L.LemIsClimber then
               begin
                 L.LemX := CheckX;
                 fLemNextAction := baClimbing;
               end else begin
-                if L.LemIsSlider and not L.LemIsHoverboarder then
+                if L.LemIsSlider then
                 begin
                   Inc(L.LemX, L.LemDX);
                   fLemNextAction := baSliding;
@@ -5999,10 +6020,9 @@ begin
   if MakeJumpMovement then
   begin
     Inc(L.LemJumpProgress);
-    if (L.LemJumpProgress >= 8) and (L.LemIsGlider) and not (L.LemIsHoverboarder) then
+
+    if (L.LemJumpProgress >= 8) and (L.LemIsGlider) then
       fLemNextAction := baGliding
-    else if (L.LemJumpProgress >= 16) and (L.LemIsHoverboarder) then
-      fLemNextAction := baHoverboarding // hotbookmark - use JumpToHoist to go to a particular frame in the Hoverboarding animation
     else if L.LemJumpProgress = JumperArcFrames then
       fLemNextAction := baWalking;
   end;
