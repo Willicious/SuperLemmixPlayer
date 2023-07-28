@@ -4351,9 +4351,6 @@ begin
     begin
       //ballooners bob around at the top infinitely
       Inc(L.LemY, 3);
-
-//      //balloons pop on ceiling
-//      PopBalloon(L, 1, baFalling);
     end;
 
   if (L.LemY <= 0) then
@@ -7667,6 +7664,7 @@ begin
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
              and not L.LemIsDisarmer)
+         or ((L.LemAction = baBallooning) and (L.LemY <= 30))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
          or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], False, True) and not L.LemIsSwimmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
