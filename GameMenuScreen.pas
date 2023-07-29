@@ -720,7 +720,7 @@ end;
 
 procedure TGameMenuScreen.ExitGame;
 begin
-  SoundManager.PlaySound(SFX_BYEBYE);
+  SoundManager.PlaySound(SFX_BYE);
   CloseScreen(gstExit);
 end;
 
