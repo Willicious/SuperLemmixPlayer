@@ -80,6 +80,7 @@ const
   SFX_BALLOON_INFLATE = 'balloon';
   SFX_BALLOON_POP = 'balloonpop';
   SFX_JUMP = 'jump';
+  SFX_BYEBYE = 'byebye';
   SFX_OK = 'OK';
 
 resourcestring

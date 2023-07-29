@@ -713,14 +713,14 @@ procedure TGameMenuScreen.BeginGame;
 begin
   if GameParams.CurrentLevel <> nil then
   begin
-    SoundManager.PlaySound(SFX_LETSGO);
+    SoundManager.PlaySound(SFX_OK);
     CloseScreen(gstPreview);
   end;
 end;
 
 procedure TGameMenuScreen.ExitGame;
 begin
-  SoundManager.PlaySound(SFX_OK);
+  SoundManager.PlaySound(SFX_BYEBYE);
   CloseScreen(gstExit);
 end;
 
