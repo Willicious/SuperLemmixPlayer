@@ -72,10 +72,12 @@ const
   SFX_ZOMBIE_DIE = 'zombiedie';
   SFX_TIMEUP = 'timeup';
   SFX_SPEAR_THROW = 'throw';
+  SFX_GRENADE_THROW = 'grenade';
   SFX_SPEAR_HIT = 'spearhit';
   SFX_LASER = 'laser';
   SFX_BALLOON_INFLATE = 'balloon';
   SFX_BALLOON_POP = 'balloonpop';
+  SFX_JUMP = 'jump';
   SFX_OK = 'OK';
 
 resourcestring

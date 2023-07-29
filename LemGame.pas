@@ -1916,7 +1916,10 @@ begin
                      Dec(L.LemY, i);
                    end;
     baFixing     : L.LemDisarmingFrames := 42;
-    baJumping    : L.LemJumpProgress := 0;
+    baJumping    : begin
+                     L.LemJumpProgress := 0;
+                     CueSoundEffect(SFX_JUMP, L.Position);
+                   end;
     baLasering   : begin
                      L.LemLaserRemainTime := 10;
                      CueSoundEffect(SFX_LASER, L.Position);
@@ -6514,7 +6517,11 @@ begin
     0, 2, 3: L.LemFrame := 0;
 
     6: begin
-         CueSoundEffect(SFX_SPEAR_THROW, L.Position);
+         if (L.LemAction = baSpearing) then
+           CueSoundEffect(SFX_SPEAR_THROW, L.Position)
+         else
+           CueSoundEffect(SFX_GRENADE_THROW, L.Position);
+
          if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
        end;
 
