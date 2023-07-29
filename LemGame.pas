@@ -3573,21 +3573,12 @@ begin
     end;
 
     Result := True;
-    if not IsOutOfTime
-      then Transition(L, baExiting)
-      else begin
-        //we don't want the lems to appear to exit if time has run out
-        Transition(L, baSleeping);
-        Exit;
-      end;
-
-    if GameParams.PreferYippee then
-    begin
-      CueSoundEffect(SFX_YIPPEE, L.Position);
-    end else
-    if GameParams.PreferBoing then
-    begin
-      CueSoundEffect(SFX_OING, L.Position);
+    if not IsOutOfTime then
+      Transition(L, baExiting)
+    else begin
+      //we don't want the lems to appear to exit if time has run out
+      Transition(L, baSleeping);
+      Exit;
     end;
   end;
 end;
