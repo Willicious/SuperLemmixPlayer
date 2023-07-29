@@ -73,6 +73,8 @@ const
   SFX_ZOMBIE_DIE = 'zombiedie';
   SFX_ZOMBIE_SPLAT = 'zombiesplat';
   SFX_ZOMBIE_PICKUP = 'zombiepickup';
+  SFX_ZOMBIE_LAUGH = 'zombielaugh';
+  SFX_ZOMBIE_LOLZ = 'zombielolz';
   SFX_ZOMBIE_EXIT = 'zombieyippee';
   SFX_TIMEUP = 'timeup';
   SFX_SPEAR_THROW = 'throw';

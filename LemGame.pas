@@ -1861,12 +1861,19 @@ begin
                        L.LemExplosionTimer := 0;
                        L.LemFreezerExplosionTimer := 0;
                      end;
-                     if L.LemIsZombie then
-                       CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
-                     else if GameParams.PreferYippee then
-                       CueSoundEffect(SFX_YIPPEE, L.Position)
-                     else if GameParams.PreferBoing then
-                       CueSoundEffect(SFX_OING, L.Position);
+                     if GameParams.PreferYippee then
+                     begin
+                       if L.LemIsZombie then
+                         CueSoundEffect(SFX_ZOMBIE_LAUGH, L.Position)
+                       else
+                         CueSoundEffect(SFX_YIPPEE, L.Position);
+                     end else if GameParams.PreferBoing then
+                     begin
+                       if L.LemIsZombie then
+                         CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
+                       else
+                         CueSoundEffect(SFX_OING, L.Position);
+                     end;
                    end;
     baVaporizing   : begin
                        L.LemExplosionTimer := 0;
