@@ -1858,10 +1858,12 @@ begin
                        L.LemExplosionTimer := 0;
                        L.LemFreezerExplosionTimer := 0;
                      end;
-                     if GameParams.PreferYippee then
-                      CueSoundEffect(SFX_YIPPEE, L.Position)
+                     if L.LemIsZombie then
+                       CueSoundEffect(SFX_ZOMBIE, L.Position)
+                     else if GameParams.PreferYippee then
+                       CueSoundEffect(SFX_YIPPEE, L.Position)
                      else if GameParams.PreferBoing then
-                      CueSoundEffect(SFX_OING, L.Position);
+                       CueSoundEffect(SFX_OING, L.Position);
                    end;
     baVaporizing   : begin
                        L.LemExplosionTimer := 0;
@@ -3554,7 +3556,7 @@ var
 begin
   Result := False; // only see exit trigger area, if it actually used
 
-  if (not L.LemIsZombie) then
+  //if (not L.LemIsZombie) then
   begin
     if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
       Exit;
@@ -6549,11 +6551,19 @@ begin
   begin
     if UserSetNuking and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
       Transition(L, baOhnoing);
+  end;
 
-    //lems that have started exiting should be saved
-    if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
-  end else
-  if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
+  // Lems that have begun to exit after time has run out still count as saved
+  if L.LemEndOfAnimation then
+  begin
+    // Exiting Zombies decrease save count by 1
+    if L.LemIsZombie then
+    begin
+      RemoveLemming(L, RM_NEUTRAL, True);
+      Dec(LemmingsIn);
+    end else
+      RemoveLemming(L, RM_SAVE);
+  end;
 end;
 
 function TLemmingGame.HandleVaporizing(L: TLemming): Boolean;
