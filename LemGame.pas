@@ -1846,7 +1846,10 @@ begin
     baSplatting  : begin
                      L.LemExplosionTimer := 0;
                      L.LemFreezerExplosionTimer := 0;
-                     CueSoundEffect(SFX_SPLAT, L.Position);
+                     if L.LemIsZombie then
+                       CueSoundEffect(SFX_ZOMBIE_SPLAT, L.Position)
+                     else
+                       CueSoundEffect(SFX_SPLAT, L.Position);
                    end;
     baBlocking   : begin
                      L.LemHasBlockerField := True;
@@ -1883,7 +1886,10 @@ begin
                    end;
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing    : begin
-                     CueSoundEffect(SFX_OHNO, L.Position);
+                     if L.LemIsZombie then
+                       CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
+                     else
+                       CueSoundEffect(SFX_OHNO, L.Position);
                      L.LemIsRunner := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
@@ -1894,7 +1900,10 @@ begin
                      L.LemHasBeenOhnoer := true;
                    end;
     baTimebombing :begin
-                     CueSoundEffect(SFX_OHNO, L.Position);
+                     if L.LemIsZombie then
+                       CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
+                     else
+                       CueSoundEffect(SFX_OHNO, L.Position);
                      L.LemIsRunner := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
