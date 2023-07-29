@@ -1529,7 +1529,9 @@ const
   LEN = 4;
 begin
   LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
-  Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
+
+  if not (Game.IsOutOfTime or Game.UserSetNuking) then
+    Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
 
   S := IntToStr(LemNum);
   if Length(S) < LEN then
