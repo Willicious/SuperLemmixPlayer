@@ -3507,12 +3507,16 @@ begin
   // Exit if there is no Object
   if GadgetID = 65535 then Exit;
 
+  Gadget := Gadgets[GadgetID];
+  Gadget.CurrentFrame := Gadget.CurrentFrame and not $01;
+
   if not L.LemIsZombie then
   begin
-    Gadget := Gadgets[GadgetID];
-    Gadget.CurrentFrame := Gadget.CurrentFrame and not $01;
     CueSoundEffect(SFX_PICKUP, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], Gadget.SkillCount);
+  end else begin
+    CueSoundEffect(SFX_SPEAR_THROW, L.Position); // hotbookmark - placeholder
+    UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], 0);
   end;
 end;
 
