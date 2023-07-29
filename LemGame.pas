@@ -186,7 +186,6 @@ type
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     fLemJumpToHoistAdvance     : Boolean; // when using above with Jumper -> Hoister, whether to apply a frame offset
-    fRunnerHopFromEdge         : Boolean; // the Runner makes a short hop when exiting a platform
     fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval          : Integer; //the current spawn interval, obviously
@@ -359,7 +358,6 @@ type
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
     function HandleBallooning(L: TLemming): Boolean;
-    function HandleRunning(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
     function HandleSplatting(L: TLemming): Boolean;
     function HandleExiting(L: TLemming): Boolean;
@@ -412,7 +410,6 @@ type
     function MayAssignFloaterGlider(L: TLemming): Boolean;
     function MayAssignSwimmer(L: TLemming): Boolean;
     function MayAssignBallooner(L: TLemming) : Boolean;
-    function MayAssignRunner(L: TLemming) : Boolean;
     function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignTimebomber(L: TLemming): Boolean;
@@ -659,12 +656,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..25] of TBasicLemmingAction =
+  ActionListArray: array[0..24] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping, baSliding, baLasering, baSpearing, baGrenading,
-             baBallooning, baRunning);
+             baJumping, baSliding, baLasering, baSpearing, baGrenading, baBallooning);
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1150,7 +1146,6 @@ begin
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
   LemmingMethods[baBallooning]    := HandleBallooning;
-  LemmingMethods[baRunning]       := HandleRunning;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1193,7 +1188,6 @@ begin
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
   NewSkillMethods[baBallooning]   := MayAssignBallooner;
-  NewSkillMethods[baRunning]      := MayAssignRunner;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1462,8 +1456,6 @@ begin
         Transition(L, baFalling)
       else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
-      else if Lem.IsRunner then
-        Transition(L, baLooking) // We want to wait a few frames before starting
       else
         Transition(L, baWalking);
 
@@ -1731,7 +1723,6 @@ const
     14, //44 baLooking
     12, //45 baLasering - it's, ironically, this high for rendering purposes
     17, //46 baBallooning
-    8,  //47 baRunning
     8,  //48 baDrifting
     20  //49 baSleeping
     );
@@ -1897,7 +1888,6 @@ begin
                        CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
                      else
                        CueSoundEffect(SFX_OHNO, L.Position);
-                     L.LemIsRunner := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -1911,7 +1901,6 @@ begin
                        CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
                      else
                        CueSoundEffect(SFX_OHNO, L.Position);
-                     L.LemIsRunner := false;
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -2375,14 +2364,6 @@ begin
      and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
     L.LemY := L.LemY - 1;
 
-  // Walkers cancel Runner action and state
-  if (NewSkill = baToWalking) and L.LemIsRunner then
-  begin
-    L.LemIsRunner := False;
-    Transition(L, baWalking);
-    TurnAround(L); // This actually keeps them facing the same way
-  end;
-
   // Turn around walking lem, if assigned a walker
   if (NewSkill = baToWalking) and (L.LemAction = baWalking) then
   begin
@@ -2396,15 +2377,6 @@ begin
       // Go one back to cancel the Inc(L.LemX, L.LemDx) in HandleWalking
       // unless the Lem will fall down (which is handles already in Transition)
       if HasPixelAt(L.LemX, L.LemY) then Dec(L.LemX, L.LemDx);
-    end;
-  end;
-
-  if (NewSkill = baRunning) then
-  begin
-    if L.LemIsRunner then TurnAround(L) //assigning a Runner to a Runner turns the lem
-    else begin
-      L.LemIsRunner := True; // Semi-permanent - can be set to false using Walker
-      Transition(L, baRunning); // We want the action to start staightaway
     end;
   end;
 
@@ -2657,7 +2629,7 @@ end;
 
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baRunning, baShrugging, baBlocking, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
                baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
                baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
@@ -2714,16 +2686,6 @@ const
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping, baDrowning,
                baSplatting, baExiting, baSleeping, baBallooning];
-begin
-  Result := (not (L.LemAction in ActionSet));
-end;
-
-function TLemmingGame.MayAssignRunner(L: TLemming): Boolean;
-const
-  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
-               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baDangling, baVaporizing, baVinetrapping, baDrowning,
-               baSplatting, baExiting, baSleeping];
 begin
   Result := (not (L.LemAction in ActionSet));
 end;
@@ -2931,7 +2893,7 @@ end;
 
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baRunning, baShrugging, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding,
                baStacking, baBallooning, baBashing, baFencing, baMining, baDigging,
                baAscending, baFalling, baFloating, baSwimming, baGliding, baFixing,
                baReaching, baShimmying, baJumping, baLasering, baSpearing, baGrenading,
@@ -2948,7 +2910,7 @@ end;
 
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baRunning, baShrugging, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding,
                baClimbing, baSwimming, baStacking, baBashing, baFencing, baMining,
                baDigging, baLasering, baDangling, baLooking, baBallooning];
 var
@@ -3006,7 +2968,7 @@ end;
 
 function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baRunning, baDigging, baBuilding, baBashing, baMining,
+  ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
                baSwimming, baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
@@ -4420,7 +4382,7 @@ begin
   //detects the presence of a Freezer lem within range of the ice cube's width/2
   //for now, though, this will do
 
-  //makes sure Walkers & Runners can ascend out of Freezer cubes
+  //makes sure Walkers can ascend out of Freezer cubes
   LemDy := FindGroundPixel(L.LemX, L.LemY);
   LemDXL := FindGroundPixel(L.LemX -1, L.LemY);
   LemDXR := FindGroundPixel(L.LemX +1, L.LemY);
@@ -4442,12 +4404,6 @@ var
   LemDy: Integer;
 begin
   Result := True;
-
-  if L.LemIsRunner then
-  begin
-    Transition(L, baRunning);
-    Exit;
-  end;
 
   // Zombies walk at half the speed of regular lems
   if L.LemIsZombie then
@@ -4495,62 +4451,6 @@ begin
   end
   else if (LemDy > 0) then
     Inc(L.LemY, LemDy);
-
-  EscapeFreezerCube(L);
-end;
-
-function TLemmingGame.HandleRunning(L: TLemming): Boolean;
-var
-  LemDy: Integer;
-  XChecks, YChecks: Integer;
-begin
-  Result := True;
-
-  // Initialise terrain check
-  LemDy := FindGroundPixel(L.LemX, L.LemY);
-
-  // Always move twice the distance of regular lems
-  begin
-    if L.LemDX < 0 then
-      Dec(L.LemX, 2)
-    else
-      Inc(L.LemX, 2);
-  end;
-
-  // Look ahead to see if there's a wall
-  for XChecks := 0 to 1 do
-  begin
-    if (L.LemDX < 0) then
-      LemDy := FindGroundPixel(L.LemX - XChecks, L.LemY)
-    else
-      LemDy := FindGroundPixel(L.LemX + XChecks, L.LemY);
-
-    if (LemDy < -6) then
-    begin
-      if L.LemIsClimber then
-        Transition(L, baClimbing)
-      else
-      begin
-        TurnAround(L);
-        Inc(L.LemX, L.LemDx);
-      end;
-    end
-    else if (LemDy < -2) then
-      Inc(L.LemY, LemDy)
-  end;
-
-  // Get new ground pixel again in case the Lem has turned
-  LemDy := FindGroundPixel(L.LemX, L.LemY);
-
-  // Runners don't fall straightaway
-  if (LemDy > 0) and not (LemDy > 7) then
-    Inc(L.LemY, LemDy)
-  else if LemDy > 7 then
-  begin
-    fRunnerHopFromEdge := true;
-    Transition(L, baJumping);
-  end else
-    fRunnerHopFromEdge := false;
 
   EscapeFreezerCube(L);
 end;
@@ -5890,46 +5790,18 @@ JumperArcFrames: Integer;
   begin
     Result := false;
 
-    if L.LemIsRunner then
-    begin
-      if fRunnerHopFromEdge then
-      begin
-        JumperArcFrames := 4;
+    JumperArcFrames := 13;
 
-        case L.LemJumpProgress of
-          0..3: PatternIndex := L.LemJumpProgress;
-          else Exit;
-        end;
-
-        Pattern := HOP_JUMP_PATTERNS[PatternIndex];
-      end else begin
-        JumperArcFrames := 19;
-
-        case L.LemJumpProgress of
-          0..2: PatternIndex := L.LemJumpProgress;
-          3..5: PatternIndex := 3;
-          6..12: PatternIndex := L.LemJumpProgress -2;
-          13..15: PatternIndex := 11;
-          16..18: PatternIndex := L.LemJumpProgress -4;
-          else Exit;
-        end;
-
-        Pattern := SUPER_JUMP_PATTERNS[PatternIndex];
-      end;
-    end else begin
-      JumperArcFrames := 13;
-
-      case L.LemJumpProgress of
-        0..1: PatternIndex := 0;
-        2..3: PatternIndex := 1;
-        4..8: PatternIndex := L.LemJumpProgress -2;
-        9..10: PatternIndex := 7;
-        11..12: PatternIndex := 8;
-        else Exit;
-      end;
-
-      Pattern := JUMP_PATTERNS[PatternIndex];
+    case L.LemJumpProgress of
+      0..1: PatternIndex := 0;
+      2..3: PatternIndex := 1;
+      4..8: PatternIndex := L.LemJumpProgress -2;
+      9..10: PatternIndex := 7;
+      11..12: PatternIndex := 8;
+      else Exit;
     end;
+
+    Pattern := JUMP_PATTERNS[PatternIndex];
 
     FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
 
@@ -7236,7 +7108,6 @@ begin
           LemDX := 1;
           if Gadgets[ix].IsFlipPhysics then TurnAround(NewLemming);
 
-          // Runner not needed here because it's obvious that they're running!
           LemIsSlider := Gadgets[ix].IsPreassignedSlider;
           LemIsClimber := Gadgets[ix].IsPreassignedClimber;
           LemIsSwimmer := Gadgets[ix].IsPreassignedSwimmer;

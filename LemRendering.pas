@@ -487,13 +487,7 @@ begin
   end;
 
   if (aLemming.LemAction = baJumping) then
-  begin  //hotbookmark
-    if aLemming.LemIsRunner then
-    case aLemming.LemJumpProgress of
-      0..8: if aLemming.LemFrame >= aLemming.LemMaxFrame - aLemming.LemFrameDiff then aLemming.LemFrame := 0;
-      9: aLemming.LemFrame := aLemming.LemMaxFrame - aLemming.LemFrameDiff + 1;
-      10..18: if aLemming.LemFrame > aLemming.LemMaxFrame then aLemming.LemFrame := aLemming.LemMaxFrame - aLemming.LemFrameDiff + 2;
-    end else
+  begin
     case aLemming.LemJumpProgress of
       0..6: if aLemming.LemFrame >= aLemming.LemMaxFrame - aLemming.LemFrameDiff then aLemming.LemFrame := 0;
       7: aLemming.LemFrame := aLemming.LemMaxFrame - aLemming.LemFrameDiff + 1;
@@ -961,7 +955,7 @@ var
 
   DoProjection: Boolean;
 const
-  PROJECTION_STATES = [baWalking, baAscending, baRunning,
+  PROJECTION_STATES = [baWalking, baAscending,
                        baDigging, baClimbing, baHoisting, baBuilding, baBashing,
                        baMining, baFalling, baFloating, baShrugging, baPlatforming,
                        baStacking, baSwimming, baGliding, baFixing, baFencing,
@@ -990,7 +984,6 @@ begin
                    else
                      fRenderInterface.SimulateTransitionLem(CopyL, baToWalking);
         spbShimmier: fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
-        spbRunner: CopyL.LemIsRunner := true;
         spbSlider: CopyL.LemIsSlider := true;
         spbClimber: CopyL.LemIsClimber := true;
         spbSwimmer: CopyL.LemIsSwimmer := true;
@@ -2699,7 +2692,6 @@ begin
 
     // Count number of helper icons to be displayed.
     numHelpers := 0;
-    // Runner is not needed here because it's obvious that they're running!
     if Gadget.IsPreassignedSlider then Inc(numHelpers);
     if Gadget.IsPreassignedClimber then Inc(numHelpers);
     if Gadget.IsPreassignedSwimmer then Inc(numHelpers);
@@ -3770,8 +3762,6 @@ begin
       L.LemAction := baFalling
     else if Lem.IsBlocker then
       L.LemAction := baBlocking
-    else if Lem.IsRunner then
-      L.LemAction := baRunning
     else
       L.LemAction := baWalking;
 

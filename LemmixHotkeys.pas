@@ -347,7 +347,6 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else if s = 'jumper' then Result := Integer(spbJumper)
     else if s = 'shimmier' then Result := Integer(spbShimmier)
     else if s = 'ballooner' then Result := Integer(spbBallooner)
-    else if s = 'runner' then Result := Integer(spbRunner)
     else if s = 'slider' then Result := Integer(spbSlider)
     else if s = 'climber' then Result := Integer(spbClimber)
     else if s = 'swimmer' then Result := Integer(spbSwimmer)
@@ -506,7 +505,6 @@ var
                     Integer(spbJumper):       Result := 'Jumper';
                     Integer(spbShimmier):     Result := 'Shimmier';
                     Integer(spbBallooner):    Result := 'Ballooner';
-                    Integer(spbRunner):       Result := 'Runner';
                     Integer(spbSlider):       Result := 'Slider';
                     Integer(spbClimber):      Result := 'Climber';
                     Integer(spbSwimmer):      Result := 'Swimmer';

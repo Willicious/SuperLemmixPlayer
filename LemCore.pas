@@ -90,9 +90,8 @@ type
     baLooking,         //44
     baLasering,        //45
     baBallooning,      //46
-    baRunning,         //47
-    baDrifting,        //48
-    baSleeping         //49
+    baDrifting,        //47
+    baSleeping         //48
   );
 
 const
@@ -106,7 +105,6 @@ type
     spbJumper,
     spbShimmier,
     spbBallooner,
-    spbRunner,
     spbSlider,
     spbClimber,
     spbSwimmer,
@@ -148,7 +146,6 @@ const
     'jumper',
     'shimmier',
     'ballooner',
-    'runner',
     'slider',
     'climber',
     'swimmer',
@@ -177,7 +174,6 @@ const
     'jumpers',
     'shimmiers',
     'ballooners',
-    'runners',
     'sliders',
     'climbers',
     'swimmers',
@@ -258,8 +254,7 @@ const
     baSpearing,
     baGrenading,
     baLasering,
-    baBallooning,
-    baRunning
+    baBallooning
   ];
 
 const
@@ -310,9 +305,8 @@ const
     spbNone,        //44  baLooking
     spbLaserer,     //45  baLasering
     spbBallooner,   //46  baBallooning
-    spbRunner,      //47  baRunning
-    spbNone,        //48  baDrifting
-    spbNone         //49  baSleeping
+    spbNone,        //47  baDrifting
+    spbNone         //48  baSleeping
   );
 
 const
@@ -323,28 +317,27 @@ const
     baJumping,      //2
     baShimmying,    //3
     baBallooning,   //4
-    baRunning,      //5
-    baSliding,      //6
-    baClimbing,     //7
-    baSwimming,     //8
-    baFloating,     //9
-    baGliding,      //10
-    baFixing,       //11
-    baTimebombing,  //12
-    baExploding,    //13
-    baFreezing,     //14
-    baBlocking,     //15
-    baPlatforming,  //16
-    baBuilding,     //17
-    baStacking,     //18
-    baSpearing,     //19
-    baGrenading,    //20
-    baLasering,     //21
-    baBashing,      //22
-    baFencing,      //23
-    baMining,       //24
-    baDigging,      //25
-    baCloning,      //26
+    baSliding,      //5
+    baClimbing,     //6
+    baSwimming,     //7
+    baFloating,     //8
+    baGliding,      //9
+    baFixing,       //10
+    baTimebombing,  //11
+    baExploding,    //12
+    baFreezing,     //13
+    baBlocking,     //14
+    baPlatforming,  //15
+    baBuilding,     //16
+    baStacking,     //17
+    baSpearing,     //18
+    baGrenading,    //19
+    baLasering,     //20
+    baBashing,      //21
+    baFencing,      //22
+    baMining,       //23
+    baDigging,      //24
+    baCloning,      //25
     baNone, //Null
     baNone, //RR-
     baNone, //RR+

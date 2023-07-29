@@ -22,7 +22,6 @@ type
       fIsGlider:       Boolean;
       fIsDisarmer:     Boolean;
       fIsShimmier:     Boolean;
-      fIsRunner:       Boolean;
       fIsBlocker:      Boolean;
       fIsZombie:       Boolean;
       fIsNeutral:      Boolean;
@@ -39,7 +38,6 @@ type
       property IsGlider: Boolean read fIsGlider write fIsGlider;
       property IsDisarmer: Boolean read fIsDisarmer write fIsDisarmer;
       property IsShimmier: Boolean read fIsShimmier write fIsShimmier;
-      property IsRunner: Boolean read fIsRunner write fIsRunner;
       property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
       property IsZombie: Boolean read fIsZombie write fIsZombie;
       property IsNeutral: Boolean read fIsNeutral write fIsNeutral;
@@ -97,8 +95,6 @@ type
                                              // equal to (LemFrame > LemMaxFrame)
     LemIsPhysicsSimulation        : Boolean; // for simulations that are used for physics (eg. the Basher / Fencer checks) as opposed
                                              // to simulations to determine shadows
-
-    LemIsRunner                   : Boolean; //the state is semi-permanent, but needs permanent-style implementation
     LemIsSlider                   : Boolean;
     LemIsClimber                  : Boolean;
     LemIsSwimmer                  : Boolean;
@@ -195,7 +191,6 @@ begin
   IsGlider := aSrc.IsGlider;
   IsDisarmer := aSrc.IsDisarmer;
   IsShimmier := aSrc.IsShimmier;
-  IsRunner := aSrc.IsRunner;
   IsBlocker := aSrc.IsBlocker;
   IsZombie := aSrc.IsZombie;
   IsNeutral := aSrc.IsNeutral;
@@ -250,7 +245,7 @@ end;
 
 function TLemming.CheckForPermanentSkills: Boolean;
 begin
-  Result := (LemIsRunner or LemIsSlider or LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsDisarmer);
+  Result := (LemIsSlider or LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsDisarmer);
 end;
 
 procedure TLemming.SetFromPreplaced(Source: TPreplacedLemming);
@@ -265,7 +260,6 @@ begin
   LemIsGlider := Source.IsGlider;
   LemIsDisarmer := Source.IsDisarmer;
   LemIsNeutral := Source.IsNeutral;
-  LemIsRunner := Source.IsRunner;
   // Shimmier, Blocker and Zombie must be handled by the calling routine
 end;
 
@@ -321,7 +315,6 @@ begin
   LemTeleporting := Source.LemTeleporting;
   LemEndOfAnimation := Source.LemEndOfAnimation;
   LemIsPhysicsSimulation := Source.LemIsPhysicsSimulation;
-  LemIsRunner := Source.LemIsRunner;
   LemIsSlider := Source.LemIsSlider;
   LemIsClimber := Source.LemIsClimber;
   LemIsSwimmer := Source.LemIsSwimmer;

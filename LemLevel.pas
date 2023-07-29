@@ -922,7 +922,6 @@ begin
   HandleSkill('jumper', spbJumper);
   HandleSkill('shimmier', spbShimmier);
   HandleSkill('ballooner', spbBallooner);
-  HandleSkill('runner', spbRunner);
   HandleSkill('slider', spbSlider);
   HandleSkill('climber', spbClimber);
   HandleSkill('swimmer', spbSwimmer);
@@ -982,7 +981,6 @@ var
     if S = 'jumper' then O.Skill := Integer(spbJumper);    
     if S = 'shimmier' then O.Skill := Integer(spbShimmier);
     if S = 'ballooner' then O.Skill := Integer(spbBallooner);
-    if S = 'runner' then O.Skill := Integer(spbRunner);
     if S = 'slider' then O.Skill := Integer(spbSlider);
     if S = 'climber' then O.Skill := Integer(spbClimber);
     if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
@@ -1154,7 +1152,6 @@ begin
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
                // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
-  L.IsRunner := (aSection.Line['runner'] <> nil);
   L.IsShimmier     := (aSection.Line['shimmier'] <> nil);
   L.IsSlider       := (aSection.Line['slider'] <> nil);
   L.IsClimber      := (aSection.Line['climber']  <> nil);
@@ -1496,7 +1493,6 @@ begin
   HandleSkill('JUMPER', spbJumper);
   HandleSkill('SHIMMIER', spbShimmier);
   HandleSkill('BALLOONER', spbBallooner);
-  HandleSkill('RUNNER', spbRunner);
   HandleSkill('SLIDER', spbSlider);
   HandleSkill('CLIMBER', spbClimber);
   HandleSkill('SWIMMER', spbSwimmer);
@@ -1551,7 +1547,6 @@ var
      spbJumper: s := 'JUMPER';
      spbShimmier: s := 'SHIMMIER';
      spbBallooner: s := 'BALLOONER';
-     spbRunner: s := 'RUNNER';
      spbSwimmer: s := 'SWIMMER';
      spbSlider: s := 'SLIDER';
      spbClimber: s := 'CLIMBER';
@@ -1711,7 +1706,6 @@ begin
     if L.Dx < 0 then
       Sec.AddLine('FLIP_HORIZONTAL');
 
-    if L.IsRunner then Sec.AddLine('RUNNER');
     if L.IsShimmier then Sec.AddLine('SHIMMIER');
     if L.IsSlider then Sec.AddLine('SLIDER');
     if L.IsClimber then Sec.AddLine('CLIMBER');

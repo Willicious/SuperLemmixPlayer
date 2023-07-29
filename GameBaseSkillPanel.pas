@@ -190,7 +190,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png',
     {Skills end here}
 
     'empty_slot.png',
@@ -733,12 +733,11 @@ begin
     ///  This code is mostly copied to LemGadgetAnimation. ///
     //////////////////////////////////////////////////////////
 
-    // Walker, Jumper, Shimmier, Ballooner, Runner, Slider, Climber, - all simple
+    // Walker, Jumper, Shimmier, Ballooner, Slider, Climber, - all simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 19);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 19);
     DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
-    DrawAnimationFrame(fSkillIcons[spbRunner], RUNNING, 2, 7, 20);
     DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 5, 21);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 20);
 
@@ -1460,7 +1459,6 @@ begin
   if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
     Result := '--------';
-    if L.LemIsRunner then Result[1] := 'R';
     if L.LemIsSlider then Result[2] := 'L';
     if L.LemIsClimber then Result[3] := 'C';
     if L.LemIsSwimmer then Result[4] := 'S';
@@ -1473,7 +1471,6 @@ begin
   else if (L.LemAction in [baWalking, baAscending, baFalling]) then
   begin
     i := 0;
-    if L.LemIsRunner then DoInc(SRunner);
     if L.LemIsSlider then DoInc(SSlider);
     if L.LemIsClimber then DoInc(SClimber);
     if L.LemIsSwimmer then DoInc(SSwimmer);
