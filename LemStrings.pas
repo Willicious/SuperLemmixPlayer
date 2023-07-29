@@ -70,6 +70,8 @@ const
   SFX_FIXING = 'wrench';
   SFX_ZOMBIE = 'zombie';
   SFX_ZOMBIE_DIE = 'zombiedie';
+  SFX_ZOMBIE_PICKUP = 'zombiepickup';
+  SFX_ZOMBIE_EXIT = 'zombieyippee';
   SFX_TIMEUP = 'timeup';
   SFX_SPEAR_THROW = 'throw';
   SFX_GRENADE_THROW = 'grenade';

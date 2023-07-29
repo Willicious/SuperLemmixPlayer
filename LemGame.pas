@@ -1859,7 +1859,7 @@ begin
                        L.LemFreezerExplosionTimer := 0;
                      end;
                      if L.LemIsZombie then
-                       CueSoundEffect(SFX_ZOMBIE, L.Position)
+                       CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
                      else if GameParams.PreferYippee then
                        CueSoundEffect(SFX_YIPPEE, L.Position)
                      else if GameParams.PreferBoing then
@@ -3518,7 +3518,7 @@ begin
     CueSoundEffect(SFX_PICKUP, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], Gadget.SkillCount);
   end else begin
-    CueSoundEffect(SFX_SPEAR_THROW, L.Position); // hotbookmark - placeholder
+    CueSoundEffect(SFX_ZOMBIE_PICKUP, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], 0);
   end;
 end;
