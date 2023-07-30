@@ -179,6 +179,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Bomber'
       'Freezer'
       'Blocker'
+      'Ladderer'
       'Platformer'
       'Builder'
       'Stacker'

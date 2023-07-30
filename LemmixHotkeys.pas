@@ -279,6 +279,7 @@ begin
   SetKeyFunction($09, lka_Skill, Integer(spbGlider));
   SetKeyFunction($56, lka_Skill, Integer(spbBomber));
   SetKeyFunction($58, lka_Skill, Integer(spbBlocker));
+  SetKeyFunction($54, lka_Skill, Integer(spbLadderer));
   SetKeyFunction($54, lka_Skill, Integer(spbPlatformer));
   SetKeyFunction($41, lka_Skill, Integer(spbBuilder));
   SetKeyFunction($59, lka_Skill, Integer(spbLaserer));
@@ -357,6 +358,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else if s = 'bomber' then Result := Integer(spbBomber)
     else if s = 'freezer' then Result := Integer(spbFreezer)
     else if s = 'blocker' then Result := Integer(spbBlocker)
+    else if s = 'ladderer' then Result := Integer(spbLadderer)
     else if s = 'platformer' then Result := Integer(spbPlatformer)
     else if s = 'builder' then Result := Integer(spbBuilder)
     else if s = 'stacker' then Result := Integer(spbStacker)
@@ -515,6 +517,7 @@ var
                     Integer(spbBomber):       Result := 'Bomber';
                     Integer(spbFreezer):      Result := 'Freezer';
                     Integer(spbBlocker):      Result := 'Blocker';
+                    Integer(spbLadderer):     Result := 'Ladderer';
                     Integer(spbPlatformer):   Result := 'Platformer';
                     Integer(spbBuilder):      Result := 'Builder';
                     Integer(spbStacker):      Result := 'Stacker';
