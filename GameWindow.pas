@@ -907,6 +907,7 @@ begin
       spbBomber: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
       spbFreezer: SL.Add('  fRenderInterface.SelectedSkill: Freezer');
       spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
+      spbLadderer: SL.Add('  fRenderInterface.SelectedSkill: Ladderer');
       spbPlatformer: SL.Add('  fRenderInterface.SelectedSkill: Platformer');
       spbBuilder: SL.Add('  fRenderInterface.SelectedSkill: Builder');
       spbStacker: SL.Add('  fRenderInterface.SelectedSkill: Stacker');

@@ -90,8 +90,9 @@ type
     baLooking,         //44
     baLasering,        //45
     baBallooning,      //46
-    baDrifting,        //47
-    baSleeping         //48
+    baLaddering,       //47
+    baDrifting,        //48
+    baSleeping         //49
   );
 
 const
@@ -115,6 +116,7 @@ type
     spbBomber,
     spbFreezer,
     spbBlocker,
+    spbLadderer,
     spbPlatformer,
     spbBuilder,
     spbStacker,
@@ -156,6 +158,7 @@ const
     'bomber',
     'freezer',
     'blocker',
+    'ladderer',
     'platformer',
     'builder',
     'stacker',
@@ -184,6 +187,7 @@ const
     'bombers',
     'freezers',
     'blockers',
+    'ladderers',
     'platformers',
     'builders',
     'stackers',
@@ -254,7 +258,8 @@ const
     baSpearing,
     baGrenading,
     baLasering,
-    baBallooning
+    baBallooning,
+    baLaddering
   ];
 
 const
@@ -305,8 +310,9 @@ const
     spbNone,        //44  baLooking
     spbLaserer,     //45  baLasering
     spbBallooner,   //46  baBallooning
-    spbNone,        //47  baDrifting
-    spbNone         //48  baSleeping
+    spbLadderer,    //47  baLaddering
+    spbNone,        //48  baDrifting
+    spbNone         //49  baSleeping
   );
 
 const
@@ -327,17 +333,18 @@ const
     baExploding,    //12
     baFreezing,     //13
     baBlocking,     //14
-    baPlatforming,  //15
-    baBuilding,     //16
-    baStacking,     //17
-    baSpearing,     //18
-    baGrenading,    //19
-    baLasering,     //20
-    baBashing,      //21
-    baFencing,      //22
-    baMining,       //23
-    baDigging,      //24
-    baCloning,      //25
+    baLaddering,    //15
+    baPlatforming,  //16
+    baBuilding,     //17
+    baStacking,     //18
+    baSpearing,     //19
+    baGrenading,    //20
+    baLasering,     //21
+    baBashing,      //22
+    baFencing,      //23
+    baMining,       //24
+    baDigging,      //25
+    baCloning,      //26
     baNone, //Null
     baNone, //RR-
     baNone, //RR+

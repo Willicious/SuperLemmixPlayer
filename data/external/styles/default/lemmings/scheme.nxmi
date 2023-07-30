@@ -209,6 +209,20 @@ $ANIMATIONS
       FOOT_Y 13
     $END
   $END
+  
+  $LADDERER
+    FRAMES 25
+
+    $RIGHT
+      FOOT_X 5
+      FOOT_Y 14
+    $END
+
+    $LEFT
+      FOOT_X 26
+      FOOT_Y 14
+    $END
+  $END
 
   $BASHER
     FRAMES 32

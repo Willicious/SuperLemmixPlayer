@@ -133,6 +133,7 @@ resourcestring
   SShrugger = 'Shrugger';
   STimebomber = 'Timebomber';
   SExploder = 'Bomber';
+  SLadderer = 'Ladderer';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';
   SFreezer = 'Freezer';
@@ -235,8 +236,9 @@ const
     SLooker,      //44
     SLaserer,     //45
     SBallooner,   //46
-    SDrifter,     //47
-    SSleeper      //48
+    SLadderer,    //47
+    SDrifter,     //48
+    SSleeper      //49
   );
 
 implementation

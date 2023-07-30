@@ -84,6 +84,7 @@ var
             baExploding:     Result := 'Bomber';
             baFreezing:      Result := 'Freezer';
             baBlocking:      Result := 'Blocker';
+            baLaddering:     Result := 'Ladderer';
             baPlatforming:   Result := 'Platformer';
             baBuilding:      Result := 'Builder';
             baStacking:      Result := 'Stacker';

@@ -932,6 +932,7 @@ begin
   HandleSkill('bomber', spbBomber);
   HandleSkill('freezer', spbFreezer);
   HandleSkill('blocker', spbBlocker);
+  HandleSkill('ladderer', spbLadderer);
   HandleSkill('platformer', spbPlatformer);
   HandleSkill('builder', spbBuilder);
   HandleSkill('stacker', spbStacker);
@@ -991,6 +992,7 @@ var
     if S = 'bomber' then O.Skill := Integer(spbBomber);
     if S = 'freezer' then O.Skill := Integer(spbFreezer);
     if S = 'blocker' then O.Skill := Integer(spbBlocker);
+    if S = 'ladderer' then O.Skill := Integer(spbLadderer);
     if S = 'platformer' then O.Skill := Integer(spbPlatformer);
     if S = 'builder' then O.Skill := Integer(spbBuilder);
     if S = 'stacker' then O.Skill := Integer(spbStacker);
@@ -1503,6 +1505,7 @@ begin
   HandleSkill('BOMBER', spbBomber);
   HandleSkill('Freezer', spbFreezer);
   HandleSkill('BLOCKER', spbBlocker);
+  HandleSkill('LADDERER', spbLadderer);
   HandleSkill('PLATFORMER', spbPlatformer);
   HandleSkill('BUILDER', spbBuilder);
   HandleSkill('STACKER', spbStacker);
@@ -1557,6 +1560,7 @@ var
      spbBomber: s := 'BOMBER';
      spbFreezer: s := 'FREEZER';
      spbBlocker: s := 'BLOCKER';
+     spbLadderer: s := 'LADDERER';
      spbPlatformer: s := 'PLATFORMER';
      spbBuilder: s := 'BUILDER';
      spbStacker: s := 'STACKER';

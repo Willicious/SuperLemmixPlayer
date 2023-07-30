@@ -296,6 +296,7 @@ type
     function GetIsSimulating: Boolean;
 
     procedure LayBrick(L: TLemming);
+    procedure LayLadder(L:TLemming);
     function LayStackBrick(L: TLemming): Boolean;
     procedure MoveLemToReceivePoint(L: TLemming; GadgetID: Byte);
 
@@ -373,7 +374,9 @@ type
     function HandleFreezerExplosion(L: TLemming): Boolean;
     function HandleFrozen(L: TLemming): Boolean;
     function HandleUnfreezing(L: TLemming): Boolean;
+    function HandleLaddering(L: TLemming): Boolean;
     function HandlePlatforming(L: TLemming): Boolean;
+    function LemCanLadder(L: TLemming): Boolean;
     function LemCanPlatform(L: TLemming): Boolean;
     function HandleStacking(L: TLemming): Boolean;
     function HandleSwimming(L: TLemming): Boolean;
@@ -416,6 +419,7 @@ type
     function MayAssignExploder(L: TLemming): Boolean;
     function MayAssignFreezer(L: TLemming): Boolean;
     function MayAssignBuilder(L: TLemming): Boolean;
+    function MayAssignLadderer(L: TLemming): Boolean;
     function MayAssignPlatformer(L: TLemming): Boolean;
     function MayAssignStacker(L: TLemming): Boolean;
     function MayAssignBasher(L: TLemming): Boolean;
@@ -656,11 +660,12 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..24] of TBasicLemmingAction =
+  ActionListArray: array[0..25] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping, baSliding, baLasering, baSpearing, baGrenading, baBallooning);
+             baJumping, baSliding, baLasering, baSpearing, baGrenading,
+             baBallooning, baLaddering); // hotbookmark - maybe the wrong place for Ladderer & Ballooner?
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1124,6 +1129,7 @@ begin
   LemmingMethods[baTimebombing]   := HandleTimebombing;
   LemmingMethods[baTimebombFinish]:= HandleTimebombFinish;
   LemmingMethods[baToWalking]     := HandleWalking; //should never happen anyway
+  LemmingMethods[baLaddering]     := HandleLaddering;
   LemmingMethods[baPlatforming]   := HandlePlatforming;
   LemmingMethods[baStacking]      := HandleStacking;
   LemmingMethods[baFreezing]      := HandleFreezing;
@@ -1170,6 +1176,7 @@ begin
   NewSkillMethods[baTimebombing]  := MayAssignTimebomber;
   NewSkillMethods[baExploding]    := MayAssignExploder;
   NewSkillMethods[baToWalking]    := MayAssignWalker;
+  NewSkillMethods[baLaddering]    := MayAssignLadderer;
   NewSkillMethods[baPlatforming]  := MayAssignPlatformer;
   NewSkillMethods[baStacking]     := MayAssignStacker;
   NewSkillMethods[baFreezing]     := MayAssignFreezer;
@@ -1723,6 +1730,7 @@ const
     14, //44 baLooking
     12, //45 baLasering - it's, ironically, this high for rendering purposes
     17, //46 baBallooning
+    25, //47 baLaddering
     8,  //48 baDrifting
     20  //49 baSleeping
     );
@@ -2516,8 +2524,9 @@ var
     Result := True;
     case PriorityBox of
       Perm    : Result :=     L.HasPermanentSkills;
-      NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
-                                               baPlatforming, baStacking, baBlocking, baShrugging,
+      NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging,
+                                               baBuilding, baLaddering, baPlatforming, baStacking,
+                                               baBlocking, baShrugging,
                                                baReaching, baShimmying, baLasering, baLooking]);
       Walk    : Result :=     (L.LemAction in [baWalking, baAscending]);
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
@@ -2629,7 +2638,7 @@ end;
 
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding, baLaddering,
                baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
                baReaching, baShimmying, baLasering, baDangling, baLooking];
 begin
@@ -2702,7 +2711,7 @@ end;
 
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 
 begin
@@ -2770,8 +2779,8 @@ end;
 
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLasering, baBashing,
-               baFencing, baMining, baDigging, baLooking];
+  ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLaddering,
+               baLasering, baBashing, baFencing, baMining, baDigging, baLooking];
 begin
   //non-assignable from 1px below the top of the level (prevents wastage)
   if L.LemY <= 1 then
@@ -2784,8 +2793,8 @@ end;
 
 function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baBashing,
-               baFencing, baMining, baDigging, baLasering, baLooking];
+  ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baLaddering,
+               baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 var
   n: Integer;
 begin
@@ -2805,10 +2814,26 @@ begin
   Result := Result and (L.LemAction in ActionSet) and LemCanPlatform(L);
 end;
 
+function TLemmingGame.MayAssignLadderer(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baPlatforming,
+               baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
+var
+  n: Integer;
+begin
+  //non-assignable from the top of the level        //hotbookmark
+  if L.LemY <= 0 then
+    begin
+      Result := (L.LemAction = baNone);
+      Exit;
+    end else
+  Result := (L.LemAction in ActionSet) and LemCanLadder(L);
+end;
+
 function TLemmingGame.MayAssignStacker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baBashing,
-               baFencing, baMining, baDigging, baLasering, baLooking];
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baLaddering,
+               baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
   if L.LemY <= 0 then
@@ -2821,7 +2846,7 @@ end;
 
 function TLemmingGame.MayAssignThrowingSkill(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2835,7 +2860,7 @@ end;
 
 function TLemmingGame.MayAssignBasher(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baFencing, baMining, baDigging, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2849,7 +2874,7 @@ end;
 
 function TLemmingGame.MayAssignFencer(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baMining, baDigging, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2863,7 +2888,7 @@ end;
 
 function TLemmingGame.MayAssignMiner(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baDigging, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2878,7 +2903,7 @@ end;
 
 function TLemmingGame.MayAssignDigger(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baMining, baLasering, baLooking];
 begin
   //non-assignable from the top of the level
@@ -2893,7 +2918,7 @@ end;
 
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baLaddering,
                baStacking, baBallooning, baBashing, baFencing, baMining, baDigging,
                baAscending, baFalling, baFloating, baSwimming, baGliding, baFixing,
                baReaching, baShimmying, baJumping, baLasering, baSpearing, baGrenading,
@@ -2910,7 +2935,7 @@ end;
 
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baLaddering,
                baClimbing, baSwimming, baStacking, baBashing, baFencing, baMining,
                baDigging, baLasering, baDangling, baLooking, baBallooning];
 var
@@ -2968,7 +2993,7 @@ end;
 
 function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
-  ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
+  ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining, baLaddering,
                baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
                baSwimming, baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
@@ -2983,7 +3008,7 @@ end;
 
 function TLemmingGame.MayAssignLaserer(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baMining, baDigging, baLooking];
 begin
     //non-assignable from the top of the level
@@ -4069,6 +4094,109 @@ begin
   end;
 end;
 
+procedure TLemmingGame.LayLadder(L: TLemming);
+{-------------------------------------------------------------------------------
+  bricks are in the lemming area so will automatically be copied to the screen
+  during drawlemmings
+-------------------------------------------------------------------------------}
+var
+  X, Y: Integer;
+begin
+    case L.LemPhysicsFrame of
+      9: begin
+           for X := 0 to 5 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY -1, BrickPixelColors[9]);
+         end;
+      11:begin
+           X := 5;
+
+           for Y := 0 to 1 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
+         end;
+      12:begin
+           for X := 5 to 8 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 2, BrickPixelColors[9]);
+
+           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 2) then
+             Transition(L, baWalking);
+         end;
+      13:begin
+           X := 8;
+
+           for Y := 3 to 4 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
+         end;
+      14:begin
+           for X := 8 to 11 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 5, BrickPixelColors[9]);
+
+           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 5) then
+             Transition(L, baWalking);
+         end;
+      15:begin
+           X := 11;
+
+           for Y := 6 to 7 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
+         end;
+      16:begin
+           for X := 11 to 14 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 8, BrickPixelColors[9]);
+
+           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 8) then
+             Transition(L, baWalking);
+         end;
+      17:begin
+           X := 14;
+
+           for Y := 9 to 10 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
+         end;
+      18:begin
+           for X := 14 to 17 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 11, BrickPixelColors[9]);
+
+           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 11) then
+             Transition(L, baWalking);
+         end;
+      19:begin
+           X := 17;
+
+           for Y := 12 to 13 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
+         end;
+      20:begin
+           for X := 17 to 20 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 14, BrickPixelColors[9]);
+
+           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 14) then
+             Transition(L, baWalking);
+         end;
+      21:begin
+           X := 20;
+
+           for Y := 15 to 16 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
+         end;
+      22:begin
+           for X := 20 to 23 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 17, BrickPixelColors[9]);
+
+           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 17) then
+             Transition(L, baWalking);
+         end;
+      23:begin
+           X := 23;
+
+           for Y := 18 to 19 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
+         end;
+      24:begin
+           for X := 23 to 26 do
+             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 20, BrickPixelColors[9]);
+         end;
+    end;
+end;
 
 procedure TLemmingGame.LayBrick(L: TLemming);
 {-------------------------------------------------------------------------------
@@ -4081,7 +4209,7 @@ begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
-  If L.LemAction = baBuilding then BrickPosY := L.LemY - 1
+  if L.LemAction = baBuilding then BrickPosY := L.LemY - 1
   else BrickPosY := L.LemY; // for platformers
 
   for n := 0 to 5 do
@@ -4245,7 +4373,7 @@ const
                       baShrugging, baTimebombing, baOhnoing, baExploding,
                       baFreezerExplosion, baFreezing, baFrozen, baUnfreezing,
                       baReaching, baDehoisting, baVaporizing, baVinetrapping,
-                      baDangling, baLooking];
+                      baDangling, baLooking, baLaddering];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -4963,6 +5091,39 @@ begin
     Dec(L.LemY, 1)
   else if L.LemPhysicsFrame <= 4 then
     Dec(L.LemY, 2);
+end;
+
+
+function TLemmingGame.LemCanLadder(L: TLemming): Boolean;
+var
+  n: Integer;
+begin
+  Result := False;
+  // Next brick must add at least one pixel
+  for n := 0 to 4 do
+    Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
+end;
+
+function TLemmingGame.HandleLaddering(L: TLemming): Boolean;  //hotbookmark
+//  function PlatformerTerrainCheck(X, Y: Integer): Boolean;
+//  begin
+//    Result := HasPixelAt(X, Y - 1) or HasPixelAt(X, Y - 2);
+//  end;
+
+begin
+  Result := True;
+
+  if LemCanLadder(L) then
+    LayLadder(L);
+
+  if (L.LemPhysicsFrame in [9, 12, 14, 16, 18, 20, 22, 24, 26]) then
+  begin
+    CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+//    //fRenderer.VisualSFXTimer := 10;
+  end;
+
+  if L.LemEndOfAnimation then
+    Transition(L, baWalking);
 end;
 
 
