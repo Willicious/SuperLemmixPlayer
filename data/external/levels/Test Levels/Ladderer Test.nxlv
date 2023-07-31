@@ -8,11 +8,11 @@
  TITLE Ladderer Test
  AUTHOR WillLem
  ID x4DC50F326231F6D9
- VERSION x0000000000000002
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 320
+ WIDTH 384
  HEIGHT 160
  START_X 160
  START_Y 80
@@ -26,15 +26,19 @@
  
  $SKILLSET 
    WALKER 50
+   JUMPER 50
+   SHIMMIER 50
    BALLOONER 50
+   CLIMBER 50
    FLOATER 50
-   LADDERER 50
    BLOCKER 50
    PLATFORMER 50
    BUILDER 50
    STACKER 50
    LASERER 50
+   BASHER 50
    CLONER 50
+   LADDERER 50
  $END 
  
 #     Interactive objects       
@@ -42,23 +46,23 @@
  $GADGET
    STYLE orig_crystal
    PIECE exit
-   X 183
-   Y 101
+   X 243
+   Y 103
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 47
-   Y 8
+   X 75
+   Y 10
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_crystal
    PIECE window
-   X 200
+   X 252
    Y 5
    NO_OVERWRITE
  $END
@@ -69,56 +73,155 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 73
-   Y 48
+   X 113
+   Y 50
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 128
-   Y 124
+   X 161
+   Y 126
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 176
-   Y 124
+   X 223
+   Y 126
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 25
-   Y 48
+   X 58
+   Y 50
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
+   X 233
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 327
+   Y 18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 195
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 256
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 233
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 233
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 241
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 243
+   Y 21
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 171
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 195
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 164
+   Y 50
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 204
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
    X 201
-   Y 37
+   Y 30
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE bar_01
-   X 283
-   Y 23
+   PIECE line_04
+   X 203
+   Y 30
+   FLIP_VERTICAL
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE bar_01
-   X 162
-   Y 23
+   PIECE bar_04
+   X 21
+   Y 50
    ONE_WAY
  $END
  
