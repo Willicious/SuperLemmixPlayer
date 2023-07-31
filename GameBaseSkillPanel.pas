@@ -190,7 +190,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png',
+    'empty_slot.png', 'empty_slot.png',
     {Skills end here}
 
     'empty_slot.png',
@@ -776,26 +776,33 @@ begin
     // Blocker is simple
     DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 4, 7, 20);
 
-    // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
+    // Ladderer, Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
+    DrawAnimationFrame(fSkillIcons[spbLadderer], LADDERING, 16, 5, 17);
+    DrawBrick(fSkillIcons[spbLadderer], 8, 17);
+    DrawBrick(fSkillIcons[spbLadderer], 10, 17, 1);
+    DrawBrick(fSkillIcons[spbLadderer], 10, 18, 1);
+    DrawBrick(fSkillIcons[spbLadderer], 10, 19);
+    DrawBrick(fSkillIcons[spbLadderer], 12, 19, 1);
+
     // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
-    DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 19);
+    DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 18);
     fSkillIcons[spbPlatformer].FillRect(2 * ResMod, 21 * ResMod, 12 * ResMod, 21 * ResMod, $FF000000);
-    DrawBrick(fSkillIcons[spbPlatformer], 2, 20);
-    DrawBrick(fSkillIcons[spbPlatformer], 5, 20);
-    DrawBrick(fSkillIcons[spbPlatformer], 8, 20);
-    DrawBrick(fSkillIcons[spbPlatformer], 11, 20);
+    DrawBrick(fSkillIcons[spbPlatformer], 2, 19);
+    DrawBrick(fSkillIcons[spbPlatformer], 5, 19);
+    DrawBrick(fSkillIcons[spbPlatformer], 8, 19);
+    DrawBrick(fSkillIcons[spbPlatformer], 11, 19);
 
-    DrawAnimationFrame(fSkillIcons[spbBuilder], BRICKLAYING, 1, 7, 19);
-    DrawBrick(fSkillIcons[spbBuilder], 4, 21);
-    DrawBrick(fSkillIcons[spbBuilder], 6, 20);
-    DrawBrick(fSkillIcons[spbBuilder], 8, 19);
-    DrawBrick(fSkillIcons[spbBuilder], 10, 18);
+    DrawAnimationFrame(fSkillIcons[spbBuilder], BRICKLAYING, 1, 7, 18);
+    DrawBrick(fSkillIcons[spbBuilder], 4, 20);
+    DrawBrick(fSkillIcons[spbBuilder], 6, 19);
+    DrawBrick(fSkillIcons[spbBuilder], 8, 18);
+    DrawBrick(fSkillIcons[spbBuilder], 10, 17);
 
-    DrawAnimationFrame(fSkillIcons[spbStacker], STACKING, 0, 7, 20);
-    DrawBrick(fSkillIcons[spbStacker], 10, 19);
+    DrawAnimationFrame(fSkillIcons[spbStacker], STACKING, 0, 7, 19);
     DrawBrick(fSkillIcons[spbStacker], 10, 18);
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
     DrawBrick(fSkillIcons[spbStacker], 10, 16);
+    DrawBrick(fSkillIcons[spbStacker], 10, 15);
 
     // Projectiles need to be loaded separately
     LoadGrenadeImages;
