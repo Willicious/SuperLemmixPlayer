@@ -8,7 +8,7 @@
  TITLE Ladderer Test
  AUTHOR WillLem
  ID x4DC50F326231F6D9
- VERSION x000000000000000E
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -65,6 +65,46 @@
    X 252
    Y 5
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 167
+   Y 38
+   NO_OVERWRITE
+   SKILL STACKER
+   SKILL_COUNT 2
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 153
+   Y 38
+   NO_OVERWRITE
+   SKILL BUILDER
+   SKILL_COUNT 2
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 139
+   Y 38
+   NO_OVERWRITE
+   SKILL PLATFORMER
+   SKILL_COUNT 2
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 125
+   Y 38
+   NO_OVERWRITE
+   SKILL LADDERER
+   SKILL_COUNT 2
  $END
  
  
