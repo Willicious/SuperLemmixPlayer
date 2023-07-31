@@ -4100,102 +4100,82 @@ procedure TLemmingGame.LayLadder(L: TLemming);
   during drawlemmings
 -------------------------------------------------------------------------------}
 var
-  X, Y: Integer;
+  i: Integer;
+  PosX, PosY: Integer;
+  FrameOffset: Integer;
+const
+  VerticalBrick: array[0..3, 0..1] of Integer = (
+       (4, 0),
+       (4, 1),
+       (4, 2),
+       (4, 3));
+
+  HorizontalBrick: array[0..3, 0..1] of Integer = (
+       (1, 0), (2, 0), (3, 0), (4, 0));
 begin
-    case L.LemPhysicsFrame of
-      9: begin
-           for X := 0 to 5 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY -1, BrickPixelColors[9]);
-         end;
-      11:begin
-           X := 5;
+  PosX := L.LemX + L.LemDX;
+  PosY := L.LemY;
 
-           for Y := 0 to 1 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
-         end;
-      12:begin
-           for X := 5 to 8 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 2, BrickPixelColors[9]);
+  /// Horizontal bricks
+  for i := 0 to Length(HorizontalBrick) - 1 do
+  begin
+    // First ladder frame only uses Horizontal brick
+    if L.LemPhysicsFrame = 10 then
+    begin
+      // Extra pixel at lem's foot position
+      AddConstructivePixel(PosX, PosY, BrickPixelColors[9]);
 
-           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 2) then
-             Transition(L, baWalking);
-         end;
-      13:begin
-           X := 8;
+      if L.LemDX > 0 then
+        AddConstructivePixel(PosX + HorizontalBrick[i, 0], PosY + HorizontalBrick[i, 1], BrickPixelColors[9])
+      else
+        AddConstructivePixel(PosX - HorizontalBrick[i, 0], PosY + HorizontalBrick[i, 1], BrickPixelColors[9]);
+    end else
+    // Only draw horizontal bricks on the following frames
+    if L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22, 24] then
+    begin
+        case L.LemPhysicsFrame of
+          12: FrameOffset := 3;
+          14: FrameOffset := 6;
+          16: FrameOffset := 9;
+          18: FrameOffset := 12;
+          20: FrameOffset := 15;
+          22: FrameOffset := 18;
+          24: FrameOffset := 21;
+        end;
 
-           for Y := 3 to 4 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
-         end;
-      14:begin
-           for X := 8 to 11 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 5, BrickPixelColors[9]);
-
-           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 5) then
-             Transition(L, baWalking);
-         end;
-      15:begin
-           X := 11;
-
-           for Y := 6 to 7 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
-         end;
-      16:begin
-           for X := 11 to 14 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 8, BrickPixelColors[9]);
-
-           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 8) then
-             Transition(L, baWalking);
-         end;
-      17:begin
-           X := 14;
-
-           for Y := 9 to 10 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
-         end;
-      18:begin
-           for X := 14 to 17 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 11, BrickPixelColors[9]);
-
-           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 11) then
-             Transition(L, baWalking);
-         end;
-      19:begin
-           X := 17;
-
-           for Y := 12 to 13 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
-         end;
-      20:begin
-           for X := 17 to 20 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 14, BrickPixelColors[9]);
-
-           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 14) then
-             Transition(L, baWalking);
-         end;
-      21:begin
-           X := 20;
-
-           for Y := 15 to 16 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
-         end;
-      22:begin
-           for X := 20 to 23 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 17, BrickPixelColors[9]);
-
-           if HasPixelAt(L.LemX + X * L.LemDx, L.LemY + 17) then
-             Transition(L, baWalking);
-         end;
-      23:begin
-           X := 23;
-
-           for Y := 18 to 19 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + Y, BrickPixelColors[9]);
-         end;
-      24:begin
-           for X := 23 to 26 do
-             AddConstructivePixel(L.LemX + X * L.LemDx, L.LemY + 20, BrickPixelColors[9]);
-         end;
+      if L.LemDX > 0 then
+        AddConstructivePixel((PosX + FrameOffset) + HorizontalBrick[i, 0],
+                             (PosY + FrameOffset) + HorizontalBrick[i, 1], BrickPixelColors[9])
+      else
+        AddConstructivePixel((PosX - FrameOffset) - HorizontalBrick[i, 0],
+                             (PosY + FrameOffset) + HorizontalBrick[i, 1], BrickPixelColors[9]);
     end;
+  end;
+
+  /// Vertical bricks
+  for i := 0 to Length(VerticalBrick) - 1 do
+  begin
+    // Only draw vertical bricks on the following frames
+    if L.LemPhysicsFrame in [11, 13, 15, 17, 19, 21, 23] then
+    begin
+        case L.LemPhysicsFrame of
+          11: FrameOffset := 0;
+          13: FrameOffset := 3;
+          15: FrameOffset := 6;
+          17: FrameOffset := 9;
+          19: FrameOffset := 12;
+          21: FrameOffset := 15;
+          23: FrameOffset := 18;
+        end;
+
+      if L.LemDX > 0 then
+        AddConstructivePixel((PosX + FrameOffset) + VerticalBrick[i, 0],
+                             (PosY + FrameOffset) + VerticalBrick[i, 1], BrickPixelColors[9])
+      else
+        AddConstructivePixel((PosX - FrameOffset) - VerticalBrick[i, 0],
+                             (PosY + FrameOffset) + VerticalBrick[i, 1], BrickPixelColors[9]);
+    end;
+  end;
 end;
 
 procedure TLemmingGame.LayBrick(L: TLemming);
@@ -5100,29 +5080,49 @@ var
 begin
   Result := False;
   // Next brick must add at least one pixel
-  for n := 0 to 4 do
+  for n := 0 to 5 do
     Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
 end;
 
-function TLemmingGame.HandleLaddering(L: TLemming): Boolean;  //hotbookmark
-//  function PlatformerTerrainCheck(X, Y: Integer): Boolean;
-//  begin
-//    Result := HasPixelAt(X, Y - 1) or HasPixelAt(X, Y - 2);
-//  end;
+function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
+  // Check if the ladder has met terrain - this must be done per-frame
+  function LadderHitTerrain: Boolean;
+  var
+  X, Y: Integer;
+  FrameOffset: Integer;
+  begin
+    Result := False;
 
+    case L.LemPhysicsFrame of
+      12: FrameOffset := 5;
+      14: FrameOffset := 8;
+      16: FrameOffset := 11;
+      18: FrameOffset := 14;
+      20: FrameOffset := 17;
+      22: FrameOffset := 20;
+    end;
+
+    for X := FrameOffset to (FrameOffset + 3) do
+    begin
+      Y := FrameOffset - 1;
+
+      if ((L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22]) and HasPixelAt(L.LemX + X * L.LemDX, L.LemY + Y)) then
+        Result := True;
+    end;
+  end;
 begin
   Result := True;
 
-  if LemCanLadder(L) then
+  if L.LemPhysicsFrame >=10 then
     LayLadder(L);
 
-  if (L.LemPhysicsFrame in [9, 12, 14, 16, 18, 20, 22, 24, 26]) then
+  if (L.LemPhysicsFrame in [10, 12, 14, 16, 18, 20, 22, 24, 26]) then
   begin
     CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
 //    //fRenderer.VisualSFXTimer := 10;
   end;
 
-  if L.LemEndOfAnimation then
+  if LadderHitTerrain or L.LemEndOfAnimation then
     Transition(L, baWalking);
 end;
 
