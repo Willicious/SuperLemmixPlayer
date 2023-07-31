@@ -506,28 +506,11 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], ICECUBE, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 1);
 
-  // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
-  // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
-  DrawAnimationFrame(SkillIcons[Integer(spbPlatformer)], PLATFORMING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 5, PICKUP_BASELINE - 4);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 3, PICKUP_BASELINE - 4);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 1, PICKUP_BASELINE - 4);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID + 1, PICKUP_BASELINE - 4);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID + 3, PICKUP_BASELINE - 4);
-
-  DrawAnimationFrame(SkillIcons[Integer(spbBuilder)], BRICKLAYING, 1, PICKUP_MID, PICKUP_BASELINE - 3);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID - 3, PICKUP_BASELINE - 2);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID - 1, PICKUP_BASELINE - 3);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID + 1, PICKUP_BASELINE - 4);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID + 3, PICKUP_BASELINE - 5);
-
-  DrawAnimationFrame(SkillIcons[Integer(spbStacker)], STACKING, 0, PICKUP_MID, PICKUP_BASELINE - 2);
-  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 2);
-  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 3);
-  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 4);
-  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 5);
-  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 6);
-  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 7);
+  // Ladderer, Platformer, Builder and Stacker are identifiable by their bag colours
+  DrawAnimationFrame(SkillIcons[Integer(spbLadderer)], LADDERING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
+  DrawAnimationFrame(SkillIcons[Integer(spbPlatformer)], PLATFORMING, 0, PICKUP_MID, PICKUP_BASELINE - 4);
+  DrawAnimationFrame(SkillIcons[Integer(spbBuilder)], BRICKLAYING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
+  DrawAnimationFrame(SkillIcons[Integer(spbStacker)], STACKING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
 
   // Projectiles need to be loaded separately
   NewBmp := TBitmap32.Create;
