@@ -1437,22 +1437,17 @@ begin
     /// Horizontal bricks
     for i := 0 to Length(HorizontalBrickShadow) - 1 do
     begin
-      // First ladder frame only uses Horizontal brick
+      // First ladder frame needs extra pixel at lem's foot position
       if L.LemPhysicsFrame = 10 then
-      begin
-        // Extra pixel at lem's foot position
         SetLowShadowPixel(PosX, PosY);
 
-        if L.LemDX > 0 then
-          SetLowShadowPixel(PosX + HorizontalBrickShadow[i, 0], PosY + HorizontalBrickShadow[i, 1])
-        else
-          SetLowShadowPixel(PosX - HorizontalBrickShadow[i, 0], PosY + HorizontalBrickShadow[i, 1]);
-      end else
       // Only draw horizontal bricks on the following frames
-      // The shadow is drawn a frame early so that it corresponds with what actually happens in-game
-      if L.LemPhysicsFrame in [11, 13, 15, 17, 19, 21, 23] then
+      // With the exception of frame 10,
+      // the shadow is drawn a frame early so that it corresponds with what actually happens in-game
+      if L.LemPhysicsFrame in [10, 11, 13, 15, 17, 19, 21, 23] then
       begin
           case L.LemPhysicsFrame of
+            10: FrameOffset := 0;
             11: FrameOffset := 3;
             13: FrameOffset := 6;
             15: FrameOffset := 9;

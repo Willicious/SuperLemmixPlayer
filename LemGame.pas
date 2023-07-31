@@ -4119,21 +4119,15 @@ begin
   /// Horizontal bricks
   for i := 0 to Length(HorizontalBrick) - 1 do
   begin
-    // First ladder frame only uses Horizontal brick
+    // First ladder frame needs an extra pixel at lem's foot position
     if L.LemPhysicsFrame = 10 then
-    begin
-      // Extra pixel at lem's foot position
       AddConstructivePixel(PosX, PosY, BrickPixelColors[9]);
 
-      if L.LemDX > 0 then
-        AddConstructivePixel(PosX + HorizontalBrick[i, 0], PosY + HorizontalBrick[i, 1], BrickPixelColors[9])
-      else
-        AddConstructivePixel(PosX - HorizontalBrick[i, 0], PosY + HorizontalBrick[i, 1], BrickPixelColors[9]);
-    end else
     // Only draw horizontal bricks on the following frames
-    if L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22, 24] then
+    if L.LemPhysicsFrame in [10, 12, 14, 16, 18, 20, 22, 24] then
     begin
         case L.LemPhysicsFrame of
+          10: FrameOffset := 0;
           12: FrameOffset := 3;
           14: FrameOffset := 6;
           16: FrameOffset := 9;
