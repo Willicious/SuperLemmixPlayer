@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   //MUST MATCH BELOW (not the next list, the one after that)
   //And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 89;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 44;        //num lem sprite types
+  NUM_LEM_SPRITES     = 85;   //num lem sprites
+  NUM_LEM_SPRITE_TYPE = 42;        //num lem sprite types
   WALKING             = 0;    //1  //1
   WALKING_RTL         = 1;    //2
   ZOMBIEWALKING       = 2;    //3  //2
@@ -108,15 +108,15 @@ const
   LOOKING_RTL         = 77;   //78
   LASERING            = 78;   //79 //40
   LASERING_RTL        = 79;   //80
-  BALLOONING          = 80;   //81 //41
-  BALLOONING_RTL      = 81;   //82
-  LADDERING           = 82;   //83 //42
-  LADDERING_RTL       = 83;   //84
-  DRIFTING            = 84;   //85 //43
-  DRIFTING_RTL        = 85;   //86
-  SLEEPING            = 86;   //87 //44
-  SLEEPING_RTL        = 87;   //88
-  ICECUBE             = 88;   //89 this one does NOT need an RTL form;
+  //BALLOONING          = 80;   //81 //41
+  //BALLOONING_RTL      = 81;   //82
+  //LADDERING           = 82;   //83 //42
+  //LADDERING_RTL       = 83;   //84
+  DRIFTING            = 80;   //85 //43
+  DRIFTING_RTL        = 81;   //86
+  SLEEPING            = 82;   //87 //44
+  SLEEPING_RTL        = 83;   //88
+  ICECUBE             = 84;   //89 this one does NOT need an RTL form;
                              //in fact in needs to be moved to the Masks section
                              //also, it's not counted as a "sprite type"
 
@@ -167,8 +167,8 @@ const
     (THROWING, THROWING_RTL),                 // 43 baGrenading
     (LOOKING, LOOKING_RTL),                   // 44 baLooking
     (LASERING, LASERING_RTL),                 // 45 baLasering
-    (BALLOONING, BALLOONING_RTL),             // 46 baBallooning
-    (LADDERING, LADDERING_RTL),               // 47 baPlatforming
+    //(BALLOONING, BALLOONING_RTL),             // 46 baBallooning
+    //(LADDERING, LADDERING_RTL),               // 47 baPlatforming
     (DRIFTING, DRIFTING_RTL),                 // 48 baDrifting
     (SLEEPING, SLEEPING_RTL)                  // 49 baSleeping
   );
@@ -187,7 +187,7 @@ type
     fUnfreezingOverlay      : TBitmap32;
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
-    fBalloonPopBitmap       : TBitmap32;
+    //fBalloonPopBitmap       : TBitmap32;
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -215,7 +215,7 @@ type
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
-    property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
+    //property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
     property HasZombieColor: Boolean read fHasZombieColor;
@@ -234,7 +234,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..43] of String =  (
+  ANIM_NAMES: array[0..41] of String =  (
   'WALKER',        //1
   'ZOMBIEWALKER',  //2
   'ASCENDER',      //3
@@ -275,8 +275,8 @@ const
   'THROWER',       //38
   'LOOKER',        //39
   'LASERER',       //40
-  'BALLOONER',     //41
-  'LADDERER',      //42
+  //'BALLOONER',     //41
+  //'LADDERER',      //42
   'DRIFTER',       //43
   'SLEEPER'        //44
   );
@@ -412,7 +412,7 @@ var
   TempBitmap: TBitmap32;
   iAnimation: Integer;
   MLA: TMetaLemmingAnimation;
-  BalloonPop, BalloonPopGraphic, CustomBalloonPopGraphic: String;
+  //BalloonPop, BalloonPopGraphic, CustomBalloonPopGraphic: String;
   Freeze, Unfreeze: String;
   FreezingOverlay, CustomFreezingOverlay: String;
   UnfreezingOverlay, CustomUnfreezingOverlay: String;
@@ -516,8 +516,8 @@ begin
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
 
-    fBalloonPopBitmap.DrawMode := dmBlend;
-    fBalloonPopBitmap.CombineMode := cmMerge;
+    //fBalloonPopBitmap.DrawMode := dmBlend;
+    //fBalloonPopBitmap.CombineMode := cmMerge;
 
     if GameParams.HighResolution then
     begin
@@ -554,17 +554,17 @@ begin
       UpscalePieces;
     end;
 
-    // Load the balloon pop graphic
-    BalloonPop := 'balloon_pop.png';
-    BalloonPopGraphic := MetaSrcFolder + BalloonPop;
-    CustomBalloonPopGraphic := ImgSrcFolder + BalloonPop;
+//    // Load the balloon pop graphic
+//    BalloonPop := 'balloon_pop.png';
+//    BalloonPopGraphic := MetaSrcFolder + BalloonPop;
+//    CustomBalloonPopGraphic := ImgSrcFolder + BalloonPop;
 
-    if FileExists(CustomBalloonPopGraphic) then
-      TPngInterface.LoadPngFile(CustomBalloonPopGraphic, fBalloonPopBitmap)
-    else begin
-      TPngInterface.LoadPngFile(BalloonPopGraphic, fBalloonPopBitmap);
-      UpscalePieces;
-    end;
+//    if FileExists(CustomBalloonPopGraphic) then
+//      TPngInterface.LoadPngFile(CustomBalloonPopGraphic, fBalloonPopBitmap)
+//    else begin
+//      TPngInterface.LoadPngFile(BalloonPopGraphic, fBalloonPopBitmap);
+//      UpscalePieces;
+//    end;
 
     fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
     fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
@@ -587,7 +587,7 @@ begin
   fUnfreezingOverlay.Clear;
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
-  fBalloonPopBitmap.Clear;
+  //fBalloonPopBitmap.Clear;
   fHasZombieColor := false;
   fHasNeutralColor := false;
   fTheme := nil;
@@ -604,7 +604,7 @@ begin
   fUnfreezingOverlay := TBitmap32.Create;
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
-  fBalloonPopBitmap := TBitmap32.Create;
+  //fBalloonPopBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -616,7 +616,7 @@ begin
   fUnfreezingOverlay.Free;
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
-  fBalloonPopBitmap.Free;
+  //fBalloonPopBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;
 end;

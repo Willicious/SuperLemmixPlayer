@@ -81,8 +81,8 @@ const
   SFX_GRENADE_THROW = 'grenade';
   SFX_SPEAR_HIT = 'spearhit';
   SFX_LASER = 'laser';
-  SFX_BALLOON_INFLATE = 'balloon';
-  SFX_BALLOON_POP = 'balloonpop';
+  //SFX_BALLOON_INFLATE = 'balloon';
+  //SFX_BALLOON_POP = 'balloonpop';
   SFX_JUMP = 'jump';
   SFX_BYE = 'bye';
   SFX_OK = 'OK';
@@ -133,7 +133,7 @@ resourcestring
   SShrugger = 'Shrugger';
   STimebomber = 'Timebomber';
   SExploder = 'Bomber';
-  SLadderer = 'Ladderer';
+  //SLadderer = 'Ladderer';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';
   SFreezer = 'Freezer';
@@ -155,7 +155,7 @@ resourcestring
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
-  SBallooner = 'Ballooner';
+  //SBallooner = 'Ballooner';
   SDrifter = 'Drifter';
   SSleeper = 'Sleeper';
 
@@ -235,8 +235,8 @@ const
     SGrenader,    //43
     SLooker,      //44
     SLaserer,     //45
-    SBallooner,   //46
-    SLadderer,    //47
+    //SBallooner,   //46
+    //SLadderer,    //47
     SDrifter,     //48
     SSleeper      //49
   );

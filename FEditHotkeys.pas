@@ -218,7 +218,7 @@ begin
                      Integer(spbWalker):       s := s + 'Walker';      //0
                      Integer(spbJumper):       s := s + 'Jumper';      //1
                      Integer(spbShimmier):     s := s + 'Shimmier';    //2
-                     Integer(spbBallooner):    s := s + 'Ballooner';   //3
+                     //Integer(spbBallooner):    s := s + 'Ballooner';   //3
                      Integer(spbSlider):       s := s + 'Slider';      //4
                      Integer(spbClimber):      s := s + 'Climber';     //5
                      Integer(spbSwimmer):      s := s + 'Swimmer';     //6
@@ -229,7 +229,7 @@ begin
                      Integer(spbBomber):       s := s + 'Bomber';      //11
                      Integer(spbFreezer):      s := s + 'Freezer';     //12
                      Integer(spbBlocker):      s := s + 'Blocker';     //13
-                     Integer(spbLadderer):     s := s + 'Ladderer';    //14
+                     //Integer(spbLadderer):     s := s + 'Ladderer';    //14
                      Integer(spbPlatformer):   s := s + 'Platformer';  //15
                      Integer(spbBuilder):      s := s + 'Builder';     //16
                      Integer(spbStacker):      s := s + 'Stacker';     //17

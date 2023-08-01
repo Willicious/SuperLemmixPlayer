@@ -173,15 +173,15 @@ type
     procedure DrawLemmingParticles(L: TLemming);
     procedure DrawFreezingOverlay(L: TLemming);
     procedure DrawUnfreezingOverlay(L: TLemming);
-    procedure DrawBalloonPop(L: TLemming);
+    //procedure DrawBalloonPop(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
     procedure DrawJumperShadow(L: TLemming);
-    procedure DrawBalloonerShadow(L: TLemming);
+    //procedure DrawBalloonerShadow(L: TLemming);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawShimmierShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
-    procedure DrawLaddererShadow(L: TLemming);
+    //procedure DrawLaddererShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
     procedure DrawLasererShadow(L: TLemming);
@@ -377,7 +377,7 @@ begin
     end;
 
     DrawLemmingCountdown(LemmingList[i]);
-    DrawBalloonPop(LemmingList[i]);
+    //DrawBalloonPop(LemmingList[i]);
 
     ////hotbookmark - not ready yet, but this is the place to call it from
     //DrawVisualSFXLemmings(LemmingList[i]);
@@ -753,24 +753,24 @@ begin
     fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
-procedure TRenderer.DrawBalloonPop(L: TLemming);
-var
-  NewAction: TBasicLemmingAction;
-  FrameRect: TRect;
-begin
-  if L.LemBalloonPopTimer > 0 then
-  begin
-    FrameRect.Left := 0;
-    FrameRect.Right := FrameRect.Left + (48 * ResMod);
-    FrameRect.Top := 0;
-    FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
-
-    if L.LemDX < 0 then      //in front of terrain, and behind all lems except Freezers
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
-    else
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
-  end;
-end;
+//procedure TRenderer.DrawBalloonPop(L: TLemming);
+//var
+//  NewAction: TBasicLemmingAction;
+//  FrameRect: TRect;
+//begin
+//  if L.LemBalloonPopTimer > 0 then
+//  begin
+//    FrameRect.Left := 0;
+//    FrameRect.Right := FrameRect.Left + (48 * ResMod);
+//    FrameRect.Top := 0;
+//    FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
+//
+//    if L.LemDX < 0 then      //in front of terrain, and behind all lems except Freezers
+//      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
+//    else
+//      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
+//  end;
+//end;
 
 //This code is used (or not) by Nuke, Bomber, Freezer and Timebomber
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
@@ -956,11 +956,11 @@ var
 
   DoProjection: Boolean;
 const
-  PROJECTION_STATES = [baWalking, baAscending, baLaddering,
+  PROJECTION_STATES = [baWalking, baAscending, //baLaddering,
                        baDigging, baClimbing, baHoisting, baBuilding, baBashing,
                        baMining, baFalling, baFloating, baShrugging, baPlatforming,
                        baStacking, baSwimming, baGliding, baFixing, baFencing,
-                       baReaching, baShimmying, baJumping, baBallooning,
+                       baReaching, baShimmying, baJumping, //baBallooning,
                        baDehoisting, baSliding, baDangling, baLasering, baLooking];
 begin
   // Copy L to simulate the path
@@ -1019,12 +1019,12 @@ begin
         DrawJumperShadow(CopyL);
       end;
 
-    spbBallooner:
-      if not DoProjection then
-      begin
-        fRenderInterface.SimulateTransitionLem(CopyL, baBallooning);
-        DrawBalloonerShadow(CopyL);
-      end;
+//    spbBallooner:
+//      if not DoProjection then
+//      begin
+//        fRenderInterface.SimulateTransitionLem(CopyL, baBallooning);
+//        DrawBalloonerShadow(CopyL);
+//      end;
 
     spbShimmier:
       if not DoProjection then
@@ -1042,11 +1042,11 @@ begin
         DrawBuilderShadow(CopyL);
       end;
 
-    spbLadderer:
-      begin
-        fRenderInterface.SimulateTransitionLem(CopyL, baLaddering);
-        DrawLaddererShadow(CopyL);
-      end;
+//    spbLadderer:
+//      begin
+//        fRenderInterface.SimulateTransitionLem(CopyL, baLaddering);
+//        DrawLaddererShadow(CopyL);
+//      end;
 
     spbPlatformer:
       begin
@@ -1270,39 +1270,39 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawBalloonerShadow(L: TLemming);
-var
-  FrameCount: Integer;
-  LemPosArray: TArrayArrayInt;
-  i: Integer;
-const
-  MAX_FRAME_COUNT = 2000;
-begin
-  fLayers.fIsEmpty[rlLowShadows] := false;
-  fLayers.fIsEmpty[rlHighShadows] := false;
-  FrameCount := 0;
-  LemPosArray := nil;
-
-  SetLowShadowPixel(L.LemX, L.LemY - 1);
-
-  while (FrameCount < MAX_FRAME_COUNT)
-    and Assigned(L)
-    // We simulate as long as the lemming is ballooning
-    and (L.LemAction = baBallooning) do
-  begin
-    Inc(FrameCount);
-
-    LemPosArray := fRenderInterface.SimulateLem(L);
-
-    if Assigned(LemPosArray) then
-      for i := 0 to Length(LemPosArray[0]) do
-      begin
-        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
-        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
-        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
-      end;
-  end;
-end;
+//procedure TRenderer.DrawBalloonerShadow(L: TLemming);
+//var
+//  FrameCount: Integer;
+//  LemPosArray: TArrayArrayInt;
+//  i: Integer;
+//const
+//  MAX_FRAME_COUNT = 2000;
+//begin
+//  fLayers.fIsEmpty[rlLowShadows] := false;
+//  fLayers.fIsEmpty[rlHighShadows] := false;
+//  FrameCount := 0;
+//  LemPosArray := nil;
+//
+//  SetLowShadowPixel(L.LemX, L.LemY - 1);
+//
+//  while (FrameCount < MAX_FRAME_COUNT)
+//    and Assigned(L)
+//    // We simulate as long as the lemming is ballooning
+//    and (L.LemAction = baBallooning) do
+//  begin
+//    Inc(FrameCount);
+//
+//    LemPosArray := fRenderInterface.SimulateLem(L);
+//
+//    if Assigned(LemPosArray) then
+//      for i := 0 to Length(LemPosArray[0]) do
+//      begin
+//        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+//        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+//        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+//      end;
+//  end;
+//end;
 
 procedure TRenderer.DrawGliderShadow(L: TLemming);
 var
@@ -1407,98 +1407,98 @@ begin
   SavePhysicsMap.Free;
 end;
 
-procedure TRenderer.DrawLaddererShadow(L: TLemming);
-var
-  i: Integer;
-  SavePhysicsMap: TBitmap32;
-  PosX, PosY: Integer;
-  FrameOffset: Integer;
-const
-  VerticalBrickShadow: array[0..3, 0..1] of Integer = (
-       (4, 0),
-       (4, 1),
-       (4, 2),
-       (4, 3));
-
-  HorizontalBrickShadow: array[0..3, 0..1] of Integer = (
-       (1, 0), (2, 0), (3, 0), (4, 0));
-begin
-  fLayers.fIsEmpty[rlLowShadows] := False;
-
-  PosX := L.LemX + L.LemDX;
-  PosY := L.LemY;
-
-  // Make a deep copy of the PhysicsMap
-  SavePhysicsMap := TBitmap32.Create;
-  SavePhysicsMap.Assign(PhysicsMap);
-
-  while Assigned(L) and (L.LemAction = baLaddering) do
-  begin
-    /// Horizontal bricks
-    for i := 0 to Length(HorizontalBrickShadow) - 1 do
-    begin
-      // First ladder frame needs extra pixel at lem's foot position
-      if L.LemPhysicsFrame = 10 then
-        SetLowShadowPixel(PosX, PosY);
-
-      // Only draw horizontal bricks on the following frames
-      // With the exception of frame 10,
-      // the shadow is drawn a frame early so that it corresponds with what actually happens in-game
-      if L.LemPhysicsFrame in [10, 11, 13, 15, 17, 19, 21, 23] then
-      begin
-          case L.LemPhysicsFrame of
-            10: FrameOffset := 0;
-            11: FrameOffset := 3;
-            13: FrameOffset := 6;
-            15: FrameOffset := 9;
-            17: FrameOffset := 12;
-            19: FrameOffset := 15;
-            21: FrameOffset := 18;
-            23: FrameOffset := 21;
-          end;
-
-        if L.LemDX > 0 then
-          SetLowShadowPixel((PosX + FrameOffset) + HorizontalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + HorizontalBrickShadow[i, 1])
-        else
-          SetLowShadowPixel((PosX - FrameOffset) - HorizontalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + HorizontalBrickShadow[i, 1]);
-      end;
-    end;
-
-    /// Vertical bricks
-    for i := 0 to Length(VerticalBrickShadow) - 1 do
-    begin
-      // Only draw vertical bricks on the following frames
-      // The shadow is drawn a frame early so that it corresponds with what actually happens in-game
-      if L.LemPhysicsFrame in [10, 12, 14, 16, 18, 20, 22] then
-      begin
-          case L.LemPhysicsFrame of
-            10: FrameOffset := 0;
-            12: FrameOffset := 3;
-            14: FrameOffset := 6;
-            16: FrameOffset := 9;
-            18: FrameOffset := 12;
-            20: FrameOffset := 15;
-            22: FrameOffset := 18;
-          end;
-
-        if L.LemDX > 0 then
-          SetLowShadowPixel((PosX + FrameOffset) + VerticalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + VerticalBrickShadow[i, 1])
-        else
-          SetLowShadowPixel((PosX - FrameOffset) - VerticalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + VerticalBrickShadow[i, 1]);
-      end;
-    end;
-
-    // Simulate next frame advance for lemming
-    fRenderInterface.SimulateLem(L);
-  end;
-
-  PhysicsMap.Assign(SavePhysicsMap);
-  SavePhysicsMap.Free;
-end;
+//procedure TRenderer.DrawLaddererShadow(L: TLemming);
+//var
+//  i: Integer;
+//  SavePhysicsMap: TBitmap32;
+//  PosX, PosY: Integer;
+//  FrameOffset: Integer;
+//const
+//  VerticalBrickShadow: array[0..3, 0..1] of Integer = (
+//       (4, 0),
+//       (4, 1),
+//       (4, 2),
+//       (4, 3));
+//
+//  HorizontalBrickShadow: array[0..3, 0..1] of Integer = (
+//       (1, 0), (2, 0), (3, 0), (4, 0));
+//begin
+//  fLayers.fIsEmpty[rlLowShadows] := False;
+//
+//  PosX := L.LemX + L.LemDX;
+//  PosY := L.LemY;
+//
+//  // Make a deep copy of the PhysicsMap
+//  SavePhysicsMap := TBitmap32.Create;
+//  SavePhysicsMap.Assign(PhysicsMap);
+//
+//  while Assigned(L) and (L.LemAction = baLaddering) do
+//  begin
+//    /// Horizontal bricks
+//    for i := 0 to Length(HorizontalBrickShadow) - 1 do
+//    begin
+//      // First ladder frame needs extra pixel at lem's foot position
+//      if L.LemPhysicsFrame = 10 then
+//        SetLowShadowPixel(PosX, PosY);
+//
+//      // Only draw horizontal bricks on the following frames
+//      // With the exception of frame 10,
+//      // the shadow is drawn a frame early so that it corresponds with what actually happens in-game
+//      if L.LemPhysicsFrame in [10, 11, 13, 15, 17, 19, 21, 23] then
+//      begin
+//          case L.LemPhysicsFrame of
+//            10: FrameOffset := 0;
+//            11: FrameOffset := 3;
+//            13: FrameOffset := 6;
+//            15: FrameOffset := 9;
+//            17: FrameOffset := 12;
+//            19: FrameOffset := 15;
+//            21: FrameOffset := 18;
+//            23: FrameOffset := 21;
+//          end;
+//
+//        if L.LemDX > 0 then
+//          SetLowShadowPixel((PosX + FrameOffset) + HorizontalBrickShadow[i, 0],
+//                            (PosY + FrameOffset) + HorizontalBrickShadow[i, 1])
+//        else
+//          SetLowShadowPixel((PosX - FrameOffset) - HorizontalBrickShadow[i, 0],
+//                            (PosY + FrameOffset) + HorizontalBrickShadow[i, 1]);
+//      end;
+//    end;
+//
+//    /// Vertical bricks
+//    for i := 0 to Length(VerticalBrickShadow) - 1 do
+//    begin
+//      // Only draw vertical bricks on the following frames
+//      // The shadow is drawn a frame early so that it corresponds with what actually happens in-game
+//      if L.LemPhysicsFrame in [10, 12, 14, 16, 18, 20, 22] then
+//      begin
+//          case L.LemPhysicsFrame of
+//            10: FrameOffset := 0;
+//            12: FrameOffset := 3;
+//            14: FrameOffset := 6;
+//            16: FrameOffset := 9;
+//            18: FrameOffset := 12;
+//            20: FrameOffset := 15;
+//            22: FrameOffset := 18;
+//          end;
+//
+//        if L.LemDX > 0 then
+//          SetLowShadowPixel((PosX + FrameOffset) + VerticalBrickShadow[i, 0],
+//                            (PosY + FrameOffset) + VerticalBrickShadow[i, 1])
+//        else
+//          SetLowShadowPixel((PosX - FrameOffset) - VerticalBrickShadow[i, 0],
+//                            (PosY + FrameOffset) + VerticalBrickShadow[i, 1]);
+//      end;
+//    end;
+//
+//    // Simulate next frame advance for lemming
+//    fRenderInterface.SimulateLem(L);
+//  end;
+//
+//  PhysicsMap.Assign(SavePhysicsMap);
+//  SavePhysicsMap.Free;
+//end;
 
 procedure TRenderer.DrawPlatformerShadow(L: TLemming);
 var

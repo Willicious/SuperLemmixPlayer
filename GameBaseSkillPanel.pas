@@ -190,7 +190,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png',
+    //'empty_slot.png', 'empty_slot.png',
     {Skills end here}
 
     'empty_slot.png',
@@ -737,7 +737,7 @@ begin
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 19);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 19);
-    DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
+    //DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
     DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 5, 21);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 20);
 
@@ -777,12 +777,12 @@ begin
     DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 4, 7, 20);
 
     // Ladderer, Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
-    DrawAnimationFrame(fSkillIcons[spbLadderer], LADDERING, 16, 5, 17);
-    DrawBrick(fSkillIcons[spbLadderer], 8, 17);
-    DrawBrick(fSkillIcons[spbLadderer], 10, 17, 1);
-    DrawBrick(fSkillIcons[spbLadderer], 10, 18, 1);
-    DrawBrick(fSkillIcons[spbLadderer], 10, 19);
-    DrawBrick(fSkillIcons[spbLadderer], 12, 19, 1);
+//    DrawAnimationFrame(fSkillIcons[spbLadderer], LADDERING, 16, 5, 17);
+//    DrawBrick(fSkillIcons[spbLadderer], 8, 17);
+//    DrawBrick(fSkillIcons[spbLadderer], 10, 17, 1);
+//    DrawBrick(fSkillIcons[spbLadderer], 10, 18, 1);
+//    DrawBrick(fSkillIcons[spbLadderer], 10, 19);
+//    DrawBrick(fSkillIcons[spbLadderer], 12, 19, 1);
 
     // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
     DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 18);

@@ -127,7 +127,7 @@ const // Icon indexes
     24, // 0 Walker
     25, // 1 Jumper
     26, // 2 Shimmier
-    27, // 3 Ballooner
+    //27, // 3 Ballooner
     28, // 4 Slider
     29, // 5 Climber
     30, // 6 Swimmer
@@ -138,7 +138,7 @@ const // Icon indexes
     35, // 11 Bomber
     36, // 12 Freezer
     37, // 13 Blocker
-    38, // 14 Ladderer
+    //38, // 14 Ladderer
     39, // 15 Platformer
     40, // 16 Builder
     41, // 17 Stacker
