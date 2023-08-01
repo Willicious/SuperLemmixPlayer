@@ -252,6 +252,7 @@ type
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
+    procedure CheckForProjectiles(L: TLemming);
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -3120,6 +3121,36 @@ begin
   begin
     MoveVertical;
     MoveHorizontal;
+  end;
+end;
+
+procedure TLemmingGame.CheckForProjectiles(L: TLemming);
+var
+XOffset, YOffset: Integer;
+begin
+  if L.LemIsZombie then
+  begin
+    for YOffset := 0 to 15 do
+    for XOffset := -5 to 5 do
+    begin
+      if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset)
+        and not (L.LemAction in [baSpearing, baGrenading]) then
+      begin
+        DoExplosionCrater := False;
+        Transition(L, baExploding);
+      end;
+    end;
+//  end else if L.LemAction = baBallooning then
+//  begin
+//    for YOffset := 10 to 30 do
+//    for XOffset := -5 to 5 do
+//    begin
+//      if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset) then
+//      begin
+//        OutputDebugString(PChar('Projectile detected for ballooner'));
+//        PopBalloon(L);
+//      end;
+//    end;
   end;
 end;
 
@@ -7670,8 +7701,10 @@ begin
       // Check whether the lem has moved over trigger areas
       if ContinueWithLem then
         CheckTriggerArea(CurrentLemming);
-    end;
 
+      if ContinueWithLem then
+        CheckForProjectiles(CurrentLemming);
+    end;
   end;
 
   // Check for lemmings meeting zombies
@@ -7690,7 +7723,6 @@ begin
         RemoveLemming(CurrentLemming, RM_ZOMBIE);
     end;
   end;
-
 end;
 
 procedure TLemmingGame.SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
