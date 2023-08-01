@@ -196,6 +196,7 @@ type
 
     fUserSetNuking             : Boolean;
     ExploderAssignInProgress   : Boolean;
+    DoExplosionCrater          : Boolean;
     Index_LemmingToBeNuked     : Integer;
     BrickPixelColors           : array[0..11] of TColor32; // gradient steps
     fGameFinished              : Boolean;
@@ -1953,8 +1954,9 @@ end;
 function TLemmingGame.UpdateExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
-
   Dec(L.LemExplosionTimer);
+  DoExplosionCrater := True;
+
   if L.LemExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
@@ -3725,8 +3727,10 @@ end;
 function TLemmingGame.HandleBlasticine(L: TLemming): Boolean;
 begin
   Result := True;
+
   if not (L.LemAction in [baFreezerExplosion, baExiting]) then
   begin
+    DoExplosionCrater := False;
     Transition(L, baExploding);
   end;
 end;
@@ -6686,6 +6690,7 @@ begin
   Result := True;
   if L.LemEndOfAnimation then
   begin
+    DoExplosionCrater := True;
     Transition(L, baExploding);
     L.LemHasBlockerField := False; // remove blocker field
     SetBlockerMap;
@@ -6709,9 +6714,7 @@ begin
   Renderer.IsFreezerExplosion := False;
   Result := False;
 
-  if (L.LemAction = baExploding)
-  //hotbookmark - not sure yet if we want blasticine to cause terrain destruction
-  and not (HasTriggerAt(L.LemX, L.LemY, trBlasticine)) then
+  if (L.LemAction = baExploding) and DoExplosionCrater then
     ApplyExplosionMask(L);
 
   RemoveLemming(L, RM_KILL);
