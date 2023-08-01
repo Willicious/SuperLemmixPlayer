@@ -76,6 +76,34 @@ $ANIMATIONS
       FOOT_Y 10
     $END
   $END
+  
+  $ZOMBIEWALKER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+  $END
+  
+  $DRIFTER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 8
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 8
+    $END
+  $END
 
   $DIGGER
     FRAMES 16
