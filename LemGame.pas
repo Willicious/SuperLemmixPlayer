@@ -256,7 +256,6 @@ type
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
-      function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
       function FindGadgetID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
       function HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -289,7 +288,6 @@ type
     //procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedGadgets;
-    function HasPixelAt(X, Y: Integer): Boolean;
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeAllTriggerMaps;
@@ -341,14 +339,6 @@ type
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Amount: Integer = -1);
 
   { lemming actions }
-    function FindGroundPixel(x, y: Integer): Integer;
-    function FindWaterPixel(x, y: Integer): Integer;
-    function HasWaterObjectAt(x, y: Integer; AnyType: Boolean; SwimmableOnly: Boolean): Boolean;
-    function HasSteelAt(x, y: Integer): Boolean;
-    function HasIndestructibleAt(x, y, Direction: Integer;
-                                     Skill: TBasicLemmingAction): Boolean;
-
-
     function HandleLemming(L: TLemming): Boolean;
       function CheckLevelBoundaries(L: TLemming) : Boolean;
     function HandleWalking(L: TLemming): Boolean;
@@ -469,6 +459,15 @@ type
     procedure UpdateLemmings;
 
   { callable }
+    // All checks for terrain, objects, etc
+    function HasPixelAt(X, Y: Integer): Boolean;
+    function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
+    function FindGroundPixel(x, y: Integer): Integer;
+    function FindWaterPixel(x, y: Integer): Integer;
+    function HasWaterObjectAt(x, y: Integer; AnyType: Boolean; SwimmableOnly: Boolean): Boolean;
+    function HasSteelAt(x, y: Integer): Boolean;
+    function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
+
     procedure CheckAdjustSpawnInterval;
     procedure AdjustSpawnInterval(aSI: Integer);
     function CheckIfLegalSI(aSI: Integer): Boolean;

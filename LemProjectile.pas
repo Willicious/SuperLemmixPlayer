@@ -126,7 +126,7 @@ type
 implementation
 
 uses
-  LemRenderHelpers;
+  LemRenderHelpers, LemGame;
 
 const
   PROJECTILE_HORIZONTAL_MOMENTUM = 9;
@@ -418,7 +418,10 @@ var
       Result[PosCount] := Point(fX, fY);
       Inc(PosCount);
 
-      if (fPhysicsMap.PixelS[fX, fY] and PM_SOLID) <> 0 then
+      if ((fPhysicsMap.PixelS[fX, fY] and PM_SOLID) <> 0) then
+        fHit := true;
+
+      if fIsGrenade and GlobalGame.HasTriggerAt(fX, fY, trZombie) then
         fHit := true;
 
       if fIsSpear and ((fPhysicsMap.PixelS[fX, fY + 1] and PM_SOLID) <> 0) then
