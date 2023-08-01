@@ -333,6 +333,7 @@ type
     //procedure UpdateBalloonPopTimer(L: TLemming);
     procedure UpdateGadgets;
 
+    function HasProjectileAt(X, Y: Integer): Boolean;
     procedure UpdateProjectiles;
 
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
@@ -1596,7 +1597,6 @@ procedure TLemmingGame.CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M
 begin
   if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
 end;
-
 
 
 function TLemmingGame.HasPixelAt(X, Y: Integer): Boolean;
@@ -6925,6 +6925,19 @@ begin
   end else begin
     NewRecs.SetNameOnAll(fReplayManager.PlayerName);
     GameParams.CurrentLevel.WriteNewRecords(NewRecs, false);
+  end;
+end;
+
+function TLemmingGame.HasProjectileAt(X, Y: Integer): Boolean;
+var
+i: Integer;
+P: TProjectile;
+begin
+  for i := 0 to ProjectileList.Count-1 do
+  begin
+    P := ProjectileList[i];
+
+    Result := (P.X = X) and (P.Y = Y);
   end;
 end;
 
