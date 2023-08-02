@@ -4136,26 +4136,17 @@ var
   PosX, PosY: Integer;
   FrameOffset: Integer;
 const
-  VerticalBrick: array[0..3, 0..1] of Integer = (
-       (4, 0),
-       (4, 1),
-       (4, 2),
-       (4, 3));
-
-  HorizontalBrick: array[0..3, 0..1] of Integer = (
-       (1, 0), (2, 0), (3, 0), (4, 0));
+  LadderBrick: array[0..8, 0..1] of Integer = (
+       (0, 0), (1, 0), (2, 0),
+               (1, 1), (2, 1), (3, 1),
+                       (2, 2), (3, 2),(4, 2)
+               );
 begin
   PosX := L.LemX + L.LemDX;
   PosY := L.LemY;
 
-  /// Horizontal bricks
-  for i := 0 to Length(HorizontalBrick) - 1 do
+  for i := 0 to Length(LadderBrick) - 1 do
   begin
-    // First ladder frame needs an extra pixel at lem's foot position
-    if L.LemPhysicsFrame = 10 then
-      AddConstructivePixel(PosX, PosY, BrickPixelColors[9]);
-
-    // Only draw horizontal bricks on the following frames
     if L.LemPhysicsFrame in [10, 12, 14, 16, 18, 20, 22, 24] then
     begin
         case L.LemPhysicsFrame of
@@ -4167,39 +4158,15 @@ begin
           20: FrameOffset := 15;
           22: FrameOffset := 18;
           24: FrameOffset := 21;
+          else Exit;
         end;
 
       if L.LemDX > 0 then
-        AddConstructivePixel((PosX + FrameOffset) + HorizontalBrick[i, 0],
-                             (PosY + FrameOffset) + HorizontalBrick[i, 1], BrickPixelColors[9])
+        AddConstructivePixel((PosX + FrameOffset) + LadderBrick[i, 0],
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[FrameOffset div 2])
       else
-        AddConstructivePixel((PosX - FrameOffset) - HorizontalBrick[i, 0],
-                             (PosY + FrameOffset) + HorizontalBrick[i, 1], BrickPixelColors[9]);
-    end;
-  end;
-
-  /// Vertical bricks
-  for i := 0 to Length(VerticalBrick) - 1 do
-  begin
-    // Only draw vertical bricks on the following frames
-    if L.LemPhysicsFrame in [11, 13, 15, 17, 19, 21, 23] then
-    begin
-        case L.LemPhysicsFrame of
-          11: FrameOffset := 0;
-          13: FrameOffset := 3;
-          15: FrameOffset := 6;
-          17: FrameOffset := 9;
-          19: FrameOffset := 12;
-          21: FrameOffset := 15;
-          23: FrameOffset := 18;
-        end;
-
-      if L.LemDX > 0 then
-        AddConstructivePixel((PosX + FrameOffset) + VerticalBrick[i, 0],
-                             (PosY + FrameOffset) + VerticalBrick[i, 1], BrickPixelColors[9])
-      else
-        AddConstructivePixel((PosX - FrameOffset) - VerticalBrick[i, 0],
-                             (PosY + FrameOffset) + VerticalBrick[i, 1], BrickPixelColors[9]);
+        AddConstructivePixel((PosX - FrameOffset) - LadderBrick[i, 0],
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[FrameOffset div 2]);
     end;
   end;
 end;
@@ -5105,7 +5072,7 @@ var
   n: Integer;
 begin
   Result := False;
-  // Next brick must add at least one pixel
+  // First brick must add at least one pixel
   for n := 0 to 5 do
     Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
 end;
@@ -5114,27 +5081,24 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
   // Check if the ladder has met terrain - this must be done per-frame
   function LadderHitTerrain: Boolean;
   var
-  X, Y: Integer;
+  n: Integer;
   FrameOffset: Integer;
   begin
     Result := False;
 
     case L.LemPhysicsFrame of
-      12: FrameOffset := 5;
-      14: FrameOffset := 8;
-      16: FrameOffset := 11;
-      18: FrameOffset := 14;
-      20: FrameOffset := 17;
-      22: FrameOffset := 20;
+      12: FrameOffset := 8;
+      14: FrameOffset := 11;
+      16: FrameOffset := 14;
+      18: FrameOffset := 17;
+      20: FrameOffset := 20;
+      22: FrameOffset := 23;
     end;
 
-    for X := FrameOffset to (FrameOffset + 3) do
-    begin
-      Y := FrameOffset - 1;
+    n := FrameOffset;
 
-      if ((L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22]) and HasPixelAt(L.LemX + X * L.LemDX, L.LemY + Y)) then
-        Result := True;
-    end;
+    if ((L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22]) and HasPixelAt(L.LemX + n * L.LemDX, L.LemY + n)) then
+        Result := True
   end;
 begin
   Result := True;

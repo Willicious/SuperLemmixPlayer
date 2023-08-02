@@ -777,12 +777,11 @@ begin
     DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 4, 7, 20);
 
     // Ladderer, Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
-    DrawAnimationFrame(fSkillIcons[spbLadderer], LADDERING, 16, 5, 17);
-    DrawBrick(fSkillIcons[spbLadderer], 8, 17);
-    DrawBrick(fSkillIcons[spbLadderer], 10, 17, 1);
-    DrawBrick(fSkillIcons[spbLadderer], 10, 18, 1);
-    DrawBrick(fSkillIcons[spbLadderer], 10, 19);
-    DrawBrick(fSkillIcons[spbLadderer], 12, 19, 1);
+    DrawAnimationFrame(fSkillIcons[spbLadderer], LADDERING, 16, 5, 16);
+    DrawBrick(fSkillIcons[spbLadderer], 7, 17);
+    DrawBrick(fSkillIcons[spbLadderer], 8, 18);
+    DrawBrick(fSkillIcons[spbLadderer], 9, 19);
+    DrawBrick(fSkillIcons[spbLadderer], 10, 20);
 
     // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
     DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 18);

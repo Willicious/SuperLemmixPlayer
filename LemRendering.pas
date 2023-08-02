@@ -1416,14 +1416,11 @@ var
   PosX, PosY: Integer;
   FrameOffset: Integer;
 const
-  VerticalBrickShadow: array[0..3, 0..1] of Integer = (
-       (4, 0),
-       (4, 1),
-       (4, 2),
-       (4, 3));
-
-  HorizontalBrickShadow: array[0..3, 0..1] of Integer = (
-       (1, 0), (2, 0), (3, 0), (4, 0));
+  LadderBrickShadow: array[0..8, 0..1] of Integer = (
+       (0, 0), (1, 0), (2, 0),
+               (1, 1), (2, 1), (3, 1),
+                       (2, 2), (3, 2),(4, 2)
+               );
 begin
   fLayers.fIsEmpty[rlLowShadows] := False;
 
@@ -1436,61 +1433,29 @@ begin
 
   while Assigned(L) and (L.LemAction = baLaddering) do
   begin
-    /// Horizontal bricks
-    for i := 0 to Length(HorizontalBrickShadow) - 1 do
+    for i := 0 to Length(LadderBrickShadow) - 1 do
     begin
-      // First ladder frame needs extra pixel at lem's foot position
-      if L.LemPhysicsFrame = 10 then
-        SetLowShadowPixel(PosX, PosY);
-
-      // Only draw horizontal bricks on the following frames
-      // With the exception of frame 10,
-      // the shadow is drawn a frame early so that it corresponds with what actually happens in-game
+      // Skill shadow is drawn a frame early to show what will actually happen
       if L.LemPhysicsFrame in [10, 11, 13, 15, 17, 19, 21, 23] then
       begin
-          case L.LemPhysicsFrame of
-            10: FrameOffset := 0;
-            11: FrameOffset := 3;
-            13: FrameOffset := 6;
-            15: FrameOffset := 9;
-            17: FrameOffset := 12;
-            19: FrameOffset := 15;
-            21: FrameOffset := 18;
-            23: FrameOffset := 21;
-          end;
+        case L.LemPhysicsFrame of
+          10: FrameOffset := 0;
+          11: FrameOffset := 3;
+          13: FrameOffset := 6;
+          15: FrameOffset := 9;
+          17: FrameOffset := 12;
+          19: FrameOffset := 15;
+          21: FrameOffset := 18;
+          23: FrameOffset := 21;
+          else Exit;
+        end;
 
-        if L.LemDX > 0 then
-          SetLowShadowPixel((PosX + FrameOffset) + HorizontalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + HorizontalBrickShadow[i, 1])
-        else
-          SetLowShadowPixel((PosX - FrameOffset) - HorizontalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + HorizontalBrickShadow[i, 1]);
-      end;
-    end;
-
-    /// Vertical bricks
-    for i := 0 to Length(VerticalBrickShadow) - 1 do
-    begin
-      // Only draw vertical bricks on the following frames
-      // The shadow is drawn a frame early so that it corresponds with what actually happens in-game
-      if L.LemPhysicsFrame in [10, 12, 14, 16, 18, 20, 22] then
-      begin
-          case L.LemPhysicsFrame of
-            10: FrameOffset := 0;
-            12: FrameOffset := 3;
-            14: FrameOffset := 6;
-            16: FrameOffset := 9;
-            18: FrameOffset := 12;
-            20: FrameOffset := 15;
-            22: FrameOffset := 18;
-          end;
-
-        if L.LemDX > 0 then
-          SetLowShadowPixel((PosX + FrameOffset) + VerticalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + VerticalBrickShadow[i, 1])
-        else
-          SetLowShadowPixel((PosX - FrameOffset) - VerticalBrickShadow[i, 0],
-                            (PosY + FrameOffset) + VerticalBrickShadow[i, 1]);
+      if L.LemDX > 0 then
+        SetLowShadowPixel((PosX + FrameOffset) + LadderBrickShadow[i, 0],
+                          (PosY + FrameOffset) + LadderBrickShadow[i, 1])
+      else
+        SetLowShadowPixel((PosX - FrameOffset) - LadderBrickShadow[i, 0],
+                          (PosY + FrameOffset) + LadderBrickShadow[i, 1]);
       end;
     end;
 
