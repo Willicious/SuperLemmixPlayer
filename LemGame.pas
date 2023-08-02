@@ -5076,10 +5076,10 @@ begin
 
   // First brick must add at least one pixel
   for i := 0 to 4 do
-  Result := Result or (not HasPixelAt(PosX + i, PosY)
+  Result := Result or (not HasPixelAt(PosX + (i * L.LemDX), PosY)
                    // Prevents laddering where there is already a ladder
-                   and not HasPixelAt(PosX + i, PosY + 1)
-                   and not HasPixelAt(PosX + i, PosY + 2));
+                   and not HasPixelAt(PosX + (i * L.LemDX), PosY + 1)
+                   and not HasPixelAt(PosX + (i * L.LemDX), PosY + 2));
 end;
 
 function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
