@@ -8,7 +8,7 @@
  TITLE Ladderer Test 2
  AUTHOR WillLem
  ID x67A1093939A998B7
- VERSION x0000000000000005
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -27,6 +27,8 @@
  $SKILLSET 
    WALKER 50
    JUMPER 50
+   SHIMMIER 50
+   BLOCKER 50
    LADDERER 50
    BUILDER 50
    BASHER 50

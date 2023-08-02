@@ -5084,9 +5084,9 @@ end;
 
 function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
   // Check if the ladder has met terrain - this must be done per-frame
-  function LadderHitTerrain: Boolean;
+  function LadderHitObstacle: Boolean;
   var
-  XOffset, YOffset: Integer;
+  i, XOffset, YOffset: Integer;
   FrameOffset: Integer;
   begin
     Result := False;
@@ -5103,10 +5103,25 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
     XOffset := FrameOffset + 4;
     YOffset := FrameOffset;
 
-    if ((L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22])
-      and HasPixelAt(L.LemX + (XOffset * L.LemDX), L.LemY + YOffset)
-      and HasPixelAt(L.LemX + ((XOffset -1) * L.LemDX), L.LemY + (YOffset +1))) then
-        Result := True
+    if (L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22]) then
+    begin
+        // Check for terrain at extreme X and Y edge of most-recently-placed ladder brick
+        if (HasPixelAt(L.LemX + (XOffset * L.LemDX), L.LemY + YOffset)
+        and HasPixelAt(L.LemX + ((XOffset -1) * L.LemDX), L.LemY + (YOffset +1)))
+
+        // Check for Blocker/OWF at extreme X edge
+        or HasTriggerAt(L.LemX + (XOffset * L.LemDX), L.LemY + YOffset, trForceRight)
+        or HasTriggerAt(L.LemX + (XOffset * L.LemDX), L.LemY + YOffset, trForceLeft)
+
+        // Check for Edge-of-level at extreme X edge
+        or (L.LemX + XOffset >= PhysicsMap.Width)
+        or (L.LemX - XOffset <= 0)
+
+        // Check for Bottom-of-level at extreme Y edge
+        or (L.LemY + YOffset >= PhysicsMap.Height)
+          then Result := True;
+    end else
+      Result := False;
   end;
 begin
   Result := True;
@@ -5120,7 +5135,7 @@ begin
 //    //fRenderer.VisualSFXTimer := 10;
   end;
 
-  if LadderHitTerrain or L.LemEndOfAnimation then
+  if LadderHitObstacle or L.LemEndOfAnimation then
     Transition(L, baWalking);
 end;
 
