@@ -5092,19 +5092,20 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
     Result := False;
 
     case L.LemPhysicsFrame of
-      12: FrameOffset := 8;
-      14: FrameOffset := 11;
-      16: FrameOffset := 14;
-      18: FrameOffset := 17;
-      20: FrameOffset := 20;
-      22: FrameOffset := 23;
+      12: FrameOffset := 5;   // 9, 5 and 8, 6
+      14: FrameOffset := 8;   // add 3 to each digit
+      16: FrameOffset := 11;  // etc.
+      18: FrameOffset := 14;
+      20: FrameOffset := 17;
+      22: FrameOffset := 20;
     end;
 
-    XOffset := FrameOffset;
-    YOffset := FrameOffset + 3;
+    XOffset := FrameOffset + 4;
+    YOffset := FrameOffset;
 
     if ((L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22])
-      and HasPixelAt(L.LemX + XOffset * L.LemDX, L.LemY + YOffset)) then
+      and HasPixelAt(L.LemX + (XOffset * L.LemDX), L.LemY + YOffset)
+      and HasPixelAt(L.LemX + ((XOffset -1) * L.LemDX), L.LemY + (YOffset +1))) then
         Result := True
   end;
 begin
