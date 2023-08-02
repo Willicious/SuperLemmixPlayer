@@ -321,7 +321,7 @@ begin
 
   //rescue result record
   if Results.gSuccess and (Entry.UserRecords.LemmingsRescued.Value > 0)
-  and (not Results.gToRescue = 0) then
+  and (not Results.gToRescue <= 0) then
     Result[3].Line := SYourRecord + IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value)
   else
     Result[3].Line := '';
@@ -340,8 +340,8 @@ begin
 
   //time taken
   HueShift.HShift := TIME_RECORD_SHIFT;
-  if (Results.gSuccess and (not Results.gToRescue = 0)) or
-  ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
+  if (Results.gSuccess and not (Results.gToRescue <= 0))
+  or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
     Result[6].Line := SYourTime + MakeTimeString(Results.gLastRescueIteration)
   else
     Result[6].Line := '';
@@ -350,7 +350,7 @@ begin
 
   //time record
   if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
-  and (not Results.gToRescue = 0) then
+  and (not Results.gToRescue <= 0) then
     Result[7].Line := SYourTimeRecord + MakeTimeString(Entry.UserRecords.TimeTaken.Value)
   else
     Result[7].Line := '';
@@ -360,7 +360,7 @@ begin
   //skills record
   HueShift.HShift := SKILLS_RECORD_SHIFT;
   if Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0)
-  and (not Results.gToRescue = 0) then
+  and (not Results.gToRescue <= 0) then
     Result[8].Line := SYourFewestSkills + IntToStr(Entry.UserRecords.TotalSkills.Value)
   else
     Result[8].Line := '';
