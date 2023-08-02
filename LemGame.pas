@@ -6958,16 +6958,23 @@ end;
 
 function TLemmingGame.HasProjectileAt(X, Y: Integer): Boolean;
 var
-i: Integer;
-P: TProjectile;
+  i: Integer;
+  P: TProjectile;
 begin
-  for i := 0 to ProjectileList.Count-1 do
+  Result := False;
+
+  for i := 0 to ProjectileList.Count - 1 do
   begin
     P := ProjectileList[i];
 
-    Result := (P.X = X) and (P.Y = Y);
+    if (P.X = X) and (P.Y = Y) then
+    begin
+      Result := True;
+      Exit;
+    end;
   end;
 end;
+
 
 procedure TLemmingGame.UpdateProjectiles;
 var
