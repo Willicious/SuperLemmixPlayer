@@ -795,7 +795,9 @@ begin
     if aLemming.LemExplosionTimer > 0 then
       n := (aLemming.LemExplosionTimer div 17) + 1
     else if aLemming.LemFreezerExplosionTimer > 0 then
-      n := (aLemming.LemFreezerExplosionTimer div 17) + 1;
+      n := (aLemming.LemFreezerExplosionTimer div 17) + 1
+    else
+      n := 0; // Should never happen
 
     // Extract tens and ones digit from n
     tensDigit := n div 10;
