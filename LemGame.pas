@@ -2820,8 +2820,6 @@ function TLemmingGame.MayAssignLadderer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baPlatforming,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
-var
-  n: Integer;
 begin
   //non-assignable from the top of the level        //hotbookmark
   if L.LemY <= 0 then
@@ -6291,7 +6289,7 @@ end;
 
 function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
 var
-i, XChecks, YChecks: Integer;
+XChecks, YChecks: Integer;
 begin
   Result := True;
 

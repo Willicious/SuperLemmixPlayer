@@ -755,7 +755,6 @@ end;
 
 procedure TRenderer.DrawBalloonPop(L: TLemming);
 var
-  NewAction: TBasicLemmingAction;
   FrameRect: TRect;
 begin
   if L.LemBalloonPopTimer > 0 then
