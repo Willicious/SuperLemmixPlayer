@@ -5067,19 +5067,26 @@ end;
 
 function TLemmingGame.LemCanLadder(L: TLemming): Boolean;
 var
-  n: Integer;
+  i, PosX, PosY: Integer;
 begin
   Result := False;
+
+  PosX := L.LemX + L.LemDX;
+  PosY := L.LemY;
+
   // First brick must add at least one pixel
-  for n := 0 to 5 do
-    Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
+  for i := 0 to 4 do
+  Result := Result or (not HasPixelAt(PosX + i, PosY)
+                   // Prevents laddering where there is already a ladder
+                   and not HasPixelAt(PosX + i, PosY + 1)
+                   and not HasPixelAt(PosX + i, PosY + 2));
 end;
 
 function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
   // Check if the ladder has met terrain - this must be done per-frame
   function LadderHitTerrain: Boolean;
   var
-  n: Integer;
+  XOffset, YOffset: Integer;
   FrameOffset: Integer;
   begin
     Result := False;
@@ -5093,9 +5100,11 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
       22: FrameOffset := 23;
     end;
 
-    n := FrameOffset;
+    XOffset := FrameOffset;
+    YOffset := FrameOffset + 3;
 
-    if ((L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22]) and HasPixelAt(L.LemX + n * L.LemDX, L.LemY + n)) then
+    if ((L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22])
+      and HasPixelAt(L.LemX + XOffset * L.LemDX, L.LemY + YOffset)) then
         Result := True
   end;
 begin
