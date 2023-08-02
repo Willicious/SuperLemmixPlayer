@@ -272,8 +272,8 @@ type
       function HandleBlasticine(L: TLemming): Boolean;
       function HandleVinewater(L: TLemming): Boolean;
       function HandlePoison(L: TLemming): Boolean;
-      function HandleRadiation(L: TLemming): Boolean;
-      function HandleSlowfreeze(L: TLemming): Boolean;
+      function HandleRadiation(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleSlowfreeze(L: TLemming; PosX, PosY: Integer): Boolean;
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForQueuedAction;
@@ -3226,11 +3226,11 @@ begin
 
     // Radiation
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
-      HandleRadiation(L);
+      HandleRadiation(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Slowfreeze
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
-      HandleSlowfreeze(L);
+      HandleSlowfreeze(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Water - Check only for drowning here!
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
@@ -3775,9 +3775,8 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleRadiation(L: TLemming): Boolean;
+function TLemmingGame.HandleRadiation(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  PosX, PosY: Integer;
   GadgetID: Word;
   Gadget: TGadget;
 begin
@@ -3804,9 +3803,8 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleSlowfreeze(L: TLemming): Boolean;
+function TLemmingGame.HandleSlowfreeze(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  PosX, PosY: Integer;
   GadgetID: Word;
   Gadget: TGadget;
 begin
