@@ -89,8 +89,8 @@ type
     baGrenading,       //43
     baLooking,         //44
     baLasering,        //45
-    //baBallooning,      //46
-    //baLaddering,       //47
+    baBallooning,      //46
+    baLaddering,       //47
     baDrifting,        //48
     baSleeping         //49
   );
@@ -105,7 +105,7 @@ type
     spbWalker,
     spbJumper,
     spbShimmier,
-    //spbBallooner,
+    spbBallooner,
     spbSlider,
     spbClimber,
     spbSwimmer,
@@ -116,7 +116,7 @@ type
     spbBomber,
     spbFreezer,
     spbBlocker,
-    //spbLadderer,
+    spbLadderer,
     spbPlatformer,
     spbBuilder,
     spbStacker,
@@ -147,7 +147,7 @@ const
     'walker',
     'jumper',
     'shimmier',
-    //'ballooner',
+    'ballooner',
     'slider',
     'climber',
     'swimmer',
@@ -158,7 +158,7 @@ const
     'bomber',
     'freezer',
     'blocker',
-    //'ladderer',
+    'ladderer',
     'platformer',
     'builder',
     'stacker',
@@ -176,7 +176,7 @@ const
     'walkers',
     'jumpers',
     'shimmiers',
-    //'ballooners',
+    'ballooners',
     'sliders',
     'climbers',
     'swimmers',
@@ -187,7 +187,7 @@ const
     'bombers',
     'freezers',
     'blockers',
-    //'ladderers',
+    'ladderers',
     'platformers',
     'builders',
     'stackers',
@@ -257,9 +257,9 @@ const
     baSliding,
     baSpearing,
     baGrenading,
-    baLasering
-    //baBallooning,
-    //baLaddering
+    baLasering,
+    baBallooning,
+    baLaddering
   ];
 
 const
@@ -309,8 +309,8 @@ const
     spbGrenader,    //43  baGrenading
     spbNone,        //44  baLooking
     spbLaserer,     //45  baLasering
-    //spbBallooner,   //46  baBallooning
-    //spbLadderer,    //47  baLaddering
+    spbBallooner,   //46  baBallooning
+    spbLadderer,    //47  baLaddering
     spbNone,        //48  baDrifting
     spbNone         //49  baSleeping
   );
@@ -322,7 +322,7 @@ const
     baToWalking,    //1
     baJumping,      //2
     baShimmying,    //3
-    //baBallooning,   //4
+    baBallooning,   //4
     baSliding,      //5
     baClimbing,     //6
     baSwimming,     //7
@@ -333,7 +333,7 @@ const
     baExploding,    //12
     baFreezing,     //13
     baBlocking,     //14
-    //baLaddering,    //15
+    baLaddering,    //15
     baPlatforming,  //16
     baBuilding,     //17
     baStacking,     //18

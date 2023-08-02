@@ -73,7 +73,7 @@ var
             baToWalking:     Result := 'Walker';
             baJumping:       Result := 'Jumper';
             baShimmying:     Result := 'Shimmier';
-            //baBallooning:    Result := 'Ballooner';
+            baBallooning:    Result := 'Ballooner';
             baSliding:       Result := 'Slider';
             baClimbing:      Result := 'Climber';
             baSwimming:      Result := 'Swimmer';
@@ -84,7 +84,7 @@ var
             baExploding:     Result := 'Bomber';
             baFreezing:      Result := 'Freezer';
             baBlocking:      Result := 'Blocker';
-            //baLaddering:     Result := 'Ladderer';
+            baLaddering:     Result := 'Ladderer';
             baPlatforming:   Result := 'Platformer';
             baBuilding:      Result := 'Builder';
             baStacking:      Result := 'Stacker';

@@ -899,7 +899,7 @@ begin
       spbWalker: SL.Add('  fRenderInterface.SelectedSkill: Walker');
       spbClimber: SL.Add('  fRenderInterface.SelectedSkill: Climber');
       spbSwimmer: SL.Add('  fRenderInterface.SelectedSkill: Swimmer');
-      //spbBallooner: SL.Add('  fRenderInterface.SelectedSkill: Ballooner');
+      spbBallooner: SL.Add('  fRenderInterface.SelectedSkill: Ballooner');
       spbFloater: SL.Add('  fRenderInterface.SelectedSkill: Floater');
       spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
       spbDisarmer: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
@@ -907,7 +907,7 @@ begin
       spbBomber: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
       spbFreezer: SL.Add('  fRenderInterface.SelectedSkill: Freezer');
       spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
-      //spbLadderer: SL.Add('  fRenderInterface.SelectedSkill: Ladderer');
+      spbLadderer: SL.Add('  fRenderInterface.SelectedSkill: Ladderer');
       spbPlatformer: SL.Add('  fRenderInterface.SelectedSkill: Platformer');
       spbBuilder: SL.Add('  fRenderInterface.SelectedSkill: Builder');
       spbStacker: SL.Add('  fRenderInterface.SelectedSkill: Stacker');
@@ -2069,7 +2069,7 @@ var
 const
   COMPATIBLE_ACTIONS: array[0..8] of array[0..1] of TBasicLemmingAction =
     ((baWalking, baAscending),
-     (baDehoisting, baSliding),             //hotbookmark - do any new states need to go here???
+     (baDehoisting, baSliding),
      (baClimbing, baHoisting),
      (baFalling, baFloating),
      (baFalling, baGliding),
