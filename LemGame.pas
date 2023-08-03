@@ -3127,19 +3127,22 @@ begin
       begin
         DoExplosionCrater := False;
         Transition(L, baExploding);
+        Exit;
       end;
     end;
-//  end else if L.LemAction = baBallooning then
-//  begin
-//    for YOffset := 10 to 30 do
-//    for XOffset := -5 to 5 do
-//    begin
-//      if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset) then
-//      begin
-//        OutputDebugString(PChar('Projectile detected for ballooner'));
-//        PopBalloon(L);
-//      end;
-//    end;
+  end;
+
+  if L.LemAction = baBallooning then
+  begin
+    for YOffset := 10 to 30 do
+    for XOffset := -6 to 6 do
+    begin
+      if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset) then
+      begin
+        PopBalloon(L, 1, baWalking);
+        Exit;
+      end;
+    end;
   end;
 end;
 
