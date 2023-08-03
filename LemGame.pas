@@ -3130,7 +3130,7 @@ begin
   if L.LemIsZombie then
   begin
     for YOffset := 0 to 15 do
-    for XOffset := -5 to 5 do
+    for XOffset := -6 to 6 do
     begin
       if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset)
         and not (L.LemAction in [baSpearing, baGrenading]) then

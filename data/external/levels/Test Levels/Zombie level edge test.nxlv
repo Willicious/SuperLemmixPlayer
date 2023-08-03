@@ -8,7 +8,7 @@
  TITLE Zombie level edge test
  AUTHOR WillLem
  ID x79AB18BE51B0088C
- VERSION x0000000000000001
+ VERSION x0000000000000002
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,6 +25,10 @@
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
+   FREEZER 10
+   BUILDER 10
+   GRENADER 10
+   BASHER 10
  $END 
  
 #     Interactive objects       
@@ -60,6 +64,14 @@
    PIECE window
    X 242
    Y 84
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 135
+   Y 99
    NO_OVERWRITE
  $END
  
@@ -159,6 +171,22 @@
    PIECE bar_01
    X 190
    Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 133
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 117
+   Y 122
    ONE_WAY
  $END
  
