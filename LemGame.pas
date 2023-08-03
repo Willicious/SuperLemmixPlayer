@@ -4507,7 +4507,7 @@ begin
     end;
 
     // Right Side
-    if (L.LemX >= PhysicsMap.Width) then
+    if (L.LemX >= PhysicsMap.Width -2) then
     begin
       HandleForceField(L, -1);
       Result := True;
