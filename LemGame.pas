@@ -5089,7 +5089,7 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
   // Check if the ladder has met terrain - this must be done per-frame
   function LadderHitObstacle: Boolean;
   var
-  i, XOffset, YOffset: Integer;
+  XOffset, YOffset: Integer;
   FrameOffset: Integer;
   begin
     Result := False;
@@ -5101,6 +5101,7 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
       18: FrameOffset := 14;
       20: FrameOffset := 17;
       22: FrameOffset := 20;
+      else Exit;
     end;
 
     XOffset := FrameOffset + 4;

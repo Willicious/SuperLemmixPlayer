@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.5
+#   Created with SLXEditor 2.6
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Ladderer Test
  AUTHOR WillLem
  ID x4DC50F326231F6D9
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -32,13 +32,13 @@
    CLIMBER 50
    FLOATER 50
    BLOCKER 50
+   LADDERER 50
    PLATFORMER 50
    BUILDER 50
    STACKER 50
    LASERER 50
    BASHER 50
    CLONER 50
-   LADDERER 50
  $END 
  
 #     Interactive objects       
