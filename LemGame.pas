@@ -3120,7 +3120,7 @@ begin
   if L.LemIsZombie then
   begin
     for YOffset := 0 to 15 do
-    for XOffset := -5 to 5 do
+    for XOffset := -6 to 6 do
     begin
       if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset)
         and not (L.LemAction in [baSpearing, baGrenading]) then
@@ -4462,13 +4462,13 @@ begin
     Result := True;
   end;
 
-  //Right Side
+  // Right Side
   if (L.LemX >= PhysicsMap.Width -2) then
   begin
-    //this makes the sides behave like one-way forcefields
     HandleForceField(L, -1);
     Result := True;
   end;
+//  end;
 end;
 
 procedure TLemmingGame.EscapeFreezerCube(L: TLemming);

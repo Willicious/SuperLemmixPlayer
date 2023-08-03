@@ -1,4 +1,6 @@
 LEMMINGS willlem_lemminas
+NAMES_SINGULAR Lemmina
+NAMES_PLURAL Lemminas
 
 $COLORS
   MASK xF0F069
