@@ -964,16 +964,11 @@ begin
     if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
   end;
 
-  if GameParams.FullScreen <> OldFullScreen then
+  if (GameParams.FullScreen <> OldFullScreen)
+    or (GameParams.ShowMinimap <> OldShowMinimap) then
   begin
-     InitializeImage;
-     BuildScreen;
-  end;
-
-  if GameParams.ShowMinimap <> OldShowMinimap then
-  begin
-     InitializeImage;
-     BuildScreen;
+    InitializeImage;
+    BuildScreen;
   end;
 
   if GameParams.HighResolution <> OldHighResolution then

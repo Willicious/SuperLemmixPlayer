@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.5
+#   Created with SLXEditor 2.6
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x000000000000001B
+ VERSION x000000000000001C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -83,6 +83,14 @@
    Y 139
    NO_OVERWRITE
    SKILL BALLOONER
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE trap
+   X 201
+   Y 122
+   NO_OVERWRITE
  $END
  
  
