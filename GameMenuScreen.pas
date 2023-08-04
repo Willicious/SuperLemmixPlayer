@@ -288,6 +288,8 @@ begin
   end else
     fDisableScroller := true;
 
+  //FadeIn;
+
   EnableIdle;
 end;
 
