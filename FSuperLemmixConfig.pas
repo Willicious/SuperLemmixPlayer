@@ -63,6 +63,7 @@ type
     gbMenuSounds: TGroupBox;
     cbPostviewJingles: TCheckBox;
     cbMenuMusic: TCheckBox;
+    rgGameLoading: TRadioGroup;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -330,6 +331,9 @@ begin
   GameParams.IngameSaveReplayPattern := GetReplayPattern(cbIngameSaveReplayPattern);
   GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
+  GameParams.NextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
+  GameParams.LastActiveLevel := rgGameLoading.ItemIndex = 1;
+
   //GameParams.EnableOnline := cbEnableOnline.Checked;
   //GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
@@ -558,6 +562,9 @@ procedure TFormNXConfig.SetCheckboxes;
         cbMinimapHighQuality.Checked := False;
         cbMinimapHighQuality.Enabled := False;
       end;
+
+    if GameParams.NextUnsolvedLevel then rgGameLoading.ItemIndex := 0;
+    if GameParams.LastActiveLevel then rgGameLoading.ItemIndex := 1;
 
     if GameParams.PreferYippee then rgExitSound.ItemIndex := 0;
     if GameParams.PreferBoing then rgExitSound.ItemIndex := 1;

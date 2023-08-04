@@ -171,8 +171,14 @@ procedure TGamePostviewScreen.ExitToMenu;
 begin
   if GameParams.TestModeLevel <> nil then
     CloseScreen(gstExit)
-  else
+  else begin
+    if GameParams.LastActiveLevel then
+      GameParams.NextUnsolvedLevel := False
+    else if GameParams.GameResult.gSuccess and GameParams.NextUnsolvedLevel then
+      GameParams.NextLevel(true);
+
     CloseScreen(gstMenu);
+  end;
 end;
 
 function TGamePostviewScreen.GetResultIndex: Integer;

@@ -64,6 +64,8 @@ type
     moEnableOnline,
     moCheckUpdates,
     moNoAutoReplayMode,
+    moNextUnsolvedLevel,
+    moLastActiveLevel,
     moReplayAfterRestart,
     moPauseAfterBackwards,
     moTurboFF,
@@ -101,6 +103,7 @@ const
   DEF_MISCOPTIONS = [
     moCheckUpdates,
     moAutoReplaySave,
+    moNextUnsolvedLevel,
     moPauseAfterBackwards,
     moLinearResampleMenu,
     moNoAutoReplayMode,
@@ -224,6 +227,8 @@ type
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
+    property NextUnsolvedLevel: boolean Index moNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
+    property LastActiveLevel: boolean Index moLastActiveLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
@@ -427,6 +432,8 @@ begin
   SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
   SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
   SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
+  SaveBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
+  SaveBoolean('LoadLastActiveLevel', LastActiveLevel);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
@@ -601,6 +608,8 @@ begin
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
 
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
+    NextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
+    LastActiveLevel := LoadBoolean('LoadLastActiveLevel', LastActiveLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
@@ -716,9 +725,10 @@ begin
       CurLevelGroup := fCurrentLevel.Group;
     end;
     fCurrentLevel := CurLevelGroup.Levels[0];
-  end else begin
+  end else if GameParams.NextUnsolvedLevel then
+    fCurrentLevel := CurLevelGroup.FirstUnbeatenLevel
+  else
     fCurrentLevel := CurLevelGroup.Levels[CurLevelIndex + 1];
-  end;
 
   ShownText := false;
 end;

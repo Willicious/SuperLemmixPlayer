@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 276
     Height = 439
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -72,7 +72,7 @@ object FormNXConfig: TFormNXConfig
       end
       object ReplayOptions: TGroupBox
         Left = 3
-        Top = 146
+        Top = 142
         Width = 261
         Height = 167
         Caption = 'Replay Options'
@@ -162,8 +162,8 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object btnHotkeys: TButton
-        Left = 15
-        Top = 70
+        Left = 16
+        Top = 66
         Width = 238
         Height = 52
         Caption = 'Configure Hotkeys'
@@ -176,6 +176,18 @@ object FormNXConfig: TFormNXConfig
         Width = 178
         Height = 21
         TabOrder = 0
+      end
+      object rgGameLoading: TRadioGroup
+        Left = 15
+        Top = 315
+        Width = 230
+        Height = 72
+        Caption = 'Game Loading Options'
+        Items.Strings = (
+          'Always Load Next Unsolved Level'
+          'Always Load Most Recently Active Level')
+        TabOrder = 3
+        OnClick = OptionChanged
       end
     end
     object TabSheet2: TTabSheet
