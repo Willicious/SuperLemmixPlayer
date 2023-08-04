@@ -25,6 +25,7 @@ type
       fTalismanImage: TBitmap32;
 
       function GetPreviewText: TextLineArray;
+      procedure LoadPreviewTextColours;
 
       procedure NextLevel;
       procedure PreviousLevel;
@@ -58,10 +59,19 @@ type
 implementation
 
 uses
-  CustomPopup, FBaseDosForm, FLevelInfo, FStyleManager, GameSound;
+  CustomPopup, FBaseDosForm, FLevelInfo, FStyleManager, GameSound, LemNeoParser;
 
 const
   TALISMAN_PADDING = 8;
+
+var
+  TitleShift: Extended;       //0.600;     //red
+  GroupShift: Extended;       //0.600;     //red
+  NumLemsShift: Extended;     //0.250;     //blue
+  RescueLemsShift: Extended;  //0;         //green (default)
+  ReleaseRateShift: Extended; //0.800;     //yellow
+  TimeLimitShift: Extended;   //0.150;     //teal
+  AuthorShift: Extended;      //0.500;     //violet
 
 { TGamePreviewScreen }
 
@@ -339,14 +349,6 @@ end;
 
 function TGamePreviewScreen.GetPreviewText: TextLineArray;
 const
-  TITLE_SHIFT = 0.600;        //red
-  GROUP_SHIFT = 0.600;        //red
-  NUM_LEMS_SHIFT = 0.250;     //blue
-  RESCUE_LEMS_SHIFT = 0;      //green (default)
-  RELEASE_RATE_SHIFT = 0.800; //yellow
-  TIME_LIMIT_SHIFT = 0.150;   //teal
-  AUTHOR_SHIFT = 0.500;       //violet
-
   LINE_Y_SPACING = 28;
 var
   HueShift: TColorDiff;
@@ -358,13 +360,14 @@ begin
   FillChar(HueShift, SizeOf(TColorDiff), 0);
 
   SetLength(Result, 7);
+  LoadPreviewTextColours;
 
-  HueShift.HShift := TITLE_SHIFT;
+  HueShift.HShift := TitleShift;
   Result[0].Line := Entry.Title;
   Result[0].ColorShift := HueShift;
   Result[0].yPos := 168;//hotbookmark
 
-  HueShift.HShift := GROUP_SHIFT;
+  HueShift.HShift := GroupShift;
   Result[1].yPos := Result[0].yPos + 40;
   Result[1].Line := Entry.Group.Name;
   if Entry.Group.Parent = nil then
@@ -377,7 +380,7 @@ begin
   end;
   Result[1].ColorShift := HueShift;
 
-  HueShift.HShift := NUM_LEMS_SHIFT;
+  HueShift.HShift := NumLemsShift;
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   if (Level.Info.NeutralCount > 0) or (Level.Info.ZombieCount > 0) then
   begin
@@ -405,12 +408,12 @@ begin
   Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
   Result[2].ColorShift := HueShift;
 
-  HueShift.HShift := RESCUE_LEMS_SHIFT;
+  HueShift.HShift := RescueLemsShift;
   Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
   Result[3].Line := IntToStr(Level.Info.RescueCount) + SPreviewSave;
   Result[3].ColorShift := HueShift;
 
-  HueShift.HShift := RELEASE_RATE_SHIFT;
+  HueShift.HShift := ReleaseRateShift;
   Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
   if Level.Info.SpawnIntervalLocked then
   begin
@@ -419,7 +422,7 @@ begin
   Result[4].Line := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
   Result[4].ColorShift := HueShift;
 
-  HueShift.HShift := TIME_LIMIT_SHIFT;
+  HueShift.HShift := TimeLimitShift;
   Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
   if Level.Info.HasTimeLimit then
   begin
@@ -429,7 +432,7 @@ begin
   Result[5].Line := 'Infinite Time';
   Result[5].ColorShift := HueShift;
 
-  HueShift.HShift := AUTHOR_SHIFT;
+  HueShift.HShift := AuthorShift;
   Result[6].yPos := Result[5].yPos + LINE_Y_SPACING;
   if Level.Info.Author <> '' then
   begin
@@ -459,6 +462,57 @@ begin
       end;
       Break;
     end;
+end;
+
+procedure TGamePreviewScreen.LoadPreviewTextColours;
+var
+  Parser: TParser;
+  Sec: TParserSection;
+  aGroup: TNeoLevelGroup;
+  aFile: string;
+
+  // Default SLX colours, loaded if custom files don't exist
+  procedure ResetColours;
+  begin
+    TitleShift := 0.600;       //red
+    GroupShift := 0.600;       //red
+    NumLemsShift := 0.250;     //blue
+    RescueLemsShift := 0;      //green (default)
+    ReleaseRateShift := 0.800; //yellow
+    TimeLimitShift := 0.150;   //teal
+    AuthorShift := 0.500;      //violet
+  end;
+
+begin
+  ResetColours;
+
+  aFile := 'textcolours.nxmi';
+  aGroup := GameParams.CurrentLevel.Group.Parent;
+
+  if (GameParams.CurrentLevel = nil)
+    or not (FileExists(aGroup.FindFile(aFile)) or FileExists(AppPath + SFData + aFile))
+      then Exit;
+
+  Parser := TParser.Create;
+  try
+    if FileExists(aGroup.FindFile(aFile)) then
+      Parser.LoadFromFile(aGroup.Path + aFile)
+    else if FileExists(AppPath + SFData + aFile) then
+      Parser.LoadFromFile(AppPath + SFData + aFile);
+
+    Sec := Parser.MainSection.Section['preview'];
+    if Sec = nil then Exit;
+
+    TitleShift := StrToFloatDef(Sec.LineString['title'], 0.600);
+    GroupShift := StrToFloatDef(Sec.LineString['group'], 0.600);
+    NumLemsShift := StrToFloatDef(Sec.LineString['lem_count'], 0);
+    RescueLemsShift := StrToFloatDef(Sec.LineString['rescue_count'], 0);
+    ReleaseRateShift := StrToFloatDef(Sec.LineString['release_rate'], 0.800);
+    TimeLimitShift := StrToFloatDef(Sec.LineString['time_limit'], 0.150);
+    AuthorShift := StrToFloatDef(Sec.LineString['author'], 0.500);
+  finally
+    Parser.Free;
+  end;
 end;
 
 procedure TGamePreviewScreen.MakeTalismanOptions;
