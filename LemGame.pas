@@ -6771,18 +6771,44 @@ end;
 
 function TLemmingGame.HandleFrozen(L: TLemming): Boolean;
 var
-i: Integer;
+i, n: Integer;
+YOffset: Integer;
+  procedure Unfreeze;
+  begin
+    Transition(L, baUnfreezing);
+    L.LemUnfreezingTimer := 12;
+  end;
 begin
   Result := true;
 
   if L.LemAction = baFrozen then
   begin
-    for i := 1 to 7 do
-
-    if not HasPixelAt(L.LemX, L.LemY -i) then
+    if (L.LemY > PhysicsMap.Height) then
     begin
-      Transition(L, baUnfreezing);
-      L.LemUnfreezingTimer := 12;
+      n := L.LemY - 7;
+
+      if n <= (PhysicsMap.Height -1) then
+      begin
+        // Prevents lems falling off the bottom of the screen
+        for YOffset := n to (PhysicsMap.Height -1) do
+        begin
+          if not HasPixelAt(L.LemX, YOffset) then
+            Unfreeze
+          else Exit;
+        end;
+      end else
+      if n >= PhysicsMap.Height then
+      begin
+        // Allows Freezers with <4px showing to be unfrozen
+        if not HasPixelAt(L.LemX, PhysicsMap.Height -1) then
+          Unfreeze
+        else Exit;
+      end;
+    end else for i := 1 to 7 do
+    begin
+      if not HasPixelAt(L.LemX, L.LemY - i) then
+        Unfreeze
+      else Exit;
     end;
   end;
 
