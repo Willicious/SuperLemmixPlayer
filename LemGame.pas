@@ -5851,6 +5851,7 @@ end;
 function TLemmingGame.HandleShimmying(L: TLemming): Boolean;
 var
   i: Integer;
+  LemDY: Integer;
 begin
   Result := True;
   if L.LemPhysicsFrame mod 2 = 0 then
@@ -5897,8 +5898,18 @@ begin
     // Check whether we fall down due to not enough ceiling terrain
     if not (HasPixelAt(L.LemX + L.LemDX, L.LemY - 9) or HasPixelAt(L.LemX + L.LemDX, L.LemY - 10)) then
     begin
-      Transition(L, baFalling);
-      Exit;
+      LemDY := FindGroundPixel(L.LemX, L.LemY -9);
+
+      // For transition to Climber, there must be at least 2px of climbable terrain
+      if LemDY <= -1 then
+        begin
+          TurnAround(L);
+          Dec(L.LemY);
+          Transition(L, baClimbing);
+          Exit;
+        end else
+          Transition(L, baFalling);
+          Exit;
     end;
     // Check whether we fall down due a checkerboard ceiling
     if HasPixelAt(L.LemX + L.LemDX, L.LemY - 8) and (not HasPixelAt(L.LemX + L.LemDX, L.LemY - 9)) then

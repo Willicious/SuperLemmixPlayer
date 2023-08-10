@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.5
+#   Created with SLXEditor 2.6
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Slider To Dangler Test
  AUTHOR 
  ID x00EDFD375AB7C7BD
- VERSION x000000000000002E
+ VERSION x0000000000000048
  
 #       Level dimensions        
 # ----------------------------- 
@@ -143,16 +143,95 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 83
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 62
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 173
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 125
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1917522262
+   X 60
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1917522262
+   X 60
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 121
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 147
+   Y 47
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1917522262
+   X 145
+   Y 62
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 100
-   Y 31
+   X 118
+   Y 76
+   FLIP_HORIZONTAL
    CLIMBER 
-   SWIMMER 
    BLOCKER 
-   SLIDER 
+ $END
+ 
+ $LEMMING
+   X 79
+   Y 76
+   CLIMBER 
+   BLOCKER 
  $END
  
  
