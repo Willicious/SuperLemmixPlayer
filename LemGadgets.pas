@@ -531,8 +531,10 @@ function TGadget.GetCountdownLength: Integer;
 begin
   if sCountdownLength = 0 then
   begin
-    if Obj.CountdownLength > 0 then
+    if (Obj.CountdownLength > 0) and not (Obj.CountdownLength >= 100) then
       sCountdownLength := Obj.CountdownLength
+    else if Obj.CountdownLength >= 100 then
+      sCountdownLength := 99
     else
       sCountdownLength := 0;
   end;
