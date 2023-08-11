@@ -8,7 +8,7 @@
  TITLE Slider To Dangler Test
  AUTHOR 
  ID x00EDFD375AB7C7BD
- VERSION x0000000000000048
+ VERSION x0000000000000049
  
 #       Level dimensions        
 # ----------------------------- 
@@ -42,14 +42,6 @@
  
 #     Interactive objects       
 # ----------------------------- 
- $GADGET
-   STYLE orig_pillar
-   PIECE exit
-   X 228
-   Y 76
-   NO_OVERWRITE
- $END
- 
  
 #        Terrain groups         
 # ----------------------------- 
