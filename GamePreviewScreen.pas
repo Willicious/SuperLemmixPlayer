@@ -489,6 +489,8 @@ begin
   aFile := 'textcolours.nxmi';
   aGroup := GameParams.CurrentLevel.Group.Parent;
 
+  if aGroup = nil then Exit;
+
   if (GameParams.CurrentLevel = nil)
     or not (FileExists(aGroup.FindFile(aFile)) or FileExists(AppPath + SFData + aFile))
       then Exit;
