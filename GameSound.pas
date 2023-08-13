@@ -200,7 +200,7 @@ end;
 
 procedure TSoundManager.HandleMenuMusic;
 begin
-if GameParams.MenuMusic then
+  if GameParams.MenuMusic then
   begin
     if not MenuMusicPlaying then
     begin
