@@ -227,7 +227,7 @@ begin
   begin
     SoundManager.StopMusic;
     SoundManager.MenuMusicPlaying := False;
-  end else
+  end else if not SoundManager.MenuMusicPlaying then
     SoundManager.HandleMenuMusic;
 end;
 
