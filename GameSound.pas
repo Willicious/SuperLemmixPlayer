@@ -454,6 +454,7 @@ begin
     F := TFileStream.Create(aPath + aName + Ext, fmOpenRead);
   end else begin
     fLookingForCustomMenuMusicExt := False;
+    GetExtension;
     F := TFileStream.Create(AppPath + SFMusic + aName + Ext, fmOpenRead);
   end;
   try
