@@ -299,9 +299,6 @@ begin
     GlobalGame.ReplayManager.Clear(true);
 
   GameParams.ShownText := false;
-
-  GameParams.SoundOptions := GameParams.SoundOptions; // Seems pointless, but this was (indirectly) in
-                                                      // the old menu code, probably for a good reason.
 end;
 
 procedure TGameMenuScreen.DrawLogo;

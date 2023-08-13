@@ -222,22 +222,19 @@ procedure TFormNXConfig.btnApplyClick(Sender: TObject);
 begin
   SaveToParams;
 
-  // do this here so the effect is instant
+  // Do this here so the effect is instant
   if not GameParams.MenuMusic then
   begin
     SoundManager.StopMusic;
     SoundManager.MenuMusicPlaying := False;
-  end;
+  end else
+    SoundManager.HandleMenuMusic;
 end;
 
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
 begin
   SaveToParams;
   SoundManager.PlaySound(SFX_OK);
-
-  // do this here to mitigate sudden volume changes
-  SoundManager.HandleMenuMusic;
-
   ModalResult := mrOK;
 end;
 
