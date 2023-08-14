@@ -5095,8 +5095,8 @@ begin
   // First brick must add at least one pixel at its extreme edge
   not HasPixelAt(PosX + (4 * L.LemDX), PosY + 2)
 
-  // Offset next possible ladder by 1px due to LadderHitObstacle checks
-  and not HasPixelAt(PosX + (4 * L.LemDX), PosY + 3);
+//  // Offset next possible ladder by 1px due to LadderHitObstacle checks
+//  and not HasPixelAt(PosX + (4 * L.LemDX), PosY + 3);
 end;
 
 function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
@@ -5104,7 +5104,7 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
   function LadderHitObstacle: Boolean;
   var
   XOffset, YOffset: Integer;
-  FrameOffset: Integer;
+  i, FrameOffset: Integer;
   begin
     Result := False;
 
@@ -5123,21 +5123,24 @@ function TLemmingGame.HandleLaddering(L: TLemming): Boolean;
 
     if (L.LemPhysicsFrame in [12, 14, 16, 18, 20, 22]) then
     begin
+      for i := 0 to 1 do
         // Check for terrain 1px beyond final pixel of most-recently-placed ladder brick
         if (HasPixelAt(L.LemX + ((XOffset + 1) * L.LemDX), L.LemY + YOffset)
-        or HasPixelAt(L.LemX + (XOffset * L.LemDX), L.LemY + (YOffset + 1)))
+        and HasPixelAt(L.LemX + (XOffset * L.LemDX), L.LemY + (YOffset + 1)))
 
-        // Check for Blocker/OWF at final pixel of most recently-placed ladder brick
-        or HasTriggerAt(L.LemX + (XOffset * L.LemDX), L.LemY + YOffset, trForceRight)
-        or HasTriggerAt(L.LemX + (XOffset * L.LemDX), L.LemY + YOffset, trForceLeft)
+        // Check for Blocker/OWF at, and 1px beyond, final pixel of most recently-placed ladder brick
+        or HasTriggerAt(L.LemX + ((XOffset + i) * L.LemDX), L.LemY + (YOffset + i), trForceRight)
+        or HasTriggerAt(L.LemX + ((XOffset + i) * L.LemDX), L.LemY + (YOffset + i), trForceLeft)
 
         // Check for Edge-of-level at extreme X edge
         or (L.LemX + (XOffset * L.LemDX) >= PhysicsMap.Width)
         or (L.LemX + (XOffset * L.LemDX) <= 0)
 
         // Check for Bottom-of-level at extreme Y edge
-        or (L.LemY + YOffset >= PhysicsMap.Height)
-          then Result := True;
+        or (L.LemY + YOffset >= PhysicsMap.Height) then
+          Result := True
+        else
+          Result := False;
     end else
       Result := False;
   end;
