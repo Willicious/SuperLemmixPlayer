@@ -253,7 +253,8 @@ type
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
-    procedure CheckForProjectiles(L: TLemming);
+    procedure ZombieCheckForProjectiles(L: TLemming);
+    procedure ZombieCheckForLaser(L: TLemming);
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = false);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -333,6 +334,7 @@ type
     procedure UpdateBalloonPopTimer(L: TLemming);
     procedure UpdateGadgets;
 
+    function HasLaserAt(X, Y: Integer): Boolean;
     function HasProjectileAt(X, Y: Integer): Boolean;
     procedure UpdateProjectiles;
 
@@ -3126,7 +3128,26 @@ begin
   end;
 end;
 
-procedure TLemmingGame.CheckForProjectiles(L: TLemming);
+procedure TLemmingGame.ZombieCheckForLaser(L: TLemming);
+var
+YOffset: Integer;
+begin
+  if L.LemIsZombie then
+  begin
+    for YOffset := 0 to 10 do
+    begin
+      if HasLaserAt(L.LemX, L.LemY - YOffset) then
+      begin
+        DoExplosionCrater := False;
+        Transition(L, baExploding);
+        Exit;
+      end;
+
+    end;
+  end;
+end;
+
+procedure TLemmingGame.ZombieCheckForProjectiles(L: TLemming);
 var
 XOffset, YOffset: Integer;
 begin
@@ -3140,19 +3161,6 @@ begin
       begin
         DoExplosionCrater := False;
         Transition(L, baExploding);
-        Exit;
-      end;
-    end;
-  end;
-
-  if L.LemAction = baBallooning then
-  begin
-    for YOffset := 10 to 30 do
-    for XOffset := -6 to 6 do
-    begin
-      if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset) then
-      begin
-        PopBalloon(L, 1, baWalking);
         Exit;
       end;
     end;
@@ -6399,6 +6407,17 @@ begin
     // Walk onto terrain if there is a clear platform of at least 1px
     if HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY - 1) then
       PopBalloon(L, 1, baWalking);
+
+    // Pop balloon if a laser or projectile makes contact with it
+    for YChecks := 10 to 30 do
+    for XChecks := -6 to 6 do
+    begin
+      if HasLaserAt(L.LemX, L.LemY - YChecks) then
+        PopBalloon(L, 1, baFalling);
+
+      if HasProjectileAt(L.LemX - XChecks, L.LemY - YChecks) then
+        PopBalloon(L, 1, baFalling);
+    end;
   end;
 end;
 
@@ -6986,6 +7005,48 @@ begin
     GameParams.CurrentLevel.WriteNewRecords(NewRecs, false);
   end;
 end;
+
+function TLemmingGame.HasLaserAt(X, Y: Integer): Boolean;
+var
+  i: Integer;
+  L: TLemming;
+  CheckPointA, CheckPointB: TPoint;
+  LaserLine: TArray<TPoint>;
+  VirtualX, VirtualY: Integer;
+begin
+  Result := False;
+
+  // Find the relevant CheckPointA and CheckPointB
+  for i := 0 to LemmingList.Count - 1 do
+  begin
+    L := LemmingList[i];
+
+    if L.LemAction = baLasering then
+    begin
+      CheckPointA := Point(L.LemX, L.LemY);
+      CheckPointB := L.LemLaserHitPoint;
+
+      // Create virtual line array to represent laser
+      SetLength(LaserLine, Abs(CheckPointB.X - CheckPointA.X) + 1);
+      for VirtualX := 0 to High(LaserLine) do
+      begin
+        LaserLine[VirtualX].X := CheckPointA.X + (VirtualX * L.LemDX);
+        LaserLine[VirtualX].Y := CheckPointA.Y - VirtualX;
+      end;
+
+      // Check if (X, Y) matches any point in LaserLine
+      for VirtualX := Low(LaserLine) to High(LaserLine) do
+      begin
+        if (X = LaserLine[VirtualX].X) and (Y = LaserLine[VirtualX].Y) then
+        begin
+          Result := True;
+          Exit;
+        end;
+      end;
+    end;
+  end;
+end;
+
 
 function TLemmingGame.HasProjectileAt(X, Y: Integer): Boolean;
 var
@@ -7737,8 +7798,12 @@ begin
       if ContinueWithLem then
         CheckTriggerArea(CurrentLemming);
 
-      if ContinueWithLem then
-        CheckForProjectiles(CurrentLemming);
+      // Check to see whether a laser or projectile has hit the lemming {applies to Zombies only}
+      if ContinueWithLem and CurrentLemming.LemIsZombie then
+      begin
+        ZombieCheckForLaser(CurrentLemming);
+        ZombieCheckForProjectiles(CurrentLemming);
+      end;
     end;
   end;
 

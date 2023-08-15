@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x000000000000001C
+ VERSION x000000000000001D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -37,7 +37,7 @@
    BUILDER 50
    SPEARER 50
    GRENADER 50
-   MINER 50
+   LASERER 50
    CLONER 50
  $END 
  
