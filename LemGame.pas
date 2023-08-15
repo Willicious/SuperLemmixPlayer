@@ -1295,7 +1295,6 @@ begin
 
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
-
 end;
 
 procedure TLemmingGame.Start(aReplay: Boolean = False);

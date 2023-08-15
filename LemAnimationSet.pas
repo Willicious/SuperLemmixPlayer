@@ -189,6 +189,7 @@ type
     fHighlightBitmap        : TBitmap32;
     fBalloonPopBitmap       : TBitmap32;
     fGrenadeBitmap          : TBitmap32;
+    fSpearBitmap            : TBitmap32;
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -218,6 +219,7 @@ type
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
     property GrenadeBitmap         : TBitmap32 read fGrenadeBitmap;
+    property SpearBitmap           : TBitmap32 read fSpearBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
     property HasZombieColor: Boolean read fHasZombieColor;
@@ -524,6 +526,9 @@ begin
     fGrenadeBitmap.DrawMode := dmBlend;
     fGrenadeBitmap.CombineMode := cmMerge;
 
+    fSpearBitmap.DrawMode := dmBlend;
+    fSpearBitmap.CombineMode := cmMerge;
+
     fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
     fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
     fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
@@ -532,11 +537,13 @@ begin
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', fSpearBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers-hr.png', fHatchNumbersBitmap);
     end else begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer.png', fLemmingAnimations[ICECUBE]);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', fSpearBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers.png', fHatchNumbersBitmap);
@@ -607,6 +614,7 @@ begin
   fHighlightBitmap.Clear;
   fBalloonPopBitmap.Clear;
   fGrenadeBitmap.Clear;
+  fSpearBitmap.Clear;
   fHasZombieColor := false;
   fHasNeutralColor := false;
   fTheme := nil;
@@ -625,6 +633,7 @@ begin
   fHighlightBitmap := TBitmap32.Create;
   fBalloonPopBitmap := TBitmap32.Create;
   fGrenadeBitmap := TBitmap32.Create;
+  fSpearBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -638,6 +647,7 @@ begin
   fHighlightBitmap.Free;
   fBalloonPopBitmap.Free;
   fGrenadeBitmap.Free;
+  fSpearBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;
 end;

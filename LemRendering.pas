@@ -49,7 +49,6 @@ type
     fTransparentBackground: Boolean;
 
     fLaserGraphic       : TBitmap32;
-    fSpearImage         : TBitmap32;
 
     fPhysicsMap         : TBitmap32;
     fLayers             : TRenderBitmaps;
@@ -138,7 +137,6 @@ type
 
     procedure LoadHelperImages;
     //procedure LoadVisualSFXImages;
-    procedure LoadSpearImages;
 
     function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
@@ -1192,7 +1190,7 @@ begin
     else
       fAni.GrenadeBitmap.DrawTo(fLayers[rlProjectiles], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
   end else
-    fSpearImage.DrawTo(fLayers[rlProjectiles], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
+    fAni.SpearBitmap.DrawTo(fLayers[rlProjectiles], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
@@ -2021,7 +2019,7 @@ begin
     Target.Y := Target.Y * 2;
   end;
 
-  fSpearImage.DrawTo(fLayers[rlTerrain], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+  fAni.SpearBitmap.DrawTo(fLayers[rlTerrain], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
 
 procedure TRenderer.AddFreezer(X, Y: Integer);
@@ -3115,20 +3113,6 @@ begin
   fHelpersAreHighRes := GameParams.HighResolution;
 end;
 
-procedure TRenderer.LoadSpearImages;
-begin
-  if GameParams.HighResolution then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', fSpearImage)
-  else
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', fSpearImage);
-
-    if fTheme <> nil then
-    DoProjectileRecolor(fSpearImage, fTheme.Colors['MASK']);
-
-  fSpearImage.DrawMode := dmCustom;
-  fSpearImage.OnPixelCombine := CombineTerrainNoOverwrite;
-end;
-
 //procedure TRenderer.LoadVisualSFXImages;
 //var
 //  i: TVisualSFX;
@@ -3441,7 +3425,6 @@ begin
   fTheme := TNeoTheme.Create;
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
-  fSpearImage := TBitmap32.Create;
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
@@ -3469,7 +3452,6 @@ var
   iIcon: THelperIcon;
 begin
   TempBitmap.Free;
-  fSpearImage.Free;
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
@@ -3879,8 +3861,6 @@ begin
   fTheme.Load(aLevel.Info.GraphicSetName);
   PieceManager.SetTheme(fTheme);
 
-  LoadSpearImages;
-
   fAni.ClearData;
   fAni.Theme := fTheme;
 
@@ -3923,6 +3903,10 @@ begin
     fRenderInterface.UserHelper := hpi_None;
     fRenderInterface.DisableDrawing := NoOutput;
   end;
+
+  // Recolor the spear graphics
+  if fTheme <> nil then
+  DoProjectileRecolor(fAni.SpearBitmap, fTheme.Colors['MASK']);
 
   // Prepare any composite pieces
   PieceManager.RemoveCompositePieces;
