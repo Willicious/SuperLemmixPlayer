@@ -1188,9 +1188,9 @@ begin
   if P.IsGrenade then
   begin
     if P.GrenadeGraphic = pgGrenadeExplode then
-      fGrenadeImage.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
+      fAni.GrenadeBitmap.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
     else
-      fGrenadeImage.DrawTo(fLayers[rlProjectiles], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
+      fAni.GrenadeBitmap.DrawTo(fLayers[rlProjectiles], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
   end else
     fSpearImage.DrawTo(fLayers[rlProjectiles], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
 end;
