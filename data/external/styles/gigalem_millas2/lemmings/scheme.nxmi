@@ -76,8 +76,8 @@ $ANIMATIONS
       FOOT_Y 10
     $END
   $END
-  
-  $ZOMBIEWALKER
+
+ $ZOMBIEWALKER
     FRAMES 16
 
     $RIGHT
@@ -104,7 +104,6 @@ $ANIMATIONS
       FOOT_Y 8
     $END
   $END
-
   $DIGGER
     FRAMES 16
 
@@ -175,6 +174,22 @@ $ANIMATIONS
     $END
   $END
 
+$LADDERER
+    FRAMES 25
+
+    $RIGHT
+      FOOT_X 5
+      FOOT_Y 14
+    $END
+
+    $LEFT
+      FOOT_X 26
+      FOOT_Y 14
+    $END
+  $END
+
+
+
   $BASHER
     FRAMES 32
 
@@ -229,6 +244,21 @@ $ANIMATIONS
     $LEFT
       FOOT_X 9
       FOOT_Y 16
+    $END
+  $END
+
+  $BALLOONER
+    FRAMES 17
+    LOOP_TO_FRAME 10
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 30
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 30
     $END
   $END
 
