@@ -448,7 +448,7 @@ begin
   aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
   GetExtension;
 
-  if FileExists(GameParams.CurrentLevel.Group.Parent.FindFile(aName + Ext)) then
+  if FileExists(aPath + aName + Ext) then
   begin
     fLookingForCustomMenuMusicExt := True;
     F := TFileStream.Create(aPath + aName + Ext, fmOpenRead);
