@@ -435,26 +435,26 @@ var
   procedure LoadGrenadeImages;
   var
   CustomStyle: String;
-  CustomGrenadeImages: String;
-  HRCustomGrenadeImages: String;
+  CustomStylePath, DefaultStylePath: String;
+  Grenades, GrenadesHR: String;
   begin
     CustomStyle := GameParams.Level.Info.GraphicSetName;
+    CustomStylePath := AppPath + SFStyles + CustomStyle + SFPiecesEffects;
+    DefaultStylePath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
+    Grenades := 'grenades.png';
+    GrenadesHR := 'grenades-hr.png';
 
-    CustomGrenadeImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades.png';
-    HRCustomGrenadeImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades-hr.png';
-
-    if (FileExists(CustomGrenadeImages) and FileExists(HRCustomGrenadeImages)) then
+    if (FileExists(CustomStylePath + Grenades) and FileExists(CustomStylePath + GrenadesHR)) then
     begin
       if GameParams.HighResolution then
-        TPngInterface.LoadPngFile(HRCustomGrenadeImages, NewBmp)
+        TPngInterface.LoadPngFile(CustomStylePath + GrenadesHR, NewBmp)
       else
-        TPngInterface.LoadPngFile(CustomGrenadeImages, NewBmp);
+        TPngInterface.LoadPngFile(CustomStylePath + Grenades, NewBmp);
     end else
-
     if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades-hr.png', NewBmp)
+      TPngInterface.LoadPngFile(DefaultStylePath + GrenadesHR, NewBmp)
     else
-      TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades.png', NewBmp);
+      TPngInterface.LoadPngFile(DefaultStylePath + Grenades, NewBmp);
   end;
 
   procedure LoadSpearImages;

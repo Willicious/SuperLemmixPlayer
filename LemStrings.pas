@@ -30,7 +30,7 @@ const
       SFPiecesBackgroundsHighRes = '\backgrounds-hr\';
       SFPiecesLemmings = '\lemmings\';
       SFPiecesLemmingsHighRes = '\lemmings-hr\';
-      SFPiecesGrenades = '\grenades\';
+      SFPiecesEffects = '\effects\';
       SFTheme = 'theme.nxtm';
 
   SFLevels = 'levels\';
