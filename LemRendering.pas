@@ -49,10 +49,9 @@ type
     fTransparentBackground: Boolean;
 
     fLaserGraphic       : TBitmap32;
+    fSpearImage         : TBitmap32;
 
     fPhysicsMap         : TBitmap32;
-    fGrenadeImage       : TBitmap32;
-    fSpearImage         : TBitmap32;
     fLayers             : TRenderBitmaps;
 
     TempBitmap          : TBitmap32;
@@ -139,7 +138,6 @@ type
 
     procedure LoadHelperImages;
     //procedure LoadVisualSFXImages;
-    procedure LoadGrenadeImages;
     procedure LoadSpearImages;
 
     function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
@@ -3117,34 +3115,6 @@ begin
   fHelpersAreHighRes := GameParams.HighResolution;
 end;
 
-procedure TRenderer.LoadGrenadeImages;
-var
-CustomStyle: String;
-CustomProjectileImages: String;
-HRCustomProjectileImages: String;
-begin
-  CustomStyle := GameParams.Level.Info.GraphicSetName;
-
-  CustomProjectileImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades.png';
-  HRCustomProjectileImages := AppPath + SFStyles + CustomStyle + SFPiecesGrenades + 'grenades-hr.png';
-
-  if (FileExists(CustomProjectileImages) and FileExists(HRCustomProjectileImages)) then
-  begin
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(HRCustomProjectileImages, fGrenadeImage)
-    else
-      TPngInterface.LoadPngFile(CustomProjectileImages, fGrenadeImage);
-  end else
-
-  if GameParams.HighResolution then
-    TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades-hr.png', fGrenadeImage)
-  else
-    TPngInterface.LoadPngFile(AppPath + SFStyles + SFDefaultStyle + SFPiecesGrenades + 'grenades.png', fGrenadeImage);
-
-  fGrenadeImage.DrawMode := dmCustom;
-  fGrenadeImage.OnPixelCombine := CombineTerrainNoOverwrite;
-end;
-
 procedure TRenderer.LoadSpearImages;
 begin
   if GameParams.HighResolution then
@@ -3471,7 +3441,6 @@ begin
   fTheme := TNeoTheme.Create;
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
-  fGrenadeImage := TBitmap32.Create;
   fSpearImage := TBitmap32.Create;
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
@@ -3500,7 +3469,6 @@ var
   iIcon: THelperIcon;
 begin
   TempBitmap.Free;
-  fGrenadeImage.Free;
   fSpearImage.Free;
   fTheme.Free;
   fLayers.Free;
@@ -3911,7 +3879,6 @@ begin
   fTheme.Load(aLevel.Info.GraphicSetName);
   PieceManager.SetTheme(fTheme);
 
-  LoadGrenadeImages;
   LoadSpearImages;
 
   fAni.ClearData;
