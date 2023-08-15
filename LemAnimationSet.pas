@@ -430,10 +430,10 @@ var
 
   Info: TUpscaleInfo;
 
-  procedure UpscalePieces;
+  procedure UpscalePieces(Bitmap: TBitmap32);
   begin
     Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
-    UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Settings);
+    UpscaleFrames(Bitmap, 2, MLA.FrameCount, Info.Settings);
   end;
 begin
   TempBitmap := TBitmap32.Create;
@@ -471,7 +471,7 @@ begin
         TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap)
       else begin
         TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);
-        UpscalePieces;
+        UpscalePieces(TempBitmap);
       end;
 
       MLA.Width := TempBitmap.Width div 2;
@@ -566,28 +566,28 @@ begin
         TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlayHR, fFreezingOverlay)
       else begin
         TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlay, fFreezingOverlay);
-        UpscalePieces;
+        UpscalePieces(fFreezingOverlay);
       end;
 
       if FileExists(EffectsSrcFolder + UnfreezingOverlayHR) then
         TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlayHR, fUnfreezingOverlay)
       else begin
         TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlay, fUnfreezingOverlay);
-        UpscalePieces;
+        UpscalePieces(fUnfreezingOverlay);
       end;
 
       if FileExists(EffectsSrcFolder + BalloonPopHR) then
         TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPopHR, fBalloonPopBitmap)
       else begin
         TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPop, fBalloonPopBitmap);
-        UpscalePieces;
+        UpscalePieces(fBalloonPopBitmap);
       end;
 
       if FileExists(EffectsSrcFolder + GrenadesHR) then
         TPngInterface.LoadPngFile(EffectsSrcFolder + GrenadesHR, fGrenadeBitmap)
       else begin
         TPngInterface.LoadPngFile(EffectsSrcFolder + Grenades, fGrenadeBitmap);
-        UpscalePieces;
+        UpscalePieces(fGrenadeBitmap);
       end;
     end else begin
       TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlay, fFreezingOverlay);
