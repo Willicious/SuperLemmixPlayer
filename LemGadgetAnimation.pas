@@ -438,7 +438,7 @@ var
   CustomStylePath, DefaultStylePath: String;
   Grenades, GrenadesHR: String;
   begin
-    CustomStyle := GameParams.Level.Info.GraphicSetName;
+    CustomStyle := GameParams.Renderer.Theme.Lemmings;
     CustomStylePath := AppPath + SFStyles + CustomStyle + SFPiecesEffects;
     DefaultStylePath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
     Grenades := 'grenades.png';
