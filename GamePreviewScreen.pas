@@ -468,7 +468,7 @@ procedure TGamePreviewScreen.LoadPreviewTextColours;
 var
   Parser: TParser;
   Sec: TParserSection;
-  aGroup: TNeoLevelGroup;
+  aPath: string;
   aFile: string;
 
   // Default SLX colours, loaded if custom files don't exist
@@ -487,18 +487,19 @@ begin
   ResetColours;
 
   aFile := 'textcolours.nxmi';
-  aGroup := GameParams.CurrentLevel.Group.Parent;
+  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
-  if aGroup = nil then Exit;
+  if aPath = '' then
+  aPath := AppPath + SFLevels;
 
   if (GameParams.CurrentLevel = nil)
-    or not (FileExists(aGroup.FindFile(aFile)) or FileExists(AppPath + SFData + aFile))
+    or not (FileExists(aPath + aFile) or FileExists(AppPath + SFData + aFile))
       then Exit;
 
   Parser := TParser.Create;
   try
-    if FileExists(aGroup.FindFile(aFile)) then
-      Parser.LoadFromFile(aGroup.Path + aFile)
+    if FileExists(aPath + aFile) then
+      Parser.LoadFromFile(aPath + aFile)
     else if FileExists(AppPath + SFData + aFile) then
       Parser.LoadFromFile(AppPath + SFData + aFile);
 
