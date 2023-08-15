@@ -188,6 +188,7 @@ type
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
     fBalloonPopBitmap       : TBitmap32;
+    fGrenadeBitmap          : TBitmap32;
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -216,6 +217,7 @@ type
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
+    property GrenadeBitmap         : TBitmap32 read fGrenadeBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
     property HasZombieColor: Boolean read fHasZombieColor;
@@ -412,17 +414,17 @@ var
   TempBitmap: TBitmap32;
   iAnimation: Integer;
   MLA: TMetaLemmingAnimation;
-  BalloonPop, BalloonPopGraphic, CustomBalloonPopGraphic: String;
-  Freeze, Unfreeze: String;
-  FreezingOverlay, CustomFreezingOverlay: String;
-  UnfreezingOverlay, CustomUnfreezingOverlay: String;
+  BalloonPop, BalloonPopHR: String;
+  FreezingOverlay, FreezingOverlayHR: String;
+  UnfreezingOverlay, UnfreezingOverlayHR: String;
+  Grenades, GrenadesHR: String;
   X: Integer;
 
   SrcFolder: String;
   ColorDict: TColorDict;
   ShadeDict: TShadeDict;
 
-  MetaSrcFolder, ImgSrcFolder: String;
+  MetaSrcFolder, ImgSrcFolder, EffectsSrcFolder: String;
 
   Info: TUpscaleInfo;
 
@@ -519,6 +521,14 @@ begin
     fBalloonPopBitmap.DrawMode := dmBlend;
     fBalloonPopBitmap.CombineMode := cmMerge;
 
+    fGrenadeBitmap.DrawMode := dmBlend;
+    fGrenadeBitmap.CombineMode := cmMerge;
+
+    fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
+    fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
+    fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
+    fLemmingAnimations[ICECUBE].CombineMode := cmMerge;
+
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
@@ -532,44 +542,52 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers.png', fHatchNumbersBitmap);
     end;
 
-    // Load the freezing & unfreezing overlays
-    Freeze := 'freezing_overlay.png';
-    Unfreeze := 'unfreezing_overlay.png';
-    FreezingOverlay := MetaSrcFolder + Freeze;
-    CustomFreezingOverlay := ImgSrcFolder + Freeze;
-    UnfreezingOverlay := MetaSrcFolder + Unfreeze;
-    CustomUnfreezingOverlay := ImgSrcFolder + Unfreeze;
-
-    if FileExists(CustomFreezingOverlay) then
-      TPngInterface.LoadPngFile(CustomFreezingOverlay, fFreezingOverlay)
-    else begin
-      TPngInterface.LoadPngFile(FreezingOverlay, fFreezingOverlay);
-      UpscalePieces;
-    end;
-
-    if FileExists(CustomUnfreezingOverlay) then
-      TPngInterface.LoadPngFile(CustomUnfreezingOverlay, fUnfreezingOverlay)
-    else begin
-      TPngInterface.LoadPngFile(UnfreezingOverlay, fUnfreezingOverlay);
-      UpscalePieces;
-    end;
-
-    // Load the balloon pop graphic
+    // Load the freezing & unfreezing overlays and balloon pop graphic
+    EffectsSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesEffects;
+    FreezingOverlay := 'freezing_overlay.png';
+    FreezingOverlayHR := 'freezing_overlay-hr.png';
+    UnfreezingOverlay := 'unfreezing_overlay.png';
+    UnfreezingOverlayHR := 'unfreezing_overlay-hr.png';
     BalloonPop := 'balloon_pop.png';
-    BalloonPopGraphic := MetaSrcFolder + BalloonPop;
-    CustomBalloonPopGraphic := ImgSrcFolder + BalloonPop;
+    BalloonPopHR := 'balloon_pop-hr.png';
+    Grenades := 'grenades.png';
+    GrenadesHR := 'grenades-hr.png';
 
-    if FileExists(CustomBalloonPopGraphic) then
-      TPngInterface.LoadPngFile(CustomBalloonPopGraphic, fBalloonPopBitmap)
-    else begin
-      TPngInterface.LoadPngFile(BalloonPopGraphic, fBalloonPopBitmap);
-      UpscalePieces;
+    if GameParams.HighResolution then
+    begin
+      if FileExists(EffectsSrcFolder + FreezingOverlayHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlayHR, fFreezingOverlay)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlay, fFreezingOverlay);
+        UpscalePieces;
+      end;
+
+      if FileExists(EffectsSrcFolder + UnfreezingOverlayHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlayHR, fUnfreezingOverlay)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlay, fUnfreezingOverlay);
+        UpscalePieces;
+      end;
+
+      if FileExists(EffectsSrcFolder + BalloonPopHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPopHR, fBalloonPopBitmap)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPop, fBalloonPopBitmap);
+        UpscalePieces;
+      end;
+
+      if FileExists(EffectsSrcFolder + GrenadesHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + GrenadesHR, fGrenadeBitmap)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + Grenades, fGrenadeBitmap);
+        UpscalePieces;
+      end;
+    end else begin
+      TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlay, fFreezingOverlay);
+      TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlay, fUnfreezingOverlay);
+      TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPop, fBalloonPopBitmap);
+      TPngInterface.LoadPngFile(EffectsSrcFolder + Grenades, fGrenadeBitmap);
     end;
-
-    fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
-    fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
-    fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
-    fLemmingAnimations[ICECUBE].CombineMode := cmMerge;
   finally
     TempBitmap.Free;
     ColorDict.Free;
@@ -588,6 +606,7 @@ begin
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
   fBalloonPopBitmap.Clear;
+  fGrenadeBitmap.Clear;
   fHasZombieColor := false;
   fHasNeutralColor := false;
   fTheme := nil;
@@ -605,6 +624,7 @@ begin
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
   fBalloonPopBitmap := TBitmap32.Create;
+  fGrenadeBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -617,6 +637,7 @@ begin
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
   fBalloonPopBitmap.Free;
+  fGrenadeBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;
 end;
