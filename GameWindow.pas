@@ -2386,12 +2386,16 @@ var
   RightMouseUnassigned: Boolean;
 begin
   Result := 0;
+
+  // Make sure the window is focused and the mouse is in the gameplay area
+  if (FindControl(GetForegroundWindow()) = nil) or (fSuspendCursor)
+    or (GameParams.EdgeScroll and not fMouseTrapped) then Exit;
+
   if (GameParams.HideFrameskipping or Game.IsSuperlemming) then Exit;
 
-  if GetTickCount - fMouseClickFrameskip < 650 then
-    Exit;
+  if GetTickCount - fMouseClickFrameskip < 650 then Exit;
 
-  // we need to make sure the right mouse button is unassigned
+  // We need to make sure the right mouse button is unassigned
   RightMouseUnassigned := HotkeyManager.CheckKeyAssigned(lka_Null, 2);
 
   if (GameSpeed = gspPause) and not SkillPanel.CursorOverClickableItem then
