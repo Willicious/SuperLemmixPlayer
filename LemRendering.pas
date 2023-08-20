@@ -3782,10 +3782,10 @@ begin
 
     if (Lem.IsShimmier and ((fPhysicsMap.PixelS[L.LemX, L.LemY - 9] and PM_SOLID) <> 0)) then
       L.LemAction := baShimmying
-    else if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
-      L.LemAction := baFalling
     else if Lem.IsBallooner then
       L.LemAction := baBallooning
+    else if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
+      L.LemAction := baFalling
     else if Lem.IsBlocker then
       L.LemAction := baBlocking
     else

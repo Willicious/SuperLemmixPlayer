@@ -1475,10 +1475,10 @@ begin
 
       if Lem.IsShimmier and HasPixelAt(L.LemX, L.LemY - 9) then
         Transition(L, baShimmying)
-      else if not HasPixelAt(L.LemX, L.LemY) then
-        Transition(L, baFalling)
       else if Lem.IsBallooner then
         Transition(L, baBallooning)
+      else if not HasPixelAt(L.LemX, L.LemY) then
+        Transition(L, baFalling)
       else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
       else
