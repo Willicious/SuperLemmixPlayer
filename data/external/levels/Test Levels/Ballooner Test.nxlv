@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000022
+ VERSION x0000000000000028
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,12 +16,12 @@
  HEIGHT 232
  START_X 192
  START_Y 144
- THEME gigalem_millas2
+ THEME orig_marble
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 200
- SAVE_REQUIREMENT 199
+ LEMMINGS 100
+ SAVE_REQUIREMENT 50
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
@@ -30,10 +30,10 @@
    SHIMMIER 50
    BALLOONER 50
    SLIDER 50
-   FLOATER 50
    TIMEBOMBER 50
    BOMBER 50
    FREEZER 50
+   LADDERER 50
    BUILDER 50
    SPEARER 50
    GRENADER 50
@@ -262,6 +262,16 @@
    Y 132
    ROTATE
    ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 151
+   Y 99
+   FLOATER
+   BALLOONER
  $END
  
  

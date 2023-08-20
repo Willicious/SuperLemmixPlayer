@@ -21,6 +21,7 @@ type
       fIsFloater:      Boolean;
       fIsGlider:       Boolean;
       fIsDisarmer:     Boolean;
+      fIsBallooner:    Boolean;
       fIsShimmier:     Boolean;
       fIsBlocker:      Boolean;
       fIsZombie:       Boolean;
@@ -37,6 +38,7 @@ type
       property IsFloater: Boolean read fIsFloater write fIsFloater;
       property IsGlider: Boolean read fIsGlider write fIsGlider;
       property IsDisarmer: Boolean read fIsDisarmer write fIsDisarmer;
+      property IsBallooner: Boolean read fIsBallooner write fIsBallooner;
       property IsShimmier: Boolean read fIsShimmier write fIsShimmier;
       property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
       property IsZombie: Boolean read fIsZombie write fIsZombie;
@@ -174,6 +176,8 @@ begin
   fIsFloater := false;
   fIsGlider := false;
   fIsDisarmer := false;
+  fIsBallooner := false;
+  fIsShimmier := false;
   fIsBlocker := false;
   fIsZombie := false;
   fIsNeutral := false;
@@ -190,6 +194,7 @@ begin
   IsFloater := aSrc.IsFloater;
   IsGlider := aSrc.IsGlider;
   IsDisarmer := aSrc.IsDisarmer;
+  IsBallooner := aSrc.IsBallooner;
   IsShimmier := aSrc.IsShimmier;
   IsBlocker := aSrc.IsBlocker;
   IsZombie := aSrc.IsZombie;

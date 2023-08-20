@@ -1154,6 +1154,7 @@ begin
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
                // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
+  L.IsBallooner    := (aSection.Line['ballooner'] <> nil);
   L.IsShimmier     := (aSection.Line['shimmier'] <> nil);
   L.IsSlider       := (aSection.Line['slider'] <> nil);
   L.IsClimber      := (aSection.Line['climber']  <> nil);
@@ -1710,6 +1711,7 @@ begin
     if L.Dx < 0 then
       Sec.AddLine('FLIP_HORIZONTAL');
 
+    if L.IsBallooner then Sec.AddLine('BALLOONER');
     if L.IsShimmier then Sec.AddLine('SHIMMIER');
     if L.IsSlider then Sec.AddLine('SLIDER');
     if L.IsClimber then Sec.AddLine('CLIMBER');

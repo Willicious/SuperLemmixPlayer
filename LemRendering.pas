@@ -2850,6 +2850,14 @@ begin
         DirDrawY := DrawY + 9 * ResMod
       else
         DirDrawY := DrawY;
+    end else if (L.LemAction = baBallooning) and (L.LemPhysicsFrame >= 3) then
+    begin
+      if L.LemPhysicsFrame in [3, 4] then DrawY := (L.LemY - 21 - 9) * ResMod
+      else if L.LemPhysicsFrame >= 5 then DrawY := (L.LemY - 30 - 9) * ResMod;
+      if numHelpers > 0 then
+        DirDrawY := DrawY - 9 * ResMod
+      else
+        DirDrawY := DrawY;
     end else begin
       DrawY := (L.LemY - 10 - 9) * ResMod;
       if numHelpers > 0 then
@@ -3776,6 +3784,8 @@ begin
       L.LemAction := baShimmying
     else if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
       L.LemAction := baFalling
+    else if Lem.IsBallooner then
+      L.LemAction := baBallooning
     else if Lem.IsBlocker then
       L.LemAction := baBlocking
     else
