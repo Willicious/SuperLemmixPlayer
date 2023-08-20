@@ -3140,10 +3140,13 @@ begin
       if HasLaserAt(L.LemX, L.LemY - YOffset) then
       begin
         DoExplosionCrater := False;
-        Transition(L, baExploding);
+
+        if L.LemAction = baBallooning then
+          PopBalloon(L, 1, baExploding)
+        else
+          Transition(L, baExploding);
         Exit;
       end;
-
     end;
   end;
 end;
@@ -3161,7 +3164,11 @@ begin
         and not (L.LemAction in [baSpearing, baGrenading]) then
       begin
         DoExplosionCrater := False;
-        Transition(L, baExploding);
+
+        if L.LemAction = baBallooning then
+          PopBalloon(L, 1, baExploding)
+        else
+          Transition(L, baExploding);
         Exit;
       end;
     end;
