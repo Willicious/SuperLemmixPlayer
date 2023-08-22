@@ -6375,12 +6375,7 @@ begin
     if (L.LemPhysicsFrame in [10, 12, 14, 16])
     // Unless there is terrain at foot position, in which case we only ascend
     and not HasPixelAt(L.LemX, L.LemY) then
-    begin
-      if L.LemDX < 0 then
-        Dec(L.LemX)
-      else
-        Inc(L.LemX);
-    end;
+      Inc(L.LemX, L.LemDX);
 
     // Move upwards faster in an updraft
     for YChecks := 0 to 30 do
@@ -6394,10 +6389,9 @@ begin
     begin
       for XChecks := -4 to 4 do
       begin
-        if ((L.LemDX > 0) and HasPixelAt((L.LemX + 1) - XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt((L.LemX - 1) - XChecks, L.LemY - YChecks))
-        and not HasPixelAt(L.LemX, L.LemY) then
-          PopBalloon(L, 1, baFalling);
+        if HasPixelAt((L.LemX + L.LemDX) - XChecks, L.LemY - YChecks)
+          and not HasPixelAt(L.LemX, L.LemY) then
+            PopBalloon(L, 1, baFalling);
       end;
     end;
 
@@ -6406,8 +6400,7 @@ begin
     begin
       for XChecks := 4 to 7 do
       begin
-        if ((L.LemDX > 0) and HasPixelAt(L.LemX + XChecks, L.LemY - YChecks))
-        or ((L.LemDX < 0) and HasPixelAt(L.LemX - XChecks, L.LemY - YChecks)) then
+        if HasPixelAt(L.LemX + (XChecks * L.LemDX), L.LemY - YChecks) then
           TurnAround(L);
       end;
     end;
