@@ -4456,10 +4456,19 @@ begin
       Exit;
     end;
 
+  // Ballooners bob around at the top infinitely
   if (L.LemAction = baBallooning) and (L.LemY < 30) then
     begin
-      //ballooners bob around at the top infinitely
-      Inc(L.LemY, 3);
+      // Unless they find terrain at their foot position, in which case they ascend...
+      if HasPixelAt(L.LemX, L.LemY) then
+      begin
+        Dec(L.LemY);
+
+          // ...Until they can walk onto it
+          if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
+            PopBalloon(L, 1, baWalking);
+      end else
+        Inc(L.LemY, 3);
     end;
 
   if (L.LemY <= 0) then
