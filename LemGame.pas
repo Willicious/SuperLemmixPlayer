@@ -4193,10 +4193,10 @@ begin
 
       if L.LemDX > 0 then
         AddConstructivePixel((PosX + FrameOffset) + LadderBrick[i, 0],
-                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[FrameOffset div 2])
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[(FrameOffset +1) div 2])
       else
         AddConstructivePixel((PosX - FrameOffset) - LadderBrick[i, 0],
-                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[FrameOffset div 2]);
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[(FrameOffset +1) div 2]);
     end;
   end;
 end;
