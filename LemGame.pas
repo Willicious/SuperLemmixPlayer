@@ -4424,11 +4424,11 @@ function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
 begin
   Result := True;
 
-  //Top
-  //jumpers complete their arc above the level
+  // Top
+  // Jumpers complete their arc above the level
   if (L.LemY <= 0) and (L.LemAction = baJumping) then Exit;
 
-  //prevents climbers and hoisters accessing level top
+  // Prevents climbers and hoisters accessing level top
   if ((L.LemY <= 7) and (L.LemAction = baClimbing) and HasPixelAt(L.LemX, 0))
   or ((L.LemY <= 3) and (L.LemAction = baHoisting) and HasPixelAt(L.LemX, 0)) then
     begin
@@ -4449,7 +4449,7 @@ begin
       end;
     end;
 
-  //stops builders 1px below level top
+  // Stops builders 1px below level top
   if (L.LemY <= 1) and (L.LemAction = baBuilding) then
     begin
       Transition(L, baWalking);
@@ -4464,16 +4464,16 @@ begin
 
   if (L.LemY <= 0) then
     begin
-      if not L.LemHasTurned then //prevents infinite turning
+      if not L.LemHasTurned then // Prevents infinite turning
       begin
         TurnAround(L);
         L.LemHasTurned := True;
       end;
     end else begin
-        L.LemHasTurned := False; //resets when lem is no longer at level top
+        L.LemHasTurned := False; // Resets when lem is no longer at level top
     end;
 
-  //Bottom
+  // Bottom
   if (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
   begin
 //    WrapPosX := L.LemX;                                    //the -6 is to make sure they're at 0
@@ -4486,10 +4486,10 @@ begin
     Result := False;
   end;
 
-  //Left Side
+  // Left Side
   if (L.LemX <= 1) then
   begin
-    //this makes the sides behave like one-way forcefields
+    // This makes the sides behave like one-way forcefields
     HandleForceField(L, 1);
     Result := True;
   end;
