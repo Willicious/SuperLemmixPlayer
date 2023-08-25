@@ -8,7 +8,7 @@
  TITLE Slider To Dangler Test
  AUTHOR 
  ID x00EDFD375AB7C7BD
- VERSION x0000000000000049
+ VERSION x000000000000004A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -42,6 +42,14 @@
  
 #     Interactive objects       
 # ----------------------------- 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 234
+   Y 78
+   NO_OVERWRITE
+ $END
+ 
  
 #        Terrain groups         
 # ----------------------------- 
@@ -197,7 +205,6 @@
    X 147
    Y 47
    ERASE
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -208,12 +215,20 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 83
+   Y 131
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 118
-   Y 76
+   X 116
+   Y 131
    FLIP_HORIZONTAL
    CLIMBER 
    BLOCKER 

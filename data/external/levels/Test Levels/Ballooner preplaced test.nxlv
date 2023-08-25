@@ -5,10 +5,10 @@
  
 #        Level info             
 # ----------------------------- 
- TITLE 
- AUTHOR 
+ TITLE Pre-Placed Ballooner Test
+ AUTHOR WillLem
  ID x76AF606428EA4B50
- VERSION x0000000000000002
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 160
  START_Y 80
- THEME orig_crystal
+ THEME xmas
  
 #         Level stats           
 # ----------------------------- 
@@ -25,6 +25,9 @@
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
+   WALKER 10
+   CLIMBER 10
+   SPEARER 10
  $END 
  
 #     Interactive objects       
@@ -56,6 +59,22 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 199
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 231
+   Y 42
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
@@ -63,6 +82,13 @@
    X 114
    Y 62
    BALLOONER 
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 286
+   Y 42
+   FLIP_HORIZONTAL
  $END
  
  

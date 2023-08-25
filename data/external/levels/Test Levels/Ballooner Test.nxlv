@@ -8,7 +8,7 @@
  TITLE Ballooner Test
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000028
+ VERSION x000000000000003B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -29,15 +29,15 @@
    JUMPER 50
    SHIMMIER 50
    BALLOONER 50
-   SLIDER 50
    TIMEBOMBER 50
-   BOMBER 50
    FREEZER 50
    LADDERER 50
    BUILDER 50
    SPEARER 50
    GRENADER 50
    LASERER 50
+   FENCER 50
+   MINER 50
    CLONER 50
  $END 
  
@@ -150,7 +150,7 @@
    STYLE orig_marble
    PIECE pillar_02
    X 159
-   Y 216
+   Y 200
    ONE_WAY
  $END
  
@@ -264,14 +264,63 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_08
+   X 88
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_08
+   X 88
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_03
+   X 64
+   Y 23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE pillar_02
+   X 159
+   Y 216
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_06
+   X 133
+   Y 202
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_05
+   X 236
+   Y 201
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 151
+   X 167
    Y 99
-   FLOATER
-   BALLOONER
+   FLIP_HORIZONTAL
+   BALLOONER 
+   FLOATER 
  $END
  
  
