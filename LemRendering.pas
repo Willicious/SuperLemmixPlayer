@@ -322,8 +322,6 @@ begin
   if not fLayers.fIsEmpty[rlCountdown] then fLayers[rlCountdown].Clear(0);
   if not fLayers.fIsEmpty[rlLemmingsLow] then fLayers[rlLemmingsLow].Clear(0);
   if not fLayers.fIsEmpty[rlLemmingsHigh] then fLayers[rlLemmingsHigh].Clear(0);
-  if not fLayers.fIsEmpty[rlFreezerLow] then fLayers[rlFreezerLow].Clear(0);
-  if not fLayers.fIsEmpty[rlFreezerHigh] then fLayers[rlFreezerHigh].Clear(0);
 
   LemmingList := fTempLemmingList;
 
@@ -501,7 +499,7 @@ begin
 
   // freezer states are drawn behind terrain
   if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing] then
-    SrcAnim.DrawTo(fLayers[rlFreezerLow], DstRect, SrcRect)
+    SrcAnim.DrawTo(fLayers[rlLemmingsLow], DstRect, SrcRect)
 
   // explosion graphics or about-to-explode lems are drawn behind active lems
   else if aLemming.LemAction in [baFreezerExplosion, baOhNoing, baExploding,
@@ -726,9 +724,9 @@ begin
   FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
 
   if L.LemDX < 0 then
-    fAni.FreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
   else
-    fAni.FreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
+    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawUnfreezingOverlay(L: TLemming);
@@ -744,9 +742,9 @@ begin
   FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
 
   if L.LemDX < 0 then
-    fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
   else
-    fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawBalloonPop(L: TLemming);
@@ -760,10 +758,10 @@ begin
     FrameRect.Top := 0;
     FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
 
-    if L.LemDX < 0 then      //in front of terrain, and behind all lems except Freezers
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
+    if L.LemDX < 0 then      //in front of terrain, and behind all lems
+      fAni.BalloonPopBitmap.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
     else
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
+      fAni.BalloonPopBitmap.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
   end;
 end;
 
