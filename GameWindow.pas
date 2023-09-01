@@ -498,16 +498,17 @@ begin
 if GameParams.ShowMinimap then
   begin
     if GameParams.MinimapHighQuality
-    and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)) then
-      begin
-        fMinimapBuffer.Clear(0);
-        Img.Bitmap.DrawTo(fMinimapBuffer);
-        SkillPanel.Minimap.Clear(0);
-        fMinimapBuffer.DrawTo(SkillPanel.Minimap, SkillPanel.Minimap.BoundsRect, fMinimapBuffer.BoundsRect);
-        fRenderer.RenderMinimap(SkillPanel.Minimap, true);
-      end else
-        fRenderer.RenderMinimap(SkillPanel.Minimap, false);
-        SkillPanel.DrawMinimap;
+      and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
+        or (Game.Level.Info.Width >= 1600) or (Game.Level.Info.Height >= 640)) then
+        begin
+          fMinimapBuffer.Clear(0);
+          Img.Bitmap.DrawTo(fMinimapBuffer);
+          SkillPanel.Minimap.Clear(0);
+          fMinimapBuffer.DrawTo(SkillPanel.Minimap, SkillPanel.Minimap.BoundsRect, fMinimapBuffer.BoundsRect);
+          fRenderer.RenderMinimap(SkillPanel.Minimap, true);
+        end else
+          fRenderer.RenderMinimap(SkillPanel.Minimap, false);
+          SkillPanel.DrawMinimap;
   end;
 end;
 
@@ -700,10 +701,11 @@ begin
       if CheckScroll then
       begin
         if GameParams.MinimapHighQuality
-        and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)) then
-          SetRedraw(rdRefresh)
-        else
-          SetRedraw(rdRedraw);
+          and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
+            or (Game.Level.Info.Width >= 1600) or (Game.Level.Info.Height >= 640)) then
+              SetRedraw(rdRefresh)
+            else
+              SetRedraw(rdRedraw);
       end;
     end;
 
@@ -1002,13 +1004,14 @@ begin
       fRenderer.DrawProjectiles;
 
       if GameParams.MinimapHighQuality or (GameSpeed = gspPause)
-      and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)) then
-        DrawRect := Img.Bitmap.BoundsRect
-      else begin
-        DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
-        DrawHeight := (ClientHeight div fInternalZoom) + 2;
-        DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
-      end;
+        and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
+          or (Game.Level.Info.Width >= 1600) or (Game.Level.Info.Height >= 640)) then
+            DrawRect := Img.Bitmap.BoundsRect
+          else begin
+            DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
+            DrawHeight := (ClientHeight div fInternalZoom) + 2;
+            DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
+          end;
 
       fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
 
