@@ -200,6 +200,7 @@ type
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
     property ProjectionType: Integer read fProjectionType write SetProjectionType;
     function DoSuspendCursor: Boolean;
+    function DisplayHQMinimap: Boolean;
 
     procedure DoRewind(Sender: TObject);
     procedure DoTurbo(Sender: TObject);
@@ -493,22 +494,31 @@ begin
   Result := fClearPhysics;
 end;
 
+function TGameWindow.DisplayHQMinimap: Boolean;
+begin
+  Result := False;
+
+  if (GameParams.MinimapHighQuality
+    and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed
+      or (fGameSpeed = gspFF)
+        or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640))) then
+  Result := True;
+end;
+
 procedure TGameWindow.RenderMinimap;
 begin
-if GameParams.ShowMinimap then
+  if GameParams.ShowMinimap then
   begin
-    if GameParams.MinimapHighQuality
-      and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
-        or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640)) then
-        begin
-          fMinimapBuffer.Clear(0);
-          Img.Bitmap.DrawTo(fMinimapBuffer);
-          SkillPanel.Minimap.Clear(0);
-          fMinimapBuffer.DrawTo(SkillPanel.Minimap, SkillPanel.Minimap.BoundsRect, fMinimapBuffer.BoundsRect);
-          fRenderer.RenderMinimap(SkillPanel.Minimap, true);
-        end else
-          fRenderer.RenderMinimap(SkillPanel.Minimap, false);
-          SkillPanel.DrawMinimap;
+    if DisplayHQMinimap then
+    begin
+      fMinimapBuffer.Clear(0);
+      Img.Bitmap.DrawTo(fMinimapBuffer);
+      SkillPanel.Minimap.Clear(0);
+      fMinimapBuffer.DrawTo(SkillPanel.Minimap, SkillPanel.Minimap.BoundsRect, fMinimapBuffer.BoundsRect);
+      fRenderer.RenderMinimap(SkillPanel.Minimap, true);
+    end else
+      fRenderer.RenderMinimap(SkillPanel.Minimap, false);
+      SkillPanel.DrawMinimap;
   end;
 end;
 
@@ -698,14 +708,12 @@ begin
     if TimeForScroll then
     begin
       PrevScrollTime := CurrTime;
-      if CheckScroll then
+      if CheckScroll and GameParams.ShowMinimap then
       begin
-        if GameParams.MinimapHighQuality
-          and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
-            or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640)) then
-              SetRedraw(rdRefresh)
-            else
-              SetRedraw(rdRedraw);
+        if DisplayHQMinimap then
+          SetRedraw(rdRefresh)
+        else
+          SetRedraw(rdRedraw);
       end;
     end;
 
@@ -1003,15 +1011,13 @@ begin
       fRenderer.DrawLemmings(fClearPhysics);
       fRenderer.DrawProjectiles;
 
-      if GameParams.MinimapHighQuality or (GameSpeed = gspPause)
-        and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
-          or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640)) then
-            DrawRect := Img.Bitmap.BoundsRect
-          else begin
-            DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
-            DrawHeight := (ClientHeight div fInternalZoom) + 2;
-            DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
-          end;
+      if DisplayHQMinimap or (GameSpeed = gspPause) then
+        DrawRect := Img.Bitmap.BoundsRect
+      else begin
+        DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
+        DrawHeight := (ClientHeight div fInternalZoom) + 2;
+        DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
+      end;
 
       fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
 
