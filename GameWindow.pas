@@ -499,7 +499,7 @@ if GameParams.ShowMinimap then
   begin
     if GameParams.MinimapHighQuality
       and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
-        or (Game.Level.Info.Width >= 1600) or (Game.Level.Info.Height >= 640)) then
+        or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640)) then
         begin
           fMinimapBuffer.Clear(0);
           Img.Bitmap.DrawTo(fMinimapBuffer);
@@ -702,7 +702,7 @@ begin
       begin
         if GameParams.MinimapHighQuality
           and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
-            or (Game.Level.Info.Width >= 1600) or (Game.Level.Info.Height >= 640)) then
+            or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640)) then
               SetRedraw(rdRefresh)
             else
               SetRedraw(rdRedraw);
@@ -1005,7 +1005,7 @@ begin
 
       if GameParams.MinimapHighQuality or (GameSpeed = gspPause)
         and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed or (fGameSpeed = gspFF)
-          or (Game.Level.Info.Width >= 1600) or (Game.Level.Info.Height >= 640)) then
+          or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640)) then
             DrawRect := Img.Bitmap.BoundsRect
           else begin
             DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
