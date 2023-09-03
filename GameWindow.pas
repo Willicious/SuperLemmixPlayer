@@ -708,7 +708,7 @@ begin
     if TimeForScroll then
     begin
       PrevScrollTime := CurrTime;
-      if CheckScroll and GameParams.ShowMinimap then
+      if CheckScroll then
       begin
         if DisplayHQMinimap then
           SetRedraw(rdRefresh)
