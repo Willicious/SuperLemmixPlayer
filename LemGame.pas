@@ -5943,7 +5943,7 @@ begin
       LemDY := FindGroundPixel(L.LemX, L.LemY -9);
 
       // For transition to Climber, there must be at least 2px of climbable terrain
-      if LemDY <= -1 then
+      if (LemDY <= -1) and L.LemIsClimber then
         begin
           TurnAround(L);
           Dec(L.LemY);
@@ -5970,7 +5970,6 @@ begin
         Exit;
       end else if L.LemY >= Level.Info.Height + 8 then
       begin
-        //RemoveLemming(L, RM_NEUTRAL);
         Transition(L, baFalling);
         Exit;
       end;
