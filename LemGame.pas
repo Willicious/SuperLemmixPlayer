@@ -3663,7 +3663,7 @@ begin
     Result := True;
 
     // We want to cancel certain actions first
-    if L.LemAction in [baPlatforming, baBashing, baFencing] then
+    if (L.LemAction = baPlatforming) then
       Transition(L, baWalking);
 
     TurnAround(L);
