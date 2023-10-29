@@ -597,12 +597,12 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbMenuMusic: TCheckBox
+        object cbMenuSounds: TCheckBox
           Left = 14
           Top = 47
           Width = 155
           Height = 17
-          Caption = 'Activate Menu Music'
+          Caption = 'Activate Menu Sounds'
           TabOrder = 1
           OnClick = OptionChanged
         end

@@ -422,7 +422,7 @@ end;
 procedure TFLevelSelect.btnOKClick(Sender: TObject);
 begin
   WriteToParams;
-  SoundManager.PlaySound(SFX_OK);
+  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
   ModalResult := mrOk;
 end;
 

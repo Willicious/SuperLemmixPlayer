@@ -91,7 +91,7 @@ type
     moSpawnInterval,
     moFileCaching,
     moPostviewJingles,
-    moMenuMusic,
+    moMenuSounds,
     moDisableMusicInTestplay,
     moPreferYippee,
     moPreferBoing
@@ -113,7 +113,7 @@ const
     moIncreaseZoom,
     moEdgeScroll,
     moPreferYippee,
-    moMenuMusic
+    moMenuSounds
   ];
 
 type
@@ -255,7 +255,7 @@ type
     property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
     property PreferBoing: Boolean Index moPreferBoing read GetOptionFlag write SetOptionFlag;
     property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
-    property MenuMusic: Boolean Index moMenuMusic read GetOptionFlag write SetOptionFlag;
+    property MenuSounds: Boolean Index moMenuSounds read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
@@ -483,7 +483,7 @@ begin
   SaveBoolean('PreferYippee', PreferYippee);
   SaveBoolean('PreferBoing', PreferBoing);
   SaveBoolean('PostviewJingles', PostviewJingles);
-  SaveBoolean('MenuMusic', MenuMusic);
+  SaveBoolean('MenuSounds', MenuSounds);
 
   //SL.Add('');
   //SL.Add('# Online Options');
@@ -663,7 +663,7 @@ begin
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
 
     PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
-    MenuMusic := LoadBoolean('MenuMusic', MenuMusic);
+    MenuSounds := LoadBoolean('MenuSounds', MenuSounds);
 
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 

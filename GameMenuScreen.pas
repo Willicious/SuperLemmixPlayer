@@ -711,14 +711,14 @@ procedure TGameMenuScreen.BeginGame;
 begin
   if GameParams.CurrentLevel <> nil then
   begin
-    SoundManager.PlaySound(SFX_OK);
+    if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
     CloseScreen(gstPreview);
   end;
 end;
 
 procedure TGameMenuScreen.ExitGame;
 begin
-  SoundManager.PlaySound(SFX_BYE);
+  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_BYE);
   CloseScreen(gstExit);
 end;
 
@@ -727,7 +727,7 @@ begin
   if not GameParams.CurrentLevel.Group.IsLowestGroup then
   begin
     GameParams.PrevGroup;
-    SoundManager.PlaySound(SFX_SKILLBUTTON);
+    if GameParams.MenuSounds then SoundManager.PlaySound(SFX_SKILLBUTTON);
     UpdateGroupSign;
   end;
 end;
@@ -737,7 +737,7 @@ begin
   if not GameParams.CurrentLevel.Group.IsHighestGroup then
   begin
     GameParams.NextGroup;
-    SoundManager.PlaySound(SFX_SKILLBUTTON);
+    if GameParams.MenuSounds then SoundManager.PlaySound(SFX_SKILLBUTTON);
     UpdateGroupSign;
   end;
 end;

@@ -62,8 +62,8 @@ type
     cbTurboFF: TCheckBox;
     gbMenuSounds: TGroupBox;
     cbPostviewJingles: TCheckBox;
-    cbMenuMusic: TCheckBox;
     rgGameLoading: TRadioGroup;
+    cbMenuSounds: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -223,13 +223,13 @@ begin
   SaveToParams;
 
   // Do this here so the effect is instant
-  SoundManager.HandleMenuMusic;
+  SoundManager.HandleMenuSounds;
 end;
 
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
 begin
   SaveToParams;
-  SoundManager.PlaySound(SFX_OK);
+  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
   ModalResult := mrOK;
 end;
 
@@ -302,7 +302,7 @@ begin
 
     cbDisableTestplayMusic.Checked := GameParams.DisableMusicInTestplay;
     cbPostviewJingles.Checked := GameParams.PostviewJingles;
-    cbMenuMusic.Checked := GameParams.MenuMusic;
+    cbMenuSounds.Checked := GameParams.MenuSounds;
 
     btnApply.Enabled := false;
   finally
@@ -375,7 +375,7 @@ begin
   GameParams.PreferBoing := rgExitSound.ItemIndex = 1;
 
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
-  GameParams.MenuMusic := cbMenuMusic.Checked;
+  GameParams.MenuSounds := cbMenuSounds.Checked;
 
   btnApply.Enabled := false;
 end;
