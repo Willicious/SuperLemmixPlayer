@@ -269,7 +269,6 @@ begin
   DrawLogo;
   MakePanels;
   MakeFooterText;
-  SoundManager.HandleMenuMusic;
 
   LoadScrollerGraphics;
   DrawScroller;

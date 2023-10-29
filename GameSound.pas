@@ -81,8 +81,6 @@ type
       fMusicStream: TMemoryStream;
       fMusicChannel: LongWord;
       fMusicPlaying: Boolean;
-      fMenuMusicPlaying: Boolean;
-      fLookingForCustomMenuMusicExt: Boolean;
 
       fIsBassLoaded: Boolean;
 
@@ -105,11 +103,9 @@ type
       procedure PurgeNonDefaultSounds;
       procedure PurgePackSounds;
 
-      procedure LoadMenuMusic;
       procedure LoadMusicFromFile(aName: String);
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
 
-      procedure HandleMenuMusic;
       procedure PlaySound(aName: String; aBalance: Integer = 0; aFrequency: Single = 0); // -100 = fully left, +100 = fully right
       procedure PlayPackSound(aName: String; aLoadPath: String; aBalance: Integer = 0; aFrequency: Single = 0);
       procedure PlayMusic;
@@ -124,7 +120,6 @@ type
       property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
       property MuteSound: Boolean read fMuteSound write fMuteSound;
       property MuteMusic: Boolean read fMuteMusic write SetMusicMute;
-      property MenuMusicPlaying: Boolean read fMenuMusicPlaying write fMenuMusicPlaying;
   end;
 
 var
@@ -198,22 +193,6 @@ begin
   fMusicName := '';
 end;
 
-procedure TSoundManager.HandleMenuMusic;
-begin
-  if GameParams.MenuMusic then
-  begin
-    if not MenuMusicPlaying then
-    begin
-      LoadMenuMusic;
-      PlayMusic;
-      fMenuMusicPlaying := True;
-    end;
-  end else begin
-    StopMusic;
-    fMenuMusicPlaying := False;
-  end;
-end;
-
 procedure TSoundManager.ObtainMusicBassChannel;
 begin
   if not fIsBassLoaded then Exit;
@@ -266,10 +245,7 @@ var
 begin
   if aIsMusic then
   begin
-    if fLookingForCustomMenuMusicExt then
-      BasePath := GameParams.CurrentLevel.Group.ParentBasePack.Path
-    else
-      BasePath := AppPath + SFMusic;
+    BasePath := AppPath + SFMusic;
   end else
     BasePath := AppPath + SFSounds;
 
@@ -423,45 +399,6 @@ begin
   for i := fSoundEffects.Count-1 downto 0 do
     if fSoundEffects[i].Origin = seoPack then
       fSoundEffects.Delete(i);
-end;
-
-procedure TSoundManager.LoadMenuMusic;
-var
-  aName: String;
-  aPath: String;
-  F: TFileStream;
-  Ext: String;
-
-  procedure GetExtension;
-  begin
-    Ext := FindExtension(aName, true);
-    if Ext = '' then
-    begin
-      FreeMusic;
-      Exit;
-    end;
-  end;
-begin
-  if not fIsBassLoaded then Exit;
-
-  aName := 'menu';
-  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
-  GetExtension;
-
-  if FileExists(aPath + aName + Ext) then
-  begin
-    fLookingForCustomMenuMusicExt := True;
-    F := TFileStream.Create(aPath + aName + Ext, fmOpenRead);
-  end else begin
-    fLookingForCustomMenuMusicExt := False;
-    GetExtension;
-    F := TFileStream.Create(AppPath + SFMusic + aName + Ext, fmOpenRead);
-  end;
-  try
-    LoadMusicFromStream(F, aName);
-  finally
-    F.Free;
-  end;
 end;
 
 procedure TSoundManager.LoadMusicFromFile(aName: String);

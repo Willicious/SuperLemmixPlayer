@@ -907,12 +907,9 @@ begin
   end else begin
     GameParams.ShownText := false;
 
-    if LoadAsPack then begin
-       CloseScreen(gstMenu);
-       SoundManager.StopMusic;
-       SoundManager.MenuMusicPlaying := False;
-       SoundManager.HandleMenuMusic;
-    end else
+    if LoadAsPack then
+      CloseScreen(gstMenu)
+    else
       CloseScreen(gstPreview);
   end;
 end;
