@@ -7903,10 +7903,11 @@ begin
         and L.LemIsSwimmer then
           fLemNextAction := baSwimming;
 
-      if HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap) and
-         HasPixelAt(LemPosArray[0, i], LemPosArray[1, i]) and
-         L.LemIsDisarmer then
-        fLemNextAction := baFixing;
+      if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+            and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
+          and HasPixelAt(LemPosArray[0, i], LemPosArray[1, i])
+          and L.LemIsDisarmer then
+            fLemNextAction := baFixing;
 
       // End this loop when we have reached the lemming position
       if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
