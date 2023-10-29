@@ -1224,6 +1224,9 @@ begin
     if Assigned(LemPosArray) then
       for i := 0 to Length(LemPosArray[0]) do
       begin
+        if (LemPosArray[0, i] < 0) or (LemPosArray[0, i] >= RenderInfoRec.Level.Info.Width) or (LemPosArray[1, i] <= 0) then
+          Exit;
+
         SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
         SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
       end;
