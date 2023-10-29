@@ -221,9 +221,6 @@ end;
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
 begin
   SaveToParams;
-
-  // Do this here so the effect is instant
-  SoundManager.HandleMenuSounds;
 end;
 
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
