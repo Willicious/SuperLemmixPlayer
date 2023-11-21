@@ -2788,7 +2788,8 @@ function TLemmingGame.MayAssignFreezer(L: TLemming): Boolean;
 const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baVaporizing, baVinetrapping, baSplatting, baExiting, baSleeping];
+               baVaporizing, baVinetrapping, baSplatting, baDrowning,
+               baExiting, baSleeping];
 begin
   //non-assignable from the top of the level
   if L.LemY <= 0 then
