@@ -6396,11 +6396,7 @@ begin
       Inc(L.LemX, L.LemDX);
 
     // Move upwards faster in an updraft
-    for YChecks := 0 to 30 do
-    begin
-      if HasTriggerAt(L.LemX, L.LemY - YChecks, trUpdraft) then
-        Dec(L.LemY, (3 div 2));
-    end;
+    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY);
 
     // Pop the balloon when there is terrain overhead
     for YChecks := 29 to 30 do
