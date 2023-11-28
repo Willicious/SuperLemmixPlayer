@@ -1,0 +1,489 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Cool Runnings
+ AUTHOR WillLem
+ ID x19AACEB83383E841
+ VERSION x000000000000000A
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1000
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_pillar
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 60
+ MAX_SPAWN_INTERVAL 23
+ 
+ $SKILLSET 
+   WALKER 0
+   SWIMMER 0
+   FLOATER 0
+   FREEZER 20
+   BUILDER 0
+   GRENADER 0
+   LASERER 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   SAVE_REQUIREMENT 80
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_snow
+   PIECE water
+   X 383
+   Y 142
+   WIDTH 56
+   HEIGHT 18
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_blue
+   X 546
+   Y 57
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 139
+   Y 3
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_snow
+   PIECE water
+   X 94
+   Y 142
+   WIDTH 128
+   HEIGHT 18
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_blue
+   X 4
+   Y 27
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE willlem_xmas
+   PIECE lights
+   X 345
+   Y -1
+   WIDTH 64
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE trap_03
+   X 813
+   Y 86
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas_monochrome
+   PIECE exit
+   X 871
+   Y 75
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_xmas
+   PIECE lights
+   X 411
+   Y -1
+   WIDTH 64
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE willlem_xmas
+   PIECE lights
+   X 379
+   Y 13
+   WIDTH 64
+   NO_OVERWRITE
+   SPEED 0
+   ANGLE 0
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 578
+   Y 125
+   NO_OVERWRITE
+   SKILL GRENADER
+   SKILL_COUNT 10
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 554
+   Y 125
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 530
+   Y 125
+   NO_OVERWRITE
+   SKILL FLOATER
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 506
+   Y 125
+   NO_OVERWRITE
+   SKILL SWIMMER
+   SKILL_COUNT 10
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 602
+   Y 125
+   NO_OVERWRITE
+   SKILL LASERER
+   SKILL_COUNT 2
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 482
+   Y 125
+   NO_OVERWRITE
+   SKILL WALKER
+   SKILL_COUNT 5
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 463
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 886
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_10
+   X 232
+   Y 48
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 230
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_11
+   X 222
+   Y 50
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 154
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_16
+   X 209
+   Y 23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_12
+   X 210
+   Y 41
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_12
+   X 208
+   Y 39
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_snow
+   PIECE snow_13
+   X 224
+   Y 46
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 287
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 351
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 226
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 439
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 630
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 686
+   Y 142
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 629
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 622
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 98
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 222
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 79
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 78
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_xmas
+   PIECE snowman
+   X 77
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 822
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE steel_block
+   X 829
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE steel_block
+   X 893
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE block
+   X 797
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE block
+   X 861
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar_diagonal
+   X 667
+   Y 106
+   ERASE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 758
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE block
+   X 733
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar_diagonal
+   X 688
+   Y 99
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 518
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE steel_block
+   X 765
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 574
+   Y 141
+   ONE_WAY
+ $END
+ 
+ 

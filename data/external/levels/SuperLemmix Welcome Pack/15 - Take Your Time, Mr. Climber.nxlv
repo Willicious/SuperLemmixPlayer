@@ -1,0 +1,610 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Take Your Time, Mr. Climber
+ AUTHOR WillLem
+ ID x7E5AD7F731A1714A
+ VERSION x000000000000000C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 376
+ HEIGHT 160
+ START_X 185
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 1
+ SAVE_REQUIREMENT 1
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   SHIMMIER 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   CLASSIC_MODE 0
+   NO_PAUSE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 103
+   Y 31
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_blue
+   X 82
+   Y 81
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-1749398669
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 97
+     Y 111
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 89
+     Y 113
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 80
+     Y 112
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 72
+     Y 109
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 64
+     Y 101
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 56
+     Y 91
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 48
+     Y 88
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 40
+     Y 88
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 32
+     Y 90
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 24
+     Y 96
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 17
+     Y 105
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 13
+     Y 115
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 13
+     Y 126
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-1679493061
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 266
+     Y 22
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 275
+     Y 21
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 284
+     Y 23
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 293
+     Y 28
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 303
+     Y 32
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 311
+     Y 32
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 322
+     Y 28
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 329
+     Y 21
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 332
+     Y 12
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 333
+     Y 3
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-202475490
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 56
+     Y 4
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 84
+     Y 4
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 64
+     Y 9
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 71
+     Y 14
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 77
+     Y 19
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 82
+     Y 24
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 86
+     Y 29
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_04
+     X 76
+     Y 9
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 102
+     Y -10
+     ERASE
+     ROTATE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 217
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_04
+   X 188
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 265
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 235
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 171
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 115
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1749398669
+   X 13
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 297
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 297
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 247
+   Y 20
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1679493061
+   X 266
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 265
+   Y 30
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 301
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 306
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 311
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 316
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 321
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 325
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 329
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 333
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 86
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 146
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 60
+   Y 29
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 86
+   Y 6
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_03
+   X 185
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_03
+   X 160
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 86
+   Y -33
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-202475490
+   X 56
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 301
+   Y 149
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 195
+   Y 120
+   CLIMBER 
+ $END
+ 
+ 

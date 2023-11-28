@@ -1,0 +1,448 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The Juicy Dangler
+ AUTHOR WillLem
+ ID x0652D4CC45F88611
+ VERSION x0000000000000042
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 400
+ HEIGHT 160
+ START_X 196
+ START_Y 78
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 1
+ SAVE_REQUIREMENT 1
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   WALKER 5
+   SHIMMIER 5
+   SLIDER 1
+   BASHER 1
+   CLONER 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE The Daredevil
+   ID 0
+   COLOR Silver
+   NO_PAUSE 0
+   SAVE_REQUIREMENT 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE Easy When You Know How
+   ID 1
+   COLOR Gold
+   TIME_LIMIT 765
+   NO_PAUSE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit_vortex
+   X 55
+   Y 126
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 172
+   Y 62
+   WIDTH 127
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE firepit_blue
+   X 297
+   Y 134
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE firepit_blue
+   X 148
+   Y 104
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_blue
+   X 168
+   Y 111
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_blue
+   X 80
+   Y 111
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 209
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_blue
+   X 68
+   Y 3
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas
+   PIECE pickup
+   X 278
+   Y 133
+   NO_OVERWRITE
+   SKILL CLONER
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group1811485270
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 172
+     Y 71
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 172
+     Y 66
+     ERASE
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 172
+     Y 78
+     NO_OVERWRITE
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 172
+     Y 87
+     ERASE
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-82477224
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 71
+     Y 26
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 71
+     Y 21
+     ERASE
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 71
+     Y 34
+     NO_OVERWRITE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 71
+     Y 42
+     ERASE
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1827998673
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 313
+     Y 26
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 313
+     Y 21
+     ERASE
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 313
+     Y 34
+     NO_OVERWRITE
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE steel_03
+     X 313
+     Y 42
+     ERASE
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 108
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 164
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 220
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_03
+   X 334
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 282
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 8
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 52
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 55
+   Y 18
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 55
+   Y -7
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 297
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 133
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 156
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 172
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 197
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 222
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 247
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 272
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 125
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_02
+   X 156
+   Y 87
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 156
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 148
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 71
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 135
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 199
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 253
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1827998673
+   X 313
+   Y 34
+ $END
+ 
+ 

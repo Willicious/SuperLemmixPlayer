@@ -1,0 +1,335 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Spearmint Superhighway
+ AUTHOR WillLem
+ ID x61A1CC5A68FBC3DE
+ VERSION x0000000000000007
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 632
+ HEIGHT 160
+ START_X 208
+ START_Y 80
+ THEME orig_pillar
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 19
+ MAX_SPAWN_INTERVAL 73
+ 
+ $SKILLSET 
+   SPEARER 50
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   SAVE_REQUIREMENT 20
+   SPEARER_LIMIT 10
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 357
+   Y 37
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 77
+   Y 11
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit_vortex
+   X 492
+   Y 113
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 0
+   Y 144
+   WIDTH 136
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-1775816733
+   
+   $TERRAIN
+     STYLE willlem_lemminas
+     PIECE bar_light_01
+     X 152
+     Y 72
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas
+     PIECE bar_light_01
+     X 72
+     Y 53
+     ROTATE
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas
+     PIECE bar_light_01
+     X 152
+     Y 53
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas
+     PIECE bar_light_02
+     X 127
+     Y 27
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas
+     PIECE bar_light_01
+     X 104
+     Y 53
+     NO_OVERWRITE
+     ROTATE
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 141
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 463
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_02
+   X 446
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 519
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_02
+   X 124
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_06
+   X 581
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_03
+   X 431
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_01
+   X 566
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_01
+   X 566
+   Y 66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_01
+   X 566
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_thin_01
+   X 566
+   Y 2
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE bump_01
+   X 558
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 196
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE bar_light_02
+   X 298
+   Y 128
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 309
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_03
+   X 369
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE block_light
+   X 278
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_01
+   X 252
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE stairs_01
+   X 275
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1775816733
+   X 72
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE orb_light
+   X 46
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE gelato_melted
+   X 46
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1775816733
+   X 337
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 337
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 337
+   Y 99
+   ERASE
+   ONE_WAY
+ $END
+ 
+ 

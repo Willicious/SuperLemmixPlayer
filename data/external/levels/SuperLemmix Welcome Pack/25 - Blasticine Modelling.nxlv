@@ -1,0 +1,491 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Blasticine Modelling
+ AUTHOR WillLem
+ ID x395644D72FB2EFF3
+ VERSION x000000000000002C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 432
+ HEIGHT 160
+ START_X 205
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 22
+ MAX_SPAWN_INTERVAL 83
+ 
+ $SKILLSET 
+   WALKER 8
+   JUMPER 8
+   BALLOONER 8
+   CLIMBER 8
+   SWIMMER 8
+   GLIDER 8
+   FREEZER 4
+   BLOCKER 4
+   BUILDER 8
+   DIGGER 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   SAVE_REQUIREMENT 30
+   FREEZER_LIMIT 0
+   GLIDER_LIMIT 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y -5
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 32
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 69
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 106
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 401
+   Y -5
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 401
+   Y 32
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 401
+   Y 69
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 401
+   Y 106
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 129
+   WIDTH 432
+   HEIGHT 31
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y -9
+   WIDTH 432
+   HEIGHT 31
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE window
+   X 60
+   Y 60
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE dd_pillar_exit
+   X 342
+   Y 119
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE dd_updraft
+   X 364
+   Y 103
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X 216
+   Y 52
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 31
+   Y 18
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 75
+   Y 14
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 87
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_09
+   X 127
+   Y 53
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_09
+   X 135
+   Y 61
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_09
+   X 143
+   Y 69
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_07
+   X 117
+   Y 43
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_12
+   X 76
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 167
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_11
+   X 33
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_06
+   X 76
+   Y 34
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_08
+   X 151
+   Y 77
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_09
+   X 187
+   Y 101
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_11
+   X 216
+   Y 82
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_07
+   X 202
+   Y 86
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 163
+   Y 114
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_08
+   X 179
+   Y 109
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 132
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 119
+   Y 114
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_10
+   X 107
+   Y 114
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_08
+   X 288
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_12
+   X 288
+   Y 118
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_08
+   X 288
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_03
+   X 269
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_08
+   X 288
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 227
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 203
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 179
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 155
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_10
+   X 148
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_01
+   X 47
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_small_09
+   X 195
+   Y 93
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_bubble
+   PIECE pipe_large_09
+   X 252
+   Y 32
+   ONE_WAY
+ $END
+ 
+ 

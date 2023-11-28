@@ -1,0 +1,308 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE R-Rated Release
+ AUTHOR WillLem
+ ID x467AB59C5D2EBD92
+ VERSION x0000000000000010
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 384
+ HEIGHT 160
+ START_X 192
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 203
+ SAVE_REQUIREMENT 200
+ TIME_LIMIT 180
+ MAX_SPAWN_INTERVAL 102
+ 
+ $SKILLSET 
+ $END 
+ 
+ $TALISMAN 
+   TITLE Bronze Talisman
+   ID 0
+   COLOR Bronze
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 1
+   COLOR Silver
+   TIME_LIMIT 1785
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 2
+   COLOR Gold
+   TIME_LIMIT 1530
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 169
+   Y 123
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 166
+   Y 24
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-634027990
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 94
+     Y 79
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 94
+     Y 81
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 94
+     Y 83
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_02
+   X 114
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_03
+   X 212
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 159
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-634027990
+   X 94
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-634027990
+   X 258
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-634027990
+   X 271
+   Y 66
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 127
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 223
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 97
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 66
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 285
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 254
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 348
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 286
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 318
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 256
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 232
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 36
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 36
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 67
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 97
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 117
+   Y 54
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 124
+   Y 54
+   ZOMBIE 
+   GLIDER 
+ $END
+ 
+ $LEMMING
+   X 332
+   Y 83
+   ZOMBIE 
+   GLIDER 
+ $END
+ 
+ $LEMMING
+   X 113
+   Y 116
+   FLIP_HORIZONTAL
+   ZOMBIE 
+   GLIDER 
+ $END
+ 
+ 

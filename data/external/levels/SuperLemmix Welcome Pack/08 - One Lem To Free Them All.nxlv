@@ -1,0 +1,788 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE One Lem To Free Them All
+ AUTHOR WillLem
+ ID x71BAB8F451C16C96
+ VERSION x0000000000000013
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 75
+ SAVE_REQUIREMENT 74
+ MAX_SPAWN_INTERVAL 102
+ 
+ $SKILLSET 
+   TIMEBOMBER 1
+   BOMBER 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   USE_ONLY_SKILL Timebomber
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_fire
+   PIECE exit
+   X 223
+   Y 58
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-1291901063
+   
+   $TERRAIN
+     STYLE orig_fire
+     PIECE steel_03
+     X 70
+     Y 94
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_fire
+     PIECE steel_03
+     X 70
+     Y 98
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_fire
+     PIECE steel_03
+     X 70
+     Y 89
+     NO_OVERWRITE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_fire
+     PIECE steel_03
+     X 70
+     Y 80
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 71
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 103
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 137
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 175
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_05
+   X 70
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 71
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 107
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 139
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 175
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 147
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 179
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 215
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 70
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 102
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 138
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 147
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 175
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 70
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 102
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 138
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 15
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 23
+   Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 15
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 23
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 282
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 291
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 283
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 291
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_02
+   X 70
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1291901063
+   X 70
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1291901063
+   X 90
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1291901063
+   X 130
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_02
+   X 200
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1291901063
+   X 190
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1291901063
+   X 170
+   Y 94
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 87
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 90
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 93
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 96
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 99
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 102
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 105
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 108
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 111
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 114
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 117
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 120
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 123
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 126
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 129
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 132
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 135
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 138
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 141
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 144
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 147
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 150
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 153
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 156
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 159
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 162
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 165
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 168
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 171
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 174
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 177
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 180
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 183
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 186
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 189
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 192
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 195
+   Y 88
+ $END
+ 
+ $LEMMING
+   X 195
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 192
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 189
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 186
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 183
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 180
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 177
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 174
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 171
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 168
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 165
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 162
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 159
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 156
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 153
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 150
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 147
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 144
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 141
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 138
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 135
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 132
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 129
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 126
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 123
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 120
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 117
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 114
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 111
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 108
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 105
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 102
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 99
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 96
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 93
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 90
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 87
+   Y 88
+   FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 122
+   Y 94
+ $END
+ 
+ 

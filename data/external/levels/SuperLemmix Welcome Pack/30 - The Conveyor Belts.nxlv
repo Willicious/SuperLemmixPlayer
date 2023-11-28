@@ -1,0 +1,472 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The Conveyor Belts
+ AUTHOR WillLem
+ ID x395644D72FB2EFF3
+ VERSION x0000000000000028
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 416
+ HEIGHT 160
+ START_X 205
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 30
+ SAVE_REQUIREMENT 30
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   WALKER 10
+   JUMPER 10
+   BALLOONER 10
+   BLOCKER 10
+   BUILDER 20
+   GRENADER 10
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 0
+   COLOR Silver
+   GRENADER_LIMIT 0
+   JUMPER_LIMIT 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 1
+   COLOR Gold
+   BUILDER_LIMIT 6
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE willlem_special
+   PIECE conveyor_left
+   X 45
+   Y 67
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE conveyor_right
+   X 235
+   Y 67
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit_vortex
+   X 182
+   Y 45
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 54
+   Y 23
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 306
+   Y 23
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 180
+   Y 86
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y -5
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 32
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 69
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 106
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 385
+   Y -5
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 385
+   Y 32
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 385
+   Y 69
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 385
+   Y 106
+   WIDTH 31
+   HEIGHT 40
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y 121
+   WIDTH 424
+   HEIGHT 39
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y -1
+   WIDTH 424
+   HEIGHT 31
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group1761926758
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 49
+     Y 69
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 48
+     Y 70
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 47
+     Y 71
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 46
+     Y 72
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 45
+     Y 74
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 45
+     Y 76
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 45
+     Y 77
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 46
+     Y 79
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 47
+     Y 80
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE line_03
+     X 48
+     Y 81
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 51
+     Y 68
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 156
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 196
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 243
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 299
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 109
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 45
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 85
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 310
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 85
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 109
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 157
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 213
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 245
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 262
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 85
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 324
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 18
+   Y 59
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 358
+   Y 57
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1761926758
+   X 45
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1761926758
+   X 358
+   Y 69
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ 

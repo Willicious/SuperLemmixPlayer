@@ -1,0 +1,1206 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.6
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Zombie Apocalypse
+ AUTHOR WillLem
+ ID x76737B301437095F
+ VERSION x0000000000000010
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 808
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 1
+ MAX_SPAWN_INTERVAL 4
+ 
+ $SKILLSET 
+   WALKER 99
+   JUMPER 99
+   SPEARER 99
+   GRENADER 99
+   LASERER 99
+ $END 
+ 
+ $TALISMAN 
+   TITLE Bronze Talisman
+   ID 1
+   COLOR Bronze
+   KILL_ZOMBIES 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   WALKER_LIMIT 20
+   JUMPER_LIMIT 20
+   SPEARER_LIMIT 20
+   GRENADER_LIMIT 20
+   LASERER_LIMIT 10
+   KILL_ZOMBIES 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 2
+   COLOR Silver
+   SPEARER_LIMIT 1
+   LASERER_LIMIT 20
+   KILL_ZOMBIES 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_dirt
+   PIECE window
+   X 19
+   Y 53
+   NO_OVERWRITE
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE window
+   X 258
+   Y 52
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE window
+   X 259
+   Y 52
+   NO_OVERWRITE
+   ZOMBIE 
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE exit
+   X 498
+   Y 121
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE water
+   X 368
+   Y 136
+   WIDTH 120
+   HEIGHT 24
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE trap_03
+   X 762
+   Y -8
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-791408184
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE steel_03
+     X 66
+     Y 98
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE steel_03
+     X 66
+     Y 102
+     ERASE
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE steel_03
+     X 66
+     Y 93
+     NO_OVERWRITE
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE steel_03
+     X 66
+     Y 84
+     ERASE
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1051347810
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE moss_01
+     X 185
+     Y 14
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE bridge_03
+     X 181
+     Y 11
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group1860848126
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-791408184
+     X 412
+     Y 88
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-791408184
+     X 423
+     Y 88
+     ERASE
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_04
+   X 458
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_04
+   X 390
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE tree
+   X 579
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 368
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 66
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 90
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 282
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 258
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 234
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 210
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 18
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 42
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 66
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 90
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 114
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 138
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 162
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 186
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 210
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 234
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 258
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 282
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 141
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 130
+   Y -10
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 130
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 184
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 184
+   Y -10
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 341
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 330
+   Y -10
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 330
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 384
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 384
+   Y -10
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 18
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 18
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 42
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_04
+   X 35
+   Y 105
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 31
+   Y 141
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 150
+   Y 141
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 101
+   Y 141
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_04
+   X 119
+   Y 149
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 306
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 330
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 306
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 330
+   Y 95
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_04
+   X 392
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 488
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 512
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 536
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 560
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 584
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 608
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 632
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 488
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 512
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 536
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 560
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 584
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 608
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 632
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 752
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 776
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 776
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 776
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 656
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 680
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 704
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 728
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 656
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 680
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 704
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 728
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 533
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 522
+   Y -10
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 522
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 576
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 576
+   Y -10
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 716
+   Y 152
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 623
+   Y 152
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 572
+   Y 153
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 524
+   Y 86
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 668
+   Y 86
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 761
+   Y 150
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 488
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_02
+   X 488
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 464
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 440
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_04
+   X 426
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_05
+   X 433
+   Y -46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_01
+   X 402
+   Y 10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_01
+   X 485
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_02
+   X 466
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 486
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_06
+   X 438
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_01
+   X 445
+   Y 5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 436
+   Y -6
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 460
+   Y -6
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 308
+   Y -22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 181
+   Y -22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 102
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 102
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_05
+   X 78
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_06
+   X 196
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_06
+   X 317
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_02
+   X 323
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_01
+   X 197
+   Y -22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1051347810
+   X 192
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_03
+   X 227
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bones_02
+   X 242
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bones_02
+   X 33
+   Y -5
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bones_02
+   X -22
+   Y -8
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_01
+   X 616
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE moss_02
+   X 606
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 772
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 748
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-791408184
+   X 644
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 412
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_03
+   X 416
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 404
+   Y 96
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 396
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 388
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 380
+   Y 120
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 372
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 368
+   Y 132
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 376
+   Y 124
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 384
+   Y 116
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 392
+   Y 108
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 400
+   Y 100
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1860848126
+   X 408
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 354
+   Y 136
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 78
+   Y 136
+   BLOCKER 
+ $END
+ 
+ $LEMMING
+   X 152
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 164
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 176
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 352
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 364
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 376
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 544
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 556
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ $LEMMING
+   X 568
+   Y 25
+   ZOMBIE 
+ $END
+ 
+ 
