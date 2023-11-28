@@ -1837,6 +1837,9 @@ begin
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY + 3;
 
+  if (NewAction = baBallooning) and (L.LemAction = baSwimming) then
+    L.LemY := L.LemY - 1;
+
   if NewAction = baDehoisting then
     L.LemDehoistPinY := L.LemY;
   if NewAction = baSliding then
