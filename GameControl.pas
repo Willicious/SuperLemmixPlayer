@@ -725,7 +725,7 @@ begin
       CurLevelGroup := fCurrentLevel.Group;
     end;
     fCurrentLevel := CurLevelGroup.Levels[0];
-  end else if GameParams.NextUnsolvedLevel then
+  end else if GameParams.NextUnsolvedLevel and not GameResult.gCheated then
     fCurrentLevel := CurLevelGroup.FirstUnbeatenLevel
   else
     fCurrentLevel := CurLevelGroup.Levels[CurLevelIndex + 1];
