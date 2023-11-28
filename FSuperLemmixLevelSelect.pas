@@ -443,8 +443,7 @@ begin
                   mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
   begin
     L.ResetTalismans;
-    InitializeTreeview;
-    tvLevelSelectClick(tvLevelSelect);
+    SetInfo;
   end;
 end;
 
