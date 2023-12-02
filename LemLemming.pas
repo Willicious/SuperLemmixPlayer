@@ -104,6 +104,7 @@ type
     LemIsGlider                   : Boolean;
     LemIsDisarmer                 : Boolean;
     LemIsTimebomber               : Boolean;
+    LemIsRadiating                : Boolean;
     LemIsZombie                   : Boolean;
     LemIsNeutral                  : Boolean;
     LemHasBeenOhnoer              : Boolean;
@@ -327,6 +328,8 @@ begin
   LemIsFloater := Source.LemIsFloater;
   LemIsGlider := Source.LemIsGlider;
   LemIsDisarmer := Source.LemIsDisarmer;
+  LemIsTimebomber := Source.LemIsTimebomber;
+  LemIsRadiating := Source.LemIsRadiating;
   LemIsZombie := Source.LemIsZombie;
   LemHasBeenOhnoer := Source.LemHasBeenOhnoer;
   LemHasTurned := Source.LemHasTurned;

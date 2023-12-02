@@ -1976,6 +1976,11 @@ begin
   Dec(L.LemExplosionTimer);
   DoExplosionCrater := True;
 
+  if UserSetNuking and L.LemIsRadiating then
+  begin
+    L.LemIsRadiating := False;
+  end;
+
   if L.LemExplosionTimer = 0 then
   begin               //all these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
@@ -3815,6 +3820,8 @@ begin
   GadgetID := FindGadgetID(PosX, PosY, trRadiation);
   if GadgetID = 65535 then Exit;
   Gadget := Gadgets[GadgetID];
+
+  L.LemIsRadiating := True;
 
   // prevents repeatedly assigning to the same lemming whilst in trigger area
   if (L.LemExplosionTimer = 0)
