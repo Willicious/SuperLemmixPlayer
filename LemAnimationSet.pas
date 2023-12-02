@@ -183,6 +183,8 @@ type
     fLemmingAnimations     : TBitmaps; // the list of lemmings bitmaps
 
     fCountDownDigitsBitmap  : TBitmap32;
+    fRadiationDigitsBitmap  : TBitmap32;
+    fSlowfreezeDigitsBitmap : TBitmap32;
     fFreezingOverlay        : TBitmap32;
     fUnfreezingOverlay      : TBitmap32;
     fHatchNumbersBitmap     : TBitmap32;
@@ -213,6 +215,8 @@ type
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
+    property RadiationDigitsBitmap : TBitmap32 read fRadiationDigitsBitmap;
+    property SlowfreezeDigitsBitmap: TBitmap32 read fSlowfreezeDigitsBitmap;
     property FreezingOverlay       : TBitmap32 read fFreezingOverlay;
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
@@ -507,6 +511,10 @@ begin
 
     fCountDownDigitsBitmap.DrawMode := dmBlend;
     fCountDownDigitsBitmap.CombineMode := cmMerge;
+    fRadiationDigitsBitmap.DrawMode := dmBlend;
+    fRadiationDigitsBitmap.CombineMode := cmMerge;
+    fSlowfreezeDigitsBitmap.DrawMode := dmBlend;
+    fSlowfreezeDigitsBitmap.CombineMode := cmMerge;
 
     fFreezingOverlay.DrawMode := dmBlend;
     fFreezingOverlay.CombineMode := cmMerge;
@@ -540,12 +548,16 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', fSpearBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'radiation-hr.png', fRadiationDigitsBitmap);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'slowfreeze-hr.png', fSlowfreezeDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers-hr.png', fHatchNumbersBitmap);
     end else begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer.png', fLemmingAnimations[ICECUBE]);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', fSpearBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'radiation.png', fRadiationDigitsBitmap);
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'slowfreeze.png', fSlowfreezeDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers.png', fHatchNumbersBitmap);
     end;
 
@@ -608,6 +620,8 @@ begin
   fLemmingAnimations.Clear;
   fMetaLemmingAnimations.Clear;
   fCountDownDigitsBitmap.Clear;
+  fRadiationDigitsBitmap.Clear;
+  fSlowfreezeDigitsBitmap.Clear;
   fFreezingOverlay.Clear;
   fUnfreezingOverlay.Clear;
   fHatchNumbersBitmap.Clear;
@@ -627,6 +641,8 @@ begin
   fLemmingAnimations := TBitmaps.Create;
   fRecolorer := TRecolorImage.Create;
   fCountDownDigitsBitmap := TBitmap32.Create;
+  fRadiationDigitsBitmap := TBitmap32.Create;
+  fSlowfreezeDigitsBitmap := TBitmap32.Create;
   fFreezingOverlay := TBitmap32.Create;
   fUnfreezingOverlay := TBitmap32.Create;
   fHatchNumbersBitmap := TBitmap32.Create;
@@ -641,6 +657,8 @@ begin
   fMetaLemmingAnimations.Free;
   fLemmingAnimations.Free;
   fCountDownDigitsBitmap.Free;
+  fRadiationDigitsBitmap.Free;
+  fSlowfreezeDigitsBitmap.Free;
   fFreezingOverlay.Free;
   fUnfreezingOverlay.Free;
   fHatchNumbersBitmap.Free;
