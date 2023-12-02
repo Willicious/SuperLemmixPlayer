@@ -11,12 +11,12 @@ uses
   GR32, GR32_Blend;
 
 const
-  CPM_LEMMING_NORMAL = $FF0000FF;  // used for a non-athlete
-  CPM_LEMMING_ATHLETE = $FF00FFFF; // used for an athlete
-  CPM_LEMMING_SELECTED = $007F0000; // OR'd to base value for selected lemming
+  CPM_LEMMING_NORMAL = $FF0000FF;    // Used for a non-athlete
+  CPM_LEMMING_ATHLETE = $FF00FFFF;   // Used for an athlete
+  CPM_LEMMING_SELECTED = $007F0000;  // OR'd to base value for selected lemming
   CPM_LEMMING_ZOMBIE_OR = $00007F00; // OR'd to base value for zombies
-  CPM_LEMMING_ZOMBIE_NOT = $000000C0; // AND-NOT'd to base value for zombies
-  CPM_LEMMING_NEUTRAL = $00FFFFFF; // XOR'd to base value for neutrals
+  CPM_LEMMING_ZOMBIE_NOT = $000000C0;// AND-NOT'd to base value for zombies
+  CPM_LEMMING_NEUTRAL = $00FFFFFF;   // XOR'd to base value for neutrals
 
 type
   TColorSwapType = (rcl_Selected,
@@ -125,7 +125,7 @@ end;
 
 procedure TRecolorImage.CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  // photoflash
+  // Photoflash
   if F <> 0 then B := clBlack32 else B := clWhite32;
 end;
 

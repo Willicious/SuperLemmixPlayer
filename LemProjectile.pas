@@ -39,24 +39,24 @@ const
     pgGrenadeR, pgGrenadeExplode
   );
 
-  SPEAR_GRAPHIC_RECTS: array[TSpearGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
+  SPEAR_GRAPHIC_RECTS: array[TSpearGraphic] of TRect =
   (
-    (Left: 11; Top: 20; Right: 25; Bottom: 22), //pgSpearFlat
-    (Left: 0; Top: 0; Right: 12; Bottom: 6),    //pgSpearSlightTLBR
-    (Left: 13; Top: 0; Right: 25; Bottom: 6),   //pgSpearSlightBLTR
-    (Left: 0; Top: 7; Right: 10; Bottom: 17),   //pgSpear45TLBR
-    (Left: 0; Top: 18; Right: 10; Bottom: 28),  //pgSpear45BLTR
-    (Left: 11; Top: 7; Right: 17; Bottom: 19),  //pgSpearSteepTLBR
-    (Left: 18; Top: 7; Right: 24; Bottom: 19)   //pgSpearSteepBLTR
+    (Left: 11; Top: 20; Right: 25; Bottom: 22), // - pgSpearFlat
+    (Left: 0; Top: 0; Right: 12; Bottom: 6),    // - pgSpearSlightTLBR
+    (Left: 13; Top: 0; Right: 25; Bottom: 6),   // - pgSpearSlightBLTR
+    (Left: 0; Top: 7; Right: 10; Bottom: 17),   // - pgSpear45TLBR
+    (Left: 0; Top: 18; Right: 10; Bottom: 28),  // - pgSpear45BLTR
+    (Left: 11; Top: 7; Right: 17; Bottom: 19),  // - pgSpearSteepTLBR
+    (Left: 18; Top: 7; Right: 24; Bottom: 19)   // - pgSpearSteepBLTR
   );
 
-  GRENADE_GRAPHIC_RECTS: array[TGrenadeGraphic] of TRect = //this is the code that specifies the size of the grenade cookie spear projectile
+  GRENADE_GRAPHIC_RECTS: array[TGrenadeGraphic] of TRect =
   (
-    (Left: 1; Top: 7; Right: 6; Bottom: 12), //pgGrenadeU
-    (Left: 7; Top: 7; Right: 12; Bottom: 12), //pgGrenadeR
-    (Left: 13; Top: 7; Right: 18; Bottom: 12), //pgGrenadeD
-    (Left: 19; Top: 7; Right: 24; Bottom: 12), //pgGrenadeL
-    (Left: 0; Top: 13; Right: 32; Bottom: 45)   //pgGrenadeExplode
+    (Left: 1; Top: 7; Right: 6; Bottom: 12),   // - pgGrenadeU
+    (Left: 7; Top: 7; Right: 12; Bottom: 12),  // - pgGrenadeR
+    (Left: 13; Top: 7; Right: 18; Bottom: 12), // - pgGrenadeD
+    (Left: 19; Top: 7; Right: 24; Bottom: 12), // - pgGrenadeL
+    (Left: 0; Top: 13; Right: 32; Bottom: 45)  // - pgGrenadeExplode
   );
 
 type
@@ -198,7 +198,7 @@ begin
   fFired := aSrc.fFired;
   fHit := aSrc.fHit;
 
-  // don't assign physicsmap or lemming
+  // Don't assign physicsmap or lemming
   fLemmingIndex := aSrc.fLemmingIndex;
 
   fIsSpear := aSrc.fIsSpear;
@@ -272,21 +272,21 @@ begin
       else begin
         if fFired then
         case fOffsetX of
-          0..5:     Result := pgGrenadeU; //equiv 1 frame
-          6..15:    Result := pgGrenadeR; //equiv 1 frame
-          16..30:   Result := pgGrenadeD; //equiv 2 frames
-          31..50:   Result := pgGrenadeL; //equiv 2 frames
-          51..75:   Result := pgGrenadeU; //equiv 3 frames
-          76..100:  Result := pgGrenadeR; //equiv 3 frames
-          101..130: Result := pgGrenadeD; //equiv 3 frames
-          131..169: Result := pgGrenadeL; //equiv 4 frames
+          0..5:     Result := pgGrenadeU; // Equiv 1 frame
+          6..15:    Result := pgGrenadeR; // Equiv 1 frame
+          16..30:   Result := pgGrenadeD; // Equiv 2 frames
+          31..50:   Result := pgGrenadeL; // Equiv 2 frames
+          51..75:   Result := pgGrenadeU; // Equiv 3 frames
+          76..100:  Result := pgGrenadeR; // Equiv 3 frames
+          101..130: Result := pgGrenadeD; // Equiv 3 frames
+          131..169: Result := pgGrenadeL; // Equiv 4 frames
           else
-          Result := pgGrenadeU; //let it stay upright after 2 complete spins
+          Result := pgGrenadeU; // Let it stay upright after 2 complete spins
         end else
-        Result := pgGrenadeU; //and at any other time, e.g. before thrown
+        Result := pgGrenadeU; // And at any other time, e.g. before thrown
       end;
   end else
-    Result := pgGrenadeU; // shouldn't happen
+    Result := pgGrenadeU; // Shouldn't happen
 
   if fDX < 0 then
     Result := GRENADE_FLIP[Result];
@@ -303,7 +303,7 @@ begin
         5: Result := pgSpearSlightBLTR;
 
         else
-        Result := pgSpearFlat; // shouldn't happen
+        Result := pgSpearFlat; // Shouldn't happen
       end
     else
       case fOffsetX of
@@ -315,7 +315,7 @@ begin
         else Result := pgSpearSteepTLBR;
       end;
   end else
-    Result := pgSpearFlat; // shouldn't happen
+    Result := pgSpearFlat; // Shouldn't happen
 
   if fDX < 0 then
     Result := SPEAR_FLIP[Result];
@@ -352,7 +352,7 @@ begin
     pgSpearSteepBLTR:
       AtTop := fDX > 0;
 
-    else AtTop := false; // should never happen
+    else AtTop := false; // Shouldn't happen
   end;
 
   if fDX < 0 then
@@ -451,7 +451,7 @@ begin
   if fHit then
     raise Exception.Create('TProjectile.Update called for a projectile after it collides with terrain');
 
-  SetLength(Result, PROJECTILE_HORIZONTAL_MOMENTUM * 2); // it'll be expanded if need be
+  SetLength(Result, PROJECTILE_HORIZONTAL_MOMENTUM * 2);
   Result[0] := Point(fX, fY);
   PosCount := 1;
 

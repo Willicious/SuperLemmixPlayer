@@ -1,8 +1,7 @@
 unit LemNeoPieceManager;
 
-// The TNeoPieceManager class is used in a similar manner to how
-// graphic sets were in the past. It could be thought of as a huge
-// dynamic graphic set.
+{ The TNeoPieceManager class is used in a similar manner to how graphic sets were in the past.
+  It could be thought of as a huge dynamic graphic set. }
 
 interface
 
@@ -15,8 +14,8 @@ uses
   LemNeoParser;
 
 const
-  RETAIN_PIECE_CYCLES = 20; // how many times Tidy can be called without a piece being used before it's discarded
-  COMPOSITE_PIECE_STYLE = '*GROUP'; // what to use for the style name in per-level composite pieces
+  RETAIN_PIECE_CYCLES = 20; // How many times Tidy can be called without a piece being used before it's discarded
+  COMPOSITE_PIECE_STYLE = '*GROUP'; // What to use for the style name in per-level composite pieces
 
 type
 
@@ -106,7 +105,7 @@ type
   function CombineIdentifier(Identifier: TLabelRecord): String;
 
 var
-  PieceManager: TNeoPieceManager; // globalized as this does not need to have seperate instances
+  PieceManager: TNeoPieceManager; // Globalized as this does not need to have seperate instances
 
 implementation
 
@@ -179,8 +178,7 @@ begin
   inherited;
 end;
 
-// Tidy-up function. Pretty much clears out the lists. Might add
-// stuff in the future so it retains frequently-used pieces.
+// Tidy-up function, clears out the lists. Might add stuff in the future so it retains frequently-used pieces.
 procedure TNeoPieceManager.Tidy;
 var
   i: Integer;
@@ -219,7 +217,7 @@ begin
   for Result := 0 to TerrainCount-1 do
     if fTerrains[Result].Identifier = Identifier then Exit;
 
-  // if it's not found
+  // If it's not found
   Result := ObtainTerrain(Identifier);
 end;
 
@@ -229,11 +227,11 @@ begin
   for Result := 0 to ObjectCount-1 do
     if fObjects[Result].Identifier = Identifier then Exit;
 
-  // if it's not found
+  // If it's not found
   Result := ObtainObject(Identifier);
 end;
 
-// ... and to load it if not found.
+// ... And to load it if not found.
 
 function TNeoPieceManager.ObtainTerrain(Identifier: String): Integer;
 var

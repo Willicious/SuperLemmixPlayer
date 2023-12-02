@@ -11,23 +11,23 @@ uses
 
 const
   // Object Drawing Flags
-  odf_OnlyOnTerrain = 1; // bit 0
-  odf_UpsideDown    = 2; // bit 1
-  odf_NoOverwrite   = 4; // bit 2
+  odf_OnlyOnTerrain = 1; // Bit 0
+  odf_UpsideDown    = 2; // Bit 1
+  odf_NoOverwrite   = 4; // Bit 2
   odf_FlipLem       = 8;
-  //odf_Invisible     = 32;  // removed
-  //odf_Flip          = 64;            // Better name: odf_FlipImage
+  //odf_Invisible     = 32;  // Removed
+  //odf_Flip          = 64;  // Better name: odf_FlipImage
   odf_Rotate        = 128;
 
 type
   TGadgetModel = class(TIdentifiedPiece)
   private
   protected
-    fDrawingFlags: Byte; // odf_xxxx
+    fDrawingFlags: Byte; // N.B. odf_xxxx
     fSkill: Integer;
-    fTarLev: Integer; // This saves the preassigned skills for hatches
-                      //        and the speed of movable backgrounds.
-                      //        and the skill amount for pick-up skills
+    fTarLev: Integer; { This saves the preassigned skills for hatches
+                               and the speed of movable backgrounds.
+                               and the skill amount for pick-up skills. }
     fLemmingCap: Integer;
     fCountdownLength: Integer;
     procedure SetInvert(aValue: Boolean); override;

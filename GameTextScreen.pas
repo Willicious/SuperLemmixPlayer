@@ -6,7 +6,7 @@ interface
 
 uses
   Types,
-  Dialogs, // debug
+  Dialogs, // Debug
   LemmixHotkeys,
   Windows, Classes, SysUtils, Controls, StrUtils,
   UMisc,
@@ -147,7 +147,7 @@ var
       if Length(Result) = 0 then
         Result := '{None}'
       else
-        Result := LeftStr(Result, Length(Result) - 2); // remove the double-space at the end
+        Result := LeftStr(Result, Length(Result) - 2); // Remove the double-space at the end
     end;
 
   var

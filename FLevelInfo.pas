@@ -123,9 +123,9 @@ begin
     aStylePath := AppPath + SFStyles + aStyle + '\levelinfo\';
     aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
-    if FileExists(aStylePath + IconsImg) then //check styles folder first
+    if FileExists(aStylePath + IconsImg) then // Check styles folder first
       TPNGInterface.LoadPngFile(aStylePath + IconsImg, fIcons)
-    else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then //then levelpack folder
+    else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then // Then levelpack folder
       TPNGInterface.LoadPngFile(aPath + IconsImg, fIcons)
     else
       TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIcons);

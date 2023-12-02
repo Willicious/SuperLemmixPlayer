@@ -27,8 +27,8 @@ type
       function GetDisableTriggers: Boolean;
     public
       constructor Create(aGadget: TGadget; aAnimation: TGadgetAnimation);
-      function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
-      procedure UpdateAnimationState; // basically, all frame update logic *except* moving to the next frame
+      function UpdateOneFrame: Boolean; // If returns false, the object PERMANENTLY removes the animation. Futureproofing.
+      procedure UpdateAnimationState; // Basically, all frame update logic *except* moving to the next frame
       procedure ProcessTriggers;
 
       procedure Clone(aSrc: TGadgetAnimationInstance);
@@ -50,12 +50,12 @@ type
       procedure SetPrimaryAnimation(const aValue: TGadgetAnimationInstance);
     public
       procedure Clone(aSrc: TGadgetAnimationInstances; newObj: TGadget);
-      procedure ChangePrimaryAnimation(aNewPrimaryName: String; aSetFrame: Integer = -1); // this discards the old primary!
+      procedure ChangePrimaryAnimation(aNewPrimaryName: String; aSetFrame: Integer = -1); // Discards the old primary!
       property PrimaryAnimation: TGadgetAnimationInstance read GetPrimaryAnimation write SetPrimaryAnimation;
       property PrimaryAnimationFrameCount: Integer read fPrimaryAnimationFrameCount;
   end;
 
-  // internal object used by game
+  // Internal object used by game
   TGadget = class
   private
     sTop            : Integer;
@@ -63,7 +63,7 @@ type
     sHeight         : Integer;
     sWidth          : Integer;
 
-    sWidthVariance  : Integer; // difference from default. used by secondary animations.
+    sWidthVariance  : Integer; // Difference from default. used by secondary animations.
     sHeightVariance : Integer;
 
     sTriggerRect    : TRect;  // We assume that trigger areas will never move!!!
@@ -108,8 +108,9 @@ type
     function GetRemainingLemmingsCount: Integer;
     function GetCountdownLength: Integer;
 
-    function GetCurrentFrame: Integer; // Just remaps to primary animation. This allows LemGame to control
-    procedure SetCurrentFrame(aValue: Integer); // the primary animation directly, as it always has.
+    function GetCurrentFrame: Integer; { Just remaps to primary animation. This allows LemGame to control
+                                         the primary animation directly, as it always has. }
+    procedure SetCurrentFrame(aValue: Integer);
 
     function GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
   public
@@ -118,7 +119,7 @@ type
     Animations: TGadgetAnimationInstances;
 
     Triggered      : Boolean;
-    TeleLem        : Integer; // saves which lemming is currently teleported
+    TeleLem        : Integer; // Saves which lemming is currently teleported
     HoldActive     : Boolean;
 
     constructor Create; overload;
@@ -153,7 +154,7 @@ type
     property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property NeutralMode: Boolean read sNeutralMode write sNeutralMode;
     property KeyFrame: Integer read GetKeyFrame;
-    property CanDrawToBackground: Boolean read GetCanDrawToBackground; // moving backgrounds: if only one frame and zero speed, this returns true
+    property CanDrawToBackground: Boolean read GetCanDrawToBackground; // Moving backgrounds: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
     property SkillCount: Integer read GetSkillCount;
     property IsPreassignedClimber: Boolean index 1 read GetPreassignedSkill;
@@ -177,12 +178,12 @@ type
     procedure UnifyFlippingFlagsOfTeleporter();
     procedure SetFlipOfReceiverTo(Teleporter: TGadget);
 
-    // true = X-movement, false = Y-movement
+    // True = X-movement, False = Y-movement
     function Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
   end;
 
 type
-  // internal list, used by game
+  // Internal list, used by game
   TGadgetList = class(TObjectList)
   private
     function GetItem(Index: Integer): TGadget;
@@ -253,7 +254,7 @@ begin
   sHeightVariance := sHeight - MetaObj.Height;
 
   sTriggerEffect := MetaObj.TriggerEffect;
-  AdjustOWWDirection; // adjusts eg. flipped OWL becomes OWR
+  AdjustOWWDirection; // Adjusts eg. flipped OWL becomes OWR
   sTriggerRect := GetTriggerRect;
   sReceiverId := 65535;
 
@@ -305,17 +306,17 @@ end;
 function TGadget.Clone: TGadget;
 begin
   Result := TGadget.Create(Obj, MetaObj);
-  // doesn't clone state
+  // Doesn't clone state
 end;
 
 function TGadget.GetTriggerRect: TRect;
-// Note that the trigger area is only the inside of the TRect,
-// which by definition does not include the right and bottom line!
+{ Note that the trigger area is only the inside of the TRect,
+  which by definition does not include the right and bottom line! }
 var
   X, Y: Integer;
   W, H: Integer;
 begin
-  Y := Obj.Top; // of whole object
+  Y := Obj.Top; // Of whole object
   X := Obj.Left;
 
   X := X + MetaObj.TriggerLeft;
@@ -339,7 +340,7 @@ begin
     end else begin
       W := 1;
       H := 1;
-      // for cases where these are zero
+      // For cases where these are zero
     end;
 
   Result.Top := Y;
@@ -433,8 +434,8 @@ const
     Result := true;
     if TriggerEffectBase in READY_OBJECT_TYPES then
     begin
-      if sSecondariesTreatAsBusy // for DOM_TELEPORT, "receiver is busy" is marked as this
-      or (TriggerEffect = DOM_NONE) then // local trigger effect is set to DOM_NONE when disarmed / etc
+      if sSecondariesTreatAsBusy // For DOM_TELEPORT, "receiver is busy" is marked as this
+      or (TriggerEffect = DOM_NONE) then // Local trigger effect is set to DOM_NONE when disarmed / etc
         Result := false
       else
         case TriggerEffectBase of
@@ -454,7 +455,7 @@ const
     Result := false;
     if TriggerEffectBase in BUSY_OBJECT_TYPES then
     begin
-      if sSecondariesTreatAsBusy then // for DOM_TELEPORT, "receiver is busy" is marked as this
+      if sSecondariesTreatAsBusy then // For DOM_TELEPORT, "receiver is busy" is marked as this
         Result := true
       else
         case TriggerEffectBase of
@@ -470,16 +471,16 @@ const
     Result := false;
     if TriggerEffectBase in DISABLED_OBJECT_TYPES then
     begin
-       if TriggerEffect = DOM_NONE then // local trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
+       if TriggerEffect = DOM_NONE then // Local trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
         Result := true
       else
         case TriggerEffectBase of
           DOM_EXIT: Result := RemainingLemmingsCount = 0;
-          // DOM_TRAP: Only condition is handled by the above TriggerEffect check
+          // DOM_TRAP: Only condition is handled by the above TriggerEffect check // Bookmark - remove?
           DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
           DOM_BUTTON, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
           DOM_LOCKEXIT: Result := (CurrentFrame = 1) or (RemainingLemmingsCount = 0);
-          DOM_WINDOW: Result := RemainingLemmingsCount = 0; // todo: when all lemmings are released even on infinite windows
+          DOM_WINDOW: Result := RemainingLemmingsCount = 0; // Bookmark - check this is done: todo: when all lemmings are released even on infinite windows
         end;
     end;
   end;
@@ -732,23 +733,23 @@ begin
         begin
           // Clone the receiver, if it is used by more than one teleporter
           TestGadget := TestGadget.Clone;
-          Add(TestGadget); // to this GadgetList
-          Gadget.sReceiverId := Count - 1; // set to newly added receiver
+          Add(TestGadget); // To this GadgetList
+          Gadget.sReceiverId := Count - 1; // Set to newly added receiver
         end;
         Gadget.sPairingId := PairCount;
         TestGadget.sPairingId := PairCount;
-        IsReceiverUsed[TestID] := true; // ignore newly added receivers for this
+        IsReceiverUsed[TestID] := true; // Ignore newly added receivers for this
         Inc(PairCount);
         // Flip receiver according to teleporter
         Gadget.UnifyFlippingFlagsOfTeleporter();
         TestGadget.SetFlipOfReceiverTo(Gadget);
       end;
-    end; // end test whether object is teleporter
-  end; // next gadget
+    end; // End test whether object is teleporter
+  end; // Next gadget
 
   for i := 0 to ItemCount - 1 do
     if (Items[i].TriggerEffect = DOM_RECEIVER) and not IsReceiverUsed[i] then
-      Items[i].TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
+      Items[i].TriggerEffect := DOM_NONE // Set to no-effect as a means of disabling if
 end;
 
 { TGadgetAnimationInstance }
@@ -824,8 +825,8 @@ end;
 procedure TGadgetAnimationInstance.UpdateAnimationState;
 begin
   case fState of
-    gasPlay: ; // nothing to do
-    gasPause: ; // nothing to do
+    gasPlay: ; // Nothing to do
+    gasPause: ; // Nothing to do
     gasLoopToZero: if fFrame = 0 then fState := gasPause;
     gasStop: begin fFrame := 0; fState := gasPause; end;
     gasMatchPrimary: fFrame := fGadget.CurrentFrame;
@@ -872,8 +873,8 @@ begin
       NewPrimary.fVisible := true;
 
       if (aSetFrame >= 0) then
-        NewPrimary.fFrame := aSetFrame; // Futureproofing, in case we ever have a situation where we *don't* need
-                                        // to set the frame, but can allow INITIAL_FRAME to take effect.
+        NewPrimary.fFrame := aSetFrame; { Futureproofing, in case we ever have a situation where we *don't* need
+                                          to set the frame, but can allow INITIAL_FRAME to take effect. }
       Exit;
     end;
 end;

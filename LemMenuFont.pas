@@ -55,7 +55,7 @@ uses
   GameControl;
 
 procedure TMenuFont.Combine(F: TColor32; var B: TColor32; M: TColor32);
-// just show transparent
+// Just show transparent
 begin
   if F <> 0 then B := F;
 end;
@@ -143,7 +143,7 @@ begin
   begin
     R := GetTextSize(S);
     Types.OffsetRect(R, X, Y);
-    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // oops, again watch out for sourceretangle!
+    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // Oops, again watch out for sourceretangle!
     aRestoreBuffer.DrawTo(Dst, R, R);
   end;
 
@@ -191,7 +191,7 @@ begin
   begin
     R := GetTextSize(S);
     Types.OffsetRect(R, (Dst.Width - (R.Right - R.Left)) div 2, Y);
-    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // oops, again watch out for sourceretangle!
+    Types.IntersectRect(R, R, aRestoreBuffer.BoundsRect); // Oops, again watch out for sourceretangle!
     aRestoreBuffer.DrawTo(Dst, R, R);
   end;
 

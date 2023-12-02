@@ -14,7 +14,7 @@ uses
 
 type
   TSkillSet = set of TSkillPanelButton;
-  TSkillCounts = array[Low(TSkillPanelButton)..High(TSkillPanelButton)] of Integer; // non-skill buttons are just unused
+  TSkillCounts = array[Low(TSkillPanelButton)..High(TSkillPanelButton)] of Integer; // Non-skill buttons are just unused
 
   TLevelInfo = class
   private
@@ -165,7 +165,7 @@ implementation
 
 uses
   LemVersion,
-  Dialogs, Math; // for backwards compatibility
+  Dialogs, Math; // For backwards compatibility
 
 { TLevelInfo }
 
@@ -508,7 +508,7 @@ begin
     begin
       MoreThanTwoSkills := ProhibitedSkills > 2;
 
-      if MadeSkillRestrictionText then // at this point this would mean there WERE restricted skills
+      if MadeSkillRestrictionText then // At this point this would mean there WERE restricted skills
       begin
         ReqText := ReqText + ';';
         if aTalisman.TotalSkillLimit < 0 then
@@ -1275,7 +1275,7 @@ var
 begin
   for i := 0 to InteractiveObjects.Count-1 do
     if InteractiveObjects[i].Identifier = 'default:fallback' then
-      Exit; // safer not to do this with fallbacks in play
+      Exit; // Safer not to do this with fallbacks in play
 
   // 1. Validate skillset - remove skills that don't exist in the level, and forbid infinite cloners
   for S := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -1335,7 +1335,7 @@ begin
 
       if (n = -1) then
       begin
-        Info.LemmingsCount := SpawnedCount; // remember - this already includes preplaced lemmings
+        Info.LemmingsCount := SpawnedCount; // Remember - this already includes preplaced lemmings
         Break;
       end;
 
@@ -1351,7 +1351,7 @@ begin
       Inc(SpawnedCount);
     end;
 
-    SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count); // in case this got overridden
+    SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count); // In case this got overridden
   end;
 
   // 3. Validate save requirement and lower it if need be. It must:

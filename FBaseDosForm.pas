@@ -15,7 +15,7 @@ type
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure BuildScreen; virtual;
-    procedure PrepareGameParams; virtual; // always call inherited
+    procedure PrepareGameParams; virtual; // Always call inherited
 
     function IsGameplayScreen: Boolean; virtual;
   public
@@ -58,7 +58,7 @@ begin
   inherited CreateParams(Params);
   with Params.WindowClass do
   begin
-    Style := Style or CS_OWNDC; // maybe faster screen output
+    Style := Style or CS_OWNDC; // Maybe faster screen output
   end;
 end;
 
@@ -77,7 +77,7 @@ begin
     PrepareGameParams;
     BuildScreen;
   except
-    on E : EAbort do Exit; // should only happen if some level piece is missing
+    on E : EAbort do Exit; // Should only happen if some level piece is missing
   end;
   TMainForm(GameParams.MainForm).ChildForm := self;
   Cursor := crNone;

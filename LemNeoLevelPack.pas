@@ -25,7 +25,7 @@ type
 
   TPostviewCondition = (pvc_Zero, pvc_Absolute, pvc_Relative, pvc_Percent, pvc_RelativePercent);
 
-  TPostviewText = class // class rather than record so it plays nicely with a TObjectList and can create / destroy a TStringList
+  TPostviewText = class // Class rather than record so it plays nicely with a TObjectList and can create / destroy a TStringList
     private
       fText: TStringList;
       procedure LoadLine(aLine: TParserLine; const aIteration: Integer);
@@ -333,7 +333,7 @@ var
   DateTime: TDateTime;
 begin
   if not FileAge(FilePath, DateTime) then
-    DateTime := 32100; // some time in 1987...
+    DateTime := 32100; // Some time in 1987...
 
   Result := DateTimeToFileDate(DateTime);
 end;
@@ -505,7 +505,7 @@ begin
         if (aExtent = lls_Full) then
         begin
           fTalismans.Clear;
-          // set talisman.Data to "self"
+          // Set talisman.Data to "self"
           TalInfoLevel := TLevel.Create;
           try
             try
@@ -818,7 +818,7 @@ begin
 
       GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion + 1;
       GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
-      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion - 1; // just in case
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion - 1; // Just in case
     except
       if aOutput.Count > 0 then
         aOutput.Add('');
@@ -1367,7 +1367,7 @@ var
 
       for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
         if (aLevel.UserRecords.SkillCount[Skill].Value >= 0) or
-           (aLevel.WorldRecords.SkillCount[Skill].Value >= 0) then // avoid skills that don't exist in the level
+           (aLevel.WorldRecords.SkillCount[Skill].Value >= 0) then // Avoid skills that don't exist in the level
           SaveRecord('fewest_' + SKILL_NAMES[Skill], aLevel.UserRecords.SkillCount[Skill], aLevel.WorldRecords.SkillCount[Skill]);
     end;
   begin
@@ -1401,7 +1401,7 @@ end;
 
 procedure TNeoLevelGroup.Load;
 begin
-  LoadScrollerData; // doesn't do anything if there is no info.nxmo file...
+  LoadScrollerData; // Doesn't do anything if there is no info.nxmo file...
 
   if FileExists(Path + 'levels.nxmi') and (Parent <> nil) then
     LoadFromMetaInfo
@@ -1442,8 +1442,8 @@ begin
     fIsBasePack := MainSec.Line['base'] <> nil;
     fIsOrdered := true;
 
-    // we do NOT want to sort alphabetically here, we want them to stay in the order
-    // the metainfo file lists them in!
+    { We do NOT want to sort alphabetically here, we want them to stay in the order
+      the metainfo file lists them in! }
   finally
     Parser.Free;
   end;
@@ -1635,7 +1635,7 @@ var
       Result := Result.Children[0];
   end;
 begin
-  Result := self; // failsafe
+  Result := self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat
@@ -1657,7 +1657,7 @@ function TNeoLevelGroup.GetPrevGroup: TNeoLevelGroup;
 var
   AsChildIndex: Integer;
 begin
-  Result := self; // failsafe
+  Result := self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat
@@ -1681,7 +1681,7 @@ function TNeoLevelGroup.GetHighestGroup: TNeoLevelGroup;
 var
   AsChildIndex: Integer;
 begin
-  Result := self; // failsafe
+  Result := self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat
@@ -1711,7 +1711,7 @@ var
       Result := Result.Children[0];
   end;
 begin
-  Result := self; // failsafe
+  Result := self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat

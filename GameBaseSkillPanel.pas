@@ -21,7 +21,7 @@ type
   TBaseSkillPanel = class(TCustomControl)
   private
     fGame                 : TLemmingGame;
-    fIconBmp              : TBitmap32;   // for temporary storage
+    fIconBmp              : TBitmap32;   // For temporary storage
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
 
@@ -30,7 +30,7 @@ type
     fRectColor            : TColor32;
     fSelectDx             : Integer;
     fIsBlinkFrame         : Boolean;
-    fOnMinimapClick       : TMinimapClickEvent; // event handler for minimap
+    fOnMinimapClick       : TMinimapClickEvent; // Event handler for minimap
 
     fCombineHueShift      : Single;
 
@@ -49,11 +49,11 @@ type
     fGameWindow           : IGameWindow;
     fButtonRects          : array[TSkillPanelButton] of TRect;
 
-    fImage                : TImage32;  // panel image to be displayed
-    fOriginal             : TBitmap32; // original panel image
-    fMinimap              : TBitmap32; // full minimap image
-    fMinimapImage         : TImage32;  // minimap to be displayed
-    fMinimapTemp          : TBitmap32; // temp image, to create fMinimapImage from fMinimap
+    fImage                : TImage32;  // Panel image to be displayed
+    fOriginal             : TBitmap32; // Original panel image
+    fMinimap              : TBitmap32; // Full minimap image
+    fMinimapImage         : TImage32;  // Minimap to be displayed
+    fMinimapTemp          : TBitmap32; // Temp image, to create fMinimapImage from fMinimap
 
     fMinimapScrollFreeze  : Boolean;
 
@@ -67,10 +67,10 @@ type
     fSkillSelected        : TBitmap32;
     fTurboHighlight       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
-    fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
+    fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // Make one of this!
 
     fHighlitSkill         : TSkillPanelButton;
-    fLastHighlitSkill     : TSkillPanelButton; // to avoid sounds when shouldn't be played
+    fLastHighlitSkill     : TSkillPanelButton; // To avoid sounds when shouldn't be played
 
     fLastDrawnStr         : String;
     fNewDrawStr           : String;
@@ -514,7 +514,8 @@ end;
 
 procedure TBaseSkillPanel.AddButtonImage(ButtonName: string; Index: Integer);
 begin
-  if (Index >= FirstSkillButtonIndex) and (Index <= LastSkillButtonIndex) then Exit; // otherwise, "empty_slot.png" placeholder causes some graphical glitches
+  if (Index >= FirstSkillButtonIndex) and (Index <= LastSkillButtonIndex) then
+    Exit; // Otherwise, "empty_slot.png" placeholder causes some graphical glitches
   GetGraphic(ButtonName, fIconBmp);
   fIconBmp.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
 end;
@@ -713,9 +714,9 @@ begin
   fSkillCountEraseInvert.Assign(fSkillCountErase);
   for y := 0 to fSkillCountEraseInvert.Height-1 do
     for x := 0 to fSkillCountEraseInvert.Width-1 do
-      fSkillCountEraseInvert[x, y] := fSkillCountEraseInvert[x, y] xor $00FFFFFF; // don't invert alpha
+      fSkillCountEraseInvert[x, y] := fSkillCountEraseInvert[x, y] xor $00FFFFFF; // Don't invert alpha
 
-  TempBmp := TBitmap32.Create; // freely useable as long as Outline isn't called while it's being used
+  TempBmp := TBitmap32.Create; // Freely useable as long as Outline isn't called while it's being used
   try
     // Some preparation
     TempBmp.DrawMode := dmBlend;
@@ -729,9 +730,9 @@ begin
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       fSkillIcons[Button].SetSize(15 * ResMod, 23 * ResMod);
 
-    //////////////////////////////////////////////////////////
-    ///  This code is mostly copied to LemGadgetAnimation. ///
-    //////////////////////////////////////////////////////////
+    // --------------------------------------------------------- //
+    // --- This code is mostly copied to LemGadgetAnimation. --- //
+    // --------------------------------------------------------- //
 
     // Walker, Jumper, Shimmier, Ballooner, Slider, Climber, - all simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 20);
@@ -755,7 +756,7 @@ begin
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 25);
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 20);
 
-    //Timebomber has its own graphic
+    // Timebomber has its own graphic
     if GameParams.HighResolution then
       TPngInterface.LoadPngFile(AppPath + SFGraphicsPanelHighRes + 'icon_timebomber.png', fIconBMP)
     else
@@ -822,8 +823,7 @@ begin
     DrawAnimationFrame(fSkillIcons[spbMiner], MINING, 12, 4, 20);
     DrawAnimationFrame(fSkillIcons[spbDigger], DIGGING, 4, 7, 20);
 
-    // And finally, outline everything. We generate the cloner after this, as it makes use of
-    // the post-outlined Walker graphic.
+    // Finally, outline everything. Cloner is generated after this, as it uses the post-outlined Walker graphic.
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if not (Button in [spbSwimmer, spbCloner]) then
         Outline(fSkillIcons[Button]);
@@ -852,7 +852,7 @@ var
     CountStr: String;
   begin
     TempBmp.Clear(0);
-    CountStr := LeadZeroStr(aCount, 3); // just in case
+    CountStr := LeadZeroStr(aCount, 3); // Just in case
     fSkillFont[CountStr[1], 1].DrawTo(TempBmp, 0, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
     fSkillFont[CountStr[2], 1].DrawTo(TempBmp, 4 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
     fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 8 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
@@ -871,7 +871,7 @@ begin
       fSkillFontInvert[c, i].Assign(fSkillFont[c, i]);
       for y := 0 to fSkillFontInvert[c, i].Height-1 do
         for x := 0 to fSkillFontInvert[c, i].Width-1 do
-          fSkillFontInvert[c, i][x, y] := fSkillFontInvert[c,i][x,y] xor $00FFFFFF; // don't invert alpha
+          fSkillFontInvert[c, i][x, y] := fSkillFontInvert[c,i][x,y] xor $00FFFFFF; // Don't invert alpha
     end;
     OffsetRect(SrcRect, 4 * ResMod, 0);
   end;
@@ -978,19 +978,19 @@ var
   MagicFrequencyAmiga: Single;
   //MagicFrequencyCalculatedByWillAndEric: Single;
 begin
-  //stops the sound cueing during backwards framesteps and rewind
+  // Stops the sound cueing during backwards framesteps and rewind
   if (Game.IsBackstepping or Game.RewindPressed)
-    //unless the change is at the current frame
+    // Unless the change is at the current frame
     and not (Game.ReplayManager.HasRRChangeAt(Game.CurrentIteration)) then Exit;
 
   if Game.SpawnIntervalChanged then
   begin
     RR := (103 - Game.CurrentSpawnInterval);
 
-    //Linear pitch slide
+    // Linear pitch slide
     //MagicFrequencyCalculatedByWillAndEric := 210 * RR + 3300;
 
-    //Logarithmic pitch slide modelled on Amiga
+    // Logarithmic pitch slide modelled on Amiga
     MagicFrequencyAmiga := 3300 * (Power(1.02, RR));
 
     SoundManager.PlaySound(SFX_CHANGE_RR, 0, MagicFrequencyAmiga);
@@ -1076,8 +1076,8 @@ begin
   ButtonList := GetButtonList;
   Assert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
 
-  //Set only rectangles for non-skill buttons
-  //The skill buttons are dealt with in SetSkillIcons
+  // Set only rectangles for non-skill buttons
+  // The skill buttons are dealt with in SetSkillIcons
   for i := 0 to Length(ButtonList) - 1 do
   begin
     if ButtonList[i] > spbNone then
@@ -1156,9 +1156,9 @@ begin
   begin
     ButtonPos := Game.GetSelectedSkill + 1;
 
-                   //pitch             //this makes sure the interval is 1 semitone
+    // Pitch - matches Amiga        // This makes sure the interval is 1 semitone
     MagicFrequency := 6900 * (IntPower(1.0595, ButtonPos));
-                   //matches Amiga - lower might be better for levels with more skills?
+
     if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
     SoundManager.PlaySound(SFX_SKILLBUTTON, 0, MagicFrequency);
     if (fHighlitSkill = aButton) and Highlight then Exit;
@@ -1175,7 +1175,7 @@ procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
 var
   BorderRect: TRect;
 begin
-  if aButton <= LAST_SKILL_BUTTON then // we don't want to memorize this for eg. fast forward
+  if aButton <= LAST_SKILL_BUTTON then // No need to memorize this for eg. fast forward
   begin
     BorderRect := fButtonRects[aButton];
     fHighlitSkill := aButton;
@@ -1225,22 +1225,22 @@ begin
   fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
   Exit;
 
-  // top
+  // Top
   EraseRect := BorderRect;
   EraseRect.Bottom := EraseRect.Top + 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
-  // left
+  // Left
   EraseRect := BorderRect;
   EraseRect.Right := EraseRect.Left + 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
-  // right
+  // Right
   EraseRect := BorderRect;
   EraseRect.Left := EraseRect.Right - 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
-  // bottom
+  // Bottom
   EraseRect := BorderRect;
   EraseRect.Top := EraseRect.Bottom - 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
@@ -1386,7 +1386,7 @@ begin
       end else
         SpecialCombine := false;
 
-      //this changes the position of the game info string (lems, time limit, etc) - bookmark
+      // This changes the position of the game info string (lems, time limit, etc) - bookmark
       if SpecialCombine then
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
@@ -1567,14 +1567,14 @@ begin
   if Level.Info.HasTimeLimit then
   begin
     if Game.IsSuperlemming then
-      Time := Level.Info.TimeLimit - Game.CurrentIteration div 50 //hotbookmark
+      Time := Level.Info.TimeLimit - Game.CurrentIteration div 50
     else
       Time := Level.Info.TimeLimit - Game.CurrentIteration div 17;
     if Time < 0 then
       Time := 0 - Time;
   end else
     if Game.IsSuperlemming then
-      Time := Game.CurrentIteration div 50 //hotbookmark
+      Time := Game.CurrentIteration div 50
     else
       Time := Game.CurrentIteration div 17;
 
@@ -1627,8 +1627,8 @@ var
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
 
-  // Although we don't want to attempt game control whilst in HyperSpeed,
-  // we do want the Rewind and Turbo keys to respond
+  { Although we don't want to attempt game control whilst in HyperSpeed,
+    we do want the Rewind and Turbo keys to respond }
   if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
     Exit;
 
@@ -1662,7 +1662,7 @@ begin
         fRRIsPressed := True;
         DrawButtonSelector(spbSlower, true);
 
-        //deactivates min/max RR jumping in ClassicMode
+        // Deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
           begin
             Game.SetSelectedSkill(i, True);
@@ -1675,11 +1675,11 @@ begin
         fRRIsPressed := True;
         DrawButtonSelector(spbFaster, true);
 
-        //deactivates min/max RR jumping in ClassicMode
+        // Deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
           begin
             Game.SetSelectedSkill(i, True);
-            end else
+          end else
         Game.SetSelectedSkill(i, True, (Button = mbRight));
       end;
     spbPause:
@@ -1751,7 +1751,7 @@ begin
       begin
         DrawButtonSelector(spbRestart, true);
 
-        // cancels Replay after Restart in ClassicMode
+        // Cancels Replay after Restart in ClassicMode
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
           begin
             Game.CancelReplayAfterSkip := true;
@@ -1762,13 +1762,13 @@ begin
             Game.fReplayWasLoaded := true;
           end;
       end;
-    spbSquiggle:
+    spbSquiggle: // Formerly spbClearPhysics
       begin
-        if not GameParams.HideClearPhysics then  //formerly spbClearPhysics
+        if not GameParams.HideClearPhysics then
         fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
       end;
     spbNone: {nothing};
-  else // usual skill buttons
+  else // Usual skill buttons
     Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
   end;
 end;
@@ -1845,7 +1845,7 @@ begin
   for Button := Low(fButtonRects) to High(fButtonRects) do
   begin
     P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
-    //Check if the cursor is over a panel button or the minimap
+    // Check if the cursor is over a panel button or the minimap
     if PtInRect(fButtonRects[Button], P)
     or PtInRect(MinimapRect, P) then
     begin
@@ -1865,7 +1865,7 @@ begin
   Result := GameParams.Level;
 end;
 
-////zooming code: this needs to be changed to resizing code
+// Bookmark - Zooming code: this needs to be changed to resizing code
 procedure TBaseSkillPanel.SetZoom(NewZoom: Integer);
 begin
   if GameParams.HighResolution then
@@ -1873,8 +1873,8 @@ begin
   NewZoom := Max(Min(MaxZoom, NewZoom), 1);
   if (NewZoom = Trunc(fImage.Scale)) and fSetInitialZoom then Exit;
 
-  Width := GameParams.MainForm.ClientWidth;    // for the whole skill panel
-  Height := GameParams.MainForm.ClientHeight;  // for the whole skill panel
+  Width := GameParams.MainForm.ClientWidth;    // For the whole skill panel
+  Height := GameParams.MainForm.ClientHeight;  // For the whole skill panel
 
   fImage.Width := PanelWidth * NewZoom;
   fImage.Height := PanelHeight * NewZoom;

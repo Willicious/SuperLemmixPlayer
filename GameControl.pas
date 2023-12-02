@@ -20,22 +20,22 @@ uses
   LemStrings,
   LemRendering;
 
-var
-  IsHalting: Boolean; // ONLY used during AppController's init routines. Don't use this anywhere else.
-                      // Shouldn't even be used there really, but a kludgy fix is okay since that's gonna
-                      // be replaced once proper level select menus are introduced. 
+var                   // Bookmark - is this still needed?
+  IsHalting: Boolean; { ONLY used during AppController's init routines. Don't use this anywhere else.
+                        Shouldn't even be used there really, but a kludgy fix is okay since that's gonna
+                        be replaced once proper level select menus are introduced. }
 
 type
   TGameResultsRec = record
-    gSuccess            : Boolean; // level played successfully?
-    gCheated            : Boolean; // level cheated?
-    gCount              : Integer; // number
-    gToRescue           : Integer;
-    gRescued            : Integer;
-    gTimeIsUp           : Boolean;
-    gLastRescueIteration: Integer;
-    gGotTalisman        : Boolean;
-    gGotNewTalisman     : Boolean;
+    gSuccess            : Boolean; // Level played successfully
+    gCheated            : Boolean; // Level cheated
+    gCount              : Integer; // Number of lems
+    gToRescue           : Integer; // Save requirement
+    gRescued            : Integer; // Number of lems rescued
+    gTimeIsUp           : Boolean; // Time up status
+    gLastRescueIteration: Integer; // Final rescue frame
+    gGotTalisman        : Boolean; // Talisman achieved
+    gGotNewTalisman     : Boolean; // New talisman achieved
   end;
 
 type
@@ -151,7 +151,7 @@ type
     fIngameSaveReplayPattern: String;
     fPostviewSaveReplayPattern: String;
 
-    fMainForm: TForm; // link to the FMain form
+    fMainForm: TForm; // Link to the FMain form
 
     MiscOptions           : TMiscOptions;
 
@@ -174,17 +174,17 @@ type
     BaseLevelPack: TNeoLevelGroup;
 
 
-    // this is initialized by the window in which the game will be played
+    // This is initialized by the window in which the game will be played
     TargetBitmap : TBitmap32;
 
-    // this is initialized by the game
+    // This is initialized by the game
     GameResult: TGameResultsRec;
 
-    // this is set by the individual screens when closing (if they know)
+    // This is set by the individual screens when closing (if they know)
     NextScreen: TGameScreenType;
     NextScreen2: TGameScreenType;
 
-    // resource vars
+    // Resource vars
     LemDataInResource   : Boolean;
     LemDataOnDisk       : Boolean;
     LemSoundsInResource : Boolean;
@@ -216,8 +216,8 @@ type
     procedure SetGroup(aGroup: TNeoLevelGroup);
     procedure NextGroup;
     procedure PrevGroup;
-    procedure LoadCurrentLevel(NoOutput: Boolean = false); // loads level specified by CurrentLevel into Level, and prepares renderer
-    procedure ReloadCurrentLevel(NoOutput: Boolean = false); // re-prepares using the existing TLevel in memory
+    procedure LoadCurrentLevel(NoOutput: Boolean = false); // Loads level specified by CurrentLevel into Level, and prepares renderer
+    procedure ReloadCurrentLevel(NoOutput: Boolean = false); // Re-prepares using the existing TLevel in memory
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
@@ -308,7 +308,7 @@ implementation
 uses
   FMain,
   SharedGlobals, Controls, UITypes,
-  GameBaseScreenCommon, //for EXTRA_ZOOM_LEVELS const
+  GameBaseScreenCommon, // For EXTRA_ZOOM_LEVELS const
   GameSound;
 
 const
@@ -344,9 +344,8 @@ begin
       SaveToIniFile;
       BaseLevelPack.SaveUserData;
 
-      ////hotbookmark - this probably isnt needed anymore, but we still need
-      ////to find the code that temporarily saves the hotkey layout to memory
-      ////because that isn't needed either:
+      { // Bookmark - this probably isnt needed anymore, but we still need to find the code that
+        temporarily saves the hotkey layout to memory because that isn't needed either: }
       //Hotkeys.SaveFile;
 
       Success := true;
@@ -533,9 +532,9 @@ var
     if ZoomLevel < 1 then
       ZoomLevel := 1;
 
-    // Set window size to screen size if fullscreen. This doesn't get used directly,
-    // and will be overwritten when the user changes zoom settings (unless done by
-    // editing INI manually), but it keeps this function tidier.
+    { Set window size to screen size if fullscreen. This doesn't get used directly,
+      and will be overwritten when the user changes zoom settings (unless done by
+      editing INI manually), but it keeps this function tidier. }
     if FullScreen then
     begin
       WindowLeft := 0;
@@ -544,8 +543,7 @@ var
       WindowHeight := Screen.Height;
     end;
 
-    // If no WindowWidth or WindowHeight is specified, we want to set them so that they
-    // match 444x200 x ZoomLevel exactly.
+    // If no WindowWidth or WindowHeight is specified, we set them so they match 444x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
       TMainForm(MainForm).RestoreDefaultSize;
@@ -802,11 +800,9 @@ var
     end;
   end;
 begin
-  // Tries to set the exact level. If the level is missing, try to set to
-  // the rank it's supposedly in; or if that fails, the pack the rank is in,
-  // etc. If there's no sane result whatsoever, do nothing.
-  // This is used for the LastActiveLevel setting in settings.ini, and the
-  // -shortcut command line parameter.
+  // Tries to set the exact level. If the level is missing, try to set to the rank it's supposedly in;
+  // If that fails, the pack the rank is in, etc. If there's no sane result whatsoever, do nothing.
+  // This is used for the LastActiveLevel setting in settings.ini, and the -shortcut command line parameter.
 
   if not TPath.IsPathRooted(aPattern) then
     aPattern := AppPath + SFLevels + aPattern;

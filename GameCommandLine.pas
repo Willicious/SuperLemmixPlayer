@@ -1,7 +1,6 @@
 unit GameCommandLine;
 
-// Some command line utilities. For use by external tools, and hopefully someday,
-// a level archive website.
+// Some command line utilities. For use by external tools (and hopefully someday a level archive website).
 
 interface
 
@@ -171,7 +170,7 @@ var
     Width := StrToIntDef(LineValues.Values['WIDTH'], -1);
     Height := StrToIntDef(LineValues.Values['HEIGHT'], -1);
 
-    AnimRect := Rect(0, 0, 0, 0); // avoid compiler warning
+    AnimRect := Rect(0, 0, 0, 0); // Avoid compiler warning
     PhysRect := Rect(0, 0, 0, 0);
     Accessor := PieceManager.Objects[PieceIdentifier].GetInterface(Flip, Invert, Rotate);
 
@@ -209,10 +208,8 @@ var
       NewGadget.Height := NewGadget.Height + Accessor.Animations.Items[0].CutTop + Accessor.Animations.Items[0].CutBottom;
     end;
 
-    // Get ready for a really epic kludge. We will generally want any teleporter
-    // or receiver to render as non-disabled, and any locked exit to render in
-    // locked state. So how do we do this? By adding a paired teleporter/receiver
-    // or an unlock button respectively, and placing it outside the "level".
+    // Get ready for a really epic kludge! We generally want any teleporter/receiver to render as non-disabled.
+    // So, we add a paired teleporter/receiver, and place it outside the "level".
 
     if not (Uppercase(Trim(LineValues.Values['ALLOW_DISABLED'])) = 'TRUE') then
     begin
@@ -288,7 +285,7 @@ begin
       if LineValues.Count = 0 then
         Continue;
 
-      DstFile := RootPath(LineValues.Values['OUTPUT']); // fallback must be implemented per-item!
+      DstFile := RootPath(LineValues.Values['OUTPUT']); // Fallback must be implemented per-item!
 
       if Trim(Uppercase(LineValues[0])) = 'LEVEL' then DoRenderLevel;
       if Trim(Uppercase(LineValues[0])) = 'OBJECT' then DoRenderObject;
@@ -304,8 +301,8 @@ end;
 
 class procedure TCommandLineHandler.HandleTestMode;
 begin
-  InitializeNoGuiMode; // Misleading in this case, because a GUI *is* used for
-                       // testplay mode. But it does the required things.
+  InitializeNoGuiMode; // Misleading in this case, because a GUI *is* used for testplay mode.
+                       // But, it does the required things.
 
   GameParams.TestModeLevel.Filename := ParamStr(2);
   if Pos(':', GameParams.TestModeLevel.Filename) = 0 then

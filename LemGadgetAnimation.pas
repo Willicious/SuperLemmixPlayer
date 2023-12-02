@@ -474,9 +474,9 @@ begin
   if BrickColor = aTheme.Colors['MASK'] or $FF000000 then
     BrickColor := $FFFFFFFF;
 
-  ////////////////////////////////////////////////////////////
-  ///  This code is mostly copied from GameBaseSkillPanel. ///
-  ////////////////////////////////////////////////////////////
+  // ----------------------------------------------------------- //
+  // ---  This code is mostly copied from GameBaseSkillPanel.--- //
+  // ----------------------------------------------------------- //
 
   SkillIcons := TBitmaps.Create;
 
@@ -501,7 +501,7 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbDisarmer)], FIXING, 6, PICKUP_MID - 2, PICKUP_BASELINE - 3);
 
   // Bomber, freezer and blocker are simple. Unlike the skill panel, we use the Ohnoer animation for timebomber and bomber here.
-  DrawAnimationFrame(SkillIcons[Integer(spbTimebomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);  //bookmark - might use the timebomber-specific graphic for this one
+  DrawAnimationFrame(SkillIcons[Integer(spbTimebomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);  // Bookmark - might use the timebomber-specific graphic for this one
   DrawAnimationFrame(SkillIcons[Integer(spbBomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);
   DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], ICECUBE, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 1);
@@ -605,7 +605,7 @@ begin
       LoadPath := AppPath + SFStyles + aCollection + SFPiecesObjects + aPiece;
 
     if fName <> '' then
-      LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
+      LoadPath := LoadPath + '_' + fName; // For backwards-compatible or simply unnamed primaries
     LoadPath := LoadPath + '.png';
 
     if GameParams.HighResolution and not FileExists(LoadPath) then
@@ -613,7 +613,7 @@ begin
       LoadPath := AppPath + SFStyles + aCollection + SFPiecesObjects + aPiece;
 
       if fName <> '' then
-        LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
+        LoadPath := LoadPath + '_' + fName; // For backwards-compatible or simply unnamed primaries
       LoadPath := LoadPath + '.png';
 
       NeedUpscale := true;
@@ -657,8 +657,7 @@ begin
       fSourceImage.SetSize(fWidth * ResMod, fHeight * ResMod * fFrameCount);
       fSourceImage.Clear(0);
     end else begin
-      // Fallback behaviour. This may mean it's unrecognized, but it could also just
-      // mean that it's handled elsewhere (eg. "*PICKUP").
+      // Fallback behaviour. Could mean it's unrecognized, or handled elsewhere (eg. "*PICKUP").
       fSourceImage.SetSize(ResMod, ResMod);
       fSourceImage.Clear(0);
       fFrameCount := 1;
@@ -667,8 +666,7 @@ begin
     end;
   end;
 
-  // fPrimary is only set by TGadgetAnimations
-
+  // Only set fPrimary by TGadgetAnimations
   if fPrimary and (aSegment.Line['z_index'] = nil) then
     fZIndex := 1
   else
@@ -721,9 +719,9 @@ begin
 
   if fPrimary then
   begin
-    // Some properties are overridden / hardcoded for primary
-    BaseTrigger.fState := gasPause; // physics control the current frame
-    BaseTrigger.fVisible := true;   // never hide the primary - if it's needed as an effect, make the graphic blank
+    // Some properties are overridden/hardcoded for primary
+    BaseTrigger.fState := gasPause; // Physics control the current frame
+    BaseTrigger.fVisible := true;   // Never hide the primary - if it's needed as an effect, make the graphic blank
   end else begin
     // If NOT primary - load triggers
     aSegment.DoForEachSection('trigger',
@@ -754,7 +752,7 @@ begin
   fName := '';
   fColor := '';
 
-  // leave fPrimary unaffected
+  // Leave fPrimary unaffected
   fHorizontalStrip := false;
 
   fZIndex := 0;

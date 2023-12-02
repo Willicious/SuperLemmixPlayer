@@ -96,7 +96,7 @@ resourcestring
   {-------------------------------------------------------------------------------
     PreviewScreen
   -------------------------------------------------------------------------------}
-  //SPreviewLemmings = ' Lemmings'; //not currently used
+  //SPreviewLemmings = ' Lemmings'; // Bookmark - not currently used - remove?
   SPreviewSave = ' To Be Saved';
   SPreviewReleaseRate = 'Release Rate ';
   SPreviewSpawnInterval = 'Spawn Interval ';
@@ -167,7 +167,7 @@ resourcestring
     'Your time is up!';
 
   //SAllLemmingsAccountedFor =
-    //'All lemmings accounted for.'; //not currently used
+    //'All lemmings accounted for.'; // Bookmark - not currently used - remove?
 
   STalismanUnlocked =
     'You unlocked a talisman!';
@@ -189,56 +189,57 @@ resourcestring
   SOptionSaveReplay = 'Save replay';
 
 const
-  LemmingActionStrings: array[TBasicLemmingAction] of string = (    //needs to match TBasicLemmingAction in LemCore
-    SDummyString, //1
-    SWalker,      //2
-    SDummyString, //3
-    SAscender,    //4
-    SDigger,      //5
-    SClimber,     //6
-    SDrowner,     //7
-    SHoister,     //8
-    SBuilder,     //9
-    SBasher,      //10
-    SMiner,       //11
-    SFaller,      //12
-    SFloater,     //13
-    SSplatter,    //14
-    SExiter,      //15
-    SVaporizer,   //16
-    SVinetrapper, //17
-    SBlocker,     //18
-    SShrugger,    //19
-    STimebomber,  //20
-    STimebomber,  //21
-    SExploder,    //22
-    SExploder,    //23
-    SDummyString, //24
-    SPlatformer,  //25
-    SStacker,     //26
-    SFreezer,     //27
-    SFreezer,     //28
-    SFreezer,     //29
-    SFreezer,     //30
-    SSwimmer,     //31
-    SGlider,      //32
-    SDisarmer,    //33
-    SCloner,      //34
-    SFencer,      //35
-    SReacher,     //36
-    SShimmier,    //37
-    SJumper,      //38
-    SDehoister,   //39
-    SSlider,      //40
-    SDangler,     //41
-    SSpearer,     //42
-    SGrenader,    //43
-    SLooker,      //44
-    SLaserer,     //45
-    SBallooner,   //46
-    SLadderer,    //47
-    SDrifter,     //48
-    SSleeper      //49
+  // Needs to match TBasicLemmingAction in LemCore
+  LemmingActionStrings: array[TBasicLemmingAction] of string = (
+    SDummyString, // 1
+    SWalker,      // 2
+    SDummyString, // 3
+    SAscender,    // 4
+    SDigger,      // 5
+    SClimber,     // 6
+    SDrowner,     // 7
+    SHoister,     // 8
+    SBuilder,     // 9
+    SBasher,      // 10
+    SMiner,       // 11
+    SFaller,      // 12
+    SFloater,     // 13
+    SSplatter,    // 14
+    SExiter,      // 15
+    SVaporizer,   // 16
+    SVinetrapper, // 17
+    SBlocker,     // 18
+    SShrugger,    // 19
+    STimebomber,  // 20
+    STimebomber,  // 21
+    SExploder,    // 22
+    SExploder,    // 23
+    SDummyString, // 24
+    SPlatformer,  // 25
+    SStacker,     // 26
+    SFreezer,     // 27
+    SFreezer,     // 28
+    SFreezer,     // 29
+    SFreezer,     // 30
+    SSwimmer,     // 31
+    SGlider,      // 32
+    SDisarmer,    // 33
+    SCloner,      // 34
+    SFencer,      // 35
+    SReacher,     // 36
+    SShimmier,    // 37
+    SJumper,      // 38
+    SDehoister,   // 39
+    SSlider,      // 40
+    SDangler,     // 41
+    SSpearer,     // 42
+    SGrenader,    // 43
+    SLooker,      // 44
+    SLaserer,     // 45
+    SBallooner,   // 46
+    SLadderer,    // 47
+    SDrifter,     // 48
+    SSleeper      // 49
   );
 
 implementation

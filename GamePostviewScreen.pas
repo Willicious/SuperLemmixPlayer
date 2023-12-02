@@ -50,11 +50,11 @@ implementation
 uses Forms, LemNeoParser;
 
 var
-  TopTextShift: Extended;      //0.150;      //teal
-  RescueRecordShift: Extended; //0.500;      //violet
-  CommentShift: Extended;      //0.600;      //red
-  TimeRecordShift: Extended;   //0.800;      //yellow
-  SkillsRecordShift: Extended; //0;          //green (default)
+  TopTextShift: Extended;      // 0.150; - Teal
+  RescueRecordShift: Extended; // 0.500; - Violet
+  CommentShift: Extended;      // 0.600; - Red
+  TimeRecordShift: Extended;   // 0.800; - Yellow
+  SkillsRecordShift: Extended; // 0;     - Green (default)
 
 { TDosGamePreview }
 
@@ -109,11 +109,11 @@ begin
   fClickableRegions.Clear;
   ScreenImg.BeginUpdate;
   try
-    // draw text
+    // Draw text
     Lines := GetPostviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
-    //MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
+    // MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
 
     if GameParams.GameResult.gSuccess then
     begin
@@ -203,7 +203,7 @@ var
       begin
         with GameParams.GameResult do
         begin
-          NewMin := $7FFFFFFF; // avoid compiler warning
+          NewMin := $7FFFFFFF; // Avoid compiler warning
           case aText.ConditionType of
             pvc_Absolute: NewMin := aText.ConditionValue;
             pvc_Percent: NewMin := AdjLemCount * aText.ConditionValue div 100;
@@ -309,7 +309,7 @@ begin
     end;
   end;
 
-  //top text
+  // Top text
   HueShift.HShift := TopTextShift;
   if Results.gGotTalisman then
     Result[0].Line := STalismanUnlocked
@@ -320,18 +320,18 @@ begin
   Result[0].ColorShift := HueShift;
   Result[0].yPos := 0 + LINE_Y_SPACING;
 
-  //rescue result rescued
+  // Rescue result rescued
   HueShift.HShift := RescueRecordShift;
   Result[1].Line := SYouRescued + SDone;
   Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
   Result[1].ColorShift := HueShift;
 
-  //rescue result needed
+  // Rescue result needed
   Result[2].Line := SYouNeeded + STarget;
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   Result[2].ColorShift := HueShift;
 
-  //rescue result record
+  // Rescue result record
   if Results.gSuccess and (Entry.UserRecords.LemmingsRescued.Value > 0)
   and (not Results.gToRescue <= 0) then
     Result[3].Line := SYourRecord + IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value)
@@ -340,7 +340,7 @@ begin
   Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
   Result[3].ColorShift := HueShift;
 
-  //comment - we allocate 2 lines for this
+  // Comment - we allocate 2 lines for this
   HueShift.HShift := CommentShift;
   WhichText := Entry.Group.PostviewTexts[GetResultIndex];
   Result[4].Line := WhichText.Text[0];
@@ -350,7 +350,7 @@ begin
   Result[4].ColorShift := HueShift;
   Result[5].ColorShift := HueShift;
 
-  //time taken
+  // Time taken
   HueShift.HShift := TimeRecordShift;
   if (Results.gSuccess and not (Results.gToRescue <= 0))
   or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
@@ -360,7 +360,7 @@ begin
   Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
   Result[6].ColorShift := HueShift;
 
-  //time record
+  // Time record
   if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
   and (not Results.gToRescue <= 0) then
     Result[7].Line := SYourTimeRecord + MakeTimeString(Entry.UserRecords.TimeTaken.Value)
@@ -369,7 +369,7 @@ begin
   Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
   Result[7].ColorShift := HueShift;
 
-  //skills record
+  // Skills record
   HueShift.HShift := SkillsRecordShift;
   if Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0)
   and (not Results.gToRescue <= 0) then
@@ -390,11 +390,11 @@ var
   // Default SLX colours, loaded if custom files don't exist
   procedure ResetColours;
   begin
-    TopTextShift := 0.150;      //teal
-    RescueRecordShift := 0.500; //violet
-    CommentShift := 0.600;      //red
-    TimeRecordShift := 0.800;   //yellow
-    SkillsRecordShift := 0;     //green (default)
+    TopTextShift := 0.150;      // Teal
+    RescueRecordShift := 0.500; // Violet
+    CommentShift := 0.600;      // Red
+    TimeRecordShift := 0.800;   // Yellow
+    SkillsRecordShift := 0;     // Green (default)
   end;
 
 begin

@@ -125,12 +125,12 @@ type
 implementation
 
 uses
-  LemMenuFont, // for size const
+  LemMenuFont, // For size const
   CustomPopup,
   FStyleManager,
   FSuperLemmixSetup,
   GameSound,
-  LemGame, // to clear replay
+  LemGame, // To clear replay
   LemVersion,
   PngInterface;
 
@@ -287,7 +287,7 @@ begin
   end else
     fDisableScroller := true;
 
-  //FadeIn;
+  //FadeIn;  // Bookmark
 
   EnableIdle;
 end;
@@ -345,7 +345,7 @@ begin
     NewRegion := MakeClickableImageAuto(fGroupSignCenter, BMP.BoundsRect, NextGroup, BMP);
     NewRegion.DrawInFrontWhenHighlit := false;
 
-    DrawAllClickables(true); // for the next step's sake
+    DrawAllClickables(true); // For the next step's sake
 
     // Group sign buttons
     GetGraphic('sign_group_up.png', BMP);
@@ -949,7 +949,7 @@ end;
 //        end;
 //      //end else if CheckStyleUpdates then
 //      //begin
-//        //// Add cursor stuff here
+//        // Bookmark - Add cursor stuff here
 //
 //        //case RunCustomPopup(self, 'Styles Update', 'Styles updates are available. Do you want to download them?',
 //          //'Open Style Manager|Remind me later') of   //'Open Style Manager|Remind me later') of

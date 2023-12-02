@@ -107,8 +107,8 @@ var
 implementation
 
 uses
-  GameBaseScreenCommon, // for EXTRA_ZOOM_LEVELS constant
-  GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
+  GameBaseScreenCommon, // For EXTRA_ZOOM_LEVELS constant
+  GameMenuScreen; // For disabling the MassReplayCheck button if necessary.
 
 const
   PRESET_REPLAY_PATTERNS: array[0..6] of String =
@@ -241,7 +241,7 @@ begin
   fIsSetting := true;
 
   try
-    //// Page 1 (Global Options) ////
+    // --- Page 1 (Global Options) --- //
 
     ebUserName.Text := GameParams.UserName;
 
@@ -254,7 +254,7 @@ begin
     //cbUpdateCheck.Checked := GameParams.CheckUpdates;
     //cbEnableOnline.Checked := GameParams.EnableOnline;
 
-    //// Page 2 (Interface Options) ////
+    // --- Page 2 (Interface Options) --- //
     // Checkboxes
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbNoAutoReplay.Checked := not GameParams.NoAutoReplayMode;
@@ -275,7 +275,7 @@ begin
     cbResetWindowSize.Checked := false;
     cbResetWindowPosition.Enabled := not GameParams.FullScreen;
     cbResetWindowPosition.Checked := false;
-    cbHighResolution.Checked := GameParams.HighResolution; // must be done before SetZoomDropdown
+    cbHighResolution.Checked := GameParams.HighResolution; // Must be done before SetZoomDropdown
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
     cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
@@ -287,7 +287,7 @@ begin
     SetZoomDropdown;
     SetPanelZoomDropdown;
 
-    //// Page 3 (Audio Options) ////
+    // --- Page 3 (Audio Options) --- //
     if SoundManager.MuteSound then
       tbSoundVol.Position := 0
     else
@@ -310,7 +310,7 @@ end;
 procedure TFormNXConfig.SaveToParams;
 begin
 
-  //// Page 1 (Global Options) ////
+  // --- Page 1 (Global Options) --- //
 
   GameParams.UserName := ebUserName.Text;
 
@@ -326,7 +326,7 @@ begin
   //GameParams.EnableOnline := cbEnableOnline.Checked;
   //GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
-  //// Page 2 (Interface Options) ////
+  // --- Page 2 (Interface Options) --- //
   // Checkboxes
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.NoAutoReplayMode := not cbNoAutoReplay.Checked;
@@ -358,7 +358,7 @@ begin
   GameParams.ZoomLevel := cbZoom.ItemIndex + 1;
   GameParams.PanelZoomLevel := cbPanelZoom.ItemIndex + 1;
 
-  //// Page 3 (Audio Options) ////
+  // --- Page 3 (Audio Options) --- //
   SoundManager.MuteSound := tbSoundVol.Position = 0;
   if tbSoundVol.Position <> 0 then
     SoundManager.SoundVolume := tbSoundVol.Position;
@@ -424,7 +424,7 @@ begin
         NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
       end;
 
-      //if going from {low res, 3x panel zoom w/minimap} to hi-res, we need to reset window
+      // If going from {low res, 3x panel zoom w/minimap} to hi-res, we need to reset window
       if cbShowMinimap.Checked and not GameParams.FullScreen then
       begin
         cbResetWindowPosition.Checked := True;
@@ -497,12 +497,12 @@ end;
   //btnApply.Enabled := true;
 //end;
 
-//----------Classic Mode-------------------------------------------------------
+// --- Classic Mode --- //
 procedure TFormNXConfig.btnClassicModeClick(Sender: TObject);
 begin
   OptionChanged(Sender);
   cbClassicMode.Checked := true;
-  cbHideShadows.Checked := true; // or cbHideShadows.State = cbChecked;
+  cbHideShadows.Checked := true;
   cbHideClearPhysics.Checked := true;
   cbHideAdvancedSelect.Checked := true;
   cbHideFrameskipping.Checked := true;

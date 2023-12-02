@@ -21,106 +21,106 @@ const
 
 const
 {-------------------------------------------------------------------------------
-  dos animations ordered by their appearance in main.dat
-  the constants below show the exact order
+  DOS animations ordered by their appearance in main.dat
+  The constants below show the exact order
 -------------------------------------------------------------------------------}
-  //MUST MATCH BELOW (not the next list, the one after that)
-  //And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 89;   //num lem sprites
-  NUM_LEM_SPRITE_TYPE = 44;        //num lem sprite types
-  WALKING             = 0;    //1  //1
-  WALKING_RTL         = 1;    //2
-  ZOMBIEWALKING       = 2;    //3  //2
-  ZOMBIEWALKING_RTL   = 3;    //4
-  ASCENDING           = 4;    //5  //3
-  ASCENDING_RTL       = 5;    //6
-  DIGGING             = 6;    //7  //4
-  DIGGING_RTL         = 7;    //8
-  CLIMBING            = 8;    //9  //5
-  CLIMBING_RTL        = 9;    //10
-  DROWNING            = 10;   //11 //6
-  DROWNING_RTL        = 11;   //12
-  HOISTING            = 12;   //13 //7
-  HOISTING_RTL        = 13;   //14
-  BRICKLAYING         = 14;   //15 //8
-  BRICKLAYING_RTL     = 15;   //16
-  BASHING             = 16;   //17 //9
-  BASHING_RTL         = 17;   //18
-  MINING              = 18;   //19 //10
-  MINING_RTL          = 19;   //20
-  FALLING             = 20;   //21 //11
-  FALLING_RTL         = 21;   //22
-  UMBRELLA            = 22;   //23 //12
-  UMBRELLA_RTL        = 23;   //24
-  SPLATTING           = 24;   //25 //13
-  SPLATTING_RTL       = 25;   //26
-  EXITING             = 26;   //27 //14
-  EXITING_RTL         = 27;   //28
-  VAPORIZING          = 28;   //29 //15
-  VAPORIZING_RTL      = 29;   //30
-  VINETRAPPING        = 30;   //31 //16
-  VINETRAPPING_RTL    = 31;   //32
-  BLOCKING            = 32;   //33 //17
-  BLOCKING_RTL        = 33;   //34
-  SHRUGGING           = 34;   //35 //18
-  SHRUGGING_RTL       = 35;   //36
-  TIMEBOMBEXPLOSION   = 36;   //37 //19
-  TIMEBOMBEXPLOSION_RTL= 37;  //38
-  OHNOING             = 38;   //39 //20
-  OHNOING_RTL         = 39;   //40
-  EXPLOSION           = 40;   //41 //21
-  EXPLOSION_RTL       = 41;   //42
-  PLATFORMING         = 42;   //43 //22
-  PLATFORMING_RTL     = 43;   //44
-  FREEZING            = 44;   //45 //23
-  FREEZING_RTL        = 45;   //46
-  FREEZEREXPLOSION    = 46;   //47 //24
-  FREEZEREXPLOSION_RTL= 47;   //48
-  FROZEN              = 48;   //49 //25
-  FROZEN_RTL          = 49;   //50
-  UNFREEZING          = 50;   //51 //26
-  UNFREEZING_RTL      = 51;   //52
-  SWIMMING            = 52;   //53 //27
-  SWIMMING_RTL        = 53;   //54
-  GLIDING             = 54;   //55 //28
-  GLIDING_RTL         = 55;   //56
-  FIXING              = 56;   //57 //29
-  FIXING_RTL          = 57;   //58
-  STACKING            = 58;   //59 //30
-  STACKING_RTL        = 59;   //60
-  FENCING             = 60;   //61 //31
-  FENCING_RTL         = 61;   //62
-  REACHING            = 62;   //63 //32
-  REACHING_RTL        = 63;   //64
-  SHIMMYING           = 64;   //65 //33
-  SHIMMYING_RTL       = 65;   //66
-  JUMPING             = 66;   //67 //34
-  JUMPING_RTL         = 67;   //68
-  DEHOISTING          = 68;   //69 //35
-  DEHOISTING_RTL      = 69;   //70
-  SLIDING             = 70;   //71 //36
-  SLIDING_RTL         = 71;   //72
-  DANGLING            = 72;   //73 //37
-  DANGLING_RTL        = 73;   //74
-  THROWING            = 74;   //75 //38
-  THROWING_RTL        = 75;   //76
-  LOOKING             = 76;   //77 //39
-  LOOKING_RTL         = 77;   //78
-  LASERING            = 78;   //79 //40
-  LASERING_RTL        = 79;   //80
-  BALLOONING          = 80;   //81 //41
-  BALLOONING_RTL      = 81;   //82
-  LADDERING           = 82;   //83 //42
-  LADDERING_RTL       = 83;   //84
-  DRIFTING            = 84;   //85 //43
-  DRIFTING_RTL        = 85;   //86
-  SLEEPING            = 86;   //87 //44
-  SLEEPING_RTL        = 87;   //88
-  ICECUBE             = 88;   //89 this one does NOT need an RTL form;
-                             //in fact in needs to be moved to the Masks section
-                             //also, it's not counted as a "sprite type"
+  // MUST MATCH BELOW (not the next list, the one after that)
+  // And don't forget to update the numbers! ;P
+  NUM_LEM_SPRITES     = 89;   // Num lem sprites
+  NUM_LEM_SPRITE_TYPE = 44;         // Num lem sprite types
+  WALKING             = 0;    // 1  // 1
+  WALKING_RTL         = 1;    // 2
+  ZOMBIEWALKING       = 2;    // 3  // 2
+  ZOMBIEWALKING_RTL   = 3;    // 4
+  ASCENDING           = 4;    // 5  // 3
+  ASCENDING_RTL       = 5;    // 6
+  DIGGING             = 6;    // 7  // 4
+  DIGGING_RTL         = 7;    // 8
+  CLIMBING            = 8;    // 9  // 5
+  CLIMBING_RTL        = 9;    // 10
+  DROWNING            = 10;   // 11 // 6
+  DROWNING_RTL        = 11;   // 12
+  HOISTING            = 12;   // 13 // 7
+  HOISTING_RTL        = 13;   // 14
+  BRICKLAYING         = 14;   // 15 // 8
+  BRICKLAYING_RTL     = 15;   // 16
+  BASHING             = 16;   // 17 // 9
+  BASHING_RTL         = 17;   // 18
+  MINING              = 18;   // 19 // 10
+  MINING_RTL          = 19;   // 20
+  FALLING             = 20;   // 21 // 11
+  FALLING_RTL         = 21;   // 22
+  UMBRELLA            = 22;   // 23 // 12
+  UMBRELLA_RTL        = 23;   // 24
+  SPLATTING           = 24;   // 25 // 13
+  SPLATTING_RTL       = 25;   // 26
+  EXITING             = 26;   // 27 // 14
+  EXITING_RTL         = 27;   // 28
+  VAPORIZING          = 28;   // 29 // 15
+  VAPORIZING_RTL      = 29;   // 30
+  VINETRAPPING        = 30;   // 31 // 16
+  VINETRAPPING_RTL    = 31;   // 32
+  BLOCKING            = 32;   // 33 // 17
+  BLOCKING_RTL        = 33;   // 34
+  SHRUGGING           = 34;   // 35 // 18
+  SHRUGGING_RTL       = 35;   // 36
+  TIMEBOMBEXPLOSION   = 36;   // 37 // 19
+  TIMEBOMBEXPLOSION_RTL= 37;  // 38
+  OHNOING             = 38;   // 39 // 20
+  OHNOING_RTL         = 39;   // 40
+  EXPLOSION           = 40;   // 41 // 21
+  EXPLOSION_RTL       = 41;   // 42
+  PLATFORMING         = 42;   // 43 // 22
+  PLATFORMING_RTL     = 43;   // 44
+  FREEZING            = 44;   // 45 // 23
+  FREEZING_RTL        = 45;   // 46
+  FREEZEREXPLOSION    = 46;   // 47 // 24
+  FREEZEREXPLOSION_RTL= 47;   // 48
+  FROZEN              = 48;   // 49 // 25
+  FROZEN_RTL          = 49;   // 50
+  UNFREEZING          = 50;   // 51 // 26
+  UNFREEZING_RTL      = 51;   // 52
+  SWIMMING            = 52;   // 53 // 27
+  SWIMMING_RTL        = 53;   // 54
+  GLIDING             = 54;   // 55 // 28
+  GLIDING_RTL         = 55;   // 56
+  FIXING              = 56;   // 57 // 29
+  FIXING_RTL          = 57;   // 58
+  STACKING            = 58;   // 59 // 30
+  STACKING_RTL        = 59;   // 60
+  FENCING             = 60;   // 61 // 31
+  FENCING_RTL         = 61;   // 62
+  REACHING            = 62;   // 63 // 32
+  REACHING_RTL        = 63;   // 64
+  SHIMMYING           = 64;   // 65 // 33
+  SHIMMYING_RTL       = 65;   // 66
+  JUMPING             = 66;   // 67 // 34
+  JUMPING_RTL         = 67;   // 68
+  DEHOISTING          = 68;   // 69 // 35
+  DEHOISTING_RTL      = 69;   // 70
+  SLIDING             = 70;   // 71 // 36
+  SLIDING_RTL         = 71;   // 72
+  DANGLING            = 72;   // 73 // 37
+  DANGLING_RTL        = 73;   // 74
+  THROWING            = 74;   // 75 // 38
+  THROWING_RTL        = 75;   // 76
+  LOOKING             = 76;   // 77 // 39
+  LOOKING_RTL         = 77;   // 78
+  LASERING            = 78;   // 79 // 40
+  LASERING_RTL        = 79;   // 80
+  BALLOONING          = 80;   // 81 // 41
+  BALLOONING_RTL      = 81;   // 82
+  LADDERING           = 82;   // 83 // 42
+  LADDERING_RTL       = 83;   // 84
+  DRIFTING            = 84;   // 85 // 43
+  DRIFTING_RTL        = 85;   // 86
+  SLEEPING            = 86;   // 87 // 44
+  SLEEPING_RTL        = 87;   // 88
+  ICECUBE             = 88;   // 89 Bookmark - this one does NOT need an RTL form;
+                             // In fact in needs to be moved to the Masks section
+                             // Also, it's not counted as a "sprite type"
 
-  //This one must match TBasicLemmingAction in LemCore / LemStrings
+  // This one must match TBasicLemmingAction in LemCore / LemStrings
   AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
     (0,0),                                    // 1 baNone
     (WALKING, WALKING_RTL),                   // 2 baWalking,
@@ -179,8 +179,8 @@ type
   -------------------------------------------------------------------------------}
   TBaseAnimationSet = class(TPersistent)
   private
-    fMetaLemmingAnimations : TMetaLemmingAnimations; // meta data lemmings
-    fLemmingAnimations     : TBitmaps; // the list of lemmings bitmaps
+    fMetaLemmingAnimations : TMetaLemmingAnimations; // Meta data lemmings
+    fLemmingAnimations     : TBitmaps; // List of lemmings bitmaps
 
     fCountDownDigitsBitmap  : TBitmap32;
     fRadiationDigitsBitmap  : TBitmap32;
@@ -243,50 +243,50 @@ const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
   ANIM_NAMES: array[0..43] of String =  (
-  'WALKER',        //1
-  'ZOMBIEWALKER',  //2
-  'ASCENDER',      //3
-  'DIGGER',        //4
-  'CLIMBER',       //5
-  'DROWNER',       //6
-  'HOISTER',       //7
-  'BUILDER',       //8
-  'BASHER',        //9
-  'MINER',         //10
-  'FALLER',        //11
-  'FLOATER',       //12
-  'SPLATTER',      //13
-  'EXITER',        //14
-  'BURNER',        //15 //aka Vaporizer
-  'VINETRAPPER',   //16
-  'BLOCKER',       //17
-  'SHRUGGER',      //18
-  'TIMEBOMBER',    //19
-  'OHNOER',        //20
-  'BOMBER',        //21
-  'PLATFORMER',    //22
-  'FREEZING',      //23
-  'FREEZER',       //24
-  'FROZEN',        //25
-  'UNFREEZING',    //26
-  'SWIMMER',       //27
-  'GLIDER',        //28
-  'DISARMER',      //29
-  'STACKER',       //30
-  'FENCER',        //31
-  'REACHER',       //32
-  'SHIMMIER',      //33
-  'JUMPER',        //34
-  'DEHOISTER',     //35
-  'SLIDER',        //36
-  'DANGLER',       //37
-  'THROWER',       //38
-  'LOOKER',        //39
-  'LASERER',       //40
-  'BALLOONER',     //41
-  'LADDERER',      //42
-  'DRIFTER',       //43
-  'SLEEPER'        //44
+  'WALKER',        // 1
+  'ZOMBIEWALKER',  // 2
+  'ASCENDER',      // 3
+  'DIGGER',        // 4
+  'CLIMBER',       // 5
+  'DROWNER',       // 6
+  'HOISTER',       // 7
+  'BUILDER',       // 8
+  'BASHER',        // 9
+  'MINER',         // 10
+  'FALLER',        // 11
+  'FLOATER',       // 12
+  'SPLATTER',      // 13
+  'EXITER',        // 14
+  'BURNER',        // 15 - aka Vaporizer
+  'VINETRAPPER',   // 16
+  'BLOCKER',       // 17
+  'SHRUGGER',      // 18
+  'TIMEBOMBER',    // 19
+  'OHNOER',        // 20
+  'BOMBER',        // 21
+  'PLATFORMER',    // 22
+  'FREEZING',      // 23
+  'FREEZER',       // 24
+  'FROZEN',        // 25
+  'UNFREEZING',    // 26
+  'SWIMMER',       // 27
+  'GLIDER',        // 28
+  'DISARMER',      // 29
+  'STACKER',       // 30
+  'FENCER',        // 31
+  'REACHER',       // 32
+  'SHIMMIER',      // 33
+  'JUMPER',        // 34
+  'DEHOISTER',     // 35
+  'SLIDER',        // 36
+  'DANGLER',       // 37
+  'THROWER',       // 38
+  'LOOKER',        // 39
+  'LASERER',       // 40
+  'BALLOONER',     // 41
+  'LADDERER',      // 42
+  'DRIFTER',       // 43
+  'SLEEPER'        // 44
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
@@ -444,7 +444,7 @@ begin
   ColorDict := TColorDict.Create;
   ShadeDict := TShadeDict.Create;
 
-  try
+  try                      // Bookmark - remove?
     if (fTheme = nil) then //or (GameParams.ForceDefaultLemmings) then
       SrcFolder := 'default'
     else
@@ -456,7 +456,7 @@ begin
 
     SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
 
-    if fMetaLemmingAnimations.Count = 0 then // not entirely sure why it would ever NOT be 0
+    if fMetaLemmingAnimations.Count = 0 then // Not entirely sure why it would ever NOT be 0
       ReadMetaData(ColorDict, ShadeDict);
 
     MetaSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesLemmings;
@@ -503,11 +503,11 @@ begin
 
     HandleRecoloring(ColorDict, ShadeDict);
 
-    fLemmingAnimations.Add(TBitmap32.Create); // for the Freezer
+    fLemmingAnimations.Add(TBitmap32.Create); // For the Freezer
 
-    // // // // // // // // // // // //
-    // Extract masks / Digits / etc. //
-    // // // // // // // // // // // //
+    // ------------------------------------- //
+    // --- Extract masks / Digits / etc. --- //
+    // ------------------------------------- //
 
     fCountDownDigitsBitmap.DrawMode := dmBlend;
     fCountDownDigitsBitmap.CombineMode := cmMerge;
@@ -677,7 +677,7 @@ var
   C, BaseC, NewC: TColor32;
 begin
   if fTheme = nil then Exit;
-  if aColorDict = nil then Exit; // this one shouldn't happen but just in case
+  if aColorDict = nil then Exit; // This one shouldn't happen but just in case
 
   Template := TBitmap32.Create;
   try

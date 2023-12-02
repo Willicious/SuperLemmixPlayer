@@ -66,37 +66,37 @@ type
     function GetJumperDebug(Index: Integer): Boolean;
   public
   { misc sized }
-    LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
+    LemEraseRect                  : TRect; // Rectangle of the last drawaction (can include space for countdown digits)
   { integer sized fields }
-    LemIndex                      : Integer; // index in the lemminglist
-    LemIdentifier                 : String;  // identifier for replay purposes
-    LemX                          : Integer; // the "main" foot x position
-    LemY                          : Integer; // the "main" foot y position
-    LemDX                         : Integer; // x speed (1 if left to right, -1 if right to left)
-    LemAscended                   : Integer; // number of pixels the lem ascended while walking
-    LemFallen                     : Integer; // number of fallen pixels after last updraft
-    LemTrueFallen                 : Integer; // total number of fallen pixels
+    LemIndex                      : Integer; // Index in the lemminglist
+    LemIdentifier                 : String;  // Identifier for replay purposes
+    LemX                          : Integer; // The "main" foot x position
+    LemY                          : Integer; // The "main" foot y position
+    LemDX                         : Integer; // X speed (1 if left to right, -1 if right to left)
+    LemAscended                   : Integer; // Number of pixels the lem ascended while walking
+    LemFallen                     : Integer; // Number of fallen pixels after last updraft
+    LemTrueFallen                 : Integer; // Total number of fallen pixels
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
     LemFreezerExplosionTimer      : Integer; // 0 unless slowfreeze
     LemFreezingTimer              : Integer; // 8 downto 0
     LemUnfreezingTimer            : Integer; // 12 downto 0
     LemBalloonPopTimer            : Integer; // 1 single frame
     LemDisarmingFrames            : Integer;
-    LemFrame                      : Integer; // current animationframe
-    LemMaxFrame                   : Integer; // copy from LMA
+    LemFrame                      : Integer; // Current animationframe
+    LemMaxFrame                   : Integer; // Copy from LMA
     LemFrameDiff                  : Integer;
     LemPhysicsFrame               : Integer;
     LemMaxPhysicsFrame            : Integer;
     LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
-    LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
+    LemNumberOfBricksLeft         : Integer; // For builder, platformer, stacker
   { byte sized fields }
-    LemAction                     : TBasicLemmingAction; // current action of the lemming
-    LemRemoved                    : Boolean; // the lemming is not in the level anymore
+    LemAction                     : TBasicLemmingAction; // Current action of the lemming
+    LemRemoved                    : Boolean; // The lemming is not in the level anymore
     LemTeleporting                : Boolean;
-    LemEndOfAnimation             : Boolean; // got to the end of non-looping animation
-                                             // equal to (LemFrame > LemMaxFrame)
-    LemIsPhysicsSimulation        : Boolean; // for simulations that are used for physics (eg. the Basher / Fencer checks) as opposed
-                                             // to simulations to determine shadows
+    LemEndOfAnimation             : Boolean; // Got to the end of non-looping animation
+                                             // Equal to (LemFrame > LemMaxFrame)
+    LemIsPhysicsSimulation        : Boolean; { For simulations that are used for physics (eg. Basher/Fencer checks)
+                                               as opposed to simulations to determine shadows }
     LemIsSlider                   : Boolean;
     LemIsClimber                  : Boolean;
     LemIsSwimmer                  : Boolean;
@@ -109,13 +109,13 @@ type
     LemIsNeutral                  : Boolean;
     LemHasBeenOhnoer              : Boolean;
     LemHasTurned                  : Boolean;
-    LemPlacedBrick                : Boolean; // placed useful brick during this cycle (plaformer and stacker)
+    LemPlacedBrick                : Boolean; // Placed useful brick during this cycle (plaformer and stacker)
     LemInFlipper                  : Integer;
-    LemHasBlockerField            : Boolean; // for blockers, even during ohno
-    LemIsStartingAction           : Boolean; // replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
+    LemHasBlockerField            : Boolean; // For blockers, even during ohno
+    LemIsStartingAction           : Boolean; // Replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Freezer --- needs to be set to "False" for Timebomber
+    LemHideCountdown              : Boolean; // Used to ensure countdown is not displayed when assigned Bomber / Freezer --- needs to be set to "False" for Timebomber
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
     LemDehoistPinY                : Integer; // The Y coordinate the lemming started dehoisting on
@@ -127,17 +127,19 @@ type
     LemWalkerPositionAdjusted     : Boolean;
 
     LemInitialFall                : Boolean; // Set during the lemming's initial fall at the start of a level for a glider / floater special case
-    // The next three values are only needed to determine intermediate trigger area checks
-    // They are set in HandleLemming
-    LemXOld                       : Integer; // position of previous frame
+
+    { The next three values are only needed to determine intermediate trigger area checks.
+      They are set in HandleLemming }
+    LemXOld                       : Integer; // Position of previous frame
     LemYOld                       : Integer;
     LemDXOld                      : Integer;
-    LemActionOld                  : TBasicLemmingAction; // action in previous frame
-    LemActionNew                  : TBasicLemmingAction; // new action after fixing a trap, see http://www.lemmingsforums.net/index.php?topic=3004.0
-    LemJumpPositions              : array[0..5, 0..1] of Integer; // tracking exact positions is the only way jumper shadows can be accurate
 
-    LemQueueAction                : TBasicLemmingAction; // queued action to be assigned within the next few frames
-    LemQueueFrame                 : Integer; // number of frames the skill is already queued
+    LemActionOld                  : TBasicLemmingAction; // Action in previous frame
+    LemActionNew                  : TBasicLemmingAction; // New action after fixing a trap, see www.lemmingsforums.net/index.php?topic=3004.0
+    LemJumpPositions              : array[0..5, 0..1] of Integer; // Tracking exact positions is the only way jumper shadows can be accurate
+
+    LemQueueAction                : TBasicLemmingAction; // Queued action to be assigned within the next few frames
+    LemQueueFrame                 : Integer; // Number of frames the skill is already queued
 
     constructor Create;
     procedure Assign(Source: TLemming);
@@ -159,7 +161,7 @@ type
     function Add(Item: TLemming): Integer;
     procedure Insert(Index: Integer; Item: TLemming);
     property Items[Index: Integer]: TLemming read GetItem; default;
-    property List; // for fast access
+    property List; // For fast access
   end;
 
 implementation
@@ -293,7 +295,7 @@ end;
 procedure TLemming.Assign(Source: TLemming);
 begin
 
-  // does NOT copy LemIndex! This is intentional //
+  // Does NOT copy LemIndex! This is intentional //
   LemIdentifier := Source.LemIdentifier;
   LemEraseRect := Source.LemEraseRect;
   LemX := Source.LemX;
@@ -357,7 +359,7 @@ begin
   LemActionOld := Source.LemActionOld;
   LemActionNew := Source.LemActionNew;
   LemJumpPositions := Source.LemJumpPositions;
-  // does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
+  // Does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
 end;
 
 { TLemmingList }

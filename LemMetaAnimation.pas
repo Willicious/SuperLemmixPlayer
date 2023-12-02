@@ -11,14 +11,14 @@ type
   TMetaAnimation = class(TCollectionItem)
   private
   protected
-    fDescription     : string;  // for fun, really
-    fFrameCount      : Integer; // number of frames
-    fPhysicsFrameCount: Integer; // number of frames for physics
-    fFrameDiff       : Integer; // value of X such that FrameCount - X = KeyFrame
-    fWidth           : Integer; // width of a single frame picture
-    fHeight          : Integer; // height of a single frame
-    fImageLocation   : Integer; // dos only
-    fBitsPerPixel    : Integer; // dos only
+    fDescription     : string;   // For fun, really
+    fFrameCount      : Integer;  // Number of frames
+    fPhysicsFrameCount: Integer; // Number of frames for physics
+    fFrameDiff       : Integer;  // Value of X such that FrameCount - X = KeyFrame
+    fWidth           : Integer;  // Width of a single frame picture
+    fHeight          : Integer;  // Height of a single frame
+    fImageLocation   : Integer;  // DOS only
+    fBitsPerPixel    : Integer;  // DOS only
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -35,7 +35,7 @@ type
   TMetaLemmingAnimationClass = class of TMetaLemmingAnimation;
   TMetaLemmingAnimation = class(TMetaAnimation)
   private
-    fAnimationType   : Integer; // at_xxxx
+    fAnimationType   : Integer; // N.B. at_xxxx
     fFootX           : Integer;
     fFootY           : Integer;
   protected

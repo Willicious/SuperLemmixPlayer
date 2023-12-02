@@ -55,7 +55,7 @@ var
 implementation
 
 uses
-  SharedGlobals, // debug
+  SharedGlobals, // Debug
   Math,
   GameControl, GameBaseScreenCommon;
 
@@ -149,8 +149,8 @@ begin
 
   if GameParams.ShowMinimap then
   begin
-    ClientWidth := Max(WindowScale * 444, 444 * ResMod);     //1776
-    ClientHeight := ClientWidth * 50 div 111;                //800
+    ClientWidth := Max(WindowScale * 444, 444 * ResMod);     // 1776
+    ClientHeight := ClientWidth * 50 div 111;                // 800
   end else begin
     ClientWidth := Max(WindowScale * 340, 340 * ResMod);
     ClientHeight := ClientWidth * 10 div 17;
@@ -214,8 +214,8 @@ begin
   TGameBaseScreen(fChildForm).MainFormResized;
   GameParams.WindowWidth := ClientWidth;
   GameParams.WindowHeight := ClientHeight;
-  // Seems pointless? Yes. But apparently, changing between maximized and not maximized
-  // causes the handle to change, which was causing the fullscreen-windowed change glitch.
+  { Seems pointless? Yes. But apparently, changing between maximized and not maximized
+    causes the handle to change, which was causing the fullscreen-windowed change glitch. }
   MainFormHandle := Handle;
 end;
 

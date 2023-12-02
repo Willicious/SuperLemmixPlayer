@@ -76,11 +76,11 @@ begin
   Result := 37;
 end;
 
-//First set of digits adust left & top pos of minimap frame
-//Second set of digits adjusts width & height of minimap itself
+// First set of digits adust left & top pos of minimap frame
+// Second set of digits adjusts width & height of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-//if GameParams.ShowMinimap then
+//if GameParams.ShowMinimap then //Bookmark - why is this commented out?
   begin
     Result := Rect(355 * ResMod, 2 * ResMod, 440 * ResMod, 36 * ResMod);
   end;
@@ -105,7 +105,7 @@ begin
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (0 + MAX_SKILL_TYPES_PER_LEVEL -1) do
-    Result[i] := Low(TSkillPanelButton); // placeholder for any skill
+    Result[i] := Low(TSkillPanelButton); // Placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbRewind;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
@@ -133,7 +133,7 @@ if GameParams.ShowMinimap then
     TempBmp := TBitmap32.Create;
     TempBmp.Assign(MinimapRegion);
 
-  //changing the first digit changes the right side of the minimap frame
+  // Changing the first digit changes the right side of the minimap frame
     if (MinimapRegion.Width <> 91 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
     begin
       MinimapRegion.SetSize(91 * ResMod, 39 * ResMod);

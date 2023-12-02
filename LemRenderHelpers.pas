@@ -17,7 +17,7 @@ const
   PARTICLE_COLORS: array[0..7] of TColor32 = ($FF4040E0, $FF00B000, $FFF0D0D0, $FFF02020,
                                               $C04040E0, $C000B000, $C0F0D0D0, $C0F02020);
   PARTICLE_FREEZER_COLORS: array[0..4] of TColor32
-                                           //$80 is 50% transparency, $FF is 100%
+                                           // $80 is 50% transparency, $FF is 100%
                                            = ($803D638E, $801562E0, $805C90F6,
                                               $8082C2FF, $80D6EEEE);
 
@@ -31,11 +31,11 @@ const
   PM_NOCANCELSTEEL = $00000080;
   PM_ORIGSOLID = $00000100;
 
-  PM_TERRAIN = $000001FF; // combination of all terrain flags
+  PM_TERRAIN = $000001FF; // Combination of all terrain flags
   PM_ONEWAYFLAGS = PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN or PM_ONEWAYUP;
 
   SHADOW_COLOR = $80202020;
-  ALPHA_CUTOFF = $80; // below this = nonsolid, based on the COMPOSITE image (not individual pieces)
+  ALPHA_CUTOFF = $80; // Below this = nonsolid, based on the COMPOSITE image (not individual pieces)
 
 type
 
@@ -107,7 +107,7 @@ type
   TDrawItem = class
   private
   protected
-    fOriginal: TBitmap32; // reference
+    fOriginal: TBitmap32; // Reference
   public
     constructor Create(aOriginal: TBitmap32);
     destructor Destroy; override;
@@ -137,6 +137,7 @@ type
                  hpi_Skill_Zombie, hpi_Skill_Neutral, hpi_Skill_Slider, hpi_Skill_Climber,
                  hpi_Skill_Floater, hpi_Skill_Glider, hpi_Skill_Swimmer, hpi_Skill_Disarmer);
 
+  // Bookmark
   //TVisualSFX = (vfx_blank, vfx_letsgo, vfx_chink, vfx_oops, vfx_yippee);
 
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
@@ -203,13 +204,13 @@ type
       property ScreenPos: TPoint read fScreenPos write fScreenPos;
       property MousePos: TPoint read fMousePos write fMousePos;
       property UserHelper: THelperIcon read fUserHelperIcon write fUserHelperIcon;
-      property ForceUpdate: Boolean read fForceUpdate write fForceUpdate; //used after a assign-to-highlit while paused
+      property ForceUpdate: Boolean read fForceUpdate write fForceUpdate; // Used after a assign-to-highlit while paused
       property ProjectionType: Integer read fProjectionType write fProjectionType;
   end;
 
 const
   HelperImageFilenames: array[Low(THelperIcon)..High(THelperIcon)] of String =
-                             ('ltr_a.png', // placeholder
+                             ('ltr_a.png', // Placeholder
                               'ltr_a.png',
                               'ltr_b.png',
                               'ltr_c.png',
@@ -271,7 +272,7 @@ const
                               'skill_disarmer.png');
 
 //  VisualSFXFilenames: array[Low(TVisualSFX)..High(TVisualSFX)] of String =
-//                             ('blank.png', //placeholder
+//                             ('blank.png', // Placeholder
 //                              'letsgo.png',
 //                              'chink.png',
 //                              'oops.png',
@@ -354,9 +355,9 @@ end;
 
 procedure TRenderInterface.RemoveTerrain(X, Y, Width, Height: Integer);
 begin
-  // This removes terrain from the layer rlTerrain accoding to the physics map
-  // within the rectange defined defined by (X, Y, Width, Height)
-  // Whenever LemGame removes some terrain, it is expected to call this method!
+  { This removes terrain from the layer rlTerrain accoding to the physics map
+    within the rectange defined defined by (X, Y, Width, Height)
+    Whenever LemGame removes some terrain, it is expected to call this method! }
   if fDisableDrawing then Exit;
   fRemoveRoutine(X, Y, Width, Height);
 end;
@@ -427,8 +428,8 @@ procedure TRenderInterface.Null;
 var
   TempVar: Integer;
 begin
-  // This is a dummy procedure. We simply call it to ensure TRenderInterface exists
-  // and can be accessed correctly during exception logging.
+  { This is a dummy procedure. We simply call it to ensure TRenderInterface exists
+    and can be accessed correctly during exception logging. }
   TempVar := fScreenPos.X;
   fScreenPos.X := TempVar;
 end;
@@ -618,14 +619,14 @@ begin
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
     if (not aClearPhysics) and (i = rlTriggers) then
-      Continue; // we only want to draw triggers when Clear Physics Mode is enabled
+      Continue; // We only want to draw triggers when Clear Physics Mode is enabled
 
     if aClearPhysics and (i in [rlBackground, rlOnTerrainGadgets, rlGadgetsHigh]) then
-      Continue; // we don't want to draw the first two in Clear Physics mode; while the latter has special handling
+      Continue; // We don't want to draw the first two in Clear Physics mode; while the latter has special handling
 
     if aClearPhysics and (i in [rlTerrain, rlTerrainHigh]) then
-    begin // we want to draw based on physics map, not graphical map, in this case
-      Items[rlGadgetsHigh].DrawTo(aDst, aRegion, aRegion); // we want it behind terrain
+    begin // We want to draw based on physics map, not graphical map, in this case
+      Items[rlGadgetsHigh].DrawTo(aDst, aRegion, aRegion); // We want it behind terrain
       DrawClearPhysicsTerrain(aDst, aRegion);
       Continue;
     end;
@@ -662,8 +663,7 @@ var
     Result := $FF000000 or (R shl 16) or (G shl 8) or B;
   end;
 begin
-  // It's very messy to track position in a custom pixelcombine, hence using an entirely
-  // custom procedure instead.
+  // It's messy to track position in a custom pixelcombine, hence using a custom procedure instead.
 
   if GameParams.HighResolution then
   begin
@@ -692,7 +692,7 @@ begin
     PDst := aDst.PixelPtr[aRegion.Left, y];
     PDst2 := PDst;
 
-    Dec(PSrc); // so we can put Inc(P) at the start of the next loop rather than having to use lots of if statements
+    Dec(PSrc); // So we can put Inc(P) at the start of the next loop rather than having to use lots of if statements
 
     if GameParams.HighResolution then
     begin

@@ -59,9 +59,9 @@ type
   TLemDataType = (
     ldtNone,
     ldtLemmings,  // NXP or resource
-    ldtSound,     // in a resource
+    ldtSound,     // In a resource
     ldtMusic,     // NXP, music packs, resource... there are a few places this looks
-    ldtParticles, // is in a resource
+    ldtParticles, // In a resource
     ldtText,      // NXP
     ldtStyle      // NXP, resource, 'styles' directory
   );
@@ -83,7 +83,7 @@ type
   published
   end;
 
-  // lemlowlevel
+  // Lemlowlevel
 procedure ReplaceColor(B: TBitmap32; FromColor, ToColor: TColor32);
 procedure DrawNineSlice(Dst: TBitmap32; DstRect: TRect; SrcRect: TRect; Margins: TRect; Src: TBitmap32);
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
@@ -284,7 +284,7 @@ var
 
   function MakeNineSliceRects(aInput: TRect): TNineSliceRects;
   var
-    VarWidth, VarHeight: Integer; // stores the non-margin width and height
+    VarWidth, VarHeight: Integer; // Stores the non-margin width and height
     i: Integer;
   begin
     VarWidth := aInput.Width - (Margins.Left + Margins.Right);
@@ -347,8 +347,9 @@ var
 
 begin
   if (DstRect.Width = SrcRect.Width) and (DstRect.Height = SrcRect.Height) then
-    Src.DrawTo(Dst, DstRect.Left, DstRect.Top) // save processing time
+    Src.DrawTo(Dst, DstRect.Left, DstRect.Top) // Save processing time
   else begin
+    // Bookmark - why is this commented out?
     //Assert(VerifyInput, 'Invalid input passed to LemTypes.DrawNineSlice');
 
     TrimMargins(Margins.Left, Margins.Right, DstRect.Width);
@@ -637,6 +638,7 @@ var
       for n := 0 to (Src.Width * Src.Height * 4)-1 do
       begin
         a := (((PBmp^ and $FF000000) shr 24) + ((PColor^ and $FF000000) shr 24)) div 2;
+                                                      // Bookmark - why is this commented out?
         PBmp^ := (a shl 24) or (PColor^ and $FFFFFF); //(MergeReg(PColor^, PBmp^) and $FFFFFF);
         Inc(PBmp);
         Inc(PColor);

@@ -40,7 +40,7 @@ type
 
       fIsSteel         : Boolean;
 
-      fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
+      fCyclesSinceLastUse: Integer; // To improve TNeoPieceManager.Tidy
 
       function GetIdentifier: String;
       function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -50,6 +50,7 @@ type
       procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
 
       function GetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty): Integer;
+      // Bookmark - why is this commented out?
       //procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty; const aValue: Integer);
 
       function GetResizableProperty(Flip, Invert, Rotate: Boolean; aDirection: Integer): Boolean;
@@ -215,7 +216,7 @@ begin
   with fVariableInfo[GetImageIndex(Flip, Invert, Rotate)] do
   begin
     case Index of
-      tv_Width: ; // remove this later, it's just here so the "else" doesn't give a syntax error
+      tv_Width: ; // Remove this later, it's just here so the "else" doesn't give a syntax error
       else raise Exception.Create('TMetaTerrain.SetVariableProperty given invalid value.');
     end;
   end;

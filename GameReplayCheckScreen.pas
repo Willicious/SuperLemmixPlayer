@@ -325,9 +325,9 @@ begin
 
     GetReplayLevelIDs;
 
-    Game := GlobalGame;        // shortcut
-    Level := GameParams.Level; // shortcut
-    Renderer := GameParams.Renderer; // shortcut
+    Game := GlobalGame;              // Shortcut
+    Level := GameParams.Level;       // Shortcut
+    Renderer := GameParams.Renderer; // Shortcut
     Renderer.SetInterface(Game.RenderInterface);
 
     if ScreenImg.Bitmap.Resampler is TLinearResampler then
@@ -495,7 +495,7 @@ begin
     ScreenImg.EndUpdate;
   end;
 
-  Application.OnIdle := Application_Idle; // this delays processing until the form is visible
+  Application.OnIdle := Application_Idle; // Delays processing until the form is visible
 end;
 
 procedure TGameReplayCheckScreen.OnMouseClick(aPoint: TPoint;

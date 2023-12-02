@@ -195,10 +195,10 @@ var
   Header: TChunkIHDR;
   BmpArrPtr: PColor32Array;
 begin
-  ASL := nil; // Just gets rid of a compile-time warning. ASL won't be referenced if it hasn't been initialized anyway, since
-              // the only line that references it has the same IF condition as the line that initializes it.
+  ASL := nil; { Just gets rid of a compile-time warning. ASL won't be referenced if it hasn't been initialized anyway, since
+                the only line that references it has the same IF condition as the line that initializes it. }
 
-  // exit if image is not present
+  // Exit if image is not present
   if not Png.IsHeaderPresent then Exit;
 
   // Load everything into one Header
@@ -239,7 +239,7 @@ begin
   end;
 
 
-  // handle 8 bit PNG files - fuck the 1/2/4 bit ones
+  // Handle 8 bit PNG files - fuck the 1/2/4 bit ones
   if (PNG.TransparencyMode = ptmBit) and (PNG.Header.BitDepth = 8) then
   begin
     if (Png.Header.ColorType = COLOR_PALETTE)  and (Png.Chunks.ItemFromClass(TChunktRNS) = nil) then

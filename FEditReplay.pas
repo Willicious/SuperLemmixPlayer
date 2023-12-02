@@ -1,7 +1,7 @@
 unit FEditReplay;
 
-// known issue - clicking Cancel destroys all replay data (should just revert to
-//               the state of data before opening dialog)
+// Bookmark - Known issue - clicking Cancel destroys all replay data
+// (should just revert to the state of data before opening dialog) - check if this is is still an issue
 
 interface
 
@@ -267,7 +267,7 @@ begin
 
   if lbReplayActions.ItemIndex = -1 then Exit;
   I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
-  if I = nil then Exit; // just in case  
+  if I = nil then Exit;
 
   NoteChangeAtFrame(I.Frame);
   if I is TReplayChangeSpawnInterval then

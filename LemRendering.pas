@@ -29,9 +29,9 @@ type
   TParticleArray = packed array[0..79] of TParticleRec;
   TParticleTable = packed array[0..50] of TParticleArray;
 
-  // temp solution
+  // Temp solution
   TRenderInfoRec = record
-    TargetBitmap : TBitmap32; // the visual bitmap
+    TargetBitmap : TBitmap32; // The visual bitmap
     Level        : TLevel;
   end;
 
@@ -61,14 +61,14 @@ type
     //fVisualSFXTimer     : Integer;
     fAni                : TBaseAnimationSet;
     fBgColor            : TColor32;
-    fParticles          : TParticleTable; // all particle offsets
+    fParticles          : TParticleTable; // All particle offsets
     fPreviewGadgets     : TGadgetList; // For rendering from Preview screen
     fDoneBackgroundDraw : Boolean;
     fIsFreezerExplosion : Boolean;
 
     fTempLemmingList: TLemmingList;
 
-    fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
+    fFixedDrawColor: TColor32; // Must use with CombineFixedColor pixel combine
     fPhysicsRenderingType: TPhysicsRenderingType;
 
     fHelpersAreHighRes:   Boolean;
@@ -101,7 +101,7 @@ type
 
     // Clear Physics combines
     procedure CombineLasererShadowToShadowLayer(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // use with fFixedDrawColor
+    procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // Use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
@@ -188,7 +188,7 @@ type
     procedure DrawExploderShadow(L: TLemming);
     procedure DrawFreezerShadow(L: TLemming);
     procedure DrawProjectileShadow(L: TLemming);
-    procedure DrawProjectionShadow(L: TLemming); //bookmark - deprecated, need to remove associated code
+    procedure DrawProjectionShadow(L: TLemming); // Bookmark - deprecated, need to remove associated code
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -212,9 +212,9 @@ type
     property IsFreezerExplosion: Boolean read fIsFreezerExplosion write fIsFreezerExplosion;
     //property VisualSFXTimer: Integer read fVisualSFXTimer write fVisualSFXTimer;
 
-    property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
+    property TerrainLayer: TBitmap32 read GetTerrainLayer; // For save state purposes
     property TerrainHighLayer: TBitmap32 read GetTerrainHighLayer;
-    property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them
+    property ParticleLayer: TBitmap32 read GetParticleLayer; // Needs to be replaced with making TRenderer draw them
 
     property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
   end;
@@ -375,7 +375,7 @@ begin
     DrawLemmingCountdown(LemmingList[i]);
     DrawBalloonPop(LemmingList[i]);
 
-    ////hotbookmark - not ready yet, but this is the place to call it from
+    // Bookmark - not ready yet, but this is the place to call it from
     //DrawVisualSFXLemmings(LemmingList[i]);
 
     if LemmingList[i].LemAction = baLasering then
@@ -499,11 +499,11 @@ begin
   SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
 
-  // freezer states are drawn behind terrain
+  // Freezer states are drawn behind terrain
   if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing] then
     SrcAnim.DrawTo(fLayers[rlFreezerLow], DstRect, SrcRect)
 
-  // explosion graphics or about-to-explode lems are drawn behind active lems
+  // Explosion graphics or about-to-explode lems are drawn behind active lems
   else if aLemming.LemAction in [baFreezerExplosion, baOhNoing, baExploding,
                                  baTimebombing, baTimebombFinish] then
     SrcAnim.DrawTo(fLayers[rlLemmingsLow], DstRect, SrcRect)
@@ -540,7 +540,7 @@ end;
 
 procedure TRenderer.DrawLemmingLaser(aLemming: TLemming);
 var
-  //InnerC, OuterC: TColor32;
+  //InnerC, OuterC: TColor32;  // Bookmark - remove?
   LaserColors: array[0..4] of TColor32;
   Origin, Target: TPoint;
 
@@ -674,7 +674,7 @@ begin
 
   if aLemming.LemLaserHit then
   begin
-    Target := aLemming.LemLaserHitPoint; // undo high-res modifications from above, if any
+    Target := aLemming.LemLaserHitPoint; // Undo high-res modifications from above, if any
 
     Src := Rect(48, 0, 61, 13);
     Dst := Rect(Target.X - 6, Target.Y - 6, Target.X + 6 + 1, Target.Y + 6 + 1);
@@ -760,14 +760,14 @@ begin
     FrameRect.Top := 0;
     FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
 
-    if L.LemDX < 0 then      //in front of terrain, and behind all lems except Freezers
+    if L.LemDX < 0 then      // In front of terrain, and behind all lems except Freezers
       fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
     else
       fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
   end;
 end;
 
-//This code is used (or not) by Nuke, Bomber, Freezer and Timebomber
+// Draws countdown for associated actions (Timebomber, Nuke, Slowfreeze/Radiation)
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
 var
   Countdown: TBitmap32;
@@ -902,7 +902,7 @@ end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false);
 begin
-  fLayers.PhysicsMap := fPhysicsMap; // can we assign this just once somewhere? very likely.
+  fLayers.PhysicsMap := fPhysicsMap; // Can we assign this just once somewhere? very likely.
   if PtInRect(fPhysicsMap.BoundsRect, fRenderInterface.MousePos) then
     fLayers.OneWayHighlightBit := fPhysicsMap[fRenderInterface.MousePos.X, fRenderInterface.MousePos.Y] and PM_ONEWAYFLAGS
   else
@@ -1317,7 +1317,7 @@ end;
 
 procedure TRenderer.DrawGliderShadow(L: TLemming);
 var
-  FrameCount: Integer; // counts number of frames we have simulated, because glider paths can be infinitely long
+  FrameCount: Integer; // Counts number of frames we have simulated, because glider paths can be infinitely long
   LemPosArray: TArrayArrayInt;
   i: Integer;
 const
@@ -1400,7 +1400,7 @@ begin
 
   while Assigned(L) and (L.LemAction = baBuilding) do
   begin
-    // draw shadow for placed brick
+    // Draw shadow for placed brick
     if (L.LemPhysicsFrame >= 8) and not DoneThisCycle then
     begin
       for i := 0 to 5 do
@@ -1489,7 +1489,7 @@ begin
 
   while Assigned(L) and (L.LemAction = baPlatforming) do
   begin
-    // draw shadow for placed brick
+    // Draw shadow for placed brick
     if L.LemPhysicsFrame + 1 = 9 then
       for i := 0 to 5 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
@@ -1518,20 +1518,20 @@ begin
   BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
   if L.LemStackLow then Inc(BrickPosY);
 
-  if (L.LemAction = baStacking) and (L.LemPhysicsFrame = 7) then // see TLemmingGame.Transition's const ANIM_FRAMECOUNT
+  if (L.LemAction = baStacking) and (L.LemPhysicsFrame = 7) then // See TLemmingGame.Transition's const ANIM_FRAMECOUNT
     YOffset := -1
   else
     YOffset := 0;
 
   while Assigned(L) and (L.LemAction = baStacking) do
   begin
-    // draw shadow for placed brick
+    // Draw shadow for placed brick
     if L.LemPhysicsFrame + 1 = 7 then
     begin
       for i := 1 to 3 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, BrickPosY + YOffset);
 
-      Dec(BrickPosY); // for the next brick
+      Dec(BrickPosY); // For the next brick
     end;
 
     // Simulate next frame advance for lemming
@@ -1570,7 +1570,7 @@ begin
 
   while Assigned(L) and (L.LemAction = baBashing) and (curFrameCount < MAX_FRAME_COUNT) do
   begin
-    // draw shadow for basher tunnel
+    // Draw shadow for basher tunnel
     if (L.LemPhysicsFrame + 1) mod 16 = 2 then
     begin
       BashPosX := L.LemX;
@@ -1598,8 +1598,8 @@ begin
 end;
 
 procedure TRenderer.DrawFencerShadow(L: TLemming);
-// Like with the Fencer code itself, this is an almost exact copy of the Basher shadow code,
-// and probably needs some work.
+{ Like with the Fencer code itself, this is an almost exact copy of the Basher shadow code,
+  and probably needs some work. }
 const
   FencerEnd: array[0..5, 0..1] of Integer = (
      (6, -4), (6, -5), (6, -6), (6, -7), (6, -8),
@@ -1627,7 +1627,7 @@ begin
 
   while Assigned(L) and (L.LemAction = baFencing) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
-    // draw shadow for fencer tunnel
+    // Draw shadow for fencer tunnel
     if (L.LemPhysicsFrame + 1) mod 16 = 2 then
     begin
       FencePosX := L.LemX;
@@ -1638,9 +1638,9 @@ begin
       for i := 0 to 5 do
       begin
         if i > 0 then
-          SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 2 - DrawDy); // slightly more consistent graphics with this If here
+          SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 2 - DrawDy); // Slightly more consistent graphics with this If here
         if i in [2, 4] then
-          Inc(DrawDY); // putting it between the SetHighShadowPixel's is not a mistake; it reflects the mask 100% accurately ;)
+          Inc(DrawDY); // Putting it between the SetHighShadowPixel's is not a mistake; it reflects the mask 100% accurately ;)
         SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 8 - DrawDy);
       end;
     end;
@@ -1661,8 +1661,8 @@ end;
 procedure TRenderer.DrawMinerShadow(L: TLemming);
 const
   MinerTurn: array[0..11, 0..1] of Integer = (
-     (1, -1), (1, 0), (2, 0), (3, 0), (3, 1), (4, 1),             // bottom border
-     (3, -12), (4, -12), (5, -12), (5, -11), (6, -11), (6, -10)   // top border
+     (1, -1), (1, 0), (2, 0), (3, 0), (3, 1), (4, 1),             // Bottom border
+     (3, -12), (4, -12), (5, -12), (5, -11), (6, -11), (6, -10)   // Top border
    );
 
   MinerEnd: array[0..15, 0..1] of Integer = (
@@ -1692,7 +1692,7 @@ begin
 
   while Assigned(L) and (L.LemAction = baMining) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
-    // draw shadow for miner tunnel
+    // Draw shadow for miner tunnel
     if L.LemPhysicsFrame + 1 = 1 then
     begin
       MinePosX := L.LemX;
@@ -1738,7 +1738,7 @@ begin
 
   while Assigned(L) and (L.LemAction = baDigging) and (CurFrameCount < MAX_FRAME_COUNT) do
   begin
-    // draw shadow for dug row
+    // Draw shadow for dug row
     if (L.LemPhysicsFrame + 1) mod 8 = 0 then
     begin
       SetHighShadowPixel(DigPosX - 4, DigPosY - 1);
@@ -1915,7 +1915,7 @@ begin
   TempBitmap.OnPixelCombine := CombineLasererShadowToShadowLayer;
   Bounds := TempBitmap.BoundsRect;
 
-  LastHitPoint := Point(-1, -1); // can't actually hit because no terrain outside borders, so guaranteed dummy
+  LastHitPoint := Point(-1, -1); // Can't actually hit because no terrain outside borders, so guaranteed dummy
 
   while Assigned(L) and (L.LemAction = baLasering) do
   begin
@@ -1993,7 +1993,7 @@ var
     P := fLayers[rlTerrain].PixelPtr[X, Y];
     if P^ and $FF000000 <> $FF000000 then
     begin
-      C := Color; //Theme.Colors[MASK_COLOR];
+      C := Color; // Theme.Colors[MASK_COLOR]; // Bookmark -why is this commented out?
       MergeMem(P^, C);
       P^ := C;
     end;
@@ -2309,12 +2309,12 @@ var
 
     PieceWidth, PieceHeight: Integer;
   begin
-    // Calculates the initial canvas rectangle we draw on to. If shrinking this
-    // is needed later, we do so, but for now we just want a size that's 100%
-    // for sure able to fit the composite piece.
+    { Calculates the initial canvas rectangle we draw on to. If shrinking this
+      is needed later, we do so, but for now we just want a size that's 100%
+      for sure able to fit the composite piece. }
 
     HasFoundNonEraserTerrain := false;
-    DataBoundsRect := Rect(0, 0, 0, 0); // in case all pieces are erasers
+    DataBoundsRect := Rect(0, 0, 0, 0); // In case all pieces are erasers
 
     for i := 0 to aTerrains.Count-1 do
     begin
@@ -2405,7 +2405,7 @@ procedure TRenderer.PrepareCompositePieceBitmaps(aTerrains: TTerrains; aLowRes: 
         begin
           if (x < SrcRect.Left) then srcRect.Left := x;
           if (y < SrcRect.Top) then srcRect.Top := y;
-          if (x >= SrcRect.Right) then srcRect.Right := x + 1; // careful - remember how TRect.Right / TRect.Bottom work!
+          if (x >= SrcRect.Right) then srcRect.Right := x + 1; // Careful - remember how TRect.Right / TRect.Bottom work!
           if (y >= SrcRect.Bottom) then srcRect.Bottom := y + 1;
         end;
       end;
@@ -2612,12 +2612,12 @@ begin
 
     MO := Gadget.MetaObj;
 
-    // We don't question here whether the conditions are met to draw the helper or
-    // not. We assume the calling routine has already done this, and we just draw it.
-    // We do, however, determine which ones to draw here.
+    { We don't question here whether the conditions are met to draw the helper or
+      not. We assume the calling routine has already done this, and we just draw it.
+      We do, however, determine which ones to draw here. }
 
     DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod; // Obj.Left + Obj.Width div 2 - 4;
-    DrawY := (Gadget.Top - 9) * ResMod; // much simpler
+    DrawY := (Gadget.Top - 9) * ResMod; // Much simpler
     if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod; // Draw below instead above the level border
 
     case MO.TriggerEffect of
@@ -2844,7 +2844,8 @@ const
   DRAW_ABOVE_MIN_Y_CPM = 28;
 begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-    //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // why?
+    // Bookmark - why is this commented out?
+    //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // Why?
 
     // Count number of helper icons to be displayed.
     numHelpers := 0;
@@ -2933,7 +2934,7 @@ var
     fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
-  procedure DrawNumberWithHatchNumbers(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  procedure DrawNumberWithHatchNumbers(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // Negative = left; zero = center; positive = right
   var
     DigitsWidth: Integer;
 
@@ -2951,7 +2952,7 @@ var
 
     LocalDst := GetDigitTargetLayer;
 
-    Y := Y - 2; // to center
+    Y := Y - 2; // To center
 
     DigitsWidth := Length(aDigitString) * 5;
     if aAlignment < 0 then
@@ -3260,7 +3261,7 @@ begin
   DrawGadgetsOnLayer(rlOneWayArrows);
   DrawGadgetsOnLayer(rlGadgetsHigh);
 
-  if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
+  if fRenderInterface = nil then Exit; // Otherwise, some of the remaining code may cause an exception on first rendering
 
   // Draw hatch helpers
   for i := 0 to Gadgets.Count-1 do
@@ -3280,7 +3281,7 @@ begin
     if DrawOtherHatchHelper and not GameParams.HideHelpers then
       DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
 
-    ////hotbookmark - not ready yet, but this is the place to call it from
+    // Bookmark - not ready yet, but this is the place to call it from
     //DrawVisualSFXGadgets(Gadget);
 
     if fUsefulOnly then
@@ -3336,11 +3337,11 @@ begin
       if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) or (not IsUseful(Gadget)) then
         Continue;
 
-      // otherwise, draw its helper
+      // Otherwise, draw its helper
       if not GameParams.HideHelpers then DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
 
-      // if it's a teleporter or receiver, draw all paired helpers too
+      // If it's a teleporter or receiver, draw all paired helpers too
       if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId <> -1) then
         for i2 := 0 to Gadgets.Count-1 do
         begin
@@ -3452,7 +3453,7 @@ begin
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
   fTempLemmingList := TLemmingList.Create(false);
-  //fStartTime := GetTickCount; //hotbookmark - this seems to start the timer on the preview screen ???
+  //fStartTime := GetTickCount; // Bookmark - this seems to start the timer on the preview screen ???
 
   fLaserGraphic := TBitmap32.Create;
   fLaserGraphic.DrawMode := dmCustom;
@@ -3628,6 +3629,7 @@ var
         thisSolidity := (TempWorld[x, y] and $FF000000) shr 24;
         thisSteel    := (TempWorld[x, y] and $00FF0000) shr 16;
         thisOneWay   := (TempWorld[x, y] and $0000FF00) shr 8;
+        // Bookmark - remove?
         //thisUnused   := (TempWorld[x, y] and $000000FF) shr 0;
 
         if thisSolidity >= ALPHA_CUTOFF then
@@ -3648,8 +3650,8 @@ var
       end;
   end;
 
-begin
-  if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
+begin                                   // Bookmark -
+  if Dst = nil then Dst := fPhysicsMap; // Should it ever not be to here? Maybe during debugging we need it elsewhere
   TempWorld := TBitmap32.Create;
 
   T := TTerrain.Create;
@@ -3744,7 +3746,7 @@ var
     else if not IsFallback then
     begin
       LoadBackgroundImage(IsFallback);
-      Exit; // don't upscale twice!
+      Exit; // Don't upscale twice!
     end;
 
     if NeedUpscale then
@@ -3816,7 +3818,7 @@ begin
     DrawTerrain(fLayers[rlTerrain], RenderInfoRec.Level.Terrains[i], GameParams.HighResolution);
   end;
 
-  // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
+  // Remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
   ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
 
   // Combine all layers to the WorldMap
@@ -3847,7 +3849,7 @@ begin
        or (Gadget.TriggerRect.Left > RenderInfoRec.Level.Info.Width) then
     begin
       if not (Gadget.TriggerEffect in [DOM_BACKGROUND, DOM_PAINT, DOM_ANIMATION, DOM_ANIMONCE]) then
-        Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
+        Gadget.TriggerEffect := DOM_NONE; // Effectively disables the object
     end;
 
     if (MO.TriggerEffect = DOM_WINDOW) then

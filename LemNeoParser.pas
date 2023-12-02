@@ -258,7 +258,7 @@ begin
     F := TFileStream.Create(aFile, fmOpenRead);
     try
       F.Position := 0;
-      if not GameParams.FileCaching then aFile := ''; // this prevents caching, see code of LoadFromStreamInternal
+      if not GameParams.FileCaching then aFile := ''; // Prevents caching, see code of LoadFromStreamInternal
       LoadFromStreamInternal(F, aFile);
     finally
       F.Free;

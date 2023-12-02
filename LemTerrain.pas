@@ -13,10 +13,10 @@ uses
 
 const
   // Terrain Drawing Flags
-  tdf_Erase                    = 1;    // bit 0 use terrain bitmap as eraser
-  tdf_Invert                   = 2;    // bit 1 invert terrain bitmap
-  tdf_NoOverwrite              = 4;    // bit 2 do not overwrite existing terrain pixels
-  tdf_Steel                    = 8;    // bit 3 steel
+  tdf_Erase                    = 1;    // Bit 0 use terrain bitmap as eraser
+  tdf_Invert                   = 2;    // Bit 1 invert terrain bitmap
+  tdf_NoOverwrite              = 4;    // Bit 2 do not overwrite existing terrain pixels
+  tdf_Steel                    = 8;    // Bit 3 steel
   tdf_Flip                     = 16;
   tdf_NoOneWay                 = 32;
   tdf_Rotate                   = 64;

@@ -65,13 +65,13 @@ const
   TALISMAN_PADDING = 8;
 
 var
-  TitleShift: Extended;       //0.600;     //red
-  GroupShift: Extended;       //0.600;     //red
-  NumLemsShift: Extended;     //0.250;     //blue
-  RescueLemsShift: Extended;  //0;         //green (default)
-  ReleaseRateShift: Extended; //0.800;     //yellow
-  TimeLimitShift: Extended;   //0.150;     //teal
-  AuthorShift: Extended;      //0.500;     //violet
+  TitleShift: Extended;       // 0.600; - Red
+  GroupShift: Extended;       // 0.600; - Red
+  NumLemsShift: Extended;     // 0.250; - Blue
+  RescueLemsShift: Extended;  // 0;     - Green (default)
+  ReleaseRateShift: Extended; // 0.800; - Yellow
+  TimeLimitShift: Extended;   // 0.150; - Teal
+  AuthorShift: Extended;      // 0.500; - Violet
 
 { TGamePreviewScreen }
 
@@ -167,7 +167,7 @@ procedure TGamePreviewScreen.AfterCancelLevelSelect;
 begin
   inherited;
   GameParams.LoadCurrentLevel;
-  GameParams.Renderer.RenderWorld(nil, not GameParams.NoBackgrounds); // some necessary prep work is done in here
+  GameParams.Renderer.RenderWorld(nil, not GameParams.NoBackgrounds); // Some necessary prep work is done in here
 end;
 
 procedure TGamePreviewScreen.BeginPlay;
@@ -215,7 +215,7 @@ begin
     Lw := GameParams.Level.Info.Width;
     Lh := GameParams.Level.Info.Height;
 
-    // draw level preview
+    // Draw level preview
     W.SetSize(Lw, Lh);
     W.Clear(0);
 
@@ -224,7 +224,7 @@ begin
     W.DrawMode := dmBlend;
     W.CombineMode := cmMerge;
 
-    //Draw the level preview
+    // Draw the level preview
     if GameParams.ShowMinimap and not GameParams.FullScreen then
       LevelScale := MM_INTERNAL_SCREEN_WIDTH / lw
     else if GameParams.FullScreen then
@@ -244,7 +244,7 @@ begin
 
     W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
 
-    // draw text
+    // Draw text
     Lines := GetPreviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
@@ -318,8 +318,7 @@ end;
 
 procedure TGamePreviewScreen.TryLoadReplay;
 begin
-  // Pretty much just because LoadReplay is a function, not a procedure, so this
-  // needs to be here as a wraparound.
+  // LoadReplay is a function, not a procedure, so this needs to be here as a wraparound.
   LoadReplay;
 end;
 
@@ -360,7 +359,7 @@ begin
   HueShift.HShift := TitleShift;
   Result[0].Line := Entry.Title;
   Result[0].ColorShift := HueShift;
-  Result[0].yPos := 168;//hotbookmark
+  Result[0].yPos := 168;
 
   HueShift.HShift := GroupShift;
   Result[1].yPos := Result[0].yPos + 40;
@@ -469,13 +468,13 @@ var
   // Default SLX colours, loaded if custom files don't exist
   procedure ResetColours;
   begin
-    TitleShift := 0.600;       //red
-    GroupShift := 0.600;       //red
-    NumLemsShift := 0.250;     //blue
-    RescueLemsShift := 0;      //green (default)
-    ReleaseRateShift := 0.800; //yellow
-    TimeLimitShift := 0.150;   //teal
-    AuthorShift := 0.500;      //violet
+    TitleShift := 0.600;       // Red
+    GroupShift := 0.600;       // Red
+    NumLemsShift := 0.250;     // Blue
+    RescueLemsShift := 0;      // Green (default)
+    ReleaseRateShift := 0.800; // Yellow
+    TimeLimitShift := 0.150;   // Teal
+    AuthorShift := 0.500;      // Violet
   end;
 
 begin
@@ -600,12 +599,12 @@ begin
     begin
       ShowMessage(E.Message);
       CloseScreen(gstMenu);
-      Raise; // yet again, to be caught on TBaseDosForm
+      Raise; // Yet again, to be caught on TBaseDosForm
     end;
   end;
   if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
   begin
-    // this clears the current-replay-in-memory when the level loads
+    // Clears the current-replay-in-memory when the level loads
     GlobalGame.ReplayManager.Clear(true);
     GlobalGame.fReplayWasLoaded := False;
   end;

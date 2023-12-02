@@ -1,7 +1,6 @@
 unit GameSound;
 
-// Entire rewrite, as this is more efficient (or at least less tedious) than tidying up
-// the existing unit.
+// Entire rewrite, as this is more efficient (or at least less tedious) than tidying up the existing unit.
 
 
 // To load a sound:
@@ -24,16 +23,17 @@ unit GameSound;
 //   SoundManager.PlayMusic;
 //   SoundManager.StopMusic;
 //
-// This new sound manager will handle not loading music if music is muted. With that being said, it currently still loads the file
-// into memory, but doesn't load it into BASS. This is to simplify integration into backwards-compatible; and it can be changed to
-// not load the file at all once backwards-compatible is no longer a thing.
+{ This new sound manager will handle not loading music if music is muted.
+  With that being said, it currently still loads the file into memory, but doesn't load it into BASS.
+  This is to simplify integration into backwards-compatible; and it can be changed to
+  not load the file at all once backwards-compatible is no longer a thing. }
 
 interface
 
 uses
   Dialogs,
   Bass,
-  LemTypes, // only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
+  LemTypes, // Only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
   LemStrings, Contnrs, Classes, SysUtils;
 
 type
@@ -140,7 +140,7 @@ const
                   '.mtm',
                   '.umx'
                   );
-  LAST_SOUND_EXT = '.mp3'; // anything beyond this entry can only be used for music, not sfx
+  LAST_SOUND_EXT = '.mp3'; // Anything beyond this entry can only be used for music, not sfx
 
 implementation
 
@@ -199,12 +199,12 @@ begin
 
   Assert(fMusicChannel = $FFFFFFFF, 'TSoundManager.ObtainMusicBassChannel: A channel already exists!');
   fMusicChannel := BASS_StreamCreateFile(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP);
-  if fMusicChannel = 0 then // this means we have a module-based file
+  if fMusicChannel = 0 then // This means we have a module-based file
   begin
     fMusicChannel := BASS_MusicLoad(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP, 0);
     BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume / 2);
   end else begin
-    BASS_LoadLoopData(fMusicChannel); // yay, this was added to the BASS unit rather than GameSound
+    BASS_LoadLoopData(fMusicChannel); // Yay, this was added to the BASS unit rather than GameSound
     BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
   end;
 end;
@@ -409,7 +409,7 @@ begin
   if not fIsBassLoaded then Exit;
 
   aName := Lowercase(aName);
-  if fMusicName = aName then Exit; // saves some time
+  if fMusicName = aName then Exit; // Saves some time
 
   Ext := FindExtension(aName, true);
   if Ext = '' then
@@ -431,7 +431,7 @@ begin
   if not fIsBassLoaded then Exit;
 
   aName := Lowercase(aName);
-  if fMusicName = aName then Exit; // saves some time
+  if fMusicName = aName then Exit; // Saves some time
 
   FreeMusic;
   fMusicStream.Clear;

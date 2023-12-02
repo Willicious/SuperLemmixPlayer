@@ -1,17 +1,16 @@
 unit LemReplay;
 
-// Handles replay files. Has backwards compatibility for loading old replay
-// files, too.
+{ Handles replay files. Has backwards compatibility for loading old replay files, too.
 
-// The replay items contain a lot of unnessecary information for normal
-// usage. Only the type of action (inferred from which of TReplay's lists
-// the item is stored in, and if nessecary, using an "if <var> is <class>"),
-// the frame number, and if applicable the skill, release rate and/or lemming
-// index are used in normal situations. The remaining data is intended to be
-// used by a future "replay repair" code. (The main purpose of the seperation
-// into three lists is due to the different timings of when they're acted on,
-// more than being primarily intended to distinguish them. But the distinction
-// may as well be taken advantage of.)
+  The replay items contain a lot of unnessecary information for normal
+  usage. Only the type of action (inferred from which of TReplay's lists
+  the item is stored in, and if nessecary, using an "if <var> is <class>"),
+  the frame number, and if applicable the skill, release rate and/or lemming
+  index are used in normal situations. The remaining data is intended to be
+  used by a future "replay repair" code. (The main purpose of the seperation
+  into three lists is due to the different timings of when they're acted on,
+  more than being primarily intended to distinguish them. But the distinction
+  may as well be taken advantage of.) }
 
 interface
 
@@ -48,7 +47,7 @@ type
     protected
       procedure DoLoadSection(Sec: TParserSection); virtual;    // Return TRUE if the line is understood. Should start with "if inherited then Exit".
       procedure DoSave(Sec: TParserSection); virtual;  // Should start with a call to inherited.
-      procedure InitializeValues(); virtual; // we cannot guarantee that all values will be set, so make sure that there is nothing null and nothing that will crash the game!!!
+      procedure InitializeValues(); virtual; // We cannot guarantee that all values will be set, so make sure that there is nothing null and nothing that will crash the game!!!
     public
       constructor Create; // NEVER call this from this base class - only instanciate children!
       procedure Load(Sec: TParserSection);
@@ -125,7 +124,7 @@ type
     private
       fIsModified: Boolean;
 
-      fAssignments: TReplayItemList;        // nuking is also included here
+      fAssignments: TReplayItemList;        // Nuking is also included here
       fSpawnIntervalChanges: TReplayItemList;
       fPlayerName: String;
       fLevelName: String;
@@ -190,7 +189,7 @@ var
 implementation
 
 uses
-  CustomPopup, LemNeoLevelPack, LemTypes, GameControl, uMisc, SharedGlobals; // in TReplay.GetSaveFileName
+  CustomPopup, LemNeoLevelPack, LemTypes, GameControl, uMisc, SharedGlobals; // In TReplay.GetSaveFileName
 
 var
   IncludeInternalInfo: Boolean;
@@ -211,7 +210,7 @@ function GetSkillButton(aName: String): TSkillPanelButton;
 var
   i: Integer;
 begin
-  Result := TSkillPanelButton(0); // to avoid compiler warning
+  Result := TSkillPanelButton(0); // To avoid compiler warning
   aName := Uppercase(aName);
   for i := 0 to SKILL_REPLAY_NAME_COUNT-1 do
     if aName = SKILL_REPLAY_NAMES[i] then
@@ -519,8 +518,8 @@ begin
 end;
 
 function TReplay.GetLastActionFrame: Integer;
-// We could assume that the last action in the list is the last one in order,
-// but let's not, just in case.
+{ We could assume that the last action in the list is the last one in order,
+  but let's not, just in case. }
   procedure CheckForAction(aList: TReplayItemList);
   var
     i: Integer;
@@ -687,7 +686,7 @@ begin
   NeedUpdate := false;
   for i := 0 to SL.Count-1 do
   begin
-    if ModLine(SL[0]) = 'force_update' then // panic button
+    if ModLine(SL[0]) = 'force_update' then // Panic button
     begin
       SL.Delete(0);
       NeedUpdate := true;
@@ -787,7 +786,7 @@ end;
 
 procedure TBaseReplayItem.InitializeValues();
 begin
-  Frame := 17 * 60 * 99; // try corrupt values only after 99 minutes.
+  Frame := 17 * 60 * 99; // Try corrupt values only after 99 minutes.
 end;
 
 procedure TBaseReplayItem.Load(Sec: TParserSection);

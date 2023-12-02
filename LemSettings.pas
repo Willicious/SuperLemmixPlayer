@@ -14,7 +14,7 @@ type
   end;
 
 var
-  ProgramSettings: TProgramSettings; // initialized by FMain
+  ProgramSettings: TProgramSettings; // Initialized by FMain
 
 implementation
 

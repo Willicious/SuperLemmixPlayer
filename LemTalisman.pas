@@ -14,7 +14,7 @@ type
   TTalisman = class
   private
     fTitle: String;
-    fData: Pointer; // unused when loaded in a TLevel; points to the owner TNeoLevelEntry when in a TNeoLevelEntry or TNeoLevelGroup
+    fData: Pointer; // Unused when loaded in a TLevel; points to the owner TNeoLevelEntry when in a TNeoLevelEntry or TNeoLevelGroup
     fID: LongWord;
     fColor: TTalismanColor;
     fRescueCount: Integer;

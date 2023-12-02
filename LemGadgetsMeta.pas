@@ -15,16 +15,16 @@ uses
 
 const
   // Object Animation Types
-  oat_None                     = 0;    // the object is not animated
-  oat_Triggered                = 1;    // the object is triggered by a lemming
-  oat_Continuous               = 2;    // the object is always moving
-  oat_Once                     = 3;    // the object is animated once at the beginning (entrance only)
+  oat_None                     = 0;    // The object is not animated
+  oat_Triggered                = 1;    // The object is triggered by a lemming
+  oat_Continuous               = 2;    // The object is always moving
+  oat_Once                     = 3;    // The object is animated once at the beginning (entrance only)
 
   ALIGNMENT_COUNT = 8; // 4 possible combinations of Flip + Invert + Rotate
 
 type
 
-  TGadgetMetaAccessor = class;  // predefinition so it can be used in TMetaObject despite being defined later
+  TGadgetMetaAccessor = class;  // Predefinition so it can be used in TMetaObject despite being defined later
 
   TGadgetVariableProperties = record // For properties that vary based on flip / invert
     Animations: TGadgetAnimations;
@@ -57,16 +57,16 @@ type
     fGeneratedVariableInfo: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fGeneratedVariableImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fInterfaces: array[0..ALIGNMENT_COUNT-1] of TGadgetMetaAccessor;
-    fFrameCount                   : Integer; // number of animations
-    fTriggerEffect                : Integer; // ote_xxxx see dos doc
+    fFrameCount                   : Integer; // Number of animations
+    fTriggerEffect                : Integer; // N.B. ote_xxxx see DOS doc
     fKeyFrame                     : Integer;
-    fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
+    fPreviewFrameIndex            : Integer; // Index of preview (previewscreen)
     fDigitMinLength               : Integer;
 
     fSoundActivate  : String;
     fSoundExhaust   : String;
 
-    fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
+    fCyclesSinceLastUse: Integer; // To improve TNeoPieceManager.Tidy
 
     function GetIdentifier: String;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -115,7 +115,7 @@ type
     property DigitX[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitX read GetVariableProperty write SetVariableProperty;
     property DigitY[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitY read GetVariableProperty write SetVariableProperty;
     property DigitAlign[Flip, Invert, Rotate: Boolean]   : Integer index ov_DigitAlign read GetVariableProperty write SetVariableProperty;
-    property TriggerEffect: Integer read fTriggerEffect write fTriggerEffect; // used by level loading / saving code
+    property TriggerEffect: Integer read fTriggerEffect write fTriggerEffect; // Used by level loading / saving code
 
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean read GetCanResizeVertical write SetCanResizeVertical;
@@ -124,9 +124,9 @@ type
   end;
 
   TGadgetMetaAccessor = class
-    // This is basically an abstraction layer for the flip, invert, rotate seperations. Instead of having to
-    // specify them every time the TMetaObject is referenced, a TMetaObjectInterface created for that specific
-    // combination of TMetaObject and orientation settings can be used, making the code tidier.
+    { This is basically an abstraction layer for the flip, invert, rotate seperations. Instead of having to
+      specify them every time the TMetaObject is referenced, a TMetaObjectInterface created for that specific
+      combination of TMetaObject and orientation settings can be used, making the code tidier. }
     private
       fGadgetMetaInfo: TGadgetMetaInfo;
       fFlip: Boolean;
@@ -304,7 +304,7 @@ begin
     NewAnim.Load(aCollection, aPiece, Sec.Section['PRIMARY_ANIMATION'], aTheme);
 
     fFrameCount := NewAnim.FrameCount;
-    PrimaryWidth := NewAnim.Width; // used later
+    PrimaryWidth := NewAnim.Width; // Used later
 
     Sec.DoForEachSection('ANIMATION',
       procedure (aSection: TParserSection; const aIteration: Integer)
@@ -343,7 +343,7 @@ begin
       fSoundActivate := Sec.LineTrimString['sound_activate'];
     fSoundExhaust := Sec.LineTrimString['sound_exhaust'];
 
-    fKeyFrame := Sec.LineNumeric['key_frame']; // this is almost purely a physics property, so should not go under animations
+    fKeyFrame := Sec.LineNumeric['key_frame']; // This is almost purely a physics property, so should not go under animations
 
     if Sec.Line['resize_both'] <> nil then
     begin
@@ -526,7 +526,7 @@ begin
     DstRec.ResizeVertical := SrcRec.ResizeHorizontal;
 
     // I can't imagine digits will work well rotated (at least without a vertical display option), but better at least try
-    DstRec.DigitAlign := 0; // not that any value really makes sense for this
+    DstRec.DigitAlign := 0; // Not that any value really makes sense for this
     DstRec.DigitX := SrcRec.Animations.PrimaryAnimation.Height - SrcRec.DigitY - 1;
     DstRec.DigitY := SrcRec.DigitX;
   end;
@@ -608,8 +608,7 @@ procedure TGadgetMetaInfo.SetVariableProperty(Flip, Invert, Rotate: Boolean; aPr
 var
   i: Integer;
 begin
-  // In practice we should only ever write to the standard orientation. But here isn't the place
-  // to restrict that.
+  // We should only ever write to the standard orientation, but here isn't the place to restrict that.
   EnsureVariationMade(Flip, Invert, Rotate);
   i := GetImageIndex(Flip, Invert, Rotate);
   with fVariableInfo[i] do
@@ -664,8 +663,8 @@ end;
 
 function TGadgetMetaAccessor.GetIntegerProperty(aProp: TGadgetMetaProperty): Integer;
 begin
-  // Access via properties where these exist to discriminate orientations (after all, that's the whole
-  // point of the TMetaObjectInterface abstraction layer :P ). Otherwise, access the fields directly.
+  { Access via properties where these exist to discriminate orientations (after all, that's the whole
+    point of the TMetaObjectInterface abstraction layer :P ). Otherwise, access the fields directly. }
   case aProp of
     ov_Frames: Result := fGadgetMetaInfo.fFrameCount;
     ov_Width: Result := fGadgetMetaInfo.Width[fFlip, fInvert, fRotate];

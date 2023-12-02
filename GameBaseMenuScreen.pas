@@ -18,14 +18,14 @@ uses
   Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows;
 
 const
-  //this determines the size of the available window space
+  // Determines the size of the available window space
   INTERNAL_SCREEN_WIDTH = 836;
   INTERNAL_SCREEN_HEIGHT = 492;
 
-  //MM = Minimap - we need different menu sizes for when the Minimap is or isn't displayed
+  // MM = Minimap - different menu sizes required for ShowMinimap
   MM_INTERNAL_SCREEN_WIDTH = 1092;
 
-  //FS = FullScreen - we need different menu size for FullScreen mode
+  // FS = FullScreen - different menu size required for FullScreen mode
   FS_INTERNAL_SCREEN_WIDTH = 874;
 
   FOOTER_OPTIONS_ONE_ROW_Y = 460;
@@ -33,28 +33,28 @@ const
   FOOTER_OPTIONS_TWO_ROWS_HIGH_Y = 440;
   FOOTER_OPTIONS_TWO_ROWS_LOW_Y = 460;
 
-  MM_FOOTER_ONE_OPTION_X = MM_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
-  FS_FOOTER_ONE_OPTION_X = FS_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
+  MM_FOOTER_ONE_OPTION_X = MM_INTERNAL_SCREEN_WIDTH div 2;
+  FS_FOOTER_ONE_OPTION_X = FS_INTERNAL_SCREEN_WIDTH div 2;
   FOOTER_ONE_OPTION_X = INTERNAL_SCREEN_WIDTH div 2;
 
-  MM_FOOTER_TWO_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 5 div 16; //hotbookmark
-  FS_FOOTER_TWO_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 5 div 16; //hotbookmark
+  MM_FOOTER_TWO_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 5 div 16;
+  FS_FOOTER_TWO_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 5 div 16;
   FOOTER_TWO_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 5 div 16;
 
-  MM_FOOTER_TWO_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 11 div 16; //hotbookmark
-  FS_FOOTER_TWO_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 11 div 16; //hotbookmark
+  MM_FOOTER_TWO_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 11 div 16;
+  FS_FOOTER_TWO_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 11 div 16;
   FOOTER_TWO_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 11 div 16;
 
-  MM_FOOTER_THREE_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 3 div 16; //hotbookmark
-  FS_FOOTER_THREE_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 3 div 16; //hotbookmark
+  MM_FOOTER_THREE_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 3 div 16;
+  FS_FOOTER_THREE_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 3 div 16;
   FOOTER_THREE_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 3 div 16;
 
-  MM_FOOTER_THREE_OPTIONS_X_MID = MM_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
-  FS_FOOTER_THREE_OPTIONS_X_MID = FS_INTERNAL_SCREEN_WIDTH div 2; //hotbookmark
+  MM_FOOTER_THREE_OPTIONS_X_MID = MM_INTERNAL_SCREEN_WIDTH div 2;
+  FS_FOOTER_THREE_OPTIONS_X_MID = FS_INTERNAL_SCREEN_WIDTH div 2;
   FOOTER_THREE_OPTIONS_X_MID = INTERNAL_SCREEN_WIDTH div 2;
 
-  MM_FOOTER_THREE_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 13 div 16; //hotbookmark
-  FS_FOOTER_THREE_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 13 div 16; //hotbookmark
+  MM_FOOTER_THREE_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 13 div 16;
+  FS_FOOTER_THREE_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 13 div 16;
   FOOTER_THREE_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 13 div 16;
 
 type
@@ -222,7 +222,7 @@ begin
   ScreenImg.OnMouseMove := Img_MouseMove;
 
   {$ifdef exp}{$ifndef rc}
-  //MakeHiddenOption(lka_SaveImage, SaveScreenImage);
+  //MakeHiddenOption(lka_SaveImage, SaveScreenImage);   // Bookmark - why is this commented out?
   {$endif}{$endif}
 end;
 
@@ -255,8 +255,7 @@ var
 begin
   BMP := TBitmap32.Create;
   try
-    //if {we're on the postview screen} then     //bookmark - need code to check
-                                                 //for postview screen status
+    //if {we're on the postview screen} then // Bookmark - need code to check for postview screen status
     //begin
     //if GameParams.HighResolution then
       //TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/postview.png', BMP)
@@ -382,7 +381,7 @@ begin
 
     aNormal.DrawTo(Temp, aMargin, aMargin);
 
-    // tmpNormal is used as a second temporary image within this loop
+    // N.B. tmpNormal is used as a second temporary image within this loop
     for n := 1 to aMargin do
     begin
       for y := 0 to Temp.Height-1 do
@@ -409,7 +408,7 @@ begin
       Temp.Assign(tmpNormal);
       tmpNormal.Clear(0);
     end;
-    // end of usage of tmpNormal as a temporary image
+    // End of usage of tmpNormal as a temporary image
 
     for y := 0 to Temp.Height-1 do
       for x := 0 to Temp.Width-1 do
@@ -438,7 +437,7 @@ begin
 
 end;
 
-//changes hue of clickable text in pre-level screen
+// Changes hue of clickable text in pre-level screen
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
   aText: String; aAction: TRegionAction): TClickableRegion;
 const
@@ -761,7 +760,7 @@ begin
   if (not (GameParams.CurrentLevel = nil))
      and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if FileExists(AppPath + SFGraphicsMenu + aName) and ((not aFromPackOnly) or (not aAcceptFailure)) then // aFromPackOnly + aAcceptFailure is an invalid combination
+  else if FileExists(AppPath + SFGraphicsMenu + aName) and ((not aFromPackOnly) or (not aAcceptFailure)) then // N.B. aFromPackOnly + aAcceptFailure is an invalid combination
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
   else begin
     if not aAcceptFailure then
@@ -934,9 +933,8 @@ begin
     ConfigDlg.Free;
   end;
 
-  // Wise advice from Simon - save these things on exiting the
-  // config dialog, rather than waiting for a quit or a screen
-  // transition to save them.
+  { Wise advice from Simon - save these things on exiting the  config dialog, rather than
+    waiting for a quit or a screen transition to save them. }
   GameParams.Save(scImportant);
   ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
   DoAfterConfig;

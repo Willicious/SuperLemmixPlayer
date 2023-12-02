@@ -15,7 +15,7 @@ uses
   Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Buttons,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
-  ActiveX, ShlObj, ComObj, // for the shortcut creation
+  ActiveX, ShlObj, ComObj, // For the shortcut creation
   LemNeoParser, GR32_Image, System.ImageList;
 
 type
@@ -272,9 +272,9 @@ begin
   aStylePath := AppPath + SFStyles + aStyle + '\levelinfo\';
   aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
-  if FileExists(aStylePath + IconsImg) then //check styles folder first
+  if FileExists(aStylePath + IconsImg) then // Check styles folder first
     TPNGInterface.LoadPngFile(aStylePath + IconsImg, fIconBMP)
-  else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then //then levelpack folder
+  else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then // Then levelpack folder
     TPNGInterface.LoadPngFile(aPath + IconsImg, fIconBMP)
   else
     TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIconBMP);
@@ -314,7 +314,7 @@ procedure TFLevelSelect.FormDestroy(Sender: TObject);
 begin
   fIconBMP.Free;
 
-  fTalismanButtons.OwnsObjects := false; // because TFLevelSelect itself will take care of any that remain
+  fTalismanButtons.OwnsObjects := false; // Because TFLevelSelect itself will take care of any that remain
   fTalismanButtons.Free;
 end;
 
@@ -352,7 +352,7 @@ var
 
   Dlg: TSaveDialog;
 
-  // Source: http://delphiexamples.com/others/createlnk.html
+  // Source: delphiexamples.com/others/createlnk.html
   procedure CreateLink(const PathObj, PathLink, Desc, Param: string);
   var
     IObject: IUnknown;
@@ -433,7 +433,7 @@ var
   N: TTreeNode;
 begin
   N := tvLevelSelect.Selected;
-  if N = nil then Exit; // safeguard
+  if N = nil then Exit; // Safeguard
 
   Obj := TObject(N.Data);
 
@@ -455,7 +455,7 @@ var
   N: TTreeNode;
 begin
   N := tvLevelSelect.Selected;
-  if N = nil then Exit; // safeguard
+  if N = nil then Exit; // Safeguard
 
   Obj := TObject(N.Data);
 
@@ -486,7 +486,7 @@ var
   GroupWord: String;
 begin
   N := tvLevelSelect.Selected;
-  if N = nil then Exit; // safeguard
+  if N = nil then Exit; // Safeguard
 
   Obj := TObject(N.Data);
 
@@ -525,7 +525,7 @@ begin
   SetInfo;
 end;
 
-//when treeview is active, pressing return loads the currently selected level
+// When treeview is active, pressing return loads the currently selected level
 procedure TFLevelSelect.tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -657,7 +657,7 @@ begin
 
     fInfoForm.Visible := false;
 
-    btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
+    btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
     btnResetTalismans.Enabled := false;
 
     ClearTalismanButtons;
@@ -1041,10 +1041,7 @@ begin
   end;
 end;
 
-//////////////////////
-// Advanced options //
-//////////////////////
-
+// --- Advanced options --- //
 procedure TFLevelSelect.SetAdvancedOptionsGroup;
 begin
     btnSaveImage.Caption := 'Save Level Images';

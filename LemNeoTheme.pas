@@ -1,8 +1,8 @@
 unit LemNeoTheme;
 
-// A simple unit for management of themes. These are basically just the remnants
-// of graphic sets onces the terrain and objects are taken out. They define which
-// lemming graphics to use, and the key colors.
+{ A simple unit for management of themes. These are basically just the remnants
+  of graphic sets onces the terrain and objects are taken out. They define which
+  lemming graphics to use, and the key colors. }
 
 interface
 

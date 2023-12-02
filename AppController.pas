@@ -11,8 +11,8 @@ uses
   LemTypes, LemRendering, LemLevel, LemGadgetsModel, LemGadgetsMeta,
   LemStrings,
   GameControl, LemVersion,
-  GameSound,          // initial creation
-  LemNeoPieceManager, // initial creation
+  GameSound,          // Initial creation
+  LemNeoPieceManager, // Initial creation
   FBaseDosForm, GameBaseScreenCommon,
   CustomPopup,
   Classes, SysUtils, StrUtils, IOUtils, UMisc, Windows, Forms, Dialogs, Messages;
@@ -48,7 +48,7 @@ type
     function Execute: Boolean;
     procedure FreeScreen;
 
-    property LoadSuccess: Boolean read fLoadSuccess; // currently unused!
+    property LoadSuccess: Boolean read fLoadSuccess; // Bookmark - currently unused! - remove?
   end;
 
 implementation
@@ -84,15 +84,16 @@ begin
 
   GameParams.NextScreen := gstMenu;
 
-  GameParams.SoundOptions := [gsoSound, gsoMusic]; // This was to fix a glitch where an older version disabled them
-                                                    // sometimes. Not sure if this still needs to be here but no harm
-                                                    // in having it.
+  // Bookmark - This was to fix a glitch where an older version disabled them sometimes.
+  // Not sure if this still needs to be here - remove?
+  GameParams.SoundOptions := [gsoSound, gsoMusic];
 
   GameParams.Load;
   GameParams.BaseLevelPack.LoadUserData;
 
-  PieceManager.Clear; // This is because some pieces may have been loaded before the user's settings, which would result
-                      // in the high-res graphics for them not being loaded, and this causes errors later.
+ { Some pieces may have been loaded before the user's settings, which would result
+   in the high-res graphics for them not being loaded, causing errors later. }
+  PieceManager.Clear;
 
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
@@ -106,7 +107,7 @@ begin
     end;
 
   GameParams.MainForm.Caption := 'SuperLemmix';
-  Application.Title := GameParams.MainForm.Caption;   //bookmark - title bar
+  Application.Title := GameParams.MainForm.Caption;
 
   GameParams.Renderer.BackgroundColor := $000000;
 
@@ -125,9 +126,8 @@ end;
 
 destructor TAppController.Destroy;
 begin
-  // It isn't too critical to free absolutely everything here, since the
-  // game will be terminating after this procedure anyway.
-  // More important is making sure all relevant data is saved.
+// No need to free absolutely everything here, since the game terminates after this procedure anyway.
+// More important is making sure all relevant data is saved.
 
   PieceManager.Free;
 
@@ -137,7 +137,7 @@ begin
   GameParams.Level.Free;
   GameParams.Free;
 
-  SoundManager.Free; // must NOT be moved before GameParams.Save!
+  SoundManager.Free; // Must NOT be moved before GameParams.Save!
 
   try
     if DirectoryExists(AppPath + SFTemp) then
@@ -166,15 +166,14 @@ var
 begin
   Result := true;
 
+  // Bookmark - should this be commented back in???
   //while GameParams.NextScreen <> gstExit do
   //begin
-    // Save the data between screens. This way it's more up to date in case
-    // game crashes at any point.
-    GameParams.Save(TGameParamsSaveCriticality.scNone); // compiler throws a fit without the type specifier here
+    // Save the data between screens. This way it's more up to date in case game crashes
+    GameParams.Save(TGameParamsSaveCriticality.scNone); // Compiler throws a fit without the type specifier here
 
     // I don't remember why this part is written like this.
-    // Might be so that after the text screen, the right screen out of
-    // gstPlay or gstPostview is shown.
+    // Might be so that after the text screen, the right screen out of gstPlay or gstPostview is shown.
     NewScreen := GameParams.NextScreen;
     GameParams.NextScreen := GameParams.NextScreen2;
     GameParams.NextScreen2 := gstUnknown;
@@ -208,10 +207,8 @@ procedure TAppController.ShowTextScreen;
 var
   IsPreview: Boolean;
 begin
-  // This function is always called between gstPreview/gstGame, and
-  // between gstGame/gstPostview (if successful). However, if there's
-  // no text to show, it does nothing, and proceeds directly to the
-  // next screen.
+// Always called between gstPreview/gstGame, and between gstGame/gstPostview (if successful).
+// However, if there's no text to show, it does nothing, and proceeds directly to the next screen.
   IsPreview := not (GameParams.NextScreen = gstPostview);
   if (IsPreview and (GameParams.Level.PreText.Count = 0))
   or ((not IsPreview) and (GameParams.Level.PostText.Count = 0))

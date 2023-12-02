@@ -7,7 +7,7 @@ uses
   Classes, SysUtils;
 
 type
-  // abstract ancestor for object, terrain and steel
+  // Abstract ancestor for object, terrain and steel
   TPieceClass = class of TPiece;
   TPiece = class
   private
@@ -22,7 +22,7 @@ type
   end;
 
 type
-  // basically ancestor for object and terrain
+  // Basically ancestor for object and terrain
   TIdentifiedPiece = class(TPiece)
   private
   protected
@@ -53,7 +53,7 @@ type
   end;
 
 type
-  // basically ancestor for steel
+  // Basically ancestor for steel
   TSizedPiece = class(TPiece)
   private
   protected

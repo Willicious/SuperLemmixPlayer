@@ -53,7 +53,7 @@ type
                          lka_SkillRight,
                          lka_ReleaseMouse,
                          lka_ClearPhysics,
-                         //lka_ToggleShadows,
+                         //lka_ToggleShadows, // Bookmark - remove?
                          //lka_Projection,
                          //lka_SkillProjection,
                          lka_ShowUsedSkills,
@@ -150,7 +150,6 @@ begin
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
   SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
-  //SetKeyFunction($33, lka_Skill, Integer(spbBomber));
   SetKeyFunction($34, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($35, lka_Skill, Integer(spbBuilder));
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
@@ -213,7 +212,6 @@ begin
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
   SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
-  //SetKeyFunction($33, lka_Skill, Integer(spbBomber));
   SetKeyFunction($34, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($35, lka_Skill, Integer(spbBuilder));
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
@@ -222,7 +220,6 @@ begin
   SetKeyFunction($70, lka_Skill, Integer(spbClimber));
   SetKeyFunction($71, lka_Skill, Integer(spbFloater));
   SetKeyFunction($72, lka_Skill, Integer(spbTimebomber));
-  //SetKeyFunction($73, lka_Skill, Integer(spbBomber));
   SetKeyFunction($73, lka_Skill, Integer(spbBlocker));
   SetKeyFunction($74, lka_Skill, Integer(spbBuilder));
   SetKeyFunction($75, lka_Skill, Integer(spbBasher));
@@ -328,7 +325,7 @@ begin
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
   if s = 'clear_physics' then Result := lka_ClearPhysics;
-  //if s = 'toggle_shadows' then Result := lka_ToggleShadows;
+  //if s = 'toggle_shadows' then Result := lka_ToggleShadows; // Bookmark - remove?
   //if s = 'projection' then Result := lka_Projection;
   //if s = 'skill_projection' then Result := lka_SkillProjection;
   if s = 'show_used_skills' then Result := lka_ShowUsedSkills;
@@ -377,7 +374,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else
     begin
       try
-        // a lot of secondaries will be actually numeric
+        // A lot of secondaries will be actually numeric
         Result := StrToInt(s);
       except
         Result := 0;
@@ -485,7 +482,7 @@ var
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
       lka_ClearPhysics:     Result := 'Clear_Physics';
-      //lka_ToggleShadows:    Result := 'Toggle_Shadows';
+      //lka_ToggleShadows:    Result := 'Toggle_Shadows'; // Bookmark - remove?
       //lka_Projection:       Result := 'Projection';
       //lka_SkillProjection:  Result := 'Skill_Projection';
       lka_ShowUsedSkills:   Result := 'Show_Used_Skills';
@@ -546,7 +543,7 @@ begin
   for i := 0 to MAX_KEY do
   begin
     s := InterpretMain(fKeyFunctions[i].Action);
-    if s = 'Null' then Continue;
+    if s = 'Null' then Continue;                                                           // Bookmark - remove?
     if fKeyFunctions[i].Action in [lka_Skill, lka_Skip, lka_SpecialSkip, lka_ClearPhysics, //lka_Projection, lka_SkillProjection,
     lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
@@ -641,11 +638,11 @@ begin
     Result[$28] := 'Down Arrow';
     Result[$2D] := 'Insert';
     Result[$2E] := 'Delete';
-    // Shortcut time!   //Yeah, you should have written it all out properly tbh!!!
+    // Shortcut time!   // Yeah, you should have written it all out properly tbh!!!
     for i := 0 to 9 do
       Result[$30 + i] := IntToStr(i);
-    for i := 0 to 25 do
-      Result[$41 + i] := Char(i + 65);   //no, this doesn't work: J - O are 4A - 4F
+    for i := 0 to 25 do                  // Bookmark - put all this in properly at some point
+      Result[$41 + i] := Char(i + 65);   // No, this doesn't work: J - O are 4A - 4F
     Result[$5B] := 'Windows';
     for i := 0 to 9 do
       Result[$60 + i] := 'NumPad ' + IntToStr(i);

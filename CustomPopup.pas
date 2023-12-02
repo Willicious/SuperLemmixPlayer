@@ -1,8 +1,8 @@
 unit CustomPopup;
 
-// For maximum control, create a TCustomPopup, set Caption and Text properties, then use the AddButton to
-// add buttons to it. Call it via ShowModal, and the return value will be the tag assigned to whichever button
-// was clicked. Due to how ShowModal works, a tag of 0 cannot be used.
+// For maximum control, create a TCustomPopup, set Caption and Text properties, then use AddButton to add buttons to it.
+// Call it via ShowModal, and the return value will be the tag assigned to whichever button was clicked.
+// Due to how ShowModal works, a tag of 0 cannot be used.
 
 
 // However, a quick version does exist:
@@ -88,8 +88,8 @@ begin
   inherited CreateNew(aOwner);
   fButtons := TButtonList.Create(self);
 
-  // Since we aren't using a .dfm file here (to keep this unit as a single file) we must configure
-  // the properties that differ from default manually.
+  { Since we aren't using a .dfm file here (to keep this unit as a single file),
+    we must configure the properties that differ from default manually. }
   Name := 'POPUP_WINDOW';
   BorderStyle := bsToolWindow;
   Position := poOwnerFormCenter;
@@ -118,13 +118,13 @@ var
     Substr: String;
     Linebreaks: Integer;
   begin
-    // Changes all line returns to just CRs, and detects actual width / height as Canvas.TextWidth/TextHeight is not reliable
-    // in text that has linebreaks.
+   // Changes all line returns to just CRs, and detects actual width / height because
+   // Canvas.TextWidth/TextHeight is not reliable in text that has linebreaks.
 
-    fText := StringReplace(fText, #13 + #10, #13, [rfReplaceAll]); // change all CRLF to just CR
-    fText := StringReplace(fText, #10, #13, [rfReplaceAll]);       // change any remaining lone LFs to CRs
+    fText := StringReplace(fText, #13 + #10, #13, [rfReplaceAll]); // Change all CRLF to just CR
+    fText := StringReplace(fText, #10, #13, [rfReplaceAll]);       // Change any remaining lone LFs to CRs
 
-    fText := fText + #13; // put a dummy one at the end to make the loop easier
+    fText := fText + #13; // Put a dummy one at the end to make the loop easier
 
     LineBreaks := 0;
     Substr := '';
@@ -141,7 +141,7 @@ var
       end;
     CH := CH * LineBreaks;
 
-    fText := LeftStr(fText, Length(fText)-1); // remove dummy CR
+    fText := LeftStr(fText, Length(fText)-1); // Remove dummy CR
   end;
 
 begin
@@ -164,7 +164,7 @@ begin
   TotalButtonWidth := 0;
   for i := 0 to fButtons.Count-1 do
     Inc(TotalButtonWidth, fButtons[i].Width);
-  Inc(TotalButtonWidth, (fButtons.Count-1) * PADDING_SIZE); // padding
+  Inc(TotalButtonWidth, (fButtons.Count-1) * PADDING_SIZE); // Padding
 
   if ClientWidth < (TotalButtonWidth + (PADDING_SIZE * 2)) then
     ClientWidth := TotalButtonWidth + (PADDING_SIZE * 2);
@@ -174,7 +174,7 @@ begin
 
   x := (ClientWidth - TotalButtonWidth) div 2;
   y := ClientHeight;
-  ClientHeight := ClientHeight + 25 + PADDING_SIZE; // button height is 25, + 10 for padding
+  ClientHeight := ClientHeight + 25 + PADDING_SIZE; // Button height is 25, + 10 for padding
 
   for i := 0 to fButtons.Count-1 do
   begin
