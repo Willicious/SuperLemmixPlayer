@@ -774,7 +774,7 @@ var
   ShowCountdown, ShowHighlight: Boolean;
   SrcRect: TRect;
   n, tensDigit, onesDigit: Integer;
-  xPosition: Integer;
+  xPos: Integer;
 begin
   if aLemming.LemRemoved then Exit;
 
@@ -810,19 +810,19 @@ begin
     if tensDigit = 0 then
     begin
       if aLemming.LemDX < 0 then
-        xPosition := (aLemming.LemX - 3) * ResMod  // Center single-digit for left-facing lem
+        xPos := (aLemming.LemX - 3) * ResMod  // Center single-digit for left-facing lem
       else
-        xPosition := (aLemming.LemX - 2) * ResMod; // Center single-digit
+        xPos := (aLemming.LemX - 2) * ResMod; // Center single-digit
     end else if tensDigit = 1 then
     begin
       if aLemming.LemDX < 0 then
-        xPosition := (aLemming.LemX - 6) * ResMod  // Center "1"-leading double-digit for left-facing lem
+        xPos := (aLemming.LemX - 6) * ResMod  // Center "1"-leading double-digit for left-facing lem
       else
-        xPosition := (aLemming.LemX - 5) * ResMod; // Center "1"-leading double-digit
+        xPos := (aLemming.LemX - 5) * ResMod; // Center "1"-leading double-digit
     end else if aLemming.LemDX < 0 then
-        xPosition := (aLemming.LemX - 7) * ResMod  // Center all other double-digits for left-facing lem
+        xPos := (aLemming.LemX - 7) * ResMod  // Center all other double-digits for left-facing lem
       else
-        xPosition := (aLemming.LemX - 6) * ResMod; // Center all other double-digits
+        xPos := (aLemming.LemX - 6) * ResMod; // Center all other double-digits
 
     // Draw tens digit
     if tensDigit <> 0 then
