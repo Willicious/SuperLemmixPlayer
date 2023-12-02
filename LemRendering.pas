@@ -770,12 +770,20 @@ end;
 //This code is used (or not) by Nuke, Bomber, Freezer and Timebomber
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
 var
+  Countdown: TBitmap32;
   ShowCountdown, ShowHighlight: Boolean;
   SrcRect: TRect;
   n, tensDigit, onesDigit: Integer;
   xPosition: Integer;
 begin
   if aLemming.LemRemoved then Exit;
+
+  if aLemming.LemIsRadiating then
+    Countdown := fAni.RadiationDigitsBitmap
+  else if (aLemming.LemFreezerExplosionTimer > 0) then
+    Countdown := fAni.SlowfreezeDigitsBitmap
+  else
+    Countdown := fAni.CountDownDigitsBitmap;
 
   ShowCountdown := ((aLemming.LemFreezerExplosionTimer > 0)
                  or (aLemming.LemExplosionTimer > 0))
@@ -820,16 +828,19 @@ begin
     if tensDigit <> 0 then
     begin
       SrcRect := SizedRect(tensDigit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], xPosition, (aLemming.LemY - 17) * ResMod, SrcRect);
+
+      Countdown.DrawTo(fLayers[rlCountdown], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
+
       if tensDigit = 1 then
-        Inc(xPosition, 6 * ResMod)
+        Inc(xPos, 6 * ResMod)
       else
-        Inc(xPosition, 7 * ResMod); // Nudge the second digit across, add 1px space
+        Inc(xPos, 7 * ResMod); // Nudge the second digit across, add 1px space
     end;
 
     // Draw ones digit
     SrcRect := SizedRect(onesDigit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
-    fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlCountdown], xPosition, (aLemming.LemY - 17) * ResMod, SrcRect);
+
+    Countdown.DrawTo(fLayers[rlCountdown], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
   end
   else if ShowHighlight then
     fAni.HighlightBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
