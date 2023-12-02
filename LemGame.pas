@@ -2011,23 +2011,26 @@ function TLemmingGame.UpdateFreezerExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
 
+  if UserSetNuking then
+  begin
+    if (L.LemFreezerExplosionTimer > 0) then L.LemFreezerExplosionTimer := 0;
+    Exit;
+  end;
+
   Dec(L.LemFreezerExplosionTimer);
+
   if L.LemFreezerExplosionTimer = 0 then
   begin               //all these states bypass freezing phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
                       baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
                       baFreezing, baFrozen] then
     begin
-      if not UserSetNuking then
-      begin
-        if L.LemAction = baBallooning then
-          PopBalloon(L, 1, baFreezerExplosion)
-        else
-          Transition(L, baFreezerExplosion);
-      end;
+      if L.LemAction = baBallooning then
+        PopBalloon(L, 1, baFreezerExplosion)
+      else
+        Transition(L, baFreezerExplosion);
     end else begin
-      if not UserSetNuking then
-        Transition(L, baFreezing);
+      Transition(L, baFreezing);
     end;
     Result := True;
   end;
