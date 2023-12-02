@@ -1386,7 +1386,7 @@ begin
       end else
         SpecialCombine := false;
 
-      // This changes the position of the game info string (lems, time limit, etc) - bookmark
+      // This changes the position of the game info string (lems, time limit, etc)
       if SpecialCombine then
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
@@ -1487,9 +1487,12 @@ begin
     if L.LemIsNeutral then Result := SNeutral;
     if L.LemIsZombie and L.LemIsNeutral then Result := SNeutralZombie;
   end else
-    if L.LemIsZombie then Result := 'Z-' + Result;
-    if L.LemIsNeutral then Result := 'N-' + Result;
-    if L.LemIsZombie and L.LemIsNeutral then Result := 'ZN-' + Result;
+    if L.LemIsZombie and not L.LemIsNeutral then
+      Result := 'Z-' + Result
+    else if L.LemIsNeutral and not L.LemIsZombie then
+      Result := 'N-' + Result
+    else if L.LemIsZombie and L.LemIsNeutral then
+      Result := 'ZN-' + Result;
 end;
 
 procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);
