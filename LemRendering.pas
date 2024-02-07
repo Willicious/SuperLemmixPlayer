@@ -57,8 +57,6 @@ type
     RenderInfoRec       : TRenderInfoRec;
     fTheme              : TNeoTheme;
     fHelperImages       : THelperImages;
-    //fVisualSFXImages    : TVisualSFXImages;
-    //fVisualSFXTimer     : Integer;
     fAni                : TBaseAnimationSet;
     fBgColor            : TColor32;
     fParticles          : TParticleTable; // All particle offsets
@@ -72,7 +70,6 @@ type
     fPhysicsRenderingType: TPhysicsRenderingType;
 
     fHelpersAreHighRes:   Boolean;
-    //fVisualSFXAreHighRes: Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
@@ -136,7 +133,6 @@ type
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
 
     procedure LoadHelperImages;
-    //procedure LoadVisualSFXImages;
 
     function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
@@ -155,11 +151,6 @@ type
     procedure DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
     procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
-
-    // VisualSFX rendering
-//    procedure DrawVisualSFXLemmings(L: TLemming);
-//    procedure DrawVisualSFXGadgets(G: TGadget);
-//    procedure UpdateVisualSFXTimer;
 
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
@@ -210,7 +201,6 @@ type
     property Theme: TNeoTheme read fTheme;
     property LemmingAnimations: TBaseAnimationSet read fAni;
     property IsFreezerExplosion: Boolean read fIsFreezerExplosion write fIsFreezerExplosion;
-    //property VisualSFXTimer: Integer read fVisualSFXTimer write fVisualSFXTimer;
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // For save state purposes
     property TerrainHighLayer: TBitmap32 read GetTerrainHighLayer;
@@ -374,9 +364,6 @@ begin
 
     DrawLemmingCountdown(LemmingList[i]);
     DrawBalloonPop(LemmingList[i]);
-
-    // Bookmark - not ready yet, but this is the place to call it from
-    //DrawVisualSFXLemmings(LemmingList[i]);
 
     if LemmingList[i].LemAction = baLasering then
       DrawLemmingLaser(LemmingList[i]);
@@ -2558,51 +2545,6 @@ begin
     fPhysicsRenderingType := prtStandard;
 end;
 
-//procedure TRenderer.UpdateVisualSFXTimer;
-//begin
-//  if VisualSFXTimer > 0 then
-//    Dec(fVisualSFXTimer);
-//end;
-
-//procedure TRenderer.DrawVisualSFXLemmings(L: TLemming);
-//var
-//  DrawX, DrawY: Integer;
-//begin
-//  // Set base drawing position at lem foot position
-//  DrawX := L.LemX;
-//  DrawY := L.LemY;
-//
-//  if (VisualSFXTimer > 0) and not L.LemIsPhysicsSimulation then
-//  begin
-//    if (L.LemAction in [baBuilding, baPlatforming, baStacking]) and (L.LemFrame > 10) then
-//      fVisualSFXImages[vfx_chink].DrawTo(fLayers[rlCountdown], DrawX, (DrawY - 20) * ResMod);
-//  end;
-//end;
-//
-//procedure TRenderer.DrawVisualSFXGadgets(G: TGadget);
-//var
-//  MO: TGadgetMetaAccessor;
-//  DrawX, DrawY: Integer;
-//  NudgeX: Integer;
-//begin
-//  MO := G.MetaObj;
-//
-//  // Set base drawing position in centre of object's trigger area
-//  DrawX := G.TriggerRect.Left + (G.TriggerRect.Width div 2);
-//  DrawY := G.TriggerRect.Top + (G.TriggerRect.Height div 2);
-//
-//  if VisualSFXTimer > 0 then
-//  begin
-//    case MO.TriggerEffect of
-//      DOM_WINDOW:
-//        begin
-//          NudgeX := fVisualSFXImages[vfx_letsgo].Width div 2;
-//          fVisualSFXImages[vfx_letsgo].DrawTo(fLayers[rlObjectHelpers], (DrawX - NudgeX) * ResMod, (DrawY + 4) * ResMod);
-//        end;
-//    end;
-//  end;
-//end;
-
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
 var
   MO: TGadgetMetaAccessor;
@@ -3137,31 +3079,6 @@ begin
   fHelpersAreHighRes := GameParams.HighResolution;
 end;
 
-//procedure TRenderer.LoadVisualSFXImages;
-//var
-//  i: TVisualSFX;
-//begin
-//  for i := Low(TVisualSFX) to High(TVisualSFX) do
-//  begin
-//    if i = vfx_blank then Continue;
-//    if fVisualSFXImages[i] <> nil then
-//      fVisualSFXImages[i].Free;
-//
-//    fVisualSFXImages[i] := TBitmap32.Create;
-//
-//    if GameParams.HighResolution and FileExists(AppPath + SFVisualSFXHighRes + VisualSFXFilenames[i]) then
-//      TPngInterface.LoadPngFile(AppPath + SFVisualSFXHighRes + VisualSFXFilenames[i], fVisualSFXImages[i])
-//    else
-//    if FileExists(AppPath + SFGraphicsHelpers + VisualSFXFilenames[i]) then
-//      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + VisualSFXFilenames[i], fVisualSFXImages[i]);
-//
-//    fVisualSFXImages[i].DrawMode := dmBlend;
-//    fVisualSFXImages[i].CombineMode := cmMerge;
-//  end;
-//
-//  fVisualSFXAreHighRes := GameParams.HighResolution;
-//end;
-
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
 var
   Dst: TBitmap32;
@@ -3280,9 +3197,6 @@ begin
 
     if DrawOtherHatchHelper and not GameParams.HideHelpers then
       DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
-
-    // Bookmark - not ready yet, but this is the place to call it from
-    //DrawVisualSFXGadgets(Gadget);
 
     if fUsefulOnly then
     begin
@@ -3879,9 +3793,6 @@ begin
 
   if GameParams.HighResolution <> fHelpersAreHighRes and not GameParams.HideHelpers then
     LoadHelperImages;
-
-//  if GameParams.HighResolution <> fVisualSFXAreHighRes then
-//    LoadVisualSFXImages;
 
   RenderInfoRec.Level := aLevel;
 
