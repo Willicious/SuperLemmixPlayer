@@ -48,10 +48,14 @@ type
     lblVersion: TLabel;
     cbRemoveSpecialLemmings: TCheckBox;
     cbRemovePreplaced: TCheckBox;
+    gbSuperlemming: TGroupBox;
+    cbActivateSuperlemming: TCheckBox;
+    cbDeactivateSuperlemming: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
     procedure cbLockRRClick(Sender: TObject);
+    procedure cbSuperlemmingClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
   private
     AppPath: String;
@@ -94,6 +98,15 @@ begin
   begin
     if Sender <> cbLockRR then cbLockRR.Checked := false;
     if Sender <> cbUnlockRR then cbUnlockRR.Checked := false;
+  end;
+end;
+
+procedure TFQuickmodMain.cbSuperlemmingClick(Sender: TObject);
+begin
+  if cbActivateSuperlemming.Checked and cbDeactivateSuperlemming.Checked then
+  begin
+    if Sender <> cbActivateSuperlemming then cbActivateSuperlemming.Checked := false;
+    if Sender <> cbDeactivateSuperlemming then cbDeactivateSuperlemming.Checked := false;
   end;
 end;
 
@@ -338,6 +351,9 @@ begin
         if (Trim(ThisLine) = 'SPAWN_INTERVAL_LOCKED') and (cbLockRR.Checked or cbUnlockRR.Checked) then
           SL[n] := '# ' + SL[n];
 
+        if (Trim(ThisLine) = 'SUPERLEMMING') and cbDeactivateSuperlemming.Checked then
+          SL[n] := '# ' + SL[n];
+
         if ((LeftStr(ThisLine, 2)) = 'ID') and cbChangeID.Checked then
         begin
           ThisLine := Trim(MidStr(ThisLine, 3, Length(ThisLine) - 2));
@@ -390,6 +406,7 @@ begin
     if cbLockRR.Checked then SL.Add('SPAWN_INTERVAL_LOCKED');
     if cbTimeLimit.Checked and (StrToIntDef(ebTimeLimit.Text, 0) >= 1) then
       SL.Add('TIME_LIMIT ' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
+    if cbActivateSuperlemming.Checked then SL.Add('SUPERLEMMING');
 
     if cbCustomSkillset.Checked then
     begin

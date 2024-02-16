@@ -218,5 +218,30 @@ object FQuickmodMain: TFQuickmodMain
     OnClick = btnApplyClick
     ExplicitTop = 361
   end
+  object gbSuperlemming: TGroupBox
+    Left = 24
+    Top = 294
+    Width = 217
+    Height = 43
+    Caption = 'Superlemming Mode'
+    TabOrder = 4
+    object cbActivateSuperlemming: TCheckBox
+      Left = 16
+      Top = 17
+      Width = 73
+      Height = 17
+      Caption = 'Activate'
+      TabOrder = 0
+      OnClick = cbSuperlemmingClick
+    end
+    object cbDeactivateSuperlemming: TCheckBox
+      Left = 103
+      Top = 17
+      Width = 90
+      Height = 17
+      Caption = 'Deactivate'
+      TabOrder = 1
+      OnClick = cbSuperlemmingClick
+    end
   end
 end
