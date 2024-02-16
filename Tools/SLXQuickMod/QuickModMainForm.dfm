@@ -5,7 +5,7 @@ object FQuickmodMain: TFQuickmodMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'SuperLemmix QuickMod'
-  ClientHeight = 365
+  ClientHeight = 396
   ClientWidth = 556
   Color = clBtnFace
   DoubleBuffered = True
@@ -19,7 +19,7 @@ object FQuickmodMain: TFQuickmodMain
   OnCreate = FormCreate
   DesignSize = (
     556
-    365)
+    396)
   PixelsPerInch = 96
   TextHeight = 13
   object lblPack: TLabel
@@ -31,7 +31,7 @@ object FQuickmodMain: TFQuickmodMain
   end
   object lblVersion: TLabel
     Left = 515
-    Top = 344
+    Top = 375
     Width = 22
     Height = 13
     Alignment = taRightJustify
@@ -53,10 +53,11 @@ object FQuickmodMain: TFQuickmodMain
     Left = 8
     Top = 34
     Width = 257
-    Height = 292
+    Height = 323
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
+    ExplicitHeight = 321
     object cbLemCount: TCheckBox
       Left = 16
       Top = 24
@@ -116,7 +117,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbLockRR: TCheckBox
       Left = 32
-      Top = 105
+      Top = 101
       Width = 81
       Height = 17
       Caption = 'Lock All RR'#39's'
@@ -125,7 +126,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbUnlockRR: TCheckBox
       Left = 119
-      Top = 105
+      Top = 101
       Width = 90
       Height = 17
       Caption = 'Unlock All RR'#39's'
@@ -134,7 +135,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbTimeLimit: TCheckBox
       Left = 16
-      Top = 133
+      Top = 129
       Width = 130
       Height = 17
       Caption = 'Set Time Limit:'
@@ -143,7 +144,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebTimeLimit: TEdit
       Left = 152
-      Top = 131
+      Top = 127
       Width = 57
       Height = 21
       Enabled = False
@@ -153,7 +154,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemoveTalismans: TCheckBox
       Left = 16
-      Top = 160
+      Top = 156
       Width = 130
       Height = 17
       Caption = 'Remove Talismans'
@@ -162,7 +163,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbChangeID: TCheckBox
       Left = 16
-      Top = 241
+      Top = 237
       Width = 130
       Height = 17
       Caption = 'Change Level IDs'
@@ -171,7 +172,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemoveSpecialLemmings: TCheckBox
       Left = 16
-      Top = 214
+      Top = 210
       Width = 217
       Height = 17
       Caption = 'Remove Zombies, Neutrals, Lem Caps'
@@ -180,7 +181,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemovePreplaced: TCheckBox
       Left = 16
-      Top = 187
+      Top = 183
       Width = 161
       Height = 17
       Caption = 'Remove Preplaced Lemmings'
@@ -192,7 +193,7 @@ object FQuickmodMain: TFQuickmodMain
     Left = 279
     Top = 34
     Width = 269
-    Height = 292
+    Height = 323
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Level Skillset'
     TabOrder = 2
@@ -208,12 +209,14 @@ object FQuickmodMain: TFQuickmodMain
   end
   object btnApply: TButton
     Left = 76
-    Top = 332
+    Top = 363
     Width = 388
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 361
+  end
   end
 end

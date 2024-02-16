@@ -4,15 +4,16 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes, StrUtils;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes, StrUtils,
+  Vcl.ExtCtrls;
 
 const
-  SKILL_COUNT = 24;
+  SKILL_COUNT = 26;
   SKILLS: array[0..SKILL_COUNT-1] of String =
-   ('Walker', 'Jumper', 'Shimmier', 'Slider',
-    'Climber', 'Swimmer', 'Floater', 'Glider',
-    'Disarmer', 'Timebomber', 'Bomber', 'Freezer',
-    'Blocker', 'Platformer', 'Builder', 'Stacker',
+   ('Walker', 'Jumper', 'Shimmier', 'Ballooner',
+    'Slider', 'Climber', 'Swimmer', 'Floater', 'Glider', 'Disarmer',
+    'Timebomber', 'Bomber', 'Freezer', 'Blocker',
+    'Ladderer', 'Platformer', 'Builder', 'Stacker',
     'Spearer', 'Grenader', 'Laserer', 'Basher',
     'Fencer', 'Miner', 'Digger', 'Cloner');
 
