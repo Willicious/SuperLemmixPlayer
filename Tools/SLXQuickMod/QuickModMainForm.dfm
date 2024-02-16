@@ -36,7 +36,7 @@ object FQuickmodMain: TFQuickmodMain
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v1.0'
+    Caption = 'v1.1'
     ExplicitLeft = 453
     ExplicitTop = 330
   end
