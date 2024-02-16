@@ -408,8 +408,14 @@ begin
       SL.Add('TIME_LIMIT ' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
     if cbActivateSuperlemming.Checked then SL.Add('SUPERLEMMING');
 
+    if cbRemoveTalismans.Checked then SL.Add('# TALISMANS REMOVED');
+    if cbRemoveSpecialLemmings.Checked then SL.Add('# SPECIAL LEMS REMOVED');
+    if cbRemovePreplaced.Checked then SL.Add('# PRE-PLACED LEMS REMOVED');
+    if cbDeactivateSuperlemming.Checked then SL.Add('# SUPERLEMMING DEACTIVATED');
+
     if cbCustomSkillset.Checked then
     begin
+      SL.Add('# SKILLSET CHANGED:');
       SL.Add('$SKILLSET');
 
       for i := 0 to SKILL_COUNT-1 do
