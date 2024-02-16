@@ -62,6 +62,7 @@ type
 
     fSkillInputs: TSkillInputs;
     fPackList: TStringList;
+    fProcessCompletedSuccessfully: Boolean;
 
     procedure BuildPackList;
     procedure LoadPackInfo(aPackFolder: String);
@@ -124,6 +125,7 @@ begin
   Randomize;
   fPackList := TStringList.Create;
   AppPath := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+  fProcessCompletedSuccessfully := False;
 end;
 
 destructor TFQuickmodMain.Destroy;
@@ -247,7 +249,11 @@ end;
 
 procedure TFQuickmodMain.ApplyChanges;
 begin
+  fProcessCompletedSuccessfully := False;
   RecursiveFindLevels(fPackList.Names[cbPack.ItemIndex]);
+
+  if fProcessCompletedSuccessfully then
+  ShowMessage('Done!');
 end;
 
 procedure TFQuickmodMain.RecursiveFindLevels(aBaseFolder: String);
@@ -277,6 +283,8 @@ begin
       FindClose(SearchRec);
     end;
   end;
+
+  fProcessCompletedSuccessfully := True;
 end;
 
 procedure TFQuickmodMain.ApplyChangesToLevelFile(aFile: String);
