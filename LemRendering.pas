@@ -115,6 +115,7 @@ type
     procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
     procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawUserHelper;
+    procedure MakeColorCycle;
     function IsUseful(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
@@ -3026,10 +3027,14 @@ var
   BMP: TBitmap32;
   DrawPoint: TPoint;
 begin
+  MakeColorCycle;
+
   BMP := fHelperImages[fRenderInterface.UserHelper];
   DrawPoint := fRenderInterface.MousePos;
   DrawPoint.X := DrawPoint.X - (BMP.Width div 2 div ResMod);
   DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2 div ResMod);
+  BMP.DrawMode := dmCustom;
+  BMP.OnPixelCombine := CombineFixedColor;
   BMP.DrawTo(fLayers[rlObjectHelpers], DrawPoint.X * ResMod, DrawPoint.Y * ResMod);
   fLayers.fIsEmpty[rlObjectHelpers] := false;
 end;
@@ -3137,20 +3142,20 @@ begin
   end;
 end;
 
+procedure TRenderer.MakeColorCycle;
+var
+  H: Integer;
+begin
+  H := GetTickCount mod 5000;
+  fFixedDrawColor := HSVToRGB(H / 5000, 1, 0.75);
+end;
+
 procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
   function IsCursorOnGadget(Gadget: TGadget): Boolean;
   begin
     // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
     Result := PtInRect(Rect(Gadget.Left - 4, Gadget.Top + 1, Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height + 3),
                       fRenderInterface.MousePos)
-  end;
-
-  procedure MakeFixedDrawColor;
-  var
-    H: Integer;
-  begin
-    H := GetTickCount mod 5000;
-    fFixedDrawColor := HSVToRGB(H / 5000, 1, 0.75);
   end;
 
 var
@@ -3164,7 +3169,7 @@ begin
   fUsefulOnly := UsefulOnly;
 
   if fUsefulOnly then
-    MakeFixedDrawColor;
+    MakeColorCycle;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
