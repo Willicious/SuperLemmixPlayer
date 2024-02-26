@@ -3031,7 +3031,7 @@ begin
 
   BMP := fHelperImages[fRenderInterface.UserHelper];
   DrawPoint := fRenderInterface.MousePos;
-  DrawPoint.X := DrawPoint.X - (BMP.Width div 2 div ResMod);
+  DrawPoint.X := DrawPoint.X;
   DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2 div ResMod);
   BMP.DrawMode := dmCustom;
   BMP.OnPixelCombine := CombineFixedColor;
