@@ -70,7 +70,7 @@ begin
   inherited;
 
   // Set to true as default; change to false if any failure.
-  fLoadSuccess := true;
+  fLoadSuccess := True;
 
   SoundManager := TSoundManager.Create;
   SoundManager.LoadDefaultSounds;  

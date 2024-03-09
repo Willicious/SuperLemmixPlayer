@@ -3,7 +3,7 @@
         <ProjectGuid>{EA531DB2-6C15-4E5E-93B1-7AA1776E0F35}</ProjectGuid>
         <MainSource>SuperLemmix.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">RC Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -284,20 +284,18 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="SharedGlobals.pas"/>
         <DCCReference Include="FStyleManager.pas">
             <Form>FManageStyles</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="LemMenuFont.pas"/>
         <DCCReference Include="GameBaseMenuScreen.pas"/>
         <DCCReference Include="GameMenuScreen.pas"/>
         <DCCReference Include="FLevelInfo.pas">
             <Form>LevelInfoPanel</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="FReplayRename.pas">
             <Form>FReplayNaming</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="LemProjectile.pas"/>
+        <DCCReference Include="FLevelListDialog.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -338,6 +336,12 @@ $(PreBuildEvent)]]></PreBuildEvent>
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
+                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>SuperLemmix.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="RC Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
@@ -345,12 +349,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Release" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>SuperLemmix.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
                         <Overwrite>true</Overwrite>
