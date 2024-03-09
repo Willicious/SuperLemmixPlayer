@@ -2,10 +2,6 @@
 
 program SuperLemmix;
 
-
-
-
-
 uses
   Windows,
   LemRes,
@@ -72,7 +68,8 @@ uses
   GameMenuScreen in 'GameMenuScreen.pas',
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
   FReplayRename in 'FReplayRename.pas' {FReplayNaming},
-  LemProjectile in 'LemProjectile.pas';
+  LemProjectile in 'LemProjectile.pas',
+  FLevelListDialog in 'FLevelListDialog.pas';
 
 {$R *.res}
 
@@ -80,6 +77,7 @@ begin
   {$ifdef debug}
   ReportMemoryLeaksOnShutdown := True;
   {$endif}
+
   Application.Initialize;
   Application.Title := 'SuperLemmix';
   Application.CreateForm(TMainForm, MainForm);

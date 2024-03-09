@@ -31,8 +31,8 @@ type
     property ScreenIsClosing: Boolean read fScreenIsClosing;
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
 
-    function LoadReplay: Boolean;
   public
+    function LoadReplay: Boolean;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     //procedure FadeIn;
@@ -216,30 +216,38 @@ var
   end;
 begin
   s := '';
-  Dlg := TOpenDialog.Create(self);
-  try
-    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := 'SuperLemmix Replay File (*.nxrp)|*.nxrp';
-    Dlg.FilterIndex := 1;
-    if LastReplayDir = '' then
-    begin
-      Dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath + 'Replay\';
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath;
-    end else
-      Dlg.InitialDir := LastReplayDir;
-    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
-    if Dlg.execute then
-    begin
-      s:=Dlg.filename;
-      LastReplayDir := ExtractFilePath(s);
-      Result := true;
-    end else
-      Result := false;
-  finally
-    Dlg.Free;
+
+  if OpenedViaReplay then
+  begin
+    s := LoadedReplayFile;
+
+  end else begin
+
+    Dlg := TOpenDialog.Create(self);
+    try
+      Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
+      Dlg.Filter := 'SuperLemmix Replay File (*.nxrp)|*.nxrp';
+      Dlg.FilterIndex := 1;
+      if LastReplayDir = '' then
+      begin
+        Dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
+        if not DirectoryExists(Dlg.InitialDir) then
+          Dlg.InitialDir := AppPath + 'Replay\';
+        if not DirectoryExists(Dlg.InitialDir) then
+          Dlg.InitialDir := AppPath;
+      end else
+        Dlg.InitialDir := LastReplayDir;
+      Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
+      if Dlg.execute then
+      begin
+        s:=Dlg.filename;
+        LastReplayDir := ExtractFilePath(s);
+        Result := true;
+      end else
+        Result := false;
+    finally
+      Dlg.Free;
+    end;
   end;
 
   if s <> '' then

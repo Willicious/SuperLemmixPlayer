@@ -47,6 +47,7 @@ type
     procedure ShowReplayCheckScreen;
     function Execute: Boolean;
     procedure FreeScreen;
+    procedure CheckIfOpenedViaReplay;
 
     property LoadSuccess: Boolean read fLoadSuccess; // Bookmark - currently unused! - remove?
   end;
@@ -122,6 +123,25 @@ begin
     IsHalting := true;
     GameParams.NextScreen := gstExit;
   end;
+
+  OpenedViaReplay := False;
+  CheckIfOpenedViaReplay;
+
+  if OpenedViaReplay then
+  begin
+    GameParams.FindLevelByID(LoadedReplayID);
+
+    if not GameParams.MatchFound then
+    begin
+      GameParams.NextScreen := gstMenu;
+      Exit;
+    end;
+
+    GameParams.LoadCurrentLevel();
+    GameParams.NextScreen := gstPreview;
+    fActiveForm.LoadReplay;
+    OpenedViaReplay := False;
+  end;
 end;
 
 destructor TAppController.Destroy;
@@ -147,6 +167,66 @@ begin
   end;
 
   inherited;
+end;
+
+// Check if the program was activated by opening an .nxrp file
+procedure TAppController.CheckIfOpenedViaReplay;
+    // Find and extract the level ID within the replay file
+    function GetLevelID(const nxrpFilePath: string): string;
+    var
+      nxrpFileContent: TStringList;
+      line: string;
+      idPos: Integer;
+    begin
+      Result := '';
+
+      nxrpFileContent := TStringList.Create;
+      try
+        nxrpFileContent.LoadFromFile(nxrpFilePath);
+
+        for line in nxrpFileContent do
+        begin
+          if Pos('ID', line) = 1 then
+          begin
+            idPos := Pos(' ', line);
+            if idPos > 0 then
+            begin
+              Result := Trim(Copy(line, idPos + 1, Length(line)));
+              Break;
+            end;
+          end;
+        end;
+      finally
+        nxrpFileContent.Free;
+      end;
+    end;
+var
+  CommandLine: string;
+  i: Integer;
+  aReplayFile: string;
+  ID: string;
+begin
+  CommandLine := GetCommandLine;
+  if Pos('.nxrp', CommandLine) > 0 then
+  begin
+    for i := 1 to ParamCount do
+    begin
+      aReplayFile := ParamStr(i);
+      if LowerCase(ExtractFileExt(aReplayFile)) = '.nxrp' then
+      begin
+        ID := GetLevelID(aReplayFile);
+
+        if ID <> '' then
+        begin
+          LoadedReplayID := ID;
+          LoadedReplayFile := aReplayFile;
+          OpenedViaReplay := True;
+        end else
+          ShowMessage('Level ID not found');
+        Break;
+      end;
+    end;
+  end;
 end;
 
 procedure TAppController.FreeScreen;

@@ -14,16 +14,20 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys,
   Math,
-  Dialogs, SysUtils, StrUtils, IOUtils, Classes, Forms, GR32,
+  Dialogs, StdCtrls, SysUtils, StrUtils, IOUtils, Classes, Forms, GR32, Types,
   LemVersion,
   LemTypes, LemLevel,
-  LemStrings,
+  LemStrings, FLevelListDialog,
   LemRendering;
 
 var                   // Bookmark - is this still needed?
   IsHalting: Boolean; { ONLY used during AppController's init routines. Don't use this anywhere else.
                         Shouldn't even be used there really, but a kludgy fix is okay since that's gonna
                         be replaced once proper level select menus are introduced. }
+
+  OpenedViaReplay: Boolean;
+  LoadedReplayFile: string;
+  LoadedReplayID: string;
 
 type
   TGameResultsRec = record
@@ -121,6 +125,7 @@ type
 
   TDosGameParams = class(TPersistent)
   private
+    fMatchFound: Boolean;
     fDisableSaveOptions: Boolean;
     fSaveCriticality: TGameParamsSaveCriticality;
 
@@ -218,10 +223,12 @@ type
     procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // Loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = false); // Re-prepares using the existing TLevel in memory
+    procedure FindLevelByID(LevelID: string);
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
+    property MatchFound: Boolean read fMatchFound write fMatchFound;
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
@@ -680,6 +687,86 @@ begin
   end;
 
   SL.Free;
+end;
+
+// Procedure to find and load a level by its ID
+procedure TDosGameParams.FindLevelByID(LevelID: string);
+var
+  LevelFiles: TStringDynArray;
+  RootDir: string;
+  MatchingFiles: TStringList;
+  aFileName: string;
+  i: Integer;
+  FileContent: TStringList;
+  LevelDialog: TFLevelListDialog;
+begin
+  // Get the directory containing the executable
+  RootDir := ExtractFilePath(ParamStr(0));
+
+  // Search for .nxlv files in the root directory and all subdirectories
+  LevelFiles := TDirectory.GetFiles(RootDir, '*.nxlv', TSearchOption.soAllDirectories);
+
+  MatchFound := False;
+
+  if Length(LevelFiles) > 0 then
+  begin
+    MatchFound := True;
+    MatchingFiles := TStringList.Create;
+
+    try
+      // Check each .nxlv file for matching LevelID
+      for i := 0 to Length(LevelFiles) - 1 do
+      begin
+        FileContent := TStringList.Create;
+        try
+          FileContent.LoadFromFile(LevelFiles[i]);
+
+          // Check if the current file contains the Level ID
+          if Pos('ID ' + LevelID, FileContent.Text) > 0 then
+            MatchingFiles.Add(LevelFiles[i]);
+        finally
+          FileContent.Free;
+        end;
+      end;
+
+      // If no matching files found, show message
+      if MatchingFiles.Count = 0 then
+      begin
+        ShowMessage('No .nxlv files found with Level ID: ' + LevelID);
+        Exit;
+      end
+      // If only one matching file is found, load it directly
+      else if MatchingFiles.Count = 1 then
+        aFileName := MatchingFiles[0]
+      else
+      begin
+        // If multiple matching files are found, show level select dialog
+        LevelDialog := TFLevelListDialog.Create(nil);
+        try
+          for i := 0 to MatchingFiles.Count - 1 do
+            LevelDialog.ListBoxFiles.Items.Add(ExtractFileName(MatchingFiles[i]));
+
+          // Show the dialog
+          if LevelDialog.ShowModal = mrOk then
+            aFileName := MatchingFiles[LevelDialog.ListBoxFiles.ItemIndex]
+          else
+            MatchFound := False;
+        finally
+          LevelDialog.Free;
+        end;
+      end;
+
+      if not MatchFound then Exit;
+
+      // Set the Filename to the selected level file
+      CurrentLevel.Filename := aFileName;
+      SetLevel(CurrentLevel);
+    finally
+      MatchingFiles.Free;
+    end;
+  end
+  else
+    ShowMessage('No .nxlv files found in directory: ' + RootDir);
 end;
 
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
