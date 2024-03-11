@@ -88,6 +88,7 @@ type
     function MinimapRect: TRect; virtual; abstract;
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
+    function ReplayMarkRect: TRect; virtual; abstract;
 
     function FirstSkillButtonIndex: Integer; virtual;
     function LastSkillButtonIndex: Integer; virtual;
@@ -1657,6 +1658,10 @@ var
   i: TSkillPanelButton;
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
+
+  // Cancel replay if the "R" icon is clicked
+  if PtInRect(ReplayMarkRect, MousePos(X, Y)) then
+    Game.RegainControl(true);
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
     we do want the Rewind and Turbo keys to respond }

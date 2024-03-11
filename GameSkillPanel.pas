@@ -18,6 +18,7 @@ type
 
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
+    function ReplayMarkRect: TRect; override;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
@@ -84,6 +85,12 @@ begin
   begin
     Result := Rect(355 * ResMod, 2 * ResMod, 440 * ResMod, 36 * ResMod);
   end;
+end;
+
+// Assigns a clickable rectangle to the replay "R" icon
+function TSkillPanelStandard.ReplayMarkRect: TRect;
+begin
+  Result := Rect(106 * ResMod, 2 * ResMod, 116 * ResMod, 16 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
