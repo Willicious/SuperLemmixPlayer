@@ -177,7 +177,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 45;
+  NUM_FONT_CHARS = 49;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -538,7 +538,17 @@ begin
   // Load now the icons for the text panel
   GetGraphic('panel_icons.png', fIconBmp);
   SrcRect := Rect(0, 0, 12 * ResMod, 16 * ResMod);
-  for i := 38 to NUM_FONT_CHARS - 1 do
+  for i := 38 to 44 do
+  begin
+    fInfoFont[i].SetSize(12 * ResMod, 16 * ResMod);
+    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+    OffsetRect(SrcRect, 12 * ResMod, 0);
+  end;
+
+  // Load now the replay icons for the text panel        //boook
+  GetGraphic('replay_icons.png', fIconBmp);
+  SrcRect := Rect(0, 0, 12 * ResMod, 16 * ResMod);
+  for i := 45 to NUM_FONT_CHARS - 1 do
   begin
     fInfoFont[i].SetSize(12 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -1337,11 +1347,11 @@ begin
     New := fNewDrawStr[i];
 
     case New of
-      '%':        CharID := 0;
-      '0'..'9':   CharID := ord(New) - ord('0') + 1;
-      '-':        CharID := 11;
-      'A'..'Z':   CharID := ord(New) - ord('A') + 12;
-      #91 .. #97: CharID := ord(New) - ord('A') + 12;
+      '%':         CharID := 0;
+      '0'..'9':    CharID := ord(New) - ord('0') + 1;
+      '-':         CharID := 11;
+      'A'..'Z':    CharID := ord(New) - ord('A') + 12;
+      #91 .. #101: CharID := ord(New) - ord('A') + 12;
     else CharID := -1;
     end;
 
@@ -1499,7 +1509,7 @@ procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);
 var
   S: string;
 const
-  LEN = 12;
+  LEN = 14;
 begin
   S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
   if S = '' then
@@ -1591,13 +1601,31 @@ begin
 end;
 
 procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
+var
+  TickCount: Cardinal;
+  FrameIndex: Integer;
 begin
+  // Calculate the frame index based on the tick count
+  TickCount := GetTickCount;
+  FrameIndex := (TickCount div 500) mod 2;
+
+  //boook
+
   if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     fNewDrawStr[Pos] := ' '
   else if Game.ReplayInsert then
-    fNewDrawStr[Pos] := #97 // Blue "R"
-  else if not fRRIsPressed then
-    fNewDrawStr[Pos] := #91; // Red "R"
+  begin
+    case FrameIndex of
+      0: fNewDrawStr[Pos] := #100; // Blue "R"
+      1: fNewDrawStr[Pos] := #101;
+    end;
+  end else if not fRRIsPressed then
+  begin
+    case FrameIndex of
+      0: fNewDrawStr[Pos] := #98; // Red "R"
+      1: fNewDrawStr[Pos] := #99;
+    end;
+  end;
 end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
