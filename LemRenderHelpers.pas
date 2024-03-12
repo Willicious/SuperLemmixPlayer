@@ -57,7 +57,6 @@ type
                   rlTerrain,
                   rlFreezerLow,
                   rlFreezerHigh,
-                  rlTerrainHigh,
                   rlOnTerrainGadgets,
                   rlOneWayArrows,
                   rlGadgetsHigh,
@@ -482,7 +481,6 @@ begin
   // Always draw rlBackground, rlTerrain, rlCountdown and rlLemmings
   fIsEmpty[rlBackground] := False;
   fIsEmpty[rlTerrain] := False;
-  fIsEmpty[rlTerrainHigh] := False;
   fIsEmpty[rlCountdown] := False;
   fIsEmpty[rlLemmingsLow] := False;
   fIsEmpty[rlLemmingsHigh] := False;
@@ -614,7 +612,7 @@ begin
     if aClearPhysics and (i in [rlBackground, rlOnTerrainGadgets, rlGadgetsHigh]) then
       Continue; // We don't want to draw the first two in Clear Physics mode; while the latter has special handling
 
-    if aClearPhysics and (i in [rlTerrain, rlTerrainHigh]) then
+    if aClearPhysics and (i = rlTerrain) then
     begin // We want to draw based on physics map, not graphical map, in this case
       Items[rlGadgetsHigh].DrawTo(aDst, aRegion, aRegion); // We want it behind terrain
       DrawClearPhysicsTerrain(aDst, aRegion);

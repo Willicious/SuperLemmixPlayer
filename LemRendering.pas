@@ -2027,8 +2027,8 @@ end;
 procedure TRenderer.AddFreezer(X, Y: Integer);
 begin
   fAni.LemmingAnimations[ICECUBE].DrawMode := dmCustom;
-  fAni.LemmingAnimations[ICECUBE].OnPixelCombine := CombineTerrainNoOverwrite;
-  fAni.LemmingAnimations[ICECUBE].DrawTo(fLayers[rlTerrainHigh], X * ResMod, Y * ResMod);
+  fAni.LemmingAnimations[ICECUBE].OnPixelCombine := CombineTerrainDefault;
+  fAni.LemmingAnimations[ICECUBE].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
 end;
 
 function TRenderer.FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
