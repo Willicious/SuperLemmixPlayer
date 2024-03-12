@@ -311,8 +311,6 @@ begin
   if not fLayers.fIsEmpty[rlCountdown] then fLayers[rlCountdown].Clear(0);
   if not fLayers.fIsEmpty[rlLemmingsLow] then fLayers[rlLemmingsLow].Clear(0);
   if not fLayers.fIsEmpty[rlLemmingsHigh] then fLayers[rlLemmingsHigh].Clear(0);
-  if not fLayers.fIsEmpty[rlFreezerLow] then fLayers[rlFreezerLow].Clear(0);
-  if not fLayers.fIsEmpty[rlFreezerHigh] then fLayers[rlFreezerHigh].Clear(0);
 
   LemmingList := fTempLemmingList;
 
@@ -493,11 +491,6 @@ begin
   if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing,
                             baFreezerExplosion, baOhNoing, baExploding,
                             baTimebombing, baTimebombFinish] then
-    SrcAnim.DrawTo(fLayers[rlFreezerLow], DstRect, SrcRect)
-
-  // Explosion graphics or about-to-explode lems are drawn behind active lems
-  else if aLemming.LemAction in [baFreezerExplosion, baOhNoing, baExploding,
-                                 baTimebombing, baTimebombFinish] then
     SrcAnim.DrawTo(fLayers[rlLemmingsLow], DstRect, SrcRect)
   else
     SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
@@ -753,9 +746,9 @@ begin
     FrameRect.Bottom := FrameRect.Top + (54 * ResMod);
 
     if L.LemDX < 0 then      // In front of terrain, and behind all lems except Freezers
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
+      fAni.BalloonPopBitmap.DrawTo(fLayers[rlLemmingsLow], (L.LemX - 27) * ResMod, (L.LemY - 53) * ResMod, FrameRect)
     else
-      fAni.BalloonPopBitmap.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
+      fAni.BalloonPopBitmap.DrawTo(fLayers[rlLemmingsLow], (L.LemX - 26) * ResMod, (L.LemY - 53) * ResMod, FrameRect);
   end;
 end;
 
