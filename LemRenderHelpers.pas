@@ -53,7 +53,6 @@ type
                   rlBackgroundObjects,
                   rlGadgetsLow,
                   rlShadowsLow,
-                  rlProjectiles,
                   rlTerrain,
                   rlFreezerLow,
                   rlFreezerHigh,

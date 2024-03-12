@@ -1128,17 +1128,8 @@ procedure TRenderer.DrawProjectiles;
 var
   i: Integer;
 begin
-  if (fRenderInterface = nil) or (fRenderInterface.ProjectileList = nil) or
-     (fRenderInterface.ProjectileList.Count = 0) then
-  begin
-    fLayers.fIsEmpty[rlProjectiles] := true;
-  end else begin
-    fLayers.fIsEmpty[rlProjectiles] := false;
-    fLayers[rlProjectiles].Clear(0);
-
-    for i := 0 to fRenderInterface.ProjectileList.Count-1 do
-      DrawThisProjectile(fRenderInterface.ProjectileList[i]);
-  end;
+  for i := 0 to fRenderInterface.ProjectileList.Count-1 do
+    DrawThisProjectile(fRenderInterface.ProjectileList[i]);
 end;
 
 procedure TRenderer.DrawThisProjectile(P: TProjectile);
@@ -1185,9 +1176,9 @@ begin
     if P.GrenadeGraphic = pgGrenadeExplode then
       fAni.GrenadeBitmap.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
     else
-      fAni.GrenadeBitmap.DrawTo(fLayers[rlProjectiles], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
+      fAni.GrenadeBitmap.DrawTo(fLayers[rlGadgetsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
   end else
-    fAni.SpearBitmap.DrawTo(fLayers[rlProjectiles], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
+    fAni.SpearBitmap.DrawTo(fLayers[rlGadgetsLow], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
