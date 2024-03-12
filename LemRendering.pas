@@ -899,7 +899,7 @@ end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
 var
-  PhysicsArrPtr, TerrLayerArrPtr, TerrHighLayerArrPtr: PColor32Array;
+  PhysicsArrPtr, TerrLayerArrPtr: PColor32Array;
   cx, cy: Integer;
   MapWidth: Integer; // Width of the total PhysicsMap
 begin
@@ -930,14 +930,8 @@ begin
           TerrLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2)] := 0;
           TerrLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2) + 1] := 0;
 
-          TerrHighLayerArrPtr[(cy * MapWidth * 4) + (cx * 2)] := 0;
-          TerrHighLayerArrPtr[(cy * MapWidth * 4) + (cx * 2) + 1] := 0;
-          TerrHighLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2)] := 0;
-          TerrHighLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2) + 1] := 0;
-        end else begin
+        end else
           TerrLayerArrPtr[cy * MapWidth + cx] := 0;
-          TerrHighLayerArrPtr[cy * MapWidth + cx] := 0;
-        end;
       end;
     end;
   end;
@@ -2010,6 +2004,8 @@ begin
     Target.Y := Target.Y * 2;
   end;
 
+  fAni.SpearBitmap.DrawMode := dmCustom;
+  fAni.SpearBitmap.OnPixelCombine := CombineTerrainNoOverwrite;
   fAni.SpearBitmap.DrawTo(fLayers[rlTerrain], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
 
