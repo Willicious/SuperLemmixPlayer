@@ -711,9 +711,9 @@ begin
   FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
 
   if L.LemDX < 0 then
-    fAni.FreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
   else
-    fAni.FreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
+    fAni.FreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawUnfreezingOverlay(L: TLemming);
@@ -729,9 +729,9 @@ begin
   FrameRect.Bottom := FrameRect.Top + (10 * ResMod);
 
   if L.LemDX < 0 then
-    fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 8) * ResMod, (L.LemY - 10) * ResMod, FrameRect)
   else
-    fAni.UnfreezingOverlay.DrawTo(fLayers[rlFreezerHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
+    fAni.UnfreezingOverlay.DrawTo(fLayers[rlLemmingsHigh], (L.LemX - 7) * ResMod, (L.LemY - 10) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawBalloonPop(L: TLemming);
