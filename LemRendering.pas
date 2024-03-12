@@ -385,7 +385,7 @@ var
   TriggerLeft, TriggerTop: Integer;
   i: Integer;
 
-  Selected: Boolean;
+  Selected, Highlit: Boolean;
 
   function GetFrameBounds: TRect;
   begin
@@ -432,6 +432,11 @@ begin
   if aLemming.LemRemoved then Exit;
   if aLemming.LemTeleporting then Exit;
 
+  if fRenderInterface.HighlitLemming <> nil then
+    Highlit := aLemming = fRenderInterface.HighlitLemming
+  else
+    Highlit := false;
+
   if fRenderInterface <> nil then
     Selected := aLemming = fRenderInterface.SelectedLemming
   else
@@ -440,7 +445,7 @@ begin
   UsefulOnly := UsefulOnly and Selected; // Not sure why this is needed. Probably "UsefulOnly" is a bad variable name.
 
   Recolorer.Lemming := aLemming;
-  Recolorer.DrawAsSelected := Selected;
+  Recolorer.DrawAsSelected := Selected or Highlit;
   Recolorer.ClearPhysics := fUsefulOnly;
 
   // Get the animation and meta-animation
