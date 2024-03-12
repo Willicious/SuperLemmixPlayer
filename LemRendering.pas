@@ -1202,8 +1202,8 @@ var
 const
   MAX_FRAME_COUNT = 510; // 30 in-game seconds
 begin
-  fLayers.fIsEmpty[rlLowShadows] := false;
-  fLayers.fIsEmpty[rlHighShadows] := false;
+  fLayers.fIsEmpty[rlShadowsLow] := false;
+  fLayers.fIsEmpty[rlShadowsHigh] := false;
   FrameCount := 0;
   LemPosArray := nil;
 
@@ -1243,8 +1243,8 @@ var
 const
   MAX_FRAME_COUNT = 2000;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := false;
-  fLayers.fIsEmpty[rlHighShadows] := false;
+  fLayers.fIsEmpty[rlShadowsLow] := false;
+  fLayers.fIsEmpty[rlShadowsHigh] := false;
   FrameCount := 0;
   LemPosArray := nil;
 
@@ -1277,8 +1277,8 @@ var
 const
   MAX_FRAME_COUNT = 2000;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := false;
-  fLayers.fIsEmpty[rlHighShadows] := false;
+  fLayers.fIsEmpty[rlShadowsLow] := false;
+  fLayers.fIsEmpty[rlShadowsHigh] := false;
   FrameCount := 0;
   LemPosArray := nil;
 
@@ -1312,7 +1312,7 @@ const
   MAX_FRAME_COUNT = 2000;
 begin
   // Set ShadowLayer to be drawn
-  fLayers.fIsEmpty[rlLowShadows] := False;
+  fLayers.fIsEmpty[rlShadowsLow] := False;
   // Initialize FrameCount
   FrameCount := 0;
   // Initialize LemPosArray
@@ -1349,7 +1349,7 @@ var
 const
   MAX_FRAME_COUNT = 2000;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := false;
+  fLayers.fIsEmpty[rlShadowsLow] := false;
   FrameCount := 0;
   LemPosArray := nil;
 
@@ -1379,7 +1379,7 @@ var
   DoneThisCycle: Boolean;
   SavePhysicsMap: TBitmap32;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := False;
+  fLayers.fIsEmpty[rlShadowsLow] := False;
   DoneThisCycle := false;
 
   // Make a deep copy of the PhysicsMap
@@ -1419,7 +1419,7 @@ const
                        (2, 2), (3, 2),(4, 2)
                );
 begin
-  fLayers.fIsEmpty[rlLowShadows] := False;
+  fLayers.fIsEmpty[rlShadowsLow] := False;
 
   PosX := L.LemX + L.LemDX;
   PosY := L.LemY;
@@ -1469,7 +1469,7 @@ var
   i: Integer;
   SavePhysicsMap: TBitmap32;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := False;
+  fLayers.fIsEmpty[rlShadowsLow] := False;
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1496,7 +1496,7 @@ var
   YOffset: Integer;
   SavePhysicsMap: TBitmap32;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := False;
+  fLayers.fIsEmpty[rlShadowsLow] := False;
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1544,7 +1544,7 @@ var
   BashPosX, BashPosY, BashPosDx: Integer;
   SavePhysicsMap: TBitmap32;
 begin
-  fLayers.fIsEmpty[rlHighShadows] := False;
+  fLayers.fIsEmpty[rlShadowsHigh] := False;
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1601,7 +1601,7 @@ var
   SavePhysicsMap: TBitmap32;
   CurFrameCount: Integer;
 begin
-  fLayers.fIsEmpty[rlHighShadows] := False;
+  fLayers.fIsEmpty[rlShadowsHigh] := False;
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1666,7 +1666,7 @@ var
   SavePhysicsMap: TBitmap32;
   CurFrameCount: Integer;
 begin
-  fLayers.fIsEmpty[rlHighShadows] := False;
+  fLayers.fIsEmpty[rlShadowsHigh] := False;
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1713,7 +1713,7 @@ var
   SavePhysicsMap: TBitmap32;
   CurFrameCount: Integer;
 begin
-  fLayers.fIsEmpty[rlHighShadows] := False;
+  fLayers.fIsEmpty[rlShadowsHigh] := False;
 
   // Make a deep copy of the PhysicsMap
   SavePhysicsMap := TBitmap32.Create;
@@ -1766,7 +1766,7 @@ const
 var
   PosX, i: Integer;
 begin
-  fLayers.fIsEmpty[rlHighShadows] := False;
+  fLayers.fIsEmpty[rlShadowsHigh] := False;
 
   PosX := L.LemX;
   if L.LemDx = 1 then Inc(PosX);
@@ -1797,7 +1797,7 @@ var
   i: Integer;
   PosX: Integer;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := False;
+  fLayers.fIsEmpty[rlShadowsLow] := False;
 
   PosX := L.LemX;
   if L.LemDx = 1 then Inc(PosX);
@@ -1847,7 +1847,7 @@ var
               (Proj.Y < -108) or (Proj.Y >= LevelHeight + 108);
   end;
 begin
-  fLayers.fIsEmpty[rlLowShadows] := False;
+  fLayers.fIsEmpty[rlShadowsLow] := False;
 
   LevelWidth := GameParams.Level.Info.Width;
   LevelHeight := GameParams.Level.Info.Height;
@@ -1884,7 +1884,7 @@ var
 
   TargetRect: TRect;
 begin
-  fLayers.fIsEmpty[rlHighShadows] := False;
+  fLayers.fIsEmpty[rlShadowsHigh] := False;
 
   if L.LemDX = 1 then
     TargetRect := Rect(L.LemX, 0, PhysicsMap.Width, L.LemY)
@@ -1936,7 +1936,7 @@ begin
     LastHitPoint := L.LemLaserHitPoint;
   end;
 
-  TempBitmap.DrawTo(fLayers[rlHighShadows], TargetRect, TargetRect);
+  TempBitmap.DrawTo(fLayers[rlShadowsHigh], TargetRect, TargetRect);
 
   // Restore PhysicsMap
   PhysicsMap.Assign(SavePhysicsMap);
@@ -1947,28 +1947,28 @@ end;
 
 procedure TRenderer.ClearShadows;
 begin
-  if not fLayers.fIsEmpty[rlLowShadows] then
+  if not fLayers.fIsEmpty[rlShadowsLow] then
   begin
-    fLayers[rlLowShadows].Clear(0);
-    fLayers.fIsEmpty[rlLowShadows] := True;
+    fLayers[rlShadowsLow].Clear(0);
+    fLayers.fIsEmpty[rlShadowsLow] := True;
   end;
-  if not fLayers.fIsEmpty[rLHighShadows] then
+  if not fLayers.fIsEmpty[rlShadowsHigh] then
   begin
-    fLayers[rLHighShadows].Clear(0);
-    fLayers.fIsEmpty[rLHighShadows] := True;
+    fLayers[rlShadowsHigh].Clear(0);
+    fLayers.fIsEmpty[rlShadowsHigh] := True;
   end;
 end;
 
 procedure TRenderer.SetLowShadowPixel(X, Y: Integer);
 begin
   if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
-    fLayers[rlLowShadows].Pixel[X, Y] := SHADOW_COLOR;
+    fLayers[rlShadowsLow].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
 procedure TRenderer.SetHighShadowPixel(X, Y: Integer);
 begin
   if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
-    fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
+    fLayers[rlShadowsHigh].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
 procedure TRenderer.AddTerrainPixel(X, Y: Integer; Color: TColor32);

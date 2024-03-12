@@ -52,7 +52,7 @@ type
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
                   rlGadgetsLow,
-                  rlLowShadows,
+                  rlShadowsLow,
                   rlProjectiles,
                   rlTerrain,
                   rlFreezerLow,
@@ -62,7 +62,7 @@ type
                   rlOneWayArrows,
                   rlGadgetsHigh,
                   rlTriggers,
-                  rlHighShadows,
+                  rlShadowsHigh,
                   rlObjectHelpers,
                   rlParticles,
                   rlLemmingsLow,
@@ -70,7 +70,7 @@ type
                   rlCountdown);
 
 const
-  SCALE_ON_MERGE_LAYERS = [rlLowShadows, rlHighShadows, rlParticles];
+  SCALE_ON_MERGE_LAYERS = [rlShadowsLow, rlShadowsHigh, rlParticles];
 
 type
 
@@ -466,7 +466,7 @@ begin
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
     BMP := TBitmap32.Create;
-    if i in [rlLowShadows, rlHighShadows] then
+    if i in [rlShadowsLow, rlShadowsHigh] then
     begin
       BMP.DrawMode := dmCustom;
       BMP.OnPixelCombine := CombinePixelsShadow;
@@ -599,10 +599,10 @@ begin
     end;
 
     // Delete High Shadows not on non-steel terrain
-    if not fIsEmpty[rlHighShadows] then
+    if not fIsEmpty[rlShadowsHigh] then
     begin
       fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyDestructible;
-      fPhysicsMap.DrawTo(Items[rlHighShadows], LRRegion, LRRegion);
+      fPhysicsMap.DrawTo(Items[rlShadowsHigh], LRRegion, LRRegion);
     end;
   end;
 
