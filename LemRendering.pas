@@ -432,15 +432,14 @@ begin
   if aLemming.LemRemoved then Exit;
   if aLemming.LemTeleporting then Exit;
 
-  if fRenderInterface.HighlitLemming <> nil then
-    Highlit := aLemming = fRenderInterface.HighlitLemming
-  else
-    Highlit := false;
-
   if fRenderInterface <> nil then
-    Selected := aLemming = fRenderInterface.SelectedLemming
-  else
+  begin
+    Selected := aLemming = fRenderInterface.SelectedLemming;
+    Highlit := aLemming = fRenderInterface.HighlitLemming;
+  end else begin
     Selected := false;
+    Highlit := false;
+  end;
 
   UsefulOnly := UsefulOnly and Selected; // Not sure why this is needed. Probably "UsefulOnly" is a bad variable name.
 
