@@ -475,10 +475,9 @@ begin
     fIsEmpty[i] := True;
   end;
 
-  // Always draw rlBackground, rlTerrain, rlCountdown and rlLemmings
+  // Always draw rlBackground, rlTerrain and rlLemmings
   fIsEmpty[rlBackground] := False;
   fIsEmpty[rlTerrain] := False;
-  fIsEmpty[rlCountdown] := False;
   fIsEmpty[rlLemmingsLow] := False;
   fIsEmpty[rlLemmingsHigh] := False;
 end;

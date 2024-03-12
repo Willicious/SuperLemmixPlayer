@@ -351,6 +351,7 @@ begin
 
   // Draw particles for exploding lemmings, laser for laserers
   fLayers.fIsEmpty[rlParticles] := True;
+  fLayers.fIsEmpty[rlCountdown] := True;
   for i := 0 to LemmingList.Count-1 do
   begin
     if LemmingList[i].LemParticleTimer > 0 then
@@ -359,8 +360,13 @@ begin
       fLayers.fIsEmpty[rlParticles] := False;
     end;
 
-    DrawLemmingCountdown(LemmingList[i]);
-    DrawBalloonPop(LemmingList[i]);
+    if (((LemmingList[i].LemFreezerExplosionTimer > 0)
+      or (LemmingList[i].LemExplosionTimer > 0)) and not LemmingList[i].LemHideCountdown)
+      or (LemmingList[i] = fRenderInterface.HighlitLemming) then
+    begin
+      DrawLemmingCountdown(LemmingList[i]);
+      fLayers.fIsEmpty[rlCountdown] := False;
+    end;
 
     if LemmingList[i].LemAction = baLasering then
       DrawLemmingLaser(LemmingList[i]);
@@ -370,6 +376,8 @@ begin
 
     if LemmingList[i].LemAction = baUnfreezing then
       DrawUnfreezingOverlay(LemmingList[i]);
+
+    DrawBalloonPop(LemmingList[i]);
   end;
 
   for i := 0 to LemmingList.Count-1 do
@@ -830,8 +838,7 @@ begin
     SrcRect := SizedRect(onesDigit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
 
     Countdown.DrawTo(fLayers[rlCountdown], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
-  end
-  else if ShowHighlight then
+  end else if ShowHighlight then
     fAni.HighlightBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
 
