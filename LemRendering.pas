@@ -107,7 +107,6 @@ type
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
     function GetTerrainLayer: TBitmap32;
-    function GetTerrainHighLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
 
     // Were sub-procedures or part of DrawAllObjects
@@ -204,7 +203,6 @@ type
     property IsFreezerExplosion: Boolean read fIsFreezerExplosion write fIsFreezerExplosion;
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // For save state purposes
-    property TerrainHighLayer: TBitmap32 read GetTerrainHighLayer;
     property ParticleLayer: TBitmap32 read GetParticleLayer; // Needs to be replaced with making TRenderer draw them
 
     property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
@@ -487,8 +485,14 @@ begin
   SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
 
-  // Freezer states are drawn behind terrain
-  if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing] then
+  // Frozen lems are drawn behind terrain
+  if aLemming.LemAction = baFrozen then
+    SrcAnim.DrawTo(fLayers[rlGadgetsLow], DstRect, SrcRect)
+  else
+  // Explosion states are drawn behind other lems
+  if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing,
+                            baFreezerExplosion, baOhNoing, baExploding,
+                            baTimebombing, baTimebombFinish] then
     SrcAnim.DrawTo(fLayers[rlFreezerLow], DstRect, SrcRect)
 
   // Explosion graphics or about-to-explode lems are drawn behind active lems
@@ -861,11 +865,6 @@ begin
   Result := fLayers[rlTerrain];
 end;
 
-function TRenderer.GetTerrainHighLayer: TBitmap32;
-begin
-  Result := fLayers[rlTerrainHigh];
-end;
-
 function TRenderer.GetParticleLayer: TBitmap32;
 begin
   Result := fLayers[rlParticles];
@@ -910,7 +909,6 @@ begin
 
   PhysicsArrPtr := PhysicsMap.Bits;
   TerrLayerArrPtr := fLayers[rlTerrain].Bits;
-  TerrHighLayerArrPtr := fLayers[rlTerrainHigh].Bits;
 
   MapWidth := PhysicsMap.Width;
 
