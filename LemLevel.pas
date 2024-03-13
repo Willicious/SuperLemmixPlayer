@@ -20,14 +20,15 @@ type
   private
   protected
     fSpawnIntervalLocked : Boolean;
-    fSpawnInterval  : Integer;
-    fLemmingsCount  : Integer;
-    fZombieCount    : Integer;
-    fNeutralCount   : Integer;
-    fRescueCount    : Integer;
-    fHasTimeLimit   : Boolean;
-    fTimeLimit      : Integer;
-    fSuperlemming   : Boolean;
+    fSpawnInterval   : Integer;
+    fLemmingsCount   : Integer;
+    fZombieCount     : Integer;
+    fNeutralCount    : Integer;
+    fRescueCount     : Integer;
+    fCollectibleCount:Integer;
+    fTimeLimit       : Integer;
+    fHasTimeLimit    : Boolean;
+    fSuperlemming    : Boolean;
 
     fSkillset: TSkillset;
     fSkillCounts: TSkillCounts;
@@ -60,12 +61,13 @@ type
     constructor Create;
     procedure Clear; virtual;
 
-    property SpawnInterval    : Integer read fSpawnInterval write fSpawnInterval;
+    property SpawnInterval  : Integer read fSpawnInterval write fSpawnInterval;
     property SpawnIntervalLocked: Boolean read fSpawnIntervalLocked write fSpawnIntervalLocked;
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
     property ZombieCount    : Integer read fZombieCount write fZombieCount;
     property NeutralCount   : Integer read fNeutralCount write fNeutralCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
+    property CollectibleCount: Integer read fCollectibleCount write fCollectibleCount;
     property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
     property SuperLemming   : Boolean read fSuperLemming write fSuperLemming;
@@ -177,6 +179,7 @@ begin
   ZombieCount     := 0;
   NeutralCount    := 0;
   RescueCount     := 1;
+  CollectibleCount:= 0;
   HasTimeLimit    := false;
   TimeLimit       := 0;
   SuperLemming := false;
@@ -869,6 +872,7 @@ begin
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
     RescueCount := aSection.LineNumericDefault['save_requirement', RescueCount];
+    CollectibleCount := aSection.LineNumeric['collectibles'];
     HandleTimeLimit(aSection.LineTrimString['time_limit']);
     SpawnInterval := 53 - (aSection.LineNumeric['release_rate'] div 2);
     if aSection.Line['max_spawn_interval'] <> nil then
@@ -1458,6 +1462,9 @@ begin
     aSection.AddLine('MAX_SPAWN_INTERVAL', SpawnInterval);
     if SpawnIntervalLocked then
       aSection.AddLine('SPAWN_INTERVAL_LOCKED');
+
+    if CollectibleCount > 0 then
+      aSection.AddLine('COLLECTIBLES', CollectibleCount);
 
     aSection.AddLine('WIDTH', Width);
     aSection.AddLine('HEIGHT', Height);

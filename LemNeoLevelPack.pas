@@ -955,6 +955,9 @@ var
 
     if Level.Info.SuperLemming then
       Result := 'superlemming' + Result + BoolToStr(Level.Info.SuperLemming);
+
+    if (Level.Info.CollectibleCount > 0) then
+      Result := Result + IntToStr(Level.Info.CollectibleCount);
   end;
 
   function SkillsetString: String;
