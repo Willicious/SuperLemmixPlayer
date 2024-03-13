@@ -121,6 +121,7 @@ type
     procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
     procedure SetReplayMark(Pos: Integer);
+    procedure SetCollectibleIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
 
     // Event handlers for user interaction and related routines.
@@ -1627,6 +1628,14 @@ begin
       1: fNewDrawStr[Pos] := #99;
     end;
   end;
+end;
+
+procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
+begin
+  if Game.CollectiblesCompleted then
+    fNewDrawStr[Pos] := #92
+  else
+    fNewDrawStr[Pos] := #91;
 end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);

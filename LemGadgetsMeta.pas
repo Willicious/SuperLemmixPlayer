@@ -271,6 +271,7 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'pickupskill' then fTriggerEffect := DOM_PICKUP;
     if Lowercase(Sec.LineTrimString['effect']) = 'lockedexit' then fTriggerEffect := DOM_LOCKEXIT;
     if Lowercase(Sec.LineTrimString['effect']) = 'unlockbutton' then fTriggerEffect := DOM_BUTTON;
+    if Lowercase(Sec.LineTrimString['effect']) = 'collectible' then fTriggerEffect := DOM_COLLECTIBLE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewaydown' then fTriggerEffect := DOM_ONEWAYDOWN;
     if Lowercase(Sec.LineTrimString['effect']) = 'updraft' then fTriggerEffect := DOM_UPDRAFT;
     if Lowercase(Sec.LineTrimString['effect']) = 'splitter' then fTriggerEffect := DOM_FLIPPER;

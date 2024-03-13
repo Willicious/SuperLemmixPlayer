@@ -2628,6 +2628,11 @@ begin
           fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
         end;
 
+      DOM_COLLECTIBLE:
+        begin
+          fHelperImages[hpi_Collectible].DrawTo(Dst, DrawX - 34 * ResMod, DrawY);
+        end;
+
       DOM_FORCELEFT:
         if Gadget.IsFlipImage then
         begin

@@ -219,6 +219,7 @@ type
     trTeleport,
     trPickup,
     trButton,
+    trCollectible,
     trUpdraft,
     trFlipper,
     trNoSplat,
@@ -377,8 +378,8 @@ const
     trZombie,                 // Preplaced lemming
     trPickup,                 // Pickup skill
     trExit,                   // Locked exit
-    trZombie,                 // Sketch item
     trButton,                 // Button
+    trCollectible,            // Collectible
     trRadiation,              // Radiation
     trOWDown,                 // OWW down
     trUpdraft,                // Updraft

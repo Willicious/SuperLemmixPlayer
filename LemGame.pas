@@ -56,6 +56,7 @@ type
       CurrentIteration: Integer;
       ClockFrame: Integer;
       ButtonsRemain: Integer;
+      CollectiblesRemain: Integer;
       LemmingsToRelease: Integer;
       LemmingsCloned: Integer;
       LemmingsOut: Integer;
@@ -107,6 +108,7 @@ type
 
     fTalismanReceived          : Boolean;
     fNewTalismanReceived       : Boolean;
+    fCollectiblesCompleted     : Boolean;
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // Currently selected skill restricted by F3-F9
 
@@ -127,6 +129,7 @@ type
     UpdraftMap                 : TArrayArrayBoolean;
     PickupMap                  : TArrayArrayBoolean;
     ButtonMap                  : TArrayArrayBoolean;
+    CollectibleMap             : TArrayArrayBoolean;
     FlipperMap                 : TArrayArrayBoolean;
     NoSplatMap                 : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
@@ -162,6 +165,7 @@ type
     fCurrentIteration          : Integer;
     fClockFrame                : Integer; // 17 frames is one game-second
     ButtonsRemain              : Byte;
+    CollectiblesRemain         : Byte;
     LemmingsToRelease          : Integer; // Number of lemmings that were created
     LemmingsCloned             : Integer; // Number of cloned lemmings
     LemmingsOut                : Integer; // Number of lemmings currently walking around
@@ -264,6 +268,7 @@ type
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleCollectible(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
@@ -506,6 +511,7 @@ type
     property ClockFrame: Integer read fClockFrame;
     property CursorPoint: TPoint read fCursorPoint write fCursorPoint;
     property GameFinished: Boolean read fGameFinished;
+    property CollectiblesCompleted: Boolean read fCollectiblesCompleted write fCollectiblesCompleted;
     property Level: TLevel read fLevel write fLevel;
     property MessageQueue: TGameMessageQueue read fMessageQueue;
     property Playing: Boolean read fPlaying write fPlaying;
@@ -626,9 +632,8 @@ const
   DOM_LEMMING          = 13;
   DOM_PICKUP           = 14;
   DOM_LOCKEXIT         = 15;
-  DOM_SECRET           = 16; // No longer used!!
-  DOM_SKETCH           = 16;
-  DOM_BUTTON           = 17;
+  DOM_BUTTON           = 16;
+  DOM_COLLECTIBLE      = 17;
   DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
@@ -789,6 +794,7 @@ begin
   aState.CurrentIteration := fCurrentIteration;
   aState.ClockFrame := fClockFrame;
   aState.ButtonsRemain := ButtonsRemain;
+  aState.CollectiblesRemain := CollectiblesRemain;
   aState.LemmingsToRelease := LemmingsToRelease;
   aState.LemmingsCloned := LemmingsCloned;
   aState.LemmingsOut := LemmingsOut;
@@ -844,6 +850,7 @@ begin
   fCurrentIteration := aState.CurrentIteration;
   fClockFrame := aState.ClockFrame;
   ButtonsRemain := aState.ButtonsRemain;
+  CollectiblesRemain := aState.CollectiblesRemain;
   LemmingsToRelease := aState.LemmingsToRelease;
   LemmingsCloned := aState.LemmingsCloned;
   LemmingsOut := aState.LemmingsOut;
@@ -1200,6 +1207,8 @@ begin
   P := AppPath;
 
   ButtonsRemain := 0;
+  CollectiblesRemain := 0;
+
   fHitTestAutoFail := false;
 
   fSimulationDepth := 0;
@@ -1342,6 +1351,7 @@ begin
   fCurrentIteration := 0;
   fClockFrame := 0;
   HatchesOpened := False;
+  CollectiblesCompleted := False;
 
   SpawnIntervalModifier := 0;
   UserSetNuking := False;
@@ -1380,6 +1390,7 @@ begin
   NextLemmingCountDown := 20;
 
   ButtonsRemain := 0;
+  CollectiblesRemain := 0;
 
   // Create the list of interactive objects
   Gadgets.Clear;
@@ -1398,6 +1409,10 @@ begin
     // Update number of buttons
     if Gadget.TriggerEffect = DOM_BUTTON then
       Inc(ButtonsRemain);
+
+    // Update number of collectibles
+    if Gadget.TriggerEffect = DOM_COLLECTIBLE then
+      Inc(CollectiblesRemain);
   end;
 
   InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
@@ -2135,6 +2150,8 @@ begin
   SetLength(UpdraftMap, Level.Info.Width, Level.Info.Height);
   SetLength(ButtonMap, 0, 0);
   SetLength(ButtonMap, Level.Info.Width, Level.Info.Height);
+  SetLength(CollectibleMap, 0, 0);
+  SetLength(CollectibleMap, Level.Info.Width, Level.Info.Height);
   SetLength(PickupMap, 0, 0);
   SetLength(PickupMap, Level.Info.Width, Level.Info.Height);
   SetLength(FlipperMap, 0, 0);
@@ -2301,6 +2318,7 @@ begin
       DOM_UPDRAFT:    WriteTriggerMap(UpdraftMap, Gadgets[i].TriggerRect);
       DOM_PICKUP:     WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
+      DOM_COLLECTIBLE:WriteTriggerMap(CollectibleMap, Gadgets[i].TriggerRect);
       DOM_FLIPPER:    WriteTriggerMap(FlipperMap, Gadgets[i].TriggerRect);
       DOM_NOSPLAT:    WriteTriggerMap(NoSplatMap, Gadgets[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
@@ -3242,6 +3260,10 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trButton) then
       HandleButton(L, CheckPos[0, i], CheckPos[1, i]);
 
+    // Collectibles
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trCollectible) then
+      HandleCollectible(L, CheckPos[0, i], CheckPos[1, i]);
+
     // Blasticine
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trBlasticine) then
       HandleBlasticine(L);
@@ -3383,6 +3405,7 @@ begin
     trTeleport:   Result :=     ReadTriggerMap(X, Y, TeleporterMap);
     trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap);
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
+    trCollectible:Result :=     ReadTriggerMap(X, Y, CollectibleMap);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
     trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap);
     trNoSplat:    Result :=     ReadTriggerMap(X, Y, NoSplatMap);
@@ -3430,7 +3453,7 @@ begin
     if Gadget.Triggered then
       GadgetFound := False;
     // Ignore already used buttons and one-shot traps
-    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_ANIMONCE])
+    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE])
        and (Gadget.CurrentFrame = 0) then  // Other objects have always CurrentFrame = 0, so the first check is needed!
       GadgetFound := False;
     // Ignore already used pickup skills
@@ -3596,6 +3619,28 @@ begin
   end;
 end;
 
+function TLemmingGame.HandleCollectible(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  Gadget: TGadget;
+  n: Integer;
+  GadgetID: Word;
+begin
+  Result := False;
+
+  GadgetID := FindGadgetID(PosX, PosY, trCollectible);
+  // Exit if there is no Object
+  if GadgetID = 65535 then Exit;
+
+  Gadget := Gadgets[GadgetID];
+  CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
+  Gadget.Triggered := True;
+  Dec(CollectiblesRemain);
+
+  if (CollectiblesRemain = 0) then
+    CollectiblesCompleted := True
+  else
+    CollectiblesCompleted := False;
+end;
 
 function TLemmingGame.HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
 var

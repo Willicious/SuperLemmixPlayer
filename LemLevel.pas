@@ -1052,6 +1052,7 @@ var
   MO: TGadgetMetaInfo;
   DealiasInfo: TDealiasResult;
 const
+  // Bookmark - this is used to set flip/rotate values for objects
   NO_FLIP_HORIZONTAL_TYPES = [DOM_PICKUP];
   NO_FLIP_VERTICAL_TYPES = [DOM_WINDOW, DOM_PICKUP, DOM_UPDRAFT];
   NO_ROTATE_TYPES = [DOM_WINDOW, DOM_FORCELEFT, DOM_FORCERIGHT, DOM_PICKUP, DOM_UPDRAFT, DOM_FLIPPER];

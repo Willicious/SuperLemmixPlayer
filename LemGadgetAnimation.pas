@@ -72,6 +72,7 @@ type
   DOM_PICKUP      | True when the skill has not been picked up
   DOM_LOCKEXIT    | True when the exit is fully open and the lemming limit has not been reached, or it doesn't have one
   DOM_BUTTON      | True when the button has not been pressed
+  DOM_COLLECTIBLE | True when the collectible has not been collected
   DOM_WINDOW      | True when the window is fully open, and if it has a lemming limit, hasn't yet reached it
   DOM_TRAPONCE    | True when the trap has not yet been triggered (or disabled)
   DOM_ANIMATION   | True when the animation is idle
@@ -104,6 +105,7 @@ type
   DOM_PICKUP      | True if the skill has been picked up
   DOM_LOCKEXIT    | True while the exit is in a locked state, or if the exit has a lemming limit and it has been reached
   DOM_BUTTON      | True when the button has been pressed
+  DOM_COLLECTIBLE | True when the collectible has been collected
   DOM_WINDOW      | True if the window has a lemming limit and it has been reached
   DOM_TRAPONCE    | True when the trap has been disabled (most likely by a disarmer) or used
   DOM_ANIMONCE    | True when the animation has completed
@@ -117,6 +119,7 @@ type
   DOM_PICKUP      | True if the skill has been picked up
   DOM_LOCKEXIT    | True if the exit is limited-use and has zero remaining uses
   DOM_BUTTON      | True when the button has been pressed
+  DOM_COLLECTIBLE | True when the collectible has been collected
   DOM_WINDOW      | True if the window is limited-use and has released all lemmings
   DOM_TRAPONCE    | True when the trap has been used
   DOM_ANIMONCE    | True when the animation has completed

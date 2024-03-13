@@ -20,8 +20,8 @@ const
   // 13 = Unused, formerly preplaced lemming
   DOM_PICKUP           = 14;
   DOM_LOCKEXIT         = 15;
-  // 16 = Unused; formerly sketch, and before that secret level trigger
-  DOM_BUTTON           = 17;
+  DOM_BUTTON           = 16;
+  DOM_COLLECTIBLE      = 17;
   DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
