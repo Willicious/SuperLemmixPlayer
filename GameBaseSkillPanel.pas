@@ -1632,7 +1632,9 @@ end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
 begin
-  if Game.CollectiblesCompleted then
+  if (Level.Info.CollectibleCount <= 0) then
+    fNewDrawStr[Pos] := ' '
+  else if Game.CollectiblesCompleted then
     fNewDrawStr[Pos] := #92
   else
     fNewDrawStr[Pos] := #91;
