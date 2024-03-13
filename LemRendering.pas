@@ -3122,6 +3122,7 @@ begin
   Dst := fLayers[aLayer];
   try
     if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
+
     // Special conditions
     if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
     if (aLayer = rlGadgetsLow) then
