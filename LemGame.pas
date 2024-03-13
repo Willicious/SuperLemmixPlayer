@@ -6795,6 +6795,7 @@ end;
 
 function TLemmingGame.HandleTimebombFinish(L: TLemming): Boolean;
 begin
+  Renderer.IsFreezerExplosion := False;
   Result := False;
 
   if L.LemAction = baTimebombFinish then
@@ -6868,7 +6869,7 @@ end;
 
 function TLemmingGame.HandleFreezerExplosion(L: TLemming): Boolean;
 begin
-  Renderer.IsFreezerExplosion := true;
+  Renderer.IsFreezerExplosion := True;
   Result := false;
 
   if (L.LemAction = baFreezerExplosion) then
