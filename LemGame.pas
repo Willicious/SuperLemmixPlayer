@@ -6718,7 +6718,7 @@ function TLemmingGame.HandleShrugging(L: TLemming): Boolean;
 begin
   Result := True;
 
-  if (L.LemFrame = 7) and fGameCheated then
+  if (LemmingsOut > 0) and (L.LemFrame = 7) and fGameCheated then
     Finish(GM_FIN_TERMINATE)
   else if L.LemEndOfAnimation then
     Transition(L, baWalking);
@@ -8125,7 +8125,9 @@ begin
   fGameCheated := True;
   CueSoundEffect(SFX_OK);
 
-  // HanfleShrugging now handles finishing the game in the event of a cheat
+  // Finish immediately if there are no active lemmings (see HandleShrugging)
+  if (LemmingsOut <= 0) then
+    Finish(GM_FIN_TERMINATE);
 end;
 
 procedure TLemmingGame.EnsureCorrectReplayDetails;
