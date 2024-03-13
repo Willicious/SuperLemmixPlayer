@@ -1170,13 +1170,9 @@ begin
   end;
 
   if P.IsGrenade then
-  begin
-    if P.GrenadeGraphic = pgGrenadeExplode then
-      fAni.GrenadeBitmap.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
-    else
-      fAni.GrenadeBitmap.DrawTo(fLayers[rlGadgetsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade);
-  end else
-    fAni.SpearBitmap.DrawTo(fLayers[rlGadgetsLow], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
+    fAni.GrenadeBitmap.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
+  else
+    fAni.SpearBitmap.DrawTo(fLayers[rlLemmingsLow], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
