@@ -497,8 +497,12 @@ begin
 
   // Frozen lems are drawn behind terrain
   if aLemming.LemAction = baFrozen then
-    SrcAnim.DrawTo(fLayers[rlGadgetsLow], DstRect, SrcRect)
-  else
+  begin
+    if fLayers.fIsEmpty[rlGadgetsLow] then
+      fLayers.fIsEmpty[rlGadgetsLow] := False;
+
+    SrcAnim.DrawTo(fLayers[rlGadgetsLow], DstRect, SrcRect);
+  end else
   // Explosion states are drawn behind other lems
   if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing,
                             baFreezerExplosion, baOhNoing, baExploding,
