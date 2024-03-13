@@ -30,8 +30,9 @@ uses
   GameControl, GameSound;
 
 const
-  ParticleColorIndices: array[0..15] of Byte =
-    (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
+// Bookmark - not sure if this is used anywhere
+//  ParticleColorIndices: array[0..15] of Byte =
+//    (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
