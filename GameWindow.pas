@@ -1387,6 +1387,7 @@ procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShift
 var
   CurrTime: Cardinal;
   sn: Integer;
+  ButtonIndex: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;
   CursorPointForm: TPoint; // A point in coordinates relative to the main form
@@ -1424,7 +1425,7 @@ const
                          lka_ZoomIn,
                          lka_ZoomOut,
                          lka_Scroll];
-  SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
+  SKILL_KEYS = [lka_Skill, lka_SkillButton, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
 
@@ -1614,6 +1615,12 @@ begin
                           SetSelectedSkill(fActiveSkills[sn]);
                         end;
                       end;
+      lka_SkillButton: begin
+                         ButtonIndex := func.Modifier -1;
+                         AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
+
+                         SetSelectedSkill(fActiveSkills[ButtonIndex], True, AssignToHighlit);
+                       end;
       lka_Skip: if Game.Playing then
                   if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
                   if func.Modifier < 0 then
@@ -1639,19 +1646,6 @@ begin
                 ClearPhysics := not ClearPhysics
               else
                 ClearPhysics := true;
-      //lka_ToggleShadows: begin  // Bookmark - remove?
-                           //GameParams.HideShadows := not GameParams.HideShadows;
-                           //SetRedraw(rdRedraw);
-                           //Game.CheckForNewShadow(true);
-                         //end;
-      //lka_Projection: if ProjectionType <> 1 then
-                        //ProjectionType := 1
-                      //else if func.Modifier = 0 then
-                        //ProjectionType := 0;
-      //lka_SkillProjection: if ProjectionType <> 2 then
-                             //ProjectionType := 2
-                           //else if func.Modifier = 0 then
-                             //ProjectionType := 0;
       lka_ShowUsedSkills: if func.Modifier = 0 then
                             SkillPanel.ShowUsedSkills := not SkillPanel.ShowUsedSkills
                           else
