@@ -421,7 +421,7 @@ var
       if ((fPhysicsMap.PixelS[fX, fY] and PM_SOLID) <> 0) then
         fHit := true;
 
-      if (fIsGrenade and GlobalGame.HasTriggerAt(fX, fY, trZombie)) then
+      if fIsGrenade and GlobalGame.HasTriggerAt(fX, fY, trZombie) then
         fHit := true;
 
       if fIsSpear and ((fPhysicsMap.PixelS[fX, fY + 1] and PM_SOLID) <> 0) then
