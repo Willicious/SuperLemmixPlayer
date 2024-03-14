@@ -6,7 +6,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'Hotkeys'
-  ClientHeight = 474
+  ClientHeight = 508
   ClientWidth = 519
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -28,16 +28,16 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Visible = False
   end
   object lblDuration: TLabel
-    Left = 321
-    Top = 287
+    Left = 318
+    Top = 317
     Width = 49
     Height = 13
     Caption = 'Duration:'
     Visible = False
   end
   object lblSkip: TLabel
-    Left = 338
-    Top = 311
+    Left = 340
+    Top = 343
     Width = 25
     Height = 13
     Caption = 'Skip:'
@@ -56,6 +56,14 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblSkillButton: TLabel
+    Left = 364
+    Top = 290
+    Width = 62
+    Height = 13
+    Caption = 'Skill Button:'
+    Visible = False
+  end
   object btnFindKey: TButton
     Left = 342
     Top = 133
@@ -70,7 +78,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Left = -3
     Top = 0
     Width = 311
-    Height = 468
+    Height = 500
     Columns = <
       item
         Caption = 'Key'
@@ -101,6 +109,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Items.Strings = (
       'Nothing'
       'Select Skill'
+      'Select Skill Button'
       'Show Athlete Info'
       'Quit'
       'Max Release Rate'
@@ -144,7 +153,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnSaveClose: TButton
     Left = 342
-    Top = 390
+    Top = 422
     Width = 138
     Height = 40
     Caption = 'Save && Close'
@@ -202,7 +211,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object ebSkipDuration: TEdit
     Left = 373
-    Top = 284
+    Top = 313
     Width = 129
     Height = 21
     Enabled = False
@@ -212,7 +221,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbHardcodedNames: TCheckBox
     Left = 343
-    Top = 367
+    Top = 399
     Width = 145
     Height = 17
     Caption = 'Use Hardcoded Names'
@@ -225,7 +234,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbHoldKey: TCheckBox
     Left = 378
-    Top = 342
+    Top = 374
     Width = 97
     Height = 17
     Caption = 'Hold Key'
@@ -235,7 +244,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSpecialSkip: TComboBox
     Left = 373
-    Top = 308
+    Top = 340
     Width = 129
     Height = 21
     Style = csDropDownList
@@ -286,7 +295,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnCancel: TBitBtn
     Left = 415
-    Top = 436
+    Top = 468
     Width = 65
     Height = 30
     Caption = 'Cancel'
@@ -296,11 +305,24 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnReset: TBitBtn
     Left = 342
-    Top = 436
+    Top = 468
     Width = 67
     Height = 30
     Caption = 'Reset'
     TabOrder = 15
     OnClick = btnResetClick
+  end
+  object seSkillButton: TSpinEdit
+    Left = 432
+    Top = 287
+    Width = 41
+    Height = 22
+    Enabled = False
+    MaxValue = 14
+    MinValue = 1
+    TabOrder = 16
+    Value = 0
+    Visible = False
+    OnChange = seSkillButtonChange
   end
 end

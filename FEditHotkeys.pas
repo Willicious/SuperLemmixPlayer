@@ -5,7 +5,7 @@ interface
 uses
   LemmixHotkeys, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Vcl.Buttons;
+  Dialogs, ComCtrls, StdCtrls, Vcl.Buttons, Vcl.Samples.Spin;
 
 type
   TFLemmixHotkeys = class(TForm)
@@ -26,6 +26,8 @@ type
     btnNeoLemmixLayout: TBitBtn;
     btnCancel: TBitBtn;
     btnReset: TBitBtn;
+    lblSkillButton: TLabel;
+    seSkillButton: TSpinEdit;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -47,6 +49,7 @@ type
     procedure btnResetClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure btnSaveCloseClick(Sender: TObject);
+    procedure seSkillButtonChange(Sender: TObject);
   private
     fKeyNames: TKeyNameArray;
     fHotkeys: TLemmixHotkeyManager;
@@ -106,9 +109,11 @@ begin
   begin
     cbFunctions.ItemIndex := -1;
     cbSkill.ItemIndex := -1;
+    seSkillButton.Value := 0;
     ebSkipDuration.Text := '';
     cbFunctions.Enabled := false;
     cbSkill.Enabled := false;
+    seSkillButton.Enabled := false;
     ebSkipDuration.Enabled := false;
     Exit;
   end;
@@ -116,6 +121,7 @@ begin
   cbFunctions.ItemIndex := Integer(fHotkeys.CheckKeyEffect(i).Action);
   case fHotkeys.CheckKeyEffect(i).Action of
     lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
+    lka_SkillButton: seSkillButton.Value := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
     lka_ClearPhysics,
     lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
@@ -244,6 +250,9 @@ begin
                      else s := s + '???';
                    end;
                  end;
+      lka_SkillButton: begin
+                         s := 'Select Skill Button: ' + IntToStr(Hotkey.Modifier);
+                       end;
       lka_Skip: begin
                   if Hotkey.Modifier < -1 then
                     s := 'Time Skip: Back ' + IntToStr(Hotkey.Modifier * -1) + ' Frames'
@@ -325,6 +334,9 @@ begin
   lblSkill.Visible := false;
   cbSkill.Visible := false;
   cbSkill.Enabled := false;
+  lblSkillButton.Visible := false;
+  seSkillButton.Visible := false;
+  seSkillButton.Enabled := false;
   lblDuration.Visible := false;
   ebSkipDuration.Visible := false;
   ebSkipDuration.Enabled := false;
@@ -340,6 +352,11 @@ begin
                  cbSkill.Visible := true;
                  cbSkill.Enabled := true;
                end;
+    lka_SkillButton: begin
+                       lblSkillButton.Visible := true;
+                       seSkillButton.Visible := true;
+                       seSkillButton.Enabled := true;
+                     end;
     lka_Skip: begin
                 lblDuration.Visible := true;
                 ebSkipDuration.Visible := true;
@@ -369,6 +386,12 @@ begin
                  if cbSkill.ItemIndex = -1 then cbSkill.ItemIndex := 0;
                  fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
                end;
+    lka_SkillButton: begin
+                       if seSkillButton.Value <= 0 then seSkillButton.Value := 1;
+                       if seSkillButton.Value >= 15 then seSkillButton.Value := 14;
+
+                       fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
+                     end;
     lka_Skip: begin
                 ebSkipDuration.Text := IntToStr(StrToIntDef(ebSkipDuration.Text, 0)); // Destroys non-numeric values
                 fHotkeys.SetKeyFunction(i, lka_Skip, StrToInt(ebSkipDuration.Text));
@@ -396,6 +419,18 @@ begin
   if i = -1 then Exit; // Safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_Skill then Exit;
   fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.seSkillButtonChange(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if (i = -1) then Exit; // Safety; should never happen
+  if fHotkeys.CheckKeyEffect(i).Action <> lka_SkillButton then Exit;
+
+  fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
   RefreshList;
 end;
 
