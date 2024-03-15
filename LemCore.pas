@@ -404,7 +404,7 @@ const
   );
 
 type
-  TRecordDisplay = (rdNone, rdUser, rdWorld);
+  TRecordDisplay = (rdNone, rdUser, rdWorld, rdCollectibles);
 
   function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
   function SpawnIntervalToReleaseRate(aSI: Integer): Integer;

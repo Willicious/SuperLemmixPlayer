@@ -121,7 +121,7 @@ const // Icon indexes
   ICON_CLASSIC_MODE = 20;
   ICON_NO_PAUSE = 21;
   ICON_KILL_ZOMBIES = 22;
-  // 23 is currently blank
+  ICON_COLLECTIBLE_UNOBTAINED = 23;
 
   ICON_SKILLS: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer = (
     24, // 0 Walker
@@ -871,6 +871,9 @@ begin
   end else if GameParams.CurrentLevel.WorldRecords.LemmingsRescued.Value > 0 then
     MakeButton(-2);
 
+  if (GameParams.Level.Info.CollectibleCount > 0) then
+    MakeButton(-3);
+
   for i := 0 to GameParams.Level.Talismans.Count-1 do
     MakeButton(i);
 
@@ -887,6 +890,7 @@ begin
   begin
     NewRecords := rdWorld;
     if TalBtn.Tag = -1 then NewRecords := rdUser;
+    if TalBtn.Tag = -3 then NewRecords := rdCollectibles;
 
     if fDisplayRecords = NewRecords then
       fDisplayRecords := rdNone
@@ -1011,9 +1015,27 @@ begin
     if fTalismanButtons[i].Tag < 0 then
     begin
       RecordType := rdWorld;
+
       if fTalismanButtons[i].Tag = -1 then
         RecordType := rdUser;
+      if fTalismanButtons[i].Tag = -3 then
+        RecordType := rdCollectibles;
 
+      if RecordType = rdCollectibles then
+      begin
+        if GameParams.CurrentLevel.UserRecords.CollectiblesGathered.Value < GameParams.Level.Info.CollectibleCount then
+        begin
+          if fDisplayRecords = rdCollectibles then
+            DrawSpeedButton(fTalismanButtons[i], ICON_COLLECTIBLE_UNOBTAINED, ICON_SELECTED_TALISMAN)
+          else
+            DrawSpeedButton(fTalismanButtons[i], ICON_COLLECTIBLE_UNOBTAINED);
+        end else begin
+          if fDisplayRecords = rdCollectibles then
+            DrawSpeedButton(fTalismanButtons[i], ICON_COLLECTIBLE, ICON_SELECTED_TALISMAN)
+          else
+            DrawSpeedButton(fTalismanButtons[i], ICON_COLLECTIBLE);
+        end;
+      end else
       if RecordType = rdUser then
       begin
         if fDisplayRecords = rdUser then

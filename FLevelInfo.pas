@@ -682,7 +682,7 @@ begin
       Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
   end;
 
-  if (Level.Info.CollectibleCount <> 0) then
+  if (fLevel.Info.CollectibleCount <> 0) then
       Add(ICON_COLLECTIBLE, fLevel.Info.CollectibleCount, '', true, pmNextColumnSame);
 
   if ((fTalisman <> nil) and (fTalisman.RequireClassicMode)) then
@@ -725,7 +725,6 @@ begin
     if (Talisman.SkillTypeLimit >= 0) then
       Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
   end;
-
 
   Reposition(pmNextRowPadLeft);
 
@@ -776,7 +775,8 @@ end;
 
 procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
 var
-  Records: TLevelRecords;
+  Records, WorldRecords: TLevelRecords;
+  CollectibleIcon, TextColour: Integer;
 
   Skill: TSkillPanelButton;
 
@@ -789,16 +789,68 @@ var
     else
       Result := aInput;
   end;
+
+  procedure PrepareCollectiblesRecords;
+  begin
+    if Records.CollectiblesGathered.Value < 0 then
+      Add(ICON_COLLECTIBLE_UNOBTAINED, '~', '', true, pmNextColumnSame)
+    else if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
+      Add(ICON_COLLECTIBLE_UNOBTAINED, Records.CollectiblesGathered.Value,
+          PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS)
+    else
+      Add(ICON_COLLECTIBLE, Records.CollectiblesGathered.Value,
+          PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+  end;
 begin
   Wipe;
 
+  if aKind = rdCollectibles then
+  begin
+    Records := GameParams.CurrentLevel.UserRecords;
+
+    if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
+    begin
+      CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
+      TextColour := 0;
+    end else begin
+      CollectibleIcon := ICON_COLLECTIBLE;
+      TextColour := COLOR_RECORDS;
+    end;
+
+    Add(CollectibleIcon, GameParams.Username + '''s record is ' + IntToStr(Records.CollectiblesGathered.Value)
+        + '/' + IntToStr(fLevel.Info.CollectibleCount), '', true, pmNextRowLeft, TextColour);
+
+    WorldRecords := GameParams.CurrentLevel.WorldRecords;
+    if WorldRecords.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
+    begin
+      CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
+      TextColour := 0;
+    end else begin
+      CollectibleIcon := ICON_COLLECTIBLE;
+      TextColour := COLOR_RECORDS;
+    end;
+
+    if WorldRecords.CollectiblesGathered.Value > Records.CollectiblesGathered.Value then
+      Add(CollectibleIcon, 'World record is '
+          + IntToStr(WorldRecords.CollectiblesGathered.Value) + '/' + IntToStr(fLevel.Info.CollectibleCount),
+          PrepareHintName(WorldRecords.CollectiblesGathered.User), true, pmNextRowLeft, TextColour)
+    else
+      AddDummy(false, pmNextRowLeft);
+
+    if fCurrentPos.X = fAdjustedSizing.PaddingSize then
+      AddDummy(false, pmMoveHorz);
+
+    AddPreview(false);
+    ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
+    Exit;
+  end else
   if aKind = rdUser then
   begin
     Records := GameParams.CurrentLevel.UserRecords;
-    Add(ICON_RECORDS, 'Your records', '', true, pmNextRowLeft);
+    Add(ICON_RECORDS, GameParams.Username + '''s Records', '', true, pmNextRowLeft);
   end else begin
     Records := GameParams.CurrentLevel.WorldRecords;
-    Add(ICON_WORLD_RECORDS, 'Records', '', true, pmNextRowLeft);
+    Add(ICON_WORLD_RECORDS, 'World Records', '', true, pmNextRowLeft);
   end;
 
   if Records.LemmingsRescued.Value < 0 then
@@ -827,6 +879,7 @@ begin
     Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value,
         PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
 
+  PrepareCollectiblesRecords;
 
   Reposition(pmNextRowPadLeft);
 
@@ -842,7 +895,6 @@ begin
     AddDummy(false, pmMoveHorz);
 
   AddPreview(false);
-
   ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
 end;
 
