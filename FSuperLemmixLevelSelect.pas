@@ -116,7 +116,7 @@ const // Icon indexes
   ICON_SELECTED_TALISMAN = 16;
   ICON_MAX_SKILLS = 17;
   ICON_MAX_SKILL_TYPES = 18;
-  // 19 is currently blank
+  ICON_COLLECTIBLE = 19;
 
   ICON_CLASSIC_MODE = 20;
   ICON_NO_PAUSE = 21;

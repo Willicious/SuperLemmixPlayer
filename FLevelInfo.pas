@@ -682,6 +682,9 @@ begin
       Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
   end;
 
+  if (Level.Info.CollectibleCount <> 0) then
+      Add(ICON_COLLECTIBLE, fLevel.Info.CollectibleCount, '', true, pmNextColumnSame);
+
   if ((fTalisman <> nil) and (fTalisman.RequireClassicMode)) then
       Add(ICON_CLASSIC_MODE, '', '', true, pmNextColumnSame);
 
