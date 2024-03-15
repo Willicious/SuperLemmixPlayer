@@ -7037,6 +7037,7 @@ begin
   begin
     // We only want to update the rest when we're at the rescue count EXACTLY.
     NewRecs.TimeTaken.Value := fCurrentIteration;
+    NewRecs.CollectiblesGathered.Value := Level.Info.CollectibleCount - CollectiblesRemain;
     NewRecs.TotalSkills.Value := 0;
     NewRecs.SkillTypes.Value := 0;
 
