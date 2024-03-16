@@ -7037,7 +7037,6 @@ begin
   begin
     // We only want to update the rest when we're at the rescue count EXACTLY.
     NewRecs.TimeTaken.Value := fCurrentIteration;
-    NewRecs.CollectiblesGathered.Value := Level.Info.CollectibleCount - CollectiblesRemain;
     NewRecs.TotalSkills.Value := 0;
     NewRecs.SkillTypes.Value := 0;
 
@@ -7050,6 +7049,10 @@ begin
           NewRecs.SkillTypes.Value := NewRecs.SkillTypes.Value + 1;
       end;
   end;
+
+  // Continue updating collectibles records for each new lem saved beyond the rescue count
+  if LemmingsIn >= Level.Info.RescueCount then
+    NewRecs.CollectiblesGathered.Value := Level.Info.CollectibleCount - CollectiblesRemain;
 
   if fReplayManager.IsThisUsersReplay then
   begin
