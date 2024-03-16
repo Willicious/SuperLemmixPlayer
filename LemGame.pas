@@ -7302,9 +7302,6 @@ begin
   end;
 
   if not Result then PlayAssignFailSound;
-
-  if Result then
-    CheckForNewShadow;        // Bookmark - probably unneeded now?
 end;
 
 function TLemmingGame.ProcessHighlightAssignment: Boolean;
