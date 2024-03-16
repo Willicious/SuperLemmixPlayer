@@ -443,7 +443,7 @@ begin
                   mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
   begin
     L.ResetTalismans;
-    SetInfo;
+    SetTalismanInfo;
   end;
 end;
 
@@ -507,6 +507,8 @@ begin
 
     if fDisplayRecords <> rdNone then
       fInfoForm.PrepareEmbedRecords(fDisplayRecords);
+
+    SetTalismanInfo;
   end;
 end;
 
