@@ -702,7 +702,7 @@ begin
   fLastLevelPath := GameParams.CurrentLevel.Path;
 
   fInfoForm.Visible := true;
-  fInfoForm.BoundsRect := pnLevelInfo.BoundsRect; // Delphi 10.4 bugfix
+  fInfoForm.BoundsRect := pnLevelInfo.BoundsRect;
   fInfoForm.Level := GameParams.Level;
   fInfoForm.Talisman := nil;
   fDisplayRecords := rdNone;
@@ -868,11 +868,11 @@ begin
   begin
     MakeButton(-1);
     MakeButton(-2);
+
+    if (GameParams.Level.Info.CollectibleCount > 0) then
+      MakeButton(-3);
   end else if GameParams.CurrentLevel.WorldRecords.LemmingsRescued.Value > 0 then
     MakeButton(-2);
-
-  if (GameParams.Level.Info.CollectibleCount > 0) then
-    MakeButton(-3);
 
   for i := 0 to GameParams.Level.Talismans.Count-1 do
     MakeButton(i);

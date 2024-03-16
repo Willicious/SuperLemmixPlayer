@@ -79,6 +79,7 @@ type
       procedure ShowPopup;
       procedure PrepareEmbed(aForceRedraw: Boolean);
       procedure PrepareEmbedRecords(aKind: TRecordDisplay);
+      procedure PrepareEmbedCollectiblesRecords;
 
       procedure Wipe;
 
@@ -773,11 +774,52 @@ begin
   ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
 end;
 
-procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
+procedure TLevelInfoPanel.PrepareEmbedCollectiblesRecords;
 var
+  UserValue, WorldValue, LevelValue: Integer;
   Records, WorldRecords: TLevelRecords;
   CollectibleIcon, TextColour: Integer;
+begin
+  Records := GameParams.CurrentLevel.UserRecords;
+  WorldRecords := GameParams.CurrentLevel.WorldRecords;
 
+  UserValue := Records.CollectiblesGathered.Value;
+  WorldValue := WorldRecords.CollectiblesGathered.Value;
+  LevelValue := fLevel.Info.CollectibleCount;
+
+  if UserValue < LevelValue then
+  begin
+    if UserValue < 0 then UserValue := 0;
+    CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
+    TextColour := 0;
+  end else begin
+    CollectibleIcon := ICON_COLLECTIBLE;
+    TextColour := COLOR_RECORDS;
+  end;
+
+  Add(CollectibleIcon, GameParams.Username + '''s record is '
+      + IntToStr(UserValue) + '/' + IntToStr(LevelValue),
+      Records.CollectiblesGathered.User, true, pmNextRowLeft, TextColour);
+
+  if WorldValue < LevelValue then
+  begin
+    CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
+    TextColour := 0;
+  end else begin
+    CollectibleIcon := ICON_COLLECTIBLE;
+    TextColour := COLOR_RECORDS;
+  end;
+
+  if WorldValue > UserValue then
+    Add(CollectibleIcon, 'World record is ' + IntToStr(WorldValue) + '/' + IntToStr(LevelValue),
+        WorldRecords.CollectiblesGathered.User, true, pmNextRowLeft, TextColour)
+  else
+    AddDummy(false, pmNextRowLeft);
+end;
+
+procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
+var
+  Records: TLevelRecords;
   Skill: TSkillPanelButton;
 
   function PrepareHintName(aInput: String): String;
@@ -790,60 +832,24 @@ var
       Result := aInput;
   end;
 
-  procedure PrepareCollectiblesRecords;
+  procedure AddLevelPreview;
   begin
-    if Records.CollectiblesGathered.Value < 0 then
-      Add(ICON_COLLECTIBLE_UNOBTAINED, '~', '', true, pmNextColumnSame)
-    else if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
-      Add(ICON_COLLECTIBLE_UNOBTAINED, Records.CollectiblesGathered.Value,
-          PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS)
-    else
-      Add(ICON_COLLECTIBLE, Records.CollectiblesGathered.Value,
-          PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+    if fCurrentPos.X = fAdjustedSizing.PaddingSize then
+      AddDummy(false, pmMoveHorz);
+
+    AddPreview(false);
+    ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
   end;
 begin
   Wipe;
 
   if aKind = rdCollectibles then
   begin
-    Records := GameParams.CurrentLevel.UserRecords;
-
-    if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
-    begin
-      CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
-      TextColour := 0;
-    end else begin
-      CollectibleIcon := ICON_COLLECTIBLE;
-      TextColour := COLOR_RECORDS;
-    end;
-
-    Add(CollectibleIcon, GameParams.Username + '''s record is ' + IntToStr(Records.CollectiblesGathered.Value)
-        + '/' + IntToStr(fLevel.Info.CollectibleCount), '', true, pmNextRowLeft, TextColour);
-
-    WorldRecords := GameParams.CurrentLevel.WorldRecords;
-    if WorldRecords.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
-    begin
-      CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
-      TextColour := 0;
-    end else begin
-      CollectibleIcon := ICON_COLLECTIBLE;
-      TextColour := COLOR_RECORDS;
-    end;
-
-    if WorldRecords.CollectiblesGathered.Value > Records.CollectiblesGathered.Value then
-      Add(CollectibleIcon, 'World record is '
-          + IntToStr(WorldRecords.CollectiblesGathered.Value) + '/' + IntToStr(fLevel.Info.CollectibleCount),
-          PrepareHintName(WorldRecords.CollectiblesGathered.User), true, pmNextRowLeft, TextColour)
-    else
-      AddDummy(false, pmNextRowLeft);
-
-    if fCurrentPos.X = fAdjustedSizing.PaddingSize then
-      AddDummy(false, pmMoveHorz);
-
-    AddPreview(false);
-    ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
+    PrepareEmbedCollectiblesRecords;
+    AddLevelPreview;
     Exit;
-  end else
+  end;
+
   if aKind = rdUser then
   begin
     Records := GameParams.CurrentLevel.UserRecords;
@@ -879,7 +885,14 @@ begin
     Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value,
         PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
 
-  PrepareCollectiblesRecords;
+  if Records.CollectiblesGathered.Value < 0 then
+    Add(ICON_COLLECTIBLE_UNOBTAINED, '~', '', true, pmNextColumnSame)
+  else if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
+    Add(ICON_COLLECTIBLE_UNOBTAINED, Records.CollectiblesGathered.Value,
+        PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS)
+  else
+    Add(ICON_COLLECTIBLE, Records.CollectiblesGathered.Value,
+        PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
 
   Reposition(pmNextRowPadLeft);
 
@@ -891,11 +904,7 @@ begin
         Add(ICON_SKILLS[Skill], Records.SkillCount[Skill].Value,
             PrepareHintName(Records.SkillCount[Skill].User), false, pmMoveHorz, COLOR_RECORDS);
 
-  if fCurrentPos.X = fAdjustedSizing.PaddingSize then
-    AddDummy(false, pmMoveHorz);
-
-  AddPreview(false);
-  ApplySize(fAdjustedSizing.AsPanelWidth, fAdjustedSizing.AsPanelHeight);
+  AddLevelPreview;
 end;
 
 end.
