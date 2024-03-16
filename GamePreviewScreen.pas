@@ -40,6 +40,8 @@ type
 
       procedure MakeTalismanOptions;
       procedure HandleTalismanClick;
+
+      procedure SetWindowCaption;
     protected
       procedure DoAfterConfig; override;
       function GetBackgroundSuffix: String; override;
@@ -194,17 +196,11 @@ var
   LevelScale: Double;
   NewRegion: TClickableRegion;
   Lines: TextLineArray;
+  s: string;
 const
   TEXT_Y_POSITION = 170;
 begin
-  if GameParams.Level.Info.LemmingsCount = 1 then
-    GameParams.MainForm.Caption :=
-      'SuperLemmix - ' + GameParams.Level.Info.Title + ' - Save ' + IntToStr(GameParams.Level.Info.RescueCount)
-      + ' of ' + IntToStr(GameParams.Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesSingular
-  else
-    GameParams.MainForm.Caption :=
-      'SuperLemmix - ' + GameParams.Level.Info.Title + ' - Save ' + IntToStr(GameParams.Level.Info.RescueCount)
-      + ' of ' + IntToStr(GameParams.Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
+  SetWindowCaption;
 
   fClickableRegions.Clear;
   Assert(GameParams <> nil);
@@ -288,6 +284,30 @@ begin
     W.Free;
     ScreenImg.EndUpdate;
   end;
+end;
+
+procedure TGamePreviewScreen.SetWindowCaption;
+var
+  s, Title: string;
+  RescueCount, LemCount, CollectibleCount: Integer;
+begin
+  Title := GameParams.Level.Info.TItle;
+  RescueCount := GameParams.Level.Info.RescueCount;
+  LemCount := GameParams.Level.Info.LemmingsCount;
+  CollectibleCount := GameParams.Level.Info.CollectibleCount;
+
+  s := 'SuperLemmix - ' + Title + ' - Save ' + IntToStr(RescueCount)
+       + ' of ' + IntToStr(LemCount) + ' ';
+
+  if LemCount = 1 then
+    s := s + GameParams.Renderer.Theme.LemNamesSingular
+  else
+    s := s + GameParams.Renderer.Theme.LemNamesPlural;
+
+  if CollectibleCount <> 0 then
+    s := s + ' - ' + IntToStr(CollectibleCount) + ' Diamonds to collect';
+
+  GameParams.MainForm.Caption := s;
 end;
 
 procedure TGamePreviewScreen.SaveLevelImage;
