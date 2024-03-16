@@ -77,6 +77,7 @@ type
       destructor Destroy; override;
 
       procedure ShowPopup;
+      procedure ShowCollectiblePopup;
       procedure PrepareEmbed(aForceRedraw: Boolean);
       procedure PrepareEmbedRecords(aKind: TRecordDisplay);
       procedure PrepareEmbedCollectiblesRecords;
@@ -518,6 +519,68 @@ begin
     ColumnLongerSpacing := Adjust(COLUMN_LONGER_SPACING);
     ColumnSmallerSpacing := Adjust(COLUMN_SMALLER_SPACING);
     IconSize := Adjust(ICON_BASE_SIZE);
+  end;
+end;
+
+procedure TLevelInfoPanel.ShowCollectiblePopup;
+
+  function AddRequirements(aDry: Boolean): Integer;
+  var
+  Icon, aValue: Integer;
+    procedure LocalAdd(aIcon: Integer; aText: Integer; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+    begin
+      Inc(Result);
+      if not aDry then
+        Add(aIcon, aText, '', aTextOnRight, aMovement, aColor);
+    end;
+
+    procedure LocalAdd(aIcon: Integer; aText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+    begin
+      Inc(Result);
+      if not aDry then
+        Add(aIcon, aText, '', aTextOnRight, aMovement, aColor);
+    end;
+  begin
+    Result := 0;
+    aValue := GameParams.CurrentLevel.UserRecords.CollectiblesGathered.Value;
+
+    LocalAdd(ICON_COLLECTIBLE, 'Total collectibles: ' + IntToStr(fLevel.Info.CollectibleCount) + '  ', true, pmNextRowSame, 0);
+
+    if aValue < fLevel.Info.CollectibleCount then
+      Icon := ICON_COLLECTIBLE_UNOBTAINED
+    else
+      Icon := ICON_COLLECTIBLE;
+
+    if aValue > 0 then
+    LocalAdd(Icon, 'Your record is:     ' + IntToStr(aValue) + '  ', true, pmMoveHorz, 0);
+  end;
+var
+  ReqCount: Integer;
+  ReqWidth: Integer;
+const
+  MIN_CENTER_REQ_COUNT = 5;
+begin
+  if GameParams.Level.Info.CollectibleCount > 0 then
+  begin
+    BorderStyle := bsDialog;
+
+    Wipe;
+
+    ReqCount := AddRequirements(true);
+    ReqWidth := fAdjustedSizing.NormalSpacing * ReqCount;
+
+    if fMinSize.X > ReqWidth + (fAdjustedSizing.PaddingSize * 2) then
+      fCurrentPos.X := (fMinSize.X - ReqWidth) div 2;
+
+    AddRequirements(false);
+
+    AddClose;
+    ApplySize;
+
+    Left := (Screen.Width - Width) div 2;
+    Top := TForm(Owner).Top + ((TForm(Owner).Height - Height) div 2);
+
+    ShowModal;
   end;
 end;
 

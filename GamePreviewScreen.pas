@@ -40,6 +40,7 @@ type
 
       procedure MakeTalismanOptions;
       procedure HandleTalismanClick;
+      procedure HandleCollectibleClick;
 
       procedure SetWindowCaption;
     protected
@@ -456,6 +457,27 @@ begin
   Result[6].ColorShift := HueShift;
 end;
 
+procedure TGamePreviewScreen.HandleCollectibleClick;
+var
+  P: TPoint;
+  i: Integer;
+  F: TLevelInfoPanel;
+begin
+  P := GetInternalMouseCoordinates;
+  for i := 0 to fTalRects.Count-1 do
+    if PtInRect(fTalRects[i], P) then
+    begin
+      F := TLevelInfoPanel.Create(self, nil, fTalismanImage);
+      try
+        F.Level := GameParams.Level;
+        F.ShowCollectiblePopup;
+      finally
+        F.Free;
+      end;
+      Break;
+    end;
+end;
+
 procedure TGamePreviewScreen.HandleTalismanClick;
 var
   P: TPoint;
@@ -542,17 +564,33 @@ var
   LoadPath: String;
   SrcRect: TRect;
 
+  TalCount: Integer;
   TotalTalWidth: Integer;
   TalPoint: TPoint;
 
-  KeepTalismans: Boolean;
+  KeepTalismans, HasCollectibles, AllCollectiblesGathered: Boolean;
+
+  procedure DrawButtons(IsCollectible: Boolean = False);
+  begin
+    Temp.Clear(0);
+    fTalismanImage.DrawTo(Temp, 0, 0, SrcRect);
+
+    if IsCollectible then
+      NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleCollectibleClick, Temp)
+    else
+      NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
+
+    fTalRects.Add(NewRegion.ClickArea);
+    TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
+  end;
 const
   TALISMANS_Y_POSITION = 408;
 begin
   if GameParams.Level.Talismans.Count = 0 then
     Exit;
 
-  KeepTalismans := false;
+  KeepTalismans := False;
+  HasCollectibles := GameParams.Level.Info.CollectibleCount > 0;
 
   if fTalismanImage = nil then
     fTalismanImage := TBitmap32.Create;
@@ -568,13 +606,13 @@ begin
     TPngInterface.LoadPngFile(LoadPath, fTalismanImage);
     fTalismanImage.DrawMode := dmOpaque;
 
-    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 3);
+    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 4);
 
-    TotalTalWidth := (GameParams.Level.Talismans.Count * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
-    TalPoint := Point(
-      (ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2,
-      TALISMANS_Y_POSITION
-      );
+    TalCount := GameParams.Level.Talismans.Count;
+    if HasCollectibles then TalCount := TalCount + 1;
+
+    TotalTalWidth := (TalCount * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
+    TalPoint := Point((ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2, TALISMANS_Y_POSITION);
 
     for i := 0 to GameParams.Level.Talismans.Count-1 do
     begin
@@ -588,13 +626,20 @@ begin
       if GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
         OffsetRect(SrcRect, Temp.Width, 0);
 
-      Temp.Clear(0);
-      fTalismanImage.DrawTo(Temp, 0, 0, SrcRect);
+      DrawButtons;
+    end;
 
-      NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
-      fTalRects.Add(NewRegion.ClickArea);
+    if (GameParams.Level.Info.CollectibleCount > 0) then
+    begin
+      AllCollectiblesGathered := (GameParams.CurrentLevel.UserRecords.CollectiblesGathered.Value
+                               = GameParams.Level.Info.CollectibleCount);
 
-      TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
+      SrcRect := SizedRect(0, Temp.Height * 3, Temp.Width, Temp.Height);
+
+      if AllCollectiblesGathered then
+        OffsetRect(SrcRect, Temp.Width, 0);
+
+      DrawButtons(True);
     end;
   finally
     Temp.Free;
