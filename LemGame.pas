@@ -495,7 +495,7 @@ type
     function GetTargetLemming: TLemming;
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
     function SpawnIntervalChanged: Boolean;
-    procedure PlayAssignFailSound;
+    procedure PlayAssignFailSound(PlayForHighlit: Boolean = False);
     procedure PopBalloon(L: TLemming; BalloonPopTimerValue: Integer; NewAction: TBasicLemmingAction);
     //procedure SetSkillsToInfinite; // Bookmark
 
@@ -1238,7 +1238,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TLemmingGame.PlayAssignFailSound;
+procedure TLemmingGame.PlayAssignFailSound(PlayForHighlit: Boolean = False);
 var
 SelectedLemming: TLemming;
 HighlitLemming: TLemming;
@@ -1253,7 +1253,7 @@ begin
       CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
     else
       CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
-  end else if (GetHighlitLemming <> nil) then
+  end else if (GetHighlitLemming <> nil) and PlayForHighlit then
     begin
     if  (HasSteelAt(HighlitLemming.LemX, HighlitLemming.LemY)
     and (RenderInterface.SelectedSkill in [spbMiner, spbDigger])) then
@@ -7431,7 +7431,7 @@ begin
           if ProcessSkillAssignment(true) then
             fRenderInterface.ForceUpdate := true
           else
-            PlayAssignFailSound;
+            PlayAssignFailSound(True);
         end;
       end;
   end;
