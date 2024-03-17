@@ -1377,7 +1377,7 @@ begin
   if fActivateCount = 0 then
   begin
     fGame.Start;
-    fGame.CreateSavedState(fSaveList.Add); 
+    fGame.CreateSavedState(fSaveList.Add);
     CanPlay := True;
   end;
   Inc(fActivateCount);
@@ -1386,7 +1386,8 @@ end;
 procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   CurrTime: Cardinal;
-  sn: Integer;
+  sn, i, TargetFrame: Integer;
+  SkillCountChange: TBaseReplayItem;
   ButtonIndex: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;
@@ -1402,8 +1403,8 @@ const
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
+                         lka_InfiniteSkills, // Infinite Skills
                          lka_Cheat,
-                         //lka_InfiniteSkills,
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
@@ -1487,6 +1488,25 @@ begin
                      GameSpeed := gspPause;
                    end;
                  end;
+            lka_InfiniteSkills: begin // Infinite Skills
+                                  if not SkillsAreInfinite then
+                                  begin
+                                    Game.SetSkillsToInfinite;
+                                    UserSetInfiniteSkills := True;
+                                  end else
+                                  begin
+                                    SkillsAreInfinite := False; // Prevents skills being set to infinite again
+
+                                    for i := 0 to Game.CurrentIteration do
+                                    if Game.ReplayManager.HasSkillCountChangeAt(i) then
+                                      TargetFrame := i;
+
+                                    Game.fIsBackstepping := True;
+                                    GotoSaveState(Max(TargetFrame - 1, 0));
+
+                                    //Game.ReplayManager.Delete( we need to identify the item to delete );
+                                  end;
+                                end;
       lka_Nuke: begin
                   // Double keypress needed to prevent accidently nuking
                   CurrTime := TimeGetTime;
@@ -1526,9 +1546,6 @@ begin
                         end;
                       end;
       lka_Cheat: Game.Cheat;
-//      lka_InfiniteSkills: begin
-//                            Game.SetSkillsToInfinite;
-//                          end;
       lka_Turbo: begin
                    if Game.IsSuperLemming then Exit;
                    if Game.RewindPressed then Game.fRewindPressed := False;

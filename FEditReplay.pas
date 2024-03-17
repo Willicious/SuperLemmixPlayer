@@ -66,6 +66,7 @@ var
     A: TReplaySkillAssignment absolute aItem;
     R: TReplayChangeSpawnInterval absolute aItem;
     N: TReplayNuke absolute aItem;
+    F: TReplayInfiniteSkills absolute aItem;
 
     function GetSkillString(aSkill: TBasicLemmingAction): String;
     begin
@@ -115,6 +116,9 @@ var
     end else if aItem is TReplayNuke then
     begin
       Result := Result + 'Nuke';
+    end else if aItem is TReplayInfiniteSkills then
+    begin
+      Result := Result + 'Infinite Skills'// + IntToStr(F.NewSkillCount); // Infinite Skills
     end else
       Result := 'Unknown replay action';
   end;
@@ -277,7 +281,7 @@ begin
   if ApplyRRDelete then
     HandleRRDelete(I.Frame)
   else
-    fReplay.Delete(I);
+    fReplay.Delete(I); // Infinite Skills - this is the logic you need to delete the replay items
 
   ListReplayActions;
 end;

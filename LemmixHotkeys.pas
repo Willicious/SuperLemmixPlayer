@@ -33,8 +33,8 @@ type
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
+                         lka_InfiniteSkills, // Infinite Skills
                          lka_Cheat,
-                         //lka_InfiniteSkills,
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
@@ -196,7 +196,7 @@ begin
   SetKeyFunction($30, lka_SlowMotion);
   SetKeyFunction($BE, lka_SlowMotion);
   SetKeyFunction($2E, lka_Cheat);
-  //SetKeyFunction($2D, lka_InfiniteSkills);
+  SetKeyFunction($2D, lka_InfiniteSkills); // Infinite Skills
   SetKeyFunction($56, lka_ClearPhysics, 1);
   SetKeyFunction($14, lka_ClearPhysics, 0);
   SetKeyFunction($4C, lka_LoadReplay);
@@ -305,7 +305,7 @@ begin
   if s = 'dir_select_right' then Result := lka_DirRight;
   if s = 'force_walker' then Result := lka_ForceWalker;
   if s = 'cheat' then Result := lka_Cheat;
-  //if s = 'infinite_skills' then Result := lka_InfiniteSkills;
+  if s = 'infinite_skills' then Result := lka_InfiniteSkills; // Infinite Skills
   if s = 'skip' then Result := lka_Skip;
   if s = 'special_skip' then Result := lka_SpecialSkip;
   if s = 'fastforward' then Result := lka_FastForward;
@@ -463,7 +463,7 @@ var
       lka_DirRight:         Result := 'Dir_Select_Right';
       lka_ForceWalker:      Result := 'Force_Walker';
       lka_Cheat:            Result := 'Cheat';
-      //lka_InfiniteSkills:   Result := 'Infinite_Skills';
+      lka_InfiniteSkills:   Result := 'Infinite_Skills'; // Infinite Skills
       lka_Skip:             Result := 'Skip';
       lka_SpecialSkip:      Result := 'Special_Skip';
       lka_FastForward:      Result := 'FastForward';

@@ -125,6 +125,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Directional Select Left'
       'Directional Select Right'
       'Select Walking Lemming'
+      'Infinite Skills'
       'Cheat'
       'Time Skip'
       'Special Skip'
@@ -321,7 +322,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     MaxValue = 14
     MinValue = 1
     TabOrder = 16
-    Value = 0
+    Value = 1
     Visible = False
     OnChange = seSkillButtonChange
   end

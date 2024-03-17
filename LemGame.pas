@@ -198,6 +198,8 @@ type
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
 
+    fSkillsAreInfinite         : Boolean;
+    fUserSetInfiniteSkills     : Boolean;
     fUserSetNuking             : Boolean;
     ExploderAssignInProgress   : Boolean;
     DoExplosionCrater          : Boolean;
@@ -497,7 +499,10 @@ type
     function SpawnIntervalChanged: Boolean;
     procedure PlayAssignFailSound(PlayForHighlit: Boolean = False);
     procedure PopBalloon(L: TLemming; BalloonPopTimerValue: Integer; NewAction: TBasicLemmingAction);
-    //procedure SetSkillsToInfinite; // Bookmark
+
+    procedure SetSkillsToInfinite; // Infinite Skills
+    procedure RecordInfiniteSkills; // Infinite Skills
+    procedure HandleInfiniteSkills; // Infinite Skills
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -537,6 +542,8 @@ type
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
 
+    property SkillsAreInfinite: Boolean read fSkillsAreInfinite write fSkillsAreInfinite;
+    property UserSetInfiniteSkills: Boolean read fUserSetInfiniteSkills write fUserSetInfiniteSkills;
     property UserSetNuking: Boolean read fUserSetNuking write fUserSetNuking;
     property ActiveLemmingTypes: TLemmingKinds read GetActiveLemmingTypes;
 
@@ -814,6 +821,7 @@ begin
   end;
 
   aState.UserSetNuking := UserSetNuking;
+  // Infinite Skills - might need to add state here
   aState.ExploderAssignInProgress := ExploderAssignInProgress;
   aState.Index_LemmingToBeNuked := Index_LemmingToBeNuked;
 
@@ -870,6 +878,7 @@ begin
   end;
 
   UserSetNuking := aState.UserSetNuking;
+  // Infinite Skills - might need to add state here
   ExploderAssignInProgress := aState.ExploderAssignInProgress;
   Index_LemmingToBeNuked := aState.Index_LemmingToBeNuked;
 
@@ -1354,6 +1363,8 @@ begin
   CollectiblesCompleted := False;
 
   SpawnIntervalModifier := 0;
+  SkillsAreInfinite := False;
+  UserSetInfiniteSkills := False;
   UserSetNuking := False;
   ExploderAssignInProgress := False;
   Index_LemmingToBeNuked := 0;
@@ -2124,17 +2135,43 @@ begin
 
 end;
 
-//procedure TLemmingGame.SetSkillsToInfinite;
-//var
-//Skill: TSkillPanelButton;
-//begin
-//  with Level.Info do
-//  begin
-//    for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
-//    if SkillPanelButtonToAction[Skill] <> baNone then
-//        CurrSkillCount[SkillPanelButtonToAction[Skill]] := 100;
-//  end;
-//end;
+procedure TLemmingGame.SetSkillsToInfinite; // Infinite Skills
+begin
+  // 123 - not sure what order to do things in here. We don't want to record multiples, ideally
+  // If the level is backstepped manually, and skills are set to infinite again at an earlier point
+  // Then the later replay action should be deleted automatically
+  SkillsAreInfinite := True;
+
+  RecordInfiniteSkills;
+end;
+
+procedure TLemmingGame.HandleInfiniteSkills; // Infinite Skills
+var
+  Skill: TSkillPanelButton;
+begin
+  if SkillsAreInfinite then
+  begin
+    ShowMessage('Handle: Skills are infinite');
+
+    // Set all skill counts to 100 (infinite)
+    with Level.Info do
+    begin
+      for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+      if SkillPanelButtonToAction[Skill] <> baNone then
+          CurrSkillCount[SkillPanelButtonToAction[Skill]] := 100;
+    end;
+  end else begin
+    ShowMessage('Handle: Skills are not infinite');
+
+    // Reset to original skill count, accounting for any used skills
+    with Level.Info do
+    begin
+      for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+      if SkillPanelButtonToAction[Skill] <> baNone then
+          CurrSkillCount[SkillPanelButtonToAction[Skill]] := (Level.Info.SkillCount[Skill] - SkillsUsed[Skill]);
+    end;
+  end;
+end;
 
 // --- Setting Size of Object Maps --- //
 
@@ -7637,6 +7674,20 @@ begin
   end;
 end;
 
+procedure TLemmingGame.RecordInfiniteSkills; // Infinite Skills
+var
+  E: TReplayInfiniteSkills;
+begin
+  if not fPlaying then Exit;
+
+  E := TReplayInfiniteSkills.Create;
+  E.Frame := fCurrentIteration;
+  //E.NewSkillCount := aCount;
+
+  E.AddedByInsert := ReplayInsert;
+
+  fReplayManager.Add(E);
+end;
 
 procedure TLemmingGame.RecordNuke(aInsert: Boolean);
 var
@@ -7715,6 +7766,13 @@ var
     ExploderAssignInProgress := True;
   end;
 
+  procedure ApplyInfiniteSkills; // Infinite Skills
+  var
+    E: TReplayInfiniteSkills absolute R;
+  begin
+    HandleInfiniteSkills;
+  end;
+
   function Handle: Boolean;
   begin
     Result := false;
@@ -7730,6 +7788,9 @@ var
 
     if R is TReplayNuke then
       ApplyNuke;
+
+    if R is TReplayInfiniteSkills then // Infinite Skills
+      ApplyInfiniteSkills;
   end;
 begin
   try
@@ -7740,11 +7801,17 @@ begin
       R := fReplayManager.SpawnIntervalChange[fCurrentIteration, i];
       Inc(i);
     until not Handle;
-    if PausedRRCheck then Exit;
+    if PausedRRCheck then Exit;    // Bookmark - maybe we can get rid of paused RR code?
 
     i := 0;
     repeat
       R := fReplayManager.Assignment[fCurrentIteration, i];
+      Inc(i);
+    until not Handle;
+
+    i := 0;
+    repeat
+      R := fReplayManager.SkillCountChange[fCurrentIteration, i];
       Inc(i);
     until not Handle;
 
@@ -8158,7 +8225,6 @@ begin
   NewSI := CurrSpawnInterval + SpawnIntervalModifier;
   if CheckIfLegalSI(NewSI) then RecordSpawnInterval(NewSI);
 end;
-
 
 procedure TLemmingGame.Finish(aReason: Integer);
 begin
