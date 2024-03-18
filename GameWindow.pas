@@ -1407,7 +1407,6 @@ begin
       end;
 
       Game.ResetSkillCount;
-      Game.IsInfiniteSkillsMode := False;
       Exit;
     end;
 

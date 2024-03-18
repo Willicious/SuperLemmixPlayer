@@ -2158,6 +2158,8 @@ begin
     if SkillPanelButtonToAction[Skill] <> baNone then
         CurrSkillCount[SkillPanelButtonToAction[Skill]] := (Level.Info.SkillCount[Skill] - SkillsUsed[Skill]);
   end;
+
+  IsInfiniteSkillsMode := False;
 end;
 
 // --- Setting Size of Object Maps --- //
