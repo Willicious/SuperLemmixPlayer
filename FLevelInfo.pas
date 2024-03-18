@@ -948,14 +948,18 @@ begin
     Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value,
         PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
 
-  if Records.CollectiblesGathered.Value < 0 then
-    Add(ICON_COLLECTIBLE_UNOBTAINED, '~', '', true, pmNextColumnSame)
-  else if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
-    Add(ICON_COLLECTIBLE_UNOBTAINED, Records.CollectiblesGathered.Value,
-        PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS)
-  else
-    Add(ICON_COLLECTIBLE, Records.CollectiblesGathered.Value,
-        PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+  // Only show collectibles records if a level has them
+  if Level.Info.CollectibleCount > 0 then
+  begin
+    if Records.CollectiblesGathered.Value < 0 then
+      Add(ICON_COLLECTIBLE_UNOBTAINED, '~', '', true, pmNextColumnSame)
+    else if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
+      Add(ICON_COLLECTIBLE_UNOBTAINED, Records.CollectiblesGathered.Value,
+          PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS)
+    else
+      Add(ICON_COLLECTIBLE, Records.CollectiblesGathered.Value,
+          PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+  end;
 
   Reposition(pmNextRowPadLeft);
 
