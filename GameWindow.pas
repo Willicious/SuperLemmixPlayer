@@ -133,6 +133,7 @@ type
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
     procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
+    procedure HandleInfiniteSkillsHotkey; // Infinite Skills
 
     function GetLevelMusicName: String;
     function ProcessMusicPriorityOrder(aOptions: String; aIsFromRotation: Boolean): String;
@@ -1383,10 +1384,42 @@ begin
   Inc(fActivateCount);
 end;
 
+procedure TGameWindow.HandleInfiniteSkillsHotkey; // Infinite Skills
+var
+  Skill: TSkillPanelButton;
+  i, n, TargetFrame: Integer;
+  ReplayEvent: TBaseReplayItem;
+begin
+  // Check for existing previous replay event
+  for i := 0 to Game.CurrentIteration do
+    if Game.ReplayManager.HasSkillCountChangeAt(i) then
+    begin
+      TargetFrame := i;
+
+      Game.fIsBackstepping := True;
+      GotoSaveState(Max(TargetFrame - 1, 0));
+
+      // Delete all existing future Infinite Skills replay events
+      for n := 0 to Game.ReplayManager.LastActionFrame do
+      begin
+        ReplayEvent := Game.ReplayManager.SkillCountChange[n, 0];
+        Game.ReplayManager.Delete(ReplayEvent);
+      end;
+
+      Game.ResetSkillCount;
+      Game.IsInfiniteSkillsMode := False;
+      Exit;
+    end;
+
+  // If no previous replay events found, set Infinite Skills and record replay event
+  Game.SetSkillsToInfinite;
+  Game.RecordInfiniteSkills;
+end;
+
 procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   CurrTime: Cardinal;
-  sn, i, TargetFrame: Integer;
+  sn: Integer;
   SkillCountChange: TBaseReplayItem;
   ButtonIndex: Integer;
   func: TLemmixHotkey;
@@ -1489,23 +1522,7 @@ begin
                    end;
                  end;
             lka_InfiniteSkills: begin // Infinite Skills
-                                  if not SkillsAreInfinite then
-                                  begin
-                                    Game.SetSkillsToInfinite;
-                                    UserSetInfiniteSkills := True;
-                                  end else
-                                  begin
-                                    SkillsAreInfinite := False; // Prevents skills being set to infinite again
-
-                                    for i := 0 to Game.CurrentIteration do
-                                    if Game.ReplayManager.HasSkillCountChangeAt(i) then
-                                      TargetFrame := i;
-
-                                    Game.fIsBackstepping := True;
-                                    GotoSaveState(Max(TargetFrame - 1, 0));
-
-                                    //Game.ReplayManager.Delete( we need to identify the item to delete );
-                                  end;
+                                  HandleInfiniteSkillsHotkey;
                                 end;
       lka_Nuke: begin
                   // Double keypress needed to prevent accidently nuking

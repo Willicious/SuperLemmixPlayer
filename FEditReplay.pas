@@ -118,7 +118,7 @@ var
       Result := Result + 'Nuke';
     end else if aItem is TReplayInfiniteSkills then
     begin
-      Result := Result + 'Infinite Skills'// + IntToStr(F.NewSkillCount); // Infinite Skills
+      Result := Result + 'Infinite Skills'; // Infinite Skills
     end else
       Result := 'Unknown replay action';
   end;
