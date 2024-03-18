@@ -7056,6 +7056,9 @@ var
   NewRecs: TLevelRecords;
   Skill: TSkillPanelButton;
 begin
+  // Don't update records if Infinite Skills mode is active
+  if IsInfiniteSkillsMode then Exit;
+
   NewRecs.Wipe;
   NewRecs.LemmingsRescued.Value := LemmingsIn;
 

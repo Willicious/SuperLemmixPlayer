@@ -342,9 +342,16 @@ begin
 
   // Comment - we allocate 2 lines for this
   HueShift.HShift := CommentShift;
-  WhichText := Entry.Group.PostviewTexts[GetResultIndex];
-  Result[4].Line := WhichText.Text[0];
-  Result[5].Line := WhichText.Text[1];
+  if GlobalGame.IsInfiniteSkillsMode then
+  begin
+    Result[4].Line := 'You used infinite skills to play this level';
+    Result[5].Line := 'Try again sometime with the intended skillset';
+  end else begin
+    WhichText := Entry.Group.PostviewTexts[GetResultIndex];
+    Result[4].Line := WhichText.Text[0];
+    Result[5].Line := WhichText.Text[1];
+  end;
+
   Result[4].yPos := Result[3].yPos + (LINE_Y_SPACING * 2);
   Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
   Result[4].ColorShift := HueShift;
