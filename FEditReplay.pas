@@ -152,6 +152,10 @@ begin
       Action := fReplay.Assignment[i, 0];
       if Action <> nil then
         AddAction(Action);
+
+      Action := fReplay.SkillCountChange[i, 0];
+      if Action <> nil then
+        AddAction(Action);
     end;
   finally
     for i := 0 to lbReplayActions.Items.Count-1 do
