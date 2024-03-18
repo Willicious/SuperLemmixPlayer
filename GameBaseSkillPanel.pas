@@ -64,6 +64,7 @@ type
     fSkillCountEraseInvert: TBitmap32;
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
+    fSkillInfiniteMode    : TBitmap32;
     fSkillSelected        : TBitmap32;
     fTurboHighlight       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
@@ -304,6 +305,10 @@ begin
   fSkillInfinite.DrawMode := dmBlend;
   fSkillInfinite.CombineMode := cmMerge;
 
+  fSkillInfiniteMode := TBitmap32.Create;
+  fSkillInfiniteMode.DrawMode := dmBlend;
+  fSkillInfiniteMode.CombineMode := cmMerge;
+
   fSkillSelected := TBitmap32.Create;
   fSkillSelected.DrawMode := dmBlend;
   fSkillSelected.CombineMode := cmMerge;
@@ -360,6 +365,7 @@ begin
     fSkillOvercount[i].Free;
 
   fSkillInfinite.Free;
+  fSkillInfiniteMode.Free;
   fSkillSelected.Free;
   fTurboHighlight.Free;
   fSkillCountErase.Free;
@@ -892,7 +898,11 @@ begin
   fSkillInfinite.SetSize(8 * ResMod, 8 * ResMod);
   fIconBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
 
-  OffsetRect(SrcRect, 8 * ResMod, 0);
+  OffsetRect(SrcRect, 8 * ResMod, 0); // Additional blue infinity symbol for when Infinite Skills mode is active
+  fSkillInfiniteMode.SetSize(8 * ResMod, 8 * ResMod);
+  fIconBmp.DrawTo(fSkillInfiniteMode, 0, 0, SrcRect);
+
+  OffsetRect(SrcRect, 8 * ResMod, 0); // Locked RR/SI icon
   fSkillLock.SetSize(8 * ResMod, 8 * ResMod);
   fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
 
@@ -1303,7 +1313,9 @@ begin
     fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
   else if (aNumber > 99) then
   begin
-    if (aButton <= LAST_SKILL_BUTTON) then
+    if ((aButton <= LAST_SKILL_BUTTON) and Game.IsInfiniteSkillsMode) then
+      fSkillInfiniteMode.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
+    else if (aButton <= LAST_SKILL_BUTTON) then
       fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
     else
       fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
