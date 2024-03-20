@@ -426,32 +426,41 @@ var
   MaskColor: TColor32;
   SrcFile, SrcFileHr, SrcFileHrMask: String;
   Target: TNeoLevelGroup;
-
   UpscaleSettings: TUpscaleSettings;
-begin
-  Target := GameParams.CurrentLevel.Group;
 
-  SrcFile := Target.Path + aName;
-  if GameParams.HighResolution then
+  procedure GetHiResFileExtension;
   begin
-    SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
-    SrcFileHrMask := ChangeFileExt(SrcFile, '_mask-hr.png');
-  end;
-
-  while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
-  begin
-    Target := Target.Parent;
-    SrcFile := Target.Path + aName;
     if GameParams.HighResolution then
     begin
       SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
       SrcFileHrMask := ChangeFileExt(SrcFile, '_mask-hr.png');
     end;
   end;
+begin
+  // Check styles folder first
+  SrcFile := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aName;
+  GetHiResFileExtension;
 
+  // Then levelpack folder
+  if not FileExists(SrcFile) then
+  begin
+    Target := GameParams.CurrentLevel.Group;
+    SrcFile := Target.Path + aName;
+    GetHiResFileExtension;
+
+    while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
+    begin
+      Target := Target.Parent;
+      SrcFile := Target.Path + aName;
+      GetHiResFileExtension;
+    end;
+  end;
+
+  // Then default
   if not FileExists(SrcFile) then
   begin
     SrcFile := AppPath + SFGraphicsPanel + aName;
+
     if GameParams.HighResolution then
     begin
       SrcFileHr := AppPath + SFGraphicsPanelHighRes + aName;
