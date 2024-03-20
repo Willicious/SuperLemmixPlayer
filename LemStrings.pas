@@ -29,6 +29,7 @@ const
       SFPiecesLemmings = '\lemmings\';
       SFPiecesLemmingsHighRes = '\lemmings-hr\';
       SFPiecesEffects = '\effects\';
+      SFIcons = '\icons\';
       SFTheme = 'theme.nxtm';
 
   SFLevels = 'levels\';
