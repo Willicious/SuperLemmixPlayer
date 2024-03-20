@@ -269,7 +269,7 @@ aPath: String;
 begin
   IconsImg := 'levelinfo_icons.png';
   aStyle := GameParams.Level.Info.GraphicSetName;
-  aStylePath := AppPath + SFStyles + aStyle + '\levelinfo\';
+  aStylePath := AppPath + SFStyles + aStyle + SFIcons;
   aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
   if FileExists(aStylePath + IconsImg) then // Check styles folder first
@@ -277,7 +277,7 @@ begin
   else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then // Then levelpack folder
     TPNGInterface.LoadPngFile(aPath + IconsImg, fIconBMP)
   else
-    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIconBMP);
+    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIconBMP); // Then default
 end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
