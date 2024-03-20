@@ -122,7 +122,7 @@ begin
 
     IconsImg := 'levelinfo_icons.png';
     aStyle := GameParams.Level.Info.GraphicSetName;
-    aStylePath := AppPath + SFStyles + aStyle + '\levelinfo\';
+    aStylePath := AppPath + SFStyles + aStyle + SFIcons;
     aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
     if FileExists(aStylePath + IconsImg) then // Check styles folder first
