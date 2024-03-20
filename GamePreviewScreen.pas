@@ -561,7 +561,7 @@ var
   Tal: TTalisman;
   i: Integer;
 
-  LoadPath: String;
+  LoadPath, aImage: String;
   SrcRect: TRect;
 
   TalCount: Integer;
@@ -597,9 +597,15 @@ begin
 
   Temp := TBitmap32.Create;
   try
-    LoadPath := GameParams.CurrentLevel.Group.FindFile('talismans.png');
+    aImage := 'talismans.png';
+    // Try styles folder first
+    LoadPath := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aImage;
+    // Then level pack folder
     if LoadPath = '' then
-      LoadPath := AppPath + SFGraphicsMenu + 'talismans.png'
+      LoadPath := GameParams.CurrentLevel.Group.FindFile(aImage);
+    // Then default
+    if LoadPath = '' then
+      LoadPath := AppPath + SFGraphicsMenu + aImage
     else
       KeepTalismans := true;
 
