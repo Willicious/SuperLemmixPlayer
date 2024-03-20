@@ -64,6 +64,9 @@ const
   SFX_SKILLBUTTON = 'changeop';
   SFX_CHANGE_RR = 'changerr';
   SFX_PICKUP = 'oing2';
+  SFX_COLLECT = 'collect';
+  SFX_ALLCOLLECT = 'allcollect';
+  SFX_APPLAUSE = 'applause';
   SFX_SWIMMING = 'splash';
   SFX_FALLOUT = 'die';
   SFX_FIXING = 'wrench';

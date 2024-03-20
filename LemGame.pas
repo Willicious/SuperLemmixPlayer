@@ -3658,13 +3658,21 @@ begin
   if GadgetID = 65535 then Exit;
 
   Gadget := Gadgets[GadgetID];
-  CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
+
+  // Play default sound effect if none specified
+  if Gadget.SoundEffectActivate = '' then
+    CueSoundEffect(SFX_COLLECT, L.Position)
+  else
+    CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
+
   Gadget.Triggered := True;
   Dec(CollectiblesRemain);
 
   if (CollectiblesRemain = 0) then
-    CollectiblesCompleted := True
-  else
+  begin
+    CollectiblesCompleted := True;
+    CueSoundEffect(SFX_ALLCOLLECT);
+  end else
     CollectiblesCompleted := False;
 end;
 
