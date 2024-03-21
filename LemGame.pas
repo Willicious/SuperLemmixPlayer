@@ -3858,7 +3858,7 @@ const
                baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
-  if not L.LemIsSwimmer then
+  if not (L.LemIsSwimmer or L.LemIsInvincible) then
   begin
     Result := True;
 
@@ -3877,7 +3877,7 @@ const
                baUnfreezing, baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
-  if L.LemIsSwimmer and not (L.LemAction in ActionSet) then
+  if (L.LemIsSwimmer or L.LemIsInvincible) and not (L.LemAction in ActionSet) then
   begin
     Transition(L, baSwimming);
     CueSoundEffect(SFX_SWIMMING, L.Position);
@@ -3896,6 +3896,7 @@ begin
     if not (L.LemIsZombie or L.LemIsInvincible) then
       RemoveLemming(L, RM_ZOMBIE);
 
+    if L.LemIsSwimmer or L.LemIsInvincible then
     begin
       Transition(L, baSwimming);
       CueSoundEffect(SFX_SWIMMING, L.Position);
@@ -3912,6 +3913,13 @@ begin
 
   if not (L.LemAction in [baFreezerExplosion, baExiting]) then
   begin
+    if L.LemIsInvincible then
+    begin
+      Transition(L, baSwimming);
+      CueSoundEffect(SFX_SWIMMING, L.Position);
+      Exit;
+    end;
+
     DoExplosionCrater := False;
     Transition(L, baExploding);
   end;
@@ -3922,6 +3930,13 @@ begin
   Result := True;
   if not (L.LemAction in [baFreezerExplosion, baExiting]) then
   begin
+    if L.LemIsInvincible then
+    begin
+      Transition(L, baSwimming);
+      CueSoundEffect(SFX_SWIMMING, L.Position);
+      Exit;
+    end;
+
     Transition(L, baVinetrapping);
     CueSoundEffect(SFX_VINETRAPPING, L.Position);
   end;
@@ -3933,6 +3948,12 @@ begin
 
   if not (L.LemAction in [baFreezerExplosion, baExiting]) then
   begin
+    if L.LemIsInvincible then
+    begin
+      Transition(L, baSwimming);
+      CueSoundEffect(SFX_SWIMMING, L.Position);
+      Exit;
+    end;
 
     Transition(L, baVaporizing);
     CueSoundEffect(SFX_VAPORIZING, L.Position);
@@ -4749,6 +4770,12 @@ var
   LemDy: Integer;
   DiveDist: Integer;
 
+  function InSwimmableObject(Y: Integer = 0): Boolean;
+  begin
+    Result := (HasWaterObjectAt(L.LemX, L.LemY + Y, False, True)
+           or (HasWaterObjectAt(L.LemX, L.LemY + Y, True, False) and L.LemIsInvincible));
+  end;
+
   function LemDive(L: TLemming): Integer;
     // Returns 0 if the lem may not dive down
     // Otherwise return the amount of pixels the lem dives
@@ -4758,8 +4785,7 @@ var
     begin
       Inc(Result);
       Inc(L.LemFallen);
-      if HasWaterObjectAt(L.LemX, L.LemY + Result, False, True)
-        then L.LemFallen := 0;
+      if InSwimmableObject(Result) then L.LemFallen := 0;
       if L.LemY + Result >= PhysicsMap.Height then Break;
     end;
 
@@ -4774,14 +4800,12 @@ begin
 
   Inc(L.LemX, L.LemDx);
 
-  if HasWaterObjectAt(L.LemX, L.LemY, False, True)
-  or HasPixelAt(L.LemX, L.LemY) then
+  if InSwimmableObject or HasPixelAt(L.LemX, L.LemY) then
   begin
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
     // Rise if there is water above the lemming
-    if (LemDy >= -1) and HasWaterObjectAt(L.LemX, L.LemY - 1, False, True)
-                     and not HasPixelAt(L.LemX, L.LemY - 1) then
+    if (LemDy >= -1) and InSwimmableObject(-1) and not HasPixelAt(L.LemX, L.LemY - 1) then
       Dec(L.LemY)
 
     else if LemDy < -6 then
@@ -4791,11 +4815,11 @@ begin
       if DiveDist > 0 then
       begin
         Inc(L.LemY, DiveDist); // Dive below the terrain
-        if not HasWaterObjectAt(L.LemX, L.LemY, False, True) then
+        if not InSwimmableObject then
           Transition(L, baWalking);
-      end else if L.LemIsClimber
-        and not HasWaterObjectAt(L.LemX, L.LemY -1, False, True) then
-      // Only transition to climber, if the lemming is not under water
+
+               // Only transition to climber, if the lemming is not under water
+      end else if L.LemIsClimber and not InSwimmableObject(-1) then
         Transition(L, baClimbing)
       else begin
         TurnAround(L);
@@ -4811,9 +4835,7 @@ begin
 
     // See www.lemmingsforums.net/index.php?topic=3380.0
     // And the swimmer should not yet stop if the water and terrain overlaps
-    else if (LemDy <= -1)
-    or ((LemDy = 0)
-     and not HasWaterObjectAt(L.LemX, L.LemY, False, True)) then
+    else if (LemDy <= -1) or ((LemDy = 0) and not InSwimmableObject) then
     begin
       Transition(L, baWalking);
       Inc(L.LemY, LemDy);
@@ -4834,7 +4856,6 @@ begin
       Transition(L, baWalking);
     end;
   end;
-
 end;
 
 // This is a very specific LemAction that only takes place if a non-Swimmer-Zombie is in poison!
@@ -8078,9 +8099,8 @@ begin
          or ((L.LemAction = baBallooning) and (L.LemY <= 30))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
          or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], False, True) and not L.LemIsSwimmer)
+         or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], True, False) and not L.LemIsInvincible)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
-         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trBlasticine)
-         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trVinewater)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
          then
