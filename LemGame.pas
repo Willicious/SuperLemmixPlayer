@@ -3659,6 +3659,14 @@ begin
 
   Gadget := Gadgets[GadgetID];
 
+  // Zombies deactivate collectibles
+  if L.LemIsZombie then
+  begin
+    Gadget.TriggerEffect := DOM_NONE;
+    CueSoundEffect(SFX_ZOMBIE_PICKUP, L.Position);
+    Exit;
+  end;
+
   // Play default sound effect if none specified
   if Gadget.SoundEffectActivate = '' then
     CueSoundEffect(SFX_COLLECT, L.Position)
