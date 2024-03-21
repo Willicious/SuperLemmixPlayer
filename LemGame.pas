@@ -6479,7 +6479,7 @@ begin
   if CurrFallDist < MaxFallDist then
   begin
     // Object checks at hitting ground
-    if IsFallFatal then
+    if IsFallFatal and not L.LemIsInvincible then
       fLemNextAction := baSplatting
     else
       fLemNextAction := baWalking;
