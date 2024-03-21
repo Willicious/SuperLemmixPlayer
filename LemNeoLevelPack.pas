@@ -958,6 +958,8 @@ var
 
     if Level.Info.SuperLemming then
       Result := 'superlemming' + Result + BoolToStr(Level.Info.SuperLemming);
+    if Level.Info.InvincibilityMode then
+      Result := 'invincibility' + Result + BoolToStr(Level.Info.InvincibilityMode);
 
     if (Level.Info.CollectibleCount > 0) then
       Result := Result + IntToStr(Level.Info.CollectibleCount);

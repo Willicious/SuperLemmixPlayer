@@ -29,6 +29,7 @@ type
     fTimeLimit       : Integer;
     fHasTimeLimit    : Boolean;
     fSuperlemming    : Boolean;
+    fInvincibilityMode: Boolean;
 
     fSkillset: TSkillset;
     fSkillCounts: TSkillCounts;
@@ -71,6 +72,7 @@ type
     property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
     property SuperLemming   : Boolean read fSuperLemming write fSuperLemming;
+    property InvincibilityMode  : Boolean read fInvincibilityMode write fInvincibilityMode;
 
     property Skillset: TSkillset read fSkillset write fSkillset;
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount write SetSkillCount;
@@ -183,6 +185,7 @@ begin
   HasTimeLimit    := false;
   TimeLimit       := 0;
   SuperLemming := false;
+  InvincibilityMode := false;
 
   fSkillset       := [];
   FillChar(fSkillCounts, SizeOf(TSkillCounts), 0);
@@ -880,6 +883,7 @@ begin
     SpawnIntervalLocked := (aSection.Line['spawn_interval_locked'] <> nil) or (aSection.Line['release_rate_locked'] <> nil);
 
     SuperLemming := (aSection.Line['superlemming'] <> nil);
+    InvincibilityMode := (aSection.Line['invincibility'] <> nil);
 
     Width := aSection.LineNumeric['width'];
     Height := aSection.LineNumeric['height'];
@@ -1458,6 +1462,9 @@ begin
 
     if SuperLemming then
       aSection.AddLine('SUPERLEMMING');
+
+    if InvincibilityMode then
+      aSection.AddLine('INVINCIBILITY');
 
     aSection.AddLine('MAX_SPAWN_INTERVAL', SpawnInterval);
     if SpawnIntervalLocked then

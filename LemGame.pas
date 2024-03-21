@@ -3712,8 +3712,13 @@ begin
   begin
     CollectiblesCompleted := True;
     CueSoundEffect(SFX_ALLCOLLECT);
-    if L.LemIsNeutral then L.LemIsNeutral := False;
-    L.LemIsInvincible := True;
+
+    // Optionally apply invincibility to the first lem who reaches the final collectible
+    if Level.Info.InvincibilityMode then
+    begin
+      if L.LemIsNeutral then L.LemIsNeutral := False;
+      L.LemIsInvincible := True;
+    end;
   end else
     CollectiblesCompleted := False;
 end;
