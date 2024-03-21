@@ -3328,7 +3328,9 @@ begin
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
     begin
-      AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
+      // Don't even call HandleTrap if lem is invincible
+      if not L.LemIsInvincible then
+        AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
       // Disarmers move always to final X-position, see www.lemmingsforums.net/index.php?topic=3004.0
       if (L.LemAction = baFixing) then CheckPos[0, i] := L.LemX;
     end;
@@ -3545,7 +3547,7 @@ begin
   begin
     // Traps don't affect lems in any of the freezer states
     if L.LemAction in [baFreezing, baFreezerExplosion, baFrozen, baUnfreezing] then Exit;
-    
+
     // Trigger trap
     Gadget.Triggered := True;
     Gadget.ZombieMode := L.LemIsZombie;
@@ -8036,7 +8038,7 @@ begin
 
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
-             and not L.LemIsDisarmer)
+             and not (L.LemIsDisarmer or L.LemIsInvincible))
          or ((L.LemAction = baBallooning) and (L.LemY <= 30))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
          or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], False, True) and not L.LemIsSwimmer)
@@ -8058,9 +8060,13 @@ begin
 
       if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
-          and HasPixelAt(LemPosArray[0, i], LemPosArray[1, i])
-          and L.LemIsDisarmer then
-            fLemNextAction := baFixing;
+          and HasPixelAt(LemPosArray[0, i], LemPosArray[1, i]) then
+          begin
+           if L.LemIsDisarmer then
+             fLemNextAction := baFixing
+           else if L.LemIsInvincible then
+             fLemNextAction := baWalking;
+          end;
 
       // End this loop when we have reached the lemming position
       if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
