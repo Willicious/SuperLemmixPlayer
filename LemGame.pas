@@ -346,7 +346,7 @@ type
     function HasProjectileAt(X, Y: Integer): Boolean;
     procedure UpdateProjectiles;
 
-    function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
+    function CheckSkillAvailable(aAction: TBasicLemmingAction; L: TLemming): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Amount: Integer = -1);
 
   { lemming actions }
@@ -2403,7 +2403,7 @@ begin
   HitTestAutoFail := OldHTAF;
 
   // Queue skill assignment if current assignment is impossible
-  if not Assigned(L) or not CheckSkillAvailable(Skill) then
+  if not Assigned(L) or not CheckSkillAvailable(Skill, L) then
   begin
 
   if not GameParams.HideSkillQ then
@@ -2427,7 +2427,7 @@ begin
   // Record new skill assignment to be assigned once we call again UpdateLemmings
   else
   begin
-    Result := CheckSkillAvailable(Skill);
+    Result := CheckSkillAvailable(Skill, L);
     if Result then
     begin
       RegainControl;
@@ -2442,9 +2442,12 @@ begin
   Result := False;
 
   // We check first, whether the skill is available at all
-  if not CheckSkillAvailable(NewSkill) then Exit;
+  if not CheckSkillAvailable(NewSkill, L) then Exit;
 
   if fDoneAssignmentThisFrame then Exit;
+
+  // Ensures the 'available' count stays the same for invincible lems, whilst still updating the 'used' count as normal
+  if L.LemIsInvincible then UpdateSkillCount(NewSkill, 1);
 
   UpdateSkillCount(NewSkill);
 
@@ -7940,7 +7943,7 @@ begin
     NewSkill := L.LemQueueAction;
 
     // Try assigning the skill
-    if NewSkillMethods[NewSkill](L) and CheckSkillAvailable(NewSkill) then
+    if NewSkillMethods[NewSkill](L) and CheckSkillAvailable(NewSkill, L) then
       // Record skill assignment, so that we apply it in CheckForReplayAction
       RecordSkillAssignment(L, NewSkill)
     else
@@ -8353,7 +8356,7 @@ begin
   end;
 end;
 
-function TLemmingGame.CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
+function TLemmingGame.CheckSkillAvailable(aAction: TBasicLemmingAction; L: TLemming): Boolean;
 var
   HasSkillButton: Boolean;
   i: Integer;
@@ -8364,7 +8367,12 @@ begin
   for i := 0 to MAX_SKILL_TYPES_PER_LEVEL - 1 do
     HasSkillButton := HasSkillButton or (fActiveSkills[i] = ActionToSkillPanelButton[aAction]);
 
-  Result := HasSkillButton and (CurrSkillCount[aAction] > 0);
+  // Invincible lems get free skills, even when they have run out
+  if L.LemIsInvincible then
+  begin
+    Result := HasSkillButton;
+  end else
+    Result := HasSkillButton and (CurrSkillCount[aAction] > 0);
 end;
 
 
