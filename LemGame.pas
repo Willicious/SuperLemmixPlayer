@@ -3692,6 +3692,8 @@ begin
   begin
     CollectiblesCompleted := True;
     CueSoundEffect(SFX_ALLCOLLECT);
+    if L.LemIsNeutral then L.LemIsNeutral := False;
+    L.LemIsInvincible := True;
   end else
     CollectiblesCompleted := False;
 end;
