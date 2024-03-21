@@ -11,18 +11,20 @@ uses
   GR32, GR32_Blend;
 
 const
-  CPM_LEMMING_NORMAL = $FF0000FF;    // Used for a non-athlete
-  CPM_LEMMING_ATHLETE = $FF00FFFF;   // Used for an athlete
-  CPM_LEMMING_SELECTED = $007F0000;  // OR'd to base value for selected lemming
-  CPM_LEMMING_ZOMBIE_OR = $00007F00; // OR'd to base value for zombies
-  CPM_LEMMING_ZOMBIE_NOT = $000000C0;// AND-NOT'd to base value for zombies
-  CPM_LEMMING_NEUTRAL = $00FFFFFF;   // XOR'd to base value for neutrals
+  CPM_LEMMING_NORMAL     = $FF0000FF; // Used for a non-athlete
+  CPM_LEMMING_ATHLETE    = $FF00FFFF; // Used for an athlete
+  CPM_LEMMING_SELECTED   = $007F0000; // OR'd to base value for selected lemming
+  CPM_LEMMING_INVINCIBLE = $0000FFFF; // OR'd to base value for invincible lemming
+  CPM_LEMMING_ZOMBIE_OR  = $00007F00; // OR'd to base value for zombies
+  CPM_LEMMING_ZOMBIE_NOT = $000000C0; // AND-NOT'd to base value for zombies
+  CPM_LEMMING_NEUTRAL    = $00FFFFFF; // XOR'd to base value for neutrals
 
 type
   TColorSwapType = (rcl_Selected,
                     rcl_Athlete,
                     rcl_Zombie,
-                    rcl_Neutral);
+                    rcl_Neutral,
+                    rcl_Invincible);
 
   TColorSwap = record
     Condition: TColorSwapType;
@@ -92,6 +94,9 @@ begin
     if fDrawAsSelected then
       B := B or CPM_LEMMING_SELECTED;
 
+    if fLemming.LemIsInvincible then
+      B := B or CPM_LEMMING_INVINCIBLE;
+
     if fLemming.LemIsNeutral then
       B := B xor CPM_LEMMING_NEUTRAL;
 
@@ -105,6 +110,8 @@ begin
         rcl_Zombie: if not fLemming.LemIsZombie then Continue;
         rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
         rcl_Neutral: if not fLemming.LemIsNeutral then Continue;
+        rcl_Invincible: if not fLemming.LemIsInvincible then Continue;
+                        
         else raise Exception.Create('TRecolorImage.SwapColors encountered an unknown condition' + #13 + IntToStr(Integer(fSwaps[i].Condition)));
       end;
       if (F and $FFFFFF) = fSwaps[i].SrcColor then B := fSwaps[i].DstColor;
@@ -155,6 +162,9 @@ begin
       begin
         Mode := rcl_Athlete;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+
+        Mode := rcl_Invincible;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('invincible', RegisterSwap, @Mode);
 
         Mode := rcl_Neutral;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('neutral', RegisterSwap, @Mode);
