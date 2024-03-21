@@ -254,7 +254,7 @@ type
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyTimebombMask(L: TLemming);
     procedure ApplyExplosionMask(L: TLemming);
-    procedure ApplyFreezeLemming(L: TLemming);
+    procedure ApplyFreezerIceCube(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
@@ -3994,7 +3994,7 @@ begin
   end;
 end;
 
-procedure TLemmingGame.ApplyFreezeLemming(L: TLemming);
+procedure TLemmingGame.ApplyFreezerIceCube(L: TLemming);
 var
   X: Integer;
 begin
@@ -6972,8 +6972,14 @@ begin
 
   if (L.LemAction = baFreezerExplosion) then
   begin
-    ApplyFreezeLemming(L);
-    Transition(L, baFrozen);
+    ApplyFreezerIceCube(L);
+
+    // Invincible lems don't become frozen, but do leave an ice cube
+    if L.LemIsInvincible then
+      Transition(L, baWalking)
+    else
+      Transition(L, baFrozen);
+
     L.LemParticleTimer := PARTICLE_FRAMECOUNT;
     fParticleFinishTimer := PARTICLE_FRAMECOUNT;
   end;
