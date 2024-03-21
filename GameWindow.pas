@@ -500,7 +500,7 @@ begin
   Result := False;
 
   if (GameParams.MinimapHighQuality
-    and not (Game.IsSuperlemming or Game.RewindPressed or Game.TurboPressed
+    and not (Game.IsSuperLemmingMode or Game.RewindPressed or Game.TurboPressed
       or (fGameSpeed = gspFF)
         or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640))) then
   Result := True;
@@ -623,7 +623,7 @@ begin
 
   MouseClickFrameSkip := MouseFrameSkip;
 
-  if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+  if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
   if MouseClickFrameSkip < 0 then
   begin
     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
@@ -681,7 +681,7 @@ begin
   end;
 
   // Superlemming mode
-  if Game.IsSuperlemming then
+  if Game.IsSuperLemmingMode then
   begin
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeSuper);
     SkillPanel.DrawButtonSelector(spbRewind, true);
@@ -691,7 +691,7 @@ begin
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
 
   // Relax CPU
-  if not (Hyper or Fast or Game.IsSuperlemming) then
+  if not (Hyper or Fast or Game.IsSuperLemmingMode) then
     Sleep(1);
 
   if TimeForFrame or TimeForScroll or TimeForPausedRR then
@@ -1563,7 +1563,7 @@ begin
                       end;
       lka_Cheat: Game.Cheat;
       lka_Turbo: begin
-                   if Game.IsSuperLemming then Exit;
+                   if Game.IsSuperLemmingMode then Exit;
                    if Game.RewindPressed then Game.fRewindPressed := False;
                    if Game.IsBackstepping then Game.fIsBackstepping := False;
 
@@ -1577,7 +1577,7 @@ begin
                       Game.fTurboPressed := False;
                  end;
       lka_FastForward: begin
-                       if Game.IsSuperLemming then Exit;
+                       if Game.IsSuperLemmingMode then Exit;
 
                          if Game.RewindPressed then Game.fRewindPressed := False;
                          if Game.TurboPressed then Game.fTurboPressed := False;
@@ -1589,7 +1589,7 @@ begin
                          end;
                        end;
       lka_Rewind: begin
-                  if Game.IsSuperLemming then Exit;
+                  if Game.IsSuperLemmingMode then Exit;
 
                     case fGameSpeed of
                       gspSlowMo, gspPause, gspFF: GameSpeed := gspNormal;
@@ -1602,7 +1602,7 @@ begin
                     else
                       Game.fRewindPressed := False;
                   end;
-      lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+      lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
                       begin
                         if Game.RewindPressed then Game.fRewindPressed := False;
                         if Game.TurboPressed then Game.fTurboPressed := False;
@@ -1655,7 +1655,7 @@ begin
                          SetSelectedSkill(fActiveSkills[ButtonIndex], True, AssignToHighlit);
                        end;
       lka_Skip: if Game.Playing then
-                  if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+                  if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
                   if func.Modifier < 0 then
                   begin
                     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
@@ -1711,7 +1711,7 @@ var
   TargetFrame: Integer;
   HasSuitableSkill: Boolean;
 begin
-  if not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+  if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
   begin
     TargetFrame := 0; // Fallback
     fSpecialStartIteration := Game.CurrentIteration;
@@ -1848,17 +1848,17 @@ begin
     begin
       Game.RegainControl;
 
-      // Deactivates assign-whilst-paused in ClassicMode or Superlemming
+      // Deactivates assign-whilst-paused in Classic Mode or Superlemming Mode
       if not ((GameSpeed = gspPause) and
-        (GameParams.ClassicMode or Game.IsSuperlemming)) then
+        (GameParams.ClassicMode or Game.IsSuperLemmingMode)) then
           Game.ProcessSkillAssignment;
 
       if (fGameSpeed = gspPause)
-      and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+      and not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
         fForceUpdateOneFrame := True;
 
     end else if (Button = mbRight) and RightMouseUnassigned
-    and not (GameParams.HideFrameskipping or Game.IsSuperlemming) then
+    and not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
     begin
       Game.fIsBackstepping := True;
       GoToSaveState(Max(Game.CurrentIteration -1, 0));
@@ -2433,7 +2433,7 @@ begin
   if (FindControl(GetForegroundWindow()) = nil) or (fSuspendCursor)
     or (GameParams.EdgeScroll and not fMouseTrapped) then Exit;
 
-  if (GameParams.HideFrameskipping or Game.IsSuperlemming) then Exit;
+  if (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then Exit;
 
   if GetTickCount - fMouseClickFrameskip < 650 then Exit;
 

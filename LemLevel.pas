@@ -28,7 +28,8 @@ type
     fCollectibleCount:Integer;
     fTimeLimit       : Integer;
     fHasTimeLimit    : Boolean;
-    fSuperlemming    : Boolean;
+
+    fSuperlemmingMode : Boolean;
     fInvincibilityMode: Boolean;
 
     fSkillset: TSkillset;
@@ -71,7 +72,8 @@ type
     property CollectibleCount: Integer read fCollectibleCount write fCollectibleCount;
     property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
-    property SuperLemming   : Boolean read fSuperLemming write fSuperLemming;
+
+    property SuperLemmingMode   : Boolean read fSuperLemmingMode write fSuperLemmingMode;
     property InvincibilityMode  : Boolean read fInvincibilityMode write fInvincibilityMode;
 
     property Skillset: TSkillset read fSkillset write fSkillset;
@@ -184,7 +186,8 @@ begin
   CollectibleCount:= 0;
   HasTimeLimit    := false;
   TimeLimit       := 0;
-  SuperLemming := false;
+
+  SuperLemmingMode  := false;
   InvincibilityMode := false;
 
   fSkillset       := [];
@@ -882,7 +885,7 @@ begin
       SpawnInterval := aSection.LineNumeric['max_spawn_interval'];
     SpawnIntervalLocked := (aSection.Line['spawn_interval_locked'] <> nil) or (aSection.Line['release_rate_locked'] <> nil);
 
-    SuperLemming := (aSection.Line['superlemming'] <> nil);
+    SuperLemmingMode := (aSection.Line['superlemming'] <> nil);
     InvincibilityMode := (aSection.Line['invincibility'] <> nil);
 
     Width := aSection.LineNumeric['width'];
@@ -1460,7 +1463,7 @@ begin
     if HasTimeLimit then
       aSection.AddLine('TIME_LIMIT', TimeLimit);
 
-    if SuperLemming then
+    if SuperLemmingMode then
       aSection.AddLine('SUPERLEMMING');
 
     if InvincibilityMode then

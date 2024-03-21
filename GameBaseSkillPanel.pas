@@ -1410,9 +1410,9 @@ begin
 
         if Game.IsOutOfTime then
           fCombineHueShift := 1 / 2
-        else if (Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17}) and not Game.IsSuperLemming then
+        else if (Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17}) and not Game.IsSuperLemmingMode then
           fCombineHueShift := -1 / 3
-        else if (Level.Info.TimeLimit * 50 < Game.CurrentIteration + 750 {15 * 50}) and Game.IsSuperLemming then
+        else if (Level.Info.TimeLimit * 50 < Game.CurrentIteration + 750 {15 * 50}) and Game.IsSuperLemmingMode then
           fCombineHueShift := -1 / 3
         else
           fCombineHueShift := -1 / 6;
@@ -1604,14 +1604,14 @@ const
 begin
   if Level.Info.HasTimeLimit then
   begin
-    if Game.IsSuperlemming then
+    if Game.IsSuperLemmingMode then
       Time := Level.Info.TimeLimit - Game.CurrentIteration div 50
     else
       Time := Level.Info.TimeLimit - Game.CurrentIteration div 17;
     if Time < 0 then
       Time := 0 - Time;
   end else
-    if Game.IsSuperlemming then
+    if Game.IsSuperLemmingMode then
       Time := Game.CurrentIteration div 50
     else
       Time := Game.CurrentIteration div 17;
@@ -1780,7 +1780,7 @@ begin
       end;
     spbFastForward:
       begin
-        if Game.IsSuperLemming then Exit;
+        if Game.IsSuperLemmingMode then Exit;
         if Game.RewindPressed then Game.fRewindPressed := False;
         if Game.IsBackstepping then Game.fIsBackstepping := False;
 
@@ -1805,7 +1805,7 @@ begin
       end;
     spbRewind:
       begin
-        if Game.IsSuperLemming then Exit;
+        if Game.IsSuperLemmingMode then Exit;
 
         if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
           fGameWindow.GameSpeed := gspNormal;

@@ -210,7 +210,7 @@ type
     fGameCheated               : Boolean;
     NextLemmingCountDown       : Integer;
     fFastForward               : Boolean;
-    fSuperlemming              : Boolean;
+    fIsSuperlemmingMode        : Boolean;
     fTargetIteration           : Integer; // This is used in hyperspeed
     fHyperSpeedCounter         : Integer; // No screenoutput
     fHyperSpeed                : Boolean; // We are at hyperspeed no targetbitmap output
@@ -539,7 +539,7 @@ type
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property IsOutOfTime: Boolean read GetOutOfTime;
-    property IsSuperlemming: Boolean read fSuperlemming;
+    property IsSuperlemmingMode: Boolean read fIsSuperlemmingMode;
 
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
@@ -1329,7 +1329,7 @@ begin
   fLeavingHyperSpeed := False;
   fPauseOnHyperSpeedExit := False;
 
-  fSuperlemming := Level.Info.SuperLemming;
+  fIsSuperLemmingMode := Level.Info.SuperLemmingMode;
 
   fFastForward := False;
   fRewindPressed := False;
@@ -7342,7 +7342,7 @@ begin
   if fParticleFinishTimer > 0 then
     Dec(fParticleFinishTimer);
 
-  if IsSuperlemming then
+  if IsSuperLemmingMode then
   begin
     if fClockFrame = 50 then
     begin

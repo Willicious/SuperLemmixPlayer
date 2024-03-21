@@ -956,8 +956,9 @@ var
     else
       Result := Result + '0';
 
-    if Level.Info.SuperLemming then
-      Result := 'superlemming' + Result + BoolToStr(Level.Info.SuperLemming);
+    if Level.Info.SuperLemmingMode then
+      Result := 'superlemming' + Result + BoolToStr(Level.Info.SuperLemmingMode);
+
     if Level.Info.InvincibilityMode then
       Result := 'invincibility' + Result + BoolToStr(Level.Info.InvincibilityMode);
 
