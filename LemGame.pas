@@ -3823,6 +3823,8 @@ function TLemmingGame.HandleFire(L: TLemming): Boolean;
 begin
   Result := True;
 
+  if L.LemIsInvincible then Exit;
+
   Transition(L, baVaporizing);
   CueSoundEffect(SFX_VAPORIZING, L.Position);
 end;
