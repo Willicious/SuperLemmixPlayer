@@ -1497,7 +1497,7 @@ begin
 
   if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
-    Result := '--------';
+    Result := '---------';
     if L.LemIsSlider then Result[2] := 'L';
     if L.LemIsClimber then Result[3] := 'C';
     if L.LemIsSwimmer then Result[4] := 'S';
@@ -1506,6 +1506,7 @@ begin
     if L.LemIsDisarmer then Result[7] := 'D';
     if L.LemIsZombie then Result[8] := 'Z';
     if L.LemIsNeutral then Result[9] := 'N';
+    if L.LemIsInvincible then Result[10] := 'I';
   end
   else if (L.LemAction in [baWalking, baAscending, baFalling]) then
   begin
@@ -1518,6 +1519,7 @@ begin
     if L.LemIsDisarmer then DoInc(SDisarmer);
     if L.LemIsZombie then Result := SZombie;
     if L.LemIsNeutral then Result := SNeutral;
+    if L.LemIsInvincible then Result := SInvincible;
     if L.LemIsZombie and L.LemIsNeutral then Result := SNeutralZombie;
   end else
     if L.LemIsZombie and not L.LemIsNeutral then

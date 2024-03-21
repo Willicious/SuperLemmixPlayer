@@ -155,6 +155,7 @@ resourcestring
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
+  SInvincible = 'Invincible';
   SBallooner = 'Ballooner';
   SDrifter = 'Drifter';
   SSleeper = 'Sleeper';

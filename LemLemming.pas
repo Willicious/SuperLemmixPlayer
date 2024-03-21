@@ -26,6 +26,7 @@ type
       fIsBlocker:      Boolean;
       fIsZombie:       Boolean;
       fIsNeutral:      Boolean;
+      fIsInvincible:   Boolean;
     public
       constructor Create;
       procedure Assign(aSrc: TPreplacedLemming);
@@ -43,6 +44,7 @@ type
       property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
       property IsZombie: Boolean read fIsZombie write fIsZombie;
       property IsNeutral: Boolean read fIsNeutral write fIsNeutral;
+      property IsInvincible: Boolean read fIsInvincible write fIsInvincible;
   end;
 
   TPreplacedLemmingList = class(TObjectList)
@@ -107,6 +109,7 @@ type
     LemIsRadiating                : Boolean;
     LemIsZombie                   : Boolean;
     LemIsNeutral                  : Boolean;
+    LemIsInvincible               : Boolean;
     LemHasBeenOhnoer              : Boolean;
     LemHasTurned                  : Boolean;
     LemPlacedBrick                : Boolean; // Placed useful brick during this cycle (plaformer and stacker)
@@ -185,6 +188,7 @@ begin
   fIsBlocker := false;
   fIsZombie := false;
   fIsNeutral := false;
+  fIsInvincible := false;
 end;
 
 procedure TPreplacedLemming.Assign(aSrc: TPreplacedLemming);
@@ -203,6 +207,7 @@ begin
   IsBlocker := aSrc.IsBlocker;
   IsZombie := aSrc.IsZombie;
   IsNeutral := aSrc.IsNeutral;
+  IsInvincible := aSrc.IsInvincible;
 end;
 
 { TPreplacedLemmingList }
@@ -269,6 +274,7 @@ begin
   LemIsGlider := Source.IsGlider;
   LemIsDisarmer := Source.IsDisarmer;
   LemIsNeutral := Source.IsNeutral;
+  LemIsInvincible := Source.IsInvincible; // Not sure if we want to allow pre-placed invincibles yet
   // Shimmier, Blocker and Zombie must be handled by the calling routine
 end;
 
@@ -336,6 +342,7 @@ begin
   LemHasBeenOhnoer := Source.LemHasBeenOhnoer;
   LemHasTurned := Source.LemHasTurned;
   LemIsNeutral := Source.LemIsNeutral;
+  LemIsInvincible := Source.LemIsInvincible;
   LemPlacedBrick := Source.LemPlacedBrick;
   LemInFlipper := Source.LemInFlipper;
   LemHasBlockerField := Source.LemHasBlockerField;
