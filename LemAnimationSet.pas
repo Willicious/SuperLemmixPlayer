@@ -187,6 +187,7 @@ type
     fSlowfreezeDigitsBitmap : TBitmap32;
     fFreezingOverlay        : TBitmap32;
     fUnfreezingOverlay      : TBitmap32;
+    fInvincibilityOverlay   : TBitmap32;
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
     fBalloonPopBitmap       : TBitmap32;
@@ -219,6 +220,7 @@ type
     property SlowfreezeDigitsBitmap: TBitmap32 read fSlowfreezeDigitsBitmap;
     property FreezingOverlay       : TBitmap32 read fFreezingOverlay;
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
+    property InvincibilityOverlay  : TBitmap32 read fInvincibilityOverlay;
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
@@ -423,6 +425,7 @@ var
   BalloonPop, BalloonPopHR: String;
   FreezingOverlay, FreezingOverlayHR: String;
   UnfreezingOverlay, UnfreezingOverlayHR: String;
+  InvincibilityOverlay, InvincibilityOverlayHR: string;
   Grenades, GrenadesHR: String;
   X: Integer;
 
@@ -522,6 +525,9 @@ begin
     fUnfreezingOverlay.DrawMode := dmBlend;
     fUnfreezingOverlay.CombineMode := cmMerge;
 
+    fInvincibilityOverlay.DrawMode := dmBlend;
+    fInvincibilityOverlay.CombineMode := cmMerge;
+
     fHatchNumbersBitmap.DrawMode := dmBlend;
     fHatchNumbersBitmap.CombineMode := cmMerge;
 
@@ -567,6 +573,8 @@ begin
     FreezingOverlayHR := 'freezing_overlay-hr.png';
     UnfreezingOverlay := 'unfreezing_overlay.png';
     UnfreezingOverlayHR := 'unfreezing_overlay-hr.png';
+    InvincibilityOverlay := 'invincibility_overlay.png';
+    InvincibilityOverlayHR := 'invincibility_overlay-hr.png';
     BalloonPop := 'balloon_pop.png';
     BalloonPopHR := 'balloon_pop-hr.png';
     Grenades := 'grenades.png';
@@ -588,6 +596,13 @@ begin
         UpscalePieces(fUnfreezingOverlay);
       end;
 
+      if FileExists(EffectsSrcFolder + InvincibilityOverlayHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + InvincibilityOverlayHR, fInvincibilityOverlay)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + InvincibilityOverlay, fInvincibilityOverlay);
+        UpscalePieces(fInvincibilityOverlay);
+      end;
+
       if FileExists(EffectsSrcFolder + BalloonPopHR) then
         TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPopHR, fBalloonPopBitmap)
       else begin
@@ -604,6 +619,7 @@ begin
     end else begin
       TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlay, fFreezingOverlay);
       TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlay, fUnfreezingOverlay);
+      TPngInterface.LoadPngFile(EffectsSrcFolder + InvincibilityOverlay, fInvincibilityOverlay);
       TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPop, fBalloonPopBitmap);
       TPngInterface.LoadPngFile(EffectsSrcFolder + Grenades, fGrenadeBitmap);
     end;
@@ -624,6 +640,7 @@ begin
   fSlowfreezeDigitsBitmap.Clear;
   fFreezingOverlay.Clear;
   fUnfreezingOverlay.Clear;
+  fInvincibilityOverlay.Clear;
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
   fBalloonPopBitmap.Clear;
@@ -645,6 +662,7 @@ begin
   fSlowfreezeDigitsBitmap := TBitmap32.Create;
   fFreezingOverlay := TBitmap32.Create;
   fUnfreezingOverlay := TBitmap32.Create;
+  fInvincibilityOverlay := TBitmap32.Create;
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
   fBalloonPopBitmap := TBitmap32.Create;
@@ -661,6 +679,7 @@ begin
   fSlowfreezeDigitsBitmap.Free;
   fFreezingOverlay.Free;
   fUnfreezingOverlay.Free;
+  fInvincibilityOverlay.Free;
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
   fBalloonPopBitmap.Free;

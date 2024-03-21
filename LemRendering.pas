@@ -160,6 +160,7 @@ type
     procedure DrawLemmingParticles(L: TLemming);
     procedure DrawFreezingOverlay(L: TLemming);
     procedure DrawUnfreezingOverlay(L: TLemming);
+    procedure DrawInvinciblityOverlay(L: TLemming);
     procedure DrawBalloonPop(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
@@ -365,6 +366,12 @@ begin
       or (LemmingList[i] = fRenderInterface.HighlitLemming) then
     begin
       DrawLemmingCountdown(LemmingList[i]);
+      fLayers.fIsEmpty[rlCountdown] := False;
+    end;
+
+    if LemmingList[i].LemIsInvincible then
+    begin
+      DrawInvinciblityOverlay(LemmingList[i]);
       fLayers.fIsEmpty[rlCountdown] := False;
     end;
 
@@ -712,6 +719,34 @@ begin
     fFixedDrawColor := WHITE_COLOR;
     fLaserGraphic.DrawTo(fLayers[rlLemmingsHigh], Dst, Src);
   end;
+end;
+
+procedure TRenderer.DrawInvinciblityOverlay(L: TLemming);
+var
+  FrameIndex, TickCount, YOffset: Integer;
+  FrameRect: TRect;
+begin
+  TickCount := GetTickCount;
+  FrameIndex := (TickCount div 100) mod 8;
+
+  FrameRect.Left := 0;
+  FrameRect.Right := FrameRect.Left + 16 * ResMod;
+  FrameRect.Top := FrameIndex * (16 * ResMod);
+  FrameRect.Bottom := FrameRect.Top + (16 * ResMod);
+
+  YOffset := 16;
+
+  // Only draw half the image for swimmers
+  if L.LemAction = baSwimming then
+  begin
+    FrameRect.Top := FrameRect.Top + (10 * ResMod);
+    YOffset := 4;
+  end;
+
+  if L.LemDX < 0 then
+    fAni.InvincibilityOverlay.DrawTo(fLayers[rlCountdown], (L.LemX - 8) * ResMod, (L.LemY - YOffset) * ResMod, FrameRect)
+  else
+    fAni.InvincibilityOverlay.DrawTo(fLayers[rlCountdown], (L.LemX - 7) * ResMod, (L.LemY - YOffset) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawFreezingOverlay(L: TLemming);

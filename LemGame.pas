@@ -7019,6 +7019,7 @@ begin
     Inc(LemmingsRemoved);
     Dec(LemmingsOut);
     L.LemRemoved := True;
+    L.LemIsInvincible := False;
 
     case RemMode of
     RM_SAVE : begin
