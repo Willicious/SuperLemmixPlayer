@@ -3780,8 +3780,9 @@ begin
     TurnAround(L);
 
     // Zombies always infect a blocker they bounce off
-    if L.LemIsZombie and (fLastBlockerCheckLem <> nil) and not (fLastBlockerCheckLem.LemIsZombie) then
-      RemoveLemming(fLastBlockerCheckLem, RM_ZOMBIE);
+    if L.LemIsZombie and (fLastBlockerCheckLem <> nil)
+      and not (fLastBlockerCheckLem.LemIsZombie or fLastBlockerCheckLem.LemIsInvincible) then
+        RemoveLemming(fLastBlockerCheckLem, RM_ZOMBIE);
 
     // Avoid moving into terrain, see www.lemmingsforums.net/index.php?topic=2575.0
     if L.LemAction = baMining then
@@ -3875,8 +3876,9 @@ begin
   Result := True;
   if not (L.LemAction in ActionSet) then
   begin
-    if not L.LemIsZombie then RemoveLemming(L, RM_ZOMBIE);
-    if L.LemIsSwimmer then
+    if not (L.LemIsZombie or L.LemIsInvincible) then
+      RemoveLemming(L, RM_ZOMBIE);
+
     begin
       Transition(L, baSwimming);
       CueSoundEffect(SFX_SWIMMING, L.Position);
@@ -6121,8 +6123,9 @@ JumperArcFrames: Integer;
       if HandleFlipper(L, L.LemX, L.LemY) then
         Exit;
 
-    if HasTriggerAt(L.LemX, L.LemY, trZombie, L) and not L.LemIsZombie then
-      RemoveLemming(L, RM_ZOMBIE);
+    if HasTriggerAt(L.LemX, L.LemY, trZombie, L)
+      and not (L.LemIsZombie or L.LemIsInvincible) then
+        RemoveLemming(L, RM_ZOMBIE);
 
     if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
       HandleForceField(L, -1)
@@ -7981,7 +7984,7 @@ begin
       // Zombies
       if     (ReadZombieMap(LemX, LemY) and 1 <> 0)
          and (LemAction <> baExiting)
-         and not CurrentLemming.LemIsZombie
+         and not (CurrentLemming.LemIsZombie or CurrentLemming.LemIsInvincible)
          // Freezers are protected from zombies
          and not (LemAction in [baFreezing, baFreezerExplosion, baFrozen]) then
         RemoveLemming(CurrentLemming, RM_ZOMBIE);
