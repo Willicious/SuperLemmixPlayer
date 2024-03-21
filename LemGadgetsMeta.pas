@@ -287,6 +287,7 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'blasticine' then fTriggerEffect := DOM_BLASTICINE;
     if Lowercase(Sec.LineTrimString['effect']) = 'vinewater' then fTriggerEffect := DOM_VINEWATER;
     if Lowercase(Sec.LineTrimString['effect']) = 'poison' then fTriggerEffect := DOM_POISON;
+    if Lowercase(Sec.LineTrimString['effect']) = 'lava' then fTriggerEffect := DOM_LAVA;
     if Lowercase(Sec.LineTrimString['effect']) = 'radiation' then fTriggerEffect := DOM_RADIATION;
     if Lowercase(Sec.LineTrimString['effect']) = 'slowfreeze' then fTriggerEffect := DOM_SLOWFREEZE;
 

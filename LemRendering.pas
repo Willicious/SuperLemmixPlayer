@@ -2683,6 +2683,11 @@ begin
           fHelperImages[hpi_Poison].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
         end;
 
+      DOM_LAVA:
+        begin
+          fHelperImages[hpi_Lava].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        end;
+
       DOM_RADIATION:
         begin
           fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);

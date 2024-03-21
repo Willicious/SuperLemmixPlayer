@@ -43,6 +43,7 @@ const
   DOM_BLASTICINE       = 36;
   DOM_VINEWATER        = 37;
   DOM_POISON           = 38;
+  DOM_LAVA             = 39;
 
 implementation
 

@@ -36,7 +36,8 @@ const
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
         DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND, DOM_PAINT,
-        DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_RADIATION, DOM_SLOWFREEZE];
+        DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA,
+        DOM_RADIATION, DOM_SLOWFREEZE];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie);
@@ -139,6 +140,7 @@ type
     BlasticineMap              : TArrayArrayBoolean;
     VinewaterMap               : TArrayArrayBoolean;
     PoisonMap                  : TArrayArrayBoolean;
+    LavaMap                    : TArrayArrayBoolean;
     RadiationMap               : TArrayArrayBoolean;
     SlowfreezeMap              : TArrayArrayBoolean;
 
@@ -279,6 +281,7 @@ type
       function HandleBlasticine(L: TLemming): Boolean;
       function HandleVinewater(L: TLemming): Boolean;
       function HandlePoison(L: TLemming): Boolean;
+      function HandleLava(L: TLemming): Boolean;
       function HandleRadiation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleSlowfreeze(L: TLemming; PosX, PosY: Integer): Boolean;
 
@@ -660,6 +663,7 @@ const
   DOM_BLASTICINE       = 36; // Lems become instabombers on contact
   DOM_VINEWATER        = 37; // Triggers vinetrapper instead of drowner
   DOM_POISON           = 38; // Turns lems into zombies
+  DOM_LAVA             = 39;
   *)
 
   // Removal modes
@@ -2204,6 +2208,8 @@ begin
   SetLength(VinewaterMap, Level.Info.Width, Level.Info.Height);
   SetLength(PoisonMap, 0, 0);
   SetLength(PoisonMap, Level.Info.Width, Level.Info.Height);
+  SetLength(LavaMap, 0, 0);
+  SetLength(LavaMap, Level.Info.Width, Level.Info.Height);
   SetLength(RadiationMap, 0, 0);
   SetLength(RadiationMap, Level.Info.Width, Level.Info.Height);
   SetLength(SlowfreezeMap, 0, 0);
@@ -2355,6 +2361,7 @@ begin
       DOM_BLASTICINE: WriteTriggerMap(BlasticineMap, Gadgets[i].TriggerRect);
       DOM_VINEWATER:  WriteTriggerMap(VinewaterMap, Gadgets[i].TriggerRect);
       DOM_POISON:     WriteTriggerMap(PoisonMap, Gadgets[i].TriggerRect);
+      DOM_LAVA:       WriteTriggerMap(LavaMap, Gadgets[i].TriggerRect);
       DOM_RADIATION:  WriteTriggerMap(RadiationMap, Gadgets[i].TriggerRect);
       DOM_SLOWFREEZE: WriteTriggerMap(SlowfreezeMap, Gadgets[i].TriggerRect);
     end;
@@ -3298,6 +3305,10 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trVinewater) then
       HandleVinewater(L);
 
+    // Lava
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trLava) then
+      HandleLava(L);
+
     // Fire
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
       AbortChecks := HandleFire(L);
@@ -3440,6 +3451,7 @@ begin
     trBlasticine: Result :=     ReadTriggerMap(X, Y, BlasticineMap);
     trVinewater:  Result :=     ReadTriggerMap(X, Y, VinewaterMap);
     trPoison:     Result :=     ReadTriggerMap(X, Y, PoisonMap);
+    trLava:       Result :=     ReadTriggerMap(X, Y, LavaMap);
     trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap);
     trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);
   end;
@@ -3889,6 +3901,18 @@ begin
   begin
     Transition(L, baVinetrapping);
     CueSoundEffect(SFX_VINETRAPPING, L.Position);
+  end;
+end;
+
+function TLemmingGame.HandleLava(L: TLemming): Boolean;
+begin
+  Result := True;
+
+  if not (L.LemAction in [baFreezerExplosion, baExiting]) then
+  begin
+
+    Transition(L, baVaporizing);
+    CueSoundEffect(SFX_VAPORIZING, L.Position);
   end;
 end;
 
@@ -6282,6 +6306,7 @@ begin
            or HasTriggerAt(x, y, trPoison)
            or HasTriggerAt(x, y, trVinewater)
            or HasTriggerAt(x, y, trBlasticine)
+           or HasTriggerAt(x, y, trLava)
   else if SwimmableOnly then
     Result := HasTriggerAt(x, y, trWater)
            or HasTriggerAt(x, y, trPoison)
