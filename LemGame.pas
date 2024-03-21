@@ -1796,6 +1796,15 @@ begin
   if (NewAction = baJumping) and (L.LemAction = baSwimming) then
     Dec(L.LemY);  // Makes sure that the Jumper skill shadow is displayed
 
+  // Stops invincible lems momentarily transitioning to faller when exploding in water/poison
+  if ((L.LemAction in [baTimebombFinish, baExploding]) and L.LemIsInvincible)
+    and (HasWaterObjectAt(L.LemX, L.LemY, True, False)) then
+    begin
+      Inc(L.LemY);
+      Inc(L.LemX, L.LemDx);
+      NewAction := baSwimming;
+    end;
+
   // Set initial fall heights according to previous skill
   if (NewAction = baFalling) then
   begin
@@ -1935,6 +1944,9 @@ begin
                    end;
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing    : begin
+                     // Invincible lems keep all permaskills and don't cue sound effect
+                     if L.LemIsInvincible then Exit;
+                     
                      if L.LemIsZombie then
                        CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
                      else
@@ -1948,6 +1960,9 @@ begin
                      L.LemHasBeenOhnoer := true;
                    end;
     baTimebombing :begin
+                     // Invincible lems keep all permaskills and don't cue sound effect
+                     if L.LemIsInvincible then Exit;
+
                      if L.LemIsZombie then
                        CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
                      else
@@ -6874,7 +6889,12 @@ begin
   if L.LemAction = baTimebombFinish then
     ApplyTimebombMask(L);
 
-  RemoveLemming(L, RM_KILL);
+  // Invincible lems aren't removed, but do create fireworks and a crater
+  if L.LemIsInvincible then
+    Transition(L, baWalking)
+  else
+    RemoveLemming(L, RM_KILL);
+
   L.LemExploded := True;
   L.LemParticleTimer := PARTICLE_FRAMECOUNT;
   fParticleFinishTimer := PARTICLE_FRAMECOUNT;
@@ -6912,7 +6932,12 @@ begin
   if (L.LemAction = baExploding) and DoExplosionCrater then
     ApplyExplosionMask(L);
 
-  RemoveLemming(L, RM_KILL);
+  // Invincible lems aren't removed, but still create fireworks and a crater
+  if L.LemIsInvincible then
+    Transition(L, baWalking)
+  else
+    RemoveLemming(L, RM_KILL);
+
   L.LemExploded := True;
   L.LemParticleTimer := PARTICLE_FRAMECOUNT;
   fParticleFinishTimer := PARTICLE_FRAMECOUNT;

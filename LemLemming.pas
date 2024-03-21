@@ -279,8 +279,8 @@ begin
 end;
 
 function TLemming.GetCannotReceiveSkills: Boolean;
-begin
-  Result := LemIsZombie or LemIsNeutral or LemHasBeenOhnoer;
+begin                                                        // Just in case - shouldn't happen
+  Result := LemIsZombie or LemIsNeutral or (LemHasBeenOhnoer and not LemIsInvincible);
 end;
 
 function TLemming.GetJumperDebug(Index: Integer): Boolean;
