@@ -3799,32 +3799,42 @@ const
                baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
-  if not (L.LemAction in ActionSet) then
+
+  if not (L.LemIsInvincible or L.LemIsSwimmer) then
   begin
     Result := True;
 
-    if HasTriggerAt(L.LemX, L.LemY, trWater) and not (L.LemIsSwimmer or L.LemIsInvincible) then
+    if not (L.LemAction in ActionSet) then
     begin
-      Transition(L, baDrowning);
-      CueSoundEffect(SFX_DROWNING, L.Position);
+      if HasTriggerAt(L.LemX, L.LemY, trWater) then
+      begin
+        Transition(L, baDrowning);
+        CueSoundEffect(SFX_DROWNING, L.Position);
+      end;
     end;
 
-    if HasTriggerAt(L.LemX, L.LemY, trBlasticine) and not L.LemIsInvincible then
+    // Only invincible lems can swim in blasticine, vinewater and lava
+  end else if not L.LemIsInvincible then
+  begin
+    if not (L.LemAction in ActionSet) then
     begin
-      DoExplosionCrater := False;
-      Transition(L, baExploding);
-    end;
+      if HasTriggerAt(L.LemX, L.LemY, trBlasticine) then
+      begin
+        DoExplosionCrater := False;
+        Transition(L, baExploding);
+      end;
 
-    if HasTriggerAt(L.LemX, L.LemY, trVinewater) and not L.LemIsInvincible then
-    begin
-      Transition(L, baVinetrapping);
-      CueSoundEffect(SFX_VINETRAPPING, L.Position);
-    end;
+      if HasTriggerAt(L.LemX, L.LemY, trVinewater) then
+      begin
+        Transition(L, baVinetrapping);
+        CueSoundEffect(SFX_VINETRAPPING, L.Position);
+      end;
 
-    if HasTriggerAt(L.LemX, L.LemY, trLava) and not L.LemIsInvincible then
-    begin
-      Transition(L, baVaporizing);
-      CueSoundEffect(SFX_VAPORIZING, L.Position);
+      if HasTriggerAt(L.LemX, L.LemY, trLava) then
+      begin
+        Transition(L, baVaporizing);
+        CueSoundEffect(SFX_VAPORIZING, L.Position);
+      end;
     end;
   end;
 end;
