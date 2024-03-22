@@ -274,12 +274,8 @@ type
       function HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
-      function HandleWaterDrown(L: TLemming): Boolean;
-      function HandleWaterSwim(L: TLemming): Boolean;
-      function HandleBlasticine(L: TLemming): Boolean;
-      function HandleVinewater(L: TLemming): Boolean;
-      function HandlePoison(L: TLemming): Boolean;
-      function HandleLava(L: TLemming): Boolean;
+      function HandleWaterObjectFatality(L: TLemming): Boolean;
+      function HandleWaterObjectSwim(L: TLemming): Boolean;
       function HandleRadiation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleSlowfreeze(L: TLemming; PosX, PosY: Integer): Boolean;
 
@@ -471,6 +467,7 @@ type
     // All checks for terrain, objects, etc
     function HasPixelAt(X, Y: Integer): Boolean;
     function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
+    function HasWaterObjectAt(X, Y: Integer): Boolean;
     function FindGroundPixel(x, y: Integer): Integer;
     function HasSteelAt(x, y: Integer): Boolean;
     function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
@@ -1793,7 +1790,7 @@ begin
 
   // Stops invincible lems momentarily transitioning to faller when exploding in water/poison
   if ((L.LemAction in [baTimebombFinish, baExploding]) and L.LemIsInvincible)
-    and (HasWaterObjectAt(L.LemX, L.LemY, True, False)) then
+    and (HasWaterObjectAt(L.LemX, L.LemY)) then
     begin
       Inc(L.LemY);
       Inc(L.LemX, L.LemDx);
@@ -1976,7 +1973,7 @@ begin
     baFreezerExplosion: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
-                     while (i < 4) and HasWaterObjectAt(L.LemX, L.LemY - i - 1, False, True)
+                     while (i < 4) and HasWaterObjectAt(L.LemX, L.LemY - i - 1)
                                    and not HasPixelAt(L.LemX, L.LemY - i - 1) do
                        Inc(i);
                      Dec(L.LemY, i);
@@ -3282,7 +3279,7 @@ begin
     // Except if we try to splat and there is water at the lemming position - then let this take precedence.
     if (fLemNextAction <> baNone) and ([CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY])
       and ((fLemNextAction <> baSplatting)
-      or not HasWaterObjectAt(L.LemX, L.LemY, False, True)) then
+      or not HasWaterObjectAt(L.LemX, L.LemY)) then
     begin
       Transition(L, fLemNextAction);
       if fLemJumpToHoistAdvance then
@@ -3307,18 +3304,6 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trCollectible) then
       HandleCollectible(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Blasticine
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trBlasticine) then
-      HandleBlasticine(L);
-
-    // Vinewater
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trVinewater) then
-      HandleVinewater(L);
-
-    // Lava
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trLava) then
-      HandleLava(L);
-
     // Fire
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
       AbortChecks := HandleFire(L);
@@ -3331,9 +3316,9 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
       HandleSlowfreeze(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Water - Check only for drowning here!
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
-      AbortChecks := HandleWaterDrown(L);
+    // Water - Check only for fatalities here!
+    if (not AbortChecks) and HasWaterObjectAt(CheckPos[0, i], CheckPos[1, i]) then
+      AbortChecks := HandleWaterObjectFatality(L);
 
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
@@ -3368,13 +3353,9 @@ begin
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
 
-  // Check for water to transition to swimmer only at final position
-  if HasTriggerAt(L.LemX, L.LemY, trWater) then
-    HandleWaterSwim(L);
-
-  // Check for poison to transition to swimmer/drifter only at final position
-  if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPoison) then
-    HandlePoison(L);
+  // Check for water object to transition to swimmer/drifter only at final position
+  if HasWaterObjectAt(L.LemX, L.LemY) then
+    HandleWaterObjectSwim(L);
 
   { Check for blocker fields and force-fields
     but not for miners removing terrain, see www.lemmingsforums.net/index.php?topic=2710.0
@@ -3812,111 +3793,83 @@ begin
   CueSoundEffect(SFX_VAPORIZING, L.Position);
 end;
 
-function TLemmingGame.HandleWaterDrown(L: TLemming): Boolean;
+function TLemmingGame.HandleWaterObjectFatality(L: TLemming): Boolean;
 const
   ActionSet = [baSwimming, baExploding, baFreezerExplosion, baVaporizing,
                baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
-  if not (L.LemIsSwimmer or L.LemIsInvincible) then
+  if not (L.LemAction in ActionSet) then
   begin
     Result := True;
 
-    if not (L.LemAction in ActionSet) then
+    if HasTriggerAt(L.LemX, L.LemY, trWater) and not (L.LemIsSwimmer or L.LemIsInvincible) then
     begin
       Transition(L, baDrowning);
       CueSoundEffect(SFX_DROWNING, L.Position);
     end;
+
+    if HasTriggerAt(L.LemX, L.LemY, trBlasticine) and not L.LemIsInvincible then
+    begin
+      DoExplosionCrater := False;
+      Transition(L, baExploding);
+    end;
+
+    if HasTriggerAt(L.LemX, L.LemY, trVinewater) and not L.LemIsInvincible then
+    begin
+      Transition(L, baVinetrapping);
+      CueSoundEffect(SFX_VINETRAPPING, L.Position);
+    end;
+
+    if HasTriggerAt(L.LemX, L.LemY, trLava) and not L.LemIsInvincible then
+    begin
+      Transition(L, baVaporizing);
+      CueSoundEffect(SFX_VAPORIZING, L.Position);
+    end;
   end;
 end;
 
-function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
+function TLemmingGame.HandleWaterObjectSwim(L: TLemming): Boolean;
 const
   ActionSet = [baSwimming, baClimbing, baHoisting, baTimebombing, baTimebombFinish,
                baOhnoing, baExploding, baFreezing, baFreezerExplosion, baFrozen,
                baUnfreezing, baVaporizing, baVinetrapping, baExiting, baSplatting];
-begin
-  Result := True;
-  if (L.LemIsSwimmer or L.LemIsInvincible) and not (L.LemAction in ActionSet) then
-  begin
-    Transition(L, baSwimming);
-    CueSoundEffect(SFX_SWIMMING, L.Position);
-  end;
-end;
 
-function TLemmingGame.HandlePoison(L: TLemming): Boolean;
-const
-  ActionSet = [baSwimming, baDrifting, baClimbing, baHoisting, baTimebombing, baTimebombFinish,
-               baOhnoing, baExploding, baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
-               baVaporizing, baVinetrapping, baExiting, baSplatting];
+  function InUnswimmableWaterObject: Boolean;
+  begin
+    Result := False
+           or HasTriggerAt(L.LemX, L.LemY, trBlasticine)
+           or HasTriggerAt(L.LemX, L.LemY, trVinewater)
+           or HasTriggerAt(L.LemX, L.LemY, trLava);
+  end;
 begin
   Result := True;
   if not (L.LemAction in ActionSet) then
   begin
-    if not (L.LemIsZombie or L.LemIsInvincible) then
-      RemoveLemming(L, RM_ZOMBIE);
-
-    if L.LemIsSwimmer or L.LemIsInvincible then
+    if HasTriggerAt(L.LemX, L.LemY, trWater) and (L.LemIsSwimmer or L.LemIsInvincible) then
     begin
       Transition(L, baSwimming);
       CueSoundEffect(SFX_SWIMMING, L.Position);
-    end else begin
-      Transition(L, baDrifting);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
     end;
-  end;
-end;
 
-function TLemmingGame.HandleBlasticine(L: TLemming): Boolean;
-begin
-  Result := True;
+    if HasTriggerAt(L.LemX, L.LemY, trPoison) then
+    begin
+      if not (L.LemIsZombie or L.LemIsInvincible) then
+        RemoveLemming(L, RM_ZOMBIE);
 
-  if not (L.LemAction in [baFreezerExplosion, baExiting]) then
-  begin
-    if L.LemIsInvincible then
+      if (L.LemIsSwimmer or L.LemIsInvincible) then
+      begin
+        Transition(L, baSwimming);
+        CueSoundEffect(SFX_SWIMMING, L.Position);
+      end else
+        Transition(L, baDrifting);
+    end;
+
+    if InUnswimmableWaterObject and L.LemIsInvincible then
     begin
       Transition(L, baSwimming);
       CueSoundEffect(SFX_SWIMMING, L.Position);
-      Exit;
     end;
-
-    DoExplosionCrater := False;
-    Transition(L, baExploding);
-  end;
-end;
-
-function TLemmingGame.HandleVinewater(L: TLemming): Boolean;
-begin
-  Result := True;
-  if not (L.LemAction in [baFreezerExplosion, baExiting]) then
-  begin
-    if L.LemIsInvincible then
-    begin
-      Transition(L, baSwimming);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
-      Exit;
-    end;
-
-    Transition(L, baVinetrapping);
-    CueSoundEffect(SFX_VINETRAPPING, L.Position);
-  end;
-end;
-
-function TLemmingGame.HandleLava(L: TLemming): Boolean;
-begin
-  Result := True;
-
-  if not (L.LemAction in [baFreezerExplosion, baExiting]) then
-  begin
-    if L.LemIsInvincible then
-    begin
-      Transition(L, baSwimming);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
-      Exit;
-    end;
-
-    Transition(L, baVaporizing);
-    CueSoundEffect(SFX_VAPORIZING, L.Position);
   end;
 end;
 
@@ -4730,12 +4683,6 @@ var
   LemDy: Integer;
   DiveDist: Integer;
 
-  function InSwimmableObject(Y: Integer = 0): Boolean;
-  begin
-    Result := (HasWaterObjectAt(L.LemX, L.LemY + Y, False, True)
-           or (HasWaterObjectAt(L.LemX, L.LemY + Y, True, False) and L.LemIsInvincible));
-  end;
-
   function LemDive(L: TLemming): Integer;
     // Returns 0 if the lem may not dive down
     // Otherwise return the amount of pixels the lem dives
@@ -4745,7 +4692,8 @@ var
     begin
       Inc(Result);
       Inc(L.LemFallen);
-      if InSwimmableObject(Result) then L.LemFallen := 0;
+      if HasWaterObjectAt(L.LemX, L.LemY + Result)
+        then L.LemFallen := 0;
       if L.LemY + Result >= PhysicsMap.Height then Break;
     end;
 
@@ -4760,12 +4708,14 @@ begin
 
   Inc(L.LemX, L.LemDx);
 
-  if InSwimmableObject or HasPixelAt(L.LemX, L.LemY) then
+  if HasWaterObjectAt(L.LemX, L.LemY)
+  or HasPixelAt(L.LemX, L.LemY) then
   begin
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
     // Rise if there is water above the lemming
-    if (LemDy >= -1) and InSwimmableObject(-1) and not HasPixelAt(L.LemX, L.LemY - 1) then
+    if (LemDy >= -1) and HasWaterObjectAt(L.LemX, L.LemY - 1)
+                     and not HasPixelAt(L.LemX, L.LemY - 1) then
       Dec(L.LemY)
 
     else if LemDy < -6 then
@@ -4775,11 +4725,11 @@ begin
       if DiveDist > 0 then
       begin
         Inc(L.LemY, DiveDist); // Dive below the terrain
-        if not InSwimmableObject then
+        if not HasWaterObjectAt(L.LemX, L.LemY) then
           Transition(L, baWalking);
-
-               // Only transition to climber, if the lemming is not under water
-      end else if L.LemIsClimber and not InSwimmableObject(-1) then
+      end else if L.LemIsClimber
+        and not HasWaterObjectAt(L.LemX, L.LemY -1) then
+      // Only transition to climber, if the lemming is not under water
         Transition(L, baClimbing)
       else begin
         TurnAround(L);
@@ -4795,7 +4745,8 @@ begin
 
     // See www.lemmingsforums.net/index.php?topic=3380.0
     // And the swimmer should not yet stop if the water and terrain overlaps
-    else if (LemDy <= -1) or ((LemDy = 0) and not InSwimmableObject) then
+    else if (LemDy <= -1)
+         or ((LemDy = 0) and not HasWaterObjectAt(L.LemX, L.LemY)) then
     begin
       Transition(L, baWalking);
       Inc(L.LemY, LemDy);
@@ -6278,23 +6229,14 @@ begin
   end;
 end;
 
+function TLemmingGame.HasWaterObjectAt(x, y: Integer): Boolean;
 begin
-end;
-
-function TLemmingGame.HasWaterObjectAt(x, y: Integer; AnyType: Boolean;
-                                       SwimmableOnly: Boolean): Boolean;
-begin
-  if AnyType then
-    Result := HasTriggerAt(x, y, trWater)
-           or HasTriggerAt(x, y, trPoison)
-           or HasTriggerAt(x, y, trVinewater)
-           or HasTriggerAt(x, y, trBlasticine)
-           or HasTriggerAt(x, y, trLava)
-  else if SwimmableOnly then
-    Result := HasTriggerAt(x, y, trWater)
-           or HasTriggerAt(x, y, trPoison)
-  else
-    Result := False;
+  Result := False
+         or HasTriggerAt(x, y, trWater)
+         or HasTriggerAt(x, y, trPoison)
+         or HasTriggerAt(x, y, trVinewater)
+         or HasTriggerAt(x, y, trBlasticine)
+         or HasTriggerAt(x, y, trLava);
 end;
 
 function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
@@ -8036,8 +7978,8 @@ begin
              and not (L.LemIsDisarmer or L.LemIsInvincible))
          or ((L.LemAction = baBallooning) and (L.LemY <= 30))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
-         or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], False, True) and not L.LemIsSwimmer)
-         or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], True, False) and not L.LemIsInvincible)
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
+         or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i]) and not L.LemIsInvincible)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
@@ -8048,8 +7990,8 @@ begin
         Break;
       end;
 
-      if HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i], False, True)
-        and L.LemIsSwimmer then
+      if HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i])
+        and (L.LemIsSwimmer or L.LemIsInvincible) then
           fLemNextAction := baSwimming;
 
       if (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
