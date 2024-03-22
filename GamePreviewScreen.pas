@@ -560,14 +560,11 @@ var
   Temp: TBitmap32;
   Tal: TTalisman;
   i: Integer;
-
   LoadPath, aImage: String;
   SrcRect: TRect;
-
   TalCount: Integer;
   TotalTalWidth: Integer;
   TalPoint: TPoint;
-
   KeepTalismans, HasCollectibles, AllCollectiblesGathered: Boolean;
 
   procedure DrawButtons(IsCollectible: Boolean = False);
@@ -598,13 +595,14 @@ begin
   Temp := TBitmap32.Create;
   try
     aImage := 'talismans.png';
+
     // Try styles folder first
     LoadPath := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aImage;
     // Then level pack folder
-    if LoadPath = '' then
+    if not FileExists(LoadPath) then
       LoadPath := GameParams.CurrentLevel.Group.FindFile(aImage);
     // Then default
-    if LoadPath = '' then
+    if not FileExists(LoadPath) then
       LoadPath := AppPath + SFGraphicsMenu + aImage
     else
       KeepTalismans := true;
