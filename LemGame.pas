@@ -3324,11 +3324,11 @@ begin
       AbortChecks := HandleFire(L);
 
     // Radiation
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
       HandleRadiation(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Slowfreeze
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
       HandleSlowfreeze(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Water - Check only for drowning here!
