@@ -29,7 +29,7 @@ type
 
     fRectColor            : TColor32;
     fSelectDx             : Integer;
-    fIsBlinkFrame         : Boolean;
+    //fIsBlinkFrame         : Boolean;
     fOnMinimapClick       : TMinimapClickEvent; // Event handler for minimap
 
     fCombineHueShift      : Single;
@@ -1437,7 +1437,7 @@ procedure TBaseSkillPanel.RefreshInfo;
 var
   i : TSkillPanelButton;
 begin
-  fIsBlinkFrame := (GetTickCount mod 1000) > 499;
+  //fIsBlinkFrame := (GetTickCount mod 1000) > 499;  // Bookmark - needed?
 
   Image.BeginUpdate;
   try

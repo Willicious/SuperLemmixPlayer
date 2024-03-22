@@ -472,8 +472,6 @@ type
     function HasPixelAt(X, Y: Integer): Boolean;
     function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
     function FindGroundPixel(x, y: Integer): Integer;
-    function FindWaterPixel(x, y: Integer): Integer;
-    function HasWaterObjectAt(x, y: Integer; AnyType: Boolean; SwimmableOnly: Boolean): Boolean;
     function HasSteelAt(x, y: Integer): Boolean;
     function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
 
@@ -3658,7 +3656,6 @@ end;
 function TLemmingGame.HandleCollectible(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Gadget: TGadget;
-  n: Integer;
   GadgetID: Word;
 begin
   Result := False;
@@ -6281,23 +6278,7 @@ begin
   end;
 end;
 
-function TLemmingGame.FindWaterPixel(x, y: Integer): Integer;
 begin
-  // Find the new water pixel
-  // If Result = 10, then at least 10 pixels are air below (X, Y)
-  // If Result = -10, then at least 10 pixels are water above (X, Y)
-  Result := 0;
-  if HasWaterObjectAt(x, y, True, False) then
-  begin
-    while HasWaterObjectAt(x, y + Result - 1, True, False) and (Result > -10) do
-      Dec(Result);
-  end
-  else
-  begin
-    Inc(Result);
-    while (not HasWaterObjectAt(x, y + Result, True, False)) and (Result < 10) do
-      Inc(Result);
-  end;
 end;
 
 function TLemmingGame.HasWaterObjectAt(x, y: Integer; AnyType: Boolean;
@@ -7164,7 +7145,7 @@ var
   L: TLemming;
   CheckPointA, CheckPointB: TPoint;
   LaserLine: TArray<TPoint>;
-  VirtualX, VirtualY: Integer;
+  VirtualX: Integer;
 begin
   Result := False;
 
