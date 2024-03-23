@@ -221,6 +221,7 @@ type
     trButton,
     trCollectible,
     trUpdraft,
+    trFlipper,
     trNoSplat,
     trSplat,
     trZombie,
@@ -360,7 +361,7 @@ const
 const
   // All objects that don't have trigger areas got mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..38] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..39] of TTriggerTypes = (
     trZombie,                 // No-object
     trZombie,                 // No trigger area
     trExit,                   // Exit
@@ -383,6 +384,7 @@ const
     trRadiation,              // Radiation
     trOWDown,                 // OWW down
     trUpdraft,                // Updraft
+    trFlipper,                // Flipper
     trSlowfreeze,             // Slowfreeze
     trZombie,                 // Hatch
     trAnim,                   // Triggered animation

@@ -2065,8 +2065,8 @@ begin
   FindLabel := O.GS + ':' + O.Piece;
   MO := PieceManager.Objects[FindLabel];
   df := O.DrawingFlags;
-  // Don't flip hatches
-  mayFlip := (df and odf_FlipLem <> 0) and not (MO.TriggerEffect = DOM_WINDOW);
+  // Don't flip hatches and flippers
+  mayFlip := (df and odf_FlipLem <> 0) and not (MO.TriggerEffect in [DOM_WINDOW, DOM_FLIPPER]);
   Result := MO.GetInterface(mayFlip, df and odf_UpsideDown <> 0, df and odf_Rotate <> 0);
 end;
 
@@ -2651,6 +2651,11 @@ begin
       DOM_UPDRAFT:
         begin
           fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
+        end;
+
+      DOM_FLIPPER:
+        begin
+          fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
         end;
 
       DOM_BUTTON:

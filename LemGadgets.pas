@@ -399,8 +399,11 @@ end;
 
 function TGadget.GetIsFlipImage: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and odf_FlipLem) <> 0)
-    and (TriggerEffect <> DOM_WINDOW);
+  if (TriggerEffect = DOM_FLIPPER) then
+    Result := (CurrentFrame = 1)
+  else
+    Result := ((Obj.DrawingFlags and odf_FlipLem) <> 0)
+          and (TriggerEffect <> DOM_WINDOW);
 end;
 
 function TGadget.GetIsRotate: Boolean;
@@ -792,6 +795,9 @@ begin
 
     if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_COLLECTIBLE,
                                  DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE] then
+      fFrame := 1;
+
+    if (MetaObj.TriggerEffect = DOM_FLIPPER) and (aGadget.IsFlipPhysics) then
       fFrame := 1;
   end else
     fPrimary := false;

@@ -113,6 +113,7 @@ type
     LemHasBeenOhnoer              : Boolean;
     LemHasTurned                  : Boolean;
     LemPlacedBrick                : Boolean; // Placed useful brick during this cycle (plaformer and stacker)
+    LemInFlipper                  : Integer;
     LemHasBlockerField            : Boolean; // For blockers, even during ohno
     LemIsStartingAction           : Boolean; // Replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
     LemHighlightReplay            : Boolean;
@@ -251,6 +252,7 @@ end;
 constructor TLemming.Create;
 begin
   inherited;
+  LemInFlipper := -1;
   LemParticleTimer := -1;
   LemHoldingProjectileIndex := -1;
 end;
@@ -342,6 +344,7 @@ begin
   LemIsNeutral := Source.LemIsNeutral;
   LemIsInvincible := Source.LemIsInvincible;
   LemPlacedBrick := Source.LemPlacedBrick;
+  LemInFlipper := Source.LemInFlipper;
   LemHasBlockerField := Source.LemHasBlockerField;
   LemIsStartingAction := Source.LemIsStartingAction;
   LemHighlightReplay := Source.LemHighlightReplay;

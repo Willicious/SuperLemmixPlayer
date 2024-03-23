@@ -1022,6 +1022,14 @@ var
       O.TarLev := Max(aSection.LineNumeric['skill_count'], 1);
   end;
 
+  procedure GetSplitterData;
+  begin
+    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
+      Flag(odf_FlipLem)
+    else if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'r' then
+      O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
+  end;
+
   procedure GetRadiationSlowfreezeData;
   begin
     O.CountdownLength := aSection.LineNumeric['countdown'];
@@ -1058,7 +1066,7 @@ const
   // Bookmark - this is used to set flip/rotate values for objects
   NO_FLIP_HORIZONTAL_TYPES = [DOM_PICKUP];
   NO_FLIP_VERTICAL_TYPES = [DOM_WINDOW, DOM_PICKUP, DOM_UPDRAFT];
-  NO_ROTATE_TYPES = [DOM_WINDOW, DOM_FORCELEFT, DOM_FORCERIGHT, DOM_PICKUP, DOM_UPDRAFT];
+  NO_ROTATE_TYPES = [DOM_WINDOW, DOM_FORCELEFT, DOM_FORCERIGHT, DOM_PICKUP, DOM_UPDRAFT, DOM_FLIPPER];
 begin
   O := fInteractiveObjects.Add;
 
@@ -1103,6 +1111,7 @@ begin
     DOM_TELEPORT: GetTeleporterData;
     DOM_RECEIVER: GetReceiverData;
     DOM_PICKUP: GetPickupData;
+    DOM_FLIPPER: GetSplitterData;
     DOM_WINDOW: GetWindowData;
     DOM_BACKGROUND: GetMovingBackgroundData;
     DOM_EXIT, DOM_LOCKEXIT: GetExitData;
