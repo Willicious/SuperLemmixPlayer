@@ -362,47 +362,47 @@ const
   // All objects that don't have trigger areas got mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
   ObjectTypeToTrigger: array[-1..39] of TTriggerTypes = (
-    trZombie,                 // No-object
-    trZombie,                 // No trigger area
-    trExit,                   // Exit
-    trForceLeft,              // Force-field left
-    trForceRight,             // Force-field right
-    trTrap,                   // Triggered trap
-    trWater,                  // Water
-    trFire,                   // Continuous trap
-    trOWLeft,                 // OWW left
-    trOWRight,                // OWW right
-    trSteel,                  // Steel
-    trZombie,                 // Blocker (there is no blocker OBJECT!!)
-    trTeleport,               // Teleporter
-    trZombie,                 // Receiver
-    trZombie,                 // Preplaced lemming
-    trPickup,                 // Pickup skill
-    trExit,                   // Locked exit
-    trButton,                 // Button
-    trCollectible,            // Collectible
-    trRadiation,              // Radiation
-    trOWDown,                 // OWW down
-    trUpdraft,                // Updraft
-    trSplitter,               // Splitter
-    trSlowfreeze,             // Slowfreeze
-    trZombie,                 // Hatch
-    trAnim,                   // Triggered animation
-    trZombie,                 // Hint // Bookmark - is this used?
-    trNoSplat,                // No-splat
-    trSplat,                  // Splat
-    trTeleport,               // 2-way teleporter - unused // Bookmark - can this be removed?
-    trTeleport,               // Single teleporter - unused // Bookmark - can this be removed?
-    trZombie,                 // Background
-    trTrap,                   // Once trap
-    trZombie,                 // Background image - unused
-    trOWUp,                   // OWW up
-    trZombie,                 // Paint // Bookmark - is this used?
-    trAnim,                   // Once animation
-    trBlasticine,             // Lems become instabombers on contact (swimmable by invincible lems)
-    trVinewater,              // Triggers vinetrapper instead of drowner (swimmable by invincible lems)
-    trPoison,                 // Turns non-invincible lems into zombies (swimmable by invincible lems)
-    trLava                    // Triggers burner instead of drowner (swimmable by invincible lems)
+    trZombie,                 // -1 No-object
+    trZombie,                 // 0  No trigger area
+    trZombie,                 // 1  Hatch
+    trExit,                   // 2  Exit
+    trExit,                   // 3  Locked exit
+    trButton,                 // 4  Button
+    trForceLeft,              // 5  Force-field left
+    trForceRight,             // 6  Force-field right
+    trTrap,                   // 7  Triggered trap
+    trTrap,                   // 8  Once trap
+    trWater,                  // 9  Water
+    trBlasticine,             // 10 Blasticine
+    trVinewater,              // 11 Vinewater
+    trPoison,                 // 12 Poison
+    trLava,                   // 13 Lava
+    trFire,                   // 14 Triggers burner
+    trOWLeft,                 // 15 OWW left
+    trOWRight,                // 16 OWW right
+    trOWDown,                 // 17 OWW down
+    trOWUp,                   // 18 OWW up
+    trZombie,                 // 19 Blocker (there is no blocker OBJECT!!)
+    trSteel,                  // 20 Steel
+    trTeleport,               // 21 Teleporter
+    trZombie,                 // 22 Receiver
+    trZombie,                 // 23 Preplaced lemming
+    trPickup,                 // 24 Pickup skill
+    trCollectible,            // 25 Collectible
+    trUpdraft,                // 26 Updraft
+    trSplitter,               // 27 Splitter
+    trRadiation,              // 28 Radiation
+    trSlowfreeze,             // 29 Slowfreeze
+    trNoSplat,                // 30 No-splat
+    trSplat,                  // 31 Splat
+    trZombie,                 // 32 Background
+    trZombie,                 // 33 Paint
+    trAnim,                   // 34 Triggered animation
+    trAnim,                   // 35 Once animation
+    trZombie,                 // 36 Hint  // Bookmark - can this be removed?
+    trTeleport,               // 37 2-way teleporter - unused // Bookmark - can this be removed?
+    trTeleport,               // 38 Single teleporter - unused // Bookmark - can this be removed?
+    trZombie                  // 39 Background image - unused  // Bookmark - can this be removed?
   );
 
 type

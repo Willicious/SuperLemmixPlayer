@@ -616,51 +616,6 @@ const
 
 
 const
-  { Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
-    Here only for refence. }
-(*DOM_NOOBJECT         = 65535;
-  DOM_NONE             = 0;
-  DOM_EXIT             = 1;
-  DOM_FORCELEFT        = 2; // Left arm of blocker
-  DOM_FORCERIGHT       = 3; // Right arm of blocker
-  DOM_TRAP             = 4; // Triggered trap
-  DOM_WATER            = 5; // Causes drowning
-  DOM_FIRE             = 6; // Causes vaporizing
-  DOM_ONEWAYLEFT       = 7;
-  DOM_ONEWAYRIGHT      = 8;
-  DOM_STEEL            = 9;
-  DOM_BLOCKER          = 10; // Middle part of blocker
-  DOM_TELEPORT         = 11;
-  DOM_RECEIVER         = 12;
-  DOM_LEMMING          = 13;
-  DOM_PICKUP           = 14;
-  DOM_LOCKEXIT         = 15;
-  DOM_BUTTON           = 16;
-  DOM_COLLECTIBLE      = 17;
-  DOM_RADIATION        = 18;
-  DOM_ONEWAYDOWN       = 19;
-  DOM_UPDRAFT          = 20;
-  DOM_SPLITTER         = 21;
-  DOM_SLOWFREEZE       = 22;
-  DOM_WINDOW           = 23;
-  DOM_ANIMATION        = 24; // No longer used!!
-  DOM_HINT             = 25;
-  DOM_NOSPLAT          = 26; // No longer used!!
-  DOM_SPLAT            = 27;
-  DOM_TWOWAYTELE       = 28; // No longer used!!
-  DOM_SINGLETELE       = 29; // No longer used!!
-  DOM_BACKGROUND       = 30;
-  DOM_TRAPONCE         = 31;
-  DOM_BGIMAGE          = 32; // No longer used!!
-  DOM_ONEWAYUP         = 33;
-  DOM_PAINT            = 34;
-  DOM_ANIMONCE         = 35;
-  DOM_BLASTICINE       = 36; // Lems become instabombers on contact
-  DOM_VINEWATER        = 37; // Triggers vinetrapper instead of drowner
-  DOM_POISON           = 38; // Turns lems into zombies
-  DOM_LAVA             = 39;
-  *)
-
   // Removal modes
   RM_NEUTRAL           = 0;
   RM_SAVE              = 1;
