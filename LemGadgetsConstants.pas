@@ -24,26 +24,22 @@ const
   DOM_ONEWAYDOWN       = 17; // Downwards-only destructible
   DOM_ONEWAYUP         = 18; // Upwards-only destructible
   DOM_BLOCKER          = 19; // The middle part of a blocker
-  // DOM_STEEL         = 20; // Steel
-  DOM_TELEPORT         = 21; // Sends lems to receiver
-  DOM_RECEIVER         = 22; // Receives lems from teleporter
-  // DOM_LEMMING       = 23; // Pre-placed lemming
-  DOM_PICKUP           = 24; // Pickup skills
-  DOM_COLLECTIBLE      = 25; // Collectibles with optional effects
-  DOM_UPDRAFT          = 26; // Slows falling lems, sends Gliders upwards, speeds up Ballooners
-  DOM_SPLITTER         = 27; // Alternates direction of lemmings
-  DOM_RADIATION        = 28; // Assigns timebomber with a variable countdown
-  DOM_SLOWFREEZE       = 29; // Assigns freezer with a variable countdown
-  DOM_NOSPLAT          = 30; // Makes any fall safe regardless of distance
-  DOM_SPLAT            = 31; // Makes any fall deadly regardless of distance
-  DOM_BACKGROUND       = 32; // Background graphics
-  DOM_PAINT            = 33; // Paint-only graphics
-  DOM_ANIMATION        = 34; // Animated graphics
-  DOM_ANIMONCE         = 35; // Single-animated graphics
-  // DOM_HINT          = 36; // No longer used
-  // DOM_TWOWAYTELE    = 37; // No longer used
-  // DOM_SINGLETELE    = 38; // No longer used
-  // DOM_BGIMAGE       = 39; // No longer used
+  DOM_TELEPORT         = 20; // Sends lems to receiver
+  DOM_RECEIVER         = 21; // Receives lems from teleporter
+  DOM_PICKUP           = 22; // Pickup skills
+  DOM_COLLECTIBLE      = 23; // Collectibles with optional effects
+  DOM_UPDRAFT          = 24; // Slows falling lems, sends Gliders upwards, speeds up Ballooners
+  DOM_SPLITTER         = 25; // Alternates direction of lemmings
+  DOM_RADIATION        = 26; // Assigns timebomber with a variable countdown
+  DOM_SLOWFREEZE       = 27; // Assigns freezer with a variable countdown
+  DOM_NOSPLAT          = 28; // Makes any fall safe regardless of distance
+  DOM_SPLAT            = 29; // Makes any fall deadly regardless of distance
+  DOM_BACKGROUND       = 30; // Background graphics
+  DOM_PAINT            = 31; // Paint-only graphics
+  DOM_ANIMATION        = 32; // Animated graphics
+  DOM_ANIMONCE         = 33; // Single-animated graphics
+  // DOM_STEEL         = 34; // Steel
+  // DOM_LEMMING       = 35; // Pre-placed lemming
 
 implementation
 

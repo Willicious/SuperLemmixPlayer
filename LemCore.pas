@@ -204,33 +204,33 @@ const
 type
   TTriggerTypes = (
     trExit,       // As well for locked exits, once all buttons are pressed
+    trButton,
     trForceLeft,  // As well for blockers
     trForceRight, // As well for blockers
     trTrap,       // For triggered and one-time traps
     trAnim,       // Ditto for triggered animations
     trWater,
-    trFire,
-    trOWLeft,
-    trOWRight,
-    trOWDown,
-    trOWUp,
-    trSteel,
-    trBlocker,    // Total blocker area!
-    trTeleport,
-    trPickup,
-    trButton,
-    trCollectible,
-    trUpdraft,
-    trSplitter,
-    trNoSplat,
-    trSplat,
-    trZombie,
     trBlasticine,
     trVinewater,
     trPoison,
     trLava,
+    trFire,
+    trOWLeft,
+    trOWRight,
+    trOWUp,
+    trOWDown,
+    trBlocker,    // Total blocker area!
+    trSteel,
+    trTeleport,
+    trPickup,
+    trCollectible,
+    trUpdraft,
+    trSplitter,
     trRadiation,
-    trSlowfreeze
+    trSlowfreeze,
+    trNoSplat,
+    trSplat,
+    trZombie
   );
 
 
@@ -359,9 +359,9 @@ const
   );
 
 const
-  // All objects that don't have trigger areas got mapped to trZombie
+  // All objects that don't have trigger areas get mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..39] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..35] of TTriggerTypes = (
     trZombie,                 // -1 No-object
     trZombie,                 // 0  No trigger area
     trZombie,                 // 1  Hatch
@@ -382,27 +382,23 @@ const
     trOWRight,                // 16 OWW right
     trOWDown,                 // 17 OWW down
     trOWUp,                   // 18 OWW up
-    trZombie,                 // 19 Blocker (there is no blocker OBJECT!!)
-    trSteel,                  // 20 Steel
-    trTeleport,               // 21 Teleporter
-    trZombie,                 // 22 Receiver
-    trZombie,                 // 23 Preplaced lemming
-    trPickup,                 // 24 Pickup skill
-    trCollectible,            // 25 Collectible
-    trUpdraft,                // 26 Updraft
-    trSplitter,               // 27 Splitter
-    trRadiation,              // 28 Radiation
-    trSlowfreeze,             // 29 Slowfreeze
-    trNoSplat,                // 30 No-splat
-    trSplat,                  // 31 Splat
-    trZombie,                 // 32 Background
-    trZombie,                 // 33 Paint
-    trAnim,                   // 34 Triggered animation
-    trAnim,                   // 35 Once animation
-    trZombie,                 // 36 Hint  // Bookmark - can this be removed?
-    trTeleport,               // 37 2-way teleporter - unused // Bookmark - can this be removed?
-    trTeleport,               // 38 Single teleporter - unused // Bookmark - can this be removed?
-    trZombie                  // 39 Background image - unused  // Bookmark - can this be removed?
+    trZombie,                 // 19 Blocker (note - there is no blocker object!)
+    trTeleport,               // 20 Teleporter
+    trZombie,                 // 21 Receiver
+    trPickup,                 // 22 Pickup skill
+    trCollectible,            // 23 Collectible
+    trUpdraft,                // 24 Updraft
+    trSplitter,               // 25 Splitter
+    trRadiation,              // 26 Radiation
+    trSlowfreeze,             // 27 Slowfreeze
+    trNoSplat,                // 28 No-splat
+    trSplat,                  // 29 Splat
+    trZombie,                 // 30 Background
+    trZombie,                 // 31 Paint
+    trAnim,                   // 32 Triggered animation
+    trAnim,                   // 33 Once animation
+    trSteel,                  // 34 Steel
+    trZombie                  // 35 Preplaced lemming
   );
 
 type
