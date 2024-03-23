@@ -221,7 +221,7 @@ type
     trButton,
     trCollectible,
     trUpdraft,
-    trFlipper,
+    trSplitter,
     trNoSplat,
     trSplat,
     trZombie,
@@ -384,7 +384,7 @@ const
     trRadiation,              // Radiation
     trOWDown,                 // OWW down
     trUpdraft,                // Updraft
-    trFlipper,                // Flipper
+    trSplitter,               // Splitter
     trSlowfreeze,             // Slowfreeze
     trZombie,                 // Hatch
     trAnim,                   // Triggered animation

@@ -25,7 +25,7 @@ const
   DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
-  DOM_FLIPPER          = 21;
+  DOM_SPLITTER         = 21;
   DOM_SLOWFREEZE       = 22;
   DOM_WINDOW           = 23;
   DOM_ANIMATION        = 24;

@@ -274,7 +274,7 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'collectible' then fTriggerEffect := DOM_COLLECTIBLE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewaydown' then fTriggerEffect := DOM_ONEWAYDOWN;
     if Lowercase(Sec.LineTrimString['effect']) = 'updraft' then fTriggerEffect := DOM_UPDRAFT;
-    if Lowercase(Sec.LineTrimString['effect']) = 'splitter' then fTriggerEffect := DOM_FLIPPER;
+    if Lowercase(Sec.LineTrimString['effect']) = 'splitter' then fTriggerEffect := DOM_SPLITTER;
     if Lowercase(Sec.LineTrimString['effect']) = 'entrance' then fTriggerEffect := DOM_WINDOW;
     if Lowercase(Sec.LineTrimString['effect']) = 'antisplatpad' then fTriggerEffect := DOM_NOSPLAT;
     if Lowercase(Sec.LineTrimString['effect']) = 'splatpad' then fTriggerEffect := DOM_SPLAT;

@@ -131,7 +131,7 @@ type
     PickupMap                  : TArrayArrayBoolean;
     ButtonMap                  : TArrayArrayBoolean;
     CollectibleMap             : TArrayArrayBoolean;
-    FlipperMap                 : TArrayArrayBoolean;
+    SplitterMap                : TArrayArrayBoolean;
     NoSplatMap                 : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
     ForceLeftMap               : TArrayArrayBoolean;
@@ -277,7 +277,7 @@ type
       function HandleFire(L: TLemming): Boolean;
       function HandleWaterObjectFatality(L: TLemming): Boolean;
       function HandleWaterObjectSwim(L: TLemming): Boolean;
-      function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleSplitter(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleRadiation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleSlowfreeze(L: TLemming; PosX, PosY: Integer): Boolean;
 
@@ -640,7 +640,7 @@ const
   DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
-  DOM_FLIPPER          = 21;
+  DOM_SPLITTER         = 21;
   DOM_SLOWFREEZE       = 22;
   DOM_WINDOW           = 23;
   DOM_ANIMATION        = 24; // No longer used!!
@@ -2194,8 +2194,8 @@ begin
   SetLength(CollectibleMap, Level.Info.Width, Level.Info.Height);
   SetLength(PickupMap, 0, 0);
   SetLength(PickupMap, Level.Info.Width, Level.Info.Height);
-  SetLength(FlipperMap, 0, 0);
-  SetLength(FlipperMap, Level.Info.Width, Level.Info.Height);
+  SetLength(SplitterMap, 0, 0);
+  SetLength(SplitterMap, Level.Info.Width, Level.Info.Height);
   SetLength(NoSplatMap, 0, 0);
   SetLength(NoSplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplatMap, 0, 0);
@@ -2361,7 +2361,7 @@ begin
       DOM_PICKUP:     WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
       DOM_COLLECTIBLE:WriteTriggerMap(CollectibleMap, Gadgets[i].TriggerRect);
-      DOM_FLIPPER:    WriteTriggerMap(FlipperMap, Gadgets[i].TriggerRect);
+      DOM_SPLITTER:   WriteTriggerMap(SplitterMap, Gadgets[i].TriggerRect);
       DOM_NOSPLAT:    WriteTriggerMap(NoSplatMap, Gadgets[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
       DOM_FORCELEFT:  WriteTriggerMap(ForceLeftMap, Gadgets[i].TriggerRect);
@@ -3344,13 +3344,13 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
       AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Flipper (except for blockers / jumpers)
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
+    // Splitter (except for blockers / jumpers)
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
                          and not (L.LemAction = baBlocking)
                          and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
     begin
       NeedShiftPosition := (L.LemAction in [baClimbing, baSliding, baDehoisting]);
-      AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
+      AbortChecks := HandleSplitter(L, CheckPos[0, i], CheckPos[1, i]);
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
     end;
 
@@ -3365,10 +3365,10 @@ begin
       L.LemY := CheckPos[1, i];
     end;
 
-    // Set L.LemInFlipper correctly
-    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
+    // Set L.LemInSplitter correctly
+    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
-      L.LemInFlipper := DOM_NOOBJECT;
+      L.LemInSplitter := DOM_NOOBJECT;
   until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY) (*or AbortChecks*);
 
   if NeedShiftPosition then
@@ -3443,7 +3443,7 @@ begin
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
     trCollectible:Result :=     ReadTriggerMap(X, Y, CollectibleMap);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
-    trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap);
+    trSplitter:    Result :=     ReadTriggerMap(X, Y, SplitterMap);
     trNoSplat:    Result :=     ReadTriggerMap(X, Y, NoSplatMap);
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
@@ -3815,21 +3815,21 @@ begin
   CueSoundEffect(SFX_VAPORIZING, L.Position);
 end;
 
-function TLemmingGame.HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
+function TLemmingGame.HandleSplitter(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Gadget: TGadget;
   GadgetID: Word;
 begin
   Result := False;
 
-  GadgetID := FindGadgetID(PosX, PosY, trFlipper);
+  GadgetID := FindGadgetID(PosX, PosY, trSplitter);
   // Exit if there is no Object
   if GadgetID = 65535 then Exit;
 
   Gadget := Gadgets[GadgetID];
-  if not (L.LemInFlipper = GadgetID) then
+  if not (L.LemInSplitter = GadgetID) then
   begin
-    L.LemInFlipper := GadgetID;
+    L.LemInSplitter := GadgetID;
     if (Gadget.CurrentFrame = 1) xor (L.LemDX < 0) then
       Result := HandleForceField(L, -L.LemDX);
 
@@ -6121,10 +6121,10 @@ JumperArcFrames: Integer;
 
   procedure DoJumperTriggerChecks;
   begin
-    if not HasTriggerAt(L.LemX, L.LemY, trFlipper) then
-      L.LemInFlipper := DOM_NOOBJECT
+    if not HasTriggerAt(L.LemX, L.LemY, trSplitter) then
+      L.LemInSplitter := DOM_NOOBJECT
     else
-      if HandleFlipper(L, L.LemX, L.LemY) then
+      if HandleSplitter(L, L.LemX, L.LemY) then
         Exit;
 
     if HasTriggerAt(L.LemX, L.LemY, trZombie, L)

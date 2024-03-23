@@ -399,7 +399,7 @@ end;
 
 function TGadget.GetIsFlipImage: Boolean;
 begin
-  if (TriggerEffect = DOM_FLIPPER) then
+  if (TriggerEffect = DOM_SPLITTER) then
     Result := (CurrentFrame = 1)
   else
     Result := ((Obj.DrawingFlags and odf_FlipLem) <> 0)
@@ -797,7 +797,7 @@ begin
                                  DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE] then
       fFrame := 1;
 
-    if (MetaObj.TriggerEffect = DOM_FLIPPER) and (aGadget.IsFlipPhysics) then
+    if (MetaObj.TriggerEffect = DOM_SPLITTER) and (aGadget.IsFlipPhysics) then
       fFrame := 1;
   end else
     fPrimary := false;
