@@ -21,6 +21,7 @@ const
 
 type
   TColorSwapType = (rcl_Selected,
+                    rcl_Swimmer,
                     rcl_Athlete,
                     rcl_Zombie,
                     rcl_Neutral,
@@ -108,6 +109,7 @@ begin
       case fSwaps[i].Condition of
         rcl_Selected: if not fDrawAsSelected then Continue;
         rcl_Zombie: if not fLemming.LemIsZombie then Continue;
+        rcl_Swimmer: if not fLemming.LemIsSwimmer then Continue;
         rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
         rcl_Neutral: if not fLemming.LemIsNeutral then Continue;
         rcl_Invincible: if not fLemming.LemIsInvincible then Continue;
@@ -162,6 +164,9 @@ begin
       begin
         Mode := rcl_Athlete;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+
+        Mode := rcl_Athlete;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('swimmer', RegisterSwap, @Mode);
 
         Mode := rcl_Invincible;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('invincible', RegisterSwap, @Mode);
