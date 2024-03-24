@@ -27,16 +27,6 @@ $STATE_RECOLORING
     TO x00B00B
   $END
   
-  $SWIMMER
-    FROM x4040E0
-    TO xB49EFF
-  $END
-  
-  $SWIMMER
-    FROM x00B000
-    TO x288F75
-  $END
-  
   $ZOMBIE
     FROM xF0D0D0
     TO x97B590
