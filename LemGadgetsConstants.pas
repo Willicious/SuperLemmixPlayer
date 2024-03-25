@@ -35,11 +35,10 @@ const
   DOM_NOSPLAT          = 28; // Makes any fall safe regardless of distance
   DOM_SPLAT            = 29; // Makes any fall deadly regardless of distance
   DOM_DECORATION       = 30; // Decoration-only graphics, can move at a set direction & speed if specified
-  //DOM_PAINT            = 31; // Paint-only graphics // Bookmark - WASPAINT
-  DOM_ANIMATION        = 32; // Animated graphics
-  DOM_ANIMONCE         = 33; // Single-animated graphics
-  // DOM_STEEL         = 34; // Steel
-  // DOM_LEMMING       = 35; // Pre-placed lemming
+  DOM_ANIMATION        = 31; // Animated graphics
+  DOM_ANIMONCE         = 32; // Single-animated graphics
+  // DOM_STEEL         = 33; // Steel
+  // DOM_LEMMING       = 34; // Pre-placed lemming
 
 implementation
 

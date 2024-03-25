@@ -281,7 +281,6 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'decoration' then fTriggerEffect := DOM_DECORATION;
     if Lowercase(Sec.LineTrimString['effect']) = 'traponce' then fTriggerEffect := DOM_TRAPONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewayup' then fTriggerEffect := DOM_ONEWAYUP;
-    //if Lowercase(Sec.LineTrimString['effect']) = 'paint' then fTriggerEffect := DOM_PAINT; // Bookmark - WASPAINT
     if Lowercase(Sec.LineTrimString['effect']) = 'animation' then fTriggerEffect := DOM_ANIMATION;
     if Lowercase(Sec.LineTrimString['effect']) = 'animationonce' then fTriggerEffect := DOM_ANIMONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'blasticine' then fTriggerEffect := DOM_BLASTICINE;
@@ -356,8 +355,7 @@ begin
       GadgetAccessor.CanResizeVertical := Sec.Line['resize_vertical'] <> nil;
     end;
 
-    if fTriggerEffect in [DOM_NONE, DOM_DECORATION//, DOM_PAINT
-    ] then // No trigger area
+    if fTriggerEffect in [DOM_NONE, DOM_DECORATION] then // No trigger area
     begin
       GadgetAccessor.TriggerWidth := 0;
       GadgetAccessor.TriggerHeight := 0;

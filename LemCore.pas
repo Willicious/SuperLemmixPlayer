@@ -394,11 +394,10 @@ const
     trNoSplat,                // 28 No-splat
     trSplat,                  // 29 Splat
     trZombie,                 // 30 Decoration
-    //trZombie,                 // 31 Paint // Bookmark - WASPAINT
-    trAnim,                   // 32 Triggered animation
-    trAnim,                   // 33 Once animation
-    trSteel,                  // 34 Steel
-    trZombie                  // 35 Preplaced lemming
+    trAnim,                   // 31 Triggered animation
+    trAnim,                   // 32 Once animation
+    trSteel,                  // 33 Steel
+    trZombie                  // 34 Preplaced lemming
   );
 
 type

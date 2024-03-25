@@ -379,10 +379,7 @@ end;
 
 function TGadget.GetIsOnlyOnTerrain: Boolean;
 begin
-  Result := //(MetaObj.TriggerEffect = DOM_PAINT) or ( // Bookmark - WASPAINT
-  (Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0
-  //)
-  ;
+  Result := (Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0;
 end;
 
 function TGadget.GetIsUpsideDown: Boolean;
