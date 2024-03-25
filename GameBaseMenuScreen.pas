@@ -788,15 +788,7 @@ begin
 
   try
     if not GetGraphic('wallpaper' + '_' + GetWallpaperSuffix + '.png', BgImage, true) then
-    begin
-      if not GetGraphic('wallpaper.png', BgImage, true) then
-      begin
-        if not GetGraphic('background_' + GetWallpaperSuffix + '.png', BgImage, true) then
-        begin
-          GetGraphic('background.png', BgImage, true);
-        end;
-      end;
-    end;
+      GetGraphic('wallpaper.png', BgImage, true);
 
     if (BgImage.Width = 0) or (BgImage.Height = 0) then
     begin
