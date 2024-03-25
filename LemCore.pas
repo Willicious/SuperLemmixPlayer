@@ -361,7 +361,7 @@ const
 const
   // All objects that don't have trigger areas get mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..35] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..34] of TTriggerTypes = (
     trZombie,                 // -1 No-object
     trZombie,                 // 0  No trigger area
     trZombie,                 // 1  Hatch
@@ -393,8 +393,8 @@ const
     trSlowfreeze,             // 27 Slowfreeze
     trNoSplat,                // 28 No-splat
     trSplat,                  // 29 Splat
-    trZombie,                 // 30 Background
-    trZombie,                 // 31 Paint
+    trZombie,                 // 30 Decoration
+    //trZombie,                 // 31 Paint // Bookmark - WASPAINT
     trAnim,                   // 32 Triggered animation
     trAnim,                   // 33 Once animation
     trSteel,                  // 34 Steel

@@ -1050,7 +1050,7 @@ var
     O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
 
-  procedure GetMovingBackgroundData;
+  procedure GetMovingDecorationData;
   var
     Angle: Integer;
   begin
@@ -1113,7 +1113,7 @@ begin
     DOM_PICKUP: GetPickupData;
     DOM_SPLITTER: GetSplitterData;
     DOM_WINDOW: GetWindowData;
-    DOM_BACKGROUND: GetMovingBackgroundData;
+    DOM_DECORATION: GetMovingDecorationData;
     DOM_EXIT, DOM_LOCKEXIT: GetExitData;
     DOM_SLOWFREEZE, DOM_RADIATION: GetRadiationSlowfreezeData;
   end;
@@ -1619,7 +1619,7 @@ var
       Sec.AddLine('LEMMINGS', O.LemmingCap);
   end;
 
-  procedure SetMovingBackgroundData;
+  procedure SetMovingDecorationData;
   var
     Angle: Integer;
   begin
@@ -1661,7 +1661,7 @@ begin
       SetTeleporterData;
       SetPickupData;
       SetWindowData;
-      SetMovingBackgroundData;
+      SetMovingDecorationData;
       // Receiver and Exit's data are covered by Teleporter and Window respectively.
     end else begin
       case PieceManager.Objects[O.Identifier].TriggerEffect of
@@ -1670,7 +1670,7 @@ begin
         DOM_RECEIVER: SetReceiverData;
         DOM_PICKUP: SetPickupData;
         DOM_WINDOW: SetWindowData;
-        DOM_BACKGROUND: SetMovingBackgroundData;
+        DOM_DECORATION: SetMovingDecorationData;
       end;
     end;
   end;

@@ -154,7 +154,7 @@ type
     property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property NeutralMode: Boolean read sNeutralMode write sNeutralMode;
     property KeyFrame: Integer read GetKeyFrame;
-    property CanDrawToBackground: Boolean read GetCanDrawToBackground; // Moving backgrounds: if only one frame and zero speed, this returns true
+    property CanDrawToBackground: Boolean read GetCanDrawToBackground; // Moving decorations: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
     property SkillCount: Integer read GetSkillCount;
     property IsPreassignedClimber: Boolean index 1 read GetPreassignedSkill;
@@ -379,7 +379,10 @@ end;
 
 function TGadget.GetIsOnlyOnTerrain: Boolean;
 begin
-  Result := (MetaObj.TriggerEffect = DOM_PAINT) or ((Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0);
+  Result := //(MetaObj.TriggerEffect = DOM_PAINT) or ( // Bookmark - WASPAINT
+  (Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0
+  //)
+  ;
 end;
 
 function TGadget.GetIsUpsideDown: Boolean;
@@ -587,11 +590,12 @@ begin
     Result := (AnimObjMov[(Obj.Skill + 12) mod 16] * f) div 2;
 end;
 
+// Only draw decorations to background layer if they're a single frame and 0 speed
 function TGadget.GetCanDrawToBackground: Boolean;
 var
   i: Integer;
 begin
-  Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
+  Assert(MetaObj.TriggerEffect = DOM_DECORATION, 'GetCanDrawToBackground called for an object that isn''t a moving decoration!');
   Result := false;
   if GetSpeed <> 0 then Exit;
   for i := 0 to MetaObj.Animations.Count-1 do
@@ -603,7 +607,7 @@ end;
 
 function TGadget.GetSpeed: Integer;
 begin
-  Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetSpeed called for an object that isn''t a moving background!');
+  Assert(MetaObj.TriggerEffect = DOM_DECORATION, 'GetSpeed called for an object that isn''t a moving decoration!');
   Result := Obj.TarLev;
 end;
 

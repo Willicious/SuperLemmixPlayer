@@ -34,8 +34,8 @@ const
   DOM_SLOWFREEZE       = 27; // Assigns freezer with a variable countdown
   DOM_NOSPLAT          = 28; // Makes any fall safe regardless of distance
   DOM_SPLAT            = 29; // Makes any fall deadly regardless of distance
-  DOM_BACKGROUND       = 30; // Background graphics
-  DOM_PAINT            = 31; // Paint-only graphics
+  DOM_DECORATION       = 30; // Decoration-only graphics, can move at a set direction & speed if specified
+  //DOM_PAINT            = 31; // Paint-only graphics // Bookmark - WASPAINT
   DOM_ANIMATION        = 32; // Animated graphics
   DOM_ANIMONCE         = 33; // Single-animated graphics
   // DOM_STEEL         = 34; // Steel

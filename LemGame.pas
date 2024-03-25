@@ -35,7 +35,7 @@ const
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
-        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND, DOM_PAINT,
+        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_DECORATION, //DOM_PAINT, // Bookmark - WASPAINT
         DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA,
         DOM_RADIATION, DOM_SLOWFREEZE];
 
@@ -4149,7 +4149,7 @@ begin
   for i := 0 to Gadgets.Count-1 do
   begin
     Gadget := Gadgets[i];
-    if Gadget.TriggerEffect = DOM_BACKGROUND then
+    if Gadget.TriggerEffect = DOM_DECORATION then
     begin
       Gadget.Left := Gadget.Left + Gadget.Movement(True, CurrentIteration); // X-movement
       Gadget.Top := Gadget.Top + Gadget.Movement(False, CurrentIteration); // Y-movement

@@ -50,7 +50,7 @@ type
   TIsStartingSecondsRoutine = function: Boolean of object;
 
   TRenderLayer = (rlBackground,
-                  rlBackgroundObjects,
+                  rlDecorations,
                   rlGadgetsLow,
                   rlShadowsLow,
                   rlTerrain,

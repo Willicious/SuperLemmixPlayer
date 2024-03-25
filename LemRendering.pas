@@ -3046,8 +3046,9 @@ procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
 const
   DO_NOT_DRAW: set of 0..255 =
         [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_BLOCKER,
-         DOM_ONEWAYDOWN, DOM_WINDOW, DOM_BACKGROUND, DOM_ONEWAYUP,
-         DOM_PAINT];
+         DOM_ONEWAYDOWN, DOM_WINDOW, DOM_DECORATION, DOM_ONEWAYUP
+         //, DOM_PAINT // Bookmark - WASPAINT
+         ];
 begin
   if (Gadget.TriggerEffect in [DOM_ANIMATION, DOM_ANIMONCE]) and GameParams.NoBackgrounds then
     Exit;
@@ -3077,8 +3078,8 @@ function TRenderer.IsUseful(Gadget: TGadget): Boolean;
 begin
   Result := true;
   if not fUsefulOnly then Exit;
-
-  if Gadget.TriggerEffect in [DOM_NONE, DOM_BACKGROUND, DOM_PAINT] then
+  if Gadget.TriggerEffect in [DOM_NONE, DOM_DECORATION//, DOM_PAINT // Bookmark - WASPAINT
+  ] then
     Result := false;
 
   if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId < 0) then
@@ -3124,10 +3125,11 @@ var
 
   function IsValidForLayer(Gadget: TGadget): Boolean;
   begin
-    if (Gadget.TriggerEffect = DOM_PAINT) then
-      Result := aLayer = rlOnTerrainGadgets
-    else if (Gadget.TriggerEffect = DOM_BACKGROUND) and not Gadget.IsOnlyOnTerrain then
-      Result := aLayer = rlBackgroundObjects
+//    if (Gadget.TriggerEffect = DOM_PAINT) then // Bookmark - WASPAINT
+//      Result := aLayer = rlOnTerrainGadgets
+//  else
+    if (Gadget.TriggerEffect = DOM_DECORATION) and not Gadget.IsOnlyOnTerrain then
+      Result := aLayer = rlDecorations
     else if Gadget.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
       Result := aLayer = rlOneWayArrows
     else case aLayer of
@@ -3146,7 +3148,7 @@ var
     if (Gadget.TriggerEffectBase in [DOM_ANIMATION, DOM_ANIMONCE]) and GameParams.NoBackgrounds then Exit;
     if not (IsValidForLayer(Gadget) and IsUseful(Gadget)) then Exit;
 
-    if (aLayer = rlBackgroundObjects) and (Gadget.CanDrawToBackground) then
+    if (aLayer = rlDecorations) and (Gadget.CanDrawToBackground) then
       ProcessDrawFrame(Gadget, fLayers[rlBackground])
     else begin
       ProcessDrawFrame(Gadget, Dst);
@@ -3164,7 +3166,7 @@ begin
     if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
 
     // Special conditions
-    if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
+    if (aLayer = rlDecorations) and (fUsefulOnly or fDisableBackground) then Exit;
     if (aLayer = rlGadgetsLow) then
       for i := fGadgets.Count-1 downto 0 do
         HandleGadget(i)
@@ -3212,7 +3214,7 @@ begin
   fLayers.fIsEmpty[rlTriggers] := true;
   fLayers.fIsEmpty[rlObjectHelpers] := true;
 
-  DrawGadgetsOnLayer(rlBackgroundObjects);
+  DrawGadgetsOnLayer(rlDecorations);
   DrawGadgetsOnLayer(rlGadgetsLow);
   DrawGadgetsOnLayer(rlOnTerrainGadgets);
   DrawGadgetsOnLayer(rlOneWayArrows);
@@ -3802,7 +3804,9 @@ begin
        or (Gadget.TriggerRect.Right < 0)
        or (Gadget.TriggerRect.Left > RenderInfoRec.Level.Info.Width) then
     begin
-      if not (Gadget.TriggerEffect in [DOM_BACKGROUND, DOM_PAINT, DOM_ANIMATION, DOM_ANIMONCE]) then
+      if not (Gadget.TriggerEffect in [DOM_DECORATION, DOM_ANIMATION, DOM_ANIMONCE
+      //, DOM_PAINT // Bookmark - WASPAINT
+      ]) then
         Gadget.TriggerEffect := DOM_NONE; // Effectively disables the object
     end;
 
