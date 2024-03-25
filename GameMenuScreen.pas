@@ -92,7 +92,7 @@ type
 
       procedure BeginGame;
       procedure ExitGame;
-
+      procedure HandleClassicMode;
       procedure PrevGroup;
       procedure NextGroup;
       procedure UpdateGroupSign(aRedraw: Boolean = true);
@@ -320,6 +320,12 @@ procedure TGameMenuScreen.MakePanels;
     Result.Y := LayoutInfo.CardsCenterY + Round(aVertOffset * LayoutInfo.CardSpacingVert);
   end;
 
+  function SetClassicModeButtonPosition(XOffset: Integer; YOffset: Integer): TPoint;
+  begin
+    Result.X := (ScreenImg.Bitmap.Width - XOffset);
+    Result.Y := (0 + YOffset);
+  end;
+
 var
   NewRegion: TClickableRegion;
   BMP: TBitmap32;
@@ -327,6 +333,16 @@ begin
   BMP := TBitmap32.Create;
   try
     fClickableRegions.Clear;
+
+    // Classic Mode
+    if GameParams.ClassicMode then
+      GetGraphic('classic_mode_on.png', BMP)
+    else
+      GetGraphic('classic_mode_off.png', BMP);
+    NewRegion := MakeClickableImageAuto(SetClassicModeButtonPosition((BMP.Width div 3) * 2, BMP.Height),
+                                        BMP.BoundsRect, HandleClassicMode, BMP);
+    NewRegion.ShortcutKeys.Add(VK_F4);
+
     // Play
     GetGraphic('sign_play.png', BMP);
     NewRegion := MakeClickableImageAuto(MakePosition(-1, -0.5), BMP.BoundsRect, BeginGame, BMP);
@@ -722,6 +738,38 @@ begin
   CloseScreen(gstExit);
 end;
 
+procedure TGameMenuScreen.HandleClassicMode;
+begin
+  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
+
+  // Set Classic Mode properties
+  if not GameParams.ClassicMode then
+  begin
+    GameParams.ClassicMode := True;
+    GameParams.HideShadows := True;
+    GameParams.HideClearPhysics := True;
+    GameParams.HideAdvancedSelect := True;
+    GameParams.HideFrameskipping := True;
+    GameParams.HideHelpers := True;
+    GameParams.HideSkillQ := True;
+  end else begin
+    GameParams.ClassicMode := False;
+    GameParams.HideShadows := False;
+    GameParams.HideClearPhysics := False;
+    GameParams.HideAdvancedSelect := False;
+    GameParams.HideFrameskipping := False;
+    GameParams.HideHelpers := False;
+    GameParams.HideSkillQ := False;
+  end;
+
+  // Reload config to apply changes
+  GameParams.Save(scCritical);
+  GameParams.Load;
+
+  // Redraw panels
+  MakePanels; // Bookmark - Make this its own procedure just for drawing the CM button
+end;
+
 procedure TGameMenuScreen.PrevGroup;
 begin
   if not GameParams.CurrentLevel.Group.IsLowestGroup then
@@ -851,6 +899,7 @@ procedure TGameMenuScreen.DoAfterConfig;
 begin
   inherited;
   ReloadCursor;
+  MakePanels;
 end;
 
 procedure TGameMenuScreen.DoCleanInstallCheck;

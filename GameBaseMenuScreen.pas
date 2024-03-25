@@ -983,7 +983,6 @@ begin
       ScreenImg.Bitmap.Changed;
     end;
   end;
-
 end;
 
 { TClickableRegion }
