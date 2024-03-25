@@ -27,7 +27,7 @@ type
       procedure TryLoadReplay;
     protected
       procedure BuildScreen; override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
@@ -74,7 +74,7 @@ begin
   end;
 end;
 
-function TGameTextScreen.GetBackgroundSuffix: String;
+function TGameTextScreen.GetWallpaperSuffix: String;
 begin
   if PreviewText then
     Result := 'pretext'

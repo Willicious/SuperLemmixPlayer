@@ -39,7 +39,7 @@ type
       procedure PrepareGameParams; override;
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
       procedure DoAfterConfig; override;
@@ -63,7 +63,7 @@ begin
   inherited CloseScreen(aNextScreen);
 end;
 
-function TGamePostviewScreen.GetBackgroundSuffix: String;
+function TGamePostviewScreen.GetWallpaperSuffix: String;
 begin
   Result := 'postview';
 end;

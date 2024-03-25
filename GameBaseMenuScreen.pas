@@ -140,8 +140,8 @@ type
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false; aFromPackOnly: Boolean = false): Boolean;
 
-      procedure DrawBackground; overload;
-      procedure DrawBackground(aRegion: TRect); overload;
+      procedure DrawWallpaper; overload;
+      procedure DrawWallpaper(aRegion: TRect); overload;
 
       function MakeClickableImage(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
                                    aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
@@ -161,7 +161,7 @@ type
 
       procedure AfterRedrawClickables; virtual;
 
-      function GetBackgroundSuffix: String; virtual; abstract;
+      function GetWallpaperSuffix: String; virtual; abstract;
 
       procedure ReloadCursor;
 
@@ -290,7 +290,7 @@ begin
     if not GameParams.ShowMinimap and not GameParams.FullScreen then
     Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
 
-    DrawBackground;
+    DrawWallpaper;
 
     BoundsRect := Rect(0, 0, ClientWidth, ClientHeight);
 
@@ -772,12 +772,12 @@ begin
   aDst.DrawMode := dmBlend;
 end;
 
-procedure TGameBaseMenuScreen.DrawBackground;
+procedure TGameBaseMenuScreen.DrawWallpaper;
 begin
-  DrawBackground(ScreenImg.Bitmap.BoundsRect);
+  DrawWallpaper(ScreenImg.Bitmap.BoundsRect);
 end;
 
-procedure TGameBaseMenuScreen.DrawBackground(aRegion: TRect);
+procedure TGameBaseMenuScreen.DrawWallpaper(aRegion: TRect);
 var
   aX, aY: Integer;
   BgImage, Dst: TBitmap32;
@@ -787,8 +787,16 @@ begin
   BgImage := TBitmap32.Create;
 
   try
-    if not GetGraphic('background_' + GetBackgroundSuffix + '.png', BgImage, true) then
-      GetGraphic('background.png', BgImage, true);
+    if not GetGraphic('wallpaper' + '_' + GetWallpaperSuffix + '.png', BgImage, true) then
+    begin
+      if not GetGraphic('wallpaper.png', BgImage, true) then
+      begin
+        if not GetGraphic('background_' + GetWallpaperSuffix + '.png', BgImage, true) then
+        begin
+          GetGraphic('background.png', BgImage, true);
+        end;
+      end;
+    end;
 
     if (BgImage.Width = 0) or (BgImage.Height = 0) then
     begin

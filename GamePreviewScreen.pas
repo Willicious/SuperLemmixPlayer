@@ -45,7 +45,7 @@ type
       procedure SetWindowCaption;
     protected
       procedure DoAfterConfig; override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure AfterCancelLevelSelect; override;
 
@@ -349,7 +349,7 @@ begin
   CloseScreen(gstPreview);
 end;
 
-function TGamePreviewScreen.GetBackgroundSuffix: String;
+function TGamePreviewScreen.GetWallpaperSuffix: String;
 begin
   Result := 'preview';
 end;

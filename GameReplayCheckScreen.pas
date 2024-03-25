@@ -66,7 +66,7 @@ type
     protected
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
-      function GetBackgroundSuffix: String; override;
+      function GetWallpaperSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
@@ -481,7 +481,7 @@ procedure TGameReplayCheckScreen.BuildScreen;
 begin
   ScreenImg.BeginUpdate;
   try
-    DrawBackground;
+    DrawWallpaper;
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);
 
     fOldHighRes := GameParams.HighResolution;
@@ -515,7 +515,7 @@ begin
 
   ScreenImg.BeginUpdate;
   try
-    DrawBackground;
+    DrawWallpaper;
     for i := 0 to fScreenText.Count-1 do
       MenuFont.DrawTextCentered(ScreenImg.Bitmap, fScreenText[i], (i * 16) + 8);
   finally
@@ -539,7 +539,7 @@ begin
     inherited;
 end;
 
-function TGameReplayCheckScreen.GetBackgroundSuffix: String;
+function TGameReplayCheckScreen.GetWallpaperSuffix: String;
 begin
   Result := 'replay_check';
 end;
