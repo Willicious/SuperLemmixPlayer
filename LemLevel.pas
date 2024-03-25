@@ -1175,8 +1175,10 @@ begin
   L.IsGlider       := (aSection.Line['glider']   <> nil);
   L.IsDisarmer     := (aSection.Line['disarmer'] <> nil);
   L.IsZombie       := (aSection.Line['zombie']   <> nil);
-  L.IsNeutral      := (aSection.Line['neutral']  <> nil);
-  L.IsBlocker      := (aSection.Line['blocker']  <> nil);
+  L.IsNeutral      := (aSection.Line['neutral']  <> nil);   // Bookmark - implement this later
+  L.IsBlocker      := (aSection.Line['blocker']  <> nil);   // Invincible lems can't also be neutral or zombie
+  //L.IsInvincible   := ((aSection.Line['invincible'] <> nil) and not ((aSection.Line['neutral']  <> nil)
+                                                                  //or (aSection.Line['zombie']   <> nil)));
 end;
 
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
@@ -1740,6 +1742,7 @@ begin
     if L.IsBlocker then Sec.AddLine('BLOCKER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
     if L.IsNeutral then Sec.AddLine('NEUTRAL');
+    //if L.IsInvincible then Sec.AddLine('INVINCIBLE');
   end;
 end;
 
