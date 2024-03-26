@@ -542,6 +542,8 @@ var
 begin
   BMP := TBitmap32.Create;
   try
+    BMP.Clear;
+
     if GameParams.ClassicMode then
       GetGraphic('classic_mode_on.png', BMP)
     else
