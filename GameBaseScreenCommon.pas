@@ -96,6 +96,7 @@ begin
   inherited Create(aOwner);
   fScreenImg := TImage32.Create(Self);
   fScreenImg.Parent := Self;
+  fScreenImg.RepaintMode := rmOptimizer;
   ScreenImg.Cursor := crNone;
 end;
 
@@ -107,46 +108,28 @@ end;
 
 procedure TGameBaseScreen.FadeOut;
 var
-  Steps: Cardinal;
-  i: Integer;
-  P: PColor32;
-  StartTickCount: Cardinal;
-  IterationDiff: Integer;
-  RGBDiff: Integer;
+  RemainingTime: integer;
+  OldRemainingTime: integer;
+  EndTickCount: Cardinal;
 const
-  TOTAL_STEPS = 32;
-  STEP_DELAY = 12;
+  MAX_TIME = 300; // mS
 begin
-  Steps := 0;
-  StartTickCount := GetTickCount;
-  while Steps < TOTAL_STEPS do
+  EndTickCount := GetTickCount + MAX_TIME;
+  OldRemainingTime := 0;
+  RemainingTime := MAX_TIME;
+  ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
+  while (RemainingTime >= 0) do
   begin
-    IterationDiff := ((GetTickCount - StartTickCount) div STEP_DELAY) - Steps;
-
-    if IterationDiff = 0 then
-      Continue;
-
-    RGBDiff := IterationDiff * 8;
-
-    with ScreenImg.Bitmap do
+    if (RemainingTime <> OldRemainingTime) then
     begin
-      P := PixelPtr[0, 0];
-      for i := 0 to Width * Height - 1 do
-      begin
-        with TColor32Entry(P^) do
-        begin
-          if R > RGBDiff then Dec(R, RGBDiff) else R := 0;
-          if G > RGBDiff then Dec(G, RGBDiff) else G := 0;
-          if B > RGBDiff then Dec(B, RGBDiff) else B := 0;
-        end;
-        Inc(P);
-      end;
-    end;
-    Inc(Steps, IterationDiff);
+      ScreenImg.Bitmap.MasterAlpha := MulDiv(255, RemainingTime, MAX_TIME);
+      ScreenImg.Update;
 
-    ScreenImg.Bitmap.Changed;
-    Changed;
-    Update;
+      OldRemainingTime := RemainingTime;
+    end else
+      Sleep(1);
+
+    RemainingTime := EndTickCount - GetTickCount;
   end;
 
   Application.ProcessMessages;

@@ -1004,7 +1004,6 @@ begin
 
   if fNeedRedraw = rdRefresh then
   begin
-    Img.Changed;
     if GameParams.ShowMinimap then
       { rdRefresh currently always occurs as a result of scrolling without any change otherwise,
       so, minimap needs redrawing. }
@@ -1031,7 +1030,6 @@ begin
 
       fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
 
-      Img.Changed;
       if GameParams.ShowMinimap then RenderMinimap;
 
       SkillPanel.RefreshInfo;
@@ -1324,7 +1322,6 @@ begin
   fReplayKilled := false;
   fMinimapBuffer := TBitmap32.Create;
   TLinearResampler.Create(fMinimapBuffer);
-  DoubleBuffered := true;
   fSuspensions := TList<TSuspendState>.Create;
   fHighlitStartCopyLemming := TLemming.Create;
   HotkeyManager := TLemmixHotkeyManager.Create;
@@ -2348,8 +2345,6 @@ begin
       Game.ReplayManager.SaveToFile(S, true);
     end;
   end;
-
-  Img.RepaintMode := rmFull;
 
   inherited CloseScreen(aNextScreen);
 end;

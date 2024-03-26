@@ -625,7 +625,6 @@ begin
     end;
   end;
   aDst.EndUpdate;
-  aDst.Changed;
 end;
 
 procedure TRenderBitmaps.DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);

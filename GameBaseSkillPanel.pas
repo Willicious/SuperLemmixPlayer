@@ -243,7 +243,6 @@ begin
   // Some general settings for the panel
   Color := $000000;
   ParentBackground := false;
-  DoubleBuffered := true;
 
   // Initialize images
   fImage := TImage32.Create(Self);
@@ -940,7 +939,6 @@ begin
 
   // Copy the created bitmap
   fImage.Bitmap.Assign(fOriginal);
-  fImage.Bitmap.Changed;
 
   // Load the remaining graphics for icons, ...
   LoadPanelFont;
@@ -983,16 +981,17 @@ begin
   // Sets game-dependant properties of the skill panel:
   // Size of the minimap, style, scaling factor, skills on the panel, ...
   fImage.BeginUpdate;
+  try
 
-  Minimap.SetSize(Level.Info.Width div 8 * ResMod, Level.Info.Height div 8 * ResMod);
+    Minimap.SetSize(Level.Info.Width div 8 * ResMod, Level.Info.Height div 8 * ResMod);
 
-  ReadBitmapFromStyle;
-  SetButtonRects;
-  SetSkillIcons;
+    ReadBitmapFromStyle;
+    SetButtonRects;
+    SetSkillIcons;
 
-  fImage.EndUpdate;
-  fImage.Changed;
-  Invalidate;
+  finally
+    fImage.EndUpdate;
+  end;
 end;
 
 procedure TBaseSkillPanel.SetShowUsedSkills(const Value: Boolean);
@@ -1417,9 +1416,9 @@ begin
     end;
 
     DrawButtonSelector(spbNuke, (Game.NukeIsActive or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
+
   finally
     Image.EndUpdate;
-    Image.Invalidate;
   end;
 end;
 
