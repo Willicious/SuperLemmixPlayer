@@ -42,7 +42,7 @@ type
     procedure SetZoom(NewZoom: Integer);
     function GetMaxZoom: Integer;
 
-    procedure CombineShift(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineShift(F: TColor32; var B: TColor32; M: Cardinal);
     procedure SetShowUsedSkills(const Value: Boolean);
   protected
     fGameWindow           : IGameWindow;
@@ -1293,7 +1293,7 @@ end;
 {-----------------------------------------
     Info string at top
 -----------------------------------------}
-procedure TBaseSkillPanel.CombineShift(F: TColor32; var B: TColor32; M: TColor32);
+procedure TBaseSkillPanel.CombineShift(F: TColor32; var B: TColor32; M: Cardinal);
 var
   H, S, V: Single;
 begin

@@ -29,7 +29,7 @@ type
   TMenuFont = class
     private
       function GetBitmapOfChar(Ch: Char): TBitmap32;
-      procedure Combine(F: TColor32; var B: TColor32; M: TColor32);
+      procedure Combine(F: TColor32; var B: TColor32; M: Cardinal);
       procedure MakeList(const S: string; aList: TStrings);
     public
       fBitmaps: array[0..MENU_FONT_COUNT - 1] of TBitmap32;
@@ -54,7 +54,7 @@ uses
   PngInterface,
   GameControl;
 
-procedure TMenuFont.Combine(F: TColor32; var B: TColor32; M: TColor32);
+procedure TMenuFont.Combine(F: TColor32; var B: TColor32; M: Cardinal);
 // Just show transparent
 begin
   if F <> 0 then B := F;

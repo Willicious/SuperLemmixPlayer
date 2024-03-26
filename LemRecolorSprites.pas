@@ -55,14 +55,14 @@ type
 
       procedure LoadSwaps(aName: String);
       procedure ApplyPaletteSwapping(aColorDict: TColorDict; aShadeDict: TShadeDict; aTheme: TNeoTheme);
-      procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
+      procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: Cardinal);
+      procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: Cardinal);
 
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
       property ClearPhysics: Boolean write fClearPhysics;
 
-      class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
+      class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: Cardinal);
   end;
 
 implementation
@@ -127,7 +127,7 @@ begin
     end;
 end;
 
-procedure TRecolorImage.CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRecolorImage.CombineLemmingPixels(F: TColor32; var B: TColor32; M: Cardinal);
 var
   A: TColor32;
   TempColor: TColor32;
@@ -139,7 +139,7 @@ begin
   MergeMem(TempColor, B);
 end;
 
-procedure TRecolorImage.CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRecolorImage.CombineLemmingHighlight(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   // Photoflash
   if F <> 0 then B := clBlack32 else B := clWhite32;
@@ -253,7 +253,7 @@ begin
   end;
 end;
 
-class procedure TRecolorImage.CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
+class procedure TRecolorImage.CombineDefaultPixels(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if F <> 0 then B := F;
 end;

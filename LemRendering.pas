@@ -84,21 +84,21 @@ type
     function CombineTerrainSolidityErase(F: Byte; B: Byte): Byte;
     function CombineTerrainProperty(F: Byte; B: Byte; FIntensity: Byte): Byte;
 
-    procedure CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainPhysicsPrepNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineTerrainPhysicsPrepNoOverwrite(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32; M: Cardinal);
 
     // Graphical combines
-    procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
 
     // Clear Physics combines
-    procedure CombineLasererShadowToShadowLayer(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // Use with fFixedDrawColor
+    procedure CombineLasererShadowToShadowLayer(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineFixedColor(F: TColor32; var B: TColor32; M: Cardinal); // Use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
@@ -198,7 +198,7 @@ type
 
     // Minimap
     procedure RenderMinimap(Dst: TBitmap32; LemmingsOnly: Boolean);
-    procedure CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineMinimapPixels(F: TColor32; var B: TColor32; M: Cardinal);
 
     property PhysicsMap: TBitmap32 read fPhysicsMap;
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
@@ -294,7 +294,7 @@ if GameParams.ShowMinimap then
   end;
 end;
 
-procedure TRenderer.CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineMinimapPixels(F: TColor32; var B: TColor32; M: Cardinal);
 begin
 if GameParams.ShowMinimap then
   begin
@@ -2173,7 +2173,7 @@ end;
 
 // Graphical combines
 
-procedure TRenderer.CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineFixedColor(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (F and $FF000000) <> 0 then
     B := fFixedDrawColor;
@@ -2205,13 +2205,13 @@ begin
     Result := Round(((1 - (F / 255)) * (B / 255)) * 255);
 end;
 
-procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (F and $FF000000) <> 0 then
     MergeMem(F, B);
 end;
 
-procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if ((F and $FF000000) <> $00000000) then
   begin
@@ -2220,13 +2220,13 @@ begin
   end;
 end;
 
-procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   B := (B and $FFFFFF) or (CombineTerrainSolidityErase(F shr 24, B shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32;
-  M: TColor32);
+  M: Cardinal);
 var
   srcSolidity, srcSteel, srcOneWay, srcErase: Byte;
   dstSolidity, dstSteel, dstOneWay, dstErase: Byte;
@@ -2266,7 +2266,7 @@ begin
 end;
 
 procedure TRenderer.CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32;
-  M: TColor32);
+  M: Cardinal);
 var
   Intensity: Byte;
 begin
@@ -2282,7 +2282,7 @@ begin
 end;
 
 procedure TRenderer.CombineTerrainPhysicsPrepNoOverwrite(F: TColor32;
-  var B: TColor32; M: TColor32);
+  var B: TColor32; M: Cardinal);
 var
   Intensity: Byte;
 begin
@@ -2310,7 +2310,7 @@ begin
   Result := B + Round(Diff * (FIntensity / 255));
 end;
 
-procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (F and $FF000000) = $FF000000 then
     B := F
@@ -2318,7 +2318,7 @@ begin
     MergeMem(F, B);
 end;
 
-procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (F and $FF000000) <> 0 then
   begin
@@ -2333,12 +2333,12 @@ begin
 end;
 
 procedure TRenderer.CombineLasererShadowToShadowLayer(F: TColor32;
-  var B: TColor32; M: TColor32);
+  var B: TColor32; M: Cardinal);
 begin
   if (F and $00FF0000 <> 0) or ((F and $0000FFFF) = $00000100) then B := SHADOW_COLOR;
 end;
 
-procedure TRenderer.CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (F and $FF000000) <> 0 then
   begin

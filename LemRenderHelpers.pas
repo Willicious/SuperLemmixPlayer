@@ -78,10 +78,10 @@ type
     fOneWayHighlightBit: Cardinal;
 
     function GetItem(Index: TRenderLayer): TBitmap32;
-    procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: Cardinal);
 
     procedure DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
   protected
@@ -485,7 +485,7 @@ begin
   fIsEmpty[rlLemmingsHigh] := False;
 end;
 
-procedure TRenderBitmaps.CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderBitmaps.CombinePixelsShadow(F: TColor32; var B: TColor32; M: Cardinal);
 var
   A, C: TColor32;
   Red: Cardinal;
@@ -512,18 +512,18 @@ begin
   MergeMem(C, B);
 end;
 
-procedure TRenderBitmaps.CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderBitmaps.CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (F and PM_ORIGSOLID) = 0 then B := 0;
 end;
 
-procedure TRenderBitmaps.CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderBitmaps.CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (F and PM_ONEWAY) = 0 then B := 0;
 end;
 
 
-procedure TRenderBitmaps.CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderBitmaps.CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if ((F and PM_SOLID) = 0) or ((F and PM_STEEL) <> 0) then B := 0;
 end;

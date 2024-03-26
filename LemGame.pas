@@ -237,16 +237,16 @@ type
 
   { pixel combine eventhandlers }
     // CombineMaskPixels has variants based on the direction of destruction
-    procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32); // General-purpose
-    procedure CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);       // Left-facing basher
-    procedure CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: TColor32);      // Right-facing basher
-    procedure CombineMaskPixelsUpLeft(F: TColor32; var B: TColor32; M: TColor32);     // Left-facing fencer
-    procedure CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: TColor32);    // Right-facing fencer
-    procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   // Left-facing miner
-    procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  // Right-facing miner
-    procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    // Bomber & Timebomber
-    procedure CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: Cardinal); // General-purpose
+    procedure CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: Cardinal);       // Left-facing basher
+    procedure CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: Cardinal);      // Right-facing basher
+    procedure CombineMaskPixelsUpLeft(F: TColor32; var B: TColor32; M: Cardinal);     // Left-facing fencer
+    procedure CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: Cardinal);    // Right-facing fencer
+    procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: Cardinal);   // Left-facing miner
+    procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: Cardinal);  // Right-facing miner
+    procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: Cardinal);    // Bomber & Timebomber
+    procedure CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: Cardinal);
 
   { internal methods }
     procedure DoTalismanCheck;
@@ -1568,7 +1568,7 @@ begin
   end;
 end;
 
-procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32);
+procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: Cardinal; E: TColor32);
 // Copy masks to world
 begin
   if (AlphaComponent(F) <> 0) and (B and E = 0) then B := B and not PM_TERRAIN;
@@ -1577,7 +1577,7 @@ end;
 { Not sure who wrote this (probably me), but upon seeing this I forgot what the hell they were
   for. The pixel in "E" is excluded, IE: anything that matches even one bit of E, will not be
   removed when applying the mask. }
-procedure TLemmingGame.CombineMaskPixelsUpLeft(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsUpLeft(F: TColor32; var B: TColor32; M: Cardinal);
 var
   E: TColor32;
 begin
@@ -1585,7 +1585,7 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: Cardinal);
 var
   E: TColor32;
 begin
@@ -1593,7 +1593,7 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: Cardinal);
 var
   E: TColor32;
 begin
@@ -1601,7 +1601,7 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: Cardinal);
 var
   E: TColor32;
 begin
@@ -1609,7 +1609,7 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: Cardinal);
 var
   E: TColor32;
 begin
@@ -1617,7 +1617,7 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: Cardinal);
 var
   E: TColor32;
 begin
@@ -1625,7 +1625,7 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: Cardinal);
 var
   E: TColor32;
 begin
@@ -1638,7 +1638,7 @@ begin
   if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
 end;
 
-procedure TLemmingGame.CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineNoOverwriteFreezer(F: TColor32; var B: TColor32; M: Cardinal);
 // Copy Freezer to world
 begin
   if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
