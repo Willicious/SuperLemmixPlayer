@@ -88,7 +88,7 @@ begin
 
   Close;
 
-  SendMessage(MainFormHandle, LM_NEXT, 0, 0);
+  PostMessage(MainFormHandle, LM_NEXT, 0, 0);
 end;
 
 constructor TGameBaseScreen.Create(aOwner: TComponent);
