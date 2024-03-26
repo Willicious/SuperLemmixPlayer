@@ -107,7 +107,8 @@ begin
     for i := 0 to Length(fSwaps)-1 do
     begin
       case fSwaps[i].Condition of
-        rcl_Selected: if not fDrawAsSelected then Continue;
+        rcl_Selected: if GameParams.ClassicMode // Don't recolour Selected lems in ClassicMode
+                      or not fDrawAsSelected then Continue;
         rcl_Zombie: if not fLemming.LemIsZombie then Continue;
         rcl_Swimmer: if not fLemming.LemIsSwimmer then Continue;
         rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
@@ -177,12 +178,8 @@ begin
         Mode := rcl_Zombie;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
 
-        // Selected lems are not highlighted in ClassicMode
         Mode := rcl_Selected;
-        if not GameParams.ClassicMode then
-        begin
-          Parser.MainSection.Section['state_recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
-        end;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
       end;
     end;
   finally
