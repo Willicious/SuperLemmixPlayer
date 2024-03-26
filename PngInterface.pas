@@ -21,7 +21,7 @@ unit PngInterface;
 interface
 
 uses
-  Classes, SysUtils, Graphics, GR32, GR32_PNG, GR32_PortableNetworkGraphic;
+  Classes, SysUtils, Graphics, GR32;
 
 type
   TPngInterface = class
@@ -40,6 +40,7 @@ type
 implementation
 
 uses
+  GR32.ImageFormats,
   GameControl,
   Generics.Collections;
 
@@ -140,7 +141,7 @@ class procedure TPngInterface.LoadPngFile(fn: String; Bmp: TBitmap32);
 begin
   if (not GameParams.FileCaching) or (not ImgCache.ContainsKey(fn)) then
   begin
-    LoadBitmap32FromPng(Bmp, fn);
+    Bmp.LoadFromFile(fn);
     if GameParams.FileCaching then
       ImgCache.Add(fn, TCacheImageData.Create(Bmp));
   end else
@@ -149,7 +150,7 @@ end;
 
 class procedure TPngInterface.LoadPngStream(aStream: TStream; Bmp: TBitmap32);
 begin
-  LoadBitmap32FromPng(Bmp, aStream);
+  Bmp.LoadFromStream(aStream);
 end;
 
 class procedure TPngInterface.SavePngFile(fn: String; Bmp: TBitmap32; NoAlpha: Boolean = false);
@@ -167,15 +168,19 @@ end;
 class procedure TPngInterface.SavePngStream(aStream: TStream; Bmp: TBitmap32; NoAlpha: Boolean = false);
 var
   TempBmp: TBitmap32;
+  PNGWriter: IImageFormatWriter;
 begin
+  PNGWriter := ImageFormatManager.Writers.FindWriter('.png');
+  Assert(PNGWriter <> nil);
+
   if not NoAlpha then
-    SaveBitmap32ToPng(Bmp, aStream)
+    PNGWriter.SaveToStream(Bmp, aStream)
   else begin
     TempBmp := TBitmap32.Create;
     try
       TempBmp.Assign(Bmp);
       RemoveAlpha(Bmp);
-      SaveBitmap32ToPng(TempBmp, aStream);
+      PNGWriter.SaveToStream(Bmp, aStream)
     finally
       TempBmp.Free;
     end;
