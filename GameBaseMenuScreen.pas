@@ -173,6 +173,8 @@ type
       destructor Destroy; override;
 
       procedure MainFormResized; override;
+      procedure DrawClassicModeButton;
+      procedure HandleClassicModeClick;
   end;
 
 implementation
@@ -525,6 +527,63 @@ begin
 
   Region.ResetTimer := nil;
   Sender.Free;
+end;
+
+procedure TGameBaseMenuScreen.DrawClassicModeButton;
+  function SetButtonPosition(XOffset: Integer; YOffset: Integer): TPoint;
+  begin
+    Result.X := (ScreenImg.Bitmap.Width - XOffset);
+    Result.Y := (0 + YOffset);
+  end;
+
+var
+  NewRegion: TClickableRegion;
+  BMP: TBitmap32;
+begin
+  BMP := TBitmap32.Create;
+  try
+    if GameParams.ClassicMode then
+      GetGraphic('classic_mode_on.png', BMP)
+    else
+      GetGraphic('classic_mode_off.png', BMP);
+    NewRegion := MakeClickableImageAuto(SetButtonPosition((BMP.Width div 3) * 2, BMP.Height),
+                                        BMP.BoundsRect, HandleClassicModeClick, BMP);
+    NewRegion.ShortcutKeys.Add(VK_F4);
+  finally
+    BMP.Free;
+  end;
+end;
+
+procedure TGameBaseMenuScreen.HandleClassicModeClick;
+begin
+  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
+
+  // Set Classic Mode properties
+  if not GameParams.ClassicMode then
+  begin
+    GameParams.ClassicMode := True;
+    GameParams.HideShadows := True;
+    GameParams.HideClearPhysics := True;
+    GameParams.HideAdvancedSelect := True;
+    GameParams.HideFrameskipping := True;
+    GameParams.HideHelpers := True;
+    GameParams.HideSkillQ := True;
+  end else begin
+    GameParams.ClassicMode := False;
+    GameParams.HideShadows := False;
+    GameParams.HideClearPhysics := False;
+    GameParams.HideAdvancedSelect := False;
+    GameParams.HideFrameskipping := False;
+    GameParams.HideHelpers := False;
+    GameParams.HideSkillQ := False;
+  end;
+
+  // Reload config to apply changes
+  GameParams.Save(scCritical);
+  GameParams.Load;
+
+  // Redraw button
+  DrawClassicModeButton;
 end;
 
 procedure TGameBaseMenuScreen.HandleKeyboardInput(Key: Word);

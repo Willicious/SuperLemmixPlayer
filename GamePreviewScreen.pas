@@ -245,6 +245,8 @@ begin
     Lines := GetPreviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
+    DrawClassicModeButton;
+
     if GameParams.ShowMinimap and not GameParams.FullScreen then
       NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
     else if GameParams.FullScreen then

@@ -113,7 +113,9 @@ begin
     Lines := GetPostviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
-    // MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
+    // DrawClassicModeButton; // Bookmark - probably don't need to do this because it's shown on preview
+
+    // MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16); // Bookmark - why is this commented out?
 
     if GameParams.GameResult.gSuccess then
     begin
