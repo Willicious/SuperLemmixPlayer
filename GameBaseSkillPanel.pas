@@ -1788,10 +1788,7 @@ begin
         begin
           if ((fGameWindow.GameSpeed = gspFF) or Game.TurboPressed) then fGameWindow.GameSpeed := gspNormal;
 
-          if not Game.TurboPressed then
-            Game.fTurboPressed := True
-          else if Game.TurboPressed then
-            Game.fTurboPressed := False;
+          Game.fTurboPressed := not Game.TurboPressed;
 
           Exit;
         end;
@@ -1812,10 +1809,7 @@ begin
 
         if Game.TurboPressed then Game.fTurboPressed := False;
 
-        if not Game.RewindPressed then
-          Game.fRewindPressed := True
-        else
-          Game.fRewindPressed := False;
+        Game.fRewindPressed := not Game.RewindPressed;
       end;
     spbRestart:
       begin

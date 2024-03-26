@@ -1571,10 +1571,7 @@ begin
                       gspFF, gspSlowMo, gspPause: GameSpeed := gspNormal;
                     end;
 
-                   if not Game.TurboPressed then
-                      Game.fTurboPressed := True
-                   else if Game.TurboPressed then
-                      Game.fTurboPressed := False;
+                    Game.fTurboPressed := not Game.TurboPressed;
                  end;
       lka_FastForward: begin
                        if Game.IsSuperLemmingMode then Exit;
@@ -1597,10 +1594,7 @@ begin
 
                     if Game.TurboPressed then Game.fTurboPressed := False;
 
-                    if not Game.RewindPressed then
-                      Game.fRewindPressed := True
-                    else
-                      Game.fRewindPressed := False;
+                    Game.fRewindPressed := not Game.RewindPressed;
                   end;
       lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
                       begin
