@@ -3813,10 +3813,13 @@ begin
         CueSoundEffect(SFX_DROWNING, L.Position);
       end;
     end;
+  end;
 
-    // Only invincible lems can swim in blasticine, vinewater and lava
-  end else if not L.LemIsInvincible then
+  // Only invincible lems can swim in blasticine, vinewater and lava
+  if not L.LemIsInvincible then
   begin
+    Result := True;
+
     if not (L.LemAction in ActionSet) then
     begin
       if HasTriggerAt(L.LemX, L.LemY, trBlasticine) then
