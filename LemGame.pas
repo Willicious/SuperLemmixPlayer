@@ -1970,8 +1970,8 @@ begin
   if L.LemExplosionTimer = 0 then
   begin               // All these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
-                      baFreezing, baFrozen] then
+                      baBallooning, baFalling, baSwimming, baDrifting, baReaching,
+                      baShimmying, baJumping, baFreezing, baFrozen] then
     begin
       if L.LemAction = baBallooning then
       begin
