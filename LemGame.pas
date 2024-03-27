@@ -3266,7 +3266,9 @@ begin
       HandleCollectible(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Fire
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire)
+    // Don't even call HandleFire if lem is invincible
+    and not L.LemIsInvincible then
       AbortChecks := HandleFire(L);
 
     // Radiation
@@ -3510,6 +3512,7 @@ begin
     RemoveLemming(L, RM_KILL);
     CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Gadget.AnimationFrameCount]);
+
     // Check for one-shot trap and possibly disable it
     if Gadget.TriggerEffect = DOM_TRAPONCE then Gadget.TriggerEffect := DOM_NONE;
   end;
@@ -3763,8 +3766,6 @@ end;
 function TLemmingGame.HandleFire(L: TLemming): Boolean;
 begin
   Result := True;
-
-  if L.LemIsInvincible then Exit;
 
   Transition(L, baVaporizing);
   CueSoundEffect(SFX_VAPORIZING, L.Position);
