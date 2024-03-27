@@ -2980,7 +2980,10 @@ var
 
     if Gadget.MetaObj.DigitAnimation = nil then
     begin
-      DrawNumberWithHatchNumbers(X, Y, DigitString, aAlignment);
+      if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) then
+        DrawNumberWithHatchNumbers(X - 3, Y, DigitString, aAlignment)
+      else
+        DrawNumberWithHatchNumbers(X, Y, DigitString, aAlignment);
       Exit;
     end;
 
