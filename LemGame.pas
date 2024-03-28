@@ -1822,6 +1822,9 @@ begin
   if (NewAction = baBallooning) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY - 1;
 
+  if (NewAction = baBlocking) and (L.LemAction = baSwimming) then
+    L.LemY := L.LemY + 2;
+
   if NewAction = baDehoisting then
     L.LemDehoistPinY := L.LemY;
   if NewAction = baSliding then
@@ -2757,8 +2760,9 @@ end;
 
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
-               baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
+  ActionSet = [baWalking, baSwimming, baShrugging, baPlatforming, baBuilding,
+               baStacking, baLaddering, baBashing, baFencing, baMining, baDigging,
+               baLasering, baLooking];
 
 begin
   // Non-assignable from the top of the level
@@ -3832,9 +3836,10 @@ end;
 
 function TLemmingGame.HandleWaterObjectSwim(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baClimbing, baHoisting, baTimebombing, baTimebombFinish,
-               baOhnoing, baExploding, baFreezing, baFreezerExplosion, baFrozen,
-               baUnfreezing, baVaporizing, baVinetrapping, baExiting, baSplatting];
+  ActionSet = [baSwimming, baClimbing, baHoisting, baBlocking,
+               baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+               baVaporizing, baVinetrapping, baExiting, baSplatting];
 
   function InUnswimmableWaterObject: Boolean;
   begin
@@ -6124,7 +6129,8 @@ JumperArcFrames: Integer;
       if (Pattern[i][0] <> 0) then // Wall check
       begin
         CheckX := L.LemX + L.LemDX;
-        if HasPixelAt(CheckX, L.LemY) or (HasTriggerAt(CheckX, L.LemY, trWater) and L.LemIsSwimmer) then
+        if HasPixelAt(CheckX, L.LemY) or (HasTriggerAt(CheckX, L.LemY, trWater) and L.LemIsSwimmer)
+                                      or (HasWaterObjectAt(CheckX, L.LemY) and L.LemIsInvincible) then
         begin
           for n := 1 to 8 do
           begin
@@ -6781,7 +6787,16 @@ end;
 function TLemmingGame.HandleBlocking(L: TLemming): Boolean;
 begin
   Result := True;
-  if not HasPixelAt(L.LemX, L.LemY) then
+
+  if HasWaterObjectAt(L.LemX, L.LemY) then
+  begin
+    case L.LemPhysicsFrame of
+      0,  8: Dec(L.LemY);
+      4, 12: Inc(L.LemY);
+    end;
+  end;
+
+  if not (HasPixelAt(L.LemX, L.LemY) or HasWaterObjectAt(L.LemX, L.LemY)) then
     Transition(L, baFalling);
 end;
 

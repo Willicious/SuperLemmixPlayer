@@ -502,6 +502,14 @@ begin
   SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
 
+  // Swimmer-Blockers are drawn behind all objects
+  if aLemming.LemAction = baBlocking then
+  begin
+    if fLayers.fIsEmpty[rlDecorations] then
+      fLayers.fIsEmpty[rlDecorations] := False;
+
+    SrcAnim.DrawTo(fLayers[rlDecorations], DstRect, SrcRect);
+  end else
   // Frozen lems are drawn behind terrain
   if aLemming.LemAction = baFrozen then
   begin
