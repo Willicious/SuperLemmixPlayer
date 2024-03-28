@@ -3801,44 +3801,31 @@ const
 begin
   Result := False;
 
-  if not (L.LemIsInvincible or L.LemIsSwimmer) then
+  if not (L.LemAction in ActionSet) then
   begin
-    Result := True;
-
-    if not (L.LemAction in ActionSet) then
+    if HasTriggerAt(L.LemX, L.LemY, trWater) and not (L.LemIsSwimmer or L.LemIsInvincible) then
     begin
-      if HasTriggerAt(L.LemX, L.LemY, trWater) then
-      begin
-        Transition(L, baDrowning);
-        CueSoundEffect(SFX_DROWNING, L.Position);
-      end;
+      Result := True;
+      Transition(L, baDrowning);
+      CueSoundEffect(SFX_DROWNING, L.Position);
     end;
-  end;
 
-  // Only invincible lems can swim in blasticine, vinewater and lava
-  if not L.LemIsInvincible then
-  begin
-    Result := True;
-
-    if not (L.LemAction in ActionSet) then
+    if HasTriggerAt(L.LemX, L.LemY, trBlasticine) and not L.LemIsInvincible then
     begin
-      if HasTriggerAt(L.LemX, L.LemY, trBlasticine) then
-      begin
-        DoExplosionCrater := False;
-        Transition(L, baExploding);
-      end;
+      DoExplosionCrater := False;
+      Transition(L, baExploding);
+    end;
 
-      if HasTriggerAt(L.LemX, L.LemY, trVinewater) then
-      begin
-        Transition(L, baVinetrapping);
-        CueSoundEffect(SFX_VINETRAPPING, L.Position);
-      end;
+    if HasTriggerAt(L.LemX, L.LemY, trVinewater) and not L.LemIsInvincible then
+    begin
+      Transition(L, baVinetrapping);
+      CueSoundEffect(SFX_VINETRAPPING, L.Position);
+    end;
 
-      if HasTriggerAt(L.LemX, L.LemY, trLava) then
-      begin
-        Transition(L, baVaporizing);
-        CueSoundEffect(SFX_VAPORIZING, L.Position);
-      end;
+    if HasTriggerAt(L.LemX, L.LemY, trLava) and not L.LemIsInvincible then
+    begin
+      Transition(L, baVaporizing);
+      CueSoundEffect(SFX_VAPORIZING, L.Position);
     end;
   end;
 end;
@@ -3856,33 +3843,33 @@ const
            or HasTriggerAt(L.LemX, L.LemY, trVinewater)
            or HasTriggerAt(L.LemX, L.LemY, trLava);
   end;
+
+  procedure StartSwimming;
+  begin
+    Transition(L, baSwimming);
+    CueSoundEffect(SFX_SWIMMING, L.Position);
+  end;
 begin
   Result := True;
+
   if not (L.LemAction in ActionSet) then
   begin
-    if HasTriggerAt(L.LemX, L.LemY, trWater) and (L.LemIsSwimmer or L.LemIsInvincible) then
-    begin
-      Transition(L, baSwimming);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
-    end;
+    // Swimmers and invincible lems can swim in water
+    if (HasTriggerAt(L.LemX, L.LemY, trWater) and (L.LemIsSwimmer or L.LemIsInvincible))
+    // Only invincible lemmings can swim in blasticine, vinewater and lava
+    or (InUnswimmableWaterObject and L.LemIsInvincible) then
+      StartSwimming;
 
+    // Swimmers and invincible lems can swim in poison
     if HasTriggerAt(L.LemX, L.LemY, trPoison) then
     begin
       if not (L.LemIsZombie or L.LemIsInvincible) then
         RemoveLemming(L, RM_ZOMBIE);
 
       if (L.LemIsSwimmer or L.LemIsInvincible) then
-      begin
-        Transition(L, baSwimming);
-        CueSoundEffect(SFX_SWIMMING, L.Position);
-      end else
+        StartSwimming
+      else
         Transition(L, baDrifting);
-    end;
-
-    if InUnswimmableWaterObject and L.LemIsInvincible then
-    begin
-      Transition(L, baSwimming);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
     end;
   end;
 end;
