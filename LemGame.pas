@@ -6425,6 +6425,13 @@ function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
 var
 XChecks, YChecks: Integer;
 ShouldPop: Boolean;
+
+  procedure Pop;
+  begin
+    ShouldPop := True;
+    PopBalloon(L, 1, baFalling);
+  end;
+
 begin
   Result := True;
   ShouldPop := False;
@@ -6446,14 +6453,28 @@ begin
     // Pop the balloon when there is terrain overhead
     for YChecks := 27 to 30 do
     begin
-      for XChecks := -5 to 5 do
-      begin
-        if HasPixelAt((L.LemX + L.LemDX) - XChecks, L.LemY - YChecks)
-          and not HasPixelAt(L.LemX, L.LemY) then
-          begin
-            ShouldPop := True;
-            PopBalloon(L, 1, baFalling);
-          end;
+      case YChecks of
+        27, 28: begin
+                for XChecks := -5 to 5 do
+                  begin
+                    if HasPixelAt((L.LemX + L.LemDX) - XChecks, L.LemY - YChecks)
+                      and not HasPixelAt(L.LemX, L.LemY) then Pop;
+                  end;
+                end;
+        29: begin
+              for XChecks := -4 to 4 do
+              begin
+                if HasPixelAt((L.LemX + L.LemDX) - XChecks, L.LemY - YChecks)
+                  and not HasPixelAt(L.LemX, L.LemY) then Pop;
+              end;
+            end;
+        30: begin
+              for XChecks := -2 to 2 do
+              begin
+                if HasPixelAt((L.LemX + L.LemDX) - XChecks, L.LemY - YChecks)
+                  and not HasPixelAt(L.LemX, L.LemY) then Pop;
+              end;
+            end;
       end;
     end;
 
