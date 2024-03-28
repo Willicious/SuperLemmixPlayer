@@ -6442,7 +6442,7 @@ begin
     if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(L.LemY);
 
     // Pop the balloon when there is terrain overhead
-    for YChecks := 29 to 30 do
+    for YChecks := 27 to 30 do
     begin
       for XChecks := -4 to 4 do
       begin
@@ -6453,7 +6453,7 @@ begin
     end;
 
     // Bounce and turn when there is terrain at the side of the balloon
-    for YChecks := 20 to 28 do
+    for YChecks := 20 to 26 do
     begin
       for XChecks := 4 to 7 do
       begin
