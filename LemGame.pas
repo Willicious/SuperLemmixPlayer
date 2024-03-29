@@ -7014,6 +7014,10 @@ procedure TLemmingGame.UpdateLemmings;
 begin
   fDoneAssignmentThisFrame := false;
 
+  // Don't update if the game is finished, or we've reached an unplayable state
+  if fGameFinished or StateIsUnplayable then
+    Exit;
+
   if fGameFinished then
     Exit;
   fSoundList.Clear(); // Clear list of played sound effects

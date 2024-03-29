@@ -767,6 +767,10 @@ begin
         fHyperSpeedTarget := Game.CurrentIteration + 1;
     end;
 
+    // Prevents large forward skips overshooting into unplayable state
+    if Game.StateIsUnplayable and Hyper then
+      fHyperSpeedTarget := Game.CurrentIteration;
+
     // Refresh panel if in usual or fast play mode
     if not Hyper then
     begin
