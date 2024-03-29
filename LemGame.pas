@@ -240,8 +240,8 @@ type
 
   { internal methods }
     procedure DoTalismanCheck;
-    function CheckAllZombiesKilled: Boolean; // Checks for remaining zombies, returning false if nuke is used or if zombies remain
-    function CheckIfZombiesRemain: Boolean; // Slightly different - checks for remaining zombies, returns true if zombies remain
+    function AllZombiesKilled: Boolean; // Checks for remaining zombies, returning false if nuke is used or if zombies remain
+    function ZombiesRemain: Boolean; // Slightly different - checks for remaining zombies, returns true if zombies remain
     function CheckForClassicMode: Boolean; // Checks if classic mode is activated
     function CheckNoPause: Boolean; // Checks if pause has been pressed at any time
     function GetIsReplaying: Boolean;
@@ -897,7 +897,7 @@ var
     if (TotalSkillTypes > aTalisman.SkillTypeLimit) and (aTalisman.SkillTypeLimit >= 0) then Exit;
 
     if (aTalisman.RequireKillZombies) then
-      if not CheckAllZombiesKilled then
+      if not AllZombiesKilled then
         Exit;
 
     if (aTalisman.RequireClassicMode) then
@@ -951,7 +951,7 @@ begin
   Result := true;
 end;
 
-function TLemmingGame.CheckAllZombiesKilled: Boolean;
+function TLemmingGame.AllZombiesKilled: Boolean;
 var
   i: Integer;
   ReleaseOffset: Integer;
@@ -977,27 +977,35 @@ begin
   Result := true;
 end;
 
-function TLemmingGame.CheckIfZombiesRemain: Boolean;
+function TLemmingGame.ZombiesRemain: Boolean;
 var
   i: Integer;
   ReleaseOffset: Integer;
 begin
-  Result := true;
+  Result := False;
 
-  for i := 0 to LemmingList.Count-1 do
-    if LemmingList[i].LemIsZombie and not LemmingList[i].LemRemoved then
+  // No need to check for zombies if there is no Kill All Zombies talisman
+  if Level.Talismans.Count = 0 then
+    Exit;
+
+  for i := 0 to Level.Talismans.Count -1 do
+    if not Level.Talismans[i].RequireKillZombies then
       Exit;
 
+  // Check if there are any zombies active in the level
+  for i := 0 to LemmingList.Count-1 do
+    if LemmingList[i].LemIsZombie and not LemmingList[i].LemRemoved then
+      Result := True;
+
+  // Check pre-assigned lems and hatches
   ReleaseOffset := 0;
   if (LemmingsToRelease - ReleaseOffset > 0) then
   begin
     i := Level.Info.SpawnOrder[Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease + ReleaseOffset];
     if i >= 0 then
       if Gadgets[i].IsPreassignedZombie then
-        Exit;
+        Result := True;
   end;
-
-  Result := false;
 end;
 
 function TLemmingGame.Checkpass: Boolean;
