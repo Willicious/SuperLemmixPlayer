@@ -4453,7 +4453,7 @@ const
                       baShrugging, baTimebombing, baOhnoing, baExploding,
                       baFreezerExplosion, baFreezing, baFrozen, baUnfreezing,
                       baReaching, baDehoisting, baVaporizing, baVinetrapping,
-                      baDangling, baLooking, baLaddering];
+                      baDangling, baLooking, baLaddering, baSleeping];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
