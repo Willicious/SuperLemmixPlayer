@@ -1467,7 +1467,7 @@ begin
         DrawSkillCount(i, Game.SkillCount[i]);
     end;
 
-    DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
+    DrawButtonSelector(spbNuke, (Game.NukeIsActive or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
   finally
     Image.EndUpdate;
     Image.Invalidate;
@@ -1571,7 +1571,7 @@ const
 begin
   LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
 
-  if not (Game.IsOutOfTime or Game.UserSetNuking) then
+  if not (Game.IsOutOfTime or Game.NukeIsActive) then
     Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
 
   S := IntToStr(LemNum);

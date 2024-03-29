@@ -74,7 +74,7 @@ type
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
       UsedSkillCount: array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
 
-      UserSetNuking: Boolean;
+      NukeIsActive: Boolean;
       ExploderAssignInProgress: Boolean;
       Index_LemmingToBeNuked: Integer;
       constructor Create;
@@ -200,7 +200,7 @@ type
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
 
     fIsInfiniteSkillsMode      : Boolean;
-    fUserSetNuking             : Boolean;
+    fNukeIsActive             : Boolean;
     ExploderAssignInProgress   : Boolean;
     DoExplosionCrater          : Boolean;
     Index_LemmingToBeNuked     : Integer;
@@ -539,7 +539,7 @@ type
     property IsSimulating: Boolean read GetIsSimulating;
 
     property IsInfiniteSkillsMode: Boolean read fIsInfiniteSkillsMode write fIsInfiniteSkillsMode;
-    property UserSetNuking: Boolean read fUserSetNuking write fUserSetNuking;
+    property NukeIsActive: Boolean read fNukeIsActive write fNukeIsActive;
     property ActiveLemmingTypes: TLemmingKinds read GetActiveLemmingTypes;
 
     function GetLevelWidth: Integer;
@@ -771,7 +771,7 @@ begin
     aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
   end;
 
-  aState.UserSetNuking := UserSetNuking;
+  aState.NukeIsActive := NukeIsActive;
   // Infinite Skills - might need to add state here
   aState.ExploderAssignInProgress := ExploderAssignInProgress;
   aState.Index_LemmingToBeNuked := Index_LemmingToBeNuked;
@@ -828,7 +828,7 @@ begin
     UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
   end;
 
-  UserSetNuking := aState.UserSetNuking;
+  NukeIsActive := aState.NukeIsActive;
   // Infinite Skills - might need to add state here
   ExploderAssignInProgress := aState.ExploderAssignInProgress;
   Index_LemmingToBeNuked := aState.Index_LemmingToBeNuked;
@@ -958,7 +958,7 @@ var
 begin
   Result := false;
 
-  if UserSetNuking then
+  if NukeIsActive then
     Exit;
 
   for i := 0 to LemmingList.Count-1 do
@@ -1315,7 +1315,7 @@ begin
 
   SpawnIntervalModifier := 0;
   IsInfiniteSkillsMode := False;
-  UserSetNuking := False;
+  NukeIsActive := False;
   ExploderAssignInProgress := False;
   Index_LemmingToBeNuked := 0;
   fParticleFinishTimer := 0;
@@ -1964,7 +1964,7 @@ begin
   Dec(L.LemExplosionTimer);
   DoExplosionCrater := True;
 
-  if UserSetNuking and L.LemIsRadiating then
+  if NukeIsActive and L.LemIsRadiating then
   begin
     L.LemIsRadiating := False;
   end;
@@ -1999,7 +1999,7 @@ function TLemmingGame.UpdateFreezerExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
 
-  if UserSetNuking then
+  if NukeIsActive then
   begin
     if (L.LemFreezerExplosionTimer > 0) then L.LemFreezerExplosionTimer := 0;
     Exit;
@@ -3697,7 +3697,7 @@ begin
 
   // If (not L.LemIsZombie) then
   begin
-    if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
+    if IsOutOfTime and NukeIsActive and (L.LemAction = baOhNoing) then
       Exit;
 
     GadgetID := FindGadgetID(PosX, PosY, trExit);
@@ -6740,7 +6740,7 @@ begin
 
   if IsOutOfTime then
   begin
-    if UserSetNuking and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
+    if NukeIsActive and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
       Transition(L, baOhnoing);
   end;
 
@@ -6960,7 +6960,7 @@ begin
     end;
   end;
 
-  if UserSetNuking then L.LemHideCountdown := false;
+  if NukeIsActive then L.LemHideCountdown := false;
 end;
 
 function TLemmingGame.HandleUnfreezing(L: TLemming): Boolean;
@@ -7491,7 +7491,7 @@ begin
                                             
   if not HatchesOpened then
     Exit;
-  if UserSetNuking then
+  if NukeIsActive then
     Exit;
 
   // NextLemmingCountdown is initialized to 20 before start of a level
@@ -7557,7 +7557,7 @@ var
   CurrentLemming: TLemming;
 begin
 
-  if UserSetNuking and ExploderAssignInProgress then
+  if NukeIsActive and ExploderAssignInProgress then
   begin
 
     // Find first following non removed lemming
@@ -7770,7 +7770,7 @@ var
   var
     E: TReplayNuke absolute R;
   begin
-    UserSetNuking := True;
+    NukeIsActive := True;
     ExploderAssignInProgress := True;
   end;
 
