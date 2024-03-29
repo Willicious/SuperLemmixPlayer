@@ -7462,6 +7462,12 @@ begin
     spbNuke:
       begin
         RecordNuke(RightClick);
+
+        if StateIsUnplayable then
+        begin
+          Finish(GM_FIN_TERMINATE);
+          Exit;
+        end;
       end;
     spbPause: ; // Do Nothing
     spbNone: ; // Do Nothing
