@@ -257,7 +257,6 @@ type
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
-    procedure CheckForGameFinished;
     procedure ZombieCheckForProjectiles(L: TLemming);
     procedure ZombieCheckForLaser(L: TLemming);
     // The next few procedures are for checking the behavior of lems in trigger areas!
@@ -473,6 +472,7 @@ type
     function HasSteelAt(x, y: Integer): Boolean;
     function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
 
+    function StateIsUnplayable: Boolean;
     procedure CheckAdjustSpawnInterval;
     procedure AdjustSpawnInterval(aSI: Integer);
     function CheckIfLegalSI(aSI: Integer): Boolean;
@@ -2050,58 +2050,34 @@ begin
     Dec(L.LemBalloonPopTimer);
 end;
 
-procedure TLemmingGame.CheckForGameFinished;
+function TLemmingGame.StateIsUnplayable: Boolean;
 begin
-  if fGameFinished then
-    Exit;
+  // Always wait for animations to finish
+  Result := (((DelayEndFrames = 0) and (fParticleFinishTimer = 0))
 
-  if fParticleFinishTimer > 0 then
-    Exit;
+  // Unless time is up
+  or IsOutOfTime)
 
-  // Stops single-lemming levels ending when 1 lemming has been removed and 0 are saved
-  if ((Level.Info.LemmingsCount = 1) and ((LemmingsRemoved) = 1))
-  and not (LemmingsIn >= 1) and not GameParams.ClassicMode then
-      Exit;
-  // We probably want to do more here ^^^ - maybe auto-restart, or show a message
+  // Plus, other conditions...
+  and (
 
-  // Ends the level when time runs out in Classic Mode
-  if IsOutOfTime and GameParams.ClassicMode then
-  begin
-    Finish(GM_FIN_LEMMINGS);
-    Exit;
-  end;
+  // Ends level if no lemmings remain
+  ((LemmingsOut = 0) and (LemmingsToSpawn = 0) and not ZombiesRemain)
 
-
-  // Stops level continuing into overtime when time is up and save req is met
-  if (Level.Info.RescueCount <= LemmingsIn) and IsOutOfTime then
-  begin
-    Finish(GM_FIN_LEMMINGS);
-    Exit;
-  end;
+  // Ends level if nuke has finished
+  or (NukeIsActive and (LemmingsOut = 0) and not ZombiesRemain)
 
   // Ends level if all lems are saved
-  if (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned)
-  and (DelayEndFrames = 0) then
-  begin
-    Finish(GM_FIN_LEMMINGS);
-    Exit;
-  end;
+  or (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned)
 
-  // Ends level if all lems have been removed, including zombies
-  if ((Level.Info.LemmingsCount + LemmingsCloned - fSpawnedDead) - (LemmingsRemoved) = 0)
-  and (CheckIfZombiesRemain = false) and (DelayEndFrames = 0) then
-  begin
-    Finish(GM_FIN_LEMMINGS);
-    Exit;
-  end;
+  // Stops level continuing into overtime when time is up and save req is met
+  or (IsOutOfTime and (LemmingsIn >= Level.Info.RescueCount))
+  );
+end;
 
-  // Checks for nuke and makes sure no lemmings or zombies remain in the level
-  if UserSetNuking and (LemmingsOut = 0) and (CheckIfZombiesRemain = false)
-  and (DelayEndFrames = 0) then
-  begin
-    Finish(GM_FIN_LEMMINGS);
+
+
     Exit;
-  end;
 
 end;
 
@@ -7041,10 +7017,8 @@ begin
   if fGameFinished then
     Exit;
   fSoundList.Clear(); // Clear list of played sound effects
-  CheckForGameFinished;
 
   CheckAdjustSpawnInterval;
-
   CheckForQueuedAction; // Needs to be done before CheckForReplayAction, because it writes an assignment in the replay
   CheckForReplayAction;
 
