@@ -195,7 +195,6 @@ type
     fLastBlockerCheckLem       : TLemming; // Blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // List of objects excluding entrances
     CurrSpawnInterval          : Integer; // The current spawn interval, obviously
-    LemIsAsleep                : Boolean;
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
@@ -2064,12 +2063,6 @@ begin
     Exit;
   end;
 
-  // Ends the level when no time or lemmings (including zombies) remain
-  if IsOutOfTime and (LemmingsOut = 0) and (LemIsAsleep) and (CheckIfZombiesRemain = false) then
-   begin
-    Finish(GM_FIN_LEMMINGS);
-    Exit;
-  end;
 
   // Stops level continuing into overtime when time is up and save req is met
   if (Level.Info.RescueCount <= LemmingsIn) and IsOutOfTime then
@@ -5022,17 +5015,9 @@ function TLemmingGame.HandleSleeping(L: TLemming): Boolean;
 begin
    Result := True;
 
-   if L.LemFrame = 1 then Dec(LemmingsOut);
-
-   // Ensures the animation finishes before the level ends
-   if LemmingsOut = 0 then
-   begin
-      if L.LemFrame < 20 then
-     begin
-        LemIsAsleep := False
-     end else
-        LemIsAsleep := True;
-   end;
+   // Wait for penultimate animation frame before changing the lem count
+   if L.LemFrame = 19 then
+     Dec(LemmingsOut);
 
    if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
     RemoveLemming(L, RM_NEUTRAL); // Shouldn't happen
