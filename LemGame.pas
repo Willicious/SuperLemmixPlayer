@@ -242,6 +242,7 @@ type
     procedure DoTalismanCheck;
     function AllZombiesKilled: Boolean; // Checks for remaining zombies, returning false if nuke is used or if zombies remain
     function ZombiesRemain: Boolean; // Slightly different - checks for remaining zombies, returns true if zombies remain
+    function LevelHasKillZombiesTalisman: Boolean;
     function CheckForClassicMode: Boolean; // Checks if classic mode is activated
     function CheckNoPause: Boolean; // Checks if pause has been pressed at any time
     function GetIsReplaying: Boolean;
@@ -979,25 +980,31 @@ begin
   Result := true;
 end;
 
+function TLemmingGame.LevelHasKillZombiesTalisman: Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+
+  if Level.Talismans.Count > 0 then
+  begin
+    for i := 0 to Level.Talismans.Count -1 do
+      if Level.Talismans[i].RequireKillZombies then
+        Result := True;
+  end;
+end;
+
 function TLemmingGame.ZombiesRemain: Boolean;
 var
   i: Integer;
   ReleaseOffset: Integer;
 begin
-  Result := False;
-
-  // No need to check for zombies if there is no Kill All Zombies talisman
-  if Level.Talismans.Count = 0 then
-    Exit;
-
-  for i := 0 to Level.Talismans.Count -1 do
-    if not Level.Talismans[i].RequireKillZombies then
-      Exit;
+  Result := True;
 
   // Check if there are any zombies active in the level
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i].LemIsZombie and not LemmingList[i].LemRemoved then
-      Result := True;
+      Exit;
 
   // Check pre-assigned lems and hatches
   ReleaseOffset := 0;
@@ -1006,8 +1013,10 @@ begin
     i := Level.Info.SpawnOrder[Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease + ReleaseOffset];
     if i >= 0 then
       if Gadgets[i].IsPreassignedZombie then
-        Result := True;
+        Exit;
   end;
+
+  Result := False;
 end;
 
 function TLemmingGame.Checkpass: Boolean;
@@ -2064,10 +2073,14 @@ begin
   and (
 
   // Ends level if no lemmings remain
-  ((LemmingsOut = 0) and (LemmingsToSpawn = 0) and not ZombiesRemain)
-
-  // Ends level if nuke has finished
-  or (NukeIsActive and (LemmingsOut = 0) and not ZombiesRemain)
+  ((LemmingsOut = 0) and
+    {Prevents level ending immediately if there are no pre-placed lems
+     and allows nuke whilst there are still lems to spawn}
+    (NukeIsActive or (LemmingsToSpawn = 0)) and not
+    // Allows nuke animation to play out in full for zombies
+    not (NukeIsActive and ZombiesRemain) and not
+    // Keep playing if there is a Kill All Zombies talisman and active zombies
+    (LevelHasKillZombiesTalisman and ZombiesRemain))
 
   // Ends level if all lems are saved
   or (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned)
@@ -2087,7 +2100,10 @@ begin
             (GameParams.ClassicMode
 
             // or the save requirement is met
-            or (LemmingsIn >= Level.Info.RescueCount));
+            or (LemmingsIn >= Level.Info.RescueCount))
+
+            // or the nuke has finished
+            or (NukeIsActive and (fParticleFinishTimer = 0));
 end;
 
 procedure TLemmingGame.MaybeExitToPostview;
