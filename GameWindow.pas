@@ -615,6 +615,8 @@ begin
   // This makes sure this method is called very often :)
   Done := False;
 
+  Game.MaybeExitToPostview;
+
   if not CanPlay or not Game.Playing or Game.GameFinished then
   begin
     ProcessGameMessages; // May still be some lingering, especially the GAMEMSG_FINISH message

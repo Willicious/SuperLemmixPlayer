@@ -472,6 +472,8 @@ type
     function HasSteelAt(x, y: Integer): Boolean;
     function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
 
+    function ShouldExitToPostview: Boolean;
+    procedure MaybeExitToPostview;
     function StateIsUnplayable: Boolean;
     procedure CheckAdjustSpawnInterval;
     procedure AdjustSpawnInterval(aSI: Integer);
@@ -2075,10 +2077,26 @@ begin
   );
 end;
 
+function TLemmingGame.ShouldExitToPostview: Boolean;
+begin
+  Result := False;
 
+  // Only exit to postview if the game is currently unplayable
+  if StateIsUnplayable then
+    Result := // and we're in Classic Mode
+            (GameParams.ClassicMode
 
+            // or the save requirement is met
+            or (LemmingsIn >= Level.Info.RescueCount));
+end;
+
+procedure TLemmingGame.MaybeExitToPostview;
+begin
+  if fGameFinished then
     Exit;
 
+  if ShouldExitToPostview then
+    Finish(GM_FIN_LEMMINGS);
 end;
 
 procedure TLemmingGame.SetSkillsToInfinite; // Infinite Skills
