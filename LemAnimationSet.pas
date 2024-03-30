@@ -447,8 +447,8 @@ begin
   ColorDict := TColorDict.Create;
   ShadeDict := TShadeDict.Create;
 
-  try                      // Bookmark - remove?
-    if (fTheme = nil) then //or (GameParams.ForceDefaultLemmings) then
+  try
+    if (fTheme = nil) then
       SrcFolder := 'default'
     else
       SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS;

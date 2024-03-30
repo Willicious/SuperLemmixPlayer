@@ -96,7 +96,6 @@ resourcestring
   {-------------------------------------------------------------------------------
     PreviewScreen
   -------------------------------------------------------------------------------}
-  //SPreviewLemmings = ' Lemmings'; // Bookmark - not currently used - remove?
   SPreviewSave = ' To Be Saved';
   SPreviewReleaseRate = 'Release Rate ';
   SPreviewSpawnInterval = 'Spawn Interval ';
@@ -166,9 +165,6 @@ resourcestring
   -------------------------------------------------------------------------------}
   SYourTimeIsUp =
     'Your time is up!';
-
-  //SAllLemmingsAccountedFor =
-    //'All lemmings accounted for.'; // Bookmark - not currently used - remove?
 
   STalismanUnlocked =
     'You unlocked a talisman!';

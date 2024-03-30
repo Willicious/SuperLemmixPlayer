@@ -1325,11 +1325,11 @@ begin
   Img.OnMouseMove := Img_MouseMove;
   Img.OnMouseUp := Img_MouseUp;
 
-  RewindTimer := TTimer.Create(Self);
+  RewindTimer := TTimer.Create(Self); // Bookmark - can TickCount be used here instead??
   RewindTimer.Interval := 60;
   RewindTimer.OnTimer := DoRewind;
 
-  TurboTimer := TTimer.Create(Self);
+  TurboTimer := TTimer.Create(Self); // Bookmark - can TickCount be used here instead??
   TurboTimer.Interval := 40;
   TurboTimer.OnTimer := DoTurbo;
 
@@ -1776,11 +1776,6 @@ begin
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
       lka_ClearPhysics       : if func.Modifier <> 0 then
                                  ClearPhysics := false;
-      // Bookmark - remove?
-      //lka_Projection         : if (func.Modifier <> 0) and (ProjectionType = 1) then
-                                //ProjectionType := 0;
-      //lka_SkillProjection    : if (func.Modifier <> 0) and (ProjectionType = 2) then
-                                 //ProjectionType := 0;
       lka_ShowUsedSkills     : if func.Modifier <> 0 then
                                  SkillPanel.ShowUsedSkills := false;
     end;

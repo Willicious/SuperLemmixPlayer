@@ -537,8 +537,8 @@ begin
   for i := 0 to MAX_KEY do
   begin
     s := InterpretMain(fKeyFunctions[i].Action);
-    if s = 'Null' then Continue;                                                           // Bookmark - remove?
-    if fKeyFunctions[i].Action in [lka_Skill, lka_SkillButton, lka_Skip, lka_SpecialSkip, lka_ClearPhysics, //lka_Projection, lka_SkillProjection,
+    if s = 'Null' then Continue;
+    if fKeyFunctions[i].Action in [lka_Skill, lka_SkillButton, lka_Skip, lka_SpecialSkip, lka_ClearPhysics,
     lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
