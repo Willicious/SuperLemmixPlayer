@@ -833,7 +833,7 @@ begin
   end;
 
   NukeIsActive := aState.NukeIsActive;
-  // Infinite Skills - might need to add state here
+  IsInfiniteSkillsMode := aState.IsInfiniteSkillsMode;
   ExploderAssignInProgress := aState.ExploderAssignInProgress;
   Index_LemmingToBeNuked := aState.Index_LemmingToBeNuked;
 
