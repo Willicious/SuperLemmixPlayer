@@ -500,9 +500,9 @@ type
     procedure PlayAssignFailSound(PlayForHighlit: Boolean = False);
     procedure PopBalloon(L: TLemming; BalloonPopTimerValue: Integer; NewAction: TBasicLemmingAction);
 
-    procedure SetSkillsToInfinite; // Infinite Skills
-    procedure RecordInfiniteSkills; // Infinite Skills
-    procedure ResetSkillCount; // InfiniteSkills
+    procedure SetSkillsToInfinite;
+    procedure RecordInfiniteSkills;
+    procedure ResetSkillCount;
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -2116,7 +2116,7 @@ begin
     Finish(GM_FIN_LEMMINGS);
 end;
 
-procedure TLemmingGame.SetSkillsToInfinite; // Infinite Skills
+procedure TLemmingGame.SetSkillsToInfinite;
 var
   Skill: TSkillPanelButton;
 begin
@@ -2131,7 +2131,7 @@ begin
   IsInfiniteSkillsMode := True;
 end;
 
-procedure TLemmingGame.ResetSkillCount; // Infinite Skills
+procedure TLemmingGame.ResetSkillCount;
 var
   Skill: TSkillPanelButton;
 begin
@@ -7710,7 +7710,7 @@ begin
   end;
 end;
 
-procedure TLemmingGame.RecordInfiniteSkills; // Infinite Skills
+procedure TLemmingGame.RecordInfiniteSkills;
 var
   E: TReplayInfiniteSkills;
 begin
@@ -7801,7 +7801,7 @@ var
     ExploderAssignInProgress := True;
   end;
 
-  procedure ApplyInfiniteSkills; // Infinite Skills
+  procedure ApplyInfiniteSkills;
   var
     E: TReplayInfiniteSkills absolute R;
   begin
@@ -7824,7 +7824,7 @@ var
     if R is TReplayNuke then
       ApplyNuke;
 
-    if R is TReplayInfiniteSkills then // Infinite Skills
+    if R is TReplayInfiniteSkills then
       ApplyInfiniteSkills;
   end;
 begin

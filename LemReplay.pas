@@ -134,9 +134,9 @@ type
     private
       fIsModified: Boolean;
 
-      fAssignments: TReplayItemList;        // Nuking is also included here
+      fAssignments: TReplayItemList; // Nuking is also included here
       fSpawnIntervalChanges: TReplayItemList;
-      fSkillCountChanges: TReplayItemList; // Infinite Skills
+      fSkillCountChanges: TReplayItemList;
       fPlayerName: String;
       fLevelName: String;
       fLevelAuthor: String;
@@ -170,7 +170,7 @@ type
       function HasAnyActionAt(aFrame: Integer): Boolean;
       function HasAssignmentAt(aFrame: Integer): Boolean;
       function HasRRChangeAt(aFrame: Integer): Boolean;
-      function HasSkillCountChangeAt(aFrame: Integer): Boolean; // Infinite Skills
+      function HasSkillCountChangeAt(aFrame: Integer): Boolean;
       function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
@@ -245,7 +245,7 @@ begin
   inherited;
   fAssignments := TReplayItemList.Create;
   fSpawnIntervalChanges := TReplayItemList.Create;
-  fSkillCountChanges := TReplayItemList.Create; // Infinite Skills
+  fSkillCountChanges := TReplayItemList.Create;
   Clear(true);
 end;
 
@@ -253,7 +253,7 @@ destructor TReplay.Destroy;
 begin
   fAssignments.Free;
   fSpawnIntervalChanges.Free;
-  fSkillCountChanges.Free; // Infinite Skills
+  fSkillCountChanges.Free;
   inherited;
 end;
 
@@ -382,7 +382,7 @@ begin
   if aItem is TReplaySkillAssignment then Dst := fAssignments;
   if aItem is TReplayChangeSpawnInterval then Dst := fSpawnIntervalChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
-  if aItem is TReplayInfiniteSkills then Dst := fSkillCountChanges; // Infinite Skills
+  if aItem is TReplayInfiniteSkills then Dst := fSkillCountChanges;
 
   if Dst = nil then
     raise Exception.Create('Unknown type passed to TReplay.Add!');
@@ -405,7 +405,7 @@ begin
   if aItem is TReplaySkillAssignment then Dst := fAssignments;
   if aItem is TReplayChangeSpawnInterval then Dst := fSpawnIntervalChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
-  if aItem is TReplayInfiniteSkills then Dst := fSkillCountChanges; // Infinite Skills
+  if aItem is TReplayInfiniteSkills then Dst := fSkillCountChanges;
 
   if Dst = nil then Exit;
 
@@ -420,7 +420,7 @@ procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
 begin
   fAssignments.Clear;
   fSpawnIntervalChanges.Clear;
-  fSkillCountChanges.Clear; // Infinite Skills
+  fSkillCountChanges.Clear;
   fIsModified := true;
   if not EraseLevelInfo then Exit;
   fPlayerName := '';
@@ -447,7 +447,7 @@ var
   end;
 begin
   DoCut(fAssignments, aLastFrame);
-  DoCut(fSkillCountChanges, aLastFrame); // Infinite Skills
+  DoCut(fSkillCountChanges, aLastFrame);
 
   NextSI := TReplayChangeSpawnInterval(SpawnIntervalChange[aLastFrame, 0]);
   if (NextSI <> nil) and (NextSI.NewSpawnInterval <> aExpectedSpawnInterval) then
@@ -478,7 +478,7 @@ function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
 begin
   Result := CheckForAction(fAssignments)
          or CheckForAction(fSpawnIntervalChanges)
-         or CheckForAction(fSkillCountChanges); // Infinite Skills
+         or CheckForAction(fSkillCountChanges);
 end;
 
 function TReplay.HasAssignmentAt(aFrame: Integer): Boolean;
@@ -517,7 +517,7 @@ begin
   Result := CheckForRRChange(fSpawnIntervalChanges);
 end;
 
-function TReplay.HasSkillCountChangeAt(aFrame: Integer): Boolean; // Infinite Skills
+function TReplay.HasSkillCountChangeAt(aFrame: Integer): Boolean;
 
   function CheckForSkillCountChange(aList: TReplayItemList): Boolean;
   var
@@ -547,7 +547,7 @@ begin
   begin
     for i := 0 to fSpawnIntervalChanges.Count-1 do
       if (fSpawnIntervalChanges[i] <> aAction) and (fSpawnIntervalChanges[i].AddTime >= aAction.AddTime) then Exit;
-  end else if aAction is TReplayInfiniteSkills then // Infinite Skills
+  end else if aAction is TReplayInfiniteSkills then
   begin
     for i := 0 to fSkillCountChanges.Count-1 do
       if (fSkillCountChanges[i] <> aAction) and (fSkillCountChanges[i].AddTime >= aAction.AddTime) then Exit;
@@ -630,7 +630,7 @@ begin
 
   if Item is TReplayChangeSpawnInterval then
     fSpawnIntervalChanges.Add(Item)
-  else if Item is TReplayInfiniteSkills then // Infinite Skills
+  else if Item is TReplayInfiniteSkills then
     fSkillCountChanges.Add(Item)   
   else
     fAssignments.Add(Item);
@@ -992,7 +992,7 @@ begin
   inherited DoSave(Sec);
 end;
 
-{ TReplayInfiniteSkills }  // Infinite Skills
+{ TReplayInfiniteSkills }
 
 procedure TReplayInfiniteSkills.DoLoadSection(Sec: TParserSection);
 begin

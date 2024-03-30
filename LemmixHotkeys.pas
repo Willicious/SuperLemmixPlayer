@@ -33,7 +33,7 @@ type
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
-                         lka_InfiniteSkills, // Infinite Skills
+                         lka_InfiniteSkills,
                          lka_Cheat,
                          lka_Skip,
                          lka_SpecialSkip,
@@ -196,7 +196,7 @@ begin
   SetKeyFunction($30, lka_SlowMotion);
   SetKeyFunction($BE, lka_SlowMotion);
   SetKeyFunction($2E, lka_Cheat);
-  SetKeyFunction($2D, lka_InfiniteSkills); // Infinite Skills
+  SetKeyFunction($2D, lka_InfiniteSkills);
   SetKeyFunction($56, lka_ClearPhysics, 1);
   SetKeyFunction($14, lka_ClearPhysics, 0);
   SetKeyFunction($4C, lka_LoadReplay);
@@ -305,7 +305,7 @@ begin
   if s = 'dir_select_right' then Result := lka_DirRight;
   if s = 'force_walker' then Result := lka_ForceWalker;
   if s = 'cheat' then Result := lka_Cheat;
-  if s = 'infinite_skills' then Result := lka_InfiniteSkills; // Infinite Skills
+  if s = 'infinite_skills' then Result := lka_InfiniteSkills;
   if s = 'skip' then Result := lka_Skip;
   if s = 'special_skip' then Result := lka_SpecialSkip;
   if s = 'fastforward' then Result := lka_FastForward;
@@ -324,9 +324,6 @@ begin
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
   if s = 'clear_physics' then Result := lka_ClearPhysics;
-  //if s = 'toggle_shadows' then Result := lka_ToggleShadows; // Bookmark - remove?
-  //if s = 'projection' then Result := lka_Projection;
-  //if s = 'skill_projection' then Result := lka_SkillProjection;
   if s = 'show_used_skills' then Result := lka_ShowUsedSkills;
   if s = 'fall_distance' then Result := lka_FallDistance;
   if s = 'edit_replay' then Result := lka_EditReplay;
@@ -463,7 +460,7 @@ var
       lka_DirRight:         Result := 'Dir_Select_Right';
       lka_ForceWalker:      Result := 'Force_Walker';
       lka_Cheat:            Result := 'Cheat';
-      lka_InfiniteSkills:   Result := 'Infinite_Skills'; // Infinite Skills
+      lka_InfiniteSkills:   Result := 'Infinite_Skills';
       lka_Skip:             Result := 'Skip';
       lka_SpecialSkip:      Result := 'Special_Skip';
       lka_FastForward:      Result := 'FastForward';
@@ -482,9 +479,6 @@ var
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
       lka_ClearPhysics:     Result := 'Clear_Physics';
-      //lka_ToggleShadows:    Result := 'Toggle_Shadows'; // Bookmark - remove?
-      //lka_Projection:       Result := 'Projection';
-      //lka_SkillProjection:  Result := 'Skill_Projection';
       lka_ShowUsedSkills:   Result := 'Show_Used_Skills';
       lka_FallDistance:     Result := 'Fall_Distance';
       lka_EditReplay:       Result := 'Edit_Replay';

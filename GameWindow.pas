@@ -133,7 +133,7 @@ type
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
     procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
-    procedure HandleInfiniteSkillsHotkey; // Infinite Skills
+    procedure HandleInfiniteSkillsHotkey;
 
     function GetLevelMusicName: String;
     function ProcessMusicPriorityOrder(aOptions: String; aIsFromRotation: Boolean): String;
@@ -1390,7 +1390,7 @@ begin
   Inc(fActivateCount);
 end;
 
-procedure TGameWindow.HandleInfiniteSkillsHotkey; // Infinite Skills
+procedure TGameWindow.HandleInfiniteSkillsHotkey;
 var
   Skill: TSkillPanelButton;
   i, n, TargetFrame: Integer;
@@ -1441,7 +1441,7 @@ const
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
-                         lka_InfiniteSkills, // Infinite Skills
+                         lka_InfiniteSkills,
                          lka_Cheat,
                          lka_Skip,
                          lka_SpecialSkip,
@@ -1526,7 +1526,7 @@ begin
                      GameSpeed := gspPause;
                    end;
                  end;
-            lka_InfiniteSkills: begin // Infinite Skills
+            lka_InfiniteSkills: begin
                                   HandleInfiniteSkillsHotkey;
                                 end;
       lka_Nuke: begin

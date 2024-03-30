@@ -49,7 +49,7 @@ type
     procedure FreeScreen;
     procedure CheckIfOpenedViaReplay;
 
-    property LoadSuccess: Boolean read fLoadSuccess; // Bookmark - currently unused! - remove?
+    property LoadSuccess: Boolean read fLoadSuccess;
   end;
 
 implementation
@@ -85,8 +85,6 @@ begin
 
   GameParams.NextScreen := gstMenu;
 
-  // Bookmark - This was to fix a glitch where an older version disabled them sometimes.
-  // Not sure if this still needs to be here - remove?
   GameParams.SoundOptions := [gsoSound, gsoMusic];
 
   GameParams.Load;
@@ -246,14 +244,10 @@ var
 begin
   Result := true;
 
-  // Bookmark - should this be commented back in???
-  //while GameParams.NextScreen <> gstExit do
-  //begin
     // Save the data between screens. This way it's more up to date in case game crashes
-    GameParams.Save(TGameParamsSaveCriticality.scNone); // Compiler throws a fit without the type specifier here
+    GameParams.Save(TGameParamsSaveCriticality.scNone);
 
-    // I don't remember why this part is written like this.
-    // Might be so that after the text screen, the right screen out of gstPlay or gstPostview is shown.
+    // This might be so that after the text screen, the correct screen out of gstPlay or gstPostview is shown
     NewScreen := GameParams.NextScreen;
     GameParams.NextScreen := GameParams.NextScreen2;
     GameParams.NextScreen2 := gstUnknown;

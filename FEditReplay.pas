@@ -1,8 +1,5 @@
 unit FEditReplay;
 
-// Bookmark - Known issue - clicking Cancel destroys all replay data
-// (should just revert to the state of data before opening dialog) - check if this is is still an issue
-
 interface
 
 uses
@@ -118,7 +115,7 @@ var
       Result := Result + 'Nuke';
     end else if aItem is TReplayInfiniteSkills then
     begin
-      Result := Result + 'Infinite Skills'; // Infinite Skills
+      Result := Result + 'Infinite Skills';
     end else
       Result := 'Unknown replay action';
   end;
@@ -285,7 +282,7 @@ begin
   if ApplyRRDelete then
     HandleRRDelete(I.Frame)
   else
-    fReplay.Delete(I); // Infinite Skills - this is the logic you need to delete the replay items
+    fReplay.Delete(I);
 
   ListReplayActions;
 end;

@@ -20,7 +20,7 @@ uses
   LemStrings, FLevelListDialog,
   LemRendering;
 
-var                   // Bookmark - is this still needed?
+var
   IsHalting: Boolean; { ONLY used during AppController's init routines. Don't use this anywhere else.
                         Shouldn't even be used there really, but a kludgy fix is okay since that's gonna
                         be replaced once proper level select menus are introduced. }

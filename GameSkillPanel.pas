@@ -81,10 +81,7 @@ end;
 // Second set of digits adjusts width & height of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-//if GameParams.ShowMinimap then //Bookmark - why is this commented out?
-  begin
-    Result := Rect(355 * ResMod, 2 * ResMod, 440 * ResMod, 36 * ResMod);
-  end;
+  Result := Rect(355 * ResMod, 2 * ResMod, 440 * ResMod, 36 * ResMod);
 end;
 
 // Assigns a clickable rectangle to the replay "R" icon
