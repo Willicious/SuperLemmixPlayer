@@ -405,6 +405,34 @@ var
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
 
+  procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+    OldDrawMode: TDrawMode;
+  begin
+    if GameParams.HighResolution then
+    begin
+      dstRect.Left := dstRect.Left * 2 + 1;
+      dstRect.Top := dstRect.Top * 2;
+      dstRect.Right := dstRect.Right * 2 + 1;
+      dstRect.Bottom := dstRect.Bottom * 2;
+    end;
+
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+  end;
+
   procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
   var
     oX: Integer;
@@ -503,9 +531,9 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
   DrawAnimationFrame(SkillIcons[Integer(spbDisarmer)], FIXING, 6, PICKUP_MID - 2, PICKUP_BASELINE - 3);
 
-  // Bomber, freezer and blocker are simple. Unlike the skill panel, we use the Ohnoer animation for timebomber and bomber here.
-  DrawAnimationFrame(SkillIcons[Integer(spbTimebomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);  // Bookmark - might use the timebomber-specific graphic for this one
-  DrawAnimationFrame(SkillIcons[Integer(spbBomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);
+  // (Time)Bomber, Freezer and Blocker are simple
+  DrawAnimationFrameResized(SkillIcons[Integer(spbTimebomber)], TIMEBOMBEXPLOSION,  0, Rect(2, 3, 19, 18));
+  DrawAnimationFrameResized(SkillIcons[Integer(spbBomber)], EXPLOSION, 0, Rect(2, 3, 19, 18));
   DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], ICECUBE, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 1);
 
