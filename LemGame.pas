@@ -73,6 +73,7 @@ type
 
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
       UsedSkillCount: array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
+      IsInfiniteSkillsMode: Boolean;
 
       NukeIsActive: Boolean;
       ExploderAssignInProgress: Boolean;
@@ -775,7 +776,7 @@ begin
   end;
 
   aState.NukeIsActive := NukeIsActive;
-  // Infinite Skills - might need to add state here
+  aState.IsInfiniteSkillsMode := IsInfiniteSkillsMode;
   aState.ExploderAssignInProgress := ExploderAssignInProgress;
   aState.Index_LemmingToBeNuked := Index_LemmingToBeNuked;
 
