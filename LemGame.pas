@@ -7651,18 +7651,6 @@ begin
   MessageQueue.Add(GAMEMSG_SOUND_BAL, aSound, aOrigin.X);
 end;
 
-// Bookmark - follow this train
-//procedure TLemmingGame.CueSoundEffectFrequency(aSound: String; aFrequency: Single);
-//begin
-//  if IsSimulating then Exit; // Not play sound in simulation mode
-//
-//  // Check that the sound was not yet played on this frame
-//  if fSoundList.Contains(aSound) then Exit;
-//
-//  fSoundList.Add(aSound);
-//  MessageQueue.Add(GAMEMSG_SOUND_FREQ, aSound, Int64(Trunc(aFrequency)));
-//end;
-
 function TLemmingGame.GetHighlitLemming: TLemming;
 begin
   Result := nil;
