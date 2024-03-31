@@ -1995,9 +1995,9 @@ begin
 
   if L.LemExplosionTimer = 0 then
   begin               // All these states bypass ohno phase
-    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baBallooning, baFalling, baSwimming, baDrifting, baReaching,
-                      baShimmying, baTurning, baClimbing, baJumping, baFreezing, baFrozen] then
+    if L.LemAction in [baJumping, baReaching, baShimmying, baTurning, baClimbing, baSliding,
+                      baVaporizing, baVinetrapping, baDrowning, baFreezing, baFrozen,
+                      baFloating, baGliding, baBallooning, baSwimming, baDrifting, baFalling] then
     begin
       if L.LemAction = baBallooning then
       begin
@@ -2033,9 +2033,9 @@ begin
 
   if L.LemFreezerExplosionTimer = 0 then
   begin               // All these states bypass freezing phase
-    if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baBallooning, baFalling, baSwimming, baDrifting, baReaching,
-                      baShimmying, baTurning, baClimbing, baJumping, baFreezing, baFrozen] then
+    if L.LemAction in [baJumping, baReaching, baShimmying, baTurning, baClimbing, baSliding,
+                      baVaporizing, baVinetrapping, baDrowning, baFreezing, baFrozen,
+                      baFloating, baGliding, baBallooning, baSwimming, baDrifting, baFalling] then
     begin
       if L.LemAction = baBallooning then
         PopBalloon(L, 1, baFreezerExplosion)
