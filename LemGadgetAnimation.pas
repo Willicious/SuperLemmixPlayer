@@ -520,22 +520,25 @@ begin
   end;
 
   // Walker, Jumper, Shimmier, Ballooner, Slider, Climber, Swimmer, Floater, Glider, Disarmer - all simple
-  DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, PICKUP_MID, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, PICKUP_MID, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbJumper)], JUMPING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
   DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
-  DrawAnimationFrame(SkillIcons[Integer(spbBallooner)], BALLOONING, 4, PICKUP_MID + 1, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbBallooner)], BALLOONING, 4, PICKUP_MID, PICKUP_BASELINE + 2);
   DrawAnimationFrame(SkillIcons[Integer(spbSlider)], SLIDING_RTL, 0, PICKUP_MID - 2, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, PICKUP_MID + 3, PICKUP_BASELINE - 1);
-  DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, PICKUP_MID + 1, PICKUP_BASELINE - 6);
-  DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
-  DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
+  DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, PICKUP_MID + 1, PICKUP_BASELINE - 5);
+  DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, PICKUP_MID - 1, PICKUP_BASELINE + 4);
+  DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 4);
   DrawAnimationFrame(SkillIcons[Integer(spbDisarmer)], FIXING, 6, PICKUP_MID - 2, PICKUP_BASELINE - 3);
 
-  // (Time)Bomber, Freezer and Blocker are simple
-  DrawAnimationFrameResized(SkillIcons[Integer(spbTimebomber)], TIMEBOMBEXPLOSION,  0, Rect(2, 3, 19, 18));
-  DrawAnimationFrameResized(SkillIcons[Integer(spbBomber)], EXPLOSION, 0, Rect(2, 3, 19, 18));
-  DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], ICECUBE, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
-  DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 1);
+  // (Time)Bomber and Blocker are simple
+  DrawAnimationFrameResized(SkillIcons[Integer(spbTimebomber)], TIMEBOMBEXPLOSION,  0, Rect(4, 4, 18, 18));
+  DrawAnimationFrameResized(SkillIcons[Integer(spbBomber)], EXPLOSION, 0, Rect(4, 4, 18, 18));
+  DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 2);
+
+  // Freezer needs the ice cube overlay
+  DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], FROZEN, 0, PICKUP_MID, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], ICECUBE, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
 
   // Ladderer, Platformer, Builder and Stacker are identifiable by their bag colours
   DrawAnimationFrame(SkillIcons[Integer(spbLadderer)], LADDERING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
@@ -547,7 +550,7 @@ begin
   NewBmp := TBitmap32.Create;
   try
     LoadGrenadeImages;
-    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
+    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 12, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
   finally
     NewBmp.Free;
   end;
@@ -556,25 +559,25 @@ begin
   try
     LoadSpearImages;
     DoProjectileRecolor(NewBmp, $FFFFFFFF);
-    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 12, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
   finally
     NewBmp.Free;
   end;
 
-  DrawAnimationFrame(SkillIcons[Integer(spbSpearer)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE);
-  DrawAnimationFrame(SkillIcons[Integer(spbGrenader)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE);
+  DrawAnimationFrame(SkillIcons[Integer(spbSpearer)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbGrenader)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 2);
 
   // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles.
   // For the Digger, we don't have a choice - we have to accept the presence of some destruction particles.
   DrawAnimationFrame(SkillIcons[Integer(spbLaserer)], LASERING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbFencer)], FENCING, 1, PICKUP_MID, PICKUP_BASELINE - 2);
-  DrawAnimationFrame(SkillIcons[Integer(spbMiner)], MINING, 12, PICKUP_MID - 3, PICKUP_BASELINE - 2);
-  DrawAnimationFrame(SkillIcons[Integer(spbDigger)], DIGGING, 4, PICKUP_MID + 1, PICKUP_BASELINE - 4);
+  DrawAnimationFrame(SkillIcons[Integer(spbMiner)], MINING, 12, PICKUP_MID - 3, PICKUP_BASELINE - 3);
+  DrawAnimationFrame(SkillIcons[Integer(spbDigger)], DIGGING, 4, PICKUP_MID + 1, PICKUP_BASELINE - 3);
 
   // Cloner is drawn as two back-to-back walkers.
-  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, PICKUP_MID - 1, PICKUP_BASELINE - 1);
-  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, PICKUP_MID - 1, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 2);
 
   if aErase <> nil then
   begin
