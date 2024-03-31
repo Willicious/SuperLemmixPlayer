@@ -60,7 +60,7 @@ type
       fReelForceDirection: Integer;
 
       fCleanInstallFail: Boolean;
-      fUpdateCheckThread: TDownloadThread;
+      //fUpdateCheckThread: TDownloadThread;
       fVersionInfo: TStringList;
 
       fGroupSignCenter: TPoint;
@@ -99,7 +99,7 @@ type
 
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
-      procedure InitiateUpdateCheck;
+      //procedure InitiateUpdateCheck;
       //procedure HandleUpdateCheckResult;
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
@@ -214,17 +214,17 @@ begin
     ShowSetupMenu;
 
     EnableIdle;
-  //end else if (fUpdateCheckThread <> nil) and (fUpdateCheckThread.Complete) then
-  //begin
-    //DisableIdle;
-
-    //if fUpdateCheckThread.Success then
-      //HandleUpdateCheckResult;
-
-    //fUpdateCheckThread.Free;
-    //fUpdateCheckThread := nil;
-
-    //EnableIdle;
+//  end else if (fUpdateCheckThread <> nil) and (fUpdateCheckThread.Complete) then
+//  begin
+//    DisableIdle;
+//
+//    if fUpdateCheckThread.Success then
+//      HandleUpdateCheckResult;
+//
+//    fUpdateCheckThread.Free;
+//    fUpdateCheckThread := nil;
+//
+//    EnableIdle;
   end else if not fDisableScroller then
     UpdateReel;
 
@@ -245,11 +245,11 @@ end;
 
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
-  if fUpdateCheckThread <> nil then
-  begin
-    fUpdateCheckThread.Kill;
-    FreeAndNil(fUpdateCheckThread);
-  end;
+//  if fUpdateCheckThread <> nil then
+//  begin
+//    fUpdateCheckThread.Kill;
+//    FreeAndNil(fUpdateCheckThread);
+//  end;
 
   inherited;
 end;
@@ -274,8 +274,8 @@ begin
 
   DoCleanInstallCheck;
 
-  if not GameParams.DoneUpdateCheck then
-    InitiateUpdateCheck;
+//  if not GameParams.DoneUpdateCheck then
+//    InitiateUpdateCheck;
 
   if (GameParams.CurrentLevel <> nil) and
      (fScrollerTextList.Count > 0) then
@@ -899,14 +899,14 @@ begin
   end;
 end;
 
-procedure TGameMenuScreen.InitiateUpdateCheck;
-begin
-  GameParams.DoneUpdateCheck := true;
-  if not GameParams.CheckUpdates then Exit;
-
-  fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo);
-end;
-
+// Bookmark - FIF "UpdateCheck" to find all related code in case you want to re-implement this
+//procedure TGameMenuScreen.InitiateUpdateCheck;
+//begin
+//  GameParams.DoneUpdateCheck := true;
+    // This part will have to be done differently as FStyleManager unit has been removed
+//  fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo);
+//end;
+//
 //procedure TGameMenuScreen.HandleUpdateCheckResult;
 //var
 //  NewVersionStr, OrigVersionStr: String;

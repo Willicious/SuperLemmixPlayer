@@ -251,9 +251,6 @@ begin
     SetReplayPatternDropdown(cbIngameSaveReplayPattern, GameParams.IngameSaveReplayPattern);
     SetReplayPatternDropdown(cbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
 
-    //cbUpdateCheck.Checked := GameParams.CheckUpdates;
-    //cbEnableOnline.Checked := GameParams.EnableOnline;
-
     // --- Page 2 (Interface Options) --- //
     // Checkboxes
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
@@ -322,9 +319,6 @@ begin
 
   GameParams.NextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
   GameParams.LastActiveLevel := rgGameLoading.ItemIndex = 1;
-
-  //GameParams.EnableOnline := cbEnableOnline.Checked;
-  //GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
   // --- Page 2 (Interface Options) --- //
   // Checkboxes
@@ -489,13 +483,6 @@ procedure TFormNXConfig.FormCreate(Sender: TObject);
 begin
   SetCheckboxes;
 end;
-
-//procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
-//begin
-  //cbUpdateCheck.Enabled := cbEnableOnline.Checked;
-  //if not cbEnableOnline.Checked then cbUpdateCheck.Checked := false;
-  //btnApply.Enabled := true;
-//end;
 
 // --- Classic Mode --- //
 procedure TFormNXConfig.btnClassicModeClick(Sender: TObject);

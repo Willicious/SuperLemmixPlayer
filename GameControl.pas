@@ -135,7 +135,7 @@ type
     fDumpMode : Boolean;
     fShownText: Boolean;
     fOneLevelMode: Boolean;
-    fDoneUpdateCheck: Boolean;
+    //fDoneUpdateCheck: Boolean;
     fCurrentLevel: TNeoLevelEntry;
 
     fCursorResize: Double;
@@ -272,7 +272,7 @@ type
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
     property ShownText: boolean read fShownText write fShownText;
-    property DoneUpdateCheck: Boolean read fDoneUpdateCheck write fDoneUpdateCheck;
+    //property DoneUpdateCheck: Boolean read fDoneUpdateCheck write fDoneUpdateCheck;
 
     property Directory: string read fDirectory write fDirectory;
 
@@ -490,11 +490,6 @@ begin
   SaveBoolean('PostviewJingles', PostviewJingles);
   SaveBoolean('MenuSounds', MenuSounds);
 
-  //SL.Add('');
-  //SL.Add('# Online Options');
-  //SaveBoolean('EnableOnline', EnableOnline);
-  SaveBoolean('UpdateCheck', CheckUpdates);
-
   SL.Add('');
   SL.Add('# Technical Options');
   SaveBoolean('FileCaching', FileCaching);
@@ -634,9 +629,6 @@ begin
     PreferBoing := LoadBoolean('PreferBoing', PreferBoing);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
-
-    //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-    CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
     FileCaching := LoadBoolean('FileCaching', FileCaching);
