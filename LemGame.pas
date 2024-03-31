@@ -2759,6 +2759,7 @@ const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping, baDrowning,
+               baShimmying, baTurning, baClimbing, baHoisting, baSliding,
                baSplatting, baExiting, baSleeping, baBallooning];
 begin
   Result := (not (L.LemAction in ActionSet));
