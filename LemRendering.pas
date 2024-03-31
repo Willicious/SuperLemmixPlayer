@@ -556,7 +556,6 @@ end;
 
 procedure TRenderer.DrawLemmingLaser(aLemming: TLemming);
 var
-  //InnerC, OuterC: TColor32;  // Bookmark - remove?
   LaserColors: array[0..4] of TColor32;
   Origin, Target: TPoint;
 

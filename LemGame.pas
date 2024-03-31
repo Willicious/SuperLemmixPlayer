@@ -1623,7 +1623,7 @@ var
   Gadget, Gadget2: TGadget;
 begin
   Gadget := Gadgets[GadgetID];
-  Assert(Gadget.ReceiverId <> 65535, 'Telerporter used without receiver'); // Bookmark - change this to use -1 instead?
+  Assert(Gadget.ReceiverId <> 65535, 'Teleporter used without receiver'); // Bookmark - change this to use -1 instead?
   Gadget2 := Gadgets[Gadget.ReceiverId];
 
   if Gadget.IsFlipPhysics then TurnAround(L);
@@ -3346,9 +3346,8 @@ begin
   if HasWaterObjectAt(L.LemX, L.LemY) then
     HandleWaterObjectSwim(L);
 
-  { Check for blocker fields and force-fields
-    but not for miners removing terrain, see www.lemmingsforums.net/index.php?topic=2710.0
-    also not for Jumpers, as this is handled during movement. }
+  { Check for blocker fields and force-fields | not for Jumpers, as this is handled during movement.
+    Also not for miners removing terrain, see www.lemmingsforums.net/index.php?topic=2710.0}
   if ((L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2])) and
      (L.LemAction <> baJumping) then
   begin // Bookmark - testing needed
@@ -4609,9 +4608,9 @@ var
   LemDXL: Integer;
   LemDXR: Integer;
 begin
-  // Bookmark - Ideally, we can create a new function for HasLemmingAt which specifically
-  // Detects the presence of a Freezer lem within range of the ice cube's width/2
-  // For now, though, this will do
+  // Bookmark -
+  {Ideally, we can create a new function which specifically detects the presence
+  of a Freezer lem within range of the ice cube's width - For now, though, this will do}
 
   // Makes sure Walkers can ascend out of Freezer cubes
   LemDy := FindGroundPixel(L.LemX, L.LemY);

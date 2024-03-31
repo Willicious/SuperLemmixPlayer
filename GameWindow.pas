@@ -1066,25 +1066,6 @@ begin
   if not GameParams.HideAdvancedSelect then
   if GameParams.Hotkeys.CheckForKey(lka_DirRight) then SDir := SDir + 1; // These two cancel each other out if both are pressed. Genius. :D
 
-  // Bookmark - Code not needed because Direction Select is no longer shown on the panel
-  //if SDir = 0 then
-  //if not GameParams.HideAdvancedSelect then
-  //begin
-    //SDir := SkillPanel.SkillPanelSelectDx;
-    //if (SDir = 0) and (Game.fSelectDx <> 0) then
-    //begin
-      //SkillPanel.DrawButtonSelector(spbDirLeft, false);
-      //SkillPanel.DrawButtonSelector(spbDirRight, false);
-    //end;
-  //end else begin
-    //SkillPanel.SkillPanelSelectDx := 0;
-    //if (Game.fSelectDx <> SDir) then
-    //begin
-      //SkillPanel.DrawButtonSelector(spbDirLeft, (SDir = -1));
-      //SkillPanel.DrawButtonSelector(spbDirRight, (SDir = 1));
-    //end;
-  //end;
-
   Game.fSelectDx := SDir;
 end;
 
