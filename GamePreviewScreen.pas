@@ -62,7 +62,7 @@ type
 implementation
 
 uses
-  CustomPopup, FBaseDosForm, FLevelInfo, FStyleManager, GameSound, LemNeoParser;
+  CustomPopup, FBaseDosForm, FLevelInfo, GameSound, LemNeoParser;
 
 const
   TALISMAN_PADDING = 8;

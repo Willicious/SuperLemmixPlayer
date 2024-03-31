@@ -62,7 +62,6 @@ uses
   LemVersion in 'LemVersion.pas',
   PngInterface in 'PngInterface.pas',
   SharedGlobals in 'SharedGlobals.pas',
-  FStyleManager in 'FStyleManager.pas' {FManageStyles},
   LemMenuFont in 'LemMenuFont.pas',
   GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
   GameMenuScreen in 'GameMenuScreen.pas',

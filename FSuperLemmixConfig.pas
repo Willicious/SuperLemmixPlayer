@@ -3,7 +3,7 @@ unit FSuperLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, LemStrings, FEditHotkeys, FStyleManager, LemmixHotkeys, Math,
+  GameControl, GameSound, LemStrings, FEditHotkeys, LemmixHotkeys, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls;
 

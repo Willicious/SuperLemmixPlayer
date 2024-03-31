@@ -126,7 +126,6 @@ implementation
 uses
   LemMenuFont, // For size const
   CustomPopup,
-  FStyleManager,
   FSuperLemmixSetup,
   GameSound,
   LemGame, // To clear replay
@@ -915,7 +914,6 @@ end;
 //  n: Integer;
 //  NewestID: Int64;
 //  URL: String;
-//  //F: TFManageStyles;
 //begin
 //  NewVersionStr := fVersionInfo.Values['game'];
 //  if LeftStr(NewVersionStr, 1) = 'V' then
@@ -951,22 +949,6 @@ end;
 //             end;
 //          //2: do nothing;
 //        end;
-//      //end else if CheckStyleUpdates then
-//      //begin
-//        // Bookmark - Add cursor stuff here
-//
-//        //case RunCustomPopup(self, 'Styles Update', 'Styles updates are available. Do you want to download them?',
-//          //'Open Style Manager|Remind me later') of   //'Open Style Manager|Remind me later') of
-//          //1: begin
-//               //F := TFManageStyles.Create(self);
-//               //try
-//                 //F.ShowModal;
-//               //finally
-//                 //F.Free;
-//               //end;
-//             //end;
-//          // 2: do nothing;
-//        //end;
 //      end;
 //
 //    except
