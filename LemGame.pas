@@ -6167,8 +6167,6 @@ JumperArcFrames: Integer;
                   fLemNextAction := baSliding;
                 end else begin
                   TurnAround(L);
-                  //L.LemDX := -L.LemDX;   // Bookmark - can remove this
-                  //fLemNextAction := baFalling;
                 end;
               end;
               Exit;
