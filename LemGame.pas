@@ -1997,7 +1997,7 @@ begin
   begin               // All these states bypass ohno phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
                       baBallooning, baFalling, baSwimming, baDrifting, baReaching,
-                      baShimmying, baJumping, baFreezing, baFrozen] then
+                      baShimmying, baTurning, baJumping, baFreezing, baFrozen] then
     begin
       if L.LemAction = baBallooning then
       begin
@@ -2034,8 +2034,8 @@ begin
   if L.LemFreezerExplosionTimer = 0 then
   begin               // All these states bypass freezing phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baBallooning, baFalling, baSwimming, baReaching, baShimmying, baJumping,
-                      baFreezing, baFrozen] then
+                      baBallooning, baFalling, baSwimming, baReaching,
+                      baShimmying, baTurning, baJumping, baFreezing, baFrozen] then
     begin
       if L.LemAction = baBallooning then
         PopBalloon(L, 1, baFreezerExplosion)
@@ -2705,7 +2705,7 @@ function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding, baLaddering,
                baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
-               baReaching, baShimmying, baLasering, baDangling, baLooking];
+               baReaching, baShimmying, baTurning, baLasering, baDangling, baLooking];
 begin
   // Non-assignable from the top of the level
   if L.LemY <= 0 then
