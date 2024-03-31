@@ -1652,11 +1652,6 @@ procedure TLemmingGame.SetZombieField(L: TLemming);
 var
   X, Y: Integer;
 begin
-// Bookmark - this can be removed
-// If we wanted to limit zombie infectiousness to "live" states only, this would do it
-// It's been decided that they should be infectious as long as they're present at all
-//if not (L.LemAction in [baSplatting, baDrowning, baVaporizing, baVinetrapping,
-//                        baExploding, baTimebombFinish]) then
   with L do
   begin
     for X := LemX - 5 to LemX + 5 do
