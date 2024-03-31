@@ -1845,6 +1845,12 @@ begin
   if (NewAction = baBallooning) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY - 1;
 
+  if (NewAction = baBallooning) and (L.LemAction in [baClimbing, baSliding]) then
+  begin
+    TurnAround(L);
+    Inc(L.LemX, L.LemDx);
+  end;
+
   if (NewAction = baBlocking) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY + 2;
 
@@ -2759,8 +2765,8 @@ const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baDangling, baVaporizing, baVinetrapping, baDrowning,
-               baShimmying, baTurning, baClimbing, baHoisting, baSliding,
-               baSplatting, baExiting, baSleeping, baBallooning];
+               baShimmying, baTurning, baHoisting, baSplatting,
+               baExiting, baSleeping, baBallooning];
 begin
   Result := (not (L.LemAction in ActionSet));
 end;
