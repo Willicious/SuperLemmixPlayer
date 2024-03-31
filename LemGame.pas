@@ -2034,7 +2034,7 @@ begin
   if L.LemFreezerExplosionTimer = 0 then
   begin               // All these states bypass freezing phase
     if L.LemAction in [baVaporizing, baVinetrapping, baDrowning, baFloating, baGliding,
-                      baBallooning, baFalling, baSwimming, baReaching,
+                      baBallooning, baFalling, baSwimming, baDrifting, baReaching,
                       baShimmying, baTurning, baJumping, baFreezing, baFrozen] then
     begin
       if L.LemAction = baBallooning then
