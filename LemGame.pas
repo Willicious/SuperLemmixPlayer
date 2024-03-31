@@ -1799,6 +1799,11 @@ begin
         Inc(L.LemY);
   end;
 
+  if (NewAction = baShimmying) and (L.LemAction = baTurning) then
+  begin
+    Inc(L.LemY);
+  end;
+
   if (NewAction = baShimmying) and (L.LemAction = baSliding) then
   begin
     Inc(L.LemY, 2);
@@ -1832,16 +1837,6 @@ begin
         L.LemY := L.LemY - i;
         Break;
       end;
-  end;
-
-  if (NewAction = baTurning) and (L.LemAction = baShimmying) then
-  begin
-    // Bookmark - Shimmier to Turner transition stuff
-  end;
-
-  if (NewAction = baClimbing) and (L.LemAction = baTurning) then
-  begin
-    // Bookmark - Turner to Climber transition stuff
   end;
 
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
@@ -2499,8 +2494,8 @@ begin
     GenerateClonedLem(L);
   end
   else if (NewSkill = baShimmying) then
-  begin                // Putting baClimbing here stops climber>reacher transition
-    if L.LemAction in [baSliding, baJumping, baDehoisting, baDangling] then
+  begin                // These actions skip reacher state and go straight to shimmier
+    if L.LemAction in [baSliding, baJumping, baDehoisting, baDangling, baTurning] then
       Transition(L, baShimmying)
     else
       Transition(L, baReaching);
@@ -3005,8 +3000,9 @@ end;
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baLaddering,
-               baClimbing, baSwimming, baStacking, baBashing, baFencing, baMining,
-               baDigging, baLasering, baDangling, baLooking, baBallooning];
+               baTurning, baClimbing, baSwimming, baStacking, baBashing,
+               baFencing, baMining, baDigging, baLasering, baDangling,
+               baLooking, baBallooning];
 var
   CopyL: TLemming;
   i: Integer;
@@ -3019,7 +3015,13 @@ begin
       Exit;
     end else
   Result := (L.LemAction in ActionSet);
-  if L.LemAction = baClimbing then
+
+  if L.LemAction = baTurning then
+  begin
+    // Only allow Shimmier assignment once the lem has turned
+    Result := (L.LemFrame >= 2);
+
+  end else if L.LemAction = baClimbing then
   begin
     // Check whether the lemming would fall down the next frame
     CopyL := TLemming.Create;

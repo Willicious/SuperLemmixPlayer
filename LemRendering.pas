@@ -1067,7 +1067,7 @@ begin
     spbShimmier:
       if not DoProjection then
       begin
-        if CopyL.LemAction in [baJumping, baDangling] then
+        if CopyL.LemAction in [baJumping, baDangling, baTurning] then
           fRenderInterface.SimulateTransitionLem(CopyL, baShimmying)
         else
           fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
