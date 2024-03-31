@@ -143,6 +143,7 @@ resourcestring
   SFencer = 'Fencer';
   SReacher = 'Reacher';
   SShimmier = 'Shimmier';
+  STurner = 'Turner';
   SJumper = 'Jumper';
   SDehoister = 'Dehoister';
   SSlider = 'Slider';
@@ -225,18 +226,19 @@ const
     SFencer,      // 35
     SReacher,     // 36
     SShimmier,    // 37
-    SJumper,      // 38
-    SDehoister,   // 39
-    SSlider,      // 40
-    SDangler,     // 41
-    SSpearer,     // 42
-    SGrenader,    // 43
-    SLooker,      // 44
-    SLaserer,     // 45
-    SBallooner,   // 46
-    SLadderer,    // 47
-    SDrifter,     // 48
-    SSleeper      // 49
+    STurner,      // 38
+    SJumper,      // 39
+    SDehoister,   // 40
+    SSlider,      // 41
+    SDangler,     // 42
+    SSpearer,     // 43
+    SGrenader,    // 44
+    SLooker,      // 45
+    SLaserer,     // 46
+    SBallooner,   // 47
+    SLadderer,    // 48
+    SDrifter,     // 49
+    SSleeper      // 50
   );
 
 implementation

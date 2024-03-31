@@ -605,6 +605,20 @@ $ANIMATIONS
     $END
   $END
   
+  $TURNER
+    FRAMES 6
+    
+    $RIGHT
+      FOOT_X 9
+      FOOT_Y 12
+    $END
+
+    $LEFT
+      FOOT_X 6
+      FOOT_Y 12
+    $END
+  $END
+  
   $JUMPER
     FRAMES 3
     PEAK_FRAME 1

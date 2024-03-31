@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   // MUST MATCH BELOW (not the next list, the one after that)
   // And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 89;   // Num lem sprites
-  NUM_LEM_SPRITE_TYPE = 44;         // Num lem sprite types
+  NUM_LEM_SPRITES     = 91;   // Num lem sprites
+  NUM_LEM_SPRITE_TYPE = 45;         // Num lem sprite types
   WALKING             = 0;    // 1  // 1
   WALKING_RTL         = 1;    // 2
   ZOMBIEWALKING       = 2;    // 3  // 2
@@ -94,29 +94,31 @@ const
   REACHING_RTL        = 63;   // 64
   SHIMMYING           = 64;   // 65 // 33
   SHIMMYING_RTL       = 65;   // 66
-  JUMPING             = 66;   // 67 // 34
-  JUMPING_RTL         = 67;   // 68
-  DEHOISTING          = 68;   // 69 // 35
-  DEHOISTING_RTL      = 69;   // 70
-  SLIDING             = 70;   // 71 // 36
-  SLIDING_RTL         = 71;   // 72
-  DANGLING            = 72;   // 73 // 37
-  DANGLING_RTL        = 73;   // 74
-  THROWING            = 74;   // 75 // 38
-  THROWING_RTL        = 75;   // 76
-  LOOKING             = 76;   // 77 // 39
-  LOOKING_RTL         = 77;   // 78
-  LASERING            = 78;   // 79 // 40
-  LASERING_RTL        = 79;   // 80
-  BALLOONING          = 80;   // 81 // 41
-  BALLOONING_RTL      = 81;   // 82
-  LADDERING           = 82;   // 83 // 42
-  LADDERING_RTL       = 83;   // 84
-  DRIFTING            = 84;   // 85 // 43
-  DRIFTING_RTL        = 85;   // 86
-  SLEEPING            = 86;   // 87 // 44
-  SLEEPING_RTL        = 87;   // 88
-  ICECUBE             = 88;   // 89 Bookmark - this one does NOT need an RTL form;
+  TURNING             = 66;   // 67 // 34
+  TURNING_RTL         = 67;   // 68
+  JUMPING             = 68;   // 69 // 35
+  JUMPING_RTL         = 69;   // 70
+  DEHOISTING          = 70;   // 71 // 36
+  DEHOISTING_RTL      = 71;   // 72
+  SLIDING             = 72;   // 73 // 37
+  SLIDING_RTL         = 73;   // 74
+  DANGLING            = 74;   // 75 // 38
+  DANGLING_RTL        = 75;   // 76
+  THROWING            = 76;   // 77 // 39
+  THROWING_RTL        = 77;   // 78
+  LOOKING             = 78;   // 79 // 40
+  LOOKING_RTL         = 79;   // 80
+  LASERING            = 80;   // 81 // 41
+  LASERING_RTL        = 81;   // 82
+  BALLOONING          = 82;   // 83 // 42
+  BALLOONING_RTL      = 83;   // 84
+  LADDERING           = 84;   // 85 // 43
+  LADDERING_RTL       = 85;   // 86
+  DRIFTING            = 86;   // 87 // 44
+  DRIFTING_RTL        = 87;   // 88
+  SLEEPING            = 88;   // 89 // 45
+  SLEEPING_RTL        = 89;   // 90
+  ICECUBE             = 90;   // 91 Bookmark - this one does NOT need an RTL form;
                              // In fact in needs to be moved to the Masks section
                              // Also, it's not counted as a "sprite type"
 
@@ -159,18 +161,19 @@ const
     (FENCING, FENCING_RTL),                   // 35 baFencing
     (REACHING, REACHING_RTL),                 // 36 baReaching (for shimmier)
     (SHIMMYING, SHIMMYING_RTL),               // 37 baShimmying
-    (JUMPING, JUMPING_RTL),                   // 38 baJumping
-    (DEHOISTING, DEHOISTING_RTL),             // 39 baDehoisting
-    (SLIDING, SLIDING_RTL),                   // 40 baSliding
-    (DANGLING, DANGLING_RTL),                 // 41 baDangling
-    (THROWING, THROWING_RTL),                 // 42 baSpearing
-    (THROWING, THROWING_RTL),                 // 43 baGrenading
-    (LOOKING, LOOKING_RTL),                   // 44 baLooking
-    (LASERING, LASERING_RTL),                 // 45 baLasering
-    (BALLOONING, BALLOONING_RTL),             // 46 baBallooning
-    (LADDERING, LADDERING_RTL),               // 47 baPlatforming
-    (DRIFTING, DRIFTING_RTL),                 // 48 baDrifting
-    (SLEEPING, SLEEPING_RTL)                  // 49 baSleeping
+    (TURNING, TURNING_RTL),                   // 38 baTurning
+    (JUMPING, JUMPING_RTL),                   // 39 baJumping
+    (DEHOISTING, DEHOISTING_RTL),             // 40 baDehoisting
+    (SLIDING, SLIDING_RTL),                   // 41 baSliding
+    (DANGLING, DANGLING_RTL),                 // 42 baDangling
+    (THROWING, THROWING_RTL),                 // 43 baSpearing
+    (THROWING, THROWING_RTL),                 // 44 baGrenading
+    (LOOKING, LOOKING_RTL),                   // 45 baLooking
+    (LASERING, LASERING_RTL),                 // 46 baLasering
+    (BALLOONING, BALLOONING_RTL),             // 47 baBallooning
+    (LADDERING, LADDERING_RTL),               // 48 baPlatforming
+    (DRIFTING, DRIFTING_RTL),                 // 49 baDrifting
+    (SLEEPING, SLEEPING_RTL)                  // 50 baSleeping
   );
 
 type
@@ -244,7 +247,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..43] of String =  (
+  ANIM_NAMES: array[0..44] of String =  (
   'WALKER',        // 1
   'ZOMBIEWALKER',  // 2
   'ASCENDER',      // 3
@@ -278,17 +281,18 @@ const
   'FENCER',        // 31
   'REACHER',       // 32
   'SHIMMIER',      // 33
-  'JUMPER',        // 34
-  'DEHOISTER',     // 35
-  'SLIDER',        // 36
-  'DANGLER',       // 37
-  'THROWER',       // 38
-  'LOOKER',        // 39
-  'LASERER',       // 40
-  'BALLOONER',     // 41
-  'LADDERER',      // 42
-  'DRIFTER',       // 43
-  'SLEEPER'        // 44
+  'TURNER',        // 34
+  'JUMPER',        // 35
+  'DEHOISTER',     // 36
+  'SLIDER',        // 37
+  'DANGLER',       // 38
+  'THROWER',       // 39
+  'LOOKER',        // 40
+  'LASERER',       // 41
+  'BALLOONER',     // 42
+  'LADDERER',      // 43
+  'DRIFTER',       // 44
+  'SLEEPER'        // 45
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

@@ -81,18 +81,19 @@ type
     baFencing,         // 35
     baReaching,        // 36
     baShimmying,       // 37
-    baJumping,         // 38
-    baDehoisting,      // 39
-    baSliding,         // 40
-    baDangling,        // 41
-    baSpearing,        // 42
-    baGrenading,       // 43
-    baLooking,         // 44
-    baLasering,        // 45
-    baBallooning,      // 46
-    baLaddering,       // 47
-    baDrifting,        // 48
-    baSleeping         // 49
+    baTurning,         // 38
+    baJumping,         // 39
+    baDehoisting,      // 40
+    baSliding,         // 41
+    baDangling,        // 42
+    baSpearing,        // 43
+    baGrenading,       // 44
+    baLooking,         // 45
+    baLasering,        // 46
+    baBallooning,      // 47
+    baLaddering,       // 48
+    baDrifting,        // 49
+    baSleeping         // 50
   );
 
 const
@@ -303,18 +304,19 @@ const
     spbFencer,      // 35  baFencing
     spbNone,        // 36  baReaching
     spbShimmier,    // 37  baShimmying
-    spbJumper,      // 38  baJumping
-    spbNone,        // 39  baDehoisting
-    spbSlider,      // 40  baGliding
-    spbNone,        // 41  baDangling
-    spbSpearer,     // 42  baSpearing
-    spbGrenader,    // 43  baGrenading
-    spbNone,        // 44  baLooking
-    spbLaserer,     // 45  baLasering
-    spbBallooner,   // 46  baBallooning
-    spbLadderer,    // 47  baLaddering
-    spbNone,        // 48  baDrifting
-    spbNone         // 49  baSleeping
+    spbNone,        // 38  baTurning
+    spbJumper,      // 39  baJumping
+    spbNone,        // 40  baDehoisting
+    spbSlider,      // 41  baGliding
+    spbNone,        // 42  baDangling
+    spbSpearer,     // 43  baSpearing
+    spbGrenader,    // 44  baGrenading
+    spbNone,        // 45  baLooking
+    spbLaserer,     // 46  baLasering
+    spbBallooner,   // 47  baBallooning
+    spbLadderer,    // 48  baLaddering
+    spbNone,        // 49  baDrifting
+    spbNone         // 50  baSleeping
   );
 
 const

@@ -386,6 +386,7 @@ type
     function HandleFencing(L: TLemming): Boolean;
     function HandleReaching(L: TLemming) : Boolean;
     function HandleShimmying(L: TLemming) : Boolean;
+    function HandleTurning(L: TLemming) : Boolean;
     function HandleJumping(L: TLemming) : Boolean;
     function HandleDehoisting(L: TLemming) : Boolean;
       function LemCanDehoist(L: TLemming; AlreadyMovedX: Boolean): Boolean;
@@ -1130,6 +1131,7 @@ begin
   LemmingMethods[baFencing]       := HandleFencing;
   LemmingMethods[baReaching]      := HandleReaching;
   LemmingMethods[baShimmying]     := HandleShimmying;
+  LemmingMethods[baTurning]       := HandleTurning;
   LemmingMethods[baJumping]       := HandleJumping;
   LemmingMethods[baDehoisting]    := HandleDehoisting;
   LemmingMethods[baSliding]       := HandleSliding;
@@ -1173,6 +1175,7 @@ begin
   NewSkillMethods[baCloning]      := MayAssignCloner;
   NewSkillMethods[baFencing]      := MayAssignFencer;
   NewSkillMethods[baShimmying]    := MayAssignShimmier;
+  NewSkillMethods[baTurning]      := nil;
   NewSkillMethods[baJumping]      := MayAssignJumper;
   NewSkillMethods[baDehoisting]   := nil;
   NewSkillMethods[baSliding]      := MayAssignSlider;
@@ -1688,55 +1691,56 @@ const
   // Number of physics frames for the various lemming actions.
   ANIM_FRAMECOUNT: array[TBasicLemmingAction] of Integer =
     (
-     0, // 1 baNone,
-     4, // 2 baWalking,
+     0, // 1 baNone
+     4, // 2 baWalking
      8, // 3 baZombieWalking
-     1, // 4 baAscending,
-    16, // 5 baDigging,
-     8, // 6 baClimbing,
-    16, // 7 baDrowning,
-     8, // 8 baHoisting,
-    16, // 9 baBuilding,
-    16, // 10 baBashing,
-    24, // 11 baMining,
-     4, // 12 baFalling,
-    17, // 13 baFloating,
-    16, // 14 baSplatting,
-     8, // 15 baExiting,
-    14, // 16 baVaporizing,
-     9, // 17 baVinetrapping,
-    16, // 18 baBlocking,
-     8, // 19 baShrugging,
-    16, // 20 baTimebombing, - same as OhNoing
+     1, // 4 baAscending
+    16, // 5 baDigging
+     8, // 6 baClimbing
+    16, // 7 baDrowning
+     8, // 8 baHoisting
+    16, // 9 baBuilding
+    16, // 10 baBashing
+    24, // 11 baMining
+     4, // 12 baFalling
+    17, // 13 baFloating
+    16, // 14 baSplatting
+     8, // 15 baExiting
+    14, // 16 baVaporizing
+     9, // 17 baVinetrapping
+    16, // 18 baBlocking
+     8, // 19 baShrugging
+    16, // 20 baTimebombing - same as OhNoing
      1, // 21 baTimebombFinish - same as Exploding
-    16, // 22 baOhnoing,
-     1, // 23 baExploding,
-     0, // 24 baToWalking,
-    16, // 25 baPlatforming,
-     8, // 26 baStacking,
-     8, // 27 baFreezing,
-     1, // 28 baFreezerExplosion,
-     1, // 29 baFrozen,
-    12, // 30 baUnfreezing,
-     8, // 31 baSwimming,
-    17, // 32 baGliding,
-    16, // 33 baFixing,
-     0, // 34 baCloning,
-    16, // 35 baFencing,
-     8, // 36 baReaching,
+    16, // 22 baOhnoing
+     1, // 23 baExploding
+     0, // 24 baToWalking
+    16, // 25 baPlatforming
+     8, // 26 baStacking
+     8, // 27 baFreezing
+     1, // 28 baFreezerExplosion
+     1, // 29 baFrozen
+    12, // 30 baUnfreezing
+     8, // 31 baSwimming
+    17, // 32 baGliding
+    16, // 33 baFixing
+     0, // 34 baCloning
+    16, // 35 baFencing
+     8, // 36 baReaching
     20, // 37 baShimmying
-    19, // 38 baJumping
-     7, // 39 baDehoisting
-     1, // 40 baSliding
-    16, // 41 baDangling
-    10, // 42 baSpearing
-    10, // 43 baGrenading
-    14, // 44 baLooking
-    12, // 45 baLasering - it's, ironically, this high for rendering purposes
-    17, // 46 baBallooning
-    25, // 47 baLaddering
-    8,  // 48 baDrifting
-    20  // 49 baSleeping
+     6, // 38 baTurning
+    19, // 39 baJumping
+     7, // 40 baDehoisting
+     1, // 41 baSliding
+    16, // 42 baDangling
+    10, // 43 baSpearing
+    10, // 44 baGrenading
+    14, // 45 baLooking
+    12, // 46 baLasering - it's, ironically, this high for rendering purposes
+    17, // 47 baBallooning
+    25, // 48 baLaddering
+    8,  // 49 baDrifting
+    20  // 50 baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1828,6 +1832,16 @@ begin
         L.LemY := L.LemY - i;
         Break;
       end;
+  end;
+
+  if (NewAction = baTurning) and (L.LemAction = baShimmying) then
+  begin
+    // Bookmark - Shimmier to Turner transition stuff
+  end;
+
+  if (NewAction = baClimbing) and (L.LemAction = baTurning) then
+  begin
+    // Bookmark - Turner to Climber transition stuff
   end;
 
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
@@ -2582,8 +2596,8 @@ var
       Perm    : Result :=     L.HasPermanentSkills;
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging,
                                                baBuilding, baLaddering, baPlatforming, baStacking,
-                                               baBlocking, baShrugging,
-                                               baReaching, baShimmying, baLasering, baLooking]);
+                                               baBlocking, baShrugging, baReaching, baShimmying,
+                                               baTurning, baLasering, baLooking]);
       Walk    : Result :=     (L.LemAction in [baWalking, baAscending]);
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
@@ -4465,8 +4479,8 @@ const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baShrugging, baTimebombing, baOhnoing, baExploding,
                       baFreezerExplosion, baFreezing, baFrozen, baUnfreezing,
-                      baReaching, baDehoisting, baVaporizing, baVinetrapping,
-                      baDangling, baLooking, baLaddering, baSleeping];
+                      baReaching, baTurning, baDehoisting, baVaporizing,
+                      baVinetrapping, baDangling, baLooking, baLaddering];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -5152,6 +5166,19 @@ begin
         Transition(L, baFalling, True); // Turn around as well
       end;
     end;
+  end;
+end;
+
+
+function TLemmingGame.HandleTurning(L: TLemming): Boolean;
+begin
+  if L.LemFrame = 2 then
+    TurnAround(L);
+
+  if L.LemEndOfAnimation then
+  begin
+    Dec(L.LemY);
+    Transition(L, baClimbing);
   end;
 end;
 
@@ -6024,9 +6051,9 @@ begin
       // For transition to Climber, there must be at least 2px of climbable terrain
       if (LemDY <= -1) and L.LemIsClimber then
         begin
-          TurnAround(L);
+          //TurnAround(L);
           Dec(L.LemY);
-          Transition(L, baClimbing);
+          Transition(L, baTurning); // Turner then transitions to Climber
           Exit;
         end else
           Transition(L, baFalling);

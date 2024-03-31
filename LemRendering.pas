@@ -998,7 +998,7 @@ const
                        baDigging, baClimbing, baHoisting, baBuilding, baBashing,
                        baMining, baFalling, baFloating, baShrugging, baPlatforming,
                        baStacking, baSwimming, baGliding, baFixing, baFencing,
-                       baReaching, baShimmying, baJumping, baBallooning,
+                       baReaching, baShimmying, baTurning, baJumping, baBallooning,
                        baDehoisting, baSliding, baDangling, baLasering, baLooking];
 begin
   // Copy L to simulate the path
