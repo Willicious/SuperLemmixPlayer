@@ -1845,22 +1845,6 @@ begin
   if (NewAction = baBallooning) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY - 1;
 
-  if (NewAction = baBallooning) and (L.LemAction in [baClimbing, baSliding]) then
-  begin
-    // If the balloon wouldn't immediately pop, turn and proceed as usual
-    if not HasPixelAt(L.LemX, L.LemY - 27) then
-    begin
-      TurnAround(L);
-      Inc(L.LemX, L.LemDx);
-    end;
-  end;
-
-  if (NewAction = baBallooning) and (L.LemAction in [baHoisting, baDehoisting]) then
-  begin
-    TurnAround(L);
-    Inc(L.LemX, L.LemDx);
-  end;
-
   if (NewAction = baBlocking) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY + 2;
 
@@ -6486,22 +6470,24 @@ begin
   // Pre-flight checks
   if L.LemPhysicsFrame <= 8 then
   begin
-    for XChecks := 0 to 6 do
+    for XChecks := 0 to 5 do
     begin
       YChecks := FindGroundPixel(L.LemX + (XChecks * L.LemDX), L.LemY);
 
-      // Only perform the following if the lem would turn/climb anyway
-      if (YChecks < -6) and HasPixelAt(L.LemX + (XChecks * L.LemDX), L.LemY - 27) then
+      // Only turn if the lem would turn/climb anyway
+      if (YChecks < -9) then
         TurnAround(L);
 
+      // Move away from terrain that would immediately pop the balloon
       case L.LemFrame of
         0 .. 4: XOffset := L.LemFrame;
         5, 6: XOffset := 4;
         7, 8: XOffset := 5;
       end;
 
-      // Move away from terrain that would immediately pop the balloon
-      if HasPixelAt(L.LemX - (XOffset * L.LemDX), L.LemY - 27) then
+      YChecks := FindGroundPixel(L.LemX - (XOffset * L.LemDX), L.LemY);
+
+      if (YChecks < -9) then
         Inc(L.LemX, L.LemDX);
     end;
 
