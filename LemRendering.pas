@@ -3714,6 +3714,12 @@ var
       Upscale(BgImg, Info.Settings);
     end;
   end;
+
+  function CanShimmy: Boolean;
+  begin
+    Result := ((fPhysicsMap.PixelS[L.LemX, L.LemY - 9] and PM_SOLID) <> 0)
+           or ((fPhysicsMap.PixelS[L.LemX, L.LemY - 10] and PM_SOLID) <> 0);
+  end;
 begin
   if RenderInfoRec.Level = nil then Exit;
 
@@ -3756,9 +3762,13 @@ begin
     L.SetFromPreplaced(Lem);
     L.LemIsZombie := Lem.IsZombie;
 
-    if (Lem.IsShimmier and ((fPhysicsMap.PixelS[L.LemX, L.LemY - 9] and PM_SOLID) <> 0)) then
-      L.LemAction := baShimmying
-    else if Lem.IsBallooner then
+    if Lem.IsShimmier then
+    begin
+      if CanShimmy then
+        L.LemAction := baShimmying
+      else
+        L.LemAction := baReaching;
+    end else if Lem.IsBallooner then
       L.LemAction := baBallooning
     else if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
       L.LemAction := baFalling

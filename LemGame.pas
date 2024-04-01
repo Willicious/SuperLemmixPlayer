@@ -1456,6 +1456,12 @@ var
   L: TLemming;
   Lem: TPreplacedLemming;
   i: Integer;
+
+  function CanShimmy: Boolean;
+  begin
+    Result := HasPixelAt(L.LemX, L.LemY - 9)
+           or HasPixelAt(L.LemX, L.LemY - 10);
+  end;
 begin
   for i := 0 to GameParams.Level.PreplacedLemmings.Count-1 do
   begin
@@ -1467,9 +1473,13 @@ begin
       L.LemIdentifier := 'P' + IntToStr(Lem.X) + '.' + IntToStr(Lem.Y);
       SetFromPreplaced(Lem);
 
-      if Lem.IsShimmier and HasPixelAt(L.LemX, L.LemY - 9) then
-        Transition(L, baShimmying)
-      else if Lem.IsBallooner then
+      if Lem.IsShimmier then
+      begin
+        if CanShimmy then
+          Transition(L, baShimmying)
+        else
+          Transition(L, baReaching);
+      end else if Lem.IsBallooner then
         Transition(L, baBallooning)
       else if not HasPixelAt(L.LemX, L.LemY) then
         Transition(L, baFalling)
