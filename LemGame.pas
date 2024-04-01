@@ -6486,10 +6486,13 @@ begin
   // Pre-flight checks
   if L.LemPhysicsFrame <= 8 then
   begin
-      // Move away from terrain that would immediately pop the balloon
-      for XOffset := 1 to 6 do
-        if HasPixelAt(L.LemX + (XOffset * L.LemDX), L.LemY - 27) then
-          TurnAround(L);
+    for XChecks := 0 to 6 do
+    begin
+      YChecks := FindGroundPixel(L.LemX + (XChecks * L.LemDX), L.LemY);
+
+      // Only perform the following if the lem would turn/climb anyway
+      if (YChecks < -6) and HasPixelAt(L.LemX + (XChecks * L.LemDX), L.LemY - 27) then
+        TurnAround(L);
 
       case L.LemFrame of
         0 .. 4: XOffset := L.LemFrame;
@@ -6497,8 +6500,10 @@ begin
         7, 8: XOffset := 5;
       end;
 
+      // Move away from terrain that would immediately pop the balloon
       if HasPixelAt(L.LemX - (XOffset * L.LemDX), L.LemY - 27) then
-          Inc(L.LemX, L.LemDX);
+        Inc(L.LemX, L.LemDX);
+    end;
 
   end else begin // Flight checks
 
