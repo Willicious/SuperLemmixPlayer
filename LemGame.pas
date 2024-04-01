@@ -6470,7 +6470,7 @@ end;
 
 function TLemmingGame.HandleBallooning(L: TLemming): Boolean;
 var
-XChecks, YChecks: Integer;
+XChecks, YChecks, XOffset: Integer;
 ShouldPop: Boolean;
 
   procedure Pop;
@@ -6483,8 +6483,25 @@ begin
   Result := True;
   ShouldPop := False;
 
-  if L.LemPhysicsFrame >= 9 then
+  // Pre-flight checks
+  if L.LemPhysicsFrame <= 8 then
   begin
+      // Move away from terrain that would immediately pop the balloon
+      for XOffset := 1 to 6 do
+        if HasPixelAt(L.LemX + (XOffset * L.LemDX), L.LemY - 27) then
+          TurnAround(L);
+
+      case L.LemFrame of
+        0 .. 4: XOffset := L.LemFrame;
+        5, 6: XOffset := 4;
+        7, 8: XOffset := 5;
+      end;
+
+      if HasPixelAt(L.LemX - (XOffset * L.LemDX), L.LemY - 27) then
+          Inc(L.LemX, L.LemDX);
+
+  end else begin // Flight checks
+
     // Always ascend
     Dec(L.LemY);
 
