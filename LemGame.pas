@@ -1845,17 +1845,17 @@ begin
   if (NewAction = baBallooning) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY - 1;
 
-  if (NewAction = baBallooning) and (L.LemAction = baHoisting) then
+  if (NewAction = baBallooning) and (L.LemAction in [baClimbing, baSliding]) then
   begin
-    if L.LemFrame in [0, 1, 2, 3] then
+    // If the balloon wouldn't immediately pop, turn and proceed as usual
+    if not HasPixelAt(L.LemX, L.LemY - 27) then
     begin
       TurnAround(L);
       Inc(L.LemX, L.LemDx);
-    end else
-      L.LemY := L.LemY - 1;
+    end;
   end;
 
-  if (NewAction = baBallooning) and (L.LemAction in [baClimbing, baDehoisting, baSliding]) then
+  if (NewAction = baBallooning) and (L.LemAction in [baHoisting, baDehoisting]) then
   begin
     TurnAround(L);
     Inc(L.LemX, L.LemDx);
