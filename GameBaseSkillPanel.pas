@@ -114,6 +114,7 @@ type
       function LemmingSavedStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
+    procedure SetPanelMessage(Pos: Integer);
     procedure SetInfoCursorLemming(Pos: Integer);
       function GetSkillString(L: TLemming): String;
     procedure SetInfoLemHatch(Pos: Integer);
@@ -180,7 +181,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 49;
+  NUM_FONT_CHARS = 50;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -1399,7 +1400,7 @@ begin
       '0'..'9':    CharID := ord(New) - ord('0') + 1;
       '-':         CharID := 11;
       'A'..'Z':    CharID := ord(New) - ord('A') + 12;
-      #91 .. #101: CharID := ord(New) - ord('A') + 12;
+      #91 .. #102: CharID := ord(New) - ord('A') + 12;
     else CharID := -1;
     end;
 
@@ -1495,6 +1496,21 @@ begin
     Image.EndUpdate;
     Image.Invalidate;
   end;
+end;
+
+procedure TBaseSkillPanel.SetPanelMessage(Pos: Integer);
+var
+  SrcRect: TRect;
+  i: Integer;
+begin
+  // Only load this one when needed
+  GetGraphic('panel_message.png', fIconBmp);
+  SrcRect := Rect(0, 0, 140 * ResMod, 16 * ResMod);
+  i := NUM_FONT_CHARS - 1;
+  fInfoFont[i].SetSize(140 * ResMod, 16 * ResMod);
+  fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+
+  fNewDrawStr[Pos] := #102;
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;

@@ -92,8 +92,13 @@ end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
-  SetInfoCursorLemming(1);
-  SetReplayMark(14);
+  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
+    SetPanelMessage(1)
+  else begin
+    SetInfoCursorLemming(1);
+    SetReplayMark(14);
+  end;
+
   SetCollectibleIcon(16);
   SetInfoLemHatch(20);
   SetInfoLemAlive(26);
