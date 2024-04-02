@@ -585,8 +585,9 @@ var
 const
   TALISMANS_Y_POSITION = 408;
 begin
-  if GameParams.Level.Talismans.Count = 0 then
-    Exit;
+  if (GameParams.Level.Talismans.Count = 0) and
+     (GameParams.Level.Info.CollectibleCount = 0) then
+        Exit;
 
   KeepTalismans := False;
   HasCollectibles := GameParams.Level.Info.CollectibleCount > 0;
