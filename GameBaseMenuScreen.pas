@@ -103,8 +103,7 @@ type
       fKeyStates: TDictionary<Word, UInt64>;
 
       fBasicCursor: TNLCursor;
-
-
+      fCalledFromClassicModeButton: Boolean;
 
       procedure LoadBasicCursor;
       procedure SetBasicCursor;
@@ -222,6 +221,8 @@ begin
   OnMouseMove := Form_MouseMove;
   ScreenImg.OnMouseDown := Img_MouseDown;
   ScreenImg.OnMouseMove := Img_MouseMove;
+
+  fCalledFromClassicModeButton := False;
 
   {$ifdef exp}{$ifndef rc}
   //MakeHiddenOption(lka_SaveImage, SaveScreenImage);   // Bookmark - why is this commented out?
@@ -580,12 +581,16 @@ begin
     GameParams.HideSkillQ := False;
   end;
 
-  // Reload config to apply changes
-  GameParams.Save(scCritical);
-  GameParams.Load;
-
-  // Redraw button
-  DrawClassicModeButton;
+  // Reload config to apply changes and redraw button
+  if GameParams.TestModeLevel <> nil then
+  begin
+    fCalledFromClassicModeButton := True;
+    ShowConfigMenu;
+  end else begin
+    GameParams.Save(scCritical);
+    GameParams.Load;
+    DrawClassicModeButton;
+  end;
 end;
 
 procedure TGameBaseMenuScreen.HandleKeyboardInput(Key: Word);
@@ -986,19 +991,34 @@ begin
   ConfigDlg := TFormNXConfig.Create(self);
   try
     ConfigDlg.SetGameParams;
-    ConfigDlg.NXConfigPages.TabIndex := 0;
-    ConfigDlg.ShowModal;
-    ResetWindowSize := ConfigDlg.ResetWindowSize;
-    ResetWindowPos := ConfigDlg.ResetWindowPosition;
+
+    // Skip the dialog and go straight to result
+    if fCalledFromClassicModeButton and (GameParams.TestModeLevel <> nil) then
+      ConfigDlg.ModalResult := MrOK
+
+    // Show the dialog
+    else begin
+      ConfigDlg.NXConfigPages.TabIndex := 0;
+      ConfigDlg.ShowModal;
+      ResetWindowSize := ConfigDlg.ResetWindowSize;
+      ResetWindowPos := ConfigDlg.ResetWindowPosition;
+    end;
+
   finally
     ConfigDlg.Free;
   end;
 
-  { Wise advice from Simon - save these things on exiting the  config dialog, rather than
+  { Wise advice from Simon - save these things on exiting the config dialog, rather than
     waiting for a quit or a screen transition to save them. }
   GameParams.Save(scImportant);
   ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
-  DoAfterConfig;
+
+  if fCalledFromClassicModeButton then
+  begin
+    fCalledFromClassicModeButton := False;
+    DrawClassicModeButton;
+  end else
+    DoAfterConfig;
 end;
 
 procedure TGameBaseMenuScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
