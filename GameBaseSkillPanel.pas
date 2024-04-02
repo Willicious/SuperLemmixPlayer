@@ -1121,7 +1121,7 @@ begin
   MessageImage := TBitmap32.Create;
   try
     try
-      fMinimapTemp.SetSize(104 * ResMod, 34 * ResMod);
+      fMinimapTemp.SetSize(85 * ResMod, 32 * ResMod);
       fMinimapTemp.Clear(0);
       GetGraphic(GraphicName, MessageImage);
       fMinimapTemp.Draw(0, 0, MessageImage);

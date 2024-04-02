@@ -2093,7 +2093,7 @@ begin
      and allows nuke whilst there are still lems to spawn}
     (NukeIsActive or (LemmingsToSpawn = 0)) and not
     // Allows nuke animation to play out in full for zombies
-    not (NukeIsActive and ZombiesRemain) and not
+    (NukeIsActive and ZombiesRemain) and not
     // Keep playing if there is a Kill All Zombies talisman and active zombies
     (LevelHasKillZombiesTalisman and ZombiesRemain))
 
