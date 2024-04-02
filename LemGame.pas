@@ -3683,7 +3683,7 @@ begin
   if (CollectiblesRemain = 0) then
   begin
     CollectiblesCompleted := True;
-    CueSoundEffect(SFX_ALLCOLLECT);
+    CueSoundEffect(SFX_APPLAUSE);
 
     // Optionally apply invincibility to the first lem who reaches the final collectible
     if Level.Info.InvincibilityMode then
