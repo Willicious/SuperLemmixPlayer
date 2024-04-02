@@ -563,7 +563,7 @@ begin
     OffsetRect(SrcRect, 12 * ResMod, 0);
   end;
 
-  // Load now the replay icons for the text panel        //boook
+  // Load now the replay icons for the text panel
   GetGraphic('replay_icons.png', fIconBmp);
   SrcRect := Rect(0, 0, 12 * ResMod, 16 * ResMod);
   for i := 45 to NUM_FONT_CHARS - 1 do
@@ -1672,8 +1672,6 @@ begin
   // Calculate the frame index based on the tick count
   TickCount := GetTickCount;
   FrameIndex := (TickCount div 500) mod 2;
-
-  //boook
 
   if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     fNewDrawStr[Pos] := ' '
