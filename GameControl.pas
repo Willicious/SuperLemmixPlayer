@@ -333,6 +333,7 @@ var
 begin
   ElevateSaveCriticality(aCriticality);
 
+  if TestModeLevel <> nil then Exit;
   if fDisableSaveOptions then Exit;
   if not LoadedConfig then Exit;
   if IsHalting then Exit;
