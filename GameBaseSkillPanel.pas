@@ -164,7 +164,6 @@ type
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawTurboHighlight;
-    procedure DrawMinimapMessage(const GraphicName: string; out MessageImage: TBitmap32);
     procedure DrawMinimap; virtual;
 
     property Minimap: TBitmap32 read fMinimap;
@@ -1117,24 +1116,6 @@ begin
   end;
 end;
 
-procedure TBaseSkillPanel.DrawMinimapMessage(const GraphicName: string; out MessageImage: TBitmap32);
-begin
-  MessageImage := TBitmap32.Create;
-  try
-    try
-      fMinimapTemp.SetSize(85 * ResMod, 32 * ResMod);
-      fMinimapTemp.Clear(0);
-      GetGraphic(GraphicName, MessageImage);
-      fMinimapTemp.Draw(0, 0, MessageImage);
-    except
-      on E: Exception do
-        Exit;
-    end;
-  finally
-    MessageImage.Free;
-  end;
-end;
-
 procedure TBaseSkillPanel.DrawMinimap;
 var
   BaseOffsetHoriz, BaseOffsetVert: Double;
@@ -1147,33 +1128,28 @@ if GameParams.ShowMinimap then
   begin
     if Parent = nil then Exit;
 
-    // Draw a message instead of the minimap in certain conditions
-    if Game.StateIsUnplayable and not Game.ShouldExitToPostview then
-      DrawMinimapMessage('nolems_message.png', MinimapMessage)
-    else begin
-      // Add some space for when the viewport rect lies on the very edges
-      fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
-      fMinimapTemp.Clear(0);
+    // Add some space for when the viewport rect lies on the very edges
+    fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
+    fMinimapTemp.Clear(0);
 
-      fMinimap.DrawTo(fMinimapTemp, 1 * ResMod, 1 * ResMod);
+    fMinimap.DrawTo(fMinimapTemp, 1 * ResMod, 1 * ResMod);
 
-      BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
-      BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
+    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
+    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
 
-      // Draw the visible area frame
-      ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
-      OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
-      fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+    // Draw the visible area frame
+    ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
+    OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
+    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
-      if GameParams.HighResolution then
-      begin
-        InnerViewRect := ViewRect;
-        Inc(InnerViewRect.Left);
-        Inc(InnerViewRect.Top);
-        Dec(InnerViewRect.Bottom);
-        Dec(InnerViewRect.Right);
-        fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
-      end;
+    if GameParams.HighResolution then
+    begin
+      InnerViewRect := ViewRect;
+      Inc(InnerViewRect.Left);
+      Inc(InnerViewRect.Top);
+      Dec(InnerViewRect.Bottom);
+      Dec(InnerViewRect.Right);
+      fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
     end;
 
     fMinimapImage.Bitmap.Assign(fMinimapTemp);
