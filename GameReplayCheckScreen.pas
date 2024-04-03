@@ -374,7 +374,7 @@ begin
             Game.UpdateLemmings;
 
             if (Game.CurrentIteration > CutoffFrame) or
-               Game.IsOutOfTime then
+               Game.IsOutOfTime or Game.StateIsUnplayable then
             begin
               Game.Finish(GM_FIN_TERMINATE);
               if Game.GameResultRec.gSuccess then
