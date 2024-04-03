@@ -1479,6 +1479,10 @@ var
   SrcRect: TRect;
   i: Integer;
 begin
+  // Clear the panel
+  for i := 1 to 14 do
+    fNewDrawStr[i] := ' ';
+
   // Only load this one when needed
   GetGraphic('panel_message.png', fIconBmp);
   SrcRect := Rect(0, 0, 140 * ResMod, 16 * ResMod);
@@ -1506,7 +1510,8 @@ var
   end;
 begin
   Result := '';
-  if L = nil then Exit;
+
+  if (L = nil) then Exit;
 
   Result := LemmingActionStrings[L.LemAction];
 
@@ -1551,6 +1556,9 @@ var
 const
   LEN = 14;
 begin
+  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
+    Exit;
+
   S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
   if S = '' then
     S := StringOfChar(' ', LEN)
@@ -1668,7 +1676,8 @@ end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
 begin
-  if (Level.Info.CollectibleCount <= 0) then
+  if (Level.Info.CollectibleCount <= 0)
+  or (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
     fNewDrawStr[Pos] := ' '
   else if Game.CollectiblesCompleted then
     fNewDrawStr[Pos] := #92
