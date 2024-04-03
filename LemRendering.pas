@@ -3070,14 +3070,18 @@ var
   BMP: TBitmap32;
   DrawPoint: TPoint;
 begin
-  MakeColorCycle;
-
   BMP := fHelperImages[fRenderInterface.UserHelper];
   DrawPoint := fRenderInterface.MousePos;
   DrawPoint.X := DrawPoint.X;
   DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2 div ResMod);
-  BMP.DrawMode := dmCustom;
-  BMP.OnPixelCombine := CombineFixedColor;
+
+  if GameParams.ColourCycle then
+  begin
+    MakeColorCycle;
+    BMP.DrawMode := dmCustom;
+    BMP.OnPixelCombine := CombineFixedColor;
+  end;
+
   BMP.DrawTo(fLayers[rlObjectHelpers], DrawPoint.X * ResMod, DrawPoint.Y * ResMod);
   fLayers.fIsEmpty[rlObjectHelpers] := false;
 end;

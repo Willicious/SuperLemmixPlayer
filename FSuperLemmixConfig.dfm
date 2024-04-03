@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 276
     Height = 439
-    ActivePage = TabSheet1
+    ActivePage = Graphics
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -396,7 +396,7 @@ object FormNXConfig: TFormNXConfig
           '1x Zoom')
       end
       object cbFullScreen: TCheckBox
-        Left = 38
+        Left = 24
         Top = 80
         Width = 205
         Height = 17
@@ -405,7 +405,7 @@ object FormNXConfig: TFormNXConfig
         OnClick = cbFullScreenClick
       end
       object cbHighResolution: TCheckBox
-        Left = 38
+        Left = 24
         Top = 103
         Width = 205
         Height = 17
@@ -414,7 +414,7 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object cbIncreaseZoom: TCheckBox
-        Left = 38
+        Left = 24
         Top = 126
         Width = 205
         Height = 17
@@ -423,7 +423,7 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object cbLinearResampleMenu: TCheckBox
-        Left = 38
+        Left = 24
         Top = 149
         Width = 205
         Height = 17
@@ -433,7 +433,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbMinimapOptions: TGroupBox
         Left = 24
-        Top = 210
+        Top = 240
         Width = 219
         Height = 48
         Caption = 'Minimap Options'
@@ -476,7 +476,7 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object cbNoBackgrounds: TCheckBox
-        Left = 38
+        Left = 24
         Top = 172
         Width = 205
         Height = 17
@@ -486,7 +486,7 @@ object FormNXConfig: TFormNXConfig
       end
       object ResetWindow: TGroupBox
         Left = 24
-        Top = 292
+        Top = 322
         Width = 219
         Height = 49
         TabOrder = 9
@@ -511,12 +511,21 @@ object FormNXConfig: TFormNXConfig
       end
       object btnResetWindow: TButton
         Left = 65
-        Top = 276
+        Top = 306
         Width = 135
         Height = 34
         Caption = 'Reset Window'
         TabOrder = 8
         OnClick = btnResetWindowClick
+      end
+      object cbColourCycle: TCheckBox
+        Left = 24
+        Top = 195
+        Width = 235
+        Height = 17
+        Caption = 'Use Colour Cycle For Fall Distance Ruler'
+        TabOrder = 10
+        OnClick = OptionChanged
       end
     end
     object TabSheet3: TTabSheet

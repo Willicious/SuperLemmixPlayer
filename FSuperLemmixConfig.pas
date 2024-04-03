@@ -64,13 +64,12 @@ type
     cbPostviewJingles: TCheckBox;
     rgGameLoading: TRadioGroup;
     cbMenuSounds: TCheckBox;
+    cbColourCycle: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
     procedure OptionChanged(Sender: TObject);
-    //procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
-    //procedure btnStylesClick(Sender: TObject);
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
@@ -257,6 +256,7 @@ begin
     cbNoAutoReplay.Checked := not GameParams.NoAutoReplayMode;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+    cbColourCycle.Checked := GameParams.ColourCycle;
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbHideClearPhysics.Checked := GameParams.HideClearPhysics;
@@ -327,6 +327,7 @@ begin
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.ColourCycle := cbColourCycle.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.HideClearPhysics := cbHideClearPhysics.Checked;

@@ -74,6 +74,7 @@ type
     moPauseAfterBackwards,
     moTurboFF,
     moNoBackgrounds,
+    moColourCycle,
     moClassicMode,
     moHideShadows,
     moHideClearPhysics,
@@ -114,6 +115,7 @@ const
     moFullScreen,
     moMinimapHighQuality,
     moShowMinimap,
+    moColourCycle,
     moIncreaseZoom,
     moEdgeScroll,
     moPreferYippee,
@@ -240,6 +242,7 @@ type
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
+    property ColourCycle: boolean Index moColourCycle read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
     property HideClearPhysics: boolean Index moHideClearPhysics read GetOptionFlag write SetOptionFlag;
@@ -445,6 +448,7 @@ begin
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('TurboFastForward', TurboFF);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
+  SaveBoolean('ColourCycle', ColourCycle);
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('HideClearPhysics', HideClearPhysics);
@@ -614,6 +618,7 @@ begin
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+    ColourCycle := LoadBoolean('ColourCycle', ColourCycle);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     HideClearPhysics := LoadBoolean('HideClearPhysics', HideClearPhysics);
