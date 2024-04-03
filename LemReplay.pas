@@ -17,7 +17,7 @@ interface
 uses
   Dialogs,
   LemLevel,
-  LemLemming, LemCore, LemVersion,
+  LemLemming, LemCore, LemVersion, LemStrings,
   Contnrs, Classes, SysUtils, StrUtils, Windows,
   LemNeoParser;
 
@@ -312,9 +312,9 @@ class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TRepla
   function GetDefaultSavePath: String;
   begin
     if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
-      Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
+      Result := ExtractFilePath(ParamStr(0)) + SFReplays
     else
-      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name) + '\';
+      Result := ExtractFilePath(ParamStr(0)) + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name) + '\';
     if aSaveOccasion = rsoAuto then Result := Result + 'Auto\';
   end;
 

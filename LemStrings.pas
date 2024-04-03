@@ -33,6 +33,7 @@ const
       SFTheme = 'theme.nxtm';
 
   SFLevels = 'levels\';
+  SFReplays = 'replays\';
 
   SFSounds = 'sound\';
   SFMusic = 'music\';
