@@ -35,7 +35,6 @@ type
     function LoadReplay: Boolean;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-    //procedure FadeIn;
     procedure FadeOut;
 
     procedure MainFormResized; virtual; abstract;
@@ -105,37 +104,6 @@ begin
   inherited Destroy;
 end;
 
-//procedure TGameBaseScreen.FadeIn;
-//const
-//  MaxAlpha = 255; // Maximum alpha value (fully opaque)
-//  FadeSpeed = 3;  // Adjust this value to control the speed of the fade
-//var
-//  FadeAlpha: Byte;
-//  FadeBitmap: TBitmap32;
-//  ScreenRect: TRect;
-//begin
-//  FadeAlpha := MaxAlpha;
-//  FadeBitmap := TBitmap32.Create;
-//  try
-//    // Create a black bitmap with the size of the screen
-//    FadeBitmap.SetSize(Screen.Width, Screen.Height);
-//    FadeBitmap.Canvas.Brush.Color := clBlack32;
-//    ScreenRect := Rect(0, 0, FadeBitmap.Width, FadeBitmap.Height);
-//
-//    // Gradually reduce the alpha value to create the fade-in effect
-//    while FadeAlpha > 0 do
-//    begin
-//      Application.ProcessMessages; // Allow other messages to be processed
-//      FadeBitmap.Canvas.Brush.Color := RGB(0, 0, 0); // Set the brush color to black
-//      FadeBitmap.Canvas.Font.Color := RGB(FadeAlpha, FadeAlpha, FadeAlpha);
-//      FadeBitmap.Canvas.FillRect(ScreenRect);
-//      FadeBitmap.DrawTo(ScreenImg.Bitmap, ScreenImg.Bitmap.Width, ScreenImg.Bitmap.Height);
-//      Dec(FadeAlpha, FadeSpeed);
-//    end;
-//  finally
-//    FadeBitmap.Free;
-//  end;
-//end;
 
 procedure TGameBaseScreen.FadeOut;
 var

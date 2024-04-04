@@ -285,8 +285,6 @@ begin
   end else
     fDisableScroller := true;
 
-  //FadeIn;  // Bookmark
-
   EnableIdle;
 end;
 

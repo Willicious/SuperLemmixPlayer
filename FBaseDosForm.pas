@@ -38,8 +38,6 @@ begin
   //
 end;
 
-
-
 constructor TBaseDosForm.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
