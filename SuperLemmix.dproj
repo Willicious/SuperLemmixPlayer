@@ -146,10 +146,10 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_MajorVer>2</VerInfo_MajorVer>
-        <VerInfo_MinorVer>6</VerInfo_MinorVer>
+        <VerInfo_MinorVer>7</VerInfo_MinorVer>
         <VerInfo_Build>0</VerInfo_Build>
         <VerInfo_Locale>2057</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=2.6.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=2.6.1;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=2.7.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=2.7.1;Comments=</VerInfo_Keys>
         <VerInfo_Release>1</VerInfo_Release>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
@@ -333,6 +333,12 @@ $(PreBuildEvent)]]></PreBuildEvent>
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
+                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>SuperLemmix.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="RC Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
@@ -340,12 +346,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Release" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>SuperLemmix.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
                         <Overwrite>true</Overwrite>
