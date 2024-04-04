@@ -170,6 +170,7 @@ begin
     MakeHiddenOption(VK_F2, ShowConfigMenu);
 
     DrawAllClickables;
+    ReloadCursor('postview.png');
   finally
     ScreenImg.EndUpdate;
   end;
@@ -438,7 +439,7 @@ end;
 procedure TGamePostviewScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor;
+  ReloadCursor('postview.png');
 end;
 
 end.

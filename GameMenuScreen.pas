@@ -852,7 +852,7 @@ end;
 procedure TGameMenuScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor;
+  ReloadCursor('amiga.png');
   MakePanels;
 end;
 

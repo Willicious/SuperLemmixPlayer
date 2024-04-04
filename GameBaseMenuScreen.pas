@@ -105,7 +105,7 @@ type
       fBasicCursor: TNLCursor;
       fCalledFromClassicModeButton: Boolean;
 
-      procedure LoadBasicCursor;
+      procedure LoadBasicCursor(aName: string);
       procedure SetBasicCursor;
 
       procedure InitializeImage;
@@ -162,7 +162,7 @@ type
 
       function GetWallpaperSuffix: String; virtual; abstract;
 
-      procedure ReloadCursor;
+      procedure ReloadCursor(aName: string);
 
       procedure AfterCancelLevelSelect; virtual;
 
@@ -210,7 +210,7 @@ begin
   fMenuFont.Load;
 
   fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
-  LoadBasicCursor;
+  LoadBasicCursor('amiga.png');
   SetBasicCursor;
 
   InitializeImage;
@@ -251,26 +251,20 @@ begin
   inherited;
 end;
 
-procedure TGameBaseMenuScreen.LoadBasicCursor;
+procedure TGameBaseMenuScreen.LoadBasicCursor(aName: string);
 var
   BMP: TBitmap32;
+  aPath: string;
   i: Integer;
 begin
   BMP := TBitmap32.Create;
   try
-    //if {we're on the postview screen} then // Bookmark - need code to check for postview screen status
-    //begin
-    //if GameParams.HighResolution then
-      //TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/postview.png', BMP)
-    //else
-      //TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/postview.png', BMP);
-    //end else begin
     if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/amiga.png', BMP)
+      aPath := AppPath + SFGraphicsCursorHighRes + aName
     else
-      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/amiga.png', BMP);
-    //end;
+      aPath := AppPath + SFGraphicsCursor + aName;
 
+    TPngInterface.LoadPngFile(aPath, BMP);
     fBasicCursor.LoadFromBitmap(BMP);
 
     for i := 1 to fBasicCursor.MaxZoom+1 do
@@ -742,9 +736,9 @@ begin
   // Intentionally blank.
 end;
 
-procedure TGameBaseMenuScreen.ReloadCursor;
+procedure TGameBaseMenuScreen.ReloadCursor(aName: string);
 begin
-  LoadBasicCursor;
+  LoadBasicCursor(aName);
   SetBasicCursor;
 end;
 
