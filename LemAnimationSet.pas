@@ -116,9 +116,11 @@ const
   LADDERING_RTL       = 85;   // 86
   DRIFTING            = 86;   // 87 // 44
   DRIFTING_RTL        = 87;   // 88
-  SLEEPING            = 88;   // 89 // 45
-  SLEEPING_RTL        = 89;   // 90
-  ICECUBE             = 90;   // 91 Bookmark - this one does NOT need an RTL form;
+  //BATTING             = 88;   // 89 // 45  // Batter - REMEMBER to change numbers in list AND at the top
+  //BATTING_RTL         = 89;   // 90
+  SLEEPING            = 88;   // 91 // 46
+  SLEEPING_RTL        = 89;   // 92
+  ICECUBE             = 90;   // 93 Bookmark - this one does NOT need an RTL form;
                              // In fact in needs to be moved to the Masks section
                              // Also, it's not counted as a "sprite type"
 
@@ -173,6 +175,7 @@ const
     (BALLOONING, BALLOONING_RTL),             // 47 baBallooning
     (LADDERING, LADDERING_RTL),               // 48 baPlatforming
     (DRIFTING, DRIFTING_RTL),                 // 49 baDrifting
+    //(BATTING, BATTING_RTL),                 // Batter
     (SLEEPING, SLEEPING_RTL)                  // 50 baSleeping
   );
 
@@ -196,6 +199,7 @@ type
     fBalloonPopBitmap       : TBitmap32;
     fGrenadeBitmap          : TBitmap32;
     fSpearBitmap            : TBitmap32;
+    //fBatBitmap              : TBitmap32; // Batter
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -228,6 +232,7 @@ type
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
     property GrenadeBitmap         : TBitmap32 read fGrenadeBitmap;
+    //property BatBitmap             : TBitmap32 read fBatBitmap; // Batter
     property SpearBitmap           : TBitmap32 read fSpearBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
@@ -547,6 +552,9 @@ begin
     fSpearBitmap.DrawMode := dmBlend;
     fSpearBitmap.CombineMode := cmMerge;
 
+    //fBatBitmap.DrawMode := dmBlend;      // Batter
+    //fBatBitmap.CombineMode := cmMerge;
+
     fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
     fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
     fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
@@ -556,6 +564,7 @@ begin
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', fSpearBitmap);
+      //TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'bat-hr.png', fBatBitmap);  // Batter
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'radiation-hr.png', fRadiationDigitsBitmap);
@@ -564,6 +573,7 @@ begin
     end else begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer.png', fLemmingAnimations[ICECUBE]);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', fSpearBitmap);
+      //TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'bat.png', fBatBitmap); // Batter
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'radiation.png', fRadiationDigitsBitmap);
@@ -650,6 +660,7 @@ begin
   fBalloonPopBitmap.Clear;
   fGrenadeBitmap.Clear;
   fSpearBitmap.Clear;
+  //fBatBitmap.Clear;  // Batter
   fHasZombieColor := false;
   fHasNeutralColor := false;
   fTheme := nil;
@@ -672,6 +683,7 @@ begin
   fBalloonPopBitmap := TBitmap32.Create;
   fGrenadeBitmap := TBitmap32.Create;
   fSpearBitmap := TBitmap32.Create;
+  //fBatBitmap := TBitmap32.Create;  // Batter
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -689,6 +701,7 @@ begin
   fBalloonPopBitmap.Free;
   fGrenadeBitmap.Free;
   fSpearBitmap.Free;
+  //fBatBitmap.Free;  // Batter
   fRecolorer.Free;
   inherited Destroy;
 end;

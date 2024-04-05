@@ -32,6 +32,7 @@ const
                                                 'BLOCKER', 'LADDERER',
                                                 'PLATFORMER', 'BUILDER',
                                                 'STACKER', 'SPEARER', 'GRENADER',
+                                                //'BATTER', // Batter
                                                 'LASERER', 'BASHER', 'FENCER',
                                                 'MINER', 'DIGGER', 'CLONER');
 

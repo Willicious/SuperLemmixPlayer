@@ -140,8 +140,8 @@ $ANIMATIONS
     $END
   $END
   
-  $RUNNER
-    FRAMES 8
+  $BATTER
+    FRAMES 10
 
     $RIGHT
       FOOT_X 8

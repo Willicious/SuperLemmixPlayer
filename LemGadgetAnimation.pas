@@ -575,6 +575,9 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbMiner)], MINING, 12, PICKUP_MID - 3, PICKUP_BASELINE - 3);
   DrawAnimationFrame(SkillIcons[Integer(spbDigger)], DIGGING, 4, PICKUP_MID + 1, PICKUP_BASELINE - 3);
 
+  // Bookmark - move this later // Batter
+  //DrawAnimationFrame(SkillIcons[Integer(spbBatter)], BATTING, 4, PICKUP_MID + 1, PICKUP_BASELINE - 3);
+
   // Cloner is drawn as two back-to-back walkers.
   DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, PICKUP_MID - 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 2);

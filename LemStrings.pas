@@ -85,6 +85,8 @@ const
   SFX_SPEAR_THROW = 'throw';
   SFX_GRENADE_THROW = 'grenade';
   SFX_SPEAR_HIT = 'spearhit';
+  //SFX_BAT_SWISH = 'batswish';   // Batter
+  //SFX_BAT_HIT = 'bathit';      // Batter
   SFX_LASER = 'laser';
   SFX_BALLOON_INFLATE = 'balloon';
   SFX_BALLOON_POP = 'balloonpop';
@@ -161,6 +163,7 @@ resourcestring
   SInvincible = 'Invincible';
   SBallooner = 'Ballooner';
   SDrifter = 'Drifter';
+  //SBatter = 'Batter';  // Batter
   SSleeper = 'Sleeper';
 
 
@@ -241,6 +244,7 @@ const
     SBallooner,   // 47
     SLadderer,    // 48
     SDrifter,     // 49
+    //SBatter,  // Batter
     SSleeper      // 50
   );
 

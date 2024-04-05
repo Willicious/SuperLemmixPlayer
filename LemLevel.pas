@@ -954,6 +954,7 @@ begin
   HandleSkill('fencer', spbFencer);
   HandleSkill('miner', spbMiner);
   HandleSkill('digger', spbDigger);
+  //HandleSkill('batter', spbBatter); // Batter
   HandleSkill('cloner', spbCloner);
 end;
 
@@ -1014,6 +1015,7 @@ var
     if S = 'fencer' then O.Skill := Integer(spbFencer);
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
+    //if S = 'batter' then O.Skill := Integer(spbBatter);  // Batter
     if S = 'cloner' then O.Skill := Integer(spbCloner);
 
     if aSection.Line['skill_count'] = nil then
@@ -1537,6 +1539,7 @@ begin
   HandleSkill('FENCER', spbFencer);
   HandleSkill('MINER', spbMiner);
   HandleSkill('DIGGER', spbDigger);
+  //HandleSkill('BATTER', spbBatter);  // Batter
   HandleSkill('CLONER', spbCloner);
 end;
 
@@ -1592,6 +1595,7 @@ var
      spbFencer: s := 'FENCER';     
      spbMiner: s := 'MINER';
      spbDigger: s := 'DIGGER';
+     //spbBatter: s := 'BATTER';  // Batter
      spbCloner: s := 'CLONER';
     end;
 

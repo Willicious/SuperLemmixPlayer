@@ -731,7 +731,6 @@ var
     else
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', TempBMP);
   end;
-
 begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
@@ -849,6 +848,9 @@ begin
     DrawAnimationFrame(fSkillIcons[spbFencer], FENCING, 1, 7, 20);
     DrawAnimationFrame(fSkillIcons[spbMiner], MINING, 12, 4, 20);
     DrawAnimationFrame(fSkillIcons[spbDigger], DIGGING, 4, 7, 20);
+
+    // Bookmark - Move Batter to correct place later  // Batter
+    //DrawAnimationFrame(fSkillIcons[spbBatter], BATTING, 4, 8, 20);
 
     // Finally, outline everything. Cloner is generated after this, as it uses the post-outlined Walker graphic.
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do

@@ -936,6 +936,7 @@ begin
       spbJumper: SL.Add('  fRenderInterface.SelectedSkill: Jumper');
       spbSpearer: SL.Add('  fRenderInterface.SelectedSkill: Spearer');
       spbGrenader: SL.Add('  fRenderInterface.SelectedSkill: Grenader');
+      //spbBatter: SL.Add('  fRenderInterface.SelectedSkill: Batter'); // Batter
       spbSlider: SL.Add('  fRenderInterface.SelectedSkill: Slider');
       else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
     end;

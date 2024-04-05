@@ -160,6 +160,7 @@ type
     MinerMasks                 : TBitmap32;
     GrenadeMask                : TBitmap32;
     SpearMasks                 : TBitmap32;
+    //BatMask                    : TBitmap32; // Batter
     LaserMask                  : TBitmap32;
     fMasksLoaded               : Boolean;
 
@@ -249,6 +250,7 @@ type
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
+    //procedure ApplyBat(P: TProjectile); // Batter
     procedure ApplyGrenadeExplosionMask(P: TProjectile);
     procedure ApplyLaserMask(P: TPoint; L: TLemming);
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
@@ -395,6 +397,7 @@ type
     function HandleDangling(L: TLemming) : Boolean;
     function HandleLasering(L: TLemming) : Boolean;
     function HandleThrowing(L: TLemming) : Boolean;
+    //function HandleBatting(L: TLemming) : Boolean; // Batter
     function HandleLooking(L: TLemming) : Boolean;
     function HandleSleeping(L: TLemming): Boolean;
 
@@ -637,7 +640,8 @@ const
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
-             baBallooning, baLaddering); // Bookmark - maybe the wrong place for Ladderer & Ballooner?
+             baBallooning, baLaddering//, baBatting // Batter
+             ); // Bookmark - maybe the wrong place for Ladderer & Ballooner?
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1077,6 +1081,7 @@ begin
   MinerMasks              := TBitmap32.Create;
   GrenadeMask             := TBitmap32.Create;
   SpearMasks              := TBitmap32.Create;
+  //BatMask                 := TBitmap32.Create;  // Batter
   LaserMask               := TBitmap32.Create;
 
   Gadgets        := TGadgetList.Create;
@@ -1141,6 +1146,7 @@ begin
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
   LemmingMethods[baBallooning]    := HandleBallooning;
+  //LemmingMethods[baBatting]       := HandleBatting; // Batter
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1185,6 +1191,7 @@ begin
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
   NewSkillMethods[baBallooning]   := MayAssignBallooner;
+  //NewSkillMethods[baBatting]      := MayAssignBatter; // Batter
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1205,6 +1212,7 @@ begin
   FreezerMask.Free;
   GrenadeMask.Free;
   SpearMasks.Free;
+  //BatMask.Free; // Batter
   LaserMask.Free;
   BasherMasks.Free;
   FencerMasks.Free;
@@ -1276,6 +1284,7 @@ begin
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
     LoadMask(GrenadeMask, 'grenader.png', CombineMaskPixelsNeutral);
     LoadMask(SpearMasks, 'spears.png', CombineNoOverwriteMask);
+    //LoadMask(BatMask, 'bat.png', CombineNoOverwriteMask); // Batter
     LoadMask(LaserMask, 'laser.png', CombineMaskPixelsNeutral);
     fMasksLoaded := true;
   end;
@@ -1750,6 +1759,7 @@ const
     17, // 47 baBallooning
     25, // 48 baLaddering
     8,  // 49 baDrifting
+    //10, // batting // Batter
     20  // 50 baSleeping
     );
 begin
@@ -4026,6 +4036,15 @@ begin
   if not IsSimulating then
     fRenderInterface.AddTerrainSpear(P);
 end;
+
+//procedure TLemmingGame.ApplyBat(P: TProjectile); // Batter
+//var
+//  Hotspot: TPoint;
+//begin
+//  Hotspot := P.SpearHotspot;
+//
+//  BatMask.DrawTo(PhysicsMap, P.X - Hotspot.X, P.Y - Hotspot.Y);
+//end;
 
 procedure TLemmingGame.ApplyGrenadeExplosionMask(P: TProjectile);
 begin
@@ -6796,6 +6815,28 @@ begin
   Result := true;
 end;
 
+//function TLemmingGame.HandleBatting(L: TLemming): Boolean; // Batter
+//var
+//  NewProjectile: TProjectile;
+//begin
+//  if L.LemPhysicsFrame = 4 then
+//  begin
+//     if not IsSimulating then // Bookmark - is this needed? We will never simulate Batters
+//     begin
+//       NewProjectile := TProjectile.CreateBat(PhysicsMap, L);
+//
+//       ProjectileList.Add(NewProjectile);
+//
+//       L.LemHoldingProjectileIndex := ProjectileList.Count - 1;
+//     end;
+//  end;
+//
+//  if L.LemEndOfAnimation then
+//    Transition(L, baWalking);
+//
+//  Result := true;
+//end;
+
 function TLemmingGame.HandleLooking(L: TLemming): Boolean;
 begin
   Result := True;
@@ -7267,7 +7308,8 @@ begin
   for i := ProjectileList.Count-1 downto 0 do
   begin
     P := ProjectileList[i];
-    if P.Hit and P.IsGrenade then
+    if P.Hit and (P.IsGrenade //or P.IsBat  // Batter
+    ) then
        ProjectileList.Delete(i);
   end;
 
@@ -7289,10 +7331,13 @@ begin
         ApplySpear(P);
         CueSoundEffect(SFX_SPEAR_HIT);
         ProjectileList.Delete(i);
-      end else begin
+      end else //if P.IsGrenade then
+      begin
         ApplyGrenadeExplosionMask(P);
         CueSoundEffect(SFX_EXPLOSION, Point(P.X, P.Y));
-      end;
+      end //else       // Batter
+        //ApplyBat(P)
+        ;
     end;
   end;
 end;

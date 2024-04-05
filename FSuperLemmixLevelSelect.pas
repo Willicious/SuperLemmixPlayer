@@ -149,6 +149,7 @@ const // Icon indexes
     46, // 22 Fencer
     47, // 23 Miner
     48, // 24 Digger
+    //49, // batter // Batter
     51  // 25 Cloner
   );
 

@@ -93,6 +93,7 @@ type
     baBallooning,      // 47
     baLaddering,       // 48
     baDrifting,        // 49
+    //baBatting,       // Batter
     baSleeping         // 50
   );
 
@@ -128,6 +129,7 @@ type
     spbFencer,
     spbMiner,
     spbDigger,
+    //spbBatter, // Batter
     spbCloner,
 
     spbNone,
@@ -170,6 +172,7 @@ const
     'fencer',
     'miner',
     'digger',
+    //'batter',  // Batter
     'cloner'
     );
 
@@ -199,6 +202,7 @@ const
     'fencers',
     'miners',
     'diggers',
+    //'batters', // Batter
     'cloners'
     );
 
@@ -262,6 +266,7 @@ const
     baGrenading,
     baLasering,
     baBallooning,
+    //baBatting, // Batter
     baLaddering
   ];
 
@@ -316,6 +321,7 @@ const
     spbBallooner,   // 47  baBallooning
     spbLadderer,    // 48  baLaddering
     spbNone,        // 49  baDrifting
+    //spbBatter,    // Batter
     spbNone         // 50  baSleeping
   );
 
@@ -348,6 +354,7 @@ const
     baFencing,      // 23
     baMining,       // 24
     baDigging,      // 25
+    //baBatting,    // Batter
     baCloning,      // 26
     baNone, // Null
     baNone, // RR-
