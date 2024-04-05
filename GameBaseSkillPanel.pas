@@ -1519,7 +1519,7 @@ begin
 
   if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
-    Result := '---------';
+    Result := '-----------';
     if L.LemIsSlider then Result[2] := 'L';
     if L.LemIsClimber then Result[3] := 'C';
     if L.LemIsSwimmer then Result[4] := 'S';
