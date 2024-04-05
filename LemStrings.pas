@@ -88,6 +88,7 @@ const
   //SFX_BAT_SWISH = 'batswish';   // Batter
   //SFX_BAT_HIT = 'bathit';      // Batter
   SFX_LASER = 'laser';
+  //SFX_PROPELLER = 'propeller'; // Propeller
   SFX_BALLOON_INFLATE = 'balloon';
   SFX_BALLOON_POP = 'balloonpop';
   SFX_JUMP = 'jump';
@@ -157,6 +158,7 @@ resourcestring
   SGrenader = 'Grenader';
   SLooker = 'Looker';
   SLaserer = 'Laserer';
+  //SPropeller = 'Propeller'; // Propeller
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
@@ -247,6 +249,7 @@ const
     SDrifter,     // 49
     //SBatter,  // Batter
     SSleeper      // 50
+    //SPropeller,   // 47  // Propeller
   );
 
 implementation

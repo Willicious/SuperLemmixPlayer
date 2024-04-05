@@ -88,6 +88,7 @@ var
             baStacking:      Result := 'Stacker';
             baSpearing:      Result := 'Spearer';
             baGrenading:     Result := 'Grenader';
+            //baPropelling:    Result := 'Propeller'; // Propeller
             baLasering:      Result := 'Laserer';
             baBashing:       Result := 'Basher';
             baFencing:       Result := 'Fencer';

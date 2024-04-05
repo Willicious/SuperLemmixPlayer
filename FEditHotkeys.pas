@@ -247,6 +247,7 @@ begin
                      Integer(spbMiner):        s := s + 'Miner';       // 23
                      Integer(spbDigger):       s := s + 'Digger';      // 24
                      //Integer(spbBatter):       s := s + 'Batter';    // Batter
+                     //Integer(spbPropeller):    s := s + 'Propeller';   // Propeller
                      Integer(spbCloner):       s := s + 'Cloner';      // 25
                      else s := s + '???';
                    end;

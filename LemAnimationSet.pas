@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   // MUST MATCH BELOW (not the next list, the one after that)
   // And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 91;   // Num lem sprites
-  NUM_LEM_SPRITE_TYPE = 45;         // Num lem sprite types
+  NUM_LEM_SPRITES     = 93;   // Num lem sprites
+  NUM_LEM_SPRITE_TYPE = 46;         // Num lem sprite types
   WALKING             = 0;    // 1  // 1
   WALKING_RTL         = 1;    // 2
   ZOMBIEWALKING       = 2;    // 3  // 2
@@ -116,11 +116,13 @@ const
   LADDERING_RTL       = 85;   // 86
   DRIFTING            = 86;   // 87 // 44
   DRIFTING_RTL        = 87;   // 88
-  //BATTING             = 88;   // 89 // 45  // Batter - REMEMBER to change numbers in list AND at the top
-  //BATTING_RTL         = 89;   // 90
   SLEEPING            = 88;   // 91 // 46
   SLEEPING_RTL        = 89;   // 92
   ICECUBE             = 90;   // 93 Bookmark - this one does NOT need an RTL form;
+  //BATTING             = ?;   //?  //?  // Batter - REMEMBER to change numbers in list AND at the top
+  //BATTING_RTL         = ?;   //?
+  //PROPELLING          = ?;   //?  //?
+  //PROPELLING_RTL      = ?;   //?    // Propeller
                              // In fact in needs to be moved to the Masks section
                              // Also, it's not counted as a "sprite type"
 
@@ -177,6 +179,7 @@ const
     (DRIFTING, DRIFTING_RTL),                 // 49 baDrifting
     //(BATTING, BATTING_RTL),                 // Batter
     (SLEEPING, SLEEPING_RTL)                  // 50 baSleeping
+    //(PROPELLING, PROPELLING_RTL),             // 47 baPropelling // Propeller
   );
 
 type
@@ -296,10 +299,12 @@ const
   'THROWER',       // 39
   'LOOKER',        // 40
   'LASERER',       // 41
-  'BALLOONER',     // 42
-  'LADDERER',      // 43
-  'DRIFTER',       // 44
-  'SLEEPER'        // 45
+  //'PROPELLER',     // ? // Propeller
+  //'BATTER',        // ? // Batter
+  'BALLOONER',     // 43
+  'LADDERER',      // 44
+  'DRIFTER',       // 45
+  'SLEEPER'        // 46
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var

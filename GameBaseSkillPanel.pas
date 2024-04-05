@@ -193,8 +193,8 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png',
-    {Skills end here}
+    'empty_slot.png', 'empty_slot.png', //'empty_slot.png', 'empty_slot.png',
+    {Skills end here}                     // Batter           // Propeller
 
     'empty_slot.png',
     'button_rr_plus.png',
@@ -841,8 +841,9 @@ begin
     DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 3, 3, 20);
     DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 2, 6, 20);
 
-    // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
+    // Propeller, Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
     // For Digger, we just have to accept some particles.
+    //DrawAnimationFrame(fSkillIcons[spbPropeller], PROPELLING, 0, 8, 20);  // Propeller
     DrawAnimationFrame(fSkillIcons[spbLaserer], LASERING, 0, 8, 20);
     DrawAnimationFrame(fSkillIcons[spbBasher], BASHING, 0, 8, 20);
     DrawAnimationFrame(fSkillIcons[spbFencer], FENCING, 1, 7, 20);

@@ -567,8 +567,9 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbSpearer)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbGrenader)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 2);
 
-  // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles.
+  // Propeller, Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles.
   // For the Digger, we don't have a choice - we have to accept the presence of some destruction particles.
+  // Propeller //DrawAnimationFrame(SkillIcons[Integer(spbPropeller)], PROPELLING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbLaserer)], LASERING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbFencer)], FENCING, 1, PICKUP_MID, PICKUP_BASELINE - 2);

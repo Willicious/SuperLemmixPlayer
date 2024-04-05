@@ -179,6 +179,7 @@ type
     procedure DrawFencerShadow(L: TLemming);
     procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
+    //procedure DrawPropellerShadow(L: TLemming);  // Propeller
     procedure DrawExploderShadow(L: TLemming);
     procedure DrawFreezerShadow(L: TLemming);
     procedure DrawProjectileShadow(L: TLemming);
@@ -1007,7 +1008,8 @@ var
 
   DoProjection: Boolean;
 const
-  PROJECTION_STATES = [baWalking, baAscending, baLaddering, // Batting is not included
+                                                               // Propeller    // Batter
+  PROJECTION_STATES = [baWalking, baAscending, baLaddering, // baPropelling, Batting is not included
                        baDigging, baClimbing, baHoisting, baBuilding, baBashing,
                        baMining, baFalling, baFloating, baShrugging, baPlatforming,
                        baStacking, baSwimming, baGliding, baFixing, baFencing,
@@ -1169,6 +1171,12 @@ begin
         fRenderInterface.SimulateTransitionLem(CopyL, baGrenading);
         DrawProjectileShadow(CopyL);
       end;
+
+//    spbPropeller: // Propeller
+//      begin
+//        fRenderInterface.SimulateTransitionLem(CopyL, baPropelling);
+//        DrawPropellerShadow(CopyL);
+//      end;
 
     spbLaserer:
       begin
@@ -1763,6 +1771,52 @@ begin
   PhysicsMap.Assign(SavePhysicsMap);
   SavePhysicsMap.Free;
 end;
+
+//procedure TRenderer.DrawPropellerShadow(L: TLemming);  // Propeller - this doesn't work yet
+//const
+//  MAX_FRAME_COUNT = 10000;
+//var
+//  i: Integer;
+//  PosX, PosY: Integer;
+//  SavePhysicsMap: TBitmap32;
+//  CurFrameCount: Integer;
+//begin
+//  fLayers.fIsEmpty[rlShadowsHigh] := False;
+//
+//  // Make a deep copy of the PhysicsMap
+//  SavePhysicsMap := TBitmap32.Create;
+//  SavePhysicsMap.Assign(PhysicsMap);
+//
+//  PosX := L.LemX;
+//  PosY := L.LemY;
+//
+//  CurFrameCount := 0;
+//
+//  while Assigned(L) and (L.LemAction = baPropelling) and (CurFrameCount < MAX_FRAME_COUNT) do
+//  begin
+//    // Draw shadow for dug row
+//    if L.LemPhysicsFrame = 0 then
+//    begin
+//      SetHighShadowPixel(PosX - 4, PosY - 8);
+//      SetHighShadowPixel(PosX + 4, PosY - 8);
+//
+//      Dec(PosY);
+//    end;
+//
+//    // Simulate next frame advance for lemming
+//    fRenderInterface.SimulateLem(L);
+//    Inc(CurFrameCount);
+//  end;
+//
+//  // Draw top line of propeller tunnel
+//  SetHighShadowPixel(PosX - 4, PosY - 8);
+//  SetHighShadowPixel(PosX + 4, PosY - 8);
+//  for i := -4 to 4 do
+//    SetHighShadowPixel(PosX + i, PosY);
+//
+//  PhysicsMap.Assign(SavePhysicsMap);
+//  SavePhysicsMap.Free;
+//end;
 
 procedure TRenderer.DrawDiggerShadow(L: TLemming);
 const

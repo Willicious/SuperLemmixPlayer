@@ -952,6 +952,7 @@ begin
   HandleSkill('stacker', spbStacker);
   HandleSkill('spearer', spbSpearer);
   HandleSkill('grenader', spbGrenader);
+  //HandleSkill('propeller', spbPropeller);  // Propeller
   HandleSkill('laserer', spbLaserer);
   HandleSkill('basher', spbBasher);
   HandleSkill('fencer', spbFencer);
@@ -1013,6 +1014,7 @@ var
     if S = 'stacker' then O.Skill := Integer(spbStacker);
     if S = 'spearer' then O.Skill := Integer(spbSpearer);
     if S = 'grenader' then O.Skill := Integer(spbGrenader);
+    //if S = 'propeller' then O.Skill := Integer(spbPropeller); // Propeller
     if S = 'laserer' then O.Skill := Integer(spbLaserer);
     if S = 'basher' then O.Skill := Integer(spbBasher);
     if S = 'fencer' then O.Skill := Integer(spbFencer);
@@ -1544,6 +1546,7 @@ begin
   HandleSkill('STACKER', spbStacker);
   HandleSkill('SPEARER', spbSpearer);
   HandleSkill('GRENADER', spbGrenader);
+  //HandleSkill('PROPELLER', spbPropeller);  // Propeller
   HandleSkill('LASERER', spbLaserer);
   HandleSkill('BASHER', spbBasher);
   HandleSkill('FENCER', spbFencer);
@@ -1600,6 +1603,7 @@ var
      spbStacker: s := 'STACKER';
      spbSpearer: s := 'SPEARER';
      spbGrenader: s := 'GRENADER';
+     //spbPropeller: s := 'PROPELLER';  // Propeller
      spbLaserer: s := 'LASERER';
      spbBasher: s := 'BASHER';
      spbFencer: s := 'FENCER';     
