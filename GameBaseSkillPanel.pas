@@ -1528,6 +1528,7 @@ begin
     if L.LemIsDisarmer then Result[7] := 'D';
     if L.LemIsZombie then Result[8] := 'Z';
     if L.LemIsNeutral then Result[9] := 'N';
+    //if L.LemIsRival then Result[10] := 'R';
     if L.LemIsInvincible then Result[10] := 'I';
   end
   else if (L.LemAction in [baWalking, baAscending, baFalling]) then
@@ -1541,6 +1542,7 @@ begin
     if L.LemIsDisarmer then DoInc(SDisarmer);
     if L.LemIsZombie then Result := SZombie;
     if L.LemIsNeutral then Result := SNeutral;
+    //if L.LemIsRival then Result := SRival;
     if L.LemIsInvincible then Result := SInvincible;
     if L.LemIsZombie and L.LemIsNeutral then Result := SNeutralZombie;
   end else
@@ -1550,6 +1552,8 @@ begin
       Result := 'N-' + Result
     else if L.LemIsZombie and L.LemIsNeutral then
       Result := 'ZN-' + Result;
+//    else if L.LemIsRival then
+//      Result := 'R-' + Result;
 end;
 
 procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);

@@ -15,6 +15,7 @@ const
   CPM_LEMMING_ATHLETE    = $FF00FFFF; // Used for an athlete
   CPM_LEMMING_SELECTED   = $007F0000; // OR'd to base value for selected lemming
   CPM_LEMMING_INVINCIBLE = $0000FFFF; // OR'd to base value for invincible lemming
+  //CPM_LEMMING_RIVAL      = $whatever;
   CPM_LEMMING_ZOMBIE_OR  = $00007F00; // OR'd to base value for zombies
   CPM_LEMMING_ZOMBIE_NOT = $000000C0; // AND-NOT'd to base value for zombies
   CPM_LEMMING_NEUTRAL    = $00FFFFFF; // XOR'd to base value for neutrals
@@ -25,6 +26,7 @@ type
                     rcl_Athlete,
                     rcl_Zombie,
                     rcl_Neutral,
+                    //rcl_Rival,
                     rcl_Invincible);
 
   TColorSwap = record
@@ -98,6 +100,9 @@ begin
     if fLemming.LemIsInvincible then
       B := B or CPM_LEMMING_INVINCIBLE;
 
+//    if fLemming.LemIsRival then
+//      B := B or CPM_LEMMING_RIVAL;
+
     if fLemming.LemIsNeutral then
       B := B xor CPM_LEMMING_NEUTRAL;
 
@@ -113,6 +118,7 @@ begin
         rcl_Swimmer: if not fLemming.LemIsSwimmer then Continue;
         rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
         rcl_Neutral: if not fLemming.LemIsNeutral then Continue;
+        //rcl_Rival: if not fLemming.LemIsRival then Continue;
         rcl_Invincible: if not fLemming.LemIsInvincible then Continue;
                         
         else raise Exception.Create('TRecolorImage.SwapColors encountered an unknown condition' + #13 + IntToStr(Integer(fSwaps[i].Condition)));
@@ -174,6 +180,9 @@ begin
 
         Mode := rcl_Neutral;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('neutral', RegisterSwap, @Mode);
+
+//        Mode := rcl_Rival;
+//        Parser.MainSection.Section['state_recoloring'].DoForEachSection('rival', RegisterSwap, @Mode);
 
         Mode := rcl_Zombie;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);

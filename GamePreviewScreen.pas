@@ -399,7 +399,9 @@ begin
 
   HueShift.HShift := NumLemsShift;
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
-  if (Level.Info.NeutralCount > 0) or (Level.Info.ZombieCount > 0) then
+  if (Level.Info.NeutralCount > 0) or (Level.Info.ZombieCount > 0)
+  // or (Level.Info.RivalCount > 0)
+  then
   begin
     if Level.Info.LemmingsCount = 1 then
     Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
@@ -409,6 +411,11 @@ begin
     Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
                                      - Level.Info.ZombieCount - Level.Info.NeutralCount)
                                      + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
+
+//    if (Level.Info.RivalCount = 1) then
+//    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.RivalCount) + ' Rival'
+//    else if (Level.Info.RivalCount > 1) then
+//    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.RivalCount) + ' Rivals';
 
     if (Level.Info.NeutralCount = 1) then
     Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'

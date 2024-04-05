@@ -26,6 +26,7 @@ type
       fIsBlocker:      Boolean;
       fIsZombie:       Boolean;
       fIsNeutral:      Boolean;
+      //fIsRival:      Boolean;
       fIsInvincible:   Boolean;
     public
       constructor Create;
@@ -44,6 +45,7 @@ type
       property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
       property IsZombie: Boolean read fIsZombie write fIsZombie;
       property IsNeutral: Boolean read fIsNeutral write fIsNeutral;
+      //property IsRival: Boolean read fIsRival write fIsRival;
       property IsInvincible: Boolean read fIsInvincible write fIsInvincible;
   end;
 
@@ -109,6 +111,7 @@ type
     LemIsRadiating                : Boolean;
     LemIsZombie                   : Boolean;
     LemIsNeutral                  : Boolean;
+    //LemIsRival                  : Boolean;
     LemIsInvincible               : Boolean;
     LemHasBeenOhnoer              : Boolean;
     LemHasTurned                  : Boolean;
@@ -188,6 +191,7 @@ begin
   fIsBlocker := false;
   fIsZombie := false;
   fIsNeutral := false;
+  //fIsRival := false;
   fIsInvincible := false;
 end;
 
@@ -207,6 +211,7 @@ begin
   IsBlocker := aSrc.IsBlocker;
   IsZombie := aSrc.IsZombie;
   IsNeutral := aSrc.IsNeutral;
+  //IsRival := aSrc.IsRival;
   IsInvincible := aSrc.IsInvincible;
 end;
 
@@ -274,6 +279,7 @@ begin
   LemIsGlider := Source.IsGlider;
   LemIsDisarmer := Source.IsDisarmer;
   LemIsNeutral := Source.IsNeutral;
+  //LemIsRival := Source.IsRival;
   LemIsInvincible := Source.IsInvincible; // Not sure if we want to allow pre-placed invincibles yet
   // Shimmier, Blocker and Zombie must be handled by the calling routine
 end;
@@ -342,6 +348,7 @@ begin
   LemHasBeenOhnoer := Source.LemHasBeenOhnoer;
   LemHasTurned := Source.LemHasTurned;
   LemIsNeutral := Source.LemIsNeutral;
+  //LemIsRival := Source.LemIsRival;
   LemIsInvincible := Source.LemIsInvincible;
   LemPlacedBrick := Source.LemPlacedBrick;
   LemInSplitter := Source.LemInSplitter;

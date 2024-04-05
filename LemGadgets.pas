@@ -72,6 +72,7 @@ type
     sPairingId      : Integer;
     sZombieMode     : Boolean;
     sNeutralMode    : Boolean;
+    //sRivalMode    : Boolean; - might not be needed
     sSecondariesTreatAsBusy: Boolean;
 
     sRemainingLemmingsCount: Integer;
@@ -153,6 +154,7 @@ type
     property SoundEffectExhaust: String read GetSoundEffectExhaust;
     property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property NeutralMode: Boolean read sNeutralMode write sNeutralMode;
+    //property RivalMode: Boolean read sRivalMode write sRivalMode; - might not be needed
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // Moving decorations: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
@@ -165,6 +167,7 @@ type
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
     property IsPreassignedNeutral: Boolean index 128 read GetPreassignedSkill;
     property IsPreassignedSlider: Boolean index 256 read GetPreassignedSkill;
+    //property IsPreassignedRival: Boolean index 512 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;

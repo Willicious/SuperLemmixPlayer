@@ -102,7 +102,9 @@ type
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
-    procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false);
+    procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false
+    //; IsRival: Boolean = false;
+    );
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
@@ -328,6 +330,7 @@ begin
       A: TLemming absolute rA;
       B: TLemming absolute rB;
     const
+      //RIVAL_LEMMING = 512;
       SELECTED_LEMMING = 128;
       NOT_EXITER_LEMMING = 64;
       HIGHLIT_LEMMING = 32;
@@ -338,6 +341,7 @@ begin
       function MakePriorityValue(L: TLemming): Integer;
       begin
         Result := 0;
+        //if L = L.LemIsRival then Result := Result + RIVAL_LEMMING;
         if L = SelectedLemming then Result := Result + SELECTED_LEMMING;
         if not (L.LemAction = baExiting) then Result := Result + NOT_EXITER_LEMMING;
         if L = HighlitLemming then Result := Result + HIGHLIT_LEMMING;
@@ -2490,7 +2494,9 @@ begin
   Crop;
 end;
 
-procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false);
+procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false
+//; IsRival: Boolean = false;
+);
 begin
   Bmp.DrawMode := dmCustom;
 
@@ -2498,6 +2504,8 @@ begin
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
+//  else if IsRival then
+//    Bmp.OnPixelCombine := CombineGadgetsDefaultRival  // SEE TODO at top of page - I think the plan is to use recolorer here instead
   else if IsNeutral then
     Bmp.OnPixelCombine := CombineGadgetsDefaultNeutral
   else if IsZombie then
@@ -2787,7 +2795,7 @@ begin
     if Gadget.IsPreassignedGlider then Inc(numHelpers);
     if Gadget.IsPreassignedDisarmer then Inc(numHelpers);
     if Gadget.IsPreassignedZombie then Inc(numHelpers);
-    if Gadget.IsPreassignedNeutral then Inc(numHelpers);
+    if Gadget.IsPreassignedNeutral then Inc(numHelpers); // Rival - not sure whether to make helpers for rivals
 
     if DrawOtherHelper then Inc(numHelpers);
 
@@ -2810,7 +2818,7 @@ begin
       fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
-    if Gadget.IsPreassignedNeutral then
+    if Gadget.IsPreassignedNeutral then  // Rival - not sure whether to make helpers for Rivals
     begin
       fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
@@ -3060,7 +3068,7 @@ begin
     if (not ThisAnim.Visible) and (ThisAnim.State = gasPause) then
       Continue;
 
-    BMP := ThisAnim.Bitmap;
+    BMP := ThisAnim.Bitmap;                             // Does there need to be a RivalMode?
     PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode, Gadget.NeutralMode);
     DstRect := SizedRect((Gadget.Left + ThisAnim.MetaAnimation.OffsetX) * ResMod,
                          (Gadget.Top + ThisAnim.MetaAnimation.OffsetY) * ResMod,
@@ -3897,6 +3905,9 @@ begin
 
     if (aLevel.Info.NeutralCount > 0) and (not fAni.HasNeutralColor) then
       raise Exception.Create('Specified lemming spriteset does not include neutral coloring.');
+
+//    if (aLevel.Info.RivalCount > 0) and (not fAni.HasRivalColor) then
+//      raise Exception.Create('Specified lemming spriteset does not include rival coloring.');
 
   except
     on E: Exception do

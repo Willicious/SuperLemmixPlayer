@@ -40,7 +40,9 @@ const
         DOM_RADIATION, DOM_SLOWFREEZE];
 
 type
-  TLemmingKind = (lkNormal, lkNeutral, lkZombie);
+  TLemmingKind = (lkNormal, lkNeutral, lkZombie
+  //, lkRival  - might not be needed
+  );
   TLemmingKinds = set of TLemmingKind;
 
 type
@@ -7663,6 +7665,9 @@ begin
 
           if Gadgets[ix].IsPreassignedNeutral then
             LemIsNeutral := true;
+
+//          if Gadgets[ix].IsPreassignedRival then
+//            LemIsRival := true;
 
           if Gadgets[ix].RemainingLemmingsCount > 0 then
           begin
