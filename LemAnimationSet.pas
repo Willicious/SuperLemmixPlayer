@@ -26,8 +26,8 @@ const
 -------------------------------------------------------------------------------}
   // MUST MATCH BELOW (not the next list, the one after that)
   // And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 93;   // Num lem sprites
-  NUM_LEM_SPRITE_TYPE = 46;         // Num lem sprite types
+  NUM_LEM_SPRITES     = 91;   // Num lem sprites
+  NUM_LEM_SPRITE_TYPE = 45;         // Num lem sprite types
   WALKING             = 0;    // 1  // 1
   WALKING_RTL         = 1;    // 2
   ZOMBIEWALKING       = 2;    // 3  // 2
@@ -116,9 +116,9 @@ const
   LADDERING_RTL       = 85;   // 86
   DRIFTING            = 86;   // 87 // 44
   DRIFTING_RTL        = 87;   // 88
-  SLEEPING            = 88;   // 91 // 46
-  SLEEPING_RTL        = 89;   // 92
-  ICECUBE             = 90;   // 93 Bookmark - this one does NOT need an RTL form;
+  SLEEPING            = 88;   // 99 // 45
+  SLEEPING_RTL        = 89;   // 90
+  ICECUBE             = 90;   // 91 Bookmark - this one does NOT need an RTL form;
   //BATTING             = ?;   //?  //?  // Batter - REMEMBER to change numbers in list AND at the top
   //BATTING_RTL         = ?;   //?
   //PROPELLING          = ?;   //?  //?
