@@ -6971,9 +6971,12 @@ end;
 function TLemmingGame.HandleBlocking(L: TLemming): Boolean;
 begin
   Result := True;
+  L.LemIsWaterblocker := False;
 
   if HasWaterObjectAt(L.LemX, L.LemY) then
   begin
+    L.LemIsWaterblocker := True;
+
     case L.LemPhysicsFrame of
       0,  8: Dec(L.LemY);
       4, 12: Inc(L.LemY);

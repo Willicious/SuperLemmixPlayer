@@ -517,7 +517,7 @@ begin
   SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
 
   // Swimmer-Blockers are drawn behind all objects
-  if aLemming.LemAction = baBlocking then
+  if (aLemming.LemAction = baBlocking) and aLemming.LemIsWaterblocker then
   begin
     if fLayers.fIsEmpty[rlDecorations] then
       fLayers.fIsEmpty[rlDecorations] := False;

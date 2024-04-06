@@ -113,6 +113,7 @@ type
     LemIsNeutral                  : Boolean;
     //LemIsRival                  : Boolean;
     LemIsInvincible               : Boolean;
+    LemIsWaterblocker             : Boolean;
     LemHasBeenOhnoer              : Boolean;
     LemHasTurned                  : Boolean;
     LemPlacedBrick                : Boolean; // Placed useful brick during this cycle (plaformer and stacker)
@@ -350,6 +351,7 @@ begin
   LemIsNeutral := Source.LemIsNeutral;
   //LemIsRival := Source.LemIsRival;
   LemIsInvincible := Source.LemIsInvincible;
+  LemIsWaterblocker := Source.LemIsWaterblocker;
   LemPlacedBrick := Source.LemPlacedBrick;
   LemInSplitter := Source.LemInSplitter;
   LemHasBlockerField := Source.LemHasBlockerField;
