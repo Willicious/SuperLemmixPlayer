@@ -5286,6 +5286,8 @@ end;
 
 function TLemmingGame.HandleTurning(L: TLemming): Boolean;
 begin
+  Result := True;
+
   if L.LemFrame = 2 then
     TurnAround(L);
 
@@ -6590,6 +6592,8 @@ begin
       // Only turn if the lem would turn/climb anyway
       if (YChecks < -9) then
         TurnAround(L);
+
+      XOffset := 0;  // Initialise XOffset
 
       // Move away from terrain that would immediately pop the balloon
       case L.LemFrame of
