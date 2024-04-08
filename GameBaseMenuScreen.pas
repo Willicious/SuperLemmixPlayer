@@ -981,6 +981,8 @@ begin
   OldFullScreen := GameParams.FullScreen;
   OldHighResolution := GameParams.HighResolution;
   OldShowMinimap := GameParams.ShowMinimap;
+  ResetWindowSize := False;
+  ResetWindowPos := False;
 
   ConfigDlg := TFormNXConfig.Create(self);
   try
