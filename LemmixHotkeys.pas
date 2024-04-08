@@ -608,7 +608,6 @@ begin
     Result[i] := '';
 
   // This list shows which characters correspond to which keys
-  // Whoever wrote it got it slightly wrong though!!!
   if aUseHardcoded then
   begin
     Result[$02] := 'Right-Click';
@@ -636,11 +635,19 @@ begin
     Result[$28] := 'Down Arrow';
     Result[$2D] := 'Insert';
     Result[$2E] := 'Delete';
-    // Shortcut time!   // Yeah, you should have written it all out properly tbh!!!
+    // Shortcut time!
     for i := 0 to 9 do
       Result[$30 + i] := IntToStr(i);
-    for i := 0 to 25 do                  // Bookmark - put all this in properly at some point
-      Result[$41 + i] := Char(i + 65);   // No, this doesn't work: J - O are 4A - 4F
+    for i := 0 to 8 do
+      Result[$41 + i] := Char(i + 65);
+    Result[$4A] := 'J';
+    Result[$4B] := 'K';
+    Result[$4C] := 'L';
+    Result[$4D] := 'M';
+    Result[$4E] := 'N';
+    Result[$4F] := 'O';
+    for i := 15 to 26 do
+      Result[$41 + i] := Char(i + 65);
     Result[$5B] := 'Windows';
     for i := 0 to 9 do
       Result[$60 + i] := 'NumPad ' + IntToStr(i);
