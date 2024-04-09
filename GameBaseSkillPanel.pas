@@ -1125,7 +1125,6 @@ var
   OH, OV: Double;
   ViewRect: TRect;
   InnerViewRect: TRect;
-  MinimapMessage: TBitmap32;
 begin
 if GameParams.ShowMinimap then
   begin
@@ -1516,7 +1515,10 @@ begin
 
   if (L = nil) then Exit;
 
-  Result := LemmingActionStrings[L.LemAction];
+  if L.LemAction in [baTimebombing, baOhnoing] then
+    Result := SExploder
+  else
+    Result := LemmingActionStrings[L.LemAction];
 
   if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
@@ -1543,6 +1545,9 @@ begin
     if L.LemIsDisarmer then DoInc(SDisarmer);
     if L.LemIsZombie then Result := SZombie;
     if L.LemIsNeutral then Result := SNeutral;
+    if L.LemIsTimebomber then Result := STimebomber;
+    if L.LemIsRadiating then Result := SRadiator;
+    if (L.LemFreezerExplosionTimer > 0) then Result := SSlowfreezer;
     //if L.LemIsRival then Result := SRival;
     if L.LemIsInvincible then Result := SInvincible;
     if L.LemIsZombie and L.LemIsNeutral then Result := SNeutralZombie;

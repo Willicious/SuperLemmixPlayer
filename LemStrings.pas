@@ -137,7 +137,7 @@ resourcestring
   SBlocker = 'Blocker';
   SShrugger = 'Shrugger';
   STimebomber = 'Timebomber';
-  SExploder = 'Bomber';
+  SExploder = 'Exploder';
   SLadderer = 'Ladderer';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';
@@ -169,6 +169,8 @@ resourcestring
   //SBatter = 'Batter';  // Batter
   SSleeper = 'Sleeper';
 
+  SRadiator = 'Radiator';
+  SSlowfreezer = 'Slowfreezer';
 
   {-------------------------------------------------------------------------------
     Postview Screen
