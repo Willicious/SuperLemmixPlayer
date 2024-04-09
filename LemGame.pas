@@ -1993,6 +1993,7 @@ begin
     baFixing     : L.LemDisarmingFrames := 42;
     baJumping    : begin
                      L.LemJumpProgress := 0;
+                     L.LemJumperBounceAllowance := 3;
                      CueSoundEffect(SFX_JUMP, L.Position);
                    end;
     baLasering   : begin
@@ -6211,6 +6212,16 @@ function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 var
 JumperArcFrames: Integer;
 
+  procedure HandleJumperWallBounce;
+  begin
+    if (L.LemJumperBounceAllowance = 0) then
+      Transition(L, baFalling)
+    else begin
+      TurnAround(L);
+      Dec(L.LemJumperBounceAllowance);
+    end;
+  end;
+
   procedure DoJumperTriggerChecks;
   begin
     if not HasTriggerAt(L.LemX, L.LemY, trSplitter) then
@@ -6307,9 +6318,8 @@ JumperArcFrames: Integer;
                 begin
                   Inc(L.LemX, L.LemDX);
                   fLemNextAction := baSliding;
-                end else begin
-                  TurnAround(L);
-                end;
+                end else
+                  HandleJumperWallBounce;
               end;
               Exit;
             end;

@@ -80,6 +80,7 @@ type
     LemAscended                   : Integer; // Number of pixels the lem ascended while walking
     LemFallen                     : Integer; // Number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // Total number of fallen pixels
+    LemJumperBounceAllowance      : Integer; // Total times a Jumper can consecutively bounce off a wall
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
     LemFreezerExplosionTimer      : Integer; // 0 unless slowfreeze
     LemFreezingTimer              : Integer; // 8 downto 0
@@ -318,6 +319,7 @@ begin
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
   LemInitialFall := Source.LemInitialFall;
+  LemJumperBounceAllowance := Source.LemJumperBounceAllowance;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemFreezerExplosionTimer := Source.LemFreezerExplosionTimer;
   LemFreezingTimer := Source.LemFreezingTimer;
