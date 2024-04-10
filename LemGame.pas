@@ -1798,8 +1798,10 @@ begin
   // Should not happen, except for assigning walkers to walkers
   if L.LemAction = NewAction then Exit;
 
-  if (NewAction = baJumping) and (L.LemAction = baSwimming) then
-    Dec(L.LemY);  // Makes sure that the Jumper skill shadow is displayed
+  // Makes sure that the Jumper skill shadow is displayed
+  if (NewAction = baJumping) and (L.LemAction = baSwimming)
+    and not HasPixelAt(L.LemX, L.LemY -1) then
+      Dec(L.LemY);
 
   // Stops invincible lems momentarily transitioning to faller when exploding in water/poison
   if ((L.LemAction in [baTimebombFinish, baExploding]) and L.LemIsInvincible)
@@ -3120,7 +3122,7 @@ function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining, baLaddering,
                baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
-               baSwimming, baClimbing, baSliding, baDangling, baLasering, baLooking];
+               baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
   // Non-assignable from the top of the level
   if L.LemY <= 0 then
@@ -3128,7 +3130,8 @@ begin
       Result := (L.LemAction = baNone);
       Exit;
     end else
-  Result := (L.LemAction in ActionSet);
+  Result := (L.LemAction in ActionSet)
+         or ((L.LemAction = baSwimming) and not HasPixelAt(L.LemX, L.LemY -1));
 end;
 
 function TLemmingGame.MayAssignLaserer(L: TLemming): Boolean;
