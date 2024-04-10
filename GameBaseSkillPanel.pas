@@ -581,10 +581,10 @@ var
   Button: TSkillPanelButton;
   TempBmp: TBitmap32;
   x, y: Integer;
+  Ani: TBaseAnimationSet;
 
   procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
   var
-    Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
     OldDrawMode: TDrawMode;
@@ -604,7 +604,6 @@ var
 
   procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
   var
-    Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
     OldDrawMode: TDrawMode;
@@ -683,54 +682,6 @@ var
     if GameParams.HighResolution and not isRecursive then
       Outline(dst, true);
   end;
-
-  procedure DrawMiscBmp(Src, Dst: TBitmap32; dstX, dstY: Integer; SrcRect: TRect);
-  begin
-    if GameParams.HighResolution then
-    begin
-      dstX := dstX * 2;
-      dstY := dstY * 2;
-      SrcRect.Left := SrcRect.Left * 2;
-      SrcRect.Top := SrcRect.Top * 2;
-      SrcRect.Right := SrcRect.Right * 2;
-      SrcRect.Bottom := SrcRect.Bottom * 2;
-    end;
-
-    Src.DrawTo(Dst, dstX, dstY, SrcRect);
-  end;
-
-  procedure LoadGrenadeImages;
-  var
-  CustomStyle: String;
-  CustomStylePath, DefaultStylePath: String;
-  Grenades, GrenadesHR: String;
-  begin
-    CustomStyle := GameParams.Renderer.Theme.Lemmings;
-    CustomStylePath := AppPath + SFStyles + CustomStyle + SFPiecesEffects;
-    DefaultStylePath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
-    Grenades := 'grenades.png';
-    GrenadesHR := 'grenades-hr.png';
-
-    if (FileExists(CustomStylePath + Grenades) and FileExists(CustomStylePath + GrenadesHR)) then
-    begin
-      if GameParams.HighResolution then
-        TPngInterface.LoadPngFile(CustomStylePath + GrenadesHR, TempBMP)
-      else
-        TPngInterface.LoadPngFile(CustomStylePath + Grenades, TempBMP);
-    end else
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(DefaultStylePath + GrenadesHR, TempBMP)
-    else
-      TPngInterface.LoadPngFile(DefaultStylePath + Grenades, TempBMP);
-  end;
-
-  procedure LoadSpearImages;
-  begin
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', TempBMP)
-    else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', TempBMP);
-  end;
 begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
@@ -783,14 +734,10 @@ begin
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 20);
 
     // Timebomber has its own graphic
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsPanelHighRes + 'icon_timebomber.png', fIconBMP)
-    else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsPanel + 'icon_timebomber.png', fIconBMP);
-
+    GetGraphic('icon_timebomber.png', fIconBMP);
     fIconBmp.DrawTo(fSkillIcons[spbTimebomber], -1 * ResMod, 7 * ResMod);
 
-    // Bomber is drawn resized
+    // (Time)Bomber is drawn resized, and we draw a "5" to Timebomber
     DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 22));
 
     // Freezer is tricky - the goal is an outlined ice cube over a frozen lemming
@@ -831,12 +778,12 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 15);
 
     // Projectiles need to be loaded separately
-    LoadGrenadeImages;
-    DrawMiscBmp(TempBMP, fSkillIcons[spbGrenader], 10, 7, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
+    Ani.LoadGrenadeImages(TempBMP);
+    Ani.DrawProjectilesToBitmap(TempBMP, fSkillIcons[spbGrenader], 10, 7, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
 
-    LoadSpearImages;
+    Ani.LoadSpearImages(TempBMP);
     DoProjectileRecolor(TempBMP, BrickColor);
-    DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], 2, 7, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    Ani.DrawProjectilesToBitmap(TempBMP, fSkillIcons[spbSpearer], 2, 7, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
 
     DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 3, 3, 20);
     DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 2, 6, 20);

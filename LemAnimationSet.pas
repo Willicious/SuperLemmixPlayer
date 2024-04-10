@@ -243,6 +243,10 @@ type
     property HasZombieColor: Boolean read fHasZombieColor;
     property HasNeutralColor: Boolean read fHasNeutralColor;
     //property HasRivalColor: Boolean read fHasRivalColor;
+
+    procedure LoadGrenadeImages(aBitmap: TBitmap32);
+    procedure LoadSpearImages(aBitmap: TBitmap32);
+    procedure DrawProjectilesToBitmap(Src, Dst: TBitmap32; dstX, dstY: Integer; SrcRect: TRect);
   end;
 
 implementation
@@ -763,6 +767,56 @@ begin
   finally
     Template.Free;
   end;
+end;
+
+{ Grenade and Spear images - for loading & drawing to skill panel & pickups only }
+
+procedure TBaseAnimationSet.LoadGrenadeImages(aBitmap: TBitmap32);
+var
+  CustomStyle: String;
+  CustomStylePath, DefaultStylePath: String;
+  Grenades, GrenadesHR: String;
+begin
+  CustomStyle := GameParams.Renderer.Theme.Lemmings;
+  CustomStylePath := AppPath + SFStyles + CustomStyle + SFPiecesEffects;
+  DefaultStylePath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
+  Grenades := 'grenades.png';
+  GrenadesHR := 'grenades-hr.png';
+
+  if (FileExists(CustomStylePath + Grenades) and FileExists(CustomStylePath + GrenadesHR)) then
+  begin
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(CustomStylePath + GrenadesHR, aBitmap)
+    else
+      TPngInterface.LoadPngFile(CustomStylePath + Grenades, aBitmap);
+  end else
+  if GameParams.HighResolution then
+    TPngInterface.LoadPngFile(DefaultStylePath + GrenadesHR, aBitmap)
+  else
+    TPngInterface.LoadPngFile(DefaultStylePath + Grenades, aBitmap);
+end;
+
+procedure TBaseAnimationSet.LoadSpearImages(aBitmap: TBitmap32);
+begin
+  if GameParams.HighResolution then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', aBitmap)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', aBitmap);
+end;
+
+procedure TBaseAnimationSet.DrawProjectilesToBitmap(Src, Dst: TBitmap32; dstX, dstY: Integer; SrcRect: TRect);
+begin
+  if GameParams.HighResolution then
+  begin
+    dstX := dstX * 2;
+    dstY := dstY * 2;
+    SrcRect.Left := SrcRect.Left * 2;
+    SrcRect.Top := SrcRect.Top * 2;
+    SrcRect.Right := SrcRect.Right * 2;
+    SrcRect.Bottom := SrcRect.Bottom * 2;
+  end;
+
+  Src.DrawTo(Dst, dstX, dstY, SrcRect);
 end;
 
 end.

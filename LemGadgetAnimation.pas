@@ -384,10 +384,10 @@ var
   SkillIcons: TBitmaps;
   NewBmp: TBitmap32;
   i: Integer;
+  Ani: TBaseAnimationSet;
 
   procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
   var
-    Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
     OldDrawMode: TDrawMode;
@@ -407,7 +407,6 @@ var
 
   procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
   var
-    Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
     OldDrawMode: TDrawMode;
@@ -447,55 +446,6 @@ var
       end else
         dst.PixelS[X + oX, Y] := BrickColor;
   end;
-
-  procedure DrawMiscBmp(Src, Dst: TBitmap32; dstX, dstY: Integer; SrcRect: TRect);
-  begin
-    if GameParams.HighResolution then
-    begin
-      dstX := dstX * 2;
-      dstY := dstY * 2;
-      SrcRect.Left := SrcRect.Left * 2;
-      SrcRect.Top := SrcRect.Top * 2;
-      SrcRect.Right := SrcRect.Right * 2;
-      SrcRect.Bottom := SrcRect.Bottom * 2;
-    end;
-
-    Src.DrawTo(Dst, dstX, dstY, SrcRect);
-  end;
-
-  procedure LoadGrenadeImages;
-  var
-  CustomStyle: String;
-  CustomStylePath, DefaultStylePath: String;
-  Grenades, GrenadesHR: String;
-  begin
-    CustomStyle := GameParams.Renderer.Theme.Lemmings;
-    CustomStylePath := AppPath + SFStyles + CustomStyle + SFPiecesEffects;
-    DefaultStylePath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
-    Grenades := 'grenades.png';
-    GrenadesHR := 'grenades-hr.png';
-
-    if (FileExists(CustomStylePath + Grenades) and FileExists(CustomStylePath + GrenadesHR)) then
-    begin
-      if GameParams.HighResolution then
-        TPngInterface.LoadPngFile(CustomStylePath + GrenadesHR, NewBmp)
-      else
-        TPngInterface.LoadPngFile(CustomStylePath + Grenades, NewBmp);
-    end else
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(DefaultStylePath + GrenadesHR, NewBmp)
-    else
-      TPngInterface.LoadPngFile(DefaultStylePath + Grenades, NewBmp);
-  end;
-
-  procedure LoadSpearImages;
-  begin
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', NewBmp)
-    else
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', NewBmp);
-  end;
-
 const
   PICKUP_MID = (PICKUP_AUTO_GFX_SIZE div 2) - 1;
   PICKUP_BASELINE = (PICKUP_AUTO_GFX_SIZE div 2) + 7;
@@ -549,17 +499,17 @@ begin
   // Projectiles need to be loaded separately
   NewBmp := TBitmap32.Create;
   try
-    LoadGrenadeImages;
-    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 12, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
+    Ani.LoadGrenadeImages(NewBmp);
+    Ani.DrawProjectilesToBitmap(NewBmp, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 12, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
   finally
     NewBmp.Free;
   end;
 
   NewBmp := TBitmap32.Create;
   try
-    LoadSpearImages;
+    Ani.LoadSpearImages(NewBmp);
     DoProjectileRecolor(NewBmp, $FFFFFFFF);
-    DrawMiscBmp(NewBmp, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 12, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    Ani.DrawProjectilesToBitmap(NewBmp, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 12, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
   finally
     NewBmp.Free;
   end;
