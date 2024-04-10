@@ -36,8 +36,7 @@ object FQuickmodMain: TFQuickmodMain
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v1.2'
-    ExplicitTop = 409
+    Caption = 'v1.3'
   end
   object cbPack: TComboBox
     Left = 40
@@ -47,7 +46,6 @@ object FQuickmodMain: TFQuickmodMain
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
-    ExplicitWidth = 804
   end
   object gbStats: TGroupBox
     Left = 8
@@ -57,10 +55,9 @@ object FQuickmodMain: TFQuickmodMain
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
-    ExplicitHeight = 411
     object cbLemCount: TCheckBox
       Left = 16
-      Top = 24
+      Top = 59
       Width = 130
       Height = 17
       Caption = 'Set Lemming Count:'
@@ -69,7 +66,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebLemCount: TEdit
       Left = 152
-      Top = 22
+      Top = 57
       Width = 57
       Height = 21
       Enabled = False
@@ -79,7 +76,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbSaveRequirement: TCheckBox
       Left = 16
-      Top = 51
+      Top = 86
       Width = 130
       Height = 17
       Caption = 'Set Save Requirement:'
@@ -88,7 +85,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebSaveRequirement: TEdit
       Left = 152
-      Top = 49
+      Top = 84
       Width = 57
       Height = 21
       Enabled = False
@@ -98,7 +95,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbTimeLimit: TCheckBox
       Left = 16
-      Top = 79
+      Top = 114
       Width = 130
       Height = 17
       Caption = 'Set Time Limit:'
@@ -107,7 +104,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebTimeLimit: TEdit
       Left = 152
-      Top = 77
+      Top = 112
       Width = 57
       Height = 21
       Enabled = False
@@ -116,8 +113,8 @@ object FQuickmodMain: TFQuickmodMain
       Text = '0'
     end
     object cbChangeID: TCheckBox
-      Left = 184
-      Top = 189
+      Left = 324
+      Top = 20
       Width = 129
       Height = 17
       Caption = 'Change All Level IDs'
@@ -126,7 +123,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemoveSpecialLemmings: TCheckBox
       Left = 16
-      Top = 149
+      Top = 184
       Width = 217
       Height = 17
       Caption = 'Remove Zombies, Neutrals, Lem Caps'
@@ -135,7 +132,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemovePreplaced: TCheckBox
       Left = 16
-      Top = 122
+      Top = 157
       Width = 161
       Height = 17
       Caption = 'Remove Preplaced Lemmings'
@@ -144,7 +141,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbReleaseRate: TGroupBox
       Left = 244
-      Top = 20
+      Top = 55
       Width = 225
       Height = 78
       Caption = 'Release Rate'
@@ -189,7 +186,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbSuperlemming: TGroupBox
       Left = 244
-      Top = 122
+      Top = 157
       Width = 225
       Height = 53
       Caption = 'Superlemming Mode'
@@ -215,7 +212,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbTalismans: TGroupBox
       Left = 16
-      Top = 212
+      Top = 222
       Width = 453
       Height = 147
       Caption = 'Talismans'
@@ -262,6 +259,21 @@ object FQuickmodMain: TFQuickmodMain
         TabOrder = 4
       end
     end
+    object cbChangeAuthor: TCheckBox
+      Left = 16
+      Top = 20
+      Width = 97
+      Height = 17
+      Caption = 'Change Author:'
+      TabOrder = 12
+    end
+    object ebAuthor: TEdit
+      Left = 119
+      Top = 18
+      Width = 186
+      Height = 21
+      TabOrder = 13
+    end
   end
   object gbSkillset: TGroupBox
     Left = 503
@@ -290,6 +302,5 @@ object FQuickmodMain: TFQuickmodMain
     Caption = 'Apply Changes To All Levels in Selected Pack'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 397
   end
 end

@@ -57,6 +57,8 @@ type
     cbAddNoPauseTalisman: TCheckBox;
     gbReleaseRate: TGroupBox;
     cbAddSaveAllTalisman: TCheckBox;
+    cbChangeAuthor: TCheckBox;
+    ebAuthor: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -148,8 +150,6 @@ begin
 end;
 
 procedure TFQuickmodMain.btnApplyClick(Sender: TObject);
-var
-  n: Integer;
 begin
   if MessageDlg('Are you sure you want to apply these changes to'
                 + sLineBreak + ' ' + sLineBreak + cbPack.Text + '?',
@@ -266,7 +266,8 @@ end;
 
 function TFQuickmodMain.SaveAllTalisman: string;
 begin
-  Result := ' $TALISMAN' + sLineBreak +
+  Result := sLineBreak +
+            ' $TALISMAN' + sLineBreak +
             '   TITLE Save All Lemmings' + sLineBreak +
             '   ID ' + IntToStr(TalismanID) + sLineBreak +
             '   COLOR Gold' + sLineBreak +
@@ -276,7 +277,8 @@ end;
 
 function TFQuickmodMain.ClassicModeTalisman: string;
 begin
-  Result := ' $TALISMAN' + sLineBreak +
+  Result := sLineBreak +
+            ' $TALISMAN' + sLineBreak +
             '   TITLE Classic Mode' + sLineBreak +
             '   ID ' + IntToStr(TalismanID) + sLineBreak +
             '   COLOR Gold' + sLineBreak +
@@ -286,7 +288,8 @@ end;
 
 function TFQuickmodMain.KillZombiesTalisman: string;
 begin
-  Result := ' $TALISMAN' + sLineBreak +
+  Result := sLineBreak +
+            ' $TALISMAN' + sLineBreak +
             '   TITLE Kill All Zombies' + sLineBreak +
             '   ID ' + IntToStr(TalismanID) + sLineBreak +
             '   COLOR Gold' + sLineBreak +
@@ -445,6 +448,9 @@ begin
         if (Trim(ThisLine) = 'SUPERLEMMING') and cbDeactivateSuperlemming.Checked then
           SL[n] := '# ' + SL[n];
 
+        if (LeftStr(ThisLine, 6) = 'AUTHOR') and cbChangeAuthor.Checked then
+          SL[n] := '# ' + SL[n];
+
         if ((LeftStr(ThisLine, 2)) = 'ID') and cbChangeID.Checked then
         begin
           ThisLine := Trim(MidStr(ThisLine, 3, Length(ThisLine) - 2));
@@ -471,6 +477,8 @@ begin
     SL.Add('');
     SL.Add('# SLX QuickMod modifications');
     SL.Add('');
+
+    if cbChangeAuthor.Checked then SL.Add('AUTHOR ' + ebAuthor.Text);
 
     if cbChangeID.Checked then
     begin
