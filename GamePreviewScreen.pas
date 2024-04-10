@@ -197,7 +197,6 @@ var
   LevelScale: Double;
   NewRegion: TClickableRegion;
   Lines: TextLineArray;
-  s: string;
 const
   TEXT_Y_POSITION = 170;
 begin

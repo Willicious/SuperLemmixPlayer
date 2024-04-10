@@ -1373,7 +1373,6 @@ end;
 
 procedure TGameWindow.HandleInfiniteSkillsHotkey;
 var
-  Skill: TSkillPanelButton;
   i, n, TargetFrame: Integer;
   ReplayEvent: TBaseReplayItem;
 begin

@@ -187,10 +187,10 @@ begin
 
   if OpenedViaReplay then
   begin
+    Result := true; // Return true if opened by replay
     s := LoadedReplayFile;
 
   end else begin
-
     Dlg := TOpenDialog.Create(self);
     try
       Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
@@ -205,14 +205,15 @@ begin
           Dlg.InitialDir := AppPath;
       end else
         Dlg.InitialDir := LastReplayDir;
+
       Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
       if Dlg.execute then
       begin
-        s:=Dlg.filename;
+        s := Dlg.filename;
         LastReplayDir := ExtractFilePath(s);
-        Result := true;
+        Result := true; // Return true if the file was successfully selected
       end else
-        Result := false;
+        Result := false; // Return false if the user canceled the dialog
     finally
       Dlg.Free;
     end;

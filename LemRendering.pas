@@ -2931,6 +2931,7 @@ begin
     if L.LemIsDisarmer then Inc(numHelpers);
 
     DrawX := (L.LemX - numHelpers * 5) * ResMod;
+    DrawY := 0;
 
     if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_CPM) and IsClearPhysics) then
     begin
