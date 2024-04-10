@@ -5,8 +5,8 @@ object FQuickmodMain: TFQuickmodMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'SuperLemmix QuickMod'
-  ClientHeight = 396
-  ClientWidth = 556
+  ClientHeight = 451
+  ClientWidth = 827
   Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -18,8 +18,8 @@ object FQuickmodMain: TFQuickmodMain
   Position = poScreenCenter
   OnCreate = FormCreate
   DesignSize = (
-    556
-    396)
+    827
+    451)
   PixelsPerInch = 96
   TextHeight = 13
   object lblPack: TLabel
@@ -30,34 +30,34 @@ object FQuickmodMain: TFQuickmodMain
     Caption = 'Pack'
   end
   object lblVersion: TLabel
-    Left = 515
-    Top = 375
+    Left = 797
+    Top = 430
     Width = 22
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v1.1'
-    ExplicitLeft = 453
-    ExplicitTop = 330
+    Caption = 'v1.2'
+    ExplicitTop = 409
   end
   object cbPack: TComboBox
     Left = 40
     Top = 7
-    Width = 508
+    Width = 779
     Height = 21
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
+    ExplicitWidth = 804
   end
   object gbStats: TGroupBox
     Left = 8
     Top = 34
-    Width = 257
-    Height = 323
+    Width = 481
+    Height = 378
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
-    ExplicitHeight = 321
+    ExplicitHeight = 411
     object cbLemCount: TCheckBox
       Left = 16
       Top = 24
@@ -96,104 +96,178 @@ object FQuickmodMain: TFQuickmodMain
       TabOrder = 3
       Text = '50'
     end
-    object cbReleaseRate: TCheckBox
-      Left = 16
-      Top = 78
-      Width = 130
-      Height = 17
-      Caption = 'Set Release Rate:'
-      TabOrder = 4
-      OnClick = cbStatCheckboxClicked
-    end
-    object ebReleaseRate: TEdit
-      Left = 152
-      Top = 76
-      Width = 57
-      Height = 21
-      Enabled = False
-      NumbersOnly = True
-      TabOrder = 5
-      Text = '50'
-    end
-    object cbLockRR: TCheckBox
-      Left = 32
-      Top = 101
-      Width = 81
-      Height = 17
-      Caption = 'Lock All RR'#39's'
-      TabOrder = 6
-      OnClick = cbLockRRClick
-    end
-    object cbUnlockRR: TCheckBox
-      Left = 119
-      Top = 101
-      Width = 90
-      Height = 17
-      Caption = 'Unlock All RR'#39's'
-      TabOrder = 7
-      OnClick = cbLockRRClick
-    end
     object cbTimeLimit: TCheckBox
       Left = 16
-      Top = 129
+      Top = 79
       Width = 130
       Height = 17
       Caption = 'Set Time Limit:'
-      TabOrder = 8
+      TabOrder = 5
       OnClick = cbStatCheckboxClicked
     end
     object ebTimeLimit: TEdit
       Left = 152
-      Top = 127
+      Top = 77
       Width = 57
       Height = 21
       Enabled = False
       NumbersOnly = True
-      TabOrder = 9
+      TabOrder = 7
       Text = '0'
     end
-    object cbRemoveTalismans: TCheckBox
-      Left = 16
-      Top = 156
-      Width = 130
-      Height = 17
-      Caption = 'Remove Talismans'
-      TabOrder = 10
-      OnClick = cbStatCheckboxClicked
-    end
     object cbChangeID: TCheckBox
-      Left = 16
-      Top = 237
-      Width = 130
+      Left = 184
+      Top = 189
+      Width = 129
       Height = 17
-      Caption = 'Change Level IDs'
-      TabOrder = 11
+      Caption = 'Change All Level IDs'
+      TabOrder = 9
       OnClick = cbStatCheckboxClicked
     end
     object cbRemoveSpecialLemmings: TCheckBox
       Left = 16
-      Top = 210
+      Top = 149
       Width = 217
       Height = 17
       Caption = 'Remove Zombies, Neutrals, Lem Caps'
-      TabOrder = 12
+      TabOrder = 11
       OnClick = cbStatCheckboxClicked
     end
     object cbRemovePreplaced: TCheckBox
       Left = 16
-      Top = 183
+      Top = 122
       Width = 161
       Height = 17
       Caption = 'Remove Preplaced Lemmings'
-      TabOrder = 13
+      TabOrder = 6
       OnClick = cbStatCheckboxClicked
+    end
+    object gbReleaseRate: TGroupBox
+      Left = 244
+      Top = 20
+      Width = 225
+      Height = 78
+      Caption = 'Release Rate'
+      TabOrder = 8
+      object cbReleaseRate: TCheckBox
+        Left = 16
+        Top = 21
+        Width = 130
+        Height = 17
+        Caption = 'Set Release Rate:'
+        TabOrder = 0
+        OnClick = cbStatCheckboxClicked
+      end
+      object ebReleaseRate: TEdit
+        Left = 152
+        Top = 19
+        Width = 57
+        Height = 21
+        Enabled = False
+        NumbersOnly = True
+        TabOrder = 1
+        Text = '50'
+      end
+      object cbLockRR: TCheckBox
+        Left = 32
+        Top = 44
+        Width = 81
+        Height = 17
+        Caption = 'Lock All RR'#39's'
+        TabOrder = 2
+        OnClick = cbLockRRClick
+      end
+      object cbUnlockRR: TCheckBox
+        Left = 119
+        Top = 44
+        Width = 90
+        Height = 17
+        Caption = 'Unlock All RR'#39's'
+        TabOrder = 3
+        OnClick = cbLockRRClick
+      end
+    end
+    object gbSuperlemming: TGroupBox
+      Left = 244
+      Top = 122
+      Width = 225
+      Height = 53
+      Caption = 'Superlemming Mode'
+      TabOrder = 4
+      object cbActivateSuperlemming: TCheckBox
+        Left = 16
+        Top = 21
+        Width = 73
+        Height = 17
+        Caption = 'Activate'
+        TabOrder = 0
+        OnClick = cbSuperlemmingClick
+      end
+      object cbDeactivateSuperlemming: TCheckBox
+        Left = 95
+        Top = 21
+        Width = 90
+        Height = 17
+        Caption = 'Deactivate'
+        TabOrder = 1
+        OnClick = cbSuperlemmingClick
+      end
+    end
+    object gbTalismans: TGroupBox
+      Left = 16
+      Top = 212
+      Width = 453
+      Height = 147
+      Caption = 'Talismans'
+      TabOrder = 10
+      object cbRemoveTalismans: TCheckBox
+        Left = 168
+        Top = 22
+        Width = 145
+        Height = 17
+        Caption = 'Remove All Talismans'
+        TabOrder = 0
+        OnClick = cbStatCheckboxClicked
+      end
+      object cbAddKillZombiesTalisman: TCheckBox
+        Left = 16
+        Top = 91
+        Width = 369
+        Height = 17
+        Caption = 'Add '#39'Kill All Zombies'#39' Talisman to all levels with Zombies'
+        TabOrder = 1
+      end
+      object cbAddClassicModeTalisman: TCheckBox
+        Left = 16
+        Top = 45
+        Width = 206
+        Height = 17
+        Caption = 'Add '#39'Play in Classic Mode'#39' Talisman'
+        TabOrder = 2
+      end
+      object cbAddNoPauseTalisman: TCheckBox
+        Left = 16
+        Top = 114
+        Width = 201
+        Height = 17
+        Caption = 'Add '#39'No Pressing Pause'#39' Talisman'
+        TabOrder = 3
+      end
+      object cbAddSaveAllTalisman: TCheckBox
+        Left = 16
+        Top = 68
+        Width = 369
+        Height = 17
+        Caption = 'Add '#39'Save All Lemmings'#39' Talisman to all levels without Zombies'
+        TabOrder = 4
+      end
     end
   end
   object gbSkillset: TGroupBox
-    Left = 279
+    Left = 503
     Top = 34
-    Width = 269
-    Height = 323
+    Width = 316
+    Height = 378
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Level Skillset'
     TabOrder = 2
@@ -208,40 +282,14 @@ object FQuickmodMain: TFQuickmodMain
     end
   end
   object btnApply: TButton
-    Left = 76
-    Top = 363
-    Width = 388
+    Left = 40
+    Top = 418
+    Width = 740
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
-    Caption = 'Apply'
+    Caption = 'Apply Changes To All Levels in Selected Pack'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 361
-  end
-  object gbSuperlemming: TGroupBox
-    Left = 24
-    Top = 294
-    Width = 217
-    Height = 43
-    Caption = 'Superlemming Mode'
-    TabOrder = 4
-    object cbActivateSuperlemming: TCheckBox
-      Left = 16
-      Top = 17
-      Width = 73
-      Height = 17
-      Caption = 'Activate'
-      TabOrder = 0
-      OnClick = cbSuperlemmingClick
-    end
-    object cbDeactivateSuperlemming: TCheckBox
-      Left = 103
-      Top = 17
-      Width = 90
-      Height = 17
-      Caption = 'Deactivate'
-      TabOrder = 1
-      OnClick = cbSuperlemmingClick
-    end
+    ExplicitTop = 397
   end
 end

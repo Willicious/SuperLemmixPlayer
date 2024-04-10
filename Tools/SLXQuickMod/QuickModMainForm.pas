@@ -51,6 +51,12 @@ type
     gbSuperlemming: TGroupBox;
     cbActivateSuperlemming: TCheckBox;
     cbDeactivateSuperlemming: TCheckBox;
+    gbTalismans: TGroupBox;
+    cbAddKillZombiesTalisman: TCheckBox;
+    cbAddClassicModeTalisman: TCheckBox;
+    cbAddNoPauseTalisman: TCheckBox;
+    gbReleaseRate: TGroupBox;
+    cbAddSaveAllTalisman: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -71,6 +77,11 @@ type
     procedure ApplyChanges;
     procedure RecursiveFindLevels(aBaseFolder: String);
     procedure ApplyChangesToLevelFile(aFile: String);
+
+    function SaveAllTalisman: string;
+    function ClassicModeTalisman: string;
+    function KillZombiesTalisman: string;
+    function NoPauseTalisman: string;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -78,6 +89,8 @@ type
 
 var
   FQuickmodMain: TFQuickmodMain;
+  TalismanID: Integer;
+  TotalLemmings: Integer;
 
 implementation
 
@@ -135,8 +148,12 @@ begin
 end;
 
 procedure TFQuickmodMain.btnApplyClick(Sender: TObject);
+var
+  n: Integer;
 begin
-  if MessageDlg('Are you sure you want to apply these changes?', mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+  if MessageDlg('Are you sure you want to apply these changes to'
+                + sLineBreak + ' ' + sLineBreak + cbPack.Text + '?',
+                mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
     ApplyChanges;
 end;
 
@@ -247,6 +264,46 @@ begin
   CreateSkillInputs;
 end;
 
+function TFQuickmodMain.SaveAllTalisman: string;
+begin
+  Result := ' $TALISMAN' + sLineBreak +
+            '   TITLE Save All Lemmings' + sLineBreak +
+            '   ID ' + IntToStr(TalismanID) + sLineBreak +
+            '   COLOR Gold' + sLineBreak +
+            '   SAVE_REQUIREMENT ' + IntToStr(TotalLemmings) + sLineBreak +
+            ' $END' + sLineBreak;
+end;
+
+function TFQuickmodMain.ClassicModeTalisman: string;
+begin
+  Result := ' $TALISMAN' + sLineBreak +
+            '   TITLE Classic Mode' + sLineBreak +
+            '   ID ' + IntToStr(TalismanID) + sLineBreak +
+            '   COLOR Gold' + sLineBreak +
+            '   CLASSIC_MODE 0' + sLineBreak +
+            ' $END' + sLineBreak;
+end;
+
+function TFQuickmodMain.KillZombiesTalisman: string;
+begin
+  Result := ' $TALISMAN' + sLineBreak +
+            '   TITLE Kill All Zombies' + sLineBreak +
+            '   ID ' + IntToStr(TalismanID) + sLineBreak +
+            '   COLOR Gold' + sLineBreak +
+            '   KILL_ZOMBIES 0' + sLineBreak +
+            ' $END' + sLineBreak;
+end;
+
+function TFQuickmodMain.NoPauseTalisman: string;
+begin
+  Result := ' $TALISMAN' + sLineBreak +
+            '   TITLE Frenzy Mode' + sLineBreak +
+            '   ID ' + IntToStr(TalismanID) + sLineBreak +
+            '   COLOR Gold' + sLineBreak +
+            '   NO_PAUSE 0' + sLineBreak +
+            ' $END' + sLineBreak;
+end;
+
 procedure TFQuickmodMain.ApplyChanges;
 begin
   fProcessCompletedSuccessfully := False;
@@ -292,14 +349,20 @@ var
   SL: TStringList;
   ThisLine: String;
   SecLevel: Integer;
-  n: Integer;
-  i: Integer;
+  n, i, p: Integer;
   OldID, NewID: String;
+  LevelHasZombies: Boolean;
+  AlreadyModified: Boolean;
 begin
   SecLevel := 0;
   n := 0;
   OldID := '';
   SL := TStringList.Create;
+  TalismanID := -1;
+  TotalLemmings := 0;
+  LevelHasZombies := False;
+  AlreadyModified := False;
+
   try
     SL.LoadFromFile(aFile);
 
@@ -307,6 +370,26 @@ begin
     begin
       ThisLine := Uppercase(TrimLeft(SL[n]));
 
+      if (Trim(ThisLine) = '# LEVEL FILE MODIFIED BY SLX QUICKMOD') then
+        AlreadyModified := True;
+
+      // Get some values for adding Talismans
+      if (Trim(ThisLine) = '$TALISMAN') then
+      begin
+        Inc(TalismanID);
+      end;
+
+      if cbLemCount.Checked then
+        TotalLemmings := StrToInt(ebLemCount.Text)
+      else if (Pos('LEMMINGS ', ThisLine) = 1) then
+      begin
+        Val(Copy(ThisLine, Length('LEMMINGS ') + 1, Length(ThisLine)), TotalLemmings, p);
+      end;
+
+      if (Trim(ThisLine) = 'ZOMBIE') then
+        LevelHasZombies := True;
+
+      // Set any changed values
       if LeftStr(ThisLine, 4) = '$END' then
       begin
         Dec(SecLevel);
@@ -379,11 +462,14 @@ begin
       Inc(n);
     end;
 
-    SL.Insert(0, '# Level file modified by NL QuickMod');
-    SL.Insert(1, '');
+    if not AlreadyModified then
+    begin
+      SL.Insert(0, '# Level file modified by SLX QuickMod');
+      SL.Insert(1, '');
+    end;
 
     SL.Add('');
-    SL.Add('# NL QuickMod modifications');
+    SL.Add('# SLX QuickMod modifications');
     SL.Add('');
 
     if cbChangeID.Checked then
@@ -415,6 +501,30 @@ begin
     if cbTimeLimit.Checked and (StrToIntDef(ebTimeLimit.Text, 0) >= 1) then
       SL.Add('TIME_LIMIT ' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
     if cbActivateSuperlemming.Checked then SL.Add('SUPERLEMMING');
+
+    if cbAddSaveAllTalisman.Checked and not LevelHasZombies then
+    begin
+      Inc(TalismanID);
+      SL.Add(SaveAllTalisman);
+    end;
+
+    if cbAddClassicModeTalisman.Checked then
+    begin
+      Inc(TalismanID);
+      SL.Add(ClassicModeTalisman);
+    end;
+
+    if cbAddKillZombiesTalisman.Checked and LevelHasZombies then
+    begin
+      Inc(TalismanID);
+      SL.Add(KillZombiesTalisman);
+    end;
+
+    if cbAddNoPauseTalisman.Checked then
+    begin
+      Inc(TalismanID);
+      SL.Add(NoPauseTalisman);
+    end;
 
     if cbRemoveTalismans.Checked then SL.Add('# TALISMANS REMOVED');
     if cbRemoveSpecialLemmings.Checked then SL.Add('# SPECIAL LEMS REMOVED');
