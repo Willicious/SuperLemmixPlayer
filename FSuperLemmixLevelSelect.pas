@@ -236,14 +236,12 @@ procedure TFLevelSelect.InitializeTreeview;
     MaskBMP := TBitmap.Create;
     try
       Load('level_not_attempted.png');
-      Load('level_not_attempted.png');
-      //Load('level_attempted.png');
+      Load('level_attempted.png');
       Load('level_completed_outdated.png');
       Load('level_completed.png');
 
       Load('level_talisman.png', 'level_not_attempted.png');
-      Load('level_talisman.png', 'level_not_attempted.png');
-      //Load('level_talisman.png', 'level_attempted.png',);
+      Load('level_talisman.png', 'level_attempted.png',);
       Load('level_talisman.png', 'level_completed_outdated.png');
       Load('level_talisman.png', 'level_completed.png');
     finally
