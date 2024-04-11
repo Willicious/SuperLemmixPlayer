@@ -59,6 +59,7 @@ type
     cbAddSaveAllTalisman: TCheckBox;
     cbChangeAuthor: TCheckBox;
     ebAuthor: TEdit;
+    cbUpdateWater: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -411,6 +412,49 @@ begin
           SL[n] := '# ' + SL[n];
           Inc(n);
         until ThisLine = '$END';
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbUpdateWater.Checked) then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+
+          if (Trim(ThisLine) = 'STYLE ORIG_FIRE') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE WATER') then
+              SL[n] := '   PIECE lava';
+          end;
+
+          if (Trim(ThisLine) = 'STYLE ORIG_MARBLE') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE WATER') then
+              SL[n] := '   PIECE poison';
+          end;
+
+          if (Trim(ThisLine) = 'STYLE OHNO_BUBBLE') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE WATER') then
+              SL[n] := '   PIECE blasticine';
+          end;
+
+          if (Trim(ThisLine) = 'STYLE OHNO_ROCK') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE WATER') then
+              SL[n] := '   PIECE vinewater';
+          end;
+
+          Inc(n);
+        until ThisLine = '$END';
       end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbRemoveSpecialLemmings.Checked) then
       begin
         repeat
@@ -534,6 +578,7 @@ begin
       SL.Add(NoPauseTalisman);
     end;
 
+    if cbUpdateWater.Checked then SL.Add('# WATER OBJECTS UPDATED');
     if cbRemoveTalismans.Checked then SL.Add('# TALISMANS REMOVED');
     if cbRemoveSpecialLemmings.Checked then SL.Add('# SPECIAL LEMS REMOVED');
     if cbRemovePreplaced.Checked then SL.Add('# PRE-PLACED LEMS REMOVED');
