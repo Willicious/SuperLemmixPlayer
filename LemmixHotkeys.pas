@@ -145,6 +145,7 @@ begin
   SetKeyFunction($27, lka_SkillRight);
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($20, lka_ShowUsedSkills);
+  SetKeyFunction($68, lka_InfiniteSkills);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
   SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
@@ -196,7 +197,7 @@ begin
   SetKeyFunction($30, lka_SlowMotion);
   SetKeyFunction($BE, lka_SlowMotion);
   SetKeyFunction($2E, lka_Cheat);
-  SetKeyFunction($2D, lka_InfiniteSkills);
+  SetKeyFunction($68, lka_InfiniteSkills);
   SetKeyFunction($56, lka_ClearPhysics, 1);
   SetKeyFunction($14, lka_ClearPhysics, 0);
   SetKeyFunction($4C, lka_LoadReplay);
@@ -280,6 +281,7 @@ begin
   SetKeyFunction($43, lka_Skill, Integer(spbFencer));
   SetKeyFunction($47, lka_Skill, Integer(spbMiner));
   SetKeyFunction($57, lka_Skill, Integer(spbDigger));
+  SetKeyFunction($68, lka_InfiniteSkills);
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
