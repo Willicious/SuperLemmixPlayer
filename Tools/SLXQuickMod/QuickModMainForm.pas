@@ -618,6 +618,9 @@ begin
       SL.Add(NoPauseTalisman);
     end;
 
+    if cbBomberToTimebomber.Checked then SL.Add('# BOMBERS CHANGED TO TIMEBOMBERS');
+    if cbTimebomberToBomber.Checked then SL.Add('# TIMEBOMBERS CHANGED TO BOMBERS');
+    if cbStonerToFreezer.Checked then SL.Add('# STONERS CHANGED TO FREEZERS');
     if cbUpdateWater.Checked then SL.Add('# WATER OBJECTS UPDATED');
     if cbRemoveTalismans.Checked then SL.Add('# TALISMANS REMOVED');
     if cbRemoveSpecialLemmings.Checked then SL.Add('# SPECIAL LEMS REMOVED');
