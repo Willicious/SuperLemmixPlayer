@@ -6,7 +6,7 @@ object FQuickmodMain: TFQuickmodMain
   BorderStyle = bsSingle
   Caption = 'SuperLemmix QuickMod'
   ClientHeight = 451
-  ClientWidth = 827
+  ClientWidth = 870
   Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -18,7 +18,7 @@ object FQuickmodMain: TFQuickmodMain
   Position = poScreenCenter
   OnCreate = FormCreate
   DesignSize = (
-    827
+    870
     451)
   PixelsPerInch = 96
   TextHeight = 13
@@ -30,18 +30,19 @@ object FQuickmodMain: TFQuickmodMain
     Caption = 'Pack'
   end
   object lblVersion: TLabel
-    Left = 797
+    Left = 840
     Top = 430
     Width = 22
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v1.4'
+    Caption = 'v1.5'
+    ExplicitLeft = 797
   end
   object cbPack: TComboBox
     Left = 40
     Top = 7
-    Width = 779
+    Width = 822
     Height = 21
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
@@ -212,14 +213,14 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbTalismans: TGroupBox
       Left = 16
-      Top = 236
+      Top = 232
       Width = 453
-      Height = 133
+      Height = 137
       Caption = 'Talismans'
       TabOrder = 10
       object cbRemoveTalismans: TCheckBox
-        Left = 168
-        Top = 16
+        Left = 16
+        Top = 22
         Width = 145
         Height = 17
         Caption = 'Remove All Talismans'
@@ -228,7 +229,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddKillZombiesTalisman: TCheckBox
         Left = 16
-        Top = 85
+        Top = 91
         Width = 369
         Height = 17
         Caption = 'Add '#39'Kill All Zombies'#39' Talisman to all levels with Zombies'
@@ -236,7 +237,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddClassicModeTalisman: TCheckBox
         Left = 16
-        Top = 39
+        Top = 45
         Width = 206
         Height = 17
         Caption = 'Add '#39'Play in Classic Mode'#39' Talisman'
@@ -244,7 +245,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddNoPauseTalisman: TCheckBox
         Left = 16
-        Top = 108
+        Top = 114
         Width = 201
         Height = 17
         Caption = 'Add '#39'No Pressing Pause'#39' Talisman'
@@ -252,7 +253,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddSaveAllTalisman: TCheckBox
         Left = 16
-        Top = 62
+        Top = 68
         Width = 369
         Height = 17
         Caption = 'Add '#39'Save All Lemmings'#39' Talisman to all levels without Zombies'
@@ -286,7 +287,7 @@ object FQuickmodMain: TFQuickmodMain
   object gbSkillset: TGroupBox
     Left = 503
     Top = 34
-    Width = 316
+    Width = 359
     Height = 378
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Level Skillset'
@@ -300,11 +301,45 @@ object FQuickmodMain: TFQuickmodMain
       TabOrder = 0
       OnClick = cbCustomSkillsetClick
     end
+    object gbSkillConversions: TGroupBox
+      Left = 9
+      Top = 288
+      Width = 342
+      Height = 81
+      Caption = 'Skill Conversions'
+      TabOrder = 1
+      object cbTimebomberToBomber: TCheckBox
+        Left = 172
+        Top = 27
+        Width = 152
+        Height = 17
+        Caption = 'Timebombers to Bombers'
+        TabOrder = 0
+        OnClick = cbTimebomberChangeClick
+      end
+      object cbBomberToTimebomber: TCheckBox
+        Left = 11
+        Top = 27
+        Width = 155
+        Height = 17
+        Caption = 'Bombers to Timebombers'
+        TabOrder = 1
+        OnClick = cbTimebomberChangeClick
+      end
+      object cbStonerToFreezer: TCheckBox
+        Left = 11
+        Top = 50
+        Width = 129
+        Height = 17
+        Caption = 'Stoners to Freezers'
+        TabOrder = 2
+      end
+    end
   end
   object btnApply: TButton
     Left = 40
     Top = 418
-    Width = 740
+    Width = 783
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Changes To All Levels in Selected Pack'

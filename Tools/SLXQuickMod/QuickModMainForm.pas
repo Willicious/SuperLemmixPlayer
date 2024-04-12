@@ -60,10 +60,15 @@ type
     cbChangeAuthor: TCheckBox;
     ebAuthor: TEdit;
     cbUpdateWater: TCheckBox;
+    gbSkillConversions: TGroupBox;
+    cbTimebomberToBomber: TCheckBox;
+    cbBomberToTimebomber: TCheckBox;
+    cbStonerToFreezer: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
     procedure cbLockRRClick(Sender: TObject);
+    procedure cbTimebomberChangeClick(Sender: TObject);
     procedure cbSuperlemmingClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
   private
@@ -115,6 +120,21 @@ begin
   begin
     if Sender <> cbLockRR then cbLockRR.Checked := false;
     if Sender <> cbUnlockRR then cbUnlockRR.Checked := false;
+  end;
+end;
+
+procedure TFQuickmodMain.cbTimebomberChangeClick(Sender: TObject);
+begin
+  if cbBomberToTimebomber.Checked or cbTimebomberToBomber.Checked then
+  begin
+    cbCustomSkillset.Checked := false;
+    cbCustomSkillset.Enabled := false;
+  end;
+
+  if cbBomberToTimebomber.Checked and cbTimebomberToBomber.Checked then
+  begin
+    if Sender <> cbBomberToTimebomber then cbBomberToTimebomber.Checked := false;
+    if Sender <> cbTimebomberToBomber then cbTimebomberToBomber.Checked := false;
   end;
 end;
 
@@ -221,7 +241,7 @@ var
 const
   ORIGIN_X = 24;
   ORIGIN_Y = 70;
-  SPACING_X = 170;
+  SPACING_X = 160;
   SPACING_Y = 30;
   LABEL_WIDTH = 100;
   EDIT_WIDTH = 40;
@@ -238,8 +258,8 @@ begin
       Parent := gbSkillset;
       Caption := SKILLS[i];
       Height := 22;
-      Left := ORIGIN_X + (SPACING_X * (i mod 2)) + EDIT_WIDTH + 8;
-      Top := ORIGIN_Y + (SPACING_Y * (i div 2)) + 2;
+      Left := ORIGIN_X + (SPACING_X * (i mod 3)) + EDIT_WIDTH + 8;
+      Top := ORIGIN_Y + (SPACING_Y * (i div 3)) + 2;
       Width := LABEL_WIDTH;
     end;
 
@@ -248,16 +268,17 @@ begin
       Parent := gbSkillset;
       Enabled := false;
       Height := 22;
-      Left := ORIGIN_X + (SPACING_X * (i mod 2));
+      Left := ORIGIN_X + (SPACING_X * (i mod 3));
       NumbersOnly := true;
       Text := '0';
-      Top := ORIGIN_Y + (SPACING_Y * (i div 2));
+      Top := ORIGIN_Y + (SPACING_Y * (i div 3));
       Width := EDIT_WIDTH;
     end;
 
     fSkillInputs[i] := ThisInput;
   end;
 end;
+
 
 procedure TFQuickmodMain.FormCreate(Sender: TObject);
 begin
@@ -357,6 +378,7 @@ var
   OldID, NewID: String;
   LevelHasZombies: Boolean;
   AlreadyModified: Boolean;
+  ShouldConvertSkills: Boolean;
 begin
   SecLevel := 0;
   n := 0;
@@ -366,6 +388,10 @@ begin
   TotalLemmings := 0;
   LevelHasZombies := False;
   AlreadyModified := False;
+
+  ShouldConvertSkills := cbBomberToTimebomber.Checked
+                      or cbTimebomberToBomber.Checked
+                      or cbStonerToFreezer.Checked;
 
   try
     SL.LoadFromFile(aFile);
@@ -403,6 +429,20 @@ begin
         repeat
           ThisLine := Uppercase(Trim(SL[n]));
           SL[n] := '# ' + SL[n];
+          Inc(n);
+        until ThisLine = '$END';
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$SKILLSET') and ShouldConvertSkills then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+
+          if (LeftStr(ThisLine, 10) = 'TIMEBOMBER') and cbTimebomberToBomber.Checked then
+            SL[n] := '  BOMBER ' + Copy(ThisLine, 12, Length(ThisLine))
+          else if (LeftStr(ThisLine, 6) = 'BOMBER') and cbBomberToTimebomber.Checked then
+            SL[n] := '  TIMEBOMBER ' + Copy(ThisLine, 8, Length(ThisLine))
+          else if (LeftStr(ThisLine, 6) = 'STONER') and cbStonerToFreezer.Checked then
+            SL[n] := '  FREEZER ' + Copy(ThisLine, 8, Length(ThisLine));
+
           Inc(n);
         until ThisLine = '$END';
       end else if (SecLevel = 0) and (Trim(ThisLine) = '$TALISMAN') and (cbRemoveTalismans.Checked) then
