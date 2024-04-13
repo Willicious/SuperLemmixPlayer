@@ -30,14 +30,13 @@ object FQuickmodMain: TFQuickmodMain
     Caption = 'Pack'
   end
   object lblVersion: TLabel
-    Left = 840
+    Left = 819
     Top = 430
-    Width = 22
+    Width = 43
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v1.5'
-    ExplicitLeft = 797
+    Caption = 'v1.5.1'
   end
   object cbPack: TComboBox
     Left = 40
@@ -124,7 +123,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemoveSpecialLemmings: TCheckBox
       Left = 16
-      Top = 180
+      Top = 172
       Width = 217
       Height = 17
       Caption = 'Remove Zombies, Neutrals, Lem Caps'
@@ -133,7 +132,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemovePreplaced: TCheckBox
       Left = 16
-      Top = 157
+      Top = 149
       Width = 161
       Height = 17
       Caption = 'Remove Preplaced Lemmings'
@@ -141,10 +140,10 @@ object FQuickmodMain: TFQuickmodMain
       OnClick = cbStatCheckboxClicked
     end
     object gbReleaseRate: TGroupBox
-      Left = 244
+      Left = 253
       Top = 55
       Width = 225
-      Height = 78
+      Height = 76
       Caption = 'Release Rate'
       TabOrder = 8
       object cbReleaseRate: TCheckBox
@@ -187,9 +186,9 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbSuperlemming: TGroupBox
       Left = 244
-      Top = 157
+      Top = 149
       Width = 225
-      Height = 53
+      Height = 48
       Caption = 'Superlemming Mode'
       TabOrder = 4
       object cbActivateSuperlemming: TCheckBox
@@ -278,9 +277,11 @@ object FQuickmodMain: TFQuickmodMain
     object cbUpdateWater: TCheckBox
       Left = 16
       Top = 203
-      Width = 149
+      Width = 453
       Height = 17
-      Caption = 'Replace Water Objects'
+      Caption = 
+        'Replace Water Objects (orig_fire | orig_marble | ohno_bubble | o' +
+        'hno_rock)'
       TabOrder = 14
     end
   end

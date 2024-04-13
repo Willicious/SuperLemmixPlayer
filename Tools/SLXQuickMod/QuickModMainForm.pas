@@ -99,6 +99,7 @@ var
   FQuickmodMain: TFQuickmodMain;
   TalismanID: Integer;
   TotalLemmings: Integer;
+  SaveRequirement: Integer;
 
 implementation
 
@@ -386,6 +387,7 @@ begin
   SL := TStringList.Create;
   TalismanID := -1;
   TotalLemmings := 0;
+  SaveRequirement := 0;
   LevelHasZombies := False;
   AlreadyModified := False;
 
@@ -414,6 +416,14 @@ begin
       else if (Pos('LEMMINGS ', ThisLine) = 1) then
       begin
         Val(Copy(ThisLine, Length('LEMMINGS ') + 1, Length(ThisLine)), TotalLemmings, p);
+      end;
+
+      if cbSaveRequirement.Checked then
+        SaveRequirement := StrToInt(ebSaveRequirement.Text)
+      else if (Pos('SAVE_REQUIREMENT ', ThisLine) = 1) then
+      begin
+        if (SecLevel = 0) then
+          SaveRequirement := StrToInt(Copy(ThisLine, Length('SAVE_REQUIREMENT ') + 1, MaxInt));
       end;
 
       if (Trim(ThisLine) = 'ZOMBIE') then
@@ -594,7 +604,8 @@ begin
       SL.Add('TIME_LIMIT ' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
     if cbActivateSuperlemming.Checked then SL.Add('SUPERLEMMING');
 
-    if cbAddSaveAllTalisman.Checked and not LevelHasZombies then
+    if cbAddSaveAllTalisman.Checked and not (TotalLemmings = SaveRequirement)
+      and not LevelHasZombies then
     begin
       Inc(TalismanID);
       SL.Add(SaveAllTalisman);
