@@ -575,7 +575,7 @@ begin
   begin
     RewindTimer.Enabled := False;
     Game.RewindPressed := False;
-    Game.fIsBackstepping := False;
+    Game.IsBackstepping := False;
     GameSpeed := gspNormal; // Return speed to Normal at start of game
   end else begin
     GoToSaveState(Game.CurrentIteration - 3);
@@ -1091,12 +1091,12 @@ begin
   begin
   if PauseAfterSkip < 0 then
   begin
-    Game.fIsBackstepping := False;
+    Game.IsBackstepping := False;
     GameSpeed := gspNormal;
   end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
     or (PauseAfterSkip > 0) then
     begin
-      if Game.fIsBackstepping then GameSpeed := gspPause;
+      if Game.IsBackstepping then GameSpeed := gspPause;
     end;
   end;
 
@@ -1382,7 +1382,7 @@ begin
     begin
       TargetFrame := i;
 
-      Game.fIsBackstepping := True;
+      Game.IsBackstepping := True;
       GotoSaveState(Max(TargetFrame - 1, 0));
 
       // Delete all existing future Infinite Skills replay events
@@ -1468,7 +1468,7 @@ begin
 
     if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       begin
-        Game.fIsBackstepping := False;
+        Game.IsBackstepping := False;
         Game.RegainControl; // We don't want to FORCE it in this case; Replay Insert mode should be respected here
       end;
 
@@ -1493,16 +1493,16 @@ begin
       lka_Pause: begin
                  // 1 second grace to prevent restart from failing the NoPause talisman
                  if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
-                 if Game.RewindPressed then Game.fRewindPressed := False;
-                 if Game.TurboPressed then Game.fTurboPressed := False;
+                 if Game.RewindPressed then Game.RewindPressed := False;
+                 if Game.TurboPressed then Game.TurboPressed := False;
 
                  if fGameSpeed = gspPause then
                    begin
-                     Game.fIsBackstepping := False;
+                     Game.IsBackstepping := False;
                      GameSpeed := gspNormal;
                    end else begin
                      Game.RewindPressed := False; // Bookmark - needed?
-                     Game.fIsBackstepping := True;
+                     Game.IsBackstepping := True;
                      GameSpeed := gspPause;
                    end;
                  end;
@@ -1550,21 +1550,21 @@ begin
       lka_Cheat: Game.Cheat;
       lka_Turbo: begin
                    if Game.IsSuperLemmingMode then Exit;
-                   if Game.RewindPressed then Game.fRewindPressed := False;
-                   if Game.IsBackstepping then Game.fIsBackstepping := False;
+                   if Game.RewindPressed then Game.RewindPressed := False;
+                   if Game.IsBackstepping then Game.IsBackstepping := False;
 
                     case fGameSpeed of
                       gspFF, gspSlowMo, gspPause: GameSpeed := gspNormal;
                     end;
 
-                    Game.fTurboPressed := not Game.TurboPressed;
+                    Game.TurboPressed := not Game.TurboPressed;
                  end;
       lka_FastForward: begin
                        if Game.IsSuperLemmingMode then Exit;
 
-                         if Game.RewindPressed then Game.fRewindPressed := False;
-                         if Game.TurboPressed then Game.fTurboPressed := False;
-                         if Game.IsBackstepping then Game.fIsBackstepping := False;
+                         if Game.RewindPressed then Game.RewindPressed := False;
+                         if Game.TurboPressed then Game.TurboPressed := False;
+                         if Game.IsBackstepping then Game.IsBackstepping := False;
 
                          case fGameSpeed of
                            gspNormal, gspSlowMo, gspPause: GameSpeed := gspFF;
@@ -1578,15 +1578,15 @@ begin
                       gspSlowMo, gspPause, gspFF: GameSpeed := gspNormal;
                     end;
 
-                    if Game.TurboPressed then Game.fTurboPressed := False;
+                    if Game.TurboPressed then Game.TurboPressed := False;
 
-                    Game.fRewindPressed := not Game.RewindPressed;
+                    Game.RewindPressed := not Game.RewindPressed;
                   end;
       lka_SlowMotion: if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
                       begin
-                        if Game.RewindPressed then Game.fRewindPressed := False;
-                        if Game.TurboPressed then Game.fTurboPressed := False;
-                        if Game.IsBackstepping then Game.fIsBackstepping := False;
+                        if Game.RewindPressed then Game.RewindPressed := False;
+                        if Game.TurboPressed then Game.TurboPressed := False;
+                        if Game.IsBackstepping then Game.IsBackstepping := False;
 
                         case fGameSpeed of
                           gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
@@ -1597,14 +1597,17 @@ begin
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: begin
-                   if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
+                     // Always reset PauseWasPressed if user restarts
+                     Game.PauseWasPressed := False;
+
+                     if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
                       begin
                         Game.CancelReplayAfterSkip := true;
-                        Game.fReplayWasLoaded := false;
+                        Game.ReplayWasLoaded := False;
                         GotoSaveState(0);
                       end else begin
                         GotoSaveState(0);
-                        Game.fReplayWasLoaded := true;
+                        Game.ReplayWasLoaded := True;
                       end;
                    end;
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
@@ -1641,15 +1644,15 @@ begin
                     if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                     if CurrentIteration > (func.Modifier * -1) then
                     begin
-                      Game.fIsBackstepping := True;
+                      Game.IsBackstepping := True;
                       GotoSaveState(CurrentIteration + func.Modifier);
                     end else begin
-                      Game.fIsBackstepping := False;
+                      Game.IsBackstepping := False;
                       GotoSaveState(0);
                     end;
                   end else if func.Modifier > 1 then
                   begin
-                    Game.fIsBackstepping := False;
+                    Game.IsBackstepping := False;
                     fHyperSpeedTarget := CurrentIteration + func.Modifier;
                   end else
                     if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
@@ -1707,7 +1710,7 @@ begin
                             if Game.ReplayManager.HasAnyActionAt(i) then
                               TargetFrame := i;
 
-                        Game.fIsBackstepping := True;
+                        Game.IsBackstepping := True;
                         GotoSaveState(Max(TargetFrame - 1, 0));
                      end;
       ssc_NextShrugger: begin
@@ -1835,7 +1838,7 @@ begin
     end else if (Button = mbRight) and RightMouseUnassigned
     and not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
     begin
-      Game.fIsBackstepping := True;
+      Game.IsBackstepping := True;
       GoToSaveState(Max(Game.CurrentIteration -1, 0));
     end;
 
@@ -2143,7 +2146,7 @@ begin
                 'will attempt to play the replay anyway.');
 
   GameSpeed := gspNormal;
-  Game.fIsBackstepping := False;
+  Game.IsBackstepping := False;
   GotoSaveState(0, -1);
   CanPlay := True;
 end;
@@ -2258,7 +2261,7 @@ begin
   if s <> '' then
   begin
     StartReplay(s);
-    Game.fReplayWasLoaded := True;
+    Game.ReplayWasLoaded := True;
     exit;
   end;
 end;

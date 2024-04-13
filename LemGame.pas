@@ -224,6 +224,12 @@ type
     fTargetLemmingID           : Integer; // For replay skill assignments
     fCancelReplayAfterSkip     : Boolean;
 
+    fIsBackstepping            : Boolean;
+    fRewindPressed             : Boolean;
+    fTurboPressed              : Boolean;
+    fReplayWasLoaded           : Boolean;
+    fPauseWasPressed           : Boolean;
+
   { events }
     fParticleFinishTimer       : Integer; // Extra frames to enable viewing of explosions
     fSimulationDepth           : Integer; // Whether we are in simulation mode for drawing shadows
@@ -469,11 +475,6 @@ type
     SpawnIntervalModifier      : Integer; // Negative = decrease each update, positive = increase each update, 0 = no change
     fSpawnIntervalChanged      : Boolean; // Set to true in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
-    fIsBackstepping            : Boolean;
-    fRewindPressed             : Boolean;
-    fTurboPressed              : Boolean;
-    fReplayWasLoaded           : Boolean;
-    fPauseWasPressed           : Boolean;
 
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -539,8 +540,8 @@ type
     property MessageQueue: TGameMessageQueue read fMessageQueue;
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
-    property Replaying: Boolean read GetIsReplaying;         // Bookmark - why is this commented out?
-    property ReplayWasLoaded: Boolean read fReplayWasLoaded; //write fReplayWasLoaded;
+    property Replaying: Boolean read GetIsReplaying;
+    property ReplayWasLoaded: Boolean read fReplayWasLoaded write fReplayWasLoaded;
     property PauseWasPressed: Boolean read fPauseWasPressed write fPauseWasPressed;
     property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
     property TurboPressed: Boolean read fTurboPressed write fTurboPressed;
@@ -8487,7 +8488,7 @@ begin
   fReplayManager.Cut(fCurrentIteration, CurrSpawnInterval);
 
   // For NoPause talisman - allows replay to be cancelled before music starts
-  if (CurrentIteration < 55) then fReplayWasLoaded := False;
+  if (CurrentIteration < 55) then ReplayWasLoaded := False;
 end;
 
 

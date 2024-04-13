@@ -77,7 +77,7 @@ end;
 procedure TGamePostviewScreen.NextLevel;
 begin
   GameParams.NextLevel(true);
-  GlobalGame.fReplayWasLoaded := False;
+  GlobalGame.ReplayWasLoaded := False;
   CloseScreen(gstPreview);
 end;
 
@@ -96,7 +96,7 @@ procedure TGamePostviewScreen.ReplaySameLevel;
 begin
   CloseScreen(gstPreview);
   if GameParams.ReplayAfterRestart then
-    GlobalGame.fReplayWasLoaded := True;
+    GlobalGame.ReplayWasLoaded := True;
 end;
 
 procedure TGamePostviewScreen.BuildScreen;

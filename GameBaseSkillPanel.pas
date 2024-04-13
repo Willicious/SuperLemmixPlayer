@@ -1709,7 +1709,7 @@ begin
   case aButton of
     spbSlower:
       begin
-        Game.fIsBackstepping := False;
+        Game.IsBackstepping := False;
         fRRIsPressed := True;
         DrawButtonSelector(spbSlower, true);
 
@@ -1722,7 +1722,7 @@ begin
       end;
     spbFaster:
       begin
-        Game.fIsBackstepping := False;
+        Game.IsBackstepping := False;
         fRRIsPressed := True;
         DrawButtonSelector(spbFaster, true);
 
@@ -1737,15 +1737,15 @@ begin
       begin
         // 1 second grace to prevent restart from failing the NoPause talisman
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
-        if Game.RewindPressed then Game.fRewindPressed := False;
-        if Game.TurboPressed then Game.fTurboPressed := False;
+        if Game.RewindPressed then Game.RewindPressed := False;
+        if Game.TurboPressed then Game.TurboPressed := False;
 
         if fGameWindow.GameSpeed = gspPause then
         begin
-          Game.fIsBackstepping := False;
+          Game.IsBackstepping := False;
           fGameWindow.GameSpeed := gspNormal;
         end else begin
-          Game.fIsBackstepping := True;
+          Game.IsBackstepping := True;
           fGameWindow.GameSpeed := gspPause;
         end;
       end;
@@ -1762,19 +1762,19 @@ begin
     spbFastForward:
       begin
         if Game.IsSuperLemmingMode then Exit;
-        if Game.RewindPressed then Game.fRewindPressed := False;
-        if Game.IsBackstepping then Game.fIsBackstepping := False;
+        if Game.RewindPressed then Game.RewindPressed := False;
+        if Game.IsBackstepping then Game.IsBackstepping := False;
 
         if GameParams.TurboFF then
         begin
           if ((fGameWindow.GameSpeed = gspFF) or Game.TurboPressed) then fGameWindow.GameSpeed := gspNormal;
 
-          Game.fTurboPressed := not Game.TurboPressed;
+          Game.TurboPressed := not Game.TurboPressed;
 
           Exit;
         end;
 
-        if Game.TurboPressed then Game.fTurboPressed := False;
+        if Game.TurboPressed then Game.TurboPressed := False;
 
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
@@ -1788,9 +1788,9 @@ begin
         if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
           fGameWindow.GameSpeed := gspNormal;
 
-        if Game.TurboPressed then Game.fTurboPressed := False;
+        if Game.TurboPressed then Game.TurboPressed := False;
 
-        Game.fRewindPressed := not Game.RewindPressed;
+        Game.RewindPressed := not Game.RewindPressed;
       end;
     spbRestart:
       begin
@@ -1800,11 +1800,11 @@ begin
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
           begin
             Game.CancelReplayAfterSkip := true;
-            Game.fReplayWasLoaded := false;
+            Game.ReplayWasLoaded := false;
             fGameWindow.GotoSaveState(0);
           end else begin
             fGameWindow.GotoSaveState(0);
-            Game.fReplayWasLoaded := true;
+            Game.ReplayWasLoaded := true;
           end;
       end;
     spbSquiggle: // Formerly spbClearPhysics

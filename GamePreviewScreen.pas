@@ -684,7 +684,7 @@ begin
   begin
     // Clears the current-replay-in-memory when the level loads
     GlobalGame.ReplayManager.Clear(true);
-    GlobalGame.fReplayWasLoaded := False;
+    GlobalGame.ReplayWasLoaded := False;
   end;
 end;
 

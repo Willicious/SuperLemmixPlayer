@@ -222,7 +222,7 @@ begin
   if s <> '' then
   begin
     GlobalGame.ReplayManager.LoadFromFile(s);
-    GlobalGame.fReplayWasLoaded := True;
+    GlobalGame.ReplayWasLoaded := True;
     if GlobalGame.ReplayManager.LevelID <> GameParams.Level.Info.LevelID then
       ShowMessage('Warning: This replay appears to be from a different level. SuperLemmix' + #13 +
                   'will attempt to play the replay anyway.');
