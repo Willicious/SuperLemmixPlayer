@@ -1602,7 +1602,7 @@ begin
 
                      if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
                       begin
-                        Game.CancelReplayAfterSkip := true;
+                        Game.CancelReplayAfterSkip := True;
                         Game.ReplayWasLoaded := False;
                         GotoSaveState(0);
                       end else begin

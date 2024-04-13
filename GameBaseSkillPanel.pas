@@ -1796,6 +1796,9 @@ begin
       begin
         DrawButtonSelector(spbRestart, true);
 
+        // Always reset PauseWasPressed if user restarts
+        Game.PauseWasPressed := False;
+
         // Cancels Replay after Restart in ClassicMode
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
           begin
