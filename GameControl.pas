@@ -67,9 +67,9 @@ type
     moAutoReplaySave,
     moEnableOnline,
     moCheckUpdates,
-    moNoAutoReplayMode,
     moNextUnsolvedLevel,
     moLastActiveLevel,
+    moAutoReplayMode,
     moReplayAfterRestart,
     moPauseAfterBackwards,
     moTurboFF,
@@ -111,7 +111,8 @@ const
     moNextUnsolvedLevel,
     moPauseAfterBackwards,
     moLinearResampleMenu,
-    moNoAutoReplayMode,
+    moAutoReplayMode,
+    moReplayAfterRestart,
     moFullScreen,
     moMinimapHighQuality,
     moShowMinimap,
@@ -235,7 +236,7 @@ type
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
-    property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
+    property AutoReplayMode: boolean Index moAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property NextUnsolvedLevel: boolean Index moNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
     property LastActiveLevel: boolean Index moLastActiveLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
@@ -443,7 +444,7 @@ begin
   SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
   SaveBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
   SaveBoolean('LoadLastActiveLevel', LastActiveLevel);
-  SaveBoolean('NoAutoReplay', NoAutoReplayMode);
+  SaveBoolean('AutoReplay', AutoReplayMode);
   SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('TurboFastForward', TurboFF);
@@ -611,7 +612,7 @@ begin
     if IngameSaveReplayPattern = '' then IngameSaveReplayPattern := DEFAULT_REPLAY_PATTERN_INGAME;
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
 
-    NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
+    AutoReplayMode := LoadBoolean('AutoReplay', AutoReplayMode);
     NextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
     LastActiveLevel := LoadBoolean('LoadLastActiveLevel', LastActiveLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);

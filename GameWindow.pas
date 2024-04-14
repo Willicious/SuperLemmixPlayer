@@ -535,10 +535,10 @@ begin
 
     if (F.ShowModal = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
     begin
-      OldClearReplay := GameParams.NoAutoReplayMode;
+      OldClearReplay := not GameParams.AutoReplayMode;
       fSaveList.ClearAfterIteration(0);
       GotoSaveState(Game.CurrentIteration);
-      GameParams.NoAutoReplayMode := OldClearReplay;
+      GameParams.AutoReplayMode := not OldClearReplay;
     end;
   finally
     F.Free;
@@ -628,7 +628,7 @@ begin
   if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
   if MouseClickFrameSkip < 0 then
   begin
-    if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+    if not GameParams.AutoReplayMode then Game.CancelReplayAfterSkip := True;
     GotoSaveState(Max(Game.CurrentIteration-1, 0));
   end;
 
@@ -1544,7 +1544,7 @@ begin
                           fSaveStateReplayStream.Position := 0;
                           Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, true);
                           GotoSaveState(fSaveStateFrame, 1);
-                        if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+                        if not GameParams.AutoReplayMode then Game.CancelReplayAfterSkip := True;
                         end;
                       end;
       lka_Cheat: Game.Cheat;
@@ -1641,7 +1641,7 @@ begin
                   if not (GameParams.HideFrameskipping or Game.IsSuperLemmingMode) then
                   if func.Modifier < 0 then
                   begin
-                    if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+                    if not GameParams.AutoReplayMode then Game.CancelReplayAfterSkip := True;
                     if CurrentIteration > (func.Modifier * -1) then
                     begin
                       Game.IsBackstepping := True;
