@@ -1572,7 +1572,10 @@ begin
                          end;
                        end;
       lka_Rewind: begin
-                  if Game.IsSuperLemmingMode then Exit;
+                    if Game.IsSuperLemmingMode then Exit;
+
+                    // Pressing Rewind fails the NoPause talisman (1 second grace at start of level)
+                    if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
 
                     case fGameSpeed of
                       gspSlowMo, gspPause, gspFF: GameSpeed := gspNormal;

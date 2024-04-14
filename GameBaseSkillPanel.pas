@@ -1785,6 +1785,9 @@ begin
       begin
         if Game.IsSuperLemmingMode then Exit;
 
+        // Pressing Rewind fails the NoPause talisman  (1 second grace at start of level)
+        if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
+
         if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
           fGameWindow.GameSpeed := gspNormal;
 
