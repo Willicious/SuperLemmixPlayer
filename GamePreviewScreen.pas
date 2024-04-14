@@ -607,14 +607,17 @@ begin
 
     // Try styles folder first
     LoadPath := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aImage;
-    // Then level pack folder
+
     if not FileExists(LoadPath) then
+    begin
+      // Then level pack folder
       LoadPath := GameParams.CurrentLevel.Group.FindFile(aImage);
-    // Then default
-    if not FileExists(LoadPath) then
-      LoadPath := AppPath + SFGraphicsMenu + aImage
-    else
-      KeepTalismans := true;
+      // Then default
+      if LoadPath = '' then
+        LoadPath := AppPath + SFGraphicsMenu + aImage
+      else
+        KeepTalismans := true;
+    end;
 
     TPngInterface.LoadPngFile(LoadPath, fTalismanImage);
     fTalismanImage.DrawMode := dmOpaque;
