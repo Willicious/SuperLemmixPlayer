@@ -1491,12 +1491,12 @@ begin
                           SetSelectedSkill(spbSlower, True, True);
                           end;
       lka_Pause: begin
-                 // 1 second grace to prevent restart from failing the NoPause talisman
-                 if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
-                 if Game.RewindPressed then Game.RewindPressed := False;
-                 if Game.TurboPressed then Game.TurboPressed := False;
+                   // 1 second grace at the start of the level for the NoPause talisman
+                   if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
+                   if Game.RewindPressed then Game.RewindPressed := False;
+                   if Game.TurboPressed then Game.TurboPressed := False;
 
-                 if fGameSpeed = gspPause then
+                   if fGameSpeed = gspPause then
                    begin
                      Game.IsBackstepping := False;
                      GameSpeed := gspNormal;

@@ -1735,7 +1735,7 @@ begin
       end;
     spbPause:
       begin
-        // 1 second grace to prevent restart from failing the NoPause talisman
+        // 1 second grace at the start of the level for the NoPause talisman
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
         if Game.RewindPressed then Game.RewindPressed := False;
         if Game.TurboPressed then Game.TurboPressed := False;
