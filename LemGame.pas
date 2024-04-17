@@ -2608,7 +2608,7 @@ var
   var
     X, Y: Integer;
   begin
-    X := L.LemX - 8;
+    X := L.LemX - ((L.LemDX + 16) div 2);
     Y := L.LemY - 10;
     Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
   end;
