@@ -697,6 +697,11 @@ begin
     if fExpectedCompletionIteration > 0 then
       Sec.AddLine('COMPLETION_FRAME', fExpectedCompletionIteration);
 
+    if GameParams.ClassicMode then
+      Sec.AddLine('CLASSIC_MODE ON')
+    else
+      Sec.AddLine('CLASSIC_MODE OFF');
+
     SaveReplayList(fAssignments, Sec);
     SaveReplayList(fSpawnIntervalChanges, Sec);
     SaveReplayList(fSkillCountChanges, Sec);
