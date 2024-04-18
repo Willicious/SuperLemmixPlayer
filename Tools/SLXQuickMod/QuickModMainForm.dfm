@@ -30,13 +30,13 @@ object FQuickmodMain: TFQuickmodMain
     Caption = 'Pack'
   end
   object lblVersion: TLabel
-    Left = 819
+    Left = 840
     Top = 430
-    Width = 43
+    Width = 22
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v1.5.1'
+    Caption = 'v1.6'
   end
   object cbPack: TComboBox
     Left = 40
@@ -212,14 +212,14 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbTalismans: TGroupBox
       Left = 16
-      Top = 232
+      Top = 240
       Width = 453
-      Height = 137
+      Height = 123
       Caption = 'Talismans'
       TabOrder = 10
       object cbRemoveTalismans: TCheckBox
         Left = 16
-        Top = 22
+        Top = 24
         Width = 145
         Height = 17
         Caption = 'Remove All Talismans'
@@ -228,7 +228,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddKillZombiesTalisman: TCheckBox
         Left = 16
-        Top = 91
+        Top = 93
         Width = 369
         Height = 17
         Caption = 'Add '#39'Kill All Zombies'#39' Talisman to all levels with Zombies'
@@ -236,27 +236,19 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddClassicModeTalisman: TCheckBox
         Left = 16
-        Top = 45
+        Top = 47
         Width = 206
         Height = 17
         Caption = 'Add '#39'Play in Classic Mode'#39' Talisman'
         TabOrder = 2
       end
-      object cbAddNoPauseTalisman: TCheckBox
-        Left = 16
-        Top = 114
-        Width = 201
-        Height = 17
-        Caption = 'Add '#39'No Pressing Pause'#39' Talisman'
-        TabOrder = 3
-      end
       object cbAddSaveAllTalisman: TCheckBox
         Left = 16
-        Top = 68
+        Top = 70
         Width = 369
         Height = 17
         Caption = 'Add '#39'Save All Lemmings'#39' Talisman to all levels without Zombies'
-        TabOrder = 4
+        TabOrder = 3
       end
     end
     object cbChangeAuthor: TCheckBox

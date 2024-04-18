@@ -54,7 +54,6 @@ type
     gbTalismans: TGroupBox;
     cbAddKillZombiesTalisman: TCheckBox;
     cbAddClassicModeTalisman: TCheckBox;
-    cbAddNoPauseTalisman: TCheckBox;
     gbReleaseRate: TGroupBox;
     cbAddSaveAllTalisman: TCheckBox;
     cbChangeAuthor: TCheckBox;
@@ -89,7 +88,7 @@ type
     function SaveAllTalisman: string;
     function ClassicModeTalisman: string;
     function KillZombiesTalisman: string;
-    function NoPauseTalisman: string;
+    //function NoPauseTalisman: string;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -320,15 +319,15 @@ begin
             ' $END' + sLineBreak;
 end;
 
-function TFQuickmodMain.NoPauseTalisman: string;
-begin
-  Result := ' $TALISMAN' + sLineBreak +
-            '   TITLE Frenzy Mode' + sLineBreak +
-            '   ID ' + IntToStr(TalismanID) + sLineBreak +
-            '   COLOR Gold' + sLineBreak +
-            '   NO_PAUSE 0' + sLineBreak +
-            ' $END' + sLineBreak;
-end;
+//function TFQuickmodMain.NoPauseTalisman: string;
+//begin
+//  Result := ' $TALISMAN' + sLineBreak +
+//            '   TITLE Frenzy Mode' + sLineBreak +
+//            '   ID ' + IntToStr(TalismanID) + sLineBreak +
+//            '   COLOR Gold' + sLineBreak +
+//            '   NO_PAUSE 0' + sLineBreak +
+//            ' $END' + sLineBreak;
+//end;
 
 procedure TFQuickmodMain.ApplyChanges;
 begin
@@ -376,14 +375,13 @@ var
   ThisLine: String;
   SecLevel: Integer;
   n, i, p: Integer;
-  OldID, NewID: String;
+  NewID: String;
   LevelHasZombies: Boolean;
   AlreadyModified: Boolean;
   ShouldConvertSkills: Boolean;
 begin
   SecLevel := 0;
   n := 0;
-  OldID := '';
   SL := TStringList.Create;
   TalismanID := -1;
   TotalLemmings := 0;
@@ -546,17 +544,7 @@ begin
           SL[n] := '# ' + SL[n];
 
         if ((LeftStr(ThisLine, 2)) = 'ID') and cbChangeID.Checked then
-        begin
-          ThisLine := Trim(MidStr(ThisLine, 3, Length(ThisLine) - 2));
-          if LeftStr(ThisLine, 1) = 'X' then
-            OldID := RightStr(ThisLine, Length(ThisLine)-1)
-          else if Length(ThisLine) > 0 then
-          begin
-            OldID := IntToHex(StrToInt64Def(ThisLine, 0), 16);
-          end;
-
           SL[n] := '# ' + SL[n];
-        end;
       end;
 
       Inc(n);
@@ -576,22 +564,9 @@ begin
 
     if cbChangeID.Checked then
     begin
-      if (OldID = '') or (StrToInt64Def('x' + OldID, 0) = 0) then
-        repeat
-          NewID := IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4);
-        until NewID <> '0000000000000000'
-      else begin
-        while Length(OldID) < 16 do
-          OldID := '0' + OldID; // Just in case
-
-        NewID := RightStr(OldID, 15) + LeftStr(OldID, 1);
-        if NewID[16] = 'A' then
-          NewID[16] := '9'
-        else if NewID[16] = '0' then
-          NewID[16] := 'F'
-        else
-          Dec(NewID[16]);
-      end;
+      repeat
+        NewID := IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4) + IntToHex(Random($10000), 4);
+      until NewID <> '0000000000000000';
 
       SL.Add('ID x' + NewID);
     end;
@@ -623,11 +598,11 @@ begin
       SL.Add(KillZombiesTalisman);
     end;
 
-    if cbAddNoPauseTalisman.Checked then
-    begin
-      Inc(TalismanID);
-      SL.Add(NoPauseTalisman);
-    end;
+//    if cbAddNoPauseTalisman.Checked then
+//    begin
+//      Inc(TalismanID);
+//      SL.Add(NoPauseTalisman);
+//    end;
 
     if cbBomberToTimebomber.Checked then SL.Add('# BOMBERS CHANGED TO TIMEBOMBERS');
     if cbTimebomberToBomber.Checked then SL.Add('# TIMEBOMBERS CHANGED TO BOMBERS');
