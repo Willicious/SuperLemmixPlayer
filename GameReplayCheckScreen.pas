@@ -287,6 +287,9 @@ var
     end;
 
     NewName := StringReplace(NewName, TAG_FILENAME, ChangeFileExt(ExtractFileName(aEntry.ReplayFile), ''), [rfReplaceAll]);
+
+    // Append replay result to the filename
+    NewName := ChangeFileExt(NewName, '__' + TAG_RESULT + '.nxrp');
     NewName := StringReplace(NewName, TAG_RESULT, OutcomeText, [rfReplaceAll]);
 
     if not TPath.IsPathRooted(NewName) then
