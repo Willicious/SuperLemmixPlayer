@@ -179,8 +179,8 @@ begin
     TempBmp := TBitmap32.Create;
     try
       TempBmp.Assign(Bmp);
-      RemoveAlpha(Bmp);
-      PNGWriter.SaveToStream(Bmp, aStream)
+      RemoveAlpha(TempBmp);
+      PNGWriter.SaveToStream(TempBmp, aStream);
     finally
       TempBmp.Free;
     end;

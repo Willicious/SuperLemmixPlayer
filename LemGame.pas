@@ -1568,7 +1568,7 @@ begin
   end;
 end;
 
-procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: Cardinal; E: TColor32);
+procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: Cardinal);
 // Copy masks to world
 begin
   if (AlphaComponent(F) <> 0) and (B and E = 0) then B := B and not PM_TERRAIN;
@@ -1633,7 +1633,7 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: Cardinal);
 begin
   if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
 end;
