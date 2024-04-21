@@ -26,7 +26,7 @@ type
     cbRefresh: TCheckBox;
     btnOK: TButton;
     btnCancel: TButton;
-    lblClassic: TLabel;
+    lblHelpText: TLabel;
     procedure rgReplayKindClick(Sender: TObject);
     procedure rbReplayActionClick(Sender: TObject);
     procedure cbNamingSchemeChange(Sender: TObject);
@@ -109,7 +109,7 @@ begin
   if fIsSetting then
     Exit;
 
-  lblClassic.Visible := false;
+  lblHelpText.Visible := false;
   SetToOptions(true, false);
 end;
 
@@ -124,7 +124,7 @@ begin
   if fIsSetting then
     Exit;
 
-  lblClassic.Visible := false;
+  lblHelpText.Visible := false;
   SetToOptions(false, true);
 end;
 
@@ -174,7 +174,7 @@ begin
   if fIsSetting then
     Exit;
 
-  lblClassic.Visible := false;
+  lblHelpText.Visible := false;
 
   fIsSetting := true;
   try
@@ -199,7 +199,7 @@ begin
   if fIsSetting then
     Exit;
 
-  lblClassic.Visible := false;
+  lblHelpText.Visible := false;
   SetFromOptions;
 end;
 

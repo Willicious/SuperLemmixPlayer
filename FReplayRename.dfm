@@ -4,8 +4,8 @@ object FReplayNaming: TFReplayNaming
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Replay Naming'
-  ClientHeight = 195
-  ClientWidth = 369
+  ClientHeight = 243
+  ClientWidth = 510
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,12 @@ object FReplayNaming: TFReplayNaming
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lblClassic: TLabel
-    Left = 141
-    Top = 152
-    Width = 212
+  object lblHelpText: TLabel
+    Left = 143
+    Top = 191
+    Width = 348
     Height = 13
-    Caption = 'For "classic" behavior, just click "OK".'
+    Caption = 'To check replays without deleting or renaming, just click "OK"'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -34,7 +34,7 @@ object FReplayNaming: TFReplayNaming
     Left = 8
     Top = 8
     Width = 121
-    Height = 183
+    Height = 227
     Caption = 'Replay Kind'
     ItemIndex = 0
     Items.Strings = (
@@ -51,15 +51,15 @@ object FReplayNaming: TFReplayNaming
     OnClick = rgReplayKindClick
   end
   object gbAction: TGroupBox
-    Left = 135
-    Top = 9
-    Width = 225
-    Height = 140
+    Left = 143
+    Top = 8
+    Width = 355
+    Height = 169
     Caption = 'Action for _______'
     TabOrder = 1
     object rbDoNothing: TRadioButton
       Left = 16
-      Top = 16
+      Top = 24
       Width = 145
       Height = 17
       Caption = 'Keep Existing Filename'
@@ -70,7 +70,7 @@ object FReplayNaming: TFReplayNaming
     end
     object rbDeleteFile: TRadioButton
       Left = 16
-      Top = 32
+      Top = 47
       Width = 113
       Height = 17
       Caption = 'Delete File'
@@ -78,27 +78,27 @@ object FReplayNaming: TFReplayNaming
       OnClick = rbReplayActionClick
     end
     object rbCopyTo: TRadioButton
-      Left = 16
-      Top = 48
-      Width = 113
+      Left = 152
+      Top = 70
+      Width = 145
       Height = 17
-      Caption = 'Copy To'
+      Caption = 'Rename New Copy As:'
       TabOrder = 2
       OnClick = rbReplayActionClick
     end
     object rbMoveTo: TRadioButton
       Left = 16
-      Top = 64
+      Top = 70
       Width = 113
       Height = 17
-      Caption = 'Move To'
+      Caption = 'Rename As:'
       TabOrder = 3
       OnClick = rbReplayActionClick
     end
     object cbNamingScheme: TComboBox
       Left = 16
-      Top = 87
-      Width = 193
+      Top = 95
+      Width = 321
       Height = 21
       TabOrder = 4
       OnChange = cbNamingSchemeChange
@@ -113,7 +113,7 @@ object FReplayNaming: TFReplayNaming
     end
     object cbRefresh: TCheckBox
       Left = 16
-      Top = 114
+      Top = 122
       Width = 97
       Height = 17
       Caption = 'Refresh Replays'
@@ -122,8 +122,8 @@ object FReplayNaming: TFReplayNaming
     end
   end
   object btnOK: TButton
-    Left = 205
-    Top = 166
+    Left = 224
+    Top = 210
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -131,8 +131,8 @@ object FReplayNaming: TFReplayNaming
     OnClick = btnOKClick
   end
   object btnCancel: TButton
-    Left = 286
-    Top = 166
+    Left = 310
+    Top = 210
     Width = 75
     Height = 25
     Cancel = True
