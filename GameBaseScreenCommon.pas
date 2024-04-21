@@ -35,6 +35,8 @@ type
     function LoadReplay: Boolean;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
+
+    procedure FadeIn;
     procedure FadeOut;
 
     procedure MainFormResized; virtual; abstract;
@@ -105,6 +107,39 @@ begin
   inherited Destroy;
 end;
 
+procedure TGameBaseScreen.FadeIn;
+//var
+//  i: Integer;
+//  RemainingTime: Integer;
+//  OldRemainingTime: Integer;
+//  EndTickCount: Cardinal;
+//const
+//  MAX_TIME = 1000; // mS
+begin
+//  EndTickCount := GetTickCount + MAX_TIME;
+//  OldRemainingTime := 0;
+//  RemainingTime := MAX_TIME;
+//  ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
+//  while (RemainingTime >= 0) do
+//  begin
+//    if (RemainingTime <> OldRemainingTime) then
+//    begin
+//      for i := 0 to 255 do
+//      begin
+//        ScreenImg.Bitmap.MasterAlpha := i;
+//        ScreenImg.Update;
+//      end;
+//
+//      OldRemainingTime := RemainingTime;
+//    end else
+//      Sleep(1);
+//
+//    RemainingTime := EndTickCount - GetTickCount;
+//    Inc(i);
+//  end;
+//
+//  Application.ProcessMessages;
+end;
 
 procedure TGameBaseScreen.FadeOut;
 var
