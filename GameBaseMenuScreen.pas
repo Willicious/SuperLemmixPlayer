@@ -227,8 +227,6 @@ begin
   {$ifdef exp}{$ifndef rc}
   //MakeHiddenOption(lka_SaveImage, SaveScreenImage);   // Bookmark - why is this commented out?
   {$endif}{$endif}
-
-  FadeIn;
 end;
 
 {$ifdef exp}{$ifndef rc}

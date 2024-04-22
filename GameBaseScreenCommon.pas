@@ -4,7 +4,7 @@ unit GameBaseScreenCommon;
 interface
 
 uses
-  Windows, Messages, Classes, Controls, Forms, Dialogs,
+  Windows, Messages, Classes, Controls, Forms, Dialogs, Math,
   GR32, GR32_Image,
   FBaseDosForm,
   GameControl,
@@ -36,7 +36,7 @@ type
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure FadeIn;
+    //procedure FadeIn;
     procedure FadeOut;
 
     procedure MainFormResized; virtual; abstract;
@@ -107,39 +107,43 @@ begin
   inherited Destroy;
 end;
 
-procedure TGameBaseScreen.FadeIn;
+//procedure TGameBaseScreen.FadeIn;
 //var
-//  i: Integer;
-//  RemainingTime: Integer;
-//  OldRemainingTime: Integer;
 //  EndTickCount: Cardinal;
+//  TickCount: Cardinal;
+//  Progress: Integer;
+//  Alpha, LastAlpha: integer;
 //const
 //  MAX_TIME = 1000; // mS
-begin
-//  EndTickCount := GetTickCount + MAX_TIME;
-//  OldRemainingTime := 0;
-//  RemainingTime := MAX_TIME;
+//begin
 //  ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
-//  while (RemainingTime >= 0) do
+//
+//  TickCount := GetTickCount;
+//  EndTickCount := TickCount + MAX_TIME;
+//  LastAlpha := -1;
+//
+//  while (TickCount <= EndTickCount) do
 //  begin
-//    if (RemainingTime <> OldRemainingTime) then
+//    Progress := Max(TickCount - (EndTickCount - MAX_TIME), MAX_TIME);
+//
+//    Alpha := MulDiv(255, Progress, MAX_TIME);
+//
+//    if (Alpha = LastAlpha) then
 //    begin
-//      for i := 0 to 255 do
-//      begin
-//        ScreenImg.Bitmap.MasterAlpha := i;
-//        ScreenImg.Update;
-//      end;
-//
-//      OldRemainingTime := RemainingTime;
-//    end else
 //      Sleep(1);
+//      continue;
+//    end;
 //
-//    RemainingTime := EndTickCount - GetTickCount;
-//    Inc(i);
+//    ScreenImg.Bitmap.MasterAlpha := Alpha;
+//    ScreenImg.Update;
+//
+//    LastAlpha := Alpha;
+//    TickCount := GetTickCount;
 //  end;
+//  ScreenImg.Bitmap.MasterAlpha := 255;
 //
 //  Application.ProcessMessages;
-end;
+//end;
 
 procedure TGameBaseScreen.FadeOut;
 var
