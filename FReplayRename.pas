@@ -10,6 +10,7 @@ type
   TReplayNamingAction = (rnaNone, rnaDelete, rnaCopy, rnaMove);
   TReplayNamingSetting = record
     Action: TReplayNamingAction;
+    AppendResult: Boolean;
     Refresh: Boolean;
     Template: String;
   end;
@@ -26,11 +27,12 @@ type
     cbRefresh: TCheckBox;
     btnOK: TButton;
     btnCancel: TButton;
-    lblHelpText: TLabel;
+    cbAppendResult: TCheckBox;
     procedure rgReplayKindClick(Sender: TObject);
     procedure rbReplayActionClick(Sender: TObject);
     procedure cbNamingSchemeChange(Sender: TObject);
     procedure cbRefreshClick(Sender: TObject);
+    procedure cbAppendResultClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure cbNamingSchemeEnter(Sender: TObject);
@@ -38,7 +40,7 @@ type
     fIsSetting: Boolean;
 
     procedure SetFromOptions;
-    procedure SetToOptions(aSetAction, aSetRefresh: Boolean);
+    procedure SetToOptions(aSetAction, aSetRefresh, aSetAppendResult: Boolean);
 
     procedure SetNamingDropdown(aValue: String);
     function GetNamingDropdown: String;
@@ -109,8 +111,7 @@ begin
   if fIsSetting then
     Exit;
 
-  lblHelpText.Visible := false;
-  SetToOptions(true, false);
+  SetToOptions(true, false, false);
 end;
 
 procedure TFReplayNaming.cbNamingSchemeEnter(Sender: TObject);
@@ -124,8 +125,15 @@ begin
   if fIsSetting then
     Exit;
 
-  lblHelpText.Visible := false;
-  SetToOptions(false, true);
+  SetToOptions(false, true, false);
+end;
+
+procedure TFReplayNaming.cbAppendResultClick(Sender: TObject);
+begin
+  if fIsSetting then
+    Exit;
+
+  SetToOptions(false, false, true);
 end;
 
 class procedure TFReplayNaming.ClearNamingSettings;
@@ -174,8 +182,6 @@ begin
   if fIsSetting then
     Exit;
 
-  lblHelpText.Visible := false;
-
   fIsSetting := true;
   try
     if not (rbCopyTo.Checked or rbMoveTo.Checked) then
@@ -191,7 +197,7 @@ begin
     fIsSetting := false;
   end;
 
-  SetToOptions(true, false);
+  SetToOptions(true, false, false);
 end;
 
 procedure TFReplayNaming.rgReplayKindClick(Sender: TObject);
@@ -199,7 +205,6 @@ begin
   if fIsSetting then
     Exit;
 
-  lblHelpText.Visible := false;
   SetFromOptions;
 end;
 
@@ -222,6 +227,7 @@ begin
     end;
     SetNamingDropdown(ReplayNaming[ToSet[0]].Template);
     cbRefresh.Checked := ReplayNaming[ToSet[0]].Refresh;
+    cbAppendResult.Checked := ReplayNaming[ToSet[0]].AppendResult;
 
     for i := 1 to Length(ToSet)-1 do
     begin
@@ -249,7 +255,7 @@ begin
   end;
 end;
 
-procedure TFReplayNaming.SetToOptions(aSetAction, aSetRefresh: Boolean);
+procedure TFReplayNaming.SetToOptions(aSetAction, aSetRefresh, aSetAppendResult: Boolean);
 var
   ToSet: TIntArray;
   i: Integer;
@@ -259,6 +265,9 @@ begin
   begin
     if aSetRefresh then
       ReplayNaming[ToSet[i]].Refresh := cbRefresh.Checked;
+
+    if aSetAppendResult then
+      ReplayNaming[ToSet[i]].AppendResult := cbAppendResult.Checked;
 
     if aSetAction then
     begin

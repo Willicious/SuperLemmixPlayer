@@ -17,19 +17,6 @@ object FReplayNaming: TFReplayNaming
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lblHelpText: TLabel
-    Left = 143
-    Top = 191
-    Width = 348
-    Height = 13
-    Caption = 'To check replays without deleting or renaming, just click "OK"'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
   object rgReplayKind: TRadioGroup
     Left = 8
     Top = 8
@@ -51,10 +38,10 @@ object FReplayNaming: TFReplayNaming
     OnClick = rgReplayKindClick
   end
   object gbAction: TGroupBox
-    Left = 143
+    Left = 144
     Top = 8
-    Width = 355
-    Height = 169
+    Width = 358
+    Height = 185
     Caption = 'Action for _______'
     TabOrder = 1
     object rbDoNothing: TRadioButton
@@ -113,12 +100,21 @@ object FReplayNaming: TFReplayNaming
     end
     object cbRefresh: TCheckBox
       Left = 16
-      Top = 122
-      Width = 97
+      Top = 145
+      Width = 289
       Height = 17
-      Caption = 'Refresh Replays'
+      Caption = 'Refresh Replays (re-saves the file in updated format)'
       TabOrder = 5
       OnClick = cbRefreshClick
+    end
+    object cbAppendResult: TCheckBox
+      Left = 16
+      Top = 122
+      Width = 185
+      Height = 17
+      Caption = 'Append replay result to filename'
+      TabOrder = 6
+      OnClick = cbAppendResultClick
     end
   end
   object btnOK: TButton

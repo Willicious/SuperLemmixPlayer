@@ -258,7 +258,7 @@ var
     ThisSetting := ReplayNaming[aEntry.ReplayResult];
     //GameParams.ReplayCheckPath
 
-    if (ThisSetting.Action = rnaNone) and (not ThisSetting.Refresh) then
+    if (ThisSetting.Action = rnaNone) and not (ThisSetting.Refresh or ThisSetting.AppendResult) then
       Exit;
 
     if ThisSetting.Action = rnaDelete then
@@ -288,8 +288,10 @@ var
 
     NewName := StringReplace(NewName, TAG_FILENAME, ChangeFileExt(ExtractFileName(aEntry.ReplayFile), ''), [rfReplaceAll]);
 
-    // Append replay result to the filename
-    NewName := ChangeFileExt(NewName, '__' + TAG_RESULT + '.nxrp');
+    // Append replay result to the filename only
+    if ThisSetting.AppendResult then
+      NewName := ChangeFileExt(NewName, '__' + TAG_RESULT + '.nxrp');
+
     NewName := StringReplace(NewName, TAG_RESULT, OutcomeText, [rfReplaceAll]);
 
     if not TPath.IsPathRooted(NewName) then
@@ -309,7 +311,7 @@ var
 
     OutStream.SaveToFile(NewName);
 
-    if ThisSetting.Action = rnaMove then
+    if (ThisSetting.Action = rnaMove) or ((ThisSetting.Action = rnaNone) and ThisSetting.AppendResult) then
       DeleteFile(aEntry.ReplayFile);
   end;
 
