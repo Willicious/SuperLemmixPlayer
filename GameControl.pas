@@ -731,7 +731,7 @@ begin
       if MatchingFiles.Count = 0 then
       begin
         ShowMessage('No .nxlv files found with Level ID: ' + LevelID);
-        Exit;
+        MatchFound := False;
       end
       // If only one matching file is found, load it directly
       else if MatchingFiles.Count = 1 then

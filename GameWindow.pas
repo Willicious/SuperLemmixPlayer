@@ -2142,8 +2142,8 @@ begin
   Game.ReplayManager.LoadFromFile(aFilename);
 
   if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
-    ShowMessage('Warning: This replay appears to be from a different level. SuperLemmix' + #13 +
-                'will attempt to play the replay anyway.');
+    ShowMessage('Warning: This replay appears to be from a different level.' + #13 +
+                'SuperLemmix will attempt to play the replay anyway.');
 
   GameSpeed := gspNormal;
   Game.IsBackstepping := False;

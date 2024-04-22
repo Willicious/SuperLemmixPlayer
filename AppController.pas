@@ -132,10 +132,16 @@ begin
     if not GameParams.MatchFound then
     begin
       GameParams.NextScreen := gstMenu;
+      OpenedViaReplay := False;
       Exit;
     end;
 
     GameParams.LoadCurrentLevel();
+
+    // Reload settings to align GameParams with current level
+    GameParams.Save(scImportant);
+    GameParams.Load;
+
     GameParams.NextScreen := gstPreview;
     fActiveForm.LoadReplay;
     OpenedViaReplay := False;
