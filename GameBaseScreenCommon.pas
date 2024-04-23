@@ -39,6 +39,7 @@ type
 
     procedure FadeIn;
     procedure FadeOut;
+    procedure FadeOutPlayScreen;
 
     procedure MainFormResized; virtual; abstract;
 
@@ -81,7 +82,9 @@ begin
     Sleep(fCloseDelay);
   end;
 
-  if GameParams.NextScreen <> gstPlay then
+  if GameParams.NextScreen = gstPlay then
+    FadeOutPlayScreen
+  else
     FadeOut;
 
   if GameParams <> nil then
@@ -116,7 +119,7 @@ var
   Progress: Integer;
   Alpha, LastAlpha: integer;
 const
-  MAX_TIME = 400; // mS
+  MAX_TIME = 240; // mS
 begin
   ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
 
@@ -150,13 +153,14 @@ var
   OldRemainingTime: integer;
   EndTickCount: Cardinal;
 const
-  MAX_TIME = 400; // mS
+  MAX_TIME = 320; // mS
 begin
   EndTickCount := GetTickCount + MAX_TIME;
   OldRemainingTime := 0;
   RemainingTime := MAX_TIME;
 
   ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
+
   while (RemainingTime >= 0) do
   begin
     if (RemainingTime <> OldRemainingTime) then
@@ -169,6 +173,53 @@ begin
       Sleep(1);
 
     RemainingTime := EndTickCount - GetTickCount;
+  end;
+
+  Application.ProcessMessages;
+end;
+
+procedure TGameBaseScreen.FadeOutPlayScreen;
+var
+  Steps: Cardinal;
+  i: Integer;
+  P: PColor32;
+  StartTickCount: Cardinal;
+  IterationDiff: Integer;
+  RGBDiff: Integer;
+const
+  TOTAL_STEPS = 32;
+  STEP_DELAY = 12;
+begin
+  Steps := 0;
+  StartTickCount := GetTickCount;
+  while Steps < TOTAL_STEPS do
+  begin
+    IterationDiff := ((GetTickCount - StartTickCount) div STEP_DELAY) - Steps;
+
+    if IterationDiff = 0 then
+      Continue;
+
+    RGBDiff := IterationDiff * 8;
+
+    with ScreenImg.Bitmap do
+    begin
+      P := PixelPtr[0, 0];
+      for i := 0 to Width * Height - 1 do
+      begin
+        with TColor32Entry(P^) do
+        begin
+          if R > RGBDiff then Dec(R, RGBDiff) else R := 0;
+          if G > RGBDiff then Dec(G, RGBDiff) else G := 0;
+          if B > RGBDiff then Dec(B, RGBDiff) else B := 0;
+        end;
+        Inc(P);
+      end;
+    end;
+    Inc(Steps, IterationDiff);
+
+    ScreenImg.Bitmap.Changed;
+    Changed;
+    Update;
   end;
 
   Application.ProcessMessages;
