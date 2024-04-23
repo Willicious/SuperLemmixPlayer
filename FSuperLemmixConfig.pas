@@ -18,7 +18,7 @@ type
     lblUserName: TLabel;
     lblIngameSaveReplay: TLabel;
     lblPostviewSaveReplay: TLabel;
-    ReplayOptions: TGroupBox;
+    gbReplayNamingOptions: TGroupBox;
     cbAutoSaveReplay: TCheckBox;
     cbAutoSaveReplayPattern: TComboBox;
     cbIngameSaveReplayPattern: TComboBox;
@@ -31,11 +31,8 @@ type
     cbNoBackgrounds: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     cbClassicMode: TCheckbox;
-    btnClassicMode: TButton;
-    btnDeactivateClassicMode: TButton;
     cbHideShadows: TCheckBox;
     cbHideHelpers: TCheckBox;
-    cbHideSkillQ: TCheckBox;
     Label3: TLabel;
     Label5: TLabel;
     tbSoundVol: TTrackBar;
@@ -62,6 +59,9 @@ type
     rgGameLoading: TRadioGroup;
     cbMenuSounds: TCheckBox;
     cbColourCycle: TCheckBox;
+    cbHideSkillQ: TCheckBox;
+    gbReplayOptions: TGroupBox;
+    gbSkillPanelOptions: TGroupBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -70,8 +70,7 @@ type
     procedure cbFullScreenClick(Sender: TObject);
     procedure cbAutoSaveReplayClick(Sender: TObject);
     procedure cbReplayPatternEnter(Sender: TObject);
-    procedure btnClassicModeClick(Sender: TObject);
-    procedure btnDeactivateClassicModeClick(Sender: TObject);
+    procedure cbClassicModeClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnResetWindowClick(Sender: TObject);
     procedure cbShowMinimapClick(Sender: TObject);
@@ -477,28 +476,26 @@ begin
 end;
 
 // --- Classic Mode --- //
-procedure TFormNXConfig.btnClassicModeClick(Sender: TObject);
+procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
 begin
   OptionChanged(Sender);
-  cbClassicMode.Checked := true;
-  cbHideShadows.Checked := true;
-  cbHideHelpers.Checked := true;
-  cbHideSkillQ.Checked := true;
-  cbHideShadows.Enabled := false;
-  cbHideHelpers.Enabled := false;
-  cbHideSkillQ.Enabled := false;
-end;
 
-procedure TFormNXConfig.btnDeactivateClassicModeClick(Sender: TObject);
-begin
-  OptionChanged(Sender);
-  cbClassicMode.Checked := false;
-  cbHideShadows.Checked := false;
-  cbHideHelpers.Checked := false;
-  cbHideSkillQ.Checked := false;
-  cbHideShadows.Enabled := true;
-  cbHideHelpers.Enabled := true;
-  cbHideSkillQ.Enabled := true;
+  if cbClassicMode.Checked then
+  begin
+    cbHideShadows.Checked := true;
+    cbHideHelpers.Checked := true;
+    cbHideSkillQ.Checked := true;
+    cbHideShadows.Enabled := false;
+    cbHideHelpers.Enabled := false;
+    cbHideSkillQ.Enabled := false;
+  end else begin
+    cbHideShadows.Checked := false;
+    cbHideHelpers.Checked := false;
+    cbHideSkillQ.Checked := false;
+    cbHideShadows.Enabled := true;
+    cbHideHelpers.Enabled := true;
+    cbHideSkillQ.Enabled := true;
+  end;
 end;
 
 procedure TFormNXConfig.SetCheckboxes;

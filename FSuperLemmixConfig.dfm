@@ -70,12 +70,12 @@ object FormNXConfig: TFormNXConfig
         Height = 13
         Caption = 'Your name:'
       end
-      object ReplayOptions: TGroupBox
+      object gbReplayNamingOptions: TGroupBox
         Left = 3
         Top = 142
         Width = 261
         Height = 167
-        Caption = 'Replay Options'
+        Caption = 'Replay Naming Options'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -194,7 +194,7 @@ object FormNXConfig: TFormNXConfig
       Caption = 'Gameplay'
       ImageIndex = 4
       object cbEdgeScrolling: TCheckBox
-        Left = 25
+        Left = 15
         Top = 12
         Width = 234
         Height = 17
@@ -202,60 +202,34 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 0
         OnClick = OptionChanged
       end
-      object cbReplayAfterRestart: TCheckBox
-        Left = 25
-        Top = 35
-        Width = 217
-        Height = 17
-        Caption = 'Auto-Replay After Restarting Level'
-        TabOrder = 1
-        OnClick = OptionChanged
-      end
-      object cbAutoReplay: TCheckBox
-        Left = 25
-        Top = 58
-        Width = 234
-        Height = 17
-        Caption = 'Auto-Replay After Backwards Frameskip'
-        TabOrder = 2
-        OnClick = OptionChanged
-      end
       object cbPauseAfterBackwards: TCheckBox
-        Left = 25
-        Top = 81
+        Left = 15
+        Top = 35
         Width = 205
         Height = 17
         Caption = 'Pause After Backwards Frameskip'
-        TabOrder = 3
+        TabOrder = 1
         OnClick = OptionChanged
       end
-      object cbTurboFF: TCheckBox
-        Left = 25
-        Top = 104
-        Width = 177
-        Height = 17
-        Caption = 'Activate Turbo Fast-Forward'
-        TabOrder = 4
-        OnClick = OptionChanged
-      end
-      object cbSpawnInterval: TCheckBox
-        Left = 25
-        Top = 127
-        Width = 205
-        Height = 17
-        Caption = 'Activate Spawn Interval Display'
-        TabOrder = 5
-        OnClick = OptionChanged
-      end
-      object ClassicMode: TGroupBox
-        Left = 25
-        Top = 189
-        Width = 205
-        Height = 111
-        TabOrder = 7
+      object gbClassicMode: TGroupBox
+        Left = 3
+        Top = 269
+        Width = 256
+        Height = 124
+        Caption = 'Classic Mode Options'
+        TabOrder = 2
+        object cbClassicMode: TCheckBox
+          Left = 16
+          Top = 26
+          Width = 156
+          Height = 17
+          Caption = 'Activate Classic Mode'
+          TabOrder = 3
+          OnClick = cbClassicModeClick
+        end
         object cbHideShadows: TCheckBox
-          Left = 27
-          Top = 25
+          Left = 16
+          Top = 49
           Width = 190
           Height = 17
           Caption = 'Deactivate Skill Shadows'
@@ -263,8 +237,8 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbHideHelpers: TCheckBox
-          Left = 27
-          Top = 48
+          Left = 16
+          Top = 72
           Width = 190
           Height = 17
           Caption = 'Deactivate Helper Overlays'
@@ -272,8 +246,8 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbHideSkillQ: TCheckBox
-          Left = 27
-          Top = 71
+          Left = 16
+          Top = 95
           Width = 190
           Height = 17
           Caption = 'Deactivate Skill Queueing'
@@ -281,48 +255,57 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
       end
-      object btnDeactivateClassicMode: TButton
-        Left = 52
-        Top = 283
-        Width = 150
-        Height = 38
-        Caption = 'Deactivate Classic Mode'
-        TabOrder = 8
-        OnClick = btnDeactivateClassicModeClick
+      object gbReplayOptions: TGroupBox
+        Left = 3
+        Top = 74
+        Width = 256
+        Height = 75
+        Caption = 'Replay Options'
+        TabOrder = 4
+        object cbReplayAfterRestart: TCheckBox
+          Left = 12
+          Top = 20
+          Width = 217
+          Height = 17
+          Caption = 'Auto-Replay After Restarting Level'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbAutoReplay: TCheckBox
+          Left = 12
+          Top = 43
+          Width = 234
+          Height = 17
+          Caption = 'Auto-Replay After Backwards Frameskip'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
       end
-      object cbClassicMode: TCheckBox
-        Left = 208
-        Top = 180
-        Width = 51
-        Height = 17
-        Caption = 'ACM'
-        TabOrder = 9
-        Visible = False
-      end
-      object btnClassicMode: TButton
-        Left = 52
+      object gbSkillPanelOptions: TGroupBox
+        Left = 3
         Top = 170
-        Width = 150
-        Height = 38
-        Hint = 
-          'Classic Mode implements all of the features listed below for a m' +
-          'ore traditional Lemmings experience!'#13#10'Deactivates Skill Shadows'#13 +
-          #10'Deactivates ' +
-          'Helper graphics (including the Fall Distance ruler)'#13#10'Deactivates' +
-          ' Skill Queuing'#13#10'(The above features can also be toggled individu' +
-          'ally, whilst the following are exclusive to Classic Mode):'#13#10'Deac' +
-          'tivates Clear Physics Mode'#13#10'Deactivates Advanced Select (Directi' +
-          'onal, Walkers-only and Highlighted Lemming)'#13#10'Deactivates Frameskipping (including Slow-motion)'#13#10'Deactivates Assign-' +
-          'whilst paused'#13#10'Deactivates Selected Lemming recolouring'#13#10'Deactiv' +
-          'ates jumping to Min/Max Release Rate'#13#10'Prefers Release Rate rathe' +
-          'r than Spawn Interval for displaying hatch speed'#13#10'Limits Replay ' +
-          'features to saving and loading only from the level preview and p' +
-          'ostview screens.'#13#10'Enjoy!'
-        Caption = 'Activate Classic Mode'
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 6
-        OnClick = btnClassicModeClick
+        Width = 256
+        Height = 75
+        Caption = 'Skill Panel Options'
+        TabOrder = 3
+        object cbTurboFF: TCheckBox
+          Left = 12
+          Top = 22
+          Width = 177
+          Height = 17
+          Caption = 'Activate Turbo Fast-Forward'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
+        object cbSpawnInterval: TCheckBox
+          Left = 12
+          Top = 45
+          Width = 205
+          Height = 17
+          Caption = 'Activate Spawn Interval Display'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
       end
     end
     object Graphics: TTabSheet
