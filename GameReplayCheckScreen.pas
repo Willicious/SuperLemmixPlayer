@@ -277,12 +277,12 @@ var
     NewName := StringReplace(NewName, '/', '\', [rfReplaceAll]);
 
     case aEntry.ReplayResult of
-      CR_UNKNOWN, CR_ERROR: OutcomeText := 'Error';
-      CR_PASS: OutcomeText := 'Passed';
-      CR_PASS_TALISMAN: OutcomeText := 'Talisman';
-      CR_FAIL: OutcomeText := 'Failed';
-      CR_UNDETERMINED: OutcomeText := 'Undetermined';
-      CR_NOLEVELMATCH: OutcomeText := 'LevelNotFound';
+      CR_UNKNOWN, CR_ERROR: OutcomeText := '(Error)';
+      CR_PASS: OutcomeText := '(Passed)';
+      CR_PASS_TALISMAN: OutcomeText := '(Talisman)';
+      CR_FAIL: OutcomeText := '(Failed)';
+      CR_UNDETERMINED: OutcomeText := '(Undetermined)';
+      CR_NOLEVELMATCH: OutcomeText := '(LevelNotFound)';
       else raise Exception.Create('Invalid replay result');
     end;
 
