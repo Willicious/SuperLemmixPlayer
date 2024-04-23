@@ -250,10 +250,18 @@ var
   var
     NewName: String;
     ThisSetting: TReplayNamingSetting;
-    OutcomeText: String;
+    ResultTag, OutcomeText: String;
   const
     TAG_RESULT = '{RESULT}';
     TAG_FILENAME = '{FILENAME}';
+
+    ResultTags: array of String = ['__(Passed).nxrp',
+                                   '__(Talisman).nxrp',
+                                   '__(Failed).nxrp',
+                                   '__(Undetermined).nxrp',
+                                   '__(Error).nxrp',
+                                   '__(LevelNotFound).nxrp'
+                                  ];
   begin
     ThisSetting := ReplayNaming[aEntry.ReplayResult];
     //GameParams.ReplayCheckPath
@@ -288,11 +296,20 @@ var
 
     NewName := StringReplace(NewName, TAG_FILENAME, ChangeFileExt(ExtractFileName(aEntry.ReplayFile), ''), [rfReplaceAll]);
 
-    // Append replay result to the filename only
+    // Append replay result to the filename
     if ThisSetting.AppendResult then
-      NewName := ChangeFileExt(NewName, '__' + TAG_RESULT + '.nxrp');
+    begin
+      // Check for existing result tag and delete it
+      for ResultTag in ResultTags do
+      begin
+        if EndsText(ResultTag, NewName) then
+          NewName := StringReplace(NewName, ResultTag, '.nxrp', []);
+      end;
 
-    NewName := StringReplace(NewName, TAG_RESULT, OutcomeText, [rfReplaceAll]);
+      // Add new result tag
+      NewName := ChangeFileExt(NewName, '__' + TAG_RESULT + '.nxrp');
+      NewName := StringReplace(NewName, TAG_RESULT, OutcomeText, [rfReplaceAll]);
+    end;
 
     if not TPath.IsPathRooted(NewName) then
       NewName := GameParams.ReplayCheckPath + NewName;
