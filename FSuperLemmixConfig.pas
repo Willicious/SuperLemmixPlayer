@@ -34,7 +34,6 @@ type
     btnClassicMode: TButton;
     btnDeactivateClassicMode: TButton;
     cbHideShadows: TCheckBox;
-    cbHideFrameskipping: TCheckBox;
     cbHideHelpers: TCheckBox;
     cbHideSkillQ: TCheckBox;
     Label3: TLabel;
@@ -257,7 +256,6 @@ begin
     cbColourCycle.Checked := GameParams.ColourCycle;
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
-    cbHideFrameskipping.Checked := GameParams.HideFrameskipping;
     cbHideHelpers.Checked := GameParams.HideHelpers;
     cbHideSkillQ.Checked := GameParams.HideSkillQ;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
@@ -326,7 +324,6 @@ begin
   GameParams.ColourCycle := cbColourCycle.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
-  GameParams.HideFrameskipping := cbHideFrameskipping.Checked;
   GameParams.HideHelpers := cbHideHelpers.Checked;
   GameParams.HideSkillQ := cbHideSkillQ.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
@@ -485,11 +482,9 @@ begin
   OptionChanged(Sender);
   cbClassicMode.Checked := true;
   cbHideShadows.Checked := true;
-  cbHideFrameskipping.Checked := true;
   cbHideHelpers.Checked := true;
   cbHideSkillQ.Checked := true;
   cbHideShadows.Enabled := false;
-  cbHideFrameskipping.Enabled := false;
   cbHideHelpers.Enabled := false;
   cbHideSkillQ.Enabled := false;
 end;
@@ -499,11 +494,9 @@ begin
   OptionChanged(Sender);
   cbClassicMode.Checked := false;
   cbHideShadows.Checked := false;
-  cbHideFrameskipping.Checked := false;
   cbHideHelpers.Checked := false;
   cbHideSkillQ.Checked := false;
   cbHideShadows.Enabled := true;
-  cbHideFrameskipping.Enabled := true;
   cbHideHelpers.Enabled := true;
   cbHideSkillQ.Enabled := true;
 end;
@@ -513,7 +506,6 @@ procedure TFormNXConfig.SetCheckboxes;
     if GameParams.ClassicMode then
       begin
         cbHideShadows.Enabled := false;
-        cbHideFrameskipping.Enabled := false;
         cbHideHelpers.Enabled := false;
         cbHideSkillQ.Enabled := false;
       end;

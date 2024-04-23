@@ -92,14 +92,12 @@ begin
     0: begin
          GameParams.ClassicMode := true;
          GameParams.HideShadows := true;
-         GameParams.HideFrameskipping := true;
          GameParams.HideHelpers := true;
          GameParams.HideSkillQ := true;
        end;
     1: begin
          GameParams.ClassicMode := false;
          GameParams.HideShadows := false;
-         GameParams.HideFrameskipping := false;
          GameParams.HideHelpers := false;
          GameParams.HideSkillQ := false;
        end;

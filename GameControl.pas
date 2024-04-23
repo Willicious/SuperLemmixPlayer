@@ -77,7 +77,6 @@ type
     moColourCycle,
     moClassicMode,
     moHideShadows,
-    moHideFrameskipping,
     moHideHelpers,
     moHideSkillQ,
     moDisableWineWarnings,
@@ -244,7 +243,6 @@ type
     property ColourCycle: boolean Index moColourCycle read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
-    property HideFrameskipping: boolean Index moHideFrameskipping read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
     property HideSkillQ: boolean Index moHideSkillQ read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
@@ -448,7 +446,6 @@ begin
   SaveBoolean('ColourCycle', ColourCycle);
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
-  SaveBoolean('HideFrameskipping', HideFrameskipping);
   SaveBoolean('HideHelpers', HideHelpers);
   SaveBoolean('HideSkillQ', HideSkillQ);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
@@ -616,7 +613,6 @@ begin
     ColourCycle := LoadBoolean('ColourCycle', ColourCycle);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
-    HideFrameskipping := LoadBoolean('HideFrameskipping', HideFrameskipping);
     HideHelpers := LoadBoolean('HideHelpers', HideHelpers);
     HideSkillQ := LoadBoolean('HideSkillQ', HideSkillQ);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);

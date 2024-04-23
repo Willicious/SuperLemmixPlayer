@@ -563,13 +563,11 @@ begin
   begin
     GameParams.ClassicMode := True;
     GameParams.HideShadows := True;
-    GameParams.HideFrameskipping := True;
     GameParams.HideHelpers := True;
     GameParams.HideSkillQ := True;
   end else begin
     GameParams.ClassicMode := False;
     GameParams.HideShadows := False;
-    GameParams.HideFrameskipping := False;
     GameParams.HideHelpers := False;
     GameParams.HideSkillQ := False;
   end;
