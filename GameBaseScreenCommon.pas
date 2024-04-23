@@ -81,7 +81,8 @@ begin
     Sleep(fCloseDelay);
   end;
 
-  FadeOut;
+  if GameParams.NextScreen <> gstPlay then
+    FadeOut;
 
   if GameParams <> nil then
   begin
@@ -149,11 +150,12 @@ var
   OldRemainingTime: integer;
   EndTickCount: Cardinal;
 const
-  MAX_TIME = 300; // mS
+  MAX_TIME = 400; // mS
 begin
   EndTickCount := GetTickCount + MAX_TIME;
   OldRemainingTime := 0;
   RemainingTime := MAX_TIME;
+
   ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
   while (RemainingTime >= 0) do
   begin
