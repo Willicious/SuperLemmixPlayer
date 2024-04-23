@@ -35,8 +35,9 @@ type
     function LoadReplay: Boolean;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
+    procedure ShowScreen; override;
 
-    //procedure FadeIn;
+    procedure FadeIn;
     procedure FadeOut;
 
     procedure MainFormResized; virtual; abstract;
@@ -107,43 +108,40 @@ begin
   inherited Destroy;
 end;
 
-//procedure TGameBaseScreen.FadeIn;
-//var
-//  EndTickCount: Cardinal;
-//  TickCount: Cardinal;
-//  Progress: Integer;
-//  Alpha, LastAlpha: integer;
-//const
-//  MAX_TIME = 1000; // mS
-//begin
-//  ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
-//
-//  TickCount := GetTickCount;
-//  EndTickCount := TickCount + MAX_TIME;
-//  LastAlpha := -1;
-//
-//  while (TickCount <= EndTickCount) do
-//  begin
-//    Progress := Max(TickCount - (EndTickCount - MAX_TIME), MAX_TIME);
-//
-//    Alpha := MulDiv(255, Progress, MAX_TIME);
-//
-//    if (Alpha = LastAlpha) then
-//    begin
-//      Sleep(1);
-//      continue;
-//    end;
-//
-//    ScreenImg.Bitmap.MasterAlpha := Alpha;
-//    ScreenImg.Update;
-//
-//    LastAlpha := Alpha;
-//    TickCount := GetTickCount;
-//  end;
-//  ScreenImg.Bitmap.MasterAlpha := 255;
-//
-//  Application.ProcessMessages;
-//end;
+procedure TGameBaseScreen.FadeIn;
+var
+  EndTickCount: Cardinal;
+  TickCount: Cardinal;
+  Progress: Integer;
+  Alpha, LastAlpha: integer;
+const
+  MAX_TIME = 400; // mS
+begin
+  ScreenImg.Bitmap.DrawMode := dmBlend; // So MasterAlpha is used to draw the bitmap
+
+  TickCount := GetTickCount;
+  EndTickCount := TickCount + MAX_TIME;
+  LastAlpha := -1;
+
+  while (TickCount <= EndTickCount) do
+  begin
+    Progress := Min(TickCount - (EndTickCount - MAX_TIME), MAX_TIME);
+
+    Alpha := MulDiv(255, Progress, MAX_TIME);
+
+    if (Alpha <> LastAlpha) then
+    begin
+      ScreenImg.Bitmap.MasterAlpha := Alpha;
+      ScreenImg.Update;
+
+      LastAlpha := Alpha;
+    end else
+      Sleep(1);
+
+    TickCount := GetTickCount;
+  end;
+  ScreenImg.Bitmap.MasterAlpha := 255;
+end;
 
 procedure TGameBaseScreen.FadeOut;
 var
@@ -249,6 +247,16 @@ begin
       ShowMessage('Warning: This replay appears to be from a different level.' + #13 +
                   'SuperLemmix will attempt to play the replay anyway.');
   end;
+end;
+
+procedure TGameBaseScreen.ShowScreen;
+begin
+  ScreenImg.Bitmap.MasterAlpha := 0;
+
+  inherited; // Form is made visible here
+
+  if GameParams.NextScreen <> gstPlay then
+    FadeIn;
 end;
 
 end.
