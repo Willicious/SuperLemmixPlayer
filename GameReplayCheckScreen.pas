@@ -309,10 +309,10 @@ var
     end else
       OutStream.LoadFromFile(aEntry.ReplayFile);
 
-    OutStream.SaveToFile(NewName);
-
     if (ThisSetting.Action = rnaMove) or ((ThisSetting.Action = rnaNone) and ThisSetting.AppendResult) then
       DeleteFile(aEntry.ReplayFile);
+
+    OutStream.SaveToFile(NewName);
   end;
 
 begin
