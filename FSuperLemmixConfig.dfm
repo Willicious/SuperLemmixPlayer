@@ -251,7 +251,7 @@ object FormNXConfig: TFormNXConfig
         Left = 25
         Top = 189
         Width = 205
-        Height = 164
+        Height = 132
         TabOrder = 7
         object cbHideShadows: TCheckBox
           Left = 27
@@ -262,46 +262,37 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbHideAdvancedSelect: TCheckBox
+        object cbHideFrameskipping: TCheckBox
           Left = 27
           Top = 48
           Width = 190
           Height = 17
-          Caption = 'Deactivate Advanced Select'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbHideFrameskipping: TCheckBox
-          Left = 27
-          Top = 71
-          Width = 190
-          Height = 17
           Caption = 'Deactivate Frameskipping'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = OptionChanged
         end
         object cbHideHelpers: TCheckBox
           Left = 27
-          Top = 94
+          Top = 71
           Width = 190
           Height = 17
           Caption = 'Deactivate Helper Overlays'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = OptionChanged
         end
         object cbHideSkillQ: TCheckBox
           Left = 27
-          Top = 117
+          Top = 94
           Width = 190
           Height = 17
           Caption = 'Deactivate Skill Queueing'
-          TabOrder = 4
+          TabOrder = 3
           OnClick = OptionChanged
         end
       end
       object btnDeactivateClassicMode: TButton
         Left = 52
-        Top = 339
+        Top = 306
         Width = 150
         Height = 38
         Caption = 'Deactivate Classic Mode'
@@ -325,12 +316,12 @@ object FormNXConfig: TFormNXConfig
         Hint = 
           'Classic Mode implements all of the features listed below for a m' +
           'ore traditional Lemmings experience!'#13#10'Deactivates Skill Shadows'#13 +
-          #10'Deactivates Advanced Select (Directional, Walkers-only and High' +
-          'lighted Lemming)'#13#10'Deactivates Frameskipping (including Slow-moti' +
-          'on)'#13#10'Deactivates Helper graphics (including the Fall Distance ru' +
-          'ler)'#13#10'Deactivates Skill Queuing'#13#10'(The above features can also be' +
-          ' toggled individually, whilst the following are exclusive to Cla' +
-          'ssic Mode):'#13#10'Deactivates Clear Physics Mode'#13#10'Deactivates Assign-' +
+          #10'Deactivates Frameskipping (including Slow-motion)'#13#10'Deactivates ' +
+          'Helper graphics (including the Fall Distance ruler)'#13#10'Deactivates' +
+          ' Skill Queuing'#13#10'(The above features can also be toggled individu' +
+          'ally, whilst the following are exclusive to Classic Mode):'#13#10'Deac' +
+          'tivates Clear Physics Mode'#13#10'Deactivates Advanced Select (Directi' +
+          'onal, Walkers-only and Highlighted Lemming)'#13#10'Deactivates Assign-' +
           'whilst paused'#13#10'Deactivates Selected Lemming recolouring'#13#10'Deactiv' +
           'ates jumping to Min/Max Release Rate'#13#10'Prefers Release Rate rathe' +
           'r than Spawn Interval for displaying hatch speed'#13#10'Limits Replay ' +

@@ -1054,17 +1054,19 @@ procedure TGameWindow.CheckShifts(Shift: TShiftState);
 var
   SDir: Integer;
 begin
-  if not GameParams.HideAdvancedSelect then
-  Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
-  if not GameParams.HideAdvancedSelect then
-  Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
-  Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
-
   SDir := 0;
-  if not GameParams.HideAdvancedSelect then
-  if GameParams.Hotkeys.CheckForKey(lka_DirLeft) then SDir := SDir - 1;
-  if not GameParams.HideAdvancedSelect then
-  if GameParams.Hotkeys.CheckForKey(lka_DirRight) then SDir := SDir + 1; // These two cancel each other out if both are pressed. Genius. :D
+
+  if not GameParams.ClassicMode then
+  begin
+    // These two cancel each other out if both are pressed. Genius. :D
+    if GameParams.Hotkeys.CheckForKey(lka_DirLeft) then SDir := SDir - 1;
+    if GameParams.Hotkeys.CheckForKey(lka_DirRight) then SDir := SDir + 1;
+
+    Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
+    Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
+  end;
+
+  Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
   Game.fSelectDx := SDir;
 end;
