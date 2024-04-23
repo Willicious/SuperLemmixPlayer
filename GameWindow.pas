@@ -1657,7 +1657,7 @@ begin
                   end else
                     if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
-      lka_ClearPhysics: if not GameParams.HideClearPhysics then
+      lka_ClearPhysics: if not GameParams.ClassicMode then
               if func.Modifier = 0 then
                 ClearPhysics := not ClearPhysics
               else

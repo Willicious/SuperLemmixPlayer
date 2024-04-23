@@ -563,7 +563,6 @@ begin
   begin
     GameParams.ClassicMode := True;
     GameParams.HideShadows := True;
-    GameParams.HideClearPhysics := True;
     GameParams.HideAdvancedSelect := True;
     GameParams.HideFrameskipping := True;
     GameParams.HideHelpers := True;
@@ -571,7 +570,6 @@ begin
   end else begin
     GameParams.ClassicMode := False;
     GameParams.HideShadows := False;
-    GameParams.HideClearPhysics := False;
     GameParams.HideAdvancedSelect := False;
     GameParams.HideFrameskipping := False;
     GameParams.HideHelpers := False;

@@ -34,7 +34,6 @@ type
     btnClassicMode: TButton;
     btnDeactivateClassicMode: TButton;
     cbHideShadows: TCheckBox;
-    cbHideClearPhysics: TCheckBox;
     cbHideAdvancedSelect: TCheckBox;
     cbHideFrameskipping: TCheckBox;
     cbHideHelpers: TCheckBox;
@@ -259,7 +258,6 @@ begin
     cbColourCycle.Checked := GameParams.ColourCycle;
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
-    cbHideClearPhysics.Checked := GameParams.HideClearPhysics;
     cbHideAdvancedSelect.Checked := GameParams.HideAdvancedSelect;
     cbHideFrameskipping.Checked := GameParams.HideFrameskipping;
     cbHideHelpers.Checked := GameParams.HideHelpers;
@@ -330,7 +328,6 @@ begin
   GameParams.ColourCycle := cbColourCycle.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
-  GameParams.HideClearPhysics := cbHideClearPhysics.Checked;
   GameParams.HideAdvancedSelect := cbHideAdvancedSelect.Checked;
   GameParams.HideFrameskipping := cbHideFrameskipping.Checked;
   GameParams.HideHelpers := cbHideHelpers.Checked;
@@ -491,13 +488,11 @@ begin
   OptionChanged(Sender);
   cbClassicMode.Checked := true;
   cbHideShadows.Checked := true;
-  cbHideClearPhysics.Checked := true;
   cbHideAdvancedSelect.Checked := true;
   cbHideFrameskipping.Checked := true;
   cbHideHelpers.Checked := true;
   cbHideSkillQ.Checked := true;
   cbHideShadows.Enabled := false;
-  cbHideClearPhysics.Enabled := false;
   cbHideAdvancedSelect.Enabled := false;
   cbHideFrameskipping.Enabled := false;
   cbHideHelpers.Enabled := false;
@@ -509,13 +504,11 @@ begin
   OptionChanged(Sender);
   cbClassicMode.Checked := false;
   cbHideShadows.Checked := false;
-  cbHideClearPhysics.Checked := false;
   cbHideAdvancedSelect.Checked := false;
   cbHideFrameskipping.Checked := false;
   cbHideHelpers.Checked := false;
   cbHideSkillQ.Checked := false;
   cbHideShadows.Enabled := true;
-  cbHideClearPhysics.Enabled := true;
   cbHideAdvancedSelect.Enabled := true;
   cbHideFrameskipping.Enabled := true;
   cbHideHelpers.Enabled := true;
@@ -527,7 +520,6 @@ procedure TFormNXConfig.SetCheckboxes;
     if GameParams.ClassicMode then
       begin
         cbHideShadows.Enabled := false;
-        cbHideClearPhysics.Enabled := false;
         cbHideAdvancedSelect.Enabled := false;
         cbHideFrameskipping.Enabled := false;
         cbHideHelpers.Enabled := false;

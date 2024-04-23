@@ -1814,7 +1814,7 @@ begin
       end;
     spbSquiggle: // Formerly spbClearPhysics
       begin
-        if not GameParams.HideClearPhysics then
+        if not GameParams.ClassicMode then
         fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
       end;
     spbNone: {nothing};

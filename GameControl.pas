@@ -77,7 +77,6 @@ type
     moColourCycle,
     moClassicMode,
     moHideShadows,
-    moHideClearPhysics,
     moHideAdvancedSelect,
     moHideFrameskipping,
     moHideHelpers,
@@ -246,7 +245,6 @@ type
     property ColourCycle: boolean Index moColourCycle read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
-    property HideClearPhysics: boolean Index moHideClearPhysics read GetOptionFlag write SetOptionFlag;
     property HideAdvancedSelect: boolean Index moHideAdvancedSelect read GetOptionFlag write SetOptionFlag;
     property HideFrameskipping: boolean Index moHideFrameskipping read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
@@ -452,7 +450,6 @@ begin
   SaveBoolean('ColourCycle', ColourCycle);
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
-  SaveBoolean('HideClearPhysics', HideClearPhysics);
   SaveBoolean('HideAdvancedSelect', HideAdvancedSelect);
   SaveBoolean('HideFrameskipping', HideFrameskipping);
   SaveBoolean('HideHelpers', HideHelpers);
@@ -622,7 +619,6 @@ begin
     ColourCycle := LoadBoolean('ColourCycle', ColourCycle);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
-    HideClearPhysics := LoadBoolean('HideClearPhysics', HideClearPhysics);
     HideAdvancedSelect := LoadBoolean('HideAdvancedSelect', HideAdvancedSelect);
     HideFrameskipping := LoadBoolean('HideFrameskipping', HideFrameskipping);
     HideHelpers := LoadBoolean('HideHelpers', HideHelpers);
