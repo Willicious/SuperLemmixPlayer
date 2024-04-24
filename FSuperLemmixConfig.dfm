@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 276
     Height = 439
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -68,7 +68,10 @@ object FormNXConfig: TFormNXConfig
         Top = 25
         Width = 56
         Height = 13
+        Hint = 'Add your username to in-game records and replays'
         Caption = 'Your name:'
+        ParentShowHint = False
+        ShowHint = True
       end
       object gbReplayNamingOptions: TGroupBox
         Left = 3
@@ -88,21 +91,36 @@ object FormNXConfig: TFormNXConfig
           Top = 71
           Width = 45
           Height = 13
+          Hint = 
+            'Set your preferred filename (or show '#39'Save As'#39' dialog) when manu' +
+            'ally saving replays in-game'
           Caption = 'In-game:'
+          ParentShowHint = False
+          ShowHint = True
         end
         object lblPostviewSaveReplay: TLabel
           Left = 13
           Top = 115
           Width = 48
           Height = 13
+          Hint = 
+            'Set your preferred filename (or show '#39'Save As'#39' dialog) when manu' +
+            'ally saving replays from the postview screen'
           Caption = 'Postview:'
+          ParentShowHint = False
+          ShowHint = True
         end
         object cbAutoSaveReplay: TCheckBox
           Left = 13
           Top = 22
           Width = 72
           Height = 17
+          Hint = 
+            'Set your preferred filename when automatically saving replays on' +
+            ' successful completion of a level'
           Caption = 'Auto-save:'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
           OnClick = cbAutoSaveReplayClick
         end
@@ -111,9 +129,14 @@ object FormNXConfig: TFormNXConfig
           Top = 44
           Width = 238
           Height = 21
-          ItemIndex = 1
+          Hint = 
+            'Set your preferred filename when automatically saving replays on' +
+            ' successful completion of a level'
+          ItemIndex = 2
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
-          Text = 'Title + Timestamp'
+          Text = 'Position + Title + Timestamp'
           OnChange = OptionChanged
           OnEnter = cbReplayPatternEnter
           Items.Strings = (
@@ -129,6 +152,11 @@ object FormNXConfig: TFormNXConfig
           Top = 88
           Width = 238
           Height = 21
+          Hint = 
+            'Set your preferred filename (or show '#39'Save As'#39' dialog) when manu' +
+            'ally saving replays in-game'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 2
           Text = 'Position + Timestamp'
           OnChange = OptionChanged
@@ -140,13 +168,18 @@ object FormNXConfig: TFormNXConfig
             'Username + Position + Timestamp'
             'Username + Title + Timestamp'
             'Username + Position + Title + Timestamp'
-            '(Show file selector)')
+            '(Show '#39'Save As'#39' dialog)')
         end
         object cbPostviewSaveReplayPattern: TComboBox
           Left = 13
           Top = 131
           Width = 238
           Height = 21
+          Hint = 
+            'Set your preferred filename (or show '#39'Save As'#39' dialog) when manu' +
+            'ally saving replays from the postview screen'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 3
           Text = 'Position + Timestamp'
           OnChange = OptionChanged
@@ -158,7 +191,7 @@ object FormNXConfig: TFormNXConfig
             'Username + Position + Timestamp'
             'Username + Title + Timestamp'
             'Username + Position + Title + Timestamp'
-            '(Show file selector)')
+            '(Show '#39'Save As'#39' dialog)')
         end
       end
       object btnHotkeys: TButton
@@ -166,7 +199,10 @@ object FormNXConfig: TFormNXConfig
         Top = 66
         Width = 238
         Height = 52
+        Hint = 'Setup your own hotkey configuration'
         Caption = 'Configure Hotkeys'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 1
         OnClick = btnHotkeysClick
       end
@@ -175,6 +211,9 @@ object FormNXConfig: TFormNXConfig
         Top = 22
         Width = 178
         Height = 21
+        Hint = 'Add your username to in-game records and replays'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
       end
       object rgGameLoading: TRadioGroup
@@ -223,8 +262,20 @@ object FormNXConfig: TFormNXConfig
           Top = 26
           Width = 156
           Height = 17
+          Hint = 
+            'Classic Mode presents a more traditional Lemmings experience:'#13#10' ' +
+            #13#10' Deactivate Skill Shadows'#13#10' Deactivate Helper Overlays'#13#10' Deact' +
+            'ivate Skill Queueing'#13#10' Deactivate Clear Physics'#13#10' Deactivate Adv' +
+            'anced Select (Directional, Walker-only)'#13#10' Deactivate Highlight L' +
+            'emming'#13#10' Deactivate Framestepping'#13#10' Deactivate Assign-Whilst-Pau' +
+            'sed'#13#10' Deactivate Selected Lemming Recolouring'#13#10' Deactivate Jump ' +
+            'to Min/Max Release Rate'#13#10' Prefer Release Rate rather than Spawn ' +
+            'Interval'#13#10' Limit Replay features to saving & loading from previe' +
+            'w & postview only'
           Caption = 'Activate Classic Mode'
-          TabOrder = 3
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
           OnClick = cbClassicModeClick
         end
         object cbHideShadows: TCheckBox
@@ -232,8 +283,11 @@ object FormNXConfig: TFormNXConfig
           Top = 49
           Width = 190
           Height = 17
+          Hint = 'Remove the shadow showing the path/result of the selected skill'
           Caption = 'Deactivate Skill Shadows'
-          TabOrder = 0
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 1
           OnClick = OptionChanged
         end
         object cbHideHelpers: TCheckBox
@@ -241,8 +295,13 @@ object FormNXConfig: TFormNXConfig
           Top = 72
           Width = 190
           Height = 17
+          Hint = 
+            'Remove the overlaid helper graphics (e.g. pre-assigned hatch ico' +
+            'ns)'
           Caption = 'Deactivate Helper Overlays'
-          TabOrder = 1
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 2
           OnClick = OptionChanged
         end
         object cbHideSkillQ: TCheckBox
@@ -250,8 +309,13 @@ object FormNXConfig: TFormNXConfig
           Top = 95
           Width = 190
           Height = 17
+          Hint = 
+            'Prevent queueing of skill assignments for 15 seconds in the even' +
+            't that an attempted assignment fails'
           Caption = 'Deactivate Skill Queueing'
-          TabOrder = 2
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
           OnClick = OptionChanged
         end
       end
@@ -268,7 +332,7 @@ object FormNXConfig: TFormNXConfig
           Width = 217
           Height = 17
           Caption = 'Auto-Replay After Restarting Level'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = OptionChanged
         end
         object cbAutoReplay: TCheckBox
@@ -277,7 +341,7 @@ object FormNXConfig: TFormNXConfig
           Width = 234
           Height = 17
           Caption = 'Auto-Replay After Backwards Frameskip'
-          TabOrder = 0
+          TabOrder = 1
           OnClick = OptionChanged
         end
       end
@@ -293,7 +357,12 @@ object FormNXConfig: TFormNXConfig
           Top = 22
           Width = 177
           Height = 17
-          Caption = 'Activate Turbo Fast-Forward'
+          Hint = 
+            'Swap regular FF for Turbo FF (both will still be available via h' +
+            'otkeys)'
+          Caption = 'Prefer Turbo Fast-Forward'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
           OnClick = OptionChanged
         end
@@ -302,7 +371,12 @@ object FormNXConfig: TFormNXConfig
           Top = 45
           Width = 205
           Height = 17
-          Caption = 'Activate Spawn Interval Display'
+          Hint = 
+            'Show the interval between lemming spawns instead of the Release ' +
+            'Rate value'
+          Caption = 'Prefer Spawn Interval'
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
           OnClick = OptionChanged
         end
@@ -332,7 +406,7 @@ object FormNXConfig: TFormNXConfig
         Height = 21
         Style = csDropDownList
         ItemIndex = 0
-        TabOrder = 3
+        TabOrder = 0
         Text = '1x Zoom'
         OnChange = OptionChanged
         Items.Strings = (
@@ -366,7 +440,7 @@ object FormNXConfig: TFormNXConfig
         Width = 205
         Height = 17
         Caption = 'High Resolution'
-        TabOrder = 6
+        TabOrder = 3
         OnClick = OptionChanged
       end
       object cbIncreaseZoom: TCheckBox
@@ -399,7 +473,7 @@ object FormNXConfig: TFormNXConfig
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 0
+        TabOrder = 8
         object cbMinimapHighQuality: TCheckBox
           Left = 117
           Top = 20
@@ -437,7 +511,7 @@ object FormNXConfig: TFormNXConfig
         Width = 205
         Height = 17
         Caption = 'Deactivate Background Images'
-        TabOrder = 7
+        TabOrder = 6
         OnClick = OptionChanged
       end
       object ResetWindow: TGroupBox
@@ -471,7 +545,7 @@ object FormNXConfig: TFormNXConfig
         Width = 135
         Height = 34
         Caption = 'Reset Window'
-        TabOrder = 8
+        TabOrder = 10
         OnClick = btnResetWindowClick
       end
       object cbColourCycle: TCheckBox
@@ -480,7 +554,7 @@ object FormNXConfig: TFormNXConfig
         Width = 235
         Height = 17
         Caption = 'Use Colour Cycle For Fall Distance Ruler'
-        TabOrder = 10
+        TabOrder = 7
         OnClick = OptionChanged
       end
     end
