@@ -899,13 +899,15 @@ procedure TLevelInfoPanel.PrepareEmbedRecords(aKind: TRecordDisplay);
 var
   Records: TLevelRecords;
   Skill: TSkillPanelButton;
+  Icon: Integer;
+  SkillName: String;
 
   function PrepareHintName(aInput: String): String;
   begin
     if aKind = rdUser then
       Result := ''
     else if aInput = '' then
-      Result := GameParams.Username
+      Result := ': ' + GameParams.Username
     else
       Result := aInput;
   end;
@@ -941,26 +943,26 @@ begin
     Add(ICON_SAVE_REQUIREMENT, '~', '', true, pmNextColumnLongSame)
   else
     Add(ICON_SAVE_REQUIREMENT, IntToStr(Records.LemmingsRescued.Value) + ' / ' + IntToStr(fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount),
-        PrepareHintName(Records.LemmingsRescued.User), true, pmNextColumnLongSame, COLOR_RECORDS);
+        'Highest save count record' + PrepareHintName(Records.LemmingsRescued.User), true, pmNextColumnLongSame, COLOR_RECORDS);
 
   if Records.TimeTaken.Value < 0 then
     Add(ICON_TIMER, '~', '', true, pmNextColumnSame)
   else
     Add(ICON_TIMER,
       IntToStr(Records.TimeTaken.Value div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken.Value div 17) mod 60, 2) + '.' +
-        LeadZeroStr(Round((Records.TimeTaken.Value mod 17) / 17 * 100), 2),
-      PrepareHintName(Records.TimeTaken.User), true, pmNextColumnSame, COLOR_RECORDS);
+        LeadZeroStr(Round((Records.TimeTaken.Value mod 17) / 17 * 100), 2), 'Fastest time record' +
+          PrepareHintName(Records.TimeTaken.User), true, pmNextColumnSame, COLOR_RECORDS);
 
   if Records.TotalSkills.Value < 0 then
     Add(ICON_MAX_SKILLS, '~', '', true, pmNextColumnShortSame)
   else
-    Add(ICON_MAX_SKILLS, Records.TotalSkills.Value,
+    Add(ICON_MAX_SKILLS, Records.TotalSkills.Value, 'Fewest total skills record' +
         PrepareHintName(Records.TotalSkills.User), true, pmNextColumnShortSame, COLOR_RECORDS);
 
   if Records.SkillTypes.Value < 0 then
     Add(ICON_MAX_SKILL_TYPES, '~', '', true, pmNextColumnSame)
   else
-    Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value,
+    Add(ICON_MAX_SKILL_TYPES, Records.SkillTypes.Value, 'Fewest skill types record' +
         PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
 
   // Only show collectibles records if a level has them
@@ -968,23 +970,30 @@ begin
   begin
     if Records.CollectiblesGathered.Value < 0 then
       Add(ICON_COLLECTIBLE_UNOBTAINED, '~', '', true, pmNextColumnSame)
-    else if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
-      Add(ICON_COLLECTIBLE_UNOBTAINED, Records.CollectiblesGathered.Value,
-          PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS)
-    else
-      Add(ICON_COLLECTIBLE, Records.CollectiblesGathered.Value,
+    else begin
+      if Records.CollectiblesGathered.Value < fLevel.Info.CollectibleCount then
+        Icon := ICON_COLLECTIBLE_UNOBTAINED
+      else
+        Icon := ICON_COLLECTIBLE;
+
+      Add(Icon, Records.CollectiblesGathered.Value, 'Most collectibles record' +
           PrepareHintName(Records.SkillTypes.User), true, pmNextColumnShortSame, COLOR_RECORDS);
+    end;
   end;
 
   Reposition(pmNextRowPadLeft);
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
+    begin
+      SkillName := UpperCase(Copy(SKILL_NAMES[Skill], 1, 1)) + Copy(SKILL_NAMES[Skill], 2, MaxInt);
+
       if Records.SkillCount[Skill].Value < 0 then
         Add(ICON_SKILLS[Skill], '~', '', false, pmMoveHorz)
       else
-        Add(ICON_SKILLS[Skill], Records.SkillCount[Skill].Value,
+        Add(ICON_SKILLS[Skill], Records.SkillCount[Skill].Value, 'Fewest '+ SkillName + 's record' +
             PrepareHintName(Records.SkillCount[Skill].User), false, pmMoveHorz, COLOR_RECORDS);
+    end;
 
   AddLevelPreview;
 end;
