@@ -716,12 +716,14 @@ end;
 procedure TLevelInfoPanel.PrepareEmbed(aForceRedraw: Boolean);
 var
   SIVal: Integer;
+  SIHintText: String;
+
   Skill: TSkillPanelButton;
+  SkillString, SkillName, SkillHintText: String;
 
   TalCount: Integer;
   BaseCount: Integer;
   PickupCount: Integer;
-  SkillString: String;
 
   IsTalismanLimit: Boolean;
 begin
@@ -729,69 +731,73 @@ begin
 
   if fTalisman <> nil then
     if (GameParams.CurrentLevel.TalismanStatus[fTalisman.ID]) then
-      Add(ICON_TALISMAN[fTalisman.Color], fTalisman.Title, '', true, pmNextRowPadLeft)
+      Add(ICON_TALISMAN[fTalisman.Color], fTalisman.Title, 'Talisman completed - Well done!', true, pmNextRowPadLeft)
     else
-      Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, '', true, pmNextRowPadLeft);
+      Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, 'Talisman not yet completed', true, pmNextRowPadLeft);
 
   Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount - fLevel.Info.NeutralCount //-fLevel.Info.RivalCount
-  , '', true, pmNextColumnSame);
+  , 'Number of Lemmings', true, pmNextColumnSame);
 
   if fLevel.Info.NeutralCount > 0 then
-    Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, '', true, pmNextColumnSame);
+    Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, 'Number of Neutrals', true, pmNextColumnSame);
 
 //  if fLevel.Info.RivalCount > 0 then
-//    Add(ICON_RIVAL_LEMMING, fLevel.Info.RivalCount, '', true, pmNextColumnSame);
+//    Add(ICON_RIVAL_LEMMING, fLevel.Info.RivalCount, 'Number of Rivals', true, pmNextColumnSame);
 
   if (fLevel.Info.ZombieCount > 0) or ((fTalisman <> nil) and (fTalisman.RequireKillZombies)) then
   begin
     if (fTalisman <> nil) and (fTalisman.RequireKillZombies) then
-      Add(ICON_KILL_ZOMBIES, fLevel.Info.ZombieCount, '', true, pmNextColumnSame)
+      Add(ICON_KILL_ZOMBIES, fLevel.Info.ZombieCount, 'Kill All' + IntToStr(fLevel.Info.ZombieCount) + 'Zombies', true, pmNextColumnSame)
     else
-      Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, '', true, pmNextColumnSame);
+      Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, 'Number of Zombies', true, pmNextColumnSame);
   end;
 
   if (fLevel.Info.CollectibleCount <> 0) then
-      Add(ICON_COLLECTIBLE, fLevel.Info.CollectibleCount, '', true, pmNextColumnSame);
+      Add(ICON_COLLECTIBLE, fLevel.Info.CollectibleCount, 'Number of Collectibles', true, pmNextColumnSame);
 
   if ((fTalisman <> nil) and (fTalisman.RequireClassicMode)) then
-      Add(ICON_CLASSIC_MODE, '', '', true, pmNextColumnSame);
+      Add(ICON_CLASSIC_MODE, '', 'Complete the level in Classic Mode', true, pmNextColumnSame);
 
   if ((fTalisman <> nil) and (fTalisman.RequireNoPause)) then
-      Add(ICON_NO_PAUSE, '', '', true, pmNextColumnSame);
+      Add(ICON_NO_PAUSE, '', 'Complete the level without pressing Pause', true, pmNextColumnSame);
 
   Reposition(pmNextRowLeft);
 
   if (fTalisman = nil) or (fTalisman.RescueCount <= fLevel.Info.RescueCount) then
-    Add(ICON_SAVE_REQUIREMENT, fLevel.Info.RescueCount, '', true, pmNextColumnSame)
+    Add(ICON_SAVE_REQUIREMENT, fLevel.Info.RescueCount, 'Save requirement to complete the level', true, pmNextColumnSame)
   else
-    Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+    Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, 'Save requirement to complete the Talisman', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
 
   if GameParams.SpawnInterval and not GameParams.ClassicMode then
-    SIVal := Level.Info.SpawnInterval
-  else
+  begin
+    SIVal := Level.Info.SpawnInterval;
+    SIHintText := 'Spawn Interval';
+  end else begin
     SIVal := SpawnIntervalToReleaseRate(Level.Info.SpawnInterval);
+    SIHintText := 'Release Rate';
+  end;
 
   if fLevel.Info.SpawnIntervalLocked or (fLevel.Info.SpawnInterval = 4) then
-    Add(ICON_RELEASE_RATE_LOCKED, SIVal, '', true, pmNextColumnSame)
+    Add(ICON_RELEASE_RATE_LOCKED, SIVal, 'Locked ' + SIHintText, true, pmNextColumnSame)
   else
-    Add(ICON_RELEASE_RATE, SIVal, '', true, pmNextColumnSame);
+    Add(ICON_RELEASE_RATE, SIVal, SIHintText, true, pmNextColumnSame);
 
   if (Talisman <> nil) and
      (Talisman.TimeLimit > 0) and
      ((not fLevel.Info.HasTimeLimit) or (Talisman.TimeLimit < fLevel.Info.TimeLimit * 17)) then
     Add(ICON_TIME_LIMIT,
       IntToStr(Talisman.TimeLimit div (60 * 17)) + ':' + LeadZeroStr((Talisman.TimeLimit div 17) mod 60, 2) + '.' +
-        LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2), '',
+        LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2), 'Time Limit to complete Talisman',
         true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION)
   else if fLevel.Info.HasTimeLimit then
-    Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + LeadZeroStr(fLevel.Info.TimeLimit mod 60, 2), '', true, pmNextColumnSame);
+    Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + LeadZeroStr(fLevel.Info.TimeLimit mod 60, 2), 'Time Limit', true, pmNextColumnSame);
 
   if (Talisman <> nil) then
   begin
     if (Talisman.TotalSkillLimit >= 0) then
-      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), '', true, pmNextColumnShortSame, COLOR_TALISMAN_RESTRICTION);
+      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), 'Maximum number of skills to oomplete Talisman', true, pmNextColumnShortSame, COLOR_TALISMAN_RESTRICTION);
     if (Talisman.SkillTypeLimit >= 0) then
-      Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), '', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+      Add(ICON_MAX_SKILL_TYPES, IntToStr(Talisman.SkillTypeLimit), 'Maximum number of skill types to complete Talisman', true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
   end;
 
   Reposition(pmNextRowPadLeft);
@@ -799,6 +805,7 @@ begin
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
     begin
+      SkillName := UpperCase(Copy(SKILL_NAMES[Skill], 1, 1)) + Copy(SKILL_NAMES[Skill], 2, MaxInt);
       BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
       PickupCount := fLevel.GetPickupSkillCount(Skill);
 
@@ -819,17 +826,21 @@ begin
         end;
 
         if IsTalismanLimit then
-          Add(ICON_SKILLS[Skill], SkillString, '', false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+        begin
+          SkillHintText := SkillName + ' limit to complete talisman: ' + SkillString;
+          Add(ICON_SKILLS[Skill], SkillString, SkillHintText, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+        end;
       end;
 
       if not IsTalismanLimit then
       begin
         SkillString := IntToStr(BaseCount);
+        SkillHintText := SkillName;
 
         if (PickupCount > 0) then
           SkillString := SkillString + ' (' + IntToStr(PickupCount) + ')';
 
-        Add(ICON_SKILLS[Skill], SkillString, '', false, pmMoveHorz);
+        Add(ICON_SKILLS[Skill], SkillString, SkillHintText, false, pmMoveHorz);
       end;
     end;
 
