@@ -111,12 +111,13 @@ type
     function DrawStringTemplate: string; virtual; abstract;
 
     procedure DrawNewStr;
+      function CursorInfoEndIndex: Integer; virtual; abstract;
       function LemmingCountStartIndex: Integer; virtual; abstract;
       function LemmingSavedStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetPanelMessage(Pos: Integer);
-    procedure SetInfoCursorLemming(Pos: Integer);
+    procedure SetInfoCursor(Pos: Integer);
       function GetSkillString(L: TLemming): String;
     procedure SetInfoLemHatch(Pos: Integer);
     procedure SetInfoLemAlive(Pos: Integer);
@@ -1311,20 +1312,28 @@ end;
 
 procedure TBaseSkillPanel.DrawNewStr;
 var
-  New: char;
-  i, CharID: integer;
+  New: Char;
+  CurChar, CharID: Integer;
   SpecialCombine: Boolean;
+  Red, Blue, Purple, Teal, Yellow: Single;
 
   LemmingKinds: TLemmingKinds;
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
 
+  // Define hue shift colours
+  Red    := -1 / 3;
+  Blue   :=  1 / 4;
+  Purple :=  1 / 2;
+  Teal   :=  1 / 6;
+  Yellow := -1 / 6;
+
   // Erase previous text there
   fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8 * ResMod, 16 * ResMod, $00000000);
 
-  for i := 1 to DrawStringLength do
+  for CurChar := 1 to DrawStringLength do
   begin
-    New := fNewDrawStr[i];
+    New := fNewDrawStr[CurChar];
 
     case New of
       '%':         CharID := 0;
@@ -1337,54 +1346,57 @@ begin
 
     if (CharID >= 0) then
     begin
-      if (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 4) then
+      if (CurChar > LemmingCountStartIndex) and (CurChar <= LemmingCountStartIndex + 4) then
       begin
         if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
         begin
-          SpecialCombine := true;
-          fCombineHueShift := -1 / 3;
+          SpecialCombine := True;
+          fCombineHueShift := Red;
         end else if (lkNeutral in LemmingKinds) then
         begin
-          SpecialCombine := true;
+          SpecialCombine := True;
 
           if lkNormal in LemmingKinds then
-            fCombineHueShift := -1 / 6
+            fCombineHueShift := Yellow
           else
-            fCombineHueShift := 1 / 6;
+            fCombineHueShift := Teal;
         end else
-          SpecialCombine := false;
-      end else if (i > LemmingSavedStartIndex) and (i <= LemmingSavedStartIndex + 4) then
+          SpecialCombine := False;
+      end else if (CurChar > LemmingSavedStartIndex) and (CurChar <= LemmingSavedStartIndex + 4) then
       begin
         if Game.LemmingsSaved < Level.Info.RescueCount then
         begin
-          SpecialCombine := true;
-          fCombineHueShift := -1 / 3;
+          SpecialCombine := True;
+          fCombineHueShift := Red;
         end else
-          SpecialCombine := false;
-      end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
+          SpecialCombine := False;
+      end else if Level.Info.HasTimeLimit and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
       begin
-        SpecialCombine := true;
+        SpecialCombine := True;
 
         if Game.IsOutOfTime then
-          fCombineHueShift := 1 / 2
+          fCombineHueShift := Purple
         else if (Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17}) and not Game.IsSuperLemmingMode then
-          fCombineHueShift := -1 / 3
+          fCombineHueShift := Red
         else if (Level.Info.TimeLimit * 50 < Game.CurrentIteration + 750 {15 * 50}) and Game.IsSuperLemmingMode then
-          fCombineHueShift := -1 / 3
+          fCombineHueShift := Red
         else
-          fCombineHueShift := -1 / 6;
+          fCombineHueShift := Yellow;
+      end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem then
+      begin
+        SpecialCombine := True;
+        fCombineHueShift := Blue;
       end else
-        SpecialCombine := false;
+        SpecialCombine := False;
 
-      // This changes the position of the game info string (lems, time limit, etc)
       if SpecialCombine then
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * ResMod, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((i - 1) * 8) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * ResMod, 0);
       end;
     end;
   end;
@@ -1518,7 +1530,7 @@ begin
 //      Result := 'R-' + Result;
 end;
 
-procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);
+procedure TBaseSkillPanel.SetInfoCursor(Pos: Integer);
 var
   S: string;
   Button: TSkillPanelButton;

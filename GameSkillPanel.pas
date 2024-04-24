@@ -24,6 +24,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
+    function CursorInfoEndIndex: Integer; override;
     function LemmingCountStartIndex: Integer; override;
     function LemmingSavedStartIndex: Integer; override;
   public
@@ -95,7 +96,7 @@ begin
   if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
     SetPanelMessage(1);
 
-  SetInfoCursorLemming(1);
+  SetInfoCursor(1);
   SetReplayMark(14);
   SetCollectibleIcon(16);
   SetInfoLemHatch(20);
@@ -120,6 +121,11 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbNuke;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbSquiggle;
+end;
+
+function TSkillPanelStandard.CursorInfoEndIndex: Integer;
+begin
+  Result := 13;
 end;
 
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
