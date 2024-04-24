@@ -13768,7 +13768,7 @@ object FNLSetup: TFNLSetup
         Height = 21
         Style = csDropDownList
         ItemIndex = 1
-        TabOrder = 3
+        TabOrder = 2
         Text = 'Modern Mode'
         Items.Strings = (
           'Classic Mode'
@@ -13781,12 +13781,12 @@ object FNLSetup: TFNLSetup
         Height = 21
         Style = csDropDownList
         ItemIndex = 1
-        TabOrder = 2
+        TabOrder = 3
         Text = 'Advanced Hotkeys'
         Items.Strings = (
           'Classic Hotkeys'
           'Advanced Hotkeys'
-          'Alternative Hotkeys')
+          'NeoLemmix Hotkeys')
       end
       object ebUserName: TEdit
         Left = 136
@@ -13807,7 +13807,7 @@ object FNLSetup: TFNLSetup
     Caption = 'Save && Continue'
     Default = True
     ModalResult = 2
-    TabOrder = 2
+    TabOrder = 1
     OnClick = btnOKClick
   end
   object btnExit: TButton
@@ -13819,7 +13819,7 @@ object FNLSetup: TFNLSetup
     Cancel = True
     Caption = 'Exit'
     ModalResult = 2
-    TabOrder = 1
+    TabOrder = 2
     OnClick = btnExitClick
   end
 end
