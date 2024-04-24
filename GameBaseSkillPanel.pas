@@ -175,10 +175,12 @@ type
 
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
+
     property ButtonHint: String read fButtonHint write fButtonHint;
+    procedure GetButtonHints(aButton: TSkillPanelButton);
 
     function CursorOverClickableItem: Boolean;
-    function CursorOverSkillButton: Boolean;
+    function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
     function CursorOverReplayMark: Boolean;
     function CursorOverMinimap: Boolean;
   end;
@@ -1394,6 +1396,9 @@ var
 begin
   Image.BeginUpdate;
   try
+    for i := Low(fButtonRects) to High(fButtonRects) do
+      GetButtonHints(i);
+
     // Text info string
     CreateNewInfoString;
     DrawNewStr;
@@ -1898,66 +1903,78 @@ begin
   DrawMinimap;
 end;
 
-function TBaseSkillPanel.CursorOverSkillButton: Boolean;
+procedure TBaseSkillPanel.GetButtonHints(aButton: TSkillPanelButton);
+begin
+  ButtonHint := '';
+
+  if CursorOverMinimap then
+                   ButtonHint := 'MINIMAP'
+  else if CursorOverReplayMark then
+  begin
+    if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+                   ButtonHint := ''
+  else
+                   ButtonHint := 'CANCEL REPLAY';
+  end else if CursorOverSkillButton(aButton) then
+  begin
+    case aButton of
+      spbNone:     ButtonHint := '';
+      spbSlower:   ButtonHint := 'SLOWER';
+      spbFaster:   ButtonHint := 'FASTER';
+      spbPause:    ButtonHint := 'PAUSE';
+      spbRewind:   ButtonHint := 'REWIND';
+      spbFastForward:
+        if GameParams.TurboFF then
+                   ButtonHint := 'TURBO-FF'
+        else
+                   ButtonHint := 'FAST-FORWARD';
+      spbRestart:  ButtonHint := 'RESTART';
+      spbNuke:     ButtonHint := 'NUKE';
+      spbSquiggle: ButtonHint := '';
+      else         ButtonHint := Uppercase(SKILL_NAMES[aButton]);
+    end;
+  end;
+end;
+
+function TBaseSkillPanel.CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
 var
   CursorPos: TPoint;
   P: TPoint;
-  Button: TSkillPanelButton;
+  i: TSkillPanelButton;
 begin
   Result := False;
+  Button := spbNone; // Initialize Button to a default value
+
   CursorPos := Mouse.CursorPos;
   P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
 
-  for Button := Low(fButtonRects) to High(fButtonRects) do
+  for i := Low(fButtonRects) to High(fButtonRects) do
   begin
-    if PtInRect(fButtonRects[Button], P) then
+    if PtInRect(fButtonRects[i], P) then
     begin
       Result := True;
-
-      case Button of
-        spbNone:          ButtonHint := '';
-        spbSlower:        ButtonHint := 'SLOWER';
-        spbFaster:        ButtonHint := 'FASTER';
-        spbPause:         ButtonHint := 'PAUSE';
-        spbRewind:        ButtonHint := 'REWIND';
-        spbFastForward: if GameParams.TurboFF then
-                          ButtonHint := 'TURBO-FF'
-                        else
-                          ButtonHint := 'FAST-FORWARD';
-        spbRestart:       ButtonHint := 'RESTART';
-        spbNuke:          ButtonHint := 'NUKE';
-        spbSquiggle:      ButtonHint := '';
-        else              ButtonHint := Uppercase(SKILL_NAMES[Button]);
-      end;
-
+      Button := TSkillPanelButton(i); // Assign the button value
       Exit;
     end;
   end;
+
+  // If no button found, set Button to spbNone
+  Button := spbNone;
 end;
 
 function TBaseSkillPanel.CursorOverReplayMark: Boolean;
 var
   CursorPos: TPoint;
   P: TPoint;
-  Button: TSkillPanelButton;
 begin
   Result := False;
   CursorPos := Mouse.CursorPos;
   P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
 
-  for Button := Low(fButtonRects) to High(fButtonRects) do
+  if PtInRect(ReplayMarkRect, P) then
   begin
-    if PtInRect(ReplayMarkRect, P) then
-    begin
-      Result := True;
-
-      if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
-        ButtonHint := ''
-      else
-        ButtonHint := 'CANCEL REPLAY';
-
-      Exit;
-    end;
+    Result := True;
+    Exit;
   end;
 end;
 
@@ -1965,26 +1982,23 @@ function TBaseSkillPanel.CursorOverMinimap: Boolean;
 var
   CursorPos: TPoint;
   P: TPoint;
-  Button: TSkillPanelButton;
 begin
   Result := False;
   CursorPos := Mouse.CursorPos;
   P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
 
-  for Button := Low(fButtonRects) to High(fButtonRects) do
+  if PtInRect(MinimapRect, P) then
   begin
-    if PtInRect(MinimapRect, P) then
-    begin
-      Result := True;
-      ButtonHint := 'MINIMAP';
-      Exit;
-    end;
+    Result := True;
+    Exit;
   end;
 end;
 
 function TBaseSkillPanel.CursorOverClickableItem: Boolean;
+var
+  aButton: TSkillPanelButton;
 begin
-  Result := False or CursorOverSkillButton
+  Result := False or CursorOverSkillButton(aButton)
                   or CursorOverReplayMark
                   or CursorOverMinimap;
 end;
