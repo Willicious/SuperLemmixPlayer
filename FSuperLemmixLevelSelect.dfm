@@ -99,7 +99,7 @@ object FLevelSelect: TFLevelSelect
     Indent = 19
     MultiSelectStyle = []
     ReadOnly = True
-    TabOrder = 9
+    TabOrder = 0
     OnChange = tvLevelSelectChange
     OnClick = tvLevelSelectClick
     OnDblClick = tvLevelSelectDblClick
@@ -113,7 +113,7 @@ object FLevelSelect: TFLevelSelect
     Cancel = True
     Caption = 'Close'
     ModalResult = 2
-    TabOrder = 1
+    TabOrder = 2
   end
   object btnOK: TButton
     Left = 294
@@ -121,7 +121,7 @@ object FLevelSelect: TFLevelSelect
     Width = 606
     Height = 25
     Caption = 'Play'
-    TabOrder = 0
+    TabOrder = 1
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
@@ -131,15 +131,18 @@ object FLevelSelect: TFLevelSelect
     Height = 369
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
-    TabOrder = 8
+    TabOrder = 10
   end
   object btnClearRecords: TButton
     Left = 916
     Top = 36
     Width = 134
     Height = 25
+    Hint = 'Reset all user records for the selected level pack'
     Caption = 'Clear Records'
-    TabOrder = 2
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
     OnClick = btnClearRecordsClick
   end
   object btnCleanseOne: TButton
@@ -147,8 +150,11 @@ object FLevelSelect: TFLevelSelect
     Top = 224
     Width = 134
     Height = 25
+    Hint = 'Save a copy of this level in the latest SuperLemmix format'
     Caption = 'Cleanse This Level'
-    TabOrder = 7
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 9
     OnClick = btnCleanseOneClick
   end
   object btnCleanseLevels: TButton
@@ -156,8 +162,13 @@ object FLevelSelect: TFLevelSelect
     Top = 193
     Width = 134
     Height = 25
+    Hint = 
+      'Save a copy of all levels in the selected pack in the latest Sup' +
+      'erLemmix format'
     Caption = 'Cleanse All Levels'
-    TabOrder = 6
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 8
     OnClick = btnCleanseLevelsClick
   end
   object btnMassReplay: TButton
@@ -165,8 +176,11 @@ object FLevelSelect: TFLevelSelect
     Top = 162
     Width = 134
     Height = 25
+    Hint = 'Perform a replay check for every level in the selected pack'
     Caption = 'Mass Replay Check'
-    TabOrder = 5
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 7
     OnClick = btnMassReplayClick
   end
   object btnSaveImage: TButton
@@ -174,8 +188,8 @@ object FLevelSelect: TFLevelSelect
     Top = 131
     Width = 134
     Height = 25
-    Caption = 'Screenshot'
-    TabOrder = 4
+    Caption = 'Screenshot Level'
+    TabOrder = 6
     OnClick = btnSaveImageClick
   end
   object btnMakeShortcut: TButton
@@ -183,8 +197,13 @@ object FLevelSelect: TFLevelSelect
     Top = 98
     Width = 134
     Height = 25
+    Hint = 
+      'Create a shortcut which opens SuperLemmix to the selected level ' +
+      'pack'
     Caption = 'Create Shortcut'
-    TabOrder = 3
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 5
     OnClick = btnMakeShortcutClick
   end
   object btnResetTalismans: TBitBtn
@@ -193,7 +212,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Reset Talismans'
-    TabOrder = 10
+    TabOrder = 4
     OnClick = btnResetTalismansClick
   end
   object ilStatuses: TImageList
