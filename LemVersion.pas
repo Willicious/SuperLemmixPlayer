@@ -9,8 +9,8 @@ uses
 
 const
   FORMAT_VERSION = 2;
-  CORE_VERSION = 7;
-  FEATURES_VERSION = 3;
+  CORE_VERSION = 8;
+  FEATURES_VERSION = 0;
   HOTFIX_VERSION = 0; // Or RC version
 
   STYLE_VERSION = '2.0/'; // For server usage - a new style version should only be used when backwards compatibility breaks.
