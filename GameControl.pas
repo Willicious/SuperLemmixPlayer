@@ -75,6 +75,7 @@ type
     moTurboFF,
     moNoBackgrounds,
     moColourCycle,
+    moShowButtonHints,
     moClassicMode,
     moHideShadows,
     moHideHelpers,
@@ -241,6 +242,7 @@ type
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property ColourCycle: boolean Index moColourCycle read GetOptionFlag write SetOptionFlag;
+    property ShowButtonHints: boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
@@ -444,6 +446,7 @@ begin
   SaveBoolean('TurboFastForward', TurboFF);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('ColourCycle', ColourCycle);
+  SaveBoolean('ShowButtonHints', ShowButtonHints);
   SaveBoolean('ClassicMode', ClassicMode);
   SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('HideHelpers', HideHelpers);
@@ -611,6 +614,7 @@ begin
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
     ColourCycle := LoadBoolean('ColourCycle', ColourCycle);
+    ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     HideHelpers := LoadBoolean('HideHelpers', HideHelpers);

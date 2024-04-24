@@ -62,6 +62,7 @@ type
     cbHideSkillQ: TCheckBox;
     gbReplayOptions: TGroupBox;
     gbSkillPanelOptions: TGroupBox;
+    cbShowButtonHints: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -253,6 +254,7 @@ begin
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbColourCycle.Checked := GameParams.ColourCycle;
+    cbShowButtonHints.Checked := GameParams.ShowButtonHints;
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbHideHelpers.Checked := GameParams.HideHelpers;
@@ -321,6 +323,7 @@ begin
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.ColourCycle := cbColourCycle.Checked;
+  GameParams.ShowButtonHints := cbShowButtonHints.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.HideHelpers := cbHideHelpers.Checked;

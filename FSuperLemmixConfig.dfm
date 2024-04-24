@@ -258,7 +258,7 @@ object FormNXConfig: TFormNXConfig
         Caption = 'Classic Mode Options'
         TabOrder = 2
         object cbClassicMode: TCheckBox
-          Left = 16
+          Left = 12
           Top = 26
           Width = 156
           Height = 17
@@ -279,7 +279,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = cbClassicModeClick
         end
         object cbHideShadows: TCheckBox
-          Left = 16
+          Left = 12
           Top = 49
           Width = 190
           Height = 17
@@ -291,7 +291,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbHideHelpers: TCheckBox
-          Left = 16
+          Left = 12
           Top = 72
           Width = 190
           Height = 17
@@ -305,7 +305,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbHideSkillQ: TCheckBox
-          Left = 16
+          Left = 12
           Top = 95
           Width = 190
           Height = 17
@@ -321,7 +321,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 3
-        Top = 74
+        Top = 66
         Width = 256
         Height = 75
         Caption = 'Replay Options'
@@ -347,9 +347,9 @@ object FormNXConfig: TFormNXConfig
       end
       object gbSkillPanelOptions: TGroupBox
         Left = 3
-        Top = 170
+        Top = 152
         Width = 256
-        Height = 75
+        Height = 97
         Caption = 'Skill Panel Options'
         TabOrder = 3
         object cbTurboFF: TCheckBox
@@ -378,6 +378,15 @@ object FormNXConfig: TFormNXConfig
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbShowButtonHints: TCheckBox
+          Left = 12
+          Top = 68
+          Width = 158
+          Height = 17
+          Caption = 'Show Panel Button Hints'
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end

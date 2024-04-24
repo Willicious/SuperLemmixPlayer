@@ -1526,7 +1526,7 @@ begin
 
   S := '';
 
-  if CursorOverClickableItem then
+  if CursorOverClickableItem and GameParams.ShowButtonHints then
     S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
   else begin
 
