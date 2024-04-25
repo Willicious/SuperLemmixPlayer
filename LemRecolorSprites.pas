@@ -27,6 +27,8 @@ type
                     rcl_Zombie,
                     rcl_Neutral,
                     rcl_Rival,
+                    rcl_Rival_Selected,
+                    rcl_Rival_Athlete,
                     rcl_Invincible);
 
   TColorSwap = record
@@ -108,23 +110,43 @@ begin
 
     if fLemming.LemIsZombie then
       B := (B or CPM_LEMMING_ZOMBIE_OR) and not CPM_LEMMING_ZOMBIE_NOT;
-  end else
-    for i := 0 to Length(fSwaps)-1 do
+  end
+  else
+  begin
+    for i := 0 to Length(fSwaps) - 1 do
     begin
       case fSwaps[i].Condition of
-        rcl_Selected: if GameParams.ClassicMode // Don't recolour Selected lems in ClassicMode
-                      or not fDrawAsSelected then Continue;
+        rcl_Selected:
+        begin
+          // Don't apply regular Selected recoloring to Rivals
+          if fLemming.LemIsRival then Continue;
+          // Don't apply Selected recoloring in Classic Mode
+          if GameParams.ClassicMode or not fDrawAsSelected then Continue;
+        end;
+        rcl_Swimmer:
+        begin
+          // Don't apply Swimmer recoloring to Rivals
+          if fLemming.LemIsRival then Continue;
+          if not fLemming.LemIsSwimmer then Continue;
+        end;
+        rcl_Athlete:
+        begin
+          // Don't apply regular Athlete recoloring to Rivals
+          if fLemming.LemIsRival then Continue;
+          if not fLemming.HasPermanentSkills then Continue;
+        end;
         rcl_Zombie: if not fLemming.LemIsZombie then Continue;
-        rcl_Swimmer: if not fLemming.LemIsSwimmer then Continue;
-        rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
         rcl_Neutral: if not fLemming.LemIsNeutral then Continue;
         rcl_Rival: if not fLemming.LemIsRival then Continue;
+        rcl_Rival_Athlete: if not (fLemming.LemIsRival and fLemming.HasPermanentSkills) then Continue;
+        rcl_Rival_Selected: if not (fLemming.LemIsRival and fDrawAsSelected) then Continue;
         rcl_Invincible: if not fLemming.LemIsInvincible then Continue;
-                        
         else raise Exception.Create('TRecolorImage.SwapColors encountered an unknown condition' + #13 + IntToStr(Integer(fSwaps[i].Condition)));
       end;
-      if (F and $FFFFFF) = fSwaps[i].SrcColor then B := fSwaps[i].DstColor;
+      if (F and $FFFFFF) = fSwaps[i].SrcColor then
+        B := fSwaps[i].DstColor;
     end;
+  end;
 end;
 
 procedure TRecolorImage.CombineLemmingPixels(F: TColor32; var B: TColor32; M: Cardinal);
@@ -183,6 +205,12 @@ begin
 
         Mode := rcl_Rival;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('rival', RegisterSwap, @Mode);
+
+        Mode := rcl_Rival_Athlete;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('rival_athlete', RegisterSwap, @Mode);
+
+        Mode := rcl_Rival_Selected;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('rival_selected', RegisterSwap, @Mode);
 
         Mode := rcl_Zombie;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
