@@ -207,7 +207,7 @@ type
 
     fHasZombieColor         : Boolean;
     fHasNeutralColor        : Boolean;
-    //fHasRivalColor        : Boolean;
+    fHasRivalColor        : Boolean;
 
     fRecolorer              : TRecolorImage;
 
@@ -242,7 +242,7 @@ type
 
     property HasZombieColor: Boolean read fHasZombieColor;
     property HasNeutralColor: Boolean read fHasNeutralColor;
-    //property HasRivalColor: Boolean read fHasRivalColor;
+    property HasRivalColor: Boolean read fHasRivalColor;
 
     procedure LoadGrenadeImages(aBitmap: TBitmap32);
     procedure LoadSpearImages(aBitmap: TBitmap32);
@@ -342,7 +342,7 @@ begin
       HasRequiredRecoloring := (StateRecolorSec.Section['athlete'] <> nil) and (StateRecolorSec.Section['selected'] <> nil);
       fHasZombieColor := StateRecolorSec.Section['zombie'] <> nil;
       fHasNeutralColor := StateRecolorSec.Section['neutral'] <> nil;
-      //fHasRivalColor := StateRecolorSec.Section['rival'] <> nil;
+      fHasRivalColor := StateRecolorSec.Section['rival'] <> nil;
     end;
 
     if not HasRequiredRecoloring then
@@ -675,7 +675,7 @@ begin
   //fBatBitmap.Clear;  // Batter
   fHasZombieColor := false;
   fHasNeutralColor := false;
-  //fHasRivalColor := false;
+  fHasRivalColor := false;
   fTheme := nil;
 end;
 

@@ -72,7 +72,7 @@ type
     sPairingId      : Integer;
     sZombieMode     : Boolean;
     sNeutralMode    : Boolean;
-    //sRivalMode    : Boolean; - might not be needed
+    sRivalMode      : Boolean; // Bookmark - might not be needed
     sSecondariesTreatAsBusy: Boolean;
 
     sRemainingLemmingsCount: Integer;
@@ -154,7 +154,7 @@ type
     property SoundEffectExhaust: String read GetSoundEffectExhaust;
     property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property NeutralMode: Boolean read sNeutralMode write sNeutralMode;
-    //property RivalMode: Boolean read sRivalMode write sRivalMode; - might not be needed
+    property RivalMode: Boolean read sRivalMode write sRivalMode; // Bookmark - might not be needed
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // Moving decorations: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
@@ -167,7 +167,7 @@ type
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
     property IsPreassignedNeutral: Boolean index 128 read GetPreassignedSkill;
     property IsPreassignedSlider: Boolean index 256 read GetPreassignedSkill;
-    //property IsPreassignedRival: Boolean index 512 read GetPreassignedSkill;
+    property IsPreassignedRival: Boolean index 512 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
@@ -428,10 +428,10 @@ const
     [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_BUTTON,
      DOM_COLLECTIBLE, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMATION, DOM_ANIMONCE];
   DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_EXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
+    [DOM_EXIT, DOM_RIVALEXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
      DOM_COLLECTIBLE, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE];
   EXHAUSTED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_EXIT, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
+    [DOM_EXIT, DOM_RIVALEXIT, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
      DOM_COLLECTIBLE, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE];
 
   function CheckReadyFlag: Boolean;
@@ -444,7 +444,7 @@ const
         Result := false
       else
         case TriggerEffectBase of
-          DOM_EXIT: Result := RemainingLemmingsCount <> 0;
+          DOM_EXIT, DOM_RIVALEXIT: Result := RemainingLemmingsCount <> 0;
           DOM_TRAP, DOM_TELEPORT, DOM_ANIMATION: Result := (CurrentFrame = 0);
           DOM_LOCKEXIT: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
           DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 1;
@@ -480,7 +480,7 @@ const
         Result := true
       else
         case TriggerEffectBase of
-          DOM_EXIT: Result := RemainingLemmingsCount = 0;
+          DOM_EXIT, DOM_RIVALEXIT: Result := RemainingLemmingsCount = 0;
           // DOM_TRAP: Only condition is handled by the above TriggerEffect check // Bookmark - remove?
           DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
           DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
@@ -497,7 +497,7 @@ const
       case TriggerEffectBase of
         DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
         DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
-        DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW: Result := RemainingLemmingsCount = 0;
+        DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT, DOM_WINDOW: Result := RemainingLemmingsCount = 0;
       end;
   end;
 begin

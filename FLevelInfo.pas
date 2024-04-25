@@ -735,14 +735,14 @@ begin
     else
       Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, 'Talisman not yet completed', true, pmNextRowPadLeft);
 
-  Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount - fLevel.Info.NeutralCount //-fLevel.Info.RivalCount
+  Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount - fLevel.Info.NeutralCount - fLevel.Info.RivalCount
   , 'Number of Lemmings', true, pmNextColumnSame);
 
   if fLevel.Info.NeutralCount > 0 then
     Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, 'Number of Neutrals', true, pmNextColumnSame);
 
-//  if fLevel.Info.RivalCount > 0 then
-//    Add(ICON_RIVAL_LEMMING, fLevel.Info.RivalCount, 'Number of Rivals', true, pmNextColumnSame);
+  if fLevel.Info.RivalCount > 0 then
+    Add(ICON_RIVAL_LEMMING, fLevel.Info.RivalCount, 'Number of Rivals', true, pmNextColumnSame);
 
   if (fLevel.Info.ZombieCount > 0) or ((fTalisman <> nil) and (fTalisman.RequireKillZombies)) then
   begin

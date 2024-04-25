@@ -24,7 +24,7 @@ type
     fLemmingsCount   : Integer;
     fZombieCount     : Integer;
     fNeutralCount    : Integer;
-    //fRivalCount      : Integer;
+    fRivalCount      : Integer;
     fRescueCount     : Integer;
     fCollectibleCount:Integer;
     fTimeLimit       : Integer;
@@ -69,7 +69,7 @@ type
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
     property ZombieCount    : Integer read fZombieCount write fZombieCount;
     property NeutralCount   : Integer read fNeutralCount write fNeutralCount;
-    //property RivalCount   : Integer read fRivalCount write fRivalCount;
+    property RivalCount     : Integer read fRivalCount write fRivalCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
     property CollectibleCount: Integer read fCollectibleCount write fCollectibleCount;
     property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
@@ -184,7 +184,7 @@ begin
   LemmingsCount   := 1;
   ZombieCount     := 0;
   NeutralCount    := 0;
-  //RivalCount    := 0;
+  RivalCount      := 0;
   RescueCount     := 1;
   CollectibleCount:= 0;
   HasTimeLimit    := false;
@@ -679,7 +679,7 @@ begin
       MO := PieceManager.Objects[O.Identifier];
       if (MO.TriggerEffect = DOM_WINDOW) and ((O.TarLev and 192) = 0) then
           EntranceIndexes.Add(i);
-      if MO.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+      if MO.TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT] then
         ExitIndexes.Add(i);
     end;
 
@@ -687,7 +687,7 @@ begin
     begin
       L := fPreplacedLemmings[i];
       if not (L.IsZombie or L.IsNeutral) then
-        PreplacedLemmingIndexes.Add(i);   // Rival - do Rivals need to be counted separately here?
+        PreplacedLemmingIndexes.Add(i);   // Bookmark - do Rivals need to be counted separately here?
     end;
 
     AverageX := 0;
@@ -1053,7 +1053,7 @@ var
     if (aSection.Line['disarmer'] <> nil) then O.TarLev := O.TarLev or 16;
     if (aSection.Line['zombie'] <> nil) then O.TarLev := O.TarLev or 64;
     if (aSection.Line['neutral'] <> nil) then O.TarLev := O.TarLev or 128;
-    //if (aSection.Line['rival'] <> nil) then O.TarLev := O.TarLev or 512;
+    if (aSection.Line['rival'] <> nil) then O.TarLev := O.TarLev or 512;
 
     O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
@@ -1122,7 +1122,7 @@ begin
     DOM_SPLITTER: GetSplitterData;
     DOM_WINDOW: GetWindowData;
     DOM_DECORATION: GetMovingDecorationData;
-    DOM_EXIT, DOM_LOCKEXIT: GetExitData;
+    DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT: GetExitData;
     DOM_SLOWFREEZE, DOM_RADIATION: GetRadiationSlowfreezeData;
   end;
 
@@ -1184,7 +1184,7 @@ begin
   L.IsDisarmer     := (aSection.Line['disarmer'] <> nil);
   L.IsZombie       := (aSection.Line['zombie']   <> nil);
   L.IsNeutral      := (aSection.Line['neutral']  <> nil);
-  //L.IsRival        := (aSection.Line['rival'] <> nil);
+  L.IsRival        := (aSection.Line['rival'] <> nil);
   L.IsBlocker      := (aSection.Line['blocker']  <> nil);   // Bookmark - implement this later - Invincible lems can't also be neutral or zombie
   //L.IsInvincible   := ((aSection.Line['invincible'] <> nil) and not ((aSection.Line['neutral']  <> nil)
                                                                   //or (aSection.Line['zombie']   <> nil)));
@@ -1317,8 +1317,7 @@ begin
   end;
 
   if Info.SkillCount[spbCloner] > 99 then Info.SkillCount[spbCloner] := 99;
-  
-  // Rival - do Rivals need to be counted separately here?
+
   // 2. Calculate ZombieCount and NeutralCount, precise spawn order, and finalised lemming count
   FoundWindow := false;
   SetLength(WindowLemmingCount, InteractiveObjects.Count);
@@ -1335,15 +1334,15 @@ begin
 
   Info.ZombieCount := 0;
   Info.NeutralCount := 0;
-  //Info.RivalCount := 0;
+  Info.RivalCount := 0;   // Bookmark - do Rivals need to be counted separately here...?
 
   for i := 0 to PreplacedLemmings.Count-1 do
     if PreplacedLemmings[i].IsZombie then
       Info.ZombieCount := Info.ZombieCount + 1
     else if PreplacedLemmings[i].IsNeutral then
-      Info.NeutralCount := Info.NeutralCount + 1;
-//    else if PreplacedLemmings[i].IsRival then
-//      Info.RivalCount := Info.RivalCount + 1;
+      Info.NeutralCount := Info.NeutralCount + 1
+    else if PreplacedLemmings[i].IsRival then    // Bookmark - ...and here?
+      Info.RivalCount := Info.RivalCount + 1;
 
   if not FoundWindow then
   begin
@@ -1368,9 +1367,9 @@ begin
       if (InteractiveObjects[n].TarLev and 64) <> 0 then
         Info.ZombieCount := Info.ZombieCount + 1
       else if (InteractiveObjects[n].TarLev and 128) <> 0 then
-        Info.NeutralCount := Info.NeutralCount + 1;
-//      else if (InteractiveObjects[n].TarLev and 512) <> 0 then
-//        Info.RivalCount := Info.RivalCount + 1;
+        Info.NeutralCount := Info.NeutralCount + 1
+      else if (InteractiveObjects[n].TarLev and 512) <> 0 then
+        Info.RivalCount := Info.RivalCount + 1;
       Info.SpawnOrder[i] := n;
 
       if WindowLemmingCount[n] > 0 then
@@ -1392,7 +1391,7 @@ begin
   begin
     TriggerEffect := PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect;
 
-    if TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+    if TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT] then
     begin
       if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleExitCount >= 0) then
         MaxPossibleExitCount := MaxPossibleExitCount + InteractiveObjects[i].LemmingCap
@@ -1628,7 +1627,7 @@ var
     if O.TarLev and 16 <> 0 then Sec.AddLine('DISARMER');
     if O.TarLev and 64 <> 0 then Sec.AddLine('ZOMBIE');
     if O.TarLev and 128 <> 0 then Sec.AddLine('NEUTRAL');
-    //if O.TarLev and 512 <> 0 then Sec.AddLine('RIVAL');
+    if O.TarLev and 512 <> 0 then Sec.AddLine('RIVAL');
 
     if O.LemmingCap > 0 then
       Sec.AddLine('LEMMINGS', O.LemmingCap);
@@ -1686,7 +1685,7 @@ begin
       // Receiver and Exit's data are covered by Teleporter and Window respectively.
     end else begin
       case PieceManager.Objects[O.Identifier].TriggerEffect of
-        DOM_EXIT, DOM_LOCKEXIT: SetExitData;
+        DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT: SetExitData;
         DOM_TELEPORT: SetTeleporterData;
         DOM_RECEIVER: SetReceiverData;
         DOM_PICKUP: SetPickupData;
@@ -1761,7 +1760,7 @@ begin
     if L.IsBlocker then Sec.AddLine('BLOCKER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
     if L.IsNeutral then Sec.AddLine('NEUTRAL');
-    //if L.IsRival then Sec.AddLine('RIVAL');
+    if L.IsRival then Sec.AddLine('RIVAL');
     //if L.IsInvincible then Sec.AddLine('INVINCIBLE');
   end;
 end;

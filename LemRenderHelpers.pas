@@ -126,12 +126,12 @@ type
                  hpi_N, hpi_O, hpi_P, hpi_Q, hpi_R, hpi_S, hpi_T, hpi_U, hpi_V, hpi_W, hpi_X, hpi_Y, hpi_Z,
                  hpi_num_1, hpi_num_inf,
                  hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation,
-                 hpi_Exit, hpi_Exit_Lock, hpi_Fire, hpi_Trap, hpi_Trap_Disabled, hpi_Updraft,
+                 hpi_Exit, hpi_Exit_Rival, hpi_Exit_Lock, hpi_Fire, hpi_Trap, hpi_Trap_Disabled, hpi_Updraft,
                  hpi_Splitter, hpi_Button, hpi_Collectible, hpi_Force, hpi_NoSplat, hpi_Splat,
                  hpi_Water, hpi_Blasticine, hpi_Vinewater, hpi_Poison, hpi_Lava,
                  hpi_Radiation, hpi_Slowfreeze,
                  hpi_FallDist,
-                 hpi_Skill_Zombie, hpi_Skill_Neutral, hpi_Skill_Slider, hpi_Skill_Climber,
+                 hpi_Skill_Zombie, hpi_Skill_Neutral, hpi_Skill_Rival, hpi_Skill_Slider, hpi_Skill_Climber,
                  hpi_Skill_Floater, hpi_Skill_Glider, hpi_Skill_Swimmer, hpi_Skill_Disarmer);
 
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
@@ -238,6 +238,7 @@ const
                               'down_arrow.png',
                               'exclamation.png',
                               'exit.png',
+                              'exit_rival.png',
                               'exit_lock.png',
                               'fire.png',
                               'trap.png',
@@ -259,6 +260,7 @@ const
                               'fall_distance.png',
                               'skill_zombie.png',
                               'skill_neutral.png',
+                              'skill_rival.png',
                               'skill_slider.png',
                               'skill_climber.png',
                               'skill_floater.png',

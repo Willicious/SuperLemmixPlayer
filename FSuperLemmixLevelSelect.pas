@@ -94,7 +94,7 @@ const // Icon indexes
   ICON_BLANK = -1;
 
   ICON_NORMAL_LEMMING = 0;
-  // ICON_RIVAL_LEMMING = 0; // Rivals
+  ICON_RIVAL_LEMMING = 3; // Rivals - using neutral for now as placeholder
   ICON_ZOMBIE_LEMMING = 1;
   ICON_NEUTRAL_LEMMING = 2;
   ICON_SAVE_REQUIREMENT = 3;

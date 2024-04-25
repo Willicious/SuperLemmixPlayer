@@ -1499,8 +1499,8 @@ begin
     if L.LemIsDisarmer then Result[7] := 'D';
     if L.LemIsZombie then Result[8] := 'Z';
     if L.LemIsNeutral then Result[9] := 'N';
-    //if L.LemIsRival then Result[10] := 'R';
-    if L.LemIsInvincible then Result[10] := 'I';
+    if L.LemIsRival then Result[10] := 'R';
+    if L.LemIsInvincible then Result[11] := 'I';
   end
   else if (L.LemAction in [baWalking, baAscending, baFalling]) then
   begin
@@ -1516,7 +1516,7 @@ begin
     if L.LemIsTimebomber then Result := STimebomber;
     if L.LemIsRadiating then Result := SRadiator;
     if (L.LemFreezerExplosionTimer > 0) then Result := SSlowfreezer;
-    //if L.LemIsRival then Result := SRival;
+    if L.LemIsRival then Result := SRival;
     if L.LemIsInvincible then Result := SInvincible;
     if L.LemIsZombie and L.LemIsNeutral then Result := SNeutralZombie;
   end else
@@ -1525,9 +1525,9 @@ begin
     else if L.LemIsNeutral and not L.LemIsZombie then
       Result := 'N-' + Result
     else if L.LemIsZombie and L.LemIsNeutral then
-      Result := 'ZN-' + Result;
-//    else if L.LemIsRival then
-//      Result := 'R-' + Result;
+      Result := 'ZN-' + Result
+    else if L.LemIsRival then
+      Result := 'R-' + Result;
 end;
 
 procedure TBaseSkillPanel.SetInfoCursor(Pos: Integer);

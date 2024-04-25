@@ -370,6 +370,20 @@ var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
   Level: TLevel;
+
+  function HasSpecialLemmings: Boolean;
+  begin
+    Result := False or (Level.Info.NeutralCount > 0)
+                    or (Level.Info.ZombieCount > 0)
+                    or (Level.Info.RivalCount > 0);
+  end;
+
+  function RegularLemmingsCount: Integer;
+  begin
+    Result := (Level.Info.LemmingsCount - Level.Info.ZombieCount
+                                        - Level.Info.NeutralCount
+                                        - Level.Info.RivalCount);
+  end;
 begin
   Entry := GameParams.CurrentLevel;
   Level := GameParams.Level;
@@ -398,37 +412,34 @@ begin
 
   HueShift.HShift := NumLemsShift;
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
-  if (Level.Info.NeutralCount > 0) or (Level.Info.ZombieCount > 0)
-  // or (Level.Info.RivalCount > 0)
-  then
-  begin
-    if Level.Info.LemmingsCount = 1 then
-    Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
-                                     - Level.Info.ZombieCount - Level.Info.NeutralCount)
-                                     + ' ' + GameParams.Renderer.Theme.LemNamesSingular
-    else if Level.Info.LemmingsCount > 1 then
-    Result[2].Line := Result[2].Line + IntToStr(Level.Info.LemmingsCount
-                                     - Level.Info.ZombieCount - Level.Info.NeutralCount)
-                                     + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
 
-//    if (Level.Info.RivalCount = 1) then
-//    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.RivalCount) + ' Rival'
-//    else if (Level.Info.RivalCount > 1) then
-//    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.RivalCount) + ' Rivals';
+  if HasSpecialLemmings then
+  begin
+    if (Level.Info.LemmingsCount = 1) then
+      Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
+                        + GameParams.Renderer.Theme.LemNamesSingular
+    else if (Level.Info.LemmingsCount > 1) then
+      Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
+                        + GameParams.Renderer.Theme.LemNamesPlural;
+
+    if (Level.Info.RivalCount = 1) then
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.RivalCount) + ' Rival'
+    else if (Level.Info.RivalCount > 1) then
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.RivalCount) + ' Rivals';
 
     if (Level.Info.NeutralCount = 1) then
-    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutral'
     else if (Level.Info.NeutralCount > 1) then
-    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.NeutralCount) + ' Neutrals';
 
     if (Level.Info.ZombieCount = 1) then
-    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombie'
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombie'
     else if (Level.Info.ZombieCount > 1) then
-    Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
-  end else if Level.Info.LemmingsCount = 1 then
-  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesSingular
+      Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
+  end else if (Level.Info.LemmingsCount = 1) then
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesSingular
   else
-  Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
   Result[2].ColorShift := HueShift;
 
   HueShift.HShift := RescueLemsShift;

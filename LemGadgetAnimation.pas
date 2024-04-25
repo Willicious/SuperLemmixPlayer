@@ -66,6 +66,7 @@ type
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true if the object would able to interact with a lemming at this moment
   DOM_EXIT        | True when the exit's lemming limit has not been reached, or if the exit has no limit
+  DOM_RIVALEXIT   | True when the exit's lemming limit has not been reached, or if the exit has no limit
   DOM_TRAP        | True when the trap is idle (but not disabled)
   DOM_TELEPORT    | True when the teleporter and its paired receiver (if any) are idle
   DOM_RECEIVER    | True when the receiver and its paired teleporter (if any) are idle
@@ -99,6 +100,7 @@ type
   GENERAL RULE    | The condition will be true when the object is unable to interact with a lemming, either permanently or
                   | until some external condition is fulfilled.
   DOM_EXIT        | True if the exit has a lemming limit and it has been reached
+  DOM_RIVALEXIT   | True if the exit has a lemming limit and it has been reached
   DOM_TRAP        | True if the trap has been disabled (most likely by a disarmer)
   DOM_TELEPORT    | True if no receiver exists on the level
   DOM_RECEIVER    | True if no teleporter exists on the level
@@ -116,6 +118,7 @@ type
   ----------------|-----------------------------------
   GENERAL RULE    | True if an object with limited uses has been used up.
   DOM_EXIT        | True if the exit is limited-use and has zero remaining uses
+  DOM_RIVALEXIT   | True if the exit is limited-use and has zero remaining uses
   DOM_PICKUP      | True if the skill has been picked up
   DOM_LOCKEXIT    | True if the exit is limited-use and has zero remaining uses
   DOM_BUTTON      | True when the button has been pressed

@@ -93,6 +93,7 @@ type
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: Cardinal);
+    procedure CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
 
@@ -102,9 +103,8 @@ type
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
-    procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false
-    //; IsRival: Boolean = false;
-    );
+    procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false;
+                                  IsNeutral: Boolean = false; IsRival: Boolean = false);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
@@ -331,7 +331,7 @@ begin
       A: TLemming absolute rA;
       B: TLemming absolute rB;
     const
-      //RIVAL_LEMMING = 512;
+      RIVAL_LEMMING = 512;
       SELECTED_LEMMING = 128;
       NOT_EXITER_LEMMING = 64;
       HIGHLIT_LEMMING = 32;
@@ -342,8 +342,8 @@ begin
       function MakePriorityValue(L: TLemming): Integer;
       begin
         Result := 0;
-        //if L = L.LemIsRival then Result := Result + RIVAL_LEMMING;
         if L = SelectedLemming then Result := Result + SELECTED_LEMMING;
+        if L.LemIsRival then Result := Result + RIVAL_LEMMING; // Bookmark - where should rivals be placed?
         if not (L.LemAction = baExiting) then Result := Result + NOT_EXITER_LEMMING;
         if L = HighlitLemming then Result := Result + HIGHLIT_LEMMING;
         if (not L.LemIsNeutral) or (L.LemIsZombie) then Result := Result + NOT_NEUTRAL_LEMMING;
@@ -2357,6 +2357,26 @@ begin
   end;
 end;
 
+procedure TRenderer.CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
+begin
+  if (F and $FF000000) <> 0 then
+  begin
+    // Bookmark - everything here is currently same as Neutral
+    // 1 = blue, 2 = green, 5 = red
+
+    case (F and $FFFFFF) of
+      $00B000: F := $FF686868;
+      $4040E0: F := $FF525252;
+      $F02020: F := $FF5E5E5E;
+    end;
+
+    if (F and $FF000000) = $FF000000 then
+      B := F
+    else
+      MergeMem(F, B);
+  end;
+end;
+
 const
   MIN_TERRAIN_GROUP_WIDTH = 1;
   MIN_TERRAIN_GROUP_HEIGHT = 1;
@@ -2548,9 +2568,8 @@ begin
   Crop;
 end;
 
-procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false
-//; IsRival: Boolean = false;
-);
+procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false;
+                                        IsNeutral: Boolean = false; IsRival: Boolean = false);
 begin
   Bmp.DrawMode := dmCustom;
 
@@ -2558,8 +2577,8 @@ begin
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
-//  else if IsRival then
-//    Bmp.OnPixelCombine := CombineGadgetsDefaultRival  // SEE TODO at top of page - I think the plan is to use recolorer here instead
+  else if IsRival then
+    Bmp.OnPixelCombine := CombineGadgetsDefaultRival  // Bookmark - SEE TODO at top of page - I think the plan is to use recolorer here instead
   else if IsNeutral then
     Bmp.OnPixelCombine := CombineGadgetsDefaultNeutral
   else if IsZombie then
@@ -2715,6 +2734,11 @@ begin
           fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
         end;
 
+      DOM_RIVALEXIT:
+        begin
+          fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+        end;
+
       DOM_LOCKEXIT:
         begin
           fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
@@ -2849,7 +2873,7 @@ begin
     if Gadget.IsPreassignedGlider then Inc(numHelpers);
     if Gadget.IsPreassignedDisarmer then Inc(numHelpers);
     if Gadget.IsPreassignedZombie then Inc(numHelpers);
-    if Gadget.IsPreassignedNeutral then Inc(numHelpers); // Rival - not sure whether to make helpers for rivals
+    if Gadget.IsPreassignedNeutral then Inc(numHelpers); // Bookmark - make Rival helper
 
     if DrawOtherHelper then Inc(numHelpers);
 
@@ -2872,9 +2896,14 @@ begin
       fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
-    if Gadget.IsPreassignedNeutral then  // Rival - not sure whether to make helpers for Rivals
+    if Gadget.IsPreassignedNeutral then
     begin
       fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      Inc(indexHelper);
+    end;
+    if Gadget.IsPreassignedRival then // Bookmark - make rival helpers
+    begin
+      fHelperImages[hpi_Skill_Rival].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
     if Gadget.IsPreassignedSlider then
@@ -3120,8 +3149,9 @@ begin
     if (not ThisAnim.Visible) and (ThisAnim.State = gasPause) then
       Continue;
 
-    BMP := ThisAnim.Bitmap;                             // Does there need to be a RivalMode?
-    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode, Gadget.NeutralMode);
+    BMP := ThisAnim.Bitmap;
+    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode,
+                             Gadget.NeutralMode, Gadget.RivalMode); // Bookmark - Does there need to be a RivalMode?
     DstRect := SizedRect((Gadget.Left + ThisAnim.MetaAnimation.OffsetX) * ResMod,
                          (Gadget.Top + ThisAnim.MetaAnimation.OffsetY) * ResMod,
                          (ThisAnim.MetaAnimation.Width + Gadget.WidthVariance) * ResMod,
@@ -3135,8 +3165,8 @@ begin
 
   if (Gadget.TriggerEffect = DOM_PICKUP) then
     AddPickupSkillNumber;
-
-  if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW]) then
+                                         // Bookmark - is RivalExit needed here?
+  if (Gadget.TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT, DOM_WINDOW]) then
     AddLemmingCountNumber;
 end;
 
@@ -3763,8 +3793,8 @@ var
     begin
       // Set all exits to open exits
       for i := 0 to fPreviewGadgets.Count - 1 do
-      begin
-        if fPreviewGadgets[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+      begin                                               // Bookmark - is RivalExit needed here?
+        if fPreviewGadgets[i].TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT] then
           fPreviewGadgets[i].CurrentFrame := 0
       end;
     end
@@ -3958,8 +3988,8 @@ begin
     if (aLevel.Info.NeutralCount > 0) and (not fAni.HasNeutralColor) then
       raise Exception.Create('Specified lemming spriteset does not include neutral coloring.');
 
-//    if (aLevel.Info.RivalCount > 0) and (not fAni.HasRivalColor) then
-//      raise Exception.Create('Specified lemming spriteset does not include rival coloring.');
+    if (aLevel.Info.RivalCount > 0) and (not fAni.HasRivalColor) then // Bookmark - not sure whether to enforce this
+      raise Exception.Create('Specified lemming spriteset does not include rival coloring.');
 
   except
     on E: Exception do
