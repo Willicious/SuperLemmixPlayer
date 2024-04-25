@@ -2901,7 +2901,7 @@ begin
       fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
-    if Gadget.IsPreassignedRival then // Bookmark - make rival helpers
+    if Gadget.IsPreassignedRival then // Bookmark - improve position
     begin
       fHelperImages[hpi_Skill_Rival].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
