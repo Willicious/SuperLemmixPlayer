@@ -1045,15 +1045,17 @@ var
   procedure GetWindowData;
   begin
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
-    if (aSection.Line['slider'] <> nil) then O.TarLev := O.TarLev or 256;
-    if (aSection.Line['climber'] <> nil) then O.TarLev := O.TarLev or 1;
-    if (aSection.Line['swimmer'] <> nil) then O.TarLev := O.TarLev or 2;
-    if (aSection.Line['floater'] <> nil) then O.TarLev := O.TarLev or 4;
-    if (aSection.Line['glider'] <> nil) then O.TarLev := O.TarLev or 8;
+    if (aSection.Line['slider'] <> nil) then   O.TarLev := O.TarLev or 256;
+    if (aSection.Line['climber'] <> nil) then  O.TarLev := O.TarLev or 1;
+    if (aSection.Line['swimmer'] <> nil) then  O.TarLev := O.TarLev or 2;
+    if (aSection.Line['floater'] <> nil) then  O.TarLev := O.TarLev or 4;
+    if (aSection.Line['glider'] <> nil) then   O.TarLev := O.TarLev or 8;
     if (aSection.Line['disarmer'] <> nil) then O.TarLev := O.TarLev or 16;
-    if (aSection.Line['zombie'] <> nil) then O.TarLev := O.TarLev or 64;
-    if (aSection.Line['neutral'] <> nil) then O.TarLev := O.TarLev or 128;
-    if (aSection.Line['rival'] <> nil) then O.TarLev := O.TarLev or 512;
+    if (aSection.Line['zombie'] <> nil) then   O.TarLev := O.TarLev or 64;
+    if (aSection.Line['neutral'] <> nil) and not (aSection.Line['rival'] <> nil) then
+                                               O.TarLev := O.TarLev or 128;
+    if (aSection.Line['rival'] <> nil) and not (aSection.Line['zombie'] <> nil) then
+                                               O.TarLev := O.TarLev or 512;
 
     O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
