@@ -3995,7 +3995,7 @@ begin
     if (aLevel.Info.NeutralCount > 0) and (not fAni.HasNeutralColor) then
       raise Exception.Create('Specified lemming spriteset does not include neutral coloring.');
 
-    if (aLevel.Info.RivalCount > 0) and (not fAni.HasRivalColor) then // Bookmark - not sure whether to enforce this
+    if (aLevel.Info.RivalCount > 0) and (not fAni.HasRivalColor) then
       raise Exception.Create('Specified lemming spriteset does not include rival coloring.');
 
   except
