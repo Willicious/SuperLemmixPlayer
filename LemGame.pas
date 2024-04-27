@@ -7916,7 +7916,8 @@ begin
           LemIsNeutral := Gadgets[ix].IsPreassignedNeutral
                   and not Gadgets[ix].IsPreassignedRival;
 
-          LemIsRival := Gadgets[ix].IsPreassignedRival;
+          LemIsRival := Gadgets[ix].IsPreassignedRival
+                  and not Gadgets[ix].IsPreassignedZombie;
 
           if Gadgets[ix].RemainingLemmingsCount > 0 then
           begin
