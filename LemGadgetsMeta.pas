@@ -259,7 +259,6 @@ begin
 
     // Trigger effects
     if Lowercase(Sec.LineTrimString['effect']) = 'exit' then fTriggerEffect := DOM_EXIT;
-    if Lowercase(Sec.LineTrimString['effect']) = 'rivalexit' then fTriggerEffect := DOM_RIVALEXIT;
     if Lowercase(Sec.LineTrimString['effect']) = 'forceleft' then fTriggerEffect := DOM_FORCELEFT;
     if Lowercase(Sec.LineTrimString['effect']) = 'forceright' then fTriggerEffect := DOM_FORCERIGHT;
     if Lowercase(Sec.LineTrimString['effect']) = 'trap' then fTriggerEffect := DOM_TRAP;

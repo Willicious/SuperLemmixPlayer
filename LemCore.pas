@@ -213,7 +213,6 @@ const
 type
   TTriggerTypes = (
     trExit,       // As well for locked exits, once all buttons are pressed
-    trRivalExit,  // Exit for Rivals only
     trButton,
     trForceLeft,  // As well for blockers
     trForceRight, // As well for blockers
@@ -384,39 +383,38 @@ const
     trZombie,                 // 0  No trigger area
     trZombie,                 // 1  Hatch
     trExit,                   // 2  Exit
-    trRivalExit,              // 3  Rival Exit
-    trExit,                   // 4  Locked exit
-    trButton,                 // 5  Button
-    trForceLeft,              // 6  Force-field left
-    trForceRight,             // 7  Force-field right
-    trTrap,                   // 8  Triggered trap
-    trTrap,                   // 9  Once trap
-    trWater,                  // 10  Water
-    trBlasticine,             // 11 Blasticine
-    trVinewater,              // 12 Vinewater
-    trPoison,                 // 13 Poison
-    trLava,                   // 14 Lava
-    trFire,                   // 15 Triggers burner
-    trOWLeft,                 // 16 OWW left
-    trOWRight,                // 17 OWW right
-    trOWDown,                 // 18 OWW down
-    trOWUp,                   // 19 OWW up
-    trZombie,                 // 20 Blocker (note - there is no blocker object!)
-    trTeleport,               // 21 Teleporter
-    trZombie,                 // 22 Receiver
-    trPickup,                 // 23 Pickup skill
-    trCollectible,            // 24 Collectible
-    trUpdraft,                // 25 Updraft
-    trSplitter,               // 26 Splitter
-    trRadiation,              // 27 Radiation
-    trSlowfreeze,             // 28 Slowfreeze
-    trNoSplat,                // 29 No-splat
-    trSplat,                  // 30 Splat
-    trZombie,                 // 31 Decoration
-    trAnim,                   // 32 Triggered animation
-    trAnim,                   // 33 Once animation
-    trSteel,                  // 34 Steel
-    trZombie                  // 35 Preplaced lemming
+    trExit,                   // 3  Locked exit
+    trButton,                 // 4  Button
+    trForceLeft,              // 5  Force-field left
+    trForceRight,             // 6  Force-field right
+    trTrap,                   // 7  Triggered trap
+    trTrap,                   // 8  Once trap
+    trWater,                  // 9  Water
+    trBlasticine,             // 10 Blasticine
+    trVinewater,              // 11 Vinewater
+    trPoison,                 // 12 Poison
+    trLava,                   // 13 Lava
+    trFire,                   // 14 Triggers burner
+    trOWLeft,                 // 15 OWW left
+    trOWRight,                // 16 OWW right
+    trOWDown,                 // 17 OWW down
+    trOWUp,                   // 18 OWW up
+    trZombie,                 // 19 Blocker (note - there is no blocker object!)
+    trTeleport,               // 20 Teleporter
+    trZombie,                 // 21 Receiver
+    trPickup,                 // 22 Pickup skill
+    trCollectible,            // 23 Collectible
+    trUpdraft,                // 24 Updraft
+    trSplitter,               // 25 Splitter
+    trRadiation,              // 26 Radiation
+    trSlowfreeze,             // 27 Slowfreeze
+    trNoSplat,                // 28 No-splat
+    trSplat,                  // 29 Splat
+    trZombie,                 // 30 Decoration
+    trAnim,                   // 31 Triggered animation
+    trAnim,                   // 32 Once animation
+    trSteel,                  // 33 Steel
+    trZombie                  // 34 Preplaced lemming
   );
 
 type

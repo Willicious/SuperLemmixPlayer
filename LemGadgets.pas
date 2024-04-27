@@ -428,10 +428,10 @@ const
     [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_BUTTON,
      DOM_COLLECTIBLE, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMATION, DOM_ANIMONCE];
   DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_EXIT, DOM_RIVALEXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
+    [DOM_EXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
      DOM_COLLECTIBLE, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE];
   EXHAUSTED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_EXIT, DOM_RIVALEXIT, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
+    [DOM_EXIT, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON,
      DOM_COLLECTIBLE, DOM_WINDOW, DOM_TRAPONCE, DOM_ANIMONCE];
 
   function CheckReadyFlag: Boolean;
@@ -444,7 +444,7 @@ const
         Result := false
       else
         case TriggerEffectBase of
-          DOM_EXIT, DOM_RIVALEXIT: Result := RemainingLemmingsCount <> 0;
+          DOM_EXIT: Result := RemainingLemmingsCount <> 0;
           DOM_TRAP, DOM_TELEPORT, DOM_ANIMATION: Result := (CurrentFrame = 0);
           DOM_LOCKEXIT: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
           DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 1;
@@ -480,7 +480,7 @@ const
         Result := true
       else
         case TriggerEffectBase of
-          DOM_EXIT, DOM_RIVALEXIT: Result := RemainingLemmingsCount = 0;
+          DOM_EXIT: Result := RemainingLemmingsCount = 0;
           // DOM_TRAP: Only condition is handled by the above TriggerEffect check // Bookmark - remove?
           DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
           DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
@@ -497,7 +497,7 @@ const
       case TriggerEffectBase of
         DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
         DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
-        DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT, DOM_WINDOW: Result := RemainingLemmingsCount = 0;
+        DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW: Result := RemainingLemmingsCount = 0;
       end;
   end;
 begin

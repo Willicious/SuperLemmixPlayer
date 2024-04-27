@@ -679,7 +679,7 @@ begin
       MO := PieceManager.Objects[O.Identifier];
       if (MO.TriggerEffect = DOM_WINDOW) and ((O.TarLev and 192) = 0) then
           EntranceIndexes.Add(i);
-      if MO.TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT] then
+      if MO.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
         ExitIndexes.Add(i);
     end;
 
@@ -1124,7 +1124,7 @@ begin
     DOM_SPLITTER: GetSplitterData;
     DOM_WINDOW: GetWindowData;
     DOM_DECORATION: GetMovingDecorationData;
-    DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT: GetExitData;
+    DOM_EXIT, DOM_LOCKEXIT: GetExitData;
     DOM_SLOWFREEZE, DOM_RADIATION: GetRadiationSlowfreezeData;
   end;
 
@@ -1393,8 +1393,8 @@ begin
   begin
     TriggerEffect := PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect;
 
-    if TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT] then
-    begin
+    if TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+    begin                       // Bookmark - use LemmingCap as a guide for adding Rival property to Exit
       if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleExitCount >= 0) then
         MaxPossibleExitCount := MaxPossibleExitCount + InteractiveObjects[i].LemmingCap
       else
@@ -1687,7 +1687,7 @@ begin
       // Receiver and Exit's data are covered by Teleporter and Window respectively.
     end else begin
       case PieceManager.Objects[O.Identifier].TriggerEffect of
-        DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT: SetExitData;
+        DOM_EXIT, DOM_LOCKEXIT: SetExitData;
         DOM_TELEPORT: SetTeleporterData;
         DOM_RECEIVER: SetReceiverData;
         DOM_PICKUP: SetPickupData;

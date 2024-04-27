@@ -33,13 +33,11 @@ const
   ParticleColorIndices: array[0..15] of Byte =
     (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
-  AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_RIVALEXIT,
-                          DOM_FORCELEFT, DOM_FORCERIGHT,
-                          DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT,
-                          DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_UPDRAFT,
-                          DOM_NOSPLAT, DOM_SPLAT, DOM_DECORATION,
-                          DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA,
-                          DOM_RADIATION, DOM_SLOWFREEZE];
+  AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
+                          DOM_DECORATION, DOM_WATER, DOM_FIRE, DOM_UPDRAFT,
+                          DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
+                          DOM_NOSPLAT, DOM_SPLAT, DOM_RADIATION, DOM_SLOWFREEZE,
+                          DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie, lkRival // Bookmark - might not be needed
@@ -126,7 +124,6 @@ type
     BlockerMap                 : TBitmap32;    // For blockers
     ZombieMap                  : TByteMap;
     ExitMap                    : TArrayArrayBoolean;
-    RivalExitMap               : TArrayArrayBoolean;
     LockedExitMap              : TArrayArrayBoolean;
     WaterMap                   : TArrayArrayBoolean;
     FireMap                    : TArrayArrayBoolean;
@@ -285,7 +282,6 @@ type
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleCollectible(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
-      function HandleRivalExit(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
       function HandleSplitter(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -2221,8 +2217,6 @@ begin
   SetLength(SplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(ExitMap, 0, 0);
   SetLength(ExitMap, Level.Info.Width, Level.Info.Height);
-  SetLength(RivalExitMap, 0, 0);
-  SetLength(RivalExitMap, Level.Info.Width, Level.Info.Height);
   SetLength(LockedExitMap, 0, 0);
   SetLength(LockedExitMap, Level.Info.Width, Level.Info.Height);
   SetLength(TrapMap, 0, 0);
@@ -2368,7 +2362,6 @@ begin
   begin
     case Gadgets[i].TriggerEffect of
       DOM_EXIT:       WriteTriggerMap(ExitMap, Gadgets[i].TriggerRect);
-      DOM_RIVALEXIT:  WriteTriggerMap(RivalExitMap, Gadgets[i].TriggerRect);
       DOM_LOCKEXIT: begin
                       WriteTriggerMap(LockedExitMap, Gadgets[i].TriggerRect);
                       if ButtonsRemain = 0 then Gadgets[i].CurrentFrame := 0;
@@ -3397,10 +3390,6 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
       AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Rival Exits
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRivalExit) then
-      AbortChecks := HandleRivalExit(L, CheckPos[0, i], CheckPos[1, i]);
-
     // Splitter (except for blockers / jumpers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
                          and not (L.LemAction = baBlocking)
@@ -3488,8 +3477,6 @@ begin
   case TriggerType of
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
                              or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
-    // Bookmark - can Rival exits be integrated into trExit, or do they require their own tr?
-    trRivalExit:  Result :=     ReadTriggerMap(X, Y, RivalExitMap);
     trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT) or ReadTriggerMap(X, Y, ForceLeftMap);
     trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT) or ReadTriggerMap(X, Y, ForceRightMap);
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
@@ -3548,8 +3535,8 @@ begin
     // Additional checks for locked exit
     if (Gadget.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
       GadgetFound := False;
-    // Additional check for any exit       // Bookmark - Rivals needed here?
-    if (Gadget.TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT]) and (Gadget.RemainingLemmingsCount = 0) then // We specifically must not use <= 0 here, as -1 = no limit
+    // Additional check for any exit
+    if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) and (Gadget.RemainingLemmingsCount = 0) then // We specifically must not use <= 0 here, as -1 = no limit
       GadgetFound := False;
 
     // Additional checks for triggered traps, triggered animations, teleporters
@@ -3822,41 +3809,7 @@ begin
   end;
 
   Result := True;
-  L.LemIsInRivalExit := False;
-
-  if not IsOutOfTime then
-    Transition(L, baExiting)
-  else begin
-    // Stops the lems from appearing to exit if time has run out
-    Transition(L, baSleeping);
-    Exit;
-  end;
-end;
-
-// Bookmark - might not need trRivalExit to be a separate trigger type - see comment above
-function TLemmingGame.HandleRivalExit(L: TLemming; PosX, PosY: Integer): Boolean;
-var
-  GadgetID: Word;
-  Gadget: TGadget;
-begin
-  Result := False; // Only see exit trigger area, if it actually used
-
-  if IsOutOfTime and NukeIsActive and (L.LemAction = baOhNoing) then
-    Exit;
-
-  GadgetID := FindGadgetID(PosX, PosY, trRivalExit);
-  if GadgetID = 65535 then Exit;
-  Gadget := Gadgets[GadgetID];
-
-  if Gadget.RemainingLemmingsCount > 0 then
-  begin
-    Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount - 1;
-    if Gadget.RemainingLemmingsCount = 0 then
-      CueSoundEffect(Gadget.SoundEffectExhaust, Gadget.Center);
-  end;
-
-  Result := True;
-  L.LemIsInRivalExit := True;
+  L.LemIsInRivalExit := False; // Bookmark - there may end up being a better place to set this
 
   if not IsOutOfTime then
     Transition(L, baExiting)
@@ -7111,7 +7064,7 @@ begin
   if L.LemEndOfAnimation then
   begin
     // Exiting Zombies decrease save count by 1
-    if L.LemIsZombie or (L.LemIsRival and not L.LemIsInRivalExit)
+    if L.LemIsZombie or (L.LemIsRival and not L.LemIsInRivalExit) // Bookmark - this may end up being done differently
                      or (L.LemIsInRivalExit and not L.LemIsRival) then
     begin
       RemoveLemming(L, RM_NEUTRAL, True);
@@ -8382,7 +8335,6 @@ begin
              and not (L.LemIsDisarmer or L.LemIsInvincible))
          or ((L.LemAction = baBallooning) and (L.LemY <= 30))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
-         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trRivalExit))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
          or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i]) and not L.LemIsInvincible)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)

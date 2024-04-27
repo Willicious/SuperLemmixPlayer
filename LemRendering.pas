@@ -2731,12 +2731,10 @@ begin
 
       DOM_EXIT:
         begin
+          //if {meets conditions for Rival Exit} then // Bookmark - Rival Exit helper
+          //fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY)
+          //else
           fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-        end;
-
-      DOM_RIVALEXIT:
-        begin
-          fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY);
         end;
 
       DOM_LOCKEXIT:
@@ -3172,8 +3170,8 @@ begin
 
   if (Gadget.TriggerEffect = DOM_PICKUP) then
     AddPickupSkillNumber;
-                                         // Bookmark - is RivalExit needed here?
-  if (Gadget.TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT, DOM_WINDOW]) then
+
+  if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW]) then
     AddLemmingCountNumber;
 end;
 
@@ -3800,8 +3798,8 @@ var
     begin
       // Set all exits to open exits
       for i := 0 to fPreviewGadgets.Count - 1 do
-      begin                                               // Bookmark - is RivalExit needed here?
-        if fPreviewGadgets[i].TriggerEffect in [DOM_EXIT, DOM_RIVALEXIT, DOM_LOCKEXIT] then
+      begin
+        if fPreviewGadgets[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
           fPreviewGadgets[i].CurrentFrame := 0
       end;
     end
