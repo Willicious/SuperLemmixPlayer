@@ -2859,7 +2859,7 @@ end;
 procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
 var
   numHelpers, indexHelper: Integer;
-  DrawX, DrawY: Integer;
+  DrawX, DrawY, XOffset: Integer;
 begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
     Assert(Gadget.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
@@ -2873,13 +2873,15 @@ begin
     if Gadget.IsPreassignedGlider then Inc(numHelpers);
     if Gadget.IsPreassignedDisarmer then Inc(numHelpers);
     if Gadget.IsPreassignedZombie then Inc(numHelpers);
-    if Gadget.IsPreassignedNeutral then Inc(numHelpers); // Bookmark - make Rival helper
+    if Gadget.IsPreassignedNeutral then Inc(numHelpers);
+    if Gadget.IsPreassignedRival then Inc(numHelpers);
 
     if DrawOtherHelper then Inc(numHelpers);
 
     // Set base drawing position; helper icons will be drawn 10 pixels apart
     DrawX := (Gadget.Left + Gadget.Width div 2 - numHelpers * 5) * ResMod;
     DrawY := Gadget.Top * ResMod;
+    XOffset := 0;
 
     // Draw actual helper icons
     indexHelper := 0;
@@ -2901,9 +2903,14 @@ begin
       fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
-    if Gadget.IsPreassignedRival then // Bookmark - improve position
+    if Gadget.IsPreassignedRival then
     begin
-      fHelperImages[hpi_Skill_Rival].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
+      if Gadget.IsFlipPhysics then
+        XOffset := -2
+      else
+        XOffset := 3;
+
+      fHelperImages[hpi_Skill_Rival].DrawTo(Dst, DrawX + (XOffset * ResMod) + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
     if Gadget.IsPreassignedSlider then
