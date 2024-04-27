@@ -2731,10 +2731,10 @@ begin
 
       DOM_EXIT:
         begin
-          //if {meets conditions for Rival Exit} then // Bookmark - Rival Exit helper
-          //fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY)
-          //else
-          fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+          if Gadget.IsRivalExit then
+            fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY)
+        else
+            fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
         end;
 
       DOM_LOCKEXIT:
