@@ -7913,11 +7913,10 @@ begin
             RemoveLemming(NewLemming, RM_ZOMBIE, true);
           end;
 
-          if Gadgets[ix].IsPreassignedNeutral then
-            LemIsNeutral := true;
+          LemIsNeutral := Gadgets[ix].IsPreassignedNeutral
+                  and not Gadgets[ix].IsPreassignedRival;
 
-          if Gadgets[ix].IsPreassignedRival then
-            LemIsRival := true;
+          LemIsRival := Gadgets[ix].IsPreassignedRival;
 
           if Gadgets[ix].RemainingLemmingsCount > 0 then
           begin

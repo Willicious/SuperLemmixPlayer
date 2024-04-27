@@ -2896,7 +2896,7 @@ begin
       fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
-    if Gadget.IsPreassignedNeutral then
+    if Gadget.IsPreassignedNeutral and not Gadget.IsPreassignedRival then
     begin
       fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);

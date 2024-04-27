@@ -1183,7 +1183,7 @@ begin
   L.IsGlider       := (aSection.Line['glider']   <> nil);
   L.IsDisarmer     := (aSection.Line['disarmer'] <> nil);
   L.IsZombie       := (aSection.Line['zombie']   <> nil);
-  L.IsNeutral      := (aSection.Line['neutral']  <> nil);
+  L.IsNeutral      := (aSection.Line['neutral']  <> nil) and not (aSection.Line['rival'] <> nil);
   L.IsRival        := (aSection.Line['rival'] <> nil);
   L.IsBlocker      := (aSection.Line['blocker']  <> nil);   // Bookmark - implement this later - Invincible lems can't also be neutral or zombie
   //L.IsInvincible   := ((aSection.Line['invincible'] <> nil) and not ((aSection.Line['neutral']  <> nil)
