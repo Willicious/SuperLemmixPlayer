@@ -2736,7 +2736,7 @@ begin
 
       DOM_RIVALEXIT:
         begin
-          fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+          fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY);
         end;
 
       DOM_LOCKEXIT:
