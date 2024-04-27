@@ -974,6 +974,7 @@ var
   procedure GetExitData;
   begin
     O.LemmingCap := aSection.LineNumeric['lemmings'];
+    O.IsRivalExit := aSection.Line['rival'] <> nil;
   end;
 
   procedure GetTeleporterData;
@@ -1336,14 +1337,14 @@ begin
 
   Info.ZombieCount := 0;
   Info.NeutralCount := 0;
-  Info.RivalCount := 0;   // Bookmark - do Rivals need to be counted separately here...?
+  Info.RivalCount := 0;
 
   for i := 0 to PreplacedLemmings.Count-1 do
     if PreplacedLemmings[i].IsZombie then
       Info.ZombieCount := Info.ZombieCount + 1
     else if PreplacedLemmings[i].IsNeutral then
       Info.NeutralCount := Info.NeutralCount + 1
-    else if PreplacedLemmings[i].IsRival then    // Bookmark - ...and here?
+    else if PreplacedLemmings[i].IsRival then
       Info.RivalCount := Info.RivalCount + 1;
 
   if not FoundWindow then
@@ -1394,7 +1395,7 @@ begin
     TriggerEffect := PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect;
 
     if TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
-    begin                       // Bookmark - use LemmingCap as a guide for adding Rival property to Exit
+    begin
       if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleExitCount >= 0) then
         MaxPossibleExitCount := MaxPossibleExitCount + InteractiveObjects[i].LemmingCap
       else
@@ -1631,14 +1632,13 @@ var
     if O.TarLev and 128 <> 0 then Sec.AddLine('NEUTRAL');
     if O.TarLev and 512 <> 0 then Sec.AddLine('RIVAL');
 
-    if O.LemmingCap > 0 then
-      Sec.AddLine('LEMMINGS', O.LemmingCap);
+    if O.LemmingCap > 0 then Sec.AddLine('LEMMINGS', O.LemmingCap);
   end;
 
   procedure SetExitData;
   begin
-    if O.LemmingCap > 0 then
-      Sec.AddLine('LEMMINGS', O.LemmingCap);
+    if O.LemmingCap > 0 then Sec.AddLine('LEMMINGS', O.LemmingCap);
+    if O.IsRivalExit then Sec.AddLine('RIVAL');
   end;
 
   procedure SetMovingDecorationData;

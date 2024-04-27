@@ -3808,8 +3808,10 @@ begin
       CueSoundEffect(Gadget.SoundEffectExhaust, Gadget.Center);
   end;
 
+  // Check if the Exit has been designated as a Rival Exit
+  L.LemIsInRivalExit := False or Gadget.IsRivalExit;
+
   Result := True;
-  L.LemIsInRivalExit := False; // Bookmark - there may end up being a better place to set this
 
   if not IsOutOfTime then
     Transition(L, baExiting)

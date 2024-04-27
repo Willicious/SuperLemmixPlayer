@@ -77,6 +77,7 @@ type
 
     sRemainingLemmingsCount: Integer;
     sShowRemainingLemmings: Boolean;
+    sIsRivalExit: Boolean;
 
     sCountdownLength: Integer;
 
@@ -107,6 +108,7 @@ type
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
     function GetRemainingLemmingsCount: Integer;
+    function GetIsRivalExit: Boolean;
     function GetCountdownLength: Integer;
 
     function GetCurrentFrame: Integer; { Just remaps to primary animation. This allows LemGame to control
@@ -173,6 +175,7 @@ type
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
     property RemainingLemmingsCount: Integer read GetRemainingLemmingsCount write sRemainingLemmingsCount;
     property ShowRemainingLemmings: Boolean read sShowRemainingLemmings write sShowRemainingLemmings;
+    property IsRivalExit: Boolean read GetIsRivalExit write sIsRivalExit;
     property SRCountdownLength: Integer read GetCountdownLength write sCountdownLength;
 
     property AnimationFlag[Flag: TGadgetAnimationTriggerCondition]: Boolean read GetAnimFlagState;
@@ -208,6 +211,7 @@ begin
   inherited;
   Animations := TGadgetAnimationInstances.Create;
   sRemainingLemmingsCount := -2;
+  sIsRivalExit := False;
 end;
 
 constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
@@ -531,6 +535,16 @@ begin
   end;
 
   Result := sRemainingLemmingsCount;
+end;
+
+function TGadget.GetIsRivalExit: Boolean;
+begin
+  if Obj.IsRivalExit then
+  begin
+    sIsRivalExit := True;
+    Result := True;
+  end else
+    Result := False;
 end;
 
 function TGadget.GetCountdownLength: Integer;

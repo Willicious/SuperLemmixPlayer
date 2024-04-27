@@ -378,7 +378,7 @@ const
 const
   // All objects that don't have trigger areas get mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..35] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..34] of TTriggerTypes = (
     trZombie,                 // -1 No-object
     trZombie,                 // 0  No trigger area
     trZombie,                 // 1  Hatch
