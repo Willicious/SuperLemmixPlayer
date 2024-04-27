@@ -153,6 +153,7 @@ type
     procedure DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
     procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
+    procedure DrawExitHelpers(Dst: TBitmap32; Gadget: TGadget);
 
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
@@ -2733,7 +2734,7 @@ begin
         begin
           if Gadget.IsRivalExit then
             fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY)
-        else
+          else
             fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
         end;
 
@@ -2942,6 +2943,31 @@ begin
     end;
 end;
 
+procedure TRenderer.DrawExitHelpers(Dst: TBitmap32; Gadget: TGadget);
+var
+  HasLemmingCap: Boolean;
+  DrawX, DrawY, YOffset: Integer;
+  RivalHelper: TBitmap32;
+begin
+    Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+    Assert(Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT], 'DrawExitHelpers called for an object that isn''t an Exit');
+
+    // For now, this procedure only deals with Rival Exits
+    if not Gadget.IsRivalExit then Exit;
+
+    RivalHelper := fHelperImages[hpi_Skill_Rival];
+    HasLemmingCap := (Gadget.RemainingLemmingsCount >= 0);
+
+    YOffset := 2;
+    //if Gadget.TriggerEffect = DOM_LOCKEXIT then YOffset := 10; // Bookmark - there can't be a Universal value here
+    if HasLemmingCap then YOffset := 9;
+
+    DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
+    DrawY := (Gadget.Top - (RivalHelper.Height div 2) - YOffset) * ResMod;
+    if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod;
+
+    RivalHelper.DrawTo(Dst, DrawX - (RivalHelper.Width div 2), DrawY);
+end;
 
 procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 var
@@ -3357,61 +3383,66 @@ begin
   for i := 0 to Gadgets.Count-1 do
   begin
     Gadget := Gadgets[i];
-    if not (Gadget.TriggerEffect = DOM_WINDOW) then
-      Continue;
-
-    DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
-                            (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
-
-    fLayers.fIsEmpty[rlObjectHelpers] := false;
-
-    if Gadget.HasPreassignedSkills and not GameParams.HideHelpers then
-      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, false);
-
-    if DrawOtherHatchHelper and not GameParams.HideHelpers then
-      DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
-
-    if fUsefulOnly then
+    if (Gadget.TriggerEffect = DOM_WINDOW) then
     begin
-      HatchPoint := Gadget.TriggerRect.TopLeft;
+      DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
+                              (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
 
-      if GameParams.HighResolution then
+      fLayers.fIsEmpty[rlObjectHelpers] := false;
+
+      if Gadget.HasPreassignedSkills and not GameParams.HideHelpers then
+        DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, false);
+
+      if DrawOtherHatchHelper and not GameParams.HideHelpers then
+        DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
+
+      if fUsefulOnly then
       begin
-        HatchPoint.X := HatchPoint.X * 2;
-        HatchPoint.Y := HatchPoint.Y * 2;
+        HatchPoint := Gadget.TriggerRect.TopLeft;
 
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFFD700;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFFD700;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+1] := $FFFFD700;
+        if GameParams.HighResolution then
+        begin
+          HatchPoint.X := HatchPoint.X * 2;
+          HatchPoint.Y := HatchPoint.Y * 2;
 
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y+1] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFFD700;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFFD700;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+1] := $FFFFD700;
 
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2+1] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y+1] := $FFFF4500;
 
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y+1] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2+1] := $FFFF4500;
 
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2+1] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2+1] := $FFFF4500;
-      end else begin
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-1, HatchPoint.Y] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-1] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFF4500;
-        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y+1] := $FFFF4500;
+
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2+1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2+1] := $FFFF4500;
+        end else begin
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-1, HatchPoint.Y] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-1] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFF4500;
+          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFF4500;
+        end;
       end;
-    end;
+    end else if Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+    begin
+      if fRenderInterface.IsStartingSeconds and not GameParams.HideHelpers then
+        DrawExitHelpers(fLayers[rlObjectHelpers], Gadget);
+    end else
+      Continue;
   end;
 
   // Draw object helpers
