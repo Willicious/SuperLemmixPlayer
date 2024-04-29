@@ -63,6 +63,7 @@ type
     cbTimebomberToBomber: TCheckBox;
     cbBomberToTimebomber: TCheckBox;
     cbStonerToFreezer: TCheckBox;
+    cbUpdateExitPositions: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -88,7 +89,6 @@ type
     function SaveAllTalisman: string;
     function ClassicModeTalisman: string;
     function KillZombiesTalisman: string;
-    //function NoPauseTalisman: string;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -171,9 +171,18 @@ begin
 end;
 
 procedure TFQuickmodMain.btnApplyClick(Sender: TObject);
+var
+  UpdateExit, AreYouSure, SelectedPack: String;
 begin
-  if MessageDlg('Are you sure you want to apply these changes to'
-                + sLineBreak + ' ' + sLineBreak + cbPack.Text + '?',
+  if cbUpdateExitPositions.Checked then
+    UpdateExit := 'Please note that updating Exit positions should only be performed ONCE per pack!' + sLineBreak
+  else
+    UpdateExit := '';
+
+  AreYouSure := 'Are you sure you want to apply these changes to' + SLineBreak;
+  SelectedPack := ' ' + sLineBreak + cbPack.Text;
+
+  if MessageDlg(UpdateExit + AreYouSure + SelectedPack + '?',
                 mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
     ApplyChanges;
 end;
@@ -319,16 +328,6 @@ begin
             ' $END' + sLineBreak;
 end;
 
-//function TFQuickmodMain.NoPauseTalisman: string;
-//begin
-//  Result := ' $TALISMAN' + sLineBreak +
-//            '   TITLE Frenzy Mode' + sLineBreak +
-//            '   ID ' + IntToStr(TalismanID) + sLineBreak +
-//            '   COLOR Gold' + sLineBreak +
-//            '   NO_PAUSE 0' + sLineBreak +
-//            ' $END' + sLineBreak;
-//end;
-
 procedure TFQuickmodMain.ApplyChanges;
 begin
   fProcessCompletedSuccessfully := False;
@@ -374,7 +373,7 @@ var
   SL: TStringList;
   ThisLine: String;
   SecLevel: Integer;
-  n, i, p: Integer;
+  n, i, p, YPos: Integer;
   NewID: String;
   LevelHasZombies: Boolean;
   AlreadyModified: Boolean;
@@ -511,6 +510,149 @@ begin
             SL[n] := '# ' + SL[n];
           Inc(n);
         until ThisLine = '$END';
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbUpdateExitPositions.Checked) then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+
+          // Brick - move regular exits down 13px
+          if (Trim(ThisLine) = 'STYLE OHNO_BRICK') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos + 13);
+            end;
+          end;
+
+          // Bubble - move locked exits up 8px
+          if (Trim(ThisLine) = 'STYLE OHNO_BUBBLE') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos - 8);
+            end;
+          end;
+
+          // Rock - regular exits down 6px / move locked exits up 8px
+          if (Trim(ThisLine) = 'STYLE OHNO_ROCK') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos + 6);
+
+            end else if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos - 8);
+            end;
+          end;
+
+          // Snow - move regular exits down 5px
+          if (Trim(ThisLine) = 'STYLE OHNO_SNOW') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos + 5);
+            end;
+          end;
+
+          // Crystal - move locked exits up 8px
+          if (Trim(ThisLine) = 'STYLE ORIG_CRYSTAL') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos - 8);
+            end;
+          end;
+
+          // Dirt - move locked exits up 3px
+          if (Trim(ThisLine) = 'STYLE ORIG_DIRT') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos - 3);
+            end;
+          end;
+
+          // Fire - move locked exits up 24px
+          if (Trim(ThisLine) = 'STYLE ORIG_FIRE') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+              SL[n] := '   Y ' + IntToStr(YPos - 24);
+            end;
+          end;
+
+          Inc(n);
+        until ThisLine = '$END';
       end else if (SecLevel = 0) and (Trim(ThisLine) = '$LEMMING') and (cbRemovePreplaced.Checked or cbRemoveSpecialLemmings.Checked) then
       begin
         repeat
@@ -608,6 +750,7 @@ begin
     if cbTimebomberToBomber.Checked then SL.Add('# TIMEBOMBERS CHANGED TO BOMBERS');
     if cbStonerToFreezer.Checked then SL.Add('# STONERS CHANGED TO FREEZERS');
     if cbUpdateWater.Checked then SL.Add('# WATER OBJECTS UPDATED');
+    if cbUpdateExitPositions.Checked then SL.Add('# EXIT POSITIONS UPDATED');
     if cbRemoveTalismans.Checked then SL.Add('# TALISMANS REMOVED');
     if cbRemoveSpecialLemmings.Checked then SL.Add('# SPECIAL LEMS REMOVED');
     if cbRemovePreplaced.Checked then SL.Add('# PRE-PLACED LEMS REMOVED');

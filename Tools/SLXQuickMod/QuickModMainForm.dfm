@@ -36,7 +36,7 @@ object FQuickmodMain: TFQuickmodMain
     Height = 13
     Alignment = taRightJustify
     Anchors = [akRight, akBottom]
-    Caption = 'v1.6'
+    Caption = 'v1.7'
   end
   object cbPack: TComboBox
     Left = 40
@@ -57,7 +57,7 @@ object FQuickmodMain: TFQuickmodMain
     TabOrder = 1
     object cbLemCount: TCheckBox
       Left = 16
-      Top = 59
+      Top = 53
       Width = 130
       Height = 17
       Caption = 'Set Lemming Count:'
@@ -66,7 +66,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebLemCount: TEdit
       Left = 152
-      Top = 57
+      Top = 51
       Width = 57
       Height = 21
       Enabled = False
@@ -76,7 +76,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbSaveRequirement: TCheckBox
       Left = 16
-      Top = 86
+      Top = 80
       Width = 130
       Height = 17
       Caption = 'Set Save Requirement:'
@@ -85,7 +85,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebSaveRequirement: TEdit
       Left = 152
-      Top = 84
+      Top = 78
       Width = 57
       Height = 21
       Enabled = False
@@ -95,7 +95,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbTimeLimit: TCheckBox
       Left = 16
-      Top = 114
+      Top = 108
       Width = 130
       Height = 17
       Caption = 'Set Time Limit:'
@@ -104,7 +104,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object ebTimeLimit: TEdit
       Left = 152
-      Top = 112
+      Top = 106
       Width = 57
       Height = 21
       Enabled = False
@@ -123,7 +123,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemoveSpecialLemmings: TCheckBox
       Left = 16
-      Top = 172
+      Top = 162
       Width = 217
       Height = 17
       Caption = 'Remove Zombies, Neutrals, Lem Caps'
@@ -132,7 +132,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbRemovePreplaced: TCheckBox
       Left = 16
-      Top = 149
+      Top = 139
       Width = 161
       Height = 17
       Caption = 'Remove Preplaced Lemmings'
@@ -141,7 +141,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbReleaseRate: TGroupBox
       Left = 253
-      Top = 55
+      Top = 49
       Width = 225
       Height = 76
       Caption = 'Release Rate'
@@ -186,7 +186,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbSuperlemming: TGroupBox
       Left = 244
-      Top = 149
+      Top = 139
       Width = 225
       Height = 48
       Caption = 'Superlemming Mode'
@@ -212,9 +212,9 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbTalismans: TGroupBox
       Left = 16
-      Top = 240
+      Top = 242
       Width = 453
-      Height = 123
+      Height = 122
       Caption = 'Talismans'
       TabOrder = 10
       object cbRemoveTalismans: TCheckBox
@@ -268,13 +268,23 @@ object FQuickmodMain: TFQuickmodMain
     end
     object cbUpdateWater: TCheckBox
       Left = 16
-      Top = 203
+      Top = 192
       Width = 453
       Height = 17
       Caption = 
         'Replace Water Objects (orig_fire | orig_marble | ohno_bubble | o' +
         'hno_rock)'
       TabOrder = 14
+    end
+    object cbUpdateExitPositions: TCheckBox
+      Left = 16
+      Top = 215
+      Width = 437
+      Height = 17
+      Caption = 
+        'Update Orig/OhNo Exit Positions (NOTE - this should only be done' +
+        ' ONCE per pack)'
+      TabOrder = 15
     end
   end
   object gbSkillset: TGroupBox
