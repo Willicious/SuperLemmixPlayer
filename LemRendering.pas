@@ -2858,7 +2858,7 @@ end;
 procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
 var
   numHelpers, indexHelper: Integer;
-  DrawX, DrawY, XOffset: Integer;
+  DrawX, DrawY: Integer;
 begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
     Assert(Gadget.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
@@ -2880,7 +2880,6 @@ begin
     // Set base drawing position; helper icons will be drawn 10 pixels apart
     DrawX := (Gadget.Left + Gadget.Width div 2 - numHelpers * 5) * ResMod;
     DrawY := Gadget.Top * ResMod;
-    XOffset := 0;
 
     // Draw actual helper icons
     indexHelper := 0;
@@ -2904,12 +2903,7 @@ begin
     end;
     if Gadget.IsPreassignedRival and not Gadget.IsPreassignedZombie then
     begin
-      if Gadget.IsFlipPhysics then
-        XOffset := -2
-      else
-        XOffset := 3;
-
-      fHelperImages[hpi_Skill_Rival].DrawTo(Dst, DrawX + (XOffset * ResMod) + indexHelper * 10 * ResMod, DrawY);
+      fHelperImages[hpi_Skill_Rival].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
       Inc(indexHelper);
     end;
     if Gadget.IsPreassignedSlider then
@@ -2963,7 +2957,7 @@ begin
     if HasLemmingCap then YOffset := 9;
 
     DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
-    DrawY := (Gadget.Top - (RivalHelper.Height div 2) - YOffset) * ResMod;
+    DrawY := (Gadget.Top - (RivalHelper.Height) - YOffset) * ResMod;
     if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod;
 
     RivalHelper.DrawTo(Dst, DrawX - (RivalHelper.Width div 2), DrawY);
