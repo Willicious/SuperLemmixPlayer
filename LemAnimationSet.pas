@@ -200,6 +200,9 @@ type
     fHatchNumbersBitmap     : TBitmap32;
     fHighlightBitmap        : TBitmap32;
     fBalloonPopBitmap       : TBitmap32;
+    fExitMarkerNormalBitmap : TBitmap32;
+    fExitMarkerRivalBitmap  : TBitmap32;
+    fExitMarkerZombieBitmap : TBitmap32;
     fGrenadeBitmap          : TBitmap32;
     fSpearBitmap            : TBitmap32;
     //fBatBitmap              : TBitmap32; // Batter
@@ -235,6 +238,9 @@ type
     property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
+    property ExitMarkerNormalBitmap: TBitmap32 read fExitMarkerNormalBitmap;
+    property ExitMarkerRivalBitmap : TBitmap32 read fExitMarkerRivalBitmap;
+    property ExitMarkerZombieBitmap: TBitmap32 read fExitMarkerZombieBitmap;
     property GrenadeBitmap         : TBitmap32 read fGrenadeBitmap;
     //property BatBitmap             : TBitmap32 read fBatBitmap; // Batter
     property SpearBitmap           : TBitmap32 read fSpearBitmap;
@@ -444,6 +450,9 @@ var
   iAnimation: Integer;
   MLA: TMetaLemmingAnimation;
   BalloonPop, BalloonPopHR: String;
+  ExitMarkerNormal, ExitMarkerNormalHR: String;
+  ExitMarkerRival, ExitMarkerRivalHR: String;
+  ExitMarkerZombie, ExitMarkerZombieHR: String;
   FreezingOverlay, FreezingOverlayHR: String;
   UnfreezingOverlay, UnfreezingOverlayHR: String;
   InvincibilityOverlay, InvincibilityOverlayHR: string;
@@ -458,6 +467,22 @@ var
 
   Info: TUpscaleInfo;
 
+  procedure GetSrcFolder(aDirectory: String; UseLemSpritesTheme: Boolean);
+  begin
+    if (fTheme = nil) then
+      SrcFolder := 'default'
+    else if UseLemSpritesTheme then
+      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS
+    else
+      SrcFolder := fTheme.Name;
+
+    if SrcFolder = '' then
+      SrcFolder := 'default';
+
+    if not DirectoryExists(AppPath + SFStyles + SrcFolder + aDirectory) then
+      SrcFolder := 'default';
+  end;
+
   procedure UpscalePieces(Bitmap: TBitmap32);
   begin
     Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
@@ -469,15 +494,7 @@ begin
   ShadeDict := TShadeDict.Create;
 
   try
-    if (fTheme = nil) then
-      SrcFolder := 'default'
-    else
-      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS;
-
-    if SrcFolder = '' then SrcFolder := 'default';
-    if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
-      SrcFolder := 'default';
-
+    GetSrcFolder(SFPiecesLemmings, True);
     SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
 
     if fMetaLemmingAnimations.Count = 0 then // Not entirely sure why it would ever NOT be 0
@@ -558,6 +575,13 @@ begin
     fBalloonPopBitmap.DrawMode := dmBlend;
     fBalloonPopBitmap.CombineMode := cmMerge;
 
+    fExitMarkerNormalBitmap.DrawMode := dmBlend;
+    fExitMarkerNormalBitmap.CombineMode := cmMerge;
+    fExitMarkerRivalBitmap.DrawMode := dmBlend;
+    fExitMarkerRivalBitmap.CombineMode := cmMerge;
+    fExitMarkerZombieBitmap.DrawMode := dmBlend;
+    fExitMarkerZombieBitmap.CombineMode := cmMerge;
+
     fGrenadeBitmap.DrawMode := dmBlend;
     fGrenadeBitmap.CombineMode := cmMerge;
 
@@ -572,6 +596,7 @@ begin
     fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
     fLemmingAnimations[ICECUBE].CombineMode := cmMerge;
 
+    // Use the Masks folder to load these
     if GameParams.HighResolution then
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
@@ -593,7 +618,7 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers.png', fHatchNumbersBitmap);
     end;
 
-    // Load the freezing & unfreezing overlays and balloon pop graphic
+    // Use Lem sprites theme to load the effects
     EffectsSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesEffects;
     FreezingOverlay := 'freezing_overlay.png';
     FreezingOverlayHR := 'freezing_overlay-hr.png';
@@ -649,6 +674,46 @@ begin
       TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPop, fBalloonPopBitmap);
       TPngInterface.LoadPngFile(EffectsSrcFolder + Grenades, fGrenadeBitmap);
     end;
+
+    // Use Level theme to load the Exit Markers
+    GetSrcFolder(SFPiecesEffects, False);
+    EffectsSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesEffects;
+
+    ExitMarkerNormal := 'exit_marker_normal.png';
+    ExitMarkerNormalHR := 'exit_marker_normal-hr.png';
+    ExitMarkerRival := 'exit_marker_rival.png';
+    ExitMarkerRivalHR := 'exit_marker_rival-hr.png';
+    ExitMarkerZombie := 'exit_marker_zombie.png';
+    ExitMarkerZombieHR := 'exit_marker_zombie-hr.png';
+
+    if GameParams.HighResolution then
+    begin
+      if FileExists(EffectsSrcFolder + ExitMarkerNormalHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerNormalHR, fExitMarkerNormalBitmap)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerNormal, fExitMarkerNormalBitmap);
+        UpscalePieces(fExitMarkerNormalBitmap);
+      end;
+
+      if FileExists(EffectsSrcFolder + ExitMarkerRivalHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerRivalHR, fExitMarkerRivalBitmap)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerRival, fExitMarkerRivalBitmap);
+        UpscalePieces(fExitMarkerRivalBitmap);
+      end;
+
+      if FileExists(EffectsSrcFolder + ExitMarkerZombieHR) then
+        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerZombieHR, fExitMarkerZombieBitmap)
+      else begin
+        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerZombie, fExitMarkerZombieBitmap);
+        UpscalePieces(fExitMarkerZombieBitmap);
+      end;
+    end else begin
+      TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerNormal, fExitMarkerNormalBitmap);
+      TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerRival, fExitMarkerRivalBitmap);
+      TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerZombie, fExitMarkerZombieBitmap);
+    end;
+
   finally
     TempBitmap.Free;
     ColorDict.Free;
@@ -670,6 +735,9 @@ begin
   fHatchNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
   fBalloonPopBitmap.Clear;
+  fExitMarkerNormalBitmap.Clear;
+  fExitMarkerRivalBitmap.Clear;
+  fExitMarkerZombieBitmap.Clear;
   fGrenadeBitmap.Clear;
   fSpearBitmap.Clear;
   //fBatBitmap.Clear;  // Batter
@@ -694,6 +762,9 @@ begin
   fHatchNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
   fBalloonPopBitmap := TBitmap32.Create;
+  fExitMarkerNormalBitmap := TBitmap32.Create;
+  fExitMarkerRivalBitmap := TBitmap32.Create;
+  fExitMarkerZombieBitmap := TBitmap32.Create;
   fGrenadeBitmap := TBitmap32.Create;
   fSpearBitmap := TBitmap32.Create;
   //fBatBitmap := TBitmap32.Create;  // Batter
@@ -712,6 +783,9 @@ begin
   fHatchNumbersBitmap.Free;
   fHighlightBitmap.Free;
   fBalloonPopBitmap.Free;
+  fExitMarkerNormalBitmap.Free;
+  fExitMarkerRivalBitmap.Free;
+  fExitMarkerZombieBitmap.Free;
   fGrenadeBitmap.Free;
   fSpearBitmap.Free;
   //fBatBitmap.Free;  // Batter

@@ -32,6 +32,7 @@ type
       fLemmings: String; // Which lemming graphics to use
       fLemNamesPlural: String; // What to call the lemmings in menu screens
       fLemNamesSingular: String;
+      fExitMarkerFrames: Integer;
       function GetColor(Name: String): TColor32;
       function FindColorIndex(Name: String): Integer;
     public
@@ -45,6 +46,7 @@ type
       property Lemmings: String read fLemmings write fLemmings;
       property LemNamesPlural: String read fLemNamesPlural write fLemNamesPlural;
       property LemNamesSingular: String read fLemNamesSingular write fLemNamesSingular;
+      property ExitMarkerFrames: Integer read fExitMarkerFrames write fExitMarkerFrames;
       property Colors[Name: String]: TColor32 read GetColor;
   end;
 
@@ -94,6 +96,8 @@ begin
 
     fLemNamesSingular := Parser.MainSection.LineString['names_singular'];
     if fLemNamesSingular = '' then fLemNamesSingular := 'Lemming';
+
+    fExitMarkerFrames := Parser.MainSection.LineNumeric['exit_marker_frames'];
 
     Sec := Parser.MainSection.Section['colors'];
     if Sec = nil then

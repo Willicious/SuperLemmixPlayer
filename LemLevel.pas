@@ -26,7 +26,7 @@ type
     fNeutralCount    : Integer;
     fRivalCount      : Integer;
     fRescueCount     : Integer;
-    fCollectibleCount:Integer;
+    fCollectibleCount: Integer;
     fTimeLimit       : Integer;
     fHasTimeLimit    : Boolean;
 
@@ -58,6 +58,7 @@ type
 
     procedure SetSkillCount(aSkill: TSkillPanelButton; aCount: Integer);
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
+    function GetHasMixedLemTypes: Boolean;
   protected
   public
     SpawnOrder       : array of Integer;
@@ -70,6 +71,7 @@ type
     property ZombieCount    : Integer read fZombieCount write fZombieCount;
     property NeutralCount   : Integer read fNeutralCount write fNeutralCount;
     property RivalCount     : Integer read fRivalCount write fRivalCount;
+    property HasMixedLemTypes: Boolean read GetHasMixedLemTypes;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
     property CollectibleCount: Integer read fCollectibleCount write fCollectibleCount;
     property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
@@ -187,7 +189,7 @@ begin
   RivalCount      := 0;
   RescueCount     := 1;
   CollectibleCount:= 0;
-  HasTimeLimit    := false;
+  HasTimeLimit    := False;
   TimeLimit       := 0;
 
   SuperLemmingMode  := false;
@@ -221,6 +223,11 @@ end;
 procedure TLevelInfo.SetSkillCount(aSkill: TSkillPanelButton; aCount: Integer);
 begin
   fSkillCounts[aSkill] := aCount;
+end;
+
+function TLevelInfo.GetHasMixedLemTypes: Boolean;
+begin
+  Result := False or (RivalCount > 0) and (LemmingsCount - RivalCount > 0);
 end;
 
 function TLevelInfo.GetSkillCount(aSkill: TSkillPanelButton): Integer;

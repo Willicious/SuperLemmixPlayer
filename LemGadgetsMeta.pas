@@ -39,14 +39,17 @@ type
     DigitX:           Integer;
     DigitY:           Integer;
     DigitAlign:       Integer;
+    ExitMarkerX:      Integer;
+    ExitMarkerY:      Integer;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
 
   TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height,
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
                          ov_TriggerHeight, ov_DefaultWidth, ov_DefaultHeight,
-                         ov_TriggerEffect, ov_KeyFrame, ov_DigitX,
-                         ov_DigitY, ov_DigitAlign, ov_DigitMinLength);
+                         ov_TriggerEffect, ov_KeyFrame,
+                         ov_DigitX, ov_DigitY, ov_DigitAlign, ov_DigitMinLength,
+                         ov_ExitMarkerX, ov_ExitMarkerY);
                          // Integer properties only.
 
   TGadgetMetaInfo = class
@@ -115,6 +118,8 @@ type
     property DigitX[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitX read GetVariableProperty write SetVariableProperty;
     property DigitY[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitY read GetVariableProperty write SetVariableProperty;
     property DigitAlign[Flip, Invert, Rotate: Boolean]   : Integer index ov_DigitAlign read GetVariableProperty write SetVariableProperty;
+    property ExitMarkerX[Flip, Invert, Rotate: Boolean]  : Integer index ov_ExitMarkerX read GetVariableProperty write SetVariableProperty;
+    property ExitMarkerY[Flip, Invert, Rotate: Boolean]  : Integer index ov_ExitMarkerY read GetVariableProperty write SetVariableProperty;
     property TriggerEffect: Integer read fTriggerEffect write fTriggerEffect; // Used by level loading / saving code
 
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
@@ -165,6 +170,8 @@ type
       property DigitY: Integer index ov_DigitY read GetIntegerProperty write SetIntegerProperty;
       property DigitAlign: Integer index ov_DigitAlign read GetIntegerProperty write SetIntegerProperty;
       property DigitMinLength: Integer index ov_DigitMinLength read GetIntegerProperty write SetIntegerProperty;
+      property ExitMarkerX: Integer index ov_ExitMarkerX read GetIntegerProperty write SetIntegerProperty;
+      property ExitMarkerY: Integer index ov_ExitMarkerY read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
       property SoundEffectActivate: String read GetSoundEffectActivate write SetSoundEffectActivate;
       property SoundEffectExhaust: String read GetSoundEffectExhaust write SetSoundEffectExhaust;
@@ -332,6 +339,9 @@ begin
 
     GadgetAccessor.DigitX := Sec.LineNumericDefault['digit_x', PrimaryWidth div 2];
     GadgetAccessor.DigitY := Sec.LineNumericDefault['digit_y', -6];
+
+    GadgetAccessor.ExitMarkerX := Sec.LineNumeric['exit_marker_x'];
+    GadgetAccessor.ExitMarkerY := Sec.LineNumeric['exit_marker_y'];
 
     if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'l' then
       GadgetAccessor.DigitAlign := -1
@@ -534,6 +544,9 @@ begin
     DstRec.DigitAlign := 0; // Not that any value really makes sense for this
     DstRec.DigitX := SrcRec.Animations.PrimaryAnimation.Height - SrcRec.DigitY - 1;
     DstRec.DigitY := SrcRec.DigitX;
+
+    DstRec.ExitMarkerX := SrcRec.ExitMarkerY;
+    DstRec.ExitMarkerY := SrcRec.ExitMarkerX;
   end;
 
   if Flip then
@@ -591,6 +604,8 @@ begin
       ov_DigitX: Result := DigitX;
       ov_DigitY: Result := DigitY;
       ov_DigitAlign: Result := DigitAlign;
+      ov_ExitMarkerX: Result := ExitMarkerX;
+      ov_ExitMarkerY: Result := ExitMarkerY;
       else raise Exception.Create('TMetaObject.GetVariableProperty called for an invalid property!');
     end;
 end;
@@ -627,6 +642,8 @@ begin
       ov_DigitX: DigitX := aValue;
       ov_DigitY: DigitY := aValue;
       ov_DigitAlign: DigitAlign := aValue;
+      ov_ExitMarkerX: ExitMarkerX := aValue;
+      ov_ExitMarkerY: ExitMarkerY := aValue;
       else raise Exception.Create('TMetaObject.SetVariableProperty called for an invalid property!');
     end;
   MarkMetaDataUnmade;
@@ -685,6 +702,8 @@ begin
     ov_DigitY: Result := fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate];
     ov_DigitAlign: Result := fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate];
     ov_DigitMinLength: Result := fGadgetMetaInfo.fDigitMinLength;
+    ov_ExitMarkerX: Result := fGadgetMetaInfo.ExitMarkerX[fFlip, fInvert, fRotate];
+    ov_ExitMarkerY: Result := fGadgetMetaInfo.ExitMarkerY[fFlip, fInvert, fRotate];
     ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
@@ -714,6 +733,8 @@ begin
     ov_DigitY: fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate] := aValue;
     ov_DigitAlign: fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate] := aValue;
     ov_DigitMinLength: fGadgetMetaInfo.fDigitMinLength := aValue;
+    ov_ExitMarkerX: fGadgetMetaInfo.ExitMarkerX[fFlip, fInvert, fRotate] := aValue;
+    ov_ExitMarkerY: fGadgetMetaInfo.ExitMarkerY[fFlip, fInvert, fRotate] := aValue;
     ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;

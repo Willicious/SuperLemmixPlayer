@@ -115,6 +115,7 @@ type
     procedure DrawGadgetsOnLayer(aLayer: TRenderLayer);
     procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
     procedure DrawTriggerArea(Gadget: TGadget);
+    procedure DrawExitMarkers(Gadget: TGadget; aMarker: TBitmap32);
     procedure DrawUserHelper;
     procedure MakeColorCycle;
     function IsUseful(Gadget: TGadget): Boolean;
@@ -153,7 +154,6 @@ type
     procedure DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
     procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
-    procedure DrawExitHelpers(Dst: TBitmap32; Gadget: TGadget);
 
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
@@ -216,6 +216,7 @@ type
 implementation
 
 uses
+  LemGame,
   SharedGlobals,
   GameControl;
 
@@ -2740,7 +2741,10 @@ begin
 
       DOM_LOCKEXIT:
         begin
-          fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+          if Gadget.IsRivalExit then
+            fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY)
+          else
+            fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
 
           if (Gadget.CurrentFrame = 1) then
           begin
@@ -2937,32 +2941,6 @@ begin
     end;
 end;
 
-procedure TRenderer.DrawExitHelpers(Dst: TBitmap32; Gadget: TGadget);
-var
-  HasLemmingCap: Boolean;
-  DrawX, DrawY, YOffset: Integer;
-  RivalHelper: TBitmap32;
-begin
-    Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-    Assert(Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT], 'DrawExitHelpers called for an object that isn''t an Exit');
-
-    // For now, this procedure only deals with Rival Exits
-    if not Gadget.IsRivalExit then Exit;
-
-    RivalHelper := fHelperImages[hpi_Skill_Rival];
-    HasLemmingCap := (Gadget.RemainingLemmingsCount >= 0);
-
-    YOffset := 2;
-    //if Gadget.TriggerEffect = DOM_LOCKEXIT then YOffset := 10; // Bookmark - there can't be a Universal value here
-    if HasLemmingCap then YOffset := 9;
-
-    DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
-    DrawY := (Gadget.Top - (RivalHelper.Height) - YOffset) * ResMod;
-    if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod;
-
-    RivalHelper.DrawTo(Dst, DrawX - (RivalHelper.Width div 2), DrawY);
-end;
-
 procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 var
   numHelpers, indexHelper: Integer;
@@ -3047,6 +3025,34 @@ begin
     begin
       fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     end;
+end;
+
+procedure TRenderer.DrawExitMarkers(Gadget: TGadget; aMarker: TBitmap32); // Marker
+var
+  FrameIndex, MarkerFrames: Integer;
+  XPos, YPos: Integer;
+  XOffset, YOffset: Integer;
+  FrameRect: TRect;
+begin
+  if Theme.ExitMarkerFrames <> 0 then
+    MarkerFrames := Theme.ExitMarkerFrames
+  else
+    MarkerFrames := 14;
+
+  FrameIndex := GlobalGame.CurrentIteration mod MarkerFrames;
+
+  FrameRect.Left := 0;
+  FrameRect.Right := aMarker.Width;
+  FrameRect.Top := FrameIndex * (aMarker.Height div MarkerFrames);
+  FrameRect.Bottom := FrameRect.Top + (aMarker.Height div MarkerFrames);
+
+  XPos := Gadget.Left + Gadget.Width div 2;
+  YPos := Gadget.Top - 14;
+
+  XOffset := Gadget.MetaObj.ExitMarkerX;
+  YOffset := Gadget.MetaObj.ExitMarkerY;
+
+  aMarker.DrawTo(fLayers[rlGadgetsLow], (XPos + XOffset) * ResMod, (YPos + YOffset) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
@@ -3371,6 +3377,19 @@ begin
   DrawGadgetsOnLayer(rlOneWayArrows);
   DrawGadgetsOnLayer(rlGadgetsHigh);
 
+  // Draw Exit Marker only if the level contains both Normal and Rival lems
+  if RenderInfoRec.Level.Info.HasMixedLemTypes then
+  begin
+    for i := 0 to Gadgets.Count-1 do
+      if Gadgets[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+      begin
+        if Gadgets[i].IsRivalExit then
+          DrawExitMarkers(Gadgets[i], fAni.ExitMarkerRivalBitmap)
+        else
+          DrawExitMarkers(Gadgets[i], fAni.ExitMarkerNormalBitmap);
+      end;
+  end;
+
   if fRenderInterface = nil then Exit; // Otherwise, some of the remaining code may cause an exception on first rendering
 
   // Draw hatch helpers
@@ -3431,10 +3450,6 @@ begin
           fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFF4500;
         end;
       end;
-    end else if Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
-    begin
-      if fRenderInterface.IsStartingSeconds and not GameParams.HideHelpers then
-        DrawExitHelpers(fLayers[rlObjectHelpers], Gadget);
     end else
       Continue;
   end;
@@ -3466,7 +3481,6 @@ begin
 
   if fRenderInterface.UserHelper <> hpi_None then
       DrawUserHelper;
-
 end;
 
 procedure TRenderer.DrawTriggerAreaRectOnLayer(TriggerRect: TRect);

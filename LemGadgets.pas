@@ -78,7 +78,6 @@ type
     sRemainingLemmingsCount: Integer;
     sShowRemainingLemmings: Boolean;
     sIsRivalExit: Boolean;
-
     sCountdownLength: Integer;
 
     Obj            : TGadgetModel;

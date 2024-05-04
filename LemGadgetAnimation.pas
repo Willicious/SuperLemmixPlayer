@@ -665,8 +665,6 @@ begin
   else
     fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
 
-
-
   if fPrimary then
   begin
     fMainObjectWidth := fWidth;
