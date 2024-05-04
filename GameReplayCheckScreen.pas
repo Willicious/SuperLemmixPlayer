@@ -404,7 +404,7 @@ begin
               if Game.GameResultRec.gGotTalisman then
                 fReplays[i].ReplayResult := CR_PASS_TALISMAN;
               if (Game.StateIsUnplayable or Game.IsOutOfTime)
-                and not Game.GameResultRec.gSuccess then
+                and not (Game.GameResultRec.gSuccess or Game.GameResultRec.gGotTalisman) then
                   fReplays[i].ReplayResult := CR_FAIL;
               Break;
             end;
