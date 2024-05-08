@@ -1473,6 +1473,13 @@ begin
     Playing := True;
 
   UpdateLevelRecords;
+
+  // Remove the topmost pixel to prevent Y = 0 access
+  for i := 0 to Level.Info.Width do
+  begin
+    RemovePixelAt(i, 0);
+    fRenderInterface.RemoveTerrain(0, 0, Level.Info.Width, 1);
+  end;
 end;
 
 
@@ -2747,12 +2754,7 @@ const
                baStacking, baBashing, baFencing, baMining, baDigging, baBallooning,
                baReaching, baShimmying, baTurning, baLasering, baDangling, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else Result := (L.LemAction in ActionSet);
+  Result := (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
@@ -2821,12 +2823,6 @@ const
                baLasering, baLooking];
 
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
 end;
 
@@ -2838,13 +2834,8 @@ const
                baFreezerExplosion, baDangling, baVaporizing, baVinetrapping,
                baSplatting, baExiting, baSleeping];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := not (L.LemAction in ActionSet)
+
   // Stops repeat timebomber assignments to same lem, and bomber assignments to timebomber
   // Also prevents assigning timebombers to slowfreezing & radiating lems
   and not ((L.LemExplosionTimer > 0) or (L.LemFreezerExplosionTimer > 0));
@@ -2857,13 +2848,8 @@ const
                baFreezerExplosion, baDangling, baVaporizing, baVinetrapping,
                baSplatting, baExiting, baSleeping];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := not (L.LemAction in ActionSet)
+
   // Stops repeat bomber assignments to same lem, and bomber assignments to timebomber
   and not (L.LemExplosionTimer > 0);
 end;
@@ -2875,13 +2861,10 @@ const
                baVaporizing, baVinetrapping, baSplatting, baDrowning,
                baExiting, baSleeping];
 begin
+  Result := not ((L.LemAction in ActionSet)
+
   // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
-  Result := not (L.LemAction in ActionSet)
+  or (L.LemY <= 1));
 end;
 
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
@@ -2889,13 +2872,10 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLaddering,
                baLasering, baBashing, baFencing, baMining, baDigging, baLooking];
 begin
+  Result := (L.LemAction in ActionSet)
+
   // Non-assignable from 1px below the top of the level (prevents wastage)
-  if L.LemY <= 1 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
-  Result := (L.LemAction in ActionSet);
+  and not (L.LemY <= 1);
 end;
 
 function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
@@ -2905,12 +2885,6 @@ const
 var
   n: Integer;
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   // Next brick must add at least one pixel, but contrary to LemCanPlatform we ignore pixels above the platform
   Result := False;
   for n := 0 to 5 do
@@ -2925,12 +2899,6 @@ const
   ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baPlatforming,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet) and LemCanLadder(L);
 end;
 
@@ -2939,13 +2907,10 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baLaddering,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 begin
+  Result := (L.LemAction in ActionSet)
+
   // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
-  Result := (L.LemAction in ActionSet);
+  and not (L.LemY <= 1);
 end;
 
 function TLemmingGame.MayAssignThrowingSkill(L: TLemming): Boolean;
@@ -2953,12 +2918,6 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baMining, baDigging, baLasering, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -2967,12 +2926,6 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baFencing, baMining, baDigging, baLasering, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -2981,12 +2934,6 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baMining, baDigging, baLasering, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -2995,12 +2942,6 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baDigging, baLasering, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet)
   and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining)
 end;
@@ -3010,12 +2951,6 @@ end;
 //  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
 //               baBashing, baFencing, baMining, baLasering, baLooking];
 //begin
-////  // Non-assignable from the top of the level
-////  if L.LemY <= 0 then
-////    begin
-////      Result := (L.LemAction = baNone);
-////      Exit;
-////    end else
 ////  Result := (L.LemAction in ActionSet);
 ////  //and not HasIndestructibleAt(L.LemX, L.LemY - 1, L.LemDx, baPropelling);
 //end;
@@ -3025,12 +2960,6 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baMining, baLasering, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet)
   and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baDigging);
 end;
@@ -3043,12 +2972,6 @@ const
                baReaching, baShimmying, baJumping, baLasering, baSpearing, baGrenading,
                baDangling, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -3063,12 +2986,6 @@ var
   i: Integer;
   OldAction: TBasicLemmingAction;
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet);
 
   if L.LemAction = baTurning then
@@ -3123,12 +3040,6 @@ const
                baShrugging, baPlatforming, baStacking, baFencing, baBallooning,
                baClimbing, baSliding, baDangling, baLasering, baLooking];
 begin
-  // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet)
          or ((L.LemAction = baSwimming) and not HasPixelAt(L.LemX, L.LemY -1));
 end;
@@ -3138,12 +3049,6 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
                baBashing, baFencing, baMining, baDigging, baLooking];
 begin
-    // Non-assignable from the top of the level
-  if L.LemY <= 0 then
-    begin
-      Result := (L.LemAction = baNone);
-      Exit;
-    end else
   Result := (L.LemAction in ActionSet);
 end;
 
@@ -4709,65 +4614,35 @@ function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
 begin
   Result := True;
 
-  // Top
-  // Jumpers complete their arc above the level
-  if (L.LemY <= 0) and (L.LemAction = baJumping) then Exit;
+  { Top }
 
-  // Prevents climbers and hoisters accessing level top
-  if ((L.LemY <= 7) and (L.LemAction = baClimbing) and HasPixelAt(L.LemX, 0))
-  or ((L.LemY <= 3) and (L.LemAction = baHoisting) and HasPixelAt(L.LemX, 0)) then
-    begin
-      if L.LemIsSlider then
-      begin
-        if L.LemAction = baHoisting then
-          begin
-            Transition(L, baDehoisting);
-            Exit;
-          end else
-        Dec(L.LemY);
-        Transition(L, baSliding);
-      end else begin
-        Transition(L, baFalling);
-        TurnAround(L);
-        Inc(L.LemX, L.LemDx);
-        Exit;
-      end;
-    end;
+  // Stop Builders and Stackers 1px below level top
+  if (L.LemAction = baBuilding) and (L.LemY <= 1) then
+    Transition(L, baWalking);
 
-  // Stops builders 1px below level top
-  if (L.LemY <= 1) and (L.LemAction = baBuilding) then
-    begin
-      Transition(L, baWalking);
-      Exit;
-    end;
+  if (L.LemAction = baStacking) and (L.LemY <= 9 - L.LemNumberOfBricksLeft) then
+    Transition(L, baWalking);
+
+  // Nudge Swimmers down to keep them visible
+  if (L.LemAction = baSwimming) and (L.LemY <= 1) then
+    Inc(L.LemY);
 
   // Ballooners bob around at the top infinitely
   if (L.LemAction = baBallooning) and (L.LemY < 30) then
+  begin
+    // Unless they find terrain at their foot position, in which case they ascend...
+    if HasPixelAt(L.LemX, L.LemY) then
     begin
-      // Unless they find terrain at their foot position, in which case they ascend...
-      if HasPixelAt(L.LemX, L.LemY) then
-      begin
-        Dec(L.LemY);
+      Dec(L.LemY);
 
-          // ...Until they can walk onto it
-          if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
-            PopBalloon(L, 1, baWalking);
-      end else
-        Inc(L.LemY, 3);
-    end;
+        // ...Until they can walk onto it
+        if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
+          PopBalloon(L, 1, baWalking);
+    end else
+      Inc(L.LemY, 3);
+  end;
 
-  if (L.LemY <= 0) then
-    begin
-      if not L.LemHasTurned then // Prevents infinite turning
-      begin
-        TurnAround(L);
-        L.LemHasTurned := True;
-      end;
-    end else begin
-        L.LemHasTurned := False; // Resets when lem is no longer at level top
-    end;
-
-  // Bottom
+  { Bottom }
   if (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
   begin
 //    WrapPosX := L.LemX;                                    // The -6 is to make sure they're at 0
@@ -4780,15 +4655,15 @@ begin
     Result := False;
   end;
 
-  // Left Side
+  { Sides }
+
+  // Both sides are forcefields
   if (L.LemX <= 1) then
   begin
-    // This makes the sides behave like one-way forcefields
     HandleForceField(L, 1);
     Result := True;
   end;
 
-  // Right Side
   if (L.LemX >= PhysicsMap.Width -2) then
   begin
     HandleForceField(L, -1);
