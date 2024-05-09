@@ -1382,7 +1382,8 @@ begin
           fCombineHueShift := Red
         else
           fCombineHueShift := Yellow;
-      end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem then
+      end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem
+        and not Game.StateIsUnplayable then
       begin
         SpecialCombine := True;
         fCombineHueShift := Blue;
