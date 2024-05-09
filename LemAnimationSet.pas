@@ -197,7 +197,7 @@ type
     fFreezingOverlay        : TBitmap32;
     fUnfreezingOverlay      : TBitmap32;
     fInvincibilityOverlay   : TBitmap32;
-    fHatchNumbersBitmap     : TBitmap32;
+    fNumbersBitmap          : TBitmap32;
     fHighlightBitmap        : TBitmap32;
     fBalloonPopBitmap       : TBitmap32;
     fExitMarkerNormalBitmap : TBitmap32;
@@ -222,7 +222,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure ReadData;
+    procedure PrepareAnimations;
     procedure ClearData;
 
     property Theme                 : TNeoTheme read fTheme write fTheme;
@@ -235,7 +235,7 @@ type
     property FreezingOverlay       : TBitmap32 read fFreezingOverlay;
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property InvincibilityOverlay  : TBitmap32 read fInvincibilityOverlay;
-    property HatchNumbersBitmap    : TBitmap32 read fHatchNumbersBitmap;
+    property NumbersBitmap         : TBitmap32 read fNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
     property ExitMarkerNormalBitmap: TBitmap32 read fExitMarkerNormalBitmap;
@@ -442,51 +442,65 @@ begin
   LoadMetaData(aColorDict, aShadeDict);
 end;
 
-procedure TBaseAnimationSet.ReadData;
+procedure TBaseAnimationSet.PrepareAnimations;
 var
-  Fn: string;
-  Bmp: TBitmap32;
-  TempBitmap: TBitmap32;
-  iAnimation: Integer;
-  MLA: TMetaLemmingAnimation;
-  BalloonPop, BalloonPopHR: String;
-  ExitMarkerNormal, ExitMarkerNormalHR: String;
-  ExitMarkerRival, ExitMarkerRivalHR: String;
-  ExitMarkerZombie, ExitMarkerZombieHR: String;
-  FreezingOverlay, FreezingOverlayHR: String;
-  UnfreezingOverlay, UnfreezingOverlayHR: String;
-  InvincibilityOverlay, InvincibilityOverlayHR: string;
-  Grenades, GrenadesHR: String;
-  X: Integer;
-
-  SrcFolder: String;
+  LemSprite: TMetaLemmingAnimation;
+  SpriteName: string;
+  iSprite, LemDXOffset: Integer;
+  LemBitmap, TempBitmap: TBitmap32;
   ColorDict: TColorDict;
   ShadeDict: TShadeDict;
+  UpscaleInfo: TUpscaleInfo;
+  ThemeFolder: String;
+  MetaSpritesFolder, LemSpritesFolder: String;
+  MasksPath, EffectsPath, DefaultPath: String;
 
-  MetaSrcFolder, ImgSrcFolder, EffectsSrcFolder: String;
-
-  Info: TUpscaleInfo;
-
-  procedure GetSrcFolder(aDirectory: String; UseLemSpritesTheme: Boolean);
+  procedure GetThemeFolder(aDirectory: String; UseLemSpritesTheme: Boolean);
   begin
     if (fTheme = nil) then
-      SrcFolder := 'default'
+      ThemeFolder := 'default'
     else if UseLemSpritesTheme then
-      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS
+      ThemeFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS
     else
-      SrcFolder := fTheme.Name;
+      ThemeFolder := fTheme.Name;
 
-    if SrcFolder = '' then
-      SrcFolder := 'default';
+    if ThemeFolder = '' then
+      ThemeFolder := 'default';
 
-    if not DirectoryExists(AppPath + SFStyles + SrcFolder + aDirectory) then
-      SrcFolder := 'default';
+    if not DirectoryExists(AppPath + SFStyles + ThemeFolder + aDirectory) then
+      ThemeFolder := 'default';
   end;
 
   procedure UpscalePieces(Bitmap: TBitmap32);
   begin
-    Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
-    UpscaleFrames(Bitmap, 2, MLA.FrameCount, Info.Settings);
+    UpscaleInfo := PieceManager.GetUpscaleInfo(ThemeFolder, rkLemmings);
+    UpscaleFrames(Bitmap, 2, LemSprite.FrameCount, UpscaleInfo.Settings);
+  end;
+
+  procedure LoadEffectsFromMasksFolder(const FileName, FileNameHR: string; Bitmap: TBitmap32);
+  begin
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(MasksPath + FileNameHR, Bitmap)
+    else
+      TPngInterface.LoadPngFile(MasksPath + FileName, Bitmap);
+  end;
+
+  procedure LoadEffects(const FileName, FileNameHR: string; Bitmap: TBitmap32);
+  begin
+    try
+      if GameParams.HighResolution then
+      begin
+        if FileExists(EffectsPath + FileNameHR) then
+          TPngInterface.LoadPngFile(EffectsPath + FileNameHR, Bitmap)
+        else begin
+           TPngInterface.LoadPngFile(EffectsPath + FileName, Bitmap);
+           UpscalePieces(Bitmap);
+        end;
+      end else
+        TPngInterface.LoadPngFile(EffectsPath + FileName, Bitmap);
+    except
+      TPngInterface.LoadPngFile(DefaultPath + FileName, Bitmap);
+    end;
   end;
 begin
   TempBitmap := TBitmap32.Create;
@@ -494,66 +508,67 @@ begin
   ShadeDict := TShadeDict.Create;
 
   try
-    GetSrcFolder(SFPiecesLemmings, True);
-    SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
+    { ========================= Lemming sprites ============================== }
 
-    if fMetaLemmingAnimations.Count = 0 then // Not entirely sure why it would ever NOT be 0
+    GetThemeFolder(SFPiecesLemmings, True);
+    SetCurrentDir(AppPath + SFStyles + ThemeFolder + SFPiecesLemmings);
+
+    if (fMetaLemmingAnimations.Count = 0) then
       ReadMetaData(ColorDict, ShadeDict);
 
-    MetaSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesLemmings;
+    MetaSpritesFolder := AppPath + SFStyles + ThemeFolder + SFPiecesLemmings;
 
     if GameParams.HighResolution then
-      ImgSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesLemmingsHighRes
+      LemSpritesFolder := AppPath + SFStyles + ThemeFolder + SFPiecesLemmingsHighRes
     else
-      ImgSrcFolder := MetaSrcFolder;
+      LemSpritesFolder := MetaSpritesFolder;
 
-    for iAnimation := 0 to NUM_LEM_SPRITES - 2 do // -2 to leave out the freezer placeholder
+    { Load all sprites except the Freezer ice cube, which is loaded as an effect }
+    for iSprite := 0 to NUM_LEM_SPRITES - 2 do
     begin
-      MLA := fMetaLemmingAnimations[iAnimation];
-      Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
+      LemSprite := fMetaLemmingAnimations[iSprite];
+      SpriteName := RightStr(LemSprite.Description, Length(LemSprite.Description) - 1);
 
-      if FileExists(ImgSrcFolder + Fn + '.png') then
-        TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap)
+      if FileExists(LemSpritesFolder + SpriteName + '.png') then
+        TPngInterface.LoadPngFile(LemSpritesFolder + SpriteName + '.png', TempBitmap)
       else begin
-        TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);
+        TPngInterface.LoadPngFile(MetaSpritesFolder + SpriteName + '.png', TempBitmap);
         UpscalePieces(TempBitmap);
       end;
 
-      MLA.Width := TempBitmap.Width div 2;
-      MLA.Height := TempBitmap.Height div MLA.FrameCount;
+      LemSprite.Width := TempBitmap.Width div 2;
+      LemSprite.Height := TempBitmap.Height div LemSprite.FrameCount;
 
-      if iAnimation mod 2 = 1 then
-        X := 0
+      if iSprite mod 2 = 1 then
+        LemDXOffset := 0
       else
-        X := MLA.Width;
+        LemDXOffset := LemSprite.Width;
 
-      Bmp := TBitmap32.Create;
-      Bmp.SetSize(MLA.Width, MLA.Height * MLA.FrameCount);
-      TempBitmap.DrawTo(Bmp, 0, 0, Rect(X, 0, X + MLA.Width, MLA.Height * MLA.FrameCount));
+      LemBitmap := TBitmap32.Create;
+      LemBitmap.SetSize(LemSprite.Width, LemSprite.Height * LemSprite.FrameCount);
+      TempBitmap.DrawTo(LemBitmap, 0, 0, Rect(
+        LemDXOffset, 0, LemDXOffset + LemSprite.Width, LemSprite.Height * LemSprite.FrameCount));
 
-      fLemmingAnimations.Add(Bmp);
+      fLemmingAnimations.Add(LemBitmap);
 
       if GameParams.HighResolution then
       begin
-        MLA.FootX := MLA.FootX * 2;
-        MLA.FootY := MLA.FootY * 2;
+        LemSprite.FootX := LemSprite.FootX * 2;
+        LemSprite.FootY := LemSprite.FootY * 2;
       end;
     end;
 
-    fRecolorer.LoadSwaps(SrcFolder);
-
+    fRecolorer.LoadSwaps(ThemeFolder);
     HandleRecoloring(ColorDict, ShadeDict);
 
-    fLemmingAnimations.Add(TBitmap32.Create); // For the Freezer
-
-    // ------------------------------------- //
-    // --- Extract masks / Digits / etc. --- //
-    // ------------------------------------- //
+    { ==================== Effects (countdown digits, etc) =================== }
 
     fCountDownDigitsBitmap.DrawMode := dmBlend;
     fCountDownDigitsBitmap.CombineMode := cmMerge;
+
     fRadiationDigitsBitmap.DrawMode := dmBlend;
     fRadiationDigitsBitmap.CombineMode := cmMerge;
+
     fSlowfreezeDigitsBitmap.DrawMode := dmBlend;
     fSlowfreezeDigitsBitmap.CombineMode := cmMerge;
 
@@ -566,8 +581,8 @@ begin
     fInvincibilityOverlay.DrawMode := dmBlend;
     fInvincibilityOverlay.CombineMode := cmMerge;
 
-    fHatchNumbersBitmap.DrawMode := dmBlend;
-    fHatchNumbersBitmap.CombineMode := cmMerge;
+    fNumbersBitmap.DrawMode := dmBlend;
+    fNumbersBitmap.CombineMode := cmMerge;
 
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
@@ -577,8 +592,10 @@ begin
 
     fExitMarkerNormalBitmap.DrawMode := dmBlend;
     fExitMarkerNormalBitmap.CombineMode := cmMerge;
+
     fExitMarkerRivalBitmap.DrawMode := dmBlend;
     fExitMarkerRivalBitmap.CombineMode := cmMerge;
+
     fExitMarkerZombieBitmap.DrawMode := dmBlend;
     fExitMarkerZombieBitmap.CombineMode := cmMerge;
 
@@ -591,129 +608,36 @@ begin
     //fBatBitmap.DrawMode := dmBlend;      // Batter
     //fBatBitmap.CombineMode := cmMerge;
 
+    fLemmingAnimations.Add(TBitmap32.Create);
     fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
     fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
     fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
     fLemmingAnimations[ICECUBE].CombineMode := cmMerge;
 
-    // Use the Masks folder to load these
-    if GameParams.HighResolution then
-    begin
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears-hr.png', fSpearBitmap);
-      //TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'bat-hr.png', fBatBitmap);  // Batter
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight-hr.png', fHighlightBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown-hr.png', fCountdownDigitsBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'radiation-hr.png', fRadiationDigitsBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'slowfreeze-hr.png', fSlowfreezeDigitsBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers-hr.png', fHatchNumbersBitmap);
-    end else begin
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'freezer.png', fLemmingAnimations[ICECUBE]);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'spears.png', fSpearBitmap);
-      //TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'bat.png', fBatBitmap); // Batter
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'radiation.png', fRadiationDigitsBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'slowfreeze.png', fSlowfreezeDigitsBitmap);
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'numbers.png', fHatchNumbersBitmap);
-    end;
+    { Non-customisable Effects - these are loaded from the Masks folder }
+    MasksPath := AppPath + SFGraphicsMasks;
 
-    // Use Lem sprites theme to load the effects
-    EffectsSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesEffects;
-    FreezingOverlay := 'freezing_overlay.png';
-    FreezingOverlayHR := 'freezing_overlay-hr.png';
-    UnfreezingOverlay := 'unfreezing_overlay.png';
-    UnfreezingOverlayHR := 'unfreezing_overlay-hr.png';
-    InvincibilityOverlay := 'invincibility_overlay.png';
-    InvincibilityOverlayHR := 'invincibility_overlay-hr.png';
-    BalloonPop := 'balloon_pop.png';
-    BalloonPopHR := 'balloon_pop-hr.png';
-    Grenades := 'grenades.png';
-    GrenadesHR := 'grenades-hr.png';
+    LoadEffectsFromMasksFolder('spears.png', 'spears-hr.png', fSpearBitmap);
+    LoadEffectsFromMasksFolder('freezer.png', 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
 
-    if GameParams.HighResolution then
-    begin
-      if FileExists(EffectsSrcFolder + FreezingOverlayHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlayHR, fFreezingOverlay)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlay, fFreezingOverlay);
-        UpscalePieces(fFreezingOverlay);
-      end;
+    { Customisable Effects - these are replaced with defaults if not present in the spriteset's effects folder }
+    GetThemeFolder(SFPiecesEffects, False);
+    EffectsPath := AppPath + SFStyles + ThemeFolder + SFPiecesEffects;
+    DefaultPath := AppPath + SFStyles + 'default' + SFPiecesEffects;
 
-      if FileExists(EffectsSrcFolder + UnfreezingOverlayHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlayHR, fUnfreezingOverlay)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlay, fUnfreezingOverlay);
-        UpscalePieces(fUnfreezingOverlay);
-      end;
-
-      if FileExists(EffectsSrcFolder + InvincibilityOverlayHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + InvincibilityOverlayHR, fInvincibilityOverlay)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + InvincibilityOverlay, fInvincibilityOverlay);
-        UpscalePieces(fInvincibilityOverlay);
-      end;
-
-      if FileExists(EffectsSrcFolder + BalloonPopHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPopHR, fBalloonPopBitmap)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPop, fBalloonPopBitmap);
-        UpscalePieces(fBalloonPopBitmap);
-      end;
-
-      if FileExists(EffectsSrcFolder + GrenadesHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + GrenadesHR, fGrenadeBitmap)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + Grenades, fGrenadeBitmap);
-        UpscalePieces(fGrenadeBitmap);
-      end;
-    end else begin
-      TPngInterface.LoadPngFile(EffectsSrcFolder + FreezingOverlay, fFreezingOverlay);
-      TPngInterface.LoadPngFile(EffectsSrcFolder + UnfreezingOverlay, fUnfreezingOverlay);
-      TPngInterface.LoadPngFile(EffectsSrcFolder + InvincibilityOverlay, fInvincibilityOverlay);
-      TPngInterface.LoadPngFile(EffectsSrcFolder + BalloonPop, fBalloonPopBitmap);
-      TPngInterface.LoadPngFile(EffectsSrcFolder + Grenades, fGrenadeBitmap);
-    end;
-
-    // Use Level theme to load the Exit Markers
-    GetSrcFolder(SFPiecesEffects, False);
-    EffectsSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesEffects;
-
-    ExitMarkerNormal := 'exit_marker_normal.png';
-    ExitMarkerNormalHR := 'exit_marker_normal-hr.png';
-    ExitMarkerRival := 'exit_marker_rival.png';
-    ExitMarkerRivalHR := 'exit_marker_rival-hr.png';
-    ExitMarkerZombie := 'exit_marker_zombie.png';
-    ExitMarkerZombieHR := 'exit_marker_zombie-hr.png';
-
-    if GameParams.HighResolution then
-    begin
-      if FileExists(EffectsSrcFolder + ExitMarkerNormalHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerNormalHR, fExitMarkerNormalBitmap)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerNormal, fExitMarkerNormalBitmap);
-        UpscalePieces(fExitMarkerNormalBitmap);
-      end;
-
-      if FileExists(EffectsSrcFolder + ExitMarkerRivalHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerRivalHR, fExitMarkerRivalBitmap)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerRival, fExitMarkerRivalBitmap);
-        UpscalePieces(fExitMarkerRivalBitmap);
-      end;
-
-      if FileExists(EffectsSrcFolder + ExitMarkerZombieHR) then
-        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerZombieHR, fExitMarkerZombieBitmap)
-      else begin
-        TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerZombie, fExitMarkerZombieBitmap);
-        UpscalePieces(fExitMarkerZombieBitmap);
-      end;
-    end else begin
-      TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerNormal, fExitMarkerNormalBitmap);
-      TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerRival, fExitMarkerRivalBitmap);
-      TPngInterface.LoadPngFile(EffectsSrcFolder + ExitMarkerZombie, fExitMarkerZombieBitmap);
-    end;
-
+    LoadEffects('countdown.png', 'countdown-hr.png', fCountDownDigitsBitmap);
+    LoadEffects('radiation.png', 'radiation-hr.png', fRadiationDigitsBitmap);
+    LoadEffects('slowfreeze.png', 'slowfreeze-hr.png', fSlowfreezeDigitsBitmap);
+    LoadEffects('numbers.png', 'numbers-hr.png', fNumbersBitmap);
+    LoadEffects('highlight.png', 'highlight-hr.png', fHighlightBitmap);
+    LoadEffects('grenades.png', 'grenades-hr.png', fGrenadeBitmap);
+    LoadEffects('freezing_overlay.png', 'freezing_overlay-hr.png', fFreezingOverlay);
+    LoadEffects('unfreezing_overlay.png', 'unfreezing_overlay-hr.png', fUnfreezingOverlay);
+    LoadEffects('balloon_pop.png', 'balloon_pop-hr.png', fBalloonPopBitmap);
+    LoadEffects('invincibility_overlay.png', 'invincibility_overlay-hr.png', fInvincibilityOverlay);
+    LoadEffects('exit_marker_normal.png', 'exit_marker_normal-hr.png', fExitMarkerNormalBitmap);
+    LoadEffects('exit_marker_rival.png', 'exit_marker_rival-hr.png', fExitMarkerRivalBitmap);
+    LoadEffects('exit_marker_zombie.png', 'exit_marker_zombie-hr.png', fExitMarkerZombieBitmap);
   finally
     TempBitmap.Free;
     ColorDict.Free;
@@ -732,7 +656,7 @@ begin
   fFreezingOverlay.Clear;
   fUnfreezingOverlay.Clear;
   fInvincibilityOverlay.Clear;
-  fHatchNumbersBitmap.Clear;
+  fNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
   fBalloonPopBitmap.Clear;
   fExitMarkerNormalBitmap.Clear;
@@ -759,7 +683,7 @@ begin
   fFreezingOverlay := TBitmap32.Create;
   fUnfreezingOverlay := TBitmap32.Create;
   fInvincibilityOverlay := TBitmap32.Create;
-  fHatchNumbersBitmap := TBitmap32.Create;
+  fNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
   fBalloonPopBitmap := TBitmap32.Create;
   fExitMarkerNormalBitmap := TBitmap32.Create;
@@ -780,7 +704,7 @@ begin
   fFreezingOverlay.Free;
   fUnfreezingOverlay.Free;
   fInvincibilityOverlay.Free;
-  fHatchNumbersBitmap.Free;
+  fNumbersBitmap.Free;
   fHighlightBitmap.Free;
   fBalloonPopBitmap.Free;
   fExitMarkerNormalBitmap.Free;

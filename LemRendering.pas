@@ -3069,7 +3069,7 @@ var
     fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
-  procedure DrawNumberWithHatchNumbers(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // Negative = left; zero = center; positive = right
+  procedure DrawNumbers(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // Negative = left; zero = center; positive = right
   var
     DigitsWidth: Integer;
 
@@ -3102,16 +3102,16 @@ var
       Digit := StrToInt(aDigitString[n]);
       SrcRect := SizedRect(Digit * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
 
-      fAni.HatchNumbersBitmap.DrawMode := dmCustom;
-      fAni.HatchNumbersBitmap.OnPixelCombine := CombineFixedColor;
+      fAni.NumbersBitmap.DrawMode := dmCustom;
+      fAni.NumbersBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
-      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
-      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
-      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
+      fAni.NumbersBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
+      fAni.NumbersBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
+      fAni.NumbersBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
 
-      fAni.HatchNumbersBitmap.DrawMode := dmBlend;
-      fAni.HatchNumbersBitmap.CombineMode := cmMerge;
-      fAni.HatchNumbersBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
+      fAni.NumbersBitmap.DrawMode := dmBlend;
+      fAni.NumbersBitmap.CombineMode := cmMerge;
+      fAni.NumbersBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
       CurX := CurX + 5;
     end;
 
@@ -3138,7 +3138,7 @@ var
 
     if Gadget.MetaObj.DigitAnimation = nil then
     begin
-      DrawNumberWithHatchNumbers(X, Y, DigitString, aAlignment);
+      DrawNumbers(X, Y, DigitString, aAlignment);
       Exit;
     end;
 
@@ -4024,7 +4024,7 @@ begin
   fAni.Theme := fTheme;
 
   try
-    fAni.ReadData;
+    fAni.PrepareAnimations;
 
     if (aLevel.Info.ZombieCount > 0) and (not fAni.HasZombieColor) then
       raise Exception.Create('Specified lemming spriteset does not include zombie coloring.');
@@ -4041,7 +4041,7 @@ begin
       fAni.ClearData;
       fTheme.Lemmings := 'default';
 
-      fAni.ReadData;
+      fAni.PrepareAnimations;
 
       if fTheme.Lemmings <> LastErrorLemmingSprites then
       begin
