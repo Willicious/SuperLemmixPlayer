@@ -29,6 +29,7 @@ type
   TNeoTheme = class
     private
       fColors: array of TNeoThemeColor;
+      fName: String;
       fLemmings: String; // Which lemming graphics to use
       fLemNamesPlural: String; // What to call the lemmings in menu screens
       fLemNamesSingular: String;
@@ -43,6 +44,7 @@ type
 
       function DoesColorExist(Name: String): Boolean;
 
+      property Name: String read fName write fName;
       property Lemmings: String read fLemmings write fLemmings;
       property LemNamesPlural: String read fLemNamesPlural write fLemNamesPlural;
       property LemNamesSingular: String read fLemNamesSingular write fLemNamesSingular;
@@ -83,6 +85,8 @@ begin
   Clear;
   SetCurrentDir(AppPath + SFStyles + aSet + '\');
   if not FileExists('theme.nxtm') then Exit;
+
+  fName := aSet;
 
   Parser := TParser.Create;
   try
