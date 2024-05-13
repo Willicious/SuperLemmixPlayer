@@ -3807,7 +3807,8 @@ begin
   if GadgetID = 65535 then Exit;
   Gadget := Gadgets[GadgetID];
 
-  L.LemIsRadiating := True;
+  if not (L.LemFreezerExplosionTimer > 0) then
+    L.LemIsRadiating := True;
 
   // Prevents repeatedly assigning to the same lemming whilst in trigger area
   if (L.LemExplosionTimer = 0)
