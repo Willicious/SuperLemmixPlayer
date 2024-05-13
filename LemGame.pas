@@ -367,6 +367,7 @@ type
   { lemming actions }
     function HandleLemming(L: TLemming): Boolean;
       function CheckLevelBoundaries(L: TLemming) : Boolean;
+      //procedure WrapLemming(L: TLemming; WrapPosX, WrapPosY: Integer);
     function HandleWalking(L: TLemming): Boolean;
     function HandleAscending(L: TLemming): Boolean;
     function HandleDigging(L: TLemming): Boolean;
@@ -1474,12 +1475,12 @@ begin
 
   UpdateLevelRecords;
 
-  // Remove the topmost pixel to prevent Y = 0 access
-  for i := 0 to Level.Info.Width do
-  begin
-    RemovePixelAt(i, 0);
-    fRenderInterface.RemoveTerrain(0, 0, Level.Info.Width, 1);
-  end;
+//  // Remove the topmost pixel to prevent Y = 0 access
+//  for i := 0 to Level.Info.Width do
+//  begin
+//    RemovePixelAt(i, 0);
+//    fRenderInterface.RemoveTerrain(0, 0, Level.Info.Width, 1);
+//  end;
 end;
 
 
@@ -2033,7 +2034,9 @@ end;
 function TLemmingGame.UpdateExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
+
   Dec(L.LemExplosionTimer);
+
   DoExplosionCrater := True;
 
   if NukeIsActive and L.LemIsRadiating then
@@ -2861,10 +2864,7 @@ const
                baVaporizing, baVinetrapping, baSplatting, baDrowning,
                baExiting, baSleeping];
 begin
-  Result := not ((L.LemAction in ActionSet)
-
-  // Non-assignable from the top of the level
-  or (L.LemY <= 1));
+  Result := not (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
@@ -4595,82 +4595,130 @@ begin
   if L.LemIsZombie and not IsSimulating then SetZombieField(L);
 end;
 
-function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
-//var  // Bookmark - remove all this?
-//WrapPosX, WrapPosY: Integer;
+//procedure TLemmingGame.WrapLemming(L: TLemming; WrapPosX, WrapPosY: Integer);
+//var
+//  X, Y: Integer;
+//
+//  procedure GenerateWrapLem;
+//  var
+//    NewL: TLemming;
+//  begin
+//    NewL := TLemming.Create;
+//    NewL.Assign(L);
+//    NewL.LemIndex := LemmingList.Count;
+//    NewL.LemIdentifier := 'W' + IntToStr(CurrentIteration);
+//    LemmingList.Add(NewL);
+//    NewL.LemX := X;
+//    NewL.LemY := Y;
+//    Inc(LemmingsOut);
+//  end;
+//begin
+//  X := WrapPosX;
+//  Y := WrapPosY;
+//  Inc(LemmingsCloned);
+//  GenerateWrapLem;
+//  RemoveLemming(L, RM_NEUTRAL, True); // "True" here mutes the sound
+//end;
 
-//    procedure GenerateWrapLem;
-//    var
-//      NewL: TLemming;
-//    begin
-//      NewL := TLemming.Create;
-//      NewL.Assign(L);
-//      NewL.LemIndex := LemmingList.Count;
-//      NewL.LemIdentifier := 'W' + IntToStr(CurrentIteration);
-//      LemmingList.Add(NewL);
-//      NewL.LemX := WrapPosX;
-//      NewL.LemY := WrapPosY;
-//      Inc(LemmingsOut);
-//    end;
+function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
 begin
   Result := True;
 
-  { Top }
+  { /////////////////////////////// Top /////////////////////////////////////// }
+  { The top of the level is a forcefield which nudges lems back into the level  }
+  { and prevents certain skill assignments/actions from taking place            }
+  { /////////////////////////////////////////////////////////////////////////// }
 
-  // Stop Builders and Stackers 1px below level top
-  if (L.LemAction = baBuilding) and (L.LemY <= 1) then
-    Transition(L, baWalking);
+  { /// NOTE - Walkers at the top of the level are handled in HandleWalking /// }
 
-  if (L.LemAction = baStacking) and (L.LemY <= 9 - L.LemNumberOfBricksLeft) then
-    Transition(L, baWalking);
-
-  // Nudge Swimmers down to keep them visible
-  if (L.LemAction = baSwimming) and (L.LemY <= 1) then
-    Inc(L.LemY);
-
-  // Ballooners bob around at the top infinitely
-  if (L.LemAction = baBallooning) and (L.LemY < 30) then
-  begin
-    // Unless they find terrain at their foot position, in which case they ascend...
-    if HasPixelAt(L.LemX, L.LemY) then
+  // Automatically save any lemmings pre-placed more than 16 pixels above the top of the level
+  if (L.LemY <= -16) then
+    RemoveLemming(L, RM_SAVE, False)
+  // The top of the level is a virtual forcefield that nudges lems downwards by at least 1px
+  else if (L.LemY <= 0) and (L.LemAction = baWalking) then
+    Inc(L.LemY)
+  else begin
+    // Jumpers complete their arc, but are nudged down to keep them visible
+    if (L.LemAction = baJumping) and (L.LemY <= 0) then
     begin
-      Dec(L.LemY);
+      Inc(L.LemY, (2 - L.LemY));
 
-        // ...Until they can walk onto it
-        if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
-          PopBalloon(L, 1, baWalking);
-    end else
-      Inc(L.LemY, 3);
+      // Jumpers turn if their arc meets vertically with a pixel at the top of the level
+      if HasPixelAt(L.LemX + L.LemDX, 0) then
+      begin
+        TurnAround(L);
+        Inc(L.LemX, L.LemDX);
+      end;
+    end;
+
+    // Swimmers and Gliders-in-Updrafts are nudged down to keep them visible
+    if ((L.LemAction = baSwimming)
+      or ((L.LemAction = baGliding) and HasTriggerAt(L.LemX, L.LemY, trUpdraft)))
+        and (L.LemY <= 1) then
+        begin
+          Inc(L.LemY);
+          Exit;
+        end;
+
+    // Climbers and Hoisters are cancelled mid-action
+    if (L.LemAction in [baClimbing, baHoisting]) and (L.LemY <= 7) then
+    begin
+      if L.LemIsSlider then
+        Transition(L, baSliding)
+      else begin
+        Transition(L, baFalling);
+        TurnAround(L);
+        Inc(L.LemX, L.LemDX);
+      end;
+    end;
+
+    // Builders and Stackers stop when the most-recently-placed brick is 1px below level top
+    if ((L.LemAction = baBuilding) and (L.LemY <= 1))
+      or ((L.LemAction = baStacking) and (L.LemY <= 9 - L.LemNumberOfBricksLeft)) then
+        Transition(L, baWalking);
+
+    // Ballooners bob around at the top...
+    if (L.LemAction = baBallooning) and (L.LemY < 30) then
+    begin
+      // ...Unless they find terrain at their foot position, in which case they ascend...
+      if HasPixelAt(L.LemX, L.LemY) then
+      begin
+        Dec(L.LemY);
+
+          // ...Until they can walk onto it
+          if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
+            PopBalloon(L, 1, baWalking);
+      end else
+        Inc(L.LemY, 3);
+    end;
   end;
 
-  { Bottom }
-  if (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
-  begin
-//    WrapPosX := L.LemX;                                    // The -6 is to make sure they're at 0
-//    WrapPosY := L.LemY - LEMMING_MAX_Y - PhysicsMap.Height - 3;
-//    Inc(LemmingsCloned);
-//    GenerateWrapLem;
-//    if Wrap then RemoveLemming(L, RM_NEUTRAL, true); else (the "true" is needed to mute the sound)
+  { /////////////////// Sides ////////////////// }
+  { Left and right sides are one-way forcefields }
+  { //////////////////////////////////////////// }
 
-    RemoveLemming(L, RM_NEUTRAL);
-    Result := False;
-  end;
-
-  { Sides }
-
-  // Both sides are forcefields
-  if (L.LemX <= 1) then
+  if (L.LemX <= 1) then // Left side
   begin
     HandleForceField(L, 1);
     Result := True;
   end;
 
-  if (L.LemX >= PhysicsMap.Width -2) then
+  if (L.LemX >= PhysicsMap.Width -2) then // Right side
   begin
     HandleForceField(L, -1);
     Result := True;
   end;
-//  end;
+
+  { ///////////////////// Bottom //////////////////// }
+  { Lems are removed if they fall off the bottom edge }
+  { ///////////////////////////////////////////////// }
+
+  if (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
+  begin                                                        // The - 3 is to make sure they're at 0
+    //WrapLemming(L, L.LemX, L.LemY - LEMMING_MAX_Y - PhysicsMap.Height - 3);
+    RemoveLemming(L, RM_NEUTRAL);
+    Result := False;
+  end;
 end;
 
 procedure TLemmingGame.EscapeFreezerCube(L: TLemming);
@@ -4704,11 +4752,13 @@ function TLemmingGame.HandleWalking(L: TLemming): Boolean;
 var
   LemDy: Integer;
   WalkerPositionAdjusted: Boolean;
+  LemIsAtLevelTop: Boolean;
 begin
   Result := True;
 
   WalkerPositionAdjusted := L.LemWalkerPositionAdjusted;
   L.LemWalkerPositionAdjusted := False;
+  LemIsAtLevelTop := L.LemY <= 6;
 
   // Zombies walk at half the speed of regular lems
   if L.LemIsZombie then
@@ -4727,8 +4777,9 @@ begin
     Exit;
   end;
 
-  
-  if (LemDy < -6) then
+  if LemIsAtLevelTop and (L.LemY = 0 - LemDy) then
+    TurnAround(L)
+  else if (LemDy < -6) then
   begin
     if L.LemIsClimber then
       Transition(L, baClimbing)
@@ -4738,13 +4789,11 @@ begin
       if not WalkerPositionAdjusted then
         Inc(L.LemX, L.LemDx);
     end;
-  end
-  else if (LemDy < -2) then
+  end else if (LemDy < -2) then
   begin
     Transition(L, baAscending);
     Inc(L.LemY, -2);
-  end
-  else if (LemDy < 1) then
+  end else if (LemDy < 1) then
     Inc(L.LemY, LemDy);
 
   // Get new ground pixel again in case the Lem has turned
@@ -7121,44 +7170,50 @@ begin
 end;
 
 function TLemmingGame.HandleFrozen(L: TLemming): Boolean;
-var
-i: Integer;
-YOffset: Integer;
+
+  function CanUnfreeze: Boolean;
+  var
+    i: Integer;
+  begin
+    Result := False;
+
+    for i := 1 to 7 do
+      if not HasPixelAt(L.LemX, L.LemY - i) then
+        Result := True;
+  end;
+
   procedure Unfreeze;
   begin
     Transition(L, baUnfreezing);
     L.LemUnfreezingTimer := 12;
   end;
 begin
-  Result := true;
+  Result := True;
 
-  if L.LemAction = baFrozen then
+  // Check first if any of the bottom 7 pixels of the ice cube are removed
+  if (L.LemAction = baFrozen) and CanUnfreeze then
   begin
-    // Prevents Freezer lems falling off the bottom of the screen
+    // Freezer at bottom-of-level checks
     if (L.LemY > PhysicsMap.Height) then
     begin
-      YOffset := L.LemY - 7;
-
-      if YOffset <= (PhysicsMap.Height -2) then
-      begin
-        // Freezers can be unfrozen if the top 5px of ice cube are removed
-        if not HasPixelAt(L.LemX, YOffset) then
+      // The topmost 2 pixels of the visible ice cube must be removed to allow unfreezing
+      if not    HasPixelAt(L.LemX, L.LemY - 11)
+        and not HasPixelAt(L.LemX, L.LemY - 10) then
           Unfreeze;
-      end else if YOffset >= (PhysicsMap.Height -1) then
-      begin
-        // Allows Freezers with <4px showing to be unfrozen
-        if not HasPixelAt(L.LemX, PhysicsMap.Height -2) then
+    end else
+    // Freezer at top-of-level checks
+    if (L.LemY <= 7) then
+    begin
+      // The top-or-bottom-most pixel of the visible ice cube must be removed to allow unfreezing
+      if not   HasPixelAt(L.LemX, 0)
+        or not HasPixelAt(L.LemX, L.LemY -1) then
           Unfreeze;
-      end;
-    end else begin
-      // Normal Freezer check
-      for i := 1 to 7 do
-        if not HasPixelAt(L.LemX, L.LemY - i) then
-          Unfreeze;
-    end;
+    end else
+    // Normal Freezer checks
+      Unfreeze;
   end;
 
-  if NukeIsActive then L.LemHideCountdown := false;
+  if NukeIsActive then L.LemHideCountdown := False;
 end;
 
 function TLemmingGame.HandleUnfreezing(L: TLemming): Boolean;

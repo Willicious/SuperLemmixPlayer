@@ -117,7 +117,6 @@ type
     LemIsInvincible               : Boolean;
     LemIsWaterblocker             : Boolean;
     LemHasBeenOhnoer              : Boolean;
-    LemHasTurned                  : Boolean;
     LemPlacedBrick                : Boolean; // Placed useful brick during this cycle (plaformer and stacker)
     LemInSplitter                 : Integer;
     LemHasBlockerField            : Boolean; // For blockers, even during ohno
@@ -288,8 +287,12 @@ begin
 end;
 
 function TLemming.GetCannotReceiveSkills: Boolean;
-begin                                                        // Just in case - shouldn't happen
-  Result := LemIsZombie or LemIsNeutral or (LemHasBeenOhnoer and not LemIsInvincible);
+begin       // Skills cannot be assigned to...
+  Result := (   LemY <=0)        // ...lems at the top of the level
+            or  LemIsZombie      // ...Zombies
+            or  LemIsNeutral     // ...Neutrals
+            or (LemHasBeenOhnoer // ...or post-ohno state lems...
+              and not LemIsInvincible); // ...unless they're invincible
 end;
 
 function TLemming.GetJumperDebug(Index: Integer): Boolean;
@@ -350,7 +353,6 @@ begin
   LemIsRadiating := Source.LemIsRadiating;
   LemIsZombie := Source.LemIsZombie;
   LemHasBeenOhnoer := Source.LemHasBeenOhnoer;
-  LemHasTurned := Source.LemHasTurned;
   LemIsNeutral := Source.LemIsNeutral;
   LemIsRival := Source.LemIsRival;
   LemIsInRivalExit := Source.LemIsInRivalExit;
