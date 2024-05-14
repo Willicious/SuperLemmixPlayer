@@ -551,7 +551,7 @@ begin
   end;
 
   // Draw blocker areas on the triggerLayer
-  if (aLemming.LemAction = baBlocking) then
+  if (aLemming.LemAction = baBlocking) and (aLemming.LemHasBlockerField) then
   begin
     TriggerLeft := aLemming.LemX - 6;
     if (aLemming.LemDX = 1) then Inc(TriggerLeft);
