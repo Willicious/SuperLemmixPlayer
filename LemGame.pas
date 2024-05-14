@@ -1529,8 +1529,13 @@ begin
         RemoveLemming(L, RM_ZOMBIE, true);
         Dec(fSpawnedDead);
       end;
-
     end;
+
+    // Out-of-area pre-placed lemmings are automatically saved
+    if (Lem.Y <= 0) or (Lem.Y >= PhysicsMap.Height + LEMMING_MAX_Y)
+    or (Lem.X <= 0) or (Lem.X >= PhysicsMap.Width - 1) then
+      RemoveLemming(L, RM_SAVE, True);
+
     Dec(LemmingsToRelease);
     Inc(LemmingsOut);
   end;
@@ -4631,11 +4636,8 @@ begin
 
   { /// NOTE - Walkers at the top of the level are handled in HandleWalking /// }
 
-  // Automatically save any lemmings pre-placed more than 16 pixels above the top of the level
-  if (L.LemY <= -16) then
-    RemoveLemming(L, RM_SAVE, False)
   // The top of the level is a virtual forcefield that nudges lems downwards by at least 1px
-  else if (L.LemY <= 0) and (L.LemAction = baWalking) then
+  if (L.LemY <= 0) and (L.LemAction = baWalking) then
     Inc(L.LemY)
   else begin
     // Jumpers complete their arc, but are nudged down to keep them visible
