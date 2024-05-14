@@ -1404,7 +1404,6 @@ procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShift
 var
   CurrTime: Cardinal;
   sn: Integer;
-  SkillCountChange: TBaseReplayItem;
   ButtonIndex: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;

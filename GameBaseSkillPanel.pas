@@ -1534,8 +1534,6 @@ end;
 procedure TBaseSkillPanel.SetInfoCursor(Pos: Integer);
 var
   S: string;
-  Button: TSkillPanelButton;
-  X, Y: Integer;
 const
   LEN = 14;
 begin
