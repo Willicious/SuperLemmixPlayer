@@ -356,9 +356,6 @@ type
     procedure UpdateUnfreezingTimer(L: TLemming);
     procedure UpdateBalloonPopTimer(L: TLemming);
     procedure UpdateGadgets;
-
-    function HasLaserAt(X, Y: Integer): Boolean;
-    function HasProjectileAt(X, Y: Integer): Boolean;
     procedure UpdateProjectiles;
 
     function CheckSkillAvailable(aAction: TBasicLemmingAction; L: TLemming): Boolean;
@@ -492,6 +489,8 @@ type
     function FindGroundPixel(x, y: Integer): Integer;
     function HasSteelAt(x, y: Integer): Boolean;
     function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
+    function HasLaserAt(X, Y: Integer): Boolean;
+    function HasProjectileAt(X, Y: Integer): Boolean;
 
     function ShouldExitToPostview: Boolean;
     procedure MaybeExitToPostview;
