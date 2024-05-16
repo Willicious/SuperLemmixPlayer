@@ -5723,7 +5723,7 @@ var
       SimulateLem(CopyL, False);
 
       // Check if we have turned around at steel
-      if (CopyL.LemDX = -L.LemDX) then
+      if (CopyL.LemDX = -L.LemDX) and (CopyL.LemAction <> baDehoisting) then
       begin
         Result := True;
         Break;
@@ -5955,7 +5955,7 @@ var
         MoveUpContinue := true;
 
       // Check if we have turned around at steel
-      if (CopyL.LemDX = -L.LemDX) then
+      if (CopyL.LemDX = -L.LemDX) and (CopyL.LemAction <> baDehoisting) then
       begin
         SteelContinue := True;
         Break;
