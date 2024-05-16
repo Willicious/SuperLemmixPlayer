@@ -155,6 +155,7 @@ begin
       Exit;
     end;
 
+  aBox.ItemIndex := -1;
   aBox.Text := aPattern;
 end;
 
@@ -243,6 +244,7 @@ begin
 
     // Checkboxes
     cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
+    cbAutoSaveReplayPattern.Enabled := GameParams.AutoSaveReplay;
     SetReplayPatternDropdown(cbAutoSaveReplayPattern, GameParams.AutoSaveReplayPattern);
     SetReplayPatternDropdown(cbIngameSaveReplayPattern, GameParams.IngameSaveReplayPattern);
     SetReplayPatternDropdown(cbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
@@ -434,8 +436,11 @@ end;
 
 procedure TFormNXConfig.cbAutoSaveReplayClick(Sender: TObject);
 begin
-  cbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
-  OptionChanged(Sender);
+  if not fIsSetting then
+  begin
+    cbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
+    OptionChanged(Sender);
+  end;
 end;
 
 procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);
@@ -546,7 +551,8 @@ end;
 
 procedure TFormNXConfig.SliderChange(Sender: TObject);
 begin
-  btnApply.Enabled := true;
+  if not fIsSetting then
+    btnApply.Enabled := true;
 end;
 
 end.
