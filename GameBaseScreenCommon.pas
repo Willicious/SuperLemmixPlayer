@@ -140,7 +140,9 @@ begin
 
     TickCount := GetTickCount;
   end;
+
   ScreenImg.Bitmap.MasterAlpha := 255;
+  Application.ProcessMessages;
 end;
 
 procedure TGameBaseScreen.FadeOut;

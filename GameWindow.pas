@@ -2038,7 +2038,6 @@ begin
     SoundManager.LoadMusicFromFile(GetLevelMusicName)
   else
     SoundManager.FreeMusic; // This is safe to call even if no music is loaded, but ensures we don't just get the previous level's music
-
 end;
 
 procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
