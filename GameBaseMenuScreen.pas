@@ -15,7 +15,8 @@ uses
   GameControl,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
-  Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows;
+  Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows,
+  IOUtils, Vcl.FileCtrl; // For Playback Mode
 
 const
   // Determines the size of the available window space
@@ -170,6 +171,7 @@ type
       procedure MainFormResized; override;
       procedure DrawClassicModeButton;
       procedure HandleClassicModeClick;
+      procedure StartPlayback(Index: Integer);
   end;
 
 implementation
@@ -193,6 +195,80 @@ begin
   ScreenImg.OnMouseDown := nil;
   ScreenImg.OnMouseMove := nil;
   inherited;
+end;
+
+procedure TGameBaseMenuScreen.StartPlayback(Index: Integer);
+var
+  ReplayContent: TStringList;
+  LevelContent: TStringList;
+  ReplayFile: string;
+  LevelFile: string;
+  ReplayID, LevelID: string;
+  LevelFiles: TStringDynArray;
+  LevelsDirectory: string;
+  j: Integer;
+begin
+  if GameParams.PlaybackMode and ((Index < 0) or (Index >= GameParams.PlaybackList.Count)) then
+  begin
+    ShowMessage('Invalid replay index.');
+    Exit;
+  end;
+
+  LevelsDirectory := GameParams.CurrentLevel.Group.Path;
+
+  if LevelsDirectory = '' then
+  begin
+    ShowMessage('No valid directory found for the selected level.');
+    Exit;
+  end;
+
+  LevelFiles := TDirectory.GetFiles(LevelsDirectory, '*.nxlv', TSearchOption.soAllDirectories);
+
+  ReplayContent := TStringList.Create;
+  LevelContent := TStringList.Create;
+  try
+    ReplayFile := GameParams.PlaybackList[Index]; // Accessing full path
+
+    // Load replay file content
+    try
+      ReplayContent.LoadFromFile(ReplayFile);
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Failed to load replay file: ' + E.Message);
+        Exit;
+      end;
+    end;
+
+    // Extract the Replay ID
+    for j := 0 to ReplayContent.Count - 1 do
+    begin
+      if Pos('ID x', ReplayContent[j]) = 1 then
+      begin
+        ReplayID := Copy(ReplayContent[j], 4, Length(ReplayContent[j]));
+        Break;
+      end;
+    end;
+
+    // Search for "ID x" line in level file
+    GameParams.FindLevelByID(ReplayID);
+    GameParams.LoadCurrentLevel();
+
+    // Set the value of the current Playback index
+    GameParams.PlaybackIndex := Index;
+
+    // Reload settings to align GameParams with current level
+    GameParams.Save(scImportant);
+    GameParams.Load;
+
+    LoadedReplayFile := ReplayFile;
+    LoadReplay;
+
+    CloseScreen(gstPreview);
+  finally
+    ReplayContent.Free;
+    LevelContent.Free;
+  end;
 end;
 
 constructor TGameBaseMenuScreen.Create(aOwner: TComponent);
@@ -936,7 +1012,10 @@ begin
 
   if PopupResult = mrRetry then
   begin
-    CloseScreen(gstReplayTest)
+    if GameParams.PlaybackMode then
+      StartPlayback(0)
+    else
+      CloseScreen(gstReplayTest)
   end else if not Success then
   begin
     GameParams.SetLevel(OldLevel);

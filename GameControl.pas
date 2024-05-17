@@ -179,7 +179,6 @@ type
     LevelString: String;
     BaseLevelPack: TNeoLevelGroup;
 
-
     // This is initialized by the window in which the game will be played
     TargetBitmap : TBitmap32;
 
@@ -203,6 +202,10 @@ type
 
     //SysDat               : TSysDatRec;
     ReplayCheckPath: String;
+
+    PlaybackList: TStringList;
+    PlaybackMode: Boolean;
+    PlaybackIndex: Integer;
 
     TestModeLevel: TNeoLevelEntry;
 
@@ -948,6 +951,8 @@ begin
                    E.ClassName + ': ' + E.Message + #10 +
                    'Default hotkeys have been loaded. Customizations to hotkeys during this session will not be saved.');
   end;
+
+  PlaybackList := TStringList.Create;
 end;
 
 procedure TDosGameParams.CreateBasePack;
@@ -980,6 +985,7 @@ destructor TDosGameParams.Destroy;
 begin
   fHotkeys.Free;
   BaseLevelPack.Free;
+  PlaybackList.Free;
   inherited Destroy;
 end;
 

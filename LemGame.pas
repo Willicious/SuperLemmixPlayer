@@ -8411,6 +8411,8 @@ end;
 
 procedure TLemmingGame.RegainControl(Force: Boolean = false);
 begin
+  if Force then GameParams.PlaybackMode := False;
+
   if ReplayInsert and not Force then Exit;
 
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;

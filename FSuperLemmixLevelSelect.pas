@@ -15,6 +15,7 @@ uses
   Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Buttons,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
+  Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
   LemNeoParser, GR32_Image, System.ImageList;
 
@@ -37,6 +38,7 @@ type
     btnCleanseOne: TButton;
     btnClearRecords: TButton;
     btnResetTalismans: TBitBtn;
+    btnPlaybackMode: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -45,6 +47,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure btnSaveImageClick(Sender: TObject);
     procedure btnMassReplayClick(Sender: TObject);
+    procedure btnPlaybackModeClick(Sender:TObject);
     procedure btnCleanseLevelsClick(Sender: TObject);
     procedure btnCleanseOneClick(Sender: TObject);
     procedure btnClearRecordsClick(Sender: TObject);
@@ -427,6 +430,30 @@ begin
   WriteToParams;
   if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
   ModalResult := mrOk;
+end;
+
+procedure TFLevelSelect.btnPlaybackModeClick(Sender: TObject);
+var
+  ReplayFolder: string;
+  ReplayFiles: TStringDynArray;
+  ReplayFile: string;
+  InitialDir: string;
+begin
+  InitialDir := IncludeTrailingPathDelimiter(AppPath) + SFReplays;
+
+  if not SelectDirectory('Select folder containing replays', InitialDir, ReplayFolder) then
+    Exit;
+
+  // Get list of replay files
+  ReplayFiles := TDirectory.GetFiles(ReplayFolder, '*.nxrp');
+
+  // Add replay file names to PlaybackList
+  for ReplayFile in ReplayFiles do
+    GameParams.PlaybackList.Add(ReplayFile); // Storing full path for easier access later
+
+  GameParams.PlaybackMode := True;
+  WriteToParams;
+  ModalResult := mrRetry;
 end;
 
 procedure TFLevelSelect.btnResetTalismansClick(Sender: TObject);
@@ -1189,7 +1216,7 @@ begin
 
   Group := Group.ParentBasePack;
 
-  if DirectoryExists(AppPath + 'Cleanse\' + MakeSafeForFilename(Group.Name) + '\') then
+  if SysUtils.DirectoryExists(AppPath + 'Cleanse\' + MakeSafeForFilename(Group.Name) + '\') then
     if MessageDlg('Folder "Cleanse\' + MakeSafeForFilename(Group.Name) + '\" already exists. Continuing will erase it. Continue?',
                   mtCustom, [mbYes, mbNo], 0) = mrNo then
       Exit;

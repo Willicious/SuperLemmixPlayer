@@ -171,6 +171,9 @@ begin
 
     DrawAllClickables;
     ReloadCursor('postview.png');
+
+    if GameParams.PlaybackMode then
+      StartPlayback(GameParams.PlaybackIndex + 1);
   finally
     ScreenImg.EndUpdate;
   end;

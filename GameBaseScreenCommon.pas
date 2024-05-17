@@ -209,11 +209,10 @@ var
 begin
   s := '';
 
-  if OpenedViaReplay then
+  if OpenedViaReplay or GameParams.PlaybackMode then
   begin
     Result := true; // Return true if opened by replay
     s := LoadedReplayFile;
-
   end else begin
     Dlg := TOpenDialog.Create(self);
     try

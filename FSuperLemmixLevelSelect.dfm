@@ -16,6 +16,7 @@ object FLevelSelect: TFLevelSelect
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnClick = btnPlaybackModeClick
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -214,6 +215,15 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Reset Talismans'
     TabOrder = 4
     OnClick = btnResetTalismansClick
+  end
+  object btnPlaybackMode: TButton
+    Left = 916
+    Top = 264
+    Width = 134
+    Height = 25
+    Caption = 'Playback Mode'
+    TabOrder = 11
+    OnClick = btnPlaybackModeClick
   end
   object ilStatuses: TImageList
   end

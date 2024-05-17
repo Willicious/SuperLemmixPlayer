@@ -282,6 +282,9 @@ begin
     MakeTalismanOptions;
 
     DrawAllClickables;
+
+    if GameParams.PlaybackMode then
+      BeginPlay;
   finally
     W.Free;
     ScreenImg.EndUpdate;
