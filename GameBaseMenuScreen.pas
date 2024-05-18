@@ -210,7 +210,8 @@ var
 begin
   if GameParams.PlaybackMode and ((Index < 0) or (Index >= GameParams.PlaybackList.Count)) then
   begin
-    ShowMessage('Invalid replay index.');
+    GameParams.PlaybackMode := False;
+    GameParams.PlaybackList.Clear;
     Exit;
   end;
 
