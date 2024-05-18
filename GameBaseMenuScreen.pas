@@ -200,13 +200,9 @@ end;
 procedure TGameBaseMenuScreen.StartPlayback(Index: Integer);
 var
   ReplayContent: TStringList;
-  LevelContent: TStringList;
   ReplayFile: string;
-  LevelFile: string;
-  ReplayID, LevelID: string;
-  LevelFiles: TStringDynArray;
-  LevelsDirectory: string;
-  j: Integer;
+  ReplayID: Int64;
+  i: Integer;
 begin
   if GameParams.PlaybackMode and ((Index < 0) or (Index >= GameParams.PlaybackList.Count)) then
   begin
@@ -215,18 +211,7 @@ begin
     Exit;
   end;
 
-  LevelsDirectory := GameParams.CurrentLevel.Group.Path;
-
-  if LevelsDirectory = '' then
-  begin
-    ShowMessage('No valid directory found for the selected level.');
-    Exit;
-  end;
-
-  LevelFiles := TDirectory.GetFiles(LevelsDirectory, '*.nxlv', TSearchOption.soAllDirectories);
-
   ReplayContent := TStringList.Create;
-  LevelContent := TStringList.Create;
   try
     ReplayFile := GameParams.PlaybackList[Index]; // Accessing full path
 
@@ -241,26 +226,32 @@ begin
       end;
     end;
 
-    // Extract the Replay ID
-    for j := 0 to ReplayContent.Count - 1 do
+    // Extract the Replay ID as Int64
+    for i := 0 to ReplayContent.Count - 1 do
     begin
-      if Pos('ID x', ReplayContent[j]) = 1 then
+      if Pos('ID ', ReplayContent[i]) = 1 then
       begin
-        ReplayID := Copy(ReplayContent[j], 4, Length(ReplayContent[j]));
+        try
+          // Convert the hexadecimal string directly to Int64
+          ReplayID := StrToInt64('$' + Copy(ReplayContent[i], 5, Length(ReplayContent[i]) - 4));
+        except
+          on E: Exception do
+          begin
+            ShowMessage('Invalid Replay ID format: ' + E.Message);
+            Exit;
+          end;
+        end;
         Break;
       end;
     end;
 
-    // Search for "ID x" line in level file
-    GameParams.FindLevelByID(ReplayID);
-    GameParams.LoadCurrentLevel();
-
-    // Set the value of the current Playback index
-    GameParams.PlaybackIndex := Index;
-
-    // Reload settings to align GameParams with current level
-    GameParams.Save(scImportant);
-    GameParams.Load;
+    if not GameParams.LoadLevelByID(ReplayID) then
+    begin
+      ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
+      GameParams.PlaybackIndex := Index + 1;
+      Exit;
+    end else
+      GameParams.PlaybackIndex := Index;
 
     LoadedReplayFile := ReplayFile;
     LoadReplay;
@@ -268,9 +259,9 @@ begin
     CloseScreen(gstPreview);
   finally
     ReplayContent.Free;
-    LevelContent.Free;
   end;
 end;
+
 
 constructor TGameBaseMenuScreen.Create(aOwner: TComponent);
 begin

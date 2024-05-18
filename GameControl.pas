@@ -228,6 +228,7 @@ type
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // Loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = false); // Re-prepares using the existing TLevel in memory
     procedure FindLevelByID(LevelID: string);
+    function LoadLevelByID(aID: Int64): Boolean;
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
@@ -680,6 +681,37 @@ begin
   end;
 
   SL.Free;
+end;
+
+function TDosGameParams.LoadLevelByID(aID: Int64): Boolean;
+var
+  G: TNeoLevelGroup;
+
+  function SearchGroup(aGroup: TNeoLevelGroup): Boolean;
+  var
+    i: Integer;
+  begin
+    Result := false;
+
+    for i := 0 to aGroup.Children.Count-1 do
+    begin
+      Result := SearchGroup(aGroup.Children[i]);
+      if Result then Exit;
+    end;
+
+    for i := 0 to aGroup.Levels.Count-1 do
+      if aGroup.Levels[i].LevelID = aID then
+      begin
+        SetLevel(aGroup.Levels[i]);
+        LoadCurrentLevel(True);
+        Result := true;
+      end;
+  end;
+begin
+  G := GameParams.CurrentLevel.Group;
+  while (G.Parent <> nil) and (not G.IsBasePack) do
+    G := G.Parent;
+  Result := SearchGroup(G);
 end;
 
 // Procedure to find and load a level by its ID

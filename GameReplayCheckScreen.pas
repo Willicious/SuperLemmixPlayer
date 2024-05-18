@@ -159,37 +159,6 @@ var
     Result := G.Name;
   end;
 
-  function LoadLevel(aID: Int64): Boolean;
-  var
-    G: TNeoLevelGroup;
-
-    function SearchGroup(aGroup: TNeoLevelGroup): Boolean;
-    var
-      i: Integer;
-    begin
-      Result := false;
-
-      for i := 0 to aGroup.Children.Count-1 do
-      begin
-        Result := SearchGroup(aGroup.Children[i]);
-        if Result then Exit;
-      end;
-
-      for i := 0 to aGroup.Levels.Count-1 do
-        if aGroup.Levels[i].LevelID = aID then
-        begin
-          GameParams.SetLevel(aGroup.Levels[i]);
-          GameParams.LoadCurrentLevel(true);
-          Result := true;
-        end;
-    end;
-  begin
-    G := GameParams.CurrentLevel.Group;
-    while (G.Parent <> nil) and (not G.IsBasePack) do
-      G := G.Parent;
-    Result := SearchGroup(G);
-  end;
-
   procedure GetReplayLevelIDs;
   var
     i, i2: Integer;
@@ -363,7 +332,7 @@ begin
         fReplays[i].ReplayLevelText := '';
         fReplays[i].ReplayLevelTitle := '<no match>';
 
-        if not LoadLevel(fReplays[i].ReplayLevelID) then
+        if not GameParams.LoadLevelByID(fReplays[i].ReplayLevelID) then
           fReplays[i].ReplayResult := CR_NOLEVELMATCH
         else if GameParams.Level.HasAnyFallbacks then
           fReplays[i].ReplayResult := CR_ERROR
