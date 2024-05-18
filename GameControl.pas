@@ -762,6 +762,7 @@ begin
       end
       // If only one matching file is found, load it directly
       else if MatchingFiles.Count = 1 then
+      // Bookmark - see below*
         aFileName := MatchingFiles[0]
       else
       begin
@@ -773,6 +774,7 @@ begin
 
           // Show the dialog
           if LevelDialog.ShowModal = mrOk then
+          // Bookmark - see below*
             aFileName := MatchingFiles[LevelDialog.ListBoxFiles.ItemIndex]
           else
             MatchFound := False;
@@ -784,8 +786,15 @@ begin
       if not MatchFound then Exit;
 
       // Set the Filename to the selected level file
-      CurrentLevel.Filename := aFileName;
-      SetLevel(CurrentLevel);
+
+      { *Bookmark - this isn't actually the ideal way to do this, but it sort of works
+       It's necessary to re-load the GameParams, and it only works for 1 level
+       Instead, see the new LoadLevelByID and see if there might be a way to harness that
+       (Bear in mind though, that procedure relies on prior knowledge of GameParams.CurrentLevel,
+       so it might be completely irrelevant in this context) }
+      CurrentLevel.Filename := aFileName;  // <---- *
+      SetLevel(CurrentLevel);              // <---- *
+      { // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ // }
     finally
       MatchingFiles.Free;
     end;

@@ -127,6 +127,7 @@ begin
 
   if OpenedViaReplay then
   begin
+    //GameParams.LoadLevelByID(StrToInt64(LoadedReplayID));
     GameParams.FindLevelByID(LoadedReplayID);
 
     if not GameParams.MatchFound then
