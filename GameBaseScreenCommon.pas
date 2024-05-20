@@ -24,12 +24,10 @@ type
   private
     fScreenImg           : TImage32;
     fScreenIsClosing     : Boolean;
-    fCloseDelay          : Integer;
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
   protected
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
-    property CloseDelay: Integer read fCloseDelay write fCloseDelay;
 
   public
     function LoadReplay: Boolean;
@@ -77,11 +75,6 @@ begin
   ScreenImg.OnMouseMove := nil;
   Application.OnIdle := nil;
   fScreenIsClosing := True;
-  if fCloseDelay > 0 then
-  begin
-    Update;
-    Sleep(fCloseDelay);
-  end;
 
   FadeOut;
 
