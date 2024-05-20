@@ -251,25 +251,23 @@ var
 begin
   Result := true;
 
-    // Save the data between screens. This way it's more up to date in case game crashes
-    GameParams.Save(TGameParamsSaveCriticality.scNone);
+  // Save the data between screens. This way it's more up to date in case game crashes
+  GameParams.Save(TGameParamsSaveCriticality.scNone); // Bookmark - this is where data gets saved!!
 
-    // This might be so that after the text screen, the correct screen out of gstPlay or gstPostview is shown
-    NewScreen := GameParams.NextScreen;
-    GameParams.NextScreen := GameParams.NextScreen2;
-    GameParams.NextScreen2 := gstUnknown;
+  // This might be so that after the text screen, the correct screen out of gstPlay or gstPostview is shown
+  NewScreen := GameParams.NextScreen;
+  GameParams.NextScreen := GameParams.NextScreen2;
+  GameParams.NextScreen2 := gstUnknown;
 
-    case NewScreen of
-      gstMenu      : ShowMenuScreen;
-      gstPreview   : ShowPreviewScreen;
-      gstPlay      : ShowPlayScreen;
-      gstPostview  : ShowPostviewScreen;
-      gstText      : ShowTextScreen;
-      gstReplayTest: ShowReplayCheckScreen;
-      else Result := false;
-    end;
-
-  //end;
+  case NewScreen of
+    gstMenu      : ShowMenuScreen;
+    gstPreview   : ShowPreviewScreen;
+    gstPlay      : ShowPlayScreen;
+    gstPostview  : ShowPostviewScreen;
+    gstText      : ShowTextScreen;
+    gstReplayTest: ShowReplayCheckScreen;
+    else Result := false;
+  end;
 end;
 
 procedure TAppController.ShowMenuScreen;
