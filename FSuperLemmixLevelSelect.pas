@@ -10,7 +10,7 @@ uses
   LemCore,
   LemTalisman,
   PngInterface,
-  FLevelInfo,
+  FLevelInfo, FPlaybackMode,
   GR32, GR32_Resamplers, GR32_Layers,
   Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Buttons,
@@ -78,7 +78,6 @@ type
     procedure ClearTalismanButtons;
     procedure TalButtonClick(Sender: TObject);
     procedure PackListTalButtonClick(Sender: TObject);
-
     procedure DisplayPackTalismanInfo;
 
     procedure DrawSpeedButton(aButton: TSpeedButton; aIconIndex: Integer; aOverlayIndex: Integer = -1);
@@ -91,6 +90,8 @@ type
   public
     property LoadAsPack: Boolean read fLoadAsPack;
     procedure LoadIcons;
+
+    function GetCurrentlySelectedPack: String;
   end;
 
 const // Icon indexes
@@ -316,6 +317,32 @@ begin
   SetInfo;
 end;
 
+function TFLevelSelect.GetCurrentlySelectedPack: String;
+var
+  G: TNeoLevelGroup;
+  N: TTreeNode;
+  Obj: TObject;
+begin
+  Result := '';
+
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit;
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+    G := TNeoLevelGroup(Obj).ParentBasePack
+  else if Obj is TNeoLevelEntry then
+    G := TNeoLevelEntry(Obj).Group.ParentBasePack
+  else
+    Exit;
+
+  Result := G.PackTitle;
+
+  if Result = '' then
+    Result := StringReplace(G.Name, '_', ' ', [rfReplaceAll]);
+end;
+
 procedure TFLevelSelect.FormDestroy(Sender: TObject);
 begin
   fIconBMP.Free;
@@ -434,26 +461,36 @@ end;
 
 procedure TFLevelSelect.btnPlaybackModeClick(Sender: TObject);
 var
-  ReplayFolder: string;
+  PlaybackModeForm: TFPlaybackMode;
   ReplayFiles: TStringDynArray;
   ReplayFile: string;
-  InitialDir: string;
 begin
-  InitialDir := IncludeTrailingPathDelimiter(AppPath) + SFReplays;
+  PlaybackModeForm := TFPlaybackMode.Create(nil);
 
-  if not SelectDirectory('Select folder containing replays', InitialDir, ReplayFolder) then
-    Exit;
+  try
+    // Populate the form with the currently selected pack
+    PlaybackModeForm.CurrentlySelectedPack := GetCurrentlySelectedPack;
+    PlaybackModeForm.UpdatePackNameText;
 
-  // Get list of replay files
-  ReplayFiles := TDirectory.GetFiles(ReplayFolder, '*.nxrp');
+    if PlaybackModeForm.ShowModal = mrOk then
+    begin
+      if PlaybackModeForm.SelectedFolder = '' then
+        Exit;
 
-  // Add replay file names to PlaybackList
-  for ReplayFile in ReplayFiles do
-    GameParams.PlaybackList.Add(ReplayFile); // Storing full path for easier access later
+      // Get list of replay files
+      ReplayFiles := TDirectory.GetFiles(PlaybackModeForm.SelectedFolder, '*.nxrp');
 
-  GameParams.PlaybackMode := True;
-  WriteToParams;
-  ModalResult := mrRetry;
+      // Add replay file names to PlaybackList
+      for ReplayFile in ReplayFiles do
+        GameParams.PlaybackList.Add(ReplayFile); // Storing full path for easier access later
+
+      GameParams.PlaybackMode := True;
+      WriteToParams;
+      ModalResult := mrRetry;
+    end;
+  finally
+    PlaybackModeForm.Free;
+  end;
 end;
 
 procedure TFLevelSelect.btnResetTalismansClick(Sender: TObject);

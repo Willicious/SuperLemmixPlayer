@@ -68,7 +68,8 @@ uses
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
   FReplayRename in 'FReplayRename.pas' {FReplayNaming},
   LemProjectile in 'LemProjectile.pas',
-  FLevelListDialog in 'FLevelListDialog.pas';
+  FLevelListDialog in 'FLevelListDialog.pas',
+  FPlaybackMode in 'FPlaybackMode.pas';
 
 {$R *.res}
 
