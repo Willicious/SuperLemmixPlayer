@@ -129,6 +129,7 @@ type
 
       procedure DoLevelSelect;
       procedure SaveReplay;
+      procedure CancelPlaybackMode;
 
       procedure ShowConfigMenu;
       procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
@@ -184,6 +185,12 @@ const
   ACCEPT_KEY_DELAY = 200;
 
 { TGameBaseMenuScreen }
+
+procedure TGameBaseMenuScreen.CancelPlaybackMode;
+begin
+  if GameParams.PlaybackMode then
+    GameParams.PlaybackMode := False;
+end;
 
 procedure TGameBaseMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin

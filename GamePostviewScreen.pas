@@ -168,6 +168,7 @@ begin
     NewRegion.AddKeysFromFunction(lka_SaveReplay);
 
     MakeHiddenOption(VK_F2, ShowConfigMenu);
+    MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
 
     DrawAllClickables;
     ReloadCursor('postview.png');

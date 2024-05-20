@@ -82,7 +82,7 @@ var
 begin
   Result := '';
 
-  Key := lka_CancelReplay;
+  Key := lka_CancelPlayback;
   KeyNames := TLemmixHotkeyManager.GetKeyNames(True);
 
   for n := 0 to MAX_KEY do

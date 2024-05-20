@@ -119,6 +119,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Pause'
       'Nuke'
       'Nuke (Timer Bypass)'
+      'Cancel Playback Mode'
       'Save State'
       'Load State'
       'Highlight Lemming'

@@ -27,6 +27,7 @@ type
                          lka_Pause,
                          lka_Nuke,
                          lka_BypassNuke,
+                         lka_CancelPlayback,
                          lka_SaveState,
                          lka_LoadState,
                          lka_Highlight,
@@ -146,6 +147,7 @@ begin
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($20, lka_ShowUsedSkills);
   SetKeyFunction($68, lka_InfiniteSkills);
+  SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
   SetKeyFunction($33, lka_Skill, Integer(spbTimebomber));
@@ -207,6 +209,7 @@ begin
   SetKeyFunction($4F, lka_ReplayInsert);
   SetKeyFunction($47, lka_SaveState);
   SetKeyFunction($48, lka_LoadState);
+  SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($79, lka_SaveImage);
   SetKeyFunction($31, lka_SkillButton, 1);
   SetKeyFunction($32, lka_SkillButton, 2);
@@ -282,6 +285,7 @@ begin
   SetKeyFunction($47, lka_Skill, Integer(spbMiner));
   SetKeyFunction($57, lka_Skill, Integer(spbDigger));
   SetKeyFunction($68, lka_InfiniteSkills);
+  SetKeyFunction($59, lka_CancelPlayback);
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
@@ -299,6 +303,7 @@ begin
   if s = 'pause' then Result := lka_Pause;
   if s = 'nuke' then Result := lka_Nuke;
   if s = 'bypass_nuke' then Result := lka_BypassNuke;
+  if s = 'cancel_playback_mode' then Result := lka_CancelPlayback;
   if s = 'save_state' then Result := lka_SaveState;
   if s = 'load_state' then Result := lka_LoadState;
   if s = 'dir_select_left' then Result := lka_DirLeft;
@@ -456,6 +461,7 @@ var
       lka_Pause:            Result := 'Pause';
       lka_Nuke:             Result := 'Nuke';
       lka_BypassNuke:       Result := 'Bypass_Nuke';
+      lka_CancelPlayback:   Result := 'Cancel_Playback_Mode';
       lka_SaveState:        Result := 'Save_State';
       lka_LoadState:        Result := 'Load_State';
       lka_DirLeft:          Result := 'Dir_Select_Left';
@@ -636,9 +642,9 @@ begin
     Result[$2D] := 'Insert';
     Result[$2E] := 'Delete';
     // Shortcut time!
-    for i := 0 to 9 do
+    for i := 0 to 9 do // Numbers
       Result[$30 + i] := IntToStr(i);
-    for i := 0 to 8 do
+    for i := 0 to 8 do // ABCDEFGHI
       Result[$41 + i] := Char(i + 65);
     Result[$4A] := 'J';
     Result[$4B] := 'K';
@@ -646,7 +652,7 @@ begin
     Result[$4D] := 'M';
     Result[$4E] := 'N';
     Result[$4F] := 'O';
-    for i := 15 to 26 do
+    for i := 15 to 26 do // PQRSTUVWXYZ
       Result[$41 + i] := Char(i + 65);
     Result[$5B] := 'Windows';
     for i := 0 to 9 do

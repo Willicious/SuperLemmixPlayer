@@ -278,6 +278,7 @@ begin
     MakeHiddenOption(VK_DOWN, PreviousRank);
     MakeHiddenOption(VK_UP, NextRank);
     MakeHiddenOption(lka_SaveImage, SaveLevelImage);
+    MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
 
     MakeTalismanOptions;
 
