@@ -171,7 +171,6 @@ type
       procedure MainFormResized; override;
       procedure DrawClassicModeButton;
       procedure HandleClassicModeClick;
-      procedure StartPlayback(Index: Integer);
   end;
 
 implementation
@@ -196,72 +195,6 @@ begin
   ScreenImg.OnMouseMove := nil;
   inherited;
 end;
-
-procedure TGameBaseMenuScreen.StartPlayback(Index: Integer);
-var
-  ReplayContent: TStringList;
-  ReplayFile: string;
-  ReplayID: Int64;
-  i: Integer;
-begin
-  if GameParams.PlaybackMode and ((Index < 0) or (Index >= GameParams.PlaybackList.Count)) then
-  begin
-    GameParams.PlaybackMode := False;
-    GameParams.PlaybackList.Clear;
-    Exit;
-  end;
-
-  ReplayContent := TStringList.Create;
-  try
-    ReplayFile := GameParams.PlaybackList[Index]; // Accessing full path
-
-    // Load replay file content
-    try
-      ReplayContent.LoadFromFile(ReplayFile);
-    except
-      on E: Exception do
-      begin
-        ShowMessage('Failed to load replay file: ' + E.Message);
-        Exit;
-      end;
-    end;
-
-    // Extract the Replay ID as Int64
-    for i := 0 to ReplayContent.Count - 1 do
-    begin
-      if Pos('ID ', ReplayContent[i]) = 1 then
-      begin
-        try
-          // Convert the hexadecimal string directly to Int64
-          ReplayID := StrToInt64('$' + Copy(ReplayContent[i], 5, Length(ReplayContent[i]) - 4));
-        except
-          on E: Exception do
-          begin
-            ShowMessage('Invalid Replay ID format: ' + E.Message);
-            Exit;
-          end;
-        end;
-        Break;
-      end;
-    end;
-
-    if not GameParams.LoadLevelByID(ReplayID) then
-    begin
-      ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
-      GameParams.PlaybackIndex := Index + 1;
-      Exit;
-    end else
-      GameParams.PlaybackIndex := Index;
-
-    LoadedReplayFile := ReplayFile;
-    LoadReplay;
-
-    CloseScreen(gstPreview);
-  finally
-    ReplayContent.Free;
-  end;
-end;
-
 
 constructor TGameBaseMenuScreen.Create(aOwner: TComponent);
 begin
