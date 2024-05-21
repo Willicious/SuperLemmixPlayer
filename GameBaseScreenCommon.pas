@@ -36,6 +36,7 @@ type
     procedure ShowScreen; override;
 
     procedure StartPlayback(Index: Integer);
+    procedure Delay(mS: Integer);
 
     procedure FadeIn;
     procedure FadeOut;
@@ -101,6 +102,16 @@ end;
 destructor TGameBaseScreen.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TGameBaseScreen.Delay(mS: Integer);
+var
+  startTime, elapsedTime: Cardinal;
+begin
+  startTime := GetTickCount;
+  repeat
+    elapsedTime := GetTickCount - startTime;
+  until elapsedTime >= mS;
 end;
 
 procedure TGameBaseScreen.StartPlayback(Index: Integer);
@@ -291,6 +302,7 @@ begin
     CloseScreen(gstPreview);
 end;
 
+
 procedure TGameBaseScreen.FadeIn;
 var
   EndTickCount: Cardinal;
@@ -325,6 +337,13 @@ begin
   end;
 
   ScreenImg.Bitmap.MasterAlpha := 255;
+
+  if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview then
+  begin
+    Delay(800);
+    FadeOut;
+  end;
+
   Application.ProcessMessages;
 end;
 
