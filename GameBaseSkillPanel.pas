@@ -189,7 +189,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 50;
+  NUM_FONT_CHARS = 52;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -1340,7 +1340,7 @@ begin
       '0'..'9':    CharID := ord(New) - ord('0') + 1;
       '-':         CharID := 11;
       'A'..'Z':    CharID := ord(New) - ord('A') + 12;
-      #91 .. #102: CharID := ord(New) - ord('A') + 12;
+      #91 .. #104: CharID := ord(New) - ord('A') + 12;
     else CharID := -1;
     end;
 
@@ -1461,7 +1461,7 @@ begin
   fInfoFont[i].SetSize(140 * ResMod, 16 * ResMod);
   fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
 
-  fNewDrawStr[Pos] := #102;
+  fNewDrawStr[Pos] := #104;
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
@@ -1640,26 +1640,21 @@ procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
 var
   TickCount: Cardinal;
   FrameIndex: Integer;
+  IsReplaying: Boolean;
 begin
   // Calculate the frame index based on the tick count
   TickCount := GetTickCount;
   FrameIndex := (TickCount div 500) mod 2;
+  IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
 
-  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+  if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
+  else if GameParams.PlaybackModeActive and not IsReplaying then
+    fNewDrawStr[Pos] := Chr(102 + FrameIndex) // Purple "P" (#102 and #103)
   else if Game.ReplayInsert then
-  begin
-    case FrameIndex of
-      0: fNewDrawStr[Pos] := #100; // Blue "R"
-      1: fNewDrawStr[Pos] := #101;
-    end;
-  end else if not fRRIsPressed then
-  begin
-    case FrameIndex of
-      0: fNewDrawStr[Pos] := #98; // Red "R"
-      1: fNewDrawStr[Pos] := #99;
-    end;
-  end;
+    fNewDrawStr[Pos] := Chr(100 + FrameIndex) // Blue "R" (#100 and #101)
+  else if not fRRIsPressed then
+    fNewDrawStr[Pos] := Chr(98 + FrameIndex); // Red "R" (#98 and #99)
 end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
