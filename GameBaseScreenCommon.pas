@@ -126,7 +126,14 @@ var
   begin
     Result := True;
 
-    if ((Index < 0) or (Index >= GameParams.PlaybackList.Count)) then
+    if ((GameParams.PlaybackOrder = poByLevel) and (GameParams.PlaybackList.Count <= 0))
+
+    or ((GameParams.PlaybackOrder = poByReplay)
+      and ((Index < 0) or (Index >= GameParams.PlaybackList.Count)))
+
+    or ((GameParams.PlaybackOrder = poRandom)
+      and ((RandomIndex < 0) or (RandomIndex >= GameParams.PlaybackList.Count))) then
+
     begin
       GameParams.PlaybackModeActive := False;
       GameParams.PlaybackList.Clear;
@@ -272,12 +279,11 @@ begin
   {============================================================================}
   end else if GameParams.PlaybackOrder = poRandom then
   begin
-    if not ValidatePlaybackList then
-      Exit;
-
     // Get a random item from PlaybackList and find its ID
     RandomIndex := GetRandomIndex;
-    OutputDebugString(PChar(IntToStr(RandomIndex)));
+
+    if not ValidatePlaybackList then
+      Exit;
 
     ReplayID := GetReplayID(RandomIndex);
 
