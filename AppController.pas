@@ -122,6 +122,7 @@ begin
     GameParams.NextScreen := gstExit;
   end;
 
+  GameParams.PlaybackModeActive := False;
   OpenedViaReplay := False;
   CheckIfOpenedViaReplay;
 

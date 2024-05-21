@@ -13,10 +13,11 @@ object FPlaybackMode: TFPlaybackMode
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object lblSelectedFolder: TLabel
-    Left = 41
+    Left = 57
     Top = 80
     Width = 90
     Height = 13
@@ -51,14 +52,14 @@ object FPlaybackMode: TFPlaybackMode
     OnClick = btnBrowseClick
   end
   object stSelectedFolder: TStaticText
-    Left = 142
+    Left = 157
     Top = 80
     Width = 212
     Height = 17
     Caption = '(Click Browse to choose a folder of replays)'
     TabOrder = 1
   end
-  object rgPlaybackStyle: TRadioGroup
+  object rgPlaybackOrder: TRadioGroup
     Left = 41
     Top = 119
     Width = 97

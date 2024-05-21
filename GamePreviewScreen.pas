@@ -284,7 +284,7 @@ begin
 
     DrawAllClickables;
 
-    if GameParams.PlaybackMode then
+    if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview then
       BeginPlay;
   finally
     W.Free;

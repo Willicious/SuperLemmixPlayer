@@ -484,7 +484,7 @@ begin
       for ReplayFile in ReplayFiles do
         GameParams.PlaybackList.Add(ReplayFile); // Storing full path for easier access later
 
-      GameParams.PlaybackMode := True;
+      GameParams.PlaybackModeActive := True;
       WriteToParams;
       ModalResult := mrRetry;
     end;

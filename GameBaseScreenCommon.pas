@@ -108,64 +108,187 @@ var
   ReplayContent: TStringList;
   ReplayFile: string;
   ReplayID: Int64;
-  i: Integer;
-begin
-  if GameParams.PlaybackMode and ((Index < 0) or (Index >= GameParams.PlaybackList.Count)) then
+  LevelID: Int64;
+  MatchIndex, RandomIndex: Integer;
+
+  function ValidatePlaybackList: Boolean;
   begin
-    GameParams.PlaybackMode := False;
-    GameParams.PlaybackList.Clear;
-    Exit;
+    Result := True;
+
+    if ((Index < 0) or (Index >= GameParams.PlaybackList.Count)) then
+    begin
+      GameParams.PlaybackModeActive := False;
+      GameParams.PlaybackList.Clear;
+      Result := False;
+    end;
   end;
 
-  ReplayContent := TStringList.Create;
-  try
-    ReplayFile := GameParams.PlaybackList[Index]; // Accessing full path
-
-    // Load replay file content
+  function GetReplayID(Index: Integer): Int64;
+  var
+    i: Integer;
+  begin
+    Result := -1;
+    ReplayContent := TStringList.Create;
     try
-      ReplayContent.LoadFromFile(ReplayFile);
-    except
-      on E: Exception do
+      ReplayFile := GameParams.PlaybackList[Index];
+      try
+        ReplayContent.LoadFromFile(ReplayFile);
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Failed to load replay file: ' + E.Message);
+          Exit;
+        end;
+      end;
+
+      for i := 0 to ReplayContent.Count - 1 do
       begin
-        ShowMessage('Failed to load replay file: ' + E.Message);
+        if Pos('ID ', ReplayContent[i]) = 1 then
+        begin
+          try
+            Result := StrToInt64(Copy(ReplayContent[i], 4, Length(ReplayContent[i]) - 3));
+          except
+            on E: Exception do
+            begin
+              ShowMessage('Invalid Replay ID format in file ' + ReplayFile + ': ' + E.Message);
+              Exit;
+            end;
+          end;
+          Break;
+        end;
+      end;
+      if Result = -1 then
+        ShowMessage('No valid Replay ID found in file ' + ReplayFile);
+    finally
+      ReplayContent.Free;
+    end;
+  end;
+
+  procedure SearchPlaybackListForMatchingID;
+  var
+    i: Integer;
+    CurrentReplayID: Int64;
+  begin
+    MatchIndex := -1;
+    for i := 0 to GameParams.PlaybackList.Count - 1 do
+    begin
+      CurrentReplayID := GetReplayID(i);
+      if LevelID = CurrentReplayID then
+      begin
+        MatchIndex := i;
         Exit;
       end;
     end;
+  end;
 
-    // Extract the Replay ID as Int64
-    for i := 0 to ReplayContent.Count - 1 do
+  procedure LoadLevelAndFindMatchingReplay;
+  begin
+    // Loop until we find a matching ReplayID
+    while GameParams.CurrentLevel <> nil do
     begin
-      if Pos('ID ', ReplayContent[i]) = 1 then
-      begin
-        try
-          // Convert the hexadecimal string directly to Int64
-          ReplayID := StrToInt64('$' + Copy(ReplayContent[i], 5, Length(ReplayContent[i]) - 4));
-        except
-          on E: Exception do
-          begin
-            ShowMessage('Invalid Replay ID format: ' + E.Message);
-            Exit;
-          end;
+      try
+        // Load current level and store ID
+        GameParams.LoadCurrentLevel();
+        LevelID := GameParams.CurrentLevel.LevelID;
+        SearchPlaybackListForMatchingID;
+
+        if MatchIndex >= 0 then
+          Break // Exit loop if a match is found
+        else
+          GameParams.NextLevel(True); // Move on to next level if no match found
+      except
+        on E: Exception do
+        begin
+          ShowMessage('Error during replay search: ' + E.Message);
+          Exit;
         end;
-        Break;
       end;
     end;
+  end;
 
-    if not GameParams.LoadLevelByID(ReplayID) then
+  function GetRandomIndex: Integer;
+  begin
+    Randomize;
+    Result := Random(GameParams.PlaybackList.Count);
+  end;
+
+begin
+  if not GameParams.PlaybackModeActive then Exit; // Just in case
+
+  {============================================================================}
+  {============================== Playback by Level ===========================}
+  {============================================================================}
+  if GameParams.PlaybackOrder = poByLevel then
+  begin
+    if not ValidatePlaybackList then
+      Exit;
+
+    LoadLevelAndFindMatchingReplay;
+
+    // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
+    ReplayFile := GameParams.PlaybackList[MatchIndex];
+    GameParams.PlaybackList.Delete(MatchIndex);
+
+    // Load the level again to ensure it is the correct one
+    GameParams.LoadLevelByID(LevelID);
+
+  {============================================================================}
+  {============================== Playback by Replay ==========================}
+  {============================================================================}
+  end else if GameParams.PlaybackOrder = poByReplay then
+  begin
+    if not ValidatePlaybackList then
+      Exit;
+
+    // Get the Replay ID of the current item in PlaybackList
+    ReplayID := GetReplayID(Index);
+
+    if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
     begin
       ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
+
+      // Delete replay item from PlaybackList and move on to the next item if no match found
+      GameParams.PlaybackList.Delete(Index);
       GameParams.PlaybackIndex := Index + 1;
       Exit;
     end else
       GameParams.PlaybackIndex := Index;
 
-    LoadedReplayFile := ReplayFile;
-    LoadReplay;
+    ReplayFile := GameParams.PlaybackList[Index];
 
-    CloseScreen(gstPreview);
-  finally
-    ReplayContent.Free;
+  {============================================================================}
+  {============================= Randomized Playback ==========================}
+  {============================================================================}
+  end else if GameParams.PlaybackOrder = poRandom then
+  begin
+    if not ValidatePlaybackList then
+      Exit;
+
+    // Get a random item from PlaybackList and find its ID
+    RandomIndex := GetRandomIndex;
+    OutputDebugString(PChar(IntToStr(RandomIndex)));
+
+    ReplayID := GetReplayID(RandomIndex);
+
+    if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
+    begin
+      ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
+
+      // Delete replay item from PlaybackList and move on to the next item if no match found
+      GameParams.PlaybackList.Delete(RandomIndex);
+      Exit;
+    end;
+
+    // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
+    ReplayFile := GameParams.PlaybackList[RandomIndex];
+    GameParams.PlaybackList.Delete(RandomIndex);
   end;
+
+  LoadedReplayFile := ReplayFile;
+  LoadReplay;
+
+  if GameParams.AutoSkipPreAndPostview then
+    CloseScreen(gstPreview);
 end;
 
 procedure TGameBaseScreen.FadeIn;
@@ -269,7 +392,7 @@ var
 begin
   s := '';
 
-  if OpenedViaReplay or GameParams.PlaybackMode then
+  if OpenedViaReplay or GameParams.PlaybackModeActive then
   begin
     Result := true; // Return true if opened by replay
     s := LoadedReplayFile;

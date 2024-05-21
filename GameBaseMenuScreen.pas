@@ -188,8 +188,8 @@ const
 
 procedure TGameBaseMenuScreen.CancelPlaybackMode;
 begin
-  if GameParams.PlaybackMode then
-    GameParams.PlaybackMode := False;
+  if GameParams.PlaybackModeActive then
+    GameParams.PlaybackModeActive := False;
 end;
 
 procedure TGameBaseMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
@@ -944,7 +944,7 @@ begin
 
   if PopupResult = mrRetry then
   begin
-    if GameParams.PlaybackMode then
+    if GameParams.PlaybackModeActive then
       StartPlayback(0)
     else
       CloseScreen(gstReplayTest)

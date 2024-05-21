@@ -1529,7 +1529,7 @@ begin
                           fLastNukeKeyTime := CurrTime;
                       end;
       lka_CancelPlayback: begin
-                            GameParams.PlaybackMode := False;
+                            GameParams.PlaybackModeActive := False;
                             RegainControl(True);
                           end;
       lka_SaveState : if not GameParams.ClassicMode then

@@ -16,7 +16,7 @@ type
     btnBrowse: TButton;
     stSelectedFolder: TStaticText;
     lblSelectedFolder: TLabel;
-    rgPlaybackStyle: TRadioGroup;
+    rgPlaybackOrder: TRadioGroup;
     cbAutoskip: TCheckBox;
     lblPlaybackCancelHotkey: TLabel;
     stPlaybackCancelHotkey: TStaticText;
@@ -25,6 +25,7 @@ type
     stPackName: TStaticText;
     procedure btnBrowseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
     fSelectedFolder: string;
@@ -33,6 +34,7 @@ type
 
   public
     procedure UpdatePackNameText;
+    procedure SetGameParams;
     property SelectedFolder: string read fSelectedFolder write fSelectedFolder;
     property CurrentlySelectedPack: string read fCurrentlySelectedPack write fCurrentlySelectedPack;
 
@@ -90,13 +92,33 @@ begin
     ThisKey := GameParams.Hotkeys.CheckKeyEffect(n);
     if ThisKey.Action <> Key then Continue;
 
-    Result := '[' + KeyNames[n] + ']';
+    Result := KeyNames[n];
   end;
+end;
+
+procedure TFPlaybackMode.SetGameParams;
+begin
+  GameParams.AutoSkipPreAndPostview := cbAutoSkip.Checked;
+
+  if (rgPlaybackOrder.ItemIndex >= Ord(Low(TPlaybackOrder)))
+    and (rgPlaybackOrder.ItemIndex <= Ord(High(TPlaybackOrder))) then
+      GameParams.PlaybackOrder := TPlaybackOrder(rgPlaybackOrder.ItemIndex);
 end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
 begin
+  // Set default options and clear PlaybackList
+  rgPlaybackOrder.ItemIndex := 0;
+  cbAutoSkip.Checked := True;
+  GameParams.PlaybackList.Clear;
+
+  // Show currently-assigned Playback Mode hotkey
   stPlaybackCancelHotkey.Caption := GetPlaybackModeHotkey;
+end;
+
+procedure TFPlaybackMode.FormDestroy(Sender: TObject);
+begin
+  SetGameParams;
 end;
 
 end.

@@ -63,6 +63,13 @@ type
   TGameSoundOptions = set of TGameSoundOption;
 
 type
+  TPlaybackOrder = (
+    poByReplay,
+    poByLevel,
+    poRandom
+  );
+
+type
   TMiscOption = (
     moAutoReplaySave,
     moEnableOnline,
@@ -203,9 +210,12 @@ type
     //SysDat               : TSysDatRec;
     ReplayCheckPath: String;
 
+    // Playback Mode
+    PlaybackModeActive: Boolean;
+    PlaybackOrder: TPlaybackOrder;
     PlaybackList: TStringList;
-    PlaybackMode: Boolean;
     PlaybackIndex: Integer;
+    AutoSkipPreAndPostview: Boolean;
 
     TestModeLevel: TNeoLevelEntry;
 
