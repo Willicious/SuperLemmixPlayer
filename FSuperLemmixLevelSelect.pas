@@ -31,7 +31,7 @@ type
     ilStatuses: TImageList;
     lblCompletion: TLabel;
     btnMakeShortcut: TButton;
-    lblAdvancedOptions: TLabel;
+    lblRecordsOptions: TLabel;
     btnSaveImage: TButton;
     btnMassReplay: TButton;
     btnCleanseLevels: TButton;
@@ -39,6 +39,8 @@ type
     btnClearRecords: TButton;
     btnResetTalismans: TBitBtn;
     btnPlaybackMode: TButton;
+    lblAdvancedOptions: TLabel;
+    lblReplayOptions: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -56,6 +58,7 @@ type
       Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectDblClick(Sender: TObject);
+    procedure lblRecordsOptionsClick(Sender: TObject);
   private
     fLastLevelPath: String;
 

@@ -16,7 +16,6 @@ object FLevelSelect: TFLevelSelect
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
-  OnClick = btnPlaybackModeClick
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -78,12 +77,39 @@ object FLevelSelect: TFLevelSelect
     Font.Style = []
     ParentFont = False
   end
-  object lblAdvancedOptions: TLabel
-    Left = 935
+  object lblRecordsOptions: TLabel
+    Left = 941
     Top = 17
+    Width = 85
+    Height = 13
+    Caption = 'Records Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = lblRecordsOptionsClick
+  end
+  object lblAdvancedOptions: TLabel
+    Left = 936
+    Top = 119
     Width = 96
     Height = 13
     Caption = 'Advanced Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblReplayOptions: TLabel
+    Left = 941
+    Top = 288
+    Width = 79
+    Height = 13
+    Caption = 'Replay Options'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -148,7 +174,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnCleanseOne: TButton
     Left = 916
-    Top = 224
+    Top = 233
     Width = 134
     Height = 25
     Hint = 'Save a copy of this level in the latest SuperLemmix format'
@@ -160,7 +186,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnCleanseLevels: TButton
     Left = 916
-    Top = 193
+    Top = 202
     Width = 134
     Height = 25
     Hint = 
@@ -174,7 +200,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnMassReplay: TButton
     Left = 916
-    Top = 162
+    Top = 307
     Width = 134
     Height = 25
     Hint = 'Perform a replay check for every level in the selected pack'
@@ -186,7 +212,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnSaveImage: TButton
     Left = 916
-    Top = 131
+    Top = 171
     Width = 134
     Height = 25
     Caption = 'Screenshot Level'
@@ -195,7 +221,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnMakeShortcut: TButton
     Left = 916
-    Top = 98
+    Top = 138
     Width = 134
     Height = 25
     Hint = 
@@ -218,7 +244,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnPlaybackMode: TButton
     Left = 916
-    Top = 264
+    Top = 338
     Width = 134
     Height = 25
     Caption = 'Playback Mode'
