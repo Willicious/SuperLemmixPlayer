@@ -98,65 +98,80 @@ const // Icon indexes
   ICON_BLANK = -1;
 
   ICON_NORMAL_LEMMING = 0;
-  ICON_RIVAL_LEMMING = 3; // Rivals - using neutral for now as placeholder
-  ICON_ZOMBIE_LEMMING = 1;
-  ICON_NEUTRAL_LEMMING = 2;
-  ICON_SAVE_REQUIREMENT = 3;
+  ICON_RIVAL_LEMMING = 1;
+  ICON_ZOMBIE_LEMMING = 2;
+  ICON_NEUTRAL_LEMMING = 3;
 
-  ICON_RELEASE_RATE = 4;
-  ICON_RELEASE_RATE_LOCKED = 5;
-  ICON_TIME_LIMIT = 6;
-  ICON_TIMER = 7;
+  // Empty slot = 4;
+  // Empty slot = 5;
 
-  ICON_BRONZE_TALISMAN = 8;
-  ICON_SILVER_TALISMAN = 9;
-  ICON_GOLD_TALISMAN = 10;
-  ICON_RECORDS = 11;
+  ICON_RELEASE_RATE = 6;
+  ICON_RELEASE_RATE_LOCKED = 7;
+  ICON_SAVE_REQUIREMENT = 8;
+  ICON_TIME_LIMIT = 9;
+  ICON_TIMER = 10;
 
+  // Empty slot = 11;
+
+  ICON_RECORDS = 12;
+  ICON_BRONZE_TALISMAN = 13;
+  ICON_SILVER_TALISMAN = 14;
+  ICON_GOLD_TALISMAN = 15;
+  ICON_COLLECTIBLE = 16;
+
+  // Empty slot = 17;
+
+  ICON_WORLD_RECORDS = 18;
   ICON_TALISMAN: array[tcBronze..tcGold] of Integer =
     ( ICON_BRONZE_TALISMAN, ICON_SILVER_TALISMAN, ICON_GOLD_TALISMAN );
-  ICON_TALISMAN_UNOBTAINED_OFFSET = 4;
-  ICON_WORLD_RECORDS = 15;
+  ICON_TALISMAN_UNOBTAINED_OFFSET = 6;
+  ICON_COLLECTIBLE_UNOBTAINED = 22;
 
-  ICON_SELECTED_TALISMAN = 16;
-  ICON_MAX_SKILLS = 17;
-  ICON_MAX_SKILL_TYPES = 18;
-  ICON_COLLECTIBLE = 19;
+  // Empty slot = 23;
 
-  ICON_CLASSIC_MODE = 20;
-  ICON_NO_PAUSE = 21;
-  ICON_KILL_ZOMBIES = 22;
-  ICON_COLLECTIBLE_UNOBTAINED = 23;
+  ICON_SELECTED_TALISMAN = 24;
+  ICON_MAX_SKILLS = 25;
+  ICON_MAX_SKILL_TYPES = 26;
+  ICON_CLASSIC_MODE = 27;
+  ICON_NO_PAUSE = 28;
+  ICON_KILL_ZOMBIES = 29;
 
   ICON_SKILLS: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer = (
-    24, // 0 Walker
-    25, // 1 Jumper
-    26, // 2 Shimmier
-    27, // 3 Ballooner
-    28, // 4 Slider
-    29, // 5 Climber
-    30, // 6 Swimmer
-    31, // 7 Floater
-    32, // 8 Glider
-    33, // 9 Disarmer
-    34, // 10 Timebomber
-    35, // 11 Bomber
-    36, // 12 Freezer
-    37, // 13 Blocker
-    38, // 14 Ladderer
-    39, // 15 Platformer
-    40, // 16 Builder
-    41, // 17 Stacker
-    42, // 18 Spearer
-    43, // 19 Grenader
-    44, // 20 Laserer
-    45, // 21 Basher
-    46, // 22 Fencer
-    47, // 23 Miner
-    48, // 24 Digger
-    //?, // batter // Batter
+    30, // 0 Walker
+    31, // 1 Jumper
+    32, // 2 Shimmier
+    33, // 3 Ballooner
+    34, // 4 Slider
+    35, // 5 Climber
+    36, // 6 Swimmer
+    37, // 7 Floater
+    38, // 8 Glider
+    39, // 9 Disarmer
+    40, // 10 Timebomber
+    41, // 11 Bomber
+    42, // 12 Freezer
+    43, // 13 Blocker
+    44, // 14 Ladderer
+    45, // 15 Platformer
+    46, // 16 Builder
+    47, // 17 Stacker
+    48, // 18 Spearer
+    49, // 19 Grenader
+    50, // 20 Laserer
+    51, // 21 Basher
+    52, // 22 Fencer
+    53, // 23 Miner
+    54, // 24 Digger
+
+    // 55, Empty slot
+    // 56, Empty slot
+    // 57, Empty slot
+    // 58, Empty slot
+
+    59  // 25 Cloner
+
+    //?, // // Batter
     //?, // // Propeller
-    51  // 25 Cloner
   );
 
 implementation
@@ -1051,7 +1066,7 @@ end;
 
 procedure TFLevelSelect.OverlayIcon(aIconIndex: Integer; aDst: TBitmap32);
 begin
-  fIconBMP.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * 32, (aIconIndex div 4) * 32, 32, 32));
+  fIconBMP.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 6) * 32, (aIconIndex div 6) * 32, 32, 32));
 end;
 
 procedure TFLevelSelect.DrawSpeedButton(aButton: TSpeedButton; aIconIndex,

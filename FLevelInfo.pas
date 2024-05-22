@@ -197,7 +197,7 @@ begin
 
     for i := 0 to Length(TALISMAN_TARGETS)-1 do
     begin
-      DstRect := SizedRect((TALISMAN_TARGETS[i] mod 4) * ICON_INTERNAL_SIZE, (TALISMAN_TARGETS[i] div 4) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE);
+      DstRect := SizedRect((TALISMAN_TARGETS[i] mod 6) * ICON_INTERNAL_SIZE, (TALISMAN_TARGETS[i] div 6) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE);
 
       fIcons.FillRect(DstRect.Left, DstRect.Top, DstRect.Right, DstRect.Bottom, $00000000);
       BMP.DrawTo(fIcons, DstRect, SrcRect);
@@ -218,7 +218,7 @@ begin
   aDst.Clear($FFF0F0F0);
 
   if aIconIndex >= 0 then
-    fIcons.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * ICON_INTERNAL_SIZE, (aIconIndex div 4) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE));
+    fIcons.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 6) * ICON_INTERNAL_SIZE, (aIconIndex div 6) * ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE, ICON_INTERNAL_SIZE));
 end;
 
 procedure TLevelInfoPanel.Wipe;
