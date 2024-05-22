@@ -382,7 +382,9 @@ begin
       fLayers.fIsEmpty[rlCountdown] := False;
     end;
 
-    if LemmingList[i].LemAction = baLasering then
+   if (LemmingList[i].LemAction = baLasering) and not (LemmingList[i].LemRemoved or LemmingList[i].LemTeleporting
+   // or (LemmingList[i].LemPortalWarpFrame > 0) // Portals - NOT YET IMPLEMENTED IN SLX
+   ) then
       DrawLemmingLaser(LemmingList[i]);
 
     if LemmingList[i].LemAction = baFreezing then
