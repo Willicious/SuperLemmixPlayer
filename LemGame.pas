@@ -166,7 +166,6 @@ type
     fMasksLoaded               : Boolean;
 
   { vars }
-    NumberOfExits              : Integer;
     fCurrentIteration          : Integer;
     fClockFrame                : Integer; // 17 frames is one game-second
     ButtonsRemain              : Byte;
@@ -1404,17 +1403,11 @@ begin
   // Create the list of interactive objects
   Gadgets.Clear;
   fRenderer.CreateGadgetList(Gadgets);
-  NumberOfExits := 0;
 
   with Level do
   for i := 0 to Gadgets.Count - 1 do
   begin
     Gadget := Gadgets[i];
-
-    // Make sure that there is at least 1 regular exit - Rival exits don't count
-    if (Gadget.TriggerEffect = DOM_EXIT) or (Gadget.TriggerEffect = DOM_LOCKEXIT) then
-      Inc(NumberOfExits);
-
     // Update number of buttons
     if Gadget.TriggerEffect = DOM_BUTTON then
       Inc(ButtonsRemain);
@@ -1464,7 +1457,7 @@ begin
   ReplayInsert := false;
 
   // Ends gameplay if there is not at least 1 exit and we're not in test mode
-  if (NumberOfExits = 0) and (GameParams.TestModeLevel = nil) then
+  if (Level.Info.NormalExitCount + Level.Info.RivalExitCount <= 0) and (GameParams.TestModeLevel = nil) then
   begin
     ShowMessage('This level cannot be played as it doesn''t have an exit!');
     Finish(GM_FIN_TERMINATE);

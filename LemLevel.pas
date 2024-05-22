@@ -27,6 +27,8 @@ type
     fRivalCount      : Integer;
     fRescueCount     : Integer;
     fCollectibleCount: Integer;
+    fNormalExitCount : Integer;
+    fRivalExitCount  : Integer;
     fTimeLimit       : Integer;
     fHasTimeLimit    : Boolean;
 
@@ -74,6 +76,8 @@ type
     property HasMixedLemTypes: Boolean read GetHasMixedLemTypes;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
     property CollectibleCount: Integer read fCollectibleCount write fCollectibleCount;
+    property NormalExitCount: Integer read fNormalExitCount write fNormalExitCount;
+    property RivalExitCount : Integer read fRivalExitCount write fRivalExitCount;
     property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
 
@@ -189,6 +193,8 @@ begin
   RivalCount      := 0;
   RescueCount     := 1;
   CollectibleCount:= 0;
+  NormalExitCount := 0;
+  RivalExitCount  := 0;
   HasTimeLimit    := False;
   TimeLimit       := 0;
 
@@ -982,6 +988,11 @@ var
   begin
     O.LemmingCap := aSection.LineNumeric['lemmings'];
     O.IsRivalExit := aSection.Line['rival'] <> nil;
+
+    if O.IsRivalExit then
+      Inc(Info.fRivalExitCount)
+    else
+      Inc(Info.fNormalExitCount);
   end;
 
   procedure GetTeleporterData;
@@ -1285,6 +1296,7 @@ var
   n: Integer;
   SpawnedCount: Integer;
   MaxPossibleLemmingCount, MaxPossibleExitCount: Integer;
+  NormalCap, RivalCap: Integer;
 
   TriggerEffect: Integer;
 
@@ -1391,23 +1403,75 @@ begin
     SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count); // In case this got overridden
   end;
 
-  // 3. Validate save requirement and lower it if need be. It must:
-  //  - Not exceed the lemming count + cloner count (including neutrals but excluding zombies, of course)
-  //  - Not exceed the total number of lemmings permitted to enter the level's exits
+  { 3. Validate save requirement and lower it if need be. It must:
+    * Not exceed the lemming count + cloner count (including neutrals but excluding zombies, of course)
+    * Not exceed the total number of lemmings permitted to enter the level's exits }
   MaxPossibleLemmingCount := Info.LemmingsCount + Info.SkillCount[spbCloner] - Info.ZombieCount;
+
+  { * For Normals & Rivals, this depends whether or not both Exit types are provided }
+  if Info.HasMixedLemTypes then
+  begin
+    if (Info.RivalExitCount <= 0) then
+      MaxPossibleLemmingCount := MaxPossibleLemmingCount - Info.RivalCount
+    else if (Info.NormalExitCount <= 0) then
+      MaxPossibleLemmingCount := Info.RivalCount + Info.NeutralCount + Info.SkillCount[spbCloner] - Info.ZombieCount;
+  end;
+
   MaxPossibleExitCount := 0;
+
+  if Info.HasMixedLemTypes then
+  begin
+    RivalCap := 0;
+    NormalCap := 0;
+
+    for i := 0 to InteractiveObjects.Count - 1 do
+    begin
+      TriggerEffect := PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect;
+
+      if TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+      begin
+        if InteractiveObjects[i].LemmingCap > 0 then
+        begin
+          if InteractiveObjects[i].IsRivalExit then
+            Inc(RivalCap, InteractiveObjects[i].LemmingCap)
+          else
+            Inc(NormalCap, InteractiveObjects[i].LemmingCap);
+        end;
+      end;
+    end;
+
+    if RivalCap > 0 then
+      Inc(MaxPossibleExitCount, RivalCap)
+    else if Info.RivalExitCount > 0 then
+      Inc(MaxPossibleExitCount, Info.RivalCount + Info.NeutralCount + Info.SkillCount[spbCloner]);
+
+    if NormalCap > 0 then
+      Inc(MaxPossibleExitCount, NormalCap)
+    else if Info.NormalExitCount > 0 then
+      Inc(MaxPossibleExitCount, MaxPossibleLemmingCount - Info.RivalCount);
+
+    if MaxPossibleExitCount <= 0 then
+      MaxPossibleExitCount := -1;
+
+  end else begin // Non-mixed levels
+
+    for i := 0 to InteractiveObjects.Count-1 do
+    begin
+      TriggerEffect := PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect;
+
+      if TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+      begin
+        if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleExitCount >= 0) then
+          MaxPossibleExitCount := MaxPossibleExitCount + InteractiveObjects[i].LemmingCap
+        else
+          MaxPossibleExitCount := -1;
+      end;
+    end;
+  end;
 
   for i := 0 to InteractiveObjects.Count-1 do
   begin
     TriggerEffect := PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect;
-
-    if TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
-    begin
-      if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleExitCount >= 0) then
-        MaxPossibleExitCount := MaxPossibleExitCount + InteractiveObjects[i].LemmingCap
-      else
-        MaxPossibleExitCount := -1;
-    end;
 
     if (TriggerEffect = DOM_PICKUP) and (InteractiveObjects[i].Skill = Integer(spbCloner)) then
       Inc(MaxPossibleLemmingCount, InteractiveObjects[i].TarLev);
