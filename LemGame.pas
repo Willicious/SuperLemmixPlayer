@@ -3715,8 +3715,11 @@ begin
       CueSoundEffect(Gadget.SoundEffectExhaust, Gadget.Center);
   end;
 
-  // Check if the Exit has been designated as a Rival Exit
-  L.LemIsInRivalExit := False or Gadget.IsRivalExit;
+  { Rival Exit check }
+  { Whatever the designation (i.e. Normal or Rival), lems will treat an Exit
+    as their own type unless the level provides a mix of both Normals and Rivals }
+  L.LemIsInRivalExit := False or (Gadget.IsRivalExit and (Level.Info.RivalCount > 0))
+                              or (not Gadget.IsRivalExit and (Level.Info.LemmingsCount - Level.Info.RivalCount = 0));
 
   Result := True;
 
@@ -6989,8 +6992,9 @@ begin
   // Lems that have begun to exit after time has run out still count as saved
   if L.LemEndOfAnimation then
   begin
-    // Exiting Zombies decrease save count by 1
-    if L.LemIsZombie or (L.LemIsRival and not L.LemIsInRivalExit) // Bookmark - this may end up being done differently
+    { Zombies, (Rivals in Normal Exits) and (Normals in Rival Exits)
+      decrease save count by 1 - Rival Exit checks are performed in HandleExit }
+    if L.LemIsZombie or (L.LemIsRival and not L.LemIsInRivalExit)
                      or (L.LemIsInRivalExit and not L.LemIsRival) then
     begin
       RemoveLemming(L, RM_NEUTRAL, True);
