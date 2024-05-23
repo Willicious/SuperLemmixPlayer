@@ -50,9 +50,6 @@ type
       procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
 
       function GetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty): Integer;
-      // Bookmark - why is this commented out?
-      //procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty; const aValue: Integer);
-
       function GetResizableProperty(Flip, Invert, Rotate: Boolean; aDirection: Integer): Boolean;
     public
       constructor Create;
@@ -208,20 +205,6 @@ begin
 
   fGeneratedVariableInfo[0] := true;
 end;
-
-{procedure TMetaTerrain.SetVariableProperty(Flip, Invert, Rotate: Boolean;
-  Index: TTerrainMetaProperty; const aValue: Integer);
-begin
-  EnsureVariationMade(Flip, Invert, Rotate);
-  with fVariableInfo[GetImageIndex(Flip, Invert, Rotate)] do
-  begin
-    case Index of
-      tv_Width: ; // Remove this later, it's just here so the "else" doesn't give a syntax error
-      else raise Exception.Create('TMetaTerrain.SetVariableProperty given invalid value.');
-    end;
-  end;
-end;
-}
 
 function TMetaTerrain.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
 begin

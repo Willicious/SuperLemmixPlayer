@@ -93,7 +93,7 @@ type
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: Cardinal);
-    procedure CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
+    //procedure CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
 
@@ -345,7 +345,6 @@ begin
       begin
         Result := 0;
         if L = SelectedLemming then Result := Result + SELECTED_LEMMING;
-        if L.LemIsRival then Result := Result + RIVAL_LEMMING; // Bookmark - where should rivals be placed?
         if not (L.LemAction = baExiting) then Result := Result + NOT_EXITER_LEMMING;
         if L = HighlitLemming then Result := Result + HIGHLIT_LEMMING;
         if (not L.LemIsNeutral) or (L.LemIsZombie) then Result := Result + NOT_NEUTRAL_LEMMING;
@@ -2100,7 +2099,7 @@ var
     P := fLayers[rlTerrain].PixelPtr[X, Y];
     if P^ and $FF000000 <> $FF000000 then
     begin
-      C := Color; // Theme.Colors[MASK_COLOR]; // Bookmark -why is this commented out?
+      C := Color;
       MergeMem(P^, C);
       P^ := C;
     end;
@@ -2361,25 +2360,25 @@ begin
   end;
 end;
 
-procedure TRenderer.CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
-begin
-  if (F and $FF000000) <> 0 then
-  begin
-    // Bookmark - everything here is currently same as Neutral
-    // 1 = blue, 2 = green, 5 = red
-
-    case (F and $FFFFFF) of
-      $00B000: F := $FF686868;
-      $4040E0: F := $FF525252;
-      $F02020: F := $FF5E5E5E;
-    end;
-
-    if (F and $FF000000) = $FF000000 then
-      B := F
-    else
-      MergeMem(F, B);
-  end;
-end;
+// Bookmark - everything here is currently same as Neutral - is this even needed?
+//procedure TRenderer.CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
+//begin
+//  if (F and $FF000000) <> 0 then
+//  begin
+//    // 1 = blue, 2 = green, 5 = red
+//
+//    case (F and $FFFFFF) of
+//      $00B000: F := $FF686868;
+//      $4040E0: F := $FF525252;
+//      $F02020: F := $FF5E5E5E;
+//    end;
+//
+//    if (F and $FF000000) = $FF000000 then
+//      B := F
+//    else
+//      MergeMem(F, B);
+//  end;
+//end;
 
 const
   MIN_TERRAIN_GROUP_WIDTH = 1;
@@ -2581,8 +2580,8 @@ begin
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
-  else if IsRival then
-    Bmp.OnPixelCombine := CombineGadgetsDefaultRival  // Bookmark - SEE TODO at top of page - I think the plan is to use recolorer here instead
+  //else if IsRival then
+    //Bmp.OnPixelCombine := CombineGadgetsDefaultRival  // Bookmark - SEE TODO at top of page - I think the plan is to use recolorer here instead
   else if IsNeutral then
     Bmp.OnPixelCombine := CombineGadgetsDefaultNeutral
   else if IsZombie then
@@ -2952,8 +2951,6 @@ const
   DRAW_ABOVE_MIN_Y_CPM = 28;
 begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-    // Bookmark - why is this commented out?
-    //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // Why?
 
     // Count number of helper icons to be displayed.
     numHelpers := 0;
@@ -3183,8 +3180,7 @@ begin
       Continue;
 
     BMP := ThisAnim.Bitmap;
-    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode,
-                             Gadget.NeutralMode, Gadget.RivalMode); // Bookmark - Does there need to be a RivalMode?
+    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode, Gadget.NeutralMode);
     DstRect := SizedRect((Gadget.Left + ThisAnim.MetaAnimation.OffsetX) * ResMod,
                          (Gadget.Top + ThisAnim.MetaAnimation.OffsetY) * ResMod,
                          (ThisAnim.MetaAnimation.Width + Gadget.WidthVariance) * ResMod,
@@ -3745,7 +3741,7 @@ var
   procedure GeneratePhysicsMapFromInfoMap;
   var
     x, y: Integer;
-    thisSolidity, thisSteel, thisOneWay{, thisUnused}: Byte;
+    thisSolidity, thisSteel, thisOneWay: Byte;
     C: TColor32;
     SolidityMod: Single;
     Cutoff: Single;
@@ -3756,8 +3752,6 @@ var
         thisSolidity := (TempWorld[x, y] and $FF000000) shr 24;
         thisSteel    := (TempWorld[x, y] and $00FF0000) shr 16;
         thisOneWay   := (TempWorld[x, y] and $0000FF00) shr 8;
-        // Bookmark - remove?
-        //thisUnused   := (TempWorld[x, y] and $000000FF) shr 0;
 
         if thisSolidity >= ALPHA_CUTOFF then
         begin
@@ -3777,8 +3771,8 @@ var
       end;
   end;
 
-begin                                   // Bookmark -
-  if Dst = nil then Dst := fPhysicsMap; // Should it ever not be to here? Maybe during debugging we need it elsewhere
+begin
+  if Dst = nil then Dst := fPhysicsMap;
   TempWorld := TBitmap32.Create;
 
   T := TTerrain.Create;

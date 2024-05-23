@@ -349,9 +349,6 @@ begin
   if (DstRect.Width = SrcRect.Width) and (DstRect.Height = SrcRect.Height) then
     Src.DrawTo(Dst, DstRect.Left, DstRect.Top) // Save processing time
   else begin
-    // Bookmark - why is this commented out?
-    //Assert(VerifyInput, 'Invalid input passed to LemTypes.DrawNineSlice');
-
     TrimMargins(Margins.Left, Margins.Right, DstRect.Width);
     TrimMargins(Margins.Top, Margins.Bottom, DstRect.Height);
 
@@ -638,8 +635,7 @@ var
       for n := 0 to (Src.Width * Src.Height * 4)-1 do
       begin
         a := (((PBmp^ and $FF000000) shr 24) + ((PColor^ and $FF000000) shr 24)) div 2;
-                                                      // Bookmark - why is this commented out?
-        PBmp^ := (a shl 24) or (PColor^ and $FFFFFF); //(MergeReg(PColor^, PBmp^) and $FFFFFF);
+        PBmp^ := (a shl 24) or (PColor^ and $FFFFFF);
         Inc(PBmp);
         Inc(PColor);
       end;

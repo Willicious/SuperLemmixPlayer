@@ -72,7 +72,6 @@ type
     sPairingId      : Integer;
     sZombieMode     : Boolean;
     sNeutralMode    : Boolean;
-    sRivalMode      : Boolean; // Bookmark - might not be needed
     sSecondariesTreatAsBusy: Boolean;
 
     sRemainingLemmingsCount: Integer;
@@ -155,7 +154,6 @@ type
     property SoundEffectExhaust: String read GetSoundEffectExhaust;
     property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property NeutralMode: Boolean read sNeutralMode write sNeutralMode;
-    property RivalMode: Boolean read sRivalMode write sRivalMode; // Bookmark - might not be needed
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // Moving decorations: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;

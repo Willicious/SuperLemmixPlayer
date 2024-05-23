@@ -365,10 +365,6 @@ begin
       SaveToIniFile;
       BaseLevelPack.SaveUserData;
 
-      { // Bookmark - this probably isnt needed anymore, but we still need to find the code that
-        temporarily saves the hotkey layout to memory because that isn't needed either: }
-      //Hotkeys.SaveFile;
-
       Success := true;
     except
       Sleep(50);

@@ -58,7 +58,6 @@ type
       Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectDblClick(Sender: TObject);
-    procedure lblRecordsOptionsClick(Sender: TObject);
   private
     fLastLevelPath: String;
 

@@ -89,7 +89,6 @@ object FLevelSelect: TFLevelSelect
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
-    OnClick = lblRecordsOptionsClick
   end
   object lblAdvancedOptions: TLabel
     Left = 936

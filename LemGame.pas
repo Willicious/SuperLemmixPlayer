@@ -40,7 +40,7 @@ const
                           DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA];
 
 type
-  TLemmingKind = (lkNormal, lkNeutral, lkZombie, lkRival // Bookmark - might not be needed
+  TLemmingKind = (lkNormal, lkNeutral, lkZombie // Rivals are lkNormal for the purposes of TLemmingKind
   );
   TLemmingKinds = set of TLemmingKind;
 
@@ -462,7 +462,6 @@ type
 
     procedure UpdateLevelRecords;
   public
-    //GameResult                 : Boolean;  // Bookmark - why is this commented out?
     GameResultRec              : TGameResultsRec;
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
@@ -654,7 +653,7 @@ const
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
              baBallooning, baLaddering//, baBatting, baPropelling // Batter // Propeller
-             ); // Bookmark - maybe the wrong place for Ladderer & Ballooner?
+             );                       // Bookmark - Double-check these skills are in the correct place after adding them
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1368,8 +1367,8 @@ begin
   fParticleFinishTimer := 0;
   LemmingList.Clear;
   ProjectileList.Clear;
-                                                       // Bookmark - why is this commented out?
-  if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
+
+  if Level.Info.LevelID <> fReplayManager.LevelID then
   begin
     fReplayManager.Clear(true);
     fReplayManager.LevelName := Level.Info.Title;
@@ -3333,34 +3332,33 @@ begin
     HandlePoison(L);
 
   { Check for blocker fields and force-fields | not for Jumpers, as this is handled during movement.
-    Also not for miners removing terrain, see www.lemmingsforums.net/index.php?topic=2710.0}
+    Also not for miners removing terrain, see www.lemmingsforums.net/index.php?topic=2710.0 }
   if ((L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2])) and
      (L.LemAction <> baJumping) then
-  begin // Bookmark - testing needed
+  begin
     // Checks specifically for contradictory vertical field/blocker
     for LemDY := 0 to 4 do
-    // It might need fine-tuning, but it works
     begin
       if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L)
-      and not HasTriggerAt(L.LemX, L.LemY -LemDY, trForceRight) then
-        HandleForceField(L, -1);
+        and not HasTriggerAt(L.LemX, L.LemY -LemDY, trForceRight) then
+          HandleForceField(L, -1);
 
       if HasTriggerAt(L.LemX, L.LemY, trForceRight, L)
-      and not HasTriggerAt(L.LemX, L.LemY -LemDY, trForceLeft) then
-        HandleForceField(L, 1);
+        and not HasTriggerAt(L.LemX, L.LemY -LemDY, trForceLeft) then
+          HandleForceField(L, 1);
 
       //This is so lems don't ignore Blockers on one-way fields
       if HasTriggerAt(L.LemX, L.LemY, trForceLeft)
-      and HasTriggerAt(L.LemX, L.LemY -LemDY, trForceRight)
-      then Inc(L.LemX);
+        and HasTriggerAt(L.LemX, L.LemY -LemDY, trForceRight)
+          then Inc(L.LemX);
 
       if HasTriggerAt(L.LemX, L.LemY, trForceRight)
-      and HasTriggerAt(L.LemX, L.LemY -LemDY, trForceLeft)
-      then Dec(L.LemX);
+        and HasTriggerAt(L.LemX, L.LemY -LemDY, trForceLeft)
+          then Dec(L.LemX);
     end;
   end;
 
-  // And if this was a post-teleporter check, reset any position changes that may have occurred.
+  // Reset any position changes that may have occurred post-teleporter
   if IsPostTeleportCheck then
   begin
     L.LemX := SavePos.X;

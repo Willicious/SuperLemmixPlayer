@@ -253,7 +253,7 @@ begin
   Result := true;
 
   // Save the data between screens. This way it's more up to date in case game crashes
-  GameParams.Save(TGameParamsSaveCriticality.scNone); // Bookmark - this is where data gets saved!!
+  GameParams.Save(TGameParamsSaveCriticality.scNone);
 
   // This might be so that after the text screen, the correct screen out of gstPlay or gstPostview is shown
   NewScreen := GameParams.NextScreen;
