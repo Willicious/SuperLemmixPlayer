@@ -36,7 +36,7 @@ type
     procedure ShowScreen; override;
 
     procedure StartPlayback(Index: Integer);
-    procedure Delay(mS: Integer);
+    procedure Delay(mS: Cardinal);
 
     procedure FadeIn;
     procedure FadeOut;
@@ -104,7 +104,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TGameBaseScreen.Delay(mS: Integer);
+procedure TGameBaseScreen.Delay(mS: Cardinal);
 var
   startTime, elapsedTime: Cardinal;
 begin
