@@ -10,7 +10,7 @@ uses
   LemmixHotkeys,
   Windows, Classes, SysUtils, Controls, StrUtils,
   UMisc,
-  Gr32, Gr32_Layers,
+  Gr32, Gr32_Layers, GR32_Image,
   LemTypes, LemStrings, LemGame,
   GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
 

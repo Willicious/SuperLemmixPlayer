@@ -7,8 +7,8 @@ unit LemRenderHelpers;
 interface
 
 uses
-  LemProjectile,
-  LemTypes, LemGadgets, LemLemming, LemCore,
+  System.Types,
+  LemProjectile, LemTypes, LemGadgets, LemLemming, LemCore,
   GR32, GR32_Blend,
   Contnrs, Classes;
 
@@ -664,10 +664,10 @@ begin
     LRRegion.Right := aRegion.Right div ResMod;
     LRRegion.Bottom := aRegion.Bottom div ResMod;
 
-    IntersectRect(LRRegion, LRRegion, fPhysicsMap.BoundsRect);
-    IntersectRect(aRegion, aRegion, aDst.BoundsRect);
+    System.Types.IntersectRect(LRRegion, LRRegion, fPhysicsMap.BoundsRect);
+    System.Types.IntersectRect(aRegion, aRegion, aDst.BoundsRect);
   end else begin
-    IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
+    System.Types.IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
     LRRegion := aRegion;
   end;
 

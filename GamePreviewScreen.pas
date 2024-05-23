@@ -11,7 +11,7 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, SysUtils,
-  GR32, GR32_Layers, GR32_Resamplers,
+  GR32, GR32_Layers, GR32_Resamplers, GR32_Image,
   UMisc, Dialogs,
   LemCore, LemStrings, LemRendering, LemLevel, LemGame,
   LemGadgetsMeta, LemGadgets, LemMenuFont,

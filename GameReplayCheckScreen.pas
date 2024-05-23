@@ -9,7 +9,7 @@ uses
   LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager, SharedGlobals,
   Windows, Classes, SysUtils, StrUtils, IOUtils, Controls, Contnrs,
   UMisc,
-  Gr32, Gr32_Layers, GR32_Resamplers,
+  Gr32, Gr32_Layers, GR32_Resamplers, GR32_Image,
   LemTypes, LemStrings, LemGame, LemGameMessageQueue,
   GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
 
