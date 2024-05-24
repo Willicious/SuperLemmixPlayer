@@ -4034,8 +4034,13 @@ begin
   except
     on E: Exception do
     begin
-      fAni.ClearData;
       fTheme.Lemmings := 'default';
+
+      fTheme.Load(fTheme.Lemmings);
+      PieceManager.SetTheme(fTheme);
+
+      fAni.ClearData;
+      fAni.Theme := fTheme;
 
       fAni.PrepareAnimations;
 
