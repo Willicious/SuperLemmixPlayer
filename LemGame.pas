@@ -6983,10 +6983,10 @@ begin
   // Lems that have begun to exit after time has run out still count as saved
   if L.LemEndOfAnimation then
   begin
-    { Zombies, (Rivals in Normal Exits) and (Normals in Rival Exits)
-      decrease save count by 1 - Rival Exit checks are performed in HandleExit }
-    if L.LemIsZombie or (L.LemIsRival and not L.LemIsInRivalExit)
-                     or (L.LemIsInRivalExit and not L.LemIsRival) then
+    { Zombies, (Rivals in Normal Exits) and (Normals in Rival Exits) decrease save count by 1
+      - Neutrals count as +1 in both Exit types - LemIsInRivalExit is checked in HandleExit }
+    if L.LemIsZombie or ((L.LemIsRival and not L.LemIsInRivalExit)
+                     or  (L.LemIsInRivalExit and not L.LemIsRival) and not L.LemIsNeutral) then
     begin
       RemoveLemming(L, RM_NEUTRAL, True);
       Dec(LemmingsIn);
