@@ -43,6 +43,7 @@ type
     lblReplayOptions: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
+    procedure LoadCurrentLevelToPlayer;
     procedure tvLevelSelectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnMakeShortcutClick(Sender: TObject);
@@ -87,8 +88,8 @@ type
     procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aEraseColor: TColor);
     procedure OverlayIcon(aIconIndex: Integer; aDst: TBitmap32);
 
-    procedure SetAdvancedOptionsGroup;
-    procedure SetAdvancedOptionsLevel;
+    procedure SetAdvancedOptionsGroup(G: TNeoLevelGroup);
+    procedure SetAdvancedOptionsLevel(L: TNeoLevelEntry);
   public
     property LoadAsPack: Boolean read fLoadAsPack;
     procedure LoadIcons;
@@ -284,6 +285,16 @@ begin
   end;
 end;
 
+procedure TFLevelSelect.LoadCurrentLevelToPlayer;
+begin
+  WriteToParams;
+
+  if GameParams.MenuSounds then
+    SoundManager.PlaySound(SFX_OK);
+
+  ModalResult := mrOk;
+end;
+
 procedure TFLevelSelect.LoadIcons;
 var
 IconsImg: String;
@@ -325,8 +336,10 @@ begin
 
   pnLevelInfo.Visible := false;
 
-  InitializeTreeview;
   btnResetTalismans.Enabled := false;
+  btnOK.Enabled := false;
+
+  InitializeTreeview;
 end;
 
 procedure TFLevelSelect.FormShow(Sender: TObject);
@@ -471,9 +484,7 @@ end;
 
 procedure TFLevelSelect.btnOKClick(Sender: TObject);
 begin
-  WriteToParams;
-  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
-  ModalResult := mrOk;
+  LoadCurrentLevelToPlayer;
 end;
 
 procedure TFLevelSelect.btnPlaybackModeClick(Sender: TObject);
@@ -616,7 +627,7 @@ procedure TFLevelSelect.tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then
-  btnOK.Click;
+    LoadCurrentLevelToPlayer;
 end;
 
 procedure TFLevelSelect.SetInfo;
@@ -684,12 +695,8 @@ begin
   LoadNodeLabels;
 
   N := tvLevelSelect.Selected;
-  if N = nil then
-  begin
-    btnOk.Enabled := false;
-    btnResetTalismans.Enabled := false;
-    Exit;
-  end;
+
+  if N = nil then Exit;
 
   Obj := TObject(N.Data);
 
@@ -743,11 +750,8 @@ begin
 
     fInfoForm.Visible := false;
 
-    btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
-    btnResetTalismans.Enabled := false;
-
     ClearTalismanButtons;
-    SetAdvancedOptionsGroup;
+    SetAdvancedOptionsGroup(G);
   end else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
@@ -766,14 +770,7 @@ begin
 
     fPackTalBox.Visible := false;
 
-    btnOk.Enabled := true;
-
-    if (L.Talismans.Count <> 0) then
-      btnResetTalismans.Enabled := true
-    else
-      btnResetTalismans.Enabled := false;
-
-    SetAdvancedOptionsLevel;
+    SetAdvancedOptionsLevel(L);
   end;
 end;
 
@@ -1150,20 +1147,24 @@ begin
 end;
 
 // --- Advanced options --- //
-procedure TFLevelSelect.SetAdvancedOptionsGroup;
+procedure TFLevelSelect.SetAdvancedOptionsGroup(G: TNeoLevelGroup);
 begin
     btnSaveImage.Caption := 'Save Level Images';
-    btnMassReplay.Enabled := true;
-    btnCleanseLevels.Enabled := true;
-    btnCleanseOne.Enabled := false;
+    btnMassReplay.Enabled := True;
+    btnCleanseLevels.Enabled := True;
+    btnCleanseOne.Enabled := False;
+    btnResetTalismans.Enabled := False;
+    btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
 end;
 
-procedure TFLevelSelect.SetAdvancedOptionsLevel;
+procedure TFLevelSelect.SetAdvancedOptionsLevel(L: TNeoLevelEntry);
 begin
     btnSaveImage.Caption := 'Save Image';
     btnMassReplay.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
     btnCleanseLevels.Enabled := btnMassReplay.Enabled;
-    btnCleanseOne.Enabled := true;
+    btnCleanseOne.Enabled := True;
+    btnResetTalismans.Enabled := L.Talismans.Count <> 0;
+    btnOK.Enabled := True;
 end;
 
 procedure TFLevelSelect.btnSaveImageClick(Sender: TObject);
@@ -1255,6 +1256,7 @@ var
   Group: TNeoLevelGroup;
   N: TTreeNode;
   Obj: TObject;
+  AlreadyExistsMsg: String;
 begin
   N := tvLevelSelect.Selected;
   if N = nil then Exit;
@@ -1269,10 +1271,11 @@ begin
     Exit;
 
   Group := Group.ParentBasePack;
+  AlreadyExistsMsg := 'Folder "Cleanse\' + MakeSafeForFilename(Group.Name)
+                    + '\" already exists. Continuing will erase it. Continue?';
 
   if SysUtils.DirectoryExists(AppPath + 'Cleanse\' + MakeSafeForFilename(Group.Name) + '\') then
-    if MessageDlg('Folder "Cleanse\' + MakeSafeForFilename(Group.Name) + '\" already exists. Continuing will erase it. Continue?',
-                  mtCustom, [mbYes, mbNo], 0) = mrNo then
+    if MessageDlg(AlreadyExistsMsg, mtCustom, [mbYes, mbNo], 0) = mrNo then
       Exit;
 
   Group.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(Group.Name) + '\');
