@@ -25,6 +25,8 @@ const
   CR_ERROR = 5;
   CR_PASS_TALISMAN = 6;
 
+  MAX_TEXT_LINES = 27;
+
 type
   TReplayCheckEntry = class
     public
@@ -53,11 +55,15 @@ type
   TGameReplayCheckScreen = class(TGameBaseMenuScreen)
     private
       fScreenText: TStringList;
+      fStartLine: Integer;
       fReplays: TReplayCheckEntries;
       fProcessing: Boolean;
       fOldHighRes: Boolean;
 
-      procedure OutputText;
+      procedure OutputText(StartLine: Integer);
+      procedure ScrollUp;
+      procedure ScrollDown;
+
       procedure RunTests;
 
       procedure ExitToMenu;
@@ -69,6 +75,7 @@ type
       function GetWallpaperSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+      procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
@@ -91,6 +98,9 @@ begin
 
   fScreenText := TStringList.Create;
   fReplays := TReplayCheckEntries.Create;
+
+  fStartLine := 0;
+  Self.OnKeyDown := FormKeyDown;
 
   GameParams.MainForm.Caption := 'SuperLemmix - Mass Replay Check';
 end;
@@ -309,7 +319,7 @@ begin
     if fReplays.Count = 0 then
     begin
       fScreenText.Add('No valid replay files found.');
-      while fScreenText.Count < 29 do
+      while fScreenText.Count < MAX_TEXT_LINES do
         fScreenText.Add('');
       fScreenText.Add('Click mouse to exit');
     end;
@@ -356,7 +366,10 @@ begin
               if Game.CurrentIteration = 0 then
                 fScreenText.Add('');
               fScreenText[fScreenText.Count-1] := 'Running for ' + IntToStr(Game.CurrentIteration div 17) + ' seconds (in-game time).';
-              OutputText;
+
+              // Calculate the start line index to always display the latest text
+              var startLine := Max(fScreenText.Count - MAX_TEXT_LINES, 0);
+              OutputText(startLine);
 
               Application.ProcessMessages;
               if not fProcessing then Break;
@@ -416,7 +429,9 @@ begin
                             'RpV: ' + IntToHex(fReplays[i].ReplayReplayVersion, 16));
         fScreenText.Add('');
 
-        OutputText;
+        // Calculate the start line index to always display the latest text
+        var startLine := Max(fScreenText.Count - MAX_TEXT_LINES, 0);
+        OutputText(startLine);
       end;
 
       HandleReplayNaming(fReplays[i]);
@@ -432,14 +447,13 @@ begin
         fReplays.SaveToFile(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
         fScreenText.Add('Results saved to');
         fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
-        fScreenText.Add('');
-        fScreenText.Add(''); // Padding for clickable text.
+
+        // Padding for clickable text and to make sure the final output shows the level title at the top
+       fScreenText.AddStrings(['', '', '', '', '']);
       end;
 
       if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
         TLinearResampler.Create(ScreenImg.Bitmap);
-
-      OutputText;
 
       if GameParams.ShowMinimap and not GameParams.FullScreen then
       begin
@@ -447,6 +461,14 @@ begin
           begin
             ShortcutKeys.Add(VK_RETURN);
             ShortcutKeys.Add(VK_SPACE);
+          end;
+        with MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
+          begin
+            ShortcutKeys.Add(VK_UP);
+          end;
+        with MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
+          begin
+            ShortcutKeys.Add(VK_DOWN);
           end;
       end else
       if GameParams.FullScreen then
@@ -456,13 +478,33 @@ begin
             ShortcutKeys.Add(VK_RETURN);
             ShortcutKeys.Add(VK_SPACE);
           end;
+        with MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
+          begin
+            ShortcutKeys.Add(VK_UP);
+          end;
+        with MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
+          begin
+            ShortcutKeys.Add(VK_DOWN);
+          end;
       end else begin
         with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
           begin
             ShortcutKeys.Add(VK_RETURN);
             ShortcutKeys.Add(VK_SPACE);
           end;
+        with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
+          begin
+            ShortcutKeys.Add(VK_UP);
+          end;
+        with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
+          begin
+            ShortcutKeys.Add(VK_DOWN);
+          end;
       end;
+
+      // Calculate the start line index to always display the latest text
+      var startLine := Max(fScreenText.Count - MAX_TEXT_LINES, 0);
+      OutputText(startLine);
 
       DrawAllClickables;
     end;
@@ -500,18 +542,57 @@ begin
     ExitToMenu;
 end;
 
-procedure TGameReplayCheckScreen.OutputText;
-var
-  i: Integer;
+procedure TGameReplayCheckScreen.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  while fScreenText.Count > 29 do
-    fScreenText.Delete(0);
+  if not fProcessing then
+  case Key of
+    VK_UP: ScrollUp;
+    VK_DOWN: ScrollDown;
+    VK_ESCAPE: ExitToMenu;
+  end;
+end;
+
+procedure TGameReplayCheckScreen.ScrollUp;
+begin
+  if fStartLine > 0 then
+  begin
+    fStartLine := fStartLine - 5;
+    if fStartLine < 0 then
+      fStartLine := 0;
+    OutputText(fStartLine);
+  end;
+
+  DrawAllClickables;
+end;
+
+procedure TGameReplayCheckScreen.ScrollDown;
+begin
+  if fStartLine < fScreenText.Count - MAX_TEXT_LINES then
+  begin
+    fStartLine := fStartLine + 5;
+    if fStartLine > fScreenText.Count - MAX_TEXT_LINES then
+      fStartLine := fScreenText.Count - MAX_TEXT_LINES;
+    OutputText(fStartLine);
+  end;
+
+  DrawAllClickables;
+end;
+
+procedure TGameReplayCheckScreen.OutputText(StartLine: Integer);
+var
+  i, displayIndex: Integer;
+begin
+  fStartLine := StartLine;
 
   ScreenImg.BeginUpdate;
   try
     DrawWallpaper;
-    for i := 0 to fScreenText.Count-1 do
-      MenuFont.DrawTextCentered(ScreenImg.Bitmap, fScreenText[i], (i * 16) + 8);
+    for i := 0 to (MAX_TEXT_LINES - 1) do
+    begin
+      displayIndex := fStartLine + i;
+      if displayIndex < fScreenText.Count then
+        MenuFont.DrawTextCentered(ScreenImg.Bitmap, fScreenText[displayIndex], (i * 16) + 8);
+    end;
   finally
     ScreenImg.EndUpdate;
   end;
