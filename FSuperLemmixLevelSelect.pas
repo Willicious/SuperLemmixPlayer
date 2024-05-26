@@ -44,7 +44,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
-    procedure tvLevelSelectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnMakeShortcutClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -55,10 +54,9 @@ type
     procedure btnCleanseOneClick(Sender: TObject);
     procedure btnClearRecordsClick(Sender: TObject);
     procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
-    procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
-    procedure tvLevelSelectDblClick(Sender: TObject);
+    procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
   private
     fLastLevelPath: String;
 
@@ -612,12 +610,7 @@ begin
   SetInfo;
 end;
 
-procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
-begin
-  SetInfo;
-end;
-
-procedure TFLevelSelect.tvLevelSelectDblClick(Sender: TObject);
+procedure TFLevelSelect.tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
 begin
   SetInfo;
 end;
@@ -828,6 +821,7 @@ begin
   fPackTalBox.VertScrollBar.Position := 0;
 
   Group := GetGroup;
+
   TotalHeight := 8;
   Talismans := Group.Talismans;
 
@@ -1039,7 +1033,7 @@ begin
     raise Exception.Create('TFLevelSelect.PackListTalButtonClick couldn''t match the level.');
 
   tvLevelSelect.Select(NodeRef);
-  tvLevelSelectClick(tvLevelSelect);
+  SetInfo;
 end;
 
 procedure TFLevelSelect.ClearTalismanButtons;
