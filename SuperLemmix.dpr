@@ -66,7 +66,7 @@ uses
   GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
   GameMenuScreen in 'GameMenuScreen.pas',
   FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
-  FReplayRename in 'FReplayRename.pas' {FReplayNaming},
+  FReplayManager in 'FReplayManager.pas' {FReplayManager},
   LemProjectile in 'LemProjectile.pas',
   FLevelListDialog in 'FLevelListDialog.pas',
   FPlaybackMode in 'FPlaybackMode.pas';

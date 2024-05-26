@@ -33,7 +33,7 @@ type
     btnMakeShortcut: TButton;
     lblRecordsOptions: TLabel;
     btnSaveImage: TButton;
-    btnMassReplay: TButton;
+    btnReplayManager: TButton;
     btnCleanseLevels: TButton;
     btnCleanseOne: TButton;
     btnClearRecords: TButton;
@@ -49,7 +49,7 @@ type
     procedure btnMakeShortcutClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSaveImageClick(Sender: TObject);
-    procedure btnMassReplayClick(Sender: TObject);
+    procedure btnReplayManagerClick(Sender: TObject);
     procedure btnPlaybackModeClick(Sender:TObject);
     procedure btnCleanseLevelsClick(Sender: TObject);
     procedure btnCleanseOneClick(Sender: TObject);
@@ -180,7 +180,7 @@ const // Icon indexes
 implementation
 
 uses
-  fReplayRename,
+  FReplayManager,
   LemLevel;
 
 const
@@ -1150,7 +1150,7 @@ end;
 procedure TFLevelSelect.SetAdvancedOptionsGroup(G: TNeoLevelGroup);
 begin
     btnSaveImage.Caption := 'Save Level Images';
-    btnMassReplay.Enabled := True;
+    btnReplayManager.Enabled := True;
     btnCleanseLevels.Enabled := True;
     btnCleanseOne.Enabled := False;
     btnResetTalismans.Enabled := False;
@@ -1160,8 +1160,8 @@ end;
 procedure TFLevelSelect.SetAdvancedOptionsLevel(L: TNeoLevelEntry);
 begin
     btnSaveImage.Caption := 'Save Image';
-    btnMassReplay.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
-    btnCleanseLevels.Enabled := btnMassReplay.Enabled;
+    btnReplayManager.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
+    btnCleanseLevels.Enabled := btnReplayManager.Enabled;
     btnCleanseOne.Enabled := True;
     btnResetTalismans.Enabled := L.Talismans.Count <> 0;
     btnOK.Enabled := True;
@@ -1221,10 +1221,10 @@ begin
     Exit;
 end;
 
-procedure TFLevelSelect.btnMassReplayClick(Sender: TObject);
+procedure TFLevelSelect.btnReplayManagerClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
-  F: TFReplayNaming;
+  F: TFReplayManager;
 begin
   OpenDlg := TOpenDialog.Create(self);
   try
@@ -1239,7 +1239,7 @@ begin
     OpenDlg.Free;
   end;
 
-  F := TFReplayNaming.Create(self);
+  F := TFReplayManager.Create(self);
   try
     if F.ShowModal = mrCancel then
       Exit;

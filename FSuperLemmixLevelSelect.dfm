@@ -197,17 +197,17 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 8
     OnClick = btnCleanseLevelsClick
   end
-  object btnMassReplay: TButton
+  object btnReplayManager: TButton
     Left = 916
     Top = 307
     Width = 134
     Height = 25
     Hint = 'Perform a replay check for every level in the selected pack'
-    Caption = 'Mass Replay Check'
+    Caption = 'Replay Manager'
     ParentShowHint = False
     ShowHint = True
     TabOrder = 7
-    OnClick = btnMassReplayClick
+    OnClick = btnReplayManagerClick
   end
   object btnSaveImage: TButton
     Left = 916

@@ -1,9 +1,9 @@
-object FReplayNaming: TFReplayNaming
+object FReplayManager: TFReplayManager
   Left = 0
   Top = 0
   BorderIcons = []
   BorderStyle = bsDialog
-  Caption = 'Replay Naming'
+  Caption = 'Replay Manager'
   ClientHeight = 243
   ClientWidth = 510
   Color = clBtnFace
@@ -98,14 +98,14 @@ object FReplayNaming: TFReplayNaming
         'Username + Title + Timestamp'
         'Username + Position + Title + Timestamp')
     end
-    object cbRefresh: TCheckBox
+    object cbUpdateVersion: TCheckBox
       Left = 16
       Top = 145
       Width = 289
       Height = 17
-      Caption = 'Refresh Replays (re-saves the file in updated format)'
+      Caption = 'Update version number if Passed'
       TabOrder = 5
-      OnClick = cbRefreshClick
+      OnClick = cbUpdateVersionClick
     end
     object cbAppendResult: TCheckBox
       Left = 16
@@ -118,18 +118,18 @@ object FReplayNaming: TFReplayNaming
     end
   end
   object btnOK: TButton
-    Left = 224
+    Left = 207
     Top = 210
-    Width = 75
+    Width = 124
     Height = 25
-    Caption = 'OK'
+    Caption = 'Run Replay Check'
     TabOrder = 2
     OnClick = btnOKClick
   end
   object btnCancel: TButton
-    Left = 310
+    Left = 337
     Top = 210
-    Width = 75
+    Width = 88
     Height = 25
     Cancel = True
     Caption = 'Cancel'

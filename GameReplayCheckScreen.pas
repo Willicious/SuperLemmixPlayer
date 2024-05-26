@@ -85,7 +85,7 @@ implementation
 
 uses
   LemReplay,
-  FReplayRename,
+  FReplayManager,
   Forms,
   LemNeoLevelPack,
   CustomPopup;
@@ -225,10 +225,10 @@ var
       Result := Result + ' + ' + IntToStr(f) + ' frames';
   end;
 
-  procedure HandleReplayNaming(aEntry: TReplayCheckEntry);
+  procedure ManageReplays(aEntry: TReplayCheckEntry);
   var
     NewName: String;
-    ThisSetting: TReplayNamingSetting;
+    ThisSetting: TReplayManagerSetting;
     ResultTag, OutcomeText: String;
   const
     TAG_RESULT = '{RESULT}';
@@ -242,10 +242,9 @@ var
                                    '__(LevelNotFound).nxrp'
                                   ];
   begin
-    ThisSetting := ReplayNaming[aEntry.ReplayResult];
-    //GameParams.ReplayCheckPath
+    ThisSetting := ReplayManager[aEntry.ReplayResult];
 
-    if (ThisSetting.Action = rnaNone) and not (ThisSetting.Refresh or ThisSetting.AppendResult) then
+    if (ThisSetting.Action = rnaNone) and not (ThisSetting.UpdateVersion or ThisSetting.AppendResult) then
       Exit;
 
     if ThisSetting.Action = rnaDelete then
@@ -296,7 +295,7 @@ var
     ForceDirectories(ExtractFilePath(NewName));
     OutStream.Clear;
 
-    if ThisSetting.Refresh then
+    if ThisSetting.UpdateVersion then
     begin
       if aEntry.ReplayResult in [CR_PASS, CR_PASS_TALISMAN] then
         Game.ReplayManager.LevelVersion := GameParams.Level.Info.LevelVersion;
@@ -434,7 +433,7 @@ begin
         OutputText(startLine);
       end;
 
-      HandleReplayNaming(fReplays[i]);
+      ManageReplays(fReplays[i]);
 
       Application.ProcessMessages;
       if not fProcessing then Break;
