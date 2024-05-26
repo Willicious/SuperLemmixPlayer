@@ -11,13 +11,13 @@ uses
   LemTalisman,
   PngInterface,
   FLevelInfo, FPlaybackMode,
-  GR32, GR32_Resamplers, GR32_Layers,
+  GR32, GR32_Resamplers, GR32_Layers, GR32_Image,
   Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Buttons,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
   Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
-  LemNeoParser, GR32_Image, System.ImageList;
+  LemNeoParser, System.ImageList;
 
 type
   TFLevelSelect = class(TForm)

@@ -337,6 +337,12 @@ $(PreBuildEvent)]]></PreBuildEvent>
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
+                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>SuperLemmix.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
@@ -344,12 +350,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="RC Release" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>SuperLemmix.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
                         <Overwrite>true</Overwrite>
