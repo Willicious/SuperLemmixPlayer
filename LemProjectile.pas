@@ -145,10 +145,10 @@ const
   SPEAR_OFFSET: TPoint = (X: 2; Y: -3);
 
   // Spear angles
-  SPEAR_SLIGHT_UP_BEGIN = 25;
-  SPEAR_FLAT_BEGIN = 46;
-  SPEAR_SLIGHT_DOWN_BEGIN = 102;
-  SPEAR_45_DOWN_BEGIN = 138;
+  SPEAR_SLIGHT_UP_BEGIN = 35;
+  SPEAR_FLAT_BEGIN = 71;
+  SPEAR_SLIGHT_DOWN_BEGIN = 89;
+  SPEAR_45_DOWN_BEGIN = 125;
   SPEAR_STEEP_DOWN_BEGIN = 189;
 
 {$REGION '  Y offset array'}
@@ -304,7 +304,7 @@ begin
           101..130: Result := pgGrenadeD; // Equiv 3 frames
           131..169: Result := pgGrenadeL; // Equiv 4 frames
           else
-          Result := pgGrenadeU; // Let it stay upright after 2 complete spins
+            Result := pgGrenadeU; // Let it stay upright after 2 complete spins
         end else
         Result := pgGrenadeU; // And at any other time, e.g. before thrown
       end;
@@ -330,11 +330,16 @@ begin
       end
     else
       case fOffsetX of
+        // Primary arc angles
         SPEAR_SLIGHT_UP_BEGIN   .. SPEAR_FLAT_BEGIN-1:         Result := pgSpearSlightBLTR;
         SPEAR_FLAT_BEGIN        .. SPEAR_SLIGHT_DOWN_BEGIN-1:  Result := pgSpearFlat;
         SPEAR_SLIGHT_DOWN_BEGIN .. SPEAR_45_DOWN_BEGIN-1:      Result := pgSpearSlightTLBR;
         SPEAR_45_DOWN_BEGIN     .. SPEAR_STEEP_DOWN_BEGIN-1:   Result := pgSpear45TLBR;
+
+        // Beginning angle
         else if fOffsetX < SPEAR_SLIGHT_UP_BEGIN then Result := pgSpear45BLTR
+
+        // Later steep angle
         else Result := pgSpearSteepTLBR;
       end;
   end else
