@@ -5,7 +5,7 @@ interface
 uses
   System.Generics.Collections, System.Generics.Defaults,
   GR32, CRC32, PngInterface, LemLevel,
-  Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
+  Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms, ComCtrls, StdCtrls,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
   UMisc;
@@ -216,7 +216,7 @@ type
       function FindFile(aName: String): String;
 
       procedure DumpImages(aPath: String; aPrefix: String = '');
-      procedure CleanseLevels(aPath: String; aOutput: TStringList = nil);
+      procedure CleanseLevels(aPath: String; aOutput: TStringList = nil; ProgressDialog: TForm = nil; ProgressBar: TProgressBar = nil; StatusLabel: TLabel = nil);
 
       {$ifdef exp}
       procedure DumpSuperLemmixWebsiteMetaInfo(aPath: String);
@@ -701,13 +701,14 @@ begin
   inherited;
 end;
 
-procedure TNeoLevelGroup.CleanseLevels(aPath: String; aOutput: TStringList = nil);
+procedure TNeoLevelGroup.CleanseLevels(aPath: String; aOutput: TStringList = nil; ProgressDialog: TForm = nil; ProgressBar: TProgressBar = nil; StatusLabel: TLabel = nil);
 var
   i: Integer;
   L: TNeoLevelEntry;
   SL: TStringList;
-
   IsStartingPoint: Boolean;
+  CleansedLevels: Integer;
+  CurrentGroupLabel: TLabel;
 
   procedure RecursiveCopy(aSubPath: String);
   var
@@ -795,6 +796,8 @@ var
   end;
 
 begin
+  CleansedLevels := 0;
+
   if aOutput = nil then
   begin
     IsStartingPoint := true;
@@ -807,27 +810,78 @@ begin
 
   aPath := IncludeTrailingPathDelimiter(aPath);
 
-  for i := 0 to Children.Count-1 do
-    Children[i].CleanseLevels(aPath + Children[i].Folder, aOutput);
-
-  for i := 0 to Levels.Count-1 do
+  if IsStartingPoint then
   begin
-    L := Levels[i];
+    ProgressDialog := TForm.Create(nil);
     try
-      GameParams.SetLevel(L);
-      GameParams.LoadCurrentLevel(true);
+      ProgressDialog.Caption := 'Cleansing Levels...';
+      ProgressDialog.Position := poScreenCenter;
+      ProgressDialog.BorderStyle := bsDialog;
+      ProgressDialog.Width := 400;
+      ProgressDialog.Height := 150;
 
-      CheckForWarnings;
+      CurrentGroupLabel := TLabel.Create(ProgressDialog);
+      CurrentGroupLabel.Parent := ProgressDialog;
+      CurrentGroupLabel.AutoSize := True;
+      CurrentGroupLabel.Caption := '';
+      CurrentGroupLabel.Top := 10;
+      CurrentGroupLabel.Left := 10;
 
-      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion + 1;
-      GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
-      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion - 1; // Just in case
+      ProgressBar := TProgressBar.Create(ProgressDialog);
+      ProgressBar.Parent := ProgressDialog;
+      ProgressBar.Align := alBottom;
+      ProgressBar.Min := 0;
+      ProgressBar.Max := 1; // Initialize to 1, will be updated later
+      ProgressBar.Position := 0;
+
+      ProgressDialog.Show;
     except
-      if aOutput.Count > 0 then
-        aOutput.Add('');
-
-      aOutput.Add('ERROR cleansing "' + L.Title + '". This level will be copied unmodified.');
+      ProgressDialog.Free;
+      raise;
     end;
+  end;
+
+  try
+    for i := 0 to Children.Count -1 do
+    begin
+      CurrentGroupLabel.Caption := 'Cleansing levels for group: ' + Children[i].Name;
+      ProgressBar.Max := Children[i].Levels.Count;
+      Children[i].CleanseLevels(aPath + Children[i].Folder, aOutput, ProgressDialog, ProgressBar, CurrentGroupLabel);
+      Inc(CleansedLevels, ProgressBar.Max);
+    end;
+
+    for i := 0 to Levels.Count -1 do
+    begin
+      L := Levels[i];
+      try
+        GameParams.SetLevel(L);
+        GameParams.LoadCurrentLevel(true);
+
+        CheckForWarnings;
+
+        GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion +1;
+        GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+        GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion -1; // Just in case
+
+        CurrentGroupLabel.Caption := 'Cleansing level: ' + Levels.GetItem(i).Title;
+        ProgressBar.Max := Levels.Count;
+        ProgressBar.Position := CleansedLevels;
+
+        Inc(CleansedLevels);
+        Application.ProcessMessages; // Allow UI updates
+      except
+        if aOutput.Count > 0 then
+          aOutput.Add('');
+
+        aOutput.Add('ERROR cleansing "' + L.Title + '". This level will be copied unmodified.');
+      end;
+    end;
+
+    if IsStartingPoint then
+      ProgressDialog.Close;
+  finally
+    if IsStartingPoint then
+      ProgressDialog.Free;
   end;
 
   if IsStartingPoint then
