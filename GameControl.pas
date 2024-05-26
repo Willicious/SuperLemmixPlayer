@@ -46,6 +46,7 @@ type
   TGameScreenType = (
     gstUnknown,
     gstMenu,
+    gstPackSelect,
     gstPreview,
     gstPlay,
     gstPostview,
