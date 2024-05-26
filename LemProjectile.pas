@@ -137,7 +137,8 @@ type
 implementation
 
 uses
-  LemRenderHelpers, LemGame;
+  LemRenderHelpers,
+  LemGame, FMain;
 
 const
   PROJECTILE_HORIZONTAL_MOMENTUM = 9;

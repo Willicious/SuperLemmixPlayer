@@ -216,7 +216,7 @@ type
 implementation
 
 uses
-  LemGame,
+  LemGame, FMain,
   SharedGlobals,
   GameControl;
 
