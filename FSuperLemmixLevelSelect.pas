@@ -1212,7 +1212,9 @@ begin
       if SaveDlg.Execute then
       begin
         GameParams.Renderer.RenderWorld(BMP, true);
+        // Bookmark - screenshot saving currently doesn't work
         TPngInterface.SavePngFile(SaveDlg.FileName, BMP);
+        //BMP.SaveToFile(SaveDlg.FileName); // Bookmark - possible fix
       end;
     finally
       BMP.Free;
