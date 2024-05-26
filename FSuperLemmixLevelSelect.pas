@@ -1033,7 +1033,6 @@ begin
     raise Exception.Create('TFLevelSelect.PackListTalButtonClick couldn''t match the level.');
 
   tvLevelSelect.Select(NodeRef);
-  SetInfo;
 end;
 
 procedure TFLevelSelect.ClearTalismanButtons;
