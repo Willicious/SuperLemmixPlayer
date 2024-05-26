@@ -363,8 +363,10 @@ procedure TGamePreviewScreen.ExitToMenu;
 begin
   if GameParams.TestModeLevel <> nil then
     CloseScreen(gstExit)
-  else
+  else begin
+    GameParams.PlaybackModeActive := False;
     CloseScreen(gstMenu);
+  end;
 end;
 
 function TGamePreviewScreen.GetPreviewText: TextLineArray;
