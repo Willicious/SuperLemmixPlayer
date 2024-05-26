@@ -839,7 +839,10 @@ begin
       ProgressDialog.Free;
       raise;
     end;
-  end;
+  end else if Assigned(StatusLabel) then
+    CurrentGroupLabel := StatusLabel
+  else
+    CurrentGroupLabel := nil;
 
   try
     for i := 0 to Children.Count -1 do
