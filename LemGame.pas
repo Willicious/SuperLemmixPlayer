@@ -1239,6 +1239,7 @@ begin
   ZombieMap.Free;
   fReplayManager.Free;
   fRenderInterface.Free;
+  fMessageQueue.Free;
   fSoundList.Free;
   inherited Destroy;
 end;

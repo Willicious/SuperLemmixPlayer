@@ -3773,8 +3773,8 @@ var
 
 begin
   if Dst = nil then Dst := fPhysicsMap;
-  TempWorld := TBitmap32.Create;
 
+  TempWorld := TBitmap32.Create;
   T := TTerrain.Create;
   try
     fPhysicsMap.Clear(0);
@@ -3805,6 +3805,7 @@ begin
     Validate;
   finally
     TempWorld.Free;
+    T.Free;
   end;
 end;
 
