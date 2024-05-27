@@ -59,6 +59,7 @@ type
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
   private
     fLastLevelPath: String;
+    fLastGroup: TNeoLevelGroup;
 
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
@@ -821,6 +822,12 @@ begin
   fPackTalBox.VertScrollBar.Position := 0;
 
   Group := GetGroup;
+  if Group = fLastGroup then
+  begin
+    fPackTalBox.Visible:= True;
+    Exit;
+  end;
+  fLastGroup:= Group;
 
   TotalHeight := 8;
   Talismans := Group.Talismans;
