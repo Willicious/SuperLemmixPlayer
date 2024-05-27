@@ -763,12 +763,13 @@ begin
       Raise; // Yet again, to be caught on TBaseDosForm
     end;
   end;
-  if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
-  begin
-    // Clears the current-replay-in-memory when the level loads
-    GlobalGame.ReplayManager.Clear(true);
-    GlobalGame.ReplayWasLoaded := False;
-  end;
+  if (GameParams.ClassicMode and not GameParams.PlaybackModeActive)
+    or not GameParams.ReplayAfterRestart then
+    begin
+      // Clears the current-replay-in-memory when the level loads
+      GlobalGame.ReplayManager.Clear(true);
+      GlobalGame.ReplayWasLoaded := False;
+    end;
 end;
 
 end.
