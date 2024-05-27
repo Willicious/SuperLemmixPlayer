@@ -946,8 +946,13 @@ begin
   if PopupResult = mrRetry then
   begin
     if GameParams.PlaybackModeActive then
-      StartPlayback(0)
-    else
+    begin
+      StartPlayback(0);
+
+      // Skip past menu screen if AutoSkip is not activated
+      if not GameParams.AutoSkipPreAndPostview then
+        CloseScreen(gstPreview);
+    end else
       CloseScreen(gstReplayTest)
   end else if not Success then
   begin

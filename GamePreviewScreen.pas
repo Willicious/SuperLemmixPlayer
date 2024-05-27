@@ -38,9 +38,15 @@ type
       procedure SaveLevelImage;
       procedure TryLoadReplay;
 
+      procedure DrawLevelPreview;
+
       procedure MakeTalismanOptions;
       procedure HandleTalismanClick;
       procedure HandleCollectibleClick;
+
+      procedure MakeLoadReplayClickable;
+      procedure MakeLevelSelectClickable;
+      procedure MakeExitToMenuClickable;
 
       procedure SetWindowCaption;
     protected
@@ -189,36 +195,25 @@ begin
   end;
 end;
 
-procedure TGamePreviewScreen.BuildScreen;
+procedure TGamePreviewScreen.DrawLevelPreview;
 var
-  W: TBitmap32;
+  LevelPreviewImage: TBitmap32;
   DstRect: TRect;
   Lw, Lh : Integer;
   LevelScale: Double;
-  NewRegion: TClickableRegion;
-  Lines: TextLineArray;
-const
-  TEXT_Y_POSITION = 170;
 begin
-  SetWindowCaption;
-
-  fClickableRegions.Clear;
-  Assert(GameParams <> nil);
-
-  W := TBitmap32.Create;
-  ScreenImg.BeginUpdate;
+  LevelPreviewImage := TBitmap32.Create;
   try
     Lw := GameParams.Level.Info.Width;
     Lh := GameParams.Level.Info.Height;
 
-    // Draw level preview
-    W.SetSize(Lw, Lh);
-    W.Clear(0);
+    LevelPreviewImage.SetSize(Lw, Lh);
+    LevelPreviewImage.Clear(0);
 
-    GameParams.Renderer.RenderWorld(W, not GameParams.NoBackgrounds);
-    TLinearResampler.Create(W);
-    W.DrawMode := dmBlend;
-    W.CombineMode := cmMerge;
+    GameParams.Renderer.RenderWorld(LevelPreviewImage, not GameParams.NoBackgrounds);
+    TLinearResampler.Create(LevelPreviewImage);
+    LevelPreviewImage.DrawMode := dmBlend;
+    LevelPreviewImage.CombineMode := cmMerge;
 
     // Draw the level preview
     if GameParams.ShowMinimap and not GameParams.FullScreen then
@@ -238,7 +233,92 @@ begin
     else
       OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
-    W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
+    LevelPreviewImage.DrawTo(ScreenImg.Bitmap, DstRect, LevelPreviewImage.BoundsRect);
+  finally
+    LevelPreviewImage.Free;
+  end;
+end;
+
+procedure TGamePreviewScreen.MakeLoadReplayClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
+  else if GameParams.FullScreen then
+    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
+  else
+    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
+
+  R.AddKeysFromFunction(lka_LoadReplay);
+end;
+
+procedure TGamePreviewScreen.MakeLevelSelectClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+  else if GameParams.FullScreen then
+    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+  else
+    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+
+  R.ShortcutKeys.Add(VK_F3);
+end;
+
+procedure TGamePreviewScreen.MakeExitToMenuClickable;
+var
+  S: String;
+  R: TClickableRegion;
+  P: TPoint;
+begin
+  if GameParams.PlaybackModeActive then
+  begin
+    S := 'Cancel Playback Mode';
+
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else
+      P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+  end else begin
+    S := SOptionToMenu;
+
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else
+      P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+  end;
+
+  R := MakeClickableText(Point(P), S, ExitToMenu);
+  R.ShortcutKeys.Add(VK_ESCAPE);
+end;
+
+procedure TGamePreviewScreen.BuildScreen;
+var
+  LevelSelectText: String;
+  Lines: TextLineArray;
+const
+  TEXT_Y_POSITION = 170;
+begin
+  SetWindowCaption;
+
+  fClickableRegions.Clear;
+  Assert(GameParams <> nil);
+
+  ScreenImg.BeginUpdate;
+  try
+    DrawLevelPreview;
 
     // Draw text
     Lines := GetPreviewText;
@@ -246,48 +326,31 @@ begin
 
     DrawClassicModeButton;
 
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
-    else if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
-    else
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    NewRegion.ShortcutKeys.Add(VK_ESCAPE);
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-    else if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-    else
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    NewRegion.ShortcutKeys.Add(VK_F3);
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
-    else if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
-    else
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
-    NewRegion.AddKeysFromFunction(lka_LoadReplay);
+    MakeLoadReplayClickable;
+    MakeLevelSelectClickable;
+    MakeExitToMenuClickable;
 
     MakeHiddenOption(VK_SPACE, BeginPlay);
     MakeHiddenOption(VK_RETURN, BeginPlay);
     MakeHiddenOption(VK_F2, ShowConfigMenu);
-    MakeHiddenOption(VK_LEFT, PreviousLevel);
-    MakeHiddenOption(VK_RIGHT, NextLevel);
-    MakeHiddenOption(VK_DOWN, PreviousRank);
-    MakeHiddenOption(VK_UP, NextRank);
     MakeHiddenOption(lka_SaveImage, SaveLevelImage);
     MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
 
+    if not GameParams.PlaybackModeActive then
+    begin
+      MakeHiddenOption(VK_LEFT, PreviousLevel);
+      MakeHiddenOption(VK_RIGHT, NextLevel);
+      MakeHiddenOption(VK_DOWN, PreviousRank);
+      MakeHiddenOption(VK_UP, NextRank);
+    end;
+
     MakeTalismanOptions;
 
-    DrawAllClickables;
-
     if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview then
-      BeginPlay;
+      BeginPlay
+    else
+      DrawAllClickables;
   finally
-    W.Free;
     ScreenImg.EndUpdate;
   end;
 end;
@@ -363,8 +426,10 @@ procedure TGamePreviewScreen.ExitToMenu;
 begin
   if GameParams.TestModeLevel <> nil then
     CloseScreen(gstExit)
-  else
+  else begin
+    GameParams.PlaybackModeActive := False;
     CloseScreen(gstMenu);
+  end;
 end;
 
 function TGamePreviewScreen.GetPreviewText: TextLineArray;
@@ -698,12 +763,13 @@ begin
       Raise; // Yet again, to be caught on TBaseDosForm
     end;
   end;
-  if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
-  begin
-    // Clears the current-replay-in-memory when the level loads
-    GlobalGame.ReplayManager.Clear(true);
-    GlobalGame.ReplayWasLoaded := False;
-  end;
+  if (GameParams.ClassicMode and not GameParams.PlaybackModeActive)
+    or not GameParams.ReplayAfterRestart then
+    begin
+      // Clears the current-replay-in-memory when the level loads
+      GlobalGame.ReplayManager.Clear(true);
+      GlobalGame.ReplayWasLoaded := False;
+    end;
 end;
 
 end.

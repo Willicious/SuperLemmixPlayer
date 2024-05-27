@@ -127,8 +127,7 @@ object FLevelSelect: TFLevelSelect
     ReadOnly = True
     TabOrder = 0
     OnChange = tvLevelSelectChange
-    OnClick = tvLevelSelectClick
-    OnDblClick = tvLevelSelectDblClick
+    OnExpanded = tvLevelSelectExpanded
     OnKeyDown = tvLevelSelectKeyDown
   end
   object btnCancel: TButton

@@ -35,6 +35,12 @@ type
       procedure NextLevel;
       procedure ReplaySameLevel;
       procedure ExitToMenu;
+
+      procedure MakeNextLevelClickable;
+      procedure MakeRetryLevelClickable(LevelPassed: Boolean);
+      procedure MakeSaveReplayClickable;
+      procedure MakeLevelSelectClickable;
+      procedure MakeExitToMenuClickable;
     protected
       procedure PrepareGameParams; override;
       procedure BuildScreen; override;
@@ -76,8 +82,13 @@ end;
 
 procedure TGamePostviewScreen.NextLevel;
 begin
-  GameParams.NextLevel(true);
-  GlobalGame.ReplayWasLoaded := False;
+  if GameParams.PlaybackModeActive then
+    StartPlayback(GameParams.PlaybackIndex + 1)
+  else begin
+    GameParams.NextLevel(true);
+    GlobalGame.ReplayWasLoaded := False;
+  end;
+
   CloseScreen(gstPreview);
 end;
 
@@ -99,6 +110,128 @@ begin
     GlobalGame.ReplayWasLoaded := True;
 end;
 
+procedure TGamePostviewScreen.MakeExitToMenuClickable;
+var
+  S: String;
+  R: TClickableRegion;
+  P: TPoint;
+begin
+  if GameParams.PlaybackModeActive then
+  begin
+    S := 'Cancel Playback Mode';
+
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+    else
+      P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+  end else begin
+    S := SOptionToMenu;
+
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else
+      P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+  end;
+
+  R := MakeClickableText(Point(P), S, ExitToMenu);
+  R.ShortcutKeys.Add(VK_ESCAPE);
+end;
+
+procedure TGamePostviewScreen.MakeNextLevelClickable;
+var
+  R: TClickableRegion;
+  S: String;
+begin
+  if GameParams.PlaybackModeActive then
+    S := 'Playback Next Level'
+  else
+    S := SOptionNextLevel;
+
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    R := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel)
+  else if GameParams.FullScreen then
+    R := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel)
+  else
+    R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel);
+
+  R.ShortcutKeys.Add(VK_RETURN);
+  R.ShortcutKeys.Add(VK_SPACE);
+end;
+
+procedure TGamePostviewScreen.MakeRetryLevelClickable(LevelPassed: Boolean);
+var
+  P: TPoint;
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  if LevelPassed then
+  begin
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+    else
+      P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+  end else begin
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+    else
+      P := Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+  end;
+
+  R := MakeClickableText(Point(P), SOptionRetryLevel, ReplaySameLevel);
+
+  if LevelPassed then
+  begin
+    R.ShortcutKeys.Add(VK_RETURN);
+    R.ShortcutKeys.Add(VK_SPACE);
+  end;
+
+  R.AddKeysFromFunction(lka_Restart);
+end;
+
+procedure TGamePostviewScreen.MakeSaveReplayClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
+  else if GameParams.FullScreen then
+    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
+  else
+    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
+
+  R.AddKeysFromFunction(lka_SaveReplay);
+end;
+
+procedure TGamePostviewScreen.MakeLevelSelectClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive then
+    Exit;
+
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+  else if GameParams.FullScreen then
+    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
+  else
+    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+
+  R.ShortcutKeys.Add(VK_F3);
+end;
+
 procedure TGamePostviewScreen.BuildScreen;
 var
   NewRegion: TClickableRegion;
@@ -115,66 +248,32 @@ begin
 
     if GameParams.GameResult.gSuccess then
     begin
-      if GameParams.ShowMinimap and not GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
-      else if GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
-      else
-        NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
-      NewRegion.ShortcutKeys.Add(VK_RETURN);
-      NewRegion.ShortcutKeys.Add(VK_SPACE);
+      MakeNextLevelClickable;
+      MakeRetryLevelClickable(True);
+    end else
+      MakeRetryLevelClickable(False);
 
-      if GameParams.ShowMinimap and not GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
-      else if GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
-      else
-        NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      NewRegion.AddKeysFromFunction(lka_Restart);
-    end else begin
-      if GameParams.ShowMinimap and not GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
-      else if GameParams.FullScreen then
-        NewRegion := MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel)
-      else
-        NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
-      NewRegion.ShortcutKeys.Add(VK_RETURN);
-      NewRegion.ShortcutKeys.Add(VK_SPACE);
-      NewRegion.AddKeysFromFunction(lka_Restart);
-    end;
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
-    else if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu)
-    else
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-    NewRegion.ShortcutKeys.Add(VK_ESCAPE);
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-    else if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-    else
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-    NewRegion.ShortcutKeys.Add(VK_F3);
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
-    else if GameParams.FullScreen then
-      NewRegion := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
-    else
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
-    NewRegion.AddKeysFromFunction(lka_SaveReplay);
+    MakeSaveReplayClickable;
+    MakeLevelSelectClickable;
+    MakeExitToMenuClickable;
 
     MakeHiddenOption(VK_F2, ShowConfigMenu);
     MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
 
-    DrawAllClickables;
     ReloadCursor('postview.png');
 
-    if GameParams.PlaybackModeActive then
+    if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview
+    then begin
+      // Start playback of next level automatically if AutoSkip is active
       StartPlayback(GameParams.PlaybackIndex + 1);
+
+      // Rebuild screen if Playback has finished
+      if not GameParams.PlaybackModeActive then
+        BuildScreen;
+    end else
+      // Draw clickables if AutoSkip isn't active
+      DrawAllClickables;
+
   finally
     ScreenImg.EndUpdate;
   end;
@@ -185,6 +284,8 @@ begin
   if GameParams.TestModeLevel <> nil then
     CloseScreen(gstExit)
   else begin
+    GameParams.PlaybackModeActive := False;
+
     if GameParams.LastActiveLevel then
       GameParams.NextUnsolvedLevel := False
     else if GameParams.GameResult.gSuccess and GameParams.NextUnsolvedLevel then

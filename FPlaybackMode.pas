@@ -49,16 +49,24 @@ implementation
 
 procedure TFPlaybackMode.btnBrowseClick(Sender: TObject);
 var
+  OpenDlg: TOpenDialog;
   Dir: string;
-  DisplayDir: string;
 begin
-  // Set the initial directory
-  Dir := IncludeTrailingPathDelimiter(AppPath) + SFReplays;
+  OpenDlg := TOpenDialog.Create(Self);
+  try
+    Dir := IncludeTrailingPathDelimiter(AppPath) + SFReplays;
+    OpenDlg.Title := 'Select any file in the folder containing replays';
+    OpenDlg.InitialDir := Dir;
+    OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
 
-  if SelectDirectory('Select a directory', Dir, DisplayDir) then
-  begin
-    FSelectedFolder := DisplayDir;
-    stSelectedFolder.Caption := ExtractFileName(DisplayDir);
+    if OpenDlg.Execute then
+    begin
+      fSelectedFolder := ExtractFilePath(OpenDlg.FileName);
+      SetCurrentDir(fSelectedFolder);
+      stSelectedFolder.Caption := ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
+    end;
+  finally
+    OpenDlg.Free;
   end;
 end;
 
