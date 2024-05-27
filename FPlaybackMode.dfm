@@ -1,9 +1,10 @@
 object FPlaybackMode: TFPlaybackMode
   Left = 0
   Top = 0
+  BorderStyle = bsSingle
   Caption = 'Playback Mode'
-  ClientHeight = 257
-  ClientWidth = 411
+  ClientHeight = 267
+  ClientWidth = 421
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -93,19 +94,20 @@ object FPlaybackMode: TFPlaybackMode
     Caption = '(hotkey)'
     TabOrder = 4
   end
-  object btnOK: TButton
-    Left = 128
+  object btnBeginPlayback: TButton
+    Left = 102
     Top = 224
-    Width = 75
+    Width = 123
     Height = 25
-    Caption = 'OK'
+    Caption = 'Begin Playback'
     ModalResult = 1
     TabOrder = 5
+    OnClick = btnBeginPlaybackClick
   end
   object btnCancel: TButton
-    Left = 209
+    Left = 231
     Top = 224
-    Width = 75
+    Width = 96
     Height = 25
     Caption = 'Cancel'
     ModalResult = 2

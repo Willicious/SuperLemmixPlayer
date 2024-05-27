@@ -20,12 +20,13 @@ type
     cbAutoskip: TCheckBox;
     lblPlaybackCancelHotkey: TLabel;
     stPlaybackCancelHotkey: TStaticText;
-    btnOK: TButton;
+    btnBeginPlayback: TButton;
     btnCancel: TButton;
     stPackName: TStaticText;
     procedure btnBrowseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnBeginPlaybackClick(Sender: TObject);
 
   private
     fSelectedFolder: string;
@@ -111,6 +112,15 @@ begin
   if (rgPlaybackOrder.ItemIndex >= Ord(Low(TPlaybackOrder)))
     and (rgPlaybackOrder.ItemIndex <= Ord(High(TPlaybackOrder))) then
       GameParams.PlaybackOrder := TPlaybackOrder(rgPlaybackOrder.ItemIndex);
+end;
+
+procedure TFPlaybackMode.btnBeginPlaybackClick(Sender: TObject);
+begin
+  if fSelectedFolder = '' then
+  begin
+    ShowMessage('No replays selected. Please choose a folder of replays to begin Playback Mode.');
+    ModalResult := mrNone;
+  end;
 end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
