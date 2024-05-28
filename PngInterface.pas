@@ -170,7 +170,7 @@ var
   TempBmp: TBitmap32;
   PNGWriter: IImageFormatWriter;
 begin
-  PNGWriter := ImageFormatManager.Writers.FindWriter('.png');
+  PNGWriter := ImageFormatManager.Writers.FindWriter('png');
   Assert(PNGWriter <> nil);
 
   if not NoAlpha then
