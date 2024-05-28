@@ -348,6 +348,8 @@ begin
 
   for i := 100 to MAXIMUM_SI do                    
     fSkillOvercount[i] := TBitmap32.Create;
+
+  fRRIsPressed := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
