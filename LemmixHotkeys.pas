@@ -395,50 +395,53 @@ var
 begin
   StringList := TStringList.Create;
   try
-    if FileExists(AppPath + SFSaveData + 'hotkeys.ini') then
-      StringList.LoadFromFile(AppPath + SFSaveData + 'hotkeys.ini')
-    else if FileExists(AppPath + 'SuperLemmixHotkeys.ini') then
-      StringList.LoadFromFile(AppPath + 'SuperLemmixHotkeys.ini')
-    else begin
-      SetDefaultsAdvanced;
-      Exit;
-    end;
-    for i := 0 to MAX_KEY do
-    begin
-      istr := StringList.Values[IntToHex(i, MAX_KEY_LEN)];
-      if istr = '' then
+    try
+      if FileExists(AppPath + SFSaveData + 'hotkeys.ini') then
+        StringList.LoadFromFile(AppPath + SFSaveData + 'hotkeys.ini')
+      else if FileExists(AppPath + 'SuperLemmixHotkeys.ini') then
+        StringList.LoadFromFile(AppPath + 'SuperLemmixHotkeys.ini')
+      else begin
+        SetDefaultsAdvanced;
+        Exit;
+      end;
+      for i := 0 to MAX_KEY do
       begin
-        fKeyFunctions[i].Action := lka_Null;
-        fKeyFunctions[i].Modifier := 0;
-      end else begin
-        s0 := '';
-        s1 := '';
-        FoundSplit := false;
-        for i2 := 1 to Length(istr) do
+        istr := StringList.Values[IntToHex(i, MAX_KEY_LEN)];
+        if istr = '' then
         begin
-          if istr[i2] = ':' then
+          fKeyFunctions[i].Action := lka_Null;
+          fKeyFunctions[i].Modifier := 0;
+        end else begin
+          s0 := '';
+          s1 := '';
+          FoundSplit := false;
+          for i2 := 1 to Length(istr) do
           begin
-            FoundSplit := true;
-            Continue;
+            if istr[i2] = ':' then
+            begin
+              FoundSplit := true;
+              Continue;
+            end;
+            if FoundSplit then
+              s1 := s1 + istr[i2]
+            else
+              s0 := s0 + istr[i2];
           end;
-          if FoundSplit then
-            s1 := s1 + istr[i2]
-          else
-            s0 := s0 + istr[i2];
+          fKeyFunctions[i].Action := InterpretMain(s0);
+          fKeyFunctions[i].Modifier := InterpretSecondary(s1);
         end;
-        fKeyFunctions[i].Action := InterpretMain(s0);
-        fKeyFunctions[i].Modifier := InterpretSecondary(s1);
+      end;
+    except
+      on E: Exception do
+      begin
+        fDisableSaving := true;
+        SetDefaultsAdvanced;
+        raise E;
       end;
     end;
-  except
-    on E: Exception do
-    begin
-      fDisableSaving := true;
-      SetDefaultsAdvanced;
-      raise E;
-    end;
+  finally
+    StringList.Free;
   end;
-  StringList.Free;
 end;
 
 procedure TLemmixHotkeyManager.SaveFile;

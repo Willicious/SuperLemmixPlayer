@@ -115,7 +115,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_DcuOutput>dcu</DCC_DcuOutput>
         <DCC_DebugInformation>1</DCC_DebugInformation>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-        <DCC_UnitSearchPath>kernel;kernel\zlib;kernel\gr32png;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>kernel;kernel\zlib;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_F>false</DCC_F>
         <SanitizedProjectName>SuperLemmix</SanitizedProjectName>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>

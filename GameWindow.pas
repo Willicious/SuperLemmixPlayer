@@ -550,6 +550,9 @@ procedure TGameWindow.ApplyMouseTrap;
 var
   ClientTopLeft, ClientBottomRight: TPoint;
 begin
+  // Only trap mouse if SLX is in the foreground
+  if FindControl(GetForegroundWindow()) = nil then Exit;
+
   // For security check trapping the mouse again.
   if fSuspendCursor or not GameParams.EdgeScroll then Exit;
 

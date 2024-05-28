@@ -433,88 +433,90 @@ var
 begin
   SL := TStringList.Create;
   SL2 := TStringList.Create;
+  try
+    ForceDirectories(AppPath + SFSaveData);
+    if FileExists(AppPath + SFSaveData + 'settings.ini') then
+      SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
+    else if FileExists(AppPath + 'SuperLemmix147Settings.ini') then
+      SL2.LoadFromFile(AppPath + 'SuperLemmix147Settings.ini');
 
-  ForceDirectories(AppPath + SFSaveData);
-  if FileExists(AppPath + SFSaveData + 'settings.ini') then
-    SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
-  else if FileExists(AppPath + 'SuperLemmix147Settings.ini') then
-    SL2.LoadFromFile(AppPath + 'SuperLemmix147Settings.ini');
+    SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
+    SL.Add('UserName=' + UserName);
 
-  SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
-  SL.Add('UserName=' + UserName);
+    SL.Add('');
+    SL.Add('# Interface Options');
+    SaveBoolean('AutoSaveReplay', AutoSaveReplay);
+    SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
+    SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
+    SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
+    SaveBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
+    SaveBoolean('LoadLastActiveLevel', LastActiveLevel);
+    SaveBoolean('AutoReplay', AutoReplayMode);
+    SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
+    SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
+    SaveBoolean('TurboFastForward', TurboFF);
+    SaveBoolean('NoBackgrounds', NoBackgrounds);
+    SaveBoolean('ColourCycle', ColourCycle);
+    SaveBoolean('ShowButtonHints', ShowButtonHints);
+    SaveBoolean('ClassicMode', ClassicMode);
+    SaveBoolean('HideShadows', HideShadows);
+    SaveBoolean('HideHelpers', HideHelpers);
+    SaveBoolean('HideSkillQ', HideSkillQ);
+    SaveBoolean('HighQualityMinimap', MinimapHighQuality);
+    SaveBoolean('ShowMinimap', ShowMinimap);
+    SaveBoolean('EdgeScrolling', EdgeScroll);
+    SaveBoolean('UseSpawnInterval', SpawnInterval);
 
-  SL.Add('');
-  SL.Add('# Interface Options');
-  SaveBoolean('AutoSaveReplay', AutoSaveReplay);
-  SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
-  SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
-  SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
-  SaveBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
-  SaveBoolean('LoadLastActiveLevel', LastActiveLevel);
-  SaveBoolean('AutoReplay', AutoReplayMode);
-  SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
-  SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
-  SaveBoolean('TurboFastForward', TurboFF);
-  SaveBoolean('NoBackgrounds', NoBackgrounds);
-  SaveBoolean('ColourCycle', ColourCycle);
-  SaveBoolean('ShowButtonHints', ShowButtonHints);
-  SaveBoolean('ClassicMode', ClassicMode);
-  SaveBoolean('HideShadows', HideShadows);
-  SaveBoolean('HideHelpers', HideHelpers);
-  SaveBoolean('HideSkillQ', HideSkillQ);
-  SaveBoolean('HighQualityMinimap', MinimapHighQuality);
-  SaveBoolean('ShowMinimap', ShowMinimap);
-  SaveBoolean('EdgeScrolling', EdgeScroll);
-  SaveBoolean('UseSpawnInterval', SpawnInterval);
+    SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+    SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
+    SL.Add('CursorResize=' + FloatToStr(CursorResize));
+    SaveBoolean('IncreaseZoom', IncreaseZoom);
+    SaveBoolean('FullScreen', FullScreen);
 
-  SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
-  SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
-  SL.Add('CursorResize=' + FloatToStr(CursorResize));
-  SaveBoolean('IncreaseZoom', IncreaseZoom);
-  SaveBoolean('FullScreen', FullScreen);
+    if not FullScreen then
+    begin
+      SL.Add('WindowLeft=' + IntToStr(WindowLeft));
+      SL.Add('WindowTop=' + IntToStr(WindowTop));
+      SL.Add('WindowWidth=' + IntToStr(WindowWidth));
+      SL.Add('WindowHeight=' + IntToStr(WindowHeight));
+    end;
 
-  if not FullScreen then
-  begin
-    SL.Add('WindowLeft=' + IntToStr(WindowLeft));
-    SL.Add('WindowTop=' + IntToStr(WindowTop));
-    SL.Add('WindowWidth=' + IntToStr(WindowWidth));
-    SL.Add('WindowHeight=' + IntToStr(WindowHeight));
+    SaveBoolean('HighResolution', HighResolution);
+    SaveBoolean('LinearResampleMenu', LinearResampleMenu);
+
+    LevelSavePath := CurrentLevel.Path;
+    if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
+      LevelSavePath := RightStr(LevelSavePath, Length(LevelSavePath) - Length(AppPath + SFLevels));
+    SL.Add('LastActiveLevel=' + LevelSavePath);
+
+    SL.Add('');
+    SL.Add('# Sound Options');
+    SaveBoolean('MusicEnabled', not SoundManager.MuteMusic);
+    SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
+    SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
+    SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
+    SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
+    SaveBoolean('PreferYippee', PreferYippee);
+    SaveBoolean('PreferBoing', PreferBoing);
+    SaveBoolean('PostviewJingles', PostviewJingles);
+    SaveBoolean('MenuSounds', MenuSounds);
+
+    SL.Add('');
+    SL.Add('# Technical Options');
+    SaveBoolean('FileCaching', FileCaching);
+
+    if UnderWine then
+    begin
+      SaveBoolean('DisableWineWarnings', DisableWineWarnings);
+    end;
+
+    AddUnknowns;
+
+    SL.SaveToFile(AppPath + SFSaveData + 'settings.ini');
+  finally
+    SL.Free;
+    SL2.Free;
   end;
-
-  SaveBoolean('HighResolution', HighResolution);
-  SaveBoolean('LinearResampleMenu', LinearResampleMenu);
-
-  LevelSavePath := CurrentLevel.Path;
-  if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
-    LevelSavePath := RightStr(LevelSavePath, Length(LevelSavePath) - Length(AppPath + SFLevels));
-  SL.Add('LastActiveLevel=' + LevelSavePath);
-
-  SL.Add('');
-  SL.Add('# Sound Options');
-  SaveBoolean('MusicEnabled', not SoundManager.MuteMusic);
-  SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
-  SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
-  SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
-  SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
-  SaveBoolean('PreferYippee', PreferYippee);
-  SaveBoolean('PreferBoing', PreferBoing);
-  SaveBoolean('PostviewJingles', PostviewJingles);
-  SaveBoolean('MenuSounds', MenuSounds);
-
-  SL.Add('');
-  SL.Add('# Technical Options');
-  SaveBoolean('FileCaching', FileCaching);
-
-  if UnderWine then
-  begin
-    SaveBoolean('DisableWineWarnings', DisableWineWarnings);
-  end;
-
-  AddUnknowns;
-
-  SL.SaveToFile(AppPath + SFSaveData + 'settings.ini');
-
-  SL.Free;
 end;
 
 procedure TDosGameParams.LoadFromIniFile;

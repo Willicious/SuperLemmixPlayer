@@ -292,7 +292,7 @@ begin
   fActiveForm.ShowScreen;
 end;
 
-procedure TAppController.ShowTextScreen;
+procedure TAppController.ShowTextScreen; // BookmarkPlayback - this needs to be completely refactored for Playback Mode
 var
   IsPreview: Boolean;
 begin

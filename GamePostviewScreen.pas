@@ -262,6 +262,8 @@ begin
 
     ReloadCursor('postview.png');
 
+    // BookmarkPlayback - this logic is seriously flawed at the moment - the last level in the playlist plays twice
+    // if AutoSkip is not active ???????
     if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview
     then begin
       // Start playback of next level automatically if AutoSkip is active

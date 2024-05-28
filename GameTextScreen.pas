@@ -69,6 +69,9 @@ begin
 
     if PreviewText then
       GameParams.ShownText := true;
+
+//    if GameParams.PlaybackModeActive then  // BookmarkPlayback
+//      ToNextScreen;
   finally
     ScreenImg.EndUpdate;
   end;
