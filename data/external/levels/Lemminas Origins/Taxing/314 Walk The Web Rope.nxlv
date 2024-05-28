@@ -1,0 +1,1852 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.7
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Walk The Web Rope
+ AUTHOR WillLem/DMA
+ ID xDF1CCC13DF1CCC12
+ VERSION x0000000000000007
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1600
+ HEIGHT 160
+ START_X 310
+ START_Y 80
+ THEME willlem_lemminas_classic
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 75
+ TIME_LIMIT 120
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 5
+   TIMEBOMBER 5
+   BUILDER 5
+   BASHER 2
+   MINER 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE Save Maximum Possible
+   ID 0
+   COLOR Gold
+   SAVE_REQUIREMENT 76
+ $END 
+ 
+ $TALISMAN 
+   TITLE Classic Mode Plus
+   ID 1
+   COLOR Gold
+   BUILDER_LIMIT 0
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 174
+   Y 42
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 1280
+   Y 132
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE spider_web
+   X 249
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 411
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 441
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 472
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 502
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 532
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 562
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 593
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 653
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 683
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 712
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 741
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 770
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 831
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 861
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 892
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 923
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 954
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 1014
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 1044
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 1073
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE spider_web
+   X 1100
+   Y -9
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 1123
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 1102
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 1229
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 1258
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 1255
+   Y -15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 350
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 380
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 404
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_01
+   X 405
+   Y 106
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_01
+   X 407
+   Y 106
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE crystal_01
+   X 415
+   Y 112
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 189
+   Y 154
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_02
+   X 222
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 1269
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 430
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 506
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 486
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 562
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 618
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 719
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 670
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 772
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 921
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 888
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 947
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1030
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1068
+   Y 66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 795
+   Y 18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 622
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 850
+   Y 22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 863
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 410
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 129
+   Y 66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 86
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 36
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 100
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 8
+   Y 23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 12
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 193
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1279
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1329
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1389
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1489
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1370
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1434
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1578
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1462
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1546
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1499
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1167
+   Y 126
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1219
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1020
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 951
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 883
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 561
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 604
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 826
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 398
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 296
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 474
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 648
+   Y 130
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 760
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1009
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 622
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 800
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_03
+   X 984
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 204
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 312
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 320
+   Y 131
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 313
+   Y 143
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 313
+   Y 122
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 299
+   Y 134
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 172
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 180
+   Y 63
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 173
+   Y 75
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 173
+   Y 54
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 159
+   Y 66
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 140
+   Y 23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 148
+   Y 19
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 141
+   Y 31
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 141
+   Y 10
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 127
+   Y 22
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 60
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 68
+   Y 15
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 61
+   Y 27
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 61
+   Y 6
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 47
+   Y 18
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 74
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 76
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 84
+   Y 103
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 77
+   Y 115
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 77
+   Y 94
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 63
+   Y 106
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 496
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 504
+   Y 123
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 497
+   Y 135
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 497
+   Y 114
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 483
+   Y 126
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 524
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 532
+   Y 51
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 525
+   Y 63
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 525
+   Y 42
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 511
+   Y 54
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 460
+   Y 23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 468
+   Y 19
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 461
+   Y 31
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 461
+   Y 10
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 447
+   Y 22
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 588
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 596
+   Y 43
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 589
+   Y 55
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 589
+   Y 34
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 575
+   Y 46
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 600
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 608
+   Y 31
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 601
+   Y 43
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 601
+   Y 22
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 587
+   Y 34
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 816
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 824
+   Y 39
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 817
+   Y 51
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 817
+   Y 30
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 803
+   Y 42
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 968
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 976
+   Y 63
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 969
+   Y 75
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 969
+   Y 54
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 955
+   Y 66
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1000
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1008
+   Y 11
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1001
+   Y 23
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1001
+   Y 2
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 987
+   Y 14
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1068
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1076
+   Y 23
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1069
+   Y 35
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1069
+   Y 14
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1055
+   Y 26
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1036
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1044
+   Y 127
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1037
+   Y 139
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1037
+   Y 118
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1023
+   Y 130
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 932
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 940
+   Y 123
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 933
+   Y 135
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 933
+   Y 114
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 919
+   Y 126
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 908
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 916
+   Y 135
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 909
+   Y 147
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 909
+   Y 126
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 895
+   Y 138
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 704
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 712
+   Y 119
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 705
+   Y 131
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 705
+   Y 110
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 691
+   Y 122
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1200
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1208
+   Y 119
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1201
+   Y 131
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1201
+   Y 110
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1187
+   Y 122
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1284
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1292
+   Y 91
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1285
+   Y 103
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1285
+   Y 82
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1271
+   Y 94
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1300
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1308
+   Y 71
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1301
+   Y 83
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1301
+   Y 62
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1287
+   Y 74
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1444
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1452
+   Y 55
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1445
+   Y 67
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1445
+   Y 46
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1431
+   Y 58
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 1412
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1420
+   Y 7
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1413
+   Y 19
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1413
+   Y -2
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 1399
+   Y 10
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 244
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 252
+   Y 135
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 245
+   Y 147
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 245
+   Y 126
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 231
+   Y 138
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 230
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_01
+   X 219
+   Y 124
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 228
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 236
+   Y 55
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 229
+   Y 67
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 229
+   Y 46
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 215
+   Y 58
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE stars_01
+   X 148
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 156
+   Y 107
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 149
+   Y 119
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 149
+   Y 98
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE steel_04
+   X 135
+   Y 110
+   ERASE
+ $END
+ 
+ 
