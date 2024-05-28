@@ -120,8 +120,7 @@ begin
   begin
     ShowMessage('No replays selected. Please choose a folder of replays to begin Playback Mode.');
     ModalResult := mrNone;
-  end else
-    ModalResult := mrRetry;
+  end;
 end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);

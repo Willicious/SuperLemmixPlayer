@@ -348,6 +348,8 @@ begin
 
   for i := 100 to MAXIMUM_SI do                    
     fSkillOvercount[i] := TBitmap32.Create;
+
+  fRRIsPressed := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -1698,9 +1700,15 @@ var
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
 
-  // Cancel replay if the "R" icon is clicked
   if PtInRect(ReplayMarkRect, MousePos(X, Y)) then
+  begin
+    // Stop playback if the "P" icon is clicked (replay must have finished or been cancelled, so this needs to be called first)
+    if GameParams.PlaybackModeActive and (Game.CurrentIteration > Game.ReplayManager.LastActionFrame) then
+      GameParams.PlaybackModeActive := False;
+
+    // Cancel replay if the "R" icon is clicked
     Game.RegainControl(true);
+  end;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
     we do want the Rewind and Turbo keys to respond }
@@ -1917,10 +1925,12 @@ begin
                    ButtonHint := 'MINIMAP'
   else if CursorOverReplayMark then
   begin
-    if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
-                   ButtonHint := ''
-  else
-                   ButtonHint := 'CANCEL REPLAY';
+    if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+                   ButtonHint := 'CANCEL REPLAY'
+    else if GameParams.PlaybackModeActive then
+                   ButtonHint := 'STOP PLAYBACK'
+    else
+                   ButtonHint := '';
   end else if CursorOverSkillButton(aButton) then
   begin
     case aButton of
