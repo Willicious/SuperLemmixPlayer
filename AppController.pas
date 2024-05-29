@@ -290,9 +290,11 @@ begin
 // Always called between gstPreview/gstGame, and between gstGame/gstPostview (if successful).
 // However, if there's no text to show, it does nothing, and proceeds directly to the next screen.
   IsPreview := not (GameParams.NextScreen = gstPostview);
+
   if (IsPreview and (GameParams.Level.PreText.Count = 0))
   or ((not IsPreview) and (GameParams.Level.PostText.Count = 0))
-  or (IsPreview and GameParams.ShownText) then
+  or (IsPreview and GameParams.ShownText)
+  or (GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview) then
   begin
     if IsPreview then
       ShowPlayScreen
