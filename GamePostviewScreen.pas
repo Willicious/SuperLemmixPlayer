@@ -82,9 +82,8 @@ end;
 
 procedure TGamePostviewScreen.NextLevel;
 begin
-  if GameParams.PlaybackModeActive then
-    StartPlayback(GameParams.PlaybackIndex + 1)
-  else begin
+  if not GameParams.PlaybackModeActive then
+  begin
     GameParams.NextLevel(true);
     GlobalGame.ReplayWasLoaded := False;
   end;
@@ -246,6 +245,16 @@ begin
     Lines := GetPostviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
+    if GameParams.PlaybackModeActive then
+    begin
+      if (GameParams.PlaybackOrder <> poByLevel) then
+        StartPlayback(GameParams.PlaybackIndex + 1)
+      else
+        StartPlayback(GameParams.PlaybackIndex);
+
+      MakeNextLevelClickable;
+    end;
+
     if GameParams.GameResult.gSuccess then
     begin
       MakeNextLevelClickable;
@@ -262,20 +271,9 @@ begin
 
     ReloadCursor('postview.png');
 
-    // BookmarkPlayback - this logic is seriously flawed at the moment - the last level in the playlist plays twice
-    // if AutoSkip is not active ???????
-    if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview
-    then begin
-      // Start playback of next level automatically if AutoSkip is active
-      StartPlayback(GameParams.PlaybackIndex + 1);
-
-      // Rebuild screen if Playback has finished
-      if not GameParams.PlaybackModeActive then
-        BuildScreen;
-    end else
-      // Draw clickables if AutoSkip isn't active
+    // Draw clickables only if AutoSkip isn't active
+    if not (GameParams.AutoSkipPreAndPostview and GameParams.PlaybackModeActive) then
       DrawAllClickables;
-
   finally
     ScreenImg.EndUpdate;
   end;
