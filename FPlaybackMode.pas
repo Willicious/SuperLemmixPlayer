@@ -51,13 +51,16 @@ implementation
 procedure TFPlaybackMode.btnBrowseClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
-  Dir: string;
 begin
   OpenDlg := TOpenDialog.Create(Self);
   try
-    Dir := IncludeTrailingPathDelimiter(AppPath) + SFReplays;
     OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := Dir;
+
+    OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
+
+    if OpenDlg.InitialDir = '' then
+      OpenDlg.InitialDir := AppPath + SFReplays;
+
     OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
 
     if OpenDlg.Execute then
