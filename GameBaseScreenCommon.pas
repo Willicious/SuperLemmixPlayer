@@ -305,7 +305,9 @@ begin
   LoadReplay;
 
   if GameParams.AutoSkipPreAndPostview then
-    CloseScreen(gstPreview);
+    CloseScreen(gstPreview)
+  else
+    GameParams.ShownText := False;
 end;
 
 
