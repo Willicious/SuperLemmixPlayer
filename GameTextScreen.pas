@@ -60,18 +60,19 @@ begin
 
     MakeHiddenOption(VK_ESCAPE, ExitToMenu);
 
-    if PreviewText then
-      MakeHiddenOption(lka_LoadReplay, TryLoadReplay)
-    else
-      MakeHiddenOption(lka_SaveReplay, SaveReplay);
+    if GameParams.PlaybackModeActive then
+      MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode)
+    else begin
+      if PreviewText then
+        MakeHiddenOption(lka_LoadReplay, TryLoadReplay)
+      else
+        MakeHiddenOption(lka_SaveReplay, SaveReplay);
+    end;
 
     DrawAllClickables;
 
     if PreviewText then
       GameParams.ShownText := true;
-
-//    if GameParams.PlaybackModeActive then  // BookmarkPlayback
-//      ToNextScreen;
   finally
     ScreenImg.EndUpdate;
   end;
