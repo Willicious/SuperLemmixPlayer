@@ -1466,13 +1466,6 @@ begin
     Playing := True;
 
   UpdateLevelRecords;
-
-//  // Remove the topmost pixel to prevent Y = 0 access
-//  for i := 0 to Level.Info.Width do
-//  begin
-//    RemovePixelAt(i, 0);
-//    fRenderInterface.RemoveTerrain(0, 0, Level.Info.Width, 1);
-//  end;
 end;
 
 
@@ -7282,8 +7275,6 @@ begin
   if fGameFinished or StateIsUnplayable then
     Exit;
 
-  if fGameFinished then
-    Exit;
   fSoundList.Clear(); // Clear list of played sound effects
 
   CheckAdjustSpawnInterval;

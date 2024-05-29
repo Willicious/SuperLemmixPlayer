@@ -191,7 +191,11 @@ begin
   case aButton of
     mbLeft: BeginPlay;
     mbRight: ExitToMenu;
-    mbMiddle: begin GameParams.ShownText := false; BeginPlay; end;
+    mbMiddle:
+    begin
+      GameParams.ShownText := false;
+      BeginPlay;
+    end;
   end;
 end;
 
