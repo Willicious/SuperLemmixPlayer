@@ -283,7 +283,7 @@ begin
   fActiveForm.ShowScreen;
 end;
 
-procedure TAppController.ShowTextScreen; // BookmarkPlayback - this needs to be completely refactored for Playback Mode
+procedure TAppController.ShowTextScreen;
 var
   IsPreview: Boolean;
 begin
@@ -294,7 +294,14 @@ begin
   if (IsPreview and (GameParams.Level.PreText.Count = 0))
   or ((not IsPreview) and (GameParams.Level.PostText.Count = 0))
   or (IsPreview and GameParams.ShownText)
-  or (GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview) then
+
+  // Bookmark - Playback Mode doesn't play nicely with Preview screen text
+  // - see www.lemmingsforums.net/index.php?topic=6712.msg102498#msg102498
+  // - if we find what's causing the skip to previous iteration, we find the fix
+  // - Until then, we'll have to skip screen text when in Playback Mode
+                                    // This can be commented back in if the bug is fixed
+  or (GameParams.PlaybackModeActive //and GameParams.AutoSkipPreAndPostview
+  ) then
   begin
     if IsPreview then
       ShowPlayScreen
