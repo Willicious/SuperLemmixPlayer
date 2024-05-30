@@ -37,6 +37,7 @@ type
       procedure ExitToMenu;
 
       procedure MakeNextLevelClickable;
+      procedure MakePlaybackNextLevelClickable;
       procedure MakeRetryLevelClickable(LevelPassed: Boolean);
       procedure MakeSaveReplayClickable;
       procedure MakeLevelSelectClickable;
@@ -143,12 +144,27 @@ end;
 procedure TGamePostviewScreen.MakeNextLevelClickable;
 var
   R: TClickableRegion;
-  S: String;
 begin
   if GameParams.PlaybackModeActive then
-    S := 'Playback Next Level'
+    Exit;
+
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    R := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
+  else if GameParams.FullScreen then
+    R := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
   else
-    S := SOptionNextLevel;
+    R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
+
+  R.ShortcutKeys.Add(VK_RETURN);
+  R.ShortcutKeys.Add(VK_SPACE);
+end;
+
+procedure TGamePostviewScreen.MakePlaybackNextLevelClickable;
+var
+  R: TClickableRegion;
+  S: String;
+begin
+  S := 'Playback Next Level';
 
   if GameParams.ShowMinimap and not GameParams.FullScreen then
     R := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel)
@@ -245,23 +261,29 @@ begin
     Lines := GetPostviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
+    // If in PlaybackMode, validate the playlist and load the next level
     if GameParams.PlaybackModeActive then
     begin
       if (GameParams.PlaybackOrder <> poByLevel) then
         StartPlayback(GameParams.PlaybackIndex + 1)
       else
         StartPlayback(GameParams.PlaybackIndex);
-
-      MakeNextLevelClickable;
     end;
 
+    // Check again for PlaybackMode after call to StartPlayback
+    if GameParams.PlaybackModeActive then
+      MakePlaybackNextLevelClickable;
+
+    // Check for success result and prepare the relevant clickables
     if GameParams.GameResult.gSuccess then
     begin
       MakeNextLevelClickable;
       MakeRetryLevelClickable(True);
-    end else
+    end else begin
       MakeRetryLevelClickable(False);
+    end;
 
+    // Prepare some more clickables and hotkey options
     MakeSaveReplayClickable;
     MakeLevelSelectClickable;
     MakeExitToMenuClickable;
@@ -271,7 +293,7 @@ begin
 
     ReloadCursor('postview.png');
 
-    // Draw clickables only if AutoSkip isn't active
+    // Finally, draw clickables only if (AutoSkip + PlaybackMode) isn't active
     if not (GameParams.AutoSkipPreAndPostview and GameParams.PlaybackModeActive) then
       DrawAllClickables;
   finally
