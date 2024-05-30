@@ -310,7 +310,6 @@ end;
 
 procedure TGamePreviewScreen.BuildScreen;
 var
-  LevelSelectText: String;
   Lines: TextLineArray;
 const
   TEXT_Y_POSITION = 170;

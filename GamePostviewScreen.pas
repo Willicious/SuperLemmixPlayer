@@ -249,7 +249,6 @@ end;
 
 procedure TGamePostviewScreen.BuildScreen;
 var
-  NewRegion: TClickableRegion;
   Lines: TextLineArray;
 const
   TEXT_Y_POSITION = 28;
