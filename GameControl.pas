@@ -25,10 +25,6 @@ var
                         Shouldn't even be used there really, but a kludgy fix is okay since that's gonna
                         be replaced once proper level select menus are introduced. }
 
-  OpenedViaReplay: Boolean;
-  LoadedReplayFile: string;
-  LoadedReplayID: string;
-
 type
   TGameResultsRec = record
     gSuccess            : Boolean; // Level played successfully
@@ -178,6 +174,10 @@ type
 
     procedure SetUserName(aValue: String);
   public
+    OpenedViaReplay: Boolean;
+    LoadedReplayFile: string;
+    LoadedReplayID: string;
+
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;

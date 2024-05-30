@@ -301,7 +301,7 @@ begin
     GameParams.PlaybackList.Delete(RandomIndex);
   end;
 
-  LoadedReplayFile := ReplayFile;
+  GameParams.LoadedReplayFile := ReplayFile;
   LoadReplay;
 
   if GameParams.AutoSkipPreAndPostview then
@@ -419,10 +419,10 @@ var
 begin
   s := '';
 
-  if OpenedViaReplay or GameParams.PlaybackModeActive then
+  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive then
   begin
     Result := true; // Return true if opened by replay
-    s := LoadedReplayFile;
+    s := GameParams.LoadedReplayFile;
   end else begin
     Dlg := TOpenDialog.Create(self);
     try

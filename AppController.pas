@@ -123,18 +123,18 @@ begin
   end;
 
   GameParams.PlaybackModeActive := False;
-  OpenedViaReplay := False;
+  GameParams.OpenedViaReplay := False;
   CheckIfOpenedViaReplay;
 
-  if OpenedViaReplay then
+  if GameParams.OpenedViaReplay then
   begin
     //GameParams.LoadLevelByID(StrToInt64(LoadedReplayID));
-    GameParams.FindLevelByID(LoadedReplayID);
+    GameParams.FindLevelByID(GameParams.LoadedReplayID);
 
     if not GameParams.MatchFound then
     begin
       GameParams.NextScreen := gstMenu;
-      OpenedViaReplay := False;
+      GameParams.OpenedViaReplay := False;
       Exit;
     end;
 
@@ -146,7 +146,7 @@ begin
 
     GameParams.NextScreen := gstPreview;
     fActiveForm.LoadReplay;
-    OpenedViaReplay := False;
+    GameParams.OpenedViaReplay := False;
   end;
 end;
 
@@ -177,35 +177,35 @@ end;
 
 // Check if the program was activated by opening an .nxrp file
 procedure TAppController.CheckIfOpenedViaReplay;
-    // Find and extract the level ID within the replay file
-    function GetLevelID(const nxrpFilePath: string): string;
-    var
-      nxrpFileContent: TStringList;
-      line: string;
-      idPos: Integer;
-    begin
-      Result := '';
+  // Find and extract the level ID within the replay file
+  function GetLevelID(const nxrpFilePath: string): string;
+  var
+    nxrpFileContent: TStringList;
+    line: string;
+    idPos: Integer;
+  begin
+    Result := '';
 
-      nxrpFileContent := TStringList.Create;
-      try
-        nxrpFileContent.LoadFromFile(nxrpFilePath);
+    nxrpFileContent := TStringList.Create;
+    try
+      nxrpFileContent.LoadFromFile(nxrpFilePath);
 
-        for line in nxrpFileContent do
+      for line in nxrpFileContent do
+      begin
+        if Pos('ID', line) = 1 then
         begin
-          if Pos('ID', line) = 1 then
+          idPos := Pos(' ', line);
+          if idPos > 0 then
           begin
-            idPos := Pos(' ', line);
-            if idPos > 0 then
-            begin
-              Result := Trim(Copy(line, idPos + 1, Length(line)));
-              Break;
-            end;
+            Result := Trim(Copy(line, idPos + 1, Length(line)));
+            Break;
           end;
         end;
-      finally
-        nxrpFileContent.Free;
       end;
+    finally
+      nxrpFileContent.Free;
     end;
+  end;
 var
   CommandLine: string;
   i: Integer;
@@ -224,9 +224,9 @@ begin
 
         if ID <> '' then
         begin
-          LoadedReplayID := ID;
-          LoadedReplayFile := aReplayFile;
-          OpenedViaReplay := True;
+          GameParams.LoadedReplayID := ID;
+          GameParams.LoadedReplayFile := aReplayFile;
+          GameParams.OpenedViaReplay := True;
         end else
           ShowMessage('Level ID not found');
         Break;
