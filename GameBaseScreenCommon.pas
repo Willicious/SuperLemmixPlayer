@@ -380,11 +380,15 @@ begin
     end else
       Sleep(1);
 
+    if GetTickCount > EndTickCount then   // prevent integer overflow
+      Break;
+
     RemainingTime := EndTickCount - GetTickCount;
   end;
 
   Application.ProcessMessages;
 end;
+
 
 function TGameBaseScreen.LoadReplay: Boolean;
 var
