@@ -28,6 +28,19 @@ type
     btnOK: TButton;
     btnCancel: TButton;
     cbAppendResult: TCheckBox;
+    lblDoForPassed: TLabel;
+    lblDoForTalisman: TLabel;
+    lblDoForUndetermined: TLabel;
+    lblDoForFailed: TLabel;
+    lblDoForLevelNotFound: TLabel;
+    lblDoForError: TLabel;
+    gbActionsList: TGroupBox;
+    stDoForPassed: TStaticText;
+    stDoForTalisman: TStaticText;
+    stDoForUndetermined: TStaticText;
+    stDoForFailed: TStaticText;
+    stDoForLevelNotFound: TStaticText;
+    stDoForError: TStaticText;
     procedure rgReplayKindClick(Sender: TObject);
     procedure rbReplayActionClick(Sender: TObject);
     procedure cbNamingSchemeChange(Sender: TObject);
@@ -36,6 +49,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure cbNamingSchemeEnter(Sender: TObject);
+    procedure UpdateLabels;
   private
     fIsSetting: Boolean;
 
@@ -151,8 +165,11 @@ begin
 end;
 
 procedure TFReplayManager.FormShow(Sender: TObject);
+var
+  i: Integer;
 begin
   SetFromOptions;
+  UpdateLabels;
 end;
 
 procedure TFReplayManager.SetNamingDropdown(aValue: String);
@@ -193,6 +210,18 @@ begin
       cbNamingScheme.ItemIndex := 0;
       cbNamingScheme.Enabled := true;
     end;
+
+    if rbDeleteFile.Checked then
+    begin
+      cbUpdateVersion.Enabled := False;
+      cbUpdateVersion.Checked := False;
+      cbAppendResult.Enabled := False;
+      cbAppendResult.Checked := False;
+    end else
+    begin
+      cbUpdateVersion.Enabled := True;
+      cbAppendResult.Enabled := True;
+    end;
   finally
     fIsSetting := false;
   end;
@@ -225,9 +254,13 @@ begin
       rnaCopy: rbCopyTo.Checked := true;
       rnaMove: rbMoveTo.Checked := true;
     end;
+
     SetNamingDropdown(ReplayManager[ToSet[0]].Template);
-    cbUpdateVersion.Checked := ReplayManager[ToSet[0]].UpdateVersion;
-    cbAppendResult.Checked := ReplayManager[ToSet[0]].AppendResult;
+
+    cbUpdateVersion.Enabled := not rbDeleteFile.Checked;
+    cbAppendResult.Enabled  := not rbDeleteFile.Checked;
+    cbUpdateVersion.Checked := ReplayManager[ToSet[0]].UpdateVersion and not rbDeleteFile.Checked;
+    cbAppendResult.Checked  := ReplayManager[ToSet[0]].AppendResult  and not rbDeleteFile.Checked;
 
     for i := 1 to Length(ToSet)-1 do
     begin
@@ -238,6 +271,7 @@ begin
         rbCopyTo.Checked := false;
         rbMoveTo.Checked := false;
       end;
+
       if ReplayManager[ToSet[i]].Template <> ReplayManager[ToSet[0]].Template then
         cbNamingScheme.Text := '';
       if ReplayManager[ToSet[i]].UpdateVersion <> ReplayManager[ToSet[0]].UpdateVersion then
@@ -261,6 +295,7 @@ var
   i: Integer;
 begin
   ToSet := GetSettingIndexes(rgReplayKind.ItemIndex);
+
   for i := 0 to Length(ToSet)-1 do
   begin
     if aSetUpdateVersion then
@@ -287,6 +322,69 @@ begin
       else
         ReplayManager[ToSet[i]].Template := '';
     end;
+
+    UpdateLabels;
+  end;
+end;
+
+procedure TFReplayManager.UpdateLabels;
+var
+  OptionCaption: string;
+  Index: Integer;
+
+  procedure SetAllLabels;
+  begin
+    lblDoForPassed.Caption        := OptionCaption;
+    lblDoForTalisman.Caption      := OptionCaption;
+    lblDoForUndetermined.Caption  := OptionCaption ;
+    lblDoForFailed.Caption        := OptionCaption;
+    lblDoForLevelNotFound.Caption := OptionCaption ;
+    lblDoForError.Caption         := OptionCaption;
+  end;
+
+  procedure SetAllPassedLabels;
+  begin
+    lblDoForPassed.Caption        := OptionCaption;
+    lblDoForTalisman.Caption      := OptionCaption;
+  end;
+
+  procedure SetAllFailedLabels;
+  begin
+    lblDoForUndetermined.Caption  := OptionCaption ;
+    lblDoForFailed.Caption        := OptionCaption;
+    lblDoForLevelNotFound.Caption := OptionCaption ;
+    lblDoForError.Caption         := OptionCaption;
+  end;
+begin
+  OptionCaption := '';
+  Index := rgReplayKind.ItemIndex;
+
+  if rbDoNothing.Checked then
+    OptionCaption := 'Keep Existing Name'
+  else if rbDeleteFile.Checked then
+    OptionCaption := 'Delete Replay'
+  else if rbCopyTo.Checked then
+    OptionCaption := 'Rename New Copy'
+  else if rbMoveTo.Checked then
+    OptionCaption := 'Rename Replay';
+
+  if cbAppendResult.Checked and not rbDeleteFile.Checked then
+    OptionCaption := OptionCaption + ', Append Result';
+
+  if cbUpdateVersion.Checked and not rbDeleteFile.Checked then
+    OptionCaption := OptionCaption + ', Update Version';
+
+
+  case Index of
+    0: SetAllLabels;
+    1: SetAllPassedLabels;
+    2: SetAllFailedLabels;
+    3: lblDoForPassed.Caption        := OptionCaption;
+    4: lblDoForTalisman.Caption      := OptionCaption;
+    5: lblDoForUndetermined.Caption  := OptionCaption;
+    6: lblDoForFailed.Caption        := OptionCaption;
+    7: lblDoForLevelNotFound.Caption := OptionCaption;
+    8: lblDoForError.Caption         := OptionCaption;
   end;
 end;
 

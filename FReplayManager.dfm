@@ -4,8 +4,8 @@ object FReplayManager: TFReplayManager
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Replay Manager'
-  ClientHeight = 243
-  ClientWidth = 510
+  ClientHeight = 378
+  ClientWidth = 571
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object FReplayManager: TFReplayManager
   object rgReplayKind: TRadioGroup
     Left = 8
     Top = 8
-    Width = 121
-    Height = 227
+    Width = 129
+    Height = 329
     Caption = 'Replay Kind'
     ItemIndex = 0
     Items.Strings = (
@@ -38,10 +38,10 @@ object FReplayManager: TFReplayManager
     OnClick = rgReplayKindClick
   end
   object gbAction: TGroupBox
-    Left = 144
+    Left = 143
     Top = 8
-    Width = 358
-    Height = 185
+    Width = 420
+    Height = 177
     Caption = 'Action for _______'
     TabOrder = 1
     object rbDoNothing: TRadioButton
@@ -83,9 +83,9 @@ object FReplayManager: TFReplayManager
       OnClick = rbReplayActionClick
     end
     object cbNamingScheme: TComboBox
-      Left = 16
+      Left = 12
       Top = 95
-      Width = 321
+      Width = 389
       Height = 21
       TabOrder = 4
       OnChange = cbNamingSchemeChange
@@ -118,22 +118,156 @@ object FReplayManager: TFReplayManager
     end
   end
   object btnOK: TButton
-    Left = 207
-    Top = 210
-    Width = 124
+    Left = 143
+    Top = 343
+    Width = 216
     Height = 25
     Caption = 'Run Replay Check'
     TabOrder = 2
     OnClick = btnOKClick
   end
   object btnCancel: TButton
-    Left = 337
-    Top = 210
-    Width = 88
+    Left = 365
+    Top = 343
+    Width = 84
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 3
+  end
+  object gbActionsList: TGroupBox
+    Left = 143
+    Top = 191
+    Width = 420
+    Height = 146
+    Caption = 'Actions List'
+    TabOrder = 4
+    object lblDoForPassed: TLabel
+      Left = 130
+      Top = 23
+      Width = 266
+      Height = 13
+      Caption = 'Keep Existing Filename, Append Result, Update Version'
+    end
+    object lblDoForTalisman: TLabel
+      Left = 130
+      Top = 42
+      Width = 109
+      Height = 13
+      Caption = 'Keep Existing Filename'
+    end
+    object lblDoForUndetermined: TLabel
+      Left = 130
+      Top = 61
+      Width = 109
+      Height = 13
+      Caption = 'Keep Existing Filename'
+    end
+    object lblDoForFailed: TLabel
+      Left = 130
+      Top = 80
+      Width = 109
+      Height = 13
+      Caption = 'Keep Existing Filename'
+    end
+    object lblDoForLevelNotFound: TLabel
+      Left = 130
+      Top = 99
+      Width = 109
+      Height = 13
+      Caption = 'Keep Existing Filename'
+    end
+    object lblDoForError: TLabel
+      Left = 130
+      Top = 118
+      Width = 109
+      Height = 13
+      Caption = 'Keep Existing Filename'
+    end
+    object stDoForPassed: TStaticText
+      Left = 16
+      Top = 23
+      Width = 47
+      Height = 17
+      Caption = 'Passed:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+    end
+    object stDoForTalisman: TStaticText
+      Left = 16
+      Top = 42
+      Width = 111
+      Height = 17
+      Caption = 'Passed (Talisman):'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+    end
+    object stDoForUndetermined: TStaticText
+      Left = 16
+      Top = 61
+      Width = 88
+      Height = 17
+      Caption = 'Undetermined:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+    end
+    object stDoForFailed: TStaticText
+      Left = 16
+      Top = 80
+      Width = 40
+      Height = 17
+      Caption = 'Failed:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+    end
+    object stDoForLevelNotFound: TStaticText
+      Left = 16
+      Top = 99
+      Width = 96
+      Height = 17
+      Caption = 'Level Not Found:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+    end
+    object stDoForError: TStaticText
+      Left = 16
+      Top = 118
+      Width = 35
+      Height = 17
+      Caption = 'Error:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 5
+    end
   end
 end
