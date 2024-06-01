@@ -707,6 +707,7 @@ begin
 
     S := '';
     CompletedCount := 0;
+
     if G.Children.Count > 0 then
     begin
       for i := 0 to G.Children.Count-1 do
@@ -716,6 +717,7 @@ begin
     end;
 
     CompletedCount := 0;
+
     if G.Levels.Count > 0 then
     begin
       for i := 0 to G.Levels.Count-1 do
@@ -739,6 +741,10 @@ begin
 
     lblCompletion.Caption := S;
     lblCompletion.Visible := true;
+
+    // Set the first unsolved level in the pack as the current level (or first level if pack is completed)
+    WriteToParams;
+    GameParams.LoadCurrentLevel(false);
 
     DisplayPackTalismanInfo;
 
