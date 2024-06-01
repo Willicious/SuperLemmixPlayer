@@ -349,7 +349,7 @@ begin
 
     MakeTalismanOptions;
 
-    if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview then
+    if GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview then
       BeginPlay
     else
       DrawAllClickables;

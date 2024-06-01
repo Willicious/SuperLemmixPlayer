@@ -293,7 +293,7 @@ begin
     ReloadCursor('postview.png');
 
     // Finally, draw clickables only if (AutoSkip + PlaybackMode) isn't active
-    if not (GameParams.AutoSkipPreAndPostview and GameParams.PlaybackModeActive) then
+    if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
       DrawAllClickables;
   finally
     ScreenImg.EndUpdate;

@@ -111,7 +111,7 @@ end;
 
 procedure TFPlaybackMode.SetGameParams;
 begin
-  GameParams.AutoSkipPreAndPostview := cbAutoSkip.Checked;
+  GameParams.AutoSkipPreviewPostview := cbAutoSkip.Checked;
 
   if (rgPlaybackOrder.ItemIndex >= Ord(Low(TPlaybackOrder)))
     and (rgPlaybackOrder.ItemIndex <= Ord(High(TPlaybackOrder))) then
@@ -129,9 +129,9 @@ end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
 begin
-  // Set default options and clear PlaybackList
-  rgPlaybackOrder.ItemIndex := 0;
-  cbAutoSkip.Checked := True;
+  // Set options and clear PlaybackList
+  rgPlaybackOrder.ItemIndex := Ord(GameParams.PlaybackOrder);
+  cbAutoSkip.Checked := GameParams.AutoSkipPreviewPostview;
   GameParams.PlaybackList.Clear;
 
   // Show currently-assigned Playback Mode hotkey

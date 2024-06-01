@@ -304,7 +304,7 @@ begin
   GameParams.LoadedReplayFile := ReplayFile;
   LoadReplay;
 
-  if GameParams.AutoSkipPreAndPostview then
+  if GameParams.AutoSkipPreviewPostview then
     CloseScreen(gstPreview)
   else
     GameParams.ShownText := False;
@@ -346,7 +346,7 @@ begin
 
   ScreenImg.Bitmap.MasterAlpha := 255;
 
-  if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview then
+  if GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview then
   begin
     Delay(800);
     FadeOut;

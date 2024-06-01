@@ -949,7 +949,7 @@ begin
       StartPlayback(0);
 
       // Skip past menu screen if AutoSkip is not activated
-      if not GameParams.AutoSkipPreAndPostview then
+      if not GameParams.AutoSkipPreviewPostview then
         CloseScreen(gstPreview);
     end else
       CloseScreen(gstReplayTest)

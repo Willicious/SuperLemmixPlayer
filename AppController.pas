@@ -300,7 +300,7 @@ begin
   // - if we find what's causing the skip to previous iteration, we find the fix
   // - Until then, we'll have to skip screen text when in Playback Mode
                                     // This can be commented back in if the bug is fixed
-  or (GameParams.PlaybackModeActive //and GameParams.AutoSkipPreAndPostview
+  or (GameParams.PlaybackModeActive //and GameParams.AutoSkipPreviewPostview
   ) then
   begin
     if IsPreview then

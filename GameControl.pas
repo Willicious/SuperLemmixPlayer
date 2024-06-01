@@ -164,6 +164,13 @@ type
 
     MiscOptions           : TMiscOptions;
 
+    // Playback Mode
+    fPlaybackModeActive: Boolean;
+    fPlaybackOrder: TPlaybackOrder;
+    fPlaybackList: TStringList;
+    fPlaybackIndex: Integer;
+    fAutoSkipPreviewPostview: Boolean;
+
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
     procedure SetOptionFlag(aFlag: TMiscOption; aValue: Boolean);
 
@@ -209,13 +216,6 @@ type
 
     //SysDat               : TSysDatRec;
     ReplayCheckPath: String;
-
-    // Playback Mode
-    PlaybackModeActive: Boolean;
-    PlaybackOrder: TPlaybackOrder;
-    PlaybackList: TStringList;
-    PlaybackIndex: Integer;
-    AutoSkipPreAndPostview: Boolean;
 
     TestModeLevel: TNeoLevelEntry;
 
@@ -279,10 +279,13 @@ type
     property MenuSounds: Boolean Index moMenuSounds read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
+    property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
+    property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
+    property PlaybackList: TStringList read fPlaybackList write fPlaybackList;
+    property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
+    property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
+
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
-
-
-
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
     property ShownText: boolean read fShownText write fShownText;
@@ -429,6 +432,11 @@ var
     for i := 0 to SL2.Count-1 do
       SL.Add(SL2[i]);
   end;
+
+  procedure SaveString(aLabel, aValue: String);
+  begin
+    SL.Add(aLabel + '=' + aValue);
+  end;
 begin
   SL := TStringList.Create;
   SL2 := TStringList.Create;
@@ -499,6 +507,17 @@ begin
     SaveBoolean('PreferBoing', PreferBoing);
     SaveBoolean('PostviewJingles', PostviewJingles);
     SaveBoolean('MenuSounds', MenuSounds);
+
+    SL.Add('');
+    SL.Add('# Playback Options');
+    SaveBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);
+
+    if (PlaybackOrder = poByReplay) then
+      SaveString('PlaybackOrder', 'ByReplay')
+    else if (PlaybackOrder = poByLevel) then
+      SaveString('PlaybackOrder', 'ByLevel')
+    else if (PlaybackOrder = poRandom) then
+      SaveString('PlaybackOrder', 'Random');
 
     SL.Add('');
     SL.Add('# Technical Options');
@@ -591,6 +610,19 @@ var
       fPanelZoomLevel := 1;
   end;
 
+  procedure LoadPlaybackOrderOptions;
+  var
+    sOption: String;
+  begin
+    sOption := SL.Values['PlaybackOrder'];
+
+    if (sOption = 'Random') then
+      PlaybackOrder := poRandom
+    else if (sOption = 'ByReplay') then
+      PlaybackOrder := poByReplay
+    else // Set default if the string is anything else
+      PlaybackOrder := poByLevel;
+  end;
 begin
   SL := TStringList.Create;
   try
@@ -638,6 +670,9 @@ begin
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
     PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
     PreferBoing := LoadBoolean('PreferBoing', PreferBoing);
+
+    LoadPlaybackOrderOptions;
+    AutoSkipPreviewPostview := LoadBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
@@ -977,7 +1012,6 @@ begin
 
   UserName := 'Player 1';
 
-
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;
@@ -987,6 +1021,9 @@ begin
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
   fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
   fCursorResize := 1;
+
+  PlaybackOrder := poByLevel;
+  fAutoSkipPreviewPostview := true;
 
   LemDataInResource := True;
   LemSoundsInResource := True;

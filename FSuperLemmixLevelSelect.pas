@@ -512,6 +512,7 @@ begin
         GameParams.PlaybackList.Add(ReplayFile); // Storing full path for easier access later
 
       GameParams.PlaybackModeActive := True;
+      GameParams.Save(scImportant);
       WriteToParams;
       ModalResult := mrRetry;
     end;
