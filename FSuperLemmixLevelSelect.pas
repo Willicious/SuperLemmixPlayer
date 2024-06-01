@@ -1223,36 +1223,23 @@ end;
 
 procedure TFLevelSelect.btnReplayManagerClick(Sender: TObject);
 var
-  OpenDlg: TOpenDialog;
-  F: TFReplayManager;
+  ReplayManagerForm: TFReplayManager;
 begin
-  OpenDlg := TOpenDialog.Create(self);
+  ReplayManagerForm := TFReplayManager.Create(nil);
+
   try
-    OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
+    // Populate the form with the currently selected pack
+    ReplayManagerForm.CurrentlySelectedPack := GetCurrentlySelectedPack;
+    ReplayManagerForm.UpdatePackNameText;
 
-    if OpenDlg.InitialDir = '' then
-      OpenDlg.InitialDir := AppPath + SFReplays;
-
-    OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
-    if not OpenDlg.Execute then
-      Exit;
-    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
+    if ReplayManagerForm.ShowModal = mrOk then
+    begin
+      WriteToParams;
+      ModalResult := mrRetry;
+    end;
   finally
-    OpenDlg.Free;
+    ReplayManagerForm.Free;
   end;
-
-  F := TFReplayManager.Create(self);
-  try
-    if F.ShowModal = mrCancel then
-      Exit;
-  finally
-    F.Free;
-  end;
-
-  WriteToParams;
-  ModalResult := mrRetry;
 end;
 
 procedure TFLevelSelect.btnCleanseLevelsClick(Sender: TObject);

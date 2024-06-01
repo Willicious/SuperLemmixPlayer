@@ -4,7 +4,7 @@ object FReplayManager: TFReplayManager
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Replay Manager'
-  ClientHeight = 378
+  ClientHeight = 449
   ClientWidth = 571
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,9 +17,22 @@ object FReplayManager: TFReplayManager
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object lblSelectedFolder: TLabel
+    Left = 220
+    Top = 44
+    Width = 90
+    Height = 13
+    Caption = 'Selected Folder:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object rgReplayKind: TRadioGroup
     Left = 8
-    Top = 8
+    Top = 79
     Width = 129
     Height = 329
     Caption = 'Replay Kind'
@@ -39,7 +52,7 @@ object FReplayManager: TFReplayManager
   end
   object gbAction: TGroupBox
     Left = 143
-    Top = 8
+    Top = 79
     Width = 420
     Height = 177
     Caption = 'Action for _______'
@@ -119,7 +132,7 @@ object FReplayManager: TFReplayManager
   end
   object btnOK: TButton
     Left = 143
-    Top = 343
+    Top = 414
     Width = 216
     Height = 25
     Caption = 'Run Replay Check'
@@ -128,7 +141,7 @@ object FReplayManager: TFReplayManager
   end
   object btnCancel: TButton
     Left = 365
-    Top = 343
+    Top = 414
     Width = 84
     Height = 25
     Cancel = True
@@ -138,7 +151,7 @@ object FReplayManager: TFReplayManager
   end
   object gbActionsList: TGroupBox
     Left = 143
-    Top = 191
+    Top = 262
     Width = 420
     Height = 146
     Caption = 'Actions List'
@@ -269,5 +282,39 @@ object FReplayManager: TFReplayManager
       ParentFont = False
       TabOrder = 5
     end
+  end
+  object stPackName: TStaticText
+    AlignWithMargins = True
+    Left = 0
+    Top = 7
+    Width = 577
+    Height = 24
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '(pack name)'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Hobo Std'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
+  end
+  object stSelectedFolder: TStaticText
+    Left = 320
+    Top = 44
+    Width = 212
+    Height = 17
+    Caption = '(Click Browse to choose a folder of replays)'
+    TabOrder = 6
+  end
+  object btnBrowse: TButton
+    Left = 113
+    Top = 39
+    Width = 98
+    Height = 25
+    Caption = 'Browse'
+    TabOrder = 7
+    OnClick = btnBrowseClick
   end
 end

@@ -3,8 +3,9 @@ unit FReplayManager;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+  LemStrings, LemTypes,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, StdCtrls, ExtCtrls;
 
 type
   TReplayManagerAction = (rnaNone, rnaDelete, rnaCopy, rnaMove);
@@ -41,6 +42,10 @@ type
     stDoForFailed: TStaticText;
     stDoForLevelNotFound: TStaticText;
     stDoForError: TStaticText;
+    stPackName: TStaticText;
+    lblSelectedFolder: TLabel;
+    stSelectedFolder: TStaticText;
+    btnBrowse: TButton;
     procedure rgReplayKindClick(Sender: TObject);
     procedure rbReplayActionClick(Sender: TObject);
     procedure cbNamingSchemeChange(Sender: TObject);
@@ -50,7 +55,10 @@ type
     procedure btnOKClick(Sender: TObject);
     procedure cbNamingSchemeEnter(Sender: TObject);
     procedure UpdateLabels;
+    procedure btnBrowseClick(Sender: TObject);
   private
+    fSelectedFolder: string;
+    fCurrentlySelectedPack: string;
     fIsSetting: Boolean;
 
     procedure SetFromOptions;
@@ -60,6 +68,11 @@ type
     function GetNamingDropdown: String;
   public
     class procedure ClearManagerSettings;
+
+    procedure UpdatePackNameText;
+    property SelectedFolder: string read fSelectedFolder write fSelectedFolder;
+    property CurrentlySelectedPack: string read fCurrentlySelectedPack write fCurrentlySelectedPack;
+
   end;
 
 var
@@ -106,6 +119,35 @@ begin
 end;
 
 { TFReplayManager }
+
+procedure TFReplayManager.btnBrowseClick(Sender: TObject);
+var
+  OpenDlg: TOpenDialog;
+  F: TFReplayManager;
+begin
+  OpenDlg := TOpenDialog.Create(Self);
+  try
+    OpenDlg.Title := 'Select any file in the folder containing replays';
+    OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentGroupName);
+
+    if OpenDlg.InitialDir = '' then
+      OpenDlg.InitialDir := AppPath + SFReplays;
+
+    OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
+    OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
+
+    if OpenDlg.Execute then
+    begin
+      fSelectedFolder := ExtractFilePath(OpenDlg.FileName);
+      SetCurrentDir(fSelectedFolder);
+      stSelectedFolder.Caption := ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
+
+      GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
+    end;
+  finally
+    OpenDlg.Free;
+  end;
+end;
 
 procedure TFReplayManager.btnOKClick(Sender: TObject);
 begin
@@ -386,6 +428,18 @@ begin
     7: lblDoForLevelNotFound.Caption := OptionCaption;
     8: lblDoForError.Caption         := OptionCaption;
   end;
+end;
+
+procedure TFReplayManager.UpdatePackNameText;
+var
+  Pack: String;
+begin
+  Pack := CurrentlySelectedPack;
+
+  if Pack <> '' then
+    stPackName.Caption := Pack
+  else
+    stPackName.Caption := 'Replay Manager';
 end;
 
 end.
