@@ -103,8 +103,7 @@ var
 implementation
 
 uses
-  GameBaseScreenCommon, // For EXTRA_ZOOM_LEVELS constant
-  GameMenuScreen; // For disabling the MassReplayCheck button if necessary.
+  GameBaseScreenCommon; // For EXTRA_ZOOM_LEVELS constant
 
 const
   PRESET_REPLAY_PATTERNS: array[0..6] of String =
