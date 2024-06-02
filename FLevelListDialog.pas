@@ -8,9 +8,10 @@ uses
 
 type
   TFLevelListDialog = class(TForm)
-    ListBoxFiles: TListBox;
+    MatchingLevelsList: TListBox;
     btnSelect: TButton;
     procedure btnSelectClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     FSelectedFileName: string;
   public
@@ -23,9 +24,15 @@ implementation
 
 procedure TFLevelListDialog.btnSelectClick(Sender: TObject);
 begin
-  if ListBoxFiles.ItemIndex <> -1 then
-    SelectedFileName := ListBoxFiles.Items[ListBoxFiles.ItemIndex];
+  if MatchingLevelsList.ItemIndex <> -1 then
+    SelectedFileName := MatchingLevelsList.Items[MatchingLevelsList.ItemIndex];
   ModalResult := mrOk;
+end;
+
+procedure TFLevelListDialog.FormResize(Sender: TObject);
+begin
+  // Center the "Load" button horizontally when the form is resized
+  btnSelect.Left := (ClientWidth - btnSelect.Width) div 2;
 end;
 
 end.

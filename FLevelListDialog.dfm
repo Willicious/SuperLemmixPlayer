@@ -1,9 +1,10 @@
 object FLevelListDialog: TFLevelListDialog
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Select Level'
-  ClientHeight = 185
-  ClientWidth = 418
+  ClientHeight = 188
+  ClientWidth = 428
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,12 +13,13 @@ object FLevelListDialog: TFLevelListDialog
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
-  object ListBoxFiles: TListBox
+  object MatchingLevelsList: TListBox
     Left = 8
     Top = 8
-    Width = 402
+    Width = 412
     Height = 137
     ItemHeight = 13
     TabOrder = 0

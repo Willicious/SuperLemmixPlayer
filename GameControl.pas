@@ -758,9 +758,10 @@ end;
 function TDosGameParams.FindLevelFileByID(LevelID: string): string;
 var
   LevelFiles: TStringDynArray;
-  RootDir, LevelsDir: string;
+  RootDir, LevelsDir, RelativePath, FolderNames: string;
   MatchingFiles: TStringList;
-  i: Integer;
+  i, ListWidth, StringWidth: Integer;
+  AdjustDialogWidth: Boolean;
   FileContent: TStringList;
   LevelDialog: TFLevelListDialog;
 begin
@@ -809,8 +810,39 @@ begin
         // If multiple matching files are found, show level select dialog
         LevelDialog := TFLevelListDialog.Create(nil);
         try
+          ListWidth := LevelDialog.MatchingLevelsList.Width;
+          AdjustDialogWidth := False;
+
           for i := 0 to MatchingFiles.Count - 1 do
-            LevelDialog.ListBoxFiles.Items.Add(ExtractFileName(MatchingFiles[i]));
+          begin
+            // Extract the relative path starting after the 'levels' directory
+            RelativePath := StringReplace(MatchingFiles[i], LevelsDir, '', [rfIgnoreCase]);
+
+            // Extract the folder names and replace characters
+            FolderNames := ExtractFileDir(RelativePath);
+            FolderNames := StringReplace(FolderNames, '\', ' / ', [rfReplaceAll]);
+            FolderNames := StringReplace(FolderNames, '_', ' ', [rfReplaceAll]);
+
+            // Construct the display string and add it to the matching levels list
+            var DisplayString := ExtractFileName(MatchingFiles[i]) + ' (' + FolderNames + ')';
+            LevelDialog.MatchingLevelsList.Items.Add(DisplayString);
+
+            // Measure the width of the string so the dialog can fully accomodate it
+            StringWidth := LevelDialog.Canvas.TextWidth(DisplayString);
+
+            if StringWidth > ListWidth then
+            begin
+              ListWidth := StringWidth;
+              AdjustDialogWidth := True;
+            end;
+          end;
+
+          // If necessary, adjust the width of the dialog (include padding)
+          if AdjustDialogWidth then
+          begin
+            LevelDialog.ClientWidth := ListWidth + 40;
+            LevelDialog.MatchingLevelsList.Width := ListWidth + 20;
+          end;
 
           if LevelDialog.ShowModal = mrOk then
             Result := MatchingFiles[LevelDialog.MatchingLevelsList.ItemIndex]
