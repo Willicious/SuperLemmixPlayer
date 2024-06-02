@@ -146,7 +146,6 @@ begin
 
     GameParams.NextScreen := gstPreview;
     fActiveForm.LoadReplay;
-    GameParams.OpenedViaReplay := False;
   end;
 end;
 
