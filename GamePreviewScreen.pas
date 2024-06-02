@@ -431,6 +431,8 @@ begin
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;
+    GameParams.OpenedViaReplay := False;
+
     CloseScreen(gstMenu);
   end;
 end;
@@ -775,7 +777,10 @@ begin
     end;
 
   if GameParams.PlaybackModeActive or GameParams.OpenedViaReplay then
+  begin
     GlobalGame.ReplayWasLoaded := True;
+    GameParams.OpenedViaReplay := False; // Reset flag once replay has been successfully loaded
+  end;
 end;
 
 end.

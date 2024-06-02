@@ -1317,7 +1317,6 @@ var
   InitialSkill: TSkillPanelButton;
 begin
   Playing := False;
-  GameParams.OpenedViaReplay := False;
 
   // Hyperspeed things
   fTargetIteration := 0;

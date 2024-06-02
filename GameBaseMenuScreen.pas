@@ -932,6 +932,8 @@ var
 begin
   if GameParams.TestModeLevel <> nil then Exit;
 
+  GameParams.OpenedViaReplay := False;
+
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(self);
   try
