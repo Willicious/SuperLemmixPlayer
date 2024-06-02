@@ -8,7 +8,7 @@
  TITLE What The...?
  AUTHOR WillLem
  ID x787B9A12787B9A11
- VERSION x0000000000000009
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -28,8 +28,7 @@
  $SKILLSET 
    CLIMBER 1
    BUILDER 3
-   BASHER 2
-   MINER 1
+   BASHER 3
  $END 
  
  $TALISMAN 
@@ -63,16 +62,6 @@
    STYLE orig_marble
    PIECE poison
    X 620
-   Y 143
-   WIDTH 64
-   HEIGHT 25
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE poison
-   X 432
    Y 143
    WIDTH 64
    HEIGHT 25
@@ -245,29 +234,32 @@
 #        Terrain groups         
 # ----------------------------- 
  $TERRAINGROUP
-   NAME Group1136614936
+   NAME Group-1757122132
    
    $TERRAIN
      STYLE orig_marble
-     PIECE steel_02
-     X 431
-     Y 106
+     PIECE bar_01
+     X 463
+     Y 141
+     ONE_WAY
    $END
    
    $TERRAIN
      STYLE orig_marble
-     PIECE steel_02
-     X 431
-     Y 89
+     PIECE bar_06
+     X 454
+     Y 123
      ERASE
+     ONE_WAY
    $END
    
    $TERRAIN
      STYLE orig_marble
-     PIECE steel_02
-     X 431
-     Y 96
+     PIECE bar_03
+     X 420
+     Y 141
      NO_OVERWRITE
+     ONE_WAY
    $END
    
  $END
@@ -280,7 +272,6 @@
      PIECE steel_03
      X 355
      Y 68
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -289,7 +280,6 @@
      X 349
      Y 63
      ERASE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -298,7 +288,6 @@
      X 343
      Y 68
      NO_OVERWRITE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -307,7 +296,6 @@
      X 372
      Y 63
      ERASE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -316,7 +304,6 @@
      X 367
      Y 68
      NO_OVERWRITE
-     ONE_WAY
    $END
    
  $END
@@ -329,7 +316,6 @@
      PIECE Group1523297714
      X 343
      Y 68
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -338,7 +324,6 @@
      X 343
      Y 60
      ERASE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -347,6 +332,42 @@
      X 343
      Y 66
      NO_OVERWRITE
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group151119846
+   
+   $TERRAIN
+     STYLE orig_marble
+     PIECE block_10
+     X 431
+     Y 98
+     ROTATE
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_marble
+     PIECE block_10
+     X 431
+     Y 84
+     ERASE
+     ROTATE
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_marble
+     PIECE block_10
+     X 431
+     Y 96
+     NO_OVERWRITE
+     ROTATE
+     FLIP_VERTICAL
      ONE_WAY
    $END
    
@@ -355,14 +376,6 @@
  
 #        Terrain pieces         
 # ----------------------------- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE block_08
-   X 442
-   Y 93
-   ONE_WAY
- $END
- 
  $TERRAIN
    STYLE orig_marble
    PIECE brick_large_01
@@ -455,6 +468,14 @@
    STYLE orig_marble
    PIECE bar_03
    X 341
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1757122132
+   X 420
    Y 141
    ONE_WAY
  $END
@@ -671,14 +692,6 @@
    STYLE orig_marble
    PIECE block_01
    X 431
-   Y 80
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE block_01
-   X 431
    Y 48
    ONE_WAY
  $END
@@ -700,10 +713,18 @@
  $END
  
  $TERRAIN
-   STYLE *group
-   PIECE Group1136614936
+   STYLE orig_marble
+   PIECE block_08
+   X 444
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE block_01
    X 431
-   Y 96
+   Y 80
    ONE_WAY
  $END
  
@@ -728,22 +749,6 @@
    PIECE bar_02
    X 409
    Y 41
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_03
-   X 425
-   Y 141
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_01
-   X 470
-   Y 141
    ONE_WAY
  $END
  
@@ -971,6 +976,13 @@
    PIECE Group-310084589
    X 343
    Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group151119846
+   X 431
+   Y 96
    ONE_WAY
  $END
  

@@ -8,7 +8,7 @@
  TITLE Back To Our Roots
  AUTHOR WillLem
  ID xA6AF81B7A6AF81B6
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1263,14 +1263,6 @@
    PIECE steel_01
    X 440
    Y 93
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE sign_06
-   X 444
-   Y 83
-   ONE_WAY
  $END
  
  
