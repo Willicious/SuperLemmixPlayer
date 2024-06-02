@@ -129,7 +129,6 @@ type
 
   TDosGameParams = class(TPersistent)
   private
-    fMatchFound: Boolean;
     fDisableSaveOptions: Boolean;
     fSaveCriticality: TGameParamsSaveCriticality;
 
@@ -237,13 +236,12 @@ type
     procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // Loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = false); // Re-prepares using the existing TLevel in memory
-    procedure FindLevelByID(LevelID: string);
+    function FindLevelFileByID(LevelID: string): string;
     function LoadLevelByID(aID: Int64): Boolean;
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
-    property MatchFound: Boolean read fMatchFound write fMatchFound;
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
@@ -757,28 +755,32 @@ begin
   Result := SearchGroup(G);
 end;
 
-// Procedure to find and load a level by its ID
-procedure TDosGameParams.FindLevelByID(LevelID: string);
+function TDosGameParams.FindLevelFileByID(LevelID: string): string;
 var
   LevelFiles: TStringDynArray;
-  RootDir: string;
+  RootDir, LevelsDir: string;
   MatchingFiles: TStringList;
-  aFileName: string;
   i: Integer;
   FileContent: TStringList;
   LevelDialog: TFLevelListDialog;
 begin
-  // Get the directory containing the executable
+  Result := '';
+
+  // Get the directory containing the .exe and find the levels folder
   RootDir := ExtractFilePath(ParamStr(0));
+  LevelsDir := TPath.Combine(RootDir, SFLevels);
 
-  // Search for .nxlv files in the root directory and all subdirectories
-  LevelFiles := TDirectory.GetFiles(RootDir, '*.nxlv', TSearchOption.soAllDirectories);
-
-  MatchFound := False;
+  // Search for .nxlv files in the levels folder, or cancel if it doesn't exist
+  if TDirectory.Exists(LevelsDir) then
+    LevelFiles := TDirectory.GetFiles(LevelsDir, '*.nxlv', TSearchOption.soAllDirectories)
+  else
+  begin
+    ShowMessage('Levels folder not found.');
+    Exit;
+  end;
 
   if Length(LevelFiles) > 0 then
   begin
-    MatchFound := True;
     MatchingFiles := TStringList.Create;
 
     try
@@ -789,7 +791,6 @@ begin
         try
           FileContent.LoadFromFile(LevelFiles[i]);
 
-          // Check if the current file contains the Level ID
           if Pos('ID ' + LevelID, FileContent.Text) > 0 then
             MatchingFiles.Add(LevelFiles[i]);
         finally
@@ -797,63 +798,45 @@ begin
         end;
       end;
 
-      // If no matching files found, show message
       if MatchingFiles.Count = 0 then
       begin
         ShowMessage('No .nxlv files found with Level ID: ' + LevelID);
-        MatchFound := False;
-      end
+        Exit;
       // If only one matching file is found, load it directly
-      else if MatchingFiles.Count = 1 then
-      // Bookmark - see below*
-        aFileName := MatchingFiles[0]
-      else
-      begin
+      end else if MatchingFiles.Count = 1 then
+        Result := MatchingFiles[0]
+      else begin
         // If multiple matching files are found, show level select dialog
         LevelDialog := TFLevelListDialog.Create(nil);
         try
           for i := 0 to MatchingFiles.Count - 1 do
             LevelDialog.ListBoxFiles.Items.Add(ExtractFileName(MatchingFiles[i]));
 
-          // Show the dialog
           if LevelDialog.ShowModal = mrOk then
-          // Bookmark - see below*
-            aFileName := MatchingFiles[LevelDialog.ListBoxFiles.ItemIndex]
+            Result := MatchingFiles[LevelDialog.MatchingLevelsList.ItemIndex]
           else
-            MatchFound := False;
+            Exit;
         finally
           LevelDialog.Free;
         end;
       end;
-
-      if not MatchFound then Exit;
-
-      // Set the Filename to the selected level file
-
-      { *Bookmark - this isn't actually the ideal way to do this, but it sort of works
-       It's necessary to re-load the GameParams, and it only works for 1 level
-       Instead, see the new LoadLevelByID and see if there might be a way to harness that
-       (Bear in mind though, that procedure relies on prior knowledge of GameParams.CurrentLevel,
-       so it might be completely irrelevant in this context) }
-      CurrentLevel.Filename := aFileName;  // <---- *
-      SetLevel(CurrentLevel);              // <---- *
-      { // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ // }
     finally
       MatchingFiles.Free;
     end;
-  end
-  else
-    ShowMessage('No .nxlv files found in directory: ' + RootDir);
+  end else
+    ShowMessage('No .nxlv files found in directory: ' + LevelsDir);
 end;
 
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
 begin
   if CurrentLevel = nil then Exit;
+
   if not FileExists(CurrentLevel.Path) then
   begin
     MessageDlg('Loading failed: No file at location: ' + CurrentLevel.Path, mtWarning, [mbOK], 0);
     Exit;
   end;
+
   Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);

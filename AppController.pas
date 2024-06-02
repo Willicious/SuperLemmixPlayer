@@ -48,6 +48,7 @@ type
     function Execute: Boolean;
     procedure FreeScreen;
     procedure CheckIfOpenedViaReplay;
+    procedure HandleOpenedViaReplay;
 
     property LoadSuccess: Boolean read fLoadSuccess;
   end;
@@ -123,30 +124,12 @@ begin
   end;
 
   GameParams.PlaybackModeActive := False;
+
   GameParams.OpenedViaReplay := False;
   CheckIfOpenedViaReplay;
 
   if GameParams.OpenedViaReplay then
-  begin
-    //GameParams.LoadLevelByID(StrToInt64(LoadedReplayID));
-    GameParams.FindLevelByID(GameParams.LoadedReplayID);
-
-    if not GameParams.MatchFound then
-    begin
-      GameParams.NextScreen := gstMenu;
-      GameParams.OpenedViaReplay := False;
-      Exit;
-    end;
-
-    GameParams.LoadCurrentLevel();
-
-    // Reload settings to align GameParams with current level
-    GameParams.Save(scImportant);
-    GameParams.Load;
-
-    GameParams.NextScreen := gstPreview;
-    fActiveForm.LoadReplay;
-  end;
+    HandleOpenedViaReplay;
 end;
 
 destructor TAppController.Destroy;
@@ -239,6 +222,32 @@ begin
   TMainForm(GameParams.MainForm).ChildForm := nil;
   fActiveForm.Free;
   fActiveForm := nil;
+end;
+
+procedure TAppController.HandleOpenedViaReplay;
+var
+  MatchedLevelFile: string;
+begin
+  MatchedLevelFile := GameParams.FindLevelFileByID(GameParams.LoadedReplayID);
+
+  if MatchedLevelFile = '' then
+  begin
+    GameParams.NextScreen := gstMenu;
+    GameParams.OpenedViaReplay := False;
+    Exit;
+  end;
+
+  // Set the Filename to the selected level file
+  GameParams.CurrentLevel.Filename := MatchedLevelFile;
+  GameParams.SetLevel(GameParams.CurrentLevel);
+  GameParams.LoadCurrentLevel();
+
+  // Reload settings to align GameParams with selected level file
+  GameParams.Save(scImportant);
+  GameParams.Load;
+
+  GameParams.NextScreen := gstPreview;
+  fActiveForm.LoadReplay;
 end;
 
 function TAppController.Execute: Boolean;
