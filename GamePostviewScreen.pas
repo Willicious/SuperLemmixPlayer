@@ -8,7 +8,7 @@ uses
   Types,
   LemNeoLevelPack,
   LemmixHotkeys,
-  Windows, Classes, SysUtils, StrUtils, Controls,
+  Windows, Classes, SysUtils, StrUtils, Controls, Dialogs,
   UMisc, Math,
   Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
@@ -278,12 +278,7 @@ begin
 
     // If in PlaybackMode, validate the playlist and load the next level
     if GameParams.PlaybackModeActive then
-    begin
-      if (GameParams.PlaybackOrder <> poByLevel) then
-        StartPlayback(GameParams.PlaybackIndex + 1)
-      else
-        StartPlayback(GameParams.PlaybackIndex);
-    end;
+      StartPlayback(GameParams.PlaybackIndex);
 
     // Check again for PlaybackMode after call to StartPlayback
     if GameParams.PlaybackModeActive then
@@ -309,9 +304,13 @@ begin
 
     ReloadCursor('postview.png');
 
-    // Finally, draw clickables only if (AutoSkip + PlaybackMode) isn't active
+    // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
     if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
       DrawAllClickables;
+
+    // Show list of any unmatched replays if Playback Mode has finished
+    if GameParams.ShowNoPlaybackMatch and not GameParams.PlaybackModeActive then
+      ShowMessage(GameParams.NoPlaybackMatchString);
   finally
     ScreenImg.EndUpdate;
   end;

@@ -253,6 +253,7 @@ var
 
 begin
   if not GameParams.PlaybackModeActive then Exit; // Just in case
+  GameParams.ShowNoPlaybackMatch := False;
 
   {============================================================================}
   {============================== Playback by Level ===========================}
@@ -283,47 +284,70 @@ begin
     if not ValidatePlaybackList then
       Exit;
 
-    // Get the Replay ID of the current item in PlaybackList
-    ReplayID := GetReplayID(Index);
+    GameParams.NoPlaybackMatchString := '';
 
-    if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
+    while Index < GameParams.PlaybackList.Count do
     begin
-      ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
+      // Get the Replay ID of the current item in PlaybackList
+      ReplayID := GetReplayID(Index);
 
-      // Delete replay item from PlaybackList and move on to the next item if no match found
-      GameParams.PlaybackList.Delete(Index);
-      GameParams.PlaybackIndex := Index + 1;
+      if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
+      begin
+        GameParams.ShowNoPlaybackMatch := True;
+        GameParams.NoPlaybackMatchString := GameParams.NoPlaybackMatchString +
+          'No matching level found for Replay ID: ' + IntToHex(ReplayID, 16) + #13#10;
+
+        // Delete replay item from PlaybackList and move on to the next item if no match found
+        GameParams.PlaybackList.Delete(Index);
+      end else
+      begin
+        // Set ReplayFile to index and delete from the PlaybackList so it isn't loaded again
+        ReplayFile := GameParams.PlaybackList[Index];
+        GameParams.PlaybackList.Delete(Index);
+        Break;
+      end;
+    end;
+
+    if not ValidatePlaybackList then
       Exit;
-    end else
-      GameParams.PlaybackIndex := Index;
-
-    ReplayFile := GameParams.PlaybackList[Index];
 
   {============================================================================}
   {============================= Randomized Playback ==========================}
   {============================================================================}
   end else if GameParams.PlaybackOrder = poRandom then
   begin
-    // Get a random item from PlaybackList and find its ID
-    RandomIndex := GetRandomIndex;
+    // Initialize NoPlaybackMatchString
+    GameParams.NoPlaybackMatchString := '';
+
+    while GameParams.PlaybackList.Count > 0 do
+    begin
+      // Get a random item from PlaybackList and find its ID
+      RandomIndex := GetRandomIndex;
+
+      if not ValidatePlaybackList then
+        Exit;
+
+      ReplayID := GetReplayID(RandomIndex);
+
+      if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
+      begin
+        GameParams.ShowNoPlaybackMatch := True;
+        GameParams.NoPlaybackMatchString := GameParams.NoPlaybackMatchString +
+          'No matching level found for Replay ID: ' + IntToHex(ReplayID, 16) + #13#10;
+
+        // Delete replay item from PlaybackList and move on to the next item if no match found
+        GameParams.PlaybackList.Delete(RandomIndex);
+      end else
+      begin
+        // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
+        ReplayFile := GameParams.PlaybackList[RandomIndex];
+        GameParams.PlaybackList.Delete(RandomIndex);
+        Break;
+      end;
+    end;
 
     if not ValidatePlaybackList then
       Exit;
-
-    ReplayID := GetReplayID(RandomIndex);
-
-    if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
-    begin
-      ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
-
-      // Delete replay item from PlaybackList and move on to the next item if no match found
-      GameParams.PlaybackList.Delete(RandomIndex);
-      Exit;
-    end;
-
-    // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
-    ReplayFile := GameParams.PlaybackList[RandomIndex];
-    GameParams.PlaybackList.Delete(RandomIndex);
   end;
 
   GameParams.LoadedReplayFile := ReplayFile;
