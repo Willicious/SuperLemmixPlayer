@@ -168,6 +168,8 @@ type
     fPlaybackOrder: TPlaybackOrder;
     fPlaybackList: TStringList;
     fPlaybackIndex: Integer;
+    fShowNoPlaybackMatch: Boolean;
+    fNoPlaybackMatchString: String;
     fAutoSkipPreviewPostview: Boolean;
 
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
@@ -281,6 +283,8 @@ type
     property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
     property PlaybackList: TStringList read fPlaybackList write fPlaybackList;
     property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
+    property ShowNoPlaybackMatch: Boolean read fShowNoPlaybackMatch write fShowNoPlaybackMatch;
+    property NoPlaybackMatchString: String read fNoPlaybackMatchString write fNoPlaybackMatchString;
     property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
