@@ -216,17 +216,29 @@ end;
 procedure TGamePostviewScreen.MakeSaveReplayClickable;
 var
   R: TClickableRegion;
+  P: TPoint;
 begin
   if GameParams.PlaybackModeActive then
-    Exit;
+  begin
+    if not GlobalGame.ReplayManager.IsThisUsersReplay then
+      Exit;
 
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
-    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
-  else if GameParams.FullScreen then
-    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
-  else
-    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else
+      P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+  end else begin
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else
+      P := Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+  end;
 
+  R := MakeClickableText(P, SOptionSaveReplay, SaveReplay);
   R.AddKeysFromFunction(lka_SaveReplay);
 end;
 
@@ -260,6 +272,10 @@ begin
     Lines := GetPostviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
+    { This needs to be called before the next level+replay is loaded
+      so that modified replays can be saved in Playback Mode }
+    MakeSaveReplayClickable;
+
     // If in PlaybackMode, validate the playlist and load the next level
     if GameParams.PlaybackModeActive then
     begin
@@ -271,7 +287,9 @@ begin
 
     // Check again for PlaybackMode after call to StartPlayback
     if GameParams.PlaybackModeActive then
-      MakePlaybackNextLevelClickable;
+      MakePlaybackNextLevelClickable
+    else
+      MakeSaveReplayClickable;
 
     // Check for success result and prepare the relevant clickables
     if GameParams.GameResult.gSuccess then
@@ -283,7 +301,6 @@ begin
     end;
 
     // Prepare some more clickables and hotkey options
-    MakeSaveReplayClickable;
     MakeLevelSelectClickable;
     MakeExitToMenuClickable;
 

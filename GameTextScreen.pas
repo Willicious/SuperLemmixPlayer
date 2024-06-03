@@ -58,16 +58,15 @@ begin
     NewOption.ShortcutKeys.Add(VK_RETURN);
     NewOption.ShortcutKeys.Add(VK_SPACE);
 
-    MakeHiddenOption(VK_ESCAPE, ExitToMenu);
-
     if GameParams.PlaybackModeActive then
       MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode)
     else begin
       if PreviewText then
-        MakeHiddenOption(lka_LoadReplay, TryLoadReplay)
-      else
-        MakeHiddenOption(lka_SaveReplay, SaveReplay);
+        MakeHiddenOption(lka_LoadReplay, TryLoadReplay);
     end;
+
+    MakeHiddenOption(lka_SaveReplay, SaveReplay);
+    MakeHiddenOption(VK_ESCAPE, ExitToMenu);
 
     DrawAllClickables;
 
