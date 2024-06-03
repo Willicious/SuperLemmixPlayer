@@ -36,7 +36,8 @@ type
     procedure ShowScreen; override;
 
     procedure StartPlayback(Index: Integer);
-    procedure Delay(mS: Cardinal);
+    procedure StopPlayback;
+    procedure DelayPlayback(mS: Cardinal);
 
     procedure FadeIn;
     procedure FadeOut;
@@ -104,7 +105,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TGameBaseScreen.Delay(mS: Cardinal);
+procedure TGameBaseScreen.DelayPlayback(mS: Cardinal);
 var
   startTime, elapsedTime: Cardinal;
 begin
@@ -112,6 +113,12 @@ begin
   repeat
     elapsedTime := GetTickCount - startTime;
   until elapsedTime >= mS;
+end;
+
+procedure TGameBaseScreen.StopPlayback;
+begin
+  GameParams.PlaybackModeActive := False;
+  GameParams.PlaybackList.Clear;
 end;
 
 procedure TGameBaseScreen.StartPlayback(Index: Integer);
@@ -135,8 +142,7 @@ var
       and ((RandomIndex < 0) or (RandomIndex >= GameParams.PlaybackList.Count))) then
 
     begin
-      GameParams.PlaybackModeActive := False;
-      GameParams.PlaybackList.Clear;
+      StopPlayback;
       Result := False;
     end;
   end;
@@ -348,7 +354,7 @@ begin
 
   if GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview then
   begin
-    Delay(800);
+    DelayPlayback(800);
     FadeOut;
   end;
 
