@@ -205,9 +205,14 @@ var
     end;
   end;
 
-  procedure LoadLevelAndFindMatchingReplay;
+  function LoadLevelAndFindMatchingReplay: Boolean;
+  var
+    LevelsChecked: Integer;
   begin
-    // Loop until we find a matching ReplayID
+    Result := True;
+    LevelsChecked := 0;
+
+    // Loop until we find a matching ReplayID or have checked all levels
     while GameParams.CurrentLevel <> nil do
     begin
       try
@@ -218,12 +223,22 @@ var
 
         if MatchIndex >= 0 then
           Break // Exit loop if a match is found
-        else
+        else begin
           GameParams.NextLevel(True); // Move on to next level if no match found
+          Inc(LevelsChecked);
+
+          // If we have checked all levels without finding a match, exit the loop
+          if (LevelsChecked >= GameParams.CurrentLevel.Group.ParentBasePack.LevelCount) then
+          begin
+            Result := False;
+            Exit;
+          end;
+        end;
       except
         on E: Exception do
         begin
           ShowMessage('Error during replay search: ' + E.Message);
+          Result := False;
           Exit;
         end;
       end;
@@ -247,7 +262,11 @@ begin
     if not ValidatePlaybackList then
       Exit;
 
-    LoadLevelAndFindMatchingReplay;
+    if not LoadLevelAndFindMatchingReplay then
+    begin
+      StopPlayback;
+      Exit;
+    end;
 
     // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
     ReplayFile := GameParams.PlaybackList[MatchIndex];
