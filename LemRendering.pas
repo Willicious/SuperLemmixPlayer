@@ -2693,6 +2693,8 @@ procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
 var
   MO: TGadgetMetaAccessor;
   DrawX, DrawY: Integer;
+  DoDrawBelow: Boolean;
+  Helper: TBitmap32;
 begin
     Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
@@ -2702,19 +2704,42 @@ begin
       not. We assume the calling routine has already done this, and we just draw it.
       We do, however, determine which ones to draw here. }
 
-    DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod; // Obj.Left + Obj.Width div 2 - 4;
-    DrawY := (Gadget.Top - 9) * ResMod; // Much simpler
-    if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod; // Draw below instead above the level border
+    DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
+    DrawY := (Gadget.Top - 9) * ResMod;
+
+    if DrawY < 0 then // Send helper below gadget if it's drawn above the level
+    begin
+      DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod;
+      DoDrawBelow := True;
+    end else
+      DoDrawBelow := False;
 
     case MO.TriggerEffect of
       DOM_WINDOW:
         begin
+          if Gadget.IsFlipPhysics then
+            Helper := fHelperImages[hpi_ArrowLeft]
+          else
+            Helper := fHelperImages[hpi_ArrowRight];
+
           if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
 
-          if Gadget.IsFlipPhysics then
-            fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4 * ResMod, DrawY)
-          else
-            fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4 * ResMod, DrawY);
+          if DoDrawBelow then // Adjust Y offset for hatches drawn above level
+            DrawY := (DrawY - Gadget.Height div 2) * ResMod;
+
+          // Account for lemming cap/clear physics hatch digits
+          if fUsefulOnly or Gadget.ShowRemainingLemmings then
+          begin
+            if DoDrawBelow then
+              DrawY := (DrawY + Helper.Height) * ResMod
+            else
+              DrawY := (DrawY + Gadget.MetaObj.DigitY + 1) - Helper.Height div 2 * ResMod;
+          end;
+
+          if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
+            DrawY := (Gadget.Top + Gadget.Height div 2 + Helper.Height div 2) * ResMod;
+
+          Helper.DrawTo(Dst, DrawX - Helper.Width div 2 * ResMod, DrawY);
 
           if Gadget.IsPreassignedZombie then
             fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
@@ -2735,17 +2760,45 @@ begin
       DOM_EXIT:
         begin
           if Gadget.IsRivalExit then
-            fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY)
+            Helper := fHelperImages[hpi_Exit_Rival]
           else
-            fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+            Helper := fHelperImages[hpi_Exit];
+
+          // Account for lemming cap digits
+          if (Gadget.RemainingLemmingsCount > 0) then
+          begin
+            if DoDrawBelow then
+              DrawY := DrawY + Helper.Height * ResMod
+            else
+              DrawY := ((DrawY + Gadget.MetaObj.DigitY) - Helper.Height div 2) * ResMod;
+
+            if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
+              DrawY := (Gadget.Top + Gadget.Height + 2) * ResMod;
+          end;
+
+          Helper.DrawTo(Dst, DrawX - Helper.Width div 2 * ResMod, DrawY);
         end;
 
       DOM_LOCKEXIT:
         begin
           if Gadget.IsRivalExit then
-            fHelperImages[hpi_Exit_Rival].DrawTo(Dst, DrawX - 31 * ResMod, DrawY)
+            Helper := fHelperImages[hpi_Exit_Rival]
           else
-            fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+            Helper := fHelperImages[hpi_Exit];
+
+          // Account for lemming cap digits
+          if (Gadget.RemainingLemmingsCount > 0) then
+          begin
+            if DoDrawBelow then
+              DrawY := DrawY + Helper.Height * ResMod
+            else
+              DrawY := ((DrawY + Gadget.MetaObj.DigitY) - Helper.Height div 2) * ResMod;
+
+            if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
+              DrawY := (Gadget.Top + Gadget.Height + 2) * ResMod;
+          end;
+
+          Helper.DrawTo(Dst, DrawX - Helper.Width div 2 * ResMod, DrawY);
 
           if (Gadget.CurrentFrame = 1) then
           begin
@@ -3161,14 +3214,32 @@ var
   begin
     if ((Gadget.SkillCount > 1) or (Gadget.MetaObj.DigitMinLength >= 1))
       and not (Gadget.CurrentFrame mod 2 = 0) then
-        DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
+        DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY,
+                   Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
   procedure AddLemmingCountNumber;
+  var
+    XPos, YPos, LemCap: Integer;
+    DigitImage: TBitmap32;
   begin
+    DigitImage := fAni.NumbersBitmap;
+
+    XPos := Gadget.Left + Gadget.MetaObj.DigitX;
+    YPos := Gadget.Top + Gadget.MetaObj.DigitY;
+
+    if (YPos <= 0) then // Send digit below gadget if it's drawn above the level
+    begin
+      if Gadget.TriggerEffect = DOM_WINDOW then
+        YPos := (Gadget.Top + Gadget.Height div 2 + DigitImage.Height) * ResMod
+      else
+        YPos := (Gadget.Top + Gadget.Height + DigitImage.Height) * ResMod;
+    end;
+
+    LemCap := Gadget.RemainingLemmingsCount;
+
     if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or fUsefulOnly) then
-      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.RemainingLemmingsCount,
-                 Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
+      DrawNumber(XPos, YPos, LemCap, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
 begin
