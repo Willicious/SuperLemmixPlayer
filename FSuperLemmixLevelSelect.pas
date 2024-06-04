@@ -687,7 +687,6 @@ var
   end;
 
 begin
-  LoadIcons;
   LoadNodeLabels;
 
   N := tvLevelSelect.Selected;
@@ -788,6 +787,7 @@ begin
   fInfoForm.Talisman := nil;
   fDisplayRecords := rdNone;
 
+  LoadIcons;
   fInfoForm.PrepareEmbed(NeedRedraw);
 
   SetTalismanInfo;
