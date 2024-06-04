@@ -1520,7 +1520,10 @@ begin
     // Out-of-area pre-placed lemmings are automatically saved
     if (Lem.Y <= 0) or (Lem.Y >= PhysicsMap.Height + LEMMING_MAX_Y)
     or (Lem.X <= 0) or (Lem.X >= PhysicsMap.Width - 1) then
-      RemoveLemming(L, RM_SAVE, True);
+    begin
+      RemoveLemming(L, RM_SAVE);
+      CueExitSound(L);
+    end;
 
     Dec(LemmingsToRelease);
     Inc(LemmingsOut);
@@ -7791,6 +7794,14 @@ begin
         end;
         Dec(LemmingsToRelease);
         Inc(LemmingsOut);
+
+        // Automatically save lemmings that spawn outside of the level area
+        if (NewLemming.LemX <= 0) or (NewLemming.LemX >= PhysicsMap.Width)
+        or (NewLemming.LemY <= 0) or (NewLemming.LemY >= PhysicsMap.Height) then
+        begin
+          RemoveLemming(NewLemming, RM_SAVE);
+          CueExitSound(NewLemming);
+        end;
       end;
     end;
   end;
