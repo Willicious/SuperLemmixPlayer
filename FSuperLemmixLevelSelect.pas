@@ -274,6 +274,7 @@ procedure TFLevelSelect.InitializeTreeview;
   end;
 begin
   MakeImages;
+
   tvLevelSelect.Items.BeginUpdate;
   try
     tvLevelSelect.Items.Clear;
@@ -748,9 +749,7 @@ begin
     GameParams.LoadCurrentLevel(false);
 
     DisplayPackTalismanInfo;
-
     fInfoForm.Visible := false;
-
     ClearTalismanButtons;
     SetAdvancedOptionsGroup(G);
   end else if Obj is TNeoLevelEntry then
@@ -768,9 +767,7 @@ begin
     lblCompletion.Visible := false;
 
     DisplayLevelInfo;
-
     fPackTalBox.Visible := false;
-
     SetAdvancedOptionsLevel(L);
   end;
 end;

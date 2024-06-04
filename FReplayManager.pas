@@ -123,7 +123,6 @@ end;
 procedure TFReplayManager.btnBrowseClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
-  F: TFReplayManager;
 begin
   OpenDlg := TOpenDialog.Create(Self);
   try
@@ -207,8 +206,6 @@ begin
 end;
 
 procedure TFReplayManager.FormShow(Sender: TObject);
-var
-  i: Integer;
 begin
   SetFromOptions;
   UpdateLabels;

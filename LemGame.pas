@@ -5844,7 +5844,7 @@ var
 
   procedure FencerTurn(L: TLemming; SteelSound: Boolean);
   begin
-    // Turns basher around an transitions to walker
+    // Turns fencer around and transitions to walker
     Dec(L.LemX, L.LemDx);
     if NeedUndoMoveUp then
       Inc(L.LemY);
