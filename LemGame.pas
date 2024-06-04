@@ -306,6 +306,7 @@ type
     procedure HandlePostTeleport(L: TLemming);
     procedure CheckReleaseLemming;
     procedure CheckUpdateNuking;
+    procedure CueExitSound(L: TLemming);
     procedure CueSoundEffect(aSound: String); overload;
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
     //procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
@@ -1920,23 +1921,12 @@ begin
                      SetBlockerMap;
                    end;
     baExiting    : begin
+                     CueExitSound(L);
+
                      if not IsOutOfTime then
                      begin
                        L.LemExplosionTimer := 0;
                        L.LemFreezerExplosionTimer := 0;
-                     end;
-                     if GameParams.PreferYippee then
-                     begin
-                       if L.LemIsZombie then
-                         CueSoundEffect(SFX_ZOMBIE_LAUGH, L.Position)
-                       else
-                         CueSoundEffect(SFX_YIPPEE, L.Position);
-                     end else if GameParams.PreferBoing then
-                     begin
-                       if L.LemIsZombie then
-                         CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
-                       else
-                         CueSoundEffect(SFX_OING, L.Position);
                      end;
                    end;
     baVaporizing   : begin
@@ -7865,6 +7855,16 @@ begin
 
   fSoundList.Add(aSound);
   MessageQueue.Add(GAMEMSG_SOUND, aSound);
+end;
+
+procedure TLemmingGame.CueExitSound(L: TLemming);
+begin
+  if L.LemIsZombie then
+    CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
+  else if GameParams.PreferYippee then
+    CueSoundEffect(SFX_YIPPEE, L.Position)
+  else
+    CueSoundEffect(SFX_OING, L.Position);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
