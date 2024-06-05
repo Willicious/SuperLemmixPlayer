@@ -786,15 +786,11 @@ begin
       CheckResetCursor;
     end else if (Game.CurrentIteration = fHyperSpeedTarget) then
     begin
-      if not GameParams.AutoReplayMode then
-        Game.RegainControl(True);
-
       fHyperSpeedTarget := -1;
       SkillPanel.RefreshInfo;
       SetRedraw(rdRedraw);
       CheckResetCursor;
     end;
-
   end;
 
   if TimeForFrame then
