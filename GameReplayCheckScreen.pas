@@ -227,7 +227,7 @@ var
 
   procedure ManageReplays(aEntry: TReplayCheckEntry);
   var
-    NewName: String;
+    NewName, UniqueTag: String;
     ThisSetting: TReplayManagerSetting;
     ResultTag, OutcomeText: String;
   const
@@ -304,10 +304,18 @@ var
     end else
       OutStream.LoadFromFile(aEntry.ReplayFile);
 
-    if (ThisSetting.Action = rnaMove) or ((ThisSetting.Action = rnaNone) and ThisSetting.AppendResult) then
-      DeleteFile(aEntry.ReplayFile);
+    // Add a tag to ensure the filename is unique and prevent overwriting
+    UniqueTag := IntToHex(Random($1000), 3);
+    while FileExists(NewName) do
+    begin
+      NewName := ChangeFileExt(NewName, '') + '_' + UniqueTag + '.nxrp';
+      UniqueTag := IntToHex(Random($1000), 3);
+    end;
 
     OutStream.SaveToFile(NewName);
+
+    if (ThisSetting.Action = rnaMove) or ((ThisSetting.Action = rnaNone) and ThisSetting.AppendResult) then
+      DeleteFile(aEntry.ReplayFile);
   end;
 
 begin
