@@ -8,7 +8,7 @@
  TITLE Feel The Heat!
  AUTHOR WillLem/DMA
  ID xDBBF544ADBBF5449
- VERSION x000000000000000C
+ VERSION x000000000000000D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -102,7 +102,7 @@
  $GADGET
    STYLE orig_fire
    PIECE firepit
-   X 266
+   X 267
    Y 89
    NO_OVERWRITE
  $END
@@ -148,7 +148,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 427
+   X 429
    Y 104
    FLIP_VERTICAL
    ONE_WAY
@@ -157,26 +157,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE spike
-   X 266
-   Y 104
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE spike
-   X 269
-   Y 104
-   FLIP_VERTICAL
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE spike
-   X 430
+   X 268
    Y 104
    FLIP_VERTICAL
    ONE_WAY

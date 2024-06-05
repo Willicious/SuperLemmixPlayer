@@ -36,7 +36,8 @@ type
     procedure ShowScreen; override;
 
     procedure StartPlayback(Index: Integer);
-    procedure Delay(mS: Cardinal);
+    procedure StopPlayback;
+    procedure DelayPlayback(mS: Cardinal);
 
     procedure FadeIn;
     procedure FadeOut;
@@ -104,7 +105,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TGameBaseScreen.Delay(mS: Cardinal);
+procedure TGameBaseScreen.DelayPlayback(mS: Cardinal);
 var
   startTime, elapsedTime: Cardinal;
 begin
@@ -112,6 +113,12 @@ begin
   repeat
     elapsedTime := GetTickCount - startTime;
   until elapsedTime >= mS;
+end;
+
+procedure TGameBaseScreen.StopPlayback;
+begin
+  GameParams.PlaybackModeActive := False;
+  GameParams.PlaybackList.Clear;
 end;
 
 procedure TGameBaseScreen.StartPlayback(Index: Integer);
@@ -135,8 +142,7 @@ var
       and ((RandomIndex < 0) or (RandomIndex >= GameParams.PlaybackList.Count))) then
 
     begin
-      GameParams.PlaybackModeActive := False;
-      GameParams.PlaybackList.Clear;
+      StopPlayback;
       Result := False;
     end;
   end;
@@ -199,9 +205,14 @@ var
     end;
   end;
 
-  procedure LoadLevelAndFindMatchingReplay;
+  function LoadLevelAndFindMatchingReplay: Boolean;
+  var
+    LevelsChecked: Integer;
   begin
-    // Loop until we find a matching ReplayID
+    Result := True;
+    LevelsChecked := 0;
+
+    // Loop until we find a matching ReplayID or have checked all levels
     while GameParams.CurrentLevel <> nil do
     begin
       try
@@ -212,12 +223,22 @@ var
 
         if MatchIndex >= 0 then
           Break // Exit loop if a match is found
-        else
+        else begin
           GameParams.NextLevel(True); // Move on to next level if no match found
+          Inc(LevelsChecked);
+
+          // If we have checked all levels without finding a match, exit the loop
+          if (LevelsChecked >= GameParams.CurrentLevel.Group.ParentBasePack.LevelCount) then
+          begin
+            Result := False;
+            Exit;
+          end;
+        end;
       except
         on E: Exception do
         begin
           ShowMessage('Error during replay search: ' + E.Message);
+          Result := False;
           Exit;
         end;
       end;
@@ -232,6 +253,7 @@ var
 
 begin
   if not GameParams.PlaybackModeActive then Exit; // Just in case
+  GameParams.ShowNoPlaybackMatch := False;
 
   {============================================================================}
   {============================== Playback by Level ===========================}
@@ -241,7 +263,11 @@ begin
     if not ValidatePlaybackList then
       Exit;
 
-    LoadLevelAndFindMatchingReplay;
+    if not LoadLevelAndFindMatchingReplay then
+    begin
+      StopPlayback;
+      Exit;
+    end;
 
     // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
     ReplayFile := GameParams.PlaybackList[MatchIndex];
@@ -258,54 +284,79 @@ begin
     if not ValidatePlaybackList then
       Exit;
 
-    // Get the Replay ID of the current item in PlaybackList
-    ReplayID := GetReplayID(Index);
+    GameParams.NoPlaybackMatchString := '';
 
-    if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
+    while Index < GameParams.PlaybackList.Count do
     begin
-      ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
+      // Get the Replay ID of the current item in PlaybackList
+      ReplayID := GetReplayID(Index);
 
-      // Delete replay item from PlaybackList and move on to the next item if no match found
-      GameParams.PlaybackList.Delete(Index);
-      GameParams.PlaybackIndex := Index + 1;
+      if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
+      begin
+        GameParams.ShowNoPlaybackMatch := True;
+        GameParams.NoPlaybackMatchString := GameParams.NoPlaybackMatchString +
+          'No matching level found for Replay ID: ' + IntToHex(ReplayID, 16) + #13#10;
+
+        // Delete replay item from PlaybackList and move on to the next item if no match found
+        GameParams.PlaybackList.Delete(Index);
+      end else
+      begin
+        // Set ReplayFile to index and delete from the PlaybackList so it isn't loaded again
+        ReplayFile := GameParams.PlaybackList[Index];
+        GameParams.PlaybackList.Delete(Index);
+        Break;
+      end;
+    end;
+
+    if not ValidatePlaybackList then
       Exit;
-    end else
-      GameParams.PlaybackIndex := Index;
-
-    ReplayFile := GameParams.PlaybackList[Index];
 
   {============================================================================}
   {============================= Randomized Playback ==========================}
   {============================================================================}
   end else if GameParams.PlaybackOrder = poRandom then
   begin
-    // Get a random item from PlaybackList and find its ID
-    RandomIndex := GetRandomIndex;
+    // Initialize NoPlaybackMatchString
+    GameParams.NoPlaybackMatchString := '';
+
+    while GameParams.PlaybackList.Count > 0 do
+    begin
+      // Get a random item from PlaybackList and find its ID
+      RandomIndex := GetRandomIndex;
+
+      if not ValidatePlaybackList then
+        Exit;
+
+      ReplayID := GetReplayID(RandomIndex);
+
+      if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
+      begin
+        GameParams.ShowNoPlaybackMatch := True;
+        GameParams.NoPlaybackMatchString := GameParams.NoPlaybackMatchString +
+          'No matching level found for Replay ID: ' + IntToHex(ReplayID, 16) + #13#10;
+
+        // Delete replay item from PlaybackList and move on to the next item if no match found
+        GameParams.PlaybackList.Delete(RandomIndex);
+      end else
+      begin
+        // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
+        ReplayFile := GameParams.PlaybackList[RandomIndex];
+        GameParams.PlaybackList.Delete(RandomIndex);
+        Break;
+      end;
+    end;
 
     if not ValidatePlaybackList then
       Exit;
-
-    ReplayID := GetReplayID(RandomIndex);
-
-    if not GameParams.LoadLevelByID(ReplayID) then // Find and load the matching level
-    begin
-      ShowMessage('No matching level found for Replay ID: ' + IntToHex(ReplayID, 16));
-
-      // Delete replay item from PlaybackList and move on to the next item if no match found
-      GameParams.PlaybackList.Delete(RandomIndex);
-      Exit;
-    end;
-
-    // Set ReplayFile to match index and delete from the PlaybackList so it isn't loaded again
-    ReplayFile := GameParams.PlaybackList[RandomIndex];
-    GameParams.PlaybackList.Delete(RandomIndex);
   end;
 
-  LoadedReplayFile := ReplayFile;
+  GameParams.LoadedReplayFile := ReplayFile;
   LoadReplay;
 
-  if GameParams.AutoSkipPreAndPostview then
-    CloseScreen(gstPreview);
+  if GameParams.AutoSkipPreviewPostview then
+    CloseScreen(gstPreview)
+  else
+    GameParams.ShownText := False;
 end;
 
 
@@ -344,9 +395,9 @@ begin
 
   ScreenImg.Bitmap.MasterAlpha := 255;
 
-  if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview then
+  if GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview then
   begin
-    Delay(800);
+    DelayPlayback(800);
     FadeOut;
   end;
 
@@ -378,11 +429,15 @@ begin
     end else
       Sleep(1);
 
+    if GetTickCount > EndTickCount then   // prevent integer overflow
+      Break;
+
     RemainingTime := EndTickCount - GetTickCount;
   end;
 
   Application.ProcessMessages;
 end;
+
 
 function TGameBaseScreen.LoadReplay: Boolean;
 var
@@ -417,10 +472,10 @@ var
 begin
   s := '';
 
-  if OpenedViaReplay or GameParams.PlaybackModeActive then
+  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive then
   begin
     Result := true; // Return true if opened by replay
-    s := LoadedReplayFile;
+    s := GameParams.LoadedReplayFile;
   end else begin
     Dlg := TOpenDialog.Create(self);
     try

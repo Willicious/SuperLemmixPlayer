@@ -8,7 +8,7 @@ uses
   Types,
   LemNeoLevelPack,
   LemmixHotkeys,
-  Windows, Classes, SysUtils, StrUtils, Controls,
+  Windows, Classes, SysUtils, StrUtils, Controls, Dialogs,
   UMisc, Math,
   Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
@@ -37,6 +37,7 @@ type
       procedure ExitToMenu;
 
       procedure MakeNextLevelClickable;
+      procedure MakePlaybackNextLevelClickable;
       procedure MakeRetryLevelClickable(LevelPassed: Boolean);
       procedure MakeSaveReplayClickable;
       procedure MakeLevelSelectClickable;
@@ -82,9 +83,8 @@ end;
 
 procedure TGamePostviewScreen.NextLevel;
 begin
-  if GameParams.PlaybackModeActive then
-    StartPlayback(GameParams.PlaybackIndex + 1)
-  else begin
+  if not GameParams.PlaybackModeActive then
+  begin
     GameParams.NextLevel(true);
     GlobalGame.ReplayWasLoaded := False;
   end;
@@ -144,12 +144,27 @@ end;
 procedure TGamePostviewScreen.MakeNextLevelClickable;
 var
   R: TClickableRegion;
-  S: String;
 begin
   if GameParams.PlaybackModeActive then
-    S := 'Playback Next Level'
+    Exit;
+
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    R := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
+  else if GameParams.FullScreen then
+    R := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
   else
-    S := SOptionNextLevel;
+    R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
+
+  R.ShortcutKeys.Add(VK_RETURN);
+  R.ShortcutKeys.Add(VK_SPACE);
+end;
+
+procedure TGamePostviewScreen.MakePlaybackNextLevelClickable;
+var
+  R: TClickableRegion;
+  S: String;
+begin
+  S := 'Playback Next Level';
 
   if GameParams.ShowMinimap and not GameParams.FullScreen then
     R := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel)
@@ -201,17 +216,29 @@ end;
 procedure TGamePostviewScreen.MakeSaveReplayClickable;
 var
   R: TClickableRegion;
+  P: TPoint;
 begin
   if GameParams.PlaybackModeActive then
-    Exit;
+  begin
+    if not GlobalGame.ReplayManager.IsThisUsersReplay then
+      Exit;
 
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
-    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
-  else if GameParams.FullScreen then
-    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay)
-  else
-    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else
+      P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+  end else begin
+    if GameParams.ShowMinimap and not GameParams.FullScreen then
+      P := Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else if GameParams.FullScreen then
+      P := Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    else
+      P := Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+  end;
 
+  R := MakeClickableText(P, SOptionSaveReplay, SaveReplay);
   R.AddKeysFromFunction(lka_SaveReplay);
 end;
 
@@ -234,7 +261,6 @@ end;
 
 procedure TGamePostviewScreen.BuildScreen;
 var
-  NewRegion: TClickableRegion;
   Lines: TextLineArray;
 const
   TEXT_Y_POSITION = 28;
@@ -246,14 +272,30 @@ begin
     Lines := GetPostviewText;
     MenuFont.DrawTextLines(Lines, ScreenImg.Bitmap, TEXT_Y_POSITION);
 
+    { This needs to be called before the next level+replay is loaded
+      so that modified replays can be saved in Playback Mode }
+    MakeSaveReplayClickable;
+
+    // If in PlaybackMode, validate the playlist and load the next level
+    if GameParams.PlaybackModeActive then
+      StartPlayback(GameParams.PlaybackIndex);
+
+    // Check again for PlaybackMode after call to StartPlayback
+    if GameParams.PlaybackModeActive then
+      MakePlaybackNextLevelClickable
+    else
+      MakeSaveReplayClickable;
+
+    // Check for success result and prepare the relevant clickables
     if GameParams.GameResult.gSuccess then
     begin
       MakeNextLevelClickable;
       MakeRetryLevelClickable(True);
-    end else
+    end else begin
       MakeRetryLevelClickable(False);
+    end;
 
-    MakeSaveReplayClickable;
+    // Prepare some more clickables and hotkey options
     MakeLevelSelectClickable;
     MakeExitToMenuClickable;
 
@@ -262,20 +304,13 @@ begin
 
     ReloadCursor('postview.png');
 
-    // BookmarkPlayback - this logic is seriously flawed at the moment - the last level in the playlist plays twice
-    // if AutoSkip is not active ???????
-    if GameParams.PlaybackModeActive and GameParams.AutoSkipPreAndPostview
-    then begin
-      // Start playback of next level automatically if AutoSkip is active
-      StartPlayback(GameParams.PlaybackIndex + 1);
-
-      // Rebuild screen if Playback has finished
-      if not GameParams.PlaybackModeActive then
-        BuildScreen;
-    end else
-      // Draw clickables if AutoSkip isn't active
+    // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
+    if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
       DrawAllClickables;
 
+    // Show list of any unmatched replays if Playback Mode has finished
+    if GameParams.ShowNoPlaybackMatch and not GameParams.PlaybackModeActive then
+      ShowMessage(GameParams.NoPlaybackMatchString);
   finally
     ScreenImg.EndUpdate;
   end;
@@ -288,9 +323,8 @@ begin
   else begin
     GameParams.PlaybackModeActive := False;
 
-    if GameParams.LastActiveLevel then
-      GameParams.NextUnsolvedLevel := False
-    else if GameParams.GameResult.gSuccess and GameParams.NextUnsolvedLevel then
+    // Move to next level if solved and user has chosen "next unsolved" rather than "last active" in game loading settings
+    if GameParams.GameResult.gSuccess and GameParams.NextUnsolvedLevel then
       GameParams.NextLevel(true);
 
     CloseScreen(gstMenu);

@@ -8,7 +8,7 @@
  TITLE Scary Poppins' Land
  AUTHOR WillLem
  ID x5E5FF8ED5E5FF8EC
- VERSION x0000000000000011
+ VERSION x0000000000000016
  
 #       Level dimensions        
 # ----------------------------- 
@@ -168,6 +168,16 @@
  $GADGET
    STYLE orig_fire
    PIECE flamethrower_flip
+   X 951
+   Y 37
+   NO_OVERWRITE
+   ROTATE
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_flip
    X 943
    Y 82
  $END
@@ -208,9 +218,26 @@
    FLIP_HORIZONTAL
  $END
  
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_flip
+   X 951
+   Y -45
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_05
+   X 959
+   Y 33
+   ONE_WAY
+ $END
+ 
  $TERRAIN
    STYLE orig_fire
    PIECE pillar
@@ -1447,14 +1474,6 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_06
-   X 915
-   Y 29
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
    X 981
    Y 29
    ONE_WAY
@@ -1495,7 +1514,7 @@
  $TERRAIN
    STYLE orig_fire
    PIECE bars_01
-   X 950
+   X 951
    Y 30
    ONE_WAY
  $END
@@ -1802,28 +1821,6 @@
  
  $TERRAIN
    STYLE orig_fire
-   PIECE bars_05
-   X 950
-   Y 85
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_02
-   X 944
-   Y 43
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_02
-   X 944
-   Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_fire
    PIECE letter_!
    X 388
    Y 25
@@ -1895,16 +1892,53 @@
  
  $TERRAIN
    STYLE orig_fire
-   PIECE steel_04
-   X 945
-   Y 93
+   PIECE rock_01
+   X 936
+   Y 25
+   ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_fire
-   PIECE steel_04
-   X 944
-   Y 93
+   PIECE bars_03
+   X 955
+   Y 29
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_03
+   X 955
+   Y 31
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_03
+   X 955
+   Y 35
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_05
+   X 959
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_05
+   X 959
+   Y 57
+   ONE_WAY
  $END
  
  

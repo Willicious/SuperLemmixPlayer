@@ -103,8 +103,7 @@ var
 implementation
 
 uses
-  GameBaseScreenCommon, // For EXTRA_ZOOM_LEVELS constant
-  GameMenuScreen; // For disabling the MassReplayCheck button if necessary.
+  GameBaseScreenCommon; // For EXTRA_ZOOM_LEVELS constant
 
 const
   PRESET_REPLAY_PATTERNS: array[0..6] of String =
@@ -315,7 +314,6 @@ begin
   GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
   GameParams.NextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
-  GameParams.LastActiveLevel := rgGameLoading.ItemIndex = 1;
 
   // --- Page 2 (Interface Options) --- //
   // Checkboxes
@@ -359,7 +357,6 @@ begin
   GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
 
   GameParams.PreferYippee := rgExitSound.ItemIndex = 0;
-  GameParams.PreferBoing := rgExitSound.ItemIndex = 1;
 
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
   GameParams.MenuSounds := cbMenuSounds.Checked;
@@ -521,11 +518,15 @@ procedure TFormNXConfig.SetCheckboxes;
         cbMinimapHighQuality.Enabled := False;
       end;
 
-    if GameParams.NextUnsolvedLevel then rgGameLoading.ItemIndex := 0;
-    if GameParams.LastActiveLevel then rgGameLoading.ItemIndex := 1;
+    if GameParams.NextUnsolvedLevel then
+      rgGameLoading.ItemIndex := 0
+    else
+      rgGameLoading.ItemIndex := 1;
 
-    if GameParams.PreferYippee then rgExitSound.ItemIndex := 0;
-    if GameParams.PreferBoing then rgExitSound.ItemIndex := 1;
+    if GameParams.PreferYippee then
+      rgExitSound.ItemIndex := 0
+    else
+      rgExitSound.ItemIndex := 1;
   end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);

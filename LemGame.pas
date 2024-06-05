@@ -306,6 +306,7 @@ type
     procedure HandlePostTeleport(L: TLemming);
     procedure CheckReleaseLemming;
     procedure CheckUpdateNuking;
+    procedure CueExitSound(L: TLemming);
     procedure CueSoundEffect(aSound: String); overload;
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
     //procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
@@ -1466,13 +1467,6 @@ begin
     Playing := True;
 
   UpdateLevelRecords;
-
-//  // Remove the topmost pixel to prevent Y = 0 access
-//  for i := 0 to Level.Info.Width do
-//  begin
-//    RemovePixelAt(i, 0);
-//    fRenderInterface.RemoveTerrain(0, 0, Level.Info.Width, 1);
-//  end;
 end;
 
 
@@ -1526,7 +1520,10 @@ begin
     // Out-of-area pre-placed lemmings are automatically saved
     if (Lem.Y <= 0) or (Lem.Y >= PhysicsMap.Height + LEMMING_MAX_Y)
     or (Lem.X <= 0) or (Lem.X >= PhysicsMap.Width - 1) then
-      RemoveLemming(L, RM_SAVE, True);
+    begin
+      RemoveLemming(L, RM_SAVE);
+      CueExitSound(L);
+    end;
 
     Dec(LemmingsToRelease);
     Inc(LemmingsOut);
@@ -1927,23 +1924,12 @@ begin
                      SetBlockerMap;
                    end;
     baExiting    : begin
+                     CueExitSound(L);
+
                      if not IsOutOfTime then
                      begin
                        L.LemExplosionTimer := 0;
                        L.LemFreezerExplosionTimer := 0;
-                     end;
-                     if GameParams.PreferYippee then
-                     begin
-                       if L.LemIsZombie then
-                         CueSoundEffect(SFX_ZOMBIE_LAUGH, L.Position)
-                       else
-                         CueSoundEffect(SFX_YIPPEE, L.Position);
-                     end else if GameParams.PreferBoing then
-                     begin
-                       if L.LemIsZombie then
-                         CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
-                       else
-                         CueSoundEffect(SFX_OING, L.Position);
                      end;
                    end;
     baVaporizing   : begin
@@ -5851,7 +5837,7 @@ var
 
   procedure FencerTurn(L: TLemming; SteelSound: Boolean);
   begin
-    // Turns basher around an transitions to walker
+    // Turns fencer around and transitions to walker
     Dec(L.LemX, L.LemDx);
     if NeedUndoMoveUp then
       Inc(L.LemY);
@@ -7282,8 +7268,6 @@ begin
   if fGameFinished or StateIsUnplayable then
     Exit;
 
-  if fGameFinished then
-    Exit;
   fSoundList.Clear(); // Clear list of played sound effects
 
   CheckAdjustSpawnInterval;
@@ -7810,6 +7794,14 @@ begin
         end;
         Dec(LemmingsToRelease);
         Inc(LemmingsOut);
+
+        // Automatically save lemmings that spawn outside of the level area
+        if (NewLemming.LemX <= 0) or (NewLemming.LemX >= PhysicsMap.Width)
+        or (NewLemming.LemY <= 0) or (NewLemming.LemY >= PhysicsMap.Height) then
+        begin
+          RemoveLemming(NewLemming, RM_SAVE);
+          CueExitSound(NewLemming);
+        end;
       end;
     end;
   end;
@@ -7874,6 +7866,16 @@ begin
 
   fSoundList.Add(aSound);
   MessageQueue.Add(GAMEMSG_SOUND, aSound);
+end;
+
+procedure TLemmingGame.CueExitSound(L: TLemming);
+begin
+  if L.LemIsZombie then
+    CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
+  else if GameParams.PreferYippee then
+    CueSoundEffect(SFX_YIPPEE, L.Position)
+  else
+    CueSoundEffect(SFX_OING, L.Position);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);

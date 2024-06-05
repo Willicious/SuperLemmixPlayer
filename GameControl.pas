@@ -25,10 +25,6 @@ var
                         Shouldn't even be used there really, but a kludgy fix is okay since that's gonna
                         be replaced once proper level select menus are introduced. }
 
-  OpenedViaReplay: Boolean;
-  LoadedReplayFile: string;
-  LoadedReplayID: string;
-
 type
   TGameResultsRec = record
     gSuccess            : Boolean; // Level played successfully
@@ -76,7 +72,6 @@ type
     moEnableOnline,
     moCheckUpdates,
     moNextUnsolvedLevel,
-    moLastActiveLevel,
     moAutoReplayMode,
     moReplayAfterRestart,
     moPauseAfterBackwards,
@@ -104,8 +99,7 @@ type
     moPostviewJingles,
     moMenuSounds,
     moDisableMusicInTestplay,
-    moPreferYippee,
-    moPreferBoing
+    moPreferYippee
   );
 
   TMiscOptions = set of TMiscOption;
@@ -134,7 +128,6 @@ type
 
   TDosGameParams = class(TPersistent)
   private
-    fMatchFound: Boolean;
     fDisableSaveOptions: Boolean;
     fSaveCriticality: TGameParamsSaveCriticality;
 
@@ -169,6 +162,15 @@ type
 
     MiscOptions           : TMiscOptions;
 
+    // Playback Mode
+    fPlaybackModeActive: Boolean;
+    fPlaybackOrder: TPlaybackOrder;
+    fPlaybackList: TStringList;
+    fPlaybackIndex: Integer;
+    fShowNoPlaybackMatch: Boolean;
+    fNoPlaybackMatchString: String;
+    fAutoSkipPreviewPostview: Boolean;
+
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
     procedure SetOptionFlag(aFlag: TMiscOption; aValue: Boolean);
 
@@ -179,6 +181,10 @@ type
 
     procedure SetUserName(aValue: String);
   public
+    OpenedViaReplay: Boolean;
+    LoadedReplayFile: string;
+    LoadedReplayID: string;
+
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
@@ -211,13 +217,6 @@ type
     //SysDat               : TSysDatRec;
     ReplayCheckPath: String;
 
-    // Playback Mode
-    PlaybackModeActive: Boolean;
-    PlaybackOrder: TPlaybackOrder;
-    PlaybackList: TStringList;
-    PlaybackIndex: Integer;
-    AutoSkipPreAndPostview: Boolean;
-
     TestModeLevel: TNeoLevelEntry;
 
     constructor Create;
@@ -238,20 +237,18 @@ type
     procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // Loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = false); // Re-prepares using the existing TLevel in memory
-    procedure FindLevelByID(LevelID: string);
+    function FindLevelFileByID(LevelID: string): string;
     function LoadLevelByID(aID: Int64): Boolean;
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
-    property MatchFound: Boolean read fMatchFound write fMatchFound;
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property AutoReplayMode: boolean Index moAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property NextUnsolvedLevel: boolean Index moNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
-    property LastActiveLevel: boolean Index moLastActiveLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
@@ -275,15 +272,19 @@ type
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
     property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
-    property PreferBoing: Boolean Index moPreferBoing read GetOptionFlag write SetOptionFlag;
     property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
     property MenuSounds: Boolean Index moMenuSounds read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
+    property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
+    property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
+    property PlaybackList: TStringList read fPlaybackList write fPlaybackList;
+    property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
+    property ShowNoPlaybackMatch: Boolean read fShowNoPlaybackMatch write fShowNoPlaybackMatch;
+    property NoPlaybackMatchString: String read fNoPlaybackMatchString write fNoPlaybackMatchString;
+    property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
+
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
-
-
-
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
     property ShownText: boolean read fShownText write fShownText;
@@ -430,6 +431,11 @@ var
     for i := 0 to SL2.Count-1 do
       SL.Add(SL2[i]);
   end;
+
+  procedure SaveString(aLabel, aValue: String);
+  begin
+    SL.Add(aLabel + '=' + aValue);
+  end;
 begin
   SL := TStringList.Create;
   SL2 := TStringList.Create;
@@ -450,7 +456,6 @@ begin
     SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
     SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
     SaveBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
-    SaveBoolean('LoadLastActiveLevel', LastActiveLevel);
     SaveBoolean('AutoReplay', AutoReplayMode);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
@@ -497,9 +502,19 @@ begin
     SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
     SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
     SaveBoolean('PreferYippee', PreferYippee);
-    SaveBoolean('PreferBoing', PreferBoing);
     SaveBoolean('PostviewJingles', PostviewJingles);
     SaveBoolean('MenuSounds', MenuSounds);
+
+    SL.Add('');
+    SL.Add('# Playback Options');
+    SaveBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);
+
+    if (PlaybackOrder = poByReplay) then
+      SaveString('PlaybackOrder', 'ByReplay')
+    else if (PlaybackOrder = poByLevel) then
+      SaveString('PlaybackOrder', 'ByLevel')
+    else if (PlaybackOrder = poRandom) then
+      SaveString('PlaybackOrder', 'Random');
 
     SL.Add('');
     SL.Add('# Technical Options');
@@ -592,6 +607,19 @@ var
       fPanelZoomLevel := 1;
   end;
 
+  procedure LoadPlaybackOrderOptions;
+  var
+    sOption: String;
+  begin
+    sOption := SL.Values['PlaybackOrder'];
+
+    if (sOption = 'Random') then
+      PlaybackOrder := poRandom
+    else if (sOption = 'ByReplay') then
+      PlaybackOrder := poByReplay
+    else // Set default if the string is anything else
+      PlaybackOrder := poByLevel;
+  end;
 begin
   SL := TStringList.Create;
   try
@@ -621,7 +649,6 @@ begin
 
     AutoReplayMode := LoadBoolean('AutoReplay', AutoReplayMode);
     NextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
-    LastActiveLevel := LoadBoolean('LoadLastActiveLevel', LastActiveLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
@@ -638,7 +665,9 @@ begin
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
     PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
-    PreferBoing := LoadBoolean('PreferBoing', PreferBoing);
+
+    LoadPlaybackOrderOptions;
+    AutoSkipPreviewPostview := LoadBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
@@ -723,28 +752,33 @@ begin
   Result := SearchGroup(G);
 end;
 
-// Procedure to find and load a level by its ID
-procedure TDosGameParams.FindLevelByID(LevelID: string);
+function TDosGameParams.FindLevelFileByID(LevelID: string): string;
 var
   LevelFiles: TStringDynArray;
-  RootDir: string;
+  RootDir, LevelsDir, RelativePath, FolderNames: string;
   MatchingFiles: TStringList;
-  aFileName: string;
-  i: Integer;
+  i, ListWidth, StringWidth: Integer;
+  AdjustDialogWidth: Boolean;
   FileContent: TStringList;
   LevelDialog: TFLevelListDialog;
 begin
-  // Get the directory containing the executable
+  Result := '';
+
+  // Get the directory containing the .exe and find the levels folder
   RootDir := ExtractFilePath(ParamStr(0));
+  LevelsDir := TPath.Combine(RootDir, SFLevels);
 
-  // Search for .nxlv files in the root directory and all subdirectories
-  LevelFiles := TDirectory.GetFiles(RootDir, '*.nxlv', TSearchOption.soAllDirectories);
-
-  MatchFound := False;
+  // Search for .nxlv files in the levels folder, or cancel if it doesn't exist
+  if TDirectory.Exists(LevelsDir) then
+    LevelFiles := TDirectory.GetFiles(LevelsDir, '*.nxlv', TSearchOption.soAllDirectories)
+  else
+  begin
+    ShowMessage('Levels folder not found.');
+    Exit;
+  end;
 
   if Length(LevelFiles) > 0 then
   begin
-    MatchFound := True;
     MatchingFiles := TStringList.Create;
 
     try
@@ -755,7 +789,6 @@ begin
         try
           FileContent.LoadFromFile(LevelFiles[i]);
 
-          // Check if the current file contains the Level ID
           if Pos('ID ' + LevelID, FileContent.Text) > 0 then
             MatchingFiles.Add(LevelFiles[i]);
         finally
@@ -763,63 +796,76 @@ begin
         end;
       end;
 
-      // If no matching files found, show message
       if MatchingFiles.Count = 0 then
       begin
         ShowMessage('No .nxlv files found with Level ID: ' + LevelID);
-        MatchFound := False;
-      end
+        Exit;
       // If only one matching file is found, load it directly
-      else if MatchingFiles.Count = 1 then
-      // Bookmark - see below*
-        aFileName := MatchingFiles[0]
-      else
-      begin
+      end else if MatchingFiles.Count = 1 then
+        Result := MatchingFiles[0]
+      else begin
         // If multiple matching files are found, show level select dialog
         LevelDialog := TFLevelListDialog.Create(nil);
         try
-          for i := 0 to MatchingFiles.Count - 1 do
-            LevelDialog.ListBoxFiles.Items.Add(ExtractFileName(MatchingFiles[i]));
+          ListWidth := LevelDialog.MatchingLevelsList.Width;
+          AdjustDialogWidth := False;
 
-          // Show the dialog
+          for i := 0 to MatchingFiles.Count - 1 do
+          begin
+            // Extract the relative path starting after the 'levels' directory
+            RelativePath := StringReplace(MatchingFiles[i], LevelsDir, '', [rfIgnoreCase]);
+
+            // Extract the folder names and replace characters
+            FolderNames := ExtractFileDir(RelativePath);
+            FolderNames := StringReplace(FolderNames, '\', ' / ', [rfReplaceAll]);
+            FolderNames := StringReplace(FolderNames, '_', ' ', [rfReplaceAll]);
+
+            // Construct the display string and add it to the matching levels list
+            var DisplayString := ExtractFileName(MatchingFiles[i]) + ' (' + FolderNames + ')';
+            LevelDialog.MatchingLevelsList.Items.Add(DisplayString);
+
+            // Measure the width of the string so the dialog can fully accomodate it
+            StringWidth := LevelDialog.Canvas.TextWidth(DisplayString);
+
+            if StringWidth > ListWidth then
+            begin
+              ListWidth := StringWidth;
+              AdjustDialogWidth := True;
+            end;
+          end;
+
+          // If necessary, adjust the width of the dialog (include padding)
+          if AdjustDialogWidth then
+          begin
+            LevelDialog.ClientWidth := ListWidth + 40;
+            LevelDialog.MatchingLevelsList.Width := ListWidth + 20;
+          end;
+
           if LevelDialog.ShowModal = mrOk then
-          // Bookmark - see below*
-            aFileName := MatchingFiles[LevelDialog.ListBoxFiles.ItemIndex]
+            Result := MatchingFiles[LevelDialog.MatchingLevelsList.ItemIndex]
           else
-            MatchFound := False;
+            Exit;
         finally
           LevelDialog.Free;
         end;
       end;
-
-      if not MatchFound then Exit;
-
-      // Set the Filename to the selected level file
-
-      { *Bookmark - this isn't actually the ideal way to do this, but it sort of works
-       It's necessary to re-load the GameParams, and it only works for 1 level
-       Instead, see the new LoadLevelByID and see if there might be a way to harness that
-       (Bear in mind though, that procedure relies on prior knowledge of GameParams.CurrentLevel,
-       so it might be completely irrelevant in this context) }
-      CurrentLevel.Filename := aFileName;  // <---- *
-      SetLevel(CurrentLevel);              // <---- *
-      { // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ // }
     finally
       MatchingFiles.Free;
     end;
-  end
-  else
-    ShowMessage('No .nxlv files found in directory: ' + RootDir);
+  end else
+    ShowMessage('No .nxlv files found in directory: ' + LevelsDir);
 end;
 
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
 begin
   if CurrentLevel = nil then Exit;
+
   if not FileExists(CurrentLevel.Path) then
   begin
     MessageDlg('Loading failed: No file at location: ' + CurrentLevel.Path, mtWarning, [mbOK], 0);
     Exit;
   end;
+
   Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);
@@ -978,7 +1024,6 @@ begin
 
   UserName := 'Player 1';
 
-
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;
@@ -988,6 +1033,9 @@ begin
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
   fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
   fCursorResize := 1;
+
+  PlaybackOrder := poByLevel;
+  fAutoSkipPreviewPostview := true;
 
   LemDataInResource := True;
   LemSoundsInResource := True;

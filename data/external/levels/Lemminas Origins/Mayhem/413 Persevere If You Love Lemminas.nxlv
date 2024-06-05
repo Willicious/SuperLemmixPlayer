@@ -8,7 +8,7 @@
  TITLE Persevere If You Love Lemminas
  AUTHOR WillLem/DMA
  ID x79D689B168AB5473
- VERSION x000000000000000F
+ VERSION x0000000000000026
  
 #       Level dimensions        
 # ----------------------------- 
@@ -284,7 +284,7 @@
    $TERRAIN
      STYLE orig_pillar
      PIECE block_13
-     X 824
+     X 832
      Y 106
      ONE_WAY
    $END
@@ -292,7 +292,7 @@
    $TERRAIN
      STYLE orig_pillar
      PIECE block_13
-     X 824
+     X 832
      Y 116
      ERASE
      ONE_WAY
@@ -301,7 +301,7 @@
    $TERRAIN
      STYLE orig_pillar
      PIECE block_13
-     X 824
+     X 832
      Y 104
      NO_OVERWRITE
      ONE_WAY
@@ -310,7 +310,7 @@
    $TERRAIN
      STYLE orig_pillar
      PIECE block_13
-     X 824
+     X 832
      Y 86
      ERASE
      ONE_WAY
@@ -324,7 +324,7 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE block_14
-   X 846
+   X 854
    Y 86
    ONE_WAY
  $END
@@ -1414,7 +1414,7 @@
  $TERRAIN
    STYLE *group
    PIECE Group1781042706
-   X 824
+   X 832
    Y 106
    ONE_WAY
  $END

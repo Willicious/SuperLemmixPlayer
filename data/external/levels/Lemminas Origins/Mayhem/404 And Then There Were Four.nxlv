@@ -8,7 +8,7 @@
  TITLE And Then There Were Four....
  AUTHOR WillLem/DMA
  ID x02C7D87602C7D875
- VERSION x0000000000000007
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -102,6 +102,84 @@
    X 392
    Y 0
    NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group2030655180
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE moss_01
+     X 376
+     Y 89
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE sign_06
+     X 391
+     Y 83
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE sign_06
+     X 375
+     Y 83
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group-2037923768
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE moss_01
+     X 416
+     Y 89
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE bridge_02
+     X 410
+     Y 87
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group843701142
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group-2037923768
+     X 434
+     Y 90
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE sign_06
+     X 432
+     Y 83
+     ERASE
+     ONE_WAY
+   $END
+   
  $END
  
  
@@ -1901,14 +1979,6 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_01
-   X 335
-   Y 92
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
    X 449
    Y 48
    ONE_WAY
@@ -1965,7 +2035,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_03
-   X 475
+   X 474
    Y 93
    ONE_WAY
  $END
@@ -1997,7 +2067,7 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_04
-   X 509
+   X 508
    Y 92
    ONE_WAY
  $END
@@ -2013,16 +2083,16 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE moss_02
-   X 539
-   Y 93
+   X 538
+   Y 99
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 376
-   Y 92
+   STYLE *group
+   PIECE Group2030655180
+   X 380
+   Y 93
    ONE_WAY
  $END
  
@@ -2385,10 +2455,10 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
-   PIECE moss_01
-   X 416
-   Y 92
+   STYLE *group
+   PIECE Group843701142
+   X 435
+   Y 93
    ONE_WAY
  $END
  
@@ -2406,6 +2476,14 @@
    X 556
    Y 62
    ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group2030655180
+   X 337
+   Y 93
+   ONE_WAY
  $END
  
  

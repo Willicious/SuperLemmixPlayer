@@ -102,7 +102,7 @@ begin
   fStartLine := 0;
   Self.OnKeyDown := FormKeyDown;
 
-  GameParams.MainForm.Caption := 'SuperLemmix - Mass Replay Check';
+  GameParams.MainForm.Caption := 'SuperLemmix - Replay Check';
 end;
 
 destructor TGameReplayCheckScreen.Destroy;
@@ -622,7 +622,7 @@ begin
   if not fProcessing then
    CloseScreen(gstMenu)
   else
-    if RunCustomPopup(self, 'Terminate replay test?', 'Do you wish to terminate mass replay testing?', 'Yes|No') = 1 then
+    if RunCustomPopup(self, 'Terminate replay test?', 'Do you wish to terminate replay testing?', 'Yes|No') = 1 then
     begin
       fProcessing := false;
       Exit;

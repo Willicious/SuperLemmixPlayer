@@ -51,13 +51,17 @@ implementation
 procedure TFPlaybackMode.btnBrowseClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
-  Dir: string;
 begin
   OpenDlg := TOpenDialog.Create(Self);
   try
-    Dir := IncludeTrailingPathDelimiter(AppPath) + SFReplays;
     OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := Dir;
+
+    OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
+
+    if OpenDlg.InitialDir = '' then
+      OpenDlg.InitialDir := AppPath + SFReplays;
+
+    OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
     OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
 
     if OpenDlg.Execute then
@@ -107,7 +111,7 @@ end;
 
 procedure TFPlaybackMode.SetGameParams;
 begin
-  GameParams.AutoSkipPreAndPostview := cbAutoSkip.Checked;
+  GameParams.AutoSkipPreviewPostview := cbAutoSkip.Checked;
 
   if (rgPlaybackOrder.ItemIndex >= Ord(Low(TPlaybackOrder)))
     and (rgPlaybackOrder.ItemIndex <= Ord(High(TPlaybackOrder))) then
@@ -125,9 +129,9 @@ end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
 begin
-  // Set default options and clear PlaybackList
-  rgPlaybackOrder.ItemIndex := 0;
-  cbAutoSkip.Checked := True;
+  // Set options and clear PlaybackList
+  rgPlaybackOrder.ItemIndex := Ord(GameParams.PlaybackOrder);
+  cbAutoSkip.Checked := GameParams.AutoSkipPreviewPostview;
   GameParams.PlaybackList.Clear;
 
   // Show currently-assigned Playback Mode hotkey

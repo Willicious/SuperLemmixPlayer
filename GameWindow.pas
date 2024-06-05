@@ -1357,7 +1357,7 @@ procedure TGameWindow.FreeCursors;
 var
   i: Integer;
 begin
-  for i := 0 to Length(Cursors)-1 do
+  for i := Low(Cursors) to High(Cursors) do
     Cursors[i].Free;
 end;
 
@@ -1532,7 +1532,7 @@ begin
                           fLastNukeKeyTime := CurrTime;
                       end;
       lka_CancelPlayback: begin
-                            GameParams.PlaybackModeActive := False;
+                            StopPlayback;
                             RegainControl(True);
                           end;
       lka_SaveState : if not GameParams.ClassicMode then

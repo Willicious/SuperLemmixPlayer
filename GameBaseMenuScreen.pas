@@ -190,7 +190,7 @@ const
 procedure TGameBaseMenuScreen.CancelPlaybackMode;
 begin
   if GameParams.PlaybackModeActive then
-    GameParams.PlaybackModeActive := False;
+    StopPlayback;
 end;
 
 procedure TGameBaseMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
@@ -933,6 +933,8 @@ var
 begin
   if GameParams.TestModeLevel <> nil then Exit;
 
+  GameParams.OpenedViaReplay := False;
+
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(self);
   try
@@ -950,7 +952,7 @@ begin
       StartPlayback(0);
 
       // Skip past menu screen if AutoSkip is not activated
-      if not GameParams.AutoSkipPreAndPostview then
+      if not GameParams.AutoSkipPreviewPostview then
         CloseScreen(gstPreview);
     end else
       CloseScreen(gstReplayTest)

@@ -44,8 +44,8 @@ object FPlaybackMode: TFPlaybackMode
     ParentFont = False
   end
   object btnBrowse: TButton
-    Left = 152
-    Top = 43
+    Left = 153
+    Top = 44
     Width = 105
     Height = 31
     Caption = 'Browse'
@@ -116,16 +116,16 @@ object FPlaybackMode: TFPlaybackMode
   object stPackName: TStaticText
     AlignWithMargins = True
     Left = 0
-    Top = 14
+    Top = 12
     Width = 409
-    Height = 23
+    Height = 24
     Alignment = taCenter
     AutoSize = False
     Caption = '(pack name)'
-    Font.Charset = DEFAULT_CHARSET
+    Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Tahoma'
+    Font.Height = -21
+    Font.Name = 'Hobo Std'
     Font.Style = []
     ParentFont = False
     TabOrder = 7

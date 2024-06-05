@@ -8,7 +8,7 @@
  TITLE The Exploding Drill Method
  AUTHOR WillLem
  ID x905D2648905D2647
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -27,7 +27,7 @@
  
  $SKILLSET 
    TIMEBOMBER 1
-   BUILDER 20
+   BUILDER 14
    DIGGER 1
  $END 
  

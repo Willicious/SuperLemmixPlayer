@@ -49,6 +49,7 @@ type
     function Execute: Boolean;
     procedure FreeScreen;
     procedure CheckIfOpenedViaReplay;
+    procedure HandleOpenedViaReplay;
 
     property LoadSuccess: Boolean read fLoadSuccess;
   end;
@@ -125,31 +126,12 @@ begin
   end;
 
   GameParams.PlaybackModeActive := False;
-  OpenedViaReplay := False;
+
+  GameParams.OpenedViaReplay := False;
   CheckIfOpenedViaReplay;
 
-  if OpenedViaReplay then
-  begin
-    //GameParams.LoadLevelByID(StrToInt64(LoadedReplayID));
-    GameParams.FindLevelByID(LoadedReplayID);
-
-    if not GameParams.MatchFound then
-    begin
-      GameParams.NextScreen := gstMenu;
-      OpenedViaReplay := False;
-      Exit;
-    end;
-
-    GameParams.LoadCurrentLevel();
-
-    // Reload settings to align GameParams with current level
-    GameParams.Save(scImportant);
-    GameParams.Load;
-
-    GameParams.NextScreen := gstPreview;
-    fActiveForm.LoadReplay;
-    OpenedViaReplay := False;
-  end;
+  if GameParams.OpenedViaReplay then
+    HandleOpenedViaReplay;
 end;
 
 destructor TAppController.Destroy;
@@ -179,35 +161,35 @@ end;
 
 // Check if the program was activated by opening an .nxrp file
 procedure TAppController.CheckIfOpenedViaReplay;
-    // Find and extract the level ID within the replay file
-    function GetLevelID(const nxrpFilePath: string): string;
-    var
-      nxrpFileContent: TStringList;
-      line: string;
-      idPos: Integer;
-    begin
-      Result := '';
+  // Find and extract the level ID within the replay file
+  function GetLevelID(const nxrpFilePath: string): string;
+  var
+    nxrpFileContent: TStringList;
+    line: string;
+    idPos: Integer;
+  begin
+    Result := '';
 
-      nxrpFileContent := TStringList.Create;
-      try
-        nxrpFileContent.LoadFromFile(nxrpFilePath);
+    nxrpFileContent := TStringList.Create;
+    try
+      nxrpFileContent.LoadFromFile(nxrpFilePath);
 
-        for line in nxrpFileContent do
+      for line in nxrpFileContent do
+      begin
+        if Pos('ID', line) = 1 then
         begin
-          if Pos('ID', line) = 1 then
+          idPos := Pos(' ', line);
+          if idPos > 0 then
           begin
-            idPos := Pos(' ', line);
-            if idPos > 0 then
-            begin
-              Result := Trim(Copy(line, idPos + 1, Length(line)));
-              Break;
-            end;
+            Result := Trim(Copy(line, idPos + 1, Length(line)));
+            Break;
           end;
         end;
-      finally
-        nxrpFileContent.Free;
       end;
+    finally
+      nxrpFileContent.Free;
     end;
+  end;
 var
   CommandLine: string;
   i: Integer;
@@ -226,9 +208,9 @@ begin
 
         if ID <> '' then
         begin
-          LoadedReplayID := ID;
-          LoadedReplayFile := aReplayFile;
-          OpenedViaReplay := True;
+          GameParams.LoadedReplayID := ID;
+          GameParams.LoadedReplayFile := aReplayFile;
+          GameParams.OpenedViaReplay := True;
         end else
           ShowMessage('Level ID not found');
         Break;
@@ -242,6 +224,32 @@ begin
   TMainForm(GameParams.MainForm).ChildForm := nil;
   fActiveForm.Free;
   fActiveForm := nil;
+end;
+
+procedure TAppController.HandleOpenedViaReplay;
+var
+  MatchedLevelFile: string;
+begin
+  MatchedLevelFile := GameParams.FindLevelFileByID(GameParams.LoadedReplayID);
+
+  if MatchedLevelFile = '' then
+  begin
+    GameParams.NextScreen := gstMenu;
+    GameParams.OpenedViaReplay := False;
+    Exit;
+  end;
+
+  // Set the Filename to the selected level file
+  GameParams.CurrentLevel.Filename := MatchedLevelFile;
+  GameParams.SetLevel(GameParams.CurrentLevel);
+  GameParams.LoadCurrentLevel();
+
+  // Reload settings to align GameParams with selected level file
+  GameParams.Save(scImportant);
+  GameParams.Load;
+
+  GameParams.NextScreen := gstPreview;
+  fActiveForm.LoadReplay;
 end;
 
 function TAppController.Execute: Boolean;
@@ -292,16 +300,25 @@ begin
   fActiveForm.ShowScreen;
 end;
 
-procedure TAppController.ShowTextScreen; // BookmarkPlayback - this needs to be completely refactored for Playback Mode
+procedure TAppController.ShowTextScreen;
 var
   IsPreview: Boolean;
 begin
 // Always called between gstPreview/gstGame, and between gstGame/gstPostview (if successful).
 // However, if there's no text to show, it does nothing, and proceeds directly to the next screen.
   IsPreview := not (GameParams.NextScreen = gstPostview);
+
   if (IsPreview and (GameParams.Level.PreText.Count = 0))
   or ((not IsPreview) and (GameParams.Level.PostText.Count = 0))
-  or (IsPreview and GameParams.ShownText) then
+  or (IsPreview and GameParams.ShownText)
+
+  // Bookmark - Playback Mode doesn't play nicely with Preview screen text
+  // - see www.lemmingsforums.net/index.php?topic=6712.msg102498#msg102498
+  // - if we find what's causing the skip to previous iteration, we find the fix
+  // - Until then, we'll have to skip screen text when in Playback Mode
+                                    // This can be commented back in if the bug is fixed
+  or (GameParams.PlaybackModeActive //and GameParams.AutoSkipPreviewPostview
+  ) then
   begin
     if IsPreview then
       ShowPlayScreen
