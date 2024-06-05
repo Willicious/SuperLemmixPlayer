@@ -99,8 +99,7 @@ type
     moPostviewJingles,
     moMenuSounds,
     moDisableMusicInTestplay,
-    moPreferYippee,
-    moPreferBoing
+    moPreferYippee
   );
 
   TMiscOptions = set of TMiscOption;
@@ -274,7 +273,6 @@ type
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
     property DisableMusicInTestplay: boolean Index moDisableMusicInTestplay read GetOptionFlag write SetOptionFlag;
     property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
-    property PreferBoing: Boolean Index moPreferBoing read GetOptionFlag write SetOptionFlag;
     property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
     property MenuSounds: Boolean Index moMenuSounds read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
@@ -506,7 +504,6 @@ begin
     SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
     SaveBoolean('DisableTestplayMusic', DisableMusicInTestplay);
     SaveBoolean('PreferYippee', PreferYippee);
-    SaveBoolean('PreferBoing', PreferBoing);
     SaveBoolean('PostviewJingles', PostviewJingles);
     SaveBoolean('MenuSounds', MenuSounds);
 
@@ -671,7 +668,6 @@ begin
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
     PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
-    PreferBoing := LoadBoolean('PreferBoing', PreferBoing);
 
     LoadPlaybackOrderOptions;
     AutoSkipPreviewPostview := LoadBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);

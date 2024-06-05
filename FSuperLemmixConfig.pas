@@ -358,7 +358,6 @@ begin
   GameParams.DisableMusicInTestplay := cbDisableTestplayMusic.Checked;
 
   GameParams.PreferYippee := rgExitSound.ItemIndex = 0;
-  GameParams.PreferBoing := rgExitSound.ItemIndex = 1;
 
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
   GameParams.MenuSounds := cbMenuSounds.Checked;
@@ -523,8 +522,10 @@ procedure TFormNXConfig.SetCheckboxes;
     if GameParams.NextUnsolvedLevel then rgGameLoading.ItemIndex := 0;
     if GameParams.LastActiveLevel then rgGameLoading.ItemIndex := 1;
 
-    if GameParams.PreferYippee then rgExitSound.ItemIndex := 0;
-    if GameParams.PreferBoing then rgExitSound.ItemIndex := 1;
+    if GameParams.PreferYippee then
+      rgExitSound.ItemIndex := 0
+    else
+      rgExitSound.ItemIndex := 1;
   end;
 
 procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
