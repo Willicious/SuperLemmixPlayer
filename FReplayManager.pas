@@ -26,7 +26,7 @@ type
     rbMoveTo: TRadioButton;
     cbNamingScheme: TComboBox;
     cbUpdateVersion: TCheckBox;
-    btnOK: TButton;
+    btnRunReplayCheck: TButton;
     btnCancel: TButton;
     cbAppendResult: TCheckBox;
     lblDoForPassed: TLabel;
@@ -52,7 +52,7 @@ type
     procedure cbUpdateVersionClick(Sender: TObject);
     procedure cbAppendResultClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure btnOKClick(Sender: TObject);
+    procedure btnRunReplayCheckClick(Sender: TObject);
     procedure cbNamingSchemeEnter(Sender: TObject);
     procedure UpdateLabels;
     procedure btnBrowseClick(Sender: TObject);
@@ -148,8 +148,15 @@ begin
   end;
 end;
 
-procedure TFReplayManager.btnOKClick(Sender: TObject);
+procedure TFReplayManager.btnRunReplayCheckClick(Sender: TObject);
 begin
+  if fSelectedFolder = '' then
+  begin
+    ShowMessage('No replays selected. Please choose a folder of replays to begin Replay Check.');
+    ModalResult := mrNone;
+    Exit;
+  end;
+
   if (ReplayManager[CR_PASS].Action = rnaDelete) or
      (ReplayManager[CR_PASS_TALISMAN].Action = rnaDelete) then
   begin
