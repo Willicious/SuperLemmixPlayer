@@ -220,7 +220,6 @@ type
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
     fTargetLemmingID           : Integer; // For replay skill assignments
-    fCancelReplayAfterSkip     : Boolean;
 
     fIsBackstepping            : Boolean;
     fRewindPressed             : Boolean;
@@ -551,7 +550,6 @@ type
     property IsShowAthleteInfo: Boolean read fIsShowAthleteInfo write fIsShowAthleteInfo;
     property IsHighlightHotkey: Boolean read fIsHighlightHotkey write fIsHighlightHotkey;
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
-    property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property IsOutOfTime: Boolean read GetOutOfTime;
     property IsSuperlemmingMode: Boolean read fIsSuperlemmingMode;

@@ -629,10 +629,13 @@ begin
   MouseClickFrameSkip := MouseFrameSkip;
 
   if not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
+
   if MouseClickFrameSkip < 0 then
   begin
-    if not GameParams.AutoReplayMode then Game.CancelReplayAfterSkip := True;
     GotoSaveState(Max(Game.CurrentIteration-1, 0));
+
+    if not GameParams.AutoReplayMode then
+      Game.RegainControl(True);
   end;
 
   Pause := (fGameSpeed = gspPause);
@@ -657,7 +660,7 @@ begin
     SkillPanel.DrawButtonSelector(spbRewind, True);
 
     if GameParams.ClassicMode then
-      Game.CancelReplayAfterSkip := true;
+      Game.RegainControl(True);
 
     // Ensures that rendering has caught up before the next backwards skip is performed
     if IsHyperSpeed then
@@ -783,11 +786,9 @@ begin
       CheckResetCursor;
     end else if (Game.CurrentIteration = fHyperSpeedTarget) then
     begin
-      if Game.CancelReplayAfterSkip then
-      begin
-        Game.RegainControl(true);
-        Game.CancelReplayAfterSkip := false;
-      end;
+      if not GameParams.AutoReplayMode then
+        Game.RegainControl(True);
+
       fHyperSpeedTarget := -1;
       SkillPanel.RefreshInfo;
       SetRedraw(rdRedraw);
@@ -1123,17 +1124,10 @@ begin
   fSaveList.ClearAfterIteration(Game.CurrentIteration);
 
   if aTargetIteration = Game.CurrentIteration then
-  begin
-    SetRedraw(rdRedraw);
-    if Game.CancelReplayAfterSkip then
-    begin
-      Game.RegainControl(true);
-      Game.CancelReplayAfterSkip := false;
-    end;
-  end else begin
+    SetRedraw(rdRedraw)
+  else
     // Start hyperspeed to the desired interation
     fHyperSpeedTarget := aTargetIteration;
-  end;
 
   CanPlay := True;
 end;
@@ -1549,7 +1543,9 @@ begin
                           fSaveStateReplayStream.Position := 0;
                           Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, true);
                           GotoSaveState(fSaveStateFrame, 1);
-                        if not GameParams.AutoReplayMode then Game.CancelReplayAfterSkip := True;
+
+                          if not GameParams.AutoReplayMode then
+                            Game.RegainControl(True);
                         end;
                       end;
       lka_Cheat: Game.Cheat;
@@ -1610,9 +1606,9 @@ begin
 
                      if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
                       begin
-                        Game.CancelReplayAfterSkip := True;
-                        Game.ReplayWasLoaded := False;
                         GotoSaveState(0);
+                        Game.RegainControl(True);
+                        Game.ReplayWasLoaded := False;
                       end else begin
                         GotoSaveState(0);
                         Game.ReplayWasLoaded := True;
@@ -1649,11 +1645,13 @@ begin
                   if not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
                   if func.Modifier < 0 then
                   begin
-                    if not GameParams.AutoReplayMode then Game.CancelReplayAfterSkip := True;
                     if CurrentIteration > (func.Modifier * -1) then
                     begin
                       Game.IsBackstepping := True;
                       GotoSaveState(CurrentIteration + func.Modifier);
+
+                      if not GameParams.AutoReplayMode then
+                        Game.RegainControl(True);
                     end else begin
                       Game.IsBackstepping := False;
                       GotoSaveState(0);
