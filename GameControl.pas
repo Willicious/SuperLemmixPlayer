@@ -71,7 +71,6 @@ type
     moEnableOnline,
     moCheckUpdates,
     moNextUnsolvedLevel,
-    moLastActiveLevel,
     moAutoReplayMode,
     moReplayAfterRestart,
     moPauseAfterBackwards,
@@ -249,7 +248,6 @@ type
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property AutoReplayMode: boolean Index moAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property NextUnsolvedLevel: boolean Index moNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
-    property LastActiveLevel: boolean Index moLastActiveLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
@@ -457,7 +455,6 @@ begin
     SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
     SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
     SaveBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
-    SaveBoolean('LoadLastActiveLevel', LastActiveLevel);
     SaveBoolean('AutoReplay', AutoReplayMode);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
@@ -651,7 +648,6 @@ begin
 
     AutoReplayMode := LoadBoolean('AutoReplay', AutoReplayMode);
     NextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
-    LastActiveLevel := LoadBoolean('LoadLastActiveLevel', LastActiveLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
