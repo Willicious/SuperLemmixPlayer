@@ -1714,6 +1714,9 @@ begin
 
                         Game.IsBackstepping := True;
                         GotoSaveState(Max(TargetFrame - 1, 0));
+
+                        if not GameParams.AutoReplayMode then
+                          Game.RegainControl(True);
                      end;
       ssc_NextShrugger: begin
                           HasSuitableSkill := false;
