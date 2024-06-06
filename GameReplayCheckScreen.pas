@@ -529,7 +529,6 @@ begin
 
     fOldHighRes := GameParams.HighResolution;
     GameParams.HighResolution := false;
-    GlobalGame.ReplayWasLoaded := true;
 
     PieceManager.Clear;
 
@@ -610,7 +609,6 @@ end;
 procedure TGameReplayCheckScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   GameParams.HighResolution := fOldHighRes;
-  GlobalGame.ReplayWasLoaded := false;
 
   PieceManager.Clear;
 

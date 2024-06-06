@@ -1767,8 +1767,9 @@ begin
       end;
     spbPause:
       begin
-        // 1 second grace at the start of the level for the NoPause talisman
-        if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
+        // 55 frames' grace at the start of the level (before music starts) for the NoPause talisman
+        if (Game.CurrentIteration > 55) then Game.PauseWasPressed := True;
+
         if Game.RewindPressed then Game.RewindPressed := False;
         if Game.TurboPressed then Game.TurboPressed := False;
 
@@ -1830,20 +1831,15 @@ begin
     spbRestart:
       begin
         DrawButtonSelector(spbRestart, true);
+        fGameWindow.GotoSaveState(0);
 
-        // Always reset PauseWasPressed if user restarts
+        // Always reset these if user restarts
         Game.PauseWasPressed := False;
+        Game.ReplayLoaded := False;
 
-        // Cancels Replay after Restart in ClassicMode
+        // Cancel replay if in Classic Mode or if Replay After Restart is deactivated
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
-        begin
-          fGameWindow.GotoSaveState(0);
           Game.RegainControl(True);
-          Game.ReplayWasLoaded := False;
-        end else begin
-          fGameWindow.GotoSaveState(0);
-          Game.ReplayWasLoaded := True;
-        end;
       end;
     spbSquiggle: // Formerly spbClearPhysics
       begin

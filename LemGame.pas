@@ -224,8 +224,8 @@ type
     fIsBackstepping            : Boolean;
     fRewindPressed             : Boolean;
     fTurboPressed              : Boolean;
-    fReplayWasLoaded           : Boolean;
     fPauseWasPressed           : Boolean;
+    fReplayLoaded              : Boolean;
 
   { events }
     fParticleFinishTimer       : Integer; // Extra frames to enable viewing of explosions
@@ -251,7 +251,8 @@ type
     function ZombiesRemain: Boolean; // Slightly different - checks for remaining zombies, returns true if zombies remain
     function LevelHasKillZombiesTalisman: Boolean;
     function CheckForClassicMode: Boolean; // Checks if classic mode is activated
-    function CheckNoPause: Boolean; // Checks if pause has been pressed at any time
+    function CheckForNoPause: Boolean; // Checks if pause has been pressed at any time
+    procedure CheckReplayLoaded; // Checks for action on any future frame and sets flag to true if it finds any
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
@@ -538,8 +539,8 @@ type
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
     property Replaying: Boolean read GetIsReplaying;
-    property ReplayWasLoaded: Boolean read fReplayWasLoaded write fReplayWasLoaded;
     property PauseWasPressed: Boolean read fPauseWasPressed write fPauseWasPressed;
+    property ReplayLoaded: Boolean read fReplayLoaded write fReplayLoaded;
     property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
     property TurboPressed: Boolean read fTurboPressed write fTurboPressed;
     property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
@@ -925,7 +926,7 @@ var
         Exit;
 
     if (aTalisman.RequireNoPause) then
-      if not CheckNoPause then
+      if not CheckForNoPause then
         Exit;
 
     Result := true;
@@ -951,24 +952,24 @@ begin
   Result := false;
 
   // Check if a replay has been loaded
-  if ReplayWasLoaded then Exit;
+  if ReplayLoaded then Exit;
 
   // Classic mode has to be active
   if GameParams.ClassicMode then
     Result := true;
 end;
 
-function TLemmingGame.CheckNoPause: Boolean;
+function TLemmingGame.CheckForNoPause: Boolean;
 begin
-  Result := false;
+  Result := False;
 
   // Check if a replay has been loaded
-  if ReplayWasLoaded then Exit;
+  if ReplayLoaded then Exit;
 
   // Check if pause was pressed
   if PauseWasPressed then Exit;
 
-  Result := true;
+  Result := True;
 end;
 
 function TLemmingGame.AllZombiesKilled: Boolean;
@@ -1331,6 +1332,7 @@ begin
   fTurboPressed := False;
   fIsBackstepping := False;
   fPauseWasPressed := False;
+  fReplayLoaded := False;
 
   fGameFinished := False;
   fGameCheated := False;
@@ -7262,6 +7264,8 @@ procedure TLemmingGame.UpdateLemmings;
 begin
   fDoneAssignmentThisFrame := false;
 
+  CheckReplayLoaded;
+
   // Don't update if the game is finished, or we've reached an unplayable state
   if fGameFinished or StateIsUnplayable then
     Exit;
@@ -8412,9 +8416,6 @@ begin
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;
 
   fReplayManager.Cut(fCurrentIteration, CurrSpawnInterval);
-
-  // For NoPause talisman - allows replay to be cancelled before music starts
-  if (CurrentIteration < 55) then ReplayWasLoaded := False;
 end;
 
 
@@ -8486,6 +8487,20 @@ begin
 
   NewSI := CurrSpawnInterval + SpawnIntervalModifier;
   if CheckIfLegalSI(NewSI) then RecordSpawnInterval(NewSI);
+end;
+
+procedure TLemmingGame.CheckReplayLoaded;
+var
+  i: Integer;
+begin
+  // Only proceed with check if the level has Classic Mode or No Pause talisman
+  for i := 0 to Level.Talismans.Count-1 do
+    if not (Level.Talismans[i].RequireClassicMode) or (Level.Talismans[i].RequireNoPause) then
+      Exit;
+
+  // Check for action on any future frame - 55 frames' grace at the start of the level (before music starts)
+  if (CurrentIteration > 55) and (CurrentIteration < fReplayManager.LastActionFrame) then
+    ReplayLoaded := True;
 end;
 
 procedure TLemmingGame.Finish(aReason: Integer);

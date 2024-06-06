@@ -1482,8 +1482,9 @@ begin
                           SetSelectedSkill(spbSlower, True, True);
                           end;
       lka_Pause: begin
-                   // 1 second grace at the start of the level for the NoPause talisman
-                   if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
+                   // 55 frames' grace at the start of the level (before music starts) for the NoPause talisman
+                   if (Game.CurrentIteration > 55) then Game.PauseWasPressed := True;
+
                    if Game.RewindPressed then Game.RewindPressed := False;
                    if Game.TurboPressed then Game.TurboPressed := False;
 
@@ -1597,18 +1598,15 @@ begin
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: begin
-                     // Always reset PauseWasPressed if user restarts
-                     Game.PauseWasPressed := False;
+                     GotoSaveState(0);
 
+                     // Always reset these if user restarts
+                     Game.PauseWasPressed := False;
+                     Game.ReplayLoaded := False;
+
+                     // Cancel replay if in Classic Mode or if Replay After Restart is deactivated
                      if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
-                      begin
-                        GotoSaveState(0);
                         Game.RegainControl(True);
-                        Game.ReplayWasLoaded := False;
-                      end else begin
-                        GotoSaveState(0);
-                        Game.ReplayWasLoaded := True;
-                      end;
                    end;
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
       lka_SaveReplay: if not GameParams.ClassicMode then SaveReplay;
@@ -2265,8 +2263,7 @@ begin
   if s <> '' then
   begin
     StartReplay(s);
-    Game.ReplayWasLoaded := True;
-    exit;
+    Exit;
   end;
 end;
 

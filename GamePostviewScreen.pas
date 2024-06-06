@@ -84,10 +84,7 @@ end;
 procedure TGamePostviewScreen.NextLevel;
 begin
   if not GameParams.PlaybackModeActive then
-  begin
     GameParams.NextLevel(true);
-    GlobalGame.ReplayWasLoaded := False;
-  end;
 
   CloseScreen(gstPreview);
 end;
@@ -106,8 +103,6 @@ end;
 procedure TGamePostviewScreen.ReplaySameLevel;
 begin
   CloseScreen(gstPreview);
-  if GameParams.ReplayAfterRestart then
-    GlobalGame.ReplayWasLoaded := True;
 end;
 
 procedure TGamePostviewScreen.MakeExitToMenuClickable;
