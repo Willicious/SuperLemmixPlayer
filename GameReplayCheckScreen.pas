@@ -227,10 +227,12 @@ var
 
   procedure ManageReplays(aEntry: TReplayCheckEntry);
   var
-    NewName, UniqueTag: String;
+    NewName, UniqueTag, ResultTag, OutcomeText: String;
     ThisSetting: TReplayManagerSetting;
-    ResultTag, OutcomeText: String;
+    NamingAttempts: Integer;
   const
+    MaxNamingAttempts = 1000;
+
     TAG_RESULT = '{RESULT}';
     TAG_FILENAME = '{FILENAME}';
 
@@ -305,11 +307,16 @@ var
       OutStream.LoadFromFile(aEntry.ReplayFile);
 
     // Add a tag to ensure the filename is unique and prevent overwriting
-    UniqueTag := IntToHex(Random($1000), 3);
+    NamingAttempts := 0;
     while FileExists(NewName) do
     begin
-      NewName := ChangeFileExt(NewName, '') + '_' + UniqueTag + '.nxrp';
+      Inc(NamingAttempts);
+
+      if NamingAttempts > MaxNamingAttempts then
+        raise Exception.Create('Unable to generate a unique filename after ' + MaxNamingAttempts.ToString + ' attempts');
+
       UniqueTag := IntToHex(Random($1000), 3);
+      NewName := ChangeFileExt(NewName, '') + '_' + UniqueTag + '.nxrp';
     end;
 
     OutStream.SaveToFile(NewName);
