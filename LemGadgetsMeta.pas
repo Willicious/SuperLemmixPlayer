@@ -526,11 +526,7 @@ begin
     // Swap and adjust trigger area coordinates / dimensions
     DstRec.TriggerLeft := SrcRec.Animations.PrimaryAnimation.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
     DstRec.TriggerTop := SrcRec.TriggerLeft {- SrcRec.TriggerWidth};
-    if not (fTriggerEffect in NO_POSITION_ADJUST) then
-    begin
-      DstRec.TriggerLeft := DstRec.TriggerLeft + 4;
-      DstRec.TriggerTop := DstRec.TriggerTop + 5;
-    end;
+
     DstRec.TriggerWidth := SrcRec.TriggerHeight;
     DstRec.TriggerHeight := SrcRec.TriggerWidth;
 
@@ -567,8 +563,6 @@ begin
 
     // Flip and adjust trigger area Y coordinate
     DstRec.TriggerTop := DstRec.Animations.PrimaryAnimation.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
-    if not (fTriggerEffect in NO_POSITION_ADJUST) then
-      DstRec.TriggerTop := DstRec.TriggerTop + 10;
 
     // Flip digit Y coordinate
     DstRec.DigitY := DstRec.Animations.PrimaryAnimation.Height - DstRec.DigitY - 1;
