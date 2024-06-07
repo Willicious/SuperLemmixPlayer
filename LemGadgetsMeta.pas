@@ -490,11 +490,8 @@ end;
 procedure TGadgetMetaInfo.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   Index: Integer;
-
   SrcRec: TGadgetVariableProperties;
   DstRec: PGadgetVariableProperties;
-const
-  NO_POSITION_ADJUST = [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP];
 
   procedure Clone(Src, Dst: PGadgetVariableProperties);
   var
