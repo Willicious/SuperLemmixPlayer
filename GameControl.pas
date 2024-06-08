@@ -82,7 +82,6 @@ type
     moHideShadows,
     moHideHelpers,
     moHideSkillQ,
-    moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
     moFullScreen,
@@ -258,7 +257,6 @@ type
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
     property HideSkillQ: boolean Index moHideSkillQ read GetOptionFlag write SetOptionFlag;
-    property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
@@ -519,11 +517,6 @@ begin
     SL.Add('# Technical Options');
     SaveBoolean('FileCaching', FileCaching);
 
-    if UnderWine then
-    begin
-      SaveBoolean('DisableWineWarnings', DisableWineWarnings);
-    end;
-
     AddUnknowns;
 
     SL.SaveToFile(AppPath + SFSaveData + 'settings.ini');
@@ -670,7 +663,6 @@ begin
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
-    DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
     FileCaching := LoadBoolean('FileCaching', FileCaching);
 
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
