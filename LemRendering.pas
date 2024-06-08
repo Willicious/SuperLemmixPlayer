@@ -122,11 +122,13 @@ type
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
     procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
-    function GetRecolorer: TRecolorImage;
 
+    function GetRecolorer: TRecolorImage;
     property Recolorer: TRecolorImage read GetRecolorer;
   protected
   public
+    BrickPixelColors   : array[0..11] of TColor32; // Gradient steps - callable from LemGame
+
     constructor Create;
     destructor Destroy; override;
 
@@ -141,6 +143,7 @@ type
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
+    procedure InitializeBrickColors(aBrickPixelColor: TColor32);
 
     // Composite pieces (terrain grouping)
     procedure PrepareCompositePieceBitmaps(aTerrains: TTerrains; aLowRes: TBitmap32; aHighRes: TBitmap32);
@@ -4074,6 +4077,20 @@ begin
   Gadgets.InitializeAnimations;
 end;
 
+procedure TRenderer.InitializeBrickColors(aBrickPixelColor: TColor32);
+var
+  i: Integer;
+begin
+  with TColor32Entry(aBrickPixelColor) do
+  for i := 0 to High(BrickPixelColors) do
+  begin
+    TColor32Entry(BrickPixelColors[i]).A := A;
+    TColor32Entry(BrickPixelColors[i]).R := Min(Max(R + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).B := Min(Max(B + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).G := Min(Max(G + (i - 6) * 4, 0), 255);
+  end;
+end;
+
 var
   LastErrorLemmingSprites: String;
 
@@ -4139,9 +4156,12 @@ begin
     fRenderInterface.DisableDrawing := NoOutput;
   end;
 
-  // Recolor the spear graphics
+  // Recolor bricks and spears
   if fTheme <> nil then
-  DoProjectileRecolor(fAni.SpearBitmap, fTheme.Colors['MASK']);
+  begin
+    InitializeBrickColors(fTheme.Colors['MASK']);
+    DoProjectileRecolor(fAni.SpearBitmap, fTheme.Colors['MASK']);
+  end;
 
   // Prepare any composite pieces
   PieceManager.RemoveCompositePieces;

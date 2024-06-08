@@ -206,7 +206,6 @@ type
     ExploderAssignInProgress   : Boolean;
     DoExplosionCrater          : Boolean;
     Index_LemmingToBeNuked     : Integer;
-    BrickPixelColors           : array[0..11] of TColor32; // Gradient steps
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
     NextLemmingCountDown       : Integer;
@@ -314,7 +313,6 @@ type
     //function PropellerOneRow(PosX, PosY: Integer): Boolean; // Propeller
     procedure DrawAnimatedGadgets;
     procedure IncrementIteration;
-    procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeAllTriggerMaps;
     function IsStartingSeconds: Boolean;
 
@@ -1417,8 +1415,6 @@ begin
     if Gadget.TriggerEffect = DOM_COLLECTIBLE then
       Inc(CollectiblesRemain);
   end;
-
-  InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
 
   InitializeAllTriggerMaps;
   SetGadgetMap;
@@ -4317,8 +4313,8 @@ procedure TLemmingGame.LayLadder(L: TLemming);
 -------------------------------------------------------------------------------}
 var
   i: Integer;
-  PosX, PosY: Integer;
-  FrameOffset: Integer;
+  PosX, PosY, FrameOffset: Integer;
+  BrickColor: TColor32;
 const
   LadderBrick: array[0..8, 0..1] of Integer = (
        (0, 0), (1, 0), (2, 0),
@@ -4345,12 +4341,14 @@ begin
           else Exit;
         end;
 
+      BrickColor := Renderer.BrickPixelColors[(FrameOffset +1) div 2];
+
       if L.LemDX > 0 then
         AddConstructivePixel((PosX + FrameOffset) + LadderBrick[i, 0],
-                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[(FrameOffset +1) div 2])
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickColor)
       else
         AddConstructivePixel((PosX - FrameOffset) - LadderBrick[i, 0],
-                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[(FrameOffset +1) div 2]);
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickColor);
     end;
   end;
 end;
@@ -4361,16 +4359,21 @@ procedure TLemmingGame.LayBrick(L: TLemming);
   during drawlemmings
 -------------------------------------------------------------------------------}
 var
-  BrickPosY, n: Integer;
+  n, BrickPosY: Integer;
+  BrickColor: TColor32;
 begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
-  if L.LemAction = baBuilding then BrickPosY := L.LemY - 1
-  else BrickPosY := L.LemY; // For platformers
+  BrickColor := Renderer.BrickPixelColors[12 - L.LemNumberOfBricksLeft];
+
+  if L.LemAction = baBuilding then
+    BrickPosY := L.LemY - 1
+  else
+    BrickPosY := L.LemY; // For platformers
 
   for n := 0 to 5 do
-    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickColor);
 end;
 
 function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
@@ -4379,14 +4382,16 @@ function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
   during drawlemmings
 -------------------------------------------------------------------------------}
 var
-  BrickPosY, n: Integer;
-  PixPosX: Integer;
+  n, BrickPosY, PixPosX: Integer;
+  BrickColor: TColor32;
 begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number stacker bricks out of bounds');
 
   BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
   if L.LemStackLow then Inc(BrickPosY);
+
+  BrickColor := Renderer.BrickPixelColors[12 - L.LemNumberOfBricksLeft];
 
   Result := False;
 
@@ -4395,7 +4400,7 @@ begin
     PixPosX := L.LemX + n*L.LemDx;
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
-      AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+      AddConstructivePixel(PixPosX, BrickPosY, BrickColor);
       Result := true;
     end;
   end;
@@ -8349,9 +8354,11 @@ end;
 procedure TLemmingGame.HandlePostTeleport(L: TLemming);
 var
   i: Integer;
+  BrickColor: TColor32;
 begin
   // Check for trigger areas.
   CheckTriggerArea(L, true);
+  BrickColor := Renderer.BrickPixelColors[12 - L.LemNumberOfBricksLeft];
 
   // Reset blocker map, if lemming is a blocker and the target position is free
   if L.LemAction = baBlocking then
@@ -8373,14 +8380,14 @@ begin
     if L.LemPhysicsFrame < 9 then
       Inc(L.LemNumberOfBricksLeft);
     for i := 0 to 3 do
-      AddConstructivePixel(L.LemX + (i * L.LemDX), L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+      AddConstructivePixel(L.LemX + (i * L.LemDX), L.LemY, BrickColor);
     if L.LemPhysicsFrame < 9 then
       Dec(L.LemNumberOfBricksLeft);
   end else if (L.LemAction = baPlatforming) and ((L.LemNumberOfBricksLeft < 12) or (L.LemPhysicsFrame >= 9)) then
   begin
     if L.LemPhysicsFrame < 9 then
       Inc(L.LemNumberOfBricksLeft);
-    AddConstructivePixel(L.LemX, L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    AddConstructivePixel(L.LemX, L.LemY, BrickColor);
     if L.LemPhysicsFrame < 9 then
       Dec(L.LemNumberOfBricksLeft);
   end;
@@ -8571,20 +8578,6 @@ begin
     TPngInterface.SavePngFile(Filename, BMP, true);
   finally
     BMP.Free;
-  end;
-end;
-
-procedure TLemmingGame.InitializeBrickColors(aBrickPixelColor: TColor32);
-var
-  i: Integer;
-begin
-  with TColor32Entry(aBrickPixelColor) do
-  for i := 0 to Length(BrickPixelColors) - 1 do
-  begin
-    TColor32Entry(BrickPixelColors[i]).A := A;
-    TColor32Entry(BrickPixelColors[i]).R := Min(Max(R + (i - 6) * 4, 0), 255);
-    TColor32Entry(BrickPixelColors[i]).B := Min(Max(B + (i - 6) * 4, 0), 255);
-    TColor32Entry(BrickPixelColors[i]).G := Min(Max(G + (i - 6) * 4, 0), 255);
   end;
 end;
 
