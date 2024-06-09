@@ -138,6 +138,9 @@ type
     //fDoneUpdateCheck: Boolean;
     fCurrentLevel: TNeoLevelEntry;
 
+    fFallbackMessage          : String;
+    fShouldShowFallbackMessage: Boolean;
+
     fCursorResize: Double;
     fZoomLevel: Integer;
     fPanelZoomLevel: Integer;
@@ -241,6 +244,9 @@ type
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
+
+    property FallbackMessage: String read fFallbackMessage write fFallbackMessage;
+    property ShouldShowFallbackMessage: Boolean read fShouldShowFallbackMessage write fShouldShowFallbackMessage;
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;

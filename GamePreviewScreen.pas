@@ -181,6 +181,14 @@ end;
 
 procedure TGamePreviewScreen.BeginPlay;
 begin
+  if GameParams.ShouldShowFallbackMessage then
+  begin
+    ShowMessage(GameParams.FallbackMessage);
+
+    GameParams.FallbackMessage := '';
+    GameParams.ShouldShowFallbackMessage := False;
+  end;
+
   CloseScreen(gstPlay);
 end;
 

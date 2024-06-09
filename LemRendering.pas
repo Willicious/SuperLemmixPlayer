@@ -70,7 +70,6 @@ type
     fPhysicsRenderingType: TPhysicsRenderingType;
 
     fHelpersAreHighRes:   Boolean;
-    fLastErrorLemmingSprites : String;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
@@ -4125,13 +4124,10 @@ begin
       fAni.ClearData;
       fAni.Theme := fTheme;
 
-      if fTheme.Lemmings <> fLastErrorLemmingSprites then // Prevents the message being shown more than once
-      begin
-        ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
-        fTheme.Lemmings := fLastErrorLemmingSprites;
-      end;
-
       fAni.PrepareAnimations;
+
+      GameParams.FallbackMessage := E.Message + #13 + #13 + 'Falling back to default sprites';
+      GameParams.ShouldShowFallbackMessage := True;
     end;
   end;
 
