@@ -8,7 +8,7 @@
  TITLE Back To Our Roots
  AUTHOR WillLem
  ID xA6AF81B7A6AF81B6
- VERSION x0000000000000014
+ VERSION x0000000000000016
  
 #       Level dimensions        
 # ----------------------------- 
@@ -206,20 +206,60 @@
  $GADGET
    STYLE default
    PIECE owa_left
-   X 847
+   X 834
    Y 31
-   WIDTH 36
-   HEIGHT 98
+   WIDTH 32
+   HEIGHT 32
    ONLY_ON_TERRAIN
  $END
  
  $GADGET
    STYLE default
    PIECE owa_left
-   X 313
-   Y 91
-   WIDTH 34
-   HEIGHT 44
+   X 866
+   Y 31
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 834
+   Y 63
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 866
+   Y 63
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 834
+   Y 95
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 866
+   Y 95
+   WIDTH 32
+   HEIGHT 32
    ONLY_ON_TERRAIN
  $END
  
@@ -247,6 +287,16 @@
    X 613
    Y 10
    NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 313
+   Y 91
+   WIDTH 34
+   HEIGHT 44
+   ONLY_ON_TERRAIN
  $END
  
  
@@ -329,17 +379,9 @@
  
  $TERRAIN
    STYLE orig_dirt
-   PIECE clump_03
-   X 313
-   Y 94
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
    PIECE steel_01
-   X 528
-   Y 79
+   X 529
+   Y 69
  $END
  
  $TERRAIN
@@ -352,9 +394,25 @@
  
  $TERRAIN
    STYLE orig_dirt
+   PIECE bridge_03
+   X 532
+   Y 110
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
    PIECE steel_01
-   X 530
-   Y 55
+   X 525
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 533
+   Y 45
  $END
  
  $TERRAIN
@@ -512,13 +570,6 @@
    PIECE grass_04
    X 336
    Y 133
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE grass_04
-   X 321
-   Y 92
  $END
  
  $TERRAIN
@@ -1247,6 +1298,28 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE steel_01
+   X 440
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_03
+   X 313
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_04
+   X 321
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
    X 320
    Y 134
  $END
@@ -1256,13 +1329,6 @@
    PIECE steel_01
    X 327
    Y 143
- $END
- 
- $TERRAIN
-   STYLE orig_dirt
-   PIECE steel_01
-   X 440
-   Y 93
  $END
  
  

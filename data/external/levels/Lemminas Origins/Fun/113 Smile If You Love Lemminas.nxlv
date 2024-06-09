@@ -8,7 +8,7 @@
  TITLE Smile If You Love Lemminas
  AUTHOR WillLem/DMA
  ID x55A27E8855A27E87
- VERSION x0000000000000008
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -63,22 +63,6 @@
  
 #     Interactive objects       
 # ----------------------------- 
- $GADGET
-   STYLE orig_pillar
-   PIECE window
-   X 768
-   Y 4
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_pillar
-   PIECE exit
-   X 704
-   Y 120
-   NO_OVERWRITE
- $END
- 
  $GADGET
    STYLE default
    PIECE water
@@ -286,6 +270,85 @@
    HEIGHT 16
  $END
  
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 768
+   Y 4
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE exit
+   X 704
+   Y 120
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_down
+   X 771
+   Y 64
+   WIDTH 42
+   HEIGHT 60
+   ONLY_ON_TERRAIN
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE orig_pillar
+   PIECE window
+   X 769
+   Y 4
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group1781042706
+   
+   $TERRAIN
+     STYLE orig_pillar
+     PIECE block_13
+     X 832
+     Y 106
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_pillar
+     PIECE block_13
+     X 832
+     Y 116
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_pillar
+     PIECE block_13
+     X 832
+     Y 104
+     NO_OVERWRITE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_pillar
+     PIECE block_13
+     X 832
+     Y 86
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -323,62 +386,6 @@
  
  $TERRAIN
    STYLE orig_pillar
-   PIECE block_13
-   X 824
-   Y 105
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_14
-   X 846
-   Y 85
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 771
-   Y 105
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 771
-   Y 85
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 771
-   Y 65
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 771
-   Y 45
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 709
-   Y 65
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
    PIECE steel_01
    X 663
    Y 142
@@ -389,14 +396,6 @@
    PIECE steel_01
    X 851
    Y 142
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_14
-   X 709
-   Y 45
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -827,76 +826,6 @@
    PIECE block_06
    X 1065
    Y 42
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_05
-   X 667
-   Y -21
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_05
-   X 695
-   Y -21
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_05
-   X 719
-   Y -21
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_end_06
-   X 732
-   Y -31
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_05
-   X 833
-   Y -21
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_end_05
-   X 820
-   Y -31
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_05
-   X 868
-   Y -21
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE pillar_05
-   X 859
-   Y -21
    NO_OVERWRITE
    ONE_WAY
  $END
@@ -1375,6 +1304,148 @@
    PIECE block_06
    X 1312
    Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_14
+   X 854
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 771
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 771
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 771
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_13
+   X 771
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE block_14
+   X 709
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_05
+   X 667
+   Y -21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_05
+   X 695
+   Y -21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_05
+   X 719
+   Y -21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_06
+   X 732
+   Y -31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_05
+   X 833
+   Y -21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_05
+   X 820
+   Y -31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_05
+   X 868
+   Y -21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_05
+   X 859
+   Y -21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE pillar_end_06
+   X 878
+   Y -31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1781042706
+   X 832
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1781042706
+   X 709
+   Y 64
    ONE_WAY
  $END
  
