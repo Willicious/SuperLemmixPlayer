@@ -1642,20 +1642,22 @@ procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
 var
   TickCount: Cardinal;
   FrameIndex: Integer;
-  IsReplaying: Boolean;
+  IsReplaying, IsClassicModeRewind: Boolean;
 begin
   // Calculate the frame index based on the tick count
   TickCount := GetTickCount;
   FrameIndex := (TickCount div 500) mod 2;
+
   IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
+  IsClassicModeRewind := (GameParams.ClassicMode and Game.RewindPressed);
 
   if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if GameParams.PlaybackModeActive and not IsReplaying then
     fNewDrawStr[Pos] := Chr(102 + FrameIndex) // Purple "P" (#102 and #103)
-  else if Game.ReplayInsert then
+  else if Game.ReplayInsert and not IsClassicModeRewind then
     fNewDrawStr[Pos] := Chr(100 + FrameIndex) // Blue "R" (#100 and #101)
-  else if not fRRIsPressed then
+  else if not (fRRIsPressed or IsClassicModeRewind) then
     fNewDrawStr[Pos] := Chr(98 + FrameIndex); // Red "R" (#98 and #99)
 end;
 
