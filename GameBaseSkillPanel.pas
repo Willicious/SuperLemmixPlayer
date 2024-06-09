@@ -1818,6 +1818,10 @@ begin
       begin
         if Game.IsSuperLemmingMode then Exit;
 
+        // Cancel replay only when stopping Rewind in Classic Mode
+        if Game.RewindPressed and GameParams.ClassicMode then
+          Game.RegainControl(True);
+
         // Pressing Rewind fails the NoPause talisman  (1 second grace at start of level)
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
 
