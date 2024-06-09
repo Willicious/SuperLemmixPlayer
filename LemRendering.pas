@@ -70,6 +70,7 @@ type
     fPhysicsRenderingType: TPhysicsRenderingType;
 
     fHelpersAreHighRes:   Boolean;
+    fLastErrorLemmingSprites : String;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
@@ -4091,9 +4092,6 @@ begin
   end;
 end;
 
-var
-  LastErrorLemmingSprites: String;
-
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
 
@@ -4104,7 +4102,6 @@ begin
 
   fTheme.Load(aLevel.Info.GraphicSetName);
   PieceManager.SetTheme(fTheme);
-
   fAni.ClearData;
   fAni.Theme := fTheme;
 
@@ -4123,21 +4120,18 @@ begin
   except
     on E: Exception do
     begin
-      fTheme.Lemmings := 'default';
-
-      fTheme.Load(fTheme.Lemmings);
+      fTheme.Load('orig_crystal'); // We need to actually choose a theme, not just set the default sprites
       PieceManager.SetTheme(fTheme);
-
       fAni.ClearData;
       fAni.Theme := fTheme;
 
-      fAni.PrepareAnimations;
-
-      if fTheme.Lemmings <> LastErrorLemmingSprites then
+      if fTheme.Lemmings <> fLastErrorLemmingSprites then // Prevents the message being shown more than once
       begin
-        LastErrorLemmingSprites := fTheme.Lemmings;
         ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
+        fTheme.Lemmings := fLastErrorLemmingSprites;
       end;
+
+      fAni.PrepareAnimations;
     end;
   end;
 
