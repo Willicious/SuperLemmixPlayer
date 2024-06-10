@@ -1491,14 +1491,12 @@ begin
                    if GameParams.ClassicMode and Game.RewindPressed then
                      Game.RegainControl(True);
 
-                   if Game.RewindPressed then Game.RewindPressed := False;
-
-                   if fGameSpeed = gspPause then
+                   if (GameSpeed = gspPause) and not Game.RewindPressed then
                    begin
                      Game.IsBackstepping := False;
                      GameSpeed := gspNormal;
                    end else begin
-                     Game.RewindPressed := False; // Bookmark - needed?
+                     Game.RewindPressed := False;
                      Game.IsBackstepping := True;
                      GameSpeed := gspPause;
                    end;
