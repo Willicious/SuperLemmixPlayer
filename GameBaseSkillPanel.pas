@@ -176,6 +176,7 @@ type
 
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
+    property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
 
     property ButtonHint: String read fButtonHint write fButtonHint;
     procedure GetButtonHints(aButton: TSkillPanelButton);
@@ -1655,7 +1656,7 @@ begin
     fNewDrawStr[Pos] := Chr(102 + FrameIndex) // Purple "P" (#102 and #103)
   else if Game.ReplayInsert and not IsClassicModeRewind then
     fNewDrawStr[Pos] := Chr(100 + FrameIndex) // Blue "R" (#100 and #101)
-  else if not (fRRIsPressed or IsClassicModeRewind) then
+  else if not (RRIsPressed or IsClassicModeRewind) then
     fNewDrawStr[Pos] := Chr(98 + FrameIndex); // Red "R" (#98 and #99)
 end;
 
@@ -1741,8 +1742,8 @@ begin
   case aButton of
     spbSlower:
       begin
-        Game.IsBackstepping := False;
-        fRRIsPressed := True;
+        Game.IsBackstepping := False; // Ensures RR sound will be cued
+        RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
         DrawButtonSelector(spbSlower, true);
 
         // Deactivates min/max RR jumping in ClassicMode
@@ -1754,8 +1755,8 @@ begin
       end;
     spbFaster:
       begin
-        Game.IsBackstepping := False;
-        fRRIsPressed := True;
+        Game.IsBackstepping := False; // Ensures RR sound will be cued
+        RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
         DrawButtonSelector(spbFaster, true);
 
         // Deactivates min/max RR jumping in ClassicMode
@@ -1878,6 +1879,7 @@ begin
   DrawButtonSelector(spbFaster, false);
   DrawButtonSelector(spbRestart, false);
   fRRIsPressed := False;
+  RRIsPressed := False;
 end;
 
 procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;

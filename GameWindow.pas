@@ -1460,7 +1460,8 @@ begin
 
     if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       begin
-        Game.IsBackstepping := False;
+        SkillPanel.RRIsPressed := True; // Prevents replay "R" being displayed when using RR hotkeys
+        Game.IsBackstepping := False; // Ensures RR sound is cued properly
         Game.RegainControl; // We don't want to FORCE it in this case; Replay Insert mode should be respected here
       end;
 
@@ -1776,6 +1777,7 @@ begin
 
   CheckShifts(Shift);
 
+  SkillPanel.RRIsPressed := False;
 end;
 
 procedure TGameWindow.SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
