@@ -72,7 +72,14 @@ type
 
     procedure InitializeTreeview;
     procedure SetInfo;
+    procedure LoadNodeLabels;
     procedure WriteToParams;
+
+//    function GetCompletedGroupString(G: TNeoLevelGroup): String;
+    function GetCompletedLevelString(G: TNeoLevelGroup
+    //; S: String
+    ): String;
+    function GetPackResultsString(G: TNeoLevelGroup): String;
 
     procedure DisplayLevelInfo;
     procedure SetTalismanInfo;
@@ -80,7 +87,7 @@ type
     procedure ClearTalismanButtons;
     procedure TalButtonClick(Sender: TObject);
     procedure PackListTalButtonClick(Sender: TObject);
-    procedure DisplayPackTalismanInfo;
+    procedure DisplayPackTalismanInfo(Group: TNeoLevelGroup);
 
     procedure DrawSpeedButton(aButton: TSpeedButton; aIconIndex: Integer; aOverlayIndex: Integer = -1);
 
@@ -626,15 +633,178 @@ begin
     LoadCurrentLevelToPlayer;
 end;
 
+//function TFLevelSelect.GetCompletedGroupString(G: TNeoLevelGroup): String;
+//var
+//  i, CompletedCount: Integer;
+//begin
+//  Result := '';
+//  CompletedCount := 0;
+//
+//  for i := 0 to G.Children.Count-1 do
+//    if G.Children[i].Status = lst_Completed then
+//      Inc(CompletedCount);
+//
+//  Result := Result + IntToStr(CompletedCount) + ' of ' + IntToStr(G.Children.Count) + ' subgroups ';
+//end;
+
+function TFLevelSelect.GetCompletedLevelString(G: TNeoLevelGroup
+//; S: String
+): String;
+var
+  i, j, CompletedCount: Integer;
+  SubGroup: TNeoLevelGroup;
+//  ProgressDialog: TForm;
+//  ProgressBar: TProgressBar;
+begin
+  Result := '';
+  CompletedCount := 0;
+
+//    // Create the progress dialog
+//  ProgressDialog := TForm.Create(nil);
+//  try
+//    ProgressDialog.Caption := 'Processing Completion Data...';
+//    ProgressDialog.Position := poScreenCenter;
+//    ProgressDialog.BorderStyle := bsDialog;
+//    ProgressDialog.Width := 300;
+//    ProgressDialog.Height := 100;
+//
+//    // Create a progress bar
+//    ProgressBar := TProgressBar.Create(ProgressDialog);
+//    ProgressBar.Parent := ProgressDialog;
+//    ProgressBar.Left := 10;
+//    ProgressBar.Top := 10;
+//    ProgressBar.Width := ProgressDialog.Width - 20;
+//    ProgressBar.Max := G.LevelCount;
+//    ProgressBar.Position := 0;
+
+//    // Show the progress dialog
+//    ProgressDialog.Show;
+
+    for i := 0 to G.Children.Count -1 do
+    begin
+      SubGroup := G.Children[i];
+
+      for j := 0 to SubGroup.Levels.Count -1 do
+      if SubGroup.Levels[j].Status = lst_Completed then
+      begin
+        // Update progress
+        Inc(CompletedCount);
+//          ProgressBar.Position := CompletedCount;
+//          Application.ProcessMessages; // Ensure UI updates are processed
+      end;
+    end;
+
+    Result := IntToStr(CompletedCount) + ' of ' + IntToStr(G.LevelCount) + ' levels ';
+
+//    // Close the progress dialog when finished
+//    ProgressDialog.Close;
+//  finally
+//    ProgressDialog.Free;
+//  end;
+end;
+
+
+function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
+begin
+  Result := '';
+
+//  if G.Children.Count > 0 then
+//    Result := GetCompletedGroupString(G);
+
+  if G.LevelCount > 0 then
+    Result :=
+    //Result +
+    GetCompletedLevelString(G
+    //, S
+    );
+
+  if Result <> '' then
+    Result := Result + 'completed';
+
+  if G.Talismans.Count > 0 then
+  begin
+    if Result <> '' then
+      Result := Result + '; ';
+
+    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count) + ' talismans unlocked';
+  end;
+end;
+
+procedure TFLevelSelect.LoadNodeLabels;
+var
+  i: Integer;
+  L: TNeoLevelEntry;
+  S: String;
+//  ProgressDialog: TForm;
+//  ProgressBar: TProgressBar;
+//  CurrentNode: Integer;
+begin
+  tvLevelSelect.Items.BeginUpdate;
+//  CurrentNode := 0;
+
+  //    // Create the progress dialog
+//  ProgressDialog := TForm.Create(nil);
+
+  try
+//    ProgressDialog.Caption := 'Processing Level Data...';
+//    ProgressDialog.Position := poScreenCenter;
+//    ProgressDialog.BorderStyle := bsDialog;
+//    ProgressDialog.Width := 300;
+//    ProgressDialog.Height := 100;
+//
+//    // Create a progress bar
+//    ProgressBar := TProgressBar.Create(ProgressDialog);
+//    ProgressBar.Parent := ProgressDialog;
+//    ProgressBar.Left := 10;
+//    ProgressBar.Top := 10;
+//    ProgressBar.Width := ProgressDialog.Width - 20;
+//    ProgressBar.Max := 100; // This will need to be the number of visible Nodes
+//    ProgressBar.Position := 0;
+
+//    // Show the progress dialog
+//    ProgressDialog.Show;
+
+    for i := 0 to tvLevelSelect.Items.Count-1 do
+    begin
+      if not tvLevelSelect.Items[i].IsVisible then Continue;
+      if tvLevelSelect.Items[i].Text <> '' then Continue;
+      if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
+      begin
+        L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
+        S := '';
+        if L.Group.IsOrdered then
+          S := '(' + IntToStr(L.GroupIndex + 1) + ') ';
+        S := S + L.Title;
+        tvLevelSelect.Items[i].Text := S;
+
+        if (L.UnlockedTalismanList.Count < L.Talismans.Count) and (tvLevelSelect.Items[i].ImageIndex < 4 {just in case}) then
+          with tvLevelSelect.Items[i] do
+          begin
+            ImageIndex := ImageIndex + 4;
+            SelectedIndex := ImageIndex;
+          end;
+      end;
+
+//      // Update progress
+//      Inc(CurrentNode);
+//          ProgressBar.Position := CurrentNode;
+//          Application.ProcessMessages; // Ensure UI updates are processed
+    end;
+
+//    // Close the progress dialog when finished
+//    ProgressDialog.Close;
+  finally
+//    ProgressDialog.Free;
+    tvLevelSelect.Items.EndUpdate;
+  end;
+end;
+
 procedure TFLevelSelect.SetInfo;
 var
   Obj: TObject;
   G: TNeoLevelGroup;
   L: TNeoLevelEntry;
   N: TTreeNode;
-  i: Integer;
-  S: String;
-  CompletedCount: Integer;
 
   function GetGroupPositionText: String;
   begin
@@ -651,46 +821,10 @@ var
     else
       Result := 'Level ' + IntToStr(L.GroupIndex + 1) + ' of ' + L.Group.Name;
   end;
-
-  procedure LoadNodeLabels;
-  var
-    i: Integer;
-    L: TNeoLevelEntry;
-    S: String;
-  begin
-    tvLevelSelect.Items.BeginUpdate;
-    try
-      for i := 0 to tvLevelSelect.Items.Count-1 do
-      begin
-        if not tvLevelSelect.Items[i].IsVisible then Continue;
-        if tvLevelSelect.Items[i].Text <> '' then Continue;
-        if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
-        begin
-          L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
-          S := '';
-          if L.Group.IsOrdered then
-            S := '(' + IntToStr(L.GroupIndex + 1) + ') ';
-          S := S + L.Title;
-          tvLevelSelect.Items[i].Text := S;
-
-          if (L.UnlockedTalismanList.Count < L.Talismans.Count) and (tvLevelSelect.Items[i].ImageIndex < 4 {just in case}) then
-            with tvLevelSelect.Items[i] do
-            begin
-              ImageIndex := ImageIndex + 4;
-              SelectedIndex := ImageIndex;
-            end;
-        end;
-      end;
-    finally
-      tvLevelSelect.Items.EndUpdate;
-    end;
-  end;
-
 begin
   LoadNodeLabels;
 
   N := tvLevelSelect.Selected;
-
   if N = nil then Exit;
 
   Obj := TObject(N.Data);
@@ -706,50 +840,16 @@ begin
     if G.PackVersion <> '' then
       lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
 
-    S := '';
-    CompletedCount := 0;
-
-    if G.Children.Count > 0 then
-    begin
-      for i := 0 to G.Children.Count-1 do
-        if G.Children[i].Status = lst_Completed then
-          Inc(CompletedCount);
-      S := S + IntToStr(CompletedCount) + ' of ' + IntToStr(G.Children.Count) + ' subgroups ';
-    end;
-
-    CompletedCount := 0;
-
-    if G.Levels.Count > 0 then
-    begin
-      for i := 0 to G.Levels.Count-1 do
-        if G.Levels[i].Status = lst_Completed then
-          Inc(CompletedCount);
-      if S <> '' then
-        S := S + 'and ';
-      S := S + IntToStr(CompletedCount) + ' of ' + IntToStr(G.Levels.Count) + ' levels ';
-    end;
-
-    if S <> '' then
-      S := S + 'completed';
-
-    if G.Talismans.Count > 0 then
-    begin
-      if S <> '' then
-        S := S + '; ';
-
-      S := S + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count) + ' talismans unlocked';
-    end;
-
-    lblCompletion.Caption := S;
+    lblCompletion.Caption := GetPackResultsString(G);
     lblCompletion.Visible := true;
 
     // Set the first unsolved level in the pack as the current level (or first level if pack is completed)
     WriteToParams;
     GameParams.LoadCurrentLevel(false);
 
-    DisplayPackTalismanInfo;
-    fInfoForm.Visible := false;
     ClearTalismanButtons;
+    DisplayPackTalismanInfo(G);
+    fInfoForm.Visible := false;
     SetAdvancedOptionsGroup(G);
   end else if Obj is TNeoLevelEntry then
   begin
@@ -793,75 +893,42 @@ begin
   SetTalismanInfo;
 end;
 
-procedure TFLevelSelect.DisplayPackTalismanInfo;
-  function GetGroup: TNeoLevelGroup;
-  var
-    N: TTreeNode;
-    Obj: TObject;
-  begin
-    Result := nil;
-
-    N := tvLevelSelect.Selected;
-    if N <> nil then
-    begin
-      Obj := TObject(N.Data);
-      if Obj is TNeoLevelGroup then
-        Result := TNeoLevelGroup(Obj);
-    end;
-  end;
+procedure TFLevelSelect.DisplayPackTalismanInfo(Group: TNeoLevelGroup);
 var
-  Group: TNeoLevelGroup;
+//  ProgressDialog: TForm;
+//  ProgressBar: TProgressBar;
+//  TotalTalismans, CurrentTalisman: Integer;
+//  Group: TNeoLevelGroup;
   Level: TNeoLevelEntry;
   Talismans: TObjectList<TTalisman>;
-  i: Integer;
-  TotalHeight: Integer;
-
-  NewButton: TSpeedButton;
-  TitleLabel, LevLabel, ReqLabel: TLabel;
   Tal: TTalisman;
+  i, TotalHeight: Integer;
 
-  LabelStartY: Integer;
-  LabelTotalHeight: Integer;
-begin
-  fPackTalBox.VertScrollBar.Position := 0;
-
-  Group := GetGroup;
-  if Group = fLastGroup then
+  procedure CreateUIElements;
+  var
+    TitleLabel, LevLabel, ReqLabel: TLabel;
+    NewButton: TSpeedButton;
+    LabelStartY, LabelTotalHeight: Integer;
   begin
-    fPackTalBox.Visible:= True;
-    Exit;
-  end;
-  fLastGroup:= Group;
-
-  TotalHeight := 8;
-  Talismans := Group.Talismans;
-
-  for i := fPackTalBox.ControlCount-1 downto 0 do
-    fPackTalBox.Controls[i].Free;
-
-  for i := 0 to Talismans.Count-1 do
-  begin
-    Tal := Talismans[i];
-    Level := Group.GetLevelForTalisman(Tal);
-
     if Trim(Tal.Title) <> '' then
     begin
-      TitleLabel := TLabel.Create(self);
+      TitleLabel := TLabel.Create(Self);
       TitleLabel.Parent := fPackTalBox;
       TitleLabel.Font.Style := [fsBold];
       TitleLabel.Caption := Tal.Title;
-    end else
+    end
+    else
       TitleLabel := nil;
 
-    LevLabel := TLabel.Create(self);
+    LevLabel := TLabel.Create(Self);
     LevLabel.Parent := fPackTalBox;
     LevLabel.Caption := Level.Group.Name + ' ' + IntToStr(Level.GroupIndex + 1) + ': ' + Level.Title;
 
-    ReqLabel := TLabel.Create(self);
+    ReqLabel := TLabel.Create(Self);
     ReqLabel.Parent := fPackTalBox;
     ReqLabel.Caption := BreakString(Tal.RequirementText, ReqLabel, fPackTalBox.ClientWidth - 16 - 40);
 
-    NewButton := TSpeedButton.Create(self);
+    NewButton := TSpeedButton.Create(Self);
     NewButton.Parent := fPackTalBox;
 
     NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
@@ -884,7 +951,8 @@ begin
     begin
       TitleLabel.Left := 48;
       LevLabel.Left := 60;
-    end else
+    end
+    else
       LevLabel.Left := 48;
     ReqLabel.Left := 48;
     NewButton.Left := 8 - SPEEDBUTTON_PADDING_SIZE;
@@ -899,7 +967,9 @@ begin
       LabelStartY := TotalHeight + ((NewButton.Height - LabelTotalHeight) div 2);
 
       TotalHeight := TotalHeight + NewButton.Height + 8;
-    end else begin
+    end
+    else
+    begin
       LabelStartY := TotalHeight;
       NewButton.Top := TotalHeight + ((LabelTotalHeight - NewButton.Height) div 2);
 
@@ -910,147 +980,26 @@ begin
     begin
       TitleLabel.Top := LabelStartY;
       LevLabel.Top := TitleLabel.Top + TitleLabel.Height;
-    end else
+    end
+    else
       LevLabel.Top := LabelStartY;
     ReqLabel.Top := LevLabel.Top + LevLabel.Height;
   end;
-
+begin
   fPackTalBox.VertScrollBar.Position := 0;
-  fPackTalBox.VertScrollBar.Range := Max(0, TotalHeight);
-  fPackTalBox.Visible := true;
-end;
 
-//// TO DO:
-//// 1. Uncomment this and replace the existing DisplayPackTalismanInfo procedure
-//// 2. Un-next LoadNodeLabels from SetInfo and make it its own procedure (called from SetInfo or as needed)
-//// 3. Break other loop-based code out from SetInfo and make them their own procedures (ditto)
-//// 4. Use the same progress bar logic for the un-nested LoadNodeLabels
-//// 5. Use the same progress bar logic for the other outbroken loop-based procedures
+  if Group = fLastGroup then
+  begin
+    fPackTalBox.Visible := True;
+    Exit;
+  end;
+  fLastGroup := Group;
 
-//procedure TFLevelSelect.DisplayPackTalismanInfo;
-//var
-//  ProgressDialog: TForm;
-//  ProgressBar: TProgressBar;
-//  TotalTalismans, CurrentTalisman: Integer;
-//  Group: TNeoLevelGroup;
-//  Level: TNeoLevelEntry;
-//  Talismans: TObjectList<TTalisman>;
-//  Tal: TTalisman;
-//  i, TotalHeight: Integer;
-//
-//  function GetGroup: TNeoLevelGroup;
-//  var
-//    N: TTreeNode;
-//    Obj: TObject;
-//  begin
-//    Result := nil;
-//
-//    N := tvLevelSelect.Selected;
-//    if N <> nil then
-//    begin
-//      Obj := TObject(N.Data);
-//      if Obj is TNeoLevelGroup then
-//        Result := TNeoLevelGroup(Obj);
-//    end;
-//  end;
-//
-//  procedure CreateUIElements;
-//  var
-//    TitleLabel, LevLabel, ReqLabel: TLabel;
-//    NewButton: TSpeedButton;
-//    LabelStartY, LabelTotalHeight: Integer;
-//  begin
-//    if Trim(Tal.Title) <> '' then
-//    begin
-//      TitleLabel := TLabel.Create(Self);
-//      TitleLabel.Parent := fPackTalBox;
-//      TitleLabel.Font.Style := [fsBold];
-//      TitleLabel.Caption := Tal.Title;
-//    end
-//    else
-//      TitleLabel := nil;
-//
-//    LevLabel := TLabel.Create(Self);
-//    LevLabel.Parent := fPackTalBox;
-//    LevLabel.Caption := Level.Group.Name + ' ' + IntToStr(Level.GroupIndex + 1) + ': ' + Level.Title;
-//
-//    ReqLabel := TLabel.Create(Self);
-//    ReqLabel.Parent := fPackTalBox;
-//    ReqLabel.Caption := BreakString(Tal.RequirementText, ReqLabel, fPackTalBox.ClientWidth - 16 - 40);
-//
-//    NewButton := TSpeedButton.Create(Self);
-//    NewButton.Parent := fPackTalBox;
-//
-//    NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
-//    NewButton.Height := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
-//
-//    NewButton.Margins.Left := SPEEDBUTTON_PADDING_SIZE - 3;
-//    NewButton.Margins.Top := SPEEDBUTTON_PADDING_SIZE - 3;
-//    NewButton.Margins.Right := SPEEDBUTTON_PADDING_SIZE - 1;
-//    NewButton.Margins.Bottom := SPEEDBUTTON_PADDING_SIZE - 1;
-//
-//    NewButton.Tag := NativeInt(Level);
-//    NewButton.OnClick := PackListTalButtonClick;
-//
-//    if Level.TalismanStatus[Tal.ID] then
-//      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color])
-//    else
-//      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET);
-//
-//    if TitleLabel <> nil then
-//    begin
-//      TitleLabel.Left := 48;
-//      LevLabel.Left := 60;
-//    end
-//    else
-//      LevLabel.Left := 48;
-//    ReqLabel.Left := 48;
-//    NewButton.Left := 8 - SPEEDBUTTON_PADDING_SIZE;
-//
-//    LabelTotalHeight := LevLabel.Height + ReqLabel.Height;
-//    if TitleLabel <> nil then
-//      LabelTotalHeight := LabelTotalHeight + TitleLabel.Height;
-//
-//    if (NewButton.Height > LabelTotalHeight) then
-//    begin
-//      NewButton.Top := TotalHeight;
-//      LabelStartY := TotalHeight + ((NewButton.Height - LabelTotalHeight) div 2);
-//
-//      TotalHeight := TotalHeight + NewButton.Height + 8;
-//    end
-//    else
-//    begin
-//      LabelStartY := TotalHeight;
-//      NewButton.Top := TotalHeight + ((LabelTotalHeight - NewButton.Height) div 2);
-//
-//      TotalHeight := TotalHeight + LabelTotalHeight + 8;
-//    end;
-//
-//    if TitleLabel <> nil then
-//    begin
-//      TitleLabel.Top := LabelStartY;
-//      LevLabel.Top := TitleLabel.Top + TitleLabel.Height;
-//    end
-//    else
-//      LevLabel.Top := LabelStartY;
-//    ReqLabel.Top := LevLabel.Top + LevLabel.Height;
-//  end;
-//begin
-//  fPackTalBox.VertScrollBar.Position := 0;
-//
-//  Group := GetGroup;
-//  if Group = fLastGroup then
-//  begin
-//    fPackTalBox.Visible := True;
-//    Exit;
-//  end;
-//  fLastGroup := Group;
-//
-//  TotalHeight := 8;
-//  Talismans := Group.Talismans;
+  TotalHeight := 8;
+  Talismans := Group.Talismans;
 //  TotalTalismans := Talismans.Count;
 //  CurrentTalisman := 0;
-//
+
 //  // Create the progress dialog
 //  ProgressDialog := TForm.Create(nil);
 //  try
@@ -1071,33 +1020,33 @@ end;
 //
 //    // Show the progress dialog
 //    ProgressDialog.Show;
-//
-//    for i := fPackTalBox.ControlCount - 1 downto 0 do
-//      fPackTalBox.Controls[i].Free;
-//
-//    for i := 0 to Talismans.Count - 1 do
-//    begin
-//      Tal := Talismans[i];
-//      Level := Group.GetLevelForTalisman(Tal);
-//      CreateUIElements;
-//
+
+    for i := fPackTalBox.ControlCount - 1 downto 0 do
+      fPackTalBox.Controls[i].Free;
+
+    for i := 0 to Talismans.Count - 1 do
+    begin
+      Tal := Talismans[i];
+      Level := Group.GetLevelForTalisman(Tal);
+      CreateUIElements;
+
 //      // Update progress
 //      Inc(CurrentTalisman);
 //      ProgressBar.Position := CurrentTalisman;
 //
 //      Application.ProcessMessages; // Ensure UI updates are processed
-//    end;
-//
-//    fPackTalBox.VertScrollBar.Position := 0;
-//    fPackTalBox.VertScrollBar.Range := Max(0, TotalHeight);
-//    fPackTalBox.Visible := True;
-//
+    end;
+
+    fPackTalBox.VertScrollBar.Position := 0;
+    fPackTalBox.VertScrollBar.Range := Max(0, TotalHeight);
+    fPackTalBox.Visible := True;
+
 //    // Close the progress dialog when finished
 //    ProgressDialog.Close;
 //  finally
 //    ProgressDialog.Free;
 //  end;
-//end;
+end;
 
 
 procedure TFLevelSelect.SetTalismanInfo;
