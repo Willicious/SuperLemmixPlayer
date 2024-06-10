@@ -1772,6 +1772,10 @@ begin
         // 55 frames' grace at the start of the level (before music starts) for the NoPause talisman
         if (Game.CurrentIteration > 55) then Game.PauseWasPressed := True;
 
+        // Cancel replay if pausing directly from Rewind in Classic Mode
+        if GameParams.ClassicMode and Game.RewindPressed then
+          Game.RegainControl(True);
+
         if Game.RewindPressed then Game.RewindPressed := False;
         if Game.TurboPressed then Game.TurboPressed := False;
 
