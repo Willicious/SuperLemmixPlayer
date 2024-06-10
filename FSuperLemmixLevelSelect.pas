@@ -75,10 +75,7 @@ type
     procedure LoadNodeLabels;
     procedure WriteToParams;
 
-//    function GetCompletedGroupString(G: TNeoLevelGroup): String;
-    function GetCompletedLevelString(G: TNeoLevelGroup
-    //; S: String
-    ): String;
+    function GetCompletedLevelString(G: TNeoLevelGroup): String;
     function GetPackResultsString(G: TNeoLevelGroup): String;
 
     procedure DisplayLevelInfo;
@@ -633,23 +630,7 @@ begin
     LoadCurrentLevelToPlayer;
 end;
 
-//function TFLevelSelect.GetCompletedGroupString(G: TNeoLevelGroup): String;
-//var
-//  i, CompletedCount: Integer;
-//begin
-//  Result := '';
-//  CompletedCount := 0;
-//
-//  for i := 0 to G.Children.Count-1 do
-//    if G.Children[i].Status = lst_Completed then
-//      Inc(CompletedCount);
-//
-//  Result := Result + IntToStr(CompletedCount) + ' of ' + IntToStr(G.Children.Count) + ' subgroups ';
-//end;
-
-function TFLevelSelect.GetCompletedLevelString(G: TNeoLevelGroup
-//; S: String
-): String;
+function TFLevelSelect.GetCompletedLevelString(G: TNeoLevelGroup): String;
 var
   i, j, CompletedCount: Integer;
   SubGroup: TNeoLevelGroup;
@@ -708,15 +689,8 @@ function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
 begin
   Result := '';
 
-//  if G.Children.Count > 0 then
-//    Result := GetCompletedGroupString(G);
-
   if G.LevelCount > 0 then
-    Result :=
-    //Result +
-    GetCompletedLevelString(G
-    //, S
-    );
+    Result := GetCompletedLevelString(G);
 
   if Result <> '' then
     Result := Result + 'completed';
