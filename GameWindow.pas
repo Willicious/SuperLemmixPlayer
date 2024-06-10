@@ -500,7 +500,7 @@ begin
   Result := False;
 
   if (GameParams.MinimapHighQuality
-    and not (Game.IsSuperLemmingMode or Game.RewindPressed or Game.TurboPressed
+    and not (Game.IsSuperLemmingMode or Game.RewindPressed or (GameSpeed = gspTurbo)
       or (fGameSpeed = gspFF)
         or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640))) then
   Result := True;
@@ -604,8 +604,8 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-      Fast, Slow, ForceOne, TimeForFrame, TimeForPausedRR,
-      TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
+  ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame,
+    TimeForScroll, Hyper, Pause, Rewind, Fast, Turbo, Slow: Boolean;
   MouseClickFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
@@ -638,12 +638,16 @@ begin
       Game.RegainControl(True);
   end;
 
-  Pause := (fGameSpeed = gspPause);
-  Fast := (fGameSpeed = gspFF);
-  Slow := (fGameSpeed = gspSlowMo);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   fForceUpdateOneFrame := (MouseClickFrameSkip > 0);
   CurrTime := TimeGetTime;
+
+  Pause := GameSpeed = gspPause;
+  Rewind := Game.RewindPressed;
+  Fast := GameSpeed = gspFF;
+  Turbo := GameSpeed = gspTurbo;
+  Slow := GameSpeed = gspSlowMo;
+
   if Slow then
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
   else
@@ -655,7 +659,7 @@ begin
   Hyper := IsHyperSpeed;
 
   // Rewind mode
-  if Game.RewindPressed then
+  if Rewind then
   begin
     SkillPanel.DrawButtonSelector(spbRewind, True);
 
@@ -670,7 +674,7 @@ begin
   end;
 
   // Turbo mode
-  if Game.TurboPressed then
+  if Turbo then
   begin
     SkillPanel.DrawTurboHighlight;
 
@@ -1446,7 +1450,7 @@ begin
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
    we do want the Rewind and Turbo keys to respond }
-  if IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
+  if IsHyperSpeed and not (Game.RewindPressed or (GameSpeed = gspTurbo)) then
     Exit;
 
   with Game do
@@ -1487,7 +1491,6 @@ begin
                      Game.RegainControl(True);
 
                    if Game.RewindPressed then Game.RewindPressed := False;
-                   if Game.TurboPressed then Game.TurboPressed := False;
 
                    if fGameSpeed = gspPause then
                    begin
@@ -1499,9 +1502,9 @@ begin
                      GameSpeed := gspPause;
                    end;
                  end;
-            lka_InfiniteSkills: begin
-                                  HandleInfiniteSkillsHotkey;
-                                end;
+      lka_InfiniteSkills: begin
+                            HandleInfiniteSkillsHotkey;
+                          end;
       lka_Nuke: begin
                   // Double keypress needed to prevent accidently nuking
                   CurrTime := TimeGetTime;
@@ -1549,26 +1552,25 @@ begin
       lka_Cheat: Game.Cheat;
       lka_Turbo: begin
                    if Game.IsSuperLemmingMode then Exit;
-                   if Game.RewindPressed then Game.RewindPressed := False;
-                   if Game.IsBackstepping then Game.IsBackstepping := False;
 
-                    case fGameSpeed of
-                      gspFF, gspSlowMo, gspPause: GameSpeed := gspNormal;
-                    end;
+                   Game.RewindPressed := False;
+                   Game.IsBackstepping := False;
 
-                    Game.TurboPressed := not Game.TurboPressed;
+                   if GameSpeed <> gspTurbo then
+                     GameSpeed := gspTurbo
+                   else
+                     GameSpeed := gspNormal;
                  end;
       lka_FastForward: begin
-                       if Game.IsSuperLemmingMode then Exit;
+                         if Game.IsSuperLemmingMode then Exit;
 
-                         if Game.RewindPressed then Game.RewindPressed := False;
-                         if Game.TurboPressed then Game.TurboPressed := False;
-                         if Game.IsBackstepping then Game.IsBackstepping := False;
+                         Game.RewindPressed := False;
+                         Game.IsBackstepping := False;
 
-                         case fGameSpeed of
-                           gspNormal, gspSlowMo, gspPause: GameSpeed := gspFF;
-                           gspFF: GameSpeed := gspNormal;
-                         end;
+                         if GameSpeed <> gspFF then
+                           GameSpeed := gspFF
+                         else
+                           GameSpeed := gspNormal;
                        end;
       lka_Rewind: begin
                     if Game.IsSuperLemmingMode then Exit;
@@ -1580,24 +1582,22 @@ begin
                     // Pressing Rewind fails the NoPause talisman (1 second grace at start of level)
                     if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
 
-                    case fGameSpeed of
-                      gspSlowMo, gspPause, gspFF: GameSpeed := gspNormal;
-                    end;
+                    // Reset game speed
+                    if GameSpeed <> gspNormal then GameSpeed := gspNormal;
 
-                    if Game.TurboPressed then Game.TurboPressed := False;
-
+                    // Set Rewind flag
                     Game.RewindPressed := not Game.RewindPressed;
                   end;
-      lka_SlowMotion: if not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
-                      begin
-                        if Game.RewindPressed then Game.RewindPressed := False;
-                        if Game.TurboPressed then Game.TurboPressed := False;
-                        if Game.IsBackstepping then Game.IsBackstepping := False;
+      lka_SlowMotion: begin
+                        if (GameParams.ClassicMode or Game.IsSuperLemmingMode) then Exit;
 
-                        case fGameSpeed of
-                          gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
-                          gspSlowMo: GameSpeed := gspNormal;
-                        end;
+                        Game.RewindPressed := False;
+                        Game.IsBackstepping := False;
+
+                        if GameSpeed <> gspSlowMo then
+                          GameSpeed := gspSlowMo
+                        else
+                          GameSpeed := gspNormal;
                       end;
       lka_SaveImage: SaveShot;
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;

@@ -1182,19 +1182,17 @@ end;
 procedure TBaseSkillPanel.DrawTurboHighlight;
 var
   BorderRect: TRect;
-  aButton: TSkillPanelButton;
 begin
-  aButton := spbFastForward;
-  BorderRect := fButtonRects[aButton];
+  BorderRect := fButtonRects[spbFastForward];
 
-  if Game.TurboPressed then
+  if (fGameWindow.GameSpeed = gspTurbo) then
   begin
     Inc(BorderRect.Right, ResMod);
     Inc(BorderRect.Bottom, ResMod * 2);
 
     DrawNineSlice(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect,
       Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fTurboHighlight);
-  end else if not (Game.TurboPressed or (fGameWindow.GameSpeed = gspFF)) then
+  end else if not (fGameWindow.GameSpeed in [gspFF, gspTurbo]) then
     RemoveHighlight(spbFastForward);
 end;
 
@@ -1714,7 +1712,7 @@ begin
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
     we do want the Rewind and Turbo keys to respond }
-  if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
+  if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or (fGameWindow.GameSpeed = gspTurbo)) then
     Exit;
 
   // Get pressed button
@@ -1777,7 +1775,6 @@ begin
           Game.RegainControl(True);
 
         if Game.RewindPressed then Game.RewindPressed := False;
-        if Game.TurboPressed then Game.TurboPressed := False;
 
         if fGameWindow.GameSpeed = gspPause then
         begin
@@ -1801,24 +1798,22 @@ begin
     spbFastForward:
       begin
         if Game.IsSuperLemmingMode then Exit;
-        if Game.RewindPressed then Game.RewindPressed := False;
-        if Game.IsBackstepping then Game.IsBackstepping := False;
+
+        Game.RewindPressed := False;
+        Game.IsBackstepping := False;
 
         if GameParams.TurboFF then
         begin
-          if ((fGameWindow.GameSpeed = gspFF) or Game.TurboPressed) then fGameWindow.GameSpeed := gspNormal;
-
-          Game.TurboPressed := not Game.TurboPressed;
-
-          Exit;
+          if (fGameWindow.GameSpeed = gspTurbo) then
+            fGameWindow.GameSpeed := gspNormal
+          else
+            fGameWindow.GameSpeed := gspTurbo;
+        end else begin
+          if (fGameWindow.GameSpeed = gspFF) then
+            fGameWindow.GameSpeed := gspNormal
+          else
+            fGameWindow.GameSpeed := gspFF;
         end;
-
-        if Game.TurboPressed then Game.TurboPressed := False;
-
-        if fGameWindow.GameSpeed = gspFF then
-          fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause] then
-          fGameWindow.GameSpeed := gspFF;
       end;
     spbRewind:
       begin
@@ -1831,11 +1826,11 @@ begin
         // Pressing Rewind fails the NoPause talisman  (1 second grace at start of level)
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
 
-        if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
+        // Reset game speed
+        if fGameWindow.GameSpeed <> gspNormal then
           fGameWindow.GameSpeed := gspNormal;
 
-        if Game.TurboPressed then Game.TurboPressed := False;
-
+        // Set Rewind flag
         Game.RewindPressed := not Game.RewindPressed;
       end;
     spbRestart:

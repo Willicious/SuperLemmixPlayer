@@ -209,22 +209,23 @@ type
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
     NextLemmingCountDown       : Integer;
-    fFastForward               : Boolean;
-    fIsSuperlemmingMode        : Boolean;
+
     fTargetIteration           : Integer; // This is used in hyperspeed
     fHyperSpeedCounter         : Integer; // No screenoutput
     fHyperSpeed                : Boolean; // We are at hyperspeed no targetbitmap output
     fLeavingHyperSpeed         : Boolean; // In between state (see UpdateLemmings)
     fPauseOnHyperSpeedExit     : Boolean; // To maintain pause state before invoking a savestate
+
+    fIsBackstepping            : Boolean; // Track any game action that causes backward movement
+    fRewindPressed             : Boolean; // Check specifically for Rewind input, since it can't be a TGameSpeed
+
+    fIsSuperlemmingMode        : Boolean;
+    fPauseWasPressed           : Boolean;
+    fReplayLoaded              : Boolean;
+
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
     fTargetLemmingID           : Integer; // For replay skill assignments
-
-    fIsBackstepping            : Boolean;
-    fRewindPressed             : Boolean;
-    fTurboPressed              : Boolean;
-    fPauseWasPressed           : Boolean;
-    fReplayLoaded              : Boolean;
 
   { events }
     fParticleFinishTimer       : Integer; // Extra frames to enable viewing of explosions
@@ -539,19 +540,21 @@ type
     property Replaying: Boolean read GetIsReplaying;
     property PauseWasPressed: Boolean read fPauseWasPressed write fPauseWasPressed;
     property ReplayLoaded: Boolean read fReplayLoaded write fReplayLoaded;
-    property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
-    property TurboPressed: Boolean read fTurboPressed write fTurboPressed;
-    property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
     property ReplayingNoRR[isPaused: Boolean]: Boolean read GetIsReplayingNoRR;
     property ReplayManager: TReplay read fReplayManager;
     property IsSelectWalkerHotkey: Boolean read fIsSelectWalkerHotkey write fIsSelectWalkerHotkey;
     property IsSelectUnassignedHotkey: Boolean read fIsSelectUnassignedHotkey write fIsSelectUnassignedHotkey;
     property IsShowAthleteInfo: Boolean read fIsShowAthleteInfo write fIsShowAthleteInfo;
     property IsHighlightHotkey: Boolean read fIsHighlightHotkey write fIsHighlightHotkey;
+
+    property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
+    property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
+
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
+    property IsSuperlemmingMode: Boolean read fIsSuperlemmingMode;
+
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property IsOutOfTime: Boolean read GetOutOfTime;
-    property IsSuperlemmingMode: Boolean read fIsSuperlemmingMode;
 
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
@@ -1325,9 +1328,7 @@ begin
 
   fIsSuperLemmingMode := Level.Info.SuperLemmingMode;
 
-  fFastForward := False;
   fRewindPressed := False;
-  fTurboPressed := False;
   fIsBackstepping := False;
   fPauseWasPressed := False;
   fReplayLoaded := False;

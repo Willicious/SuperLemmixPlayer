@@ -13,6 +13,7 @@ type
     gspNormal,
     gspPause,
     gspFF,
+    gspTurbo,
     gspSlowMo
   );
 
