@@ -102,8 +102,9 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
     procedure SetButtonRects;
     procedure SetSkillIcons;
-    procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
+
+    procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
     // Drawing routines for the info string at the top
@@ -159,15 +160,14 @@ type
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
     procedure SetGame(const Value: TLemmingGame);
 
-    procedure ResetMinimapPosition;
-
-    property Image: TImage32 read fImage;
-
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawTurboHighlight;
-    procedure DrawMinimap; virtual;
+    procedure RemoveButtonHighlights;
 
+    procedure ResetMinimapPosition;
+    property Image: TImage32 read fImage;
+    procedure DrawMinimap; virtual;
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
@@ -1197,6 +1197,13 @@ begin
     RemoveHighlight(spbFastForward);
 end;
 
+procedure TBaseSkillPanel.RemoveButtonHighlights;
+begin
+  RemoveHighlight(spbSlower);
+  RemoveHighlight(spbFaster);
+  RemoveHighlight(spbRestart);
+end;
+
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
 var
   BorderRect, EraseRect: TRect;
@@ -1874,10 +1881,7 @@ procedure TBaseSkillPanel.ImgMouseUp(Sender: TObject; Button: TMouseButton;
 begin
   Game.SetSelectedSkill(spbSlower, False);
   Game.SetSelectedSkill(spbFaster, False);
-  DrawButtonSelector(spbSlower, false);
-  DrawButtonSelector(spbFaster, false);
-  DrawButtonSelector(spbRestart, false);
-  fRRIsPressed := False;
+  RemoveButtonHighlights;
   RRIsPressed := False;
 end;
 

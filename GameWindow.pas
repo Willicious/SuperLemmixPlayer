@@ -1774,7 +1774,7 @@ begin
   end;
 
   CheckShifts(Shift);
-
+  SkillPanel.RemoveButtonHighlights;
   SkillPanel.RRIsPressed := False;
 end;
 
