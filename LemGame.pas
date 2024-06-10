@@ -217,8 +217,6 @@ type
     fPauseOnHyperSpeedExit     : Boolean; // To maintain pause state before invoking a savestate
 
     fIsBackstepping            : Boolean; // Track any game action that causes backward movement
-    fRewindPressed             : Boolean; // Check specifically for Rewind input, since it can't be a TGameSpeed
-
     fIsSuperlemmingMode        : Boolean;
     fPauseWasPressed           : Boolean;
     fReplayLoaded              : Boolean;
@@ -547,7 +545,6 @@ type
     property IsShowAthleteInfo: Boolean read fIsShowAthleteInfo write fIsShowAthleteInfo;
     property IsHighlightHotkey: Boolean read fIsHighlightHotkey write fIsHighlightHotkey;
 
-    property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
     property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
 
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
@@ -1328,7 +1325,6 @@ begin
 
   fIsSuperLemmingMode := Level.Info.SuperLemmingMode;
 
-  fRewindPressed := False;
   fIsBackstepping := False;
   fPauseWasPressed := False;
   fReplayLoaded := False;
@@ -7513,7 +7509,7 @@ begin
   case CurrentIteration of
     15:
       // Prevents double-triggering the sound when Rewinding to the start
-      if not (IsBackstepping or RewindPressed) then
+      if not IsBackstepping then
       begin
         if UseZombieSound then
           CueSoundEffect(SFX_ZOMBIE)

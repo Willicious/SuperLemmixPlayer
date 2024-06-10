@@ -498,7 +498,7 @@ begin
   Result := False;
 
   if (GameParams.MinimapHighQuality
-    and not (Game.IsSuperLemmingMode or Game.RewindPressed or (GameSpeed = gspTurbo)
+    and not (Game.IsSuperLemmingMode or (GameSpeed = gspRewind) or (GameSpeed = gspTurbo)
       or (fGameSpeed = gspFF)
         or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640))) then
   Result := True;
@@ -575,12 +575,12 @@ begin
   if Game.CurrentIteration <= 8 then
   begin
     RewindTimer.Enabled := False;
-    Game.RewindPressed := False;
     Game.IsBackstepping := False;
     GameSpeed := gspNormal; // Return speed to Normal at start of game
+    SkillPanel.DrawButtonSelector(spbRewind, False);
   end else begin
+    Game.IsBackstepping := True;
     GoToSaveState(Game.CurrentIteration - 3);
-    GameSpeed := gspPause; // Prevents forwards-motion during Rewind mode
   end;
 end;
 
@@ -641,15 +641,15 @@ begin
   CurrTime := TimeGetTime;
 
   Pause := GameSpeed = gspPause;
-  Rewind := Game.RewindPressed;
+  Rewind := GameSpeed = gspRewind;
   Fast := GameSpeed = gspFF;
   Turbo := GameSpeed = gspTurbo;
   Slow := GameSpeed = gspSlowMo;
 
   if Slow then
-    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
+    TimeForFrame := (not (Pause or Rewind)) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
   else
-    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // Don't check for frame advancing when paused
+    TimeForFrame := (not (Pause or Rewind)) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // Don't check for frame advancing when paused
 
   TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
@@ -716,7 +716,7 @@ begin
     end;
 
     // Check whether we have to move the lemmings
-    if (TimeForFrame and not Pause)
+    if (TimeForFrame and not (Pause or Rewind))
        or ForceOne
        or Hyper then
     begin
@@ -1076,7 +1076,7 @@ begin
 
   CanPlay := False;
 
-  if not Game.RewindPressed then
+  if not (GameSpeed = gspRewind) then
   begin
   if PauseAfterSkip < 0 then
   begin
@@ -1438,7 +1438,7 @@ begin
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
    we do want the Rewind and Turbo keys to respond }
-  if IsHyperSpeed and not (Game.RewindPressed or (GameSpeed = gspTurbo)) then
+  if IsHyperSpeed and not ((GameSpeed = gspRewind) or (GameSpeed = gspTurbo)) then
     Exit;
 
   with Game do
@@ -1476,15 +1476,14 @@ begin
                    if (Game.CurrentIteration > 55) then Game.PauseWasPressed := True;
 
                    // Cancel replay if pausing directly from Rewind in Classic Mode
-                   if GameParams.ClassicMode and Game.RewindPressed then
+                   if GameParams.ClassicMode and (GameSpeed = gspRewind) then
                      Game.RegainControl(True);
 
-                   if (GameSpeed = gspPause) and not Game.RewindPressed then
+                   if GameSpeed = gspPause then
                    begin
                      Game.IsBackstepping := False;
                      GameSpeed := gspNormal;
                    end else begin
-                     Game.RewindPressed := False;
                      Game.IsBackstepping := True;
                      GameSpeed := gspPause;
                    end;
@@ -1540,7 +1539,6 @@ begin
       lka_Turbo: begin
                    if Game.IsSuperLemmingMode then Exit;
 
-                   Game.RewindPressed := False;
                    Game.IsBackstepping := False;
 
                    if GameSpeed <> gspTurbo then
@@ -1551,7 +1549,6 @@ begin
       lka_FastForward: begin
                          if Game.IsSuperLemmingMode then Exit;
 
-                         Game.RewindPressed := False;
                          Game.IsBackstepping := False;
 
                          if GameSpeed <> gspFF then
@@ -1563,22 +1560,20 @@ begin
                     if Game.IsSuperLemmingMode then Exit;
 
                     // Cancel replay only when stopping Rewind in Classic Mode
-                    if Game.RewindPressed and GameParams.ClassicMode then
+                    if GameParams.ClassicMode and (GameSpeed = gspRewind) then
                       Game.RegainControl(True);
 
                     // Pressing Rewind fails the NoPause talisman (1 second grace at start of level)
                     if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
 
-                    // Reset game speed
-                    if GameSpeed <> gspNormal then GameSpeed := gspNormal;
-
-                    // Set Rewind flag
-                    Game.RewindPressed := not Game.RewindPressed;
+                    if GameSpeed <> gspRewind then
+                      GameSpeed := gspRewind
+                    else
+                      GameSpeed := gspNormal;
                   end;
       lka_SlowMotion: begin
                         if (GameParams.ClassicMode or Game.IsSuperLemmingMode) then Exit;
 
-                        Game.RewindPressed := False;
                         Game.IsBackstepping := False;
 
                         if GameSpeed <> gspSlowMo then
@@ -1675,7 +1670,7 @@ begin
 
     // Handle Pause, Rewind and FF button selectors
     SkillPanel.DrawButtonSelector(spbPause, GameSpeed = gspPause);
-    SkillPanel.DrawButtonSelector(spbRewind, Game.RewindPressed);
+    SkillPanel.DrawButtonSelector(spbRewind, GameSpeed = gspRewind);
     SkillPanel.DrawButtonSelector(spbFastForward, GameSpeed = gspFF);
   end;
 
@@ -1834,8 +1829,8 @@ begin
           Game.ProcessSkillAssignment;
 
       if (fGameSpeed = gspPause)
-      and not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
-        fForceUpdateOneFrame := True;
+        and not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
+          fForceUpdateOneFrame := True;
 
     end else if (Button = mbRight) and RightMouseUnassigned
     and not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
@@ -1888,7 +1883,6 @@ begin
         SetRedraw(rdRedraw);
     end;
   end;
-
 end;
 
 procedure TGameWindow.Img_MouseUp(Sender: TObject; Button: TMouseButton;

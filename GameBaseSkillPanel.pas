@@ -969,7 +969,7 @@ var
   //MagicFrequencyCalculatedByWillAndEric: Single;
 begin
   // Stops the sound cueing during backwards framesteps and rewind
-  if (Game.IsBackstepping or Game.RewindPressed)
+  if (Game.IsBackstepping or (fGameWindow.GameSpeed = gspRewind))
     // Unless the change is at the current frame
     and not (Game.ReplayManager.HasRRChangeAt(Game.CurrentIteration)) then Exit;
 
@@ -1658,7 +1658,7 @@ begin
   FrameIndex := (TickCount div 500) mod 2;
 
   IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
-  IsClassicModeRewind := (GameParams.ClassicMode and Game.RewindPressed);
+  IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
 
   if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
@@ -1723,8 +1723,8 @@ begin
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
     we do want the Rewind and Turbo keys to respond }
-  if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or (fGameWindow.GameSpeed = gspTurbo)) then
-    Exit;
+  if fGameWindow.IsHyperSpeed and not ((fGameWindow.GameSpeed = gspRewind)
+                                    or (fGameWindow.GameSpeed = gspTurbo)) then Exit;
 
   // Get pressed button
   aButton := spbNone;
@@ -1782,15 +1782,14 @@ begin
         if (Game.CurrentIteration > 55) then Game.PauseWasPressed := True;
 
         // Cancel replay if pausing directly from Rewind in Classic Mode
-        if GameParams.ClassicMode and Game.RewindPressed then
+        if GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind) then
           Game.RegainControl(True);
 
-        if (fGameWindow.GameSpeed = gspPause) and not Game.RewindPressed then
+        if (fGameWindow.GameSpeed = gspPause) then
         begin
           Game.IsBackstepping := False;
           fGameWindow.GameSpeed := gspNormal;
         end else begin
-          Game.RewindPressed := False;
           Game.IsBackstepping := True;
           fGameWindow.GameSpeed := gspPause;
         end;
@@ -1809,7 +1808,6 @@ begin
       begin
         if Game.IsSuperLemmingMode then Exit;
 
-        Game.RewindPressed := False;
         Game.IsBackstepping := False;
 
         if GameParams.TurboFF then
@@ -1830,18 +1828,16 @@ begin
         if Game.IsSuperLemmingMode then Exit;
 
         // Cancel replay only when stopping Rewind in Classic Mode
-        if Game.RewindPressed and GameParams.ClassicMode then
+        if (fGameWindow.GameSpeed = gspRewind) and GameParams.ClassicMode then
           Game.RegainControl(True);
 
         // Pressing Rewind fails the NoPause talisman  (1 second grace at start of level)
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
 
-        // Reset game speed
-        if fGameWindow.GameSpeed <> gspNormal then
+        if fGameWindow.GameSpeed <> gspRewind then
+          fGameWindow.GameSpeed := gspRewind
+        else
           fGameWindow.GameSpeed := gspNormal;
-
-        // Set Rewind flag
-        Game.RewindPressed := not Game.RewindPressed;
       end;
     spbRestart:
       begin
@@ -1868,7 +1864,7 @@ begin
 
   // Handle Pause, Rewind and FF button selectors
   DrawButtonSelector(spbPause, fGameWindow.GameSpeed = gspPause);
-  DrawButtonSelector(spbRewind, Game.RewindPressed);
+  DrawButtonSelector(spbRewind, fGameWindow.GameSpeed = gspRewind);
   DrawButtonSelector(spbFastForward, fGameWindow.GameSpeed = gspFF);
 end;
 
