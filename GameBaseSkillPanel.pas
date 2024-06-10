@@ -1144,6 +1144,7 @@ var
 begin
   if fGameWindow.IsHyperSpeed then Exit;
   if aButton = spbNone then Exit;
+
   if (aButton <= LAST_SKILL_BUTTON) then
   begin
     ButtonPos := Game.GetSelectedSkill + 1;
@@ -1152,13 +1153,15 @@ begin
     MagicFrequency := 6900 * (IntPower(1.0595, ButtonPos));
 
     if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
-    SoundManager.PlaySound(SFX_SKILLBUTTON, 0, MagicFrequency);
+      SoundManager.PlaySound(SFX_SKILLBUTTON, 0, MagicFrequency);
+
     if (fHighlitSkill = aButton) and Highlight then Exit;
     if (fHighlitSkill = spbNone) and not Highlight then Exit;
   end;
   if fButtonRects[aButton].Left <= 0 then Exit;
 
   RemoveHighlight(aButton);
+
   if Highlight then
     DrawHighlight(aButton);
 end;
@@ -1167,17 +1170,18 @@ procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
 var
   BorderRect: TRect;
 begin
-  if aButton <= LAST_SKILL_BUTTON then // No need to memorize this for eg. fast forward
+  if aButton <= LAST_SKILL_BUTTON then
   begin
     BorderRect := fButtonRects[aButton];
-    fHighlitSkill := aButton;
+    fHighlitSkill := aButton; // No need to memorize this for non-skill buttons
   end else
-  BorderRect := fButtonRects[aButton];
+    BorderRect := fButtonRects[aButton];
 
   Inc(BorderRect.Right, ResMod);
   Inc(BorderRect.Bottom, ResMod * 2);
 
-  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fSkillSelected);
+  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect,
+                Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fSkillSelected);
 end;
 
 procedure TBaseSkillPanel.DrawTurboHighlight;
@@ -1432,8 +1436,8 @@ begin
     // Highlight selected button
     if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
     begin
-      DrawButtonSelector(fHighlitSkill, false);
-      DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+      DrawButtonSelector(fHighlitSkill, False);
+      DrawButtonSelector(Game.RenderInterface.SelectedSkill, True);
     end;
 
     // Skill numbers
@@ -1447,7 +1451,6 @@ begin
     end;
 
     DrawButtonSelector(spbNuke, (Game.NukeIsActive or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
-
   finally
     Image.EndUpdate;
   end;
@@ -1751,7 +1754,7 @@ begin
       begin
         Game.IsBackstepping := False; // Ensures RR sound will be cued
         RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
-        DrawButtonSelector(spbSlower, true);
+        DrawButtonSelector(spbSlower, True);
 
         // Deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1764,7 +1767,7 @@ begin
       begin
         Game.IsBackstepping := False; // Ensures RR sound will be cued
         RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
-        DrawButtonSelector(spbFaster, true);
+        DrawButtonSelector(spbFaster, True);
 
         // Deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1842,7 +1845,7 @@ begin
       end;
     spbRestart:
       begin
-        DrawButtonSelector(spbRestart, true);
+        DrawButtonSelector(spbRestart, True);
         fGameWindow.GotoSaveState(0);
 
         // Always reset these if user restarts
@@ -1862,6 +1865,11 @@ begin
   else // Usual skill buttons
     Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
   end;
+
+  // Handle Pause, Rewind and FF button selectors
+  DrawButtonSelector(spbPause, fGameWindow.GameSpeed = gspPause);
+  DrawButtonSelector(spbRewind, Game.RewindPressed);
+  DrawButtonSelector(spbFastForward, fGameWindow.GameSpeed = gspFF);
 end;
 
 procedure TBaseSkillPanel.ImgMouseMove(Sender: TObject;

@@ -226,8 +226,6 @@ uses FBaseDosForm, FEditReplay, LemReplay, LemNeoLevelPack;
 procedure TGameWindow.SetGameSpeed(aValue: TGameSpeed);
 begin
   fGameSpeed := aValue;
-  SkillPanel.DrawButtonSelector(spbPause, fGameSpeed = gspPause);
-  SkillPanel.DrawButtonSelector(spbFastForward, fGameSpeed = gspFF);
 end;
 
 function TGameWindow.GetGameSpeed: TGameSpeed;
@@ -661,40 +659,30 @@ begin
   // Rewind mode
   if Rewind then
   begin
-    SkillPanel.DrawButtonSelector(spbRewind, True);
-
     // Ensures that rendering has caught up before the next backwards skip is performed
     if IsHyperSpeed then
       RewindTimer.Enabled := False
     else
       RewindTimer.Enabled := True;
-  end else begin
-    SkillPanel.DrawButtonSelector(spbRewind, False);
+  end else
     RewindTimer.Enabled := False;
-  end;
 
   // Turbo mode
   if Turbo then
   begin
+    TurboTimer.Enabled := True;
     SkillPanel.DrawTurboHighlight;
-
-    if not TurboTimer.Enabled then
-      TurboTimer.Enabled := True;
-
-  end else
-  begin
+  end else begin
+    TurboTimer.Enabled := False;
     SkillPanel.DrawTurboHighlight;
-
-    if TurboTimer.Enabled then
-      TurboTimer.Enabled := False;
   end;
 
   // Superlemming mode
   if Game.IsSuperLemmingMode then
   begin
     TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeSuper);
-    SkillPanel.DrawButtonSelector(spbRewind, true);
-    SkillPanel.DrawButtonSelector(spbFastForward, true);
+    SkillPanel.DrawButtonSelector(spbRewind, True);
+    SkillPanel.DrawButtonSelector(spbFastForward, True);
   end;
 
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
@@ -1602,6 +1590,7 @@ begin
       lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: begin
+                     SkillPanel.DrawButtonSelector(spbRestart, True);
                      GotoSaveState(0);
 
                      // Always reset these if user restarts
@@ -1682,8 +1671,13 @@ begin
                       fHoldScrollData.StartCursor := Mouse.CursorPos;
                     end;
                   end;
-      end;
     end;
+
+    // Handle Pause, Rewind and FF button selectors
+    SkillPanel.DrawButtonSelector(spbPause, GameSpeed = gspPause);
+    SkillPanel.DrawButtonSelector(spbRewind, Game.RewindPressed);
+    SkillPanel.DrawButtonSelector(spbFastForward, GameSpeed = gspFF);
+  end;
 
   CheckShifts(Shift);
 
