@@ -63,6 +63,7 @@ type
     gbReplayOptions: TGroupBox;
     gbSkillPanelOptions: TGroupBox;
     cbShowButtonHints: TCheckBox;
+    cbAmigaTheme: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -294,6 +295,8 @@ begin
     cbPostviewJingles.Checked := GameParams.PostviewJingles;
     cbMenuSounds.Checked := GameParams.MenuSounds;
 
+    cbAmigaTheme.Checked := GameParams.AmigaTheme;
+
     btnApply.Enabled := false;
   finally
     fIsSetting := false;
@@ -360,6 +363,8 @@ begin
 
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
   GameParams.MenuSounds := cbMenuSounds.Checked;
+
+  GameParams.AmigaTheme := cbAmigaTheme.Checked;
 
   btnApply.Enabled := false;
 end;

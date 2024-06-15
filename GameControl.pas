@@ -96,6 +96,7 @@ type
     moFileCaching,
     moPostviewJingles,
     moMenuSounds,
+    moAmigaTheme,
     moDisableMusicInTestplay,
     moPreferYippee
   );
@@ -277,6 +278,7 @@ type
     property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
     property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
     property MenuSounds: Boolean Index moMenuSounds read GetOptionFlag write SetOptionFlag;
+    property AmigaTheme: Boolean Index moAmigaTheme read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
     property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
@@ -507,6 +509,7 @@ begin
     SaveBoolean('PreferYippee', PreferYippee);
     SaveBoolean('PostviewJingles', PostviewJingles);
     SaveBoolean('MenuSounds', MenuSounds);
+    SaveBoolean('AmigaTheme', AmigaTheme);
 
     SL.Add('');
     SL.Add('# Playback Options');
@@ -698,6 +701,7 @@ begin
 
     PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
     MenuSounds := LoadBoolean('MenuSounds', MenuSounds);
+    AmigaTheme := LoadBoolean('AmigaTheme', AmigaTheme);
 
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
