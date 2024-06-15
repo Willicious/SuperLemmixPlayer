@@ -433,14 +433,22 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if GameParams.PostviewJingles then
+    if GameParams.PostviewJingles or GameParams.AmigaTheme then
     begin
       SoundManager.PurgePackSounds;
 
       if gRescued >= Level.Info.RescueCount then
-        SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
-      else
-        SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
+      begin
+        if GameParams.AmigaTheme then
+          SoundManager.PlaySound(SFX_AMIGA_1)
+        else
+          SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
+      end else begin
+        if GameParams.AmigaTheme then
+          SoundManager.PlaySound(SFX_AMIGA_2)
+        else
+          SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
+      end;
     end;
   end;
 

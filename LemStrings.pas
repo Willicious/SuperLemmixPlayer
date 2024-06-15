@@ -48,6 +48,8 @@ const
   SFTemp = 'temp\';
 
   // Sound effect files
+  SFX_AMIGA_1 = 'amigadisk1';
+  SFX_AMIGA_2 = 'amigadisk2';
   SFX_BUILDER_WARNING = 'ting';
   SFX_ASSIGN_SKILL = 'mousepre';
   SFX_ASSIGN_FAIL = 'assignfail';

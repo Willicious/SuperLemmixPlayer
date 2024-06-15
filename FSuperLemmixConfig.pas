@@ -223,7 +223,10 @@ end;
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
 begin
   SaveToParams;
+
   if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
+  if GameParams.AmigaTheme then SoundManager.PlaySound(SFX_AMIGA_1);
+
   ModalResult := mrOK;
 end;
 
