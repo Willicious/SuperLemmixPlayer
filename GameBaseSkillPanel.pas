@@ -1861,11 +1861,6 @@ begin
   else // Usual skill buttons
     Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
   end;
-
-  // Handle Pause, Rewind and FF button selectors
-  DrawButtonSelector(spbPause, fGameWindow.GameSpeed = gspPause);
-  DrawButtonSelector(spbRewind, fGameWindow.GameSpeed = gspRewind);
-  DrawButtonSelector(spbFastForward, fGameWindow.GameSpeed = gspFF);
 end;
 
 procedure TBaseSkillPanel.ImgMouseMove(Sender: TObject;

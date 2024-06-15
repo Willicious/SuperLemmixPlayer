@@ -226,6 +226,11 @@ uses FBaseDosForm, FEditReplay, LemReplay, LemNeoLevelPack;
 procedure TGameWindow.SetGameSpeed(aValue: TGameSpeed);
 begin
   fGameSpeed := aValue;
+
+  // Handle Pause, Rewind and FF button selectors
+  SkillPanel.DrawButtonSelector(spbPause, GameSpeed = gspPause);
+  SkillPanel.DrawButtonSelector(spbRewind, GameSpeed = gspRewind);
+  SkillPanel.DrawButtonSelector(spbFastForward, GameSpeed = gspFF);
 end;
 
 function TGameWindow.GetGameSpeed: TGameSpeed;
@@ -1667,11 +1672,6 @@ begin
                     end;
                   end;
     end;
-
-    // Handle Pause, Rewind and FF button selectors
-    SkillPanel.DrawButtonSelector(spbPause, GameSpeed = gspPause);
-    SkillPanel.DrawButtonSelector(spbRewind, GameSpeed = gspRewind);
-    SkillPanel.DrawButtonSelector(spbFastForward, GameSpeed = gspFF);
   end;
 
   CheckShifts(Shift);
