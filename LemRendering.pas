@@ -2328,8 +2328,8 @@ procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M:
 begin
   if (F and $FF000000) <> 0 then
   begin
-    if (F and $FFFFFF) = $F0D0D0 then
-      F := $FF808080;
+    if (F and $FFFFFF) = $FFDDDD then
+      F := $FF888888;
 
     if (F and $FF000000) = $FF000000 then
       B := F
@@ -2351,9 +2351,9 @@ begin
     // 1 = blue, 2 = green, 5 = red
 
     case (F and $FFFFFF) of
-      $00B000: F := $FF686868;
-      $4040E0: F := $FF525252;
-      $F02020: F := $FF5E5E5E;
+      $00BB00: F := $FF686868;
+      $4444EE: F := $FF525252;
+      $FF2222: F := $FF5E5E5E;
     end;
 
     if (F and $FF000000) = $FF000000 then
@@ -2371,9 +2371,9 @@ end;
 //    // 1 = blue, 2 = green, 5 = red
 //
 //    case (F and $FFFFFF) of
-//      $00B000: F := $FF686868;
-//      $4040E0: F := $FF525252;
-//      $F02020: F := $FF5E5E5E;
+//      $00BB00: F := $FF686868;
+//      $4444EE: F := $FF525252;
+//      $FF2222: F := $FF5E5E5E;
 //    end;
 //
 //    if (F and $FF000000) = $FF000000 then

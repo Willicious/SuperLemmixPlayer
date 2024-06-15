@@ -14,8 +14,8 @@ uses
 
 const
   PARTICLE_FRAMECOUNT = 51;
-  PARTICLE_COLORS: array[0..7] of TColor32 = ($FF4040E0, $FF00B000, $FFF0D0D0, $FFF02020,
-                                              $C04040E0, $C000B000, $C0F0D0D0, $C0F02020);
+  PARTICLE_COLORS: array[0..7] of TColor32 = ($FF4444EE, $FF00BB00, $FFFFDDDD, $FFFF2222,
+                                              $C04444EE, $C000BB00, $C0FFDDDD, $C0FF2222);
   PARTICLE_FREEZER_COLORS: array[0..4] of TColor32
                                            // $80 is 50% transparency, $FF is 100%
                                            = ($803D638E, $801562E0, $805C90F6,

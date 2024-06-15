@@ -343,7 +343,7 @@ begin
 
   Assert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
 
-  fRectColor := $FFF0D0D0;
+  fRectColor := $FFFFDDDD;
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
 
@@ -586,7 +586,7 @@ end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
 const
-  PANEL_FALLBACK_BRICK_COLOR = $FF00B000;
+  PANEL_FALLBACK_BRICK_COLOR = $FF00BB00;
 var
   BrickColor: TColor32;
   Button: TSkillPanelButton;
