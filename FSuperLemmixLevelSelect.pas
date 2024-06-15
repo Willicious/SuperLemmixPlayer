@@ -326,6 +326,7 @@ begin
   fIconBMP := TBitmap32.Create;
   LoadIcons;
   fIconBMP.DrawMode := dmBlend;
+  fIconBMP.CombineMode := cmMerge;
 
   fInfoForm := TLevelInfoPanel.Create(self, fIconBMP);
   fInfoForm.Parent := self;
