@@ -828,13 +828,19 @@ var
   aX, aY: Integer;
   BgImage, Dst: TBitmap32;
   SrcRect: TRect;
+  WallpaperPath: String;
 begin
   Dst := ScreenImg.Bitmap;
   BgImage := TBitmap32.Create;
 
+  if GameParams.AmigaTheme then
+    WallpaperPath := 'amiga/wallpaper'
+  else
+    WallpaperPath := 'wallpaper';
+
   try
-    if not GetGraphic('wallpaper' + '_' + GetWallpaperSuffix + '.png', BgImage, true) then
-      GetGraphic('wallpaper.png', BgImage, true);
+    if not GetGraphic(WallpaperPath + '_' + GetWallpaperSuffix + '.png', BgImage, true) then
+      GetGraphic(WallpaperPath + '.png', BgImage, true);
 
     if (BgImage.Width = 0) or (BgImage.Height = 0) then
     begin
