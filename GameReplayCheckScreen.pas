@@ -531,6 +531,8 @@ procedure TGameReplayCheckScreen.BuildScreen;
 begin
   ScreenImg.BeginUpdate;
   try
+    CurrentScreen := gstReplayTest;
+
     DrawWallpaper;
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);
 

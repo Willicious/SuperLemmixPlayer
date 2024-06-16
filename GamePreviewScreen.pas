@@ -322,6 +322,7 @@ var
 const
   TEXT_Y_POSITION = 170;
 begin
+  CurrentScreen := gstPreview;
   SetWindowCaption;
 
   fClickableRegions.Clear;

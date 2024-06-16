@@ -257,11 +257,10 @@ end;
 procedure TGameMenuScreen.BuildScreen;
 begin
   inherited;
+  CurrentScreen := gstMenu;
 
   CleanUpIngameStuff;
-
   LoadLayoutData;
-
   UpdateGroupSign(false);
 
   DrawLogo;

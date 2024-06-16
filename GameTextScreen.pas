@@ -47,6 +47,7 @@ var
 begin
   ScreenImg.BeginUpdate;
   try
+    CurrentScreen := gstText;
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
@@ -229,7 +230,7 @@ end;
 
 constructor TGameTextScreen.Create(aOwner: TComponent);
 begin
-  fPreviewText := (GameParams.NextScreen = gstPlay);
+  fPreviewText := (CurrentScreen = gstPreview); // Bookmark - could the CurrentScreen property also help to fix the Preview-Text-Playback-Mode bug?
   inherited Create(aOwner);
 end;
 

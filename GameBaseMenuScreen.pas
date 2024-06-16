@@ -100,7 +100,8 @@ type
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
     private
-      fMenuFont          : TMenuFont;
+      fCurrentScreen    : TGameScreenType;
+      fMenuFont         : TMenuFont;
       fKeyStates: TDictionary<Word, UInt64>;
 
       fBasicCursor: TNLCursor;
@@ -168,6 +169,8 @@ type
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
+
+      property CurrentScreen: TGameScreenType read fCurrentScreen write fCurrentScreen;
 
       procedure MainFormResized; override;
       procedure DrawClassicModeButton;
@@ -1001,7 +1004,6 @@ begin
       ResetWindowSize := ConfigDlg.ResetWindowSize;
       ResetWindowPos := ConfigDlg.ResetWindowPosition;
     end;
-
   finally
     ConfigDlg.Free;
   end;
@@ -1040,13 +1042,16 @@ begin
 
   if (GameParams.FullScreen <> OldFullScreen)
     or (GameParams.ShowMinimap <> OldShowMinimap) then
-  begin
-    InitializeImage;
-    BuildScreen;
-  end;
+      CloseScreen(CurrentScreen);
 
-  if GameParams.HighResolution <> OldHighResolution then
+  if (GameParams.HighResolution <> OldHighResolution) then
+  begin
+    // Reload the preview screen again to ensure the level gets redrawn correctly
+    if (CurrentScreen = gstPreview) then
+      CloseScreen(CurrentScreen);
+
     PieceManager.Clear;
+  end;
 
   if GameParams.LinearResampleMenu then
   begin

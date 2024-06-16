@@ -260,8 +260,10 @@ var
 const
   TEXT_Y_POSITION = 28;
 begin
+  CurrentScreen := gstPostview;
   fClickableRegions.Clear;
   ScreenImg.BeginUpdate;
+
   try
     // Draw text
     Lines := GetPostviewText;
