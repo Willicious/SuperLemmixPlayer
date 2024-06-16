@@ -27,7 +27,7 @@ type
 
     fSetInitialZoom       : Boolean;
 
-    fRectColor            : TColor32;
+    fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
     fOnMinimapClick       : TMinimapClickEvent; // Event handler for minimap
 
@@ -343,7 +343,11 @@ begin
 
   Assert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
 
-  fRectColor := $FFFFDDDD;
+  if GameParams.AmigaTheme then
+    fMinimapViewRectColor := $FF00DD00
+  else
+    fMinimapViewRectColor := $FF4444DD;
+
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
 
@@ -1099,7 +1103,7 @@ if GameParams.ShowMinimap then
     // Draw the visible area frame
     ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
     OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
-    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+    fMinimapTemp.FrameRectS(ViewRect, fMinimapViewRectColor);
 
     if GameParams.HighResolution then
     begin
@@ -1108,7 +1112,7 @@ if GameParams.ShowMinimap then
       Inc(InnerViewRect.Top);
       Dec(InnerViewRect.Bottom);
       Dec(InnerViewRect.Right);
-      fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
+      fMinimapTemp.FrameRectS(InnerViewRect, fMinimapViewRectColor);
     end;
 
     fMinimapImage.Bitmap.Assign(fMinimapTemp);

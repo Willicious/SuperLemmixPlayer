@@ -304,9 +304,10 @@ begin
 if GameParams.ShowMinimap then
   begin
   if (F and PM_SOLID) <> 0 then
-    // if AmigaTheme then B := $FF008800 // Bookmark - when applying Amiga theme, default all minimaps to this color
-    // else
-    B := fTheme.Colors[MINIMAP_COLOR] or $FF000000;
+    if GameParams.AmigaTheme then
+      B := $FF008800
+    else                                // Ensures full opacity
+      B := fTheme.Colors[MINIMAP_COLOR] or $FF000000;
   end;
 end;
 
