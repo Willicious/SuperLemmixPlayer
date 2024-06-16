@@ -1934,16 +1934,19 @@ begin
       SL.DelimitedText := CURSOR_NAMES[i];
 
       if GameParams.HighResolution then
-        CursorDir := 'cursor-hr'
+        CursorDir := 'cursor-hr/'
       else
-        CursorDir := 'cursor';
+        CursorDir := 'cursor/';
 
-      TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + '/' + SL[0] + '.png', TempBMP);
+      if GameParams.AmigaTheme then
+        CursorDir := CursorDir + 'amiga/';
+
+      TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + SL[0] + '.png', TempBMP);
 
       while SL.Count > 1 do
       begin
         SL.Delete(0);
-        TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + '/' + SL[0] + '.png', TempBMP2);
+        TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + SL[0] + '.png', TempBMP2);
         TempBMP2.DrawMode := dmBlend;
         TempBMP2.CombineMode := cmMerge;
         TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
