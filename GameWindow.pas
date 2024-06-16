@@ -54,6 +54,9 @@ const
 
   SPECIAL_SKIP_MAX_DURATION = 17 * 60 * 2; // 2 minutes should be plenty.
 
+  MAX_WIDTH_FOR_HQMAP = 1600;
+  MAX_HEIGHT_FOR_HQMAP = 640;
+
 type
   TGameWindow = class(TGameBaseScreen, IGameWindow)
   private
@@ -201,7 +204,7 @@ type
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
     property ProjectionType: Integer read fProjectionType write SetProjectionType;
     function DoSuspendCursor: Boolean;
-    function DisplayHQMinimap: Boolean;
+    function ShouldDisplayHQMinimap: Boolean;
 
     procedure DoRewind(Sender: TObject);
     procedure DoTurbo(Sender: TObject);
@@ -498,14 +501,17 @@ begin
   Result := fClearPhysics;
 end;
 
-function TGameWindow.DisplayHQMinimap: Boolean;
+function TGameWindow.ShouldDisplayHQMinimap: Boolean;
 begin
   Result := False;
 
-  if (GameParams.MinimapHighQuality
-    and not (Game.IsSuperLemmingMode or (GameSpeed = gspRewind) or (GameSpeed = gspTurbo)
-      or (fGameSpeed = gspFF)
-        or (Game.Level.Info.Width > 1600) or (Game.Level.Info.Height > 640))) then
+  if not GameParams.MinimapHighQuality then Exit;
+  if GameParams.AmigaTheme then Exit;
+  if Game.IsSuperLemmingMode then Exit;
+  if GameSpeed in [gspRewind, gspTurbo, gspFF] then Exit;
+  if Game.Level.Info.Width > MAX_WIDTH_FOR_HQMAP then Exit;
+  if Game.Level.Info.Height > MAX_HEIGHT_FOR_HQMAP then Exit;
+
   Result := True;
 end;
 
@@ -513,7 +519,7 @@ procedure TGameWindow.RenderMinimap;
 begin
   if GameParams.ShowMinimap then
   begin
-    if DisplayHQMinimap then
+    if ShouldDisplayHQMinimap then
     begin
       fMinimapBuffer.Clear(0);
       Img.Bitmap.DrawTo(fMinimapBuffer);
@@ -713,7 +719,7 @@ begin
       PrevScrollTime := CurrTime;
       if CheckScroll then
       begin
-        if DisplayHQMinimap then
+        if ShouldDisplayHQMinimap then
           SetRedraw(rdRefresh)
         else
           SetRedraw(rdRedraw);
@@ -1014,7 +1020,7 @@ begin
       fRenderer.DrawLemmings(fClearPhysics);
       fRenderer.DrawProjectiles;
 
-      if DisplayHQMinimap or (GameSpeed = gspPause) then
+      if ShouldDisplayHQMinimap or (GameSpeed = gspPause) then
         DrawRect := Img.Bitmap.BoundsRect
       else begin
         DrawWidth := (ClientWidth div fInternalZoom) + 2; // Padding pixel on each side
