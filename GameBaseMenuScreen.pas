@@ -214,7 +214,7 @@ begin
   fMenuFont.Load;
 
   fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
-  LoadBasicCursor('amiga.png');
+  LoadBasicCursor('menu.png');
   SetBasicCursor;
 
   InitializeImage;

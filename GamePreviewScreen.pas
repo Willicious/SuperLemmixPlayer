@@ -425,7 +425,7 @@ end;
 procedure TGamePreviewScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor('amiga.png');
+  ReloadCursor('menu.png');
 end;
 
 function TGamePreviewScreen.GetWallpaperSuffix: String;
