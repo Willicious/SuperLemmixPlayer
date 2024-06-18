@@ -446,10 +446,7 @@ var
   procedure GetHiResFileExtension;
   begin
     if GameParams.HighResolution then
-    begin
       SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
-      SrcFileHrMask := ChangeFileExt(SrcFile, '_mask-hr.png');
-    end;
   end;
 begin
   // Check styles folder first
@@ -477,23 +474,15 @@ begin
     SrcFile := AppPath + SFGraphicsPanel + aName;
 
     if GameParams.HighResolution then
-    begin
       SrcFileHr := AppPath + SFGraphicsPanelHighRes + aName;
-      SrcFileHrMask := AppPath + SFGraphicsPanelHighRes + ChangeFileExt(aName, '_mask.png');
-    end;
   end;
-
-  MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
   if GameParams.HighResolution then
   begin
     if FileExists(SrcFileHr) then
-    begin
-      TPngInterface.LoadPngFile(SrcFileHr, aDst);
-      TPngInterface.MaskImageFromFile(aDst, SrcFileHrMask, MaskColor);
-    end else begin
+      TPngInterface.LoadPngFile(SrcFileHr, aDst)
+    else begin
       TPngInterface.LoadPngFile(SrcFile, aDst);
-      TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
 
       UpscaleSettings.Mode := umPixelArt;
       UpscaleSettings.LeftSide := uebTransparent;
@@ -503,10 +492,8 @@ begin
 
       Upscale(aDst, UpscaleSettings);
     end;
-  end else begin
+  end else
     TPngInterface.LoadPngFile(SrcFile, aDst);
-    TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
-  end;
 end;
 
 // Pave the area of NumButtons buttons with the blank panel
