@@ -15,6 +15,7 @@ type
     lblLevelName: TLabel;
     btnDelete: TButton;
     lblFrame: TLabel;
+    btnGoToReplayEvent: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -22,17 +23,26 @@ type
     procedure btnDeleteClick(Sender: TObject);
     procedure lbReplayActionsDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
-  private
+    procedure lbReplayActionsKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btnGoToReplayEventClick(Sender: TObject);
+    procedure lbReplayActionsDblClick(Sender: TObject);
+private
     fSavedReplay: TMemoryStream;
     fReplay: TReplay;
     fEarliestChange: Integer;
     fCurrentIteration: Integer;
+    fTargetFrame: Integer;
 
     procedure ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = false);
     procedure NoteChangeAtFrame(aFrame: Integer);
+    procedure DeleteSelectedReplayEvent;
+    procedure GoToSelectedReplayEvent;
   public
     procedure SetReplay(aReplay: TReplay; aIteration: Integer = -1);
     property EarliestChange: Integer read fEarliestChange;
+    property CurrentIteration: Integer read fCurrentIteration write fCurrentIteration;
+    property TargetFrame: Integer read fTargetFrame write fTargetFrame;
   end;
 
 var
@@ -186,10 +196,7 @@ procedure TFReplayEditor.FormCreate(Sender: TObject);
 begin
   fSavedReplay := TMemoryStream.Create;
   fEarliestChange := -1;
-
-  // Temporary stuff
-  lbReplayActions.Height := lbReplayActions.Height + 96;
-  btnDelete.Top := btnDelete.Top + 96;
+  fTargetFrame := -1;
 end;
 
 procedure TFReplayEditor.FormDestroy(Sender: TObject);
@@ -207,6 +214,11 @@ procedure TFReplayEditor.lbReplayActionsClick(Sender: TObject);
 begin
   btnDelete.Enabled := (lbReplayActions.ItemIndex <> -1) and
                        (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] <> nil);
+end;
+
+procedure TFReplayEditor.lbReplayActionsDblClick(Sender: TObject);
+begin
+  GoToSelectedReplayEvent;
 end;
 
 procedure TFReplayEditor.lbReplayActionsDrawItem(Control: TWinControl;
@@ -238,7 +250,38 @@ begin
   end;
 end;
 
+procedure TFReplayEditor.lbReplayActionsKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  case Key of
+    VK_RETURN, VK_SPACE: GoToSelectedReplayEvent;
+    VK_DELETE: DeleteSelectedReplayEvent;
+  end;
+end;
+
 procedure TFReplayEditor.btnDeleteClick(Sender: TObject);
+begin
+  DeleteSelectedReplayEvent;
+end;
+
+procedure TFReplayEditor.btnGoToReplayEventClick(Sender: TObject);
+begin
+  GoToSelectedReplayEvent;
+end;
+
+procedure TFReplayEditor.GoToSelectedReplayEvent;
+var
+  I: TBaseReplayItem;
+begin
+  if lbReplayActions.ItemIndex = -1 then Exit;
+  I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+  if I = nil then Exit;
+
+  TargetFrame := I.Frame;
+  ModalResult := mrRetry;
+end;
+
+procedure TFReplayEditor.DeleteSelectedReplayEvent;
 var
   I: TBaseReplayItem;
   ApplyRRDelete: Boolean;

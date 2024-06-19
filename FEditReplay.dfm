@@ -52,7 +52,7 @@ object FReplayEditor: TFReplayEditor
     Height = 25
     Caption = 'OK'
     ModalResult = 1
-    TabOrder = 0
+    TabOrder = 2
   end
   object btnCancel: TButton
     Left = 113
@@ -67,23 +67,34 @@ object FReplayEditor: TFReplayEditor
   end
   object lbReplayActions: TListBox
     Left = 8
-    Top = 48
+    Top = 43
     Width = 209
-    Height = 209
+    Height = 289
     Style = lbOwnerDrawVariable
     ItemHeight = 13
-    TabOrder = 2
+    TabOrder = 0
     OnClick = lbReplayActionsClick
+    OnDblClick = lbReplayActionsDblClick
     OnDrawItem = lbReplayActionsDrawItem
+    OnKeyDown = lbReplayActionsKeyDown
   end
   object btnDelete: TButton
     Left = 72
-    Top = 260
+    Top = 338
     Width = 83
     Height = 25
     Caption = 'Delete'
     Enabled = False
     TabOrder = 3
     OnClick = btnDeleteClick
+  end
+  object btnGoToReplayEvent: TButton
+    Left = 48
+    Top = 369
+    Width = 129
+    Height = 25
+    Caption = 'Go To Replay Event'
+    TabOrder = 4
+    OnClick = btnGoToReplayEventClick
   end
 end

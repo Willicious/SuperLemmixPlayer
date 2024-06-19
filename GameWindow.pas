@@ -537,19 +537,31 @@ procedure TGameWindow.ExecuteReplayEdit;
 var
   F: TFReplayEditor;
   OldClearReplay: Boolean;
+  ModalResult: Integer;
 begin
   F := TFReplayEditor.Create(self);
   SuspendGameplay;
+
   try
     F.SetReplay(Game.ReplayManager, Game.CurrentIteration);
 
-    if (F.ShowModal = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
-    begin
-      OldClearReplay := not GameParams.AutoReplayMode;
-      fSaveList.ClearAfterIteration(0);
-      GotoSaveState(Game.CurrentIteration);
-      GameParams.AutoReplayMode := not OldClearReplay;
-    end;
+    repeat
+      ModalResult := F.ShowModal;
+
+      if (ModalResult = mrRetry) and (F.TargetFrame <> -1) then
+        GoToSaveState(F.TargetFrame)
+      else if (ModalResult = mrCancel) and (F.TargetFrame <> -1) then
+        GoToSaveState(F.CurrentIteration);
+
+      if (ModalResult = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
+      begin
+        OldClearReplay := not GameParams.AutoReplayMode;
+        fSaveList.ClearAfterIteration(0);
+        GotoSaveState(Game.CurrentIteration);
+        GameParams.AutoReplayMode := not OldClearReplay;
+      end;
+
+    until ModalResult <> mrRetry;
   finally
     F.Free;
     ResumeGameplay;
