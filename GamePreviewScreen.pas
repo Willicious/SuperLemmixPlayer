@@ -426,7 +426,7 @@ end;
 procedure TGamePreviewScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor('menu.png');
+  ReloadCursor('menu');
 end;
 
 function TGamePreviewScreen.GetWallpaperSuffix: String;

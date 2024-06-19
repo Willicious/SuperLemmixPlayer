@@ -217,7 +217,7 @@ begin
   fMenuFont.Load;
 
   fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
-  LoadBasicCursor('menu.png');
+  LoadBasicCursor('menu');
   SetBasicCursor;
 
   InitializeImage;
@@ -251,9 +251,11 @@ begin
   BMP := TBitmap32.Create;
   try
     if GameParams.HighResolution then
-      aPath := AppPath + SFGraphicsCursorHighRes + aName
+      aName := aName + '-hr.png'
     else
-      aPath := AppPath + SFGraphicsCursor + aName;
+      aName := aName + '.png';
+
+    aPath := AppPath + SFGraphicsCursor + aName;
 
     TPngInterface.LoadPngFile(aPath, BMP);
     fBasicCursor.LoadFromBitmap(BMP);

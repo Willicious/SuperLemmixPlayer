@@ -299,7 +299,7 @@ begin
     MakeHiddenOption(VK_F2, ShowConfigMenu);
     MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
 
-    ReloadCursor('postview.png');
+    ReloadCursor('postview');
 
     // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
     if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
@@ -585,7 +585,7 @@ end;
 procedure TGamePostviewScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor('postview.png');
+  ReloadCursor('postview');
 end;
 
 end.

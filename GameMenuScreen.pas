@@ -849,7 +849,7 @@ end;
 procedure TGameMenuScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor('menu.png');
+  ReloadCursor('menu');
   MakePanels;
 end;
 

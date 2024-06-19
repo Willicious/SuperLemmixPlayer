@@ -2702,232 +2702,232 @@ var
   Helper, DigitImage: TBitmap32;
   DrawX, DrawY, HighestY, HighY, LowY, LowestY, WindowOffset: Integer;
 begin
-    { We don't question here whether the conditions are met to draw the helper or
-      not. We assume the calling routine has already done this, and we just draw it.
-      We do, however, determine which ones to draw here. }
+  { We don't question here whether the conditions are met to draw the helper or
+    not. We assume the calling routine has already done this, and we just draw it.
+    We do, however, determine which ones to draw here. }
 
-    Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
-    MO := Gadget.MetaObj;
+  MO := Gadget.MetaObj;
 
-    DigitImage := fAni.NumbersBitmap; // For calculating position based on lem cap numbers
+  DigitImage := fAni.NumbersBitmap; // For calculating position based on lem cap numbers
 
-    HighY := (Gadget.Top - 9) * ResMod;
-    HighestY := HighY - DigitImage.Height - (4 * ResMod);
-    LowY := (Gadget.Top + Gadget.Height + 2) * ResMod;
-    LowestY := LowY + DigitImage.Height + (2 * ResMod);
+  HighY := (Gadget.Top - 9) * ResMod;
+  HighestY := HighY - DigitImage.Height - (4 * ResMod);
+  LowY := (Gadget.Top + Gadget.Height + 2) * ResMod;
+  LowestY := LowY + DigitImage.Height + (2 * ResMod);
 
-    DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
-    DrawY := HighY;
+  DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
+  DrawY := HighY;
 
-    if DrawY < 0 then // Send helper below gadget if it's drawn above the level
-    begin
-      DrawY := LowY;
-      DoDrawBelow := True;
-    end else
-      DoDrawBelow := False;
+  if DrawY < 0 then // Send helper below gadget if it's drawn above the level
+  begin
+    DrawY := LowY;
+    DoDrawBelow := True;
+  end else
+    DoDrawBelow := False;
 
-    case MO.TriggerEffect of
-      DOM_WINDOW:
+  case MO.TriggerEffect of
+    DOM_WINDOW:
+      begin
+        if Gadget.IsFlipPhysics then
+          Helper := fHelperImages[hpi_ArrowLeft]
+        else
+          Helper := fHelperImages[hpi_ArrowRight];
+
+        if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
+
+        WindowOffset := Helper.Height * 3 div 2;
+
+        if DoDrawBelow then // Adjust DrawY for above-level hatch helpers
+          DrawY := LowY - WindowOffset;
+
+        // Account for lemming cap/clear physics hatch digits
+        if fUsefulOnly or Gadget.ShowRemainingLemmings then
         begin
-          if Gadget.IsFlipPhysics then
-            Helper := fHelperImages[hpi_ArrowLeft]
-          else
-            Helper := fHelperImages[hpi_ArrowRight];
+          if DoDrawBelow then
+          begin
+            DrawY := LowestY - WindowOffset;
+          end else begin
+            DrawY := HighestY;
+          end;
 
-          if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
-
-          WindowOffset := Helper.Height * 3 div 2;
-
-          if DoDrawBelow then // Adjust DrawY for above-level hatch helpers
+          if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
             DrawY := LowY - WindowOffset;
-
-          // Account for lemming cap/clear physics hatch digits
-          if fUsefulOnly or Gadget.ShowRemainingLemmings then
-          begin
-            if DoDrawBelow then
-            begin
-              DrawY := LowestY - WindowOffset;
-            end else begin
-              DrawY := HighestY;
-            end;
-
-            if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
-              DrawY := LowY - WindowOffset;
-          end;
-
-          Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
-
-          if Gadget.IsPreassignedZombie then
-            fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
         end;
 
-      DOM_TELEPORT:
-        begin
-          fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
-        end;
+        Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
 
-      DOM_RECEIVER:
-        begin
-          fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
-        end;
+        if Gadget.IsPreassignedZombie then
+          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
+      end;
 
-      DOM_EXIT:
+    DOM_TELEPORT:
+      begin
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
+      end;
+
+    DOM_RECEIVER:
+      begin
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
+      end;
+
+    DOM_EXIT:
+      begin
+        if Gadget.IsRivalExit then
+          Helper := fHelperImages[hpi_Exit_Rival]
+        else
+          Helper := fHelperImages[hpi_Exit];
+
+        // Account for lemming cap digits
+        if (Gadget.RemainingLemmingsCount > 0) then
         begin
-          if Gadget.IsRivalExit then
-            Helper := fHelperImages[hpi_Exit_Rival]
+          if DoDrawBelow then
+            DrawY := LowestY
           else
-            Helper := fHelperImages[hpi_Exit];
+            DrawY := HighestY;
 
-          // Account for lemming cap digits
-          if (Gadget.RemainingLemmingsCount > 0) then
-          begin
-            if DoDrawBelow then
-              DrawY := LowestY
-            else
-              DrawY := HighestY;
-
-            if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
-              DrawY := LowY;
-          end;
-
-          Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
+          if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
+            DrawY := LowY;
         end;
 
-      DOM_LOCKEXIT:
+        Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
+      end;
+
+    DOM_LOCKEXIT:
+      begin
+        if Gadget.IsRivalExit then
+          Helper := fHelperImages[hpi_Exit_Rival]
+        else
+          Helper := fHelperImages[hpi_Exit];
+
+        // Account for lemming cap digits
+        if (Gadget.RemainingLemmingsCount > 0) then
         begin
-          if Gadget.IsRivalExit then
-            Helper := fHelperImages[hpi_Exit_Rival]
+          if DoDrawBelow then
+            DrawY := LowestY
           else
-            Helper := fHelperImages[hpi_Exit];
+            DrawY := HighestY;
 
-          // Account for lemming cap digits
-          if (Gadget.RemainingLemmingsCount > 0) then
-          begin
-            if DoDrawBelow then
-              DrawY := LowestY
-            else
-              DrawY := HighestY;
-
-            if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
-              DrawY := LowY;
-          end;
-
-          Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
-
-          if (Gadget.CurrentFrame = 1) then
-          begin
-            fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
-            fHelperImages[hpi_Exit_Lock].DrawTo(Dst, DrawX - 3 * ResMod, (Gadget.TriggerRect.Top - 10) * ResMod);
-
-            fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
-          end;
+          if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
+            DrawY := LowY;
         end;
 
-      DOM_FIRE:
+        Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
+
+        if (Gadget.CurrentFrame = 1) then
         begin
-          fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-        end;
+          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
+          fHelperImages[hpi_Exit_Lock].DrawTo(Dst, DrawX - 3 * ResMod, (Gadget.TriggerRect.Top - 10) * ResMod);
 
-      DOM_TRAP:
-        begin
-          fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
         end;
+      end;
 
-      DOM_TRAPONCE:
-        begin
-          fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
-        end;
+    DOM_FIRE:
+      begin
+        fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+      end;
 
-      DOM_UPDRAFT:
-        begin
-          fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
-        end;
+    DOM_TRAP:
+      begin
+        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+      end;
 
-      DOM_SPLITTER:
-        begin
-          fHelperImages[hpi_Splitter].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-        end;
+    DOM_TRAPONCE:
+      begin
+        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+      end;
 
-      DOM_BUTTON:
-        begin
-          fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-        end;
+    DOM_UPDRAFT:
+      begin
+        fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
+      end;
 
-      DOM_COLLECTIBLE:
-        begin
-          fHelperImages[hpi_Collectible].DrawTo(Dst, DrawX - 34 * ResMod, DrawY);
-        end;
+    DOM_SPLITTER:
+      begin
+        fHelperImages[hpi_Splitter].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+      end;
 
-      DOM_FORCELEFT:
-        if Gadget.IsFlipImage then
-        begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
-        end else begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
-        end;
+    DOM_BUTTON:
+      begin
+        fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+      end;
 
-      DOM_FORCERIGHT:
-        if Gadget.IsFlipImage then
-        begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
-        end else begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
-        end;
+    DOM_COLLECTIBLE:
+      begin
+        fHelperImages[hpi_Collectible].DrawTo(Dst, DrawX - 34 * ResMod, DrawY);
+      end;
 
-      DOM_NOSPLAT:
-        begin
-          fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_FORCELEFT:
+      if Gadget.IsFlipImage then
+      begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
+      end else begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
+      end;
 
-      DOM_SPLAT:
-        begin
-          fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_FORCERIGHT:
+      if Gadget.IsFlipImage then
+      begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
+      end else begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
+      end;
 
-      DOM_WATER:
-        begin
-          fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_NOSPLAT:
+      begin
+        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_BLASTICINE:
-        begin
-          fHelperImages[hpi_Blasticine].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_SPLAT:
+      begin
+        fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_VINEWATER:
-        begin
-          fHelperImages[hpi_Vinewater].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_WATER:
+      begin
+        fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_POISON:
-        begin
-          fHelperImages[hpi_Poison].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_BLASTICINE:
+      begin
+        fHelperImages[hpi_Blasticine].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_LAVA:
-        begin
-          fHelperImages[hpi_Lava].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_VINEWATER:
+      begin
+        fHelperImages[hpi_Vinewater].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_RADIATION:
-        begin
-          fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_POISON:
+      begin
+        fHelperImages[hpi_Poison].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_SLOWFREEZE:
-        begin
-          fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
-    end;
+    DOM_LAVA:
+      begin
+        fHelperImages[hpi_Lava].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
+
+    DOM_RADIATION:
+      begin
+        fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
+
+    DOM_SLOWFREEZE:
+      begin
+        fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
+  end;
 end;
 
 procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);

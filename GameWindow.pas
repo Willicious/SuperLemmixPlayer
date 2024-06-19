@@ -1905,7 +1905,7 @@ var
   i, i2: Integer;
   TempBMP, TempBMP2: TBitmap32;
   SL: TStringList;
-  CursorDir: String;
+  CursorDir, FileExt: String;
 const
   CURSOR_NAMES: array[1..CURSOR_TYPES] of String = (
     'standard',
@@ -1934,20 +1934,22 @@ begin
 
       SL.DelimitedText := CURSOR_NAMES[i];
 
-      if GameParams.HighResolution then
-        CursorDir := 'cursor-hr/'
-      else
-        CursorDir := 'cursor/';
-
       if GameParams.AmigaTheme then
-        CursorDir := CursorDir + 'amiga/';
+        CursorDir := SFGraphicsCursor + 'amiga/'
+      else
+        CursorDir := SFGraphicsCursor;
 
-      TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + SL[0] + '.png', TempBMP);
+      if GameParams.HighResolution then
+        FileExt := '-hr.png'
+      else
+        FileExt := '.png';
+
+      TPngInterface.LoadPngFile(AppPath + CursorDir + SL[0] + FileExt, TempBMP);
 
       while SL.Count > 1 do
       begin
         SL.Delete(0);
-        TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + SL[0] + '.png', TempBMP2);
+        TPngInterface.LoadPngFile(AppPath + CursorDir + SL[0] + FileExt, TempBMP2);
         TempBMP2.DrawMode := dmBlend;
         TempBMP2.CombineMode := cmMerge;
         TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);

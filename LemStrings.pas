@@ -12,7 +12,6 @@ const
   SFGraphics = 'gfx\';
     SFGraphicsGame = SFGraphics + 'game\';
     SFGraphicsCursor = SFGraphics + 'cursor\';
-    SFGraphicsCursorHighRes = SFGraphics + 'cursor-hr\';
     SFGraphicsHelpers = SFGraphics + 'helpers\';
     SFGraphicsHelpersHighRes = SFGraphics + 'helpers-hr\';
     SFGraphicsMasks = SFGraphics + 'mask\';
