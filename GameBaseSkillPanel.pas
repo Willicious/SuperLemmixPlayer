@@ -558,7 +558,6 @@ var
   Button: TSkillPanelButton;
   X, Y: Integer;
   Offset: TPoint;
-  Ani: TBaseAnimationSet;
   IconsImg: TBitmap32;
 
   procedure LoadIcons;
