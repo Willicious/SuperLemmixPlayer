@@ -76,10 +76,14 @@ begin
   Result := 37;
 end;
 
-
+// First 2 digits = left & top of minimap frame
+// Second 2 digits = width & height of minimap itself
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(710, 4, 880, 72);
+  if GameParams.AmigaTheme then
+    Result := Rect(704, 4, 862, 72)
+  else
+    Result := Rect(710, 4, 880, 72);
 end;
 
 // Assigns a clickable rectangle to the replay "R" icon
@@ -144,8 +148,13 @@ if GameParams.ShowMinimap then
     TempBmp := TBitmap32.Create;
     TempBmp.Assign(MinimapRegion);
 
-  // Changing the first digit changes the right side of the minimap frame
-    if (MinimapRegion.Width <> 182) or (MinimapRegion.Height <> 78) then
+    // Changing the first digit changes the right side of the minimap frame
+    if GameParams.AmigaTheme then
+    begin
+      MinimapRegion.SetSize(188, 78);
+      MinimapRegion.Clear($FF000000);
+      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect, Rect(16, 16, 32, 6), TempBmp);
+    end else if (MinimapRegion.Width <> 182) or (MinimapRegion.Height <> 78) then
     begin
       MinimapRegion.SetSize(182, 78);
       MinimapRegion.Clear($FF000000);
