@@ -244,7 +244,7 @@ var
   i: Integer;
   L: TLemming;
 begin
-if GameParams.ShowMinimap then
+  if GameParams.ShowMinimap then
   begin
     if fRenderInterface.DisableDrawing then Exit;
 

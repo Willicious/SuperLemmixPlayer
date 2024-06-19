@@ -49,17 +49,15 @@ end;
 
 function TSkillPanelStandard.PanelWidth: Integer;
 begin
-if GameParams.ShowMinimap then
-  begin
-    Result := 444 * ResMod;
-  end else begin
-    Result := 336 * ResMod;
-  end;
+  if GameParams.ShowMinimap then
+    Result := 888
+  else
+    Result := 672;
 end;
 
 function TSkillPanelStandard.PanelHeight: Integer;
 begin
-  Result := 40 * ResMod;
+  Result := 80;
 end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
@@ -78,17 +76,16 @@ begin
   Result := 37;
 end;
 
-// First set of digits adust left & top pos of minimap frame
-// Second set of digits adjusts width & height of minimap itself
+
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(355 * ResMod, 2 * ResMod, 440 * ResMod, 36 * ResMod);
+  Result := Rect(710, 4, 880, 72);
 end;
 
 // Assigns a clickable rectangle to the replay "R" icon
 function TSkillPanelStandard.ReplayMarkRect: TRect;
 begin
-  Result := Rect(106 * ResMod, 2 * ResMod, 116 * ResMod, 16 * ResMod);
+  Result := Rect(212, 4, 232, 32);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -148,12 +145,11 @@ if GameParams.ShowMinimap then
     TempBmp.Assign(MinimapRegion);
 
   // Changing the first digit changes the right side of the minimap frame
-    if (MinimapRegion.Width <> 91 * ResMod) or (MinimapRegion.Height <> 39 * ResMod) then
+    if (MinimapRegion.Width <> 182) or (MinimapRegion.Height <> 78) then
     begin
-      MinimapRegion.SetSize(91 * ResMod, 39 * ResMod);
+      MinimapRegion.SetSize(182, 78);
       MinimapRegion.Clear($FF000000);
-      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
+      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect, Rect(16, 16, 16, 16), TempBmp);
     end;
 
     TempBmp.Free;

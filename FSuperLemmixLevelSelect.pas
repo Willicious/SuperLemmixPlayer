@@ -301,10 +301,7 @@ end;
 
 procedure TFLevelSelect.LoadIcons;
 var
-IconsImg: String;
-aStyle: String;
-aStylePath: String;
-aPath: String;
+  IconsImg, aStyle, aStylePath, aPath: String;
 begin
   IconsImg := 'levelinfo_icons.png';
   aStyle := GameParams.Level.Info.GraphicSetName;

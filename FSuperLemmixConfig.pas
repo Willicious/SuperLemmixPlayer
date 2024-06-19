@@ -203,8 +203,7 @@ begin
       MaxZoom := Max(MaxWidth div 336, 1);
     end;
 
-  if cbHighResolution.Checked then
-    MaxZoom := Max(1, MaxZoom div 2);
+  MaxZoom := Max(1, MaxZoom div 2);
 
   for i := 1 to MaxZoom do
     cbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
