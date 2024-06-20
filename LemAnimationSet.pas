@@ -386,7 +386,14 @@ begin
       aColorDict.Clear;
       if ColorSec <> nil then
         for i := 0 to ColorSec.LineList.Count-1 do
-          aColorDict.Add(ColorSec.LineList[i].ValueNumeric, ColorSec.LineList[i].Keyword);
+        begin
+          try
+            aColorDict.Add(ColorSec.LineList[i].ValueNumeric, ColorSec.LineList[i].Keyword);
+          except
+            on E: Exception do
+              raise Exception.CreateFmt('Invalid or duplicate color found in spriteset_recoloring: %s', [ColorSec.LineList[i].Keyword]);
+          end;
+        end;
     end;
 
     if aShadeDict <> nil then
@@ -403,7 +410,12 @@ begin
             aSec.DoForEachLine('alt',
               procedure (aLine: TParserLine; const aIteration: Integer)
               begin
-                aShadeDict.Add(aLine.ValueNumeric and $FFFFFF, BaseColor);
+                try
+                  aShadeDict.Add(aLine.ValueNumeric and $FFFFFF, BaseColor);
+                except
+                  on E: Exception do
+                    raise Exception.CreateFmt('Invalid or duplicate color found in shades section: PRIMARY=%d, alt=%d', [BaseColor, aLine.ValueNumeric and $FFFFFF]);
+                end;
               end
             );
           end
