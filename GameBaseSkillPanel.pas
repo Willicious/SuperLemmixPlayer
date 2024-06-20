@@ -943,8 +943,9 @@ if GameParams.ShowMinimap then
 
     fMinimap.DrawTo(fMinimapTemp, 2, 2);
 
-    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
-    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
+    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / (4 * ResMod);
+    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / (4 * ResMod);
+
 
     // Draw the visible area frame
     ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div (4 * ResMod) + 2, fGameWindow.DisplayHeight div (4 * ResMod) + 2);
