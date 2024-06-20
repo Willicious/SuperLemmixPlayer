@@ -320,10 +320,6 @@ begin
   else begin
     GameParams.PlaybackModeActive := False;
 
-    // Move to next level if solved and user has chosen "next unsolved" rather than "last active" in game loading settings
-    if GameParams.GameResult.gSuccess and GameParams.NextUnsolvedLevel then
-      GameParams.NextLevel(true);
-
     CloseScreen(gstMenu);
   end;
 end;

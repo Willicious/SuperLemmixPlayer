@@ -318,7 +318,7 @@ begin
   GameParams.IngameSaveReplayPattern := GetReplayPattern(cbIngameSaveReplayPattern);
   GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
-  GameParams.NextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
+  GameParams.LoadNextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
 
   // --- Page 2 (Interface Options) --- //
   // Checkboxes
@@ -525,7 +525,7 @@ procedure TFormNXConfig.SetCheckboxes;
         cbMinimapHighQuality.Enabled := False;
       end;
 
-    if GameParams.NextUnsolvedLevel then
+    if GameParams.LoadNextUnsolvedLevel then
       rgGameLoading.ItemIndex := 0
     else
       rgGameLoading.ItemIndex := 1;
