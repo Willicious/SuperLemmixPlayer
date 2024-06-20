@@ -418,8 +418,8 @@ begin
         NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
       end;
 
-      // If going from {low res, 3x panel zoom w/minimap} to hi-res, we need to reset window
-      if cbShowMinimap.Checked and not GameParams.FullScreen then
+      // If changing showminimap, we need to reset window
+      if (Sender = cbShowMinimap) and not GameParams.FullScreen then
       begin
         cbResetWindowPosition.Checked := True;
         cbResetWindowSize.Checked := True;
