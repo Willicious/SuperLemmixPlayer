@@ -1930,7 +1930,7 @@ const
 begin
   FreeCursors;
 
-  LocalMaxZoom := Min(Screen.Width div 320, (Screen.Height - (40 * ResMod * SkillPanel.MaxZoom)) div 160) + EXTRA_ZOOM_LEVELS;
+  LocalMaxZoom := Min(Screen.Width div 320, (Screen.Height - (80 * SkillPanel.MaxZoom)) div 160) + EXTRA_ZOOM_LEVELS;
 
   TempBMP := TBitmap32.Create;
   TempBMP2 := TBitmap32.Create;
@@ -1995,7 +1995,7 @@ begin
   if GameParams.IncreaseZoom then
   begin
     Sca := 2;
-    while (Min(Sca, SkillPanel.MaxZoom) * 40 * ResMod) + (Max(GameParams.Level.Info.Height, 160) * Sca * ResMod) <= ClientHeight do
+    while (Min(Sca, SkillPanel.MaxZoom) * 80) + (Max(GameParams.Level.Info.Height, 160) * Sca * ResMod) <= ClientHeight do
       Inc(Sca);
     Dec(Sca);
     Sca := Max(Sca, GameParams.ZoomLevel);

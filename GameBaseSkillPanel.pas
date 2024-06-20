@@ -1910,7 +1910,7 @@ end;
 
 function TBaseSkillPanel.GetMaxZoom: Integer;
 begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
+  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 80), 1);
 end;
 
 procedure TBaseSkillPanel.SetMinimapScrollFreeze(aValue: Boolean);
