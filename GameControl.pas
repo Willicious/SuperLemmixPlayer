@@ -869,6 +869,8 @@ begin
 
   Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
+
+  ShouldShowFallbackMessage := False;
   Renderer.PrepareGameRendering(Level, NoOutput);
 end;
 
