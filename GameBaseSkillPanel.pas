@@ -932,12 +932,13 @@ var
   OH, OV: Double;
   ViewRect: TRect;
   InnerViewRect: TRect;
+  ViewRectWidth, ViewRectHeight: Integer;
 begin
-if GameParams.ShowMinimap then
+  if GameParams.ShowMinimap then
   begin
     if Parent = nil then Exit;
 
-    // Add some space for when the viewport rect lies on the very edges
+    // Add some space for when the view frame lies on the very edges
     fMinimapTemp.SetSize(fMinimap.Width + 4, fMinimap.Height + 4);
     fMinimapTemp.Clear(0);
 
@@ -946,21 +947,17 @@ if GameParams.ShowMinimap then
     BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / (4 * ResMod);
     BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / (4 * ResMod);
 
+    // Draw the view frame
+    ViewRectWidth := fGameWindow.DisplayWidth div (4 * ResMod) + 2;
+    ViewRectHeight := fGameWindow.DisplayHeight div (4 * ResMod) + 2;
 
-    // Draw the visible area frame
-    ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div (4 * ResMod) + 2, fGameWindow.DisplayHeight div (4 * ResMod) + 2);
+    ViewRect := Rect(0, 0, ViewRectWidth, ViewRectHeight);
     OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
     fMinimapTemp.FrameRectS(ViewRect, fMinimapViewRectColor);
 
-    if GameParams.HighResolution then
-    begin
-      InnerViewRect := ViewRect;
-      Inc(InnerViewRect.Left);
-      Inc(InnerViewRect.Top);
-      Dec(InnerViewRect.Bottom);
-      Dec(InnerViewRect.Right);
-      fMinimapTemp.FrameRectS(InnerViewRect, fMinimapViewRectColor);
-    end;
+    // Thicken the view frame by 1px
+    InnerViewRect := Rect(ViewRect.Left + 1, ViewRect.Top + 1, ViewRect.Right - 1, ViewRect.Bottom - 1);
+    fMinimapTemp.FrameRectS(InnerViewRect, fMinimapViewRectColor);
 
     fMinimapImage.Bitmap.Assign(fMinimapTemp);
 
