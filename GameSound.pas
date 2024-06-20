@@ -328,26 +328,46 @@ procedure TSoundManager.LoadDefaultSounds;
 begin
   if not fIsBassLoaded then Exit;
 
+  Get('allcollect');
+  Get('amigadisk1');
+  Get('amigadisk2');
+  Get('applause');
+  Get('assignfail');
+  // Get('bathit';      // Batter
+  // Get('batswish';   // Batter
+  Get('balloon');
+  Get('balloonpop');
   Get('boop');
+  Get('bye');
   Get('chain');
   Get('changeop');
+  Get('changerr');
   Get('chink');
+  Get('collect');
   Get('die');
   Get('door');
   Get('electric');
+  Get('exitopen');
   Get('explode');
   Get('fire');
-  Get('ice');
+  Get('grenade');
   Get('glug');
+  Get('ice');
+  Get('jump');
+  Get('laser');
   Get('letsgo');
   Get('mousepre');
   Get('ohno');
   Get('oing');
   Get('oing2');
+  Get('OK');
+  // Get('propeller'; // Propeller
   Get('slurp');
+  Get('spearhit');
   Get('splash');
   Get('splat');
   Get('tenton');
+  Get('throw');
   Get('thud');
   Get('thunk');
   Get('timeup');
@@ -358,6 +378,12 @@ begin
   Get('yippee');
   Get('zombie');
   Get('zombiedie');
+  Get('zombielaugh');
+  Get('zombielolz');
+  Get('zombieohno');
+  Get('zombiepickup');
+  Get('zombiesplat');;
+  Get('zombieyippee');
 end;
 
 function TSoundManager.FindSoundIndex(aName: String): Integer;
