@@ -67,8 +67,21 @@ end;
 
 function TSkillPanelStandard.DrawStringTemplate: string;
 begin
-  Result := '..............' + '.' + ' ' + '.' + ' ' + #93 + '_...' + ' ' + #94 + '_...' + ' '
-                           + #95 + '_...' + ' ' + #96 +  '_.-..';
+  if GameParams.AmigaTheme then
+    Result := '..............' +       // 0 Cursor info
+              '.' + ' ' +              // 14 Replay mark
+              '.' + ' ' +              // 16 Collectible icon
+              'OUT' + ' ...' + ' ' +   // 18 Lemmings out       // 22 LemAlive
+              'IN' + ' ...' + ' ' +    // 26 Lemmings in (home) // 29 LemIn
+              'TIME' + ' .-..'         // 34 Time               // 39 Time limit
+  else
+    Result := '..............' +       // 0 Cursor info
+              '.' + ' ' +              // 14 Replay mark
+              '.' + ' ' +              // 16 Collectible icon
+              #93 + '_...' + ' ' +     // 18 Hatch icon        // 19 LemHatch
+              #94 + '_...' + ' ' +     // 24 Lem icon          // 25 LemAlive
+              #95 + '_...' + ' ' +     // 30 Exit icon         // 31 LemIn
+              #96 +  '_.-..';          // 36 Time icon         // 37 Time Limit
 end;
 
 function TSkillPanelStandard.TimeLimitStartIndex: Integer;
@@ -97,14 +110,24 @@ begin
   if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
     SetPanelMessage(1);
 
-  SetInfoCursor(1);
-  SetReplayMark(14);
-  SetCollectibleIcon(16);
-  SetInfoLemHatch(20);
-  SetInfoLemAlive(26);
-  SetInfoLemIn(32);
-  SetTimeLimit(37);
-  SetInfoTime(38, 41);
+  if GameParams.AmigaTheme then
+  begin
+    SetInfoCursor(1);
+    SetReplayMark(14);
+    SetCollectibleIcon(16);
+    SetInfoLemAlive(22);
+    SetInfoLemIn(29);
+    SetInfoTime(38, 41);
+  end else begin
+    SetInfoCursor(1);
+    SetReplayMark(14);
+    SetCollectibleIcon(16);
+    SetInfoLemHatch(20);
+    SetInfoLemAlive(26);
+    SetInfoLemIn(32);
+    SetTimeLimit(37);
+    SetInfoTime(38, 41);
+  end;
 end;
 
 function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
@@ -131,11 +154,17 @@ end;
 
 function TSkillPanelStandard.LemmingCountStartIndex: Integer;
 begin
-  Result := 26;
+  if GameParams.AmigaTheme then
+    Result := 22
+  else
+    Result := 26;
 end;
 
 function TSkillPanelStandard.LemmingSavedStartIndex: Integer;
 begin
+  if GameParams.AmigaTheme then
+    Result := 29
+  else
   Result := 32;
 end;
 
