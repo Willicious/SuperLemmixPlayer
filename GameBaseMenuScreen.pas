@@ -133,7 +133,7 @@ type
       procedure CancelPlaybackMode;
 
       procedure ShowConfigMenu;
-      procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
+      procedure ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false; aFromPackOnly: Boolean = false): Boolean;
@@ -981,8 +981,9 @@ end;
 procedure TGameBaseMenuScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
-  OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean;
+  OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean;
 begin
+  OldAmigaTheme := GameParams.AmigaTheme;
   OldFullScreen := GameParams.FullScreen;
   OldHighResolution := GameParams.HighResolution;
   OldShowMinimap := GameParams.ShowMinimap;
@@ -1011,7 +1012,7 @@ begin
   { Wise advice from Simon - save these things on exiting the config dialog, rather than
     waiting for a quit or a screen transition to save them. }
   GameParams.Save(scImportant);
-  ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
+  ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
 
   if fCalledFromClassicModeButton then
   begin
@@ -1021,7 +1022,7 @@ begin
     DoAfterConfig;
 end;
 
-procedure TGameBaseMenuScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
+procedure TGameBaseMenuScreen.ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
 begin
   if GameParams.FullScreen and not OldFullScreen then
   begin
@@ -1041,8 +1042,9 @@ begin
   end;
 
   if (GameParams.FullScreen <> OldFullScreen)
-    or (GameParams.ShowMinimap <> OldShowMinimap) then
-      CloseScreen(CurrentScreen);
+    or (GameParams.AmigaTheme <> OldAmigaTheme)
+      or (GameParams.ShowMinimap <> OldShowMinimap) then
+        CloseScreen(CurrentScreen);
 
   if (GameParams.HighResolution <> OldHighResolution) then
   begin

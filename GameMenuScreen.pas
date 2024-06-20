@@ -831,12 +831,11 @@ end;
 procedure TGameMenuScreen.ShowSetupMenu;
 var
   F: TFNLSetup;
-  OldFullScreen: Boolean;
-  OldHighRes: Boolean;
-  OldShowMinimap: Boolean;
+  OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap: Boolean;
 begin
   F := TFNLSetup.Create(self);
   try
+    OldAmigaTheme := GameParams.AmigaTheme;
     OldFullScreen := GameParams.FullScreen;
     OldHighRes := GameParams.HighResolution;
     OldShowMinimap := GameParams.ShowMinimap;
@@ -844,7 +843,7 @@ begin
     F.ShowModal;
 
     // And apply the settings chosen
-    ApplyConfigChanges(OldFullScreen, OldHighRes, OldShowMinimap, false, false);
+    ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap, false, false);
   finally
     F.Free;
   end;
