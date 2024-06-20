@@ -440,7 +440,6 @@ begin
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;
-    GameParams.OpenedViaReplay := False;
 
     CloseScreen(gstMenu);
   end;
