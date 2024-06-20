@@ -3808,8 +3808,6 @@ var
 
         // Remove one-way markings if it's not one-way capable
         if P^ and PM_ONEWAY = 0 then P^ := P^ and not (PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN or PM_ONEWAYUP);
-
-        P^ := P^ and not PM_NOCANCELSTEEL;
       end;
   end;
 
