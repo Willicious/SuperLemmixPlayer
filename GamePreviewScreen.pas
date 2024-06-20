@@ -181,6 +181,14 @@ end;
 
 procedure TGamePreviewScreen.BeginPlay;
 begin
+  if GameParams.ShouldShowFallbackMessage then
+  begin
+    ShowMessage(GameParams.FallbackMessage);
+
+    GameParams.FallbackMessage := '';
+    GameParams.ShouldShowFallbackMessage := False;
+  end;
+
   CloseScreen(gstPlay);
 end;
 
@@ -314,6 +322,7 @@ var
 const
   TEXT_Y_POSITION = 170;
 begin
+  CurrentScreen := gstPreview;
   SetWindowCaption;
 
   fClickableRegions.Clear;
@@ -417,7 +426,7 @@ end;
 procedure TGamePreviewScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor('amiga.png');
+  ReloadCursor('menu');
 end;
 
 function TGamePreviewScreen.GetWallpaperSuffix: String;
@@ -431,7 +440,6 @@ begin
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;
-    GameParams.OpenedViaReplay := False;
 
     CloseScreen(gstMenu);
   end;
@@ -768,19 +776,14 @@ begin
       Raise; // Yet again, to be caught on TBaseDosForm
     end;
   end;
+
+  // Clears the current-replay-in-memory when the level loads
   if (GameParams.ClassicMode and not (GameParams.PlaybackModeActive or GameParams.OpenedViaReplay))
     or not GameParams.ReplayAfterRestart then
-    begin
-      // Clears the current-replay-in-memory when the level loads
       GlobalGame.ReplayManager.Clear(true);
-      GlobalGame.ReplayWasLoaded := False;
-    end;
 
   if GameParams.PlaybackModeActive or GameParams.OpenedViaReplay then
-  begin
-    GlobalGame.ReplayWasLoaded := True;
     GameParams.OpenedViaReplay := False; // Reset flag once replay has been successfully loaded
-  end;
 end;
 
 end.

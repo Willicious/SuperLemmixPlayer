@@ -130,14 +130,14 @@ object FReplayManager: TFReplayManager
       OnClick = cbAppendResultClick
     end
   end
-  object btnOK: TButton
+  object btnRunReplayCheck: TButton
     Left = 143
     Top = 414
     Width = 216
     Height = 25
     Caption = 'Run Replay Check'
     TabOrder = 2
-    OnClick = btnOKClick
+    OnClick = btnRunReplayCheckClick
   end
   object btnCancel: TButton
     Left = 365

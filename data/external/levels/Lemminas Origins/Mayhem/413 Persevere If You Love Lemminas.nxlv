@@ -8,7 +8,7 @@
  TITLE Persevere If You Love Lemminas
  AUTHOR WillLem/DMA
  ID x79D689B168AB5473
- VERSION x0000000000000026
+ VERSION x0000000000000038
  
 #       Level dimensions        
 # ----------------------------- 
@@ -22,7 +22,7 @@
 # ----------------------------- 
  LEMMINGS 20
  SAVE_REQUIREMENT 20
- TIME_LIMIT 240
+ TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 28
  
  $SKILLSET 
@@ -44,7 +44,7 @@
  $GADGET
    STYLE orig_pillar
    PIECE window
-   X 768
+   X 767
    Y 4
    NO_OVERWRITE
  $END
@@ -265,57 +265,12 @@
  $END
  
  $GADGET
-   STYLE default
-   PIECE owa_down
-   X 771
-   Y 64
-   WIDTH 42
-   HEIGHT 60
-   ONLY_ON_TERRAIN
-   FLIP_VERTICAL
- $END
- 
- 
-#        Terrain groups         
-# ----------------------------- 
- $TERRAINGROUP
-   NAME Group1781042706
-   
-   $TERRAIN
-     STYLE orig_pillar
-     PIECE block_13
-     X 832
-     Y 106
-     ONE_WAY
-   $END
-   
-   $TERRAIN
-     STYLE orig_pillar
-     PIECE block_13
-     X 832
-     Y 116
-     ERASE
-     ONE_WAY
-   $END
-   
-   $TERRAIN
-     STYLE orig_pillar
-     PIECE block_13
-     X 832
-     Y 104
-     NO_OVERWRITE
-     ONE_WAY
-   $END
-   
-   $TERRAIN
-     STYLE orig_pillar
-     PIECE block_13
-     X 832
-     Y 86
-     ERASE
-     ONE_WAY
-   $END
-   
+   STYLE orig_pillar
+   PIECE window
+   X 768
+   Y 4
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
  $END
  
  
@@ -325,31 +280,7 @@
    STYLE orig_pillar
    PIECE block_14
    X 854
-   Y 86
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 771
-   Y 104
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 771
    Y 84
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE block_13
-   X 771
-   Y 64
    ONE_WAY
  $END
  
@@ -1372,13 +1303,6 @@
  $TERRAIN
    STYLE orig_pillar
    PIECE steel_01
-   X 803
-   Y 145
- $END
- 
- $TERRAIN
-   STYLE orig_pillar
-   PIECE steel_01
    X 779
    Y 145
  $END
@@ -1412,19 +1336,26 @@
  $END
  
  $TERRAIN
-   STYLE *group
-   PIECE Group1781042706
+   STYLE orig_pillar
+   PIECE block_13
    X 832
-   Y 106
+   Y 104
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE *group
-   PIECE Group1781042706
+   STYLE orig_pillar
+   PIECE block_13
    X 709
    Y 64
    ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_pillar
+   PIECE steel_01
+   X 803
+   Y 145
  $END
  
  

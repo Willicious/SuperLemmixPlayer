@@ -12,7 +12,9 @@ type
   TGameSpeed = (
     gspNormal,
     gspPause,
+    gspRewind,
     gspFF,
+    gspTurbo,
     gspSlowMo
   );
 

@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 276
     Height = 439
-    ActivePage = TabSheet1
+    ActivePage = Graphics
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -472,7 +472,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbMinimapOptions: TGroupBox
         Left = 24
-        Top = 240
+        Top = 257
         Width = 219
         Height = 48
         Caption = 'Minimap Options'
@@ -525,7 +525,7 @@ object FormNXConfig: TFormNXConfig
       end
       object ResetWindow: TGroupBox
         Left = 24
-        Top = 322
+        Top = 339
         Width = 219
         Height = 49
         TabOrder = 9
@@ -550,7 +550,7 @@ object FormNXConfig: TFormNXConfig
       end
       object btnResetWindow: TButton
         Left = 65
-        Top = 306
+        Top = 323
         Width = 135
         Height = 34
         Caption = 'Reset Window'
@@ -564,6 +564,15 @@ object FormNXConfig: TFormNXConfig
         Height = 17
         Caption = 'Use Colour Cycle For Fall Distance Ruler'
         TabOrder = 7
+        OnClick = OptionChanged
+      end
+      object cbAmigaTheme: TCheckBox
+        Left = 65
+        Top = 224
+        Width = 135
+        Height = 17
+        Caption = 'Activate Amiga Theme'
+        TabOrder = 11
         OnClick = OptionChanged
       end
     end

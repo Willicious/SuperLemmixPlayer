@@ -122,11 +122,13 @@ type
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
     procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
-    function GetRecolorer: TRecolorImage;
 
+    function GetRecolorer: TRecolorImage;
     property Recolorer: TRecolorImage read GetRecolorer;
   protected
   public
+    BrickPixelColors   : array[0..11] of TColor32; // Gradient steps - callable from LemGame
+
     constructor Create;
     destructor Destroy; override;
 
@@ -141,6 +143,7 @@ type
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
+    procedure InitializeBrickColors(aBrickPixelColor: TColor32);
 
     // Composite pieces (terrain grouping)
     procedure PrepareCompositePieceBitmaps(aTerrains: TTerrains; aLowRes: TBitmap32; aHighRes: TBitmap32);
@@ -241,7 +244,7 @@ var
   i: Integer;
   L: TLemming;
 begin
-if GameParams.ShowMinimap then
+  if GameParams.ShowMinimap then
   begin
     if fRenderInterface.DisableDrawing then Exit;
 
@@ -263,34 +266,21 @@ if GameParams.ShowMinimap then
     if fRenderInterface = nil then Exit;
     if fRenderInterface.LemmingList = nil then Exit;
 
-    if GameParams.HighResolution then
+    for i := 0 to fRenderInterface.LemmingList.Count-1 do
     begin
-      for i := 0 to fRenderInterface.LemmingList.Count-1 do
-        begin
-          L := fRenderInterface.LemmingList[i];
-        if L.LemRemoved then Continue;
-        if L.LemIsZombie then
-          begin
-            Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
-            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
-            Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
-            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
-          end else begin
-            Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
-            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
-            Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
-            Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
-          end;
-        end;
-    end else begin
-      for i := 0 to fRenderInterface.LemmingList.Count-1 do
+      L := fRenderInterface.LemmingList[i];
+    if L.LemRemoved then Continue;
+    if L.LemIsZombie then
       begin
-        L := fRenderInterface.LemmingList[i];
-        if L.LemRemoved then Continue;
-        if L.LemIsZombie then
-          Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FFFF0000
-        else
-          Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00FF00;
+        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
+        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
+      end else begin
+        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
+        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
       end;
     end;
   end;
@@ -301,7 +291,10 @@ begin
 if GameParams.ShowMinimap then
   begin
   if (F and PM_SOLID) <> 0 then
-    B := fTheme.Colors[MINIMAP_COLOR] or $FF000000;
+    if GameParams.AmigaTheme then
+      B := $FF008800
+    else                                // Ensures full opacity
+      B := fTheme.Colors[MINIMAP_COLOR] or $FF000000;
   end;
 end;
 
@@ -2325,8 +2318,8 @@ procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M:
 begin
   if (F and $FF000000) <> 0 then
   begin
-    if (F and $FFFFFF) = $F0D0D0 then
-      F := $FF808080;
+    if (F and $FFFFFF) = $FFDDDD then
+      F := $FF888888;
 
     if (F and $FF000000) = $FF000000 then
       B := F
@@ -2348,9 +2341,9 @@ begin
     // 1 = blue, 2 = green, 5 = red
 
     case (F and $FFFFFF) of
-      $00B000: F := $FF686868;
-      $4040E0: F := $FF525252;
-      $F02020: F := $FF5E5E5E;
+      $00BB00: F := $FF686868;
+      $4444EE: F := $FF525252;
+      $FF2222: F := $FF5E5E5E;
     end;
 
     if (F and $FF000000) = $FF000000 then
@@ -2368,9 +2361,9 @@ end;
 //    // 1 = blue, 2 = green, 5 = red
 //
 //    case (F and $FFFFFF) of
-//      $00B000: F := $FF686868;
-//      $4040E0: F := $FF525252;
-//      $F02020: F := $FF5E5E5E;
+//      $00BB00: F := $FF686868;
+//      $4444EE: F := $FF525252;
+//      $FF2222: F := $FF5E5E5E;
 //    end;
 //
 //    if (F and $FF000000) = $FF000000 then
@@ -2692,225 +2685,236 @@ end;
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
 var
   MO: TGadgetMetaAccessor;
-  DrawX, DrawY: Integer;
   DoDrawBelow: Boolean;
-  Helper: TBitmap32;
+  Helper, DigitImage: TBitmap32;
+  DrawX, DrawY, HighestY, HighY, LowY, LowestY, WindowOffset: Integer;
 begin
-    Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+  { We don't question here whether the conditions are met to draw the helper or
+    not. We assume the calling routine has already done this, and we just draw it.
+    We do, however, determine which ones to draw here. }
 
-    MO := Gadget.MetaObj;
+  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
-    { We don't question here whether the conditions are met to draw the helper or
-      not. We assume the calling routine has already done this, and we just draw it.
-      We do, however, determine which ones to draw here. }
+  MO := Gadget.MetaObj;
 
-    DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
-    DrawY := (Gadget.Top - 9) * ResMod;
+  DigitImage := fAni.NumbersBitmap; // For calculating position based on lem cap numbers
 
-    if DrawY < 0 then // Send helper below gadget if it's drawn above the level
-    begin
-      DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod;
-      DoDrawBelow := True;
-    end else
-      DoDrawBelow := False;
+  HighY := (Gadget.Top - 9) * ResMod;
+  HighestY := HighY - DigitImage.Height - (4 * ResMod);
+  LowY := (Gadget.Top + Gadget.Height + 2) * ResMod;
+  LowestY := LowY + DigitImage.Height + (2 * ResMod);
 
-    case MO.TriggerEffect of
-      DOM_WINDOW:
+  DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod;
+  DrawY := HighY;
+
+  if DrawY < 0 then // Send helper below gadget if it's drawn above the level
+  begin
+    DrawY := LowY;
+    DoDrawBelow := True;
+  end else
+    DoDrawBelow := False;
+
+  case MO.TriggerEffect of
+    DOM_WINDOW:
+      begin
+        if Gadget.IsFlipPhysics then
+          Helper := fHelperImages[hpi_ArrowLeft]
+        else
+          Helper := fHelperImages[hpi_ArrowRight];
+
+        if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
+
+        WindowOffset := Helper.Height * 3 div 2;
+
+        if DoDrawBelow then // Adjust DrawY for above-level hatch helpers
+          DrawY := LowY - WindowOffset;
+
+        // Account for lemming cap/clear physics hatch digits
+        if fUsefulOnly or Gadget.ShowRemainingLemmings then
         begin
-          if Gadget.IsFlipPhysics then
-            Helper := fHelperImages[hpi_ArrowLeft]
-          else
-            Helper := fHelperImages[hpi_ArrowRight];
-
-          if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
-
-          if DoDrawBelow then // Adjust Y offset for hatches drawn above level
-            DrawY := (DrawY - Gadget.Height div 2) * ResMod;
-
-          // Account for lemming cap/clear physics hatch digits
-          if fUsefulOnly or Gadget.ShowRemainingLemmings then
+          if DoDrawBelow then
           begin
-            if DoDrawBelow then
-              DrawY := (DrawY + Helper.Height) * ResMod
-            else
-              DrawY := (DrawY + Gadget.MetaObj.DigitY + 1) - Helper.Height div 2 * ResMod;
+            DrawY := LowestY - WindowOffset;
+          end else begin
+            DrawY := HighestY;
           end;
 
           if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
-            DrawY := (Gadget.Top + Gadget.Height div 2 + Helper.Height div 2) * ResMod;
-
-          Helper.DrawTo(Dst, DrawX - Helper.Width div 2 * ResMod, DrawY);
-
-          if Gadget.IsPreassignedZombie then
-            fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
+            DrawY := LowY - WindowOffset;
         end;
 
-      DOM_TELEPORT:
-        begin
-          fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
-        end;
+        Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
 
-      DOM_RECEIVER:
-        begin
-          fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
-        end;
+        if Gadget.IsPreassignedZombie then
+          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
+      end;
 
-      DOM_EXIT:
+    DOM_TELEPORT:
+      begin
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
+      end;
+
+    DOM_RECEIVER:
+      begin
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
+      end;
+
+    DOM_EXIT:
+      begin
+        if Gadget.IsRivalExit then
+          Helper := fHelperImages[hpi_Exit_Rival]
+        else
+          Helper := fHelperImages[hpi_Exit];
+
+        // Account for lemming cap digits
+        if (Gadget.RemainingLemmingsCount > 0) then
         begin
-          if Gadget.IsRivalExit then
-            Helper := fHelperImages[hpi_Exit_Rival]
+          if DoDrawBelow then
+            DrawY := LowestY
           else
-            Helper := fHelperImages[hpi_Exit];
+            DrawY := HighestY;
 
-          // Account for lemming cap digits
-          if (Gadget.RemainingLemmingsCount > 0) then
-          begin
-            if DoDrawBelow then
-              DrawY := DrawY + Helper.Height * ResMod
-            else
-              DrawY := ((DrawY + Gadget.MetaObj.DigitY) - Helper.Height div 2) * ResMod;
-
-            if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
-              DrawY := (Gadget.Top + Gadget.Height + 2) * ResMod;
-          end;
-
-          Helper.DrawTo(Dst, DrawX - Helper.Width div 2 * ResMod, DrawY);
+          if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
+            DrawY := LowY;
         end;
 
-      DOM_LOCKEXIT:
+        Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
+      end;
+
+    DOM_LOCKEXIT:
+      begin
+        if Gadget.IsRivalExit then
+          Helper := fHelperImages[hpi_Exit_Rival]
+        else
+          Helper := fHelperImages[hpi_Exit];
+
+        // Account for lemming cap digits
+        if (Gadget.RemainingLemmingsCount > 0) then
         begin
-          if Gadget.IsRivalExit then
-            Helper := fHelperImages[hpi_Exit_Rival]
+          if DoDrawBelow then
+            DrawY := LowestY
           else
-            Helper := fHelperImages[hpi_Exit];
+            DrawY := HighestY;
 
-          // Account for lemming cap digits
-          if (Gadget.RemainingLemmingsCount > 0) then
-          begin
-            if DoDrawBelow then
-              DrawY := DrawY + Helper.Height * ResMod
-            else
-              DrawY := ((DrawY + Gadget.MetaObj.DigitY) - Helper.Height div 2) * ResMod;
-
-            if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
-              DrawY := (Gadget.Top + Gadget.Height + 2) * ResMod;
-          end;
-
-          Helper.DrawTo(Dst, DrawX - Helper.Width div 2 * ResMod, DrawY);
-
-          if (Gadget.CurrentFrame = 1) then
-          begin
-            fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
-            fHelperImages[hpi_Exit_Lock].DrawTo(Dst, DrawX - 3 * ResMod, (Gadget.TriggerRect.Top - 10) * ResMod);
-
-            fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
-          end;
+          if DrawY <= 0 then // Send helper below gadget if it's drawn above the level
+            DrawY := LowY;
         end;
 
-      DOM_FIRE:
+        Helper.DrawTo(Dst, DrawX - Helper.Width div 2, DrawY);
+
+        if (Gadget.CurrentFrame = 1) then
         begin
-          fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-        end;
+          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
+          fHelperImages[hpi_Exit_Lock].DrawTo(Dst, DrawX - 3 * ResMod, (Gadget.TriggerRect.Top - 10) * ResMod);
 
-      DOM_TRAP:
-        begin
-          fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
         end;
+      end;
 
-      DOM_TRAPONCE:
-        begin
-          fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
-        end;
+    DOM_FIRE:
+      begin
+        fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+      end;
 
-      DOM_UPDRAFT:
-        begin
-          fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
-        end;
+    DOM_TRAP:
+      begin
+        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+      end;
 
-      DOM_SPLITTER:
-        begin
-          fHelperImages[hpi_Splitter].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
-        end;
+    DOM_TRAPONCE:
+      begin
+        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
+      end;
 
-      DOM_BUTTON:
-        begin
-          fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-        end;
+    DOM_UPDRAFT:
+      begin
+        fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
+      end;
 
-      DOM_COLLECTIBLE:
-        begin
-          fHelperImages[hpi_Collectible].DrawTo(Dst, DrawX - 34 * ResMod, DrawY);
-        end;
+    DOM_SPLITTER:
+      begin
+        fHelperImages[hpi_Splitter].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+      end;
 
-      DOM_FORCELEFT:
-        if Gadget.IsFlipImage then
-        begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
-        end else begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
-        end;
+    DOM_BUTTON:
+      begin
+        fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+      end;
 
-      DOM_FORCERIGHT:
-        if Gadget.IsFlipImage then
-        begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
-        end else begin
-          fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
-        end;
+    DOM_COLLECTIBLE:
+      begin
+        fHelperImages[hpi_Collectible].DrawTo(Dst, DrawX - 34 * ResMod, DrawY);
+      end;
 
-      DOM_NOSPLAT:
-        begin
-          fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_FORCELEFT:
+      if Gadget.IsFlipImage then
+      begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
+      end else begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
+      end;
 
-      DOM_SPLAT:
-        begin
-          fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_FORCERIGHT:
+      if Gadget.IsFlipImage then
+      begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
+      end else begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
+      end;
 
-      DOM_WATER:
-        begin
-          fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_NOSPLAT:
+      begin
+        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_BLASTICINE:
-        begin
-          fHelperImages[hpi_Blasticine].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_SPLAT:
+      begin
+        fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_VINEWATER:
-        begin
-          fHelperImages[hpi_Vinewater].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_WATER:
+      begin
+        fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_POISON:
-        begin
-          fHelperImages[hpi_Poison].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_BLASTICINE:
+      begin
+        fHelperImages[hpi_Blasticine].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_LAVA:
-        begin
-          fHelperImages[hpi_Lava].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_VINEWATER:
+      begin
+        fHelperImages[hpi_Vinewater].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_RADIATION:
-        begin
-          fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
+    DOM_POISON:
+      begin
+        fHelperImages[hpi_Poison].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
 
-      DOM_SLOWFREEZE:
-        begin
-          fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
-        end;
-    end;
+    DOM_LAVA:
+      begin
+        fHelperImages[hpi_Lava].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
+
+    DOM_RADIATION:
+      begin
+        fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
+
+    DOM_SLOWFREEZE:
+      begin
+        fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+      end;
+  end;
 end;
 
 procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
@@ -3231,9 +3235,9 @@ var
     if (YPos <= 0) then // Send digit below gadget if it's drawn above the level
     begin
       if Gadget.TriggerEffect = DOM_WINDOW then
-        YPos := (Gadget.Top + Gadget.Height div 2 + DigitImage.Height) * ResMod
+        YPos := (Gadget.Top + Gadget.Height div 2 + DigitImage.Height div ResMod)
       else
-        YPos := (Gadget.Top + Gadget.Height + DigitImage.Height) * ResMod;
+        YPos := (Gadget.Top + Gadget.Height + DigitImage.Height div ResMod);
     end;
 
     LemCap := Gadget.RemainingLemmingsCount;
@@ -4074,8 +4078,19 @@ begin
   Gadgets.InitializeAnimations;
 end;
 
+procedure TRenderer.InitializeBrickColors(aBrickPixelColor: TColor32);
 var
-  LastErrorLemmingSprites: String;
+  i: Integer;
+begin
+  with TColor32Entry(aBrickPixelColor) do
+  for i := 0 to High(BrickPixelColors) do
+  begin
+    TColor32Entry(BrickPixelColors[i]).A := A;
+    TColor32Entry(BrickPixelColors[i]).R := Min(Max(R + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).B := Min(Max(B + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).G := Min(Max(G + (i - 6) * 4, 0), 255);
+  end;
+end;
 
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
@@ -4087,7 +4102,6 @@ begin
 
   fTheme.Load(aLevel.Info.GraphicSetName);
   PieceManager.SetTheme(fTheme);
-
   fAni.ClearData;
   fAni.Theme := fTheme;
 
@@ -4106,21 +4120,15 @@ begin
   except
     on E: Exception do
     begin
-      fTheme.Lemmings := 'default';
-
-      fTheme.Load(fTheme.Lemmings);
+      fTheme.Load('orig_crystal'); // We need to actually choose a theme, not just set the default sprites
       PieceManager.SetTheme(fTheme);
-
       fAni.ClearData;
       fAni.Theme := fTheme;
 
       fAni.PrepareAnimations;
 
-      if fTheme.Lemmings <> LastErrorLemmingSprites then
-      begin
-        LastErrorLemmingSprites := fTheme.Lemmings;
-        ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
-      end;
+      GameParams.FallbackMessage := E.Message + #13 + #13 + 'Falling back to default sprites';
+      GameParams.ShouldShowFallbackMessage := True;
     end;
   end;
 
@@ -4139,9 +4147,12 @@ begin
     fRenderInterface.DisableDrawing := NoOutput;
   end;
 
-  // Recolor the spear graphics
+  // Recolor bricks and spears
   if fTheme <> nil then
-  DoProjectileRecolor(fAni.SpearBitmap, fTheme.Colors['MASK']);
+  begin
+    InitializeBrickColors(fTheme.Colors['MASK']);
+    DoProjectileRecolor(fAni.SpearBitmap, fTheme.Colors['MASK']);
+  end;
 
   // Prepare any composite pieces
   PieceManager.RemoveCompositePieces;

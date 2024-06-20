@@ -1681,7 +1681,7 @@ begin
     Exit;
   end;
 
-  // Check for groups withint this group
+  // Check for groups within this group
   for i := 0 to fChildGroups.Count-1 do
   begin
     Result := fChildGroups[i].FirstLevelRecursive;

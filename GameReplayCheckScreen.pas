@@ -227,10 +227,12 @@ var
 
   procedure ManageReplays(aEntry: TReplayCheckEntry);
   var
-    NewName: String;
+    NewName, UniqueTag, ResultTag, OutcomeText: String;
     ThisSetting: TReplayManagerSetting;
-    ResultTag, OutcomeText: String;
+    NamingAttempts: Integer;
   const
+    MaxNamingAttempts = 1000;
+
     TAG_RESULT = '{RESULT}';
     TAG_FILENAME = '{FILENAME}';
 
@@ -304,10 +306,23 @@ var
     end else
       OutStream.LoadFromFile(aEntry.ReplayFile);
 
-    if (ThisSetting.Action = rnaMove) or ((ThisSetting.Action = rnaNone) and ThisSetting.AppendResult) then
-      DeleteFile(aEntry.ReplayFile);
+    // Add a tag to ensure the filename is unique and prevent overwriting
+    NamingAttempts := 0;
+    while FileExists(NewName) do
+    begin
+      Inc(NamingAttempts);
+
+      if NamingAttempts > MaxNamingAttempts then
+        raise Exception.Create('Unable to generate a unique filename after ' + MaxNamingAttempts.ToString + ' attempts');
+
+      UniqueTag := IntToHex(Random($1000), 3);
+      NewName := ChangeFileExt(NewName, '') + '_' + UniqueTag + '.nxrp';
+    end;
 
     OutStream.SaveToFile(NewName);
+
+    if (ThisSetting.Action = rnaMove) or ((ThisSetting.Action = rnaNone) and ThisSetting.AppendResult) then
+      DeleteFile(aEntry.ReplayFile);
   end;
 
 begin
@@ -516,12 +531,13 @@ procedure TGameReplayCheckScreen.BuildScreen;
 begin
   ScreenImg.BeginUpdate;
   try
+    CurrentScreen := gstReplayTest;
+
     DrawWallpaper;
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);
 
     fOldHighRes := GameParams.HighResolution;
     GameParams.HighResolution := false;
-    GlobalGame.ReplayWasLoaded := true;
 
     PieceManager.Clear;
 
@@ -602,7 +618,6 @@ end;
 procedure TGameReplayCheckScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   GameParams.HighResolution := fOldHighRes;
-  GlobalGame.ReplayWasLoaded := false;
 
   PieceManager.Clear;
 

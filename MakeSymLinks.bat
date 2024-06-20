@@ -9,5 +9,4 @@ mklink /H bin\bass.dll data\external\bass.dll
 mklink /H bin\NLPackerDefaultData.ini data\external\NLPackerDefaultData.ini
 
 if not exist "bin\levels" mkdir "bin\levels"
-mklink /J "bin\levels\Test Levels" "data\external\levels\Test Levels"
-mklink /J "bin\levels\MazuLems" "data\external\levels\MazuLems"
+mklink /J "bin\levels\SuperLemmix Welcome Pack" "data\external\levels\SuperLemmix Welcome Pack"

@@ -100,7 +100,8 @@ type
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
     private
-      fMenuFont          : TMenuFont;
+      fCurrentScreen    : TGameScreenType;
+      fMenuFont         : TMenuFont;
       fKeyStates: TDictionary<Word, UInt64>;
 
       fBasicCursor: TNLCursor;
@@ -133,7 +134,7 @@ type
       procedure CancelPlaybackMode;
 
       procedure ShowConfigMenu;
-      procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
+      procedure ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false; aFromPackOnly: Boolean = false): Boolean;
@@ -169,6 +170,8 @@ type
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
+
+      property CurrentScreen: TGameScreenType read fCurrentScreen write fCurrentScreen;
 
       procedure MainFormResized; override;
       procedure DrawClassicModeButton;
@@ -215,7 +218,7 @@ begin
   fMenuFont.Load;
 
   fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
-  LoadBasicCursor('amiga.png');
+  LoadBasicCursor('menu');
   SetBasicCursor;
 
   InitializeImage;
@@ -249,9 +252,11 @@ begin
   BMP := TBitmap32.Create;
   try
     if GameParams.HighResolution then
-      aPath := AppPath + SFGraphicsCursorHighRes + aName
+      aName := aName + '-hr.png'
     else
-      aPath := AppPath + SFGraphicsCursor + aName;
+      aName := aName + '.png';
+
+    aPath := AppPath + SFGraphicsCursor + aName;
 
     TPngInterface.LoadPngFile(aPath, BMP);
     fBasicCursor.LoadFromBitmap(BMP);
@@ -829,13 +834,19 @@ var
   aX, aY: Integer;
   BgImage, Dst: TBitmap32;
   SrcRect: TRect;
+  WallpaperPath: String;
 begin
   Dst := ScreenImg.Bitmap;
   BgImage := TBitmap32.Create;
 
+  if GameParams.AmigaTheme then
+    WallpaperPath := 'amiga/wallpaper'
+  else
+    WallpaperPath := 'wallpaper';
+
   try
-    if not GetGraphic('wallpaper' + '_' + GetWallpaperSuffix + '.png', BgImage, true) then
-      GetGraphic('wallpaper.png', BgImage, true);
+    if not GetGraphic(WallpaperPath + '_' + GetWallpaperSuffix + '.png', BgImage, true) then
+      GetGraphic(WallpaperPath + '.png', BgImage, true);
 
     if (BgImage.Width = 0) or (BgImage.Height = 0) then
     begin
@@ -933,8 +944,6 @@ var
 begin
   if GameParams.TestModeLevel <> nil then Exit;
 
-  GameParams.OpenedViaReplay := False;
-
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(self);
   try
@@ -979,8 +988,9 @@ end;
 procedure TGameBaseMenuScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
-  OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean;
+  OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean;
 begin
+  OldAmigaTheme := GameParams.AmigaTheme;
   OldFullScreen := GameParams.FullScreen;
   OldHighResolution := GameParams.HighResolution;
   OldShowMinimap := GameParams.ShowMinimap;
@@ -1002,7 +1012,6 @@ begin
       ResetWindowSize := ConfigDlg.ResetWindowSize;
       ResetWindowPos := ConfigDlg.ResetWindowPosition;
     end;
-
   finally
     ConfigDlg.Free;
   end;
@@ -1010,7 +1019,7 @@ begin
   { Wise advice from Simon - save these things on exiting the config dialog, rather than
     waiting for a quit or a screen transition to save them. }
   GameParams.Save(scImportant);
-  ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
+  ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
 
   if fCalledFromClassicModeButton then
   begin
@@ -1020,7 +1029,7 @@ begin
     DoAfterConfig;
 end;
 
-procedure TGameBaseMenuScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
+procedure TGameBaseMenuScreen.ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
 begin
   if GameParams.FullScreen and not OldFullScreen then
   begin
@@ -1040,14 +1049,18 @@ begin
   end;
 
   if (GameParams.FullScreen <> OldFullScreen)
-    or (GameParams.ShowMinimap <> OldShowMinimap) then
-  begin
-    InitializeImage;
-    BuildScreen;
-  end;
+    or (GameParams.AmigaTheme <> OldAmigaTheme)
+      or (GameParams.ShowMinimap <> OldShowMinimap) then
+        CloseScreen(CurrentScreen);
 
-  if GameParams.HighResolution <> OldHighResolution then
+  if (GameParams.HighResolution <> OldHighResolution) then
+  begin
+    // Reload the preview screen again to ensure the level gets redrawn correctly
+    if (CurrentScreen = gstPreview) then
+      CloseScreen(CurrentScreen);
+
     PieceManager.Clear;
+  end;
 
   if GameParams.LinearResampleMenu then
   begin

@@ -178,7 +178,7 @@ var
     COLOR_COUNT = 15;
     CANDIDATES: array[0..COLOR_COUNT-1] of TColor32 =
      ($FF00FF, $FFFF00, $00FFFF, $000000, $FF0000, $00FF00, $0000FF, $FFFFFF,
-      $800080, $808000, $008080, $800000, $008000, $000080, $808080);
+      $800080, $808000, $008080, $800000, $008000, $000080, $808080, $888888);
 
     function TestColor(Color: TColor32): Boolean;
     var

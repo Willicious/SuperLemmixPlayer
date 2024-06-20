@@ -18,7 +18,7 @@ const
   BACKGROUND_COLOR = 'background';
   FALLBACK_COLOR = MASK_COLOR;
 
-  DEFAULT_COLOR = $FF808080;
+  DEFAULT_COLOR = $FF888888;
 
 type
   TNeoThemeColor = record

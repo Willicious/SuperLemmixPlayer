@@ -63,6 +63,7 @@ type
     gbReplayOptions: TGroupBox;
     gbSkillPanelOptions: TGroupBox;
     cbShowButtonHints: TCheckBox;
+    cbAmigaTheme: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -202,8 +203,7 @@ begin
       MaxZoom := Max(MaxWidth div 336, 1);
     end;
 
-  if cbHighResolution.Checked then
-    MaxZoom := Max(1, MaxZoom div 2);
+  MaxZoom := Max(1, MaxZoom div 2);
 
   for i := 1 to MaxZoom do
     cbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
@@ -222,7 +222,10 @@ end;
 procedure TFormNXConfig.btnOKClick(Sender: TObject);
 begin
   SaveToParams;
+
   if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
+  if GameParams.AmigaTheme then SoundManager.PlaySound(SFX_AMIGA_1);
+
   ModalResult := mrOK;
 end;
 
@@ -294,6 +297,8 @@ begin
     cbPostviewJingles.Checked := GameParams.PostviewJingles;
     cbMenuSounds.Checked := GameParams.MenuSounds;
 
+    cbAmigaTheme.Checked := GameParams.AmigaTheme;
+
     btnApply.Enabled := false;
   finally
     fIsSetting := false;
@@ -313,7 +318,7 @@ begin
   GameParams.IngameSaveReplayPattern := GetReplayPattern(cbIngameSaveReplayPattern);
   GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
 
-  GameParams.NextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
+  GameParams.LoadNextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
 
   // --- Page 2 (Interface Options) --- //
   // Checkboxes
@@ -360,6 +365,8 @@ begin
 
   GameParams.PostviewJingles := cbPostviewJingles.Checked;
   GameParams.MenuSounds := cbMenuSounds.Checked;
+
+  GameParams.AmigaTheme := cbAmigaTheme.Checked;
 
   btnApply.Enabled := false;
 end;
@@ -411,8 +418,8 @@ begin
         NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
       end;
 
-      // If going from {low res, 3x panel zoom w/minimap} to hi-res, we need to reset window
-      if cbShowMinimap.Checked and not GameParams.FullScreen then
+      // If changing showminimap, we need to reset window
+      if (Sender = cbShowMinimap) and not GameParams.FullScreen then
       begin
         cbResetWindowPosition.Checked := True;
         cbResetWindowSize.Checked := True;
@@ -518,7 +525,7 @@ procedure TFormNXConfig.SetCheckboxes;
         cbMinimapHighQuality.Enabled := False;
       end;
 
-    if GameParams.NextUnsolvedLevel then
+    if GameParams.LoadNextUnsolvedLevel then
       rgGameLoading.ItemIndex := 0
     else
       rgGameLoading.ItemIndex := 1;

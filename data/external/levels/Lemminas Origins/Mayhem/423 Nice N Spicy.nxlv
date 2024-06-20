@@ -8,7 +8,7 @@
  TITLE Nice N Spicy
  AUTHOR WillLem
  ID x43D3F09100477460
- VERSION x000000000000000D
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -368,8 +368,8 @@
  $TERRAIN
    STYLE orig_dirt
    PIECE steel_01
-   X 528
-   Y 79
+   X 529
+   Y 69
  $END
  
  $TERRAIN
@@ -382,9 +382,25 @@
  
  $TERRAIN
    STYLE orig_dirt
+   PIECE bridge_03
+   X 532
+   Y 110
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
    PIECE steel_01
-   X 530
-   Y 55
+   X 525
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 533
+   Y 45
  $END
  
  $TERRAIN

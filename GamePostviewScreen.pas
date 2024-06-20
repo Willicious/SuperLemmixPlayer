@@ -84,10 +84,7 @@ end;
 procedure TGamePostviewScreen.NextLevel;
 begin
   if not GameParams.PlaybackModeActive then
-  begin
     GameParams.NextLevel(true);
-    GlobalGame.ReplayWasLoaded := False;
-  end;
 
   CloseScreen(gstPreview);
 end;
@@ -106,8 +103,6 @@ end;
 procedure TGamePostviewScreen.ReplaySameLevel;
 begin
   CloseScreen(gstPreview);
-  if GameParams.ReplayAfterRestart then
-    GlobalGame.ReplayWasLoaded := True;
 end;
 
 procedure TGamePostviewScreen.MakeExitToMenuClickable;
@@ -265,8 +260,10 @@ var
 const
   TEXT_Y_POSITION = 28;
 begin
+  CurrentScreen := gstPostview;
   fClickableRegions.Clear;
   ScreenImg.BeginUpdate;
+
   try
     // Draw text
     Lines := GetPostviewText;
@@ -302,7 +299,7 @@ begin
     MakeHiddenOption(VK_F2, ShowConfigMenu);
     MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
 
-    ReloadCursor('postview.png');
+    ReloadCursor('postview');
 
     // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
     if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
@@ -322,10 +319,6 @@ begin
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;
-
-    // Move to next level if solved and user has chosen "next unsolved" rather than "last active" in game loading settings
-    if GameParams.GameResult.gSuccess and GameParams.NextUnsolvedLevel then
-      GameParams.NextLevel(true);
 
     CloseScreen(gstMenu);
   end;
@@ -438,14 +431,22 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if GameParams.PostviewJingles then
+    if GameParams.PostviewJingles or GameParams.AmigaTheme then
     begin
       SoundManager.PurgePackSounds;
 
       if gRescued >= Level.Info.RescueCount then
-        SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
-      else
-        SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
+      begin
+        if GameParams.AmigaTheme then
+          SoundManager.PlaySound(SFX_AMIGA_1)
+        else
+          SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
+      end else begin
+        if GameParams.AmigaTheme then
+          SoundManager.PlaySound(SFX_AMIGA_2)
+        else
+          SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
+      end;
     end;
   end;
 
@@ -580,7 +581,7 @@ end;
 procedure TGamePostviewScreen.DoAfterConfig;
 begin
   inherited;
-  ReloadCursor('postview.png');
+  ReloadCursor('postview');
 end;
 
 end.

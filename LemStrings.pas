@@ -12,13 +12,11 @@ const
   SFGraphics = 'gfx\';
     SFGraphicsGame = SFGraphics + 'game\';
     SFGraphicsCursor = SFGraphics + 'cursor\';
-    SFGraphicsCursorHighRes = SFGraphics + 'cursor-hr\';
     SFGraphicsHelpers = SFGraphics + 'helpers\';
     SFGraphicsHelpersHighRes = SFGraphics + 'helpers-hr\';
     SFGraphicsMasks = SFGraphics + 'mask\';
     SFGraphicsMenu = SFGraphics + 'menu\';
     SFGraphicsPanel = SFGraphics + 'panel\';
-    SFGraphicsPanelHighRes = SFGraphics + 'panel-hr\';
 
   SFStyles = 'styles\';
       SFDefaultStyle = 'default';
@@ -48,11 +46,13 @@ const
   SFTemp = 'temp\';
 
   // Sound effect files
+  SFX_AMIGA_1 = 'amigadisk1';
+  SFX_AMIGA_2 = 'amigadisk2';
   SFX_BUILDER_WARNING = 'ting';
   SFX_ASSIGN_SKILL = 'mousepre';
   SFX_ASSIGN_FAIL = 'assignfail';
   SFX_YIPPEE = 'yippee';
-  SFX_OING = 'oing';
+  SFX_BOING = 'oing';
   SFX_SPLAT = 'splat';
   SFX_LETSGO = 'letsgo';
   SFX_ENTRANCE = 'door';

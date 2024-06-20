@@ -27,7 +27,7 @@ type
 
     fSetInitialZoom       : Boolean;
 
-    fRectColor            : TColor32;
+    fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
     fOnMinimapClick       : TMinimapClickEvent; // Event handler for minimap
 
@@ -102,8 +102,9 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
     procedure SetButtonRects;
     procedure SetSkillIcons;
-    procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
+
+    procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
     // Drawing routines for the info string at the top
@@ -159,15 +160,14 @@ type
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
     procedure SetGame(const Value: TLemmingGame);
 
-    procedure ResetMinimapPosition;
-
-    property Image: TImage32 read fImage;
-
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawTurboHighlight;
-    procedure DrawMinimap; virtual;
+    procedure RemoveButtonHighlights;
 
+    procedure ResetMinimapPosition;
+    property Image: TImage32 read fImage;
+    procedure DrawMinimap; virtual;
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
@@ -176,6 +176,7 @@ type
 
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
+    property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
 
     property ButtonHint: String read fButtonHint write fButtonHint;
     procedure GetButtonHints(aButton: TSkillPanelButton);
@@ -223,7 +224,8 @@ uses
   SysUtils, Math, Windows, UMisc, PngInterface,
   GameControl, GameSound,
   LemTypes, LemReplay, LemStrings, LemNeoTheme,
-  LemmixHotkeys;
+  LemmixHotkeys,
+  FSuperLemmixLevelSelect;
 
 procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 var
@@ -342,7 +344,11 @@ begin
 
   Assert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
 
-  fRectColor := $FFF0D0D0;
+  if GameParams.AmigaTheme then
+    fMinimapViewRectColor := $FF00DD00
+  else
+    fMinimapViewRectColor := $FF4444DD;
+
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
 
@@ -398,13 +404,13 @@ end;
 -----------------------------------------}
 function TBaseSkillPanel.FirstButtonRect: TRect;
 begin
-  Result := Rect(1 * ResMod, 16 * ResMod, 15 * ResMod, 38 * ResMod);
+  Result := Rect(2, 32, 30, 76);
 end;
 
 function TBaseSkillPanel.ButtonRect(Index: Integer): TRect;
 begin
   Result := FirstButtonRect;
-  OffsetRect(Result, Index * 16 * ResMod, 0);
+  OffsetRect(Result, Index * 32, 0);
 end;
 
 function TBaseSkillPanel.FirstSkillButtonIndex: Integer;
@@ -433,75 +439,35 @@ end;
 -----------------------------------------------}
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
-  MaskColor: TColor32;
-  SrcFile, SrcFileHr, SrcFileHrMask: String;
+  SrcFile: String;
   Target: TNeoLevelGroup;
-  UpscaleSettings: TUpscaleSettings;
-
-  procedure GetHiResFileExtension;
-  begin
-    if GameParams.HighResolution then
-    begin
-      SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
-      SrcFileHrMask := ChangeFileExt(SrcFile, '_mask-hr.png');
-    end;
-  end;
 begin
   // Check styles folder first
   SrcFile := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aName;
-  GetHiResFileExtension;
 
   // Then levelpack folder
   if not FileExists(SrcFile) then
   begin
     Target := GameParams.CurrentLevel.Group;
     SrcFile := Target.Path + aName;
-    GetHiResFileExtension;
 
     while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
     begin
       Target := Target.Parent;
       SrcFile := Target.Path + aName;
-      GetHiResFileExtension;
     end;
   end;
 
   // Then default
   if not FileExists(SrcFile) then
   begin
+    if GameParams.AmigaTheme then
+      aName := 'amiga/' + aName;
+
     SrcFile := AppPath + SFGraphicsPanel + aName;
-
-    if GameParams.HighResolution then
-    begin
-      SrcFileHr := AppPath + SFGraphicsPanelHighRes + aName;
-      SrcFileHrMask := AppPath + SFGraphicsPanelHighRes + ChangeFileExt(aName, '_mask.png');
-    end;
   end;
 
-  MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
-
-  if GameParams.HighResolution then
-  begin
-    if FileExists(SrcFileHr) then
-    begin
-      TPngInterface.LoadPngFile(SrcFileHr, aDst);
-      TPngInterface.MaskImageFromFile(aDst, SrcFileHrMask, MaskColor);
-    end else begin
-      TPngInterface.LoadPngFile(SrcFile, aDst);
-      TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
-
-      UpscaleSettings.Mode := umPixelArt;
-      UpscaleSettings.LeftSide := uebTransparent;
-      UpscaleSettings.TopSide := uebTransparent;
-      UpscaleSettings.RightSide := uebTransparent;
-      UpscaleSettings.BottomSide := uebTransparent;
-
-      Upscale(aDst, UpscaleSettings);
-    end;
-  end else begin
-    TPngInterface.LoadPngFile(SrcFile, aDst);
-    TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
-  end;
+  TPngInterface.LoadPngFile(SrcFile, aDst)
 end;
 
 // Pave the area of NumButtons buttons with the blank panel
@@ -523,15 +489,15 @@ begin
   OffsetRect(DstRect, FirstButtonRect.Left, FirstButtonRect.Top);
 
   // Draw full panels
-  for i := 1 to (NumButtons * (16 * ResMod) - 1) div SrcWidth do
+  for i := 1 to (NumButtons * 32 - 1) div SrcWidth do
   begin
     BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
     OffsetRect(DstRect, SrcWidth, 0);
   end;
 
   // Draw partial panel at the end
-  DstRect.Right := ButtonRect(NumButtons - 1).Right + ResMod;
-  DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + ResMod;
+  DstRect.Right := ButtonRect(NumButtons - 1).Right + 2;
+  DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + 2;
   SrcRect.Right := SrcRect.Left - DstRect.Left + DstRect.Right;
   SrcRect.Bottom := SrcRect.Top - DstRect.Top + DstRect.Bottom;
   BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
@@ -543,6 +509,7 @@ procedure TBaseSkillPanel.AddButtonImage(ButtonName: string; Index: Integer);
 begin
   if (Index >= FirstSkillButtonIndex) and (Index <= LastSkillButtonIndex) then
     Exit; // Otherwise, "empty_slot.png" placeholder causes some graphical glitches
+
   GetGraphic(ButtonName, fIconBmp);
   fIconBmp.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
 end;
@@ -554,144 +521,102 @@ var
 begin
   // Load first the characters
   GetGraphic('panel_font.png', fIconBmp);
-  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 16, 32);
   for i := 0 to 37 do
   begin
-    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
+    fInfoFont[i].SetSize(16, 32);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8 * ResMod, 0);
+    OffsetRect(SrcRect, 16, 0);
   end;
 
   // Load now the icons for the text panel
   GetGraphic('panel_icons.png', fIconBmp);
-  SrcRect := Rect(0, 0, 12 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 24, 32);
   for i := 38 to 44 do
   begin
-    fInfoFont[i].SetSize(12 * ResMod, 16 * ResMod);
+    fInfoFont[i].SetSize(24, 32);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 12 * ResMod, 0);
+    OffsetRect(SrcRect, 24, 0);
   end;
 
   // Load now the replay icons for the text panel
   GetGraphic('replay_icons.png', fIconBmp);
-  SrcRect := Rect(0, 0, 12 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 24, 32);
   for i := 45 to NUM_FONT_CHARS - 1 do
   begin
-    fInfoFont[i].SetSize(12 * ResMod, 16 * ResMod);
+    fInfoFont[i].SetSize(24, 32);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 12 * ResMod, 0);
+    OffsetRect(SrcRect, 24, 0);
   end;
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
 const
-  PANEL_FALLBACK_BRICK_COLOR = $FF00B000;
+  PANEL_FALLBACK_BRICK_COLOR = $FF00BB00;
 var
   BrickColor: TColor32;
   Button: TSkillPanelButton;
-  TempBmp: TBitmap32;
-  x, y: Integer;
-  Ani: TBaseAnimationSet;
+  X, Y: Integer;
+  Offset: TPoint;
+  IconsImg: TBitmap32;
 
-  procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
+  procedure LoadIcons;
   var
-    Meta: TMetaLemmingAnimation;
-    SrcRect: TRect;
-    OldDrawMode: TDrawMode;
+    IconsImgPath, aStyle, aStylePath, aPath: String;
   begin
-    Ani := GameParams.Renderer.LemmingAnimations;
-    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+    IconsImgPath := 'levelinfo_icons.png';
+    aStyle := GameParams.Level.Info.GraphicSetName;
+    aStylePath := AppPath + SFStyles + aStyle + SFIcons;
+    aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
-    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
-    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
-    SrcRect.Offset(0, SrcRect.Height * aFrame);
-
-    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
-    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX * ResMod - Meta.FootX, footY * ResMod - Meta.FootY, SrcRect);
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+    if FileExists(aStylePath + IconsImgPath) then // Check styles folder first
+      TPNGInterface.LoadPngFile(aStylePath + IconsImgPath, IconsImg)
+    else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImgPath)) then // Then levelpack folder
+      TPNGInterface.LoadPngFile(aPath + IconsImgPath, IconsImg)
+    else
+      TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImgPath, IconsImg); // Then default
   end;
 
-  procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
+  procedure DrawIcon(dst: TBitmap32; IconIndex: Integer);
   var
-    Meta: TMetaLemmingAnimation;
-    SrcRect: TRect;
-    OldDrawMode: TDrawMode;
+    SrcRect, DstRect: TRect;
+    PixelColor: TColor32;
+    x, y: Integer;
   begin
-    if GameParams.HighResolution then
+    SrcRect.Left := (IconIndex mod 6) * 32;
+    SrcRect.Top := (IconIndex div 6) * 32;
+    SrcRect.Right := SrcRect.Left + 32;
+    SrcRect.Bottom := SrcRect.Top + 32;
+
+    DstRect.Left := 0 + Offset.X;
+    DstRect.Top := 0 + Offset.Y;
+    DstRect.Right := DstRect.Left + 32;
+    DstRect.Bottom := DstRect.Top + 32;
+
+    // Recolour bricks for all construction skills
+    if IconIndex in [44, 45, 46, 47, 48] then
     begin
-      dstRect.Left := dstRect.Left * 2 + 1;
-      dstRect.Top := dstRect.Top * 2;
-      dstRect.Right := dstRect.Right * 2 + 1;
-      dstRect.Bottom := dstRect.Bottom * 2;
+      BrickColor := GameParams.Renderer.Theme.Colors['MASK'];
+
+      // Prevents colors that don't contrast well with outline
+      if (BrickColor and $00C0C0C0) = 0 then
+        BrickColor := PANEL_FALLBACK_BRICK_COLOR;
+
+      for y := 0 to 31 do
+      begin
+        for x := 0 to 31 do
+        begin
+          PixelColor := IconsImg.Pixel[x + SrcRect.Left, y + SrcRect.Top];
+
+          if (PixelColor = $FFB400B4) or (PixelColor = $FF780078) then
+            IconsImg.Pixel[x + SrcRect.Left, y + SrcRect.Top] := BrickColor;
+        end;
+      end;
     end;
 
-    Ani := GameParams.Renderer.LemmingAnimations;
-    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
-
-    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
-    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
-    SrcRect.Offset(0, SrcRect.Height * aFrame);
-
-    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
-    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+    IconsImg.DrawTo(dst, DstRect, SrcRect);
   end;
 
-  procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
-  var
-    oX: Integer;
-  begin
-    for oX := 0 to W-1 do
-      if GameParams.HighResolution then
-      begin
-        dst.PixelS[(X + oX) * ResMod, Y * ResMod] := BrickColor;
-        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod] := BrickColor;
-        dst.PixelS[(X + oX) * ResMod, Y * ResMod + 1] := BrickColor;
-        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod + 1] := BrickColor;
-      end else
-        dst.PixelS[X + oX, Y] := BrickColor;
-  end;
-
-  procedure Outline(dst: TBitmap32; isRecursive: Boolean = false);
-  var
-    x, y: Integer;
-    oX, oY: Integer;
-    ThisAlpha, MaxAlpha: Byte;
-    OutlineColor: TColor32;
-  begin
-    TempBmp.Assign(dst);
-    dst.Clear(0);
-    TempBmp.WrapMode := wmClamp;
-    TempBmp.OuterColor := $00000000;
-
-    if GameParams.Renderer.Theme.DoesColorExist('PANEL_OUTLINE') then
-      OutlineColor := GameParams.Renderer.Theme.Colors['PANEL_OUTLINE'] and $FFFFFF
-    else
-      OutlineColor := $000000;
-
-    for y := 0 to TempBmp.Height-1 do
-      for x := 0 to TempBmp.Width-1 do
-      begin
-        MaxAlpha := 0;
-        for oY := -1 to 1 do
-          for oX := -1 to 1 do
-          begin
-            if Abs(oY) + Abs(oX) <> 1 then
-              Continue;
-            ThisAlpha := (TempBmp.PixelS[x + oX, y + oY] and $FF000000) shr 24;
-            if ThisAlpha > MaxAlpha then
-              MaxAlpha := ThisAlpha;
-          end;
-        dst[x, y] := (MaxAlpha shl 24) or OutlineColor;
-      end;
-
-    TempBmp.DrawTo(dst);
-
-    if GameParams.HighResolution and not isRecursive then
-      Outline(dst, true);
-  end;
 begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
@@ -703,126 +628,52 @@ begin
     for x := 0 to fSkillCountEraseInvert.Width-1 do
       fSkillCountEraseInvert[x, y] := fSkillCountEraseInvert[x, y] xor $00FFFFFF; // Don't invert alpha
 
-  TempBmp := TBitmap32.Create; // Freely useable as long as Outline isn't called while it's being used
+  IconsImg := TBitmap32.Create;
   try
-    // Some preparation
-    TempBmp.DrawMode := dmBlend;
-    TempBmp.CombineMode := cmMerge;
+    LoadIcons;
 
-    BrickColor := GameParams.Renderer.Theme.Colors['MASK'];
-    if (BrickColor and $00C0C0C0) = 0 then
-      BrickColor := PANEL_FALLBACK_BRICK_COLOR; // Prevent too-dark colors being used, that won't contrast well with outline
-
-    // Set image sizes
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      fSkillIcons[Button].SetSize(15 * ResMod, 23 * ResMod);
+    begin
+      fSkillIcons[Button].SetSize(32, 48); // Make the full button available for drawing
 
-    // --------------------------------------------------------- //
-    // --- This code is mostly copied to LemGadgetAnimation. --- //
-    // --------------------------------------------------------- //
+      // Set Offset for each button
+      Offset := Point(0, 0);
 
-    // Walker, Jumper, Shimmier, Ballooner, Slider, Climber, - all simple
-    DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 20);
-    DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 19);
-    DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 19);
-    DrawAnimationFrame(fSkillIcons[spbBallooner], BALLOONING, 4, 7, 23);
-    DrawAnimationFrame(fSkillIcons[spbSlider], SLIDING_RTL, 0, 5, 21);
-    DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 20);
+      case Button of
+        spbWalker:    Offset := Point(1, 14);
+        spbJumper:    Offset := Point(0, 16);
+        spbShimmier:  Offset := Point(0, 16);
+        spbBallooner: Offset := Point(0, 12);
+        spbSlider:    Offset := Point(-2, 15);
+        spbClimber:   Offset := Point(-1, 13);
+        spbSwimmer:   Offset := Point(0, 12);
+        spbFloater:   Offset := Point(0, 12);
+        spbGlider:    Offset := Point(0, 12);
+        spbDisarmer:  Offset := Point(-2, 16);
+        spbTimebomber:Offset := Point(-1, 12);
+        spbBomber:    Offset := Point(-1, 12);
+        spbFreezer:   Offset := Point(0, 15);
+        spbBlocker:   Offset := Point(1, 14);
+        spbLadderer:  Offset := Point(0, 16);
+        spbPlatformer:Offset := Point(0, 12);
+        spbBuilder:   Offset := Point(0, 12);
+        spbStacker:   Offset := Point(0, 16);
+        spbSpearer:   Offset := Point(0, 15);
+        spbGrenader:  Offset := Point(0, 15);
+        spbLaserer:   Offset := Point(0, 14);
+        spbBasher:    Offset := Point(0, 14);
+        spbFencer:    Offset := Point(-2, 16);
+        spbMiner:     Offset := Point(0, 15);
+        spbDigger:    Offset := Point(-1, 16);
+        spbCloner:    Offset := Point(-1, 15);
+        else          Offset := Point(0, 0);
+      end;
 
-    // Swimmer - we need to draw the background water
-    DrawAnimationFrame(fSkillIcons[spbSwimmer], SWIMMING, 2, 8, 18);
-    Outline(fSkillIcons[spbSwimmer]);
-    TempBmp.Assign(fSkillIcons[spbSwimmer]);
-    fSkillIcons[spbSwimmer].Clear(0);
-    fSkillIcons[spbSwimmer].FillRect(0, 17 * ResMod, 15 * ResMod, 22 * ResMod, $FF000000);
-    fSkillIcons[spbSwimmer].FillRect(0, 18 * ResMod, 15 * ResMod, 22 * ResMod, $FF0000FF);
-    TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
-
-    // Floater, Glider, Disarmer - all simple
-    DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 23);
-    DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 25);
-    DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 20);
-
-    // Timebomber has its own graphic
-    GetGraphic('icon_timebomber.png', fIconBMP);
-    fIconBmp.DrawTo(fSkillIcons[spbTimebomber], -1 * ResMod, 7 * ResMod);
-
-    // (Time)Bomber is drawn resized, and we draw a "5" to Timebomber
-    DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 22));
-
-    // Freezer is tricky - the goal is an outlined ice cube over a frozen lemming
-    DrawAnimationFrame(fSkillIcons[spbFreezer], FROZEN, 0, 7, 21);
-    DrawAnimationFrame(fSkillIcons[spbFreezer], ICECUBE, 0, 8, 20);
-    TempBmp.Assign(fSkillIcons[spbFreezer]);
-    fSkillIcons[spbFreezer].Clear(0);
-    TempBmp.DrawTo(fSkillIcons[spbFreezer], 0, 0);
-
-    // Blocker is simple
-    DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 4, 7, 20);
-
-    // Ladderer, Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
-    DrawAnimationFrame(fSkillIcons[spbLadderer], LADDERING, 16, 5, 16);
-    DrawBrick(fSkillIcons[spbLadderer], 7, 17);
-    DrawBrick(fSkillIcons[spbLadderer], 8, 18);
-    DrawBrick(fSkillIcons[spbLadderer], 9, 19);
-    DrawBrick(fSkillIcons[spbLadderer], 10, 20);
-
-    // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
-    DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 18);
-    fSkillIcons[spbPlatformer].FillRect(2 * ResMod, 21 * ResMod, 12 * ResMod, 21 * ResMod, $FF000000);
-    DrawBrick(fSkillIcons[spbPlatformer], 2, 19);
-    DrawBrick(fSkillIcons[spbPlatformer], 5, 19);
-    DrawBrick(fSkillIcons[spbPlatformer], 8, 19);
-    DrawBrick(fSkillIcons[spbPlatformer], 11, 19);
-
-    DrawAnimationFrame(fSkillIcons[spbBuilder], BRICKLAYING, 1, 7, 18);
-    DrawBrick(fSkillIcons[spbBuilder], 4, 20);
-    DrawBrick(fSkillIcons[spbBuilder], 6, 19);
-    DrawBrick(fSkillIcons[spbBuilder], 8, 18);
-    DrawBrick(fSkillIcons[spbBuilder], 10, 17);
-
-    DrawAnimationFrame(fSkillIcons[spbStacker], STACKING, 0, 7, 19);
-    DrawBrick(fSkillIcons[spbStacker], 10, 18);
-    DrawBrick(fSkillIcons[spbStacker], 10, 17);
-    DrawBrick(fSkillIcons[spbStacker], 10, 16);
-    DrawBrick(fSkillIcons[spbStacker], 10, 15);
-
-    // Projectiles need to be loaded separately
-    Ani.LoadGrenadeImages(TempBMP);
-    Ani.DrawProjectilesToBitmap(TempBMP, fSkillIcons[spbGrenader], 10, 7, GRENADE_GRAPHIC_RECTS[pgGrenadeU]);
-
-    Ani.LoadSpearImages(TempBMP);
-    DoProjectileRecolor(TempBMP, BrickColor);
-    Ani.DrawProjectilesToBitmap(TempBMP, fSkillIcons[spbSpearer], 2, 7, SPEAR_GRAPHIC_RECTS[pgSpearSlightBLTR]);
-
-    DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 3, 3, 20);
-    DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 2, 6, 20);
-
-    // Propeller, Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
-    // For Digger, we just have to accept some particles.
-    //DrawAnimationFrame(fSkillIcons[spbPropeller], PROPELLING, 0, 8, 20);  // Propeller
-    DrawAnimationFrame(fSkillIcons[spbLaserer], LASERING, 0, 8, 20);
-    DrawAnimationFrame(fSkillIcons[spbBasher], BASHING, 0, 8, 20);
-    DrawAnimationFrame(fSkillIcons[spbFencer], FENCING, 1, 7, 20);
-    DrawAnimationFrame(fSkillIcons[spbMiner], MINING, 12, 4, 20);
-    DrawAnimationFrame(fSkillIcons[spbDigger], DIGGING, 4, 7, 20);
-
-    // Bookmark - Move Batter to correct place later  // Batter
-    //DrawAnimationFrame(fSkillIcons[spbBatter], BATTING, 4, 8, 20);
-
-    // Finally, outline everything. Cloner is generated after this, as it uses the post-outlined Walker graphic.
-    for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      if not (Button in [spbSwimmer, spbCloner]) then
-        Outline(fSkillIcons[Button]);
-        // Swimmer and Cloner are already outlined during their generation.
-
-    // Cloner is drawn as two back-to-back walkers, individually outlined.
-    DrawAnimationFrame(fSkillIcons[spbCloner], WALKING_RTL, 1, 6, 20);
-    Outline(fSkillIcons[spbCloner]);
-    TempBmp.Assign(fSkillIcons[spbWalker]);
-    TempBmp.DrawTo(fSkillIcons[spbCloner], 2, 0); // We want it drawn 2px to the right of where it is in the walker icon
+      // Draw icons
+      DrawIcon(fSkillIcons[Button], ICON_SKILLS[Button]);
+    end;
   finally
-    TempBmp.Free;
+    IconsImg.Free;
   end;
 end;
 
@@ -840,50 +691,50 @@ var
   begin
     TempBmp.Clear(0);
     CountStr := LeadZeroStr(aCount, 3); // Just in case
-    fSkillFont[CountStr[1], 1].DrawTo(TempBmp, 0, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
-    fSkillFont[CountStr[2], 1].DrawTo(TempBmp, 4 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
-    fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 8 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
+    fSkillFont[CountStr[1], 1].DrawTo(TempBmp, 0, 0, Rect(0, 0, 8, 16));
+    fSkillFont[CountStr[2], 1].DrawTo(TempBmp, 8, 0, Rect(0, 0, 8, 16));
+    fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 16, 0, Rect(0, 0, 8, 16));
   end;
 
 begin
   GetGraphic('skill_count_digits.png', fIconBmp);
-  SrcRect := Rect(0, 0, 4 * ResMod, 8 * ResMod);
+  SrcRect := Rect(0, 0, 8, 16);
   for c := '0' to '9' do
   begin
     for i := 0 to 1 do
     begin
-      fSkillFont[c, i].SetSize(8 * ResMod, 8 * ResMod);
-      fIconBmp.DrawTo(fSkillFont[c, i], (4 - 4 * i)  * ResMod, 0, SrcRect);
+      fSkillFont[c, i].SetSize(17, 16);
+      fIconBmp.DrawTo(fSkillFont[c, i], ((4 - 4 * i) * 2) + 1, 0, SrcRect);
 
       fSkillFontInvert[c, i].Assign(fSkillFont[c, i]);
       for y := 0 to fSkillFontInvert[c, i].Height-1 do
         for x := 0 to fSkillFontInvert[c, i].Width-1 do
           fSkillFontInvert[c, i][x, y] := fSkillFontInvert[c,i][x,y] xor $00FFFFFF; // Don't invert alpha
     end;
-    OffsetRect(SrcRect, 4 * ResMod, 0);
+    OffsetRect(SrcRect, 8, 0);
   end;
 
-  Inc(SrcRect.Right, 4 * ResMod); // Position is correct at this point, but Infinite symbol is 8px wide not 4px
-  fSkillInfinite.SetSize(8 * ResMod, 8 * ResMod);
+  Inc(SrcRect.Right, 8); // Position is correct at this point, but Infinite symbol is 8px wide not 4px
+  fSkillInfinite.SetSize(16, 16);
   fIconBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
 
-  OffsetRect(SrcRect, 8 * ResMod, 0); // Additional blue infinity symbol for when Infinite Skills mode is active
-  fSkillInfiniteMode.SetSize(8 * ResMod, 8 * ResMod);
+  OffsetRect(SrcRect, 16, 0); // Additional blue infinity symbol for when Infinite Skills mode is active
+  fSkillInfiniteMode.SetSize(16, 16);
   fIconBmp.DrawTo(fSkillInfiniteMode, 0, 0, SrcRect);
 
-  OffsetRect(SrcRect, 8 * ResMod, 0); // Locked RR/SI icon
-  fSkillLock.SetSize(8 * ResMod, 8 * ResMod);
+  OffsetRect(SrcRect, 16, 0); // Locked RR/SI icon
+  fSkillLock.SetSize(16, 16);
   fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
 
   TempBmp := TBitmap32.Create;
   TKernelResampler.Create(TempBmp);
   TKernelResampler(TempBmp.Resampler).Kernel := TCubicKernel.Create;
   try
-    TempBMP.SetSize(12 * ResMod, 8 * ResMod);
+    TempBMP.SetSize(24, 16);
     for i := 100 to MAXIMUM_SI do
     begin
       MakeOvercountImage(i);
-      fSkillOvercount[i].SetSize(9 * ResMod, 8 * ResMod);
+      fSkillOvercount[i].SetSize(18, 16);
       TempBMP.DrawTo(fSkillOvercount[i], fSkillOvercount[i].BoundsRect, TempBMP.BoundsRect);
     end;
   finally
@@ -943,7 +794,7 @@ begin
     MinimapRegion := TBitmap32.Create;
     GetGraphic('minimap_region.png', MinimapRegion);
     ResizeMinimapRegion(MinimapRegion);
-    MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - (3 * ResMod), MinimapRect.Top - (2 * ResMod));
+    MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - 6, MinimapRect.Top - 4);
     MinimapRegion.Free;
   end;
 
@@ -968,7 +819,7 @@ var
   //MagicFrequencyCalculatedByWillAndEric: Single;
 begin
   // Stops the sound cueing during backwards framesteps and rewind
-  if (Game.IsBackstepping or Game.RewindPressed)
+  if (Game.IsBackstepping or (fGameWindow.GameSpeed = gspRewind))
     // Unless the change is at the current frame
     and not (Game.ReplayManager.HasRRChangeAt(Game.CurrentIteration)) then Exit;
 
@@ -993,7 +844,7 @@ begin
   fImage.BeginUpdate;
   try
 
-    Minimap.SetSize(Level.Info.Width div 8 * ResMod, Level.Info.Height div 8 * ResMod);
+    Minimap.SetSize(Level.Info.Width div 4, Level.Info.Height div 4);
 
     ReadBitmapFromStyle;
     SetButtonRects;
@@ -1081,34 +932,32 @@ var
   OH, OV: Double;
   ViewRect: TRect;
   InnerViewRect: TRect;
+  ViewRectWidth, ViewRectHeight: Integer;
 begin
-if GameParams.ShowMinimap then
+  if GameParams.ShowMinimap then
   begin
     if Parent = nil then Exit;
 
-    // Add some space for when the viewport rect lies on the very edges
-    fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
+    // Add some space for when the view frame lies on the very edges
+    fMinimapTemp.SetSize(fMinimap.Width + 4, fMinimap.Height + 4);
     fMinimapTemp.Clear(0);
 
-    fMinimap.DrawTo(fMinimapTemp, 1 * ResMod, 1 * ResMod);
+    fMinimap.DrawTo(fMinimapTemp, 2, 2);
 
-    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
-    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
+    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / (4 * ResMod);
+    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / (4 * ResMod);
 
-    // Draw the visible area frame
-    ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
+    // Draw the view frame
+    ViewRectWidth := fGameWindow.DisplayWidth div (4 * ResMod) + 2;
+    ViewRectHeight := fGameWindow.DisplayHeight div (4 * ResMod) + 2;
+
+    ViewRect := Rect(0, 0, ViewRectWidth, ViewRectHeight);
     OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
-    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+    fMinimapTemp.FrameRectS(ViewRect, fMinimapViewRectColor);
 
-    if GameParams.HighResolution then
-    begin
-      InnerViewRect := ViewRect;
-      Inc(InnerViewRect.Left);
-      Inc(InnerViewRect.Top);
-      Dec(InnerViewRect.Bottom);
-      Dec(InnerViewRect.Right);
-      fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
-    end;
+    // Thicken the view frame by 1px
+    InnerViewRect := Rect(ViewRect.Left + 1, ViewRect.Top + 1, ViewRect.Right - 1, ViewRect.Bottom - 1);
+    fMinimapTemp.FrameRectS(InnerViewRect, fMinimapViewRectColor);
 
     fMinimapImage.Bitmap.Assign(fMinimapTemp);
 
@@ -1143,6 +992,7 @@ var
 begin
   if fGameWindow.IsHyperSpeed then Exit;
   if aButton = spbNone then Exit;
+
   if (aButton <= LAST_SKILL_BUTTON) then
   begin
     ButtonPos := Game.GetSelectedSkill + 1;
@@ -1151,13 +1001,15 @@ begin
     MagicFrequency := 6900 * (IntPower(1.0595, ButtonPos));
 
     if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
-    SoundManager.PlaySound(SFX_SKILLBUTTON, 0, MagicFrequency);
+      SoundManager.PlaySound(SFX_SKILLBUTTON, 0, MagicFrequency);
+
     if (fHighlitSkill = aButton) and Highlight then Exit;
     if (fHighlitSkill = spbNone) and not Highlight then Exit;
   end;
   if fButtonRects[aButton].Left <= 0 then Exit;
 
   RemoveHighlight(aButton);
+
   if Highlight then
     DrawHighlight(aButton);
 end;
@@ -1166,36 +1018,40 @@ procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
 var
   BorderRect: TRect;
 begin
-  if aButton <= LAST_SKILL_BUTTON then // No need to memorize this for eg. fast forward
+  if aButton <= LAST_SKILL_BUTTON then
   begin
     BorderRect := fButtonRects[aButton];
-    fHighlitSkill := aButton;
+    fHighlitSkill := aButton; // No need to memorize this for non-skill buttons
   end else
-  BorderRect := fButtonRects[aButton];
+    BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right, ResMod);
-  Inc(BorderRect.Bottom, ResMod * 2);
+  Inc(BorderRect.Right, 4);
+  Inc(BorderRect.Bottom, 4);
 
-  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fSkillSelected);
+  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(6, 6, 6, 6), fSkillSelected);
 end;
 
 procedure TBaseSkillPanel.DrawTurboHighlight;
 var
   BorderRect: TRect;
-  aButton: TSkillPanelButton;
 begin
-  aButton := spbFastForward;
-  BorderRect := fButtonRects[aButton];
+  BorderRect := fButtonRects[spbFastForward];
 
-  if Game.TurboPressed then
+  if (fGameWindow.GameSpeed = gspTurbo) then
   begin
-    Inc(BorderRect.Right, ResMod);
-    Inc(BorderRect.Bottom, ResMod * 2);
+    Inc(BorderRect.Right, 2);
+    Inc(BorderRect.Bottom, 4);
 
-    DrawNineSlice(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect,
-      Rect(3 * ResMod, 3 * ResMod, 3 * ResMod, 3 * ResMod), fTurboHighlight);
-  end else if not (Game.TurboPressed or (fGameWindow.GameSpeed = gspFF)) then
+    DrawNineSlice(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect, Rect(6, 6, 6, 6), fTurboHighlight);
+  end else if not (fGameWindow.GameSpeed in [gspFF, gspTurbo]) then
     RemoveHighlight(spbFastForward);
+end;
+
+procedure TBaseSkillPanel.RemoveButtonHighlights;
+begin
+  RemoveHighlight(spbSlower);
+  RemoveHighlight(spbFaster);
+  RemoveHighlight(spbRestart);
 end;
 
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
@@ -1210,30 +1066,30 @@ begin
   end else
     BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right, ResMod);
-  Inc(BorderRect.Bottom, 2 * ResMod);
+  Inc(BorderRect.Right, 4);
+  Inc(BorderRect.Bottom, 4);
 
   fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
   Exit;
 
   // Top
   EraseRect := BorderRect;
-  EraseRect.Bottom := EraseRect.Top + 1 * ResMod;
+  EraseRect.Bottom := EraseRect.Top + 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // Left
   EraseRect := BorderRect;
-  EraseRect.Right := EraseRect.Left + 1 * ResMod;
+  EraseRect.Right := EraseRect.Left + 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // Right
   EraseRect := BorderRect;
-  EraseRect.Left := EraseRect.Right - 1 * ResMod;
+  EraseRect.Left := EraseRect.Right - 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // Bottom
   EraseRect := BorderRect;
-  EraseRect.Top := EraseRect.Bottom - 1 * ResMod;
+  EraseRect.Top := EraseRect.Bottom - 2;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 end;
 
@@ -1279,23 +1135,23 @@ begin
   if IsRegularSkill and (aNumber = 0) and not fShowUsedSkills then Exit;
 
   if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
-    fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
+    fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
   else if (aNumber > 99) then
   begin
     if ((aButton <= LAST_SKILL_BUTTON) and Game.IsInfiniteSkillsMode) then
-      fSkillInfiniteMode.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
+      fSkillInfiniteMode.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
     else if (aButton <= LAST_SKILL_BUTTON) then
-      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
+      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
     else
-      fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
+      fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
   end else if aNumber < 10 then
   begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1 * ResMod, ButtonTop + 1 * ResMod);
+    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 2, ButtonTop + 2);
   end else begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    FontBMP[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
-    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
+    FontBMP[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
+    FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
   end;
 end;
 
@@ -1331,7 +1187,7 @@ begin
   Yellow := -1 / 6;
 
   // Erase previous text there
-  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8 * ResMod, 16 * ResMod, $00000000);
+  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 16, 32, $00000000);
 
   for CurChar := 1 to DrawStringLength do
   begin
@@ -1383,7 +1239,7 @@ begin
         else if (Level.Info.TimeLimit * 50 < Game.CurrentIteration + 750 {15 * 50}) and Game.IsSuperLemmingMode then
           fCombineHueShift := Red
         else
-          fCombineHueShift := Yellow;
+          fCombineHueShift := Blue;
       end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem
         and not Game.StateIsUnplayable then
       begin
@@ -1396,10 +1252,10 @@ begin
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * ResMod, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
       end;
     end;
   end;
@@ -1426,8 +1282,8 @@ begin
     // Highlight selected button
     if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
     begin
-      DrawButtonSelector(fHighlitSkill, false);
-      DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+      DrawButtonSelector(fHighlitSkill, False);
+      DrawButtonSelector(Game.RenderInterface.SelectedSkill, True);
     end;
 
     // Skill numbers
@@ -1441,7 +1297,6 @@ begin
     end;
 
     DrawButtonSelector(spbNuke, (Game.NukeIsActive or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
-
   finally
     Image.EndUpdate;
   end;
@@ -1458,9 +1313,9 @@ begin
 
   // Only load this one when needed
   GetGraphic('panel_message.png', fIconBmp);
-  SrcRect := Rect(0, 0, 140 * ResMod, 16 * ResMod);
+  SrcRect := Rect(0, 0, 280, 32);
   i := NUM_FONT_CHARS - 1;
-  fInfoFont[i].SetSize(140 * ResMod, 16 * ResMod);
+  fInfoFont[i].SetSize(280, 32);
   fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
 
   fNewDrawStr[Pos] := #104;
@@ -1642,20 +1497,22 @@ procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
 var
   TickCount: Cardinal;
   FrameIndex: Integer;
-  IsReplaying: Boolean;
+  IsReplaying, IsClassicModeRewind: Boolean;
 begin
   // Calculate the frame index based on the tick count
   TickCount := GetTickCount;
   FrameIndex := (TickCount div 500) mod 2;
+
   IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
+  IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
 
   if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if GameParams.PlaybackModeActive and not IsReplaying then
     fNewDrawStr[Pos] := Chr(102 + FrameIndex) // Purple "P" (#102 and #103)
-  else if Game.ReplayInsert then
+  else if Game.ReplayInsert and not IsClassicModeRewind then
     fNewDrawStr[Pos] := Chr(100 + FrameIndex) // Blue "R" (#100 and #101)
-  else if not fRRIsPressed then
+  else if not (RRIsPressed or IsClassicModeRewind) then
     fNewDrawStr[Pos] := Chr(98 + FrameIndex); // Red "R" (#98 and #99)
 end;
 
@@ -1712,8 +1569,8 @@ begin
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
     we do want the Rewind and Turbo keys to respond }
-  if fGameWindow.IsHyperSpeed and not (Game.RewindPressed or Game.TurboPressed) then
-    Exit;
+  if fGameWindow.IsHyperSpeed and not ((fGameWindow.GameSpeed = gspRewind)
+                                    or (fGameWindow.GameSpeed = gspTurbo)) then Exit;
 
   // Get pressed button
   aButton := spbNone;
@@ -1741,9 +1598,9 @@ begin
   case aButton of
     spbSlower:
       begin
-        Game.IsBackstepping := False;
-        fRRIsPressed := True;
-        DrawButtonSelector(spbSlower, true);
+        Game.IsBackstepping := False; // Ensures RR sound will be cued
+        RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
+        DrawButtonSelector(spbSlower, True);
 
         // Deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1754,9 +1611,9 @@ begin
       end;
     spbFaster:
       begin
-        Game.IsBackstepping := False;
-        fRRIsPressed := True;
-        DrawButtonSelector(spbFaster, true);
+        Game.IsBackstepping := False; // Ensures RR sound will be cued
+        RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
+        DrawButtonSelector(spbFaster, True);
 
         // Deactivates min/max RR jumping in ClassicMode
         if GameParams.ClassicMode then
@@ -1767,12 +1624,14 @@ begin
       end;
     spbPause:
       begin
-        // 1 second grace at the start of the level for the NoPause talisman
-        if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
-        if Game.RewindPressed then Game.RewindPressed := False;
-        if Game.TurboPressed then Game.TurboPressed := False;
+        // 55 frames' grace at the start of the level (before music starts) for the NoPause talisman
+        if (Game.CurrentIteration > 55) then Game.PauseWasPressed := True;
 
-        if fGameWindow.GameSpeed = gspPause then
+        // Cancel replay if pausing directly from Rewind in Classic Mode
+        if GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind) then
+          Game.RegainControl(True);
+
+        if (fGameWindow.GameSpeed = gspPause) then
         begin
           Game.IsBackstepping := False;
           fGameWindow.GameSpeed := gspNormal;
@@ -1794,56 +1653,50 @@ begin
     spbFastForward:
       begin
         if Game.IsSuperLemmingMode then Exit;
-        if Game.RewindPressed then Game.RewindPressed := False;
-        if Game.IsBackstepping then Game.IsBackstepping := False;
+
+        Game.IsBackstepping := False;
 
         if GameParams.TurboFF then
         begin
-          if ((fGameWindow.GameSpeed = gspFF) or Game.TurboPressed) then fGameWindow.GameSpeed := gspNormal;
-
-          Game.TurboPressed := not Game.TurboPressed;
-
-          Exit;
+          if (fGameWindow.GameSpeed = gspTurbo) then
+            fGameWindow.GameSpeed := gspNormal
+          else
+            fGameWindow.GameSpeed := gspTurbo;
+        end else begin
+          if (fGameWindow.GameSpeed = gspFF) then
+            fGameWindow.GameSpeed := gspNormal
+          else
+            fGameWindow.GameSpeed := gspFF;
         end;
-
-        if Game.TurboPressed then Game.TurboPressed := False;
-
-        if fGameWindow.GameSpeed = gspFF then
-          fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause] then
-          fGameWindow.GameSpeed := gspFF;
       end;
     spbRewind:
       begin
         if Game.IsSuperLemmingMode then Exit;
 
+        // Cancel replay only when stopping Rewind in Classic Mode
+        if (fGameWindow.GameSpeed = gspRewind) and GameParams.ClassicMode then
+          Game.RegainControl(True);
+
         // Pressing Rewind fails the NoPause talisman  (1 second grace at start of level)
         if (Game.CurrentIteration > 17) then Game.PauseWasPressed := True;
 
-        if fGameWindow.GameSpeed in [gspFF, gspPause, gspSlowMo] then
+        if fGameWindow.GameSpeed <> gspRewind then
+          fGameWindow.GameSpeed := gspRewind
+        else
           fGameWindow.GameSpeed := gspNormal;
-
-        if Game.TurboPressed then Game.TurboPressed := False;
-
-        Game.RewindPressed := not Game.RewindPressed;
       end;
     spbRestart:
       begin
-        DrawButtonSelector(spbRestart, true);
+        DrawButtonSelector(spbRestart, True);
+        fGameWindow.GotoSaveState(0);
 
-        // Always reset PauseWasPressed if user restarts
+        // Always reset these if user restarts
         Game.PauseWasPressed := False;
+        Game.ReplayLoaded := False;
 
-        // Cancels Replay after Restart in ClassicMode
+        // Cancel replay if in Classic Mode or if Replay After Restart is deactivated
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
-          begin
-            Game.CancelReplayAfterSkip := true;
-            Game.ReplayWasLoaded := false;
-            fGameWindow.GotoSaveState(0);
-          end else begin
-            fGameWindow.GotoSaveState(0);
-            Game.ReplayWasLoaded := true;
-          end;
+          Game.RegainControl(True);
       end;
     spbSquiggle: // Formerly spbClearPhysics
       begin
@@ -1873,10 +1726,8 @@ procedure TBaseSkillPanel.ImgMouseUp(Sender: TObject; Button: TMouseButton;
 begin
   Game.SetSelectedSkill(spbSlower, False);
   Game.SetSelectedSkill(spbFaster, False);
-  DrawButtonSelector(spbSlower, false);
-  DrawButtonSelector(spbFaster, false);
-  DrawButtonSelector(spbRestart, false);
-  fRRIsPressed := False;
+  RemoveButtonHighlights;
+  RRIsPressed := False;
 end;
 
 procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
@@ -2059,7 +1910,7 @@ end;
 
 function TBaseSkillPanel.GetMaxZoom: Integer;
 begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
+  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 80), 1);
 end;
 
 procedure TBaseSkillPanel.SetMinimapScrollFreeze(aValue: Boolean);

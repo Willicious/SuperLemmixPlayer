@@ -206,27 +206,24 @@ type
     ExploderAssignInProgress   : Boolean;
     DoExplosionCrater          : Boolean;
     Index_LemmingToBeNuked     : Integer;
-    BrickPixelColors           : array[0..11] of TColor32; // Gradient steps
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
     NextLemmingCountDown       : Integer;
-    fFastForward               : Boolean;
-    fIsSuperlemmingMode        : Boolean;
+
     fTargetIteration           : Integer; // This is used in hyperspeed
     fHyperSpeedCounter         : Integer; // No screenoutput
     fHyperSpeed                : Boolean; // We are at hyperspeed no targetbitmap output
     fLeavingHyperSpeed         : Boolean; // In between state (see UpdateLemmings)
     fPauseOnHyperSpeedExit     : Boolean; // To maintain pause state before invoking a savestate
+
+    fIsBackstepping            : Boolean; // Track any game action that causes backward movement
+    fIsSuperlemmingMode        : Boolean;
+    fPauseWasPressed           : Boolean;
+    fReplayLoaded              : Boolean;
+
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
     fTargetLemmingID           : Integer; // For replay skill assignments
-    fCancelReplayAfterSkip     : Boolean;
-
-    fIsBackstepping            : Boolean;
-    fRewindPressed             : Boolean;
-    fTurboPressed              : Boolean;
-    fReplayWasLoaded           : Boolean;
-    fPauseWasPressed           : Boolean;
 
   { events }
     fParticleFinishTimer       : Integer; // Extra frames to enable viewing of explosions
@@ -252,7 +249,8 @@ type
     function ZombiesRemain: Boolean; // Slightly different - checks for remaining zombies, returns true if zombies remain
     function LevelHasKillZombiesTalisman: Boolean;
     function CheckForClassicMode: Boolean; // Checks if classic mode is activated
-    function CheckNoPause: Boolean; // Checks if pause has been pressed at any time
+    function CheckForNoPause: Boolean; // Checks if pause has been pressed at any time
+    procedure CheckReplayLoaded; // Checks for action on any future frame and sets flag to true if it finds any
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
@@ -314,7 +312,6 @@ type
     //function PropellerOneRow(PosX, PosY: Integer): Boolean; // Propeller
     procedure DrawAnimatedGadgets;
     procedure IncrementIteration;
-    procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeAllTriggerMaps;
     function IsStartingSeconds: Boolean;
 
@@ -539,22 +536,22 @@ type
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
     property Replaying: Boolean read GetIsReplaying;
-    property ReplayWasLoaded: Boolean read fReplayWasLoaded write fReplayWasLoaded;
     property PauseWasPressed: Boolean read fPauseWasPressed write fPauseWasPressed;
-    property RewindPressed: Boolean read fRewindPressed write fRewindPressed;
-    property TurboPressed: Boolean read fTurboPressed write fTurboPressed;
-    property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
+    property ReplayLoaded: Boolean read fReplayLoaded write fReplayLoaded;
     property ReplayingNoRR[isPaused: Boolean]: Boolean read GetIsReplayingNoRR;
     property ReplayManager: TReplay read fReplayManager;
     property IsSelectWalkerHotkey: Boolean read fIsSelectWalkerHotkey write fIsSelectWalkerHotkey;
     property IsSelectUnassignedHotkey: Boolean read fIsSelectUnassignedHotkey write fIsSelectUnassignedHotkey;
     property IsShowAthleteInfo: Boolean read fIsShowAthleteInfo write fIsShowAthleteInfo;
     property IsHighlightHotkey: Boolean read fIsHighlightHotkey write fIsHighlightHotkey;
+
+    property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
+
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
-    property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
+    property IsSuperlemmingMode: Boolean read fIsSuperlemmingMode;
+
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property IsOutOfTime: Boolean read GetOutOfTime;
-    property IsSuperlemmingMode: Boolean read fIsSuperlemmingMode;
 
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
@@ -927,7 +924,7 @@ var
         Exit;
 
     if (aTalisman.RequireNoPause) then
-      if not CheckNoPause then
+      if not CheckForNoPause then
         Exit;
 
     Result := true;
@@ -953,24 +950,24 @@ begin
   Result := false;
 
   // Check if a replay has been loaded
-  if ReplayWasLoaded then Exit;
+  if ReplayLoaded then Exit;
 
   // Classic mode has to be active
   if GameParams.ClassicMode then
     Result := true;
 end;
 
-function TLemmingGame.CheckNoPause: Boolean;
+function TLemmingGame.CheckForNoPause: Boolean;
 begin
-  Result := false;
+  Result := False;
 
   // Check if a replay has been loaded
-  if ReplayWasLoaded then Exit;
+  if ReplayLoaded then Exit;
 
   // Check if pause was pressed
   if PauseWasPressed then Exit;
 
-  Result := true;
+  Result := True;
 end;
 
 function TLemmingGame.AllZombiesKilled: Boolean;
@@ -1328,11 +1325,9 @@ begin
 
   fIsSuperLemmingMode := Level.Info.SuperLemmingMode;
 
-  fFastForward := False;
-  fRewindPressed := False;
-  fTurboPressed := False;
   fIsBackstepping := False;
   fPauseWasPressed := False;
+  fReplayLoaded := False;
 
   fGameFinished := False;
   fGameCheated := False;
@@ -1417,8 +1412,6 @@ begin
     if Gadget.TriggerEffect = DOM_COLLECTIBLE then
       Inc(CollectiblesRemain);
   end;
-
-  InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
 
   InitializeAllTriggerMaps;
   SetGadgetMap;
@@ -4317,8 +4310,8 @@ procedure TLemmingGame.LayLadder(L: TLemming);
 -------------------------------------------------------------------------------}
 var
   i: Integer;
-  PosX, PosY: Integer;
-  FrameOffset: Integer;
+  PosX, PosY, FrameOffset: Integer;
+  BrickColor: TColor32;
 const
   LadderBrick: array[0..8, 0..1] of Integer = (
        (0, 0), (1, 0), (2, 0),
@@ -4345,12 +4338,14 @@ begin
           else Exit;
         end;
 
+      BrickColor := Renderer.BrickPixelColors[(FrameOffset +1) div 2];
+
       if L.LemDX > 0 then
         AddConstructivePixel((PosX + FrameOffset) + LadderBrick[i, 0],
-                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[(FrameOffset +1) div 2])
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickColor)
       else
         AddConstructivePixel((PosX - FrameOffset) - LadderBrick[i, 0],
-                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickPixelColors[(FrameOffset +1) div 2]);
+                             (PosY + FrameOffset) + LadderBrick[i, 1], BrickColor);
     end;
   end;
 end;
@@ -4361,16 +4356,21 @@ procedure TLemmingGame.LayBrick(L: TLemming);
   during drawlemmings
 -------------------------------------------------------------------------------}
 var
-  BrickPosY, n: Integer;
+  n, BrickPosY: Integer;
+  BrickColor: TColor32;
 begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
-  if L.LemAction = baBuilding then BrickPosY := L.LemY - 1
-  else BrickPosY := L.LemY; // For platformers
+  BrickColor := Renderer.BrickPixelColors[12 - L.LemNumberOfBricksLeft];
+
+  if L.LemAction = baBuilding then
+    BrickPosY := L.LemY - 1
+  else
+    BrickPosY := L.LemY; // For platformers
 
   for n := 0 to 5 do
-    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickColor);
 end;
 
 function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
@@ -4379,14 +4379,16 @@ function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
   during drawlemmings
 -------------------------------------------------------------------------------}
 var
-  BrickPosY, n: Integer;
-  PixPosX: Integer;
+  n, BrickPosY, PixPosX: Integer;
+  BrickColor: TColor32;
 begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number stacker bricks out of bounds');
 
   BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
   if L.LemStackLow then Inc(BrickPosY);
+
+  BrickColor := Renderer.BrickPixelColors[12 - L.LemNumberOfBricksLeft];
 
   Result := False;
 
@@ -4395,7 +4397,7 @@ begin
     PixPosX := L.LemX + n*L.LemDx;
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
-      AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+      AddConstructivePixel(PixPosX, BrickPosY, BrickColor);
       Result := true;
     end;
   end;
@@ -7264,6 +7266,8 @@ procedure TLemmingGame.UpdateLemmings;
 begin
   fDoneAssignmentThisFrame := false;
 
+  CheckReplayLoaded;
+
   // Don't update if the game is finished, or we've reached an unplayable state
   if fGameFinished or StateIsUnplayable then
     Exit;
@@ -7505,7 +7509,7 @@ begin
   case CurrentIteration of
     15:
       // Prevents double-triggering the sound when Rewinding to the start
-      if not (IsBackstepping or RewindPressed) then
+      if not IsBackstepping then
       begin
         if UseZombieSound then
           CueSoundEffect(SFX_ZOMBIE)
@@ -7875,7 +7879,7 @@ begin
   else if GameParams.PreferYippee then
     CueSoundEffect(SFX_YIPPEE, L.Position)
   else
-    CueSoundEffect(SFX_OING, L.Position);
+    CueSoundEffect(SFX_BOING, L.Position);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
@@ -8347,9 +8351,11 @@ end;
 procedure TLemmingGame.HandlePostTeleport(L: TLemming);
 var
   i: Integer;
+  BrickColor: TColor32;
 begin
   // Check for trigger areas.
   CheckTriggerArea(L, true);
+  BrickColor := Renderer.BrickPixelColors[12 - L.LemNumberOfBricksLeft];
 
   // Reset blocker map, if lemming is a blocker and the target position is free
   if L.LemAction = baBlocking then
@@ -8371,14 +8377,14 @@ begin
     if L.LemPhysicsFrame < 9 then
       Inc(L.LemNumberOfBricksLeft);
     for i := 0 to 3 do
-      AddConstructivePixel(L.LemX + (i * L.LemDX), L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+      AddConstructivePixel(L.LemX + (i * L.LemDX), L.LemY, BrickColor);
     if L.LemPhysicsFrame < 9 then
       Dec(L.LemNumberOfBricksLeft);
   end else if (L.LemAction = baPlatforming) and ((L.LemNumberOfBricksLeft < 12) or (L.LemPhysicsFrame >= 9)) then
   begin
     if L.LemPhysicsFrame < 9 then
       Inc(L.LemNumberOfBricksLeft);
-    AddConstructivePixel(L.LemX, L.LemY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+    AddConstructivePixel(L.LemX, L.LemY, BrickColor);
     if L.LemPhysicsFrame < 9 then
       Dec(L.LemNumberOfBricksLeft);
   end;
@@ -8414,9 +8420,6 @@ begin
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;
 
   fReplayManager.Cut(fCurrentIteration, CurrSpawnInterval);
-
-  // For NoPause talisman - allows replay to be cancelled before music starts
-  if (CurrentIteration < 55) then ReplayWasLoaded := False;
 end;
 
 
@@ -8490,6 +8493,20 @@ begin
   if CheckIfLegalSI(NewSI) then RecordSpawnInterval(NewSI);
 end;
 
+procedure TLemmingGame.CheckReplayLoaded;
+var
+  i: Integer;
+begin
+  // Only proceed with check if the level has Classic Mode or No Pause talisman
+  for i := 0 to Level.Talismans.Count-1 do
+    if not (Level.Talismans[i].RequireClassicMode) or (Level.Talismans[i].RequireNoPause) then
+      Exit;
+
+  // Check for action on any future frame - 55 frames' grace at the start of the level (before music starts)
+  if (CurrentIteration > 55) and (CurrentIteration < fReplayManager.LastActionFrame) then
+    ReplayLoaded := True;
+end;
+
 procedure TLemmingGame.Finish(aReason: Integer);
 begin
   SetGameResult;
@@ -8558,20 +8575,6 @@ begin
     TPngInterface.SavePngFile(Filename, BMP, true);
   finally
     BMP.Free;
-  end;
-end;
-
-procedure TLemmingGame.InitializeBrickColors(aBrickPixelColor: TColor32);
-var
-  i: Integer;
-begin
-  with TColor32Entry(aBrickPixelColor) do
-  for i := 0 to Length(BrickPixelColors) - 1 do
-  begin
-    TColor32Entry(BrickPixelColors[i]).A := A;
-    TColor32Entry(BrickPixelColors[i]).R := Min(Max(R + (i - 6) * 4, 0), 255);
-    TColor32Entry(BrickPixelColors[i]).B := Min(Max(B + (i - 6) * 4, 0), 255);
-    TColor32Entry(BrickPixelColors[i]).G := Min(Max(G + (i - 6) * 4, 0), 255);
   end;
 end;
 

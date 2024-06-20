@@ -71,7 +71,7 @@ type
     moAutoReplaySave,
     moEnableOnline,
     moCheckUpdates,
-    moNextUnsolvedLevel,
+    moLoadNextUnsolvedLevel,
     moAutoReplayMode,
     moReplayAfterRestart,
     moPauseAfterBackwards,
@@ -83,7 +83,6 @@ type
     moHideShadows,
     moHideHelpers,
     moHideSkillQ,
-    moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
     moFullScreen,
@@ -98,6 +97,7 @@ type
     moFileCaching,
     moPostviewJingles,
     moMenuSounds,
+    moAmigaTheme,
     moDisableMusicInTestplay,
     moPreferYippee
   );
@@ -108,7 +108,7 @@ const
   DEF_MISCOPTIONS = [
     moCheckUpdates,
     moAutoReplaySave,
-    moNextUnsolvedLevel,
+    moLoadNextUnsolvedLevel,
     moPauseAfterBackwards,
     moLinearResampleMenu,
     moAutoReplayMode,
@@ -139,6 +139,9 @@ type
     fOneLevelMode: Boolean;
     //fDoneUpdateCheck: Boolean;
     fCurrentLevel: TNeoLevelEntry;
+
+    fFallbackMessage          : String;
+    fShouldShowFallbackMessage: Boolean;
 
     fCursorResize: Double;
     fZoomLevel: Integer;
@@ -242,13 +245,16 @@ type
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
-    property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
+    property CurrentLevel: TNeoLevelEntry read fCurrentLevel write fCurrentLevel;
+
+    property FallbackMessage: String read fFallbackMessage write fFallbackMessage;
+    property ShouldShowFallbackMessage: Boolean read fShouldShowFallbackMessage write fShouldShowFallbackMessage;
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property AutoReplayMode: boolean Index moAutoReplayMode read GetOptionFlag write SetOptionFlag;
-    property NextUnsolvedLevel: boolean Index moNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
+    property LoadNextUnsolvedLevel: boolean Index moLoadNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
@@ -259,7 +265,6 @@ type
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
     property HideSkillQ: boolean Index moHideSkillQ read GetOptionFlag write SetOptionFlag;
-    property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
@@ -274,6 +279,7 @@ type
     property PreferYippee: Boolean Index moPreferYippee read GetOptionFlag write SetOptionFlag;
     property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
     property MenuSounds: Boolean Index moMenuSounds read GetOptionFlag write SetOptionFlag;
+    property AmigaTheme: Boolean Index moAmigaTheme read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
     property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
@@ -455,7 +461,7 @@ begin
     SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
     SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
     SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
-    SaveBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
+    SaveBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
     SaveBoolean('AutoReplay', AutoReplayMode);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
@@ -504,6 +510,7 @@ begin
     SaveBoolean('PreferYippee', PreferYippee);
     SaveBoolean('PostviewJingles', PostviewJingles);
     SaveBoolean('MenuSounds', MenuSounds);
+    SaveBoolean('AmigaTheme', AmigaTheme);
 
     SL.Add('');
     SL.Add('# Playback Options');
@@ -519,11 +526,6 @@ begin
     SL.Add('');
     SL.Add('# Technical Options');
     SaveBoolean('FileCaching', FileCaching);
-
-    if UnderWine then
-    begin
-      SaveBoolean('DisableWineWarnings', DisableWineWarnings);
-    end;
 
     AddUnknowns;
 
@@ -648,7 +650,7 @@ begin
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
 
     AutoReplayMode := LoadBoolean('AutoReplay', AutoReplayMode);
-    NextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', NextUnsolvedLevel);
+    LoadNextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
@@ -671,7 +673,6 @@ begin
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
-    DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
     FileCaching := LoadBoolean('FileCaching', FileCaching);
 
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
@@ -701,6 +702,7 @@ begin
 
     PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
     MenuSounds := LoadBoolean('MenuSounds', MenuSounds);
+    AmigaTheme := LoadBoolean('AmigaTheme', AmigaTheme);
 
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
@@ -868,6 +870,8 @@ begin
 
   Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
+
+  ShouldShowFallbackMessage := False;
   Renderer.PrepareGameRendering(Level, NoOutput);
 end;
 
@@ -899,9 +903,7 @@ begin
       CurLevelGroup := fCurrentLevel.Group;
     end;
     fCurrentLevel := CurLevelGroup.Levels[0];
-  end else if GameParams.NextUnsolvedLevel and not GameResult.gCheated then
-    fCurrentLevel := CurLevelGroup.FirstUnbeatenLevel
-  else
+  end else
     fCurrentLevel := CurLevelGroup.Levels[CurLevelIndex + 1];
 
   ShownText := false;
