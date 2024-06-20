@@ -640,12 +640,12 @@ begin
       Offset := Point(0, 0);
 
       case Button of
-        spbWalker:    Offset := Point(0, 16);
+        spbWalker:    Offset := Point(1, 14);
         spbJumper:    Offset := Point(0, 16);
         spbShimmier:  Offset := Point(0, 16);
         spbBallooner: Offset := Point(0, 12);
         spbSlider:    Offset := Point(-2, 15);
-        spbClimber:   Offset := Point(-2, 13);
+        spbClimber:   Offset := Point(-1, 13);
         spbSwimmer:   Offset := Point(0, 12);
         spbFloater:   Offset := Point(0, 12);
         spbGlider:    Offset := Point(0, 12);
@@ -653,7 +653,7 @@ begin
         spbTimebomber:Offset := Point(-1, 12);
         spbBomber:    Offset := Point(-1, 12);
         spbFreezer:   Offset := Point(0, 15);
-        spbBlocker:   Offset := Point(0, 14);
+        spbBlocker:   Offset := Point(1, 14);
         spbLadderer:  Offset := Point(0, 16);
         spbPlatformer:Offset := Point(0, 12);
         spbBuilder:   Offset := Point(0, 12);
@@ -664,8 +664,8 @@ begin
         spbBasher:    Offset := Point(0, 14);
         spbFencer:    Offset := Point(-2, 16);
         spbMiner:     Offset := Point(0, 15);
-        spbDigger:    Offset := Point(-2, 16);
-        spbCloner:    Offset := Point(-2, 16);
+        spbDigger:    Offset := Point(-1, 16);
+        spbCloner:    Offset := Point(-1, 15);
         else          Offset := Point(0, 0);
       end;
 
@@ -703,8 +703,8 @@ begin
   begin
     for i := 0 to 1 do
     begin
-      fSkillFont[c, i].SetSize(16, 16);
-      fIconBmp.DrawTo(fSkillFont[c, i], (4 - 4 * i) * 2, 0, SrcRect);
+      fSkillFont[c, i].SetSize(17, 16);
+      fIconBmp.DrawTo(fSkillFont[c, i], ((4 - 4 * i) * 2) + 1, 0, SrcRect);
 
       fSkillFontInvert[c, i].Assign(fSkillFont[c, i]);
       for y := 0 to fSkillFontInvert[c, i].Height-1 do
