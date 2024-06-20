@@ -1239,7 +1239,7 @@ begin
         else if (Level.Info.TimeLimit * 50 < Game.CurrentIteration + 750 {15 * 50}) and Game.IsSuperLemmingMode then
           fCombineHueShift := Red
         else
-          fCombineHueShift := Yellow;
+          fCombineHueShift := Blue;
       end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem
         and not Game.StateIsUnplayable then
       begin
