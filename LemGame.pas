@@ -7879,7 +7879,7 @@ begin
   else if GameParams.PreferYippee then
     CueSoundEffect(SFX_YIPPEE, L.Position)
   else
-    CueSoundEffect(SFX_OING, L.Position);
+    CueSoundEffect(SFX_BOING, L.Position);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);

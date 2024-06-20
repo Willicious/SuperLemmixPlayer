@@ -52,7 +52,7 @@ const
   SFX_ASSIGN_SKILL = 'mousepre';
   SFX_ASSIGN_FAIL = 'assignfail';
   SFX_YIPPEE = 'yippee';
-  SFX_OING = 'oing';
+  SFX_BOING = 'oing';
   SFX_SPLAT = 'splat';
   SFX_LETSGO = 'letsgo';
   SFX_ENTRANCE = 'door';
