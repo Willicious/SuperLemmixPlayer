@@ -129,10 +129,12 @@ end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
 begin
-  // Set options and clear PlaybackList
+  // Set options and clear lists
   rgPlaybackOrder.ItemIndex := Ord(GameParams.PlaybackOrder);
   cbAutoSkip.Checked := GameParams.AutoSkipPreviewPostview;
   GameParams.PlaybackList.Clear;
+  GameParams.UnmatchedList.Clear;
+  GameParams.ReplayVerifyList.Clear;
 
   // Show currently-assigned Playback Mode hotkey
   stPlaybackCancelHotkey.Caption := GetPlaybackModeHotkey;

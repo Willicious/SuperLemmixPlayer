@@ -510,9 +510,9 @@ begin
       // Get list of replay files
       ReplayFiles := TDirectory.GetFiles(PlaybackModeForm.SelectedFolder, '*.nxrp');
 
-      // Add replay file names to PlaybackList
+      // Add replay file names to ReplayVerifyList
       for ReplayFile in ReplayFiles do
-        GameParams.PlaybackList.Add(ReplayFile); // Storing full path for easier access later
+        GameParams.ReplayVerifyList.Add(ReplayFile); // Storing full path for easier access later
 
       GameParams.PlaybackModeActive := True;
       GameParams.Save(scImportant);

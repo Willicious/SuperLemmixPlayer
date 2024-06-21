@@ -168,9 +168,9 @@ type
     fPlaybackModeActive: Boolean;
     fPlaybackOrder: TPlaybackOrder;
     fPlaybackList: TStringList;
+    fUnmatchedList: TStringList;
+    fReplayVerifyList: TStringList;
     fPlaybackIndex: Integer;
-    fShowNoPlaybackMatch: Boolean;
-    fNoPlaybackMatchString: String;
     fAutoSkipPreviewPostview: Boolean;
 
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
@@ -284,9 +284,9 @@ type
     property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
     property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
     property PlaybackList: TStringList read fPlaybackList write fPlaybackList;
+    property UnmatchedList: TStringList read fUnmatchedList write fUnmatchedList;
+    property ReplayVerifyList: TStringList read fReplayVerifyList write fReplayVerifyList;
     property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
-    property ShowNoPlaybackMatch: Boolean read fShowNoPlaybackMatch write fShowNoPlaybackMatch;
-    property NoPlaybackMatchString: String read fNoPlaybackMatchString write fNoPlaybackMatchString;
     property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
@@ -1052,6 +1052,8 @@ begin
   end;
 
   PlaybackList := TStringList.Create;
+  UnmatchedList := TStringList.Create;
+  ReplayVerifyList := TStringList.Create;
 end;
 
 procedure TDosGameParams.CreateBasePack;
@@ -1085,6 +1087,8 @@ begin
   fHotkeys.Free;
   BaseLevelPack.Free;
   PlaybackList.Free;
+  UnmatchedList.Free;
+  ReplayVerifyList.Free;
   inherited Destroy;
 end;
 

@@ -957,11 +957,7 @@ begin
   begin
     if GameParams.PlaybackModeActive then
     begin
-      StartPlayback(0);
-
-      // Skip past menu screen if AutoSkip is not activated
-      if not GameParams.AutoSkipPreviewPostview then
-        CloseScreen(gstPreview);
+      GeneratePlaybackList;
     end else
       CloseScreen(gstReplayTest)
   end else if not Success then

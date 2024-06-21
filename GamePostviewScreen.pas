@@ -273,9 +273,14 @@ begin
       so that modified replays can be saved in Playback Mode }
     MakeSaveReplayClickable;
 
-    // If in PlaybackMode, validate the playlist and load the next level
+    // If in PlaybackMode, load the next level or stop playback if the list is empty
     if GameParams.PlaybackModeActive then
-      StartPlayback(GameParams.PlaybackIndex);
+    begin
+      if GameParams.PlaybackIndex >= GameParams.PlaybackList.Count -1 then
+        StopPlayback
+      else
+        StartPlayback(GameParams.PlaybackIndex + 1);
+    end;
 
     // Check again for PlaybackMode after call to StartPlayback
     if GameParams.PlaybackModeActive then
@@ -304,10 +309,6 @@ begin
     // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
     if not (GameParams.AutoSkipPreviewPostview and GameParams.PlaybackModeActive) then
       DrawAllClickables;
-
-    // Show list of any unmatched replays if Playback Mode has finished
-    if GameParams.ShowNoPlaybackMatch and not GameParams.PlaybackModeActive then
-      ShowMessage(GameParams.NoPlaybackMatchString);
   finally
     ScreenImg.EndUpdate;
   end;
