@@ -2230,7 +2230,7 @@ begin
   // A = solidity
   // R = steel
   // G = oneway
-  // B = erase (src only,
+  // B = erase (src only)
   srcSolidity := (F and $FF000000) shr 24;
   srcSteel    := (F and $00FF0000) shr 16;
   srcOneWay   := (F and $0000FF00) shr 8;
@@ -2254,7 +2254,16 @@ begin
     end;
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
+
+    // Bookmark - for "steel is always steel, replace this line:
     dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
+
+    // With this:
+  { if srcSolidity > 0 then
+    begin
+      dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSteel);
+    end; }
+
     dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
   end;
 
