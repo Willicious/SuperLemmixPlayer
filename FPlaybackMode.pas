@@ -59,7 +59,7 @@ begin
 
     OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
 
-    if OpenDlg.InitialDir = '' then
+    if not SysUtils.DirectoryExists(OpenDlg.InitialDir) then
       OpenDlg.InitialDir := AppPath + SFReplays;
 
     OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
