@@ -252,10 +252,7 @@ begin
   // Save the data between screens. This way it's more up to date in case game crashes
   GameParams.Save(TGameParamsSaveCriticality.scNone);
 
-  // This might be so that after the text screen, the correct screen out of gstPlay or gstPostview is shown
   NewScreen := GameParams.NextScreen;
-  GameParams.NextScreen := GameParams.NextScreen2;
-  GameParams.NextScreen2 := gstUnknown;
 
   case NewScreen of
     gstMenu      : ShowMenuScreen;
@@ -281,33 +278,9 @@ begin
 end;
 
 procedure TAppController.ShowTextScreen;
-var
-  IsPreview: Boolean;
 begin
-// Always called between gstPreview/gstGame, and between gstGame/gstPostview (if successful).
-// However, if there's no text to show, it does nothing, and proceeds directly to the next screen.
-  IsPreview := not (GameParams.NextScreen = gstPostview);
-
-  if (IsPreview and (GameParams.Level.PreText.Count = 0))
-  or ((not IsPreview) and (GameParams.Level.PostText.Count = 0))
-  or (IsPreview and GameParams.ShownText)
-
-  // Bookmark - Playback Mode doesn't play nicely with Preview screen text
-  // - see www.lemmingsforums.net/index.php?topic=6712.msg102498#msg102498
-  // - if we find what's causing the skip to previous iteration, we find the fix
-  // - Until then, we'll have to skip screen text when in Playback Mode
-                                    // This can be commented back in if the bug is fixed
-  or (GameParams.PlaybackModeActive //and GameParams.AutoSkipPreviewPostview
-  ) then
-  begin
-    if IsPreview then
-      ShowPlayScreen
-    else
-      ShowPostviewScreen;
-  end else begin
-    fActiveForm := TGameTextScreen.Create(nil);
-    fActiveForm.ShowScreen;
-  end;
+  fActiveForm := TGameTextScreen.Create(nil);
+  fActiveForm.ShowScreen;
 end;
 
 procedure TAppController.ShowPostviewScreen;

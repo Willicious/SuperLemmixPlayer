@@ -1277,6 +1277,7 @@ end;
 constructor TGameWindow.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
+  CurrentScreen := gstPlay;
 
   Color := $200020;
 
@@ -2324,11 +2325,11 @@ procedure TGameWindow.Game_Finished;
 begin
   SoundManager.StopMusic;
 
-  GameParams.NextScreen2 := gstPostview;
-  if Game.CheckPass then
-    fCloseToScreen := gstText
-  else
-    fCloseToScreen := gstPostview;
+  if (Game.CheckPass and (Game.Level.PostText.Count > 0))
+    and not (GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview) then
+      fCloseToScreen := gstText
+    else
+      fCloseToScreen := gstPostview;
 end;
 
 procedure TGameWindow.CloseScreen(aNextScreen: TGameScreenType);

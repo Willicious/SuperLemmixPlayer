@@ -24,6 +24,7 @@ type
   private
     fScreenImg           : TImage32;
     fScreenIsClosing     : Boolean;
+    fCurrentScreen       : TGameScreenType;
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
   protected
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
@@ -34,6 +35,8 @@ type
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ShowScreen; override;
+
+    property CurrentScreen: TGameScreenType read fCurrentScreen write fCurrentScreen;
 
     procedure GeneratePlaybackList;
     procedure StartPlayback(aIndex: Integer);
@@ -330,9 +333,7 @@ begin
 
   // Go to preview screen if playback has just started or if autoskip is active
   if (aIndex = 0) or GameParams.AutoSkipPreviewPostview then
-    CloseScreen(gstPreview)
-  else
-    GameParams.ShownText := False;
+    CloseScreen(gstPreview);
 
   GameParams.PlaybackIndex := aIndex;
 end;
@@ -497,7 +498,7 @@ begin
 
   inherited; // Form is made visible here
 
-  if GameParams.NextScreen <> gstPlay then
+  if CurrentScreen <> gstPlay then
     FadeIn;
 end;
 

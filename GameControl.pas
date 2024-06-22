@@ -45,7 +45,6 @@ type
     gstPreview,
     gstPlay,
     gstPostview,
-    gstSounds,
     gstExit,
     gstText,
     gstReplayTest
@@ -202,8 +201,8 @@ type
     GameResult: TGameResultsRec;
 
     // This is set by the individual screens when closing (if they know)
-    NextScreen: TGameScreenType;
-    NextScreen2: TGameScreenType;
+    NextScreen     : TGameScreenType;
+    IsPreTextScreen: Boolean;
 
     // Resource vars
     LemDataInResource   : Boolean;

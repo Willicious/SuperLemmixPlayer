@@ -100,12 +100,10 @@ type
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
     private
-      fCurrentScreen    : TGameScreenType;
-      fMenuFont         : TMenuFont;
-      fKeyStates: TDictionary<Word, UInt64>;
-
-      fBasicCursor: TNLCursor;
       fCalledFromClassicModeButton: Boolean;
+      fMenuFont                   : TMenuFont;
+      fBasicCursor                : TNLCursor;
+      fKeyStates                  : TDictionary<Word, UInt64>;
 
       procedure LoadBasicCursor(aName: string);
       procedure SetBasicCursor;
@@ -169,8 +167,6 @@ type
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
-
-      property CurrentScreen: TGameScreenType read fCurrentScreen write fCurrentScreen;
 
       procedure MainFormResized; override;
       procedure DrawClassicModeButton;

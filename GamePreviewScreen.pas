@@ -134,11 +134,11 @@ begin
         ShowMessage('This level contains pieces which are missing from the styles folder. ' +
                     'Please contact the level author or download the style manually ' +
                     'via www.lemmingsforums.net.');
-    end else begin
-      GameParams.NextScreen2 := gstPlay;
-      inherited CloseScreen(gstText);
-    end;
-  end else
+    end else
+      inherited CloseScreen(gstPlay);
+  end else if NextScreen = gstText then
+    inherited CloseScreen(gstText)
+  else
     inherited;
 end;
 
@@ -189,7 +189,13 @@ begin
     GameParams.ShouldShowFallbackMessage := False;
   end;
 
-  CloseScreen(gstPlay);
+  if (GameParams.Level.PreText.Count > 0)
+    and not (GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview) then
+    begin
+      GameParams.IsPreTextScreen := True;
+      CloseScreen(gstText);
+    end else
+      CloseScreen(gstPlay);
 end;
 
 procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;
