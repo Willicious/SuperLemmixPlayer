@@ -27,7 +27,7 @@ const
 -------------------------------------------------------------------------------}
   // MUST MATCH BELOW (not the next list, the one after that)
   // And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 91;   // Num lem sprites
+  NUM_LEM_SPRITES     = 90;   // Num lem sprites
   NUM_LEM_SPRITE_TYPE = 45;         // Num lem sprite types
   WALKING             = 0;    // 1  // 1
   WALKING_RTL         = 1;    // 2
@@ -119,13 +119,10 @@ const
   DRIFTING_RTL        = 87;   // 88
   SLEEPING            = 88;   // 99 // 45
   SLEEPING_RTL        = 89;   // 90
-  ICECUBE             = 90;   // 91 Bookmark - this one does NOT need an RTL form;
   //BATTING             = ?;   //?  //?  // Batter - REMEMBER to change numbers in list AND at the top
   //BATTING_RTL         = ?;   //?
   //PROPELLING          = ?;   //?  //?
   //PROPELLING_RTL      = ?;   //?    // Propeller
-                             // In fact in needs to be moved to the Masks section
-                             // Also, it's not counted as a "sprite type"
 
   // This one must match TBasicLemmingAction in LemCore / LemStrings
   AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
@@ -207,6 +204,7 @@ type
     fGrenadeBitmap          : TBitmap32;
     fSpearBitmap            : TBitmap32;
     //fBatBitmap              : TBitmap32; // Batter
+    fIceCubeBitmap          : TBitmap32;
     fTheme                  : TNeoTheme;
 
     fHasZombieColor         : Boolean;
@@ -245,6 +243,7 @@ type
     property GrenadeBitmap         : TBitmap32 read fGrenadeBitmap;
     //property BatBitmap             : TBitmap32 read fBatBitmap; // Batter
     property SpearBitmap           : TBitmap32 read fSpearBitmap;
+    property IceCubeBitmap         : TBitmap32 read fIceCubeBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
 
     property HasZombieColor: Boolean read fHasZombieColor;
@@ -436,20 +435,10 @@ procedure TBaseAnimationSet.ReadMetaData(aColorDict: TColorDict = nil; aShadeDic
 var
   AnimIndex: Integer;
 begin
-  // Add right- and left-facing version for 25 skills and the one freezer mask
+  // Add right- and left-facing version for all skills
   for AnimIndex := 0 to NUM_LEM_SPRITES - 1 do
   begin
     fMetaLemmingAnimations.Add;
-  end;
-
-  // Setting the foot position of the freezer mask.
-  // This should be irrelevant for the freezer mask, as the freezer mask is not positioned wrt. the lemming's foot.
-  // For other sprites, the foot position is required though.
-  with fMetaLemmingAnimations[ICECUBE] do
-  begin
-    FrameCount := 1;
-    FootX := 8 * ResMod;
-    FootY := 10 * ResMod;
   end;
 
   LoadMetaData(aColorDict, aShadeDict);
@@ -539,8 +528,8 @@ begin
     else
       LemSpritesFolder := MetaSpritesFolder;
 
-    { Load all sprites except the Freezer ice cube, which is loaded as an effect }
-    for iSprite := 0 to NUM_LEM_SPRITES - 2 do
+    { Load all sprites }
+    for iSprite := 0 to NUM_LEM_SPRITES - 1 do
     begin
       LemSprite := fMetaLemmingAnimations[iSprite];
       SpriteName := RightStr(LemSprite.Description, Length(LemSprite.Description) - 1);
@@ -624,17 +613,14 @@ begin
     //fBatBitmap.DrawMode := dmBlend;      // Batter
     //fBatBitmap.CombineMode := cmMerge;
 
-    fLemmingAnimations.Add(TBitmap32.Create);
-    fMetaLemmingAnimations[ICECUBE].Width := fLemmingAnimations[ICECUBE].Width;
-    fMetaLemmingAnimations[ICECUBE].Height := fLemmingAnimations[ICECUBE].Height;
-    fLemmingAnimations[ICECUBE].DrawMode := dmBlend;
-    fLemmingAnimations[ICECUBE].CombineMode := cmMerge;
+    fIceCubeBitmap.DrawMode := dmBlend;
+    fIceCubeBitmap.CombineMode := cmMerge;
 
     { Non-customisable Effects - these are loaded from the Masks folder }
     MasksPath := AppPath + SFGraphicsMasks;
 
     LoadEffectsFromMasksFolder('spears.png', 'spears-hr.png', fSpearBitmap);
-    LoadEffectsFromMasksFolder('freezer.png', 'freezer-hr.png', fLemmingAnimations[ICECUBE]);
+    LoadEffectsFromMasksFolder('freezer.png', 'freezer-hr.png', fIceCubeBitmap);
 
     { Customisable Effects - these are replaced with defaults if not present in the spriteset's effects folder }
     GetThemeFolder(SFPiecesEffects, False);
@@ -681,6 +667,7 @@ begin
   fGrenadeBitmap.Clear;
   fSpearBitmap.Clear;
   //fBatBitmap.Clear;  // Batter
+  fIceCubeBitmap.Clear;
   fHasZombieColor := false;
   fHasNeutralColor := false;
   fHasRivalColor := false;
@@ -708,6 +695,7 @@ begin
   fGrenadeBitmap := TBitmap32.Create;
   fSpearBitmap := TBitmap32.Create;
   //fBatBitmap := TBitmap32.Create;  // Batter
+  fIceCubeBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -729,6 +717,7 @@ begin
   fGrenadeBitmap.Free;
   fSpearBitmap.Free;
   //fBatBitmap.Free;  // Batter
+  fIceCubeBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;
 end;

@@ -387,6 +387,21 @@ var
   i: Integer;
   Ani: TBaseAnimationSet;
 
+  procedure DrawFreezerIceCube(dst: TBitmap32; footX, footY: Integer);
+  var
+    SrcRect: TRect;
+    OldDrawMode: TDrawMode;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+
+    SrcRect := Ani.IceCubeBitmap.BoundsRect;
+
+    OldDrawMode := Ani.IceCubeBitmap.DrawMode;
+    Ani.IceCubeBitmap.DrawMode := dmBlend;
+    Ani.IceCubeBitmap.DrawTo(dst, footX * ResMod, footY * ResMod, SrcRect);
+    Ani.IceCubeBitmap.DrawMode := OldDrawMode;
+  end;
+
   procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
   var
     Meta: TMetaLemmingAnimation;
@@ -489,7 +504,7 @@ begin
 
   // Freezer needs the ice cube overlay
   DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], FROZEN, 0, PICKUP_MID, PICKUP_BASELINE - 1);
-  DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], ICECUBE, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
+  DrawFreezerIceCube(SkillIcons[Integer(spbFreezer)], PICKUP_MID - 7, PICKUP_BASELINE - 12);
 
   // Ladderer, Platformer, Builder and Stacker are identifiable by their bag colours
   DrawAnimationFrame(SkillIcons[Integer(spbLadderer)], LADDERING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
