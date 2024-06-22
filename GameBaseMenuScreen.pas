@@ -188,7 +188,7 @@ const
 procedure TGameBaseMenuScreen.CancelPlaybackMode;
 begin
   if GameParams.PlaybackModeActive then
-    StopPlayback;
+    StopPlayback(True);
 end;
 
 procedure TGameBaseMenuScreen.CloseScreen(aNextScreen: TGameScreenType);

@@ -320,7 +320,6 @@ begin
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;
-
     CloseScreen(gstMenu);
   end;
 end;

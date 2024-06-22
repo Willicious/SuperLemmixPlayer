@@ -40,7 +40,7 @@ type
 
     procedure GeneratePlaybackList;
     procedure StartPlayback(aIndex: Integer);
-    procedure StopPlayback;
+    procedure StopPlayback(ExitToMenu: Boolean = False);
     procedure DelayPlayback(mS: Cardinal);
     function GetReplayID(Index: Integer; UsePlaybackList: Boolean = False): Int64;
 
@@ -263,27 +263,6 @@ var
       GameParams.ReplayVerifyList.Delete(RandomIndex); // Remove replay so it isn't processed again
     end;
   end;
-
-
-  ///////////////////// Bookmark - This procedure can be removed after testing  ///////////////////////////
-  procedure ShowLists;                                                                                   //
-  // Show resulting playback list and unmatched list in a dialog                                         //
-  var
-    PlaybackListStr, UnmatchedListStr: string;                                                           //
-    i: Integer;
-  begin                                                                                                  //
-    PlaybackListStr := 'Playback List:' + sLineBreak;
-    for i := 0 to GameParams.PlaybackList.Count - 1 do                                                   //
-      PlaybackListStr := PlaybackListStr + GameParams.PlaybackList[i] + sLineBreak;
-                                                                                                         //
-    UnmatchedListStr := 'Unmatched List:' + sLineBreak;  // Bookmark - Add this logic to postview and show unmatched levels at the end of playback
-    for i := 0 to GameParams.UnmatchedList.Count - 1 do                                                  //
-      UnmatchedListStr := UnmatchedListStr + GameParams.UnmatchedList[i] + sLineBreak;
-                                                                                                          //
-    ShowMessage(PlaybackListStr + sLineBreak + UnmatchedListStr);                                         //
-  end;
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 begin
   if GameParams.PlaybackList <> nil then GameParams.PlaybackList.Clear;
   if GameParams.UnmatchedList <> nil then GameParams.UnmatchedList.Clear;
@@ -295,8 +274,6 @@ begin
   else if GameParams.PlaybackOrder = poRandom then
     ProcessReplaysRandomly;
 
-  // ShowLists; // Bookmark - remove after testing - add UnmatchedList logic to postview for showing when playback has finished
-
   if GameParams.PlaybackList.Count > 0 then
   begin
     GameParams.PlaybackIndex := 0;
@@ -307,13 +284,16 @@ begin
   end;
 end;
 
-procedure TGameBaseScreen.StopPlayback;
+procedure TGameBaseScreen.StopPlayback(ExitToMenu: Boolean);
 begin
   GameParams.PlaybackModeActive := False;
   GameParams.PlaybackList.Clear;
   GameParams.UnmatchedList.Clear;
   GameParams.ReplayVerifyList.Clear;
   GameParams.PlaybackIndex := -1;
+
+  if ExitToMenu and (CurrentScreen <> gstMenu) then
+    CloseScreen(gstMenu);
 end;
 
 procedure TGameBaseScreen.StartPlayback(aIndex: Integer);
@@ -321,9 +301,8 @@ begin
   // Extract the ID from the replay at the current index and load the matching level
   if not GameParams.LoadLevelByID(GetReplayID(aIndex, True)) then
   begin
-    // Bookmark - we probably want to do something better in this situation
-    StopPlayback;
-    ShowMessage('Error playing back level. Playback Mode will now quit.');
+    ShowMessage('Error loading level. Playback Mode will now quit');
+    StopPlayback(True);
     Exit;
   end;
 
