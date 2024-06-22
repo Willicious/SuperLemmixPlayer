@@ -330,6 +330,7 @@ begin
   // Load the replay at the current index
   GameParams.LoadedReplayFile := GameParams.PlaybackList[aIndex];
   LoadReplay;
+  GlobalGame.ReplayManager.ActionAddedDuringPlayback := False;
 
   // Go to preview screen if playback has just started or if autoskip is active
   if (aIndex = 0) or GameParams.AutoSkipPreviewPostview then

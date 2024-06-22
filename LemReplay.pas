@@ -133,7 +133,8 @@ type
 
   TReplay = class
     private
-      fIsModified: Boolean;
+      fIsModified                : Boolean;
+      fActionAddedDuringPlayback : Boolean;
 
       fAssignments: TReplayItemList; // Nuking is also included here
       fSpawnIntervalChanges: TReplayItemList;
@@ -188,6 +189,7 @@ type
       property ExpectedCompletionIteration: Integer read fExpectedCompletionIteration write fExpectedCompletionIteration;
 
       property IsModified: Boolean read fIsModified;
+      property ActionAddedDuringPlayback: Boolean read fActionAddedDuringPlayback write fActionAddedDuringPlayback;
       property IsThisUsersReplay: Boolean read GetIsThisUsersReplay;
   end;
 
@@ -459,7 +461,10 @@ begin
   if fExpectedCompletionIteration > aLastFrame then
     fExpectedCompletionIteration := 0;
 
-  fIsModified := true;
+  fIsModified := True;
+
+  if GameParams.PlaybackModeActive then
+    ActionAddedDuringPlayback := True;
 end;
 
 function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;

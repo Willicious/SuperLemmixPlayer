@@ -215,7 +215,7 @@ var
 begin
   if GameParams.PlaybackModeActive then
   begin
-    if not GlobalGame.ReplayManager.IsThisUsersReplay then
+    if not GlobalGame.ReplayManager.ActionAddedDuringPlayback then
       Exit;
 
     if GameParams.ShowMinimap and not GameParams.FullScreen then
