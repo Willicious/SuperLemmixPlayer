@@ -1569,9 +1569,8 @@ begin
   end;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
-    we do want the Rewind and Turbo keys to respond }
-  if fGameWindow.IsHyperSpeed and not ((fGameWindow.GameSpeed = gspRewind)
-                                    or (fGameWindow.GameSpeed = gspTurbo)) then Exit;
+    we do want the Rewind, FF and Turbo keys to respond }
+  if fGameWindow.IsHyperSpeed and not (fGameWindow.GameSpeed in [gspRewind, gspFF, gspTurbo]) then Exit;
 
   // Get pressed button
   aButton := spbNone;

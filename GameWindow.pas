@@ -162,11 +162,11 @@ type
     GameScroll           : TGameScroll;       // Scrollmode
     GameVScroll          : TGameScroll;
     IdealFrameTimeMS     : Cardinal;          // Normal frame speed in milliseconds
-    IdealFrameTimeMSFast : Cardinal;          // Fast forward framespeed in milliseconds
     IdealFrameTimeMSSlow : Cardinal;
     IdealFrameTimeSuper  : Cardinal;
     IdealScrollTimeMS    : Cardinal;          // Scroll speed in milliseconds
     RewindTimer          : TTimer;
+    FastForwardTimer     : TTimer;
     TurboTimer           : TTimer;
     PrevCallTime         : Cardinal;          // Last time we did something in idle
     PrevScrollTime       : Cardinal;          // Last time we scrolled in idle
@@ -208,6 +208,7 @@ type
     function ShouldDisplayHQMinimap: Boolean;
 
     procedure DoRewind(Sender: TObject);
+    procedure DoFastForward(Sender: TObject);
     procedure DoTurbo(Sender: TObject);
     property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
     property HyperSpeedTarget: Integer read fHyperSpeedTarget write fHyperSpeedTarget;
@@ -609,9 +610,14 @@ begin
   end;
 end;
 
+procedure TGameWindow.DoFastForward(Sender: TObject);
+begin
+  fHyperSpeedTarget := Game.CurrentIteration + 1;
+end;
+
 procedure TGameWindow.DoTurbo(Sender: TObject);
 begin
-  fHyperSpeedTarget := Game.CurrentIteration + 7;
+  fHyperSpeedTarget := Game.CurrentIteration + 7
 end;
 
 procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
@@ -627,8 +633,7 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-  ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame,
-    TimeForScroll, Hyper, Pause, Rewind, Fast, Turbo, Slow: Boolean;
+  ForceOne, TimeForFrame, TimeForPausedRR, TimeForScroll, Hyper, Pause, Rewind, Fast, Turbo, Slow: Boolean;
   MouseClickFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
@@ -677,7 +682,6 @@ begin
     TimeForFrame := (not (Pause or Rewind)) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // Don't check for frame advancing when paused
 
   TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
-  TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
   Hyper := IsHyperSpeed;
 
@@ -691,6 +695,12 @@ begin
       RewindTimer.Enabled := True;
   end else
     RewindTimer.Enabled := False;
+
+  // Fast-forward
+  if Fast then
+    FastForwardTimer.Enabled := True
+  else
+    FastForwardTimer.Enabled := False;
 
   // Turbo mode
   if Turbo then
@@ -710,7 +720,7 @@ begin
     SkillPanel.DrawButtonSelector(spbFastForward, True);
   end;
 
-  if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
+  if ForceOne or Hyper then TimeForFrame := true;
 
   // Relax CPU
   if not (Hyper or Fast or Game.IsSuperLemmingMode) then
@@ -1316,11 +1326,15 @@ begin
   Img.OnMouseMove := Img_MouseMove;
   Img.OnMouseUp := Img_MouseUp;
 
-  RewindTimer := TTimer.Create(Self); // Bookmark - can TickCount be used here instead??
+  RewindTimer := TTimer.Create(Self);
   RewindTimer.Interval := 60;
   RewindTimer.OnTimer := DoRewind;
 
-  TurboTimer := TTimer.Create(Self); // Bookmark - can TickCount be used here instead??
+  FastForwardTimer := TTimer.Create(Self);
+  FastForwardTimer.Interval := 10;
+  FastForwardTimer.OnTimer := DoFastForward;
+
+  TurboTimer := TTimer.Create(Self);
   TurboTimer.Interval := 40;
   TurboTimer.OnTimer := DoTurbo;
 
@@ -1354,6 +1368,7 @@ begin
   fHighlitStartCopyLemming.Free;
   HotkeyManager.Free;
   RewindTimer.Free;
+  FastForwardTimer.Free;
   TurboTimer.Free;
   inherited Destroy;
 end;
@@ -1463,8 +1478,8 @@ begin
   if not Game.Playing then Exit;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
-   we do want the Rewind and Turbo keys to respond }
-  if IsHyperSpeed and not ((GameSpeed = gspRewind) or (GameSpeed = gspTurbo)) then
+   we do want the Rewind, FF and Turbo keys to respond }
+  if IsHyperSpeed and not (GameSpeed in [gspRewind, gspFF, gspTurbo]) then
     Exit;
 
   with Game do
@@ -2012,7 +2027,6 @@ begin
   fGame.PrepareParams;
 
   // Set timers
-  IdealFrameTimeMSFast := 10;
   IdealScrollTimeMS := 15;
   IdealFrameTimeMS := 60; // Normal
   IdealFrameTimeMSSlow := 240;
