@@ -11,7 +11,8 @@ uses
   LemSystemMessages,
   PngInterface, LemTypes,
   LemReplay, LemGame, LemStrings,
-  SysUtils;
+  SysUtils,
+  SharedGlobals;
 
 const
   EXTRA_ZOOM_LEVELS = 4;

@@ -5,7 +5,8 @@ unit GameWindowInterface;
 interface
 
 uses
-  GR32_Image;
+  GR32_Image,
+  SharedGlobals;
 
 type
 

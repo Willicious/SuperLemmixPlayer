@@ -15,7 +15,8 @@ unit CustomPopup;
 interface
 
 uses
-  Forms, Controls, StdCtrls, Math, Contnrs, Classes, StrUtils, SysUtils;
+  Forms, Controls, StdCtrls, Math, Contnrs, Classes, StrUtils, SysUtils,
+  SharedGlobals;
 
 const
   MIN_BUTTON_WIDTH = 75;

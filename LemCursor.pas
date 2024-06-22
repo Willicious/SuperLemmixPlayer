@@ -8,7 +8,8 @@ uses
   GameControl,
   Windows,
   GR32,
-  Graphics;
+  Graphics,
+  SharedGlobals;
 
 type
   TNLCursor = class

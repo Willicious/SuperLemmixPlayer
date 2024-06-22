@@ -7,7 +7,7 @@ interface
 uses
   System.Types, Generics.Collections,
   PngInterface,
-  LemmixHotkeys, SharedGlobals,
+  LemmixHotkeys,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   LemCore, LemLevel, LemRendering, LemRenderHelpers,
@@ -15,7 +15,8 @@ uses
   GameSound, LemTypes, LemStrings, LemLemming,
   LemCursor,
   GameControl, GameBaseSkillPanel, GameSkillPanel, GameBaseScreenCommon,
-  GameWindowInterface;
+  GameWindowInterface,
+  SharedGlobals;
 
 type
   // For TGameSpeed see unit GameWindowInterface

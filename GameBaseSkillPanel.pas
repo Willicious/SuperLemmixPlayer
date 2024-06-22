@@ -7,7 +7,8 @@ uses
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemAnimationSet, LemMetaAnimation, LemNeoLevelPack, LemProjectile,
-  LemCore, LemLemming, LemGame, LemLevel;
+  LemCore, LemLemming, LemGame, LemLevel,
+  SharedGlobals;
 
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;

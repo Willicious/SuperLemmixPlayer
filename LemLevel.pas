@@ -10,7 +10,8 @@ uses
   LemTalisman,
   LemTerrain, LemTerrainGroup, LemGadgetsModel, LemGadgets, LemGadgetsConstants, LemGadgetsMeta,
   LemStrings, LemTypes,
-  LemNeoPieceManager, LemNeoParser;
+  LemNeoPieceManager, LemNeoParser,
+  SharedGlobals;
 
 type
   TSkillSet = set of TSkillPanelButton;

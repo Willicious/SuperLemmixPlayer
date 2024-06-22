@@ -8,7 +8,8 @@ uses
   Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms, ComCtrls, StdCtrls,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
-  UMisc;
+  UMisc,
+  SharedGlobals;
 
 type
   TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);

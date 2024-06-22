@@ -4,7 +4,8 @@ unit LemPalette;
 interface
 
 uses
-  GR32;
+  GR32,
+  SharedGlobals;
 
 type
   TLemmixPalette = class

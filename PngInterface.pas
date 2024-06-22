@@ -21,7 +21,8 @@ unit PngInterface;
 interface
 
 uses
-  Classes, SysUtils, Graphics, GR32;
+  Classes, SysUtils, Graphics, GR32,
+  SharedGlobals;
 
 type
   TPngInterface = class

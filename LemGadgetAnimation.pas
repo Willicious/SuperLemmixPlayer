@@ -15,7 +15,8 @@ uses
   GR32,
   Classes,
   StrUtils,
-  SysUtils;
+  SysUtils,
+  SharedGlobals;
 
 const
   PICKUP_AUTO_GFX_SIZE = 24;

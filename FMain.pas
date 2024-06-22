@@ -14,7 +14,8 @@ uses
   Dialogs,  StdCtrls,
   FBaseDosForm,
   LemGame, LemTypes,
-  AppController;
+  AppController,
+  SharedGlobals;
 
 type
   TMainForm = class(TBaseDosForm)
@@ -55,7 +56,6 @@ var
 implementation
 
 uses
-  SharedGlobals, // Debug
   Math,
   GameControl, GameBaseScreenCommon;
 

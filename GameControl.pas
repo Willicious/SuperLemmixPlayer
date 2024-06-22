@@ -18,7 +18,8 @@ uses
   LemVersion,
   LemTypes, LemLevel,
   LemStrings, FLevelListDialog,
-  LemRendering;
+  LemRendering,
+  SharedGlobals;
 
 var
   IsHalting: Boolean; { ONLY used during AppController's init routines. Don't use this anywhere else.
@@ -334,7 +335,7 @@ implementation
 
 uses
   FMain,
-  SharedGlobals, Controls, UITypes,
+  Controls, UITypes,
   GameBaseScreenCommon, // For EXTRA_ZOOM_LEVELS const
   GameSound;
 

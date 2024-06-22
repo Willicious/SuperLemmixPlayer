@@ -15,7 +15,7 @@ interface
 
 uses
   System.Types, Generics.Collections,
-  SharedGlobals, PngInterface,
+  PngInterface,
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
   Controls, StrUtils, UMisc,
   GR32, GR32_OrdinalMaps,
@@ -27,7 +27,8 @@ uses
   LemReplay,
   LemTalisman,
   LemGameMessageQueue,
-  GameControl, GameSound;
+  GameControl, GameSound,
+  SharedGlobals;
 
 const
   ParticleColorIndices: array[0..15] of Byte =

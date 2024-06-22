@@ -5,7 +5,8 @@ interface
 uses
   Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+  Dialogs, StdCtrls, ComCtrls, Vcl.ExtCtrls, Vcl.Imaging.pngimage,
+  SharedGlobals;
 
 type
   TFNLSetup = class(TForm)

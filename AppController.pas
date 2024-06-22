@@ -4,7 +4,6 @@ unit AppController;
 interface
 
 uses
-  SharedGlobals,
   GameCommandLine,
   GR32, PngInterface,
   LemSystemMessages,
@@ -15,7 +14,8 @@ uses
   LemNeoPieceManager, // Initial creation
   FBaseDosForm, GameBaseScreenCommon,
   CustomPopup,
-  Classes, SysUtils, StrUtils, IOUtils, UMisc, Windows, Forms, Dialogs, Messages;
+  Classes, SysUtils, StrUtils, IOUtils, UMisc, Windows, Forms, Dialogs, Messages,
+  SharedGlobals;
 
 type
   {-------------------------------------------------------------------------------

@@ -5,7 +5,8 @@ unit LemStrings;
 interface
 
 uses
-  LemCore;
+  LemCore,
+  SharedGlobals;
 
 const
   // Important paths

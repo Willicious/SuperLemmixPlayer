@@ -5,7 +5,8 @@ unit LemVersion;
 interface
 
 uses
-  UMisc, Classes, SysUtils;
+  UMisc, Classes, SysUtils,
+  SharedGlobals;
 
 const
   FORMAT_VERSION = 2;

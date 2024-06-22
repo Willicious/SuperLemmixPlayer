@@ -5,7 +5,8 @@ interface
 uses
   LemReplay, UMisc, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls,
+  SharedGlobals;
 
 type
   TFReplayEditor = class(TForm)

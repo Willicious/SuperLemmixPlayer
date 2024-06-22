@@ -16,7 +16,8 @@ uses
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
   Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows,
-  IOUtils, Vcl.FileCtrl; // For Playback Mode
+  IOUtils, Vcl.FileCtrl, // For Playback Mode
+  SharedGlobals;
 
 const
   // Determines the size of the available window space

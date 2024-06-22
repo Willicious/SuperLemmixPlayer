@@ -8,11 +8,11 @@ uses
   UMisc,
   LemNeoOnline,
   Dialogs,
-  SharedGlobals,
   Classes, SysUtils, Contnrs,
   Math,
   GR32, GR32_LowLevel, GR32_Blend, GR32_Resamplers, PngInterface,
-  Windows;
+  Windows,
+  SharedGlobals;
 
 const
   MUSIC_EXT_COUNT = 12;

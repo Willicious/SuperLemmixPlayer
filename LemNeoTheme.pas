@@ -10,7 +10,8 @@ uses
   Dialogs,
   GR32, LemTypes, LemStrings, PngInterface,
   StrUtils, Classes, SysUtils,
-  LemNeoParser;
+  LemNeoParser,
+  SharedGlobals;
 
 const
   MASK_COLOR = 'mask';

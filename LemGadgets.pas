@@ -8,7 +8,8 @@ uses
   Windows, Contnrs, SysUtils, LemTypes, LemCore,
   LemGadgetsMeta, LemGadgetsModel, LemGadgetsConstants,
   LemGadgetAnimation,
-  Generics.Collections;
+  Generics.Collections,
+  SharedGlobals;
 
 type
   TGadget = class;

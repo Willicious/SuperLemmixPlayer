@@ -7,7 +7,8 @@ uses
   LemCore,
   LemLemming,
   GR32,
-  Classes, SysUtils, Math, Types;
+  Classes, SysUtils, Math, Types,
+  SharedGlobals;
 
 type
 //TBatGraphic = (pgBatR); // Batter

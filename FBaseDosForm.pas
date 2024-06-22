@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Gr32,
-  GameControl;
+  GameControl,
+  SharedGlobals;
 
 type
   {-------------------------------------------------------------------------------

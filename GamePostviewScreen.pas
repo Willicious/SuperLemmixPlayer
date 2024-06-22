@@ -18,7 +18,8 @@ uses
   LemGadgetsConstants,
   GameControl,
   GameSound,
-  GameBaseScreenCommon, GameBaseMenuScreen;
+  GameBaseScreenCommon, GameBaseMenuScreen,
+  SharedGlobals;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.

@@ -13,7 +13,8 @@ uses
   LemNeoTheme,
   LemMetaAnimation,
   LemNeoParser,
-  LemStrings;
+  LemStrings,
+  SharedGlobals;
 
 const
   LTR = False;

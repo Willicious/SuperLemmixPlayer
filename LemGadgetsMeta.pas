@@ -11,7 +11,8 @@ uses
   Classes, SysUtils, StrUtils,
   Contnrs, LemNeoParser,
   LemAnimationSet,
-  LemGadgetAnimation, LemGadgetsConstants;
+  LemGadgetAnimation, LemGadgetsConstants,
+  SharedGlobals;
 
 const
   // Object Animation Types

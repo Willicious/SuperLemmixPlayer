@@ -9,7 +9,8 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, FileCtrl, ExtCtrls;
+  Controls, Forms, Dialogs, StdCtrls, FileCtrl, ExtCtrls,
+  SharedGlobals;
 
 type
   TFPlaybackMode = class(TForm)

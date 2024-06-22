@@ -17,7 +17,8 @@ uses
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
   Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
-  LemNeoParser, System.ImageList;
+  LemNeoParser, System.ImageList,
+  SharedGlobals;
 
 type
   TFLevelSelect = class(TForm)

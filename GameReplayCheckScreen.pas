@@ -6,12 +6,13 @@ interface
 
 uses
   Types, Math,
-  LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager, SharedGlobals,
+  LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager,
   Windows, Classes, SysUtils, StrUtils, IOUtils, Controls, Contnrs,
   UMisc,
   Gr32, Gr32_Layers, GR32_Resamplers, GR32_Image,
   LemTypes, LemStrings, LemGame, LemGameMessageQueue,
-  GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen,
+  SharedGlobals;
 
 {-------------------------------------------------------------------------------
    New dedicated screen for replay checking. :)

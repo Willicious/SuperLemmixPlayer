@@ -20,7 +20,8 @@ uses
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming, LemProjectile,
   LemAnimationSet, LemMetaAnimation, LemCore,
-  LemLevel, LemStrings;
+  LemLevel, LemStrings,
+  SharedGlobals;
 
 type
   TParticleRec = packed record
@@ -220,7 +221,6 @@ implementation
 
 uses
   LemGame, FMain,
-  SharedGlobals,
   GameControl;
 
 { TRenderer }

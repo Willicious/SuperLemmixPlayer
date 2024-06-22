@@ -6,13 +6,14 @@ interface
 
 uses
   Types,
-  Dialogs, // Debug
+  Dialogs,
   LemmixHotkeys,
   Windows, Classes, SysUtils, Controls, StrUtils,
   UMisc,
   Gr32, Gr32_Layers, GR32_Image,
   LemTypes, LemStrings, LemGame,
-  GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen,
+  SharedGlobals;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.

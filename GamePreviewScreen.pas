@@ -9,14 +9,15 @@ uses
   LemTypes,
   PngInterface,
   LemNeoLevelPack,
-  LemmixHotkeys, SharedGlobals,
+  LemmixHotkeys,
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers, GR32_Image,
   UMisc, Dialogs,
   LemCore, LemStrings, LemRendering, LemLevel, LemGame,
   LemGadgetsMeta, LemGadgets, LemMenuFont,
   LemTalisman,
-  GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow,
+  SharedGlobals;
 
 type
   TGamePreviewScreen = class(TGameBaseMenuScreen)

@@ -6,7 +6,8 @@ uses
   LemCore,
   LemNeoParser,
   UMisc,
-  Classes, SysUtils;
+  Classes, SysUtils,
+  SharedGlobals;
 
 type
   TTalismanColor = (tcBronze, tcSilver, tcGold);

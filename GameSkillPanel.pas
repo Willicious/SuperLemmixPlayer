@@ -6,7 +6,8 @@ interface
 uses
   LemTypes,
   Classes, GR32,
-  GameWindowInterface, GameBaseSkillPanel;
+  GameWindowInterface, GameBaseSkillPanel,
+  SharedGlobals;
 
 type
   TSkillPanelStandard = class(TBaseSkillPanel)

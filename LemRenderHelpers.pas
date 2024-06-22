@@ -10,7 +10,8 @@ uses
   System.Types,
   LemProjectile, LemTypes, LemGadgets, LemLemming, LemCore,
   GR32, GR32_Blend,
-  Contnrs, Classes;
+  Contnrs, Classes,
+  SharedGlobals;
 
 const
   PARTICLE_FRAMECOUNT = 51;
