@@ -931,17 +931,19 @@ var
     Result := true;
   end;
 begin
-  if not fReplayManager.IsThisUsersReplay then
-    Exit;
-
   for i := 0 to Level.Talismans.Count-1 do
   begin
     if CheckTalisman(Level.Talismans[i]) then
     begin
       fTalismanReceived := true;
-      if not GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then
-        fNewTalismanReceived := true;
-      GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
+
+      if fReplayManager.IsThisUsersReplay then
+      begin
+        if not GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then
+          fNewTalismanReceived := true;
+
+        GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
+      end;
     end;
   end;
 end;

@@ -453,7 +453,7 @@ begin
 
   // Top text
   HueShift.HShift := TopTextShift;
-  if Results.gGotTalisman then
+  if Results.gGotTalisman and GlobalGame.ReplayManager.IsThisUsersReplay then
     Result[0].Line := STalismanUnlocked
   else if Results.gTimeIsUp then
     Result[0].Line := SYourTimeIsUp
