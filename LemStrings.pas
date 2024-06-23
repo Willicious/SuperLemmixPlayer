@@ -176,11 +176,9 @@ resourcestring
   {-------------------------------------------------------------------------------
     Postview Screen
   -------------------------------------------------------------------------------}
-  SYourTimeIsUp =
-    'Your time is up!';
-
-  STalismanUnlocked =
-    'You unlocked a talisman!';
+  SYourTimeIsUp = 'Your time is up!';
+  STalismanUnlocked = 'You unlocked a new talisman!';
+  STalismanAchieved = 'You achieved a talisman!';
 
   SYouRescued = 'You rescued ';
   SYouNeeded =  'You needed  ';

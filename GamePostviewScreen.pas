@@ -453,9 +453,13 @@ begin
 
   // Top text
   HueShift.HShift := TopTextShift;
-  if Results.gGotTalisman and GlobalGame.ReplayManager.IsThisUsersReplay then
-    Result[0].Line := STalismanUnlocked
-  else if Results.gTimeIsUp then
+  if (Results.gGotNewTalisman or Results.gGotTalisman) and GlobalGame.ReplayManager.IsThisUsersReplay then
+  begin
+    if Results.gGotNewTalisman then
+      Result[0].Line := STalismanUnlocked
+    else
+      Result[0].Line := STalismanAchieved;
+  end else if Results.gTimeIsUp then
     Result[0].Line := SYourTimeIsUp
   else
     Result[0].Line := 'All ' + GameParams.Renderer.Theme.LemNamesPlural + ' accounted for.';
