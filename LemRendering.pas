@@ -1,7 +1,5 @@
 {$include lem_directives.inc}
 
-// TODO: Replace CombineGadgetsDefaultZombie and CombineGadgetsDefaultNeutral with use of the lemming recolorer.
-
 unit LemRendering;
 
 interface
@@ -94,9 +92,6 @@ type
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: Cardinal);
-    //procedure CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
-    procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
-    procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
 
     // Clear Physics combines
     procedure CombineLasererShadowToShadowLayer(F: TColor32; var B: TColor32; M: Cardinal);
@@ -2323,64 +2318,11 @@ begin
     MergeMem(F, B);
 end;
 
-procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
-begin
-  if (F and $FF000000) <> 0 then
-  begin
-    if (F and $FFFFFF) = $FFDDDD then
-      F := $FF888888;
-
-    if (F and $FF000000) = $FF000000 then
-      B := F
-    else
-      MergeMem(F, B);
-  end;
-end;
-
 procedure TRenderer.CombineLasererShadowToShadowLayer(F: TColor32;
   var B: TColor32; M: Cardinal);
 begin
   if (F and $00FF0000 <> 0) or ((F and $0000FFFF) = $00000100) then B := SHADOW_COLOR;
 end;
-
-procedure TRenderer.CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
-begin
-  if (F and $FF000000) <> 0 then
-  begin
-    // 1 = blue, 2 = green, 5 = red
-
-    case (F and $FFFFFF) of
-      $00BB00: F := $FF686868;
-      $4444EE: F := $FF525252;
-      $FF2222: F := $FF5E5E5E;
-    end;
-
-    if (F and $FF000000) = $FF000000 then
-      B := F
-    else
-      MergeMem(F, B);
-  end;
-end;
-
-// Bookmark - everything here is currently same as Neutral - is this even needed?
-//procedure TRenderer.CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
-//begin
-//  if (F and $FF000000) <> 0 then
-//  begin
-//    // 1 = blue, 2 = green, 5 = red
-//
-//    case (F and $FFFFFF) of
-//      $00BB00: F := $FF686868;
-//      $4444EE: F := $FF525252;
-//      $FF2222: F := $FF5E5E5E;
-//    end;
-//
-//    if (F and $FF000000) = $FF000000 then
-//      B := F
-//    else
-//      MergeMem(F, B);
-//  end;
-//end;
 
 const
   MIN_TERRAIN_GROUP_WIDTH = 1;
@@ -2582,12 +2524,6 @@ begin
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
-  //else if IsRival then
-    //Bmp.OnPixelCombine := CombineGadgetsDefaultRival  // Bookmark - SEE TODO at top of page - I think the plan is to use recolorer here instead
-  else if IsNeutral then
-    Bmp.OnPixelCombine := CombineGadgetsDefaultNeutral
-  else if IsZombie then
-    Bmp.OnPixelCombine := CombineGadgetsDefaultZombie
   else
     Bmp.OnPixelCombine := CombineGadgetsDefault;
 end;
