@@ -122,7 +122,6 @@ type
     procedure AddSaveState;
     procedure CheckAdjustSpawnInterval;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
-    procedure StartReplay(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
     procedure CheckUserHelpers;
@@ -195,7 +194,6 @@ type
     destructor Destroy; override;
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
-    procedure LoadReplay;
     procedure SaveReplay;
     procedure RenderMinimap;
     procedure MainFormResized; override;
@@ -1623,7 +1621,18 @@ begin
                           GameSpeed := gspNormal;
                       end;
       lka_SaveImage: SaveShot;
-      lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
+      lka_LoadReplay: begin
+                        if not (GameParams.ClassicMode or GameParams.PlaybackModeActive) then
+                          LoadReplay;
+
+                        if GlobalGame.ReplayManager.ReplayLoadSuccess then
+                        begin
+                          GameSpeed := gspNormal;
+                          Game.IsBackstepping := False;
+                          GotoSaveState(0, -1);
+                          CanPlay := True;
+                        end;
+                      end;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: begin
                      SkillPanel.DrawButtonSelector(spbRestart, True);
@@ -2170,22 +2179,6 @@ begin
     Result := false;
 end;
 
-procedure TGameWindow.StartReplay(const aFileName: string);
-begin
-  CanPlay := False;
-
-  Game.ReplayManager.LoadFromFile(aFilename);
-
-  if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
-    ShowMessage('Warning: This replay appears to be from a different level.' + #13 +
-                'SuperLemmix will attempt to play the replay anyway.');
-
-  GameSpeed := gspNormal;
-  Game.IsBackstepping := False;
-  GotoSaveState(0, -1);
-  CanPlay := True;
-end;
-
 procedure TGameWindow.SuspendGameplay;
 var
   NewSuspendState: TSuspendState;
@@ -2230,73 +2223,6 @@ begin
     Game.ReplayManager.SaveToFile(s);
   finally
     ResumeGameplay;
-  end;
-end;
-
-procedure TGameWindow.LoadReplay;
-var
-  Dlg : TOpenDialog;
-  s: string;
-
-  function GetDefaultLoadPath: String;
-    function GetGroupName: String;
-    var
-      G: TNeoLevelGroup;
-    begin
-      G := GameParams.CurrentLevel.Group;
-      if G.Parent = nil then
-        Result := ''
-      else begin
-        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
-          G := G.Parent;
-        Result := MakeSafeForFilename(G.Name, false) + '\';
-      end;
-    end;
-  begin
-    Result := AppPath + SFReplays + GetGroupName;
-  end;
-
-  function GetInitialLoadPath: String;
-  begin
-    if (LastReplayDir <> '') then
-      Result := LastReplayDir
-    else
-      Result := GetDefaultLoadPath;
-  end;
-begin
-  // Todo: Replace this with use of GameBaseScreen's LoadReplay function
-
-  s := '';
-  Dlg := TOpenDialog.Create(self);
-  SuspendGameplay;
-  try
-    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := 'SuperLemmix Replay File (*.nxrp)|*.nxrp';
-    Dlg.FilterIndex := 1;
-    if LastReplayDir = '' then
-    begin
-      Dlg.InitialDir := AppPath + SFReplays + GetInitialLoadPath;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath + SFReplays;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath;
-    end else
-      Dlg.InitialDir := LastReplayDir;
-    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
-    if Dlg.execute then
-    begin
-      s:=Dlg.filename;
-      LastReplayDir := ExtractFilePath(s);
-    end;
-  finally
-    Dlg.Free;
-    ResumeGameplay;
-  end;
-
-  if s <> '' then
-  begin
-    StartReplay(s);
-    Exit;
   end;
 end;
 

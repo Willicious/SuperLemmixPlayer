@@ -430,10 +430,11 @@ var
   end;
 begin
   s := '';
+  GlobalGame.ReplayManager.ReplayLoadSuccess := False;
 
   if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive then
   begin
-    Result := true; // Return true if opened by replay
+    Result := True; // Return true if SLX was opened by replay or if PlaybackMode is active
     s := GameParams.LoadedReplayFile;
   end else begin
     Dlg := TOpenDialog.Create(self);
@@ -456,9 +457,9 @@ begin
       begin
         s := Dlg.filename;
         LastReplayDir := ExtractFilePath(s);
-        Result := true; // Return true if the file was successfully selected
+        Result := True; // Return true if the file was successfully selected
       end else
-        Result := false; // Return false if the user canceled the dialog
+        Result := False; // Return false if the user cancelled the dialog
     finally
       Dlg.Free;
     end;
@@ -467,9 +468,12 @@ begin
   if s <> '' then
   begin
     GlobalGame.ReplayManager.LoadFromFile(s);
+
     if GlobalGame.ReplayManager.LevelID <> GameParams.Level.Info.LevelID then
       ShowMessage('Warning: This replay appears to be from a different level.' + #13 +
                   'SuperLemmix will attempt to play the replay anyway.');
+
+    GlobalGame.ReplayManager.ReplayLoadSuccess := True;
   end;
 end;
 
