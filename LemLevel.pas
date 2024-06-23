@@ -1196,20 +1196,32 @@ begin
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
                // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
-  L.IsBallooner    := (aSection.Line['ballooner'] <> nil);
-  L.IsShimmier     := (aSection.Line['shimmier'] <> nil);
-  L.IsSlider       := (aSection.Line['slider'] <> nil);
-  L.IsClimber      := (aSection.Line['climber']  <> nil);
-  L.IsSwimmer      := (aSection.Line['swimmer']  <> nil);
-  L.IsFloater      := (aSection.Line['floater']  <> nil);
-  L.IsGlider       := (aSection.Line['glider']   <> nil);
-  L.IsDisarmer     := (aSection.Line['disarmer'] <> nil);
-  L.IsZombie       := (aSection.Line['zombie']   <> nil);
-  L.IsNeutral      := (aSection.Line['neutral']  <> nil) and not (aSection.Line['rival'] <> nil);
-  L.IsRival        := (aSection.Line['rival'] <> nil) and not (aSection.Line['zombie'] <> nil);
-  L.IsBlocker      := (aSection.Line['blocker']  <> nil);   // Bookmark - implement this later - Invincible lems can't also be neutral or zombie
-  //L.IsInvincible   := ((aSection.Line['invincible'] <> nil) and not ((aSection.Line['neutral']  <> nil)
-                                                                  //or (aSection.Line['zombie']   <> nil)));
+  L.IsBallooner    := (aSection.Line['ballooner']  <> nil);
+  L.IsShimmier     := (aSection.Line['shimmier']   <> nil);
+  L.IsSlider       := (aSection.Line['slider']     <> nil);
+  L.IsClimber      := (aSection.Line['climber']    <> nil);
+  L.IsSwimmer      := (aSection.Line['swimmer']    <> nil);
+  L.IsFloater      := (aSection.Line['floater']    <> nil);
+  L.IsGlider       := (aSection.Line['glider']     <> nil);
+  L.IsDisarmer     := (aSection.Line['disarmer']   <> nil);
+  L.IsZombie       := (aSection.Line['zombie']     <> nil);
+  L.IsNeutral      := (aSection.Line['neutral']    <> nil);
+  L.IsRival        := (aSection.Line['rival']      <> nil);
+  L.IsBlocker      := (aSection.Line['blocker']    <> nil);
+  //L.IsInvincible   := (aSection.Line['invincible'] <> nil);  // Bookmark - implement this later //
+                                                                                                  //
+  if L.IsRival then // Prefer Rival state over Neutral and Zombie                                 //
+  begin                                                                                           //
+    L.IsNeutral := False;                                                                         //
+    L.IsZombie := False;                                                                          //
+  end;                                                                                            //
+                                                                                                  //
+//  if L.IsInvincible then // Prefer Invincible state over Rival, Neutral and Zombie   <--------- //
+//  begin
+//    L.IsZombie := False;
+//    L.IsNeutral := False;
+//    L.IsRival := False;
+//  end;
 end;
 
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);

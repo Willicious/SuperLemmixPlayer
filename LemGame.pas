@@ -652,7 +652,7 @@ const
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
              baBallooning, baLaddering//, baBatting, baPropelling // Batter // Propeller
-             );                       // Bookmark - Double-check these skills are in the correct place after adding them
+             );                       // Double-check these skills are in the correct place after adding them
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1657,7 +1657,7 @@ var
   Gadget, Gadget2: TGadget;
 begin
   Gadget := Gadgets[GadgetID];
-  Assert(Gadget.ReceiverId <> 65535, 'Teleporter used without receiver'); // Bookmark - change this to use -1 instead?
+  Assert(Gadget.ReceiverId <> 65535, 'Teleporter used without receiver');
   Gadget2 := Gadgets[Gadget.ReceiverId];
 
   if Gadget.IsFlipPhysics then TurnAround(L);
@@ -6932,7 +6932,7 @@ end;
 //begin
 //  if L.LemPhysicsFrame = 4 then
 //  begin
-//     if not IsSimulating then // Bookmark - is this needed? We will never simulate Batters
+//     if not IsSimulating then // Is this needed? We will never simulate Batters
 //     begin
 //       NewProjectile := TProjectile.CreateBat(PhysicsMap, L);
 //

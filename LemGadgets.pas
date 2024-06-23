@@ -478,16 +478,15 @@ const
     Result := false;
     if TriggerEffectBase in DISABLED_OBJECT_TYPES then
     begin
-       if TriggerEffect = DOM_NONE then // Local trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
+      if TriggerEffect = DOM_NONE then // Disarmed traps and unmatched teleporter/receivers are set to DOM_NONE
         Result := true
       else
         case TriggerEffectBase of
           DOM_EXIT: Result := RemainingLemmingsCount = 0;
-          // DOM_TRAP: Only condition is handled by the above TriggerEffect check // Bookmark - remove?
           DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
           DOM_BUTTON, DOM_COLLECTIBLE, DOM_TRAPONCE, DOM_ANIMONCE: Result := CurrentFrame = 0;
           DOM_LOCKEXIT: Result := (CurrentFrame = 1) or (RemainingLemmingsCount = 0);
-          DOM_WINDOW: Result := RemainingLemmingsCount = 0; // Bookmark - check this is done: todo: when all lemmings are released even on infinite windows
+          DOM_WINDOW: Result := RemainingLemmingsCount = 0;
         end;
     end;
   end;

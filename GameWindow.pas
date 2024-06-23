@@ -1061,7 +1061,6 @@ begin
       fLastSelectedSkill := fRenderInterface.SelectedSkill;
       fLastHelperIcon := fRenderInterface.UserHelper;
       fLastDrawPaused := GameSpeed = gspPause;
-
       fLastProjectionType := fProjectionType;
 
       fNeedRedraw := rdNone;
@@ -1246,8 +1245,8 @@ begin
     if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
       HandleHeldScroll
     else
-      fHoldScrollData.Active := false;                      // Bookmark -
-  end else if fNeedResetMouseTrap or not fMouseTrapped then // Why are these two seperate variables anyway?
+      fHoldScrollData.Active := false;
+  end else if fNeedResetMouseTrap or not fMouseTrapped then
   begin
     GameScroll := gsNone;
     GameVScroll := gsNone;
@@ -1819,7 +1818,6 @@ procedure TGameWindow.SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
 var
   NewPoint: TPoint;
 begin
-  // Bookmark - work out WHY this change is needed
   NewPoint := Point(BitmapPoint.X - 3, BitmapPoint.Y + 2);
   if GameParams.HighResolution then
   begin

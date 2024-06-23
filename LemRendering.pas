@@ -307,8 +307,8 @@ begin
   if not fLayers.fIsEmpty[rlLemmingsHigh] then fLayers[rlLemmingsHigh].Clear(0);
 
   LemmingList := fTempLemmingList;
-
   LemmingList.Clear;
+
   for i := 0 to fRenderInterface.LemmingList.Count-1 do
     LemmingList.Add(fRenderInterface.LemmingList[i]);
 
@@ -347,6 +347,7 @@ begin
   // Draw particles for exploding lemmings, laser for laserers
   fLayers.fIsEmpty[rlParticles] := True;
   fLayers.fIsEmpty[rlCountdown] := True;
+
   for i := 0 to LemmingList.Count-1 do
   begin
     if LemmingList[i].LemParticleTimer > 0 then
