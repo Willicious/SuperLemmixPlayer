@@ -1836,44 +1836,43 @@ begin
         Inc(L.LemY);
   end;
 
-  if (NewAction = baShimmying) and (L.LemAction = baTurning) then
+  if (NewAction = baShimmying) then
   begin
-    Inc(L.LemY);
-  end;
+    case L.LemAction of
+      baTurning: Inc(L.LemY);
 
-  if (NewAction = baShimmying) and (L.LemAction = baSliding) then
-  begin
-    Inc(L.LemY, 2);
-    if HasPixelAt(L.LemX, L.LemY - 8) then
-      Inc(L.LemY);
-  end;
+      baSliding: begin
+                   Inc(L.LemY, 2);
 
-  if (NewAction = baShimmying) and (L.LemAction = baDehoisting) then
-  begin
-    Inc(L.LemY, 2);
-    if HasPixelAt(L.LemX, L.LemY - 9 + 1) then
-      Inc(L.LemY);
-  end;
+                   if HasPixelAt(L.LemX, L.LemY - 8) then
+                     Inc(L.LemY);
+                 end;
 
-  if (NewAction = baShimmying) and (L.LemAction = baDangling) then
-  begin
-    // Adjust starting position of Shimmier according to Dangler position
-    if L.LemPhysicsFrame = 0 then
-      Inc(L.LemY)
-    else if L.LemPhysicsFrame = 2 then
-      Dec(L.LemY)
-    else if L.LemPhysicsFrame >= 3 then
-      Dec(L.LemY, 2);
-  end;
+      baDehoisting: begin
+                      Inc(L.LemY, 2);
+                      if HasPixelAt(L.LemX, L.LemY - 9 + 1) then
+                        Inc(L.LemY);
+                    end;
 
-  if (NewAction = baShimmying) and (L.LemAction = baJumping) then
-  begin
-    for i := -1 to 3 do
-      if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
-      begin
-        L.LemY := L.LemY - i;
-        Break;
-      end;
+      baDangling: begin
+                    // Adjust starting position of Shimmier according to Dangler position
+                    if L.LemPhysicsFrame = 0 then
+                      Inc(L.LemY)
+                    else if L.LemPhysicsFrame = 2 then
+                      Dec(L.LemY)
+                    else if L.LemPhysicsFrame >= 3 then
+                      Dec(L.LemY, 2);
+                  end;
+
+      baJumping: begin
+                   for i := -1 to 3 do
+                   if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
+                   begin
+                     L.LemY := L.LemY - i;
+                     Break;
+                   end;
+                 end;
+    end;
   end;
 
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
