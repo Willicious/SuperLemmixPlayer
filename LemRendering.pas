@@ -1925,7 +1925,7 @@ procedure TRenderer.DrawProjectileShadow(L: TLemming);
 const
   ARR_BASE_LEN = 1024;
 var
-  Proj: TProjectile;
+  Projectile: TProjectile;
   PosArray: TProjectilePointArray;
   ActualPosCount: Integer;
   i: Integer;
@@ -1949,8 +1949,8 @@ var
 
   function IsOutOfBounds: Boolean;
   begin
-    Result := (Proj.X < -108) or (Proj.X >= LevelWidth + 108) or
-              (Proj.Y < -108) or (Proj.Y >= LevelHeight + 108);
+    Result := (Projectile.X < -108) or (Projectile.X >= LevelWidth + 108) or
+              (Projectile.Y < -108) or (Projectile.Y >= LevelHeight + 108);
   end;
 begin
   fLayers.fIsEmpty[rlShadowsLow] := False;
@@ -1959,24 +1959,28 @@ begin
   LevelHeight := GameParams.Level.Info.Height;
 
   case L.LemAction of
-    //baBatting: Proj := TProjectile.CreateBat(fRenderInterface.PhysicsMap, L); // Batter
-    baSpearing: Proj := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
-    baGrenading: Proj := TProjectile.CreateGrenade(fRenderInterface.PhysicsMap, L);
+    //baBatting: Projectile := TProjectile.CreateBat(fRenderInterface.PhysicsMap, L); // Batter
+    baSpearing: Projectile := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
+    baGrenading: Projectile := TProjectile.CreateGrenade(fRenderInterface.PhysicsMap, L);
     else raise Exception.Create('TRenderer.DrawProjectileShadow passed an invalid lemming');
   end;
 
-  SetLength(PosArray, ARR_BASE_LEN);
-  ActualPosCount := 0;
+  try
+    SetLength(PosArray, ARR_BASE_LEN);
+    ActualPosCount := 0;
 
-  while not (Proj.SilentRemove or Proj.Hit or IsOutOfBounds) do
-  begin
-    if not Proj.Fired then // We don't need the lemming anymore once the projectile leaves its hand
-      fRenderInterface.SimulateLem(L);
-    AppendPositions(Proj.Update);
+    while not (Projectile.SilentRemove or Projectile.Hit or IsOutOfBounds) do
+    begin
+      if not Projectile.Fired then // We don't need the lemming anymore once the projectile leaves its hand
+        fRenderInterface.SimulateLem(L);
+      AppendPositions(Projectile.Update);
+    end;
+
+    for i := 0 to ActualPosCount-1 do
+      SetLowShadowPixel(PosArray[i].X, PosArray[i].Y);
+  finally
+    Projectile.Free;
   end;
-
-  for i := 0 to ActualPosCount-1 do
-    SetLowShadowPixel(PosArray[i].X, PosArray[i].Y);
 end;
 
 procedure TRenderer.DrawLasererShadow(L: TLemming);
