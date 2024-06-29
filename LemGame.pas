@@ -6087,40 +6087,37 @@ function TLemmingGame.HandleReaching(L: TLemming): Boolean;
 const
   MovementList: array[0..7] of Byte = (0, 3, 2, 2, 1, 1, 1, 0);
 var
-  emptyPixels: Integer;
+  MinimumReachDistance: Integer;
+  CannotAscendOrShimmy: Boolean;
+
 begin
   Result := True;
-  if HasPixelAt(L.LemX, L.LemY - 10) then
-    emptyPixels := 0
-  else if HasPixelAt(L.LemX, L.LemY - 11) then
-    emptyPixels := 1
-  else if HasPixelAt(L.LemX, L.LemY - 12) then
-    emptyPixels := 2
-  else if HasPixelAt(L.LemX, L.LemY - 13) then
-    emptyPixels := 3
-  else
-    emptyPixels := 4;
+  CannotAscendOrShimmy := HasPixelAt(L.LemX, L.LemY - 9) and HasPixelAt(L.LemX, L.LemY - 10);
 
-  // Check for terrain in the body to trigger falling down
-  if HasPixelAt(L.LemX, L.LemY - 5) or HasPixelAt(L.LemX, L.LemY - 6)
-    or HasPixelAt(L.LemX, L.LemY - 7) or HasPixelAt(L.LemX, L.LemY - 8) then
+  if HasPixelAt(L.LemX, L.LemY - 10) then
+    MinimumReachDistance := 1
+  else if HasPixelAt(L.LemX, L.LemY - 11) then
+    MinimumReachDistance := 2
+  else if HasPixelAt(L.LemX, L.LemY - 12) then
+    MinimumReachDistance := 3
+  else if HasPixelAt(L.LemX, L.LemY - 13) then
+    MinimumReachDistance := 4
+  else
+    MinimumReachDistance := 5;
+
+  // On the first frame, check if both ascent and shimmy are blocked by terrain
+  if (L.LemPhysicsFrame = 1) and CannotAscendOrShimmy then
   begin
     Transition(L, baFalling)
   end
-  // On the first frame, check as well for height 9, as the shimmier may not continue in that case
-  else if (L.LemPhysicsFrame = 1) and HasPixelAt(L.LemX, L.LemY - 9) then
+  // Check whether we can reach the ceiling for shimmying
+  else if MinimumReachDistance <= MovementList[L.LemPhysicsFrame] then
   begin
-    Transition(L, baFalling)
-  end
-  // Check whether we can reach the ceiling
-  else if emptyPixels <= MovementList[L.LemPhysicsFrame] then
-  begin
-    Dec(L.LemY, emptyPixels + 1); // Shimmiers are a lot smaller than reachers
+    Dec(L.LemY, MinimumReachDistance);
     Transition(L, baShimmying);
   end
-  // Move upwards
-  else
-  begin
+  // Move upwards and fall when height limit is reached (determined by frame)
+  else begin
     Dec(L.LemY, MovementList[L.LemPhysicsFrame]);
     if L.LemPhysicsFrame = 7 then
       Transition(L, baFalling);
