@@ -1027,9 +1027,9 @@ begin
     BorderRect := fButtonRects[aButton];
 
   Inc(BorderRect.Right, 4);
-  Inc(BorderRect.Bottom, 4);
+  Inc(BorderRect.Bottom, 2);
 
-  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(6, 6, 6, 6), fSkillSelected);
+  fSkillSelected.DrawTo(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect);
 end;
 
 procedure TBaseSkillPanel.DrawTurboHighlight;
@@ -1038,13 +1038,12 @@ var
 begin
   BorderRect := fButtonRects[spbFastForward];
 
-  if (fGameWindow.GameSpeed = gspTurbo) then
-  begin
-    Inc(BorderRect.Right, 2);
-    Inc(BorderRect.Bottom, 4);
+  Inc(BorderRect.Right, 4);
+  Inc(BorderRect.Bottom, 2);
 
-    DrawNineSlice(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect, Rect(6, 6, 6, 6), fTurboHighlight);
-  end else if not (fGameWindow.GameSpeed in [gspFF, gspTurbo]) then
+  if (fGameWindow.GameSpeed = gspTurbo) then
+    fTurboHighlight.DrawTo(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect)
+  else if not (fGameWindow.GameSpeed in [gspFF, gspTurbo]) then
     RemoveHighlight(spbFastForward);
 end;
 
