@@ -6221,7 +6221,7 @@ end;
 
 function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 var
-JumperArcFrames: Integer;
+  JumperArcFrames: Integer;
 
   procedure HandleJumperWallBounce;
   begin
@@ -6251,17 +6251,27 @@ JumperArcFrames: Integer;
       HandleForceField(L, 1);
   end;
 
+  function ShouldContinueJumping: Boolean;
+  var
+    IgnoreX: Integer;
+  begin
+    Result := False;
+
+    if L.LemDX = 1 then
+      IgnoreX := -1
+    else
+      IgnoreX := 1;
+
+    // Ignore pixels below head height unless approached from the side
+    if HasPixelAt(L.LemX + IgnoreX, L.LemY) then
+      Result := True;
+  end;
+
   function MakeJumpMovement: Boolean;
   var
     Pattern: TJumpPattern;
     PatternIndex: Integer;
-
-    FirstStepSpecialHandling: Boolean;
-
-    i: Integer;
-    n: Integer;
-
-    CheckX: Integer;
+    i, n, CheckX: Integer;
   begin
     Result := false;
 
@@ -6280,59 +6290,68 @@ JumperArcFrames: Integer;
 
     FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
 
-    FirstStepSpecialHandling := (L.LemJumpProgress = 0);
-
     for i := 0 to 5 do
     begin
       L.LemJumpPositions[i, 0] := L.LemX;
       L.LemJumpPositions[i, 1] := L.LemY;
 
-      if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then Break;
+      if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then
+        Break;
 
       if (Pattern[i][0] <> 0) then // Wall check
       begin
         CheckX := L.LemX + L.LemDX;
-        if HasPixelAt(CheckX, L.LemY) or (HasTriggerAt(CheckX, L.LemY, trWater) and L.LemIsSwimmer)
-                                      or (HasWaterObjectAt(CheckX, L.LemY) and L.LemIsInvincible) then
+
+        if not ShouldContinueJumping then
         begin
-          for n := 1 to 8 do
+          if HasPixelAt(CheckX, L.LemY) or (HasTriggerAt(CheckX, L.LemY, trWater) and L.LemIsSwimmer)
+                                        or (HasWaterObjectAt(CheckX, L.LemY) and L.LemIsInvincible) then
           begin
-            if not HasPixelAt(CheckX, L.LemY - n) then
+            for n := 1 to 8 do
             begin
-              if n <= 2 then
+              if not HasPixelAt(CheckX, L.LemY - n) then
               begin
-                L.LemX := CheckX;
-                L.LemY := L.LemY - n + 1;
-                fLemNextAction := baWalking;
-              end else if n <= 5 then begin
-                L.LemX := CheckX;
-                L.LemY := L.LemY - n + 5;
-                fLemNextAction := baHoisting;
-                fLemJumpToHoistAdvance := true;
-              end else begin
-                L.LemX := CheckX;
-                L.LemY := L.LemY - n + 8;
-                fLemNextAction := baHoisting;
-              end;
-
-              Exit;
-            end;
-
-            if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
-            begin
-              if L.LemIsClimber then
-              begin
-                L.LemX := CheckX;
-                fLemNextAction := baClimbing;
-              end else begin
-                if L.LemIsSlider then
+                if n <= 2 then
                 begin
-                  Inc(L.LemX, L.LemDX);
-                  fLemNextAction := baSliding;
-                end else
-                  HandleJumperWallBounce;
+                  L.LemX := CheckX;
+                  L.LemY := L.LemY - n + 1;
+                  fLemNextAction := baWalking;
+                end else if n <= 5 then begin
+                  L.LemX := CheckX;
+                  L.LemY := L.LemY - n + 5;
+
+                  if not ShouldContinueJumping then
+                  begin
+                    fLemNextAction := baHoisting;
+                    fLemJumpToHoistAdvance := true;
+                  end;
+                end else begin
+                  L.LemX := CheckX;
+                  L.LemY := L.LemY - n + 8;
+
+                  if not ShouldContinueJumping then
+                    fLemNextAction := baHoisting;
+                end;
+
+                Exit;
               end;
-              Exit;
+
+              if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
+              begin
+                if L.LemIsClimber then
+                begin
+                  L.LemX := CheckX;
+                  fLemNextAction := baClimbing;
+                end else begin
+                  if L.LemIsSlider then
+                  begin
+                    Inc(L.LemX, L.LemDX);
+                    fLemNextAction := baSliding;
+                  end else
+                    HandleJumperWallBounce;
+                end;
+                Exit;
+              end;
             end;
           end;
         end;
@@ -6340,16 +6359,10 @@ JumperArcFrames: Integer;
 
       if (Pattern[i][1] < 0) then // Head check
       begin
-        for n := 1 to 9 do
+        if HasPixelAt(L.LemX, L.LemY - 10) then
         begin
-          if (n = 1) and FirstStepSpecialHandling then
-            Continue;
-        
-          if HasPixelAt(L.LemX, L.LemY - n) then
-          begin
-            fLemNextAction := baFalling;
-            Exit;
-          end;
+          fLemNextAction := baFalling;
+          Exit;
         end;
       end;
 
@@ -6358,16 +6371,18 @@ JumperArcFrames: Integer;
 
       DoJumperTriggerChecks;
 
-      if FirstStepSpecialHandling then
-        FirstStepSpecialHandling := false
-      else if HasPixelAt(L.LemX, L.LemY) then // Foot check
+      if HasPixelAt(L.LemX, L.LemY) then // Foot check
       begin
-        fLemNextAction := baWalking;
-        Exit;
+        // Ignore pixels below original head height
+        if (L.LemJumpProgress > 2) then
+        begin
+          fLemNextAction := baWalking;
+          Exit;
+        end;
       end;
     end;
 
-    Result := true;
+    Result := True;
   end;
 begin
   if MakeJumpMovement then
@@ -6380,7 +6395,7 @@ begin
       fLemNextAction := baWalking;
   end;
 
-  Result := true;
+  Result := True;
 end;
 
 function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
