@@ -5521,6 +5521,11 @@ begin
   begin
     CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
   end
+  else if L.LemPhysicsFrame = 1 then
+  begin                                    // Relax this check for first brick
+    if HasPixelAt(L.LemX, L.LemY - 1) and (L.LemNumberOfBricksLeft < 12) then
+      Transition(L, baWalking, True)  // Turn around as well
+  end
   else if L.LemPhysicsFrame = 0 then
   begin
     Dec(L.LemNumberOfBricksLeft);
@@ -5528,29 +5533,20 @@ begin
     if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) then
       Transition(L, baWalking, True)  // Turn around as well
 
-    else if (     HasPixelAt(L.LemX + L.LemDx, L.LemY - 3)
-              or  HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 2)
-              or (HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 10) and (L.LemNumberOfBricksLeft > 0))
-            ) then
+    else if (HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 10) and (L.LemNumberOfBricksLeft > 0)) then
     begin
       Dec(L.LemY);
       Inc(L.LemX, L.LemDx);
       Transition(L, baWalking, True)  // Turn around as well
-    end
 
-    else
-    begin
+    end else begin
       if not L.LemConstructivePositionFreeze then
       begin
         Dec(L.LemY);
         Inc(L.LemX, 2*L.LemDx);
       end;
 
-      if (     HasPixelAt(L.LemX, L.LemY - 2)
-           or  HasPixelAt(L.LemX, L.LemY - 3)
-           or  HasPixelAt(L.LemX + L.LemDx, L.LemY - 3)
-           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
-         ) then
+      if (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0)) then
          Transition(L, baWalking, True)  // Turn around as well
 
       else if L.LemNumberOfBricksLeft = 0 then
