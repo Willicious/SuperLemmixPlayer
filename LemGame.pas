@@ -3229,12 +3229,6 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trCollectible) then
       HandleCollectible(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Fire
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire)
-    // Don't even call HandleFire if lem is invincible
-    and not L.LemIsInvincible then
-      AbortChecks := HandleFire(L);
-
     // Radiation
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
       HandleRadiation(L, CheckPos[0, i], CheckPos[1, i]);
@@ -3242,6 +3236,18 @@ begin
     // Slowfreeze
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
       HandleSlowfreeze(L, CheckPos[0, i], CheckPos[1, i]);
+
+    { The following objects all involve aborting position checks as they potentially remove the lemming }
+
+    // Exits - priority over all other objects
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
+      AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
+
+    // Fire
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire)
+    // Don't even call HandleFire if lem is invincible
+    and not L.LemIsInvincible then
+      AbortChecks := HandleFire(L);
 
     // Water objects - Check only for fatalities here!
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
@@ -3267,10 +3273,6 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) and not IsPostTeleportCheck then
       AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Exits
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
-      AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
-
     // Splitter (except for blockers / jumpers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
                          and not (L.LemAction = baBlocking)
@@ -3281,9 +3283,9 @@ begin
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
     end;
 
-    // Triggered animations and one-shot animations
+    // Triggered / one-shot animations - these don't abort checks, but do potentially halt movement for the duration of the animation
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnim) then
-      HandleAnimation(L, CheckPos[0, i], CheckPos[1, i]); // HandleAnimation will never activate AbortChecks
+      HandleAnimation(L, CheckPos[0, i], CheckPos[1, i]);
 
     // If the lem was required stop, move him there!
     if AbortChecks then
@@ -3295,11 +3297,13 @@ begin
     // Set L.LemInSplitter correctly
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
-      L.LemInSplitter := DOM_NOOBJECT;
+      L.LemInSplitter := DOM_NOOBJECT;                          // Bookmark - why is this commented out?
   until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY) (*or AbortChecks*);
 
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
+
+  { end of AbortChecks }
 
   // Check for water object to transition to swimmer/drifter only at final position
   if HasTriggerAt(L.LemX, L.LemY, trWater) then
