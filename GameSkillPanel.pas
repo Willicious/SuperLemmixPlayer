@@ -17,7 +17,6 @@ type
     function PanelWidth: Integer; override;
     function PanelHeight: Integer; override;
 
-    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
     function ReplayMarkRect: TRect; override;
 
@@ -167,32 +166,6 @@ begin
     Result := 29
   else
   Result := 32;
-end;
-
-procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
-var
-  TempBmp: TBitmap32;
-begin
-if GameParams.ShowMinimap then
-  begin
-    TempBmp := TBitmap32.Create;
-    TempBmp.Assign(MinimapRegion);
-
-    // Changing the first digit changes the right side of the minimap frame
-    if GameParams.AmigaTheme then
-    begin
-      MinimapRegion.SetSize(188, 78);
-      MinimapRegion.Clear($FF000000);
-      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect, Rect(16, 16, 32, 6), TempBmp);
-    end else if (MinimapRegion.Width <> 182) or (MinimapRegion.Height <> 78) then
-    begin
-      MinimapRegion.SetSize(182, 78);
-      MinimapRegion.Clear($FF000000);
-      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect, Rect(16, 16, 16, 16), TempBmp);
-    end;
-
-    TempBmp.Free;
-  end;
 end;
 
 end.

@@ -100,7 +100,6 @@ type
     function GetButtonList: TPanelButtonArray; virtual; abstract;
     procedure DrawBlankPanel(NumButtons: Integer);
     procedure AddButtonImage(ButtonName: string; Index: Integer);
-    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
     procedure SetButtonRects;
     procedure SetSkillIcons;
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
@@ -794,7 +793,6 @@ begin
   begin
     MinimapRegion := TBitmap32.Create;
     GetGraphic('minimap_region.png', MinimapRegion);
-    ResizeMinimapRegion(MinimapRegion);
     MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - 6, MinimapRect.Top - 4);
     MinimapRegion.Free;
   end;
