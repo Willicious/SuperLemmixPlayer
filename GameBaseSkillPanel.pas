@@ -66,6 +66,7 @@ type
     fSkillInfinite        : TBitmap32;
     fSkillInfiniteMode    : TBitmap32;
     fSkillSelected        : TBitmap32;
+    fSquiggleHighlight    : TBitmap32;
     fTurboHighlight       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
     fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // Make one of this!
@@ -162,6 +163,7 @@ type
 
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
+    procedure DrawSquiggleHighlight;
     procedure DrawTurboHighlight;
     procedure RemoveButtonHighlights;
 
@@ -323,6 +325,10 @@ begin
   fSkillSelected.DrawMode := dmBlend;
   fSkillSelected.CombineMode := cmMerge;
 
+  fSquiggleHighlight := TBitmap32.Create;
+  fSquiggleHighlight.DrawMode := dmBlend;
+  fSquiggleHighlight.CombineMode := cmMerge;
+
   fTurboHighlight := TBitmap32.Create;
   fTurboHighlight.DrawMode := dmBlend;
   fTurboHighlight.CombineMode := cmMerge;
@@ -383,6 +389,7 @@ begin
   fSkillInfinite.Free;
   fSkillInfiniteMode.Free;
   fSkillSelected.Free;
+  fSquiggleHighlight.Free;
   fTurboHighlight.Free;
   fSkillCountErase.Free;
   fSkillCountEraseInvert.Free;
@@ -621,6 +628,7 @@ begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
   GetGraphic('skill_selected.png', fSkillSelected);
+  GetGraphic('squiggle_highlight.png', fSquiggleHighlight);
   GetGraphic('turbo_highlight.png', fTurboHighlight);
 
   fSkillCountEraseInvert.Assign(fSkillCountErase);
@@ -1010,7 +1018,12 @@ begin
   RemoveHighlight(aButton);
 
   if Highlight then
-    DrawHighlight(aButton);
+  begin
+    if aButton = spbSquiggle then
+      DrawSquiggleHighlight
+    else
+      DrawHighlight(aButton);
+  end;
 end;
 
 procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
@@ -1045,6 +1058,24 @@ begin
     RemoveHighlight(spbFastForward);
 end;
 
+procedure TBaseSkillPanel.DrawSquiggleHighlight;
+var
+  BorderRect: TRect;
+begin
+  BorderRect := fButtonRects[spbSquiggle];
+
+  if GameParams.AmigaTheme then
+  begin
+    Inc(BorderRect.Right, 184);
+    Inc(BorderRect.Bottom, 4);
+  end else begin
+    Inc(BorderRect.Right, 3);
+    Inc(BorderRect.Bottom, 1);
+  end;
+
+  fSquiggleHighlight.DrawTo(Image.Bitmap, BorderRect, fSquiggleHighlight.BoundsRect);
+end;
+
 procedure TBaseSkillPanel.RemoveButtonHighlights;
 begin
   RemoveHighlight(spbSlower);
@@ -1064,7 +1095,11 @@ begin
   end else
     BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right, 4);
+  if GameParams.AmigaTheme and (aButton = spbSquiggle) then
+    Inc(BorderRect.Right, 184)
+  else
+    Inc(BorderRect.Right, 4);
+
   Inc(BorderRect.Bottom, 4);
 
   fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
