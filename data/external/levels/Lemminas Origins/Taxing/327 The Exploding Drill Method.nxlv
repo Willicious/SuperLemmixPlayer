@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Exploding Drill Method
  AUTHOR WillLem
  ID x905D2648905D2647
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -172,7 +172,7 @@
  $GADGET
    STYLE orig_fire
    PIECE flamethrower
-   X 676
+   X 675
    Y 41
    NO_OVERWRITE
    ROTATE
@@ -182,7 +182,7 @@
  $GADGET
    STYLE orig_fire
    PIECE flamethrower
-   X 665
+   X 666
    Y 41
    NO_OVERWRITE
    ROTATE
@@ -333,14 +333,6 @@
    PIECE pillar
    X 672
    Y 45
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE pillar_end
-   X 666
-   Y 35
    ONE_WAY
  $END
  
@@ -2224,6 +2216,14 @@
    X 889
    Y -20
    FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE pillar_end
+   X 666
+   Y 35
    ONE_WAY
  $END
  
