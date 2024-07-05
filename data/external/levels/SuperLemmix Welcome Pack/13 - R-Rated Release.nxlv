@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE R-Rated Release
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -286,23 +286,23 @@
  $LEMMING
    X 124
    Y 54
-   ZOMBIE 
    GLIDER 
+   ZOMBIE 
  $END
  
  $LEMMING
    X 332
    Y 83
-   ZOMBIE 
    GLIDER 
+   ZOMBIE 
  $END
  
  $LEMMING
    X 113
    Y 116
    FLIP_HORIZONTAL
-   ZOMBIE 
    GLIDER 
+   ZOMBIE 
  $END
  
  

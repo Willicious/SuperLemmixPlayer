@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Direct Approach
  AUTHOR WillLem
  ID x0D05EC381BEFC6FB
- VERSION x000000000000002C
+ VERSION x000000000000002D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -44,8 +44,8 @@
    ID 1
    COLOR Gold
    SAVE_REQUIREMENT 79
-   USE_ONLY_SKILL Timebomber
    CLASSIC_MODE 0
+   USE_ONLY_SKILL Timebomber
  $END 
  
 #     Interactive objects       

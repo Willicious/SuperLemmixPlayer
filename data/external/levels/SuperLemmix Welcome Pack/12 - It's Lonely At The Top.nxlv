@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE It's Lonely At The Top
  AUTHOR WillLem
  ID x374005663B129420
- VERSION x000000000000001D
+ VERSION x000000000000001E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -64,7 +64,7 @@
    STYLE ohno_brick
    PIECE exit
    X 55
-   Y 98
+   Y 111
    NO_OVERWRITE
  $END
  
@@ -1328,8 +1328,8 @@
    X 738
    Y 15
    CLIMBER 
-   NEUTRAL 
    SWIMMER 
+   NEUTRAL 
  $END
  
  $LEMMING

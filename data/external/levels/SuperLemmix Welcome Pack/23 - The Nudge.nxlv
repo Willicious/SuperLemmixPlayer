@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.4
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Nudge
  AUTHOR WillLem
  ID x07DAEAE3767ECE2F
- VERSION x0000000000000008
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -43,9 +43,9 @@
    COLOR Gold
    WALKER_LIMIT 0
    JUMPER_LIMIT 0
-   BUILDER_LIMIT 0
    DISARMER_LIMIT 0
    PLATFORMER_LIMIT 0
+   BUILDER_LIMIT 0
    GRENADER_LIMIT 0
    LASERER_LIMIT 0
    MINER_LIMIT 0
@@ -56,8 +56,8 @@
    ID 0
    COLOR Silver
    SAVE_REQUIREMENT 5
-   BUILDER_LIMIT 0
    PLATFORMER_LIMIT 0
+   BUILDER_LIMIT 0
  $END 
  
  $TALISMAN 

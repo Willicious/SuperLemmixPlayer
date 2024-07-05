@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE One Lem To Free Them All
  AUTHOR WillLem
  ID x71BAB8F451C16C96
- VERSION x0000000000000013
+ VERSION x0000000000000015
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 160
  START_Y 80
- THEME orig_crystal
+ THEME orig_fire
  
 #         Level stats           
 # ----------------------------- 
@@ -46,6 +46,16 @@
    NO_OVERWRITE
  $END
  
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 0
+   Y 140
+   WIDTH 296
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
  
 #        Terrain groups         
 # ----------------------------- 
@@ -57,7 +67,6 @@
      PIECE steel_03
      X 70
      Y 94
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -66,7 +75,6 @@
      X 70
      Y 98
      ERASE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -75,7 +83,6 @@
      X 70
      Y 89
      NO_OVERWRITE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -84,7 +91,6 @@
      X 70
      Y 80
      ERASE
-     ONE_WAY
    $END
    
  $END
@@ -288,7 +294,7 @@
    STYLE orig_fire
    PIECE chain_04
    X 282
-   Y 101
+   Y 93
    ONE_WAY
  $END
  
@@ -296,7 +302,7 @@
    STYLE orig_fire
    PIECE chain_03
    X 291
-   Y 129
+   Y 121
    ONE_WAY
  $END
  
@@ -304,7 +310,7 @@
    STYLE orig_fire
    PIECE chain_04
    X 283
-   Y 39
+   Y 31
    ONE_WAY
  $END
  
@@ -312,7 +318,7 @@
    STYLE orig_fire
    PIECE chain_03
    X 291
-   Y 70
+   Y 62
    ONE_WAY
  $END
  
@@ -328,7 +334,6 @@
    PIECE Group-1291901063
    X 70
    Y 94
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -336,7 +341,6 @@
    PIECE Group-1291901063
    X 90
    Y 94
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -344,7 +348,6 @@
    PIECE Group-1291901063
    X 130
    Y 94
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -359,7 +362,6 @@
    PIECE Group-1291901063
    X 190
    Y 94
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -367,6 +369,99 @@
    PIECE Group-1291901063
    X 170
    Y 94
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 35
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 77
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 74
+   Y -11
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 161
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 120
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 146
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 225
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 210
+   Y -3
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 226
+   Y -16
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 266
+   Y -13
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE spike
+   X 63
+   Y -23
+   FLIP_VERTICAL
    ONE_WAY
  $END
  

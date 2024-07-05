@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Vine Tuning
  AUTHOR WillLem
  ID x54AD42C90436F483
- VERSION x0000000000000026
+ VERSION x0000000000000027
  
 #       Level dimensions        
 # ----------------------------- 
@@ -66,7 +66,7 @@
    STYLE ohno_rock
    PIECE exit
    X 123
-   Y 65
+   Y 71
    NO_OVERWRITE
  $END
  

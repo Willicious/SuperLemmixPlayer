@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Snow Place Like Home
  AUTHOR WillLem
  ID x47C3367D62C4D956
- VERSION x000000000000002D
+ VERSION x000000000000002E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -82,7 +82,7 @@
    STYLE ohno_snow
    PIECE exit
    X 838
-   Y 86
+   Y 91
    NO_OVERWRITE
  $END
  

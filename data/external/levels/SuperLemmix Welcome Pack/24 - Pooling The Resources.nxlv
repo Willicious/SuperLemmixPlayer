@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Pooling The Resources
  AUTHOR WillLem
  ID x0D05EC381BEFC6FB
- VERSION x000000000000001B
+ VERSION x000000000000001C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -35,8 +35,8 @@
    TITLE Gold Talisman
    ID 0
    COLOR Gold
-   NO_PAUSE 0
    CLASSIC_MODE 0
+   NO_PAUSE 0
  $END 
  
 #     Interactive objects       
