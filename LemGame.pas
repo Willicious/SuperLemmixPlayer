@@ -6538,6 +6538,7 @@ var
   function IsFallFatal: Boolean;
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
+          and (not HasTriggerAt(L.LemX, L.LemY, trExit))
           and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
