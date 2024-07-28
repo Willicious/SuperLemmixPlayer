@@ -8226,8 +8226,9 @@ begin
          and (LemAction <> baExiting)
          and not (CurrentLemming.LemIsZombie or CurrentLemming.LemIsInvincible)
          // Freezers are protected from zombies
-         and not (LemAction in [baFreezing, baFreezerExplosion, baFrozen]) then
-        RemoveLemming(CurrentLemming, RM_ZOMBIE);
+         and not (LemAction in [baFreezing, baFreezerExplosion, baFrozen])
+         and not CurrentLemming.LemTeleporting then
+           RemoveLemming(CurrentLemming, RM_ZOMBIE);
     end;
   end;
 end;
