@@ -489,23 +489,28 @@ var
 
   procedure LoadEffects(const FileName, FileNameHR: string; Bitmap: TBitmap32);
   begin
-    if GameParams.HighResolution then
+    if GameParams.HighResolution then // Try high-res first
     begin
       if FileExists(EffectsPath + FileNameHR) then
         TPngInterface.LoadPngFile(EffectsPath + FileNameHR, Bitmap)
-      else begin
-        if FileExists(EffectsPath + FileName) then
-          TPngInterface.LoadPngFile(EffectsPath + FileName, Bitmap)
-        else
-          TPngInterface.LoadPngFile(DefaultPath + FileName, Bitmap);
-
+      else if FileExists(EffectsPath + FileName) then
+      begin // Fallback to upscaled low-res if high-res file not found
+        TPngInterface.LoadPngFile(EffectsPath + FileName, Bitmap);
         UpscalePieces(Bitmap);
+      end else begin // Fallback to the default path
+        if FileExists(DefaultPath + FileNameHR) then
+          TPngInterface.LoadPngFile(DefaultPath + FileNameHR, Bitmap)
+        else begin
+          TPngInterface.LoadPngFile(DefaultPath + FileName, Bitmap);
+          UpscalePieces(Bitmap);
+        end;
       end;
-    end else
+    end else begin // Then Low-res
       if FileExists(EffectsPath + FileName) then
         TPngInterface.LoadPngFile(EffectsPath + FileName, Bitmap)
       else
         TPngInterface.LoadPngFile(DefaultPath + FileName, Bitmap);
+    end;
   end;
 begin
   TempBitmap := TBitmap32.Create;
