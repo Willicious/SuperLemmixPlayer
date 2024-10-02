@@ -1573,7 +1573,12 @@ begin
                             Game.RegainControl(True);
                         end;
                       end;
-      lka_Cheat: Game.Cheat;
+      lka_Cheat: begin
+                   Game.Cheat;
+
+                   if GameSpeed <> gspNormal then
+                     GameSpeed := gspNormal;
+                 end;
       lka_Turbo: begin
                    if Game.IsSuperLemmingMode then Exit;
 
