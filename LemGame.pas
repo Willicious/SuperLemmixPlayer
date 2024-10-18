@@ -1823,6 +1823,13 @@ begin
     end;
     L.LemTrueFallen := L.LemFallen;
   end;
+
+//  // Freezers shouldn't fall if the bottom pixel of the cube is still intact
+//  if ((NewAction) in [baWalking, baFalling]) and (L.LemAction = baUnfreezing) then
+//  begin
+//    if HasPixelAt(L.LemX, L.LemY - 1) then Dec(L.LemY, 1);
+//  end;
+
                      // N.B. baReaching here allows Climber to enter Reacher state
   if ((NewAction in [baReaching, baShimmying, baJumping]) and (L.LemAction = baClimbing)) or
      ((NewAction = baJumping) and (L.LemAction = baSliding)) then
@@ -7221,7 +7228,7 @@ begin
   if L.LemEndOfAnimation then
   begin
     if HasPixelAt(L.LemX, L.LemY) then Transition(L, baWalking)
-    else Transition(L, baFalling);
+      else Transition(L, baFalling);
   end;
 end;
 
