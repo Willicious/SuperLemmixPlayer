@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE Diet Lemmingaid
  AUTHOR DMA Design 
  ID xEBC5EC9DEBC5EC9D
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -28,13 +31,13 @@
    TIMEBOMBER 2
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -58,6 +61,7 @@
    X 200
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -66,6 +70,7 @@
    X 264
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -74,6 +79,7 @@
    X 328
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -82,6 +88,7 @@
    X 392
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -90,6 +97,7 @@
    X 456
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -98,6 +106,7 @@
    X 520
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -106,6 +115,7 @@
    X 584
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -115,6 +125,7 @@
    X 648
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -124,6 +135,7 @@
    X 136
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -1027,3 +1039,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

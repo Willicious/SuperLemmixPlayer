@@ -1,0 +1,236 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE JackLemmings
+ AUTHOR Covox Lemmings
+ ID xC6D5C1C5C6D5C1C5
+ VERSION x0000000000000004
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 496
+ HEIGHT 160
+ START_X 248
+ START_Y 80
+ THEME ohno_brick
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 60
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 28
+ 
+ $SKILLSET 
+   CLIMBER 25
+   FLOATER 25
+   TIMEBOMBER 25
+   BLOCKER 25
+   BUILDER 25
+   BASHER 25
+   MINER 25
+   DIGGER 25
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   SAVE_REQUIREMENT 80
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 97
+   Y 0
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 209
+   Y 0
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 321
+   Y 0
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE trap_01
+   X 161
+   Y 10
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE trap_01
+   X 273
+   Y 10
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE exit
+   X 209
+   Y 100
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 152
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 120
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 88
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 184
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 216
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 248
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 280
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 312
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 344
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE platform_01
+   X 376
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 220
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 236
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE blocks_01
+   X 204
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_silver_03
+   X 234
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_silver_03
+   X 209
+   Y 151
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 204
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_small_05
+   X 241
+   Y 85
+   ONE_WAY
+ $END
+ 
+ 

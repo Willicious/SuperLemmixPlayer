@@ -1,0 +1,17 @@
+BASE
+
+$GROUP
+  NAME Xmas Lemmings
+  FOLDER Xmas Lemmings
+$END
+
+$GROUP
+  NAME New Year Lemmings 1992
+  FOLDER New Year Lemmings 1992
+$END
+
+$GROUP
+  NAME Holiday Lemmings
+  FOLDER Holiday Lemmings
+$END
+

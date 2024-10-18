@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE We are now at LEMCON ONE
  AUTHOR DMA Design 
  ID xF438A201F438A201
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -35,13 +38,13 @@
    DIGGER 20
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -66,6 +69,7 @@
    X 440
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -74,6 +78,7 @@
    X 504
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -82,6 +87,7 @@
    X 568
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -90,6 +96,7 @@
    X 632
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -98,6 +105,7 @@
    X 696
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -106,6 +114,7 @@
    X 760
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -114,6 +123,7 @@
    X 824
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -122,6 +132,7 @@
    X 376
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -131,6 +142,7 @@
    X 312
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -147,6 +159,7 @@
    X 888
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -155,6 +168,7 @@
    X 248
    Y 136
    WIDTH 88
+   HEIGHT 25
  $END
  
  $GADGET
@@ -163,6 +177,7 @@
    X 266
    Y 118
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -171,6 +186,7 @@
    X 184
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -179,6 +195,7 @@
    X 120
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -187,6 +204,7 @@
    X 56
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -195,6 +213,7 @@
    X 952
    Y 136
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -203,6 +222,7 @@
    X 1016
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -212,6 +232,7 @@
    X 259
    Y 118
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -220,6 +241,7 @@
    X 259
    Y 101
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -228,6 +250,7 @@
    X 259
    Y 84
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -236,6 +259,7 @@
    X 243
    Y 118
    WIDTH 7
+   HEIGHT 25
  $END
  
  $GADGET
@@ -244,6 +268,7 @@
    X 243
    Y 101
    WIDTH 7
+   HEIGHT 25
  $END
  
  $GADGET
@@ -252,6 +277,7 @@
    X 243
    Y 84
    WIDTH 7
+   HEIGHT 25
  $END
  
  $GADGET
@@ -260,6 +286,7 @@
    X 266
    Y 101
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -268,6 +295,7 @@
    X 266
    Y 84
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -276,6 +304,7 @@
    X 266
    Y 68
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -284,6 +313,7 @@
    X 266
    Y 52
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -292,6 +322,7 @@
    X 308
    Y 118
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -300,6 +331,7 @@
    X 308
    Y 101
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -308,6 +340,7 @@
    X 308
    Y 84
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -316,6 +349,7 @@
    X 308
    Y 68
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -324,6 +358,7 @@
    X 308
    Y 52
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -332,6 +367,7 @@
    X 326
    Y 118
    WIDTH 2
+   HEIGHT 25
  $END
  
  $GADGET
@@ -340,6 +376,7 @@
    X 326
    Y 101
    WIDTH 2
+   HEIGHT 25
  $END
  
  $GADGET
@@ -348,6 +385,7 @@
    X 326
    Y 84
    WIDTH 2
+   HEIGHT 25
  $END
  
  $GADGET
@@ -356,6 +394,7 @@
    X 326
    Y 68
    WIDTH 2
+   HEIGHT 25
  $END
  
  $GADGET
@@ -364,6 +403,7 @@
    X 326
    Y 52
    WIDTH 2
+   HEIGHT 25
  $END
  
  $GADGET
@@ -372,6 +412,7 @@
    X 237
    Y 118
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -380,6 +421,7 @@
    X 237
    Y 101
    WIDTH 5
+   HEIGHT 25
  $END
  
  $GADGET
@@ -388,6 +430,7 @@
    X 237
    Y 84
    WIDTH 5
+   HEIGHT 25
  $END
  
  
@@ -2121,3 +2164,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

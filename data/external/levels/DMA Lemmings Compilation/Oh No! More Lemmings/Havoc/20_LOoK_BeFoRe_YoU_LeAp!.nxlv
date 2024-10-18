@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE LOoK BeFoRe YoU LeAp!
  AUTHOR DMA Design 
  ID xF0819D21F0819D21
- VERSION x0000000000000000
+ VERSION x0000000000000003
  
 #       Level dimensions        
 # ----------------------------- 
@@ -17,7 +19,7 @@
  START_X 160
  START_Y 80
  THEME ohno_rock
-BACKGROUND special:amiga_blue
+ BACKGROUND special:amiga_blue
  
 #         Level stats           
 # ----------------------------- 
@@ -41,13 +43,13 @@ BACKGROUND special:amiga_blue
    LINE later date, watch this space
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -62,7 +64,7 @@ BACKGROUND special:amiga_blue
    STYLE ohno_rock
    PIECE exit
    X 512
-   Y 124
+   Y 130
    NO_OVERWRITE
  $END
  
@@ -974,3 +976,7 @@ BACKGROUND special:amiga_blue
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

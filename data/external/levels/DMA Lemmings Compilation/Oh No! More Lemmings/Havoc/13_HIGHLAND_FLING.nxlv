@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE HIGHLAND FLING
  AUTHOR DMA Design
  ID xBCCB1ECFBCCB1ECF
- VERSION x0000000000000003
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,13 +36,13 @@
    MINER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -77,7 +79,7 @@
    STYLE ohno_rock
    PIECE exit
    X 720
-   Y 36
+   Y 42
    NO_OVERWRITE
  $END
  
@@ -2315,3 +2317,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

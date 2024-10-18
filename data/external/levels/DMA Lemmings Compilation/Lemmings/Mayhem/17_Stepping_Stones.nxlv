@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE Stepping Stones
  AUTHOR DMA Design 
  ID xCDB93A82CDB93A82
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,13 +37,13 @@
    DIGGER 5
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -65,6 +68,7 @@
    X 136
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -74,6 +78,7 @@
    X 200
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -83,6 +88,7 @@
    X 264
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -92,6 +98,7 @@
    X 328
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -101,6 +108,7 @@
    X 392
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -110,6 +118,7 @@
    X 456
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -119,6 +128,7 @@
    X 520
    Y 136
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -1401,3 +1411,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

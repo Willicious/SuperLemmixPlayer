@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.35
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE Mutiny On The Bounty
  AUTHOR DMA Design 
  ID x8EF9BE1E8EF9BE1E
- VERSION x0000000000000000
+ VERSION x0000000000000003
  
 #       Level dimensions        
 # ----------------------------- 
@@ -35,13 +37,13 @@
    MINER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -66,7 +68,7 @@
    STYLE ohno_brick
    PIECE exit
    X 416
-   Y 101
+   Y 114
    NO_OVERWRITE
  $END
  
@@ -949,3 +951,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

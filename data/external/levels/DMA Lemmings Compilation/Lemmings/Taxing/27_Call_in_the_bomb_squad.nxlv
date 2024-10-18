@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE Call in the bomb squad
  AUTHOR DMA Design 
  ID xCD343462CD343462
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -30,13 +33,13 @@
    BUILDER 10
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -61,6 +64,7 @@
    X 576
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -69,6 +73,7 @@
    X 640
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -77,6 +82,7 @@
    X 704
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -85,6 +91,7 @@
    X 768
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -93,6 +100,7 @@
    X 832
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -101,6 +109,7 @@
    X 896
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -109,6 +118,7 @@
    X 960
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -117,6 +127,7 @@
    X 512
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -126,6 +137,7 @@
    X 480
    Y 12
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -135,6 +147,7 @@
    X 448
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -144,6 +157,7 @@
    X 512
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -153,6 +167,7 @@
    X 576
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -162,6 +177,7 @@
    X 640
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -171,6 +187,7 @@
    X 704
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -180,6 +197,7 @@
    X 768
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -189,6 +207,7 @@
    X 832
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -198,6 +217,7 @@
    X 896
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -207,6 +227,7 @@
    X 960
    Y 4
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -216,6 +237,7 @@
    X 960
    Y 24
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -225,6 +247,7 @@
    X 960
    Y 16
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -233,6 +256,7 @@
    X 960
    Y 8
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -242,6 +266,7 @@
    X 928
    Y 24
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -251,6 +276,7 @@
    X 928
    Y 16
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -260,6 +286,7 @@
    X 928
    Y 8
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -268,6 +295,7 @@
    X 448
    Y 24
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -277,6 +305,7 @@
    X 480
    Y 24
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -286,6 +315,7 @@
    X 448
    Y 16
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -295,6 +325,7 @@
    X 480
    Y 16
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -304,6 +335,7 @@
    X 448
    Y 12
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -3253,3 +3285,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

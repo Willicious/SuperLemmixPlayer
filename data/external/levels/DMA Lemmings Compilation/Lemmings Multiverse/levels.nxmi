@@ -1,0 +1,21 @@
+BASE
+
+$GROUP
+  NAME Basic
+  FOLDER 1 Basic
+$END
+
+$GROUP
+  NAME Manageable
+  FOLDER 2 Manageable
+$END
+
+$GROUP
+  NAME Challenging
+  FOLDER 3 Challenging
+$END
+
+$GROUP
+  NAME Ambitious
+  FOLDER 4 Ambitious
+$END
