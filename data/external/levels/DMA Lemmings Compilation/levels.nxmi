@@ -21,6 +21,11 @@ $GROUP
 $END
 
 $GROUP
+  NAME Lemmings PS3
+  FOLDER Lemmings PS3
+$END
+
+$GROUP
   NAME Holiday Lemmings
   FOLDER Holiday Lemmings
 $END
