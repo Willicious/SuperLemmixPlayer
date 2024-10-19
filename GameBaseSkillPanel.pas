@@ -601,7 +601,9 @@ var
     DstRect.Bottom := DstRect.Top + 32;
 
     // Recolour bricks for all construction skills
-    if IconIndex in [44, 45, 46, 47, 48] then
+    if (IconIndex in [44, 45, 46, 47, 48])
+    // Recolor crumbs for Digger
+    or (IconIndex = 54) then
     begin
       BrickColor := GameParams.Renderer.Theme.Colors['MASK'];
 
