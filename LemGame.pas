@@ -6649,7 +6649,13 @@ begin
       YChecks := FindGroundPixel(L.LemX - (XOffset * L.LemDX), L.LemY);
 
       if (YChecks < -9) then
-        Inc(L.LemX, L.LemDX);
+      begin
+        // Prevent clipping into opposite terrain
+        if not HasPixelAt(L.LemX + L.LemDX, L.LemY -1) then
+          Inc(L.LemX, L.LemDX)
+        else if not HasPixelAt(L.LemX, L.LemY -1) then
+          Dec(L.LemY, 1);
+      end;
     end;
 
   end else begin // Flight checks
