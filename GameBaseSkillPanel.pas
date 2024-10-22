@@ -1565,9 +1565,9 @@ end;
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
   if Level.Info.HasTimeLimit then
-    fNewDrawStr[Pos] := #96
+    fNewDrawStr[Pos] := #97
   else
-    fNewDrawStr[Pos] := #95;
+    fNewDrawStr[Pos] := #96;
 end;
 
 
