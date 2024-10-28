@@ -4667,18 +4667,26 @@ begin
         Transition(L, baWalking);
 
     // Ballooners bob around at the top...
-    if (L.LemAction = baBallooning) and (L.LemY < 30) then
+    if (L.LemAction = baBallooning) and (L.LemY < 30) and not (L.LemPhysicsFrame <= 8) then
     begin
       // ...Unless they find terrain at their foot position, in which case they ascend...
       if HasPixelAt(L.LemX, L.LemY) then
       begin
         Dec(L.LemY);
 
-          // ...Until they can walk onto it
-          if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
-            PopBalloon(L, 1, baWalking);
-      end else
-        Inc(L.LemY, 3);
+        // ...Until they can walk onto it
+        if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
+          PopBalloon(L, 1, baWalking);
+      end else begin
+        var BalloonerNudgeDistance := 3;
+
+        // Prevents clipping into terrain
+        if      HasPixelAt(L.LemX, L.LemY + 1) then BalloonerNudgeDistance := 0
+        else if HasPixelAt(L.LemX, L.LemY + 2) then BalloonerNudgeDistance := 1
+        else if HasPixelAt(L.LemX, L.LemY + 3) then BalloonerNudgeDistance := 2;
+
+        Inc(L.LemY, BalloonerNudgeDistance);
+      end;
     end;
   end;
 
