@@ -394,7 +394,6 @@ begin
     RemainingTime := EndTickCount - GetTickCount;
   end;
 
-  Application.ProcessMessages;
 end;
 
 
