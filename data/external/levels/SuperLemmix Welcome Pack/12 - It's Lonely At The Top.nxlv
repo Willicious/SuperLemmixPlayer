@@ -8,7 +8,7 @@
  TITLE It's Lonely At The Top
  AUTHOR WillLem
  ID x374005663B129420
- VERSION x000000000000001E
+ VERSION x0000000000000022
  
 #       Level dimensions        
 # ----------------------------- 
@@ -20,25 +20,31 @@
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 80
- SAVE_REQUIREMENT 80
+ LEMMINGS 8
+ SAVE_REQUIREMENT 8
  TIME_LIMIT 300
- MAX_SPAWN_INTERVAL 4
+ MAX_SPAWN_INTERVAL 102
  
  $SKILLSET 
-   WALKER 8
+   WALKER 22
    JUMPER 2
-   CLIMBER 2
-   SWIMMER 1
-   DISARMER 1
    BLOCKER 2
    LADDERER 2
    BUILDER 2
-   SPEARER 2
-   GRENADER 2
+   SPEARER 8
+   GRENADER 8
+   LASERER 2
    BASHER 2
    MINER 2
    DIGGER 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   SPEARER_LIMIT 4
+   GRENADER_LIMIT 2
  $END 
  
 #     Interactive objects       
@@ -54,34 +60,9 @@
  
  $GADGET
    STYLE ohno_brick
-   PIECE trap_02
-   X 224
-   Y 101
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE ohno_brick
    PIECE exit
    X 55
    Y 111
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE ohno_brick
-   PIECE window
-   X 303
-   Y 97
-   NO_OVERWRITE
-   NEUTRAL 
- $END
- 
- $GADGET
-   STYLE ohno_brick
-   PIECE trap_01
-   X 148
-   Y 86
    NO_OVERWRITE
  $END
  
@@ -731,8 +712,8 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE arch_03
-   X 263
-   Y 131
+   X 258
+   Y 146
    ONE_WAY
  $END
  
@@ -746,129 +727,17 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE arch_03
-   X 231
-   Y 131
+   X 226
+   Y 146
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE arch_03
-   X 199
-   Y 131
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 179
-   Y 146
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_red_02
-   X 223
+   X 194
    Y 146
    ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_red_02
-   X 227
-   Y 146
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_red_02
-   X 255
-   Y 146
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_red_02
-   X 259
-   Y 146
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_silver_02
-   X 170
-   Y 133
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 155
-   Y 146
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 107
-   Y 119
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 131
-   Y 119
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 155
-   Y 119
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 155
-   Y 89
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 131
-   Y 89
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_silver_02
-   X 170
-   Y 61
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_silver_02
-   X 170
-   Y 37
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE steel_03
-   X 155
-   Y 51
  $END
  
  $TERRAIN
@@ -979,22 +848,6 @@
  
  $TERRAIN
    STYLE ohno_brick
-   PIECE pole_silver_02
-   X 170
-   Y 73
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_silver_02
-   X 170
-   Y 103
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
    PIECE arch_03
    X 370
    Y 19
@@ -1033,22 +886,6 @@
    STYLE ohno_brick
    PIECE chain_02
    X 55
-   Y 22
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE pole_silver_02
-   X 170
-   Y 24
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE chain_02
-   X 111
    Y 22
    ONE_WAY
  $END
@@ -1170,22 +1007,6 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE blocks_01
-   X 163
-   Y 8
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE blocks_01
-   X 163
-   Y -8
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_brick
-   PIECE blocks_01
    X 267
    Y 8
    ONE_WAY
@@ -1223,13 +1044,6 @@
  $END
  
  $TERRAIN
-   STYLE *group
-   PIECE Group1461825063
-   X 143
-   Y 80
- $END
- 
- $TERRAIN
    STYLE ohno_brick
    PIECE pole_silver_02
    X 718
@@ -1241,7 +1055,7 @@
    STYLE ohno_brick
    PIECE chain_03
    X 752
-   Y 15
+   Y 7
    ONE_WAY
  $END
  
@@ -1249,7 +1063,7 @@
    STYLE ohno_brick
    PIECE hook_02
    X 750
-   Y 46
+   Y 38
    ONE_WAY
  $END
  
@@ -1321,6 +1135,102 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE arch_03
+   X 162
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE arch_03
+   X 130
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE barrel_01
+   X 138
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE steel_03
+   X 318
+   Y -14
+   ROTATE
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_01
+   X 697
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_01
+   X 721
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_01
+   X 745
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE stairs_01
+   X 769
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_silver_02
+   X 792
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_silver_03
+   X 792
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_silver_02
+   X 792
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE pole_silver_02
+   X 792
+   Y 150
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
@@ -1344,6 +1254,46 @@
    X 385
    Y 19
    FLIP_HORIZONTAL
+ $END
+ 
+ $LEMMING
+   X 175
+   Y 38
+   BALLOONER 
+   FLOATER 
+   NEUTRAL 
+ $END
+ 
+ $LEMMING
+   X 223
+   Y 38
+   BALLOONER 
+   FLOATER 
+   NEUTRAL 
+ $END
+ 
+ $LEMMING
+   X 247
+   Y 38
+   BALLOONER 
+   FLOATER 
+   NEUTRAL 
+ $END
+ 
+ $LEMMING
+   X 151
+   Y 38
+   BALLOONER 
+   FLOATER 
+   NEUTRAL 
+ $END
+ 
+ $LEMMING
+   X 767
+   Y 15
+   CLIMBER 
+   SWIMMER 
+   NEUTRAL 
  $END
  
  
