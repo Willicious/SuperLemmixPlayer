@@ -393,7 +393,6 @@ begin
 
     RemainingTime := EndTickCount - GetTickCount;
   end;
-
 end;
 
 
