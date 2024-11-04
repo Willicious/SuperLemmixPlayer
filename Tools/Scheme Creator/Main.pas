@@ -10,7 +10,7 @@ uses
 // Define a record to store each TEdit for different states
 type
   TColorControlPair = record
-    LabelEdit: TEdit;  // TEdit for the aspect name
+    LabelEdit: TEdit;  // TEdit for the feature name
     HexNormal: TEdit;  // TEdit for Hex value of Normal state
     HexAthlete: TEdit; // TEdit for Hex value of Athlete state
     HexSelected: TEdit; // TEdit for Hex value of Selected state
@@ -20,6 +20,14 @@ type
     HexZombie: TEdit; // TEdit for Hex value of Zombie state
     HexNeutral: TEdit; // TEdit for Hex value of Neutral state
     HexInvincible: TEdit; // TEdit for Hex value of Invincible state
+  end;
+
+type
+  // Define a record type for each state entry
+  TStateEntry = record
+    Name: string;
+    FromEdit: TEdit;
+    ToEdit: TEdit;
   end;
 
   TSchemeCreatorForm = class(TForm)
@@ -60,23 +68,23 @@ end;
 
 procedure TSchemeCreatorForm.ButtonAddClick(Sender: TObject);
 var
-  AspectEdit: TEdit;  // Edit for the aspect name (e.g., Hair)
+  FeatureEdit: TEdit;  // Edit for the feature name (e.g., Hair)
   NewPair: TColorControlPair; // Struct to hold references to the new controls
-  BaseTop: Integer;   // Top position for the current aspect row
+  BaseTop: Integer;   // Top position for the current feature row
   NextLeft: Integer;  // Left position for the next control in the current row
   HexLabel: TLabel;   // Label for hex edits
 begin
   // Create the hex labels only once
   if not FLabelsCreated then
   begin
-    NextLeft := 20 + 200 + 10; // Start position after the AspectEdit
+    NextLeft := 20 + 200 + 10; // Start position after the FeatureEdit
 
     // Create labels for each hex state
     HexLabel := TLabel.Create(Self);
     HexLabel.Parent := Self;
-    HexLabel.Top := FNextTop - 25; // Position above the aspect edits
+    HexLabel.Top := FNextTop - 25; // Position above the feature edits
     HexLabel.Left := 20;
-    HexLabel.Caption := 'Sprite Element';
+    HexLabel.Caption := 'Sprite Feature';
 
     // Create headers for each hex edit state
     for var State in ['Normal', '-Athlete', '-Selected', 'Rival', '-Athlete', '-Selected', 'Zombie', 'Neutral', 'Invincible'] do
@@ -92,20 +100,20 @@ begin
     FLabelsCreated := True; // Set the flag to true after creating labels
   end;
 
-  // Create a new TEdit for the aspect name (e.g., Hair)
-  AspectEdit := TEdit.Create(Self);
-  AspectEdit.Parent := Self;
-  AspectEdit.Top := FNextTop;
-  AspectEdit.Left := 20;
-  AspectEdit.Width := 200;
-  AspectEdit.Text := 'e.g. LEMMING_HAIR'; // Default name, can be edited
+  // Create a new TEdit for the feature name (e.g., Hair)
+  FeatureEdit := TEdit.Create(Self);
+  FeatureEdit.Parent := Self;
+  FeatureEdit.Top := FNextTop;
+  FeatureEdit.Left := 20;
+  FeatureEdit.Width := 200;
+  FeatureEdit.Text := 'e.g. LEMMING_HAIR'; // Default name, can be edited
 
-  // Update the base top position for the current aspect row
-  BaseTop := AspectEdit.Top;
-  NextLeft := AspectEdit.Left + AspectEdit.Width + 10; // Position next to the aspect edit
+  // Update the base top position for the current feature row
+  BaseTop := FeatureEdit.Top;
+  NextLeft := FeatureEdit.Left + FeatureEdit.Width + 10; // Position next to the feature edit
 
   // Create hex edit fields for each state and link them to NewPair
-  NewPair.LabelEdit := AspectEdit; // Associate with the aspect name
+  NewPair.LabelEdit := FeatureEdit; // Associate with the feature name
 
   // Create and setup each TEdit for different states
   NewPair.HexNormal := TEdit.Create(Self);
@@ -250,28 +258,72 @@ end;
 
 procedure TSchemeCreatorForm.ButtonGenerateClick(Sender: TObject);
 var
-  Aspect, FromColor, ToColor: string;
+  Feature, FromColor, ToColor: string;
   Output: TStringList;
   DisplayForm: TForm;
   DisplayMemo: TMemo;
+  States: array[0..7] of TStateEntry; // Update array to include all states
 begin
   Output := TStringList.Create;
   try
+    // Loop through each ColorPair in the list of color controls
     for var ColorPair in FColorControls do
     begin
-      Aspect := ColorPair.LabelEdit.Text;         // Get the aspect name
-      FromColor := ColorPair.HexNormal.Text;      // Get the Normal hex value as string
-      ToColor := ColorPair.HexAthlete.Text;       // Get the Athlete hex value as string
+      Feature := ColorPair.LabelEdit.Text;  // Get the feature name
 
-      // Format each entry with the specified structure and add to Output
-      Output.Add(Format('  $ATHLETE', []));
-      Output.Add(Format('    FROM %s', [FromColor]));
-      Output.Add(Format('    TO %s', [ToColor]));
-      Output.Add(Format('  $END', []));
-      Output.Add('');  // Blank line between entries for readability
+      // Set up each state transformation with Normal as the FROM and the specific state as TO
+      States[0].Name := 'ATHLETE';
+      States[0].FromEdit := ColorPair.HexNormal;
+      States[0].ToEdit := ColorPair.HexAthlete;
+
+      States[1].Name := 'SELECTED';
+      States[1].FromEdit := ColorPair.HexNormal;
+      States[1].ToEdit := ColorPair.HexSelected;
+
+      States[2].Name := 'RIVAL';
+      States[2].FromEdit := ColorPair.HexNormal;
+      States[2].ToEdit := ColorPair.HexRival;
+
+      States[3].Name := 'RIVAL_ATHLETE';
+      States[3].FromEdit := ColorPair.HexNormal;
+      States[3].ToEdit := ColorPair.HexRivalAthlete;
+
+      States[4].Name := 'RIVAL_SELECTED';
+      States[4].FromEdit := ColorPair.HexNormal;
+      States[4].ToEdit := ColorPair.HexRivalSelected;
+
+      States[5].Name := 'NEUTRAL';
+      States[5].FromEdit := ColorPair.HexNormal;
+      States[5].ToEdit := ColorPair.HexNeutral;
+
+      States[6].Name := 'ZOMBIE';
+      States[6].FromEdit := ColorPair.HexNormal;
+      States[6].ToEdit := ColorPair.HexZombie;
+
+      States[7].Name := 'INVINCIBLE';
+      States[7].FromEdit := ColorPair.HexNormal;
+      States[7].ToEdit := ColorPair.HexInvincible;
+
+      // Add header for each feature
+      Output.Add(Format('Feature: %s', [Feature]));
+      Output.Add('');
+
+      // Generate formatted output for each state
+      for var State in States do
+      begin
+        FromColor := State.FromEdit.Text;  // FROM color is always HexNormal
+        ToColor := State.ToEdit.Text;      // TO color varies by state
+
+        // Add the formatted string for each state
+        Output.Add(Format('  $%s', [State.Name]));
+        Output.Add(Format('    FROM %s', [FromColor]));
+        Output.Add(Format('    TO %s', [ToColor]));
+        Output.Add('  $END');
+        Output.Add(''); // Blank line between states for readability
+      end;
     end;
 
-    // Create a form to display the memo for user review and manual copying
+    // Display the output in a modal form with a memo for easy copying
     DisplayForm := TForm.Create(Self);
     try
       DisplayForm.Caption := 'Generated Output';
