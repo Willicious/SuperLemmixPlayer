@@ -32,16 +32,19 @@ type
 
   TSchemeCreatorForm = class(TForm)
     ButtonAdd: TButton;
-    ButtonGenerate: TButton; // The "Add" button to create new items dynamically
+    ButtonGenerateStateRecoloring: TButton;
+    ButtonGenerateSpritesetRecoloring: TButton; // The "Add" button to create new items dynamically
     procedure FormCreate(Sender: TObject);
     procedure HexEditChange(Sender: TObject);
     procedure ButtonAddClick(Sender: TObject);
-    procedure ButtonGenerateClick(Sender: TObject);
+    procedure ButtonGenerateStateRecoloringClick(Sender: TObject);
+    procedure ButtonGenerateSpritesetRecoloringClick(Sender: TObject);
   private
     FNextTop: Integer; // Keeps track of the next top position for new controls
     FColorControls: TList<TColorControlPair>; // List to hold TEdit and TShape pairs
     FLabelsCreated: Boolean; // Flag to check if labels have been created
     function HexToColor(const Hex: string): TColor;
+    function IsValidHexCode(const Hex: string): Boolean;
   public
     { Public declarations }
   end;
@@ -259,13 +262,109 @@ begin
     Result := clWhite; // Default color if format is incorrect
 end;
 
-procedure TSchemeCreatorForm.ButtonGenerateClick(Sender: TObject);
+function TSchemeCreatorForm.IsValidHexCode(const Hex: string): Boolean;
+var
+  R, G, B: Integer;
+begin
+  // Valid hex code: "x" followed by exactly six hex characters (RRGGBB format)
+  Result := (Length(Hex) = 7) and (Hex[1] = 'x') and
+            TryStrToInt('$' + Copy(Hex, 2, 2), R) and
+            TryStrToInt('$' + Copy(Hex, 4, 2), G) and
+            TryStrToInt('$' + Copy(Hex, 6, 2), B);
+end;
+
+procedure TSchemeCreatorForm.ButtonGenerateSpritesetRecoloringClick(Sender: TObject);
+var
+  Output: TStringList;
+  DisplayForm: TForm;
+  DisplayMemo: TMemo;
+  Feature: string;
+begin
+  Output := TStringList.Create;
+  try
+    // Start the output for the spriteset recoloring
+    Output.Add('$SPRITESET_RECOLORING');
+
+    // Loop through each ColorPair in the list of color controls
+    for var ColorPair in FColorControls do
+    begin
+      Feature := ColorPair.LabelEdit.Text; // Get the feature name
+
+      // Check and add the normal color
+      if IsValidHexCode(ColorPair.HexNormal.Text) then
+        Output.Add(Format('  %s %s', [Feature, ColorPair.HexNormal.Text]));
+
+      // Check and add the athlete color
+      if IsValidHexCode(ColorPair.HexAthlete.Text) then
+        Output.Add(Format('  %s_ATHLETE %s', [Feature, ColorPair.HexAthlete.Text]));
+
+      // Check and add the selected color
+      if IsValidHexCode(ColorPair.HexSelected.Text) then
+        Output.Add(Format('  %s_SELECTED %s', [Feature, ColorPair.HexSelected.Text]));
+
+      // Check and add the rival color
+      if IsValidHexCode(ColorPair.HexRival.Text) then
+        Output.Add(Format('  %s_RIVAL %s', [Feature, ColorPair.HexRival.Text]));
+
+      // Check and add the rival athlete color
+      if IsValidHexCode(ColorPair.HexRivalAthlete.Text) then
+        Output.Add(Format('  %s_RIVAL_ATHLETE %s', [Feature, ColorPair.HexRivalAthlete.Text]));
+
+      // Check and add the rival selected color
+      if IsValidHexCode(ColorPair.HexRivalSelected.Text) then
+        Output.Add(Format('  %s_RIVAL_SELECTED %s', [Feature, ColorPair.HexRivalSelected.Text]));
+
+      // Check and add the neutral color
+      if IsValidHexCode(ColorPair.HexNeutral.Text) then
+        Output.Add(Format('  %s_NEUTRAL %s', [Feature, ColorPair.HexNeutral.Text]));
+
+      // Check and add the zombie color
+      if IsValidHexCode(ColorPair.HexZombie.Text) then
+        Output.Add(Format('  %s_ZOMBIE %s', [Feature, ColorPair.HexZombie.Text]));
+
+      // Check and add the invincible color
+      if IsValidHexCode(ColorPair.HexInvincible.Text) then
+        Output.Add(Format('  %s_INVINCIBLE %s', [Feature, ColorPair.HexInvincible.Text]));
+    end;
+
+    // End the output for the spriteset recoloring
+    Output.Add('$END');
+
+    // Display the output in a modal form with a memo for easy copying
+    DisplayForm := TForm.Create(Self);
+    try
+      DisplayForm.Caption := 'Spriteset Recoloring Output';
+      DisplayForm.Width := 400;
+      DisplayForm.Height := 300;
+      DisplayForm.Position := poScreenCenter;
+
+      // Create and configure the memo for displaying the output
+      DisplayMemo := TMemo.Create(DisplayForm);
+      DisplayMemo.Parent := DisplayForm;
+      DisplayMemo.Align := alClient;
+      DisplayMemo.ReadOnly := True;
+      DisplayMemo.ScrollBars := ssVertical;
+      DisplayMemo.Lines.Text := Output.Text;
+      DisplayMemo.Font.Size := 10;
+      DisplayMemo.WordWrap := False; // Ensure lines maintain formatting
+
+      // Show the form modally
+      DisplayForm.ShowModal;
+    finally
+      DisplayForm.Free;
+    end;
+  finally
+    Output.Free;
+  end;
+end;
+
+procedure TSchemeCreatorForm.ButtonGenerateStateRecoloringClick(Sender: TObject);
 var
   Feature, FromColor, ToColor: string;
   Output: TStringList;
   DisplayForm: TForm;
   DisplayMemo: TMemo;
-  States: array[0..7] of TStateEntry; // Update array to include all states
+  States: array[0..7] of TStateEntry; // Array for all states
 begin
   Output := TStringList.Create;
   try
@@ -307,22 +406,27 @@ begin
       States[7].FromEdit := ColorPair.HexNormal;
       States[7].ToEdit := ColorPair.HexInvincible;
 
-      // Add header for each feature
-      Output.Add(Format('Feature: %s', [Feature]));
+      // Add header for each feature for readability
+      Output.Add(Format('# Feature: %s', [Feature]));
       Output.Add('');
 
-      // Generate formatted output for each state
+      // Generate formatted output for each state, with validation
       for var State in States do
       begin
         FromColor := State.FromEdit.Text;  // FROM color is always HexNormal
         ToColor := State.ToEdit.Text;      // TO color varies by state
 
-        // Add the formatted string for each state
-        Output.Add(Format('  $%s', [State.Name]));
-        Output.Add(Format('    FROM %s', [FromColor]));
-        Output.Add(Format('    TO %s', [ToColor]));
-        Output.Add('  $END');
-        Output.Add(''); // Blank line between states for readability
+        // Check if both colors are valid hex codes
+        if IsValidHexCode(FromColor) and IsValidHexCode(ToColor) then
+        begin
+          // Add the formatted string for each valid state
+          Output.Add(Format('  $%s', [State.Name]));
+          Output.Add(Format('    FROM %s', [FromColor]));
+          Output.Add(Format('    TO %s', [ToColor]));
+          Output.Add('  $END');
+          Output.Add(''); // Blank line between states for readability
+        end else
+          // Do nothing
       end;
     end;
 

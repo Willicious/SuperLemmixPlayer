@@ -17,20 +17,33 @@ object SchemeCreatorForm: TSchemeCreatorForm
   TextHeight = 13
   object ButtonAdd: TButton
     Left = 8
-    Top = 39
+    Top = 69
     Width = 129
     Height = 25
     Caption = 'Add Colour'
     TabOrder = 0
     OnClick = ButtonAddClick
   end
-  object ButtonGenerate: TButton
+  object ButtonGenerateStateRecoloring: TButton
+    Left = 8
+    Top = 38
+    Width = 688
+    Height = 25
+    Caption = 
+      'Generate State Recoloring (Copy-paste/replace the output text in' +
+      'to scheme.nxmi'#39's $STATE_RECOLORING section)'
+    TabOrder = 1
+    OnClick = ButtonGenerateStateRecoloringClick
+  end
+  object ButtonGenerateSpritesetRecoloring: TButton
     Left = 8
     Top = 8
     Width = 688
     Height = 25
-    Caption = 'Generate Scheme'
-    TabOrder = 1
-    OnClick = ButtonGenerateClick
+    Caption = 
+      'Generate Spriteset Recoloring (Copy-paste/replace the output tex' +
+      't into scheme.nxmi'#39's $SPRITESET_RECOLORING section)'
+    TabOrder = 2
+    OnClick = ButtonGenerateSpritesetRecoloringClick
   end
 end
