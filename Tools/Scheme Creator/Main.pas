@@ -248,33 +248,52 @@ begin
     Result := clWhite; // Default color if format is incorrect
 end;
 
-// This will write everything to a text file eventually
 procedure TSchemeCreatorForm.ButtonGenerateClick(Sender: TObject);
 var
-  Aspect: string;
+  Aspect, FromColor, ToColor: string;
   Output: TStringList;
+  DisplayForm: TForm;
+  DisplayMemo: TMemo;
 begin
   Output := TStringList.Create;
   try
     for var ColorPair in FColorControls do
     begin
-      Aspect := ColorPair.LabelEdit.Text; // Get the aspect name
+      Aspect := ColorPair.LabelEdit.Text;         // Get the aspect name
+      FromColor := ColorPair.HexNormal.Text;      // Get the Normal hex value as string
+      ToColor := ColorPair.HexAthlete.Text;       // Get the Athlete hex value as string
 
-      // Collect hex values for all states
-      Output.Add(Format('%s: Normal: %s, Athlete: %s, Selected: %s, Rival: %s, Rival Athlete: %s, Rival Selected: %s, Zombie: %s, Neutral: %s, Invincible: %s',
-        [Aspect,
-         ColorPair.HexNormal.Text,
-         ColorPair.HexAthlete.Text,
-         ColorPair.HexSelected.Text,
-         ColorPair.HexRival.Text,
-         ColorPair.HexRivalAthlete.Text,
-         ColorPair.HexRivalSelected.Text,
-         ColorPair.HexZombie.Text,
-         ColorPair.HexNeutral.Text,
-         ColorPair.HexInvincible.Text]));
+      // Format each entry with the specified structure and add to Output
+      Output.Add(Format('  $ATHLETE', []));
+      Output.Add(Format('    FROM %s', [FromColor]));
+      Output.Add(Format('    TO %s', [ToColor]));
+      Output.Add(Format('  $END', []));
+      Output.Add('');  // Blank line between entries for readability
     end;
 
-    ShowMessage(Output.Text);
+    // Create a form to display the memo for user review and manual copying
+    DisplayForm := TForm.Create(Self);
+    try
+      DisplayForm.Caption := 'Generated Output';
+      DisplayForm.Width := 400;
+      DisplayForm.Height := 300;
+      DisplayForm.Position := poScreenCenter;
+
+      // Create and configure the memo for displaying the output
+      DisplayMemo := TMemo.Create(DisplayForm);
+      DisplayMemo.Parent := DisplayForm;
+      DisplayMemo.Align := alClient;
+      DisplayMemo.ReadOnly := True;
+      DisplayMemo.ScrollBars := ssVertical;
+      DisplayMemo.Lines.Text := Output.Text;
+      DisplayMemo.Font.Size := 10;
+      DisplayMemo.WordWrap := False; // Ensure lines maintain formatting
+
+      // Show the form modally
+      DisplayForm.ShowModal;
+    finally
+      DisplayForm.Free;
+    end;
   finally
     Output.Free;
   end;
