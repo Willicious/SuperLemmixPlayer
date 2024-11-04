@@ -29,9 +29,7 @@ object SchemeCreatorForm: TSchemeCreatorForm
     Top = 38
     Width = 688
     Height = 25
-    Caption = 
-      'Generate State Recoloring (Copy-paste/replace the output text in' +
-      'to scheme.nxmi'#39's $STATE_RECOLORING section)'
+    Caption = 'Generate State Recoloring'
     TabOrder = 1
     OnClick = ButtonGenerateStateRecoloringClick
   end
@@ -40,9 +38,7 @@ object SchemeCreatorForm: TSchemeCreatorForm
     Top = 8
     Width = 688
     Height = 25
-    Caption = 
-      'Generate Spriteset Recoloring (Copy-paste/replace the output tex' +
-      't into scheme.nxmi'#39's $SPRITESET_RECOLORING section)'
+    Caption = 'Generate Spriteset Recoloring'
     TabOrder = 2
     OnClick = ButtonGenerateSpritesetRecoloringClick
   end

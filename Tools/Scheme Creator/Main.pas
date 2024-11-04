@@ -57,6 +57,36 @@ implementation
 
 {$R *.dfm}
 
+function GetApplicationVersion: string;
+var
+  InfoSize: DWORD;
+  Info: PChar;
+  VerInfo: PVSFixedFileInfo;
+  VerInfoSize: UINT;
+  Major, Minor, Release, Build: Word;
+begin
+  Result := '';
+
+  InfoSize := GetFileVersionInfoSize(PChar(ParamStr(0)), InfoSize);
+  if InfoSize > 0 then
+  begin
+    GetMem(Info, InfoSize);
+    try
+      if GetFileVersionInfo(PChar(ParamStr(0)), 0, InfoSize, Info) then
+      begin
+        if VerQueryValue(Info, '\', Pointer(VerInfo), VerInfoSize) then
+        begin
+          Major := HiWord(VerInfo^.dwFileVersionMS);
+          Minor := LoWord(VerInfo^.dwFileVersionMS);
+          Result := Format(' v%d.%d', [Major, Minor]);
+        end;
+      end;
+    finally
+      FreeMem(Info);
+    end;
+  end;
+end;
+
 procedure TSchemeCreatorForm.FormCreate(Sender: TObject);
 begin
   // Initialize the list of color control pairs
@@ -68,6 +98,8 @@ begin
   // Set FNextTop to just below the "Add" button
   FNextTop := ButtonAdd.Top + ButtonAdd.Height + 30;
   AddNewFeature;
+
+  Caption := 'Scheme Creator' + GetApplicationVersion;
 end;
 
 procedure TSchemeCreatorForm.AddNewFeature;
@@ -340,9 +372,9 @@ begin
     // Display the output in a modal form with a memo for easy copying
     DisplayForm := TForm.Create(Self);
     try
-      DisplayForm.Caption := 'Spriteset Recoloring Output';
-      DisplayForm.Width := 400;
-      DisplayForm.Height := 300;
+      DisplayForm.Caption := 'Spriteset Recoloring Output (Copy-paste/replace the output text into the $SPRITESET_RECOLORING section in scheme.nxmi)';
+      DisplayForm.Width := 1400;
+      DisplayForm.Height := 800;
       DisplayForm.Position := poScreenCenter;
 
       // Create and configure the memo for displaying the output
@@ -440,9 +472,9 @@ begin
     // Display the output in a modal form with a memo for easy copying
     DisplayForm := TForm.Create(Self);
     try
-      DisplayForm.Caption := 'Generated Output';
-      DisplayForm.Width := 400;
-      DisplayForm.Height := 300;
+      DisplayForm.Caption := 'State Recoloring Output (Copy-paste/replace the output text into $STATE_RECOLORING section in scheme.nxmi)';
+      DisplayForm.Width := 1400;
+      DisplayForm.Height := 800;
       DisplayForm.Position := poScreenCenter;
 
       // Create and configure the memo for displaying the output
