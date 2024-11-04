@@ -73,6 +73,7 @@ var
   BaseTop: Integer;   // Top position for the current feature row
   NextLeft: Integer;  // Left position for the next control in the current row
   HexLabel: TLabel;   // Label for hex edits
+  SHexDefault: String; // Default string for hex edits
 begin
   // Create the hex labels only once
   if not FLabelsCreated then
@@ -115,13 +116,15 @@ begin
   // Create hex edit fields for each state and link them to NewPair
   NewPair.LabelEdit := FeatureEdit; // Associate with the feature name
 
+  SHexDefault := 'e.g. xFFFFFF';
+
   // Create and setup each TEdit for different states
   NewPair.HexNormal := TEdit.Create(Self);
   NewPair.HexNormal.Parent := Self;
   NewPair.HexNormal.Top := BaseTop;
   NewPair.HexNormal.Left := NextLeft;
   NewPair.HexNormal.Width := 80;
-  NewPair.HexNormal.Text := 'xFFFFFF'; // Default color
+  NewPair.HexNormal.Text := SHexDefault;
   NewPair.HexNormal.OnChange := HexEditChange;
   NextLeft := NewPair.HexNormal.Left + NewPair.HexNormal.Width + 10;
 
@@ -130,7 +133,7 @@ begin
   NewPair.HexAthlete.Top := BaseTop;
   NewPair.HexAthlete.Left := NextLeft;
   NewPair.HexAthlete.Width := 80;
-  NewPair.HexAthlete.Text := 'xFFFFFF'; // Default color
+  NewPair.HexAthlete.Text := SHexDefault;
   NewPair.HexAthlete.OnChange := HexEditChange;
   NextLeft := NewPair.HexAthlete.Left + NewPair.HexAthlete.Width + 10;
 
@@ -139,7 +142,7 @@ begin
   NewPair.HexSelected.Top := BaseTop;
   NewPair.HexSelected.Left := NextLeft;
   NewPair.HexSelected.Width := 80;
-  NewPair.HexSelected.Text := 'xFFFFFF'; // Default color
+  NewPair.HexSelected.Text := SHexDefault;
   NewPair.HexSelected.OnChange := HexEditChange;
   NextLeft := NewPair.HexSelected.Left + NewPair.HexSelected.Width + 10;
 
@@ -148,7 +151,7 @@ begin
   NewPair.HexRival.Top := BaseTop;
   NewPair.HexRival.Left := NextLeft;
   NewPair.HexRival.Width := 80;
-  NewPair.HexRival.Text := 'xFFFFFF'; // Default color
+  NewPair.HexRival.Text := SHexDefault;
   NewPair.HexRival.OnChange := HexEditChange;
   NextLeft := NewPair.HexRival.Left + NewPair.HexRival.Width + 10;
 
@@ -157,7 +160,7 @@ begin
   NewPair.HexRivalAthlete.Top := BaseTop;
   NewPair.HexRivalAthlete.Left := NextLeft;
   NewPair.HexRivalAthlete.Width := 80;
-  NewPair.HexRivalAthlete.Text := 'xFFFFFF'; // Default color
+  NewPair.HexRivalAthlete.Text := SHexDefault;
   NewPair.HexRivalAthlete.OnChange := HexEditChange;
   NextLeft := NewPair.HexRivalAthlete.Left + NewPair.HexRivalAthlete.Width + 10;
 
@@ -166,7 +169,7 @@ begin
   NewPair.HexRivalSelected.Top := BaseTop;
   NewPair.HexRivalSelected.Left := NextLeft;
   NewPair.HexRivalSelected.Width := 80;
-  NewPair.HexRivalSelected.Text := 'xFFFFFF'; // Default color
+  NewPair.HexRivalSelected.Text := SHexDefault;
   NewPair.HexRivalSelected.OnChange := HexEditChange;
   NextLeft := NewPair.HexRivalSelected.Left + NewPair.HexRivalSelected.Width + 10;
 
@@ -175,7 +178,7 @@ begin
   NewPair.HexZombie.Top := BaseTop;
   NewPair.HexZombie.Left := NextLeft;
   NewPair.HexZombie.Width := 80;
-  NewPair.HexZombie.Text := 'xFFFFFF'; // Default color
+  NewPair.HexZombie.Text := SHexDefault;
   NewPair.HexZombie.OnChange := HexEditChange;
   NextLeft := NewPair.HexZombie.Left + NewPair.HexZombie.Width + 10;
 
@@ -184,7 +187,7 @@ begin
   NewPair.HexNeutral.Top := BaseTop;
   NewPair.HexNeutral.Left := NextLeft;
   NewPair.HexNeutral.Width := 80;
-  NewPair.HexNeutral.Text := 'xFFFFFF'; // Default color
+  NewPair.HexNeutral.Text := SHexDefault;
   NewPair.HexNeutral.OnChange := HexEditChange;
   NextLeft := NewPair.HexNeutral.Left + NewPair.HexNeutral.Width + 10;
 
@@ -193,7 +196,7 @@ begin
   NewPair.HexInvincible.Top := BaseTop;
   NewPair.HexInvincible.Left := NextLeft;
   NewPair.HexInvincible.Width := 80;
-  NewPair.HexInvincible.Text := 'xFFFFFF'; // Default color
+  NewPair.HexInvincible.Text := SHexDefault;
   NewPair.HexInvincible.OnChange := HexEditChange;
 
   // Add the new controls to the list
