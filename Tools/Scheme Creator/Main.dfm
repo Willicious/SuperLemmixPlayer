@@ -20,7 +20,7 @@ object SchemeCreatorForm: TSchemeCreatorForm
     Top = 69
     Width = 129
     Height = 25
-    Caption = 'Add Colour'
+    Caption = 'Add New Feature'
     TabOrder = 0
     OnClick = ButtonAddClick
   end

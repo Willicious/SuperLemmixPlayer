@@ -45,6 +45,7 @@ type
     FLabelsCreated: Boolean; // Flag to check if labels have been created
     function HexToColor(const Hex: string): TColor;
     function IsValidHexCode(const Hex: string): Boolean;
+    procedure AddNewFeature;
   public
     { Public declarations }
   end;
@@ -66,10 +67,10 @@ begin
 
   // Set FNextTop to just below the "Add" button
   FNextTop := ButtonAdd.Top + ButtonAdd.Height + 30;
-  ButtonAddClick(Sender);
+  AddNewFeature;
 end;
 
-procedure TSchemeCreatorForm.ButtonAddClick(Sender: TObject);
+procedure TSchemeCreatorForm.AddNewFeature;
 var
   FeatureEdit: TEdit;  // Edit for the feature name (e.g., Hair)
   NewPair: TColorControlPair; // Struct to hold references to the new controls
@@ -214,6 +215,11 @@ begin
     // Increase the height of the form to accommodate new controls
     Height := Height + (NewPair.HexNormal.Height + 15);
   end;
+end;
+
+procedure TSchemeCreatorForm.ButtonAddClick(Sender: TObject);
+begin
+  AddNewFeature;
 end;
 
 procedure TSchemeCreatorForm.HexEditChange(Sender: TObject);
