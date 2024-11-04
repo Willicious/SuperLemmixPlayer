@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, System.UITypes, System.Generics.Collections,
-  System.Math;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Clipbrd,
+  System.UITypes, System.Generics.Collections, System.Math;
 
 // Define a record to store each TEdit for different states
 type
@@ -41,12 +41,15 @@ type
     procedure ButtonGenerateStateRecoloringClick(Sender: TObject);
     procedure ButtonGenerateSpritesetRecoloringClick(Sender: TObject);
   private
+    DisplayMemo: TMemo;
+    CopyButton: TButton;
     FNextTop: Integer; // Keeps track of the next top position for new controls
     FColorControls: TList<TColorControlPair>; // List to hold TEdit and TShape pairs
     FLabelsCreated: Boolean; // Flag to check if labels have been created
     function HexToColor(const Hex: string): TColor;
     function IsValidHexCode(const Hex: string): Boolean;
     procedure AddNewFeature;
+    procedure CopyButtonClick(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -352,7 +355,6 @@ procedure TSchemeCreatorForm.ButtonGenerateSpritesetRecoloringClick(Sender: TObj
 var
   Output: TStringList;
   DisplayForm: TForm;
-  DisplayMemo: TMemo;
   Feature: string;
 begin
   Output := TStringList.Create;
@@ -424,6 +426,14 @@ begin
       DisplayMemo.Font.Size := 10;
       DisplayMemo.WordWrap := False; // Ensure lines maintain formatting
 
+      // Create and configure the copy button
+      CopyButton := TButton.Create(DisplayForm);
+      CopyButton.Parent := DisplayForm;
+      CopyButton.Caption := 'Copy to Clipboard';
+      CopyButton.Align := alBottom;
+      CopyButton.Height := 30;
+      CopyButton.OnClick := CopyButtonClick;
+
       // Show the form modally
       DisplayForm.ShowModal;
     finally
@@ -439,7 +449,6 @@ var
   Feature, FromColor, ToColor: string;
   Output: TStringList;
   DisplayForm: TForm;
-  DisplayMemo: TMemo;
   States: array[0..7] of TStateEntry; // Array for all states
 begin
   Output := TStringList.Create;
@@ -524,6 +533,14 @@ begin
       DisplayMemo.Font.Size := 10;
       DisplayMemo.WordWrap := False; // Ensure lines maintain formatting
 
+      // Create and configure the copy button
+      CopyButton := TButton.Create(DisplayForm);
+      CopyButton.Parent := DisplayForm;
+      CopyButton.Caption := 'Copy to Clipboard';
+      CopyButton.Align := alBottom;
+      CopyButton.Height := 30;
+      CopyButton.OnClick := CopyButtonClick;
+
       // Show the form modally
       DisplayForm.ShowModal;
     finally
@@ -532,6 +549,12 @@ begin
   finally
     Output.Free;
   end;
+end;
+
+procedure TSchemeCreatorForm.CopyButtonClick(Sender: TObject);
+begin
+  Clipboard.AsText := DisplayMemo.Lines.Text; // Copy text to clipboard
+  CopyButton.Caption := 'Copied!';
 end;
 
 end.
