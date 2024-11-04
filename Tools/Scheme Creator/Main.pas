@@ -290,6 +290,7 @@ begin
   try
     // Start the output for the spriteset recoloring
     Output.Add('$SPRITESET_RECOLORING');
+    Output.Add('  MASK xFF00FF'); // Mandatory for all schemes
 
     // Loop through each ColorPair in the list of color controls
     for var ColorPair in FColorControls do
