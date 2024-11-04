@@ -31,6 +31,7 @@ type
   end;
 
   TSchemeCreatorForm = class(TForm)
+    LabelDuplicate: TLabel;
     ButtonAdd: TButton;
     ButtonGenerateStateRecoloring: TButton;
     ButtonGenerateSpritesetRecoloring: TButton; // The "Add" button to create new items dynamically
@@ -260,6 +261,8 @@ var
   ColorValue: TColor;
   R, G, B: Byte;
   Brightness: Integer;
+  HexValues: TDictionary<string, TEdit>; // Dictionary to store hex codes and their TEdit reference
+  IsDuplicate: Boolean;
 begin
   EditControl := Sender as TEdit;
 
@@ -273,14 +276,48 @@ begin
   B := GetBValue(ColorValue);
 
   // Calculate perceived brightness
-  // Using the formula: 0.299*R + 0.587*G + 0.114*B
   Brightness := Round(0.299 * R + 0.587 * G + 0.114 * B);
 
-  // Set text color to white if the brightness is below a certain threshold (e.g., 128)
+  // Set text color to white if brightness is below a certain threshold
   if Brightness < 200 then
     EditControl.Font.Color := clWhite
   else
-    EditControl.Font.Color := clBlack; // Change to black for lighter colors
+    EditControl.Font.Color := clBlack;
+
+  // Initialize the dictionary and duplicate flag
+  HexValues := TDictionary<string, TEdit>.Create;
+  IsDuplicate := False;
+
+  try
+    // Loop through all color pairs to check for duplicates
+    for var ColorPair in FColorControls do
+    begin
+      // Check each state's hex edit field in the color pair
+      for var HexEdit in [ColorPair.HexNormal, ColorPair.HexAthlete, ColorPair.HexSelected, ColorPair.HexRival,
+                          ColorPair.HexRivalAthlete, ColorPair.HexRivalSelected, ColorPair.HexNeutral,
+                          ColorPair.HexZombie, ColorPair.HexInvincible] do
+      begin
+        if (Copy(HexEdit.Text, 1, 1) = 'x') and (Length(HexEdit.Text) = 7) then // Validate hex format
+        begin
+          // Check if hex code already exists in the dictionary
+          if HexValues.ContainsKey(HexEdit.Text) then
+          begin
+            IsDuplicate := True; // Duplicate found
+            Break;
+          end
+          else
+            HexValues.Add(HexEdit.Text, HexEdit); // Add unique hex code to dictionary
+        end;
+      end;
+      if IsDuplicate then
+        Break;
+    end;
+
+    // Show or hide the duplicate label based on the duplicate check
+    LabelDuplicate.Visible := IsDuplicate;
+  finally
+    HexValues.Free;
+  end;
 end;
 
 function TSchemeCreatorForm.HexToColor(const Hex: string): TColor;

@@ -15,6 +15,22 @@ object SchemeCreatorForm: TSchemeCreatorForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object LabelDuplicate: TLabel
+    Left = 160
+    Top = 74
+    Width = 484
+    Height = 13
+    Caption = 
+      'Duplicate hex code detected. Please ensure all codes are unique ' +
+      'for the scheme to function correctly'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
   object ButtonAdd: TButton
     Left = 8
     Top = 69
