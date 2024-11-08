@@ -62,6 +62,7 @@ type
     procedure SetOptionButtons;
     procedure ShowOptionButtons;
     procedure HideOptionButtons;
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -389,6 +390,15 @@ begin
   fTalismanButtons.Free;
 
   GameParams.Save(scImportant);
+end;
+
+procedure TFLevelSelect.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    Close;
+  end;
 end;
 
 procedure TFLevelSelect.btnCleanseOneClick(Sender: TObject);
