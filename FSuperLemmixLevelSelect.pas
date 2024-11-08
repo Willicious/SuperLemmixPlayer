@@ -59,6 +59,9 @@ type
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
     procedure btnShowHideOptionsClick(Sender: TObject);
+    procedure SetOptionButtons;
+    procedure ShowOptionButtons;
+    procedure HideOptionButtons;
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -344,6 +347,7 @@ begin
   btnOK.Enabled := false;
 
   InitializeTreeview;
+  SetOptionButtons;
 end;
 
 procedure TFLevelSelect.FormShow(Sender: TObject);
@@ -383,6 +387,8 @@ begin
 
   fTalismanButtons.OwnsObjects := false; // Because TFLevelSelect itself will take care of any that remain
   fTalismanButtons.Free;
+
+  GameParams.Save(scImportant);
 end;
 
 procedure TFLevelSelect.btnCleanseOneClick(Sender: TObject);
@@ -842,6 +848,42 @@ begin
     DisplayLevelInfo;
     fPackTalBox.Visible := false;
     SetAdvancedOptionsLevel(L);
+  end;
+end;
+
+procedure TFLevelSelect.ShowOptionButtons;
+begin
+  { Resizes and recenters the main form to show the option buttons }
+
+  Self.Width := btnClearRecords.Left + btnClearRecords.Width + 20;
+  btnOK.Width := pnLevelInfo.Width;
+  btnShowHideOptions.Left := btnClearRecords.Left;
+  btnShowHideOptions.Caption := '< Hide Options';
+
+  Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
+  Self.Top := (Application.MainForm.Top + (Application.MainForm.Height div 2)) - (Self.Height div 2);
+end;
+
+procedure TFLevelSelect.HideOptionButtons;
+begin
+  { Resizes and recenters the main form to hide the option buttons }
+
+  Self.Width := btnClearRecords.Left - 5;
+  btnShowHideOptions.Caption := 'Show Options >';
+  btnOK.Width := btnOK.Width - btnShowHideOptions.Width - 10;
+  btnShowHideOptions.Left := btnOK.Left + btnOK.Width + 10;
+
+  Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
+  Self.Top := (Application.MainForm.Top + (Application.MainForm.Height div 2)) - (Self.Height div 2);
+end;
+
+procedure TFLevelSelect.SetOptionButtons;
+begin
+  if GameParams.ShowLevelSelectOptions then
+  begin
+    ShowOptionButtons;
+  end else begin
+    HideOptionButtons;
   end;
 end;
 
@@ -1330,26 +1372,13 @@ end;
 
 procedure TFLevelSelect.btnShowHideOptionsClick(Sender: TObject);
 begin
-  { Resizes and recenters the form relative to the main form
-    in order to show/hide the various buttons on the right }
-
-  if Self.Width > btnClearRecords.Left then
+  if GameParams.ShowLevelSelectOptions then
   begin
-    Self.Width := btnClearRecords.Left - 5;
-    btnShowHideOptions.Caption := 'Show Options >';
-    btnOK.Width := btnOK.Width - btnShowHideOptions.Width - 10;
-    btnShowHideOptions.Left := btnOK.Left + btnOK.Width + 10;
-
-    Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
-    Self.Top := (Application.MainForm.Top + (Application.MainForm.Height div 2)) - (Self.Height div 2);
+    HideOptionButtons;
+    GameParams.ShowLevelSelectOptions := False;
   end else begin
-    Self.Width := btnClearRecords.Left + btnClearRecords.Width + 20;
-    btnOK.Width := pnLevelInfo.Width;
-    btnShowHideOptions.Left := btnClearRecords.Left;
-    btnShowHideOptions.Caption := '< Hide Options';
-
-    Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
-    Self.Top := (Application.MainForm.Top + (Application.MainForm.Height div 2)) - (Self.Height div 2);
+    ShowOptionButtons;
+    GameParams.ShowLevelSelectOptions := True;
   end;
 end;
 

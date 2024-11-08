@@ -142,6 +142,8 @@ type
     fFallbackMessage          : String;
     fShouldShowFallbackMessage: Boolean;
 
+    fShowLevelSelectOptions: Boolean;
+
     fCursorResize: Double;
     fZoomLevel: Integer;
     fPanelZoomLevel: Integer;
@@ -297,10 +299,11 @@ type
 
     property Directory: string read fDirectory write fDirectory;
 
+    property ShowLevelSelectOptions: Boolean read fShowLevelSelectOptions write fShowLevelSelectOptions;
+
     property CursorResize: Double read fCursorResize write fCursorResize;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property PanelZoomLevel: Integer read fPanelZoomLevel write fPanelZoomLevel;
-
     property WindowLeft: Integer read fWindowLeft write fWindowLeft;
     property WindowTop: Integer read fWindowTop write fWindowTop;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
@@ -476,6 +479,8 @@ begin
     SaveBoolean('ShowMinimap', ShowMinimap);
     SaveBoolean('EdgeScrolling', EdgeScroll);
     SaveBoolean('UseSpawnInterval', SpawnInterval);
+
+    SaveBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
 
     SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
     SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
@@ -702,6 +707,8 @@ begin
     PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
     MenuSounds := LoadBoolean('MenuSounds', MenuSounds);
     AmigaTheme := LoadBoolean('AmigaTheme', AmigaTheme);
+
+    ShowLevelSelectOptions := LoadBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
 
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
@@ -1034,6 +1041,7 @@ begin
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
   fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
   fCursorResize := 1;
+  fShowLevelSelectOptions := True;
 
   PlaybackOrder := poByLevel;
   fAutoSkipPreviewPostview := true;
