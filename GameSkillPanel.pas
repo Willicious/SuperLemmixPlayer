@@ -81,7 +81,7 @@ begin
               #93 + '_...' + ' ' +     // 18 Hatch icon        // 19 LemHatch
               #94 + '_...' + ' ' +     // 24 Lem icon          // 25 LemAlive
               #95 + '_...' + ' ' +     // 30 Exit icon         // 31 LemIn
-              #96 +  '_.-..';          // 36 Time icon         // 37 Time Limit
+              #97 + '_.-..';           // 36 Time icon         // 37 Time Limit
 end;
 
 function TSkillPanelStandard.TimeLimitStartIndex: Integer;
@@ -124,6 +124,7 @@ begin
     SetCollectibleIcon(16);
     SetInfoLemHatch(20);
     SetInfoLemAlive(26);
+    SetExitIcon(31);
     SetInfoLemIn(32);
     SetTimeLimit(37);
     SetInfoTime(38, 41);

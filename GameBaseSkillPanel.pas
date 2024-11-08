@@ -128,6 +128,7 @@ type
     procedure SetReplayMark(Pos: Integer);
     procedure SetCollectibleIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
+    procedure SetExitIcon(Pos: Integer);
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -192,7 +193,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 52;
+  NUM_FONT_CHARS = 53;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -539,7 +540,7 @@ begin
   // Load now the icons for the text panel
   GetGraphic('panel_icons.png', fIconBmp);
   SrcRect := Rect(0, 0, 24, 32);
-  for i := 38 to 44 do
+  for i := 38 to 45 do
   begin
     fInfoFont[i].SetSize(24, 32);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -549,7 +550,7 @@ begin
   // Load now the replay icons for the text panel
   GetGraphic('replay_icons.png', fIconBmp);
   SrcRect := Rect(0, 0, 24, 32);
-  for i := 45 to NUM_FONT_CHARS - 1 do
+  for i := 46 to NUM_FONT_CHARS - 1 do
   begin
     fInfoFont[i].SetSize(24, 32);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -1234,7 +1235,7 @@ begin
       '0'..'9':    CharID := ord(New) - ord('0') + 1;
       '-':         CharID := 11;
       'A'..'Z':    CharID := ord(New) - ord('A') + 12;
-      #91 .. #104: CharID := ord(New) - ord('A') + 12;
+      #91 .. #105: CharID := ord(New) - ord('A') + 12;
     else CharID := -1;
     end;
 
@@ -1358,7 +1359,7 @@ begin
   fInfoFont[i].SetSize(280, 32);
   fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
 
-  fNewDrawStr[Pos] := #104;
+  fNewDrawStr[Pos] := #105;
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
@@ -1549,11 +1550,11 @@ begin
   if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if GameParams.PlaybackModeActive and not IsReplaying then
-    fNewDrawStr[Pos] := Chr(102 + FrameIndex) // Purple "P" (#102 and #103)
+    fNewDrawStr[Pos] := Chr(103 + FrameIndex) // Purple "P" (#103 and #104)
   else if Game.ReplayInsert and not IsClassicModeRewind then
-    fNewDrawStr[Pos] := Chr(100 + FrameIndex) // Blue "R" (#100 and #101)
+    fNewDrawStr[Pos] := Chr(101 + FrameIndex) // Blue "R" (#101 and #102)
   else if not (RRIsPressed or IsClassicModeRewind) then
-    fNewDrawStr[Pos] := Chr(98 + FrameIndex); // Red "R" (#98 and #99)
+    fNewDrawStr[Pos] := Chr(99 + FrameIndex); // Red "R" (#99 and #100)
 end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
@@ -1570,9 +1571,17 @@ end;
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
   if Level.Info.HasTimeLimit then
-    fNewDrawStr[Pos] := #97
+    fNewDrawStr[Pos] := #98
   else
-    fNewDrawStr[Pos] := #96;
+    fNewDrawStr[Pos] := #97;
+end;
+
+procedure TBaseSkillPanel.SetExitIcon(Pos: Integer);
+begin
+  if (Game.LemmingsSaved >= Level.Info.RescueCount) then
+    fNewDrawStr[Pos] := #96
+  else
+    fNewDrawStr[Pos] := #95;
 end;
 
 
