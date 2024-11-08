@@ -1,6 +1,7 @@
 object FPlaybackMode: TFPlaybackMode
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Playback Mode'
   ClientHeight = 267
@@ -109,6 +110,7 @@ object FPlaybackMode: TFPlaybackMode
     Top = 224
     Width = 96
     Height = 25
+    Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 6
