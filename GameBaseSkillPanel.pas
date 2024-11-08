@@ -1208,7 +1208,7 @@ var
   New: Char;
   CurChar, CharID: Integer;
   SpecialCombine: Boolean;
-  Red, Blue, Purple, Teal, Yellow: Single;
+  Red, Blue, Purple, Teal, Yellow, Orange: Single;
 
   LemmingKinds: TLemmingKinds;
 begin
@@ -1220,6 +1220,7 @@ begin
   Purple :=  1 / 2;
   Teal   :=  1 / 6;
   Yellow := -1 / 6;
+  Orange := -1 / 4;
 
   // Erase previous text there
   fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 16, 32, $00000000);
@@ -1250,9 +1251,9 @@ begin
           SpecialCombine := True;
 
           if lkNormal in LemmingKinds then
-            fCombineHueShift := Yellow
+            fCombineHueShift := Teal
           else
-            fCombineHueShift := Teal;
+            fCombineHueShift := Blue;
         end else
           SpecialCombine := False;
       end else if (CurChar > LemmingSavedStartIndex) and (CurChar <= LemmingSavedStartIndex + 4) then
