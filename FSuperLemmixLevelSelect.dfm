@@ -7,7 +7,7 @@ object FLevelSelect: TFLevelSelect
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Level Select'
   ClientHeight = 528
-  ClientWidth = 1058
+  ClientWidth = 1158
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,9 +22,9 @@ object FLevelSelect: TFLevelSelect
   PixelsPerInch = 96
   TextHeight = 13
   object lblName: TLabel
-    Left = 308
+    Left = 404
     Top = 9
-    Width = 486
+    Width = 592
     Height = 25
     AutoSize = False
     Caption = '<Name>'
@@ -36,9 +36,9 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblPosition: TLabel
-    Left = 308
+    Left = 404
     Top = 40
-    Width = 486
+    Width = 592
     Height = 16
     AutoSize = False
     Caption = '<Position>'
@@ -50,9 +50,9 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAuthor: TLabel
-    Left = 308
+    Left = 404
     Top = 62
-    Width = 583
+    Width = 592
     Height = 16
     AutoSize = False
     Caption = '<Author>'
@@ -64,7 +64,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblCompletion: TLabel
-    Left = 308
+    Left = 404
     Top = 84
     Width = 592
     Height = 32
@@ -78,7 +78,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblRecordsOptions: TLabel
-    Left = 941
+    Left = 1037
     Top = 17
     Width = 85
     Height = 13
@@ -91,7 +91,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAdvancedOptions: TLabel
-    Left = 936
+    Left = 1032
     Top = 119
     Width = 96
     Height = 13
@@ -104,7 +104,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblReplayOptions: TLabel
-    Left = 941
+    Left = 1037
     Top = 288
     Width = 79
     Height = 13
@@ -116,21 +116,14 @@ object FLevelSelect: TFLevelSelect
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object lblTextSize: TLabel
-    Left = 8
-    Top = 500
-    Width = 43
-    Height = 13
-    Caption = 'Text Size'
-  end
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 8
-    Width = 273
-    Height = 483
+    Width = 369
+    Height = 512
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = []
     Images = ilStatuses
@@ -144,7 +137,7 @@ object FLevelSelect: TFLevelSelect
     OnKeyDown = tvLevelSelectKeyDown
   end
   object btnOK: TButton
-    Left = 294
+    Left = 390
     Top = 495
     Width = 606
     Height = 25
@@ -153,7 +146,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
-    Left = 300
+    Left = 396
     Top = 122
     Width = 600
     Height = 369
@@ -162,7 +155,7 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 9
   end
   object btnClearRecords: TButton
-    Left = 916
+    Left = 1012
     Top = 36
     Width = 134
     Height = 25
@@ -174,7 +167,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnClearRecordsClick
   end
   object btnCleanseOne: TButton
-    Left = 916
+    Left = 1012
     Top = 233
     Width = 134
     Height = 25
@@ -186,7 +179,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCleanseOneClick
   end
   object btnCleanseLevels: TButton
-    Left = 916
+    Left = 1012
     Top = 202
     Width = 134
     Height = 25
@@ -200,7 +193,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCleanseLevelsClick
   end
   object btnReplayManager: TButton
-    Left = 916
+    Left = 1012
     Top = 307
     Width = 134
     Height = 25
@@ -212,7 +205,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnReplayManagerClick
   end
   object btnSaveImage: TButton
-    Left = 916
+    Left = 1012
     Top = 171
     Width = 134
     Height = 25
@@ -221,7 +214,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnSaveImageClick
   end
   object btnMakeShortcut: TButton
-    Left = 916
+    Left = 1012
     Top = 138
     Width = 134
     Height = 25
@@ -235,7 +228,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnMakeShortcutClick
   end
   object btnResetTalismans: TBitBtn
-    Left = 916
+    Left = 1012
     Top = 67
     Width = 134
     Height = 25
@@ -244,7 +237,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnResetTalismansClick
   end
   object btnPlaybackMode: TButton
-    Left = 916
+    Left = 1012
     Top = 338
     Width = 134
     Height = 25
@@ -252,25 +245,13 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 10
     OnClick = btnPlaybackModeClick
   end
-  object tbTextSize: TTrackBar
-    Left = 57
-    Top = 497
-    Width = 231
-    Height = 45
-    Max = 14
-    Min = 8
-    Frequency = 2
-    Position = 8
-    TabOrder = 11
-    OnChange = tbTextSizeChange
-  end
   object btnShowHideOptions: TButton
-    Left = 916
+    Left = 1012
     Top = 495
     Width = 134
     Height = 25
     Caption = '< Hide Options'
-    TabOrder = 12
+    TabOrder = 11
     OnClick = btnShowHideOptionsClick
   end
   object ilStatuses: TImageList
