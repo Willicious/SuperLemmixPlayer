@@ -1,7 +1,7 @@
 object FReplayManager: TFReplayManager
   Left = 0
   Top = 0
-  BorderIcons = []
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Replay Manager'
   ClientHeight = 449
