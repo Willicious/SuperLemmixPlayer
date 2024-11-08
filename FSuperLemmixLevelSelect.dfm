@@ -3,7 +3,7 @@ object FLevelSelect: TFLevelSelect
   Top = 210
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
-  BorderIcons = []
+  BorderIcons = [biSystemMenu]
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Level Select'
   ClientHeight = 528
@@ -24,7 +24,7 @@ object FLevelSelect: TFLevelSelect
   object lblName: TLabel
     Left = 308
     Top = 9
-    Width = 592
+    Width = 486
     Height = 25
     AutoSize = False
     Caption = '<Name>'
@@ -38,7 +38,7 @@ object FLevelSelect: TFLevelSelect
   object lblPosition: TLabel
     Left = 308
     Top = 40
-    Width = 592
+    Width = 486
     Height = 16
     AutoSize = False
     Caption = '<Position>'
@@ -143,16 +143,6 @@ object FLevelSelect: TFLevelSelect
     OnExpanded = tvLevelSelectExpanded
     OnKeyDown = tvLevelSelectKeyDown
   end
-  object btnCancel: TButton
-    Left = 916
-    Top = 495
-    Width = 134
-    Height = 25
-    Cancel = True
-    Caption = 'Close'
-    ModalResult = 2
-    TabOrder = 2
-  end
   object btnOK: TButton
     Left = 294
     Top = 495
@@ -169,7 +159,7 @@ object FLevelSelect: TFLevelSelect
     Height = 369
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
-    TabOrder = 10
+    TabOrder = 9
   end
   object btnClearRecords: TButton
     Left = 916
@@ -180,7 +170,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Clear Records'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 3
+    TabOrder = 2
     OnClick = btnClearRecordsClick
   end
   object btnCleanseOne: TButton
@@ -192,7 +182,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Cleanse This Level'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 9
+    TabOrder = 8
     OnClick = btnCleanseOneClick
   end
   object btnCleanseLevels: TButton
@@ -206,7 +196,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Cleanse All Levels'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 8
+    TabOrder = 7
     OnClick = btnCleanseLevelsClick
   end
   object btnReplayManager: TButton
@@ -218,7 +208,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Replay Manager'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 7
+    TabOrder = 6
     OnClick = btnReplayManagerClick
   end
   object btnSaveImage: TButton
@@ -227,7 +217,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Screenshot Level'
-    TabOrder = 6
+    TabOrder = 5
     OnClick = btnSaveImageClick
   end
   object btnMakeShortcut: TButton
@@ -241,7 +231,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Create Shortcut'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 5
+    TabOrder = 4
     OnClick = btnMakeShortcutClick
   end
   object btnResetTalismans: TBitBtn
@@ -250,7 +240,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Reset Talismans'
-    TabOrder = 4
+    TabOrder = 3
     OnClick = btnResetTalismansClick
   end
   object btnPlaybackMode: TButton
@@ -259,7 +249,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Playback Mode'
-    TabOrder = 11
+    TabOrder = 10
     OnClick = btnPlaybackModeClick
   end
   object tbTextSize: TTrackBar
@@ -273,6 +263,15 @@ object FLevelSelect: TFLevelSelect
     Position = 8
     TabOrder = 11
     OnChange = tbTextSizeChange
+  end
+  object btnShowHideOptions: TButton
+    Left = 916
+    Top = 495
+    Width = 134
+    Height = 25
+    Caption = '< Hide Options'
+    TabOrder = 12
+    OnClick = btnShowHideOptionsClick
   end
   object ilStatuses: TImageList
   end

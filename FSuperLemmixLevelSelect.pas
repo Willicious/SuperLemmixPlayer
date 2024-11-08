@@ -23,7 +23,6 @@ uses
 type
   TFLevelSelect = class(TForm)
     tvLevelSelect: TTreeView;
-    btnCancel: TButton;
     btnOK: TButton;
     lblName: TLabel;
     pnLevelInfo: TPanel;
@@ -44,6 +43,7 @@ type
     lblReplayOptions: TLabel;
     tbTextSize: TTrackBar;
     lblTextSize: TLabel;
+    btnShowHideOptions: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -61,6 +61,7 @@ type
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
     procedure tbTextSizeChange(Sender: TObject);
+    procedure btnShowHideOptionsClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -1344,6 +1345,22 @@ begin
     end;
   end else
     Exit;
+end;
+
+procedure TFLevelSelect.btnShowHideOptionsClick(Sender: TObject);
+begin
+  if Self.Width > btnClearRecords.Left then
+  begin
+    Self.Width := btnClearRecords.Left - 5;
+    btnShowHideOptions.Caption := 'Show Options >';
+    btnOK.Width := btnOK.Width - btnShowHideOptions.Width - 10;
+    btnShowHideOptions.Left := btnOK.Left + btnOK.Width + 10;
+  end else begin
+    Self.Width := btnClearRecords.Left + btnClearRecords.Width + 20;
+    btnOK.Width := pnLevelInfo.Width;
+    btnShowHideOptions.Left := btnClearRecords.Left;
+    btnShowHideOptions.Caption := '< Hide Options';
+  end;
 end;
 
 procedure TFLevelSelect.btnReplayManagerClick(Sender: TObject);
