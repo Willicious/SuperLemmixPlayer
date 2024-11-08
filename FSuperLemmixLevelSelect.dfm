@@ -116,14 +116,27 @@ object FLevelSelect: TFLevelSelect
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblTextSize: TLabel
+    Left = 8
+    Top = 500
+    Width = 43
+    Height = 13
+    Caption = 'Text Size'
+  end
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 8
     Width = 273
-    Height = 513
+    Height = 483
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = []
     Images = ilStatuses
     Indent = 19
     MultiSelectStyle = []
+    ParentFont = False
     ReadOnly = True
     TabOrder = 0
     OnChange = tvLevelSelectChange
@@ -248,6 +261,18 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Playback Mode'
     TabOrder = 11
     OnClick = btnPlaybackModeClick
+  end
+  object tbTextSize: TTrackBar
+    Left = 57
+    Top = 497
+    Width = 231
+    Height = 45
+    Max = 14
+    Min = 8
+    Frequency = 2
+    Position = 8
+    TabOrder = 11
+    OnChange = tbTextSizeChange
   end
   object ilStatuses: TImageList
   end

@@ -42,6 +42,8 @@ type
     btnPlaybackMode: TButton;
     lblAdvancedOptions: TLabel;
     lblReplayOptions: TLabel;
+    tbTextSize: TTrackBar;
+    lblTextSize: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -58,6 +60,7 @@ type
     procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
+    procedure tbTextSizeChange(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -609,6 +612,22 @@ begin
 
     SetTalismanInfo;
   end;
+end;
+
+procedure TFLevelSelect.tbTextSizeChange(Sender: TObject);
+var
+  SnapPosition: Integer;
+begin
+  // Snap the position to the nearest multiple of 2
+  SnapPosition := ((tbTextSize.Position + 1) div 2) * 2;
+
+  // Update the TrackBar position to reflect the adjusted value
+  tbTextSize.Position := SnapPosition;
+
+  if SnapPosition = 8 then
+    tvLevelSelect.Font.Size := 9
+  else
+    tvLevelSelect.Font.Size := tbTextSize.Position;
 end;
 
 procedure TFLevelSelect.tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
