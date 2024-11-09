@@ -29,15 +29,6 @@ object FQuickmodMain: TFQuickmodMain
     Height = 13
     Caption = 'Pack'
   end
-  object lblVersion: TLabel
-    Left = 840
-    Top = 430
-    Width = 22
-    Height = 13
-    Alignment = taRightJustify
-    Anchors = [akRight, akBottom]
-    Caption = 'v1.7'
-  end
   object cbPack: TComboBox
     Left = 40
     Top = 7
@@ -140,8 +131,8 @@ object FQuickmodMain: TFQuickmodMain
       OnClick = cbStatCheckboxClicked
     end
     object gbReleaseRate: TGroupBox
-      Left = 253
-      Top = 49
+      Left = 244
+      Top = 57
       Width = 225
       Height = 76
       Caption = 'Release Rate'
@@ -212,14 +203,14 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbTalismans: TGroupBox
       Left = 16
-      Top = 242
+      Top = 193
       Width = 453
-      Height = 122
+      Height = 94
       Caption = 'Talismans'
       TabOrder = 10
       object cbRemoveTalismans: TCheckBox
-        Left = 16
-        Top = 24
+        Left = 260
+        Top = 22
         Width = 145
         Height = 17
         Caption = 'Remove All Talismans'
@@ -228,7 +219,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddKillZombiesTalisman: TCheckBox
         Left = 16
-        Top = 93
+        Top = 68
         Width = 369
         Height = 17
         Caption = 'Add '#39'Kill All Zombies'#39' Talisman to all levels with Zombies'
@@ -236,7 +227,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddClassicModeTalisman: TCheckBox
         Left = 16
-        Top = 47
+        Top = 22
         Width = 206
         Height = 17
         Caption = 'Add '#39'Play in Classic Mode'#39' Talisman'
@@ -244,7 +235,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddSaveAllTalisman: TCheckBox
         Left = 16
-        Top = 70
+        Top = 45
         Width = 369
         Height = 17
         Caption = 'Add '#39'Save All Lemmings'#39' Talisman to all levels without Zombies'
@@ -266,25 +257,33 @@ object FQuickmodMain: TFQuickmodMain
       Height = 21
       TabOrder = 13
     end
-    object cbUpdateWater: TCheckBox
+    object gbNLConversions: TGroupBox
       Left = 16
-      Top = 192
+      Top = 293
       Width = 453
-      Height = 17
-      Caption = 
-        'Replace Water Objects (orig_fire | orig_marble | ohno_bubble | o' +
-        'hno_rock)'
+      Height = 76
+      Caption = 'For NeoLemmix-to-SuperLemmix Conversions'
       TabOrder = 14
-    end
-    object cbUpdateExitPositions: TCheckBox
-      Left = 16
-      Top = 215
-      Width = 437
-      Height = 17
-      Caption = 
-        'Update Orig/OhNo Exit Positions (NOTE - this should only be done' +
-        ' ONCE per pack)'
-      TabOrder = 15
+      object cbUpdateWater: TCheckBox
+        Left = 16
+        Top = 22
+        Width = 425
+        Height = 17
+        Caption = 
+          'Replace Water Objects (orig_fire | orig_marble | ohno_bubble | o' +
+          'hno_rock)'
+        TabOrder = 0
+      end
+      object cbUpdateExitPositions: TCheckBox
+        Left = 16
+        Top = 45
+        Width = 425
+        Height = 17
+        Caption = 
+          'Update Orig/OhNo Exit Positions (NOTE - this should only be done' +
+          ' ONCE per pack)'
+        TabOrder = 1
+      end
     end
   end
   object gbSkillset: TGroupBox
@@ -306,14 +305,14 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbSkillConversions: TGroupBox
       Left = 9
-      Top = 288
+      Top = 293
       Width = 342
-      Height = 81
+      Height = 76
       Caption = 'Skill Conversions'
       TabOrder = 1
       object cbTimebomberToBomber: TCheckBox
         Left = 172
-        Top = 27
+        Top = 22
         Width = 152
         Height = 17
         Caption = 'Timebombers to Bombers'
@@ -322,7 +321,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbBomberToTimebomber: TCheckBox
         Left = 11
-        Top = 27
+        Top = 22
         Width = 155
         Height = 17
         Caption = 'Bombers to Timebombers'
@@ -331,7 +330,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbStonerToFreezer: TCheckBox
         Left = 11
-        Top = 50
+        Top = 45
         Width = 129
         Height = 17
         Caption = 'Stoners to Freezers'

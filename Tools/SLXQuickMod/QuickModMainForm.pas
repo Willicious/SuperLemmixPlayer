@@ -45,7 +45,6 @@ type
     cbCustomSkillset: TCheckBox;
     cbRemoveTalismans: TCheckBox;
     cbChangeID: TCheckBox;
-    lblVersion: TLabel;
     cbRemoveSpecialLemmings: TCheckBox;
     cbRemovePreplaced: TCheckBox;
     gbSuperlemming: TGroupBox;
@@ -64,6 +63,7 @@ type
     cbBomberToTimebomber: TCheckBox;
     cbStonerToFreezer: TCheckBox;
     cbUpdateExitPositions: TCheckBox;
+    gbNLConversions: TGroupBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -89,6 +89,7 @@ type
     function SaveAllTalisman: string;
     function ClassicModeTalisman: string;
     function KillZombiesTalisman: string;
+    function GetAppVersion: string;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -105,6 +106,41 @@ implementation
 {$R *.dfm}
 
 { TFQuickmodMain }
+
+function TFQuickmodMain.GetAppVersion: String;
+var
+  Size, Handle: DWORD;
+  Buffer: Pointer;
+  FileInfo: Pointer;
+  FileVersionInfoSize: UINT;
+  Major, Minor, Release, Build: Word;
+begin
+  Result := 'Version information not available';
+
+  // Get the size of the version info block
+  Size := GetFileVersionInfoSize(PChar(ParamStr(0)), Handle);
+  if Size > 0 then
+  begin
+    GetMem(Buffer, Size);
+    try
+      // Retrieve version information
+      if GetFileVersionInfo(PChar(ParamStr(0)), Handle, Size, Buffer) then
+      begin
+        if VerQueryValue(Buffer, '\', FileInfo, FileVersionInfoSize) then
+        begin
+          with TVSFixedFileInfo(FileInfo^) do
+          begin
+            Major := HiWord(dwFileVersionMS);
+            Minor := LoWord(dwFileVersionMS);
+          end;
+          Result := Format('Version %d.%d', [Major, Minor]);
+        end;
+      end;
+    finally
+      FreeMem(Buffer);
+    end;
+  end;
+end;
 
 procedure TFQuickmodMain.cbCustomSkillsetClick(Sender: TObject);
 var
@@ -162,6 +198,8 @@ begin
   fPackList := TStringList.Create;
   AppPath := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
   fProcessCompletedSuccessfully := False;
+
+  Self.Caption := 'SLX QuickMod' + GetAppVersion;
 end;
 
 destructor TFQuickmodMain.Destroy;
@@ -172,17 +210,18 @@ end;
 
 procedure TFQuickmodMain.btnApplyClick(Sender: TObject);
 var
-  UpdateExit, AreYouSure, SelectedPack: String;
+  UpdateExit, AreYouSure, SelectedPack, NoUndo: String;
 begin
   if cbUpdateExitPositions.Checked then
     UpdateExit := 'Please note that updating Exit positions should only be performed ONCE per pack!' + sLineBreak
   else
     UpdateExit := '';
 
-  AreYouSure := 'Are you sure you want to apply these changes to' + SLineBreak;
-  SelectedPack := ' ' + sLineBreak + cbPack.Text;
+  AreYouSure := 'Are you sure you want to apply these changes to' + sLineBreak;
+  SelectedPack := ' ' + sLineBreak + cbPack.Text + '?' + sLineBreak;
+  NoUndo := sLineBreak + 'This action cannot be undone. Please make sure you have a backup copy before proceeding!';
 
-  if MessageDlg(UpdateExit + AreYouSure + SelectedPack + '?',
+  if MessageDlg(UpdateExit + AreYouSure + SelectedPack + NoUndo,
                 mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
     ApplyChanges;
 end;
