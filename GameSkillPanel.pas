@@ -19,6 +19,7 @@ type
 
     function MinimapRect: TRect; override;
     function ReplayMarkRect: TRect; override;
+    function RescueCountRect: TRect; override;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
@@ -103,6 +104,33 @@ end;
 function TSkillPanelStandard.ReplayMarkRect: TRect;
 begin
   Result := Rect(212, 4, 232, 32);
+end;
+
+// Assigns a non-clickable rectangle to the rescue count icon & digits
+function TSkillPanelStandard.RescueCountRect: TRect;
+var
+  LemmingsSaved: Integer;
+  DigitCount: Integer;
+begin
+  LemmingsSaved := Game.LemmingsSaved;
+
+  if LemmingsSaved >= 0 then // For positive numbers
+  begin
+    if LemmingsSaved < 10 then
+      DigitCount := 1
+    else if LemmingsSaved < 100 then
+      DigitCount := 2
+    else
+      DigitCount := 3;
+  end else
+  begin
+    if LemmingsSaved > -10 then // For negative numbers, including the '-' sign
+      DigitCount := 2
+    else
+      DigitCount := 3;
+  end;
+
+  Result := Rect(478, 4, 512 + DigitCount * 16, 32);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
