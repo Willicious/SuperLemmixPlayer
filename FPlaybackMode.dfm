@@ -4,7 +4,7 @@ object FPlaybackMode: TFPlaybackMode
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Playback Mode'
-  ClientHeight = 267
+  ClientHeight = 334
   ClientWidth = 421
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object FPlaybackMode: TFPlaybackMode
   TextHeight = 13
   object lblSelectedFolder: TLabel
     Left = 57
-    Top = 80
+    Top = 167
     Width = 90
     Height = 13
     Caption = 'Selected Folder:'
@@ -33,9 +33,13 @@ object FPlaybackMode: TFPlaybackMode
   end
   object lblPlaybackCancelHotkey: TLabel
     Left = 176
-    Top = 153
+    Top = 229
     Width = 138
     Height = 13
+    Hint = 
+      'Press this hotkey at any time during playback to cancel playback' +
+      ' mode.'#13#10'This hotkey can be changed in Settings > Configure Hotke' +
+      'ys.'
     Caption = 'Playback Cancel Hotkey:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -43,10 +47,23 @@ object FPlaybackMode: TFPlaybackMode
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+  end
+  object lblWelcome: TLabel
+    Left = 33
+    Top = 55
+    Width = 352
+    Height = 52
+    Alignment = taCenter
+    Caption = 
+      'Welcome to Playback Mode!'#13#10'This feature automatically plays thro' +
+      'ugh all replays in the selected folder.'#13#10#13#10'To begin, choose a fo' +
+      'lder of replays to be played back.'
   end
   object btnBrowse: TButton
     Left = 153
-    Top = 44
+    Top = 126
     Width = 105
     Height = 31
     Caption = 'Browse'
@@ -55,17 +72,22 @@ object FPlaybackMode: TFPlaybackMode
   end
   object stSelectedFolder: TStaticText
     Left = 157
-    Top = 80
+    Top = 167
     Width = 212
     Height = 17
     Caption = '(Click Browse to choose a folder of replays)'
     TabOrder = 1
   end
   object rgPlaybackOrder: TRadioGroup
-    Left = 41
-    Top = 119
+    Left = 50
+    Top = 196
     Width = 97
     Height = 96
+    Hint = 
+      'This setting orders the replays into a playlist.'#13#10#13#10'By Replay: P' +
+      'lays the replays in the order that they appear in the folder.'#13#10'B' +
+      'y Level: Plays the replays in the order that the levels appear i' +
+      'n the selected pack.'#13#10'Random: Randomizes playback.'
     Caption = 'Playback Order'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -77,27 +99,40 @@ object FPlaybackMode: TFPlaybackMode
       'By Level'
       'Random')
     ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 2
   end
   object cbAutoskip: TCheckBox
     Left = 176
-    Top = 119
+    Top = 196
     Width = 209
     Height = 17
+    Hint = 
+      'Check this to automatically skip past preview and postview scree' +
+      'ns during playback.'
     Caption = 'Auto-skip Preview && Postview Screens'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 3
   end
   object stPlaybackCancelHotkey: TStaticText
     Left = 324
-    Top = 153
+    Top = 229
     Width = 45
     Height = 17
+    Hint = 
+      'Press this hotkey at any time during playback to cancel playback' +
+      ' mode.'#13#10'This hotkey can be changed in Settings > Configure Hotke' +
+      'ys.'
     Caption = '(hotkey)'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 4
   end
   object btnBeginPlayback: TButton
     Left = 102
-    Top = 224
+    Top = 300
     Width = 123
     Height = 25
     Caption = 'Begin Playback'
@@ -107,7 +142,7 @@ object FPlaybackMode: TFPlaybackMode
   end
   object btnCancel: TButton
     Left = 231
-    Top = 224
+    Top = 300
     Width = 96
     Height = 25
     Cancel = True
@@ -118,7 +153,7 @@ object FPlaybackMode: TFPlaybackMode
   object stPackName: TStaticText
     AlignWithMargins = True
     Left = 0
-    Top = 12
+    Top = 15
     Width = 409
     Height = 24
     Alignment = taCenter

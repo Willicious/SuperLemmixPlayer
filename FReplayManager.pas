@@ -47,6 +47,7 @@ type
     lblSelectedFolder: TLabel;
     stSelectedFolder: TStaticText;
     btnBrowse: TButton;
+    lblWelcome: TLabel;
     procedure rgReplayKindClick(Sender: TObject);
     procedure rbReplayActionClick(Sender: TObject);
     procedure cbNamingSchemeChange(Sender: TObject);

@@ -4,7 +4,7 @@ object FReplayManager: TFReplayManager
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Replay Manager'
-  ClientHeight = 449
+  ClientHeight = 542
   ClientWidth = 571
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,8 +18,8 @@ object FReplayManager: TFReplayManager
   PixelsPerInch = 96
   TextHeight = 13
   object lblSelectedFolder: TLabel
-    Left = 220
-    Top = 44
+    Left = 189
+    Top = 137
     Width = 90
     Height = 13
     Caption = 'Selected Folder:'
@@ -30,9 +30,21 @@ object FReplayManager: TFReplayManager
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblWelcome: TLabel
+    Left = 96
+    Top = 50
+    Width = 377
+    Height = 65
+    Alignment = taCenter
+    Caption = 
+      'Welcome to Replay Manager!'#13#10'This feature performs a mass replay ' +
+      'check on all replays in the selected folder.'#13#10'You can choose how' +
+      ' to rename the replays based on the result of the check.'#13#10#13#10'To b' +
+      'egin, choose a folder of replays for checking.'
+  end
   object rgReplayKind: TRadioGroup
     Left = 8
-    Top = 79
+    Top = 173
     Width = 129
     Height = 329
     Caption = 'Replay Kind'
@@ -52,7 +64,7 @@ object FReplayManager: TFReplayManager
   end
   object gbAction: TGroupBox
     Left = 143
-    Top = 79
+    Top = 173
     Width = 420
     Height = 177
     Caption = 'Action for _______'
@@ -132,7 +144,7 @@ object FReplayManager: TFReplayManager
   end
   object btnRunReplayCheck: TButton
     Left = 143
-    Top = 414
+    Top = 508
     Width = 216
     Height = 25
     Caption = 'Run Replay Check'
@@ -141,7 +153,7 @@ object FReplayManager: TFReplayManager
   end
   object btnCancel: TButton
     Left = 365
-    Top = 414
+    Top = 508
     Width = 84
     Height = 25
     Cancel = True
@@ -151,7 +163,7 @@ object FReplayManager: TFReplayManager
   end
   object gbActionsList: TGroupBox
     Left = 143
-    Top = 262
+    Top = 356
     Width = 420
     Height = 146
     Caption = 'Actions List'
@@ -286,7 +298,7 @@ object FReplayManager: TFReplayManager
   object stPackName: TStaticText
     AlignWithMargins = True
     Left = 0
-    Top = 7
+    Top = 14
     Width = 577
     Height = 24
     Alignment = taCenter
@@ -301,16 +313,16 @@ object FReplayManager: TFReplayManager
     TabOrder = 5
   end
   object stSelectedFolder: TStaticText
-    Left = 320
-    Top = 44
+    Left = 289
+    Top = 137
     Width = 212
     Height = 17
     Caption = '(Click Browse to choose a folder of replays)'
     TabOrder = 6
   end
   object btnBrowse: TButton
-    Left = 113
-    Top = 39
+    Left = 82
+    Top = 132
     Width = 98
     Height = 25
     Caption = 'Browse'

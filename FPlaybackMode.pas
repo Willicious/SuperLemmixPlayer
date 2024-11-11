@@ -24,6 +24,7 @@ type
     btnBeginPlayback: TButton;
     btnCancel: TButton;
     stPackName: TStaticText;
+    lblWelcome: TLabel;
     procedure btnBrowseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
