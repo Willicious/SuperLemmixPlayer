@@ -1497,7 +1497,10 @@ var
 const
   LEN = 4;
 begin
-  LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
+  if GameParams.AmigaTheme then
+    LemNum := Game.LemmingsActive - Game.SpawnedDead
+  else
+    LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
 
   if not (Game.IsOutOfTime or Game.NukeIsActive) then
     Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
