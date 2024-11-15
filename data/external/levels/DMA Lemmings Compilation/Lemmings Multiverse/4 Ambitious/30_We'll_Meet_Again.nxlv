@@ -8,7 +8,7 @@
  TITLE We'll Meet Again
  AUTHOR DMA / WillLem
  ID x9CE927479CE92747
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -33,6 +33,14 @@
    BASHER 4
    MINER 2
    DIGGER 2
+ $END 
+ 
+ $POSTTEXT 
+   LINE Congratulations!
+   LINE 
+   LINE You truly are an excellent lemmings player.
+   LINE 
+   LINE The saga continues...
  $END 
  
  $TALISMAN 
@@ -751,7 +759,6 @@
    PIECE steel_02
    X 382
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -759,7 +766,6 @@
    PIECE steel_01
    X 518
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -792,7 +798,6 @@
    PIECE steel_01
    X 351
    Y 124
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -808,7 +813,6 @@
    PIECE steel_01
    X 376
    Y 124
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -816,7 +820,6 @@
    PIECE steel_02
    X 352
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -824,7 +827,6 @@
    PIECE steel_01
    X 363
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -832,7 +834,6 @@
    PIECE steel_01
    X 393
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -840,7 +841,6 @@
    PIECE steel_01
    X 418
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1537,7 +1537,6 @@
    PIECE steel_01
    X 200
    Y 124
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1545,7 +1544,6 @@
    PIECE steel_01
    X 207
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1553,7 +1551,6 @@
    PIECE steel_01
    X 232
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1561,7 +1558,6 @@
    PIECE steel_01
    X 257
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1569,7 +1565,6 @@
    PIECE steel_01
    X 282
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1577,7 +1572,6 @@
    PIECE steel_01
    X 307
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1585,7 +1579,6 @@
    PIECE steel_01
    X 332
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1593,7 +1586,6 @@
    PIECE steel_01
    X 443
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1601,7 +1593,6 @@
    PIECE steel_01
    X 468
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1609,7 +1600,6 @@
    PIECE steel_01
    X 493
    Y 149
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1617,7 +1607,6 @@
    PIECE steel_01
    X 527
    Y 124
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -2066,7 +2055,6 @@
    X 363
    Y 69
    ERASE
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -2075,7 +2063,6 @@
    X 365
    Y 69
    ERASE
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -2100,7 +2087,6 @@
    X 363
    Y 37
    ERASE
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -2109,7 +2095,6 @@
    X 365
    Y 37
    ERASE
-   ONE_WAY
  $END
  
  
