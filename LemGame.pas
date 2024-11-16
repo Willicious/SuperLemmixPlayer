@@ -2106,7 +2106,7 @@ begin
   and (
 
   // Ends level if no lemmings remain
-  ((LemmingsOut = 0) and
+  ((LemmingsOut <= 0) and
     {Prevents level ending immediately if there are no pre-placed lems
      and allows nuke whilst there are still lems to spawn}
     (NukeIsActive or (LemmingsToSpawn = 0)) and not
