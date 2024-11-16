@@ -2100,10 +2100,7 @@ end;
 function TLemmingGame.StateIsUnplayable: Boolean;
 begin
   // Always wait for animations to finish
-  Result := (((DelayEndFrames = 0) and (fParticleFinishTimer = 0))
-
-  // Unless time is up
-  or IsOutOfTime)
+  Result := (((DelayEndFrames = 0) and (fParticleFinishTimer = 0)))
 
   // Plus, other conditions...
   and (
