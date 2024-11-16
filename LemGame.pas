@@ -2015,6 +2015,13 @@ function TLemmingGame.UpdateExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
 
+  // Sleepers cancel explosion timer because lem would have exited
+  if (L.LemAction = baSleeping) then
+  begin
+    L.LemExplosionTimer := 0;
+    Exit;
+  end;
+
   Dec(L.LemExplosionTimer);
 
   DoExplosionCrater := True;
