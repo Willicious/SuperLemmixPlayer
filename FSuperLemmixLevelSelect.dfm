@@ -154,7 +154,7 @@ object FLevelSelect: TFLevelSelect
     Height = 369
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
-    TabOrder = 9
+    TabOrder = 11
   end
   object btnClearRecords: TButton
     Left = 996
@@ -177,7 +177,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Cleanse This Level'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 8
+    TabOrder = 6
     OnClick = btnCleanseOneClick
   end
   object btnCleanseLevels: TButton
@@ -191,7 +191,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Cleanse All Levels'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 7
+    TabOrder = 5
     OnClick = btnCleanseLevelsClick
   end
   object btnReplayManager: TButton
@@ -203,7 +203,7 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Replay Manager'
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 6
+    TabOrder = 7
     OnClick = btnReplayManagerClick
   end
   object btnSaveImage: TButton
@@ -212,7 +212,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Screenshot Level'
-    TabOrder = 5
+    TabOrder = 10
     OnClick = btnSaveImageClick
   end
   object btnMakeShortcut: TButton
@@ -244,7 +244,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = 'Playback Mode'
-    TabOrder = 10
+    TabOrder = 8
     OnClick = btnPlaybackModeClick
   end
   object btnShowHideOptions: TButton
@@ -253,7 +253,7 @@ object FLevelSelect: TFLevelSelect
     Width = 134
     Height = 25
     Caption = '< Hide Options'
-    TabOrder = 11
+    TabOrder = 9
     OnClick = btnShowHideOptionsClick
   end
   object ilStatuses: TImageList
