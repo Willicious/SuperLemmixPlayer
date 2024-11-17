@@ -283,6 +283,7 @@ begin
     ApplyResize(False);
 
     SetRedraw(rdRedraw);
+    CheckResetCursor(True);
   finally
     SkillPanel.Image.EndUpdate;
   end;
