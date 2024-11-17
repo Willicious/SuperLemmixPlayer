@@ -189,6 +189,7 @@ type
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
     function CursorOverReplayMark: Boolean;
     function CursorOverMinimap: Boolean;
+    function CursorOverRescueCount: Boolean;
   end;
 
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
@@ -1209,7 +1210,6 @@ procedure TBaseSkillPanel.DrawNewStr;
 var
   New: Char;
   CurChar, CharID: Integer;
-  CursorPos, P: TPoint;
 
   SpecialCombine: Boolean;
   Red, Blue, Purple, Teal, Yellow{, Orange}: Single;
@@ -1262,10 +1262,7 @@ begin
           SpecialCombine := False;
       end else if (CurChar > LemmingSavedStartIndex) and (CurChar <= LemmingSavedStartIndex + 4) then
       begin
-        CursorPos := Mouse.CursorPos;
-        P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
-
-        if PtInRect(RescueCountRect, P) then
+        if CursorOverRescueCount then
         begin
           SpecialCombine := True;
           fCombineHueShift := Blue;
@@ -1519,14 +1516,10 @@ end;
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
   S: string;
-  CursorPos, P: TPoint;
 const
   LEN = 4;
 begin
-  CursorPos := Mouse.CursorPos;
-  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
-
-  if PtInRect(RescueCountRect, P) then
+  if CursorOverRescueCount then
     S := IntToStr(Level.Info.RescueCount)
   else
     S := IntToStr(Game.LemmingsSaved);
@@ -1886,6 +1879,22 @@ begin
       spbSquiggle: ButtonHint := '';
       else         ButtonHint := Uppercase(SKILL_NAMES[aButton]);
     end;
+  end;
+end;
+
+function TBaseSkillPanel.CursorOverRescueCount: Boolean;
+var
+  CursorPos: TPoint;
+  P: TPoint;
+begin
+  Result := False;
+  CursorPos := Mouse.CursorPos;
+  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+  if PtInRect(RescueCountRect, P) then
+  begin
+    Result := True;
+    Exit;
   end;
 end;
 
