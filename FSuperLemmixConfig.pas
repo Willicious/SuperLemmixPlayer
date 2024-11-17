@@ -65,6 +65,7 @@ type
     gbSkillPanelOptions: TGroupBox;
     cbShowButtonHints: TCheckBox;
     cbAmigaTheme: TCheckBox;
+    imgAmigaTick: TImage;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
