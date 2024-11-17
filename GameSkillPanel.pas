@@ -109,8 +109,7 @@ end;
 // Assigns a non-clickable rectangle to the rescue count icon & digits
 function TSkillPanelStandard.RescueCountRect: TRect;
 var
-  LemmingsSaved: Integer;
-  DigitCount: Integer;
+  LemmingsSaved, DigitCount: Integer;
 begin
   LemmingsSaved := Game.LemmingsSaved;
 
@@ -130,7 +129,10 @@ begin
       DigitCount := 3;
   end;
 
-  Result := Rect(478, 4, 512 + DigitCount * 16, 32);
+  if GameParams.AmigaTheme then
+    Result := Rect(418, 4, 466 + DigitCount * 16, 32)
+  else
+    Result := Rect(478, 4, 512 + DigitCount * 16, 32);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
