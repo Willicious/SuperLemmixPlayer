@@ -244,8 +244,6 @@ begin
     end;
   end;
 
-  fPackList.SaveToFile(AppPath + 'test.txt');
-
   cbPack.Items.Clear;
   for i := 0 to fPackList.Count-1 do
     cbPack.Items.Add(fPackList.ValueFromIndex[i]);

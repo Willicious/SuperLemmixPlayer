@@ -1248,8 +1248,8 @@ end;
 
 procedure TLemmingGame.PlayAssignFailSound(PlayForHighlit: Boolean = False);
 var
-SelectedLemming: TLemming;
-HighlitLemming: TLemming;
+  SelectedLemming: TLemming;
+  HighlitLemming: TLemming;
 begin
   SelectedLemming := fRenderInterface.SelectedLemming;
   HighlitLemming := GetHighlitLemming;

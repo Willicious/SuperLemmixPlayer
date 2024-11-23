@@ -36,6 +36,7 @@ object FQuickmodMain: TFQuickmodMain
     Height = 21
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
+    DropDownCount = 64
     TabOrder = 0
   end
   object gbStats: TGroupBox
