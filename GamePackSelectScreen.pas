@@ -5,6 +5,7 @@ interface
 uses
   StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
   Types, UMisc, Math,
+  FSuperLemmixConfig,
   GameBaseMenuScreen,
   GameControl,
   LemNeoLevelPack,
@@ -12,14 +13,15 @@ uses
   LemNeoParser,
   LemStrings,
   LemTypes,
-  GR32, GR32_Resamplers;
+  GR32, GR32_Resamplers,
+  Vcl.Graphics, Vcl.ComCtrls;
 
 type
   TGamePackSelectScreen = class(TGameBaseMenuScreen)
   private
     procedure BeginGame;
     procedure ExitToMainMenu;
-    procedure ShowSetupMenu;
+    procedure ShowConfigMenu;
     procedure OnKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
   protected
@@ -73,6 +75,8 @@ begin
       BeginGame;
     VK_ESCAPE: // Escape
       ExitToMainMenu;
+    VK_F2:
+      ShowConfigMenu;
   end;
 end;
 
@@ -115,15 +119,17 @@ begin
   Result := 'menu';
 end;
 
-procedure TGamePackSelectScreen.ShowSetupMenu;
+procedure TGamePackSelectScreen.ShowConfigMenu;
 var
-  F: TFNLSetup;
+  F: TFormNXConfig;
+  OldAmigaTheme: Boolean;
   OldFullScreen: Boolean;
   OldHighRes: Boolean;
   OldShowMinimap: Boolean;
 begin
-  F := TFNLSetup.Create(self);
+  F := TFormNXConfig.Create(self);
   try
+    OldAmigaTheme := GameParams.AmigaTheme;
     OldFullScreen := GameParams.FullScreen;
     OldHighRes := GameParams.HighResolution;
     OldShowMinimap := GameParams.ShowMinimap;
@@ -131,7 +137,7 @@ begin
     F.ShowModal;
 
     // And apply the settings chosen
-    ApplyConfigChanges(OldFullScreen, OldHighRes, OldShowMinimap, false, false);
+    ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap, false, false);
   finally
     F.Free;
   end;
