@@ -8,7 +8,8 @@ uses
   LemLevel, LemTalisman, LemNeoLevelPack,
   LemTypes, LemStrings, LemCore,
   UMisc, Types, Math,
-  GR32, GR32_Image, GR32_Resamplers, PngInterface;
+  GR32, GR32_Image, GR32_Resamplers, PngInterface,
+  SharedGlobals;
 
 const
   AS_PANEL_BASE_WIDTH = 600;

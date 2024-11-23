@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE Pillars of Hercules
  AUTHOR DMA Design 
  ID x9CE927479CE92747
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,13 +37,13 @@
    DIGGER 2
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -57,6 +60,7 @@
    X 400
    Y 124
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -66,6 +70,7 @@
    X 288
    Y 124
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -75,6 +80,7 @@
    X 224
    Y 124
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -84,6 +90,7 @@
    X 464
    Y 124
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -1432,3 +1439,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

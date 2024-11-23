@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE We all fall down
  AUTHOR DMA Design 
  ID xF0740F5CF0740F5C
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -28,13 +31,13 @@
    DIGGER 80
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -59,6 +62,7 @@
    X 336
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -67,6 +71,7 @@
    X 400
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -75,6 +80,7 @@
    X 464
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -83,6 +89,7 @@
    X 528
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -91,6 +98,7 @@
    X 592
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -99,6 +107,7 @@
    X 656
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -107,6 +116,7 @@
    X 720
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -115,6 +125,7 @@
    X 784
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -123,6 +134,7 @@
    X 848
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -131,6 +143,7 @@
    X 912
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -139,6 +152,7 @@
    X 976
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -147,6 +161,7 @@
    X 1040
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -155,6 +170,7 @@
    X 1104
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -163,6 +179,7 @@
    X 1168
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -171,6 +188,7 @@
    X 1232
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -179,6 +197,7 @@
    X 1296
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -187,6 +206,7 @@
    X 1360
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -195,6 +215,7 @@
    X 1424
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -203,6 +224,7 @@
    X 1488
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -211,6 +233,7 @@
    X 1552
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -219,6 +242,7 @@
    X 272
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -228,6 +252,7 @@
    X 208
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -237,6 +262,7 @@
    X 144
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -245,6 +271,7 @@
    X 80
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -253,6 +280,7 @@
    X 16
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -261,6 +289,7 @@
    X -48
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  
@@ -2022,3 +2051,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

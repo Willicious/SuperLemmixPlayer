@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE Lemming Friendly
  AUTHOR DMA Design
  ID x91ED863E91ED863E
- VERSION x0000000000000002
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -33,13 +35,13 @@
    BASHER 6
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -54,7 +56,7 @@
    STYLE ohno_brick
    PIECE exit
    X 456
-   Y 81
+   Y 94
    NO_OVERWRITE
  $END
  
@@ -822,3 +824,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

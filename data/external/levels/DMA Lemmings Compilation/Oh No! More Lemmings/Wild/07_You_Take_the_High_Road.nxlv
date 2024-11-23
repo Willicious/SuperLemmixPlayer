@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE You Take the High Road
  AUTHOR DMA Design
  ID xC8B03B70C8B03B70
- VERSION x0000000000000003
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -33,20 +35,20 @@
    DIGGER 2
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
    STYLE ohno_brick
    PIECE exit
    X 531
-   Y 101
+   Y 114
    NO_OVERWRITE
  $END
  
@@ -70,7 +72,7 @@
    STYLE ohno_brick
    PIECE exit
    X 131
-   Y 29
+   Y 42
    NO_OVERWRITE
  $END
  
@@ -1287,3 +1289,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

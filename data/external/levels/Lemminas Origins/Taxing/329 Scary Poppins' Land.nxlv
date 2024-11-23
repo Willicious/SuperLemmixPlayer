@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Scary Poppins' Land
  AUTHOR WillLem
  ID x5E5FF8ED5E5FF8EC
- VERSION x0000000000000016
+ VERSION x000000000000001B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -168,17 +168,7 @@
  $GADGET
    STYLE orig_fire
    PIECE flamethrower_flip
-   X 951
-   Y 37
-   NO_OVERWRITE
-   ROTATE
-   FLIP_VERTICAL
- $END
- 
- $GADGET
-   STYLE orig_fire
-   PIECE flamethrower_flip
-   X 943
+   X 941
    Y 82
  $END
  
@@ -225,6 +215,47 @@
    Y -45
    NO_OVERWRITE
    ROTATE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE flamethrower_flip
+   X 951
+   Y 37
+   NO_OVERWRITE
+   ROTATE
+   FLIP_VERTICAL
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group1613283318
+   
+   $TERRAIN
+     STYLE orig_fire
+     PIECE steel_03
+     X 1071
+     Y 89
+   $END
+   
+   $TERRAIN
+     STYLE orig_fire
+     PIECE steel_03
+     X 1077
+     Y 89
+     ERASE
+   $END
+   
+   $TERRAIN
+     STYLE orig_fire
+     PIECE steel_03
+     X 1073
+     Y 89
+     NO_OVERWRITE
+   $END
+   
  $END
  
  
@@ -1703,14 +1734,6 @@
  
  $TERRAIN
    STYLE orig_fire
-   PIECE bars_06
-   X 1073
-   Y 101
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
    PIECE bars_01
    X 1026
    Y 90
@@ -1722,14 +1745,6 @@
    PIECE bars_01
    X 1058
    Y 90
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 1043
-   Y 101
    ONE_WAY
  $END
  
@@ -1801,22 +1816,23 @@
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 1023
+   X 1021
    Y 89
  $END
  
  $TERRAIN
    STYLE orig_fire
    PIECE steel_03
-   X 1048
+   X 1046
    Y 89
  $END
  
  $TERRAIN
-   STYLE orig_fire
-   PIECE steel_03
-   X 1073
+   STYLE *group
+   PIECE Group1613283318
+   X 1071
    Y 89
+   ONE_WAY
  $END
  
  $TERRAIN

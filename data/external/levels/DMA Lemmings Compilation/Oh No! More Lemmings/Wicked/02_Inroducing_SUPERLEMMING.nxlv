@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.3
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +11,7 @@
  AUTHOR DMA Design
  MUSIC Acorn ONML/AcornONMLSuperLem
  ID xFF86647EFF86647E
- VERSION x0000000000000005
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,30 +36,30 @@
    BASHER 6
    MINER 2
    DIGGER 6
- $END
+ $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Bronze Talisman
    ID 2
    COLOR Bronze
    CLASSIC_MODE 0
- $END
-
- $TALISMAN
+ $END 
+ 
+ $TALISMAN 
    TITLE Silver Talisman
    ID 0
    COLOR Silver
    NO_PAUSE 0
- $END
-
-  $TALISMAN
+ $END 
+ 
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
    NO_PAUSE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -71,7 +73,7 @@
    STYLE ohno_brick
    PIECE exit
    X 1408
-   Y -1
+   Y 12
  $END
  
  
@@ -1997,3 +1999,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

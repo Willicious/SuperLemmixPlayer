@@ -5,7 +5,8 @@ interface
 uses
   GameControl, GameSound, LemStrings, FEditHotkeys, LemmixHotkeys, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls;
+  Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
+  SharedGlobals;
 
 type
   TFormNXConfig = class(TForm)
@@ -64,6 +65,7 @@ type
     gbSkillPanelOptions: TGroupBox;
     cbShowButtonHints: TCheckBox;
     cbAmigaTheme: TCheckBox;
+    imgAmigaTick: TImage;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);

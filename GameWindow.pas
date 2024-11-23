@@ -7,7 +7,7 @@ interface
 uses
   System.Types, Generics.Collections,
   PngInterface,
-  LemmixHotkeys, SharedGlobals,
+  LemmixHotkeys,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   LemCore, LemLevel, LemRendering, LemRenderHelpers,
@@ -15,7 +15,8 @@ uses
   GameSound, LemTypes, LemStrings, LemLemming,
   LemCursor,
   GameControl, GameBaseSkillPanel, GameSkillPanel, GameBaseScreenCommon,
-  GameWindowInterface;
+  GameWindowInterface,
+  SharedGlobals;
 
 type
   // For TGameSpeed see unit GameWindowInterface
@@ -121,7 +122,6 @@ type
     procedure AddSaveState;
     procedure CheckAdjustSpawnInterval;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
-    procedure StartReplay(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
     procedure CheckUserHelpers;
@@ -161,11 +161,11 @@ type
     GameScroll           : TGameScroll;       // Scrollmode
     GameVScroll          : TGameScroll;
     IdealFrameTimeMS     : Cardinal;          // Normal frame speed in milliseconds
-    IdealFrameTimeMSFast : Cardinal;          // Fast forward framespeed in milliseconds
     IdealFrameTimeMSSlow : Cardinal;
     IdealFrameTimeSuper  : Cardinal;
     IdealScrollTimeMS    : Cardinal;          // Scroll speed in milliseconds
     RewindTimer          : TTimer;
+    FastForwardTimer     : TTimer;
     TurboTimer           : TTimer;
     PrevCallTime         : Cardinal;          // Last time we did something in idle
     PrevScrollTime       : Cardinal;          // Last time we scrolled in idle
@@ -194,7 +194,6 @@ type
     destructor Destroy; override;
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
-    procedure LoadReplay;
     procedure SaveReplay;
     procedure RenderMinimap;
     procedure MainFormResized; override;
@@ -207,6 +206,7 @@ type
     function ShouldDisplayHQMinimap: Boolean;
 
     procedure DoRewind(Sender: TObject);
+    procedure DoFastForward(Sender: TObject);
     procedure DoTurbo(Sender: TObject);
     property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
     property HyperSpeedTarget: Integer read fHyperSpeedTarget write fHyperSpeedTarget;
@@ -266,86 +266,25 @@ end;
 
 procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
 var
-  OSHorz, OSVert: Single;
-  DoZoomOnCursor: Boolean;
-
-  procedure SetCursorToCenter();
-  var
-    MousePos, ImgCenter: TPoint;
-    ImgTopLeft, ImgBottomRight: TPoint;
-  begin
-    // Clip the Mouse position to the Image rectangle
-    MousePos := Mouse.CursorPos;
-    ImgTopLeft := Img.ClientToScreen(Point(0, 0));
-    ImgBottomRight := Img.ClientToScreen(Point(Img.Width, Img.Height));
-    MousePos.X := Max(Min(Mouse.CursorPos.X, ImgBottomRight.X), ImgTopLeft.X);
-    MousePos.Y := Max(Min(Mouse.CursorPos.Y, ImgBottomRight.Y), ImgTopLeft.Y);
-    // Get center of the image on the screen
-    ImgCenter := Point(Trunc((ImgTopLeft.X + ImgBottomRight.X) / 2), Trunc((ImgTopLeft.Y + ImgBottomRight.Y) / 2));
-    // Move the image location
-    Img.OffsetHorz := Img.OffsetHorz - (MousePos.X - ImgCenter.X);
-    Img.OffsetVert := Img.OffsetVert - (MousePos.Y - ImgCenter.Y);
-  end;
-
-  procedure ResetCenterToCursor();
-  var
-    MousePos, ImgCenter: TPoint;
-    ImgTopLeft, ImgBottomRight: TPoint;
-  begin
-    // Clip the Mouse position to the Image rectangle
-    MousePos := Mouse.CursorPos;
-    ImgTopLeft := Img.ClientToScreen(Point(0, 0));
-    ImgBottomRight := Img.ClientToScreen(Point(Img.Width, Img.Height));
-    MousePos.X := Max(Min(Mouse.CursorPos.X, ImgBottomRight.X), ImgTopLeft.X);
-    MousePos.Y := Max(Min(Mouse.CursorPos.Y, ImgBottomRight.Y), ImgTopLeft.Y);
-    // Get center of the image on the screen
-    ImgCenter := Point(Trunc((ImgTopLeft.X + ImgBottomRight.X) / 2), Trunc((ImgTopLeft.Y + ImgBottomRight.Y) / 2));
-    // Move the image location
-    Img.OffsetHorz := Img.OffsetHorz + (MousePos.X - ImgCenter.X);
-    Img.OffsetVert := Img.OffsetVert + (MousePos.Y - ImgCenter.Y);
-  end;
-
+  Pivot: TPoint;
 begin
   aNewZoom := Max(Min(fMaxZoom, aNewZoom), 1);
   if (aNewZoom = fInternalZoom) and not NoRedraw then
     Exit;
 
-  DoZoomOnCursor := (aNewZoom > fInternalZoom);
-  Img.BeginUpdate;
   SkillPanel.Image.BeginUpdate;
   try
-    // If scrolling in, move the image to center on the cursor position.
-    // We will ensure that this is a valid position later on.
-    if DoZoomOnCursor then SetCursorToCenter;
-
-    // Switch to top left coordinates, not the center of the image.
-    OSHorz := Img.OffsetHorz - (Img.Width / 2);
-    OSVert := Img.OffsetVert - (Img.Height / 2);
-    OSHorz := (OSHorz * aNewZoom) / fInternalZoom;
-    OSVert := (OSVert * aNewZoom) / fInternalZoom;
-
-    Img.Scale := aNewZoom;
+    Pivot := Img.ScreenToClient(Mouse.CursorPos);
+    Pivot := Img.ControlToBitmap(Pivot);
+    Img.Zoom(aNewZoom, Pivot);
 
     fInternalZoom := aNewZoom;
 
-    // Change the Img size and update everything accordingly.
-    ApplyResize(true);
-
-    // If scrolling in, we wish to keep the pixel below the cursor constant.
-    // Therefore we have to move the current center back to the cursor position
-    if DoZoomOnCursor then ResetCenterToCursor;
-
-    // Move back to center coordinates.
-    OSHorz := OSHorz + (Img.Width / 2);
-    OSVert := OSVert + (Img.Height / 2);
-    // Ensure that the offset doesn't move part of the visible area outside of the level area.
-    Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
-    Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
+    ApplyResize(False);
 
     SetRedraw(rdRedraw);
-    CheckResetCursor(true);
+    CheckResetCursor(True);
   finally
-    Img.EndUpdate;
     SkillPanel.Image.EndUpdate;
   end;
 end;
@@ -608,9 +547,14 @@ begin
   end;
 end;
 
+procedure TGameWindow.DoFastForward(Sender: TObject);
+begin
+  fHyperSpeedTarget := Game.CurrentIteration + 1;
+end;
+
 procedure TGameWindow.DoTurbo(Sender: TObject);
 begin
-  fHyperSpeedTarget := Game.CurrentIteration + 7;
+  fHyperSpeedTarget := Game.CurrentIteration + 7
 end;
 
 procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
@@ -626,8 +570,7 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-  ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame,
-    TimeForScroll, Hyper, Pause, Rewind, Fast, Turbo, Slow: Boolean;
+  ForceOne, TimeForFrame, TimeForPausedRR, TimeForScroll, Hyper, Pause, Rewind, Fast, Turbo, Slow: Boolean;
   MouseClickFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
@@ -676,7 +619,6 @@ begin
     TimeForFrame := (not (Pause or Rewind)) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // Don't check for frame advancing when paused
 
   TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
-  TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
   Hyper := IsHyperSpeed;
 
@@ -690,6 +632,12 @@ begin
       RewindTimer.Enabled := True;
   end else
     RewindTimer.Enabled := False;
+
+  // Fast-forward
+  if Fast then
+    FastForwardTimer.Enabled := True
+  else
+    FastForwardTimer.Enabled := False;
 
   // Turbo mode
   if Turbo then
@@ -709,7 +657,7 @@ begin
     SkillPanel.DrawButtonSelector(spbFastForward, True);
   end;
 
-  if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
+  if ForceOne or Hyper then TimeForFrame := true;
 
   // Relax CPU
   if not (Hyper or Fast or Game.IsSuperLemmingMode) then
@@ -1052,7 +1000,6 @@ begin
       fLastSelectedSkill := fRenderInterface.SelectedSkill;
       fLastHelperIcon := fRenderInterface.UserHelper;
       fLastDrawPaused := GameSpeed = gspPause;
-
       fLastProjectionType := fProjectionType;
 
       fNeedRedraw := rdNone;
@@ -1237,8 +1184,8 @@ begin
     if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
       HandleHeldScroll
     else
-      fHoldScrollData.Active := false;                      // Bookmark -
-  end else if fNeedResetMouseTrap or not fMouseTrapped then // Why are these two seperate variables anyway?
+      fHoldScrollData.Active := false;
+  end else if fNeedResetMouseTrap or not fMouseTrapped then
   begin
     GameScroll := gsNone;
     GameVScroll := gsNone;
@@ -1277,6 +1224,7 @@ end;
 constructor TGameWindow.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
+  CurrentScreen := gstPlay;
 
   Color := $200020;
 
@@ -1314,11 +1262,15 @@ begin
   Img.OnMouseMove := Img_MouseMove;
   Img.OnMouseUp := Img_MouseUp;
 
-  RewindTimer := TTimer.Create(Self); // Bookmark - can TickCount be used here instead??
+  RewindTimer := TTimer.Create(Self);
   RewindTimer.Interval := 60;
   RewindTimer.OnTimer := DoRewind;
 
-  TurboTimer := TTimer.Create(Self); // Bookmark - can TickCount be used here instead??
+  FastForwardTimer := TTimer.Create(Self);
+  FastForwardTimer.Interval := 10;
+  FastForwardTimer.OnTimer := DoFastForward;
+
+  TurboTimer := TTimer.Create(Self);
   TurboTimer.Interval := 40;
   TurboTimer.OnTimer := DoTurbo;
 
@@ -1352,6 +1304,7 @@ begin
   fHighlitStartCopyLemming.Free;
   HotkeyManager.Free;
   RewindTimer.Free;
+  FastForwardTimer.Free;
   TurboTimer.Free;
   inherited Destroy;
 end;
@@ -1461,8 +1414,8 @@ begin
   if not Game.Playing then Exit;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
-   we do want the Rewind and Turbo keys to respond }
-  if IsHyperSpeed and not ((GameSpeed = gspRewind) or (GameSpeed = gspTurbo)) then
+   we do want the Rewind, FF and Turbo keys to respond }
+  if IsHyperSpeed and not (GameSpeed in [gspRewind, gspFF, gspTurbo]) then
     Exit;
 
   with Game do
@@ -1559,7 +1512,12 @@ begin
                             Game.RegainControl(True);
                         end;
                       end;
-      lka_Cheat: Game.Cheat;
+      lka_Cheat: begin
+                   Game.Cheat;
+
+                   if GameSpeed <> gspNormal then
+                     GameSpeed := gspNormal;
+                 end;
       lka_Turbo: begin
                    if Game.IsSuperLemmingMode then Exit;
 
@@ -1606,7 +1564,18 @@ begin
                           GameSpeed := gspNormal;
                       end;
       lka_SaveImage: SaveShot;
-      lka_LoadReplay: if not GameParams.ClassicMode then LoadReplay;
+      lka_LoadReplay: begin
+                        if not (GameParams.ClassicMode or GameParams.PlaybackModeActive) then
+                          LoadReplay;
+
+                        if GlobalGame.ReplayManager.ReplayLoadSuccess then
+                        begin
+                          GameSpeed := gspNormal;
+                          Game.IsBackstepping := False;
+                          GotoSaveState(0, -1);
+                          CanPlay := True;
+                        end;
+                      end;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
       lka_Restart: begin
                      SkillPanel.DrawButtonSelector(spbRestart, True);
@@ -1793,7 +1762,6 @@ procedure TGameWindow.SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
 var
   NewPoint: TPoint;
 begin
-  // Bookmark - work out WHY this change is needed
   NewPoint := Point(BitmapPoint.X - 3, BitmapPoint.Y + 2);
   if GameParams.HighResolution then
   begin
@@ -2010,7 +1978,6 @@ begin
   fGame.PrepareParams;
 
   // Set timers
-  IdealFrameTimeMSFast := 10;
   IdealScrollTimeMS := 15;
   IdealFrameTimeMS := 60; // Normal
   IdealFrameTimeMSSlow := 240;
@@ -2154,22 +2121,6 @@ begin
     Result := false;
 end;
 
-procedure TGameWindow.StartReplay(const aFileName: string);
-begin
-  CanPlay := False;
-
-  Game.ReplayManager.LoadFromFile(aFilename);
-
-  if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
-    ShowMessage('Warning: This replay appears to be from a different level.' + #13 +
-                'SuperLemmix will attempt to play the replay anyway.');
-
-  GameSpeed := gspNormal;
-  Game.IsBackstepping := False;
-  GotoSaveState(0, -1);
-  CanPlay := True;
-end;
-
 procedure TGameWindow.SuspendGameplay;
 var
   NewSuspendState: TSuspendState;
@@ -2217,73 +2168,6 @@ begin
   end;
 end;
 
-procedure TGameWindow.LoadReplay;
-var
-  Dlg : TOpenDialog;
-  s: string;
-
-  function GetDefaultLoadPath: String;
-    function GetGroupName: String;
-    var
-      G: TNeoLevelGroup;
-    begin
-      G := GameParams.CurrentLevel.Group;
-      if G.Parent = nil then
-        Result := ''
-      else begin
-        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
-          G := G.Parent;
-        Result := MakeSafeForFilename(G.Name, false) + '\';
-      end;
-    end;
-  begin
-    Result := AppPath + SFReplays + GetGroupName;
-  end;
-
-  function GetInitialLoadPath: String;
-  begin
-    if (LastReplayDir <> '') then
-      Result := LastReplayDir
-    else
-      Result := GetDefaultLoadPath;
-  end;
-begin
-  // Todo: Replace this with use of GameBaseScreen's LoadReplay function
-
-  s := '';
-  Dlg := TOpenDialog.Create(self);
-  SuspendGameplay;
-  try
-    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := 'SuperLemmix Replay File (*.nxrp)|*.nxrp';
-    Dlg.FilterIndex := 1;
-    if LastReplayDir = '' then
-    begin
-      Dlg.InitialDir := AppPath + SFReplays + GetInitialLoadPath;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath + SFReplays;
-      if not DirectoryExists(Dlg.InitialDir) then
-        Dlg.InitialDir := AppPath;
-    end else
-      Dlg.InitialDir := LastReplayDir;
-    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
-    if Dlg.execute then
-    begin
-      s:=Dlg.filename;
-      LastReplayDir := ExtractFilePath(s);
-    end;
-  finally
-    Dlg.Free;
-    ResumeGameplay;
-  end;
-
-  if s <> '' then
-  begin
-    StartReplay(s);
-    Exit;
-  end;
-end;
-
 procedure TGameWindow.SaveShot;
 var
   Dlg : TSaveDialog;
@@ -2324,11 +2208,11 @@ procedure TGameWindow.Game_Finished;
 begin
   SoundManager.StopMusic;
 
-  GameParams.NextScreen2 := gstPostview;
-  if Game.CheckPass then
-    fCloseToScreen := gstText
-  else
-    fCloseToScreen := gstPostview;
+  if (Game.CheckPass and (Game.Level.PostText.Count > 0))
+    and not (GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview) then
+      fCloseToScreen := gstText
+    else
+      fCloseToScreen := gstPostview;
 end;
 
 procedure TGameWindow.CloseScreen(aNextScreen: TGameScreenType);

@@ -9,7 +9,8 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, FileCtrl, ExtCtrls;
+  Controls, Forms, Dialogs, StdCtrls, FileCtrl, ExtCtrls,
+  SharedGlobals;
 
 type
   TFPlaybackMode = class(TForm)
@@ -23,6 +24,7 @@ type
     btnBeginPlayback: TButton;
     btnCancel: TButton;
     stPackName: TStaticText;
+    lblWelcome: TLabel;
     procedure btnBrowseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -51,24 +53,31 @@ implementation
 procedure TFPlaybackMode.btnBrowseClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
+  InitialDir: String;
 begin
   OpenDlg := TOpenDialog.Create(Self);
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
 
-    OpenDlg.InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
+    InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name);
 
-    if OpenDlg.InitialDir = '' then
-      OpenDlg.InitialDir := AppPath + SFReplays;
+    if not SysUtils.DirectoryExists(InitialDir) then
+      InitialDir := AppPath + SFReplays;
 
+    OpenDlg.InitialDir := InitialDir;
     OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
     OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
 
     if OpenDlg.Execute then
     begin
       fSelectedFolder := ExtractFilePath(OpenDlg.FileName);
-      SetCurrentDir(fSelectedFolder);
-      stSelectedFolder.Caption := ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
+
+      if SysUtils.DirectoryExists(fSelectedFolder) then
+      begin
+        SetCurrentDir(fSelectedFolder);
+        stSelectedFolder.Caption := ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
+      end else
+        ShowMessage('The selected folder path is invalid.');
     end;
   finally
     OpenDlg.Free;
@@ -129,10 +138,12 @@ end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
 begin
-  // Set options and clear PlaybackList
+  // Set options and clear lists
   rgPlaybackOrder.ItemIndex := Ord(GameParams.PlaybackOrder);
   cbAutoSkip.Checked := GameParams.AutoSkipPreviewPostview;
   GameParams.PlaybackList.Clear;
+  GameParams.UnmatchedList.Clear;
+  GameParams.ReplayVerifyList.Clear;
 
   // Show currently-assigned Playback Mode hotkey
   stPlaybackCancelHotkey.Caption := GetPlaybackModeHotkey;

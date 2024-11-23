@@ -15,7 +15,8 @@ uses
   Classes,
   IOUtils,
   StrUtils,
-  SysUtils;
+  SysUtils,
+  SharedGlobals;
 
 type
   TCommandLineResult = (clrContinue, clrHalt, clrToPreview);

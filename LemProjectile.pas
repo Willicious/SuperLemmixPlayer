@@ -7,7 +7,8 @@ uses
   LemCore,
   LemLemming,
   GR32,
-  Classes, SysUtils, Math, Types;
+  Classes, SysUtils, Math, Types,
+  SharedGlobals;
 
 type
 //TBatGraphic = (pgBatR); // Batter
@@ -484,7 +485,6 @@ var
       if ((fPhysicsMap.PixelS[fX, fY] and PM_SOLID) <> 0) then
         fHit := true;
 
-      // Bookmark - find another way to do this
       if fIsGrenade and GlobalGame.HasTriggerAt(fX, fY, trZombie) then
         fHit := true;
 

@@ -1,0 +1,755 @@
+# Level file modified by SLX QuickMod
+
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.7
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE One Way to Freedom
+ AUTHOR DMA Design 
+ ID xBDD22BC4BDD22BC4
+ VERSION x0000000000000003
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 600
+ HEIGHT 160
+ START_X 184
+ START_Y 80
+ THEME orig_fire
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 60
+ SAVE_REQUIREMENT 53
+ TIME_LIMIT 300
+ MAX_SPAWN_INTERVAL 21
+ 
+ $SKILLSET 
+   FLOATER 1
+   TIMEBOMBER 12
+   BUILDER 25
+   BASHER 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 184
+   Y 122
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 152
+   Y 122
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 216
+   Y 122
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 152
+   Y 98
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 184
+   Y 98
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 216
+   Y 98
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 152
+   Y 74
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 184
+   Y 74
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 216
+   Y 74
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 152
+   Y 50
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 184
+   Y 50
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE owa_left
+   X 216
+   Y 50
+   WIDTH 32
+   HEIGHT 24
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE exit
+   X 489
+   Y 92
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE window
+   X 72
+   Y 80
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE firepit
+   X 360
+   Y 132
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 49
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 74
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 99
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 124
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 149
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 174
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 199
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 224
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 249
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 274
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 299
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 324
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 349
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 152
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 177
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 202
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 223
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 152
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 177
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 202
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 223
+   Y 74
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 152
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 177
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 202
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_03
+   X 223
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 152
+   Y 38
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 177
+   Y 38
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 202
+   Y 38
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 226
+   Y 38
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 48
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 40
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 48
+   Y 37
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 40
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 48
+   Y -28
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 374
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 399
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 424
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 449
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 474
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 499
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 524
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 360
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 366
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 543
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 535
+   Y 67
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 543
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 535
+   Y 1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 543
+   Y -31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 48
+   Y 37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 48
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_03
+   X 48
+   Y -28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 52
+   Y -16
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 129
+   Y -17
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 199
+   Y -16
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 272
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 335
+   Y -16
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 407
+   Y -16
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 456
+   Y -15
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X 539
+   Y -19
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE rock_03
+   X -12
+   Y -18
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE letter_d
+   X 335
+   Y 31
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE letter_o
+   X 366
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE letter_o
+   X 397
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE letter_m
+   X 429
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE letter_!
+   X 478
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 499
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 24
+   Y 146
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 40
+   Y 129
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 549
+   Y 146
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE chain_04
+   X 535
+   Y 127
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ 
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

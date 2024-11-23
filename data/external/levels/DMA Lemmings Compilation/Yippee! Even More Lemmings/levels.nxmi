@@ -1,0 +1,21 @@
+BASE
+
+$GROUP
+  NAME Simple
+  FOLDER 1 Simple
+$END
+
+$GROUP
+  NAME Intricate
+  FOLDER 2 Intricate
+$END
+
+$GROUP
+  NAME Complex
+  FOLDER 3 Complex
+$END
+
+$GROUP
+  NAME Chaotic
+  FOLDER 4 Chaotic
+$END

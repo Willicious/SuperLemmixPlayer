@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE Let's be careful out there
  AUTHOR DMA Design 
  ID xFC495740FC495740
- VERSION x0000000000000004
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -36,13 +38,13 @@
    DIGGER 20
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -1620,3 +1622,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

@@ -5,7 +5,8 @@ interface
 uses
   Generics.Collections,
   SysUtils,
-  LemTerrain;
+  LemTerrain,
+  SharedGlobals;
 
 type
   TTerrainGroup = class

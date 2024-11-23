@@ -1,0 +1,31 @@
+BASE
+
+$GROUP
+  NAME Lemmings
+  FOLDER Lemmings
+$END
+
+$GROUP
+  NAME Oh No! More Lemmings
+  FOLDER Oh No! More Lemmings
+$END
+
+$GROUP
+  NAME Yippee! Even More Lemmings
+  FOLDER Yippee! Even More Lemmings
+$END
+
+$GROUP
+  NAME Lemmings Multiverse
+  FOLDER Lemmings Multiverse
+$END
+
+$GROUP
+  NAME Lemmings PS3
+  FOLDER Lemmings PS3
+$END
+
+$GROUP
+  NAME Holiday Lemmings
+  FOLDER Holiday Lemmings
+$END

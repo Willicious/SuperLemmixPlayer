@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE Every Lemming for himself!!!
  AUTHOR DMA Design 
  ID xFE5A9A9FFE5A9A9F
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -32,13 +35,13 @@
    BASHER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -55,6 +58,7 @@
    X 384
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -63,6 +67,7 @@
    X 448
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -71,6 +76,7 @@
    X 896
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -79,6 +85,7 @@
    X 960
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -87,6 +94,7 @@
    X 1024
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -95,6 +103,7 @@
    X 1088
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -103,6 +112,7 @@
    X 1152
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -131,6 +141,7 @@
    X 1344
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -139,6 +150,7 @@
    X 1408
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -147,6 +159,7 @@
    X 1216
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -155,6 +168,7 @@
    X 1280
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -183,6 +197,7 @@
    X 0
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -191,6 +206,7 @@
    X 64
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -199,6 +215,7 @@
    X 128
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -207,6 +224,7 @@
    X 192
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -215,6 +233,7 @@
    X 256
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -223,6 +242,7 @@
    X 320
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -231,6 +251,7 @@
    X 512
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -239,6 +260,7 @@
    X 576
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -247,6 +269,7 @@
    X 640
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -255,6 +278,7 @@
    X 704
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -263,6 +287,7 @@
    X 768
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -271,6 +296,7 @@
    X 832
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -279,6 +305,7 @@
    X 1472
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -288,6 +315,7 @@
    X 1536
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -3032,3 +3060,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

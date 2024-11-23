@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE There's a lot of them about
  AUTHOR DMA Design 
  ID x5C5C5C3D5C5C5C3D
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -35,13 +38,13 @@
    DIGGER 20
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -72,6 +75,7 @@
    X 778
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -81,6 +85,7 @@
    X 842
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -90,6 +95,7 @@
    X 346
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -99,6 +105,7 @@
    X 282
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -108,6 +115,7 @@
    X 218
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -117,6 +125,7 @@
    X 154
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -126,6 +135,7 @@
    X 90
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -135,6 +145,7 @@
    X 26
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -144,6 +155,7 @@
    X 522
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -153,6 +165,7 @@
    X 586
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -162,6 +175,7 @@
    X 650
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -171,6 +185,7 @@
    X 714
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -597,3 +612,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

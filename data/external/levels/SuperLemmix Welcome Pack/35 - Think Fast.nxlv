@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Think Fast!
  AUTHOR WillLem
  ID x2FA76C0043059276
- VERSION x0000000000000008
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -73,7 +73,7 @@
    STYLE ohno_brick
    PIECE exit
    X 68
-   Y 45
+   Y 58
    NO_OVERWRITE
  $END
  

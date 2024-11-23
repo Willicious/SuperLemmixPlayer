@@ -34,7 +34,8 @@ uses
   Dialogs,
   Bass,
   LemTypes, // Only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
-  LemStrings, Contnrs, Classes, SysUtils;
+  LemStrings, Contnrs, Classes, SysUtils,
+  SharedGlobals;
 
 type
   TSoundEffectOrigin = (seoStyle, seoDefault, seoPack);

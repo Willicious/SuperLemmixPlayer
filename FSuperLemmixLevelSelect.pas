@@ -17,12 +17,12 @@ uses
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
   Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
-  LemNeoParser, System.ImageList;
+  LemNeoParser, System.ImageList,
+  SharedGlobals;
 
 type
   TFLevelSelect = class(TForm)
     tvLevelSelect: TTreeView;
-    btnCancel: TButton;
     btnOK: TButton;
     lblName: TLabel;
     pnLevelInfo: TPanel;
@@ -41,6 +41,7 @@ type
     btnPlaybackMode: TButton;
     lblAdvancedOptions: TLabel;
     lblReplayOptions: TLabel;
+    btnShowHideOptions: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -57,6 +58,11 @@ type
     procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
+    procedure btnShowHideOptionsClick(Sender: TObject);
+    procedure SetOptionButtons;
+    procedure ShowOptionButtons;
+    procedure HideOptionButtons;
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -342,6 +348,7 @@ begin
   btnOK.Enabled := false;
 
   InitializeTreeview;
+  SetOptionButtons;
 end;
 
 procedure TFLevelSelect.FormShow(Sender: TObject);
@@ -381,6 +388,17 @@ begin
 
   fTalismanButtons.OwnsObjects := false; // Because TFLevelSelect itself will take care of any that remain
   fTalismanButtons.Free;
+
+  GameParams.Save(scImportant);
+end;
+
+procedure TFLevelSelect.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+  begin
+    Close;
+  end;
 end;
 
 procedure TFLevelSelect.btnCleanseOneClick(Sender: TObject);
@@ -510,9 +528,9 @@ begin
       // Get list of replay files
       ReplayFiles := TDirectory.GetFiles(PlaybackModeForm.SelectedFolder, '*.nxrp');
 
-      // Add replay file names to PlaybackList
+      // Add replay file names to ReplayVerifyList
       for ReplayFile in ReplayFiles do
-        GameParams.PlaybackList.Add(ReplayFile); // Storing full path for easier access later
+        GameParams.ReplayVerifyList.Add(ReplayFile); // Storing full path for easier access later
 
       GameParams.PlaybackModeActive := True;
       GameParams.Save(scImportant);
@@ -840,6 +858,42 @@ begin
     DisplayLevelInfo;
     fPackTalBox.Visible := false;
     SetAdvancedOptionsLevel(L);
+  end;
+end;
+
+procedure TFLevelSelect.ShowOptionButtons;
+begin
+  { Resizes and recenters the main form to show the option buttons }
+
+  Self.Width := btnClearRecords.Left + btnClearRecords.Width + 20;
+  btnOK.Width := pnLevelInfo.Width;
+  btnShowHideOptions.Left := btnClearRecords.Left;
+  btnShowHideOptions.Caption := '< Hide Options';
+
+  Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
+  Self.Top := (Application.MainForm.Top + (Application.MainForm.Height div 2)) - (Self.Height div 2);
+end;
+
+procedure TFLevelSelect.HideOptionButtons;
+begin
+  { Resizes and recenters the main form to hide the option buttons }
+
+  Self.Width := btnClearRecords.Left - 5;
+  btnShowHideOptions.Caption := 'Show Options >';
+  btnOK.Width := btnOK.Width - btnShowHideOptions.Width - 10;
+  btnShowHideOptions.Left := btnOK.Left + btnOK.Width + 10;
+
+  Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
+  Self.Top := (Application.MainForm.Top + (Application.MainForm.Height div 2)) - (Self.Height div 2);
+end;
+
+procedure TFLevelSelect.SetOptionButtons;
+begin
+  if GameParams.ShowLevelSelectOptions then
+  begin
+    ShowOptionButtons;
+  end else begin
+    HideOptionButtons;
   end;
 end;
 
@@ -1324,6 +1378,18 @@ begin
     end;
   end else
     Exit;
+end;
+
+procedure TFLevelSelect.btnShowHideOptionsClick(Sender: TObject);
+begin
+  if GameParams.ShowLevelSelectOptions then
+  begin
+    HideOptionButtons;
+    GameParams.ShowLevelSelectOptions := False;
+  end else begin
+    ShowOptionButtons;
+    GameParams.ShowLevelSelectOptions := True;
+  end;
 end;
 
 procedure TFLevelSelect.btnReplayManagerClick(Sender: TObject);

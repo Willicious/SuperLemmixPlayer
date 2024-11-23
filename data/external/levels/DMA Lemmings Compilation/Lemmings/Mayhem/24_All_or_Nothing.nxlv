@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE All or Nothing
  AUTHOR DMA Design 
  ID xA1C2A250A1C2A250
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -28,13 +31,13 @@
    BASHER 3
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -59,6 +62,7 @@
    X 265
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -68,6 +72,7 @@
    X 329
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -76,6 +81,7 @@
    X 121
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -84,6 +90,7 @@
    X 57
    Y 140
    WIDTH 64
+   HEIGHT 20
  $END
  
  $GADGET
@@ -1157,3 +1164,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

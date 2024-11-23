@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE POOR WEE CREATURES!
  AUTHOR DMA Design 
  ID xA539A58FA539A58F
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,13 +37,13 @@
    MINER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -65,6 +68,7 @@
    X 304
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -74,6 +78,7 @@
    X 704
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -82,6 +87,7 @@
    X 768
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -90,6 +96,7 @@
    X 832
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -1171,3 +1178,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Fireworks
  AUTHOR WillLem
  ID x1AE4A94F5A3E1A77
- VERSION x0000000000000022
+ VERSION x0000000000000024
  
 #       Level dimensions        
 # ----------------------------- 
@@ -22,7 +22,7 @@
 # ----------------------------- 
  LEMMINGS 100
  SAVE_REQUIREMENT 75
- TIME_LIMIT 240
+ TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 33
  COLLECTIBLES 7
  INVINCIBILITY
@@ -35,8 +35,8 @@
    TIMEBOMBER 10
    BOMBER 1
    FREEZER 10
-   LADDERER 8
-   BUILDER 8
+   LADDERER 10
+   BUILDER 10
    BASHER 1
    MINER 1
  $END 

@@ -7,7 +7,8 @@ interface
 
 uses
   LemMetaAnimation, GR32, LemTypes, LemCore,
-  Contnrs, Types, Classes, SysUtils;
+  Contnrs, Types, Classes, SysUtils,
+  SharedGlobals;
 
 type
   TPreplacedLemming = class

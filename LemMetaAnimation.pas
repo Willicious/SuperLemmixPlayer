@@ -4,7 +4,8 @@ unit LemMetaAnimation;
 interface
 
 uses
-  Classes, LemCore;
+  Classes, LemCore,
+  SharedGlobals;
 
 type
   TMetaAnimationClass = class of TMetaAnimation;

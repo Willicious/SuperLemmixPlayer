@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Re-inroducing SUPERLEMMING
  AUTHOR WillLem / DMA Design
  ID x2FA76C0043059276
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -55,7 +55,7 @@
    STYLE ohno_brick
    PIECE exit
    X 1408
-   Y -1
+   Y 12
  $END
  
  

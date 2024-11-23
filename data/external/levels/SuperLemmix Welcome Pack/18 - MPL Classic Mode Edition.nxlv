@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Mary Poppins Land (Classic Mode Edition)
  AUTHOR WillLem
  ID xDA4E2B370FC2267F
- VERSION x000000000000001C
+ VERSION x000000000000001D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -59,8 +59,8 @@
    ID 1
    COLOR Silver
    SAVE_REQUIREMENT 100
-   CLASSIC_MODE 0
    FREEZER_LIMIT 1
+   CLASSIC_MODE 0
  $END 
  
 #     Interactive objects       

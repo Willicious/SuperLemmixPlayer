@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Trust The Sides
  AUTHOR WillLem
  ID x6D56818863BC8FB7
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -35,8 +35,8 @@
    TITLE Gold Talisman
    ID 0
    COLOR Gold
-   NO_PAUSE 0
    TIME_LIMIT 2040
+   NO_PAUSE 0
  $END 
  
 #     Interactive objects       

@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE 24 hour Lemathon
  AUTHOR DMA Design 
  ID xE19FF7C0E19FF7C0
- VERSION x0000000000000001
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -31,13 +33,13 @@
    DIGGER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -52,7 +54,7 @@
    STYLE ohno_rock
    PIECE exit
    X 264
-   Y 60
+   Y 66
    NO_OVERWRITE
  $END
  
@@ -538,3 +540,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

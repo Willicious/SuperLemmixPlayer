@@ -6,7 +6,8 @@ interface
 uses
   LemTypes,
   Classes, GR32,
-  GameWindowInterface, GameBaseSkillPanel;
+  GameWindowInterface, GameBaseSkillPanel,
+  SharedGlobals;
 
 type
   TSkillPanelStandard = class(TBaseSkillPanel)
@@ -16,9 +17,9 @@ type
     function PanelWidth: Integer; override;
     function PanelHeight: Integer; override;
 
-    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
     function ReplayMarkRect: TRect; override;
+    function RescueCountRect: TRect; override;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
@@ -81,7 +82,7 @@ begin
               #93 + '_...' + ' ' +     // 18 Hatch icon        // 19 LemHatch
               #94 + '_...' + ' ' +     // 24 Lem icon          // 25 LemAlive
               #95 + '_...' + ' ' +     // 30 Exit icon         // 31 LemIn
-              #96 +  '_.-..';          // 36 Time icon         // 37 Time Limit
+              #97 + '_.-..';           // 36 Time icon         // 37 Time Limit
 end;
 
 function TSkillPanelStandard.TimeLimitStartIndex: Integer;
@@ -105,6 +106,35 @@ begin
   Result := Rect(212, 4, 232, 32);
 end;
 
+// Assigns a non-clickable rectangle to the rescue count icon & digits
+function TSkillPanelStandard.RescueCountRect: TRect;
+var
+  LemmingsSaved, DigitCount: Integer;
+begin
+  LemmingsSaved := Game.LemmingsSaved;
+
+  if LemmingsSaved >= 0 then // For positive numbers
+  begin
+    if LemmingsSaved < 10 then
+      DigitCount := 1
+    else if LemmingsSaved < 100 then
+      DigitCount := 2
+    else
+      DigitCount := 3;
+  end else
+  begin
+    if LemmingsSaved > -10 then // For negative numbers, including the '-' sign
+      DigitCount := 2
+    else
+      DigitCount := 3;
+  end;
+
+  if GameParams.AmigaTheme then
+    Result := Rect(418, 4, 466 + DigitCount * 16, 32)
+  else
+    Result := Rect(478, 4, 512 + DigitCount * 16, 32);
+end;
+
 procedure TSkillPanelStandard.CreateNewInfoString;
 begin
   if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
@@ -124,6 +154,7 @@ begin
     SetCollectibleIcon(16);
     SetInfoLemHatch(20);
     SetInfoLemAlive(26);
+    SetExitIcon(31);
     SetInfoLemIn(32);
     SetTimeLimit(37);
     SetInfoTime(38, 41);
@@ -166,32 +197,6 @@ begin
     Result := 29
   else
   Result := 32;
-end;
-
-procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
-var
-  TempBmp: TBitmap32;
-begin
-if GameParams.ShowMinimap then
-  begin
-    TempBmp := TBitmap32.Create;
-    TempBmp.Assign(MinimapRegion);
-
-    // Changing the first digit changes the right side of the minimap frame
-    if GameParams.AmigaTheme then
-    begin
-      MinimapRegion.SetSize(188, 78);
-      MinimapRegion.Clear($FF000000);
-      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect, Rect(16, 16, 32, 6), TempBmp);
-    end else if (MinimapRegion.Width <> 182) or (MinimapRegion.Height <> 78) then
-    begin
-      MinimapRegion.SetSize(182, 78);
-      MinimapRegion.Clear($FF000000);
-      DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect, Rect(16, 16, 16, 16), TempBmp);
-    end;
-
-    TempBmp.Free;
-  end;
 end;
 
 end.

@@ -18,7 +18,8 @@ uses
   LemVersion,
   LemTypes, LemLevel,
   LemStrings, FLevelListDialog,
-  LemRendering;
+  LemRendering,
+  SharedGlobals;
 
 var
   IsHalting: Boolean; { ONLY used during AppController's init routines. Don't use this anywhere else.
@@ -33,6 +34,7 @@ type
     gToRescue           : Integer; // Save requirement
     gRescued            : Integer; // Number of lems rescued
     gTimeIsUp           : Boolean; // Time up status
+    gLastIteration      : Integer; // Final frame
     gLastRescueIteration: Integer; // Final rescue frame
     gGotTalisman        : Boolean; // Talisman achieved
     gGotNewTalisman     : Boolean; // New talisman achieved
@@ -46,7 +48,6 @@ type
     gstPreview,
     gstPlay,
     gstPostview,
-    gstSounds,
     gstExit,
     gstText,
     gstReplayTest
@@ -143,6 +144,8 @@ type
     fFallbackMessage          : String;
     fShouldShowFallbackMessage: Boolean;
 
+    fShowLevelSelectOptions: Boolean;
+
     fCursorResize: Double;
     fZoomLevel: Integer;
     fPanelZoomLevel: Integer;
@@ -169,9 +172,9 @@ type
     fPlaybackModeActive: Boolean;
     fPlaybackOrder: TPlaybackOrder;
     fPlaybackList: TStringList;
+    fUnmatchedList: TStringList;
+    fReplayVerifyList: TStringList;
     fPlaybackIndex: Integer;
-    fShowNoPlaybackMatch: Boolean;
-    fNoPlaybackMatchString: String;
     fAutoSkipPreviewPostview: Boolean;
 
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
@@ -203,8 +206,8 @@ type
     GameResult: TGameResultsRec;
 
     // This is set by the individual screens when closing (if they know)
-    NextScreen: TGameScreenType;
-    NextScreen2: TGameScreenType;
+    NextScreen     : TGameScreenType;
+    IsPreTextScreen: Boolean;
 
     // Resource vars
     LemDataInResource   : Boolean;
@@ -285,9 +288,9 @@ type
     property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
     property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
     property PlaybackList: TStringList read fPlaybackList write fPlaybackList;
+    property UnmatchedList: TStringList read fUnmatchedList write fUnmatchedList;
+    property ReplayVerifyList: TStringList read fReplayVerifyList write fReplayVerifyList;
     property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
-    property ShowNoPlaybackMatch: Boolean read fShowNoPlaybackMatch write fShowNoPlaybackMatch;
-    property NoPlaybackMatchString: String read fNoPlaybackMatchString write fNoPlaybackMatchString;
     property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
@@ -298,10 +301,11 @@ type
 
     property Directory: string read fDirectory write fDirectory;
 
+    property ShowLevelSelectOptions: Boolean read fShowLevelSelectOptions write fShowLevelSelectOptions;
+
     property CursorResize: Double read fCursorResize write fCursorResize;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property PanelZoomLevel: Integer read fPanelZoomLevel write fPanelZoomLevel;
-
     property WindowLeft: Integer read fWindowLeft write fWindowLeft;
     property WindowTop: Integer read fWindowTop write fWindowTop;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
@@ -336,7 +340,7 @@ implementation
 
 uses
   FMain,
-  SharedGlobals, Controls, UITypes,
+  Controls, UITypes,
   GameBaseScreenCommon, // For EXTRA_ZOOM_LEVELS const
   GameSound;
 
@@ -477,6 +481,8 @@ begin
     SaveBoolean('ShowMinimap', ShowMinimap);
     SaveBoolean('EdgeScrolling', EdgeScroll);
     SaveBoolean('UseSpawnInterval', SpawnInterval);
+
+    SaveBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
 
     SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
     SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
@@ -703,6 +709,8 @@ begin
     PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
     MenuSounds := LoadBoolean('MenuSounds', MenuSounds);
     AmigaTheme := LoadBoolean('AmigaTheme', AmigaTheme);
+
+    ShowLevelSelectOptions := LoadBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
 
     DisableMusicInTestplay := LoadBoolean('DisableTestplayMusic', DisableMusicInTestplay);
 
@@ -1035,6 +1043,7 @@ begin
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
   fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
   fCursorResize := 1;
+  fShowLevelSelectOptions := True;
 
   PlaybackOrder := poByLevel;
   fAutoSkipPreviewPostview := true;
@@ -1053,6 +1062,8 @@ begin
   end;
 
   PlaybackList := TStringList.Create;
+  UnmatchedList := TStringList.Create;
+  ReplayVerifyList := TStringList.Create;
 end;
 
 procedure TDosGameParams.CreateBasePack;
@@ -1086,6 +1097,8 @@ begin
   fHotkeys.Free;
   BaseLevelPack.Free;
   PlaybackList.Free;
+  UnmatchedList.Free;
+  ReplayVerifyList.Free;
   inherited Destroy;
 end;
 

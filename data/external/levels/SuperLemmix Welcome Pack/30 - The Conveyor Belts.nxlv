@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Conveyor Belts
  AUTHOR WillLem
  ID x395644D72FB2EFF3
- VERSION x0000000000000028
+ VERSION x0000000000000029
  
 #       Level dimensions        
 # ----------------------------- 
@@ -37,8 +37,8 @@
    TITLE Silver Talisman
    ID 0
    COLOR Silver
-   GRENADER_LIMIT 0
    JUMPER_LIMIT 0
+   GRENADER_LIMIT 0
  $END 
  
  $TALISMAN 

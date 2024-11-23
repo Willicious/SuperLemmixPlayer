@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE You need bashers this time
  AUTHOR DMA Design 
  ID xB3B04D17B3B04D17
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -28,13 +31,13 @@
    BASHER 50
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -59,6 +62,7 @@
    X 139
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -68,6 +72,7 @@
    X 203
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -76,6 +81,7 @@
    X 251
    Y 144
    WIDTH 64
+   HEIGHT 16
  $END
  
  $GADGET
@@ -84,6 +90,7 @@
    X 315
    Y 144
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -93,6 +100,7 @@
    X 123
    Y 136
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -102,6 +110,7 @@
    X 187
    Y 136
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -111,6 +120,7 @@
    X 251
    Y 136
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -120,6 +130,7 @@
    X 299
    Y 136
    WIDTH 64
+   HEIGHT 16
    NO_OVERWRITE
  $END
  
@@ -1273,3 +1284,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

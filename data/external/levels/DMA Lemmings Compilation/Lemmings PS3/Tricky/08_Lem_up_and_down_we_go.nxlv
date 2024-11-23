@@ -1,0 +1,651 @@
+# Level file modified by SLX QuickMod
+
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.7
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Lem up and down we go
+ AUTHOR Sony / Minim
+ ID x42614EA842614EA8
+ VERSION x0000000000000004
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 544
+ HEIGHT 160
+ START_X 248
+ START_Y 80
+ THEME minim_ps3dark
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 2
+ SAVE_REQUIREMENT 1
+ TIME_LIMIT 480
+ MAX_SPAWN_INTERVAL 43
+ 
+ $SKILLSET 
+   CLIMBER 1
+   BUILDER 0
+   BASHER 0
+   DIGGER 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE entrance
+   X 129
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 226
+   Y 77
+   WIDTH 64
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE minim_ps3dark
+   PIECE exit
+   X 278
+   Y 34
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_fire
+   PIECE lava
+   X 322
+   Y 140
+   WIDTH 64
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 154
+   Y 120
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 203
+   Y 60
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 262
+   Y 59
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 403
+   Y 123
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 387
+   Y 123
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 371
+   Y 123
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 419
+   Y 123
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 435
+   Y 123
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 112
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bars_06
+   X 150
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 226
+   Y 97
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 106
+   Y 37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 106
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 106
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 118
+   Y 37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 106
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 106
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 118
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 94
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 58
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 10
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 46
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 34
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 34
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 178
+   Y 37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 178
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 142
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 178
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 94
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 46
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X -2
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 166
+   Y 133
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 202
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 202
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_02
+   X 226
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 226
+   Y 97
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_03
+   X 251
+   Y 97
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE steel_02
+   X 260
+   Y 72
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 226
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 274
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 226
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 274
+   Y 72
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 274
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 298
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 362
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 410
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE ramp_04
+   X 476
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 94
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 94
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_11
+   X 94
+   Y 37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 458
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 458
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE ramp_04
+   X 500
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE ramp_04
+   X 452
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE ramp_04
+   X 428
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 500
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 476
+   Y 4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 452
+   Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 500
+   Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_02
+   X 475
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 433
+   Y -2
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_fire
+   PIECE bricks_01
+   X 408
+   Y -2
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE ramp_04
+   X 524
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 524
+   Y -20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 524
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 524
+   Y 52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 10
+   Y 73
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 10
+   Y 129
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X -14
+   Y 129
+   ERASE
+   ONE_WAY
+ $END
+ 
+ 
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

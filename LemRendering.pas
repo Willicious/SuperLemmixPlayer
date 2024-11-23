@@ -1,7 +1,5 @@
 {$include lem_directives.inc}
 
-// TODO: Replace CombineGadgetsDefaultZombie and CombineGadgetsDefaultNeutral with use of the lemming recolorer.
-
 unit LemRendering;
 
 interface
@@ -20,7 +18,8 @@ uses
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming, LemProjectile,
   LemAnimationSet, LemMetaAnimation, LemCore,
-  LemLevel, LemStrings;
+  LemLevel, LemStrings,
+  SharedGlobals;
 
 type
   TParticleRec = packed record
@@ -93,9 +92,6 @@ type
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: Cardinal);
-    //procedure CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
-    procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
-    procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
 
     // Clear Physics combines
     procedure CombineLasererShadowToShadowLayer(F: TColor32; var B: TColor32; M: Cardinal);
@@ -220,7 +216,6 @@ implementation
 
 uses
   LemGame, FMain,
-  SharedGlobals,
   GameControl;
 
 { TRenderer }
@@ -312,8 +307,8 @@ begin
   if not fLayers.fIsEmpty[rlLemmingsHigh] then fLayers[rlLemmingsHigh].Clear(0);
 
   LemmingList := fTempLemmingList;
-
   LemmingList.Clear;
+
   for i := 0 to fRenderInterface.LemmingList.Count-1 do
     LemmingList.Add(fRenderInterface.LemmingList[i]);
 
@@ -352,6 +347,7 @@ begin
   // Draw particles for exploding lemmings, laser for laserers
   fLayers.fIsEmpty[rlParticles] := True;
   fLayers.fIsEmpty[rlCountdown] := True;
+
   for i := 0 to LemmingList.Count-1 do
   begin
     if LemmingList[i].LemParticleTimer > 0 then
@@ -1929,7 +1925,7 @@ procedure TRenderer.DrawProjectileShadow(L: TLemming);
 const
   ARR_BASE_LEN = 1024;
 var
-  Proj: TProjectile;
+  Projectile: TProjectile;
   PosArray: TProjectilePointArray;
   ActualPosCount: Integer;
   i: Integer;
@@ -1953,8 +1949,8 @@ var
 
   function IsOutOfBounds: Boolean;
   begin
-    Result := (Proj.X < -108) or (Proj.X >= LevelWidth + 108) or
-              (Proj.Y < -108) or (Proj.Y >= LevelHeight + 108);
+    Result := (Projectile.X < -108) or (Projectile.X >= LevelWidth + 108) or
+              (Projectile.Y < -108) or (Projectile.Y >= LevelHeight + 108);
   end;
 begin
   fLayers.fIsEmpty[rlShadowsLow] := False;
@@ -1963,24 +1959,28 @@ begin
   LevelHeight := GameParams.Level.Info.Height;
 
   case L.LemAction of
-    //baBatting: Proj := TProjectile.CreateBat(fRenderInterface.PhysicsMap, L); // Batter
-    baSpearing: Proj := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
-    baGrenading: Proj := TProjectile.CreateGrenade(fRenderInterface.PhysicsMap, L);
+    //baBatting: Projectile := TProjectile.CreateBat(fRenderInterface.PhysicsMap, L); // Batter
+    baSpearing: Projectile := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
+    baGrenading: Projectile := TProjectile.CreateGrenade(fRenderInterface.PhysicsMap, L);
     else raise Exception.Create('TRenderer.DrawProjectileShadow passed an invalid lemming');
   end;
 
-  SetLength(PosArray, ARR_BASE_LEN);
-  ActualPosCount := 0;
+  try
+    SetLength(PosArray, ARR_BASE_LEN);
+    ActualPosCount := 0;
 
-  while not (Proj.SilentRemove or Proj.Hit or IsOutOfBounds) do
-  begin
-    if not Proj.Fired then // We don't need the lemming anymore once the projectile leaves its hand
-      fRenderInterface.SimulateLem(L);
-    AppendPositions(Proj.Update);
+    while not (Projectile.SilentRemove or Projectile.Hit or IsOutOfBounds) do
+    begin
+      if not Projectile.Fired then // We don't need the lemming anymore once the projectile leaves its hand
+        fRenderInterface.SimulateLem(L);
+      AppendPositions(Projectile.Update);
+    end;
+
+    for i := 0 to ActualPosCount-1 do
+      SetLowShadowPixel(PosArray[i].X, PosArray[i].Y);
+  finally
+    Projectile.Free;
   end;
-
-  for i := 0 to ActualPosCount-1 do
-    SetLowShadowPixel(PosArray[i].X, PosArray[i].Y);
 end;
 
 procedure TRenderer.DrawLasererShadow(L: TLemming);
@@ -2139,9 +2139,9 @@ end;
 
 procedure TRenderer.AddFreezer(X, Y: Integer);
 begin
-  fAni.LemmingAnimations[ICECUBE].DrawMode := dmCustom;
-  fAni.LemmingAnimations[ICECUBE].OnPixelCombine := CombineTerrainDefault;
-  fAni.LemmingAnimations[ICECUBE].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
+  fAni.IceCubeBitmap.DrawMode := dmCustom;
+  fAni.IceCubeBitmap.OnPixelCombine := CombineTerrainDefault;
+  fAni.IceCubeBitmap.DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
 end;
 
 function TRenderer.FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
@@ -2230,7 +2230,7 @@ begin
   // A = solidity
   // R = steel
   // G = oneway
-  // B = erase (src only,
+  // B = erase (src only)
   srcSolidity := (F and $FF000000) shr 24;
   srcSteel    := (F and $00FF0000) shr 16;
   srcOneWay   := (F and $0000FF00) shr 8;
@@ -2254,7 +2254,16 @@ begin
     end;
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
+
+    // Bookmark - for "steel is always steel, replace this line:
     dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
+
+    // With this:
+  { if srcSolidity > 0 then
+    begin
+      dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSteel);
+    end; }
+
     dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
   end;
 
@@ -2314,64 +2323,11 @@ begin
     MergeMem(F, B);
 end;
 
-procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: Cardinal);
-begin
-  if (F and $FF000000) <> 0 then
-  begin
-    if (F and $FFFFFF) = $FFDDDD then
-      F := $FF888888;
-
-    if (F and $FF000000) = $FF000000 then
-      B := F
-    else
-      MergeMem(F, B);
-  end;
-end;
-
 procedure TRenderer.CombineLasererShadowToShadowLayer(F: TColor32;
   var B: TColor32; M: Cardinal);
 begin
   if (F and $00FF0000 <> 0) or ((F and $0000FFFF) = $00000100) then B := SHADOW_COLOR;
 end;
-
-procedure TRenderer.CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: Cardinal);
-begin
-  if (F and $FF000000) <> 0 then
-  begin
-    // 1 = blue, 2 = green, 5 = red
-
-    case (F and $FFFFFF) of
-      $00BB00: F := $FF686868;
-      $4444EE: F := $FF525252;
-      $FF2222: F := $FF5E5E5E;
-    end;
-
-    if (F and $FF000000) = $FF000000 then
-      B := F
-    else
-      MergeMem(F, B);
-  end;
-end;
-
-// Bookmark - everything here is currently same as Neutral - is this even needed?
-//procedure TRenderer.CombineGadgetsDefaultRival(F: TColor32; var B: TColor32; M: Cardinal);
-//begin
-//  if (F and $FF000000) <> 0 then
-//  begin
-//    // 1 = blue, 2 = green, 5 = red
-//
-//    case (F and $FFFFFF) of
-//      $00BB00: F := $FF686868;
-//      $4444EE: F := $FF525252;
-//      $FF2222: F := $FF5E5E5E;
-//    end;
-//
-//    if (F and $FF000000) = $FF000000 then
-//      B := F
-//    else
-//      MergeMem(F, B);
-//  end;
-//end;
 
 const
   MIN_TERRAIN_GROUP_WIDTH = 1;
@@ -2573,12 +2529,6 @@ begin
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
-  //else if IsRival then
-    //Bmp.OnPixelCombine := CombineGadgetsDefaultRival  // Bookmark - SEE TODO at top of page - I think the plan is to use recolorer here instead
-  else if IsNeutral then
-    Bmp.OnPixelCombine := CombineGadgetsDefaultNeutral
-  else if IsZombie then
-    Bmp.OnPixelCombine := CombineGadgetsDefaultZombie
   else
     Bmp.OnPixelCombine := CombineGadgetsDefault;
 end;
@@ -3808,8 +3758,6 @@ var
 
         // Remove one-way markings if it's not one-way capable
         if P^ and PM_ONEWAY = 0 then P^ := P^ and not (PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN or PM_ONEWAYUP);
-
-        P^ := P^ and not PM_NOCANCELSTEEL;
       end;
   end;
 

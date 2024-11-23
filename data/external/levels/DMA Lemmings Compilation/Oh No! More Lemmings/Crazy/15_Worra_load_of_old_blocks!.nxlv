@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE Worra load of old blocks!
  AUTHOR DMA Design 
  ID xF5850730F5850730
- VERSION x0000000000000001
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -33,13 +35,13 @@
    DIGGER 3
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -160,7 +162,7 @@
    STYLE ohno_brick
    PIECE exit
    X 112
-   Y 96
+   Y 109
    NO_OVERWRITE
  $END
  
@@ -734,3 +736,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

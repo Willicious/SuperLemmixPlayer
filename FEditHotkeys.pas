@@ -5,7 +5,8 @@ interface
 uses
   LemmixHotkeys, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Vcl.Buttons, Vcl.Samples.Spin;
+  Dialogs, ComCtrls, StdCtrls, Vcl.Buttons, Vcl.Samples.Spin,
+  SharedGlobals;
 
 type
   TFLemmixHotkeys = class(TForm)

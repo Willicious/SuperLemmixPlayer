@@ -16,7 +16,8 @@ uses
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
   Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows,
-  IOUtils, Vcl.FileCtrl; // For Playback Mode
+  IOUtils, Vcl.FileCtrl, // For Playback Mode
+  SharedGlobals;
 
 const
   // Determines the size of the available window space
@@ -100,12 +101,10 @@ type
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
     private
-      fCurrentScreen    : TGameScreenType;
-      fMenuFont         : TMenuFont;
-      fKeyStates: TDictionary<Word, UInt64>;
-
-      fBasicCursor: TNLCursor;
       fCalledFromClassicModeButton: Boolean;
+      fMenuFont                   : TMenuFont;
+      fBasicCursor                : TNLCursor;
+      fKeyStates                  : TDictionary<Word, UInt64>;
 
       procedure LoadBasicCursor(aName: string);
       procedure SetBasicCursor;
@@ -171,8 +170,6 @@ type
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
 
-      property CurrentScreen: TGameScreenType read fCurrentScreen write fCurrentScreen;
-
       procedure MainFormResized; override;
       procedure DrawClassicModeButton;
       procedure HandleClassicModeClick;
@@ -193,7 +190,7 @@ const
 procedure TGameBaseMenuScreen.CancelPlaybackMode;
 begin
   if GameParams.PlaybackModeActive then
-    StopPlayback;
+    StopPlayback(True);
 end;
 
 procedure TGameBaseMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
@@ -958,11 +955,7 @@ begin
   begin
     if GameParams.PlaybackModeActive then
     begin
-      StartPlayback(0);
-
-      // Skip past menu screen if AutoSkip is not activated
-      if not GameParams.AutoSkipPreviewPostview then
-        CloseScreen(gstPreview);
+      GeneratePlaybackList;
     end else
       CloseScreen(gstReplayTest)
   end else if not Success then

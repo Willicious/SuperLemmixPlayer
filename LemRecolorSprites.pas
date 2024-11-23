@@ -8,7 +8,8 @@ uses
   LemNeoParser,
   LemNeoTheme,
   LemLemming, LemTypes, LemStrings,
-  GR32, GR32_Blend;
+  GR32, GR32_Blend,
+  SharedGlobals;
 
 const
   CPM_LEMMING_NORMAL     = $FF0000FF; // Used for a non-athlete

@@ -1,0 +1,572 @@
+# Level file modified by SLX QuickMod
+
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.7
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Down the hatch
+ AUTHOR Sony / Minim
+ ID xA67FA43AA67FA43A
+ VERSION x0000000000000003
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 384
+ HEIGHT 504
+ START_X 192
+ START_Y 80
+ THEME minim_ps3factory
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 100
+ SAVE_REQUIREMENT 1
+ TIME_LIMIT 660
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   CLIMBER 2
+   FLOATER 2
+   BUILDER 10
+   DIGGER 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE 
+   ID 0
+   COLOR Silver
+   BUILDER_LIMIT 4
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE entrance
+   X 170
+   Y 2
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE exit_01
+   X 168
+   Y 438
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE machine_part_02
+   X 159
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 176
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 208
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 144
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 112
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 240
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 240
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 240
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 112
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 208
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 176
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 144
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 112
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE machine_part_05
+   X 180
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE pipe
+   X 182
+   Y 173
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE pipe_end
+   X 182
+   Y 221
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE beam_blue_02
+   X 168
+   Y 102
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 176
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 152
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 128
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 104
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 200
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 224
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 248
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 256
+   Y 368
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 80
+   Y 368
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 80
+   Y 392
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE machine_part_06
+   X 22
+   Y 335
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE machine_part_06
+   X 53
+   Y 335
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_small_01
+   X 64
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_small_01
+   X 64
+   Y 376
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 48
+   Y 336
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 32
+   Y 336
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 32
+   Y 384
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 272
+   Y 368
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 304
+   Y 344
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 328
+   Y 344
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 320
+   Y 376
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 304
+   Y 376
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 304
+   Y 424
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 336
+   Y 400
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 314
+   Y 398
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 291
+   Y 336
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 315
+   Y 336
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 339
+   Y 336
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 280
+   Y 428
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE beam_01
+   X 256
+   Y 428
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE beam_blue_01
+   X 56
+   Y 416
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 32
+   Y 416
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 32
+   Y 448
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 32
+   Y 480
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 320
+   Y 448
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 304
+   Y 448
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 320
+   Y 472
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_small_row_01
+   X 288
+   Y 496
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 264
+   Y 472
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 216
+   Y 472
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 216
+   Y 488
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 168
+   Y 472
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 168
+   Y 488
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE machine_part_02
+   X 263
+   Y 472
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 352
+   Y 328
+   ERASE
+   ONE_WAY
+ $END
+ 
+ 
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +10,7 @@
  TITLE Have an ice day
  AUTHOR DMA Design
  ID xF98DEDE7F98DEDE7
- VERSION x0000000000000003
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,13 +36,13 @@
    DIGGER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -83,7 +85,7 @@
    STYLE ohno_snow
    PIECE exit
    X 616
-   Y -5
+   Y 0
    NO_OVERWRITE
  $END
  
@@ -514,3 +516,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

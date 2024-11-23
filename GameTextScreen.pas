@@ -6,13 +6,14 @@ interface
 
 uses
   Types,
-  Dialogs, // Debug
+  Dialogs,
   LemmixHotkeys,
   Windows, Classes, SysUtils, Controls, StrUtils,
   UMisc,
   Gr32, Gr32_Layers, GR32_Image,
   LemTypes, LemStrings, LemGame,
-  GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen,
+  SharedGlobals;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.
@@ -20,7 +21,6 @@ uses
 type
   TGameTextScreen = class(TGameBaseMenuScreen)
     private
-      fPreviewText: Boolean;
       function GetScreenText: string;
       procedure ToNextScreen;
       procedure ExitToMenu;
@@ -32,7 +32,6 @@ type
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
       constructor Create(aOwner: TComponent); override;
-      property PreviewText: Boolean read fPreviewText;
   end;
 
 implementation
@@ -62,7 +61,7 @@ begin
     if GameParams.PlaybackModeActive then
       MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode)
     else begin
-      if PreviewText then
+      if GameParams.IsPreTextScreen then
         MakeHiddenOption(lka_LoadReplay, TryLoadReplay);
     end;
 
@@ -71,7 +70,7 @@ begin
 
     DrawAllClickables;
 
-    if PreviewText then
+    if GameParams.IsPreTextScreen then
       GameParams.ShownText := true;
   finally
     ScreenImg.EndUpdate;
@@ -80,7 +79,7 @@ end;
 
 function TGameTextScreen.GetWallpaperSuffix: String;
 begin
-  if PreviewText then
+  if GameParams.IsPreTextScreen then
     Result := 'pretext'
   else
     Result := 'posttext';
@@ -204,7 +203,7 @@ begin
   Result := '';
   lfc := 0;
 
-  if fPreviewText then
+  if GameParams.IsPreTextScreen then
     SL := GameParams.Level.PreText
   else
     SL := GameParams.Level.PostText;
@@ -230,7 +229,6 @@ end;
 
 constructor TGameTextScreen.Create(aOwner: TComponent);
 begin
-  fPreviewText := (CurrentScreen = gstPreview); // Bookmark - could the CurrentScreen property also help to fix the Preview-Text-Playback-Mode bug?
   inherited Create(aOwner);
 end;
 
@@ -244,7 +242,12 @@ end;
 
 procedure TGameTextScreen.ToNextScreen;
 begin
-  CloseScreen(GameParams.NextScreen);
+  if GameParams.IsPreTextScreen then
+  begin
+    GameParams.IsPreTextScreen := False;
+    CloseScreen(gstPlay);
+  end else
+    CloseScreen(gstPostview);
 end;
 
 procedure TGameTextScreen.TryLoadReplay;

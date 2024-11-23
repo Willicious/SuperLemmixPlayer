@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC orig_04_lemming2_amiga
  ID x0665EED42E737307
- VERSION x0000000000000063
+ VERSION x0000000000000075
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
 # ----------------------------- 
  LEMMINGS 5
  SAVE_REQUIREMENT 4
- MAX_SPAWN_INTERVAL 78
+ MAX_SPAWN_INTERVAL 102
  
  $SKILLSET 
    WALKER 1
@@ -64,10 +64,86 @@
    STYLE orig_crystal
    PIECE water
    X 152
-   Y 112
+   Y 96
    WIDTH 144
-   HEIGHT 40
+   HEIGHT 56
    NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-404073448
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 80
+     Y 72
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 224
+     Y 72
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 128
+     Y 72
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 176
+     Y 72
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 176
+     Y 80
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 224
+     Y 80
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 80
+     Y 80
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_04
+     X 120
+     Y 80
+     ERASE
+     ONE_WAY
+   $END
+   
  $END
  
  
@@ -77,7 +153,7 @@
    STYLE orig_crystal
    PIECE bar_01
    X 136
-   Y 80
+   Y 76
    ONE_WAY
  $END
  
@@ -92,15 +168,16 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 80
-   Y 72
+   X 212
+   Y 75
+   ROTATE
    ONE_WAY
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 224
+   STYLE *group
+   PIECE Group-404073448
+   X 80
    Y 72
    ONE_WAY
  $END
@@ -195,31 +272,6 @@
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE bar_04
-   X 128
-   Y 72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 212
-   Y 72
-   ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 176
-   Y 72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
    PIECE block
    X 192
    Y 152
@@ -238,7 +290,7 @@
    STYLE orig_crystal
    PIECE block
    X 204
-   Y 104
+   Y 109
    ONE_WAY
  $END
  
@@ -246,8 +298,9 @@
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 252
+   X 260
    Y 72
+   FLIP_HORIZONTAL
    ZOMBIE 
  $END
  

@@ -12,7 +12,8 @@ uses
   LemNeoParser,
   LemStrings,
   LemTypes,
-  GR32, GR32_Resamplers;
+  GR32, GR32_Resamplers,
+  SharedGlobals;
 
 type
   TGameMenuPositionData = record

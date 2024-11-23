@@ -9,7 +9,8 @@ uses
   Classes,
   LemPiece,
   Contnrs,
-  SysUtils;
+  SysUtils,
+  SharedGlobals;
 
 const
   // Terrain Drawing Flags

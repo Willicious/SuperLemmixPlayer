@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Lucky 14
  AUTHOR WillLem
  ID x0BB08933644EF2D0
- VERSION x0000000000000034
+ VERSION x0000000000000036
  
 #       Level dimensions        
 # ----------------------------- 
@@ -57,9 +57,9 @@
    TITLE Silver Talisman
    ID 1
    COLOR Silver
-   DIGGER_LIMIT 0
    SWIMMER_LIMIT 0
    BOMBER_LIMIT 5
+   DIGGER_LIMIT 0
  $END 
  
  $TALISMAN 
@@ -67,8 +67,8 @@
    ID 2
    COLOR Gold
    SAVE_REQUIREMENT 100
-   DIGGER_LIMIT 0
    WALKER_LIMIT 0
+   DIGGER_LIMIT 0
  $END 
  
 #     Interactive objects       
@@ -150,7 +150,7 @@
  $GADGET
    STYLE default
    PIECE owa_right
-   X 305
+   X 304
    Y 59
    WIDTH 34
    HEIGHT 137

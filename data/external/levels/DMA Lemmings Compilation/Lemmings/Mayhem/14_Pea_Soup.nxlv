@@ -1,6 +1,8 @@
+# Level file modified by SLX QuickMod
+
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.20
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -8,6 +10,7 @@
  TITLE Pea Soup
  AUTHOR DMA Design 
  ID x92E50A4C92E50A4C
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -31,13 +34,13 @@
    DIGGER 21
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -46,6 +49,7 @@
    X 296
    Y 100
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -54,6 +58,7 @@
    X 360
    Y 100
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -62,6 +67,7 @@
    X 424
    Y 100
    WIDTH 64
+   HEIGHT 25
  $END
  
  $GADGET
@@ -70,6 +76,7 @@
    X 488
    Y 100
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -79,6 +86,7 @@
    X 232
    Y 100
    WIDTH 64
+   HEIGHT 25
    NO_OVERWRITE
  $END
  
@@ -428,3 +436,7 @@
  $END
  
  
+
+# SLX QuickMod modifications
+
+# EXIT POSITIONS UPDATED

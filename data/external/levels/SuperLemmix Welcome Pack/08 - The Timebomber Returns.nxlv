@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.6
+#   Created with SLXEditor 2.8
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC orig_07_tim5_amiga
  ID x20D4A9CC00FC3EB5
- VERSION x0000000000000011
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
@@ -43,8 +43,8 @@
    TITLE Gold Talisman
    ID 1
    COLOR Gold
-   CLONER_LIMIT 0
    SAVE_REQUIREMENT 38
+   CLONER_LIMIT 0
  $END 
  
 #     Interactive objects       

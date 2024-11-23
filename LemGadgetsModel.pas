@@ -7,7 +7,8 @@ uses
   Contnrs,
   Classes,
   LemCore,
-  LemPiece;
+  LemPiece,
+  SharedGlobals;
 
 const
   // Object Drawing Flags

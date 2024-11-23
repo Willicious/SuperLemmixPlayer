@@ -25,7 +25,8 @@ unit LemGameMessageQueue;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils,
+  SharedGlobals;
 
 const
   GAMEMSG_NIL = 0;      // Does nothing.

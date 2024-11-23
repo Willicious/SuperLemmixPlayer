@@ -7,7 +7,8 @@ uses
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemAnimationSet, LemMetaAnimation, LemNeoLevelPack, LemProjectile,
-  LemCore, LemLemming, LemGame, LemLevel;
+  LemCore, LemLemming, LemGame, LemLevel,
+  SharedGlobals;
 
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
@@ -65,6 +66,7 @@ type
     fSkillInfinite        : TBitmap32;
     fSkillInfiniteMode    : TBitmap32;
     fSkillSelected        : TBitmap32;
+    fSquiggleHighlight    : TBitmap32;
     fTurboHighlight       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
     fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // Make one of this!
@@ -90,6 +92,7 @@ type
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
     function ReplayMarkRect: TRect; virtual; abstract;
+    function RescueCountRect: TRect; virtual; abstract;
 
     function FirstSkillButtonIndex: Integer; virtual;
     function LastSkillButtonIndex: Integer; virtual;
@@ -99,7 +102,6 @@ type
     function GetButtonList: TPanelButtonArray; virtual; abstract;
     procedure DrawBlankPanel(NumButtons: Integer);
     procedure AddButtonImage(ButtonName: string; Index: Integer);
-    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
     procedure SetButtonRects;
     procedure SetSkillIcons;
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
@@ -127,6 +129,7 @@ type
     procedure SetReplayMark(Pos: Integer);
     procedure SetCollectibleIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
+    procedure SetExitIcon(Pos: Integer);
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -162,6 +165,7 @@ type
 
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
+    procedure DrawSquiggleHighlight;
     procedure DrawTurboHighlight;
     procedure RemoveButtonHighlights;
 
@@ -185,12 +189,13 @@ type
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
     function CursorOverReplayMark: Boolean;
     function CursorOverMinimap: Boolean;
+    function CursorOverRescueCount: Boolean;
   end;
 
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 52;
+  NUM_FONT_CHARS = 53;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -323,6 +328,10 @@ begin
   fSkillSelected.DrawMode := dmBlend;
   fSkillSelected.CombineMode := cmMerge;
 
+  fSquiggleHighlight := TBitmap32.Create;
+  fSquiggleHighlight.DrawMode := dmBlend;
+  fSquiggleHighlight.CombineMode := cmMerge;
+
   fTurboHighlight := TBitmap32.Create;
   fTurboHighlight.DrawMode := dmBlend;
   fTurboHighlight.CombineMode := cmMerge;
@@ -383,6 +392,7 @@ begin
   fSkillInfinite.Free;
   fSkillInfiniteMode.Free;
   fSkillSelected.Free;
+  fSquiggleHighlight.Free;
   fTurboHighlight.Free;
   fSkillCountErase.Free;
   fSkillCountEraseInvert.Free;
@@ -532,7 +542,7 @@ begin
   // Load now the icons for the text panel
   GetGraphic('panel_icons.png', fIconBmp);
   SrcRect := Rect(0, 0, 24, 32);
-  for i := 38 to 44 do
+  for i := 38 to 45 do
   begin
     fInfoFont[i].SetSize(24, 32);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -542,7 +552,7 @@ begin
   // Load now the replay icons for the text panel
   GetGraphic('replay_icons.png', fIconBmp);
   SrcRect := Rect(0, 0, 24, 32);
-  for i := 45 to NUM_FONT_CHARS - 1 do
+  for i := 46 to NUM_FONT_CHARS - 1 do
   begin
     fInfoFont[i].SetSize(24, 32);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
@@ -594,7 +604,9 @@ var
     DstRect.Bottom := DstRect.Top + 32;
 
     // Recolour bricks for all construction skills
-    if IconIndex in [44, 45, 46, 47, 48] then
+    if (IconIndex in [44, 45, 46, 47, 48])
+    // Recolor crumbs for Digger
+    or (IconIndex = 54) then
     begin
       BrickColor := GameParams.Renderer.Theme.Colors['MASK'];
 
@@ -621,6 +633,7 @@ begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
   GetGraphic('skill_selected.png', fSkillSelected);
+  GetGraphic('squiggle_highlight.png', fSquiggleHighlight);
   GetGraphic('turbo_highlight.png', fTurboHighlight);
 
   fSkillCountEraseInvert.Assign(fSkillCountErase);
@@ -793,7 +806,6 @@ begin
   begin
     MinimapRegion := TBitmap32.Create;
     GetGraphic('minimap_region.png', MinimapRegion);
-    ResizeMinimapRegion(MinimapRegion);
     MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - 6, MinimapRect.Top - 4);
     MinimapRegion.Free;
   end;
@@ -1011,7 +1023,12 @@ begin
   RemoveHighlight(aButton);
 
   if Highlight then
-    DrawHighlight(aButton);
+  begin
+    if aButton = spbSquiggle then
+      DrawSquiggleHighlight
+    else
+      DrawHighlight(aButton);
+  end;
 end;
 
 procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
@@ -1026,9 +1043,9 @@ begin
     BorderRect := fButtonRects[aButton];
 
   Inc(BorderRect.Right, 4);
-  Inc(BorderRect.Bottom, 4);
+  Inc(BorderRect.Bottom, 2);
 
-  DrawNineSlice(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect, Rect(6, 6, 6, 6), fSkillSelected);
+  fSkillSelected.DrawTo(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect);
 end;
 
 procedure TBaseSkillPanel.DrawTurboHighlight;
@@ -1037,14 +1054,31 @@ var
 begin
   BorderRect := fButtonRects[spbFastForward];
 
-  if (fGameWindow.GameSpeed = gspTurbo) then
-  begin
-    Inc(BorderRect.Right, 2);
-    Inc(BorderRect.Bottom, 4);
+  Inc(BorderRect.Right, 4);
+  Inc(BorderRect.Bottom, 2);
 
-    DrawNineSlice(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect, Rect(6, 6, 6, 6), fTurboHighlight);
-  end else if not (fGameWindow.GameSpeed in [gspFF, gspTurbo]) then
+  if (fGameWindow.GameSpeed = gspTurbo) then
+    fTurboHighlight.DrawTo(Image.Bitmap, BorderRect, fTurboHighlight.BoundsRect)
+  else if not (fGameWindow.GameSpeed in [gspFF, gspTurbo]) then
     RemoveHighlight(spbFastForward);
+end;
+
+procedure TBaseSkillPanel.DrawSquiggleHighlight;
+var
+  BorderRect: TRect;
+begin
+  BorderRect := fButtonRects[spbSquiggle];
+
+  if GameParams.AmigaTheme then
+  begin
+    Inc(BorderRect.Right, 184);
+    Inc(BorderRect.Bottom, 4);
+  end else begin
+    Inc(BorderRect.Right, 3);
+    Inc(BorderRect.Bottom, 1);
+  end;
+
+  fSquiggleHighlight.DrawTo(Image.Bitmap, BorderRect, fSquiggleHighlight.BoundsRect);
 end;
 
 procedure TBaseSkillPanel.RemoveButtonHighlights;
@@ -1066,7 +1100,11 @@ begin
   end else
     BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right, 4);
+  if GameParams.AmigaTheme and (aButton = spbSquiggle) then
+    Inc(BorderRect.Right, 184)
+  else
+    Inc(BorderRect.Right, 4);
+
   Inc(BorderRect.Bottom, 4);
 
   fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
@@ -1172,8 +1210,9 @@ procedure TBaseSkillPanel.DrawNewStr;
 var
   New: Char;
   CurChar, CharID: Integer;
+
   SpecialCombine: Boolean;
-  Red, Blue, Purple, Teal, Yellow: Single;
+  Red, Blue, Purple, Teal, Yellow{, Orange}: Single;
 
   LemmingKinds: TLemmingKinds;
 begin
@@ -1185,6 +1224,7 @@ begin
   Purple :=  1 / 2;
   Teal   :=  1 / 6;
   Yellow := -1 / 6;
+  //Orange := -1 / 4;
 
   // Erase previous text there
   fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 16, 32, $00000000);
@@ -1198,7 +1238,7 @@ begin
       '0'..'9':    CharID := ord(New) - ord('0') + 1;
       '-':         CharID := 11;
       'A'..'Z':    CharID := ord(New) - ord('A') + 12;
-      #91 .. #104: CharID := ord(New) - ord('A') + 12;
+      #91 .. #105: CharID := ord(New) - ord('A') + 12;
     else CharID := -1;
     end;
 
@@ -1215,19 +1255,29 @@ begin
           SpecialCombine := True;
 
           if lkNormal in LemmingKinds then
-            fCombineHueShift := Yellow
+            fCombineHueShift := Teal
           else
-            fCombineHueShift := Teal;
+            fCombineHueShift := Blue;
         end else
           SpecialCombine := False;
       end else if (CurChar > LemmingSavedStartIndex) and (CurChar <= LemmingSavedStartIndex + 4) then
       begin
-        if Game.LemmingsSaved < Level.Info.RescueCount then
+        if CursorOverRescueCount then
         begin
           SpecialCombine := True;
-          fCombineHueShift := Red;
-        end else
-          SpecialCombine := False;
+          fCombineHueShift := Blue;
+        end else begin
+          if Game.LemmingsSaved <= 0 then
+          begin
+            SpecialCombine := True;
+            fCombineHueShift := Red;
+          end else if Game.LemmingsSaved < Level.Info.RescueCount then
+          begin
+            SpecialCombine := True;
+            fCombineHueShift := Yellow;
+          end else
+            SpecialCombine := False;
+        end;
       end else if Level.Info.HasTimeLimit and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := True;
@@ -1318,7 +1368,7 @@ begin
   fInfoFont[i].SetSize(280, 32);
   fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
 
-  fNewDrawStr[Pos] := #104;
+  fNewDrawStr[Pos] := #105;
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
@@ -1406,10 +1456,10 @@ begin
     S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
     if S = '' then
       S := StringOfChar(' ', LEN)
-    else if Game.LastHitCount = 0 then
+    else if (Game.GetCursorLemmingCount = 0) then
       S := PadR(S, LEN)
     else
-      S := PadR(S + ' ' + IntToStr(Game.LastHitCount), LEN);
+      S := PadR(S + ' ' + IntToStr(Game.GetCursorLemmingCount), LEN);
   end;
 
   ModString(fNewDrawStr, S, Pos);
@@ -1417,12 +1467,19 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemHatch(Pos: Integer);
 var
+  HatchLems: Integer;
   S: string;
 const
   LEN = 4;
 begin
-  Assert(Game.LemmingsToSpawn - Game.SpawnedDead >= 0, 'Negative number of lemmings in hatch displayed');
-  S := IntToStr(Game.LemmingsToSpawn - Game.SpawnedDead);
+  HatchLems := Game.LemmingsToSpawn - Game.SpawnedDead;
+
+  Assert(HatchLems >= 0, 'Negative number of lemmings in hatch displayed');
+
+  if (HatchLems >= 999) then
+    S := ' 999'
+  else
+    S := IntToStr(HatchLems);
 
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
@@ -1437,12 +1494,19 @@ var
 const
   LEN = 4;
 begin
-  LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
+  if GameParams.AmigaTheme then
+    LemNum := Game.LemmingsActive - Game.SpawnedDead
+  else
+    LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
 
   if not (Game.IsOutOfTime or Game.NukeIsActive) then
     Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
 
-  S := IntToStr(LemNum);
+  if (LemNum >= 999) then
+    S := ' 999'
+  else
+    S := IntToStr(LemNum);
+
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
 
@@ -1455,10 +1519,18 @@ var
 const
   LEN = 4;
 begin
-  S := IntToStr(Game.LemmingsSaved); // - Level.Info.RescueCount);
+  if CursorOverRescueCount then
+    S := IntToStr(Level.Info.RescueCount)
+  else
+    S := IntToStr(Game.LemmingsSaved);
 
-  if Length(S) < LEN then
-    S := PadL(PadR(S, LEN - 1), LEN);
+  if (Game.LemmingsSaved <= -99) then
+    S := ' -99'
+  else if (Game.LemmingsSaved >= 999) then
+    S := ' 999'
+  else if Length(S) < LEN then
+    S := PadL(PadR(S, LEN - 1), LEN)
+  else;
 
   ModString(fNewDrawStr, S, Pos);
 end;
@@ -1509,11 +1581,11 @@ begin
   if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if GameParams.PlaybackModeActive and not IsReplaying then
-    fNewDrawStr[Pos] := Chr(102 + FrameIndex) // Purple "P" (#102 and #103)
+    fNewDrawStr[Pos] := Chr(103 + FrameIndex) // Purple "P" (#103 and #104)
   else if Game.ReplayInsert and not IsClassicModeRewind then
-    fNewDrawStr[Pos] := Chr(100 + FrameIndex) // Blue "R" (#100 and #101)
+    fNewDrawStr[Pos] := Chr(101 + FrameIndex) // Blue "R" (#101 and #102)
   else if not (RRIsPressed or IsClassicModeRewind) then
-    fNewDrawStr[Pos] := Chr(98 + FrameIndex); // Red "R" (#98 and #99)
+    fNewDrawStr[Pos] := Chr(99 + FrameIndex); // Red "R" (#99 and #100)
 end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
@@ -1530,6 +1602,14 @@ end;
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
   if Level.Info.HasTimeLimit then
+    fNewDrawStr[Pos] := #98
+  else
+    fNewDrawStr[Pos] := #97;
+end;
+
+procedure TBaseSkillPanel.SetExitIcon(Pos: Integer);
+begin
+  if (Game.LemmingsSaved >= Level.Info.RescueCount) then
     fNewDrawStr[Pos] := #96
   else
     fNewDrawStr[Pos] := #95;
@@ -1568,9 +1648,8 @@ begin
   end;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
-    we do want the Rewind and Turbo keys to respond }
-  if fGameWindow.IsHyperSpeed and not ((fGameWindow.GameSpeed = gspRewind)
-                                    or (fGameWindow.GameSpeed = gspTurbo)) then Exit;
+    we do want the Rewind, FF and Turbo keys to respond }
+  if fGameWindow.IsHyperSpeed and not (fGameWindow.GameSpeed in [gspRewind, gspFF, gspTurbo]) then Exit;
 
   // Get pressed button
   aButton := spbNone;
@@ -1800,6 +1879,22 @@ begin
       spbSquiggle: ButtonHint := '';
       else         ButtonHint := Uppercase(SKILL_NAMES[aButton]);
     end;
+  end;
+end;
+
+function TBaseSkillPanel.CursorOverRescueCount: Boolean;
+var
+  CursorPos: TPoint;
+  P: TPoint;
+begin
+  Result := False;
+  CursorPos := Mouse.CursorPos;
+  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
+
+  if PtInRect(RescueCountRect, P) then
+  begin
+    Result := True;
+    Exit;
   end;
 end;
 

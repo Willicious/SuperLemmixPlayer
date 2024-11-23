@@ -80,7 +80,8 @@ Don't. Load the data into the actual class that's meant to use it, then re-save 
 interface
 
 uses
-  Contnrs, StrUtils, Classes, SysUtils;
+  Contnrs, StrUtils, Classes, SysUtils,
+  SharedGlobals;
 
 const
   INDENT_PER_SECTION = 2;

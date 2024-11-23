@@ -8,39 +8,7 @@ const
   MINIMUM_SI = 4;
   MAXIMUM_SI = 102;
 
-(*
-  { TODO : find good settings }
-    we cannot get a nice minimapscale 1/16 so instead we chose the following:
-
-    image width of game                 = 1584
-    imagewidth of minimap               = 104
-    width of white rectangle in minimap = 25
-
-
-
-
-
-//  GAME_BMPWIDTH = 1664; // This is too far I think, but now it fits with the minimap!
-
-  { the original dos lemmings show pixels 0 through 1583 (so including pixel 1583)
-    so the imagewidth should be 1584, which means 80 pixels less then 1664
-
-
-  MiniMapBounds: TRect = (
-    Left: 208;   // Width =about 100
-    Top: 18;
-    Right: 311;  // Height =about 20
-    Bottom: 37
-  );
-  *)
-
-
-
-
-
   clMask32  = $00FF00FF; // Color used for "shape-only" masks
-
-{•}
 
 type
   TBasicLemmingAction = (   // Needs to match TBasicLemmingAction in LemStrings

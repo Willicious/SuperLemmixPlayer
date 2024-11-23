@@ -15,7 +15,7 @@ interface
 
 uses
   System.Types, Generics.Collections,
-  SharedGlobals, PngInterface,
+  PngInterface,
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
   Controls, StrUtils, UMisc,
   GR32, GR32_OrdinalMaps,
@@ -27,7 +27,8 @@ uses
   LemReplay,
   LemTalisman,
   LemGameMessageQueue,
-  GameControl, GameSound;
+  GameControl, GameSound,
+  SharedGlobals;
 
 const
   ParticleColorIndices: array[0..15] of Byte =
@@ -464,7 +465,6 @@ type
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
     fActiveSkills              : array[0..MAX_SKILL_TYPES_PER_LEVEL-1] of TSkillPanelButton;
-    LastHitCount               : Integer;
     SpawnIntervalModifier      : Integer; // Negative = decrease each update, positive = increase each update, 0 = no change
     fSpawnIntervalChanged      : Boolean; // Set to true in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
@@ -509,6 +509,8 @@ type
     function CheckFinishedTest: Boolean;
     function GetHighlitLemming: TLemming;
     function GetTargetLemming: TLemming;
+    function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
+    function GetCursorLemmingCount: Integer;
     procedure CheckForNewShadow(aForceRedraw: Boolean = false);
     function SpawnIntervalChanged: Boolean;
     procedure PlayAssignFailSound(PlayForHighlit: Boolean = False);
@@ -651,7 +653,7 @@ const
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
              baBallooning, baLaddering//, baBatting, baPropelling // Batter // Propeller
-             );                       // Bookmark - Double-check these skills are in the correct place after adding them
+             );                       // Double-check these skills are in the correct place after adding them
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -930,17 +932,19 @@ var
     Result := true;
   end;
 begin
-  if not fReplayManager.IsThisUsersReplay then
-    Exit;
-
   for i := 0 to Level.Talismans.Count-1 do
   begin
     if CheckTalisman(Level.Talismans[i]) then
     begin
       fTalismanReceived := true;
-      if not GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then
-        fNewTalismanReceived := true;
-      GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
+
+      if fReplayManager.IsThisUsersReplay then
+      begin
+        if not GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then
+          fNewTalismanReceived := true;
+
+        GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
+      end;
     end;
   end;
 end;
@@ -1244,8 +1248,8 @@ end;
 
 procedure TLemmingGame.PlayAssignFailSound(PlayForHighlit: Boolean = False);
 var
-SelectedLemming: TLemming;
-HighlitLemming: TLemming;
+  SelectedLemming: TLemming;
+  HighlitLemming: TLemming;
 begin
   SelectedLemming := fRenderInterface.SelectedLemming;
   HighlitLemming := GetHighlitLemming;
@@ -1656,7 +1660,7 @@ var
   Gadget, Gadget2: TGadget;
 begin
   Gadget := Gadgets[GadgetID];
-  Assert(Gadget.ReceiverId <> 65535, 'Teleporter used without receiver'); // Bookmark - change this to use -1 instead?
+  Assert(Gadget.ReceiverId <> 65535, 'Teleporter used without receiver');
   Gadget2 := Gadgets[Gadget.ReceiverId];
 
   if Gadget.IsFlipPhysics then TurnAround(L);
@@ -1820,6 +1824,7 @@ begin
     end;
     L.LemTrueFallen := L.LemFallen;
   end;
+
                      // N.B. baReaching here allows Climber to enter Reacher state
   if ((NewAction in [baReaching, baShimmying, baJumping]) and (L.LemAction = baClimbing)) or
      ((NewAction = baJumping) and (L.LemAction = baSliding)) then
@@ -1833,44 +1838,43 @@ begin
         Inc(L.LemY);
   end;
 
-  if (NewAction = baShimmying) and (L.LemAction = baTurning) then
+  if (NewAction = baShimmying) then
   begin
-    Inc(L.LemY);
-  end;
+    case L.LemAction of
+      baTurning: Inc(L.LemY);
 
-  if (NewAction = baShimmying) and (L.LemAction = baSliding) then
-  begin
-    Inc(L.LemY, 2);
-    if HasPixelAt(L.LemX, L.LemY - 8) then
-      Inc(L.LemY);
-  end;
+      baSliding: begin
+                   Inc(L.LemY, 2);
 
-  if (NewAction = baShimmying) and (L.LemAction = baDehoisting) then
-  begin
-    Inc(L.LemY, 2);
-    if HasPixelAt(L.LemX, L.LemY - 9 + 1) then
-      Inc(L.LemY);
-  end;
+                   if HasPixelAt(L.LemX, L.LemY - 8) then
+                     Inc(L.LemY);
+                 end;
 
-  if (NewAction = baShimmying) and (L.LemAction = baDangling) then
-  begin
-    // Adjust starting position of Shimmier according to Dangler position
-    if L.LemPhysicsFrame = 0 then
-      Inc(L.LemY)
-    else if L.LemPhysicsFrame = 2 then
-      Dec(L.LemY)
-    else if L.LemPhysicsFrame >= 3 then
-      Dec(L.LemY, 2);
-  end;
+      baDehoisting: begin
+                      Inc(L.LemY, 2);
+                      if HasPixelAt(L.LemX, L.LemY - 9 + 1) then
+                        Inc(L.LemY);
+                    end;
 
-  if (NewAction = baShimmying) and (L.LemAction = baJumping) then
-  begin
-    for i := -1 to 3 do
-      if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
-      begin
-        L.LemY := L.LemY - i;
-        Break;
-      end;
+      baDangling: begin
+                    // Adjust starting position of Shimmier according to Dangler position
+                    if L.LemPhysicsFrame = 0 then
+                      Inc(L.LemY)
+                    else if L.LemPhysicsFrame = 2 then
+                      Dec(L.LemY)
+                    else if L.LemPhysicsFrame >= 3 then
+                      Dec(L.LemY, 2);
+                  end;
+
+      baJumping: begin
+                   for i := -1 to 3 do
+                   if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
+                   begin
+                     L.LemY := L.LemY - i;
+                     Break;
+                   end;
+                 end;
+    end;
   end;
 
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
@@ -2011,6 +2015,13 @@ function TLemmingGame.UpdateExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
 
+  // Sleepers cancel explosion timer because lem would have exited
+  if (L.LemAction = baSleeping) then
+  begin
+    L.LemExplosionTimer := 0;
+    Exit;
+  end;
+
   Dec(L.LemExplosionTimer);
 
   DoExplosionCrater := True;
@@ -2096,16 +2107,13 @@ end;
 function TLemmingGame.StateIsUnplayable: Boolean;
 begin
   // Always wait for animations to finish
-  Result := (((DelayEndFrames = 0) and (fParticleFinishTimer = 0))
-
-  // Unless time is up
-  or IsOutOfTime)
+  Result := (((DelayEndFrames = 0) and (fParticleFinishTimer = 0)))
 
   // Plus, other conditions...
   and (
 
   // Ends level if no lemmings remain
-  ((LemmingsOut = 0) and
+  ((LemmingsOut <= 0) and
     {Prevents level ending immediately if there are no pre-placed lems
      and allows nuke whilst there are still lems to spawn}
     (NukeIsActive or (LemmingsToSpawn = 0)) and not
@@ -2567,6 +2575,35 @@ begin
   end;
 end;
 
+function TLemmingGame.LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
+  var
+    X, Y: Integer;
+  begin
+    X := L.LemX - ((L.LemDX + 16) div 2);
+    Y := L.LemY - 10;
+    Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
+  end;
+
+function TLemmingGame.GetCursorLemmingCount: Integer;
+var
+  L: TLemming;
+  i: Integer;
+  MousePos: TPoint;
+begin
+  Result := 0;
+
+  // Initialize MousePos as Game's CursorPos property
+  MousePos := CursorPoint;
+
+  for i := 0 to (LemmingList.Count - 1) do
+  begin
+    L := LemmingList.List[i];  // Retrieve the lemming from the list
+
+    if LemIsInCursor(L, MousePos) and not (L.LemRemoved or L.LemTeleporting) then
+      Inc(Result);
+  end;
+end;
+
 function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
                                           NewSkillOrig: TBasicLemmingAction;
                                           MousePos: TPoint;
@@ -2587,16 +2624,6 @@ var
   LemIsInBox: Boolean;
   NumLemInCursor: Integer;
   NewSkill: TBasicLemmingAction;
-
-  function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
-  var
-    X, Y: Integer;
-  begin
-    X := L.LemX - ((L.LemDX + 16) div 2);
-    Y := L.LemY - 10;
-    Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
-  end;
-
 
   function GetLemDistance(L: TLemming; MousePos: TPoint): Integer;
   begin
@@ -2623,7 +2650,6 @@ var
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
   end;
-
 begin
   PriorityLem := nil;
 
@@ -3227,12 +3253,6 @@ begin
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trCollectible) then
       HandleCollectible(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Fire
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire)
-    // Don't even call HandleFire if lem is invincible
-    and not L.LemIsInvincible then
-      AbortChecks := HandleFire(L);
-
     // Radiation
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
       HandleRadiation(L, CheckPos[0, i], CheckPos[1, i]);
@@ -3240,6 +3260,18 @@ begin
     // Slowfreeze
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
       HandleSlowfreeze(L, CheckPos[0, i], CheckPos[1, i]);
+
+    { The following objects all involve aborting position checks as they potentially remove the lemming }
+
+    // Exits - priority over all other objects
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
+      AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
+
+    // Fire
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire)
+    // Don't even call HandleFire if lem is invincible
+    and not L.LemIsInvincible then
+      AbortChecks := HandleFire(L);
 
     // Water objects - Check only for fatalities here!
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
@@ -3265,10 +3297,6 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) and not IsPostTeleportCheck then
       AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Exits
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
-      AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
-
     // Splitter (except for blockers / jumpers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
                          and not (L.LemAction = baBlocking)
@@ -3279,9 +3307,9 @@ begin
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
     end;
 
-    // Triggered animations and one-shot animations
+    // Triggered / one-shot animations - these don't abort checks, but do potentially halt movement for the duration of the animation
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnim) then
-      HandleAnimation(L, CheckPos[0, i], CheckPos[1, i]); // HandleAnimation will never activate AbortChecks
+      HandleAnimation(L, CheckPos[0, i], CheckPos[1, i]);
 
     // If the lem was required stop, move him there!
     if AbortChecks then
@@ -3293,11 +3321,13 @@ begin
     // Set L.LemInSplitter correctly
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
-      L.LemInSplitter := DOM_NOOBJECT;
+      L.LemInSplitter := DOM_NOOBJECT;                          // Bookmark - why is this commented out?
   until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY) (*or AbortChecks*);
 
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
+
+  { end of AbortChecks }
 
   // Check for water object to transition to swimmer/drifter only at final position
   if HasTriggerAt(L.LemX, L.LemY, trWater) then
@@ -4660,18 +4690,26 @@ begin
         Transition(L, baWalking);
 
     // Ballooners bob around at the top...
-    if (L.LemAction = baBallooning) and (L.LemY < 30) then
+    if (L.LemAction = baBallooning) and (L.LemY < 30) and not (L.LemPhysicsFrame <= 8) then
     begin
       // ...Unless they find terrain at their foot position, in which case they ascend...
       if HasPixelAt(L.LemX, L.LemY) then
       begin
         Dec(L.LemY);
 
-          // ...Until they can walk onto it
-          if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
-            PopBalloon(L, 1, baWalking);
-      end else
-        Inc(L.LemY, 3);
+        // ...Until they can walk onto it
+        if (HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY -1)) then
+          PopBalloon(L, 1, baWalking);
+      end else begin
+        var BalloonerNudgeDistance := 3;
+
+        // Prevents clipping into terrain
+        if      HasPixelAt(L.LemX, L.LemY + 1) then BalloonerNudgeDistance := 0
+        else if HasPixelAt(L.LemX, L.LemY + 2) then BalloonerNudgeDistance := 1
+        else if HasPixelAt(L.LemX, L.LemY + 3) then BalloonerNudgeDistance := 2;
+
+        Inc(L.LemY, BalloonerNudgeDistance);
+      end;
     end;
   end;
 
@@ -5519,6 +5557,11 @@ begin
   begin
     CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
   end
+  else if L.LemPhysicsFrame = 1 then
+  begin                                    // Relax this check for first brick
+    if HasPixelAt(L.LemX, L.LemY - 1) and (L.LemNumberOfBricksLeft < 12) then
+      Transition(L, baWalking, True)  // Turn around as well
+  end
   else if L.LemPhysicsFrame = 0 then
   begin
     Dec(L.LemNumberOfBricksLeft);
@@ -5526,29 +5569,20 @@ begin
     if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) then
       Transition(L, baWalking, True)  // Turn around as well
 
-    else if (     HasPixelAt(L.LemX + L.LemDx, L.LemY - 3)
-              or  HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 2)
-              or (HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 10) and (L.LemNumberOfBricksLeft > 0))
-            ) then
+    else if (HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 10) and (L.LemNumberOfBricksLeft > 0)) then
     begin
       Dec(L.LemY);
       Inc(L.LemX, L.LemDx);
       Transition(L, baWalking, True)  // Turn around as well
-    end
 
-    else
-    begin
+    end else begin
       if not L.LemConstructivePositionFreeze then
       begin
         Dec(L.LemY);
         Inc(L.LemX, 2*L.LemDx);
       end;
 
-      if (     HasPixelAt(L.LemX, L.LemY - 2)
-           or  HasPixelAt(L.LemX, L.LemY - 3)
-           or  HasPixelAt(L.LemX + L.LemDx, L.LemY - 3)
-           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
-         ) then
+      if (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0)) then
          Transition(L, baWalking, True)  // Turn around as well
 
       else if L.LemNumberOfBricksLeft = 0 then
@@ -5987,11 +6021,11 @@ begin
       begin
         DoFencerContinueTests(L, SteelContinue, MoveUpContinue);
 
-        if not ContinueWork then
-          ContinueWork := SteelContinue;
-
         if ContinueWork and not L.LemIsStartingAction then
           ContinueWork := MoveUpContinue;
+
+        if not ContinueWork then
+          ContinueWork := SteelContinue;
       end;
 
     if not ContinueWork then
@@ -6040,11 +6074,8 @@ begin
 
     else if LemDy = 0 then
     begin
-      // Move no, one or two pixels down, if there no steel
-      if FencerIndestructibleCheck(L.LemX, L.LemY + LemDy, L.LemDx) then
-        FencerTurn(L, HasSteelAt(L.LemX, L.LemY + LemDy - 4))
-      else
-        Inc(L.LemY, LemDy);
+      if FencerIndestructibleCheck(L.LemX, L.LemY, L.LemDx) then
+        FencerTurn(L, HasSteelAt(L.LemX, L.LemY - 4))
     end
 
     else if (LemDy = -1) or (LemDy = -2) then
@@ -6085,40 +6116,37 @@ function TLemmingGame.HandleReaching(L: TLemming): Boolean;
 const
   MovementList: array[0..7] of Byte = (0, 3, 2, 2, 1, 1, 1, 0);
 var
-  emptyPixels: Integer;
+  MinimumReachDistance: Integer;
+  CannotAscendOrShimmy: Boolean;
+
 begin
   Result := True;
-  if HasPixelAt(L.LemX, L.LemY - 10) then
-    emptyPixels := 0
-  else if HasPixelAt(L.LemX, L.LemY - 11) then
-    emptyPixels := 1
-  else if HasPixelAt(L.LemX, L.LemY - 12) then
-    emptyPixels := 2
-  else if HasPixelAt(L.LemX, L.LemY - 13) then
-    emptyPixels := 3
-  else
-    emptyPixels := 4;
+  CannotAscendOrShimmy := HasPixelAt(L.LemX, L.LemY - 9) and HasPixelAt(L.LemX, L.LemY - 10);
 
-  // Check for terrain in the body to trigger falling down
-  if HasPixelAt(L.LemX, L.LemY - 5) or HasPixelAt(L.LemX, L.LemY - 6)
-    or HasPixelAt(L.LemX, L.LemY - 7) or HasPixelAt(L.LemX, L.LemY - 8) then
+  if HasPixelAt(L.LemX, L.LemY - 10) then
+    MinimumReachDistance := 1
+  else if HasPixelAt(L.LemX, L.LemY - 11) then
+    MinimumReachDistance := 2
+  else if HasPixelAt(L.LemX, L.LemY - 12) then
+    MinimumReachDistance := 3
+  else if HasPixelAt(L.LemX, L.LemY - 13) then
+    MinimumReachDistance := 4
+  else
+    MinimumReachDistance := 5;
+
+  // On the first frame, check if both ascent and shimmy are blocked by terrain
+  if (L.LemPhysicsFrame = 1) and CannotAscendOrShimmy then
   begin
     Transition(L, baFalling)
   end
-  // On the first frame, check as well for height 9, as the shimmier may not continue in that case
-  else if (L.LemPhysicsFrame = 1) and HasPixelAt(L.LemX, L.LemY - 9) then
+  // Check whether we can reach the ceiling for shimmying
+  else if MinimumReachDistance <= MovementList[L.LemPhysicsFrame] then
   begin
-    Transition(L, baFalling)
-  end
-  // Check whether we can reach the ceiling
-  else if emptyPixels <= MovementList[L.LemPhysicsFrame] then
-  begin
-    Dec(L.LemY, emptyPixels + 1); // Shimmiers are a lot smaller than reachers
+    Dec(L.LemY, MinimumReachDistance);
     Transition(L, baShimmying);
   end
-  // Move upwards
-  else
-  begin
+  // Move upwards and fall when height limit is reached (determined by frame)
+  else begin
     Dec(L.LemY, MovementList[L.LemPhysicsFrame]);
     if L.LemPhysicsFrame = 7 then
       Transition(L, baFalling);
@@ -6222,7 +6250,7 @@ end;
 
 function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 var
-JumperArcFrames: Integer;
+  JumperArcFrames: Integer;
 
   procedure HandleJumperWallBounce;
   begin
@@ -6252,17 +6280,27 @@ JumperArcFrames: Integer;
       HandleForceField(L, 1);
   end;
 
+  function ShouldContinueJumping: Boolean;
+  var
+    IgnoreX: Integer;
+  begin
+    Result := False;
+
+    if L.LemDX = 1 then
+      IgnoreX := -1
+    else
+      IgnoreX := 1;
+
+    // Ignore pixels below head height unless approached from the side
+    if HasPixelAt(L.LemX + IgnoreX, L.LemY) then
+      Result := True;
+  end;
+
   function MakeJumpMovement: Boolean;
   var
     Pattern: TJumpPattern;
     PatternIndex: Integer;
-
-    FirstStepSpecialHandling: Boolean;
-
-    i: Integer;
-    n: Integer;
-
-    CheckX: Integer;
+    i, n, CheckX: Integer;
   begin
     Result := false;
 
@@ -6281,59 +6319,68 @@ JumperArcFrames: Integer;
 
     FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
 
-    FirstStepSpecialHandling := (L.LemJumpProgress = 0);
-
     for i := 0 to 5 do
     begin
       L.LemJumpPositions[i, 0] := L.LemX;
       L.LemJumpPositions[i, 1] := L.LemY;
 
-      if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then Break;
+      if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then
+        Break;
 
       if (Pattern[i][0] <> 0) then // Wall check
       begin
         CheckX := L.LemX + L.LemDX;
-        if HasPixelAt(CheckX, L.LemY) or (HasTriggerAt(CheckX, L.LemY, trWater) and L.LemIsSwimmer)
-                                      or (HasWaterObjectAt(CheckX, L.LemY) and L.LemIsInvincible) then
+
+        if not ShouldContinueJumping then
         begin
-          for n := 1 to 8 do
+          if HasPixelAt(CheckX, L.LemY) or (HasTriggerAt(CheckX, L.LemY, trWater) and L.LemIsSwimmer)
+                                        or (HasWaterObjectAt(CheckX, L.LemY) and L.LemIsInvincible) then
           begin
-            if not HasPixelAt(CheckX, L.LemY - n) then
+            for n := 1 to 8 do
             begin
-              if n <= 2 then
+              if not HasPixelAt(CheckX, L.LemY - n) then
               begin
-                L.LemX := CheckX;
-                L.LemY := L.LemY - n + 1;
-                fLemNextAction := baWalking;
-              end else if n <= 5 then begin
-                L.LemX := CheckX;
-                L.LemY := L.LemY - n + 5;
-                fLemNextAction := baHoisting;
-                fLemJumpToHoistAdvance := true;
-              end else begin
-                L.LemX := CheckX;
-                L.LemY := L.LemY - n + 8;
-                fLemNextAction := baHoisting;
-              end;
-
-              Exit;
-            end;
-
-            if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
-            begin
-              if L.LemIsClimber then
-              begin
-                L.LemX := CheckX;
-                fLemNextAction := baClimbing;
-              end else begin
-                if L.LemIsSlider then
+                if n <= 2 then
                 begin
-                  Inc(L.LemX, L.LemDX);
-                  fLemNextAction := baSliding;
-                end else
-                  HandleJumperWallBounce;
+                  L.LemX := CheckX;
+                  L.LemY := L.LemY - n + 1;
+                  fLemNextAction := baWalking;
+                end else if n <= 5 then begin
+                  L.LemX := CheckX;
+                  L.LemY := L.LemY - n + 5;
+
+                  if not ShouldContinueJumping then
+                  begin
+                    fLemNextAction := baHoisting;
+                    fLemJumpToHoistAdvance := true;
+                  end;
+                end else begin
+                  L.LemX := CheckX;
+                  L.LemY := L.LemY - n + 8;
+
+                  if not ShouldContinueJumping then
+                    fLemNextAction := baHoisting;
+                end;
+
+                Exit;
               end;
-              Exit;
+
+              if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
+              begin
+                if L.LemIsClimber then
+                begin
+                  L.LemX := CheckX;
+                  fLemNextAction := baClimbing;
+                end else begin
+                  if L.LemIsSlider then
+                  begin
+                    Inc(L.LemX, L.LemDX);
+                    fLemNextAction := baSliding;
+                  end else
+                    HandleJumperWallBounce;
+                end;
+                Exit;
+              end;
             end;
           end;
         end;
@@ -6341,16 +6388,10 @@ JumperArcFrames: Integer;
 
       if (Pattern[i][1] < 0) then // Head check
       begin
-        for n := 1 to 9 do
+        if HasPixelAt(L.LemX, L.LemY - 10) then
         begin
-          if (n = 1) and FirstStepSpecialHandling then
-            Continue;
-        
-          if HasPixelAt(L.LemX, L.LemY - n) then
-          begin
-            fLemNextAction := baFalling;
-            Exit;
-          end;
+          fLemNextAction := baFalling;
+          Exit;
         end;
       end;
 
@@ -6359,16 +6400,18 @@ JumperArcFrames: Integer;
 
       DoJumperTriggerChecks;
 
-      if FirstStepSpecialHandling then
-        FirstStepSpecialHandling := false
-      else if HasPixelAt(L.LemX, L.LemY) then // Foot check
+      if HasPixelAt(L.LemX, L.LemY) then // Foot check
       begin
-        fLemNextAction := baWalking;
-        Exit;
+        // Ignore pixels below original head height
+        if (L.LemJumpProgress > 2) then
+        begin
+          fLemNextAction := baWalking;
+          Exit;
+        end;
       end;
     end;
 
-    Result := true;
+    Result := True;
   end;
 begin
   if MakeJumpMovement then
@@ -6381,7 +6424,7 @@ begin
       fLemNextAction := baWalking;
   end;
 
-  Result := true;
+  Result := True;
 end;
 
 function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
@@ -6524,6 +6567,7 @@ var
   function IsFallFatal: Boolean;
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
+          and (not HasTriggerAt(L.LemX, L.LemY, trExit))
           and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
@@ -6627,7 +6671,13 @@ begin
       YChecks := FindGroundPixel(L.LemX - (XOffset * L.LemDX), L.LemY);
 
       if (YChecks < -9) then
-        Inc(L.LemX, L.LemDX);
+      begin
+        // Prevent clipping into opposite terrain
+        if not HasPixelAt(L.LemX + L.LemDX, L.LemY -1) then
+          Inc(L.LemX, L.LemDX)
+        else if not HasPixelAt(L.LemX, L.LemY -1) then
+          Dec(L.LemY, 1);
+      end;
     end;
 
   end else begin // Flight checks
@@ -6931,7 +6981,7 @@ end;
 //begin
 //  if L.LemPhysicsFrame = 4 then
 //  begin
-//     if not IsSimulating then // Bookmark - is this needed? We will never simulate Batters
+//     if not IsSimulating then // Is this needed? We will never simulate Batters
 //     begin
 //       NewProjectile := TProjectile.CreateBat(PhysicsMap, L);
 //
@@ -7205,8 +7255,12 @@ begin
 
   if L.LemEndOfAnimation then
   begin
-    if HasPixelAt(L.LemX, L.LemY) then Transition(L, baWalking)
-    else Transition(L, baFalling);
+    if HasPixelAt(L.LemX, L.LemY - 1) then
+      Transition(L, baAscending)
+    else if HasPixelAt(L.LemX, L.LemY) then
+      Transition(L, baWalking)
+    else
+      Transition(L, baFalling);
   end;
 end;
 
@@ -7551,7 +7605,6 @@ end;
 
 procedure TLemmingGame.HitTest(Autofail: Boolean = false);
 var
-  HitCount: Integer;
   L, OldLemSelected: TLemming;
 begin
   if Autofail then fHitTestAutoFail := true;
@@ -7562,15 +7615,13 @@ begin
   CheckForNewShadow;
 
   // Get new priority lemming including lems that cannot receive the skill
-  HitCount := GetPriorityLemming(L, baNone, CursorPoint);
+  GetPriorityLemming(L, baNone, CursorPoint);
 
   if L <> OldLemSelected then
   begin
     fLemSelected := L;
     fRenderInterface.SelectedLemming := L;
   end;
-
-  LastHitCount := HitCount;
 end;
 
 function TLemmingGame.ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
@@ -8211,8 +8262,9 @@ begin
          and (LemAction <> baExiting)
          and not (CurrentLemming.LemIsZombie or CurrentLemming.LemIsInvincible)
          // Freezers are protected from zombies
-         and not (LemAction in [baFreezing, baFreezerExplosion, baFrozen]) then
-        RemoveLemming(CurrentLemming, RM_ZOMBIE);
+         and not (LemAction in [baFreezing, baFreezerExplosion, baFrozen])
+         and not CurrentLemming.LemTeleporting then
+           RemoveLemming(CurrentLemming, RM_ZOMBIE);
     end;
   end;
 end;
@@ -8403,6 +8455,7 @@ begin
     gCheated            := fGameCheated;
     gSuccess            := (gRescued >= gToRescue) or gCheated;
     gTimeIsUp           := IsOutOfTime;
+    gLastIteration      := fCurrentIteration;
 
     if fGameCheated then
     begin

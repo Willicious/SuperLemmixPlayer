@@ -7,7 +7,8 @@ uses
   LemTypes, LemStrings,
   Dialogs, Controls, Forms,
   GR32,
-  Classes, SysUtils;
+  Classes, SysUtils,
+  SharedGlobals;
 
 const
   MENU_FONT_COUNT = ord(#126) - ord('!') + 1;
