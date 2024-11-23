@@ -180,13 +180,14 @@ resourcestring
   STalismanUnlocked = 'You unlocked a new talisman!';
   STalismanAchieved = 'You achieved a talisman!';
 
-  SYouRescued = 'You rescued ';
   SYouNeeded =  'You needed  ';
+  SYouRescued = 'You rescued ';
   SYourRecord = 'Your record ';
 
-  SYourTime =       'Your time taken is  ';
-  SYourTimeRecord = 'Your record time is ';
-  SYourFewestSkills = 'Your fewest total skills is ';
+  SYourTime =       'Save requirement time ';
+  SYourTotalTime =  'Total in-game time ';
+  SYourTimeRecord = 'Your SR time record   ';
+  SYourFewestSkills = 'Your fewest total skills record ';
 
   SOptionNextLevel = 'Next level';
   SOptionRetryLevel = 'Retry level';

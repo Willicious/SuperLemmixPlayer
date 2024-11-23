@@ -382,8 +382,7 @@ var
   Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
   WhichText: TPostviewText;
-  STarget: string;
-  SDone: string;
+  STarget, SDone, STimePadding: string;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -410,7 +409,7 @@ begin
   Results := GameParams.GameResult;
   Entry := GameParams.CurrentLevel;
   FillChar(HueShift, SizeOf(TColorDiff), 0);
-  SetLength(Result, 9);
+  SetLength(Result, 10);
   LoadPostviewTextColours;
 
   STarget := IntToStr(Results.gToRescue);
@@ -453,6 +452,7 @@ begin
 
   // Top text
   HueShift.HShift := TopTextShift;
+
   if (Results.gGotNewTalisman or Results.gGotTalisman) and GlobalGame.ReplayManager.IsThisUsersReplay then
   begin
     if Results.gGotNewTalisman then
@@ -466,14 +466,14 @@ begin
   Result[0].ColorShift := HueShift;
   Result[0].yPos := 0 + LINE_Y_SPACING;
 
-  // Rescue result rescued
+  // Rescue result needed
   HueShift.HShift := RescueRecordShift;
-  Result[1].Line := SYouRescued + SDone;
+  Result[1].Line := SYouNeeded + STarget;
   Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
   Result[1].ColorShift := HueShift;
 
-  // Rescue result needed
-  Result[2].Line := SYouNeeded + STarget;
+  // Rescue result rescued
+  Result[2].Line := SYouRescued + SDone;
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   Result[2].ColorShift := HueShift;
 
@@ -503,34 +503,43 @@ begin
   Result[4].ColorShift := HueShift;
   Result[5].ColorShift := HueShift;
 
-  // Time taken
+  // Time taken to reach SR
   HueShift.HShift := TimeRecordShift;
+  STimePadding := '';
+
   if (Results.gSuccess and not (Results.gToRescue <= 0))
   or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
-    Result[6].Line := SYourTime + MakeTimeString(Results.gLastRescueIteration)
-  else
+  begin
+    Result[6].Line := SYourTime + MakeTimeString(Results.gLastRescueIteration);
+    STimePadding := '   ';
+  end else
     Result[6].Line := '';
   Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
   Result[6].ColorShift := HueShift;
 
+  // Always show total time taken
+  Result[7].Line := SYourTotalTime + STimePadding + MakeTimeString(Results.gLastIteration);
+  Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
+  Result[7].ColorShift := HueShift;
+
   // Time record
   if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
   and (not Results.gToRescue <= 0) then
-    Result[7].Line := SYourTimeRecord + MakeTimeString(Entry.UserRecords.TimeTaken.Value)
+    Result[8].Line := SYourTimeRecord + MakeTimeString(Entry.UserRecords.TimeTaken.Value)
   else
-    Result[7].Line := '';
-  Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
-  Result[7].ColorShift := HueShift;
+    Result[8].Line := '';
+  Result[8].yPos := Result[7].yPos + LINE_Y_SPACING;
+  Result[8].ColorShift := HueShift;
 
   // Skills record
   HueShift.HShift := SkillsRecordShift;
   if Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0)
   and (not Results.gToRescue <= 0) then
-    Result[8].Line := SYourFewestSkills + IntToStr(Entry.UserRecords.TotalSkills.Value)
+    Result[9].Line := SYourFewestSkills + IntToStr(Entry.UserRecords.TotalSkills.Value)
   else
-    Result[8].Line := '';
-  Result[8].yPos := Result[7].yPos + (LINE_Y_SPACING * 2);
-  Result[8].ColorShift := HueShift;
+    Result[9].Line := '';
+  Result[9].yPos := Result[8].yPos + (LINE_Y_SPACING * 2);
+  Result[9].ColorShift := HueShift;
 end;
 
 procedure TGamePostviewScreen.LoadPostviewTextColours;

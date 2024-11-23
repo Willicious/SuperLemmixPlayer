@@ -34,6 +34,7 @@ type
     gToRescue           : Integer; // Save requirement
     gRescued            : Integer; // Number of lems rescued
     gTimeIsUp           : Boolean; // Time up status
+    gLastIteration      : Integer; // Final frame
     gLastRescueIteration: Integer; // Final rescue frame
     gGotTalisman        : Boolean; // Talisman achieved
     gGotNewTalisman     : Boolean; // New talisman achieved

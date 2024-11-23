@@ -8455,6 +8455,7 @@ begin
     gCheated            := fGameCheated;
     gSuccess            := (gRescued >= gToRescue) or gCheated;
     gTimeIsUp           := IsOutOfTime;
+    gLastIteration      := fCurrentIteration;
 
     if fGameCheated then
     begin
