@@ -129,7 +129,7 @@ object FLevelSelect: TFLevelSelect
     Font.Name = 'Segoe UI'
     Font.Style = []
     Images = ilStatuses
-    Indent = 19
+    Indent = 16
     MultiSelectStyle = []
     ParentFont = False
     ReadOnly = True
@@ -257,5 +257,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnShowHideOptionsClick
   end
   object ilStatuses: TImageList
+    AllocBy = 8
+    Height = 24
+    Width = 24
   end
 end
