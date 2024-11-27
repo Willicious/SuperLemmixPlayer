@@ -5,7 +5,7 @@ unit SharedGlobals;
 interface
 
 uses
-  {$ifdef logging}Dialogs,{$endif} Classes, SysUtils, Windows;
+  Dialogs, Forms, Classes, SysUtils, Windows;
 
 {$ifdef logging}
 var
@@ -21,7 +21,18 @@ var
   procedure Output(aString: String; i: Integer) overload;
   procedure Output(aString: String; aBool: Boolean) overload;
 
+  procedure CustomAssert(Condition: Boolean; const aMessage: string);
+
 implementation
+
+procedure CustomAssert(Condition: Boolean; const aMessage: string);
+begin
+  if not Condition then
+  begin
+    ShowMessage(aMessage + sLineBreak + sLineBreak + 'The program will now close');
+    Application.Terminate;
+  end;
+end;
 
 procedure Output(aString: String);
 begin
