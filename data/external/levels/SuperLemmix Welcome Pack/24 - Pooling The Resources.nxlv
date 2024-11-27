@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Pooling The Resources
  AUTHOR WillLem
  ID x0D05EC381BEFC6FB
- VERSION x000000000000001C
+ VERSION x000000000000001D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -54,7 +54,7 @@
  $GADGET
    STYLE willlem_lemminas_slushworld
    PIECE exit
-   X 362
+   X 330
    Y 119
    NO_OVERWRITE
  $END
@@ -326,14 +326,6 @@
    PIECE bridge_01
    X 441
    Y 79
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE willlem_lemminas_slushworld
-   PIECE icebricks_01
-   X 252
-   Y 151
    ONE_WAY
  $END
  
