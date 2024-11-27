@@ -198,8 +198,10 @@ procedure TSoundManager.ObtainMusicBassChannel;
 begin
   if not fIsBassLoaded then Exit;
 
-  Assert(fMusicChannel = $FFFFFFFF, 'TSoundManager.ObtainMusicBassChannel: A channel already exists!');
+  CustomAssert(fMusicChannel = $FFFFFFFF, 'TSoundManager.ObtainMusicBassChannel: A channel already exists!');
+
   fMusicChannel := BASS_StreamCreateFile(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP);
+
   if fMusicChannel = 0 then // This means we have a module-based file
   begin
     fMusicChannel := BASS_MusicLoad(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP, 0);

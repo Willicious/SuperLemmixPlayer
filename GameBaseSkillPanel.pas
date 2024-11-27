@@ -351,7 +351,7 @@ begin
   fLastDrawnStr := StringOfChar(' ', DrawStringLength);
   fNewDrawStr := DrawStringTemplate;
 
-  Assert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
+  CustomAssert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
 
   if GameParams.AmigaTheme then
     fMinimapViewRectColor := $FF00DD00
@@ -791,7 +791,7 @@ begin
 
   // Get array of buttons to draw
   ButtonList := GetButtonList;
-  Assert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
+  CustomAssert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
 
   // Draw empty panel
   DrawBlankPanel(Length(ButtonList));
@@ -927,7 +927,7 @@ begin
     fButtonRects[Button] := Rect(-1, -1, 0, 0);
 
   ButtonList := GetButtonList;
-  Assert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
+  CustomAssert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
 
   // Set only rectangles for non-skill buttons
   // The skill buttons are dealt with in SetSkillIcons
@@ -1474,7 +1474,7 @@ const
 begin
   HatchLems := Game.LemmingsToSpawn - Game.SpawnedDead;
 
-  Assert(HatchLems >= 0, 'Negative number of lemmings in hatch displayed');
+  CustomAssert(HatchLems >= 0, 'Negative number of lemmings in hatch displayed');
 
   if (HatchLems >= 999) then
     S := ' 999'
@@ -1500,7 +1500,7 @@ begin
     LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
 
   if not (Game.IsOutOfTime or Game.NukeIsActive) then
-    Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
+    CustomAssert(LemNum >= 0, 'Negative number of alive lemmings displayed');
 
   if (LemNum >= 999) then
     S := ' 999'

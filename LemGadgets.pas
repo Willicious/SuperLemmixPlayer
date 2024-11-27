@@ -368,7 +368,7 @@ end;
 
 function TGadget.GetSkillType: TSkillPanelButton;
 begin
-  Assert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
+  CustomAssert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
   Result := TSkillPanelButton(Obj.Skill);
 end;
 
@@ -515,7 +515,7 @@ end;
 function TGadget.GetPreassignedSkill(BitField: Integer): Boolean;
 begin
   // Only call this function for hatches
-  Assert(MetaObj.TriggerEffect in [DOM_WINDOW], 'Preassigned skill called for object not a hatch or a preplaced lemming');
+  CustomAssert(MetaObj.TriggerEffect in [DOM_WINDOW], 'Preassigned skill called for object not a hatch or a preplaced lemming');
   Result := (Obj.TarLev and BitField) <> 0; // Yes, "TargetLevel" stores this info!
 end;
 
@@ -561,7 +561,7 @@ end;
 
 function TGadget.GetHasPreassignedSkills: Boolean;
 begin
-  Assert(MetaObj.TriggerEffect in [DOM_WINDOW], 'Preassigned skill called for object not a hatch');
+  CustomAssert(MetaObj.TriggerEffect in [DOM_WINDOW], 'Preassigned skill called for object not a hatch');
   Result := Obj.TarLev <> 0; // Yes, "TargetLevel" stores this info!
 end;
 
@@ -606,7 +606,7 @@ function TGadget.GetCanDrawToBackground: Boolean;
 var
   i: Integer;
 begin
-  Assert(MetaObj.TriggerEffect = DOM_DECORATION, 'GetCanDrawToBackground called for an object that isn''t a moving decoration!');
+  CustomAssert(MetaObj.TriggerEffect = DOM_DECORATION, 'GetCanDrawToBackground called for an object that isn''t a moving decoration!');
   Result := false;
   if GetSpeed <> 0 then Exit;
   for i := 0 to MetaObj.Animations.Count-1 do
@@ -618,13 +618,13 @@ end;
 
 function TGadget.GetSpeed: Integer;
 begin
-  Assert(MetaObj.TriggerEffect = DOM_DECORATION, 'GetSpeed called for an object that isn''t a moving decoration!');
+  CustomAssert(MetaObj.TriggerEffect = DOM_DECORATION, 'GetSpeed called for an object that isn''t a moving decoration!');
   Result := Obj.TarLev;
 end;
 
 function TGadget.GetSkillCount: Integer;
 begin
-  Assert(MetaObj.TriggerEffect = DOM_PICKUP, 'GetSkillCount called for an object that isn''t a pick-up skill!');
+  CustomAssert(MetaObj.TriggerEffect = DOM_PICKUP, 'GetSkillCount called for an object that isn''t a pick-up skill!');
   Result := Obj.TarLev;
 end;
 
@@ -656,7 +656,7 @@ end;
 
 procedure TGadget.UnifyFlippingFlagsOfTeleporter();
 begin
-  Assert(MetaObj.TriggerEffect = DOM_TELEPORT, 'UnifyFlippingFlagsOfTeleporter called for object that isn''t a teleporter!');
+  CustomAssert(MetaObj.TriggerEffect = DOM_TELEPORT, 'UnifyFlippingFlagsOfTeleporter called for object that isn''t a teleporter!');
   if IsFlipPhysics then
     Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem
   else
@@ -671,9 +671,10 @@ end;
 
 procedure TGadget.SetFlipOfReceiverTo(Teleporter: TGadget);
 begin
-  Assert(Teleporter.MetaObj.TriggerEffect = DOM_TELEPORT, 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
-  Assert(MetaObj.TriggerEffect = DOM_RECEIVER, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
-  Assert(Teleporter.IsFlipImage = Teleporter.IsFlipPhysics, 'Teleporter in SetFlipOfReceiverTo has diverging flipping image and flipping physics!');
+  CustomAssert(Teleporter.MetaObj.TriggerEffect = DOM_TELEPORT, 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
+  CustomAssert(MetaObj.TriggerEffect = DOM_RECEIVER, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
+  CustomAssert(Teleporter.IsFlipImage = Teleporter.IsFlipPhysics, 'Teleporter in SetFlipOfReceiverTo has diverging flipping image and flipping physics!');
+
   if Teleporter.IsFlipImage then
     Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem
   else

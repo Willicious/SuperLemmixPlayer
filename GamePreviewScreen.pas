@@ -333,7 +333,7 @@ begin
   SetWindowCaption;
 
   fClickableRegions.Clear;
-  Assert(GameParams <> nil);
+  CustomAssert(GameParams <> nil, 'GameParams not initialized correctly');
 
   ScreenImg.BeginUpdate;
   try

@@ -172,7 +172,7 @@ var
   PNGWriter: IImageFormatWriter;
 begin
   PNGWriter := ImageFormatManager.Writers.FindWriter('png');
-  Assert(PNGWriter <> nil);
+  CustomAssert(PNGWriter <> nil, 'PNGWriter not initialized correctly');
 
   if not NoAlpha then
     PNGWriter.SaveToStream(Bmp, aStream)
