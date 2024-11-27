@@ -14,7 +14,7 @@ const
   FEATURES_VERSION = 2;
   HOTFIX_VERSION = 0; // Or RC version
 
-  STYLE_VERSION = '2.0/'; // For server usage - a new style version should only be used when backwards compatibility breaks.
+  STYLE_VERSION = '2.8/'; // For server usage - a new style version should only be used when backwards compatibility breaks.
                             // Make sure to include the trailing backslash.
 
   function COMMIT_ID: String;
@@ -27,11 +27,11 @@ function CurrentVersionID: Int64;
 implementation
 
 uses
-  LemVersionCID;
+  LemVersionCommitID;
 
 function COMMIT_ID: String;
 begin
-  Result := LemVersionCID.COMMIT_ID;
+  Result := LemVersionCommitID.COMMIT_ID;
 end;
 
 function CurrentVersionString: String;

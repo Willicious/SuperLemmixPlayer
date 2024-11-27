@@ -7686,7 +7686,6 @@ begin
       fTargetLemmingID := L.LemIndex;
       AssignNewSkill(Skill, false, true);
     end;
-
   end;
 end;
 

@@ -5,11 +5,10 @@ bin/
 *.zip
 *.res
 !OLMaker.exe
-!GetCommitID.exe
 *.nxsv
 !old_stuff/styles_extra.zip
 *.identcache
-LemVersionCID.pas
+LemVersionCommitID.pas
 old_stuff/OldGS/temp/
 Kernel/gr32png/
 0 TODO.txt
