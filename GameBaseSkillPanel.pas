@@ -1495,7 +1495,7 @@ const
   LEN = 4;
 begin
   if GameParams.AmigaTheme then
-    LemNum := Game.LemmingsActive - Game.SpawnedDead
+    LemNum := Game.LemmingsActive
   else
     LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
 
