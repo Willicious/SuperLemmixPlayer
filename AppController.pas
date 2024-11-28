@@ -7,7 +7,7 @@ uses
   GameCommandLine,
   GR32, PngInterface,
   LemSystemMessages,
-  LemTypes, LemRendering, LemLevel, LemGadgetsModel, LemGadgetsMeta,
+  LemTypes, LemRendering, LemNeoLevelPack, LemLevel, LemGadgetsModel, LemGadgetsMeta,
   LemStrings,
   GameControl, LemVersion,
   GameSound,          // Initial creation
@@ -216,6 +216,7 @@ end;
 procedure TAppController.HandleOpenedViaReplay;
 var
   MatchedLevelFile: string;
+  Level: TNeoLevelEntry;
 begin
   MatchedLevelFile := GameParams.FindLevelFileByID(GameParams.LoadedReplayID);
 
@@ -226,12 +227,12 @@ begin
     Exit;
   end;
 
-  // Set the Filename to the selected level file
-  GameParams.CurrentLevel.Filename := MatchedLevelFile;
-  GameParams.SetLevel(GameParams.CurrentLevel);
-  GameParams.LoadCurrentLevel();
+  // Set the level in GameParams
+  Level.Filename := MatchedLevelFile;
+  GameParams.SetLevel(Level);
+  GameParams.LoadCurrentLevel;
 
-  // Reload settings to align GameParams with selected level file
+  // Reload settings to align GameParams with selected level
   GameParams.Save(scImportant);
   GameParams.Load;
 
