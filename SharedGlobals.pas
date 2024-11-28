@@ -11,6 +11,9 @@ uses
 var
   DebugLog: TStringList;{$endif}
 
+var
+  AppTerminated: Boolean = False;
+
   // For writing to text log
   procedure DebugMsg(const aString: String);
   procedure Log(const aString: String);
@@ -29,8 +32,12 @@ procedure CustomAssert(Condition: Boolean; const aMessage: string);
 begin
   if not Condition then
   begin
-    ShowMessage(aMessage + sLineBreak + sLineBreak + 'The program will now close');
-    Application.Terminate;
+    if not AppTerminated then
+    begin
+      AppTerminated := True;
+      ShowMessage(aMessage + sLineBreak + sLineBreak + 'The program will now close');
+      Application.Terminate;
+    end;
   end;
 end;
 
