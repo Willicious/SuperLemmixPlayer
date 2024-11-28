@@ -247,7 +247,7 @@ type
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
 
-    property CurrentLevel: TNeoLevelEntry read fCurrentLevel write fCurrentLevel;
+    property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
     property FallbackMessage: String read fFallbackMessage write fFallbackMessage;
     property ShouldShowFallbackMessage: Boolean read fShouldShowFallbackMessage write fShouldShowFallbackMessage;

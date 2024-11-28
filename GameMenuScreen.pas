@@ -108,6 +108,7 @@ type
       procedure EnableIdle;
 
       procedure LoadLayoutData;
+      procedure LoadLevelAccordingToParams;
     protected
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
@@ -262,7 +263,7 @@ begin
 
   // If user has chosen to always load next unsolved level, load it whenever the menu screen is active
   if GameParams.LoadNextUnsolvedLevel then
-    GameParams.CurrentLevel := GameParams.CurrentLevel.Group.ParentBasePack.FirstUnbeatenLevelRecursive;
+    LoadLevelAccordingToParams;
 
   CleanUpIngameStuff;
   LoadLayoutData;
@@ -462,6 +463,14 @@ begin
   finally
     Parser.Free;
   end;
+end;
+
+procedure TGameMenuScreen.LoadLevelAccordingToParams;
+var
+  Level: TNeoLevelEntry;
+begin
+  Level := GameParams.CurrentLevel.Group.ParentBasePack.FirstUnbeatenLevelRecursive;
+  GameParams.SetLevel(Level);
 end;
 
 procedure TGameMenuScreen.LoadScrollerGraphics;
