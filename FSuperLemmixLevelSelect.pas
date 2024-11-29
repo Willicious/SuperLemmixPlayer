@@ -18,7 +18,7 @@ uses
   Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
   LemNeoParser, System.ImageList,
-  SharedGlobals;
+  SharedGlobals, Vcl.WinXCtrls;
 
 type
   TFLevelSelect = class(TForm)
@@ -42,6 +42,11 @@ type
     lblAdvancedOptions: TLabel;
     lblReplayOptions: TLabel;
     btnShowHideOptions: TButton;
+    sbSearchLevels: TSearchBox;
+    lblSearchLevels: TLabel;
+    pbSearchProgress: TProgressBar;
+    lbSearchResults: TListBox;
+    btnCloseSearch: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -63,6 +68,13 @@ type
     procedure ShowOptionButtons;
     procedure HideOptionButtons;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+
+    procedure SearchLevels;
+    procedure CloseSearchResultsPanel;
+    procedure sbSearchLevelsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure sbSearchLevelsInvokeSearch(Sender: TObject);
+    procedure lbSearchResultsClick(Sender: TObject);
+    procedure btnCloseSearchClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -75,6 +87,8 @@ type
 
     fTalismanButtons: TObjectList<TSpeedButton>;
     fDisplayRecords: TRecordDisplay;
+
+    fSearchingLevels: Boolean;
 
     procedure InitializeTreeview;
     procedure SetInfo;
@@ -99,6 +113,8 @@ type
 
     procedure SetAdvancedOptionsGroup(G: TNeoLevelGroup);
     procedure SetAdvancedOptionsLevel(L: TNeoLevelEntry);
+
+    property SearchingLevels: Boolean read fSearchingLevels write fSearchingLevels;
   public
     property LoadAsPack: Boolean read fLoadAsPack;
     procedure LoadIcons;
@@ -346,6 +362,8 @@ begin
 
   btnResetTalismans.Enabled := false;
   btnOK.Enabled := false;
+
+  SearchingLevels := False;
 
   InitializeTreeview;
   SetOptionButtons;
@@ -758,6 +776,7 @@ begin
     begin
       if not tvLevelSelect.Items[i].IsVisible then Continue;
       if tvLevelSelect.Items[i].Text <> '' then Continue;
+
       if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
       begin
         L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
@@ -767,12 +786,14 @@ begin
         S := S + L.Title;
         tvLevelSelect.Items[i].Text := S;
 
-        if (L.UnlockedTalismanList.Count < L.Talismans.Count) and (tvLevelSelect.Items[i].ImageIndex < 4 {just in case}) then
-          with tvLevelSelect.Items[i] do
-          begin
-            ImageIndex := ImageIndex + 4;
-            SelectedIndex := ImageIndex;
-          end;
+        if (L.UnlockedTalismanList.Count < L.Talismans.Count)
+          and (tvLevelSelect.Items[i].ImageIndex < 4) {just in case}
+            and not SearchingLevels then
+              with tvLevelSelect.Items[i] do
+              begin
+                ImageIndex := ImageIndex + 4;
+                SelectedIndex := ImageIndex;
+              end;
       end;
 
 //      // Update progress
@@ -813,6 +834,7 @@ var
   end;
 begin
   LoadNodeLabels;
+  if SearchingLevels then Exit;
 
   N := tvLevelSelect.Selected;
   if N = nil then Exit;
@@ -1303,6 +1325,146 @@ begin
         DrawSpeedButton(fTalismanButtons[i], TalIcon);
     end;
   end;
+end;
+
+procedure TFLevelSelect.sbSearchLevelsInvokeSearch(Sender: TObject);
+begin
+  SearchLevels;
+end;
+
+procedure TFLevelSelect.sbSearchLevelsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    SearchLevels;
+end;
+
+procedure TFLevelSelect.SearchLevels;
+  procedure ExpandAllNodes(TreeView: TTreeView; Node: TTreeNode; var Progress: Integer);
+  var
+    ChildNode: TTreeNode;
+  begin
+    while Node <> nil do
+    begin
+      Node.Expand(False);
+
+      // Update progress bar
+      Inc(Progress);
+      pbSearchProgress.Position := Progress;
+
+      if Node.HasChildren then
+      begin
+        ChildNode := Node.GetFirstChild;
+        ExpandAllNodes(TreeView, ChildNode, Progress);
+      end;
+
+      Node := Node.GetNextSibling;
+    end;
+  end;
+
+  procedure CollapseAllNodes(TreeView: TTreeView; Node: TTreeNode);
+  begin
+    while Node <> nil do
+    begin
+      Node.Collapse(False);
+      Node := Node.GetNextSibling;
+    end;
+  end;
+
+var
+  SearchText: string;
+  i: Integer;
+  Node: TTreeNode;
+  Progress: Integer;
+begin
+  SearchingLevels := True;
+  tvLevelSelect.Visible := False;
+
+  // Prepare search results list
+  lbSearchResults.Clear;
+  SearchText := Trim(sbSearchLevels.Text);
+
+  if SearchText = '' then
+  begin
+    lbSearchResults.Visible := False;
+    Exit;
+  end;
+
+  // Initialize progress bar and counter
+  pbSearchProgress.Position := 0;
+  pbSearchProgress.Max := tvLevelSelect.Items.Count;
+  pbSearchProgress.Visible := True;
+
+  Progress := 0;
+
+  // Expand all nodes for searchability
+  tvLevelSelect.Items.BeginUpdate;
+  try
+    ExpandAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode, Progress); // Start expanding from the root
+  finally
+    tvLevelSelect.Items.EndUpdate;
+  end;
+
+  // Perform search
+  tvLevelSelect.Items.BeginUpdate;
+  try
+    for i := 0 to tvLevelSelect.Items.Count - 1 do
+    begin
+      Node := tvLevelSelect.Items[i];
+
+       // Add matching nodes to the list
+      if AnsiContainsText(Node.Text, SearchText) then
+        lbSearchResults.Items.AddObject(Node.Text, Node);
+    end;
+  finally
+    tvLevelSelect.Items.EndUpdate;
+  end;
+
+  // Collapse all nodes after search
+  CollapseAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode);
+
+  // Hide progress bar and show search results
+  pbSearchProgress.Visible := False;
+  lbSearchResults.Visible := lbSearchResults.Items.Count > 0;
+  btnCloseSearch.Visible := lbSearchResults.Visible;
+
+  SearchingLevels := False;
+end;
+
+procedure TFLevelSelect.lbSearchResultsClick(Sender: TObject);
+var
+  SelectedNode: TTreeNode;
+begin
+  if lbSearchResults.ItemIndex = -1 then Exit;
+
+  // Get the associated TreeNode object from the clicked search result
+  SelectedNode := TTreeNode(lbSearchResults.Items.Objects[lbSearchResults.ItemIndex]);
+
+  if Assigned(SelectedNode) then
+  begin
+    // Select the node and refocus the treeview
+    tvLevelSelect.Selected := SelectedNode;
+    SelectedNode.MakeVisible;
+
+    // Reset Search panel visibility
+    CloseSearchResultsPanel;
+    tvLevelSelect.SetFocus;
+  end;
+end;
+
+procedure TFLevelSelect.CloseSearchResultsPanel;
+begin
+  // Close and reset search panel
+  lbSearchResults.Clear;
+  lbSearchResults.Visible := False;
+  btnCloseSearch.Visible := False;
+  sbSearchLevels.Text := '';
+
+  tvLevelSelect.Visible := True;
+end;
+
+procedure TFLevelSelect.btnCloseSearchClick(Sender: TObject);
+begin
+  CloseSearchResultsPanel;
 end;
 
 // --- Advanced options --- //

@@ -118,11 +118,24 @@ object FLevelSelect: TFLevelSelect
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblSearchLevels: TLabel
+    Left = 8
+    Top = 9
+    Width = 72
+    Height = 13
+    Caption = 'Search Levels:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object tvLevelSelect: TTreeView
     Left = 8
-    Top = 8
+    Top = 37
     Width = 353
-    Height = 512
+    Height = 480
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -133,7 +146,7 @@ object FLevelSelect: TFLevelSelect
     MultiSelectStyle = []
     ParentFont = False
     ReadOnly = True
-    TabOrder = 0
+    TabOrder = 14
     OnChange = tvLevelSelectChange
     OnExpanded = tvLevelSelectExpanded
     OnKeyDown = tvLevelSelectKeyDown
@@ -144,12 +157,12 @@ object FLevelSelect: TFLevelSelect
     Width = 606
     Height = 25
     Caption = 'Play'
-    TabOrder = 1
+    TabOrder = 15
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
     Left = 381
-    Top = 122
+    Top = 120
     Width = 600
     Height = 369
     BevelOuter = bvNone
@@ -255,6 +268,44 @@ object FLevelSelect: TFLevelSelect
     Caption = '< Hide Options'
     TabOrder = 9
     OnClick = btnShowHideOptionsClick
+  end
+  object sbSearchLevels: TSearchBox
+    Left = 90
+    Top = 8
+    Width = 271
+    Height = 21
+    TabOrder = 12
+    OnKeyDown = sbSearchLevelsKeyDown
+    OnInvokeSearch = sbSearchLevelsInvokeSearch
+  end
+  object pbSearchProgress: TProgressBar
+    Left = 8
+    Top = 37
+    Width = 353
+    Height = 17
+    TabOrder = 13
+    Visible = False
+  end
+  object lbSearchResults: TListBox
+    Left = 8
+    Top = 61
+    Width = 353
+    Height = 319
+    Cursor = crHandPoint
+    ItemHeight = 13
+    TabOrder = 0
+    Visible = False
+    OnClick = lbSearchResultsClick
+  end
+  object btnCloseSearch: TButton
+    Left = 144
+    Top = 386
+    Width = 75
+    Height = 25
+    Caption = 'Close'
+    TabOrder = 1
+    Visible = False
+    OnClick = btnCloseSearchClick
   end
   object ilStatuses: TImageList
     AllocBy = 8
