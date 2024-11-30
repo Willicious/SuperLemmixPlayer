@@ -7206,14 +7206,27 @@ end;
 function TLemmingGame.HandleFrozen(L: TLemming): Boolean;
 
   function CanUnfreeze: Boolean;
-  var
-    i: Integer;
   begin
-    Result := False;
+    Result := False
 
-    for i := 1 to 7 do
-      if not HasPixelAt(L.LemX, L.LemY - i) then
-        Result := True;
+    // Top 5 pixels must be removed
+    or (not HasPixelAt(L.LemX, L.LemY - 11)
+    and not HasPixelAt(L.LemX, L.LemY - 10)
+    and not HasPixelAt(L.LemX, L.LemY -  9)
+    and not HasPixelAt(L.LemX, L.LemY -  8)
+    and not HasPixelAt(L.LemX, L.LemY -  7))
+
+    // Middle 4 pixels must be removed
+    or (not HasPixelAt(L.LemX, L.LemY - 7)
+    and not HasPixelAt(L.LemX, L.LemY - 6)
+    and not HasPixelAt(L.LemX, L.LemY - 5)
+    and not HasPixelAt(L.LemX, L.LemY - 4))
+
+    // Bottom 4 pixels must be removed
+    or (not HasPixelAt(L.LemX, L.LemY - 4)
+    and not HasPixelAt(L.LemX, L.LemY - 3)
+    and not HasPixelAt(L.LemX, L.LemY - 2)
+    and not HasPixelAt(L.LemX, L.LemY - 1));
   end;
 
   procedure Unfreeze;
@@ -7224,7 +7237,7 @@ function TLemmingGame.HandleFrozen(L: TLemming): Boolean;
 begin
   Result := True;
 
-  // Check first if any of the bottom 7 pixels of the ice cube are removed
+  // Normal Freezer checks
   if (L.LemAction = baFrozen) and CanUnfreeze then
   begin
     // Freezer at bottom-of-level checks
@@ -7243,7 +7256,6 @@ begin
         or not HasPixelAt(L.LemX, L.LemY -1) then
           Unfreeze;
     end else
-    // Normal Freezer checks
       Unfreeze;
   end;
 
