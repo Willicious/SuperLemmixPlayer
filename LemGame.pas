@@ -415,9 +415,12 @@ type
     function HandleLooking(L: TLemming) : Boolean;
     function HandleSleeping(L: TLemming): Boolean;
 
+    // Make sure non-Freezer lems can ascend out of Freezer cubes
+    procedure BoostAscend(L: TLemming; YBoost: Integer; ShouldTurn: Boolean = False);
+    procedure CheckIfShouldBoostAscend(L: TLemming);
+
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
-    procedure EscapeFreezerCube(L: TLemming);
     procedure GenerateClonedLem(L: TLemming);
     function GetPriorityLemming(out PriorityLem: TLemming;
                                   NewSkillOrig: TBasicLemmingAction;
@@ -4741,30 +4744,49 @@ begin
   end;
 end;
 
-procedure TLemmingGame.EscapeFreezerCube(L: TLemming);
+// Make sure non-Freezer lems can ascend out of Freezer cubes
+procedure TLemmingGame.BoostAscend(L: TLemming; YBoost: Integer; ShouldTurn: Boolean = False);
+begin
+  if ShouldTurn then
+    TurnAround(L); // Keeps the lem facing the same way, ironically
+
+  Dec(L.LemY, YBoost); // Initial boost for smooth transition
+  Transition(L, baAscending);
+end;
+
+procedure TLemmingGame.CheckIfShouldBoostAscend(L: TLemming);
 var
   LemDy: Integer;
   LemDXL: Integer;
   LemDXR: Integer;
-begin
-  // Bookmark -
-  {Ideally, we can create a new function which specifically detects the presence
-  of a Freezer lem within range of the ice cube's width - For now, though, this will do}
 
-  // Makes sure Walkers can ascend out of Freezer cubes
+  function CheckForFirstBlankPixel(i: Integer): Boolean;
+  begin
+    Result := False;
+
+    if  not HasPixelAt(L.LemX, L.LemY -i)
+    and not HasPixelAt(L.LemX -1, L.LemY -i)
+    and not HasPixelAt(L.LemX +1, L.LemY -i) then
+      Result := True;
+  end;
+begin
   LemDy := FindGroundPixel(L.LemX, L.LemY);
   LemDXL := FindGroundPixel(L.LemX -1, L.LemY);
   LemDXR := FindGroundPixel(L.LemX +1, L.LemY);
-  if (LemDy < -6) and (LemDXL < -6) and (LemDXR < -6)
-  // But, prevents ascending all the way through anything taller
-  and not HasPixelAt(L.LemX, L.LemY -12)
-  and not HasPixelAt(L.LemX -1, L.LemY -12)
-  and not HasPixelAt(L.LemX +1, L.LemY -12)
-  then
+
+  if (LemDy < -6) and (LemDXL < -6) and (LemDXR < -6) then
   begin
-    TurnAround(L); // Keeps the lem facing the same way, ironically
-    Dec(L.LemY, 6); // Initial 6px boost to make the transition as smooth as possible
-    Transition(L, baAscending);
+    // Check for blank pixel up to 12px (height of ice cube)
+    if CheckForFirstBlankPixel(7)
+    or CheckForFirstBlankPixel(8)
+    or CheckForFirstBlankPixel(9)
+    or CheckForFirstBlankPixel(10)
+    or CheckForFirstBlankPixel(11)
+    or CheckForFirstBlankPixel(12) then
+    begin
+      BoostAscend(L, 6, True);
+      Exit;
+    end;
   end;
 end;
 
@@ -4827,7 +4849,7 @@ begin
   else if (LemDy > 0) then
     Inc(L.LemY, LemDy);
 
-  EscapeFreezerCube(L);
+  CheckIfShouldBoostAscend(L);
 end;
 
 function TLemmingGame.HandleSwimming(L: TLemming): Boolean;
@@ -7263,13 +7285,17 @@ begin
 end;
 
 function TLemmingGame.HandleUnfreezing(L: TLemming): Boolean;
+var
+  LemDY: Integer;
 begin
-  Result := true;
+  Result := True;
 
   if L.LemEndOfAnimation then
   begin
-    if HasPixelAt(L.LemX, L.LemY - 1) then
-      Transition(L, baAscending)
+    LemDY := FindGroundPixel(L.LemX, L.LemY);
+
+    if (LemDY < 0) then
+      BoostAscend(L, Abs(LemDY))
     else if HasPixelAt(L.LemX, L.LemY) then
       Transition(L, baWalking)
     else
