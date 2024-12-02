@@ -5055,8 +5055,7 @@ begin
     end else if ((LemAscended = 4) and HasPixelAt(LemX, LemY-1) and HasPixelAt(LemX, LemY-2))
     or ((LemAscended >= 5) and HasPixelAt(LemX, LemY-1)) then
     begin
-      Dec(LemX, LemDx);
-      Transition(L, baFalling, true); // Turn around as well
+      Transition(L, baWalking);
     end;
   end;
 end;
