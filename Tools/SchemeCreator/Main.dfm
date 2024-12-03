@@ -12,6 +12,7 @@ object SchemeCreatorForm: TSchemeCreatorForm
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClick = FormClick
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -43,7 +44,7 @@ object SchemeCreatorForm: TSchemeCreatorForm
   object ButtonGenerateStateRecoloring: TButton
     Left = 8
     Top = 38
-    Width = 688
+    Width = 609
     Height = 25
     Caption = 'Generate State Recoloring'
     TabOrder = 1
@@ -52,10 +53,28 @@ object SchemeCreatorForm: TSchemeCreatorForm
   object ButtonGenerateSpritesetRecoloring: TButton
     Left = 8
     Top = 8
-    Width = 688
+    Width = 609
     Height = 25
     Caption = 'Generate Spriteset Recoloring'
     TabOrder = 2
     OnClick = ButtonGenerateSpritesetRecoloringClick
+  end
+  object ButtonSave: TButton
+    Left = 623
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Save'
+    TabOrder = 3
+    OnClick = ButtonSaveClick
+  end
+  object ButtonLoad: TButton
+    Left = 623
+    Top = 38
+    Width = 75
+    Height = 25
+    Caption = 'Load'
+    TabOrder = 4
+    OnClick = ButtonLoadClick
   end
 end

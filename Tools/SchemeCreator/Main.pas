@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Clipbrd,
-  System.UITypes, System.Generics.Collections, System.Math;
+  System.UITypes, System.Generics.Collections, System.Math, IniFiles;
 
 // Define a record to store each TEdit for different states
 type
@@ -34,12 +34,18 @@ type
     LabelDuplicate: TLabel;
     ButtonAdd: TButton;
     ButtonGenerateStateRecoloring: TButton;
-    ButtonGenerateSpritesetRecoloring: TButton; // The "Add" button to create new items dynamically
+    ButtonGenerateSpritesetRecoloring: TButton;
+    ButtonSave: TButton;
+    ButtonLoad: TButton; // The "Add" button to create new items dynamically
     procedure FormCreate(Sender: TObject);
     procedure HexEditChange(Sender: TObject);
+    procedure FeatureEditClick(Sender: TObject);
     procedure ButtonAddClick(Sender: TObject);
     procedure ButtonGenerateStateRecoloringClick(Sender: TObject);
     procedure ButtonGenerateSpritesetRecoloringClick(Sender: TObject);
+    procedure FormClick(Sender: TObject);
+    procedure ButtonSaveClick(Sender: TObject);
+    procedure ButtonLoadClick(Sender: TObject);
   private
     DisplayMemo: TMemo;
     CopyButton: TButton;
@@ -48,8 +54,12 @@ type
     FLabelsCreated: Boolean; // Flag to check if labels have been created
     function HexToColor(const Hex: string): TColor;
     function IsValidHexCode(const Hex: string): Boolean;
+    function SetDefaultEditTopPosition: Integer;
     procedure AddNewFeature;
     procedure CopyButtonClick(Sender: TObject);
+    procedure LoadEditsFromIni(const FileName: string);
+    procedure SaveEditsToIni(const FileName: string);
+    procedure ClearFeatures;
   public
     { Public declarations }
   end;
@@ -91,6 +101,11 @@ begin
   end;
 end;
 
+procedure TSchemeCreatorForm.FormClick(Sender: TObject);
+begin
+  ButtonAdd.SetFocus;
+end;
+
 procedure TSchemeCreatorForm.FormCreate(Sender: TObject);
 begin
   // Initialize the list of color control pairs
@@ -100,7 +115,7 @@ begin
   FLabelsCreated := False;
 
   // Set FNextTop to just below the "Add" button
-  FNextTop := ButtonAdd.Top + ButtonAdd.Height + 30;
+  FNextTop := SetDefaultEditTopPosition;
   AddNewFeature;
 
   Caption := 'Scheme Creator' + GetApplicationVersion;
@@ -135,8 +150,14 @@ begin
       HexLabel.Top := FNextTop - 25; // Same top position for all labels
       HexLabel.Left := NextLeft;
       HexLabel.Caption := State;
+
+      // Check if the caption does not start with "-"
+      if not State.StartsWith('-') then
+        HexLabel.Font.Style := HexLabel.Font.Style + [fsBold]; // Make the label bold
+
       NextLeft := NextLeft + 80 + 10; // Move to the next position
     end;
+
 
     FLabelsCreated := True; // Set the flag to true after creating labels
   end;
@@ -148,6 +169,7 @@ begin
   FeatureEdit.Left := 20;
   FeatureEdit.Width := 200;
   FeatureEdit.Text := 'e.g. LEMMING_HAIR'; // Default name, can be edited
+  FeatureEdit.OnClick := FeatureEditClick;
 
   // Update the base top position for the current feature row
   BaseTop := FeatureEdit.Top;
@@ -156,7 +178,7 @@ begin
   // Create hex edit fields for each state and link them to NewPair
   NewPair.LabelEdit := FeatureEdit; // Associate with the feature name
 
-  SHexDefault := 'e.g. xFFFFFF';
+  SHexDefault := 'e.g. x00BB00';
 
   // Create and setup each TEdit for different states
   NewPair.HexNormal := TEdit.Create(Self);
@@ -165,6 +187,7 @@ begin
   NewPair.HexNormal.Left := NextLeft;
   NewPair.HexNormal.Width := 80;
   NewPair.HexNormal.Text := SHexDefault;
+  NewPair.HexNormal.OnClick := FeatureEditClick;
   NewPair.HexNormal.OnChange := HexEditChange;
   NextLeft := NewPair.HexNormal.Left + NewPair.HexNormal.Width + 10;
 
@@ -174,6 +197,7 @@ begin
   NewPair.HexAthlete.Left := NextLeft;
   NewPair.HexAthlete.Width := 80;
   NewPair.HexAthlete.Text := SHexDefault;
+  NewPair.HexAthlete.OnClick := FeatureEditClick;
   NewPair.HexAthlete.OnChange := HexEditChange;
   NextLeft := NewPair.HexAthlete.Left + NewPair.HexAthlete.Width + 10;
 
@@ -183,6 +207,7 @@ begin
   NewPair.HexSelected.Left := NextLeft;
   NewPair.HexSelected.Width := 80;
   NewPair.HexSelected.Text := SHexDefault;
+  NewPair.HexSelected.OnClick := FeatureEditClick;
   NewPair.HexSelected.OnChange := HexEditChange;
   NextLeft := NewPair.HexSelected.Left + NewPair.HexSelected.Width + 10;
 
@@ -192,6 +217,7 @@ begin
   NewPair.HexRival.Left := NextLeft;
   NewPair.HexRival.Width := 80;
   NewPair.HexRival.Text := SHexDefault;
+  NewPair.HexRival.OnClick := FeatureEditClick;
   NewPair.HexRival.OnChange := HexEditChange;
   NextLeft := NewPair.HexRival.Left + NewPair.HexRival.Width + 10;
 
@@ -201,6 +227,7 @@ begin
   NewPair.HexRivalAthlete.Left := NextLeft;
   NewPair.HexRivalAthlete.Width := 80;
   NewPair.HexRivalAthlete.Text := SHexDefault;
+  NewPair.HexRivalAthlete.OnClick := FeatureEditClick;
   NewPair.HexRivalAthlete.OnChange := HexEditChange;
   NextLeft := NewPair.HexRivalAthlete.Left + NewPair.HexRivalAthlete.Width + 10;
 
@@ -210,6 +237,7 @@ begin
   NewPair.HexRivalSelected.Left := NextLeft;
   NewPair.HexRivalSelected.Width := 80;
   NewPair.HexRivalSelected.Text := SHexDefault;
+  NewPair.HexRivalSelected.OnClick := FeatureEditClick;
   NewPair.HexRivalSelected.OnChange := HexEditChange;
   NextLeft := NewPair.HexRivalSelected.Left + NewPair.HexRivalSelected.Width + 10;
 
@@ -219,6 +247,7 @@ begin
   NewPair.HexZombie.Left := NextLeft;
   NewPair.HexZombie.Width := 80;
   NewPair.HexZombie.Text := SHexDefault;
+  NewPair.HexZombie.OnClick := FeatureEditClick;
   NewPair.HexZombie.OnChange := HexEditChange;
   NextLeft := NewPair.HexZombie.Left + NewPair.HexZombie.Width + 10;
 
@@ -228,6 +257,7 @@ begin
   NewPair.HexNeutral.Left := NextLeft;
   NewPair.HexNeutral.Width := 80;
   NewPair.HexNeutral.Text := SHexDefault;
+  NewPair.HexNeutral.OnClick := FeatureEditClick;
   NewPair.HexNeutral.OnChange := HexEditChange;
   NextLeft := NewPair.HexNeutral.Left + NewPair.HexNeutral.Width + 10;
 
@@ -236,6 +266,7 @@ begin
   NewPair.HexInvincible.Top := BaseTop;
   NewPair.HexInvincible.Left := NextLeft;
   NewPair.HexInvincible.Width := 80;
+  NewPair.HexInvincible.OnClick := FeatureEditClick;
   NewPair.HexInvincible.Text := SHexDefault;
   NewPair.HexInvincible.OnChange := HexEditChange;
 
@@ -251,6 +282,11 @@ begin
     // Increase the height of the form to accommodate new controls
     Height := Height + (NewPair.HexNormal.Height + 15);
   end;
+end;
+
+procedure TSchemeCreatorForm.FeatureEditClick(Sender: TObject);
+begin
+  (Sender as TEdit).SelectAll; // Select all text in the TEdit
 end;
 
 procedure TSchemeCreatorForm.ButtonAddClick(Sender: TObject);
@@ -359,8 +395,8 @@ var
 begin
   Output := TStringList.Create;
   try
-    // Start the output for the spriteset recoloring
-    Output.Add('$SPRITESET_RECOLORING');
+//    // Start the output for the spriteset recoloring
+//    Output.Add('$SPRITESET_RECOLORING');
     Output.Add('  MASK xFF00FF'); // Mandatory for all schemes
 
     // Loop through each ColorPair in the list of color controls
@@ -405,8 +441,8 @@ begin
         Output.Add(Format('  %s_INVINCIBLE %s', [Feature, ColorPair.HexInvincible.Text]));
     end;
 
-    // End the output for the spriteset recoloring
-    Output.Add('$END');
+//    // End the output for the spriteset recoloring
+//    Output.Add('$END');
 
     // Display the output in a modal form with a memo for easy copying
     DisplayForm := TForm.Create(Self);
@@ -453,6 +489,9 @@ var
 begin
   Output := TStringList.Create;
   try
+//    // Start the output for the state recoloring
+//    Output.Add('$STATE_RECOLORING');
+
     // Loop through each ColorPair in the list of color controls
     for var ColorPair in FColorControls do
     begin
@@ -493,7 +532,6 @@ begin
 
       // Add header for each feature for readability
       Output.Add(Format('# Feature: %s', [Feature]));
-      Output.Add('');
 
       // Generate formatted output for each state, with validation
       for var State in States do
@@ -514,6 +552,9 @@ begin
           // Do nothing
       end;
     end;
+
+//    // End the output for the state recoloring
+//    Output.Add('$END');
 
     // Display the output in a modal form with a memo for easy copying
     DisplayForm := TForm.Create(Self);
@@ -551,10 +592,160 @@ begin
   end;
 end;
 
+procedure TSchemeCreatorForm.ButtonLoadClick(Sender: TObject);
+var
+  OpenDialog: TOpenDialog;
+begin
+  OpenDialog := TOpenDialog.Create(Self);
+  try
+    OpenDialog.Filter := 'Scheme Files (*.ini)|*.ini|All Files (*.*)|*.*';
+    OpenDialog.DefaultExt := 'ini';
+    OpenDialog.Title := 'Load Scheme File';
+    OpenDialog.InitialDir := ExtractFilePath(ParamStr(0));
+
+    if OpenDialog.Execute then
+    begin
+      LoadEditsFromIni(OpenDialog.FileName);
+    end;
+  finally
+    OpenDialog.Free;
+  end;
+end;
+
+procedure TSchemeCreatorForm.ButtonSaveClick(Sender: TObject);
+var
+  SaveDialog: TSaveDialog;
+begin
+  SaveDialog := TSaveDialog.Create(Self);
+  try
+    SaveDialog.Filter := 'Scheme Files (*.ini)|*.ini|All Files (*.*)|*.*';
+    SaveDialog.DefaultExt := 'ini';
+    SaveDialog.Title := 'Save Scheme File';
+    SaveDialog.InitialDir := ExtractFilePath(ParamStr(0));
+
+    if SaveDialog.Execute then
+    begin
+      SaveEditsToIni(SaveDialog.FileName);
+    end;
+  finally
+    SaveDialog.Free;
+  end;
+end;
+
 procedure TSchemeCreatorForm.CopyButtonClick(Sender: TObject);
 begin
   Clipboard.AsText := DisplayMemo.Lines.Text; // Copy text to clipboard
   CopyButton.Caption := 'Copied!';
+end;
+
+procedure TSchemeCreatorForm.SaveEditsToIni(const FileName: string);
+var
+  IniFile: TIniFile;
+  i: Integer;
+  Pair: TColorControlPair;
+  SectionName: string;
+begin
+  IniFile := TIniFile.Create(FileName);
+  try
+    for i := 0 to FColorControls.Count - 1 do
+    begin
+      Pair := FColorControls[i];
+      SectionName := Format('Feature%d', [i + 1]); // Create unique section names (Feature1, Feature2, etc.)
+
+      // Save the feature label and all hex values under the section
+      IniFile.WriteString(SectionName, 'SpriteFeature', Pair.LabelEdit.Text);
+      IniFile.WriteString(SectionName, 'Normal', Pair.HexNormal.Text);
+      IniFile.WriteString(SectionName, '-Athlete', Pair.HexAthlete.Text);
+      IniFile.WriteString(SectionName, '-Selected', Pair.HexSelected.Text);
+      IniFile.WriteString(SectionName, 'Rival', Pair.HexRival.Text);
+      IniFile.WriteString(SectionName, '-Athlete (Rival)', Pair.HexRivalAthlete.Text);
+      IniFile.WriteString(SectionName, '-Selected (Rival)', Pair.HexRivalSelected.Text);
+      IniFile.WriteString(SectionName, 'Zombie', Pair.HexZombie.Text);
+      IniFile.WriteString(SectionName, 'Neutral', Pair.HexNeutral.Text);
+      IniFile.WriteString(SectionName, 'Invincible', Pair.HexInvincible.Text);
+    end;
+  finally
+    IniFile.Free;
+  end;
+end;
+
+function TSchemeCreatorForm.SetDefaultEditTopPosition: Integer;
+begin
+  Result := ButtonAdd.Top + ButtonAdd.Height + 30;
+end;
+
+procedure TSchemeCreatorForm.LoadEditsFromIni(const FileName: string);
+var
+  IniFile: TIniFile;
+  i: Integer;
+  SectionName: string;
+  FeatureName, Normal, Athlete, Selected, Rival, AthleteRival, SelectedRival, Zombie, Neutral, Invincible: string;
+begin
+  IniFile := TIniFile.Create(FileName);
+  try
+    // Clear any existing controls before loading new ones
+    ClearFeatures;
+
+    i := 1;
+    while True do
+    begin
+      SectionName := Format('Feature%d', [i]);
+      FeatureName := IniFile.ReadString(SectionName, 'SpriteFeature', '');
+      if FeatureName = '' then
+        Break; // Stop loading when no more sections are found
+
+      // Read all the hex values from the section
+      Normal := IniFile.ReadString(SectionName, 'Normal', '');
+      Athlete := IniFile.ReadString(SectionName, '-Athlete', '');
+      Selected := IniFile.ReadString(SectionName, '-Selected', '');
+      Rival := IniFile.ReadString(SectionName, 'Rival', '');
+      AthleteRival := IniFile.ReadString(SectionName, '-Athlete (Rival)', '');
+      SelectedRival := IniFile.ReadString(SectionName, '-Selected (Rival)', '');
+      Zombie := IniFile.ReadString(SectionName, 'Zombie', '');
+      Neutral := IniFile.ReadString(SectionName, 'Neutral', '');
+      Invincible := IniFile.ReadString(SectionName, 'Invincible', '');
+
+      // Add a new feature row
+      AddNewFeature;
+
+      // Set the loaded values to the controls
+      FColorControls.Last.LabelEdit.Text := FeatureName;
+      FColorControls.Last.HexNormal.Text := Normal;
+      FColorControls.Last.HexAthlete.Text := Athlete;
+      FColorControls.Last.HexSelected.Text := Selected;
+      FColorControls.Last.HexRival.Text := Rival;
+      FColorControls.Last.HexRivalAthlete.Text := AthleteRival;
+      FColorControls.Last.HexRivalSelected.Text := SelectedRival;
+      FColorControls.Last.HexZombie.Text := Zombie;
+      FColorControls.Last.HexNeutral.Text := Neutral;
+      FColorControls.Last.HexInvincible.Text := Invincible;
+
+      Inc(i);
+    end;
+  finally
+    IniFile.Free;
+  end;
+end;
+
+procedure TSchemeCreatorForm.ClearFeatures;
+var
+  Pair: TColorControlPair;
+begin
+  for Pair in FColorControls do
+  begin
+    Pair.LabelEdit.Free;
+    Pair.HexNormal.Free;
+    Pair.HexAthlete.Free;
+    Pair.HexSelected.Free;
+    Pair.HexRival.Free;
+    Pair.HexRivalAthlete.Free;
+    Pair.HexRivalSelected.Free;
+    Pair.HexZombie.Free;
+    Pair.HexNeutral.Free;
+    Pair.HexInvincible.Free;
+  end;
+  FColorControls.Clear;
+  FNextTop := SetDefaultEditTopPosition; // Reset the top position for new controls
 end;
 
 end.
