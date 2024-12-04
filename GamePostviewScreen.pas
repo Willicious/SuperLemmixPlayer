@@ -382,7 +382,8 @@ var
   Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
   WhichText: TPostviewText;
-  STarget, SDone, STimePadding: string;
+  STarget, SDone, STimeSR, STimeTotal, STimePadding: string;
+  SRescueRecord, STimeRecord, SSkillsRecord: string;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -414,6 +415,14 @@ begin
 
   STarget := IntToStr(Results.gToRescue);
   SDone := IntToStr(Results.gRescued);
+
+  STimeSR := MakeTimeString(Results.gLastRescueIteration);
+  STimeTotal := MakeTimeString(Results.gLastIteration);
+  STimePadding := '';
+
+  SRescueRecord := IntToStr(Entry.UserRecords.LemmingsRescued.Value);
+  STimeRecord := MakeTimeString(Entry.UserRecords.TimeTaken.Value);
+  SSkillsRecord := IntToStr(Entry.UserRecords.TotalSkills.Value);
 
   with GameParams, Results do
   begin
@@ -466,21 +475,22 @@ begin
   Result[0].ColorShift := HueShift;
   Result[0].yPos := 0 + LINE_Y_SPACING;
 
-  // Rescue result needed
+  // Rescue result - needed
   HueShift.HShift := RescueRecordShift;
-  Result[1].Line := SYouNeeded + STarget;
+  Result[1].Line := SYouNeeded + STarget + StringOfChar(' ', 3 - STarget.Length);
   Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
   Result[1].ColorShift := HueShift;
 
-  // Rescue result rescued
-  Result[2].Line := SYouRescued + SDone;
+  // Rescue result - rescued
+  Result[2].Line := SYouRescued + SDone + StringOfChar(' ', 3 - SDone.Length);
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   Result[2].ColorShift := HueShift;
 
-  // Rescue result record
+  // Rescue result - record
   if Results.gSuccess and (Entry.UserRecords.LemmingsRescued.Value > 0)
-  and (not Results.gToRescue <= 0) then
-    Result[3].Line := SYourRecord + IntToStr(GameParams.CurrentLevel.UserRecords.LemmingsRescued.Value)
+                      and (not Results.gToRescue <= 0) then
+    Result[3].Line := SYourRecord + SRescueRecord +
+                      StringOfChar(' ', 3 - SRescueRecord.Length)
   else
     Result[3].Line := '';
   Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
@@ -505,12 +515,10 @@ begin
 
   // Time taken to reach SR
   HueShift.HShift := TimeRecordShift;
-  STimePadding := '';
-
   if (Results.gSuccess and not (Results.gToRescue <= 0))
   or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
   begin
-    Result[6].Line := SYourTime + MakeTimeString(Results.gLastRescueIteration);
+    Result[6].Line := SYourTime + STimeSR;
     STimePadding := '   ';
   end else
     Result[6].Line := '';
@@ -518,14 +526,14 @@ begin
   Result[6].ColorShift := HueShift;
 
   // Always show total time taken
-  Result[7].Line := SYourTotalTime + STimePadding + MakeTimeString(Results.gLastIteration);
+  Result[7].Line := SYourTotalTime + STimePadding + STimeTotal;
   Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
   Result[7].ColorShift := HueShift;
 
   // Time record
   if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
   and (not Results.gToRescue <= 0) then
-    Result[8].Line := SYourTimeRecord + MakeTimeString(Entry.UserRecords.TimeTaken.Value)
+    Result[8].Line := SYourTimeRecord + STimeRecord
   else
     Result[8].Line := '';
   Result[8].yPos := Result[7].yPos + LINE_Y_SPACING;
@@ -535,7 +543,7 @@ begin
   HueShift.HShift := SkillsRecordShift;
   if Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0)
   and (not Results.gToRescue <= 0) then
-    Result[9].Line := SYourFewestSkills + IntToStr(Entry.UserRecords.TotalSkills.Value)
+    Result[9].Line := SYourFewestSkills + SSkillsRecord
   else
     Result[9].Line := '';
   Result[9].yPos := Result[8].yPos + (LINE_Y_SPACING * 2);

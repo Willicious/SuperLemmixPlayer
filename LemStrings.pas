@@ -186,7 +186,7 @@ resourcestring
 
   SYourTime =       'Save requirement time ';
   SYourTotalTime =  'Total in-game time ';
-  SYourTimeRecord = 'Your SR time record   ';
+  SYourTimeRecord = 'Your save time record ';
   SYourFewestSkills = 'Your fewest total skills record ';
 
   SOptionNextLevel = 'Next level';
