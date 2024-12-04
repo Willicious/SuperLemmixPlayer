@@ -382,7 +382,7 @@ var
   Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
   WhichText: TPostviewText;
-  STarget, SDone, STimeSR, STimeTotal, STimePadding: string;
+  STarget, SDone, STimeSR, STimeTotal: string;
   SRescueRecord, STimeRecord, SSkillsRecord: string;
 
   function MakeTimeString(aFrames: Integer): String;
@@ -418,7 +418,6 @@ begin
 
   STimeSR := MakeTimeString(Results.gLastRescueIteration);
   STimeTotal := MakeTimeString(Results.gLastIteration);
-  STimePadding := '';
 
   SRescueRecord := IntToStr(Entry.UserRecords.LemmingsRescued.Value);
   STimeRecord := MakeTimeString(Entry.UserRecords.TimeTaken.Value);
@@ -513,20 +512,18 @@ begin
   Result[4].ColorShift := HueShift;
   Result[5].ColorShift := HueShift;
 
-  // Time taken to reach SR
+  // Always show total time taken
   HueShift.HShift := TimeRecordShift;
-  if (Results.gSuccess and not (Results.gToRescue <= 0))
-  or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
-  begin
-    Result[6].Line := SYourTime + STimeSR;
-    STimePadding := '   ';
-  end else
-    Result[6].Line := '';
+  Result[6].Line := SYourTotalTime + STimeTotal;
   Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
   Result[6].ColorShift := HueShift;
 
-  // Always show total time taken
-  Result[7].Line := SYourTotalTime + STimePadding + STimeTotal;
+  // Time taken to reach SR
+  if (Results.gSuccess and not (Results.gToRescue <= 0))
+  or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
+    Result[7].Line := SYourTime + STimeSR
+  else
+    Result[7].Line := '';
   Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
   Result[7].ColorShift := HueShift;
 
@@ -541,7 +538,7 @@ begin
 
   // Skills record
   HueShift.HShift := SkillsRecordShift;
-  if Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0)
+  if (Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0))
   and (not Results.gToRescue <= 0) then
     Result[9].Line := SYourFewestSkills + SSkillsRecord
   else
