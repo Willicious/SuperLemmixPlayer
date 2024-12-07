@@ -4397,13 +4397,26 @@ begin
 
   BrickColor := Renderer.BrickPixelColors[12 - L.LemNumberOfBricksLeft];
 
+  // Builders
   if L.LemAction = baBuilding then
-    BrickPosY := L.LemY - 1
-  else
-    BrickPosY := L.LemY; // For platformers
+  begin
+    BrickPosY := L.LemY - 1;
 
-  for n := 0 to 5 do
-    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickColor);
+    for n := 0 to 5 do
+      AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickColor);
+  end;
+
+  // Platformers
+  if L.LemAction = baPlatforming then
+  begin
+    BrickPosY := L.LemY;
+
+    for n := 0 to 5 do
+    begin
+      AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickColor);
+      AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY + 1, BrickColor);
+    end;
+  end;
 end;
 
 function TLemmingGame.LayStackBrick(L: TLemming): Boolean;

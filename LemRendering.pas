@@ -1540,7 +1540,10 @@ begin
     // Draw shadow for placed brick
     if L.LemPhysicsFrame + 1 = 9 then
       for i := 0 to 5 do
+      begin
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
+        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY + 1);
+      end;
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
