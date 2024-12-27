@@ -131,6 +131,19 @@ object FLevelSelect: TFLevelSelect
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblEditingOptions: TLabel
+    Left = 1021
+    Top = 388
+    Width = 81
+    Height = 13
+    Caption = 'Editing Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 37
@@ -306,6 +319,18 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 1
     Visible = False
     OnClick = btnCloseSearchClick
+  end
+  object btnEditLevel: TButton
+    Left = 1000
+    Top = 407
+    Width = 134
+    Height = 25
+    Hint = 'Perform a replay check for every level in the selected pack'
+    Caption = 'Edit Level'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 16
+    OnClick = btnEditLevelClick
   end
   object ilStatuses: TImageList
     AllocBy = 8

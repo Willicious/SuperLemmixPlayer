@@ -18,7 +18,7 @@ uses
   Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
   LemNeoParser, System.ImageList,
-  SharedGlobals, Vcl.WinXCtrls;
+  SharedGlobals, ShellAPI, Vcl.WinXCtrls;
 
 type
   TFLevelSelect = class(TForm)
@@ -47,6 +47,8 @@ type
     pbSearchProgress: TProgressBar;
     lbSearchResults: TListBox;
     btnCloseSearch: TButton;
+    lblEditingOptions: TLabel;
+    btnEditLevel: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -75,6 +77,7 @@ type
     procedure sbSearchLevelsInvokeSearch(Sender: TObject);
     procedure lbSearchResultsClick(Sender: TObject);
     procedure btnCloseSearchClick(Sender: TObject);
+    procedure btnEditLevelClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -1495,6 +1498,48 @@ end;
 procedure TFLevelSelect.btnCloseSearchClick(Sender: TObject);
 begin
   CloseSearchResultsPanel;
+end;
+
+procedure TFLevelSelect.btnEditLevelClick(Sender: TObject);
+var
+  LevelFile, EditorPath: string;
+begin
+  if GameParams.CurrentLevel = nil then
+  begin
+    ShowMessage('Please select a level file to edit.');
+    Exit;
+  end;
+
+  // Set LevelFile and check it exists
+  LevelFile := GameParams.CurrentLevel.Path;
+
+  if not FileExists(LevelFile) then
+  begin
+    ShowMessage('The selected level file' + #13#10 + #13#10 +
+                LevelFile + #13#10 + #13#10 +
+                'does not exist.');
+    Exit;
+  end;
+
+  // Set EditorPath and check it exists
+  EditorPath := ExtractFilePath(Application.ExeName) + 'SLXEditor.exe';
+
+  if not FileExists(EditorPath) then
+  begin
+    ShowMessage('SLXEditor.exe not found in the SuperLemmix directory.');
+    Exit;
+  end;
+
+  // Add double quotes to handle spaces in LevelFile
+  LevelFile := '"' + LevelFile + '"';
+
+  // Launch SLX Editor with the selected level
+  if ShellExecute(0, 'open', PChar(EditorPath), PChar(LevelFile), nil, SW_SHOWNORMAL) <= 32 then
+  begin
+    ShowMessage('Failed to launch the level editor.');
+  end;
+
+  fCurrentLevelVersion := GameParams.Level.Info.LevelVersion;
 end;
 
 // --- Advanced options --- //
