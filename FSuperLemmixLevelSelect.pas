@@ -78,17 +78,15 @@ type
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
-
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
     fIconBMP: TBitmap32;
-
     fPackTalBox: TScrollBox;
-
     fTalismanButtons: TObjectList<TSpeedButton>;
     fDisplayRecords: TRecordDisplay;
-
     fSearchingLevels: Boolean;
+    fCurrentLevelVersion: Int64; // Used to check if we need to re-load the current level info
+    fIsHandlingActivation: Boolean;
 
     procedure InitializeTreeview;
     procedure SetInfo;
@@ -98,7 +96,7 @@ type
     function GetCompletedLevelString(G: TNeoLevelGroup): String;
     function GetPackResultsString(G: TNeoLevelGroup): String;
 
-    procedure DisplayLevelInfo;
+    procedure DisplayLevelInfo(RefreshLevel: Boolean = False);
     procedure SetTalismanInfo;
     procedure DrawTalismanButtons;
     procedure ClearTalismanButtons;
@@ -113,6 +111,8 @@ type
 
     procedure SetAdvancedOptionsGroup(G: TNeoLevelGroup);
     procedure SetAdvancedOptionsLevel(L: TNeoLevelEntry);
+    procedure WMActivate(var Msg: TWMActivate); message WM_ACTIVATE;
+    procedure MaybeReloadLevelInfo;
 
     property SearchingLevels: Boolean read fSearchingLevels write fSearchingLevels;
   public
@@ -336,6 +336,34 @@ begin
     TPNGInterface.LoadPngFile(aPath + IconsImg, fIconBMP)
   else
     TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIconBMP); // Then default
+end;
+
+procedure TFLevelSelect.MaybeReloadLevelInfo;
+var
+  NewVersion: Int64;
+begin
+  GameParams.LoadCurrentLevel;
+  NewVersion := GameParams.Level.Info.LevelVersion;
+  if (NewVersion <> fCurrentLevelVersion) then
+  begin
+    DisplayLevelInfo(True);
+    fCurrentLevelVersion := NewVersion;
+  end;
+end;
+
+procedure TFLevelSelect.WMActivate(var Msg: TWMActivate);
+begin
+  inherited;
+
+  if fIsHandlingActivation then Exit; // Prevent overload
+
+  fIsHandlingActivation := True;
+  try
+    if Msg.Active = WA_ACTIVE then
+      MaybeReloadLevelInfo;
+  finally
+    fIsHandlingActivation := False;
+  end;
 end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
@@ -880,6 +908,8 @@ begin
     DisplayLevelInfo;
     fPackTalBox.Visible := false;
     SetAdvancedOptionsLevel(L);
+
+    fCurrentLevelVersion := GameParams.Level.Info.LevelVersion;
   end;
 end;
 
@@ -919,14 +949,14 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.DisplayLevelInfo;
+procedure TFLevelSelect.DisplayLevelInfo(RefreshLevel: Boolean = False);
 var
-  NeedRedraw: Boolean;
+  LevelChanged: Boolean;
 begin
   WriteToParams;
   GameParams.LoadCurrentLevel(false);
 
-  NeedRedraw := (GameParams.CurrentLevel.Path <> fLastLevelPath);
+  LevelChanged := (GameParams.CurrentLevel.Path <> fLastLevelPath);
   fLastLevelPath := GameParams.CurrentLevel.Path;
 
   fInfoForm.Visible := true;
@@ -936,7 +966,7 @@ begin
   fDisplayRecords := rdNone;
 
   LoadIcons;
-  fInfoForm.PrepareEmbed(NeedRedraw);
+  fInfoForm.PrepareEmbed(LevelChanged or RefreshLevel);
 
   SetTalismanInfo;
 end;
