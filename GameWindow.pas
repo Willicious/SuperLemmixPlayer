@@ -47,7 +47,7 @@ type
   end;
 
 const
-  CURSOR_TYPES = 6;
+  CURSOR_TYPES = 24;
 
   // Special hyperspeed ends. usually only needed for forwards ones, backwards can often get the exact frame.
   SHE_SHRUGGER = 1;
@@ -1114,16 +1114,33 @@ begin
   if aCursor = 0 then
   begin
     if (fRenderInterface.SelectedLemming = nil) or not PtInRect(Img.BoundsRect, ScreenToClient(Mouse.CursorPos)) then
-      NewCursor := 1
-    else
-      NewCursor := 2;
+    begin
+      if GameParams.PlaybackModeActive and not Game.Replaying then
+        NewCursor := 7
+      else if Game.ReplayInsert and Game.Replaying then
+        NewCursor := 5
+      else if Game.Replaying then
+        NewCursor := 3
+      else
+        NewCursor := 1
+    end else begin
+      if GameParams.PlaybackModeActive and not Game.Replaying then
+        NewCursor := 8
+      else if Game.ReplayInsert and Game.Replaying then
+        NewCursor := 6
+      else if Game.Replaying then
+        NewCursor := 4
+      else
+        NewCursor := 2;
+    end;
 
     if Game.fSelectDx < 0 then
-      NewCursor := NewCursor + 2
+      NewCursor := NewCursor + 8
     else if Game.fSelectDx > 0 then
-      NewCursor := NewCursor + 4;
+      NewCursor := NewCursor + 16;
   end else
     NewCursor := aCursor;
+
   NewCursor := NewCursor + ((fInternalZoom-1) * CURSOR_TYPES);
 
   if NewCursor <> Cursor then
@@ -1888,12 +1905,30 @@ var
   CursorDir, FileExt: String;
 const
   CURSOR_NAMES: array[1..CURSOR_TYPES] of String = (
-    'standard',
-    'focused',
-    'standard|direction_left',
-    'focused|direction_left',
-    'standard|direction_right',
-    'focused|direction_right'
+    'standard',                               // 1
+    'focused',                                // 2
+    'standard_replay',                        // 3
+    'focused_replay',                         // 4
+    'standard_replay_insert',                 // 5
+    'focused_replay_insert',                  // 6
+    'standard_playback',                      // 7
+    'focused_playback',                       // 8
+    'standard|direction_left',                // 1 + 8
+    'focused|direction_left',                 // 2 + 8
+    'standard_replay|direction_left',         // 3 + 8
+    'focused_replay|direction_left',          // 4 + 8
+    'standard_replay_insert|direction_left',  // 5 + 8
+    'focused_replay_insert|direction_left',   // 6 + 8
+    'standard_playback|direction_left',       // 7 + 8
+    'focused_playback|direction_left',        // 8 + 8
+    'standard|direction_right',               // 1 + 16
+    'focused|direction_right',                // 2 + 16
+    'standard_replay|direction_right',        // 3 + 16
+    'focused_replay|direction_right',         // 4 + 16
+    'standard_replay_insert|direction_right', // 5 + 16
+    'focused_replay_insert|direction_right',  // 6 + 16
+    'standard_playback|direction_right',      // 7 + 16
+    'focused_playback|direction_right'        // 8 + 16
   );
 begin
   FreeCursors;
