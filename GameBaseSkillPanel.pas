@@ -104,7 +104,7 @@ type
     procedure AddButtonImage(ButtonName: string; Index: Integer);
     procedure SetButtonRects;
     procedure SetSkillIcons;
-    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
+    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer; CursorOverInvincible: Boolean = False);
 
     procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
@@ -1139,7 +1139,7 @@ begin
   fMinimapImage.Top := MinimapRect.Top * Trunc(fMinimapImage.Scale);
 end;
 
-procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
+procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer; CursorOverInvincible: Boolean = False);
 var
   ButtonLeft, ButtonTop: Integer;
   NumberStr: string;
@@ -1176,11 +1176,13 @@ begin
     fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
   else if (aNumber > 99) then
   begin
-    if ((aButton <= LAST_SKILL_BUTTON) and Game.IsInfiniteSkillsMode) then
-      fSkillInfiniteMode.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
-    else if (aButton <= LAST_SKILL_BUTTON) then
-      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
-    else
+    if (aButton <= LAST_SKILL_BUTTON) then
+    begin
+      if CursorOverInvincible or Game.IsInfiniteSkillsMode then
+        fSkillInfiniteMode.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
+      else
+        fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
+    end else
       fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
   end else if aNumber < 10 then
   begin
@@ -1314,7 +1316,10 @@ end;
 procedure TBaseSkillPanel.RefreshInfo;
 var
   i : TSkillPanelButton;
+  L: TLemming;
 begin
+  L := Game.RenderInterface.SelectedLemming;
+
   Image.BeginUpdate;
   try
     for i := Low(fButtonRects) to High(fButtonRects) do
@@ -1343,7 +1348,12 @@ begin
         DrawSkillCount(i, Game.SkillsUsed[i]);
     end else begin
       for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        DrawSkillCount(i, Game.SkillCount[i]);
+      begin
+        if (L <> nil) and L.LemIsInvincible then
+          DrawSkillCount(i, 100, True)
+        else
+          DrawSkillCount(i, Game.SkillCount[i]);
+      end;
     end;
 
     DrawButtonSelector(spbNuke, (Game.NukeIsActive or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
