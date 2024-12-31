@@ -183,7 +183,7 @@ type
     procedure DrawExploderShadow(L: TLemming);
     procedure DrawFreezerShadow(L: TLemming);
     procedure DrawProjectileShadow(L: TLemming);
-    procedure DrawProjectionShadow(L: TLemming); // Bookmark - deprecated, need to remove associated code
+    procedure DrawProjectionShadow(L: TLemming); // Bookmark - need to remove associated code
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -2258,7 +2258,7 @@ begin
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
 
-    // Bookmark - for "steel is always steel, replace this line:
+    // Bookmark - for "steel is always steel", replace this line:
     dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
 
     // With this:

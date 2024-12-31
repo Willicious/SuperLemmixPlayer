@@ -3324,8 +3324,8 @@ begin
     // Set L.LemInSplitter correctly
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
-      L.LemInSplitter := DOM_NOOBJECT;                          // Bookmark - why is this commented out?
-  until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY) (*or AbortChecks*);
+      L.LemInSplitter := DOM_NOOBJECT;
+  until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY);
 
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
@@ -8169,7 +8169,8 @@ begin
       R := fReplayManager.SpawnIntervalChange[fCurrentIteration, i];
       Inc(i);
     until not Handle;
-    if PausedRRCheck then Exit;    // Bookmark - maybe we can get rid of paused RR code?
+
+    if PausedRRCheck then Exit; // Bookmark - maybe we can get rid of paused RR code?
 
     i := 0;
     repeat

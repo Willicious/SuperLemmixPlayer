@@ -242,17 +242,17 @@ end;
 
 function TAppController.Execute: Boolean;
 {-------------------------------------------------------------------------------
-  Main screen-loop. Every screen returns its nextscreen (if he knows) in the
-  GameParams
+  Main screen-loop.
 -------------------------------------------------------------------------------}
 var
   NewScreen: TGameScreenType;
 begin
   Result := true;
 
-  // Save the data between screens. This way it's more up to date in case game crashes
+  // Save data between screens so it's as up-to-date as possible
   GameParams.Save(TGameParamsSaveCriticality.scNone);
 
+  // Every screen returns its NextScreen (if known)
   NewScreen := GameParams.NextScreen;
 
   case NewScreen of

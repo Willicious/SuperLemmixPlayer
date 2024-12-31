@@ -1208,20 +1208,12 @@ begin
   L.IsNeutral      := (aSection.Line['neutral']    <> nil);
   L.IsRival        := (aSection.Line['rival']      <> nil);
   L.IsBlocker      := (aSection.Line['blocker']    <> nil);
-  //L.IsInvincible   := (aSection.Line['invincible'] <> nil);  // Bookmark - implement this later //
-                                                                                                  //
-  if L.IsRival then // Prefer Rival state over Neutral and Zombie                                 //
-  begin                                                                                           //
-    L.IsNeutral := False;                                                                         //
-    L.IsZombie := False;                                                                          //
-  end;                                                                                            //
-                                                                                                  //
-//  if L.IsInvincible then // Prefer Invincible state over Rival, Neutral and Zombie   <--------- //
-//  begin
-//    L.IsZombie := False;
-//    L.IsNeutral := False;
-//    L.IsRival := False;
-//  end;
+
+  if L.IsRival then // Prefer Rival state over Neutral and Zombie
+  begin
+    L.IsNeutral := False;
+    L.IsZombie := False;
+  end;
 end;
 
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
