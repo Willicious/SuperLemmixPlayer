@@ -1351,6 +1351,8 @@ var
   i, n, TargetFrame: Integer;
   ReplayEvent: TBaseReplayItem;
 begin
+  if (Game.Level.Info.Skillset = []) then Exit;
+
   // Check for existing previous replay event
   for i := 0 to Game.CurrentIteration do
     if Game.ReplayManager.HasSkillCountChangeAt(i) then
