@@ -1949,7 +1949,8 @@ begin
 
       SL.DelimitedText := CURSOR_NAMES[i];
 
-      if GameParams.AmigaTheme then
+      // Get Amiga cursor for just the first 2 types only
+      if GameParams.AmigaTheme and (i in [1, 2]) then
         CursorDir := SFGraphicsCursor + 'amiga/'
       else
         CursorDir := SFGraphicsCursor;
