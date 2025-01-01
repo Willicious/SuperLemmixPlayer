@@ -1709,7 +1709,7 @@ begin
                               TargetFrame := i;
 
                         Game.IsBackstepping := True;
-                        GotoSaveState(Max(TargetFrame - 1, 0));
+                        GotoSaveState(Max(TargetFrame, 0));
 
                         if not GameParams.AutoReplayMode then
                           Game.RegainControl(True);
