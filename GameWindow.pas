@@ -1358,7 +1358,7 @@ begin
       TargetFrame := i;
 
       Game.IsBackstepping := True;
-      GotoSaveState(Max(TargetFrame - 1, 0));
+      GotoSaveState(Max(TargetFrame, 0));
 
       // Delete all existing future Infinite Skills replay events
       for n := 0 to Game.ReplayManager.LastActionFrame do
