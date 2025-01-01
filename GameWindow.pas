@@ -137,6 +137,7 @@ type
     procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
     procedure HandleInfiniteSkillsHotkey;
+    procedure HandleInfiniteTimeHotkey;
 
     function GetLevelMusicName: String;
     function ProcessMusicPriorityOrder(aOptions: String; aIsFromRotation: Boolean): String;
@@ -1378,6 +1379,38 @@ begin
   Game.RecordInfiniteSkills;
 end;
 
+procedure TGameWindow.HandleInfiniteTimeHotkey;
+var
+  i, n, TargetFrame: Integer;
+  ReplayEvent: TBaseReplayItem;
+begin
+  if not Game.Level.Info.HasTimeLimit then Exit;
+
+  // Check for existing previous replay event
+  for i := 0 to Game.CurrentIteration do
+    if Game.ReplayManager.HasTimeChangeAt(i) then
+    begin
+      TargetFrame := i;
+
+      Game.IsBackstepping := True;
+      GotoSaveState(Max(TargetFrame, 0));
+
+      // Delete all existing future Infinite Time replay events
+      for n := 0 to Game.ReplayManager.LastActionFrame do
+      begin
+        ReplayEvent := Game.ReplayManager.TimeChange[n, 0];
+        Game.ReplayManager.Delete(ReplayEvent);
+      end;
+
+      Game.IsInfiniteTimeMode := False;
+      Exit;
+    end;
+
+  // If no previous replay events found, set Infinite Time and record replay event
+  Game.IsInfiniteTimeMode := True;
+  Game.RecordInfiniteTime;
+end;
+
 procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   CurrTime: Cardinal;
@@ -1398,6 +1431,7 @@ const
                          lka_DirRight,
                          lka_ForceWalker,
                          lka_InfiniteSkills,
+                         lka_InfiniteTime,
                          lka_Cheat,
                          lka_Skip,
                          lka_SpecialSkip,
@@ -1487,6 +1521,9 @@ begin
       lka_InfiniteSkills: begin
                             HandleInfiniteSkillsHotkey;
                           end;
+      lka_InfiniteTime: begin
+                          HandleInfiniteTimeHotkey;
+                        end;
       lka_Nuke: begin
                   // Double keypress needed to prevent accidently nuking
                   CurrTime := TimeGetTime;

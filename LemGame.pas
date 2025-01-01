@@ -75,7 +75,9 @@ type
 
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
       UsedSkillCount: array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
+
       IsInfiniteSkillsMode: Boolean;
+      IsInfiniteTimeMode: Boolean;
 
       NukeIsActive: Boolean;
       ExploderAssignInProgress: Boolean;
@@ -203,7 +205,8 @@ type
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // Should only be called with arguments in AssignableSkills
 
     fIsInfiniteSkillsMode      : Boolean;
-    fNukeIsActive             : Boolean;
+    fIsInfiniteTimeMode        : Boolean;
+    fNukeIsActive              : Boolean;
     ExploderAssignInProgress   : Boolean;
     DoExplosionCrater          : Boolean;
     Index_LemmingToBeNuked     : Integer;
@@ -519,9 +522,10 @@ type
     procedure PlayAssignFailSound(PlayForHighlit: Boolean = False);
     procedure PopBalloon(L: TLemming; BalloonPopTimerValue: Integer; NewAction: TBasicLemmingAction);
 
+    procedure ResetSkillCount;
     procedure SetSkillsToInfinite;
     procedure RecordInfiniteSkills;
-    procedure ResetSkillCount;
+    procedure RecordInfiniteTime;
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -562,6 +566,7 @@ type
     property IsSimulating: Boolean read GetIsSimulating;
 
     property IsInfiniteSkillsMode: Boolean read fIsInfiniteSkillsMode write fIsInfiniteSkillsMode;
+    property IsInfiniteTimeMode: Boolean read fIsInfiniteTimeMode write fIsInfiniteTimeMode;
     property NukeIsActive: Boolean read fNukeIsActive write fNukeIsActive;
     property ActiveLemmingTypes: TLemmingKinds read GetActiveLemmingTypes;
 
@@ -797,6 +802,7 @@ begin
 
   aState.NukeIsActive := NukeIsActive;
   aState.IsInfiniteSkillsMode := IsInfiniteSkillsMode;
+  aState.IsInfiniteTimeMode := IsInfiniteTimeMode;
   aState.ExploderAssignInProgress := ExploderAssignInProgress;
   aState.Index_LemmingToBeNuked := Index_LemmingToBeNuked;
 
@@ -854,6 +860,7 @@ begin
 
   NukeIsActive := aState.NukeIsActive;
   IsInfiniteSkillsMode := aState.IsInfiniteSkillsMode;
+  IsInfiniteTimeMode := aState.IsInfiniteTimeMode;
   ExploderAssignInProgress := aState.ExploderAssignInProgress;
   Index_LemmingToBeNuked := aState.Index_LemmingToBeNuked;
 
@@ -1068,7 +1075,7 @@ end;
 
 function TLemmingGame.GetOutOfTime: Boolean;
 begin
-  Result := Level.Info.HasTimeLimit and
+  Result := (Level.Info.HasTimeLimit and not IsInfiniteTimeMode) and
             ((TimePlay < 0) or
              ((TimePlay = 0) and (fClockFrame > 0)));
 end;
@@ -1365,6 +1372,7 @@ begin
 
   SpawnIntervalModifier := 0;
   IsInfiniteSkillsMode := False;
+  IsInfiniteTimeMode := False;
   NukeIsActive := False;
   ExploderAssignInProgress := False;
   Index_LemmingToBeNuked := 0;
@@ -7418,8 +7426,8 @@ var
   NewRecs: TLevelRecords;
   Skill: TSkillPanelButton;
 begin
-  // Don't update records if Infinite Skills mode is active
-  if IsInfiniteSkillsMode then Exit;
+  // Don't update records if Infinite Skills or Infinite Time mode is active
+  if IsInfiniteSkillsMode or IsInfiniteTimeMode then Exit;
 
   NewRecs.Wipe;
   NewRecs.LemmingsRescued.Value := LemmingsIn;
@@ -8057,6 +8065,20 @@ begin
   fReplayManager.Add(E);
 end;
 
+procedure TLemmingGame.RecordInfiniteTime;
+var
+  E: TReplayInfiniteTime;
+begin
+  if not fPlaying then Exit;
+
+  E := TReplayInfiniteTime.Create;
+  E.Frame := fCurrentIteration;
+
+  E.AddedByInsert := ReplayInsert;
+
+  fReplayManager.Add(E);
+end;
+
 procedure TLemmingGame.RecordNuke(aInsert: Boolean);
 var
   E: TReplayNuke;
@@ -8141,6 +8163,13 @@ var
     SetSkillsToInfinite;
   end;
 
+  procedure ApplyInfiniteTime;
+  var
+    E: TReplayInfiniteTime absolute R;
+  begin
+    IsInfiniteTimeMode := True;
+  end;
+
   function Handle: Boolean;
   begin
     Result := false;
@@ -8159,6 +8188,9 @@ var
 
     if R is TReplayInfiniteSkills then
       ApplyInfiniteSkills;
+
+    if R is TReplayInfiniteTime then
+      ApplyInfiniteTime;
   end;
 begin
   try
@@ -8181,6 +8213,12 @@ begin
     i := 0;
     repeat
       R := fReplayManager.SkillCountChange[fCurrentIteration, i];
+      Inc(i);
+    until not Handle;
+
+    i := 0;
+    repeat
+      R := fReplayManager.TimeChange[fCurrentIteration, i];
       Inc(i);
     until not Handle;
 

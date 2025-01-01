@@ -384,6 +384,7 @@ var
   WhichText: TPostviewText;
   STarget, SDone, STimeSR, STimeTotal: string;
   SRescueRecord, STimeRecord, SSkillsRecord: string;
+  InfiniteHotkeysUsed: Boolean;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -422,6 +423,8 @@ begin
   SRescueRecord := IntToStr(Entry.UserRecords.LemmingsRescued.Value);
   STimeRecord := MakeTimeString(Entry.UserRecords.TimeTaken.Value);
   SSkillsRecord := IntToStr(Entry.UserRecords.TotalSkills.Value);
+
+  InfiniteHotkeysUsed := GlobalGame.IsInfiniteSkillsMode or GlobalGame.IsInfiniteTimeMode;
 
   with GameParams, Results do
   begin
@@ -497,9 +500,18 @@ begin
 
   // Comment - we allocate 2 lines for this
   HueShift.HShift := CommentShift;
-  if GlobalGame.IsInfiniteSkillsMode then
+  if InfiniteHotkeysUsed then
   begin
-    Result[4].Line := 'You used infinite skills to play this level';
+    var S := '';
+
+    if GlobalGame.IsInfiniteSkillsMode and GlobalGame.IsInfiniteTimeMode then
+      S := 'skills and time'
+    else if GlobalGame.IsInfiniteSkillsMode then
+      S := 'skills'
+    else
+      S := 'time';
+
+    Result[4].Line := 'You used infinite ' + S + ' to play this level';
     Result[5].Line := 'Try again sometime with the intended skillset';
   end else begin
     WhichText := Entry.Group.PostviewTexts[GetResultIndex];

@@ -121,6 +121,12 @@ type
       property NewSkillCount: Integer read fNewSkillCount write fNewSkillCount;
   end;
 
+  TReplayInfiniteTime = class(TBaseReplayItem)
+    protected
+      procedure DoLoadSection(Sec: TParserSection); override;
+      procedure DoSave(Sec: TParserSection); override;
+  end;
+
   TReplayItemList = class(TObjectList)
     private
       function GetItem(Index: Integer): TBaseReplayItem;
@@ -141,6 +147,7 @@ type
       fAssignments: TReplayItemList; // Nuking is also included here
       fSpawnIntervalChanges: TReplayItemList;
       fSkillCountChanges: TReplayItemList;
+      fTimeChanges: TReplayItemList;
       fPlayerName: String;
       fLevelName: String;
       fLevelAuthor: String;
@@ -176,6 +183,7 @@ type
       function HasAssignmentAt(aFrame: Integer): Boolean;
       function HasRRChangeAt(aFrame: Integer): Boolean;
       function HasSkillCountChangeAt(aFrame: Integer): Boolean;
+      function HasTimeChangeAt(aFrame: Integer): Boolean;
       function IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
@@ -188,6 +196,7 @@ type
       property Assignment[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
       property SpawnIntervalChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property SkillCountChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 3 read GetItemByFrame;
+      property TimeChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 4 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
       property ExpectedCompletionIteration: Integer read fExpectedCompletionIteration write fExpectedCompletionIteration;
 
@@ -253,6 +262,7 @@ begin
   fAssignments := TReplayItemList.Create;
   fSpawnIntervalChanges := TReplayItemList.Create;
   fSkillCountChanges := TReplayItemList.Create;
+  fTimeChanges := TReplayItemList.Create;
   Clear(true);
 end;
 
@@ -261,6 +271,7 @@ begin
   fAssignments.Free;
   fSpawnIntervalChanges.Free;
   fSkillCountChanges.Free;
+  fTimeChanges.Free;
   inherited;
 end;
 
@@ -390,6 +401,7 @@ begin
   if aItem is TReplayChangeSpawnInterval then Dst := fSpawnIntervalChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
   if aItem is TReplayInfiniteSkills then Dst := fSkillCountChanges;
+  if aItem is TReplayInfiniteTime then Dst := fTimeChanges;
 
   if Dst = nil then
     raise Exception.Create('Unknown type passed to TReplay.Add!');
@@ -413,6 +425,7 @@ begin
   if aItem is TReplayChangeSpawnInterval then Dst := fSpawnIntervalChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
   if aItem is TReplayInfiniteSkills then Dst := fSkillCountChanges;
+  if aItem is TReplayInfiniteTime then Dst := fTimeChanges;
 
   if Dst = nil then Exit;
 
@@ -428,6 +441,7 @@ begin
   fAssignments.Clear;
   fSpawnIntervalChanges.Clear;
   fSkillCountChanges.Clear;
+  fTimeChanges.Clear;
   fIsModified := true;
   if not EraseLevelInfo then Exit;
   fPlayerName := '';
@@ -455,6 +469,7 @@ var
 begin
   DoCut(fAssignments, aLastFrame);
   DoCut(fSkillCountChanges, aLastFrame);
+  DoCut(fTimeChanges, aLastFrame);
 
   NextSI := TReplayChangeSpawnInterval(SpawnIntervalChange[aLastFrame, 0]);
   if (NextSI <> nil) and (NextSI.NewSpawnInterval <> aExpectedSpawnInterval) then
@@ -489,7 +504,8 @@ function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
 begin
   Result := CheckForAction(fAssignments, aFrame)
          or CheckForAction(fSpawnIntervalChanges, aFrame)
-         or CheckForAction(fSkillCountChanges, aFrame);
+         or CheckForAction(fSkillCountChanges, aFrame)
+         or CheckForAction(fTimeChanges, aFrame);
 end;
 
 function TReplay.HasAssignmentAt(aFrame: Integer): Boolean;
@@ -505,6 +521,11 @@ end;
 function TReplay.HasSkillCountChangeAt(aFrame: Integer): Boolean;
 begin
   Result := CheckForAction(fSkillCountChanges, aFrame);
+end;
+
+function TReplay.HasTimeChangeAt(aFrame: Integer): Boolean;
+begin
+  Result := CheckForAction(fTimeChanges, aFrame);
 end;
 
 function TReplay.IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
@@ -523,6 +544,10 @@ begin
   begin
     for i := 0 to fSkillCountChanges.Count-1 do
       if (fSkillCountChanges[i] <> aAction) and (fSkillCountChanges[i].AddTime >= aAction.AddTime) then Exit;
+  end else if aAction is TReplayInfiniteTime then
+  begin
+    for i := 0 to fTimeChanges.Count-1 do
+      if (fTimeChanges[i] <> aAction) and (fTimeChanges[i].AddTime >= aAction.AddTime) then Exit;
   end else
     for i := 0 to fAssignments.Count-1 do
       if (fAssignments[i] <> aAction) and (fAssignments[i].AddTime >= aAction.AddTime) then Exit;
@@ -545,6 +570,7 @@ begin
   CheckForAction(fAssignments);
   CheckForAction(fSpawnIntervalChanges);
   CheckForAction(fSkillCountChanges);
+  CheckForAction(fTimeChanges);
 end;
 
 procedure TReplay.LoadFromStream(aStream: TStream; aInternal: Boolean = false);
@@ -595,6 +621,7 @@ begin
   if aSection.Keyword = 'spawn_interval' then Item := TReplayChangeSpawnInterval.Create;
   if aSection.Keyword = 'nuke' then Item := TReplayNuke.Create;
   if aSection.Keyword = 'infinite_skills' then Item := TReplayInfiniteSkills.Create;
+  if aSection.Keyword = 'infinite_time' then Item := TReplayInfiniteTime.Create;
 
   if Item = nil then Exit;
 
@@ -604,6 +631,8 @@ begin
     fSpawnIntervalChanges.Add(Item)
   else if Item is TReplayInfiniteSkills then
     fSkillCountChanges.Add(Item)   
+  else if Item is TReplayInfiniteTime then
+    fTimeChanges.Add(Item)
   else
     fAssignments.Add(Item);
 end;
@@ -676,6 +705,7 @@ begin
     SaveReplayList(fAssignments, Sec);
     SaveReplayList(fSpawnIntervalChanges, Sec);
     SaveReplayList(fSkillCountChanges, Sec);
+    SaveReplayList(fTimeChanges, Sec);
 
     Parser.SaveToStream(aStream);
 
@@ -785,6 +815,7 @@ begin
     1: L := fAssignments;
     2: L := fSpawnIntervalChanges;
     3: L := fSkillCountChanges;
+    4: L := fTimeChanges;
     else Exit;
   end;
 
@@ -982,6 +1013,19 @@ begin
   Sec := Sec.SectionList.Add('INFINITE_SKILLS');
   inherited DoSave(Sec);
   //Sec.AddLine('COUNT', fNewSkillCount);
+end;
+
+{ TReplayInfiniteTime }
+
+procedure TReplayInfiniteTime.DoLoadSection(Sec: TParserSection);
+begin
+  inherited DoLoadSection(Sec);
+end;
+
+procedure TReplayInfiniteTime.DoSave(Sec: TParserSection);
+begin
+  Sec := Sec.SectionList.Add('INFINITE_TIME');
+  inherited DoSave(Sec);
 end;
 
 { TReplayItemList }

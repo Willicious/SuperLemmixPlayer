@@ -127,6 +127,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Directional Select Right'
       'Select Walking Lemming'
       'Infinite Skills'
+      'Infinite Time'
       'Cheat'
       'Time Skip'
       'Special Skip'

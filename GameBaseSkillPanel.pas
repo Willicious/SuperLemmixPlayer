@@ -1280,7 +1280,8 @@ begin
           end else
             SpecialCombine := False;
         end;
-      end else if Level.Info.HasTimeLimit and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
+      end else if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode)
+        and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := True;
 
@@ -1552,7 +1553,7 @@ var
 const
   LEN = 2;
 begin
-  if Level.Info.HasTimeLimit then
+  if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode) then
   begin
     if Game.IsSuperLemmingMode then
       Time := Level.Info.TimeLimit - Game.CurrentIteration div 50
@@ -1611,7 +1612,7 @@ end;
 
 procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
 begin
-  if Level.Info.HasTimeLimit then
+  if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode) then
     fNewDrawStr[Pos] := #98
   else
     fNewDrawStr[Pos] := #97;

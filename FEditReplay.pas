@@ -75,6 +75,7 @@ var
     R: TReplayChangeSpawnInterval absolute aItem;
     N: TReplayNuke absolute aItem;
     F: TReplayInfiniteSkills absolute aItem;
+    T: TReplayInfiniteTime absolute aItem;
 
     function GetSkillString(aSkill: TBasicLemmingAction): String;
     begin
@@ -129,6 +130,9 @@ var
     end else if aItem is TReplayInfiniteSkills then
     begin
       Result := Result + 'Infinite Skills';
+    end else if aItem is TReplayInfiniteTime then
+    begin
+      Result := Result + 'Infinite Time';
     end else
       Result := 'Unknown replay action';
   end;
@@ -164,6 +168,10 @@ begin
         AddAction(Action);
 
       Action := fReplay.SkillCountChange[i, 0];
+      if Action <> nil then
+        AddAction(Action);
+
+      Action := fReplay.TimeChange[i, 0];
       if Action <> nil then
         AddAction(Action);
     end;

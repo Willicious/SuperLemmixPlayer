@@ -36,6 +36,7 @@ type
                          lka_DirRight,
                          lka_ForceWalker,
                          lka_InfiniteSkills,
+                         lka_InfiniteTime,
                          lka_Cheat,
                          lka_Skip,
                          lka_SpecialSkip,
@@ -148,6 +149,7 @@ begin
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($20, lka_ShowUsedSkills);
   SetKeyFunction($68, lka_InfiniteSkills);
+  SetKeyFunction($69, lka_InfiniteTime);
   SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
@@ -201,6 +203,7 @@ begin
   SetKeyFunction($BE, lka_SlowMotion);
   SetKeyFunction($2E, lka_Cheat);
   SetKeyFunction($68, lka_InfiniteSkills);
+  SetKeyFunction($69, lka_InfiniteTime);
   SetKeyFunction($56, lka_ClearPhysics, 1);
   SetKeyFunction($14, lka_ClearPhysics, 0);
   SetKeyFunction($4C, lka_LoadReplay);
@@ -286,6 +289,7 @@ begin
   SetKeyFunction($47, lka_Skill, Integer(spbMiner));
   SetKeyFunction($57, lka_Skill, Integer(spbDigger));
   SetKeyFunction($68, lka_InfiniteSkills);
+  SetKeyFunction($69, lka_InfiniteTime);
   SetKeyFunction($59, lka_CancelPlayback);
 end;
 
@@ -312,6 +316,7 @@ begin
   if s = 'force_walker' then Result := lka_ForceWalker;
   if s = 'cheat' then Result := lka_Cheat;
   if s = 'infinite_skills' then Result := lka_InfiniteSkills;
+  if s = 'infinite_time' then Result := lka_InfiniteTime;
   if s = 'skip' then Result := lka_Skip;
   if s = 'special_skip' then Result := lka_SpecialSkip;
   if s = 'fastforward' then Result := lka_FastForward;
@@ -473,6 +478,7 @@ var
       lka_ForceWalker:      Result := 'Force_Walker';
       lka_Cheat:            Result := 'Cheat';
       lka_InfiniteSkills:   Result := 'Infinite_Skills';
+      lka_InfiniteTime:     Result := 'Infinite_Time';
       lka_Skip:             Result := 'Skip';
       lka_SpecialSkip:      Result := 'Special_Skip';
       lka_FastForward:      Result := 'FastForward';
