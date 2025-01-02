@@ -1875,7 +1875,7 @@ begin
       // Hold Ctrl to generate a new lem at cursor (test mode only)
       if CtrlPressed and (GameParams.TestModeLevel <> nil) then
       begin
-        Game.GenerateNewLemming(X, Y, ShiftPressed, AltPressed)
+        Game.GenerateNewLemming(X, Y, True, ShiftPressed, AltPressed)
       end else
       // Assign skill
       begin
@@ -1889,12 +1889,20 @@ begin
     end else
 
     // ================== Right Mouse Button ===================== //
-    if (Button = mbRight) and RMBUnassigned and not InClassicModes then
+    if (Button = mbRight) and not Game.IsHighlightHotkey then
+    begin
+      // Hold Ctrl to generate a new lem at cursor (test mode only)
+      if CtrlPressed and (GameParams.TestModeLevel <> nil) then
+      begin
+        Game.GenerateNewLemming(X, Y, False, ShiftPressed, AltPressed)
+      end else
+      if RMBUnassigned and not InClassicModes then
       // Step backward one frame
       begin
         Game.IsBackstepping := True;
         GoToSaveState(Max(Game.CurrentIteration -1, 0));
       end;
+    end;
 
     // Check for highlight hotkey to assign skills to highlit lemmings
     if Game.IsHighlightHotkey then

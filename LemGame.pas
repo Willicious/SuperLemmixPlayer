@@ -528,7 +528,7 @@ type
     procedure RecordInfiniteSkills;
     procedure RecordInfiniteTime;
 
-    procedure GenerateNewLemming(X, Y: Integer; ShiftPressed: Boolean = False; AltPressed: Boolean = False);
+    procedure GenerateNewLemming(X, Y: Integer; Left: Boolean; ShiftPressed: Boolean = False; AltPressed: Boolean = False);
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -4638,7 +4638,7 @@ begin
 end;
 
 // Generates a new lemming at the cursor position (LMB + modifiers)
-procedure TLemmingGame.GenerateNewLemming(X, Y: Integer; ShiftPressed: Boolean = False; AltPressed: Boolean = False);
+procedure TLemmingGame.GenerateNewLemming(X, Y: Integer; Left: Boolean; ShiftPressed: Boolean = False; AltPressed: Boolean = False);
 var
   NewLemming: TLemming;
 begin
@@ -4674,10 +4674,15 @@ begin
     // Ctrl + Shift + Alt generates a Rival lemming
     LemIsRival := ShiftPressed and AltPressed;
 
-    // Set lemming position to cursor, direction to right-facing
+    // Set lemming position to cursor
     NewLemming.LemX := CursorPoint.X;
     NewLemming.LemY := CursorPoint.Y;
-    LemDX := 1;
+
+    // Set direction
+    if Left then
+      LemDX := -1
+    else
+      LemDX := 1;
   end;
 
   Inc(LemmingsOut);
