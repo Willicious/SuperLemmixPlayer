@@ -61,7 +61,11 @@ type
                          lka_FallDistance,
                          lka_ZoomIn,
                          lka_ZoomOut,
-                         lka_Scroll);
+                         lka_Scroll,
+                         lka_NudgeUp,
+                         lka_NudgeDown,
+                         lka_NudgeLeft,
+                         lka_NudgeRight);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
   TSpecialSkipCondition = (ssc_LastAction,
@@ -159,6 +163,10 @@ begin
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
   SetKeyFunction($37, lka_Skill, Integer(spbMiner));
   SetKeyFunction($38, lka_Skill, Integer(spbDigger));
+  SetKeyFunction($65, lka_NudgeUp);
+  SetKeyFunction($62, lka_NudgeDown);
+  SetKeyFunction($61, lka_NudgeLeft);
+  SetKeyFunction($63, lka_NudgeRight);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAdvanced;
@@ -229,6 +237,10 @@ begin
   SetKeyFunction($71, lka_SkillButton, 12);
   SetKeyFunction($72, lka_SkillButton, 13);
   SetKeyFunction($73, lka_SkillButton, 14);
+  SetKeyFunction($65, lka_NudgeUp);
+  SetKeyFunction($62, lka_NudgeDown);
+  SetKeyFunction($61, lka_NudgeLeft);
+  SetKeyFunction($63, lka_NudgeRight);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAlternative;
@@ -291,6 +303,10 @@ begin
   SetKeyFunction($68, lka_InfiniteSkills);
   SetKeyFunction($69, lka_InfiniteTime);
   SetKeyFunction($59, lka_CancelPlayback);
+  SetKeyFunction($65, lka_NudgeUp);
+  SetKeyFunction($62, lka_NudgeDown);
+  SetKeyFunction($61, lka_NudgeLeft);
+  SetKeyFunction($63, lka_NudgeRight);
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
@@ -342,6 +358,10 @@ begin
   if s = 'zoom_in' then Result := lka_ZoomIn;
   if s = 'zoom_out' then Result := lka_ZoomOut;
   if s = 'scroll' then Result := lka_Scroll;
+  if s = 'nudge_up' then Result := lka_NudgeUp;
+  if s = 'nudge_down' then Result := lka_NudgeDown;
+  if s = 'nudge_left' then Result := lka_NudgeLeft;
+  if s = 'nudge_right' then Result := lka_NudgeRight;
 end;
 
 class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
@@ -504,6 +524,10 @@ var
       lka_ZoomIn:           Result := 'Zoom_In';
       lka_ZoomOut:          Result := 'Zoom_Out';
       lka_Scroll:           Result := 'Scroll';
+      lka_NudgeUp:          Result := 'Nudge_Up';
+      lka_NudgeDown:        Result := 'Nudge_Down';
+      lka_NudgeLeft:        Result := 'Nudge_Left';
+      lka_NudgeRight:       Result := 'Nudge_Right';
       else Result := 'Null';
     end;
   end;

@@ -1478,7 +1478,11 @@ const
                          lka_ShowUsedSkills,
                          lka_ZoomIn,
                          lka_ZoomOut,
-                         lka_Scroll];
+                         lka_Scroll,
+                         lka_NudgeUp,
+                         lka_NudgeDown,
+                         lka_NudgeLeft,
+                         lka_NudgeRight];
   SKILL_KEYS = [lka_Skill, lka_SkillButton, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
@@ -1545,15 +1549,9 @@ begin
                  end;
       lka_InfiniteSkills: begin
                             HandleInfiniteSkillsHotkey;
-//                            Img.BeginUpdate;
-//                            ApplyScroll(-100, 0);   // Bookmark - this is how to nudge-scroll
-//                            Img.EndUpdate;
                           end;
       lka_InfiniteTime: begin
                           HandleInfiniteTimeHotkey;
-//                          Img.BeginUpdate;
-//                          ApplyScroll(100, 0);      // Bookmark - this is how to nudge-scroll
-//                          Img.EndUpdate;
                         end;
       lka_Nuke: begin
                   // Double keypress needed to prevent accidently nuking
@@ -1746,6 +1744,26 @@ begin
                       fHoldScrollData.StartCursor := Mouse.CursorPos;
                     end;
                   end;
+      lka_NudgeUp: begin
+                     Img.BeginUpdate;
+                     ApplyScroll(0, -160);
+                     Img.EndUpdate;
+                   end;
+      lka_NudgeDown: begin
+                       Img.BeginUpdate;
+                       ApplyScroll(0, 160);
+                       Img.EndUpdate;
+                     end;
+      lka_NudgeLeft: begin
+                       Img.BeginUpdate;
+                       ApplyScroll(-160, 0);
+                       Img.EndUpdate;
+                     end;
+      lka_NudgeRight: begin
+                        Img.BeginUpdate;
+                        ApplyScroll(160, 0);
+                        Img.EndUpdate;
+                      end;
     end;
   end;
 
