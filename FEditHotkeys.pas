@@ -494,8 +494,16 @@ begin
 
   if not TryStrToInt(ebSkipDuration.Text, TextValue) then
   begin
-    TextValue := 1;
-    if ebSkipDuration.Text <> '' then ebSkipDuration.Text := '1';
+    // Allow a single "-" character as valid input
+    if ebSkipDuration.Text = '-' then
+      Exit
+    else
+    begin
+      // Default to -1 for invalid cases with more than one "-"
+      TextValue := -1;
+      if ebSkipDuration.Text <> '' then ebSkipDuration.Text := '-1';
+      ebSkipDuration.SelStart := Length(ebSkipDuration.Text); // Move caret to end
+    end;
   end;
 
   fHotkeys.SetKeyFunction(i, lka_Skip, TextValue);
