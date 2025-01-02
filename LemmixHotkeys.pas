@@ -182,7 +182,7 @@ begin
   SetKeyFunction($BD, lka_ReleaseRateDown);
   SetKeyFunction($6B, lka_ReleaseRateMax);
   SetKeyFunction($6D, lka_ReleaseRateMin);
-  SetKeyFunction($55, lka_Highlight);
+  SetKeyFunction($48, lka_Highlight);
   SetKeyFunction($19, lka_ForceWalker);
   SetKeyFunction($57, lka_ForceWalker);
   SetKeyFunction($25, lka_DirLeft);
@@ -211,8 +211,8 @@ begin
   SetKeyFunction($43, lka_CancelReplay);
   SetKeyFunction($45, lka_EditReplay);
   SetKeyFunction($4F, lka_ReplayInsert);
-  SetKeyFunction($47, lka_SaveState);
-  SetKeyFunction($48, lka_LoadState);
+  SetKeyFunction($7A, lka_SaveState);
+  SetKeyFunction($7B, lka_LoadState);
   SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($79, lka_SaveImage);
   SetKeyFunction($31, lka_SkillButton, 1);
