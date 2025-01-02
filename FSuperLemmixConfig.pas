@@ -66,6 +66,8 @@ type
     cbShowButtonHints: TCheckBox;
     cbAmigaTheme: TCheckBox;
     imgAmigaTick: TImage;
+    lblScrollSpeed: TLabel;
+    cmbScrollSpeed: TComboBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -78,6 +80,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnResetWindowClick(Sender: TObject);
     procedure cbShowMinimapClick(Sender: TObject);
+    procedure cbEdgeScrollingClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -265,8 +268,11 @@ begin
     cbHideShadows.Checked := GameParams.HideShadows;
     cbHideHelpers.Checked := GameParams.HideHelpers;
     cbHideSkillQ.Checked := GameParams.HideSkillQ;
-    cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbSpawnInterval.Checked := GameParams.SpawnInterval;
+
+    // Edge scrolling
+    cbEdgeScrolling.Checked := GameParams.EdgeScroll;
+    cmbScrollSpeed.ItemIndex := GameParams.EdgeScrollSpeed;
 
     cbFullScreen.Checked := GameParams.FullScreen;
     cbResetWindowSize.Enabled := not GameParams.FullScreen;
@@ -335,8 +341,11 @@ begin
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.HideHelpers := cbHideHelpers.Checked;
   GameParams.HideSkillQ := cbHideSkillQ.Checked;
-  GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
+
+  // Edge scrolling
+  GameParams.EdgeScroll := cbEdgeScrolling.Checked;
+  GameParams.EdgeScrollSpeed := cmbScrollSpeed.ItemIndex;
 
   GameParams.FullScreen := cbFullScreen.Checked;
   fResetWindowSize := cbResetWindowSize.Checked;
@@ -512,8 +521,32 @@ begin
   end;
 end;
 
+procedure TFormNXConfig.cbEdgeScrollingClick(Sender: TObject);
+begin
+  if not fIsSetting then
+  begin
+    if cbEdgeScrolling.Checked then
+    begin
+      lblScrollSpeed.Enabled := True;
+      cmbScrollSpeed.Enabled := True;
+    end else begin
+      lblScrollSpeed.Enabled := False;
+      cmbScrollSpeed.Enabled := False;
+    end;
+  end;
+
+  OptionChanged(Sender);
+end;
+
 procedure TFormNXConfig.SetCheckboxes;
   begin
+    if not GameParams.EdgeScroll then
+    begin
+      lblScrollSpeed.Enabled := False;
+      cmbScrollSpeed.Enabled := False;
+    end;
+
+
     if GameParams.ClassicMode then
     begin
       cbHideShadows.Enabled := False;

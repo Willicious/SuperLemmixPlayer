@@ -232,6 +232,13 @@ object FormNXConfig: TFormNXConfig
     object TabSheet2: TTabSheet
       Caption = 'Gameplay'
       ImageIndex = 4
+      object lblScrollSpeed: TLabel
+        Left = 31
+        Top = 35
+        Width = 66
+        Height = 13
+        Caption = 'Scroll Speed:'
+      end
       object cbEdgeScrolling: TCheckBox
         Left = 15
         Top = 12
@@ -239,11 +246,11 @@ object FormNXConfig: TFormNXConfig
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
         TabOrder = 0
-        OnClick = OptionChanged
+        OnClick = cbEdgeScrollingClick
       end
       object cbPauseAfterBackwards: TCheckBox
         Left = 15
-        Top = 35
+        Top = 57
         Width = 205
         Height = 17
         Caption = 'Pause After Backwards Frameskip'
@@ -252,7 +259,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbClassicMode: TGroupBox
         Left = 3
-        Top = 269
+        Top = 284
         Width = 256
         Height = 124
         Caption = 'Classic Mode Options'
@@ -321,14 +328,14 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 3
-        Top = 66
+        Top = 90
         Width = 256
-        Height = 75
+        Height = 71
         Caption = 'Replay Options'
         TabOrder = 4
         object cbReplayAfterRestart: TCheckBox
           Left = 12
-          Top = 20
+          Top = 21
           Width = 217
           Height = 17
           Caption = 'Auto-Replay After Restarting Level'
@@ -337,7 +344,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbAutoReplay: TCheckBox
           Left = 12
-          Top = 43
+          Top = 42
           Width = 234
           Height = 17
           Caption = 'Auto-Replay After Backwards Frameskip'
@@ -347,7 +354,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbSkillPanelOptions: TGroupBox
         Left = 3
-        Top = 152
+        Top = 176
         Width = 256
         Height = 97
         Caption = 'Skill Panel Options'
@@ -389,6 +396,23 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 2
           OnClick = OptionChanged
         end
+      end
+      object cmbScrollSpeed: TComboBox
+        Left = 103
+        Top = 32
+        Width = 102
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 2
+        TabOrder = 5
+        Text = 'Medium'
+        OnChange = OptionChanged
+        Items.Strings = (
+          'Slowest'
+          'Slow'
+          'Medium'
+          'Fast'
+          'Fastest')
       end
     end
     object Graphics: TTabSheet

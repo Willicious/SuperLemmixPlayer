@@ -148,7 +148,7 @@ type
     function GetGameSpeed: TGameSpeed;
     function GetDisplayWidth: Integer;  // To satisfy IGameWindow
     function GetDisplayHeight: Integer; // To satisfy IGameWindow
-
+    function GetScrollSpeed: Integer;
     procedure SuspendGameplay;
     procedure ResumeGameplay;
 
@@ -1158,12 +1158,11 @@ begin
   Result := fSuspendCursor;
 end;
 
-
 function TGameWindow.CheckScroll: Boolean;
   procedure Scroll(dx, dy: Integer);
   begin
-    Img.OffsetHorz := Img.OffsetHorz - fInternalZoom * dx * fScrollSpeed;
-    Img.OffsetVert := Img.OffsetVert - fInternalZoom * dy * fScrollSpeed;
+    Img.OffsetHorz := Img.OffsetHorz - fInternalZoom * dx;
+    Img.OffsetVert := Img.OffsetVert - fInternalZoom * dy;
     Img.OffsetHorz := Max(MinScroll, Img.OffsetHorz);
     Img.OffsetHorz := Min(MaxScroll, Img.OffsetHorz);
     Img.OffsetVert := Max(MinVScroll, Img.OffsetVert);
@@ -1225,17 +1224,37 @@ begin
     Img.BeginUpdate;
     case GameScroll of
       gsRight:
-        Scroll(8 * ResMod, 0);
+        Scroll(fScrollSpeed * ResMod, 0);
       gsLeft:
-        Scroll(-8 * ResMod, 0);
+        Scroll(-fScrollSpeed * ResMod, 0);
     end;
     case GameVScroll of
       gsUp:
-        Scroll(0, -8 * ResMod);
+        Scroll(0, -fScrollSpeed * ResMod);
       gsDown:
-        Scroll(0, 8 * ResMod);
+        Scroll(0, fScrollSpeed * ResMod);
     end;
     Img.EndUpdate;
+  end;
+end;
+
+function TGameWindow.GetScrollSpeed: Integer;
+begin
+  Result := 8; // Default
+
+  // Set speed according to user options
+  if (GameParams.EdgeScrollSpeed >= 0) then
+  begin
+    if      GameParams.EdgeScrollSpeed = 0 then
+      Result := Result div 4 // Slowest
+    else if GameParams.EdgeScrollSpeed = 1 then
+      Result := Result div 2 // Slow
+    else if GameParams.EdgeScrollSpeed = 2 then
+      Exit                   // Medium (Default)
+    else if GameParams.EdgeScrollSpeed = 3 then
+      Result := Result * 2   // Fast
+    else if GameParams.EdgeScrollSpeed >= 4 then
+      Result := Result * 4;  // Fastest
   end;
 end;
 
@@ -1251,7 +1270,7 @@ begin
 
   // Create game
   fGame := GlobalGame; // Set ref to GlobalGame
-  fScrollSpeed := 1;
+  fScrollSpeed := GetScrollSpeed;
   fSaveStateFrame := -1;
   fHyperSpeedTarget := -1;
 

@@ -145,6 +145,7 @@ type
 
     fShowLevelSelectOptions: Boolean;
 
+    fEdgeScrollSpeed: Integer;
     fCursorResize: Double;
     fZoomLevel: Integer;
     fPanelZoomLevel: Integer;
@@ -303,6 +304,7 @@ type
     property ShowLevelSelectOptions: Boolean read fShowLevelSelectOptions write fShowLevelSelectOptions;
 
     property CursorResize: Double read fCursorResize write fCursorResize;
+    property EdgeScrollSpeed: Integer read fEdgeScrollSpeed write fEdgeScrollSpeed;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property PanelZoomLevel: Integer read fPanelZoomLevel write fPanelZoomLevel;
     property WindowLeft: Integer read fWindowLeft write fWindowLeft;
@@ -478,10 +480,12 @@ begin
     SaveBoolean('HideSkillQ', HideSkillQ);
     SaveBoolean('HighQualityMinimap', MinimapHighQuality);
     SaveBoolean('ShowMinimap', ShowMinimap);
-    SaveBoolean('EdgeScrolling', EdgeScroll);
     SaveBoolean('UseSpawnInterval', SpawnInterval);
 
     SaveBoolean('ShowLevelSelectOptions', ShowLevelSelectOptions);
+
+    SaveBoolean('EdgeScrolling', EdgeScroll);
+    SL.Add('EdgeScrollSpeed=' + IntToStr(EdgeScrollSpeed));
 
     SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
     SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
@@ -614,6 +618,14 @@ var
       fPanelZoomLevel := 1;
   end;
 
+  procedure ValidateEdgeScrollSpeed;
+  begin
+    if fEdgeScrollSpeed < 0 then
+      fEdgeScrollSpeed := 0
+    else if fEdgeScrollSpeed > 4 then
+      fEdgeScrollSpeed := 4;
+  end;
+
   procedure LoadPlaybackOrderOptions;
   var
     sOption: String;
@@ -668,10 +680,13 @@ begin
     HideSkillQ := LoadBoolean('HideSkillQ', HideSkillQ);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     ShowMinimap := LoadBoolean('ShowMinimap', ShowMinimap);
-    EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
     PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
+
+    EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
+    EdgeScrollSpeed := StrToIntDef(SL.Values['EdgeScrollSpeed'], 2);
+    ValidateEdgeScrollSpeed;
 
     LoadPlaybackOrderOptions;
     AutoSkipPreviewPostview := LoadBoolean('AutoSkipPreviewPostview', AutoSkipPreviewPostview);
@@ -1041,6 +1056,7 @@ begin
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
   fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
+  fEdgeScrollSpeed := 2;
   fCursorResize := 1;
   fShowLevelSelectOptions := True;
 
