@@ -82,6 +82,7 @@ type
       NukeIsActive: Boolean;
       ExploderAssignInProgress: Boolean;
       Index_LemmingToBeNuked: Integer;
+
       constructor Create;
       destructor Destroy; override;
   end;
@@ -526,6 +527,8 @@ type
     procedure SetSkillsToInfinite;
     procedure RecordInfiniteSkills;
     procedure RecordInfiniteTime;
+
+    procedure GenerateNewLemming(X, Y: Integer; ShiftPressed: Boolean = False; AltPressed: Boolean = False);
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -4632,6 +4635,52 @@ begin
   Result := LemmingMethods[L.LemAction](L);
 
   if L.LemIsZombie and not IsSimulating then SetZombieField(L);
+end;
+
+// Generates a new lemming at the cursor position (LMB + modifiers)
+procedure TLemmingGame.GenerateNewLemming(X, Y: Integer; ShiftPressed: Boolean = False; AltPressed: Boolean = False);
+var
+  NewLemming: TLemming;
+begin
+  // This feature is for test mode only
+  if GameParams.TestModeLevel = nil then Exit;
+
+  NewLemming := TLemming.Create;
+
+  with NewLemming do
+  begin
+    // Add the lemming to the level
+    LemIndex := LemmingList.Add(NewLemming);
+    LemIdentifier := 'N' + IntToStr(CurrentIteration);
+
+    // Spawn as faller
+    Transition(NewLemming, baFalling);
+    LemInitialFall := True;
+
+    // Set permaskill properties
+    LemIsSlider := False;
+    LemIsClimber := False;
+    LemIsSwimmer := False;
+    LemIsDisarmer := False;
+    LemIsFloater := False;
+    LemIsGlider := False;
+
+    // Ctrl + Shift generates a Neutral lemming
+    LemIsNeutral := ShiftPressed and not AltPressed;
+
+    // Ctrl + Alt generates a Zombie lemming
+    LemIsZombie := AltPressed and not ShiftPressed;
+
+    // Ctrl + Shift + Alt generates a Rival lemming
+    LemIsRival := ShiftPressed and AltPressed;
+
+    // Set lemming position to cursor, direction to right-facing
+    NewLemming.LemX := CursorPoint.X;
+    NewLemming.LemY := CursorPoint.Y;
+    LemDX := 1;
+  end;
+
+  Inc(LemmingsOut);
 end;
 
 //procedure TLemmingGame.WrapLemming(L: TLemming; WrapPosX, WrapPosY: Integer);

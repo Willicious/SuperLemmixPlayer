@@ -1830,13 +1830,13 @@ end;
 procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 {-------------------------------------------------------------------------------
-  mouse handling of the game
+                        Main mouse input handling method
 -------------------------------------------------------------------------------}
-
 var
   PassKey: Word;
   OldHighlightLemming: TLemming;
-  RightMouseUnassigned: Boolean;
+  RMBUnassigned, Paused, InClassicModes: Boolean;
+  CtrlPressed, ShiftPressed, AltPressed: Boolean;
 begin
   if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
@@ -1859,38 +1859,56 @@ begin
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
 
-    // Make sure the right mouse button is unassigned
-    RightMouseUnassigned := HotkeyManager.CheckKeyAssigned(lka_Null, 2);
+    // Set conditions
+    CtrlPressed    := ssCtrl in Shift;
+    ShiftPressed   := ssShift in Shift;
+    AltPressed     := ssAlt in Shift;
+    RMBUnassigned  := HotkeyManager.CheckKeyAssigned(lka_Null, 2);
+    Paused         := GameSpeed = gspPause;
+    InClassicModes := GameParams.ClassicMode or Game.IsSuperlemmingMode;
 
+    // ================== Left Mouse Button ===================== //
     if (Button = mbLeft) and not Game.IsHighlightHotkey then
     begin
       Game.RegainControl;
 
-      // Deactivates assign-whilst-paused in Classic Mode or Superlemming Mode
-      if not ((GameSpeed = gspPause) and
-        (GameParams.ClassicMode or Game.IsSuperLemmingMode)) then
+      // Hold Ctrl to generate a new lem at cursor (test mode only)
+      if CtrlPressed and (GameParams.TestModeLevel <> nil) then
+      begin
+        Game.GenerateNewLemming(X, Y, ShiftPressed, AltPressed)
+      end else
+      // Assign skill
+      begin
+        if not (Paused and InClassicModes) then
           Game.ProcessSkillAssignment;
+      end;
 
-      if (fGameSpeed = gspPause)
-        and not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
-          fForceUpdateOneFrame := True;
+      // Step forward one frame
+      if Paused and not InClassicModes then
+        fForceUpdateOneFrame := True;
+    end else
 
-    end else if (Button = mbRight) and RightMouseUnassigned
-    and not (GameParams.ClassicMode or Game.IsSuperLemmingMode) then
-    begin
-      Game.IsBackstepping := True;
-      GoToSaveState(Max(Game.CurrentIteration -1, 0));
-    end;
+    // ================== Right Mouse Button ===================== //
+    if (Button = mbRight) and RMBUnassigned and not InClassicModes then
+      // Step backward one frame
+      begin
+        Game.IsBackstepping := True;
+        GoToSaveState(Max(Game.CurrentIteration -1, 0));
+      end;
 
+    // Check for highlight hotkey to assign skills to highlit lemmings
     if Game.IsHighlightHotkey then
     begin
       OldHighlightLemming := fRenderInterface.HighlitLemming;
+
+      // Assign skill to highlit lemming by clicking the skill button
       Game.ProcessHighlightAssignment;
+
       if fRenderInterface.HighlitLemming <> OldHighlightLemming then
         SoundManager.PlaySound(SFX_SKILLBUTTON);
     end;
 
-    if fGameSpeed = gspPause then
+    if Paused then
       DoDraw;
 
     fLastMousePress := GetTickCount;
