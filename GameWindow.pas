@@ -1835,6 +1835,7 @@ procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
 var
   PassKey: Word;
   OldHighlightLemming: TLemming;
+  InTestMode: Boolean;
   RMBUnassigned, Paused, InClassicModes: Boolean;
   CtrlPressed, ShiftPressed, AltPressed: Boolean;
 begin
@@ -1866,14 +1867,15 @@ begin
     RMBUnassigned  := HotkeyManager.CheckKeyAssigned(lka_Null, 2);
     Paused         := GameSpeed = gspPause;
     InClassicModes := GameParams.ClassicMode or Game.IsSuperlemmingMode;
+    InTestMode     := {$ifdef debug} True {$else} GameParams.TestModeLevel <> nil {$endif};
 
     // ================== Left Mouse Button ===================== //
     if (Button = mbLeft) and not Game.IsHighlightHotkey then
     begin
       Game.RegainControl;
 
-      // Hold Ctrl to generate a new lem at cursor (test mode only)
-      if CtrlPressed and (GameParams.TestModeLevel <> nil) then
+      // Hold Ctrl to generate a new lem at cursor (test/debug mode only)
+      if CtrlPressed and InTestMode then
       begin
         Game.GenerateNewLemming(X, Y, True, ShiftPressed, AltPressed)
       end else
@@ -1891,8 +1893,8 @@ begin
     // ================== Right Mouse Button ===================== //
     if (Button = mbRight) and not Game.IsHighlightHotkey then
     begin
-      // Hold Ctrl to generate a new lem at cursor (test mode only)
-      if CtrlPressed and (GameParams.TestModeLevel <> nil) then
+      // Hold Ctrl to generate a new lem at cursor (test/debug mode only)
+      if CtrlPressed and InTestMode then
       begin
         Game.GenerateNewLemming(X, Y, False, ShiftPressed, AltPressed)
       end else

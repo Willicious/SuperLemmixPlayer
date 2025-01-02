@@ -4642,8 +4642,10 @@ procedure TLemmingGame.GenerateNewLemming(X, Y: Integer; Left: Boolean; ShiftPre
 var
   NewLemming: TLemming;
 begin
-  // This feature is for test mode only
+  // This feature is for test/debug mode only
+  {$ifndef debug}
   if GameParams.TestModeLevel = nil then Exit;
+  {$endif}
 
   NewLemming := TLemming.Create;
 
