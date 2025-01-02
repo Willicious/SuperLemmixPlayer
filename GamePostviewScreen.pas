@@ -490,7 +490,7 @@ begin
 
   // Rescue result - record
   if Results.gSuccess and (Entry.UserRecords.LemmingsRescued.Value > 0)
-                      and (not Results.gToRescue <= 0) then
+                      and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
     Result[3].Line := SYourRecord + SRescueRecord +
                       StringOfChar(' ', 3 - SRescueRecord.Length)
   else
@@ -541,7 +541,7 @@ begin
 
   // Time record
   if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
-  and (not Results.gToRescue <= 0) then
+  and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
     Result[8].Line := SYourTimeRecord + STimeRecord
   else
     Result[8].Line := '';
@@ -551,7 +551,7 @@ begin
   // Skills record
   HueShift.HShift := SkillsRecordShift;
   if (Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0))
-  and (not Results.gToRescue <= 0) then
+  and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
     Result[9].Line := SYourFewestSkills + SSkillsRecord
   else
     Result[9].Line := '';
