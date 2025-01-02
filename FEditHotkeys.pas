@@ -29,6 +29,8 @@ type
     btnReset: TBitBtn;
     lblSkillButton: TLabel;
     seSkillButton: TSpinEdit;
+    lblNudgeAmount: TLabel;
+    ebNudgeAmount: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -51,6 +53,8 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure btnSaveCloseClick(Sender: TObject);
     procedure seSkillButtonChange(Sender: TObject);
+    procedure ebNudgeAmountChange(Sender: TObject);
+    procedure ebClick(Sender: TObject);
   private
     fKeyNames: TKeyNameArray;
     fHotkeys: TLemmixHotkeyManager;
@@ -112,10 +116,12 @@ begin
     cbSkill.ItemIndex := -1;
     seSkillButton.Value := 0;
     ebSkipDuration.Text := '';
-    cbFunctions.Enabled := false;
-    cbSkill.Enabled := false;
-    seSkillButton.Enabled := false;
-    ebSkipDuration.Enabled := false;
+    ebNudgeAmount.Text := '';
+    cbFunctions.Enabled := False;
+    cbSkill.Enabled := False;
+    seSkillButton.Enabled := False;
+    ebSkipDuration.Enabled := False;
+    ebNudgeAmount.Enabled := False;
     Exit;
   end;
   cbFunctions.Enabled := true;
@@ -124,13 +130,16 @@ begin
     lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_SkillButton: seSkillButton.Value := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
+    lka_NudgeUp,
+    lka_NudgeDown,
+    lka_NudgeLeft,
+    lka_NudgeRight: ebNudgeAmount.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
     lka_ClearPhysics,
     lka_ShowUsedSkills: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
   end;
 
   // Scroll to selected key in the displayed list
   lvHotkeys.Selected.MakeVisible(False);
-
   cbFunctionsChange(self);
 end;
 
@@ -282,6 +291,18 @@ begin
                            ssc_HighlitStateChange: s := s + 'Highlit Lemming State Change';
                          end;
                        end;
+      lka_NudgeUp:    begin
+                        s := 'Nudge viewport up ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
+      lka_NudgeDown:  begin
+                        s := 'Nudge viewport down ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
+      lka_NudgeLeft:  begin
+                        s := 'Nudge viewport left ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
+      lka_NudgeRight: begin
+                        s := 'Nudge viewport right ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                      end;
       else s := cbFunctions.Items[Integer(fHotkeys.CheckKeyEffect(i).Action)];
     end;
     if e < lvHotkeys.Items.Count then
@@ -334,46 +355,55 @@ end;
 
 procedure TFLemmixHotkeys.SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
 begin
-  lblSkill.Visible := false;
-  cbSkill.Visible := false;
-  cbSkill.Enabled := false;
-  lblSkillButton.Visible := false;
-  seSkillButton.Visible := false;
-  seSkillButton.Enabled := false;
-  lblDuration.Visible := false;
-  ebSkipDuration.Visible := false;
-  ebSkipDuration.Enabled := false;
-  lblSkip.Visible := false;
-  cbSpecialSkip.Visible := false;
-  cbSpecialSkip.Enabled := false;
-  cbHoldKey.Visible := false;
-  cbHoldKey.Enabled := false;
+  lblSkill.Visible := False;
+  cbSkill.Visible := False;
+  cbSkill.Enabled := False;
+  lblSkillButton.Visible := False;
+  seSkillButton.Visible := False;
+  seSkillButton.Enabled := False;
+  lblDuration.Visible := False;
+  ebSkipDuration.Visible := False;
+  ebSkipDuration.Enabled := False;
+  lblSkip.Visible := False;
+  cbSpecialSkip.Visible := False;
+  cbSpecialSkip.Enabled := False;
+  lblNudgeAmount.Visible := False;
+  ebNudgeAmount.Visible := False;
+  ebNudgeAmount.Enabled := False;
+  cbHoldKey.Visible := False;
+  cbHoldKey.Enabled := False;
 
   case aKeyType of
     lka_Skill: begin
-                 lblSkill.Visible := true;
-                 cbSkill.Visible := true;
-                 cbSkill.Enabled := true;
+                 lblSkill.Visible := True;
+                 cbSkill.Visible := True;
+                 cbSkill.Enabled := True;
                end;
     lka_SkillButton: begin
-                       lblSkillButton.Visible := true;
-                       seSkillButton.Visible := true;
-                       seSkillButton.Enabled := true;
+                       lblSkillButton.Visible := True;
+                       seSkillButton.Visible := True;
+                       seSkillButton.Enabled := True;
                      end;
     lka_Skip: begin
-                lblDuration.Visible := true;
-                ebSkipDuration.Visible := true;
-                ebSkipDuration.Enabled := true;
+                lblDuration.Visible := True;
+                ebSkipDuration.Visible := True;
+                ebSkipDuration.Enabled := True;
               end;
     lka_ClearPhysics,
     lka_ShowUsedSkills: begin
-                          cbHoldKey.Visible := true;
-                          cbHoldKey.Enabled := true;
+                          cbHoldKey.Visible := True;
+                          cbHoldKey.Enabled := True;
                         end;
     lka_SpecialSkip: begin
-                       lblSkip.Visible := true;
-                       cbSpecialSkip.Visible := true;
-                       cbSpecialSkip.Enabled := true;
+                       lblSkip.Visible := True;
+                       cbSpecialSkip.Visible := True;
+                       cbSpecialSkip.Enabled := True;
+                     end;
+    lka_NudgeUp, lka_NudgeDown, lka_NudgeLeft, lka_NudgeRight:
+                     begin
+                       lblNudgeAmount.Visible := True;
+                       ebNudgeAmount.Visible := True;
+                       ebNudgeAmount.Enabled := True;
                      end;
   end;
 end;
@@ -408,6 +438,22 @@ begin
                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
                         else
                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 0);
+    lka_NudgeUp:    begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeUp, StrToInt(ebNudgeAmount.Text));
+                    end;
+    lka_NudgeDown:  begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeDown, StrToInt(ebNudgeAmount.Text));
+                    end;
+    lka_NudgeLeft:  begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeLeft, StrToInt(ebNudgeAmount.Text));
+                    end;
+    lka_NudgeRight: begin
+                      ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
+                      fHotkeys.SetKeyFunction(i, lka_NudgeRight, StrToInt(ebNudgeAmount.Text));
+                    end;
     else fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
   end;
   SetVisibleModifier(TLemmixHotkeyAction(cbFunctions.ItemIndex));
@@ -456,6 +502,39 @@ begin
   RefreshList;
 end;
 
+procedure TFLemmixHotkeys.ebClick(Sender: TObject);
+begin
+  if Sender is TEdit then
+    TEdit(Sender).SelectAll;
+end;
+
+procedure TFLemmixHotkeys.ebNudgeAmountChange(Sender: TObject);
+var
+  i: Integer;
+  aAction: TLemmixHotkeyAction;
+  TextValue: Integer;
+begin
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if i = -1 then Exit; // Safety; should never happen
+
+  aAction := fHotkeys.CheckKeyEffect(i).Action;
+
+  if not (aAction in [lka_NudgeUp, lka_NudgeDown,
+                      lka_NudgeLeft, lka_NudgeRight]) then Exit;
+
+  if not TryStrToInt(ebNudgeAmount.Text, TextValue) or (TextValue <= 0) then
+  begin
+    TextValue := 160;
+    if ebNudgeAmount.Text <> '' then
+    begin
+      ebNudgeAmount.Text := '160';
+      ebNudgeAmount.SelStart := Length(ebNudgeAmount.Text); // Move caret to the end
+    end;
+  end;
+
+  fHotkeys.SetKeyFunction(i, aAction, TextValue);
+  RefreshList;
+end;
 
 procedure TFLemmixHotkeys.lvHotkeysSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);

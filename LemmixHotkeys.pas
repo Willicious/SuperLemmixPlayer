@@ -163,10 +163,10 @@ begin
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
   SetKeyFunction($37, lka_Skill, Integer(spbMiner));
   SetKeyFunction($38, lka_Skill, Integer(spbDigger));
-  SetKeyFunction($65, lka_NudgeUp);
-  SetKeyFunction($62, lka_NudgeDown);
-  SetKeyFunction($61, lka_NudgeLeft);
-  SetKeyFunction($63, lka_NudgeRight);
+  SetKeyFunction($65, lka_NudgeUp, 160);
+  SetKeyFunction($62, lka_NudgeDown, 160);
+  SetKeyFunction($61, lka_NudgeLeft, 160);
+  SetKeyFunction($63, lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAdvanced;
@@ -237,10 +237,10 @@ begin
   SetKeyFunction($71, lka_SkillButton, 12);
   SetKeyFunction($72, lka_SkillButton, 13);
   SetKeyFunction($73, lka_SkillButton, 14);
-  SetKeyFunction($65, lka_NudgeUp);
-  SetKeyFunction($62, lka_NudgeDown);
-  SetKeyFunction($61, lka_NudgeLeft);
-  SetKeyFunction($63, lka_NudgeRight);
+  SetKeyFunction($65, lka_NudgeUp, 160);
+  SetKeyFunction($62, lka_NudgeDown, 160);
+  SetKeyFunction($61, lka_NudgeLeft, 160);
+  SetKeyFunction($63, lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAlternative;
@@ -303,10 +303,10 @@ begin
   SetKeyFunction($68, lka_InfiniteSkills);
   SetKeyFunction($69, lka_InfiniteTime);
   SetKeyFunction($59, lka_CancelPlayback);
-  SetKeyFunction($65, lka_NudgeUp);
-  SetKeyFunction($62, lka_NudgeDown);
-  SetKeyFunction($61, lka_NudgeLeft);
-  SetKeyFunction($63, lka_NudgeRight);
+  SetKeyFunction($65, lka_NudgeUp, 160);
+  SetKeyFunction($62, lka_NudgeDown, 160);
+  SetKeyFunction($61, lka_NudgeLeft, 160);
+  SetKeyFunction($63, lka_NudgeRight, 160);
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
@@ -582,9 +582,23 @@ begin
   begin
     s := InterpretMain(fKeyFunctions[i].Action);
     if s = 'Null' then Continue;
-    if fKeyFunctions[i].Action in [lka_Skill, lka_SkillButton, lka_Skip, lka_SpecialSkip, lka_ClearPhysics,
-    lka_ShowUsedSkills] then
+
+    // Hotkey actions with secondary properties (modifiers)
+    if fKeyFunctions[i].Action in [lka_Skill,
+                                   lka_SkillButton,
+                                   lka_Skip,
+                                   lka_SpecialSkip,
+                                   lka_ClearPhysics,
+                                   lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
+
+    // And, ensure these modifiers always have positive integers
+    if fKeyFunctions[i].Action in [lka_NudgeUp,
+                                   lka_NudgeDown,
+                                   lka_NudgeLeft,
+                                   lka_NudgeRight] then
+      s := s + ':' + InterpretSecondary(Abs(fKeyFunctions[i].Modifier), fKeyFunctions[i].Action);
+
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;
   try

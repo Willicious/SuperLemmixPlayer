@@ -1744,26 +1744,10 @@ begin
                       fHoldScrollData.StartCursor := Mouse.CursorPos;
                     end;
                   end;
-      lka_NudgeUp: begin
-                     Img.BeginUpdate;
-                     ApplyScroll(0, -160);
-                     Img.EndUpdate;
-                   end;
-      lka_NudgeDown: begin
-                       Img.BeginUpdate;
-                       ApplyScroll(0, 160);
-                       Img.EndUpdate;
-                     end;
-      lka_NudgeLeft: begin
-                       Img.BeginUpdate;
-                       ApplyScroll(-160, 0);
-                       Img.EndUpdate;
-                     end;
-      lka_NudgeRight: begin
-                        Img.BeginUpdate;
-                        ApplyScroll(160, 0);
-                        Img.EndUpdate;
-                      end;
+      lka_NudgeUp: ApplyScroll(0, -Abs(func.Modifier));
+      lka_NudgeDown: ApplyScroll(0, Abs(func.Modifier));
+      lka_NudgeLeft: ApplyScroll(-Abs(func.Modifier), 0);
+      lka_NudgeRight: ApplyScroll(Abs(func.Modifier), 0);
     end;
   end;
 

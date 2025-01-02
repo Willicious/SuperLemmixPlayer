@@ -6,7 +6,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'Hotkeys'
-  ClientHeight = 508
+  ClientHeight = 541
   ClientWidth = 519
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -29,15 +29,15 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblDuration: TLabel
     Left = 318
-    Top = 317
-    Width = 49
+    Top = 318
+    Width = 114
     Height = 13
-    Caption = 'Duration:'
+    Caption = 'Skip Amount (Frames):'
     Visible = False
   end
   object lblSkip: TLabel
     Left = 340
-    Top = 343
+    Top = 376
     Width = 25
     Height = 13
     Caption = 'Skip:'
@@ -64,6 +64,14 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Caption = 'Skill Button:'
     Visible = False
   end
+  object lblNudgeAmount: TLabel
+    Left = 318
+    Top = 345
+    Width = 119
+    Height = 13
+    Caption = 'Nudge Amount (Pixels):'
+    Visible = False
+  end
   object btnFindKey: TButton
     Left = 342
     Top = 133
@@ -76,9 +84,9 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lvHotkeys: TListView
     Left = -3
-    Top = 0
+    Top = -2
     Width = 311
-    Height = 500
+    Height = 533
     Columns = <
       item
         Caption = 'Key'
@@ -152,11 +160,15 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Fall Distance Template'
       'Zoom In'
       'Zoom Out'
-      'Hold-To-Scroll')
+      'Hold-To-Scroll'
+      'Nudge Up'
+      'Nudge Down'
+      'Nudge Left'
+      'Nudge Right')
   end
   object btnSaveClose: TButton
     Left = 342
-    Top = 422
+    Top = 455
     Width = 138
     Height = 40
     Caption = 'Save && Close'
@@ -213,18 +225,19 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnClick = cbShowUnassignedClick
   end
   object ebSkipDuration: TEdit
-    Left = 373
-    Top = 313
-    Width = 129
+    Left = 438
+    Top = 315
+    Width = 73
     Height = 21
     Enabled = False
     TabOrder = 5
     Visible = False
     OnChange = ebSkipDurationChange
+    OnClick = ebClick
   end
   object cbHardcodedNames: TCheckBox
     Left = 343
-    Top = 399
+    Top = 432
     Width = 145
     Height = 17
     Caption = 'Use Hardcoded Names'
@@ -237,7 +250,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbHoldKey: TCheckBox
     Left = 378
-    Top = 374
+    Top = 407
     Width = 97
     Height = 17
     Caption = 'Hold Key'
@@ -247,7 +260,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSpecialSkip: TComboBox
     Left = 373
-    Top = 340
+    Top = 373
     Width = 129
     Height = 21
     Style = csDropDownList
@@ -298,7 +311,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnCancel: TBitBtn
     Left = 415
-    Top = 468
+    Top = 501
     Width = 65
     Height = 30
     Caption = 'Cancel'
@@ -308,7 +321,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnReset: TBitBtn
     Left = 342
-    Top = 468
+    Top = 501
     Width = 67
     Height = 30
     Caption = 'Reset'
@@ -327,5 +340,16 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Value = 1
     Visible = False
     OnChange = seSkillButtonChange
+  end
+  object ebNudgeAmount: TEdit
+    Left = 443
+    Top = 342
+    Width = 68
+    Height = 21
+    Enabled = False
+    TabOrder = 17
+    Visible = False
+    OnChange = ebNudgeAmountChange
+    OnClick = ebClick
   end
 end
