@@ -124,7 +124,7 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = cbAutoSaveReplayClick
         end
-        object cbAutoSaveReplayPattern: TComboBox
+        object cmbAutoSaveReplayPattern: TComboBox
           Left = 13
           Top = 44
           Width = 238
@@ -147,7 +147,7 @@ object FormNXConfig: TFormNXConfig
             'Username + Title + Timestamp'
             'Username + Position + Title + Timestamp')
         end
-        object cbIngameSaveReplayPattern: TComboBox
+        object cmbIngameSaveReplayPattern: TComboBox
           Left = 13
           Top = 88
           Width = 238
@@ -170,7 +170,7 @@ object FormNXConfig: TFormNXConfig
             'Username + Position + Title + Timestamp'
             '(Show '#39'Save As'#39' dialog)')
         end
-        object cbPostviewSaveReplayPattern: TComboBox
+        object cmbPostviewSaveReplayPattern: TComboBox
           Left = 13
           Top = 131
           Width = 238
@@ -2580,7 +2580,7 @@ object FormNXConfig: TFormNXConfig
           0000803F0000001F0000041F0000FE0F0000FE070000FF070000FF830000FF81
           0000FFC10000FFE00000FFE00000FFFF0000}
       end
-      object cbZoom: TComboBox
+      object cmbZoom: TComboBox
         Left = 104
         Top = 17
         Width = 81
@@ -2593,7 +2593,7 @@ object FormNXConfig: TFormNXConfig
         Items.Strings = (
           '1x Zoom')
       end
-      object cbPanelZoom: TComboBox
+      object cmbPanelZoom: TComboBox
         Left = 104
         Top = 44
         Width = 81

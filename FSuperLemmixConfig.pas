@@ -21,9 +21,9 @@ type
     lblPostviewSaveReplay: TLabel;
     gbReplayNamingOptions: TGroupBox;
     cbAutoSaveReplay: TCheckBox;
-    cbAutoSaveReplayPattern: TComboBox;
-    cbIngameSaveReplayPattern: TComboBox;
-    cbPostviewSaveReplayPattern: TComboBox;
+    cmbAutoSaveReplayPattern: TComboBox;
+    cmbIngameSaveReplayPattern: TComboBox;
+    cmbPostviewSaveReplayPattern: TComboBox;
     btnHotkeys: TButton;
     ebUserName: TEdit;
     cbAutoReplay: TCheckBox;
@@ -41,7 +41,7 @@ type
     cbDisableTestplayMusic: TCheckBox;
     Label1: TLabel;
     Label2: TLabel;
-    cbZoom: TComboBox;
+    cmbZoom: TComboBox;
     cbLinearResampleMenu: TCheckBox;
     cbFullScreen: TCheckBox;
     cbMinimapHighQuality: TCheckBox;
@@ -49,7 +49,7 @@ type
     cbHighResolution: TCheckBox;
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
-    cbPanelZoom: TComboBox;
+    cmbPanelZoom: TComboBox;
     btnResetWindow: TButton;
     rgExitSound: TRadioGroup;
     cbShowMinimap: TCheckBox;
@@ -166,7 +166,7 @@ var
   i: Integer;
   MaxZoom: Integer;
 begin
-  cbZoom.Items.Clear;
+  cmbZoom.Items.Clear;
 
   MaxZoom := Min(
                    (Screen.Width div 320) + EXTRA_ZOOM_LEVELS,
@@ -177,12 +177,12 @@ begin
     MaxZoom := Max(1, MaxZoom div 2);
 
   for i := 1 to MaxZoom do
-    cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
+    cmbZoom.Items.Add(IntToStr(i) + 'x Zoom');
 
   if aValue < 0 then
     aValue := GameParams.ZoomLevel - 1;
 
-  cbZoom.ItemIndex := Max(0, Min(aValue, cbZoom.Items.Count - 1));
+  cmbZoom.ItemIndex := Max(0, Min(aValue, cmbZoom.Items.Count - 1));
 end;
 
 procedure TFormNXConfig.SetPanelZoomDropdown(aValue: Integer);
@@ -191,7 +191,7 @@ var
   MaxWidth: Integer;
   MaxZoom: Integer;
 begin
-  cbPanelZoom.Items.Clear;
+  cmbPanelZoom.Items.Clear;
 
   if GameParams.FullScreen or cbFullScreen.Checked then
     MaxWidth := Screen.Width
@@ -208,12 +208,12 @@ begin
   MaxZoom := Max(1, MaxZoom div 2);
 
   for i := 1 to MaxZoom do
-    cbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
+    cmbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
 
   if aValue < 0 then
     aValue := GameParams.PanelZoomLevel - 1;
 
-  cbPanelZoom.ItemIndex := Max(0, Min(aValue, cbPanelZoom.Items.Count - 1));
+  cmbPanelZoom.ItemIndex := Max(0, Min(aValue, cmbPanelZoom.Items.Count - 1));
 end;
 
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
@@ -248,10 +248,10 @@ begin
 
     // Checkboxes
     cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
-    cbAutoSaveReplayPattern.Enabled := GameParams.AutoSaveReplay;
-    SetReplayPatternDropdown(cbAutoSaveReplayPattern, GameParams.AutoSaveReplayPattern);
-    SetReplayPatternDropdown(cbIngameSaveReplayPattern, GameParams.IngameSaveReplayPattern);
-    SetReplayPatternDropdown(cbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
+    cmbAutoSaveReplayPattern.Enabled := GameParams.AutoSaveReplay;
+    SetReplayPatternDropdown(cmbAutoSaveReplayPattern, GameParams.AutoSaveReplayPattern);
+    SetReplayPatternDropdown(cmbIngameSaveReplayPattern, GameParams.IngameSaveReplayPattern);
+    SetReplayPatternDropdown(cmbPostviewSaveReplayPattern, GameParams.PostviewSaveReplayPattern);
 
     // --- Page 2 (Interface Options) --- //
     // Checkboxes
@@ -316,9 +316,9 @@ begin
 
   // Checkboxes
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
-  GameParams.AutoSaveReplayPattern := GetReplayPattern(cbAutoSaveReplayPattern);
-  GameParams.IngameSaveReplayPattern := GetReplayPattern(cbIngameSaveReplayPattern);
-  GameParams.PostviewSaveReplayPattern := GetReplayPattern(cbPostviewSaveReplayPattern);
+  GameParams.AutoSaveReplayPattern := GetReplayPattern(cmbAutoSaveReplayPattern);
+  GameParams.IngameSaveReplayPattern := GetReplayPattern(cmbIngameSaveReplayPattern);
+  GameParams.PostviewSaveReplayPattern := GetReplayPattern(cmbPostviewSaveReplayPattern);
 
   GameParams.LoadNextUnsolvedLevel := rgGameLoading.ItemIndex = 0;
 
@@ -350,8 +350,8 @@ begin
   GameParams.TurboFF := cbTurboFF.Checked;
 
   // Zoom Dropdown
-  GameParams.ZoomLevel := cbZoom.ItemIndex + 1;
-  GameParams.PanelZoomLevel := cbPanelZoom.ItemIndex + 1;
+  GameParams.ZoomLevel := cmbZoom.ItemIndex + 1;
+  GameParams.PanelZoomLevel := cmbPanelZoom.ItemIndex + 1;
 
   // --- Page 3 (Audio Options) --- //
   SoundManager.MuteSound := tbSoundVol.Position = 0;
@@ -413,11 +413,11 @@ begin
     begin
       if cbHighResolution.Checked then
       begin
-        NewZoom := cbZoom.ItemIndex div 2;
-        NewPanelZoom := cbPanelZoom.ItemIndex div 2;
+        NewZoom := cmbZoom.ItemIndex div 2;
+        NewPanelZoom := cmbPanelZoom.ItemIndex div 2;
       end else begin
-        NewZoom := cbZoom.ItemIndex * 2 + 1;
-        NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
+        NewZoom := cmbZoom.ItemIndex * 2 + 1;
+        NewPanelZoom := cmbZoom.ItemIndex * 2 + 1;
       end;
 
       // If changing showminimap, we need to reset window
@@ -431,7 +431,7 @@ begin
     end;
 
     if (Sender = cbFullScreen) and not GameParams.FullScreen then
-      NewPanelZoom := cbPanelZoom.ItemIndex;
+      NewPanelZoom := cmbPanelZoom.ItemIndex;
 
     if NewZoom >= 0 then SetZoomDropdown(NewZoom);
     if NewPanelZoom >= 0 then SetPanelZoomDropdown(NewPanelZoom);
@@ -444,7 +444,7 @@ procedure TFormNXConfig.cbAutoSaveReplayClick(Sender: TObject);
 begin
   if not fIsSetting then
   begin
-    cbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
+    cmbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
     OptionChanged(Sender);
   end;
 end;
@@ -515,17 +515,17 @@ end;
 procedure TFormNXConfig.SetCheckboxes;
   begin
     if GameParams.ClassicMode then
-      begin
-        cbHideShadows.Enabled := false;
-        cbHideHelpers.Enabled := false;
-        cbHideSkillQ.Enabled := false;
-      end;
+    begin
+      cbHideShadows.Enabled := False;
+      cbHideHelpers.Enabled := False;
+      cbHideSkillQ.Enabled := False;
+    end;
 
     if not GameParams.ShowMinimap then
-      begin
-        cbMinimapHighQuality.Checked := False;
-        cbMinimapHighQuality.Enabled := False;
-      end;
+    begin
+      cbMinimapHighQuality.Checked := False;
+      cbMinimapHighQuality.Enabled := False;
+    end;
 
     if GameParams.LoadNextUnsolvedLevel then
       rgGameLoading.ItemIndex := 0
