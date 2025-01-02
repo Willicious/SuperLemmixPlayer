@@ -1467,15 +1467,7 @@ begin
   MessageQueue.Clear;
 
   ReplayInsert := false;
-
-  // Ends gameplay if there is not at least 1 exit and we're not in test mode
-  if (Level.Info.NormalExitCount + Level.Info.RivalExitCount <= 0) and (GameParams.TestModeLevel = nil) then
-  begin
-    ShowMessage('This level cannot be played as it doesn''t have an exit!');
-    Finish(GM_FIN_TERMINATE);
-    Exit;
-  end else
-    Playing := True;
+  Playing := True;
 
   UpdateLevelRecords;
 end;

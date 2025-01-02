@@ -181,7 +181,14 @@ begin
 end;
 
 procedure TGamePreviewScreen.BeginPlay;
+var
+  CurLevel: TLevel;
+  aInfo: TLevelInfo;
 begin
+  CurLevel := GameParams.Level;
+  aInfo := CurLevel.Info;
+
+  // Check to see if we need to show the sprites fallback message
   if GameParams.ShouldShowFallbackMessage then
   begin
     ShowMessage(GameParams.FallbackMessage);
@@ -190,7 +197,22 @@ begin
     GameParams.ShouldShowFallbackMessage := False;
   end;
 
-  if (GameParams.Level.PreText.Count > 0)
+  // Make sure there is at least one exit if we're not in test mode
+  if (aInfo.NormalExitCount + aInfo.RivalExitCount <= 0) and (GameParams.TestModeLevel = nil) then
+  begin
+    ShowMessage('This level cannot be played as it doesn''t have an exit!');
+    Exit;
+  end;
+
+  // Make sure there is at least one available lemming
+  if (aInfo.LemmingsCount <= 0) or (aInfo.ZombieCount = aInfo.LemmingsCount) then
+  begin
+    ShowMessage('This level cannot be played as it doesn''t have any lemmings!');
+    Exit;
+  end;
+
+  // Check for preview text
+  if (CurLevel.PreText.Count > 0)
     and not (GameParams.PlaybackModeActive and GameParams.AutoSkipPreviewPostview) then
     begin
       GameParams.IsPreTextScreen := True;
