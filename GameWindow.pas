@@ -118,6 +118,7 @@ type
   { internal }
     procedure ReleaseMouse(releaseInFullScreen: Boolean = false);
     procedure CheckResetCursor(aForce: Boolean = false);
+    procedure ApplyScroll(dX, dY: Integer);
     function CheckScroll: Boolean;
     procedure AddSaveState;
     procedure CheckAdjustSpawnInterval;
@@ -1158,16 +1159,21 @@ begin
   Result := fSuspendCursor;
 end;
 
+procedure TGameWindow.ApplyScroll(dX, dY: Integer);
+begin
+  Img.OffsetHorz := Img.OffsetHorz - fInternalZoom * dX;
+  Img.OffsetVert := Img.OffsetVert - fInternalZoom * dY;
+  Img.OffsetHorz := Max(MinScroll, Img.OffsetHorz);
+  Img.OffsetHorz := Min(MaxScroll, Img.OffsetHorz);
+  Img.OffsetVert := Max(MinVScroll, Img.OffsetVert);
+  Img.OffsetVert := Min(MaxVScroll, Img.OffsetVert);
+end;
+
 function TGameWindow.CheckScroll: Boolean;
-  procedure Scroll(dx, dy: Integer);
+  procedure Scroll(dX, dY: Integer);
   begin
-    Img.OffsetHorz := Img.OffsetHorz - fInternalZoom * dx;
-    Img.OffsetVert := Img.OffsetVert - fInternalZoom * dy;
-    Img.OffsetHorz := Max(MinScroll, Img.OffsetHorz);
-    Img.OffsetHorz := Min(MaxScroll, Img.OffsetHorz);
-    Img.OffsetVert := Max(MinVScroll, Img.OffsetVert);
-    Img.OffsetVert := Min(MaxVScroll, Img.OffsetVert);
-    Result := (dx <> 0) or (dy <> 0) or Result; { Though it should never happen anyway,
+    ApplyScroll(dX, dY);
+    Result := (dX <> 0) or (dY <> 0) or Result; { Though it should never happen anyway,
                                                   a Scroll(0, 0) call after an earlier nonzero
                                                   call should not set Result to false }
   end;
@@ -1194,7 +1200,7 @@ function TGameWindow.CheckScroll: Boolean;
     Img.EndUpdate;
   end;
 begin
-  Result := false;
+  Result := False;
 
   if fHoldScrollData.Active then
   begin
@@ -1539,9 +1545,15 @@ begin
                  end;
       lka_InfiniteSkills: begin
                             HandleInfiniteSkillsHotkey;
+//                            Img.BeginUpdate;
+//                            ApplyScroll(-100, 0);   // Bookmark - this is how to nudge-scroll
+//                            Img.EndUpdate;
                           end;
       lka_InfiniteTime: begin
                           HandleInfiniteTimeHotkey;
+//                          Img.BeginUpdate;
+//                          ApplyScroll(100, 0);      // Bookmark - this is how to nudge-scroll
+//                          Img.EndUpdate;
                         end;
       lka_Nuke: begin
                   // Double keypress needed to prevent accidently nuking
