@@ -442,9 +442,6 @@ begin
     if (Sender = cbFullScreen) and not GameParams.FullScreen then
       NewPanelZoom := cmbPanelZoom.ItemIndex;
 
-    if (Sender = cbFullScreen) and GameParams.FullScreen then
-      NewZoom := cmbZoom.ItemIndex - 1;
-
     if NewZoom >= 0 then
       SetZoomDropdown(NewZoom);
 

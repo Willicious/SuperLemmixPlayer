@@ -217,7 +217,6 @@ type
     LemMusicInResource  : Boolean;
     LemMusicOnDisk      : Boolean;
 
-    fZoomFactor          : Integer;
     fLevelOverride       : Integer;
 
     //SysDat               : TSysDatRec;
