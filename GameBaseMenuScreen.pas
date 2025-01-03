@@ -543,7 +543,7 @@ begin
   HasCollectibles := GameParams.Level.Info.CollectibleCount > 0;
 
   if (CurrentScreen = gstPostview) then
-    YOffset := 8;
+    YOffset := 316;
 
   if fTalismanImage = nil then
     fTalismanImage := TBitmap32.Create;

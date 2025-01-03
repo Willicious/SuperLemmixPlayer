@@ -292,6 +292,7 @@ begin
     // Check for success result and prepare the relevant clickables
     if GameParams.GameResult.gSuccess then
     begin
+      MakeTalismanOptions;
       MakeNextLevelClickable;
       MakeRetryLevelClickable(True);
     end else begin
@@ -304,8 +305,6 @@ begin
 
     MakeHiddenOption(VK_F2, ShowConfigMenu);
     MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
-
-    MakeTalismanOptions;
 
     ReloadCursor('postview');
 
@@ -384,9 +383,9 @@ var
   Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
   WhichText: TPostviewText;
-  STarget, SDone, STimeSR, STimeTotal: string;
-  SRescueRecord, STimeRecord, SSkillsRecord: string;
-  InfiniteHotkeysUsed, LevelHasTalismans: Boolean;
+  STarget, SRescued, STimeSR, STimeTotal: string;
+  SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
+  InfiniteHotkeysUsed, LevelHasTalismans, ShowSavedRecord: Boolean;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -417,7 +416,7 @@ begin
   LoadPostviewTextColours;
 
   STarget := IntToStr(Results.gToRescue);
-  SDone := IntToStr(Results.gRescued);
+  SRescued := IntToStr(Results.gRescued);
 
   STimeSR := MakeTimeString(Results.gLastRescueIteration);
   STimeTotal := MakeTimeString(Results.gLastIteration);
@@ -482,22 +481,41 @@ begin
 
   // Rescue result - needed
   HueShift.HShift := RescueRecordShift;
-  Result[1].Line := SYouNeeded + STarget + StringOfChar(' ', 3 - STarget.Length);
+  if LevelHasTalismans and Results.gSuccess then
+    Result[1].Line := ''
+  else
+    Result[1].Line := SYouNeeded + ' ' + STarget + StringOfChar(' ', 3 - STarget.Length);
   Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
   Result[1].ColorShift := HueShift;
 
   // Rescue result - rescued
-  Result[2].Line := SYouRescued + SDone + StringOfChar(' ', 3 - SDone.Length);
+  if LevelHasTalismans and Results.gSuccess then
+    Result[2].Line := ''
+  else
+    Result[2].Line := SYouRescued + SRescued + StringOfChar(' ', 3 - SRescued.Length);
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   Result[2].ColorShift := HueShift;
 
   // Rescue result - record
-  if Results.gSuccess and (Entry.UserRecords.LemmingsRescued.Value > 0)
-                      and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
+  ShowSavedRecord := Results.gSuccess
+                     and (Entry.UserRecords.LemmingsRescued.Value > 0)
+                     and (not Results.gToRescue <= 0)
+                     and not InfiniteHotkeysUsed;
+
+  if LevelHasTalismans and Results.gSuccess then
+  begin
+    SThisLine := SYouNeeded + STarget + ' | ' + SYouRescued + SRescued;
+
+    if ShowSavedRecord then
+      Result[3].Line := SThisLine + ' | ' + SYourRecord + SRescueRecord
+    else
+      Result[3].Line := SThisLine;
+  end else if ShowSavedRecord then
     Result[3].Line := SYourRecord + SRescueRecord +
                       StringOfChar(' ', 3 - SRescueRecord.Length)
   else
     Result[3].Line := '';
+
   Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
   Result[3].ColorShift := HueShift;
 
@@ -554,7 +572,7 @@ begin
   // Skills record
   HueShift.HShift := SkillsRecordShift;
   if (Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0))
-  and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed and not LevelHasTalismans then
+  and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
     Result[9].Line := SYourFewestSkills + SSkillsRecord
   else
     Result[9].Line := '';
