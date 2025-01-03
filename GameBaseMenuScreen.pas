@@ -9,8 +9,10 @@ uses
   LemNeoLevelPack,
   LemNeoPieceManager,
   LemStrings,
+  LemTalisman,
   LemTypes,
   LemmixHotkeys,
+  FLevelInfo,
   GameBaseScreenCommon,
   GameControl,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
@@ -59,6 +61,8 @@ const
   FS_FOOTER_THREE_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 13 div 16;
   FOOTER_THREE_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 13 div 16;
 
+  TALISMAN_PADDING = 8;
+
 type
   TRegionState = (rsNormal, rsHover, rsClick);
   TRegionAction = procedure of object;
@@ -105,6 +109,9 @@ type
       fMenuFont                   : TMenuFont;
       fBasicCursor                : TNLCursor;
       fKeyStates                  : TDictionary<Word, UInt64>;
+
+      fTalRects: TList<TRect>;
+      fTalismanImage : TBitmap32;
 
       procedure LoadBasicCursor(aName: string);
       procedure SetBasicCursor;
@@ -172,6 +179,10 @@ type
       procedure MainFormResized; override;
       procedure DrawClassicModeButton;
       procedure HandleClassicModeClick;
+
+      procedure MakeTalismanOptions;
+      procedure HandleTalismanClick;
+      procedure HandleCollectibleClick;
   end;
 
 implementation
@@ -227,6 +238,9 @@ begin
   ScreenImg.OnMouseMove := Img_MouseMove;
 
   fCalledFromClassicModeButton := False;
+
+  fTalRects := TList<TRect>.Create;
+  fTalismanImage := nil;
 end;
 
 destructor TGameBaseMenuScreen.Destroy;
@@ -235,6 +249,11 @@ begin
   fBasicCursor.Free;
   fClickableRegions.Free;
   fKeyStates.Free;
+
+  fTalRects.Free;
+
+  if fTalismanImage <> nil then
+    fTalismanImage.Free;
 
   inherited;
 end;
@@ -488,6 +507,115 @@ begin
   fClickableRegions.Add(Result);
 end;
 
+procedure TGameBaseMenuScreen.MakeTalismanOptions;
+var
+  NewRegion: TClickableRegion;
+  Temp: TBitmap32;
+  Tal: TTalisman;
+  SrcRect: TRect;
+  TalPoint: TPoint;
+  LoadPath, aImage: String;
+  i, TalCount, TotalTalWidth, YOffset: Integer;
+  KeepTalismans, HasCollectibles, AllCollectiblesGathered: Boolean;
+
+  procedure DrawButtons(IsCollectible: Boolean = False);
+  begin
+    Temp.Clear(0);
+    fTalismanImage.DrawTo(Temp, 0, 0, SrcRect);
+
+    if IsCollectible then
+      NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleCollectibleClick, Temp)
+    else
+      NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
+
+    fTalRects.Add(NewRegion.ClickArea);
+    TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
+  end;
+const
+  TALISMANS_Y_POSITION = 408;
+begin
+  if (GameParams.Level.Talismans.Count = 0) and
+     (GameParams.Level.Info.CollectibleCount = 0) then
+        Exit;
+
+  YOffset := 0;
+  KeepTalismans := False;
+  HasCollectibles := GameParams.Level.Info.CollectibleCount > 0;
+
+  if (CurrentScreen = gstPostview) then
+    YOffset := 8;
+
+  if fTalismanImage = nil then
+    fTalismanImage := TBitmap32.Create;
+
+  Temp := TBitmap32.Create;
+  try
+    aImage := 'talismans.png';
+
+    // Try styles folder first
+    LoadPath := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aImage;
+
+    if not FileExists(LoadPath) then
+    begin
+      // Then level pack folder
+      LoadPath := GameParams.CurrentLevel.Group.FindFile(aImage);
+      // Then default
+      if LoadPath = '' then
+        LoadPath := AppPath + SFGraphicsMenu + aImage
+      else
+        KeepTalismans := true;
+    end;
+
+    TPngInterface.LoadPngFile(LoadPath, fTalismanImage);
+    fTalismanImage.DrawMode := dmOpaque;
+
+    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 4);
+
+    TalCount := GameParams.Level.Talismans.Count;
+    if HasCollectibles then TalCount := TalCount + 1;
+
+    TotalTalWidth := (TalCount * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
+    TalPoint := Point((ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2,
+                       TALISMANS_Y_POSITION - YOffset);
+
+    for i := 0 to GameParams.Level.Talismans.Count-1 do
+    begin
+      Tal := GameParams.Level.Talismans[i];
+      case Tal.Color of
+        tcBronze: SrcRect := SizedRect(0, 0, Temp.Width, Temp.Height);
+        tcSilver: SrcRect := SizedRect(0, Temp.Height, Temp.Width, Temp.Height);
+        tcGold: SrcRect := SizedRect(0, Temp.Height * 2, Temp.Width, Temp.Height);
+      end;
+
+      if GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
+        OffsetRect(SrcRect, Temp.Width, 0);
+
+      DrawButtons;
+    end;
+
+    if (GameParams.Level.Info.CollectibleCount > 0) then
+    begin
+      AllCollectiblesGathered := (GameParams.CurrentLevel.UserRecords.CollectiblesGathered.Value
+                               = GameParams.Level.Info.CollectibleCount);
+
+      SrcRect := SizedRect(0, Temp.Height * 3, Temp.Width, Temp.Height);
+
+      if AllCollectiblesGathered then
+        OffsetRect(SrcRect, Temp.Width, 0);
+
+      DrawButtons(True);
+    end;
+  finally
+    Temp.Free;
+
+    if not KeepTalismans then
+    begin
+      fTalismanImage.Free;
+      fTalismanImage := nil;
+    end;
+  end;
+end;
+
 function TGameBaseMenuScreen.MakeHiddenOption(aKey: Word;
   aAction: TRegionAction): TClickableRegion;
 begin
@@ -572,6 +700,49 @@ begin
     GameParams.Load;
     DrawClassicModeButton;
   end;
+end;
+
+procedure TGameBaseMenuScreen.HandleCollectibleClick;
+var
+  P: TPoint;
+  i: Integer;
+  F: TLevelInfoPanel;
+begin
+  P := GetInternalMouseCoordinates;
+  for i := 0 to fTalRects.Count-1 do
+    if PtInRect(fTalRects[i], P) then
+    begin
+      F := TLevelInfoPanel.Create(self, nil, fTalismanImage);
+      try
+        F.Level := GameParams.Level;
+        F.ShowCollectiblePopup;
+      finally
+        F.Free;
+      end;
+      Break;
+    end;
+end;
+
+procedure TGameBaseMenuScreen.HandleTalismanClick;
+var
+  P: TPoint;
+  i: Integer;
+  F: TLevelInfoPanel;
+begin
+  P := GetInternalMouseCoordinates;
+  for i := 0 to fTalRects.Count-1 do
+    if PtInRect(fTalRects[i], P) then
+    begin
+      F := TLevelInfoPanel.Create(self, nil, fTalismanImage);
+      try
+        F.Level := GameParams.Level;
+        F.Talisman := GameParams.Level.Talismans[i];
+        F.ShowPopup;
+      finally
+        F.Free;
+      end;
+      Break;
+    end;
 end;
 
 procedure TGameBaseMenuScreen.HandleKeyboardInput(Key: Word);

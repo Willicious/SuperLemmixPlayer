@@ -305,6 +305,8 @@ begin
     MakeHiddenOption(VK_F2, ShowConfigMenu);
     MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
 
+    MakeTalismanOptions;
+
     ReloadCursor('postview');
 
     // Draw clickables only if (AutoSkip + PlaybackMode) isn't active
@@ -384,7 +386,7 @@ var
   WhichText: TPostviewText;
   STarget, SDone, STimeSR, STimeTotal: string;
   SRescueRecord, STimeRecord, SSkillsRecord: string;
-  InfiniteHotkeysUsed: Boolean;
+  InfiniteHotkeysUsed, LevelHasTalismans: Boolean;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -425,6 +427,7 @@ begin
   SSkillsRecord := IntToStr(Entry.UserRecords.TotalSkills.Value);
 
   InfiniteHotkeysUsed := GlobalGame.IsInfiniteSkillsMode or GlobalGame.IsInfiniteTimeMode;
+  LevelHasTalismans := (Entry.Talismans.Count > 0) or (GameParams.Level.Info.CollectibleCount > 0);
 
   with GameParams, Results do
   begin
@@ -551,7 +554,7 @@ begin
   // Skills record
   HueShift.HShift := SkillsRecordShift;
   if (Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0))
-  and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
+  and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed and not LevelHasTalismans then
     Result[9].Line := SYourFewestSkills + SSkillsRecord
   else
     Result[9].Line := '';
