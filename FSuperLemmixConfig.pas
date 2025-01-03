@@ -459,8 +459,9 @@ begin
   if not fIsSetting then
   begin
     cmbAutoSaveReplayPattern.Enabled := cbAutoSaveReplay.Checked;
-    OptionChanged(Sender);
   end;
+
+  OptionChanged(Sender);
 end;
 
 procedure TFormNXConfig.cbReplayPatternEnter(Sender: TObject);
@@ -506,24 +507,27 @@ end;
 // --- Classic Mode --- //
 procedure TFormNXConfig.cbClassicModeClick(Sender: TObject);
 begin
-  OptionChanged(Sender);
-
-  if cbClassicMode.Checked then
+  if not fIsSetting then
   begin
-    cbHideShadows.Checked := true;
-    cbHideHelpers.Checked := true;
-    cbHideSkillQ.Checked := true;
-    cbHideShadows.Enabled := false;
-    cbHideHelpers.Enabled := false;
-    cbHideSkillQ.Enabled := false;
-  end else begin
-    cbHideShadows.Checked := false;
-    cbHideHelpers.Checked := false;
-    cbHideSkillQ.Checked := false;
-    cbHideShadows.Enabled := true;
-    cbHideHelpers.Enabled := true;
-    cbHideSkillQ.Enabled := true;
+    if cbClassicMode.Checked then
+    begin
+      cbHideShadows.Checked := true;
+      cbHideHelpers.Checked := true;
+      cbHideSkillQ.Checked := true;
+      cbHideShadows.Enabled := false;
+      cbHideHelpers.Enabled := false;
+      cbHideSkillQ.Enabled := false;
+    end else begin
+      cbHideShadows.Checked := false;
+      cbHideHelpers.Checked := false;
+      cbHideSkillQ.Checked := false;
+      cbHideShadows.Enabled := true;
+      cbHideHelpers.Enabled := true;
+      cbHideSkillQ.Enabled := true;
+    end;
   end;
+
+  OptionChanged(Sender);
 end;
 
 procedure TFormNXConfig.cbEdgeScrollingClick(Sender: TObject);
@@ -580,8 +584,6 @@ procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
 begin
   if not fIsSetting then
   begin
-    OptionChanged(Sender);
-
     if cbFullScreen.Checked then
     begin
       cbResetWindowSize.Checked := false;
@@ -595,6 +597,8 @@ begin
       cbResetWindowPosition.Checked := GameParams.FullScreen;
     end;
   end;
+
+  OptionChanged(Sender);
 end;
 
 procedure TFormNXConfig.SliderChange(Sender: TObject);
