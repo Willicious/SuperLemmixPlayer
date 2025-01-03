@@ -220,6 +220,7 @@ type
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // To satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // To satisfy IGameWindow
     function MouseFrameSkip: Integer; // Performs repeated skips when mouse buttons are held
+    function GetLemmingOffscreenEdge: Integer;
   end;
 
 implementation
@@ -564,7 +565,7 @@ procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
   • Main heartbeat of the program.
   • This method together with Game.UpdateLemmings() take care of most game-mechanics.
   • A bit problematic is the SpawnInterval handling:
-    if the game is paused it RR is handled here. if not it is handled by
+    if the game is paused, RR is handled here. if not it is handled by
     Game.UpdateLemmings().
 -------------------------------------------------------------------------------}
 var
@@ -762,6 +763,17 @@ begin
   // Update drawing
   DoDraw;
 
+  // Bookmark - use this logic for VisualSFX
+  {$ifdef debug}
+  case GetLemmingOffscreenEdge of
+    0: Output('Lemming ' + IntToStr(i) + ' is onscreen');
+    1: Output('Lemming ' + IntToStr(i) + ' is offscreen to the top');
+    2: Output('Lemming ' + IntToStr(i) + ' is offscreen to the bottom');
+    3: Output('Lemming ' + IntToStr(i) + ' is offscreen to the left');
+    4: Output('Lemming ' + IntToStr(i) + ' is offscreen to the right');
+  end;
+  {$endif}
+
   if TimeForFrame then
     ProcessGameMessages;
 end;
@@ -769,6 +781,40 @@ end;
 function TGameWindow.GetIsHyperSpeed: Boolean;
 begin
   Result := (fHyperSpeedTarget > Game.CurrentIteration) or (fHyperSpeedStopCondition <> 0);
+end;
+
+function TGameWindow.GetLemmingOffscreenEdge: Integer;
+var
+  i: Integer;
+  LemPoint: TPoint;
+  ViewportTop, ViewportBottom: Integer;
+  ViewportLeft, ViewportRight: Integer;
+begin
+  Result := -1;
+
+  if fRenderInterface = nil then Exit;
+
+  ViewportTop    := Abs(Trunc(Img.OffsetVert) div fInternalZoom) div ResMod;
+  ViewPortBottom := ((Img.Height - Trunc(Img.OffsetVert)) div fInternalZoom) div ResMod;
+  ViewportLeft   := Abs(Trunc(Img.OffsetHorz) div fInternalZoom) div ResMod;
+  ViewportRight  := ((Img.Width - Trunc(Img.OffsetHorz)) div fInternalZoom) div ResMod;
+
+  for i := 0 to fRenderInterface.LemmingList.Count -1 do
+  begin
+    LemPoint := fRenderInterface.LemmingList[i].Position;
+
+    if      (LemPoint.X > ViewportRight) then
+      Result := 4
+    else if (LemPoint.X < ViewportLeft) then
+      Result := 3
+    else if (LemPoint.Y > ViewportBottom) then
+      Result := 2
+    else if (LemPoint.Y < ViewportTop + 1) then
+      Result := 1
+    else
+      Result := 0; // Onscreen
+    Exit;
+  end;
 end;
 
 procedure TGameWindow.ProcessGameMessages;
