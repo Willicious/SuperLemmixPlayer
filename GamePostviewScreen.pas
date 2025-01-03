@@ -200,7 +200,7 @@ begin
 
   R := MakeClickableText(Point(P), SOptionRetryLevel, ReplaySameLevel);
 
-  if LevelPassed then
+  if not LevelPassed then
   begin
     R.ShortcutKeys.Add(VK_RETURN);
     R.ShortcutKeys.Add(VK_SPACE);
