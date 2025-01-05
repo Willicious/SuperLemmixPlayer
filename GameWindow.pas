@@ -1994,7 +1994,7 @@ begin
       Game.ProcessHighlightAssignment;
 
       if fRenderInterface.HighlitLemming <> OldHighlightLemming then
-        SoundManager.PlaySound(SFX_SKILLBUTTON);
+        SoundManager.PlaySound(SFX_SkillButton);
     end;
 
     if Paused then

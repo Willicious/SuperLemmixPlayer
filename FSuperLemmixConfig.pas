@@ -229,7 +229,7 @@ begin
   SaveToParams;
 
   if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
-  if GameParams.AmigaTheme then SoundManager.PlaySound(SFX_AMIGA_1);
+  if GameParams.AmigaTheme then SoundManager.PlaySound(SFX_AmigaDisk1);
 
   ModalResult := mrOK;
 end;

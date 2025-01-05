@@ -98,6 +98,7 @@ type
       constructor Create;
       destructor Destroy; override;
 
+      procedure GetDefaultSounds;
       procedure LoadDefaultSounds;
       function LoadSoundFromFile(aName: String; aOrigin: TSoundEffectOrigin; aLoadPath: String = ''): Integer;
       function LoadSoundFromStream(aStream: TStream; aName: String; aOrigin: TSoundEffectOrigin): Integer;
@@ -323,70 +324,112 @@ begin
   end;
 end;
 
+procedure TSoundManager.GetDefaultSounds;
+begin
+  SFX_AmigaDisk1 := 'amigadisk1';
+  SFX_AmigaDisk2 := 'amigadisk2';
+  SFX_AssignFail := 'assignfail';
+  SFX_AssignSkill := 'assignskill';
+  // SFX_BatHit = 'bathit';      // Batter
+  // SFX_BatSwish = 'batswish';   // Batter
+  SFX_BalloonInflate := 'balloon';
+  SFX_BalloonPop := 'balloonpop';
+  SFX_Boing := 'boing';
+  SFX_Boop := 'boop';
+  SFX_Brick := 'brick';
+  SFX_Bye := 'bye';
+  SFX_Collect := 'collect';
+  SFX_CollectAll := 'applause';
+  SFX_DisarmTrap := 'wrench';
+  SFX_Drown := 'glug';
+  SFX_Entrance := 'door';
+  SFX_ExitUnlock := 'exitunlock';
+  SFX_FallOff := 'falloff';
+  SFX_Fire := 'fire';
+  SFX_Freeze := 'ice';
+  SFX_GrenadeThrow := 'grenade';
+  SFX_Jump := 'jump';
+  SFX_Laser := 'laser';
+  SFX_LetsGo := 'letsgo';
+  SFX_OhNo := 'ohno';
+  SFX_OK := 'OK';
+  SFX_Pickup := 'pickup';
+  SFX_Pop := 'pop';
+  // SFX_Propeller := 'propeller'; // Propeller
+  SFX_ReleaseRate := 'changerr';
+  SFX_SkillButton := 'changeskill';
+  SFX_SpearHit := 'spearhit';
+  SFX_SpearThrow := 'spearthrow';
+  SFX_Splat := 'splat';
+  SFX_Steel_OWW := 'clink';
+  SFX_Swim := 'splash';
+  SFX_TimeUp := 'timeup';
+  SFX_Vinetrap := 'vinetrap';
+  SFX_Yippee := 'Yippee';
+  SFX_Zombie := 'zombie';
+  SFX_ZombieFallOff := 'zombiefalloff';
+  SFX_ZombieOhNo := 'zombieohno';
+  SFX_ZombiePickup := 'zombiepickup';
+  SFX_ZombieSplat := 'zombiesplat';
+  SFX_ZombieExit := 'zombieyippee';
+end;
+
 procedure TSoundManager.LoadDefaultSounds;
-  procedure Get(aName: String);
+  procedure Load(aName: String);
   begin
     LoadSoundFromFile(aName, seoDefault);
   end;
 begin
   if not fIsBassLoaded then Exit;
 
-  Get('allcollect');
-  Get('amigadisk1');
-  Get('amigadisk2');
-  Get('applause');
-  Get('assignfail');
-  // Get('bathit';      // Batter
-  // Get('batswish';   // Batter
-  Get('balloon');
-  Get('balloonpop');
-  Get('boop');
-  Get('bye');
-  Get('chain');
-  Get('changeop');
-  Get('changerr');
-  Get('chink');
-  Get('collect');
-  Get('die');
-  Get('door');
-  Get('electric');
-  Get('exitopen');
-  Get('explode');
-  Get('fire');
-  Get('grenade');
-  Get('glug');
-  Get('ice');
-  Get('jump');
-  Get('laser');
-  Get('letsgo');
-  Get('mousepre');
-  Get('ohno');
-  Get('oing');
-  Get('oing2');
-  Get('OK');
-  // Get('propeller'; // Propeller
-  Get('slurp');
-  Get('spearhit');
-  Get('splash');
-  Get('splat');
-  Get('tenton');
-  Get('throw');
-  Get('thud');
-  Get('thunk');
-  Get('timeup');
-  Get('ting');
-  Get('vacuusux');
-  Get('weedgulp');
-  Get('wrench');
-  Get('yippee');
-  Get('zombie');
-  Get('zombiedie');
-  Get('zombielaugh');
-  Get('zombielolz');
-  Get('zombieohno');
-  Get('zombiepickup');
-  Get('zombiesplat');;
-  Get('zombieyippee');
+  GetDefaultSounds;
+
+  Load(SFX_AmigaDisk1);
+  Load(SFX_AmigaDisk2);
+  Load(SFX_AssignFail);
+  Load(SFX_AssignSkill);
+  // Load(SFX_BatHit);   // Batter
+  // Load(SFX_BatSwish); // Batter
+  Load(SFX_BalloonInflate);
+  Load(SFX_BalloonPop);
+  Load(SFX_Boing);
+  Load(SFX_Boop);
+  Load(SFX_Brick);
+  Load(SFX_Bye);
+  Load(SFX_Collect);
+  Load(SFX_CollectAll);
+  Load(SFX_DisarmTrap);
+  Load(SFX_Drown);
+  Load(SFX_Entrance);
+  Load(SFX_ExitUnlock);
+  Load(SFX_FallOff);
+  Load(SFX_Fire);
+  Load(SFX_Freeze);
+  Load(SFX_GrenadeThrow);
+  Load(SFX_Jump);
+  Load(SFX_Laser);
+  Load(SFX_LetsGo);
+  Load(SFX_OhNo);
+  Load(SFX_OK);
+  Load(SFX_Pickup);
+  Load(SFX_Pop);
+  // Load(SFX_Propeller); // Propeller
+  Load(SFX_ReleaseRate);
+  Load(SFX_SkillButton);
+  Load(SFX_SpearHit);
+  Load(SFX_SpearThrow);
+  Load(SFX_Splat);
+  Load(SFX_Steel_OWW);
+  Load(SFX_Swim);
+  Load(SFX_TimeUp);
+  Load(SFX_Vinetrap);
+  Load(SFX_Yippee);
+  Load(SFX_Zombie);
+  Load(SFX_ZombieFallOff);
+  Load(SFX_ZombieOhNo);
+  Load(SFX_ZombiePickup);
+  Load(SFX_ZombieSplat);
+  Load(SFX_ZombieExit);
 end;
 
 function TSoundManager.FindSoundIndex(aName: String): Integer;

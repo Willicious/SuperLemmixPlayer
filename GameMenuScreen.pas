@@ -731,7 +731,7 @@ end;
 
 procedure TGameMenuScreen.ExitGame;
 begin
-  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_BYE);
+  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_Bye);
   CloseScreen(gstExit);
 end;
 
@@ -740,7 +740,7 @@ begin
   if not GameParams.CurrentLevel.Group.IsLowestGroup then
   begin
     GameParams.PrevGroup;
-    if GameParams.MenuSounds then SoundManager.PlaySound(SFX_SKILLBUTTON);
+    if GameParams.MenuSounds then SoundManager.PlaySound(SFX_SkillButton);
     UpdateGroupSign;
   end;
 end;
@@ -750,7 +750,7 @@ begin
   if not GameParams.CurrentLevel.Group.IsHighestGroup then
   begin
     GameParams.NextGroup;
-    if GameParams.MenuSounds then SoundManager.PlaySound(SFX_SKILLBUTTON);
+    if GameParams.MenuSounds then SoundManager.PlaySound(SFX_SkillButton);
     UpdateGroupSign;
   end;
 end;

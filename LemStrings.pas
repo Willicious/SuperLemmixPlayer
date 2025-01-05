@@ -8,6 +8,55 @@ uses
   LemCore,
   SharedGlobals;
 
+var
+  SFX_AmigaDisk1,
+  SFX_AmigaDisk2,
+  SFX_AssignFail,
+  SFX_AssignSkill,
+  // SFX_BatHit, // Batter
+  // SFX_BatSwish, // Batter
+  SFX_BalloonInflate,
+  SFX_BalloonPop,
+  SFX_Boing,
+  SFX_Boop,
+  SFX_Brick,
+  SFX_Bye,
+  SFX_Collect,
+  SFX_CollectAll,
+  SFX_DisarmTrap,
+  SFX_Drown,
+  SFX_Entrance,
+  SFX_ExitUnlock,
+  SFX_FallOff,
+  SFX_Fire,
+  SFX_Freeze,
+  SFX_GrenadeThrow,
+  SFX_Jump,
+  SFX_Laser,
+  SFX_LetsGo,
+  SFX_OhNo,
+  SFX_OK,
+  SFX_Pickup,
+  SFX_Pop,
+  // SFX_Propeller, // Propeller
+  SFX_ReleaseRate,
+  SFX_SkillButton,
+  SFX_SpearHit,
+  SFX_SpearThrow,
+  SFX_Splat,
+  SFX_Steel_OWW,
+  SFX_Swim,
+  SFX_TimeUp,
+  SFX_Vinetrap,
+  SFX_Yippee,
+  SFX_Zombie,
+  SFX_ZombieFallOff,
+  SFX_ZombieOhNo,
+  SFX_ZombiePickup,
+  SFX_ZombieSplat,
+  SFX_ZombieExit
+    : String;
+
 const
   // Important paths
   SFGraphics = 'gfx\';
@@ -40,61 +89,9 @@ const
   SFMusic = 'music\';
 
   SFData = 'data\';
-      SFDataTranslation = SFData + 'translation\';
-
+  SFDataTranslation = SFData + 'translation\';
   SFSaveData = 'settings\';
-
   SFTemp = 'temp\';
-
-  // Sound effect files
-  SFX_AMIGA_1 = 'amigadisk1';
-  SFX_AMIGA_2 = 'amigadisk2';
-  SFX_BUILDER_WARNING = 'ting';
-  SFX_ASSIGN_SKILL = 'mousepre';
-  SFX_ASSIGN_FAIL = 'assignfail';
-  SFX_YIPPEE = 'yippee';
-  SFX_BOING = 'oing';
-  SFX_SPLAT = 'splat';
-  SFX_LETSGO = 'letsgo';
-  SFX_ENTRANCE = 'door';
-  SFX_EXIT_OPEN = 'exitopen';
-  SFX_VAPORIZING = 'fire';
-  SFX_FREEZING = 'ice';
-  SFX_VINETRAPPING = 'weedgulp';
-  SFX_DROWNING = 'glug';
-  SFX_EXPLOSION = 'explode';
-  SFX_HITS_STEEL = 'chink';
-  SFX_OHNO = 'ohno';
-  SFX_SKILLBUTTON = 'changeop';
-  SFX_CHANGE_RR = 'changerr';
-  SFX_PICKUP = 'oing2';
-  SFX_COLLECT = 'collect';
-  SFX_ALLCOLLECT = 'allcollect';
-  SFX_APPLAUSE = 'applause';
-  SFX_SWIMMING = 'splash';
-  SFX_FALLOUT = 'die';
-  SFX_FIXING = 'wrench';
-  SFX_ZOMBIE = 'zombie';
-  SFX_ZOMBIE_OHNO = 'zombieohno';
-  SFX_ZOMBIE_DIE = 'zombiedie';
-  SFX_ZOMBIE_SPLAT = 'zombiesplat';
-  SFX_ZOMBIE_PICKUP = 'zombiepickup';
-  SFX_ZOMBIE_LAUGH = 'zombielaugh';
-  SFX_ZOMBIE_LOLZ = 'zombielolz';
-  SFX_ZOMBIE_EXIT = 'zombieyippee';
-  SFX_TIMEUP = 'timeup';
-  SFX_SPEAR_THROW = 'throw';
-  SFX_GRENADE_THROW = 'grenade';
-  SFX_SPEAR_HIT = 'spearhit';
-  //SFX_BAT_SWISH = 'batswish';   // Batter
-  //SFX_BAT_HIT = 'bathit';      // Batter
-  SFX_LASER = 'laser';
-  //SFX_PROPELLER = 'propeller'; // Propeller
-  SFX_BALLOON_INFLATE = 'balloon';
-  SFX_BALLOON_POP = 'balloonpop';
-  SFX_JUMP = 'jump';
-  SFX_BYE = 'bye';
-  SFX_OK = 'OK';
 
 resourcestring
   SProgramName = 'SuperLemmix Player';

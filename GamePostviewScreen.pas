@@ -451,12 +451,12 @@ begin
       if gRescued >= Level.Info.RescueCount then
       begin
         if GameParams.AmigaTheme then
-          SoundManager.PlaySound(SFX_AMIGA_1)
+          SoundManager.PlaySound(SFX_AmigaDisk1)
         else
           SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
       end else begin
         if GameParams.AmigaTheme then
-          SoundManager.PlaySound(SFX_AMIGA_2)
+          SoundManager.PlaySound(SFX_AmigaDisk2)
         else
           SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
       end;

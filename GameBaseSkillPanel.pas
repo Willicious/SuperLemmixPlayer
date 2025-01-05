@@ -821,7 +821,7 @@ end;
 
 procedure TBaseSkillPanel.PlayReleaseRateSound;
 //  Minimum Freq = 3300 (we don't want to go lower than this)
-//  Original Freq = 7418 (original frequency of SFX_CHANGE_RR)
+//  Original Freq = 7418 (original frequency of SFX_ReleaseRate)
 //  Maximum Freq = 24000 (we don't want to go higher than this)
 //  Minimum RR = 1 (SI 102)
 //  Maximum RR = 99 (SI 4)
@@ -845,7 +845,7 @@ begin
     // Logarithmic pitch slide modelled on Amiga
     MagicFrequencyAmiga := 3300 * (Power(1.02, RR));
 
-    SoundManager.PlaySound(SFX_CHANGE_RR, 0, MagicFrequencyAmiga);
+    SoundManager.PlaySound(SFX_ReleaseRate, 0, MagicFrequencyAmiga);
   end;
 end;
 
@@ -1013,7 +1013,7 @@ begin
     MagicFrequency := 6900 * (IntPower(1.0595, ButtonPos));
 
     if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
-      SoundManager.PlaySound(SFX_SKILLBUTTON, 0, MagicFrequency);
+      SoundManager.PlaySound(SFX_SkillButton, 0, MagicFrequency);
 
     if (fHighlitSkill = aButton) and Highlight then Exit;
     if (fHighlitSkill = spbNone) and not Highlight then Exit;

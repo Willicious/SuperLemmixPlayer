@@ -1271,16 +1271,16 @@ begin
   begin
     if  (HasSteelAt(SelectedLemming.LemX, SelectedLemming.LemY)
     and (RenderInterface.SelectedSkill in [spbMiner, spbDigger])) then
-      CueSoundEffect(SFX_HITS_STEEL, SelectedLemming.Position)
+      CueSoundEffect(SFX_Steel_OWW, SelectedLemming.Position)
     else
-      CueSoundEffect(SFX_ASSIGN_FAIL, SelectedLemming.Position);
+      CueSoundEffect(SFX_AssignFail, SelectedLemming.Position);
   end else if (GetHighlitLemming <> nil) and PlayForHighlit then
     begin
     if  (HasSteelAt(HighlitLemming.LemX, HighlitLemming.LemY)
     and (RenderInterface.SelectedSkill in [spbMiner, spbDigger])) then
-      CueSoundEffect(SFX_HITS_STEEL, HighlitLemming.Position)
+      CueSoundEffect(SFX_Steel_OWW, HighlitLemming.Position)
     else
-      CueSoundEffect(SFX_ASSIGN_FAIL, HighlitLemming.Position);
+      CueSoundEffect(SFX_AssignFail, HighlitLemming.Position);
   end;
 end;
 
@@ -1918,9 +1918,9 @@ begin
                      L.LemExplosionTimer := 0;
                      L.LemFreezerExplosionTimer := 0;
                      if L.LemIsZombie then
-                       CueSoundEffect(SFX_ZOMBIE_SPLAT, L.Position)
+                       CueSoundEffect(SFX_ZombieSplat, L.Position)
                      else
-                       CueSoundEffect(SFX_SPLAT, L.Position);
+                       CueSoundEffect(SFX_Splat, L.Position);
                    end;
     baBlocking   : begin
                      L.LemHasBlockerField := True;
@@ -1957,9 +1957,9 @@ begin
                      if L.LemIsInvincible then Exit;
                      
                      if L.LemIsZombie then
-                       CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
+                       CueSoundEffect(SFX_ZombieOhNo, L.Position)
                      else
-                       CueSoundEffect(SFX_OHNO, L.Position);
+                       CueSoundEffect(SFX_OhNo, L.Position);
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -1973,9 +1973,9 @@ begin
                      if L.LemIsInvincible then Exit;
 
                      if L.LemIsZombie then
-                       CueSoundEffect(SFX_ZOMBIE_OHNO, L.Position)
+                       CueSoundEffect(SFX_ZombieOhNo, L.Position)
                      else
-                       CueSoundEffect(SFX_OHNO, L.Position);
+                       CueSoundEffect(SFX_OhNo, L.Position);
                      L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
@@ -1984,10 +1984,10 @@ begin
                      L.LemIsDisarmer := false;
                      L.LemHasBeenOhnoer := true;
                    end;
-    baFreezing: CueSoundEffect(SFX_FREEZING, L.Position);
-    baTimebombFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
-    baExploding: CueSoundEffect(SFX_EXPLOSION, L.Position);
-    baFreezerExplosion: CueSoundEffect(SFX_EXPLOSION, L.Position);
+    baFreezing: CueSoundEffect(SFX_Freeze, L.Position);
+    baTimebombFinish: CueSoundEffect(SFX_Pop, L.Position);
+    baExploding: CueSoundEffect(SFX_Pop, L.Position);
+    baFreezerExplosion: CueSoundEffect(SFX_Pop, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
                      while (i < 4) and HasWaterObjectAt(L.LemX, L.LemY - i - 1)
@@ -1999,14 +1999,14 @@ begin
     baJumping    : begin
                      L.LemJumpProgress := 0;
                      L.LemJumperBounceAllowance := 3;
-                     CueSoundEffect(SFX_JUMP, L.Position);
+                     CueSoundEffect(SFX_Jump, L.Position);
                    end;
     baLasering   : begin
                      L.LemLaserRemainTime := 10;
-                     CueSoundEffect(SFX_LASER, L.Position);
+                     CueSoundEffect(SFX_Laser, L.Position);
                     end;
-    //baPropelling : CueSoundEffect(SFX_PROPELLER, L.Position); // Propeller
-    baBallooning : CueSoundEffect(SFX_BALLOON_INFLATE, L.Position);
+    //baPropelling : CueSoundEffect(SFX_Propeller, L.Position); // Propeller
+    baBallooning : CueSoundEffect(SFX_BalloonInflate, L.Position);
   end;
 end;
 
@@ -2430,7 +2430,7 @@ begin
   begin
     Result := DoSkillAssignment(L, Skill);
     if Result then
-      CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
+      CueSoundEffect(SFX_AssignSkill, L.Position);
   end
 
   // Record new skill assignment to be assigned once we call again UpdateLemmings
@@ -3616,10 +3616,10 @@ begin
 
   if not L.LemIsZombie then
   begin
-    CueSoundEffect(SFX_PICKUP, L.Position);
+    CueSoundEffect(SFX_Pickup, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], Gadget.SkillCount);
   end else begin
-    CueSoundEffect(SFX_ZOMBIE_PICKUP, L.Position);
+    CueSoundEffect(SFX_ZombiePickup, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], 0);
   end;
 end;
@@ -3641,13 +3641,13 @@ begin
   if L.LemIsZombie then
   begin
     Gadget.TriggerEffect := DOM_NONE;
-    CueSoundEffect(SFX_ZOMBIE_PICKUP, L.Position);
+    CueSoundEffect(SFX_ZombiePickup, L.Position);
     Exit;
   end;
 
   // Play default sound effect if none specified
   if Gadget.SoundEffectActivate = '' then
-    CueSoundEffect(SFX_COLLECT, L.Position)
+    CueSoundEffect(SFX_Collect, L.Position)
   else
     CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
 
@@ -3657,7 +3657,7 @@ begin
   if (CollectiblesRemain = 0) then
   begin
     CollectiblesCompleted := True;
-    CueSoundEffect(SFX_APPLAUSE);
+    CueSoundEffect(SFX_CollectAll);
 
     // Optionally apply invincibility to the first lem who reaches the final collectible
     if Level.Info.InvincibilityMode then
@@ -3694,7 +3694,7 @@ begin
         Gadget := Gadgets[n];
         Gadget.Triggered := True;
         if Gadget.SoundEffectActivate = '' then
-          CueSoundEffect(SFX_EXIT_OPEN, Gadget.Center)
+          CueSoundEffect(SFX_ExitUnlock, Gadget.Center)
         else
           CueSoundEffect(Gadget.SoundEffectActivate, Gadget.Center);
       end;
@@ -3782,7 +3782,7 @@ begin
   Result := True;
 
   Transition(L, baVaporizing);
-  CueSoundEffect(SFX_VAPORIZING, L.Position);
+  CueSoundEffect(SFX_Fire, L.Position);
 end;
 
 function TLemmingGame.HandleSplitter(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -3871,7 +3871,7 @@ end;
 procedure TLemmingGame.StartSwimming(L: TLemming);
 begin
   Transition(L, baSwimming);
-  CueSoundEffect(SFX_SWIMMING, L.Position);
+  CueSoundEffect(SFX_Swim, L.Position);
 end;
 
 function TLemmingGame.HandleWaterFatality(L: TLemming): Boolean;
@@ -3888,7 +3888,7 @@ begin
     if not (L.LemAction in ActionSet) then
     begin
       Transition(L, baDrowning);
-      CueSoundEffect(SFX_DROWNING, L.Position);
+      CueSoundEffect(SFX_Drown, L.Position);
     end;
   end;
 end;
@@ -3952,7 +3952,7 @@ begin
     if not (L.LemAction in ActionSet) then
     begin
       Transition(L, baVinetrapping);
-      CueSoundEffect(SFX_VINETRAPPING, L.Position);
+      CueSoundEffect(SFX_Vinetrap, L.Position);
     end;
   end;
 end;
@@ -3984,7 +3984,7 @@ begin
     if not (L.LemAction in ActionSet) then
     begin
       Transition(L, baVaporizing);
-      CueSoundEffect(SFX_VAPORIZING, L.Position);
+      CueSoundEffect(SFX_Fire, L.Position);
     end;
   end;
 end;
@@ -4020,7 +4020,7 @@ begin
       StartSwimming(L)
     else begin
       Transition(L, baDrifting);
-      CueSoundEffect(SFX_SWIMMING, L.Position);
+      CueSoundEffect(SFX_Swim, L.Position);
     end;
   end;
 end;
@@ -5159,7 +5159,7 @@ end;
 //    if HasIndestructibleAt(L.LemX, L.LemY - 10, L.LemDX, baPropelling) then
 //    begin
 //      if HasSteelAt(L.LemX, L.LemY - 10) then
-//        CueSoundEffect(SFX_HITS_STEEL, L.Position);
+//        CueSoundEffect(SFX_Steel_OWW, L.Position);
 //      Transition(L, baFalling);
 //    end
 //
@@ -5192,7 +5192,7 @@ begin
     if HasIndestructibleAt(L.LemX, L.LemY, L.LemDX, baDigging) then
     begin
       if HasSteelAt(L.LemX, L.LemY) then
-        CueSoundEffect(SFX_HITS_STEEL, L.Position);
+        CueSoundEffect(SFX_Steel_OWW, L.Position);
       Transition(L, baWalking);
     end
 
@@ -5341,10 +5341,10 @@ begin
       if L.LemIsSwimmer then
       begin
         Transition(L, baSwimming, true);
-        CueSoundEffect(SFX_SWIMMING, L.Position);
+        CueSoundEffect(SFX_Swim, L.Position);
       end else begin
         Transition(L, baDrowning, true);
-        CueSoundEffect(SFX_DROWNING, L.Position);
+        CueSoundEffect(SFX_Drown, L.Position);
       end;
       Result := false;
     end else if SliderHasPixelAt(L.LemX - L.LemDX, L.LemY) then
@@ -5458,7 +5458,7 @@ begin
     L.LemActionNew := baNone;
   end
   else if L.LemPhysicsFrame mod 8 = 0 then
-    CueSoundEffect(SFX_FIXING, L.Position);
+    CueSoundEffect(SFX_DisarmTrap, L.Position);
 end;
 
 
@@ -5546,7 +5546,7 @@ begin
 
   if (L.LemPhysicsFrame in [10, 12, 14, 16, 18, 20, 22, 24, 26]) then
   begin
-    CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+    CueSoundEffect(SFX_Brick, L.Position);
   end;
 
   if LadderHitObstacle or L.LemEndOfAnimation then
@@ -5585,7 +5585,7 @@ begin
 
   else if (L.LemPhysicsFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
   begin
-    CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+    CueSoundEffect(SFX_Brick, L.Position);
   end
   else if L.LemPhysicsFrame = 15 then
   begin
@@ -5645,7 +5645,7 @@ begin
 
   else if (L.LemPhysicsFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
   begin
-    CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+    CueSoundEffect(SFX_Brick, L.Position);
   end
   else if L.LemPhysicsFrame = 1 then
   begin                                    // Relax this check for first brick
@@ -5710,7 +5710,7 @@ begin
 
     if L.LemNumberOfBricksLeft < 3 then
     begin
-      CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
+      CueSoundEffect(SFX_Brick, L.Position);
     end;
 
     if not L.LemPlacedBrick then
@@ -5743,7 +5743,7 @@ var
     // Turns basher around an transitions to walker
     Dec(L.LemX, L.LemDx);
     Transition(L, baWalking, True); // Turn around as well
-    if SteelSound then CueSoundEffect(SFX_HITS_STEEL, L.Position);
+    if SteelSound then CueSoundEffect(SFX_Steel_OWW, L.Position);
   end;
 
   function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
@@ -5969,7 +5969,7 @@ var
     if NeedUndoMoveUp then
       Inc(L.LemY);
     Transition(L, baWalking, True); // Turn around as well
-    if SteelSound then CueSoundEffect(SFX_HITS_STEEL, L.Position);
+    if SteelSound then CueSoundEffect(SFX_Steel_OWW, L.Position);
   end;
 
   function FencerStepUpCheck(x, y, Direction, Step: Integer): Boolean;
@@ -6570,7 +6570,7 @@ end;
 function TLemmingGame.HandleMining(L: TLemming): Boolean;
   procedure MinerTurn(L: TLemming; X, Y: Integer);
   begin
-    if HasSteelAt(X, Y) then CueSoundEffect(SFX_HITS_STEEL, L.Position);
+    if HasSteelAt(X, Y) then CueSoundEffect(SFX_Steel_OWW, L.Position);
     // Independently of (X, Y) this check is always made at Lem position
     // No longer check at Lem position, due to www.lemmingsforums.net/index.php?topic=2547.0
     if HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
@@ -6720,7 +6720,7 @@ end;
 procedure TLemmingGame.PopBalloon(L: TLemming; BalloonPopTimerValue: Integer; NewAction: TBasicLemmingAction);
 begin
   L.LemBalloonPopTimer := BalloonPopTimerValue;
-  CueSoundEffect(SFX_BALLOON_POP, L.Position);
+  CueSoundEffect(SFX_BalloonPop, L.Position);
   Transition(L, NewAction);
 end;
 
@@ -7051,9 +7051,9 @@ begin
 
     6: begin
          if (L.LemAction = baSpearing) then
-           CueSoundEffect(SFX_SPEAR_THROW, L.Position)
+           CueSoundEffect(SFX_SpearThrow, L.Position)
          else
-           CueSoundEffect(SFX_GRENADE_THROW, L.Position);
+           CueSoundEffect(SFX_GrenadeThrow, L.Position);
 
          if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
        end;
@@ -7383,9 +7383,9 @@ begin
     L.LemRemoved := True;
 
     if L.LemIsZombie and (RemMode = RM_NEUTRAL) and not Silent then
-      CueSoundEffect(SFX_ZOMBIE_DIE, L.Position)
+      CueSoundEffect(SFX_ZombieFallOff, L.Position)
     else if (RemMode = RM_NEUTRAL) and not Silent then
-      CueSoundEffect(SFX_FALLOUT, L.Position)
+      CueSoundEffect(SFX_FallOff, L.Position)
   end
 
   else if not L.LemRemoved then // Usual and living lemming
@@ -7406,12 +7406,12 @@ begin
                 UpdateLevelRecords;
               end;
     RM_NEUTRAL: if L.LemIsZombie and not Silent then
-                  CueSoundEffect(SFX_ZOMBIE_DIE, L.Position)
+                  CueSoundEffect(SFX_ZombieFallOff, L.Position)
                 else if not Silent then
-                  CueSoundEffect(SFX_FALLOUT, L.Position);
+                  CueSoundEffect(SFX_FallOff, L.Position);
     RM_ZOMBIE: begin
                  if not Silent then
-                   CueSoundEffect(SFX_ZOMBIE);
+                   CueSoundEffect(SFX_Zombie);
                  L.LemIsZombie := True;
                  L.LemRemoved := False;
                end;
@@ -7613,12 +7613,12 @@ begin
       if P.IsSpear then
       begin
         ApplySpear(P);
-        CueSoundEffect(SFX_SPEAR_HIT);
+        CueSoundEffect(SFX_SpearHit);
         ProjectileList.Delete(i);
       end else //if P.IsGrenade then
       begin
         ApplyGrenadeExplosionMask(P);
-        CueSoundEffect(SFX_EXPLOSION, Point(P.X, P.Y));
+        CueSoundEffect(SFX_Pop, Point(P.X, P.Y));
       end //else       // Batter
         //ApplyBat(P)
         ;
@@ -7659,13 +7659,13 @@ begin
     begin
       fClockFrame := 0;
       if TimePlay > -5999 then Dec(TimePlay);
-      if TimePlay = 0 then CueSoundEffect(SFX_TIMEUP);
+      if TimePlay = 0 then CueSoundEffect(SFX_TimeUp);
     end;
   end else if fClockFrame = 17 then
     begin
       fClockFrame := 0;
       if TimePlay > -5999 then Dec(TimePlay);
-      if TimePlay = 0 then CueSoundEffect(SFX_TIMEUP);
+      if TimePlay = 0 then CueSoundEffect(SFX_TimeUp);
     end;
 
   // Hard coded dos frame numbers
@@ -7675,9 +7675,9 @@ begin
       if not IsBackstepping then
       begin
         if UseZombieSound then
-          CueSoundEffect(SFX_ZOMBIE)
+          CueSoundEffect(SFX_Zombie)
         else
-          CueSoundEffect(SFX_LETSGO);
+          CueSoundEffect(SFX_LetsGo);
       end;
     35:
       begin
@@ -7699,7 +7699,7 @@ begin
         begin
           AX := AX div HatchOpenCount;
           AY := AY div HatchOpenCount;
-          CueSoundEffect(SFX_ENTRANCE, Point(AX, AY));
+          CueSoundEffect(SFX_Entrance, Point(AX, AY));
         end;
         if not HatchesOpened then
           PlayMusic;
@@ -8034,11 +8034,11 @@ end;
 procedure TLemmingGame.CueExitSound(L: TLemming);
 begin
   if L.LemIsZombie then
-    CueSoundEffect(SFX_ZOMBIE_EXIT, L.Position)
+    CueSoundEffect(SFX_ZombieExit, L.Position)
   else if GameParams.PreferYippee then
-    CueSoundEffect(SFX_YIPPEE, L.Position)
+    CueSoundEffect(SFX_Yippee, L.Position)
   else
-    CueSoundEffect(SFX_BOING, L.Position);
+    CueSoundEffect(SFX_Boing, L.Position);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
