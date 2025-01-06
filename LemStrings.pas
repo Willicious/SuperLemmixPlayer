@@ -87,7 +87,7 @@ const
   SFLevels = 'levels\';
   SFReplays = 'replays\';
 
-  SFSounds = 'sound\';
+  SFSounds = 'sounds\';
   SFMusic = 'music\';
 
   SFData = 'data\';

@@ -4,7 +4,7 @@ unit GameSound;
 
 
 { To load a sound:
-   SoundManager.LoadSoundFromFile(<path relative to "sound\" folder>);
+   SoundManager.LoadSoundFromFile(<path relative to "sounds\" folder>);
       (it'ss also possible to load from streams)
 
    As of SLX 2.8.5, it's now possible for sound files placed into a level pack to replace
@@ -13,7 +13,7 @@ unit GameSound;
       (see  TNeoTheme.ValidateThemeSounds and TNeoTheme.SetSoundsFromTheme ) }
 
 { To play a sound (if not already loaded, will attempt to load it):
-   SoundManager.PlaySound(<path relative to "sound\" folder>, <balance>);
+   SoundManager.PlaySound(<path relative to "sounds\" folder>, <balance>);
    (For <balance>, -100 is fully left, 0 is center, +100 is fully right) }
 
 { To unload all sounds except the default ones:
