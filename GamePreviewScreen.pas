@@ -186,7 +186,7 @@ begin
   begin
     ShowMessage('Some sounds are missing for ' + CurTheme.Name + ':' + sLineBreak + sLineBreak +
                  CurTheme.MissingSoundsList.Text + sLineBreak +
-                 'Falling back to default sounds.');
+                 'The default sound will be loaded in place of each missing sound.');
 
     CurTheme.MissingSoundsList.Clear;
   end;

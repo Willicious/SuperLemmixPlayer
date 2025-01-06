@@ -1470,7 +1470,9 @@ begin
   Playing := True;
 
   UpdateLevelRecords;
-  SoundManager.LoadDefaultSounds;
+
+  if not Renderer.Theme.SoundsSetFromTheme then
+    SoundManager.LoadDefaultSounds;
 end;
 
 

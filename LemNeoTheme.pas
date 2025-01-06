@@ -37,6 +37,7 @@ type
       fExitMarkerFrames: Integer;
       fColors: array of TNeoThemeColor;
 
+      fSoundsSetFromTheme: Boolean;
       fMissingSoundsList: TStringList;
       fSpriteFallbackMessage: String;
 
@@ -58,6 +59,7 @@ type
       property LemNamesSingular: String read fLemNamesSingular write fLemNamesSingular;
       property ExitMarkerFrames: Integer read fExitMarkerFrames write fExitMarkerFrames;
       property Colors[Name: String]: TColor32 read GetColor;
+      property SoundsSetFromTheme: Boolean read fSoundsSetFromTheme write fSoundsSetFromTheme;
       property MissingSoundsList: TStringList read fMissingSoundsList write fMissingSoundsList;
       property SpriteFallbackMessage: String read fSpriteFallbackMessage write fSpriteFallbackMessage;
   end;
@@ -152,8 +154,10 @@ begin
     begin
       MissingSoundsList.Add(UpperCase(Name) + ' ' + '[ ' + Sound + ' ]');
       SoundManager.GetDefaultSounds;
-    end else
+    end else begin
       SetSoundsFromTheme(Name, Sound);
+      SoundsSetFromTheme := True;
+    end;
   end;
 end;
 
