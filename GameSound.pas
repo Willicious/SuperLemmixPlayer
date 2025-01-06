@@ -111,7 +111,6 @@ type
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
 
       procedure PlaySound(aName: String; aBalance: Integer = 0; aFrequency: Single = 0); // -100 = fully left, +100 = fully right
-      procedure PlayPackSound(aName: String; aLoadPath: String; aBalance: Integer = 0; aFrequency: Single = 0);
       procedure PlayMusic;
       procedure StopMusic;
       procedure FreeMusic;
@@ -370,6 +369,7 @@ begin
   SFX_Drown := 'glug';
   SFX_Entrance := 'door';
   SFX_ExitUnlock := 'exitunlock';
+  SFX_FailureJingle := 'failure';
   SFX_FallOff := 'falloff';
   SFX_Fire := 'fire';
   SFX_Freeze := 'ice';
@@ -383,6 +383,7 @@ begin
   SFX_Pop := 'pop';
   // SFX_Propeller := 'propeller'; // Propeller
   SFX_ReleaseRate := 'changerr';
+  SFX_SuccessJingle := 'success';
   SFX_SkillButton := 'changeskill';
   SFX_SpearHit := 'spearhit';
   SFX_SpearThrow := 'spearthrow';
@@ -428,6 +429,7 @@ begin
   Load(SFX_Drown);
   Load(SFX_Entrance);
   Load(SFX_ExitUnlock);
+  Load(SFX_FailureJingle);
   Load(SFX_FallOff);
   Load(SFX_Fire);
   Load(SFX_Freeze);
@@ -441,6 +443,7 @@ begin
   Load(SFX_Pop);
   // Load(SFX_Propeller); // Propeller
   Load(SFX_ReleaseRate);
+  Load(SFX_SuccessJingle);
   Load(SFX_SkillButton);
   Load(SFX_SpearHit);
   Load(SFX_SpearThrow);
@@ -589,21 +592,6 @@ begin
 
   if SoundIndex = -1 then
     SoundIndex := LoadSoundFromFile(aName, seoStyle);
-
-  InternalPlaySound(SoundIndex, aBalance, aFrequency);
-end;
-
-procedure TSoundManager.PlayPackSound(aName, aLoadPath: String; aBalance: Integer = 0; aFrequency: Single = 0);
-var
-  SoundIndex: Integer;
-begin
-  if not fIsBassLoaded then Exit;
-
-  if fMuteSound then Exit;
-  SoundIndex := FindSoundIndex(aName);
-
-  if SoundIndex = -1 then
-    SoundIndex := LoadSoundFromFile(aName, seoPack, aLoadPath);
 
   InternalPlaySound(SoundIndex, aBalance, aFrequency);
 end;

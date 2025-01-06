@@ -453,12 +453,12 @@ begin
         if GameParams.AmigaTheme then
           SoundManager.PlaySound(SFX_AmigaDisk1)
         else
-          SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
+          SoundManager.PlaySound(SFX_SuccessJingle);
       end else begin
         if GameParams.AmigaTheme then
           SoundManager.PlaySound(SFX_AmigaDisk2)
         else
-          SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
+          SoundManager.PlaySound(SFX_FailureJingle);
       end;
     end;
   end;

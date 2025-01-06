@@ -180,6 +180,7 @@ begin
   if (aName = 'DROWN') then SFX_Drown := aSound;
   if (aName = 'ENTRANCE') then SFX_Entrance := aSound;
   if (aName = 'EXIT_UNLOCK') then SFX_ExitUnlock := aSound;
+  if (aName = 'FAILURE_JINGLE') then SFX_FailureJingle := aSound;
   if (aName = 'FALL_OFF') then SFX_FallOff := aSound;
   if (aName = 'FIRE') then SFX_Fire := aSound;
   if (aName = 'FREEZE') then SFX_Freeze := aSound;
@@ -200,6 +201,7 @@ begin
   if (aName = 'SPEAR_THROW') then SFX_SpearThrow := aSound;
   if (aName = 'SPLAT') then SFX_Splat := aSound;
   if (aName = 'STEEL_OWW') then SFX_Steel_OWW := aSound;
+  if (aName = 'SUCCESS_JINGLE') then SFX_SuccessJingle := aSound;
   if (aName = 'SWIM') then SFX_Swim := aSound;
   if (aName = 'TIME_UP') then SFX_TimeUp := aSound;
   if (aName = 'VINETRAP') then SFX_Vinetrap := aSound;
