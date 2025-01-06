@@ -117,6 +117,7 @@ type
       function FindExtension(const aName: String; aIsMusic: Boolean): String; overload;
       function FindExtension(const aName: String; aBasePath: String; aIsMusic: Boolean): String; overload;
       function DoesSoundExist(const aName: String): Boolean;
+      function ValidateSoundFile(const aName: String): Boolean;
 
       property SoundVolume: Integer read fSoundVolume write SetSoundVolume;
       property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
@@ -446,7 +447,7 @@ end;
 function TSoundManager.DoesSoundExist(const aName: String): Boolean;
 begin
   if not fIsBassLoaded then
-    Result := false
+    Result := False
   else
     Result := FindSoundIndex(aName) <> -1;
 end;
@@ -534,6 +535,11 @@ begin
 
   fMusicPlaying := false;
   BASS_ChannelStop(fMusicChannel);
+end;
+
+function TSoundManager.ValidateSoundFile(const aName: String): Boolean;
+begin
+  Result := False or (LoadSoundFromFile(aName, seoStyle) <> -1);
 end;
 
 procedure TSoundManager.PlaySound(aName: String; aBalance: Integer = 0; aFrequency: Single = 0);

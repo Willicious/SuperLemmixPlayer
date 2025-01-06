@@ -4078,8 +4078,7 @@ begin
 
       fAni.PrepareAnimations;
 
-      GameParams.FallbackMessage := E.Message + #13 + #13 + 'Falling back to default sprites';
-      GameParams.ShouldShowFallbackMessage := True;
+      fTheme.SpriteFallbackMessage := E.Message + #13 + #13 + 'The default sprites will be loaded instead.';
     end;
   end;
 

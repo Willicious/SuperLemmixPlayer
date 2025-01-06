@@ -13,7 +13,7 @@ uses
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers, GR32_Image,
   UMisc, Dialogs,
-  LemCore, LemStrings, LemRendering, LemLevel, LemGame,
+  LemCore, LemStrings, LemRendering, LemLevel, LemNeoTheme, LemGame,
   LemGadgetsMeta, LemGadgets, LemMenuFont,
   LemTalisman,
   GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow,
@@ -166,29 +166,40 @@ end;
 procedure TGamePreviewScreen.BeginPlay;
 var
   CurLevel: TLevel;
-  aInfo: TLevelInfo;
+  CurInfo: TLevelInfo;
+  CurTheme: TNeoTheme;
 begin
   CurLevel := GameParams.Level;
-  aInfo := CurLevel.Info;
+  CurInfo := CurLevel.Info;
+  CurTheme := GameParams.Renderer.Theme;
 
-  // Check to see if we need to show the sprites fallback message
-  if GameParams.ShouldShowFallbackMessage then
+  // See if we need to show the sprites fallback message
+  if (CurTheme.SpriteFallbackMessage <> '') then
   begin
-    ShowMessage(GameParams.FallbackMessage);
+    ShowMessage(CurTheme.SpriteFallbackMessage);
 
-    GameParams.FallbackMessage := '';
-    GameParams.ShouldShowFallbackMessage := False;
+    CurTheme.SpriteFallbackMessage := '';
+  end;
+
+  // See if we need to show the missing sounds message
+  if (CurTheme.MissingSoundsList.Count > 0) then
+  begin
+    ShowMessage('Some sounds are missing for ' + CurTheme.Name + ':' + sLineBreak + sLineBreak +
+                 CurTheme.MissingSoundsList.Text + sLineBreak +
+                 'Falling back to default sounds.');
+
+    CurTheme.MissingSoundsList.Clear;
   end;
 
   // Make sure there is at least one exit if we're not in test mode
-  if (aInfo.NormalExitCount + aInfo.RivalExitCount <= 0) and (GameParams.TestModeLevel = nil) then
+  if (CurInfo.NormalExitCount + CurInfo.RivalExitCount <= 0) and (GameParams.TestModeLevel = nil) then
   begin
     ShowMessage('This level cannot be played as it doesn''t have an exit!');
     Exit;
   end;
 
   // Make sure there is at least one available lemming
-  if (aInfo.LemmingsCount <= 0) or (aInfo.ZombieCount = aInfo.LemmingsCount) then
+  if (CurInfo.LemmingsCount <= 0) or (CurInfo.ZombieCount = CurInfo.LemmingsCount) then
   begin
     ShowMessage('This level cannot be played as it doesn''t have any lemmings!');
     Exit;
@@ -382,20 +393,22 @@ end;
 procedure TGamePreviewScreen.SetWindowCaption;
 var
   s, Title: string;
+  CurTheme: TNeoTheme;
   RescueCount, LemCount, CollectibleCount: Integer;
 begin
   Title := GameParams.Level.Info.TItle;
   RescueCount := GameParams.Level.Info.RescueCount;
   LemCount := GameParams.Level.Info.LemmingsCount;
   CollectibleCount := GameParams.Level.Info.CollectibleCount;
+  CurTheme := GameParams.Renderer.Theme;
 
   s := 'SuperLemmix - ' + Title + ' - Save ' + IntToStr(RescueCount)
        + ' of ' + IntToStr(LemCount) + ' ';
 
   if LemCount = 1 then
-    s := s + GameParams.Renderer.Theme.LemNamesSingular
+    s := s + CurTheme.LemNamesSingular
   else
-    s := s + GameParams.Renderer.Theme.LemNamesPlural;
+    s := s + CurTheme.LemNamesPlural;
 
   if CollectibleCount <> 0 then
     s := s + ' - ' + IntToStr(CollectibleCount) + ' Diamonds to collect';
@@ -463,6 +476,7 @@ var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
   Level: TLevel;
+  Theme: TNeoTheme;
 
   function HasSpecialLemmings: Boolean;
   begin
@@ -480,6 +494,8 @@ var
 begin
   Entry := GameParams.CurrentLevel;
   Level := GameParams.Level;
+  Theme := GameParams.Renderer.Theme;
+
   FillChar(HueShift, SizeOf(TColorDiff), 0);
 
   SetLength(Result, 7);
@@ -510,10 +526,10 @@ begin
   begin
     if (Level.Info.LemmingsCount = 1) then
       Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
-                        + GameParams.Renderer.Theme.LemNamesSingular
+                        + Theme.LemNamesSingular
     else if (Level.Info.LemmingsCount > 1) then
       Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
-                        + GameParams.Renderer.Theme.LemNamesPlural;
+                        + Theme.LemNamesPlural;
 
     if (Level.Info.RivalCount = 1) then
       Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.RivalCount) + ' Rival'
@@ -530,9 +546,9 @@ begin
     else if (Level.Info.ZombieCount > 1) then
       Result[2].Line := Result[2].Line + ', ' + IntToStr(Level.Info.ZombieCount) + ' Zombies';
   end else if (Level.Info.LemmingsCount = 1) then
-    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesSingular
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + Theme.LemNamesSingular
   else
-    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + GameParams.Renderer.Theme.LemNamesPlural;
+    Result[2].Line := IntToStr(Level.Info.LemmingsCount) + ' ' + Theme.LemNamesPlural;
   Result[2].ColorShift := HueShift;
 
   HueShift.HShift := RescueLemsShift;
