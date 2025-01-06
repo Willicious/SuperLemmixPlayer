@@ -3,30 +3,31 @@ unit GameSound;
 // Entire rewrite, as this is more efficient (or at least less tedious) than tidying up the existing unit.
 
 
-// To load a sound:
-//   SoundManager.LoadSoundFromFile(<path relative to "sound\" folder>);
-//   (is also possible to load from streams, but this is mostly for backwards-compatible's use)
-//
-// To play a sound (if not already loaded, will attempt to load it):
-//   SoundManager.PlaySound(<path relative to "sound\" folder>, <balance>);  -- -100 is fully left, 0 is center, +100 is fully right
-//
-// To unload all sounds except the default ones:
-//   SoundManager.PurgeNonDefaultSounds;
-//   (Currently, the sounds used by objects in official sets are included in the default sounds. Once backwards-compatible is a thing
-//    of the past, this should be changed so that only game-wide sounds are considered default.)
-//
-// To load a music:
-//   SoundManager.LoadMusicFromFile(<path relative to "music\" folder);
-//   (this too can be loaded from streams. Only one music can be loaded at a time)
-//
-// To play or stop music:
-//   SoundManager.PlayMusic;
-//   SoundManager.StopMusic;
-//
-{ This new sound manager will handle not loading music if music is muted.
-  With that being said, it currently still loads the file into memory, but doesn't load it into BASS.
-  This is to simplify integration into backwards-compatible; and it can be changed to
-  not load the file at all once backwards-compatible is no longer a thing. }
+{ To load a sound:
+   SoundManager.LoadSoundFromFile(<path relative to "sound\" folder>);
+      (it'ss also possible to load from streams)
+
+   As of SLX 2.8.5, it's now possible for sound files placed into a level pack to replace
+   the default sounds on a per-pack basis.
+   It's also possible to specify sounds per-theme using a style's theme.nxtm
+      (see  TNeoTheme.ValidateThemeSounds and TNeoTheme.SetSoundsFromTheme ) }
+
+{ To play a sound (if not already loaded, will attempt to load it):
+   SoundManager.PlaySound(<path relative to "sound\" folder>, <balance>);
+   (For <balance>, -100 is fully left, 0 is center, +100 is fully right) }
+
+{ To unload all sounds except the default ones:
+   SoundManager.PurgeNonDefaultSounds; }
+
+{ To load a music track:
+   SoundManager.LoadMusicFromFile(<path relative to "music\" folder);
+   (this too can be loaded from streams. Only one music track can be loaded at a time) }
+
+   { To play or stop music:
+   SoundManager.PlayMusic;
+   SoundManager.StopMusic; }
+
+   { This new sound manager will handle not loading music if music is muted. }
 
 interface
 
@@ -104,6 +105,7 @@ type
       function LoadSoundFromStream(aStream: TStream; aName: String; aOrigin: TSoundEffectOrigin): Integer;
       procedure PurgeNonDefaultSounds;
       procedure PurgePackSounds;
+      procedure RemoveSoundFromStream(aName: String);
 
       procedure LoadMusicFromFile(aName: String);
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
@@ -278,21 +280,44 @@ function TSoundManager.LoadSoundFromFile(aName: String; aOrigin: TSoundEffectOri
 var
   F: TFileStream;
   Ext: String;
-  BasePath: String;
+  BasePath, PackPath: String;
 begin
+  Result := -1;
+
+  BasePath := '';
+  PackPath := '';
+
+  if (GameParams <> nil) then
+  begin
+    // Try loading from level pack first
+    PackPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
+
+    Ext := FindExtension(aName, PackPath, False);
+
+    if (Ext <> '') then
+    begin
+      // Remove existing loaded sound so it can be replaced
+      RemoveSoundFromStream(aName);
+      BasePath := PackPath;
+      aOrigin := seoPack;
+    end;
+  end;
+
   Result := FindSoundIndex(aName);
 
+  // Don't reload already-loaded sounds
   if Result <> -1 then
     Exit;
 
-  if aLoadPath = '' then
+  // Load from default sounds if no files are found in the level pack
+  if (BasePath = '') then
     BasePath := AppPath + SFSounds
-  else
+  else if (aLoadPath <> '') then
     BasePath := aLoadPath;
 
-  Ext := FindExtension(aName, BasePath, false);
+  Ext := FindExtension(aName, BasePath, False);
 
-  if Ext = '' then
+  if (Ext = '') then
     Exit;
 
   F := TFileStream.Create(BasePath + aName + Ext, fmOpenRead);
@@ -472,6 +497,17 @@ begin
   for i := fSoundEffects.Count-1 downto 0 do
     if fSoundEffects[i].Origin = seoPack then
       fSoundEffects.Delete(i);
+end;
+
+procedure TSoundManager.RemoveSoundFromStream(aName: String);
+var
+  i: Integer;
+begin
+  if not fIsBassLoaded then Exit;
+
+  for i := fSoundEffects.Count-1 downto 0 do
+  if fSoundEffects[i].Name = aName then
+    fSoundEffects.Delete(i);
 end;
 
 procedure TSoundManager.LoadMusicFromFile(aName: String);

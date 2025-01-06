@@ -1470,6 +1470,7 @@ begin
   Playing := True;
 
   UpdateLevelRecords;
+  SoundManager.LoadDefaultSounds;
 end;
 
 
