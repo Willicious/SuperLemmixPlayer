@@ -765,13 +765,13 @@ begin
 
   // Bookmark - use this logic for VisualSFX
   {$ifdef debug}
-  case GetLemmingOffscreenEdge of
-    0: Output('Lemming ' + IntToStr(i) + ' is onscreen');
-    1: Output('Lemming ' + IntToStr(i) + ' is offscreen to the top');
-    2: Output('Lemming ' + IntToStr(i) + ' is offscreen to the bottom');
-    3: Output('Lemming ' + IntToStr(i) + ' is offscreen to the left');
-    4: Output('Lemming ' + IntToStr(i) + ' is offscreen to the right');
-  end;
+//  case GetLemmingOffscreenEdge of
+//    0: Output('Lemming ' + IntToStr(i) + ' is onscreen');
+//    1: Output('Lemming ' + IntToStr(i) + ' is offscreen to the top');
+//    2: Output('Lemming ' + IntToStr(i) + ' is offscreen to the bottom');
+//    3: Output('Lemming ' + IntToStr(i) + ' is offscreen to the left');
+//    4: Output('Lemming ' + IntToStr(i) + ' is offscreen to the right');
+//  end;
   {$endif}
 
   if TimeForFrame then
