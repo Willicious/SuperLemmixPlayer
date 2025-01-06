@@ -8,3 +8,48 @@ $COLORS
   PICKUP_BORDER x4444EE
   PICKUP_INSIDE x006090
 $END 
+
+#$SOUNDS
+#  ASSIGN_FAIL nameofsound
+#  ASSIGN_SKILL nameofsound
+#  BALLOON_INFLATE nameofsound
+#  BALLOON_POP nameofsound
+#  MENU_QUIT nameofsound
+#  EXIT nameofsound
+#  BRICK nameofsound
+#  COLLECT nameofsound
+#  COLLECT_ALL nameofsound
+#  DISARM_TRAP nameofsound
+#  DROWN nameofsound
+#  ENTRANCE nameofsound
+#  EXIT_UNLOCK nameofsound
+#  FAILURE_JINGLE nameofsound
+#  FALL_OFF nameofsound
+#  FIRE nameofsound
+#  FREEZE nameofsound
+#  GRENADE_THROW nameofsound
+#  JUMP nameofsound
+#  LASER nameofsound
+#  LETS_GO nameofsound
+#  OH_NO nameofsound
+#  MENU_OK nameofsound
+#  PICKUP nameofsound
+#  EXPLODE nameofsound
+#  RELEASE_RATE nameofsound
+#  SKILL_BUTTON nameofsound
+#  SPEAR_HIT nameofsound
+#  SPEAR_THROW nameofsound
+#  SPLAT nameofsound
+#  STEEL_OWW nameofsound
+#  SUCCESS_JINGLE nameofsound
+#  SWIM nameofsound
+#  TIME_UP nameofsound
+#  VINETRAP nameofsound
+#  EXIT nameofsound
+#  ZOMBIE nameofsound
+#  ZOMBIE_FALL_OFF nameofsound
+#  ZOMBIE_OH_NO nameofsound
+#  ZOMBIE_PICKUP nameofsound
+#  ZOMBIE_SPLAT nameofsound
+#  ZOMBIE_EXIT nameofsound
+#$END
