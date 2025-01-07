@@ -169,9 +169,19 @@ type
     procedure DrawTurboHighlight;
     procedure RemoveButtonHighlights;
 
-    procedure ResetMinimapPosition;
-    property Image: TImage32 read fImage;
     procedure DrawMinimap; virtual;
+    procedure ResetMinimapPosition;
+
+    procedure GetButtonHints(aButton: TSkillPanelButton);
+
+    function CursorOverClickableItem: Boolean;
+    function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
+    function CursorOverReplayMark: Boolean;
+    function CursorOverMinimap: Boolean;
+    function CursorOverRescueCount: Boolean;
+
+    property Image: TImage32 read fImage;
+
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
@@ -181,15 +191,7 @@ type
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
     property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
-
     property ButtonHint: String read fButtonHint write fButtonHint;
-    procedure GetButtonHints(aButton: TSkillPanelButton);
-
-    function CursorOverClickableItem: Boolean;
-    function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
-    function CursorOverReplayMark: Boolean;
-    function CursorOverMinimap: Boolean;
-    function CursorOverRescueCount: Boolean;
   end;
 
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
@@ -855,7 +857,6 @@ begin
   // Size of the minimap, style, scaling factor, skills on the panel, ...
   fImage.BeginUpdate;
   try
-
     Minimap.SetSize(Level.Info.Width div 4, Level.Info.Height div 4);
 
     ReadBitmapFromStyle;
@@ -950,12 +951,22 @@ begin
 
   if Parent = nil then Exit;
 
-  // Add some space for when the view frame lies on the very edges
+  { N.B.
+
+    fMinimap = the miniaturised level
+    fMinimapTemp = the bitmap onto which fMinimap is drawn
+    fMinimapImage = the complete minimap, including view frame and lem dots }
+
+  { Add 4px on each edge to allow space for the view frame
+    when fMinimapTemp meets the very edges of fMinimapImage }
   fMinimapTemp.SetSize(fMinimap.Width + 4, fMinimap.Height + 4);
   fMinimapTemp.Clear(0);
 
   fMinimap.DrawTo(fMinimapTemp, 2, 2);
 
+  { ============================= View Frame ================================ }
+
+  // Set the view frame to the correct minimap position relative to the level
   BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / (4 * ResMod);
   BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / (4 * ResMod);
 
@@ -971,10 +982,14 @@ begin
   InnerViewRect := Rect(ViewRect.Left + 1, ViewRect.Top + 1, ViewRect.Right - 1, ViewRect.Bottom - 1);
   fMinimapTemp.FrameRectS(InnerViewRect, fMinimapViewRectColor);
 
+  { ========================================================================== }
+
+  // Assign the minimap bitmap to fMinimapImage
   fMinimapImage.Bitmap.Assign(fMinimapTemp);
 
+  // Move the bitmap to the correct position within fMinimapImage
   if not fMinimapScrollFreeze then
-    begin
+  begin
       if fMinimapTemp.Width < MinimapWidth then
       OH := (MinimapWidth - fMinimapTemp.Width) / 2
     else begin

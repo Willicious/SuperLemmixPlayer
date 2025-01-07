@@ -445,12 +445,15 @@ function TGameWindow.ShouldDisplayHQMinimap: Boolean;
 begin
   Result := False;
 
-  if not GameParams.MinimapHighQuality then Exit;
-  if GameParams.AmigaTheme then Exit;
-  if Game.IsSuperLemmingMode then Exit;
-  if GameSpeed in [gspRewind, gspTurbo, gspFF] then Exit;
-  if Game.Level.Info.Width > MAX_WIDTH_FOR_HQMAP then Exit;
-  if Game.Level.Info.Height > MAX_HEIGHT_FOR_HQMAP then Exit;
+  if not GameParams.MinimapHighQuality then
+    Exit;
+
+  if GameParams.AmigaTheme
+  or Game.IsSuperLemmingMode
+  or (GameSpeed in [gspRewind, gspTurbo, gspFF])
+  or (Game.Level.Info.Width > MAX_WIDTH_FOR_HQMAP)
+  or (Game.Level.Info.Height > MAX_HEIGHT_FOR_HQMAP) then
+    Exit;
 
   Result := True;
 end;
