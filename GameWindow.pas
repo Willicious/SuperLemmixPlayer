@@ -305,11 +305,9 @@ begin
   ClientHeight := GameParams.MainForm.ClientHeight;
 
   if GameParams.ShowMinimap then
-  begin
-    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod);
-  end else begin
+    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod)
+  else
     SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 336 div ResMod);
-  end;
 
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
   Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 80), GameParams.Level.Info.Height * fInternalZoom * ResMod);
@@ -459,20 +457,19 @@ end;
 
 procedure TGameWindow.RenderMinimap;
 begin
-  if GameParams.ShowMinimap then
-  begin
-    if ShouldDisplayHQMinimap then
-    begin
-      fMinimapBuffer.Clear(0);
-      Img.Bitmap.DrawTo(fMinimapBuffer);
-      SkillPanel.Minimap.Clear(0);
-      fMinimapBuffer.DrawTo(SkillPanel.Minimap, SkillPanel.Minimap.BoundsRect, fMinimapBuffer.BoundsRect);
-      fRenderer.RenderMinimap(SkillPanel.Minimap, true);
-    end else
-      fRenderer.RenderMinimap(SkillPanel.Minimap, false);
+  if not GameParams.ShowMinimap then Exit;
 
-    SkillPanel.DrawMinimap;
-  end;
+  if ShouldDisplayHQMinimap then
+  begin
+    fMinimapBuffer.Clear(0);
+    Img.Bitmap.DrawTo(fMinimapBuffer);
+    SkillPanel.Minimap.Clear(0);
+    fMinimapBuffer.DrawTo(SkillPanel.Minimap, SkillPanel.Minimap.BoundsRect, fMinimapBuffer.BoundsRect);
+    fRenderer.RenderMinimap(SkillPanel.Minimap, True);
+  end else
+    fRenderer.RenderMinimap(SkillPanel.Minimap, False);
+
+  SkillPanel.DrawMinimap;
 end;
 
 procedure TGameWindow.ExecuteReplayEdit;
@@ -1015,7 +1012,7 @@ begin
   begin
     if GameParams.ShowMinimap then
       { rdRefresh currently always occurs as a result of scrolling without any change otherwise,
-      so, minimap needs redrawing. }
+        so, minimap needs redrawing. }
       RenderMinimap;
     fNeedRedraw := rdNone;
   end;
@@ -1039,7 +1036,8 @@ begin
 
       fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
 
-      if GameParams.ShowMinimap then RenderMinimap;
+      if GameParams.ShowMinimap then
+        RenderMinimap;
 
       SkillPanel.RefreshInfo;
 
@@ -2211,22 +2209,21 @@ procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
 var
   O: Single;
 begin
-if GameParams.ShowMinimap then
-  begin
-    O := -P.X * 8 * fInternalZoom;
-    O :=  O + Img.Width div 2;
-    if O < MinScroll then O := MinScroll;
-    if O > MaxScroll then O := MaxScroll;
-    Img.OffSetHorz := O;
+  if not GameParams.ShowMinimap then Exit;
 
-    O := -P.Y * 8 * fInternalZoom;
-    O :=  O + Img.Height div 2;
-    if O < MinVScroll then O := MinVScroll;
-    if O > MaxVScroll then O := MaxVScroll;
-    Img.OffsetVert := O;
+  O := -P.X * 8 * fInternalZoom;
+  O :=  O + Img.Width div 2;
+  if O < MinScroll then O := MinScroll;
+  if O > MaxScroll then O := MaxScroll;
+  Img.OffSetHorz := O;
 
-    SetRedraw(rdRefresh);
-  end;
+  O := -P.Y * 8 * fInternalZoom;
+  O :=  O + Img.Height div 2;
+  if O < MinVScroll then O := MinVScroll;
+  if O > MaxVScroll then O := MaxVScroll;
+  Img.OffsetVert := O;
+
+  SetRedraw(rdRefresh);
 end;
 
 procedure TGameWindow.Form_MouseUp(Sender: TObject; Button: TMouseButton;

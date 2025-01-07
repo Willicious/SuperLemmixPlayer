@@ -239,53 +239,53 @@ var
   i: Integer;
   L: TLemming;
 begin
-  if GameParams.ShowMinimap then
+  if not GameParams.ShowMinimap then Exit;
+
+  if fRenderInterface.DisableDrawing then Exit;
+
+  if not LemmingsOnly then
   begin
-    if fRenderInterface.DisableDrawing then Exit;
+    Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
+    OldCombine := fPhysicsMap.OnPixelCombine;
+    OldMode := fPhysicsMap.DrawMode;
 
-    if not LemmingsOnly then
+    fPhysicsMap.DrawMode := dmCustom;
+    fPhysicsMap.OnPixelCombine := CombineMinimapPixels;
+
+    fPhysicsMap.DrawTo(Dst, Dst.BoundsRect, fPhysicsMap.BoundsRect);
+
+    fPhysicsMap.OnPixelCombine := OldCombine;
+    fPhysicsMap.DrawMode := OldMode;
+  end;
+
+  if fRenderInterface = nil then Exit;
+  if fRenderInterface.LemmingList = nil then Exit;
+
+  for i := 0 to fRenderInterface.LemmingList.Count-1 do
+  begin
+    L := fRenderInterface.LemmingList[i];
+  if L.LemRemoved then Continue;
+  if L.LemIsZombie then
     begin
-      Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
-      OldCombine := fPhysicsMap.OnPixelCombine;
-      OldMode := fPhysicsMap.DrawMode;
-
-      fPhysicsMap.DrawMode := dmCustom;
-      fPhysicsMap.OnPixelCombine := CombineMinimapPixels;
-
-      fPhysicsMap.DrawTo(Dst, Dst.BoundsRect, fPhysicsMap.BoundsRect);
-
-      fPhysicsMap.OnPixelCombine := OldCombine;
-      fPhysicsMap.DrawMode := OldMode;
-    end;
-
-    if fRenderInterface = nil then Exit;
-    if fRenderInterface.LemmingList = nil then Exit;
-
-    for i := 0 to fRenderInterface.LemmingList.Count-1 do
-    begin
-      L := fRenderInterface.LemmingList[i];
-    if L.LemRemoved then Continue;
-    if L.LemIsZombie then
-      begin
-        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
-        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
-      end else begin
-        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
-        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
-        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
-      end;
+      Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
+      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
+      Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
+      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
+    end else begin
+      Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
+      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
+      Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
+      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
     end;
   end;
 end;
 
 procedure TRenderer.CombineMinimapPixels(F: TColor32; var B: TColor32; M: Cardinal);
 begin
-if GameParams.ShowMinimap then
-  begin
+  if not GameParams.ShowMinimap then Exit;
+
   if (F and PM_SOLID) <> 0 then
+  begin
     if GameParams.AmigaTheme then
       B := $FF008800
     else                                // Ensures full opacity

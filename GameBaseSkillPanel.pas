@@ -946,55 +946,54 @@ var
   InnerViewRect: TRect;
   ViewRectWidth, ViewRectHeight: Integer;
 begin
-  if GameParams.ShowMinimap then
-  begin
-    if Parent = nil then Exit;
+  if not GameParams.ShowMinimap then Exit;
 
-    // Add some space for when the view frame lies on the very edges
-    fMinimapTemp.SetSize(fMinimap.Width + 4, fMinimap.Height + 4);
-    fMinimapTemp.Clear(0);
+  if Parent = nil then Exit;
 
-    fMinimap.DrawTo(fMinimapTemp, 2, 2);
+  // Add some space for when the view frame lies on the very edges
+  fMinimapTemp.SetSize(fMinimap.Width + 4, fMinimap.Height + 4);
+  fMinimapTemp.Clear(0);
 
-    BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / (4 * ResMod);
-    BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / (4 * ResMod);
+  fMinimap.DrawTo(fMinimapTemp, 2, 2);
 
-    // Draw the view frame
-    ViewRectWidth := fGameWindow.DisplayWidth div (4 * ResMod) + 2;
-    ViewRectHeight := fGameWindow.DisplayHeight div (4 * ResMod) + 2;
+  BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / (4 * ResMod);
+  BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / (4 * ResMod);
 
-    ViewRect := Rect(0, 0, ViewRectWidth, ViewRectHeight);
-    OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
-    fMinimapTemp.FrameRectS(ViewRect, fMinimapViewRectColor);
+  // Draw the view frame
+  ViewRectWidth := fGameWindow.DisplayWidth div (4 * ResMod) + 2;
+  ViewRectHeight := fGameWindow.DisplayHeight div (4 * ResMod) + 2;
 
-    // Thicken the view frame by 1px
-    InnerViewRect := Rect(ViewRect.Left + 1, ViewRect.Top + 1, ViewRect.Right - 1, ViewRect.Bottom - 1);
-    fMinimapTemp.FrameRectS(InnerViewRect, fMinimapViewRectColor);
+  ViewRect := Rect(0, 0, ViewRectWidth, ViewRectHeight);
+  OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
+  fMinimapTemp.FrameRectS(ViewRect, fMinimapViewRectColor);
 
-    fMinimapImage.Bitmap.Assign(fMinimapTemp);
+  // Thicken the view frame by 1px
+  InnerViewRect := Rect(ViewRect.Left + 1, ViewRect.Top + 1, ViewRect.Right - 1, ViewRect.Bottom - 1);
+  fMinimapTemp.FrameRectS(InnerViewRect, fMinimapViewRectColor);
 
-    if not fMinimapScrollFreeze then
-      begin
-        if fMinimapTemp.Width < MinimapWidth then
-        OH := (MinimapWidth - fMinimapTemp.Width) / 2
-      else begin
-        OH := BaseOffsetHoriz + (MinimapWidth - RectWidth(ViewRect)) / 2;
-        OH := Min(Max(OH, MinimapWidth - fMinimapTemp.Width), 0);
-      end;
+  fMinimapImage.Bitmap.Assign(fMinimapTemp);
 
-      if fMinimapTemp.Height < MinimapHeight then
-        OV := (MinimapHeight - fMinimapTemp.Height) / 2
-      else begin
-        OV := BaseOffsetVert + (MinimapHeight - RectHeight(ViewRect)) / 2;
-        OV := Min(Max(OV, MinimapHeight - fMinimapTemp.Height), 0);
-      end;
-
-      fMinimapImage.OffsetHorz := OH * fMinimapImage.Scale;
-      fMinimapImage.OffsetVert := OV * fMinimapImage.Scale;
+  if not fMinimapScrollFreeze then
+    begin
+      if fMinimapTemp.Width < MinimapWidth then
+      OH := (MinimapWidth - fMinimapTemp.Width) / 2
+    else begin
+      OH := BaseOffsetHoriz + (MinimapWidth - RectWidth(ViewRect)) / 2;
+      OH := Min(Max(OH, MinimapWidth - fMinimapTemp.Width), 0);
     end;
 
-    fMinimapImage.Changed;
+    if fMinimapTemp.Height < MinimapHeight then
+      OV := (MinimapHeight - fMinimapTemp.Height) / 2
+    else begin
+      OV := BaseOffsetVert + (MinimapHeight - RectHeight(ViewRect)) / 2;
+      OV := Min(Max(OV, MinimapHeight - fMinimapTemp.Height), 0);
+    end;
+
+    fMinimapImage.OffsetHorz := OH * fMinimapImage.Scale;
+    fMinimapImage.OffsetVert := OV * fMinimapImage.Scale;
   end;
+
+  fMinimapImage.Changed;
 end;
 
 procedure TBaseSkillPanel.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
