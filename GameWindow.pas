@@ -298,7 +298,7 @@ end;
 procedure TGameWindow.ApplyResize(NoRecenter: Boolean = False);
 var
   OSHorz, OSVert: Single;
-
+  CurPanelHeight: Integer;
   VertOffset: Integer;
 begin
   OSHorz := Img.OffsetHorz - (Img.Width / 2);
@@ -307,24 +307,35 @@ begin
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
 
-  if GameParams.ShowMinimap then
-    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod)
-  else
-    SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 336 div ResMod);
+  if GameParams.ResizePanelWithWindow then
+  begin
+    SkillPanel.ResizePanelWithWindow;
+    CurPanelHeight := SkillPanel.ResizedPanelHeight;
+  end else begin
+    if GameParams.ShowMinimap then
+      SkillPanel.Zoom := Min(GameParams.PanelZoomLevel,GameParams.MainForm.ClientWidth div 444 div ResMod)
+    else
+      SkillPanel.Zoom := Min(GameParams.PanelZoomLevel,GameParams.MainForm.ClientWidth div 336 div ResMod);
 
+    CurPanelHeight := SkillPanel.Zoom * SkillPanel.PanelHeight;
+  end;
+
+  // Set the width, height and position of the game image
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
-  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 80), GameParams.Level.Info.Height * fInternalZoom * ResMod);
-  Img.Left := (ClientWidth - Img.Width) div 2;
-  SkillPanel.ClientWidth := ClientWidth;
-  // Tops are calculated later
+  Img.Height := Min(ClientHeight - CurPanelHeight, GameParams.Level.Info.Height * fInternalZoom * ResMod);
 
-  VertOffset := ((ClientHeight - (SkillPanel.Zoom * 80) - Img.Height) div 2);
+  VertOffset := ((ClientHeight - CurPanelHeight - Img.Height) div 2);
   Img.Top := VertOffset;
+  Img.Left := (ClientWidth - Img.Width) div 2;
+
+  SkillPanel.ClientWidth := ClientWidth;
   SkillPanel.Top := Img.Top + Img.Height;
-  SkillPanel.Height := Max(SkillPanel.Zoom * 80, ClientHeight - SkillPanel.Top);
+  SkillPanel.Height := Max(CurPanelHeight, ClientHeight - SkillPanel.Top);
   SkillPanel.Image.Left := (SkillPanel.ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
-  SkillPanel.ResetMinimapPosition;
+
+  if not GameParams.ResizePanelWithWindow then
+    SkillPanel.ResetMinimapPosition;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom * ResMod) - Img.Width);
   MaxScroll := 0;

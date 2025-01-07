@@ -6,8 +6,8 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Configuration'
-  ClientHeight = 470
-  ClientWidth = 276
+  ClientHeight = 531
+  ClientWidth = 328
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,14 +18,14 @@ object FormNXConfig: TFormNXConfig
   Position = poMainFormCenter
   OnCreate = FormCreate
   DesignSize = (
-    276
-    470)
+    328
+    531)
   PixelsPerInch = 96
   TextHeight = 13
   object btnOK: TButton
-    Left = 11
-    Top = 441
-    Width = 80
+    Left = 25
+    Top = 502
+    Width = 92
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
@@ -33,8 +33,8 @@ object FormNXConfig: TFormNXConfig
     OnClick = btnOKClick
   end
   object btnCancel: TButton
-    Left = 97
-    Top = 441
+    Left = 122
+    Top = 502
     Width = 80
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -44,9 +44,9 @@ object FormNXConfig: TFormNXConfig
     TabOrder = 1
   end
   object btnApply: TButton
-    Left = 183
-    Top = 441
-    Width = 80
+    Left = 206
+    Top = 502
+    Width = 92
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Apply'
@@ -56,28 +56,28 @@ object FormNXConfig: TFormNXConfig
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
-    Width = 276
-    Height = 439
+    Width = 328
+    Height = 500
     ActivePage = Graphics
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
-        Left = 13
-        Top = 25
-        Width = 56
+        Left = 21
+        Top = 28
+        Width = 54
         Height = 13
         Hint = 'Add your username to in-game records and replays'
-        Caption = 'Your name:'
+        Caption = 'Username:'
         ParentShowHint = False
         ShowHint = True
       end
       object gbReplayNamingOptions: TGroupBox
-        Left = 3
-        Top = 142
-        Width = 261
-        Height = 167
+        Left = 21
+        Top = 157
+        Width = 273
+        Height = 183
         Caption = 'Replay Naming Options'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -88,7 +88,7 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 2
         object lblIngameSaveReplay: TLabel
           Left = 13
-          Top = 71
+          Top = 77
           Width = 45
           Height = 13
           Hint = 
@@ -100,7 +100,7 @@ object FormNXConfig: TFormNXConfig
         end
         object lblPostviewSaveReplay: TLabel
           Left = 13
-          Top = 115
+          Top = 127
           Width = 48
           Height = 13
           Hint = 
@@ -127,7 +127,7 @@ object FormNXConfig: TFormNXConfig
         object cmbAutoSaveReplayPattern: TComboBox
           Left = 13
           Top = 44
-          Width = 238
+          Width = 244
           Height = 21
           Hint = 
             'Set your preferred filename when automatically saving replays on' +
@@ -149,8 +149,8 @@ object FormNXConfig: TFormNXConfig
         end
         object cmbIngameSaveReplayPattern: TComboBox
           Left = 13
-          Top = 88
-          Width = 238
+          Top = 94
+          Width = 244
           Height = 21
           Hint = 
             'Set your preferred filename (or show '#39'Save As'#39' dialog) when manu' +
@@ -172,8 +172,8 @@ object FormNXConfig: TFormNXConfig
         end
         object cmbPostviewSaveReplayPattern: TComboBox
           Left = 13
-          Top = 131
-          Width = 238
+          Top = 146
+          Width = 244
           Height = 21
           Hint = 
             'Set your preferred filename (or show '#39'Save As'#39' dialog) when manu' +
@@ -195,9 +195,9 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object btnHotkeys: TButton
-        Left = 16
-        Top = 66
-        Width = 238
+        Left = 21
+        Top = 75
+        Width = 273
         Height = 52
         Hint = 'Setup your own hotkey configuration'
         Caption = 'Configure Hotkeys'
@@ -207,9 +207,9 @@ object FormNXConfig: TFormNXConfig
         OnClick = btnHotkeysClick
       end
       object ebUserName: TEdit
-        Left = 75
-        Top = 22
-        Width = 178
+        Left = 81
+        Top = 25
+        Width = 213
         Height = 21
         Hint = 'Add your username to in-game records and replays'
         ParentShowHint = False
@@ -217,10 +217,10 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 0
       end
       object rgGameLoading: TRadioGroup
-        Left = 15
-        Top = 315
-        Width = 230
-        Height = 72
+        Left = 21
+        Top = 370
+        Width = 273
+        Height = 73
         Caption = 'Game Loading Options'
         Items.Strings = (
           'Always Load Next Unsolved Level'
@@ -233,15 +233,15 @@ object FormNXConfig: TFormNXConfig
       Caption = 'Gameplay'
       ImageIndex = 4
       object lblScrollSpeed: TLabel
-        Left = 31
-        Top = 35
+        Left = 50
+        Top = 45
         Width = 66
         Height = 13
         Caption = 'Scroll Speed:'
       end
       object cbEdgeScrolling: TCheckBox
-        Left = 15
-        Top = 12
+        Left = 33
+        Top = 22
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
@@ -249,8 +249,8 @@ object FormNXConfig: TFormNXConfig
         OnClick = cbEdgeScrollingClick
       end
       object cbPauseAfterBackwards: TCheckBox
-        Left = 15
-        Top = 57
+        Left = 33
+        Top = 81
         Width = 205
         Height = 17
         Caption = 'Pause After Backwards Frameskip'
@@ -258,9 +258,9 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object gbClassicMode: TGroupBox
-        Left = 3
-        Top = 284
-        Width = 256
+        Left = 21
+        Top = 335
+        Width = 273
         Height = 124
         Caption = 'Classic Mode Options'
         TabOrder = 2
@@ -286,7 +286,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = cbClassicModeClick
         end
         object cbHideShadows: TCheckBox
-          Left = 12
+          Left = 28
           Top = 49
           Width = 190
           Height = 17
@@ -298,7 +298,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbHideHelpers: TCheckBox
-          Left = 12
+          Left = 28
           Top = 72
           Width = 190
           Height = 17
@@ -312,7 +312,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbHideSkillQ: TCheckBox
-          Left = 12
+          Left = 28
           Top = 95
           Width = 190
           Height = 17
@@ -327,15 +327,15 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object gbReplayOptions: TGroupBox
-        Left = 3
-        Top = 90
-        Width = 256
-        Height = 71
+        Left = 21
+        Top = 121
+        Width = 273
+        Height = 77
         Caption = 'Replay Options'
         TabOrder = 4
         object cbReplayAfterRestart: TCheckBox
           Left = 12
-          Top = 21
+          Top = 24
           Width = 217
           Height = 17
           Caption = 'Auto-Replay After Restarting Level'
@@ -344,7 +344,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbAutoReplay: TCheckBox
           Left = 12
-          Top = 42
+          Top = 45
           Width = 234
           Height = 17
           Caption = 'Auto-Replay After Backwards Frameskip'
@@ -353,15 +353,15 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object gbSkillPanelOptions: TGroupBox
-        Left = 3
-        Top = 176
-        Width = 256
-        Height = 97
+        Left = 21
+        Top = 219
+        Width = 273
+        Height = 99
         Caption = 'Skill Panel Options'
         TabOrder = 3
         object cbTurboFF: TCheckBox
           Left = 12
-          Top = 22
+          Top = 23
           Width = 177
           Height = 17
           Hint = 
@@ -375,7 +375,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbSpawnInterval: TCheckBox
           Left = 12
-          Top = 45
+          Top = 46
           Width = 205
           Height = 17
           Hint = 
@@ -389,7 +389,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbShowButtonHints: TCheckBox
           Left = 12
-          Top = 68
+          Top = 69
           Width = 158
           Height = 17
           Caption = 'Show Panel Button Hints'
@@ -398,8 +398,8 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object cmbScrollSpeed: TComboBox
-        Left = 103
-        Top = 32
+        Left = 129
+        Top = 42
         Width = 102
         Height = 21
         Style = csDropDownList
@@ -418,23 +418,9 @@ object FormNXConfig: TFormNXConfig
     object Graphics: TTabSheet
       Caption = 'Graphics'
       ImageIndex = 3
-      object Label1: TLabel
-        Left = 66
-        Top = 20
-        Width = 32
-        Height = 13
-        Caption = 'Zoom:'
-      end
-      object Label2: TLabel
-        Left = 67
-        Top = 47
-        Width = 31
-        Height = 13
-        Caption = 'Panel:'
-      end
       object imgAmigaTick: TImage
-        Left = 46
-        Top = 222
+        Left = 72
+        Top = 128
         Width = 35
         Height = 33
         Picture.Data = {
@@ -2604,73 +2590,104 @@ object FormNXConfig: TFormNXConfig
           0000803F0000001F0000041F0000FE0F0000FE070000FF070000FF830000FF81
           0000FFC10000FFE00000FFE00000FFFF0000}
       end
-      object cmbZoom: TComboBox
-        Left = 104
-        Top = 17
-        Width = 81
-        Height = 21
-        Style = csDropDownList
-        ItemIndex = 0
+      object gbZoomOptions: TGroupBox
+        Left = 21
+        Top = 242
+        Width = 273
+        Height = 137
+        Caption = 'Zoom Options'
         TabOrder = 0
-        Text = '1x Zoom'
-        OnChange = OptionChanged
-        Items.Strings = (
-          '1x Zoom')
-      end
-      object cmbPanelZoom: TComboBox
-        Left = 104
-        Top = 44
-        Width = 81
-        Height = 21
-        Style = csDropDownList
-        ItemIndex = 0
-        TabOrder = 1
-        Text = '1x Zoom'
-        OnChange = OptionChanged
-        Items.Strings = (
-          '1x Zoom')
+        object lblGameZoom: TLabel
+          Left = 77
+          Top = 24
+          Width = 32
+          Height = 13
+          Caption = 'Game:'
+        end
+        object lblPanelZoom: TLabel
+          Left = 78
+          Top = 53
+          Width = 31
+          Height = 13
+          Caption = 'Panel:'
+        end
+        object cmbGameZoom: TComboBox
+          Left = 115
+          Top = 21
+          Width = 90
+          Height = 21
+          Style = csDropDownList
+          ItemIndex = 0
+          TabOrder = 0
+          Text = '1x Zoom'
+          OnChange = OptionChanged
+          Items.Strings = (
+            '1x Zoom')
+        end
+        object cmbPanelZoom: TComboBox
+          Left = 115
+          Top = 48
+          Width = 90
+          Height = 21
+          Style = csDropDownList
+          ItemIndex = 0
+          TabOrder = 1
+          Text = '1x Zoom'
+          OnChange = OptionChanged
+          Items.Strings = (
+            '1x Zoom')
+        end
+        object cbResizePanelWithWindow: TCheckBox
+          Left = 28
+          Top = 82
+          Width = 225
+          Height = 17
+          Caption = 'Resize Panel With Window'
+          TabOrder = 2
+          OnClick = cbResizePanelWithWindowClick
+        end
+        object cbIncreaseZoom: TCheckBox
+          Left = 28
+          Top = 105
+          Width = 205
+          Height = 17
+          Caption = 'Increase Zoom On Small Levels'
+          TabOrder = 3
+          OnClick = OptionChanged
+        end
       end
       object cbFullScreen: TCheckBox
-        Left = 24
-        Top = 80
+        Left = 49
+        Top = 19
         Width = 205
         Height = 17
         Caption = 'Full Screen'
-        TabOrder = 2
+        TabOrder = 1
         OnClick = cbFullScreenClick
       end
       object cbHighResolution: TCheckBox
-        Left = 24
-        Top = 103
-        Width = 205
+        Left = 166
+        Top = 19
+        Width = 118
         Height = 17
         Caption = 'High Resolution'
-        TabOrder = 3
-        OnClick = OptionChanged
-      end
-      object cbIncreaseZoom: TCheckBox
-        Left = 24
-        Top = 126
-        Width = 205
-        Height = 17
-        Caption = 'Increase Zoom On Small Levels'
-        TabOrder = 4
+        TabOrder = 2
         OnClick = OptionChanged
       end
       object cbLinearResampleMenu: TCheckBox
-        Left = 24
-        Top = 149
+        Left = 49
+        Top = 51
         Width = 205
         Height = 17
         Caption = 'Use Smooth Resampling In Menus'
-        TabOrder = 5
+        TabOrder = 3
         OnClick = OptionChanged
       end
       object gbMinimapOptions: TGroupBox
-        Left = 24
-        Top = 271
-        Width = 219
-        Height = 48
+        Left = 21
+        Top = 178
+        Width = 273
+        Height = 54
         Caption = 'Minimap Options'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2678,10 +2695,10 @@ object FormNXConfig: TFormNXConfig
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 6
         object cbMinimapHighQuality: TCheckBox
-          Left = 117
-          Top = 20
+          Left = 145
+          Top = 24
           Width = 90
           Height = 17
           Caption = 'High Quality'
@@ -2695,8 +2712,8 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbShowMinimap: TCheckBox
-          Left = 14
-          Top = 20
+          Left = 28
+          Top = 24
           Width = 97
           Height = 17
           Caption = 'Show Minimap'
@@ -2711,23 +2728,23 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object cbNoBackgrounds: TCheckBox
-        Left = 24
-        Top = 172
+        Left = 49
+        Top = 74
         Width = 205
         Height = 17
         Caption = 'Deactivate Background Images'
-        TabOrder = 6
+        TabOrder = 4
         OnClick = OptionChanged
       end
       object ResetWindow: TGroupBox
-        Left = 24
-        Top = 348
-        Width = 219
-        Height = 49
-        TabOrder = 9
+        Left = 21
+        Top = 406
+        Width = 273
+        Height = 57
+        TabOrder = 8
         object cbResetWindowPosition: TCheckBox
-          Left = 14
-          Top = 21
+          Left = 145
+          Top = 24
           Width = 97
           Height = 17
           Caption = 'Reset Position'
@@ -2735,8 +2752,8 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbResetWindowSize: TCheckBox
-          Left = 117
-          Top = 21
+          Left = 28
+          Top = 24
           Width = 90
           Height = 17
           Caption = 'Reset Size'
@@ -2745,30 +2762,30 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object btnResetWindow: TButton
-        Left = 65
-        Top = 332
+        Left = 89
+        Top = 391
         Width = 135
         Height = 34
         Caption = 'Reset Window'
-        TabOrder = 10
+        TabOrder = 7
         OnClick = btnResetWindowClick
       end
       object cbColourCycle: TCheckBox
-        Left = 24
-        Top = 195
+        Left = 49
+        Top = 97
         Width = 235
         Height = 17
         Caption = 'Use Colour Cycle For Fall Distance Ruler'
-        TabOrder = 7
+        TabOrder = 5
         OnClick = OptionChanged
       end
       object cbAmigaTheme: TCheckBox
-        Left = 65
-        Top = 232
+        Left = 91
+        Top = 138
         Width = 135
         Height = 17
         Caption = 'Activate Amiga Theme'
-        TabOrder = 11
+        TabOrder = 9
         OnClick = OptionChanged
       end
     end
@@ -2776,26 +2793,26 @@ object FormNXConfig: TFormNXConfig
       Caption = 'Audio'
       ImageIndex = 3
       DesignSize = (
-        268
-        411)
+        320
+        472)
       object Label3: TLabel
-        Left = 17
-        Top = 32
+        Left = 40
+        Top = 42
         Width = 34
         Height = 13
         Caption = 'Sound'
       end
       object Label5: TLabel
-        Left = 21
-        Top = 75
+        Left = 44
+        Top = 85
         Width = 30
         Height = 13
         Caption = 'Music'
       end
       object tbSoundVol: TTrackBar
-        Left = 51
-        Top = 28
-        Width = 206
+        Left = 74
+        Top = 38
+        Width = 220
         Height = 33
         Max = 100
         Frequency = 10
@@ -2803,9 +2820,9 @@ object FormNXConfig: TFormNXConfig
         OnChange = SliderChange
       end
       object tbMusicVol: TTrackBar
-        Left = 51
-        Top = 71
-        Width = 206
+        Left = 74
+        Top = 81
+        Width = 220
         Height = 33
         Max = 100
         Frequency = 10
@@ -2813,18 +2830,18 @@ object FormNXConfig: TFormNXConfig
         OnChange = SliderChange
       end
       object cbDisableTestplayMusic: TCheckBox
-        Left = 37
-        Top = 124
-        Width = 193
+        Left = 55
+        Top = 150
+        Width = 210
         Height = 17
         Caption = 'Disable Music When Testplaying'
         TabOrder = 2
         OnClick = OptionChanged
       end
       object rgExitSound: TRadioGroup
-        Left = 72
-        Top = 168
-        Width = 113
+        Left = 55
+        Top = 217
+        Width = 210
         Height = 65
         Anchors = []
         Caption = 'Choose Exit Sound'
@@ -2835,14 +2852,14 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object gbMenuSounds: TGroupBox
-        Left = 37
-        Top = 256
-        Width = 185
+        Left = 55
+        Top = 332
+        Width = 210
         Height = 81
         Caption = 'Menu Sounds'
         TabOrder = 4
         object cbPostviewJingles: TCheckBox
-          Left = 14
+          Left = 18
           Top = 24
           Width = 155
           Height = 17
@@ -2851,7 +2868,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbMenuSounds: TCheckBox
-          Left = 14
+          Left = 18
           Top = 47
           Width = 155
           Height = 17

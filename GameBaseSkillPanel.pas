@@ -55,6 +55,14 @@ type
     fMinimapImage         : TImage32;  // Minimap to be displayed
     fMinimapTemp          : TBitmap32; // Temp image, to create fMinimapImage from fMinimap
 
+    fResizePercentage     : Single;
+    fResizedPanelWidth    : Integer;
+    fResizedPanelHeight   : Integer;
+    fResizedMinimapLeft   : Integer;
+    fResizedMinimapTop    : Integer;
+    fResizedMinimapWidth  : Integer;
+    fResizedMinimapHeight : Integer;
+
     fMinimapScrollFreeze  : Boolean;
 
     fSkillFont            : TFontBitmapArray;
@@ -81,9 +89,6 @@ type
     // Global stuff
     property Level: TLevel read GetLevel;
     property Game: TLemmingGame read fGame;
-
-    function PanelWidth: Integer; virtual; abstract;
-    function PanelHeight: Integer; virtual; abstract;
 
     // Helper functions for positioning
     function FirstButtonRect: TRect; virtual;
@@ -172,7 +177,11 @@ type
     procedure DrawMinimap; virtual;
     procedure ResetMinimapPosition;
 
+    procedure ResizePanelWithWindow;
     procedure GetButtonHints(aButton: TSkillPanelButton);
+
+    function PanelWidth: Integer; virtual; abstract;
+    function PanelHeight: Integer; virtual; abstract;
 
     function CursorOverClickableItem: Boolean;
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
@@ -184,6 +193,14 @@ type
 
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
+
+    property ResizePercentage: Single read fResizePercentage write fResizePercentage;
+    property ResizedPanelWidth: Integer read fResizedPanelWidth write fResizedPanelWidth;
+    property ResizedPanelHeight: Integer read fResizedPanelHeight write fResizedPanelHeight;
+    property ResizedMinimapLeft: Integer read fResizedMinimapLeft write fResizedMinimapLeft;
+    property ResizedMinimapTop: Integer read fResizedMinimapTop write fResizedMinimapTop;
+    property ResizedMinimapWidth: Integer read fResizedMinimapWidth write fResizedMinimapWidth;
+    property ResizedMinimapHeight: Integer read fResizedMinimapHeight write fResizedMinimapHeight;
 
     property Zoom: Integer read GetZoom write SetZoom;
     property MaxZoom: Integer read GetMaxZoom;
@@ -266,7 +283,7 @@ begin
   fImage := TImage32.Create(Self);
   fImage.Parent := Self;
   fImage.RepaintMode := rmOptimizer;
-  fImage.ScaleMode := smScale;
+  fImage.ScaleMode := smResize;
 
   fMinimapImage := TImage32.Create(Self);
   fMinimapImage.Parent := Self;
@@ -1149,6 +1166,8 @@ end;
 
 procedure TBaseSkillPanel.ResetMinimapPosition;
 begin
+  if GameParams.ResizePanelWithWindow then Exit; // Just in case
+
   fMinimapImage.Left := MinimapRect.Left * Trunc(fMinimapImage.Scale) + Image.Left;
   fMinimapImage.Top := MinimapRect.Top * Trunc(fMinimapImage.Scale);
 end;
@@ -1998,9 +2017,46 @@ begin
   Result := GameParams.Level;
 end;
 
-// Bookmark - Zooming code: this needs to be changed to resizing code
+procedure TBaseSkillPanel.ResizePanelWithWindow;
+begin
+  if not GameParams.ResizePanelWithWindow then Exit; // Should never happen
+
+  // Resize and reposition the panel relative to the width of the window
+  fImage.Width := GameParams.MainForm.ClientWidth;
+  fImage.Left := (GameParams.MainForm.ClientWidth - fImage.Width) div 2;
+
+  // Calculate the resize percentage based on the panel width
+  ResizePercentage := fImage.Width / PanelWidth;
+
+  // Calculate the new panel height
+  fImage.Height := Round(PanelHeight * ResizePercentage);
+
+  // Store the new panel width and height
+  ResizedPanelWidth := fImage.Width;
+  ResizedPanelHeight := fImage.Height;
+
+  // Calculate Minimap position and size relative to the resized panel
+  ResizedMinimapLeft := Round(MinimapRect.Left * ResizePercentage);
+  ResizedMinimapTop := Round(MinimapRect.Top * ResizePercentage);
+  ResizedMinimapWidth := Round(MinimapWidth * ResizePercentage);
+  ResizedMinimapHeight := Round(MinimapHeight * ResizePercentage);
+
+  // Resize the minimap
+  fMinimapImage.Width := ResizedMinimapWidth;
+  fMinimapImage.Height := ResizedMinimapHeight;
+  fMinimapImage.Left := ResizedMinimapLeft;
+  fMinimapImage.Top := ResizedMinimapTop;
+  fMinimapImage.Scale := ResizePercentage;
+end;
+
 procedure TBaseSkillPanel.SetZoom(NewZoom: Integer);
 begin
+  if GameParams.ResizePanelWithWindow then // Should never happen
+  begin
+    ResizePanelWithWindow;
+    Exit;
+  end;
+
   if GameParams.HighResolution then
     NewZoom := NewZoom * 2;
   NewZoom := Max(Min(MaxZoom, NewZoom), 1);
@@ -2025,7 +2081,10 @@ end;
 
 function TBaseSkillPanel.GetZoom: Integer;
 begin
-  Result := Trunc(fImage.Scale);
+  if GameParams.ResizePanelWithWindow then
+    Result := Round(ResizePercentage) // Should never happen
+  else
+    Result := Trunc(fImage.Scale);
 end;
 
 function TBaseSkillPanel.GetMaxZoom: Integer;

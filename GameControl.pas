@@ -88,6 +88,7 @@ type
     moFullScreen,
     moMinimapHighQuality,
     moShowMinimap,
+    moResizePanelWithWindow,
     moIncreaseZoom,
     moLoadedConfig,
     moMatchBlankReplayUsername,
@@ -266,6 +267,7 @@ type
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
+    property ResizePanelWithWindow: boolean Index moResizePanelWithWindow read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
@@ -483,6 +485,7 @@ begin
     SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
     SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
     SL.Add('CursorResize=' + FloatToStr(CursorResize));
+    SaveBoolean('ResizePanelWithWindow', ResizePanelWithWindow);
     SaveBoolean('IncreaseZoom', IncreaseZoom);
     SaveBoolean('FullScreen', FullScreen);
 
@@ -673,6 +676,7 @@ begin
     HideSkillQ := LoadBoolean('HideSkillQ', HideSkillQ);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     ShowMinimap := LoadBoolean('ShowMinimap', ShowMinimap);
+    ResizePanelWithWindow := LoadBoolean('ResizePanelWithWindow', ResizePanelWithWindow);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
     PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
