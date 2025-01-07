@@ -78,7 +78,7 @@ begin
   except
     on E : EAbort do Exit; // Should only happen if some level piece is missing
   end;
-  TMainForm(GameParams.MainForm).ChildForm := self;
+  TMainForm(GameParams.MainForm).ChildForm := Self;
   Cursor := crNone;
   Screen.Cursor := crNone;
   Show;
@@ -86,7 +86,7 @@ end;
 
 function TBaseDosForm.IsGameplayScreen: Boolean;
 begin
-  Result := false;
+  Result := False;
 end;
 
 end.

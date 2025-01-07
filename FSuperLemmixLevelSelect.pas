@@ -378,21 +378,21 @@ begin
   fIconBMP.DrawMode := dmBlend;
   fIconBMP.CombineMode := cmMerge;
 
-  fInfoForm := TLevelInfoPanel.Create(self, fIconBMP);
-  fInfoForm.Parent := self;
+  fInfoForm := TLevelInfoPanel.Create(Self, fIconBMP);
+  fInfoForm.Parent := Self;
   fInfoForm.BoundsRect := pnLevelInfo.BoundsRect;
-  fInfoForm.Visible := false;
+  fInfoForm.Visible := False;
 
-  fPackTalBox := TScrollBox.Create(self);
-  fPackTalBox.Parent := self;
+  fPackTalBox := TScrollBox.Create(Self);
+  fPackTalBox.Parent := Self;
   fPackTalBox.BoundsRect := pnLevelInfo.BoundsRect;
-  fPackTalBox.VertScrollBar.Tracking := true;
-  fPackTalBox.Visible := false;
+  fPackTalBox.VertScrollBar.Tracking := True;
+  fPackTalBox.Visible := False;
 
-  pnLevelInfo.Visible := false;
+  pnLevelInfo.Visible := False;
 
-  btnResetTalismans.Enabled := false;
-  btnOK.Enabled := false;
+  btnResetTalismans.Enabled := False;
+  btnOK.Enabled := False;
 
   SearchingLevels := False;
 
@@ -435,7 +435,7 @@ procedure TFLevelSelect.FormDestroy(Sender: TObject);
 begin
   fIconBMP.Free;
 
-  fTalismanButtons.OwnsObjects := false; // Because TFLevelSelect itself will take care of any that remain
+  fTalismanButtons.OwnsObjects := False; // Because TFLevelSelect itself will take care of any that remain
   fTalismanButtons.Free;
 
   GameParams.Save(scImportant);
@@ -454,7 +454,7 @@ procedure TFLevelSelect.btnCleanseOneClick(Sender: TObject);
 var
   SaveDlg: TSaveDialog;
 begin
-  SaveDlg := TSaveDialog.Create(self);
+  SaveDlg := TSaveDialog.Create(Self);
   try
     SaveDlg.Title := 'Select file to save to';
     SaveDlg.Filter := 'NXLV Level Files|*.nxlv';
@@ -536,7 +536,7 @@ begin
     TargetPath := RightStr(TargetPath, Length(TargetPath) - Length(AppPath + SFLevels));
 
 
-  Dlg := TSaveDialog.Create(self);
+  Dlg := TSaveDialog.Create(Self);
   try
     Dlg.Title := 'Select location for shortcut';
     Dlg.Filter := 'Windows Shortcut (*.lnk)|*.lnk';
@@ -624,14 +624,14 @@ begin
 
   Obj := TObject(N.Data);
 
-  fLoadAsPack := false;
+  fLoadAsPack := False;
 
   if Obj is TNeoLevelGroup then
   begin
     if G.Levels.Count = 0 then
     begin
       if G.LevelCount > 0 then
-        fLoadAsPack := true
+        fLoadAsPack := True
       else
         Exit;
     end;
@@ -884,15 +884,15 @@ begin
       lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
 
     lblCompletion.Caption := GetPackResultsString(G);
-    lblCompletion.Visible := true;
+    lblCompletion.Visible := True;
 
     // Set the first unsolved level in the pack as the current level (or first level if pack is completed)
     WriteToParams;
-    GameParams.LoadCurrentLevel(false);
+    GameParams.LoadCurrentLevel(False);
 
     ClearTalismanButtons;
     DisplayPackTalismanInfo(G);
-    fInfoForm.Visible := false;
+    fInfoForm.Visible := False;
     SetAdvancedOptionsGroup(G);
   end else if Obj is TNeoLevelEntry then
   begin
@@ -906,10 +906,10 @@ begin
       lblAuthor.Caption := '';
 
     lblCompletion.Caption := '';
-    lblCompletion.Visible := false;
+    lblCompletion.Visible := False;
 
     DisplayLevelInfo;
-    fPackTalBox.Visible := false;
+    fPackTalBox.Visible := False;
     SetAdvancedOptionsLevel(L);
 
     fCurrentLevelVersion := GameParams.Level.Info.LevelVersion;
@@ -957,12 +957,12 @@ var
   LevelChanged: Boolean;
 begin
   WriteToParams;
-  GameParams.LoadCurrentLevel(false);
+  GameParams.LoadCurrentLevel(False);
 
   LevelChanged := (GameParams.CurrentLevel.Path <> fLastLevelPath);
   fLastLevelPath := GameParams.CurrentLevel.Path;
 
-  fInfoForm.Visible := true;
+  fInfoForm.Visible := True;
   fInfoForm.BoundsRect := pnLevelInfo.BoundsRect;
   fInfoForm.Level := GameParams.Level;
   fInfoForm.Talisman := nil;
@@ -1138,8 +1138,8 @@ var
   var
     NewButton: TSpeedButton;
   begin
-    NewButton := TSpeedButton.Create(self);
-    NewButton.Parent := self;
+    NewButton := TSpeedButton.Create(Self);
+    NewButton.Parent := Self;
 
     NewButton.Left := lblCompletion.Left + (40 * n) - SPEEDBUTTON_PADDING_SIZE;
     NewButton.Top := lblCompletion.Top - SPEEDBUTTON_PADDING_SIZE;
@@ -1202,7 +1202,7 @@ begin
       fInfoForm.PrepareEmbedRecords(fDisplayRecords)
     else begin
       fInfoForm.Talisman := nil;
-      fInfoForm.PrepareEmbed(false);
+      fInfoForm.PrepareEmbed(False);
     end;
   end else begin
     Tal := GameParams.Level.Talismans[TalBtn.Tag];
@@ -1214,7 +1214,7 @@ begin
       fInfoForm.Talisman := Tal;
 
     DrawTalismanButtons;
-    fInfoForm.PrepareEmbed(false);
+    fInfoForm.PrepareEmbed(False);
   end;
 end;
 
@@ -1581,7 +1581,7 @@ begin
 
   if Obj is TNeoLevelGroup then
   begin
-    DumpImagesFallbackFlag := false;
+    DumpImagesFallbackFlag := False;
     BasePack := TNeoLevelGroup(Obj).ParentBasePack;
 
     PathString := MakeSafeForFilename(BasePack.Name);
@@ -1598,7 +1598,7 @@ begin
   end else if Obj is TNeoLevelEntry then
   begin
     BMP := TBitmap32.Create;
-    SaveDlg := TSaveDialog.Create(self);
+    SaveDlg := TSaveDialog.Create(Self);
     try
       if GameParams.Level.HasAnyFallbacks then
         ShowMessage('Some styles used by this level appear to be missing. Use the Style Manager to download these.');
@@ -1607,7 +1607,7 @@ begin
       SaveDlg.DefaultExt := '.png';
       if SaveDlg.Execute then
       begin
-        GameParams.Renderer.RenderWorld(BMP, true);
+        GameParams.Renderer.RenderWorld(BMP, True);
         TPngInterface.SavePngFile(SaveDlg.FileName, BMP);
       end;
     finally

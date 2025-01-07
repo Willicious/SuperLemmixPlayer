@@ -51,7 +51,7 @@ type
     private
       function GetItem(Index: Integer): TGadgetModel;
     public
-      constructor Create(aOwnsObjects: Boolean = true);
+      constructor Create(aOwnsObjects: Boolean = True);
       function Add(Item: TGadgetModel): Integer; overload;
       function Add: TGadgetModel; overload;
       procedure Insert(Index: Integer; Item: TGadgetModel); overload;
@@ -66,7 +66,7 @@ implementation
 
 { TGadgetModelList }
 
-constructor TGadgetModelList.Create(aOwnsObjects: Boolean = true);
+constructor TGadgetModelList.Create(aOwnsObjects: Boolean = True);
 begin
   inherited Create(aOwnsObjects);
 end;

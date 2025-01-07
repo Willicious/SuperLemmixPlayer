@@ -99,7 +99,7 @@ type
 
   { game eventhandler}
     procedure Game_Finished;
-  { self eventhandlers }
+  { Self eventhandlers }
     procedure Form_Activate(Sender: TObject);
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -116,8 +116,8 @@ type
   { skillpanel eventhandlers }
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
-    procedure ReleaseMouse(releaseInFullScreen: Boolean = false);
-    procedure CheckResetCursor(aForce: Boolean = false);
+    procedure ReleaseMouse(releaseInFullScreen: Boolean = False);
+    procedure CheckResetCursor(aForce: Boolean = False);
     procedure ApplyScroll(dX, dY: Integer);
     function CheckScroll: Boolean;
     procedure AddSaveState;
@@ -133,8 +133,8 @@ type
     function GetClearPhysics: Boolean;
     procedure SetProjectionType(aValue: Integer);
     procedure ProcessGameMessages;
-    procedure ApplyResize(NoRecenter: Boolean = false);
-    procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
+    procedure ApplyResize(NoRecenter: Boolean = False);
+    procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
     procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
     procedure HandleInfiniteSkillsHotkey;
@@ -173,7 +173,7 @@ type
     PrevScrollTime       : Cardinal;          // Last time we scrolled in idle
     PrevPausedRRTime     : Cardinal;          // Last time we updated RR in idle
     MouseClipRect        : TRect;             // We clip the mouse when there is more space
-    CanPlay              : Boolean;           // Use in idle en set to false whenever we don't want to play
+    CanPlay              : Boolean;           // Use in idle en set to False whenever we don't want to play
     Cursors              : array[1..CURSOR_TYPES] of TNLCursor;
     MinScroll            : Single;            // Scroll boundary for image
     MaxScroll            : Single;            // Scroll boundary for image
@@ -258,7 +258,7 @@ begin
   if Key <> 0 then
     OnKeyDown(Sender, Key, Shift);
 
-  Handled := true;
+  Handled := True;
 end;
 
 procedure TGameWindow.MainFormResized;
@@ -267,7 +267,7 @@ begin
   DoDraw;
 end;
 
-procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
+procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
 var
   Pivot: TPoint;
 begin
@@ -292,7 +292,7 @@ begin
   end;
 end;
 
-procedure TGameWindow.ApplyResize(NoRecenter: Boolean = false);
+procedure TGameWindow.ApplyResize(NoRecenter: Boolean = False);
 var
   OSHorz, OSVert: Single;
 
@@ -344,7 +344,7 @@ end;
 
 function TGameWindow.IsGameplayScreen: Boolean;
 begin
-  Result := true;
+  Result := True;
 end;
 
 function TGameWindow.GetLevelMusicName: String;
@@ -352,7 +352,7 @@ var
   MusicIndex: Integer;
   SL: TStringList;
 begin
-  Result := ProcessMusicPriorityOrder(GameParams.Level.Info.MusicFile, false);
+  Result := ProcessMusicPriorityOrder(GameParams.Level.Info.MusicFile, False);
   if Result = '' then
   begin
     SL := GameParams.CurrentLevel.Group.MusicList;
@@ -364,7 +364,7 @@ begin
       else
         MusicIndex := GameParams.CurrentLevel.MusicRotationIndex;
 
-      Result := ProcessMusicPriorityOrder(SL[MusicIndex mod SL.Count], true);
+      Result := ProcessMusicPriorityOrder(SL[MusicIndex mod SL.Count], True);
     end;
   end;
 
@@ -387,7 +387,7 @@ begin
   SL := TStringList.Create;
   try
     SL.Delimiter := ';';
-    SL.StrictDelimiter := true;
+    SL.StrictDelimiter := True;
 
     if aOptions[1] = '!' then
     begin
@@ -412,14 +412,14 @@ begin
 
         if (MusicIndex >= 0) and (MusicIndex < GameParams.CurrentLevel.Group.MusicList.Count) then
         begin
-          ThisName := ProcessMusicPriorityOrder(GameParams.CurrentLevel.Group.MusicList[MusicIndex], true);
+          ThisName := ProcessMusicPriorityOrder(GameParams.CurrentLevel.Group.MusicList[MusicIndex], True);
           if ThisName <> '' then
           begin
             Result := ThisName;
             Exit;
           end;
         end;
-      end else if SoundManager.FindExtension(ThisName, true) <> '' then
+      end else if SoundManager.FindExtension(ThisName, True) <> '' then
       begin
         Result := ThisName;
         Exit;
@@ -481,7 +481,7 @@ var
   OldClearReplay: Boolean;
   ModalResult: Integer;
 begin
-  F := TFReplayEditor.Create(self);
+  F := TFReplayEditor.Create(Self);
   SuspendGameplay;
 
   try
@@ -520,7 +520,7 @@ begin
   // For security check trapping the mouse again.
   if fSuspendCursor or not GameParams.EdgeScroll then Exit;
 
-  fMouseTrapped := true;
+  fMouseTrapped := True;
 
   ClientTopLeft := ClientToScreen(Point(Min(SkillPanel.Image.Left, Img.Left), Img.Top));
   ClientBottomRight := ClientToScreen(Point(Max(Img.Left + Img.Width, SkillPanel.Image.Left + SkillPanel.Image.Width), SkillPanel.Top + SkillPanel.Image.Height));
@@ -528,10 +528,10 @@ begin
   ClipCursor(@MouseClipRect);
 end;
 
-procedure TGameWindow.ReleaseMouse(releaseInFullScreen: Boolean = false);
+procedure TGameWindow.ReleaseMouse(releaseInFullScreen: Boolean = False);
 begin
   if GameParams.FullScreen and not releaseInFullScreen then Exit;
-  fMouseTrapped := false;
+  fMouseTrapped := False;
   ClipCursor(nil);
 end;
 
@@ -660,7 +660,7 @@ begin
     SkillPanel.DrawButtonSelector(spbFastForward, True);
   end;
 
-  if ForceOne or Hyper then TimeForFrame := true;
+  if ForceOne or Hyper then TimeForFrame := True;
 
   // Relax CPU
   if not (Hyper or Fast or Game.IsSuperLemmingMode) then
@@ -668,7 +668,7 @@ begin
 
   if TimeForFrame or TimeForScroll or TimeForPausedRR then
   begin
-    fRenderInterface.ForceUpdate := false;
+    fRenderInterface.ForceUpdate := False;
 
     // Only in paused mode adjust RR. If not paused it's updated per frame.
     if TimeForPausedRR and not GameParams.ClassicMode then
@@ -706,12 +706,12 @@ begin
         fSaveList.TidyList(Game.CurrentIteration);
       end;
 
-      fRanOneUpdate := true;
+      fRanOneUpdate := True;
     end;
 
     if Hyper and (fHyperSpeedStopCondition <> 0) then
     begin
-      ContinueHyper := false;
+      ContinueHyper := False;
 
       if Game.CurrentIteration < fSpecialStartIteration + SPECIAL_SKIP_MAX_DURATION then
         case fHyperSpeedStopCondition of
@@ -721,14 +721,14 @@ begin
 
                           if fRenderInterface.LemmingList[i].LemAction = baShrugging then
                           begin
-                            ContinueHyper := false;
+                            ContinueHyper := False;
                             Break;
                           end;
 
                           if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baStacking, baPlatforming] then
-                            ContinueHyper := true;
+                            ContinueHyper := True;
                         end;
-          SHE_HIGHLIT: if not CheckHighlitLemmingChange then ContinueHyper := true;
+          SHE_HIGHLIT: if not CheckHighlitLemmingChange then ContinueHyper := True;
         end;
 
       if not ContinueHyper then
@@ -866,14 +866,14 @@ begin
   SL.Add('  Class: ' + E.ClassName);
   SL.Add('  Message: ' + E.Message);
 
-  RIValid := false;
+  RIValid := False;
   if fRenderInterface = nil then
     SL.Add('  fRenderInterface: nil')
   else
     try
       fRenderInterface.Null;
       SL.Add('  fRenderInterface: Valid');
-      RIValid := true;
+      RIValid := True;
     except
       SL.Add('  fRenderInterface: Exception on access attempt');
     end;
@@ -955,10 +955,10 @@ begin
   // Attempt to save report - we'd rather it just fail than crash and lose the replay data.
   try
     SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'SuperLemmixException.txt');
-    RIValid := true;
+    RIValid := True;
   except
     // We can't do much here.
-    RIValid := false; // Reuse is lazy. but I'm doing it anyway.
+    RIValid := False; // Reuse is lazy. but I'm doing it anyway.
   end;
 
   if RIValid then
@@ -969,7 +969,7 @@ begin
                 'saved to the "Auto" folder if possible, then you will be returned to the main menu.');
 
   try
-    SL.Insert(0, Game.ReplayManager.GetSaveFileName(self, rsoAuto));
+    SL.Insert(0, Game.ReplayManager.GetSaveFileName(Self, rsoAuto));
     ForceDirectories(ExtractFilePath(SL[0]));
     Game.EnsureCorrectReplayDetails;
     Game.ReplayManager.SaveToFile(SL[0]);
@@ -1025,7 +1025,7 @@ begin
     try
       fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
       fRenderInterface.MousePos := Game.CursorPoint;
-      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, fClearPhysics);
       fRenderer.DrawLemmings(fClearPhysics);
       fRenderer.DrawProjectiles;
 
@@ -1122,7 +1122,7 @@ begin
     if UseSaveState >= 0 then
       Game.LoadSavedState(fSaveList[UseSaveState])
     else
-      Game.Start(true);
+      Game.Start(True);
   end;
 
   fSaveList.ClearAfterIteration(Game.CurrentIteration);
@@ -1136,13 +1136,13 @@ begin
   CanPlay := True;
 end;
 
-procedure TGameWindow.CheckResetCursor(aForce: Boolean = false);
+procedure TGameWindow.CheckResetCursor(aForce: Boolean = False);
 begin
   if not CanPlay then Exit;
 
   if FindControl(GetForegroundWindow()) = nil then
   begin
-    fNeedResetMouseTrap := true;
+    fNeedResetMouseTrap := True;
     exit;
   end;
 
@@ -1151,7 +1151,7 @@ begin
   if (fNeedResetMouseTrap or aForce) and fMouseTrapped and (not fSuspendCursor) and GameParams.EdgeScroll then
   begin
     ApplyMouseTrap;
-    fNeedResetMouseTrap := false;
+    fNeedResetMouseTrap := False;
   end;
 end;
 
@@ -1221,7 +1221,7 @@ function TGameWindow.CheckScroll: Boolean;
     ApplyScroll(dX, dY);
     Result := (dX <> 0) or (dY <> 0) or Result; { Though it should never happen anyway,
                                                   a Scroll(0, 0) call after an earlier nonzero
-                                                  call should not set Result to false }
+                                                  call should not set Result to False }
   end;
 
   procedure HandleHeldScroll;
@@ -1253,7 +1253,7 @@ begin
     if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
       HandleHeldScroll
     else
-      fHoldScrollData.Active := false;
+      fHoldScrollData.Active := False;
   end else if fNeedResetMouseTrap or not fMouseTrapped then
   begin
     GameScroll := gsNone;
@@ -1317,7 +1317,7 @@ begin
 
   Color := $200020;
 
-  fNeedResetMouseTrap := true;
+  fNeedResetMouseTrap := True;
   fSaveStateReplayStream := TMemoryStream.Create;
 
   // Create game
@@ -1367,8 +1367,8 @@ begin
   SkillPanel.SetOnMinimapClick(SkillPanel_MinimapClick);
   Application.OnIdle := Application_Idle;
 
-  fSaveList := TLemmingGameSavedStateList.Create(true);
-  fReplayKilled := false;
+  fSaveList := TLemmingGameSavedStateList.Create(True);
+  fReplayKilled := False;
   fMinimapBuffer := TBitmap32.Create;
   TLinearResampler.Create(fMinimapBuffer);
   fSuspensions := TList<TSuspendState>.Create;
@@ -1549,7 +1549,7 @@ begin
   with Game do
   begin
     if (func.Action = lka_CancelReplay) then
-      Game.RegainControl(true); // Force the cancel even if in Replay Insert mode
+      Game.RegainControl(True); // Force the cancel even if in Replay Insert mode
 
     if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       begin
@@ -1615,7 +1615,7 @@ begin
                         if CurrTime - fLastNukeKeyTime < 250 then
                         begin
                           RegainControl;
-                          SetSelectedSkill(spbNuke, true, true);
+                          SetSelectedSkill(spbNuke, True, True);
                           GotoSaveState(Game.CurrentIteration, 0, Game.CurrentIteration - 85);
                         end else
                           fLastNukeKeyTime := CurrTime;
@@ -1628,7 +1628,7 @@ begin
                       begin
                         fSaveStateFrame := fGame.CurrentIteration;
                         fSaveStateReplayStream.Clear;
-                        Game.ReplayManager.SaveToStream(fSaveStateReplayStream, false, true);
+                        Game.ReplayManager.SaveToStream(fSaveStateReplayStream, False, True);
                       end;
       lka_LoadState : if not GameParams.ClassicMode then
                       begin
@@ -1636,7 +1636,7 @@ begin
                         begin
                           fSaveList.ClearAfterIteration(0);
                           fSaveStateReplayStream.Position := 0;
-                          Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, true);
+                          Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, True);
                           GotoSaveState(fSaveStateFrame, 1);
 
                           if not GameParams.AutoReplayMode then
@@ -1767,17 +1767,17 @@ begin
                     Game.IsBackstepping := False;
                     fHyperSpeedTarget := CurrentIteration + func.Modifier;
                   end else
-                    if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
+                    if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
       lka_ClearPhysics: if not GameParams.ClassicMode then
               if func.Modifier = 0 then
                 ClearPhysics := not ClearPhysics
               else
-                ClearPhysics := true;
+                ClearPhysics := True;
       lka_ShowUsedSkills: if func.Modifier = 0 then
                             SkillPanel.ShowUsedSkills := not SkillPanel.ShowUsedSkills
                           else
-                            SkillPanel.ShowUsedSkills := true;
+                            SkillPanel.ShowUsedSkills := True;
       lka_EditReplay: if not GameParams.ClassicMode then ExecuteReplayEdit;
       lka_ReplayInsert: if not GameParams.ClassicMode then Game.ReplayInsert := not Game.ReplayInsert;
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
@@ -1786,7 +1786,7 @@ begin
                     CursorPointForm := ScreenToClient(Mouse.CursorPos);
                     if PtInRect(Img.BoundsRect, CursorPointForm) and not fHoldScrollData.Active then
                     begin
-                      fHoldScrollData.Active := true;
+                      fHoldScrollData.Active := True;
                       fHoldScrollData.StartCursor := Mouse.CursorPos;
                     end;
                   end;
@@ -1833,14 +1833,14 @@ begin
                           Game.RegainControl(True);
                      end;
       ssc_NextShrugger: begin
-                          HasSuitableSkill := false;
+                          HasSuitableSkill := False;
                           for i := 0 to fRenderInterface.LemmingList.Count-1 do
                           begin
                             if fRenderInterface.LemmingList[i].LemRemoved then Continue;
 
                             if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking] then
                             begin
-                              HasSuitableSkill := true;
+                              HasSuitableSkill := True;
                               Break;
                             end;
                           end;
@@ -1879,9 +1879,9 @@ begin
       lka_ReleaseRateDown    : SetSelectedSkill(spbSlower, False);
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
       lka_ClearPhysics       : if func.Modifier <> 0 then
-                                 ClearPhysics := false;
+                                 ClearPhysics := False;
       lka_ShowUsedSkills     : if func.Modifier <> 0 then
-                                 SkillPanel.ShowUsedSkills := false;
+                                 SkillPanel.ShowUsedSkills := False;
     end;
   end;
 
@@ -2006,7 +2006,7 @@ end;
 
 procedure TGameWindow.Form_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
-  SkillPanel.MinimapScrollFreeze := false;
+  SkillPanel.MinimapScrollFreeze := False;
 end;
 
 procedure TGameWindow.Img_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
@@ -2025,7 +2025,7 @@ begin
 
     Game.HitTestAutoFail := not PtInRect(Rect(0, 0, Img.Width, Img.Height), Point(X, Y));
 
-    SkillPanel.MinimapScrollFreeze := false;
+    SkillPanel.MinimapScrollFreeze := False;
 
     if fGameSpeed = gspPause then
     begin
@@ -2171,7 +2171,7 @@ begin
 
   fMinimapBuffer.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
 
-  ChangeZoom(Sca, true);
+  ChangeZoom(Sca, True);
 
   if GameParams.Level.Info.ScreenStartAuto then
     GameParams.Level.CalculateAutoScreenStart(HorzStart, VertStart)
@@ -2188,12 +2188,6 @@ begin
   Img.OffsetHorz := Min(Max(-HorzStart, MinScroll), MaxScroll);
   Img.OffsetVert := Min(Max(-VertStart, MinVScroll), MaxVScroll);
 
-  //if GameParams.LinearResampleGame then
-  //begin
-    //TLinearResampler.Create(Img.Bitmap);
-    //TLinearResampler.Create(SkillPanel.Image.Bitmap);
-  //end;
-
   InitializeCursor;
   if GameParams.EdgeScroll then ApplyMouseTrap;
 
@@ -2201,7 +2195,7 @@ begin
   fRenderInterface := Game.RenderInterface;
   fRenderer.SetInterface(fRenderInterface);
 
-  if FileExists(AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, true)) and
+  if FileExists(AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, True)) and
     not (GameParams.DisableMusicInTestplay and (GameParams.TestModeLevel <> nil)) then
     SoundManager.LoadMusicFromFile(GetLevelMusicName)
   else
@@ -2269,7 +2263,7 @@ const
 
   TREAT_AS_WALKING_ACTIONS = [baShrugging, baLooking, baToWalking, baCloning];
 begin
-  Result := true;
+  Result := True;
 
   if fRenderInterface = nil then Exit;
 
@@ -2284,7 +2278,7 @@ begin
 
   if (sL.LemAction <> aL.LemAction) then
   begin
-    Result := true;
+    Result := True;
 
     Act1 := sL.LemAction;
     Act2 := aL.LemAction;
@@ -2296,11 +2290,11 @@ begin
       if ((Act1 = COMPATIBLE_ACTIONS[n][0]) and (Act2 = COMPATIBLE_ACTIONS[n][1])) or
          ((Act2 = COMPATIBLE_ACTIONS[n][0]) and (Act1 = COMPATIBLE_ACTIONS[n][1])) then
     begin
-      Result := false;
+      Result := False;
       Break;
     end;
   end else
-    Result := false;
+    Result := False;
 end;
 
 procedure TGameWindow.SuspendGameplay;
@@ -2312,9 +2306,9 @@ begin
   fSuspensions.Insert(0, NewSuspendState);
 
   GameSpeed := gspPause;
-  CanPlay := false;
-  fSuspendCursor := true;
-  ReleaseMouse(true);
+  CanPlay := False;
+  fSuspendCursor := True;
+  ReleaseMouse(True);
 end;
 
 procedure TGameWindow.ResumeGameplay;
@@ -2330,7 +2324,7 @@ begin
 
   if fSuspensions.Count = 0 then
   begin
-    fSuspendCursor := false;
+    fSuspendCursor := False;
     ApplyMouseTrap;
   end;
 end;
@@ -2342,7 +2336,7 @@ begin
   SuspendGameplay;
   try
     Game.EnsureCorrectReplayDetails;
-    s := Game.ReplayManager.GetSaveFileName(self, rsoIngame, Game.ReplayManager);
+    s := Game.ReplayManager.GetSaveFileName(Self, rsoIngame, Game.ReplayManager);
     if s = '' then Exit;
     Game.ReplayManager.SaveToFile(s);
   finally
@@ -2357,7 +2351,7 @@ var
   BMP: TBitmap32;
 begin
   SuspendGameplay;
-  Dlg := TSaveDialog.Create(self);
+  Dlg := TSaveDialog.Create(Self);
   try
     Dlg.Filter := 'PNG Image (*.png)|*.png';
     Dlg.FilterIndex := 1;
@@ -2370,12 +2364,12 @@ begin
       BMP := TBitmap32.Create;
       BMP.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
 
-      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, fClearPhysics);
       fRenderer.DrawLemmings(fClearPhysics);
       fRenderer.DrawProjectiles;
       fRenderer.DrawLevel(BMP, fClearPhysics);
 
-      TPngInterface.SavePngFile(SaveName, BMP, true);
+      TPngInterface.SavePngFile(SaveName, BMP, True);
 
       BMP.Free;
     end;
@@ -2404,7 +2398,7 @@ begin
   CanPlay := False;
   Application.OnIdle := nil;
   ClipCursor(nil);
-  fSuspendCursor := true;
+  fSuspendCursor := True;
   Cursor := crNone;
   Screen.Cursor := crNone;
   Img.Cursor := crNone;
@@ -2416,17 +2410,17 @@ begin
   begin
     if gCheated then
     begin
-      GameParams.NextLevel(true);
-      GameParams.ShownText := false;
+      GameParams.NextLevel(True);
+      GameParams.ShownText := False;
       aNextScreen := gstPreview;
     end;
 
     if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
     begin
       Game.EnsureCorrectReplayDetails;
-      S := Game.ReplayManager.GetSaveFileName(self, rsoAuto, Game.ReplayManager);
+      S := Game.ReplayManager.GetSaveFileName(Self, rsoAuto, Game.ReplayManager);
       ForceDirectories(ExtractFilePath(S));
-      Game.ReplayManager.SaveToFile(S, true);
+      Game.ReplayManager.SaveToFile(S, True);
     end;
   end;
 
@@ -2472,7 +2466,7 @@ begin
     if fRenderInterface <> nil then
       fRenderInterface.ProjectionType := aValue;
 
-    Game.CheckForNewShadow(true);
+    Game.CheckForNewShadow(True);
   end;
 end;
 

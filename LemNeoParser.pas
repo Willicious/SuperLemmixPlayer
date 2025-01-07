@@ -652,7 +652,7 @@ constructor TParserSectionList.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 
@@ -683,7 +683,7 @@ constructor TParserLineList.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 

@@ -637,7 +637,7 @@ var
 begin
   SetLength(SkipObjects, 0);
   SetLength(WindowOrder, 0);
-  HasSubHeader := false;
+  HasSubHeader := False;
   with aLevel do
   begin
     aStream.ReadBuffer(Buf, SizeOf(Buf));
@@ -731,7 +731,7 @@ begin
       GSNames[0] := GraphicSetName; // fallback in case lvl file has no graphic set list, as most won't
 
       if (Buf.LevelOptions and $0A) = $0A then
-        IsSimpleAutoSteel := true;
+        IsSimpleAutoSteel := True;
 
       // Needed to apply some terrain properties
       OldLevelOptions := Buf.LevelOptions;
@@ -838,7 +838,7 @@ begin
            end;
         5: begin
              aStream.Read(Buf2, SizeOf(Buf2));
-             HasSubHeader := true;
+             HasSubHeader := True;
              Info.ScreenPosition := ((Buf2.ScreenPosition * 8) div LRes) + 160;
              Info.ScreenYPosition := ((Buf2.ScreenYPosition * 8) div LRes) + 80;
              with Info do
@@ -922,7 +922,7 @@ begin
       SkillCount[spbBasher]      := System.Swap(Buf.BasherCount) mod 256;
       SkillCount[spbMiner]       := System.Swap(Buf.MinerCount) mod 256;
       SkillCount[spbDigger]      := System.Swap(Buf.DiggerCount) mod 256;
-      IsSimpleAutoSteel := false;
+      IsSimpleAutoSteel := False;
       Title            := String(Buf.LevelName);
       Author           := '';
       GraphicSet := System.Swap(Buf.GraphicSet);
@@ -1136,7 +1136,7 @@ begin
       end;
 
       if (Buf.LevelOptions and $0A) = $0A then
-        IsSimpleAutoSteel := true;
+        IsSimpleAutoSteel := True;
 
       // Needed to apply some terrain properties
       OldLevelOptions := Buf.LevelOptions;
@@ -1267,7 +1267,7 @@ var
   T: TTerrain;
   // don't need TPreplacedLemming, SuperLemmini doesn't support it
 
-  procedure WipeSpaces(aSL: TStringList; Full: Boolean = false);
+  procedure WipeSpaces(aSL: TStringList; Full: Boolean = False);
   var
     TempSL: TStringList;
     i: Integer;
@@ -1353,7 +1353,7 @@ begin
   SplitSL := TStringList.Create;
   try
     SL.LoadFromStream(aStream);
-    WipeSpaces(SL, true);
+    WipeSpaces(SL, True);
     aLevel.Clear;
 
     with aLevel.Info do
@@ -1408,9 +1408,9 @@ begin
       Author := SL.Values['author'];
 
       case Value('autosteel') of
-        0: IsSimpleAutoSteel := false; // was originally manual steel, but we removed this option
-        1: IsSimpleAutoSteel := false;
-        2: IsSimpleAutoSteel := true;
+        0: IsSimpleAutoSteel := False; // was originally manual steel, but we removed this option
+        1: IsSimpleAutoSteel := False;
+        2: IsSimpleAutoSteel := True;
       end;
     end;
 

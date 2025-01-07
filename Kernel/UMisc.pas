@@ -60,7 +60,7 @@ begin
   SL := TStringList.Create;
   try
     SL.Delimiter := ' ';
-    SL.StrictDelimiter := true;
+    SL.StrictDelimiter := True;
 
     SL.DelimitedText := S;
 

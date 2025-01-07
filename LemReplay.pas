@@ -171,12 +171,12 @@ type
       class function EvaluateReplayNamePattern(aPattern: String; aReplay: TReplay = nil): String;
       class function GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion; aReplay: TReplay = nil): String;
       procedure Add(aItem: TBaseReplayItem);
-      procedure Clear(EraseLevelInfo: Boolean = false);
+      procedure Clear(EraseLevelInfo: Boolean = False);
       procedure Delete(aItem: TBaseReplayItem);
       procedure LoadFromFile(aFile: String);
-      procedure SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
-      procedure LoadFromStream(aStream: TStream; aInternal: Boolean = false);
-      procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false; aInternal: Boolean = false);
+      procedure SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = False);
+      procedure LoadFromStream(aStream: TStream; aInternal: Boolean = False);
+      procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = False; aInternal: Boolean = False);
       procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
       function CheckForAction(aList: TReplayItemList; aFrame: Integer): Boolean;
       function HasAnyActionAt(aFrame: Integer): Boolean;
@@ -263,7 +263,7 @@ begin
   fSpawnIntervalChanges := TReplayItemList.Create;
   fSkillCountChanges := TReplayItemList.Create;
   fTimeChanges := TReplayItemList.Create;
-  Clear(true);
+  Clear(True);
 end;
 
 destructor TReplay.Destroy;
@@ -376,12 +376,12 @@ begin
     else raise Exception.Create('Invalid replay save occasion');
   end;
 
-  UseDialog := false;
+  UseDialog := False;
   if LeftStr(SaveName, 1) = '*' then
   begin
     SaveName := RightStr(SaveName, Length(SaveName) - 1);
     if aSaveOccasion <> rsoAuto then
-      UseDialog := true;
+      UseDialog := True;
   end;
 
   if UseDialog then
@@ -412,7 +412,7 @@ begin
   Dst.Add(aItem);
 
   aItem.AddTime := GetTickCount64;
-  fIsModified := true;
+  fIsModified := True;
 end;
 
 procedure TReplay.Delete(aItem: TBaseReplayItem);
@@ -433,16 +433,16 @@ begin
     if Dst[i] = aItem then
       Dst.Delete(i);
 
-  fIsModified := true;
+  fIsModified := True;
 end;
 
-procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
+procedure TReplay.Clear(EraseLevelInfo: Boolean = False);
 begin
   fAssignments.Clear;
   fSpawnIntervalChanges.Clear;
   fSkillCountChanges.Clear;
   fTimeChanges.Clear;
-  fIsModified := true;
+  fIsModified := True;
   if not EraseLevelInfo then Exit;
   fPlayerName := '';
   fLevelName := '';
@@ -532,7 +532,7 @@ function TReplay.IsThisLatestAction(aAction: TBaseReplayItem): Boolean;
 var
   i: Integer;
 begin
-  Result := false;
+  Result := False;
 
   if aAction.AddTime <= 0 then Exit;
 
@@ -552,7 +552,7 @@ begin
     for i := 0 to fAssignments.Count-1 do
       if (fAssignments[i] <> aAction) and (fAssignments[i].AddTime >= aAction.AddTime) then Exit;
 
-  Result := true;
+  Result := True;
 end;
 
 function TReplay.GetLastActionFrame: Integer;
@@ -573,14 +573,14 @@ begin
   CheckForAction(fTimeChanges);
 end;
 
-procedure TReplay.LoadFromStream(aStream: TStream; aInternal: Boolean = false);
+procedure TReplay.LoadFromStream(aStream: TStream; aInternal: Boolean = False);
 var
   Parser: TParser;
   Sec: TParserSection;
   SL: TStringList;
 begin
   IncludeInternalInfo := aInternal;
-  Clear(true);
+  Clear(True);
 
   SL := TStringList.Create;
   Parser := TParser.Create;
@@ -605,7 +605,7 @@ begin
     Sec.DoForEachSection('nuke', HandleLoadSection);
     Sec.DoForEachSection('infinite_skills', HandleLoadSection);
 
-    fIsModified := false;
+    fIsModified := False;
   finally
     Parser.Free;
     SL.Free
@@ -637,7 +637,7 @@ begin
     fAssignments.Add(Item);
 end;
 
-procedure TReplay.SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
+procedure TReplay.SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = False);
 var
   FS: TFileStream;
 begin
@@ -664,7 +664,7 @@ begin
   end;
 end;
 
-procedure TReplay.SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false; aInternal: Boolean = false);
+procedure TReplay.SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = False; aInternal: Boolean = False);
 var
   Parser: TParser;
   Sec: TParserSection;
@@ -710,7 +710,7 @@ begin
     Parser.SaveToStream(aStream);
 
     if aMarkAsUnmodified then
-      fIsModified := false;
+      fIsModified := False;
   finally
     Parser.Free;
   end;
@@ -737,18 +737,18 @@ var
 begin
   // First, verify if it NEEDS to be updated. There's a few things we can check for, though we don't have anything 100% reliable.
   // (These tests are 100% reliable on SuperLemmix-generated files, but possibly not on user-edited ones.)
-  NeedUpdate := false;
+  NeedUpdate := False;
   for i := 0 to SL.Count-1 do
   begin
     if ModLine(SL[0]) = 'force_update' then // Panic button
     begin
       SL.Delete(0);
-      NeedUpdate := true;
+      NeedUpdate := True;
       Break;
     end;
 
     if LeftStr(ModLine(SL[i]), 1) = '$' then Exit; // Almost a surefire sign of a new format replay
-    if ModLine(SL[i]) = 'actions' then NeedUpdate := true; // The presence is almost surefire sign of old format, and absence almost surefire sign of new
+    if ModLine(SL[i]) = 'actions' then NeedUpdate := True; // The presence is almost surefire sign of old format, and absence almost surefire sign of new
 
     if NeedUpdate then Break;
   end;
@@ -795,13 +795,13 @@ function TReplay.GetIsThisUsersReplay: Boolean;
 begin
   if (fPlayerName = GameParams.UserName)
   or ((Trim(fPlayerName) = '') and GameParams.MatchBlankReplayUsername) then
-    Result := true
+    Result := True
   else if fIsModified then
   begin
-    Result := true;
+    Result := True;
     fPlayerName := GameParams.UserName;
   end else
-    Result := false;
+    Result := False;
 end;
 
 function TReplay.GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
@@ -1034,7 +1034,7 @@ constructor TReplayItemList.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 

@@ -70,7 +70,7 @@ constructor TAppController.Create(aOwner: TComponent);
 begin
   inherited;
 
-  // Set to true as default; change to false if any failure.
+  // Set to True as default; change to False if any failure.
   fLoadSuccess := True;
 
   SoundManager := TSoundManager.Create;
@@ -102,13 +102,13 @@ begin
 
   case TCommandLineHandler.HandleCommandLine of
     clrContinue: ; // Don't need to do anything.
-    clrHalt: fLoadSuccess := false;
+    clrHalt: fLoadSuccess := False;
     clrToPreview: GameParams.NextScreen := gstPreview;
   end;
 
   if not fLoadSuccess then
   begin
-    IsHalting := true;
+    IsHalting := True;
     GameParams.NextScreen := gstExit;
   end;
 
@@ -138,7 +138,7 @@ begin
 
   try
     if DirectoryExists(AppPath + SFTemp) then
-      TDirectory.Delete(AppPath + SFTemp, true);
+      TDirectory.Delete(AppPath + SFTemp, True);
   except
     // Do nothing - this is a "if it fails it fails" situation.
   end;
@@ -247,7 +247,7 @@ function TAppController.Execute: Boolean;
 var
   NewScreen: TGameScreenType;
 begin
-  Result := true;
+  Result := True;
 
   // Save data between screens so it's as up-to-date as possible
   GameParams.Save(TGameParamsSaveCriticality.scNone);
@@ -262,7 +262,7 @@ begin
     gstPostview  : ShowPostviewScreen;
     gstText      : ShowTextScreen;
     gstReplayTest: ShowReplayCheckScreen;
-    else Result := false;
+    else Result := False;
   end;
 end;
 

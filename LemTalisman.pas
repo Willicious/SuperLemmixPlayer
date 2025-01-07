@@ -163,13 +163,13 @@ begin
         fSkillLimits[i] := 0;
 
   if aSec.Line['kill_zombies'] <> nil then
-    fRequireKillZombies := true;
+    fRequireKillZombies := True;
 
   if aSec.Line['classic_mode'] <> nil then
-    fRequireClassicMode := true;
+    fRequireClassicMode := True;
 
   if aSec.Line['no_pause'] <> nil then
-    fRequireNoPause := true;
+    fRequireNoPause := True;
 
 end;
 

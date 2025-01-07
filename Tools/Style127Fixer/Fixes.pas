@@ -72,7 +72,7 @@ var
       SLPrimary := TStringList.Create;
 
     SLPrimary.Add('  ' + LineWithoutIndentation);
-    RemoveLine := true;
+    RemoveLine := True;
   end;
 const
   NAME_PAIRINGS_COUNT = 22;
@@ -94,14 +94,14 @@ begin
   try
     SL.LoadFromFile(ObjectNXMOFile);
     SLPrimary := nil;
-    FoundEffect := false;
+    FoundEffect := False;
     PrimaryStart := -1;
     Level := 0;
 
     for i := 0 to SL.Count-1 do
     begin
       Split := SplitLine(SL[i]);
-      RemoveLine := false;
+      RemoveLine := False;
 
       if Level = 0 then
       begin
@@ -111,7 +111,7 @@ begin
             begin
               Split.Keyword := 'EFFECT';
               Split.Value := NEW_NAMES[n];
-              FoundEffect := true;
+              FoundEffect := True;
               Break;
             end;
 
@@ -193,13 +193,13 @@ var
           for x := 0 to BMP.Width-1 do
             if (BMP[x, y] and $00FFFFFF) = Color then
             begin
-              Result := false;
+              Result := False;
               Exit;
             end;
       until FindNext(SearchRec) <> 0;
       FindClose(SearchRec);
 
-      Result := true;
+      Result := True;
     end;
   var
     i: Integer;

@@ -41,8 +41,8 @@ type
       procedure Load;
 
       procedure DrawText(Dst: TBitmap32; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil);
-      procedure DrawTextColored(Dst: TBitmap32; const HueShift: TColorDiff; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = false);
-      procedure DrawTextCentered(Dst: TBitmap32; const S: string; Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = false);
+      procedure DrawTextColored(Dst: TBitmap32; const HueShift: TColorDiff; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
+      procedure DrawTextCentered(Dst: TBitmap32; const S: string; Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
       procedure DrawTextLines(const Lines: TextLineArray; Dst: TBitmap32; Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
       function GetTextSize(const S: String): TRect;
 
@@ -213,7 +213,7 @@ begin
 end;
 
 procedure TMenuFont.DrawTextColored(Dst: TBitmap32; const HueShift: TColorDiff;
-  const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = false);
+  const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
 var
   C: Char;
   CX, CY, i: Integer;

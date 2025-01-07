@@ -242,7 +242,7 @@ end;
 
 procedure TFormNXConfig.SetFromParams;
 begin
-  fIsSetting := true;
+  fIsSetting := True;
 
   try
     // --- Page 1 (Global Options) --- //
@@ -276,9 +276,9 @@ begin
 
     cbFullScreen.Checked := GameParams.FullScreen;
     cbResetWindowSize.Enabled := not GameParams.FullScreen;
-    cbResetWindowSize.Checked := false;
+    cbResetWindowSize.Checked := False;
     cbResetWindowPosition.Enabled := not GameParams.FullScreen;
-    cbResetWindowPosition.Checked := false;
+    cbResetWindowPosition.Checked := False;
     cbHighResolution.Checked := GameParams.HighResolution; // Must be done before SetZoomDropdown
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
     cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
@@ -307,9 +307,9 @@ begin
 
     cbAmigaTheme.Checked := GameParams.AmigaTheme;
 
-    btnApply.Enabled := false;
+    btnApply.Enabled := False;
   finally
-    fIsSetting := false;
+    fIsSetting := False;
   end;
 end;
 
@@ -379,14 +379,14 @@ begin
 
   GameParams.AmigaTheme := cbAmigaTheme.Checked;
 
-  btnApply.Enabled := false;
+  btnApply.Enabled := False;
 end;
 
 procedure TFormNXConfig.btnHotkeysClick(Sender: TObject);
 var
   HotkeyForm: TFLemmixHotkeys;
 begin
-  HotkeyForm := TFLemmixHotkeys.Create(self);
+  HotkeyForm := TFLemmixHotkeys.Create(Self);
   HotkeyForm.HotkeyManager := GameParams.Hotkeys;
   HotkeyForm.ShowModal;
   HotkeyForm.Free;
@@ -399,7 +399,7 @@ end;
 //begin
   //OldEnableOnline := GameParams.EnableOnline;
   //GameParams.EnableOnline := cbEnableOnline.Checked; // Behave as checkbox indicates; but don't break the Cancel button.
-  //F := TFManageStyles.Create(self);
+  //F := TFManageStyles.Create(Self);
   //try
     //F.ShowModal;
   //finally
@@ -447,7 +447,7 @@ begin
 
     if NewPanelZoom >= 0 then SetPanelZoomDropdown(NewPanelZoom);
 
-    btnApply.Enabled := true;
+    btnApply.Enabled := True;
   end;
 end;
 
@@ -508,19 +508,19 @@ begin
   begin
     if cbClassicMode.Checked then
     begin
-      cbHideShadows.Checked := true;
-      cbHideHelpers.Checked := true;
-      cbHideSkillQ.Checked := true;
-      cbHideShadows.Enabled := false;
-      cbHideHelpers.Enabled := false;
-      cbHideSkillQ.Enabled := false;
+      cbHideShadows.Checked := True;
+      cbHideHelpers.Checked := True;
+      cbHideSkillQ.Checked := True;
+      cbHideShadows.Enabled := False;
+      cbHideHelpers.Enabled := False;
+      cbHideSkillQ.Enabled := False;
     end else begin
-      cbHideShadows.Checked := false;
-      cbHideHelpers.Checked := false;
-      cbHideSkillQ.Checked := false;
-      cbHideShadows.Enabled := true;
-      cbHideHelpers.Enabled := true;
-      cbHideSkillQ.Enabled := true;
+      cbHideShadows.Checked := False;
+      cbHideHelpers.Checked := False;
+      cbHideSkillQ.Checked := False;
+      cbHideShadows.Enabled := True;
+      cbHideHelpers.Enabled := True;
+      cbHideSkillQ.Enabled := True;
     end;
   end;
 
@@ -583,10 +583,10 @@ begin
   begin
     if cbFullScreen.Checked then
     begin
-      cbResetWindowSize.Checked := false;
-      cbResetWindowSize.Enabled := false;
-      cbResetWindowPosition.Checked := false;
-      cbResetWindowPosition.Enabled := false;
+      cbResetWindowSize.Checked := False;
+      cbResetWindowSize.Enabled := False;
+      cbResetWindowPosition.Checked := False;
+      cbResetWindowPosition.Enabled := False;
     end else begin
       cbResetWindowSize.Enabled := not GameParams.FullScreen;
       cbResetWindowSize.Checked := GameParams.FullScreen;
@@ -601,7 +601,7 @@ end;
 procedure TFormNXConfig.SliderChange(Sender: TObject);
 begin
   if not fIsSetting then
-    btnApply.Enabled := true;
+    btnApply.Enabled := True;
 end;
 
 end.

@@ -27,17 +27,17 @@ diff a/FLevelInfo.pas b/FLevelInfo.pas	(rejected hunks)
  
 -    if (Talisman.RescueCount > fLevel.Info.RescueCount) then
 +    if (fTalisman.RescueCount > fLevel.Info.RescueCount) then
-       LocalAdd(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+       LocalAdd(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
  
      if (Talisman.TimeLimit > 0) and
         ((not fLevel.Info.HasTimeLimit) or (Talisman.TimeLimit < fLevel.Info.TimeLimit * 17)) then
        LocalAdd(ICON_TIME_LIMIT,
          IntToStr(Talisman.TimeLimit div (60 * 17)) + ':' + LeadZeroStr((Talisman.TimeLimit div 17) mod 60, 2) + '.' +
            LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2),
-           false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+           False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
  
      if Talisman.TotalSkillLimit >= 0 then
-       LocalAdd(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+       LocalAdd(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
  
      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
        if Skill in fLevel.Info.Skillset then
@@ -50,12 +50,12 @@ diff a/FLevelInfo.pas b/FLevelInfo.pas	(rejected hunks)
            TalCount := Talisman.SkillLimit[Skill];
  
            if TalCount < BaseCount + PickupCount then
-             LocalAdd(ICON_SKILLS[Skill], TalCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+             LocalAdd(ICON_SKILLS[Skill], TalCount, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
          end;
        end;
 -
 -    if (Talisman.RequireKillZombies) then
--      LocalAdd(ICON_KILL_ZOMBIES, '', false, pmMoveHorz);
+-      LocalAdd(ICON_KILL_ZOMBIES, '', False, pmMoveHorz);
    end;
  
    procedure RepositionExistingControls(aNewWidth: Integer);

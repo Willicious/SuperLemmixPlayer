@@ -110,7 +110,7 @@ procedure TFNLReplayRefresher.btnAddFolderClick(Sender: TObject);
 var
   BasePath: String;
 begin
-  BasePath := SelectFolder(self);
+  BasePath := SelectFolder(Self);
   if BasePath <> '' then
   begin
     lbReplays.Items.BeginUpdate;
@@ -127,7 +127,7 @@ var
   OpenDlg: TOpenDialog;
   i: Integer;
 begin
-  OpenDlg := TOpenDialog.Create(self);
+  OpenDlg := TOpenDialog.Create(Self);
   try
     OpenDlg.Title := 'Select NeoLemmix replays';
     OpenDlg.Filter := 'NeoLemmix Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb';

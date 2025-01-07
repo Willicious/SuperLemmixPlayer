@@ -25,7 +25,7 @@ type
     private
       function GetItem(Index: Integer): TSteel;
     public
-      constructor Create(aOwnsObjects: Boolean = true);
+      constructor Create(aOwnsObjects: Boolean = True);
       function Add(Item: TSteel): Integer; overload;
       function Add: TSteel; overload;
       procedure Insert(Index: Integer; Item: TSteel); overload;
@@ -39,7 +39,7 @@ implementation
 
 { TSteels }
 
-constructor TSteels.Create(aOwnsObjects: Boolean = true);
+constructor TSteels.Create(aOwnsObjects: Boolean = True);
 begin
   inherited Create(aOwnsObjects);
 end;

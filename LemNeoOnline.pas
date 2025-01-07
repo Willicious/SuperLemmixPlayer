@@ -2,7 +2,7 @@ unit LemNeoOnline;
 
 interface
 
-// If GameParams.EnableOnline is false, TDownloadThread.DownloadToFile refuses to
+// If GameParams.EnableOnline is False, TDownloadThread.DownloadToFile refuses to
 // run. All other internet-based functionality eventually runs through that
 // function, so this is a total killswitch.
 
@@ -76,8 +76,8 @@ end;
 
 constructor TDownloadThread.Create(aSourceURL: String; aTargetStream: TStream);
 begin
-  inherited Create(true);
-  FreeOnTerminate := false;
+  inherited Create(True);
+  FreeOnTerminate := False;
   fStream := TMemoryStream.Create;
   fSourceURL := aSourceURL;
   fTargetStream := aTargetStream;
@@ -86,8 +86,8 @@ end;
 constructor TDownloadThread.Create(aSourceURL: String;
   aTargetStringList: TStringList);
 begin
-  inherited Create(true);
-  FreeOnTerminate := false;
+  inherited Create(True);
+  FreeOnTerminate := False;
   fStream := TMemoryStream.Create;
   fSourceURL := aSourceURL;
   fStringList := aTargetStringList;
@@ -108,12 +108,12 @@ begin
     if fTargetStream = nil then
       LoadToStringList := (fStringList <> nil)
     else
-      LoadToStringList := false;
+      LoadToStringList := False;
 
     if not DownloadToStream(fSourceURL, fStream) then
     begin
-      fSuccess := false;
-      fComplete := true;
+      fSuccess := False;
+      fComplete := True;
       Exit;
     end;
 
@@ -127,12 +127,12 @@ begin
       fTargetStream.CopyFrom(fStream, fStream.Size);
     end;
 
-    fSuccess := true;
+    fSuccess := True;
   except
-    fSuccess := false;
+    fSuccess := False;
   end;
 
-  fComplete := true;
+  fComplete := True;
 
   if Assigned(fOnComplete) then
     fOnComplete();
@@ -140,7 +140,7 @@ end;
 
 procedure TDownloadThread.Kill;
 begin
-  fTerminateRequested := true;
+  fTerminateRequested := True;
   fOnComplete := nil;
 end;
 
@@ -156,7 +156,7 @@ var
 begin
   if not GameParams.EnableOnline then
   begin
-    Result := false;
+    Result := False;
     Exit;
   end;
 
@@ -182,7 +182,7 @@ begin
 
     Result := not fTerminateRequested;
   except
-    Result := false;
+    Result := False;
   end;
 end;
 

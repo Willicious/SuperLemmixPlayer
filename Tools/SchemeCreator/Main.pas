@@ -159,7 +159,7 @@ begin
     end;
 
 
-    FLabelsCreated := True; // Set the flag to true after creating labels
+    FLabelsCreated := True; // Set the flag to True after creating labels
   end;
 
   // Create a new TEdit for the feature name (e.g., Hair)

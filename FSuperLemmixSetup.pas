@@ -57,7 +57,7 @@ end;
 
 procedure TFNLSetup.btnExitClick(Sender: TObject);
 begin
-  GameParams.DisableSaveOptions := true;
+  GameParams.DisableSaveOptions := True;
   Application.Terminate;
 end;
 
@@ -68,16 +68,14 @@ begin
 
   case cbGraphics.ItemIndex of
     1, 3: begin
-         GameParams.ShowMinimap := true;
-         GameParams.MinimapHighQuality := true;
-         GameParams.LinearResampleMenu := true;
-         //GameParams.LinearResampleGame := false;
+         GameParams.ShowMinimap := True;
+         GameParams.MinimapHighQuality := True;
+         GameParams.LinearResampleMenu := True;
        end;
     0, 2: begin
-         GameParams.ShowMinimap := true;
-         GameParams.MinimapHighQuality := false;
-         GameParams.LinearResampleMenu := false;
-         //GameParams.LinearResampleGame := false;
+         GameParams.ShowMinimap := True;
+         GameParams.MinimapHighQuality := False;
+         GameParams.LinearResampleMenu := False;
        end;
   end;
 
@@ -91,16 +89,16 @@ begin
 
   case cbGameplay.ItemIndex of
     0: begin
-         GameParams.ClassicMode := true;
-         GameParams.HideShadows := true;
-         GameParams.HideHelpers := true;
-         GameParams.HideSkillQ := true;
+         GameParams.ClassicMode := True;
+         GameParams.HideShadows := True;
+         GameParams.HideHelpers := True;
+         GameParams.HideSkillQ := True;
        end;
     1: begin
-         GameParams.ClassicMode := false;
-         GameParams.HideShadows := false;
-         GameParams.HideHelpers := false;
-         GameParams.HideSkillQ := false;
+         GameParams.ClassicMode := False;
+         GameParams.HideShadows := False;
+         GameParams.HideHelpers := False;
+         GameParams.HideSkillQ := False;
        end;
   end;
 

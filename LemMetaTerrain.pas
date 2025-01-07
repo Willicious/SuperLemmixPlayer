@@ -165,7 +165,7 @@ begin
     end;
   end;
 
-  fGeneratedVariableInfo[0] := true;
+  fGeneratedVariableInfo[0] := True;
 end;
 
 procedure TMetaTerrain.LoadFromImage(aImage: TBitmap32; aImageHighRes: TBitmap32; aCollection, aPiece: String; aSteel: Boolean);
@@ -176,7 +176,7 @@ begin
   if GameParams.HighResolution then
     fVariableInfo[0].GraphicImageHighRes.Assign(aImageHighRes);
 
-  fGeneratedVariableInfo[0] := true;
+  fGeneratedVariableInfo[0] := True;
 
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
@@ -192,7 +192,7 @@ begin
     if fVariableInfo[i].GraphicImage <> nil then fVariableInfo[i].GraphicImage.Clear;
     if fVariableInfo[i].GraphicImageHighRes <> nil then fVariableInfo[i].GraphicImageHighRes.Clear;
 
-    fGeneratedVariableInfo[i] := false;
+    fGeneratedVariableInfo[i] := False;
   end;
 end;
 
@@ -204,7 +204,7 @@ begin
   if GameParams.HighResolution then
     fVariableInfo[0].GraphicImageHighRes.Assign(aImageHighRes);
 
-  fGeneratedVariableInfo[0] := true;
+  fGeneratedVariableInfo[0] := True;
 end;
 
 function TMetaTerrain.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -339,7 +339,7 @@ begin
     fVariableInfo[i].CutBottom := Temp;
   end;
 
-  fGeneratedVariableInfo[i] := true;
+  fGeneratedVariableInfo[i] := True;
 end;
 
 function TMetaTerrain.GetIdentifier: String;
@@ -353,7 +353,7 @@ constructor TMetaTerrains.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 

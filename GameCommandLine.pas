@@ -82,7 +82,7 @@ begin
   end;
 
   if Param = '-match-blank-replay-username' then
-    GameParams.MatchBlankReplayUsername := true;
+    GameParams.MatchBlankReplayUsername := True;
 end;
 
 class procedure TCommandLineHandler.HandleConvert;
@@ -98,7 +98,7 @@ begin
   else if Pos(':', DstFile) = 0 then
     DstFile := AppPath + DstFile;
 
-  GameParams.LoadCurrentLevel(true);
+  GameParams.LoadCurrentLevel(True);
   GameParams.Level.SaveToFile(DstFile);
 end;
 
@@ -126,13 +126,13 @@ var
   procedure DoRenderLevel;
   begin
     GameParams.TestModeLevel.Filename := RootPath(LineValues[1]);
-    GameParams.LoadCurrentLevel(false);
+    GameParams.LoadCurrentLevel(False);
 
     if DstFile = '' then
       DstFile := RootPath(ChangeFileExt(GameParams.TestModeLevel.Filename, '.png'));
 
-    GameParams.Renderer.TransparentBackground := false;
-    GameParams.Renderer.RenderWorld(Dst, true);
+    GameParams.Renderer.TransparentBackground := False;
+    GameParams.Renderer.RenderWorld(Dst, True);
 
     ForceDirectories(ExtractFilePath(DstFile));
     TPngInterface.SavePngFile(DstFile, Dst);
@@ -249,8 +249,8 @@ var
     if DstFile = '' then
       DstFile := RootPath(MakeSafeForFilename(StringReplace(PieceIdentifier, ':', ' ', [rfReplaceAll])) + '.png');
 
-    GameParams.Renderer.TransparentBackground := true;
-    GameParams.Renderer.RenderWorld(Dst, true);
+    GameParams.Renderer.TransparentBackground := True;
+    GameParams.Renderer.RenderWorld(Dst, True);
 
     ForceDirectories(ExtractFilePath(DstFile));
     TPngInterface.SavePngFile(DstFile, Dst);
@@ -264,7 +264,7 @@ begin
   Dst := TBitmap32.Create;
   try
     LineValues.Delimiter := '|';
-    LineValues.StrictDelimiter := true;
+    LineValues.StrictDelimiter := True;
 
     if ParamStr(2) = '-listfile' then
       SL.LoadFromFile(ParamStr(3))
@@ -324,7 +324,7 @@ begin
   SL := TStringList.Create;
   try
     SL.Delimiter := '*';
-    SL.StrictDelimiter := true;
+    SL.StrictDelimiter := True;
 
     while ParamStr(n) <> '' do
     begin
@@ -382,8 +382,8 @@ begin
     SL.Add('level_formats=');
     SL.Add('level_format_exts=');
 
-    SL.Add('object_render=true');
-    SL.Add('level_render=true');
+    SL.Add('object_render=True');
+    SL.Add('level_render=True');
 
     WriteInfo;
 
@@ -396,7 +396,7 @@ end;
 
 class procedure TCommandLineHandler.InitializeNoGuiMode;
 begin
-  GameParams.BaseLevelPack.EnableSave := false;
+  GameParams.BaseLevelPack.EnableSave := False;
   GameParams.BaseLevelPack.Children.Clear;
   GameParams.BaseLevelPack.Levels.Clear;
   GameParams.TestModeLevel := GameParams.BaseLevelPack.Levels.Add;

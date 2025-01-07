@@ -78,8 +78,8 @@ implementation
 procedure TFLemmixHotkeys.FormCreate(Sender: TObject);
 begin
   SetWindowPosition;
-  fKeyNames := TLemmixHotkeyManager.GetKeyNames(true);
-  fEditingKey := false;
+  fKeyNames := TLemmixHotkeyManager.GetKeyNames(True);
+  fEditingKey := False;
   HandleCaptions(Self);
 end;
 
@@ -106,7 +106,7 @@ procedure TFLemmixHotkeys.lvHotkeysClick(Sender: TObject);
 var
   i: Integer;
 begin
-  fEditingKey := true;
+  fEditingKey := True;
   HandleCaptions(Self);
 
   i := FindKeyFromList(lvHotkeys.ItemIndex);
@@ -124,7 +124,7 @@ begin
     ebNudgeAmount.Enabled := False;
     Exit;
   end;
-  cbFunctions.Enabled := true;
+  cbFunctions.Enabled := True;
   cbFunctions.ItemIndex := Integer(fHotkeys.CheckKeyEffect(i).Action);
   case fHotkeys.CheckKeyEffect(i).Action of
     lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
@@ -140,7 +140,7 @@ begin
 
   // Scroll to selected key in the displayed list
   lvHotkeys.Selected.MakeVisible(False);
-  cbFunctionsChange(self);
+  cbFunctionsChange(Self);
 end;
 
 
@@ -164,7 +164,7 @@ var
   i: Integer;
   KeyName: String;
 begin
-  fEditingKey := true;
+  fEditingKey := True;
   HandleCaptions(Self);
 
   if Key = VK_SPACE then
@@ -194,9 +194,9 @@ begin
       lvHotkeys.ItemIndex := i;
       Exit;
     end;
-  if cbShowUnassigned.Checked = false then
+  if cbShowUnassigned.Checked = False then
   begin
-    cbShowUnassigned.Checked := true;
+    cbShowUnassigned.Checked := True;
     btnFindKeyKeyDown(Sender, Key, Shift);
   end else
     ShowMessage('Could not find the key.');
@@ -204,7 +204,7 @@ end;
 
 procedure TFLemmixHotkeys.btnFindKeyClick(Sender: TObject);
 begin
-  fEditingKey := false;
+  fEditingKey := False;
   btnFindKey.Caption := 'Finding Key...';
   lblFindKey.Caption := 'Press any key to edit...';
 end;
@@ -555,7 +555,7 @@ procedure TFLemmixHotkeys.btnClassicLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsClassic;
-  cbShowUnassigned.Checked := false;
+  cbShowUnassigned.Checked := False;
   RefreshList;
 end;
 
@@ -563,7 +563,7 @@ procedure TFLemmixHotkeys.btnAdvancedLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAdvanced;
-  cbShowUnassigned.Checked := false;
+  cbShowUnassigned.Checked := False;
   RefreshList;
 end;
 
@@ -571,14 +571,14 @@ procedure TFLemmixHotkeys.btnNeoLemmixLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAlternative;
-  cbShowUnassigned.Checked := false;
+  cbShowUnassigned.Checked := False;
   RefreshList;
 end;
 
 procedure TFLemmixHotkeys.btnClearAllKeysClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
-  cbShowUnassigned.Checked := true;
+  cbShowUnassigned.Checked := True;
   RefreshList;
 end;
 

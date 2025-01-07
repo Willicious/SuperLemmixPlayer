@@ -235,7 +235,7 @@ begin
     NewStyleRec.Author := LeftStr(aStyleName, Pos('_', aStyleName) - 1);
   end;
   NewStyleRec.OrderNumber := 9999;
-  NewStyleRec.FilledBySearchRec := true;
+  NewStyleRec.FilledBySearchRec := True;
 
   for i := 0 to fRawStyleData.Count-1 do
     if CompareText(fRawStyleData[i].Author, NewStyleRec.Author) = 0 then
@@ -347,7 +347,7 @@ begin
           NewStyleRec.Author := '';
           NewStyleRec.SortAuthor := '';
           NewStyleRec.OrderNumber := 0;
-          NewStyleRec.FilledBySearchRec := false;
+          NewStyleRec.FilledBySearchRec := False;
         end;
 
         if LeftStr(IniFile[i], 5) = 'Name=' then

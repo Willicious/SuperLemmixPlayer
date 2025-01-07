@@ -154,8 +154,8 @@ procedure TFQuickmodMain.cbLockRRClick(Sender: TObject);
 begin
   if cbLockRR.Checked and cbUnlockRR.Checked then
   begin
-    if Sender <> cbLockRR then cbLockRR.Checked := false;
-    if Sender <> cbUnlockRR then cbUnlockRR.Checked := false;
+    if Sender <> cbLockRR then cbLockRR.Checked := False;
+    if Sender <> cbUnlockRR then cbUnlockRR.Checked := False;
   end;
 end;
 
@@ -163,14 +163,14 @@ procedure TFQuickmodMain.cbTimebomberChangeClick(Sender: TObject);
 begin
   if cbBomberToTimebomber.Checked or cbTimebomberToBomber.Checked then
   begin
-    cbCustomSkillset.Checked := false;
-    cbCustomSkillset.Enabled := false;
+    cbCustomSkillset.Checked := False;
+    cbCustomSkillset.Enabled := False;
   end;
 
   if cbBomberToTimebomber.Checked and cbTimebomberToBomber.Checked then
   begin
-    if Sender <> cbBomberToTimebomber then cbBomberToTimebomber.Checked := false;
-    if Sender <> cbTimebomberToBomber then cbTimebomberToBomber.Checked := false;
+    if Sender <> cbBomberToTimebomber then cbBomberToTimebomber.Checked := False;
+    if Sender <> cbTimebomberToBomber then cbTimebomberToBomber.Checked := False;
   end;
 end;
 
@@ -178,8 +178,8 @@ procedure TFQuickmodMain.cbSuperlemmingClick(Sender: TObject);
 begin
   if cbActivateSuperlemming.Checked and cbDeactivateSuperlemming.Checked then
   begin
-    if Sender <> cbActivateSuperlemming then cbActivateSuperlemming.Checked := false;
-    if Sender <> cbDeactivateSuperlemming then cbDeactivateSuperlemming.Checked := false;
+    if Sender <> cbActivateSuperlemming then cbActivateSuperlemming.Checked := False;
+    if Sender <> cbDeactivateSuperlemming then cbDeactivateSuperlemming.Checked := False;
   end;
 end;
 
@@ -296,8 +296,8 @@ begin
 
   for i := 0 to SKILL_COUNT-1 do
   begin
-    ThisInput.SILabel := TLabel.Create(self);
-    ThisInput.SIEdit := TEdit.Create(self);
+    ThisInput.SILabel := TLabel.Create(Self);
+    ThisInput.SIEdit := TEdit.Create(Self);
 
     with ThisInput.SILabel do
     begin
@@ -312,10 +312,10 @@ begin
     with ThisInput.SIEdit do
     begin
       Parent := gbSkillset;
-      Enabled := false;
+      Enabled := False;
       Height := 22;
       Left := ORIGIN_X + (SPACING_X * (i mod 3));
-      NumbersOnly := true;
+      NumbersOnly := True;
       Text := '0';
       Top := ORIGIN_Y + (SPACING_Y * (i div 3));
       Width := EDIT_WIDTH;

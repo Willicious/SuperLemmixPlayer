@@ -95,7 +95,7 @@ type
       procedure ExitGame;
       procedure PrevGroup;
       procedure NextGroup;
-      procedure UpdateGroupSign(aRedraw: Boolean = true);
+      procedure UpdateGroupSign(aRedraw: Boolean = True);
       procedure RedrawGroupSign;
 
       procedure ShowSetupMenu;
@@ -179,9 +179,9 @@ begin
 
   OldForceDir := fReelForceDirection;
 
-  if Types.PtInRect(GetWorkerLemmingRect(false), aPoint) then
+  if Types.PtInRect(GetWorkerLemmingRect(False), aPoint) then
     fReelForceDirection := 1
-  else if Types.PtInRect(GetWorkerLemmingRect(true), aPoint) then
+  else if Types.PtInRect(GetWorkerLemmingRect(True), aPoint) then
     fReelForceDirection := -1
   else
     BeginGame;
@@ -189,7 +189,7 @@ begin
   if fReelForceDirection <> OldForceDir then
   begin
     fReelFreezeIterations := 0;
-    fSwitchedTextSinceForce := false;
+    fSwitchedTextSinceForce := False;
   end;
 end;
 
@@ -199,7 +199,7 @@ begin
   begin
     DisableIdle;
 
-    fCleanInstallFail := false;
+    fCleanInstallFail := False;
     ShowMessage('It appears you have installed this version of SuperLemmix over ' +
                 'an older major version. It is recommended that you perform a ' +
                 'clean install of SuperLemmix whenever updating to a new major ' +
@@ -212,7 +212,7 @@ begin
   begin
     DisableIdle;
 
-    GameParams.LoadedConfig := true;
+    GameParams.LoadedConfig := True;
     ShowSetupMenu;
 
     EnableIdle;
@@ -230,7 +230,7 @@ begin
   end else if not fDisableScroller then
     UpdateReel;
 
-  Done := false;
+  Done := False;
   Sleep(1);
 end;
 
@@ -267,7 +267,7 @@ begin
 
   CleanUpIngameStuff;
   LoadLayoutData;
-  UpdateGroupSign(false);
+  UpdateGroupSign(False);
 
   DrawLogo;
   MakePanels;
@@ -288,7 +288,7 @@ begin
     fReelTextIndex := -1;
     PrepareNextReelText;
   end else
-    fDisableScroller := true;
+    fDisableScroller := True;
 
   EnableIdle;
 end;
@@ -296,9 +296,9 @@ end;
 procedure TGameMenuScreen.CleanupIngameStuff;
 begin
   if Assigned(GlobalGame) then
-    GlobalGame.ReplayManager.Clear(true);
+    GlobalGame.ReplayManager.Clear(True);
 
-  GameParams.ShownText := false;
+  GameParams.ShownText := False;
 end;
 
 procedure TGameMenuScreen.DrawLogo;
@@ -339,7 +339,7 @@ begin
     NewRegion.ShortcutKeys.Add(VK_F1);
 
     // Level select
-    if not GetGraphic('sign_code.png', BMP, true) then // Deprecated
+    if not GetGraphic('sign_code.png', BMP, True) then // Deprecated
       GetGraphic('sign_level_select.png', BMP);
     NewRegion := MakeClickableImageAuto(MakePosition(0, -0.5), BMP.BoundsRect, DoLevelSelect, BMP);
     NewRegion.ShortcutKeys.Add(VK_F3);
@@ -348,9 +348,9 @@ begin
     fGroupSignCenter := MakePosition(0.5, 0.5);
     GetGraphic('sign_group.png', BMP);
     NewRegion := MakeClickableImageAuto(fGroupSignCenter, BMP.BoundsRect, NextGroup, BMP);
-    NewRegion.DrawInFrontWhenHighlit := false;
+    NewRegion.DrawInFrontWhenHighlit := False;
 
-    DrawAllClickables(true); // For the next step's sake
+    DrawAllClickables(True); // For the next step's sake
 
     // Group sign buttons
     GetGraphic('sign_group_up.png', BMP);
@@ -373,7 +373,7 @@ begin
     NewRegion := MakeClickableImageAuto(MakePosition(1, -0.5), BMP.BoundsRect, ExitGame, BMP);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
-    fFinishedMakingSigns := true;
+    fFinishedMakingSigns := True;
 
     DrawAllClickables;
   finally
@@ -606,7 +606,7 @@ begin
   begin
     if i = fScrollerTextList.Count then
     begin
-      fDisableScroller := true;
+      fDisableScroller := True;
       Exit;
     end;
 
@@ -644,7 +644,7 @@ begin
     fReelTextPos := LayoutInfo.ScrollerWidth;
 
   fLastReelUpdateTickCount := GetTickCount64;
-  fSwitchedTextSinceForce := true;
+  fSwitchedTextSinceForce := True;
 end;
 
 procedure TGameMenuScreen.DrawScroller;
@@ -702,11 +702,11 @@ begin
   SrcRect := Rect(0, 0, ScrollerLemmings.Width div 2, ScrollerLemmings.Height div LayoutInfo.ScrollerLemmingFrames);
   Types.OffsetRect(SrcRect, 0, SrcRect.Height * Frame);
 
-  DstRect := GetWorkerLemmingRect(false);
+  DstRect := GetWorkerLemmingRect(False);
   ScrollerLemmings.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
   Types.OffsetRect(SrcRect, SrcRect.Width, 0);
-  DstRect := GetWorkerLemmingRect(true);
+  DstRect := GetWorkerLemmingRect(True);
   ScrollerLemmings.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 end;
 
@@ -760,8 +760,8 @@ var
   TempBmp: TBitmap32;
   Sca: Double;
 begin
-  if not GetGraphic('group_graphic.png', fGroupGraphic, true, true) then
-    if not GetGraphic('rank_graphic.png', fGroupGraphic, true, true) then
+  if not GetGraphic('group_graphic.png', fGroupGraphic, True, True) then
+    if not GetGraphic('rank_graphic.png', fGroupGraphic, True, True) then
     begin
       TempBmp := TBitmap32.Create;
       try
@@ -843,7 +843,7 @@ var
   F: TFNLSetup;
   OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap: Boolean;
 begin
-  F := TFNLSetup.Create(self);
+  F := TFNLSetup.Create(Self);
   try
     OldAmigaTheme := GameParams.AmigaTheme;
     OldFullScreen := GameParams.FullScreen;
@@ -853,7 +853,7 @@ begin
     F.ShowModal;
 
     // And apply the settings chosen
-    ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap, false, false);
+    ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap, False, False);
   finally
     F.Free;
   end;
@@ -883,7 +883,7 @@ begin
 
         if (FMVer < FORMAT_VERSION) or
            ((FMVer = FORMAT_VERSION) and (CVer < CORE_VERSION)) then
-          fCleanInstallFail := true;
+          fCleanInstallFail := True;
       end;
     end;
 
@@ -912,7 +912,7 @@ end;
 // Bookmark - FIF "UpdateCheck" to find all related code in case you want to re-implement this
 //procedure TGameMenuScreen.InitiateUpdateCheck;
 //begin
-//  GameParams.DoneUpdateCheck := true;
+//  GameParams.DoneUpdateCheck := True;
     // This part will have to be done differently as FStyleManager unit has been removed
 //  fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo);
 //end;
@@ -936,7 +936,7 @@ end;
 //  try
 //    try
 //      SL.Delimiter := '.';
-//      SL.StrictDelimiter := true;
+//      SL.StrictDelimiter := True;
 //      SL.DelimitedText := NewVersionStr;
 //
 //      if SL.Count < 4 then
@@ -950,7 +950,7 @@ end;
 //
 //      if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
 //      begin
-//        case RunCustomPopup(self, 'Update', 'A SuperLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
+//        case RunCustomPopup(Self, 'Update', 'A SuperLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
 //          'Go to SuperLemmix Github|Remind me later') of
 //          1: begin
 //               URL := 'https://github.com/Willicious/SuperLemmix-Download';

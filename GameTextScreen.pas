@@ -71,7 +71,7 @@ begin
     DrawAllClickables;
 
     if GameParams.IsPreTextScreen then
-      GameParams.ShownText := true;
+      GameParams.ShownText := True;
   finally
     ScreenImg.EndUpdate;
   end;
@@ -112,21 +112,21 @@ var
         begin
           Key := lka_Skip;
           Modifier := 1;
-          CheckMod := false;
+          CheckMod := False;
         end else if Uppercase(S) = 'SKIP-' then
         begin
           Key := lka_Skip;
           Modifier := -1;
-          CheckMod := false;
+          CheckMod := False;
         end else begin
           Key := TLemmixHotkeyManager.InterpretMain(S);
           Modifier := 0;
-          CheckMod := false;
+          CheckMod := False;
         end;
       end else begin
         Key := TLemmixHotkeyManager.InterpretMain(LeftStr(S, Pos(':', S) - 1));
         Modifier := TLemmixHotkeyManager.InterpretSecondary(RightStr(S, Length(S) - Pos(':', S)));
-        CheckMod := true;
+        CheckMod := True;
       end;
 
       if Key = lka_Null then
@@ -164,7 +164,7 @@ var
            RightStr(S, Length(S) - FoundEndPos);
     end;
   begin
-    KeyNames := TLemmixHotkeyManager.GetKeyNames(true);
+    KeyNames := TLemmixHotkeyManager.GetKeyNames(True);
 
     while Pos('[', S) <> 0 do
     begin

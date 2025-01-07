@@ -35,7 +35,7 @@ private
     fCurrentIteration: Integer;
     fTargetFrame: Integer;
 
-    procedure ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = false);
+    procedure ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = False);
     procedure NoteChangeAtFrame(aFrame: Integer);
     procedure DeleteSelectedReplayEvent;
     procedure GoToSelectedReplayEvent;
@@ -63,7 +63,7 @@ begin
     fEarliestChange := aFrame;
 end;
 
-procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = false);
+procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = False);
 var
   Selected: TObject;
   i: Integer;
@@ -194,7 +194,7 @@ begin
   fReplay := aReplay;
   fCurrentIteration := aIteration;
   fSavedReplay.Clear;
-  fReplay.SaveToStream(fSavedReplay, false, true);
+  fReplay.SaveToStream(fSavedReplay, False, True);
   lblLevelName.Caption := Trim(fReplay.LevelName);
   if fCurrentIteration <> -1 then
     lblFrame.Caption := 'Current frame: ' + IntToStr(fCurrentIteration);
@@ -216,7 +216,7 @@ end;
 procedure TFReplayEditor.btnCancelClick(Sender: TObject);
 begin
   fSavedReplay.Position := 0;
-  fReplay.LoadFromStream(fSavedReplay, true);
+  fReplay.LoadFromStream(fSavedReplay, True);
 end;
 
 procedure TFReplayEditor.lbReplayActionsClick(Sender: TObject);
@@ -301,11 +301,11 @@ var
     R1: TReplayChangeSpawnInterval absolute I;
     R2: TReplayChangeSpawnInterval absolute I2;
   begin
-    Result := false;
+    Result := False;
     I2 := fReplay.SpawnIntervalChange[I.Frame + 1, 0];
     if I2 = nil then Exit;
     if Abs(R1.NewSpawnInterval - R2.NewSpawnInterval) <= 1 then
-      Result := true;
+      Result := True;
   end;
 
   procedure HandleRRDelete(StartFrame: Integer);
@@ -322,7 +322,7 @@ var
     fReplay.Delete(I);
   end;
 begin
-  ApplyRRDelete := false;
+  ApplyRRDelete := False;
 
   if lbReplayActions.ItemIndex = -1 then Exit;
   I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);

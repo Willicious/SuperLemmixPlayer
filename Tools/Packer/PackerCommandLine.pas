@@ -72,7 +72,7 @@ begin
         Recipe.PackageVersion := FormatDateTime('yymmdd-hhmmss', Now);
 
         ForceDirectories(BasePath + 'stylezips');
-        Recipe.ExportPackage(BasePath + 'stylezips\' + SearchRec.Name + '.zip', '', false);
+        Recipe.ExportPackage(BasePath + 'stylezips\' + SearchRec.Name + '.zip', '', False);
       finally
         Recipe.Free;
       end;
@@ -83,10 +83,10 @@ end;
 
 function RunCommandLine: Boolean;
 begin
-  Result := false;
+  Result := False;
   if ParamStr(1) = '' then Exit;
 
-  Result := true;
+  Result := True;
 
   if ParamStr(1) = '-d' then
   begin

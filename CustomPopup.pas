@@ -7,7 +7,7 @@ unit CustomPopup;
 
 // However, a quick version does exist:
 // Use RunCustomPopup(aOwner, aCaption, aText, aButtons): Integer;
-//       aOwner is a TComponent, which would usually be the calling class's "self"
+//       aOwner is a TComponent, which would usually be the calling class's "Self"
 //       aCaption and aText are strings which are used as-is
 //       aButtons is a list of labels for the buttons, seperated by | characters
 //       Result is the ***1-BASED*** index of the button that was clicked (because ModalResult doesn't like return values of 0)
@@ -87,7 +87,7 @@ end;
 constructor TCustomPopup.Create(aOwner: TComponent);
 begin
   inherited CreateNew(aOwner);
-  fButtons := TButtonList.Create(self);
+  fButtons := TButtonList.Create(Self);
 
   { Since we aren't using a .dfm file here (to keep this unit as a single file),
     we must configure the properties that differ from default manually. }
@@ -146,20 +146,20 @@ var
   end;
 
 begin
-  Lbl := TLabel.Create(self);
+  Lbl := TLabel.Create(Self);
 
   PrepareCaption;
 
   with Lbl do
   begin
-    AutoSize := true;
-    Parent := self;
+    AutoSize := True;
+    Parent := Self;
     Name := 'LABEL';
     Caption := fText;
     Left := PADDING_SIZE;
     Top := PADDING_SIZE;
-    self.ClientWidth := CW + (PADDING_SIZE * 2);
-    self.ClientHeight := CH + (PADDING_SIZE * 2);
+    Self.ClientWidth := CW + (PADDING_SIZE * 2);
+    Self.ClientHeight := CH + (PADDING_SIZE * 2);
   end;
 
   TotalButtonWidth := 0;
@@ -195,7 +195,7 @@ begin
   with fButtons.Add do
   begin
     Name := 'BUTTON_' + IntToStr(aTag);
-    Parent := self;
+    Parent := Self;
     Caption := aCaption;
     Tag := aTag;
     Width := Max(Canvas.TextWidth(Caption) + PADDING_SIZE, MIN_BUTTON_WIDTH);
@@ -217,7 +217,7 @@ constructor TButtonList.Create(aOwner: TComponent);
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 
   fOwner := aOwner;

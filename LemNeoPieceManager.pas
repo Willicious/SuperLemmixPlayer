@@ -122,10 +122,10 @@ var
 begin
   Result.GS := '';
   Result.Piece := '';
-  FoundDivider := false;
+  FoundDivider := False;
   for i := 1 to Length(Identifier) do
     if Identifier[i] = ':' then
-      FoundDivider := true
+      FoundDivider := True
     else if FoundDivider then
       Result.Piece := Result.Piece + Identifier[i]
     else
@@ -162,7 +162,7 @@ begin
   fUpscaling := TList<TUpscaleInfo>.Create;
 
   fNeedCheckStyles := TStringList.Create;
-  fNeedCheckStyles.Sorted := true;
+  fNeedCheckStyles.Sorted := True;
   fNeedCheckStyles.Duplicates := dupIgnore;
 
   LoadProperties('default');
@@ -310,7 +310,7 @@ begin
   Tidy;
 
   for i := 0 to fObjects.Count-1 do
-    if fObjects[i].Animations[false, false, false].AnyMasked then
+    if fObjects[i].Animations[False, False, False].AnyMasked then
       fObjects[i].Remask(aTheme);
 end;
 
@@ -334,7 +334,7 @@ var
   var
     i: Integer;
   begin
-    Result := false;
+    Result := False;
     for i := 0 to aGroup.Terrains.Count-1 do
       if (aGroup.Terrains[i].DrawingFlags and tdf_Erase) = 0 then
       begin

@@ -83,7 +83,7 @@ type
       fSpawnedLemmingCount: Integer;
       fIsOldReplay: Boolean;
     protected
-      constructor Create(IsOld: Boolean = false); overload;
+      constructor Create(IsOld: Boolean = False); overload;
       procedure DoLoadSection(Sec: TParserSection); override;
       procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override;
@@ -130,7 +130,7 @@ type
       constructor Create;
       destructor Destroy; override;
       procedure Add(aItem: TBaseReplayItem);
-      procedure Clear(EraseLevelInfo: Boolean = false);
+      procedure Clear(EraseLevelInfo: Boolean = False);
       procedure Delete(aItem: TBaseReplayItem);
       procedure LoadFromFile(aFile: String);
       procedure SaveToFile(aFile: String);
@@ -272,7 +272,7 @@ begin
   inherited;
   fAssignments := TReplayItemList.Create;
   fSpawnIntervalChanges := TReplayItemList.Create;
-  Clear(true);
+  Clear(True);
 end;
 
 destructor TReplay.Destroy;
@@ -301,7 +301,7 @@ begin
       Dst.Delete(i);
   Dst.Add(aItem);
 
-  fIsModified := true;
+  fIsModified := True;
 end;
 
 procedure TReplay.Delete(aItem: TBaseReplayItem);
@@ -320,10 +320,10 @@ begin
     if Dst[i] = aItem then
       Dst.Delete(i);
 
-  fIsModified := true;
+  fIsModified := True;
 end;
 
-procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
+procedure TReplay.Clear(EraseLevelInfo: Boolean = False);
 begin
   fAssignments.Clear;
   fSpawnIntervalChanges.Clear;
@@ -335,7 +335,7 @@ begin
   fLevelRank := '';
   fLevelPosition := 0;
   fLevelID := 0;
-  fIsModified := true;
+  fIsModified := True;
 end;
 
 procedure TReplay.Cut(aLastFrame: Integer);
@@ -350,7 +350,7 @@ procedure TReplay.Cut(aLastFrame: Integer);
 begin
   DoCut(fAssignments);
   DoCut(fSpawnIntervalChanges);
-  fIsModified := true;
+  fIsModified := True;
 end;
 
 function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
@@ -359,11 +359,11 @@ function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
   var
     i: Integer;
   begin
-    Result := false;
+    Result := False;
     for i := 0 to aList.Count-1 do
       if aList[i].Frame = aFrame then
       begin
-        Result := true;
+        Result := True;
         Exit;
       end;
   end;
@@ -394,9 +394,9 @@ var
   Sec: TParserSection;
   SL: TStringList;
 begin
-  Clear(true);
+  Clear(True);
 
-  fIsModified := false;
+  fIsModified := False;
 
   SL := TStringList.Create;
   Parser := TParser.Create;
@@ -435,8 +435,8 @@ var
 begin
   Item := nil;
   if aSection.Keyword = 'assignment' then Item := TReplaySkillAssignment.Create;
-  if aSection.Keyword = 'release_rate' then Item := TReplayChangeSpawnInterval.Create(true);
-  if aSection.Keyword = 'spawn_interval' then Item := TReplayChangeSpawnInterval.Create(false);
+  if aSection.Keyword = 'release_rate' then Item := TReplayChangeSpawnInterval.Create(True);
+  if aSection.Keyword = 'spawn_interval' then Item := TReplayChangeSpawnInterval.Create(False);
   if aSection.Keyword = 'nuke' then Item := TReplayNuke.Create;
 
   if Item = nil then Exit;
@@ -528,18 +528,18 @@ var
 begin
   // First, verify if it NEEDS to be updated. There's a few things we can check for, though we don't have anything 100% reliable.
   // (These tests are 100% reliable on NeoLemmix-generated files, but possibly not on user-edited ones.)
-  NeedUpdate := false;
+  NeedUpdate := False;
   for i := 0 to SL.Count-1 do
   begin
     if ModLine(SL[0]) = 'force_update' then // panic button
     begin
       SL.Delete(0);
-      NeedUpdate := true;
+      NeedUpdate := True;
       Break;
     end;
 
     if LeftStr(ModLine(SL[i]), 1) = '$' then Exit; // Almost a surefire sign of a new format replay
-    if ModLine(SL[i]) = 'actions' then NeedUpdate := true; // The presence is almost surefire sign of old format, and absence almost surefire sign of new
+    if ModLine(SL[i]) = 'actions' then NeedUpdate := True; // The presence is almost surefire sign of old format, and absence almost surefire sign of new
 
     if NeedUpdate then Break;
   end;
@@ -598,7 +598,7 @@ var
     E.LemmingIndex := Item.LemmingIndex;
     E.LemmingX := Item.LemmingX;
     E.LemmingDx := Item.SelectDir; // it's the closest we've got
-    E.LemmingHighlit := false; // we can't tell for old replays
+    E.LemmingHighlit := False; // we can't tell for old replays
     E.Frame := Item.Iteration;
     Add(E);
   end;
@@ -624,7 +624,7 @@ var
   end;
 
 begin
-  Clear(true);
+  Clear(True);
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(aFile);
@@ -786,7 +786,7 @@ begin
 end;
 
 { TReplaySpawnIntervalChange }
-constructor TReplayChangeSpawnInterval.Create(IsOld: Boolean = false);
+constructor TReplayChangeSpawnInterval.Create(IsOld: Boolean = False);
 begin
   inherited Create();
   fIsOldReplay := IsOld;
@@ -840,7 +840,7 @@ constructor TReplayItemList.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 

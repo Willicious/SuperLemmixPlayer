@@ -95,7 +95,7 @@ var
   begin
     AudioList := TStringList.Create;
     try
-      AudioList.Sorted := true;
+      AudioList.Sorted := True;
       AudioList.Duplicates := dupIgnore;
 
       HandleAudioDirRecursive(aDir);
@@ -129,8 +129,8 @@ begin
       FindClose(SearchRec);
     end;
 
-    HandleAudioDir('music', true);
-    HandleAudioDir('sound', false);
+    HandleAudioDir('music', True);
+    HandleAudioDir('sound', False);
 
     SL.SaveToFile(AppPath + 'NLPackerDefaultData.ini');
   finally

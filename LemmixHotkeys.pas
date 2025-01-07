@@ -440,12 +440,12 @@ begin
         end else begin
           s0 := '';
           s1 := '';
-          FoundSplit := false;
+          FoundSplit := False;
           for i2 := 1 to Length(istr) do
           begin
             if istr[i2] = ':' then
             begin
-              FoundSplit := true;
+              FoundSplit := True;
               Continue;
             end;
             if FoundSplit then
@@ -460,7 +460,7 @@ begin
     except
       on E: Exception do
       begin
-        fDisableSaving := true;
+        fDisableSaving := True;
         SetDefaultsAdvanced;
         raise E;
       end;
@@ -627,26 +627,26 @@ end;
 
 function TLemmixHotkeyManager.CheckForKey(aFunc: TLemmixHotkeyAction): Boolean;
 begin
-  Result := DoCheckForKey(aFunc, 0, false);
+  Result := DoCheckForKey(aFunc, 0, False);
 end;
 
 function TLemmixHotkeyManager.CheckForKey(aFunc: TLemmixHotkeyAction; aMod: Integer): Boolean;
 begin
-  Result := DoCheckForKey(aFunc, aMod, true);
+  Result := DoCheckForKey(aFunc, aMod, True);
 end;
 
 function TLemmixHotkeyManager.DoCheckForKey(aFunc: TLemmixHotkeyAction; aMod: Integer; CheckMod: Boolean): Boolean;
 var
   i: Integer;
 begin
-  Result := false;
+  Result := False;
   for i := 0 to MAX_KEY do
   begin
     if fKeyFunctions[i].Action <> aFunc then Continue;
     if CheckMod and (aMod <> fKeyFunctions[i].Modifier) then Continue;
     if (GetKeyState(i) < 0) then
     begin
-      Result := true;
+      Result := True;
       Exit;
     end;
   end;

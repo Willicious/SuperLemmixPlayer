@@ -104,7 +104,7 @@ constructor TMainForm.Create(aOwner: TComponent);
 begin
   inherited;
   GlobalGame := TLemmingGame.Create(nil);
-  AppController := TAppController.Create(self);
+  AppController := TAppController.Create(Self);
 end;
 
 destructor TMainForm.Destroy;

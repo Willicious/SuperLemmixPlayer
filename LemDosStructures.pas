@@ -424,11 +424,11 @@ const
   );
 
 function DosVgaColorToColor32(const ColorRec: TDosVgaColorRec): TColor32;
-function GetDosMainMenuPaletteColors32(UseXmas: Boolean = false): TArrayOfColor32;
+function GetDosMainMenuPaletteColors32(UseXmas: Boolean = False): TArrayOfColor32;
 
 implementation
 
-function GetDosMainMenuPaletteColors32(UseXmas: Boolean = false): TArrayOfColor32;
+function GetDosMainMenuPaletteColors32(UseXmas: Boolean = False): TArrayOfColor32;
 var
   i: Integer;
   P: PColor32;

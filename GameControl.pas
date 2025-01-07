@@ -232,13 +232,13 @@ type
     procedure CreateBasePack;
 
     procedure SetLevel(aLevel: TNeoLevelEntry);
-    procedure NextLevel(aCanCrossRank: Boolean = false);
-    procedure PrevLevel(aCanCrossRank: Boolean = false);
+    procedure NextLevel(aCanCrossRank: Boolean = False);
+    procedure PrevLevel(aCanCrossRank: Boolean = False);
     procedure SetGroup(aGroup: TNeoLevelGroup);
     procedure NextGroup;
     procedure PrevGroup;
-    procedure LoadCurrentLevel(NoOutput: Boolean = false); // Loads level specified by CurrentLevel into Level, and prepares renderer
-    procedure ReloadCurrentLevel(NoOutput: Boolean = false); // Re-prepares using the existing TLevel in memory
+    procedure LoadCurrentLevel(NoOutput: Boolean = False); // Loads level specified by CurrentLevel into Level, and prepares renderer
+    procedure ReloadCurrentLevel(NoOutput: Boolean = False); // Re-prepares using the existing TLevel in memory
     function FindLevelFileByID(LevelID: string): string;
     function LoadLevelByID(aID: Int64): Boolean;
 
@@ -358,7 +358,7 @@ begin
   if not LoadedConfig then Exit;
   if IsHalting then Exit;
 
-  Success := false;
+  Success := False;
   Attempts := 2;
   case fSaveCriticality of
     scImportant: Attempts := 5;
@@ -371,7 +371,7 @@ begin
       SaveToIniFile;
       BaseLevelPack.SaveUserData;
 
-      Success := true;
+      Success := True;
     except
       Sleep(50);
     end;
@@ -401,7 +401,7 @@ var
   SL, SL2: TStringList;
   LevelSavePath: String;
 
-  procedure SaveBoolean(aLabel: String; aValue: Boolean; aValue2: Boolean = false);
+  procedure SaveBoolean(aLabel: String; aValue: Boolean; aValue2: Boolean = False);
   var
     NumValue: Integer;
   begin
@@ -420,10 +420,10 @@ var
   begin
     for i := SL2.Count-1 downto 0 do
     begin
-      RemoveLine := false;
-      if SL2[i] = '' then RemoveLine := true;
-      if LeftStr(SL2[i], 1) = '#' then RemoveLine := true;
-      if SL.IndexOfName(SL2.Names[i]) > -1 then RemoveLine := true;
+      RemoveLine := False;
+      if SL2[i] = '' then RemoveLine := True;
+      if LeftStr(SL2[i], 1) = '#' then RemoveLine := True;
+      if SL.IndexOfName(SL2.Names[i]) > -1 then RemoveLine := True;
 
       if RemoveLine then SL2.Delete(i);
     end;
@@ -546,11 +546,11 @@ var
   begin
     // CANNOT load multi-saved in one for obvious reasons, those must be handled manually
     if (SL.Values[aLabel] = '0') then
-      Result := false
+      Result := False
     else if (SL.Values[aLabel] = '') then
       Result := aDefault
     else
-      Result := true;
+      Result := True;
   end;
 
   procedure EnsureValidWindowSize;
@@ -558,7 +558,7 @@ var
     // Older config files might specify a zoom level of zero, to represent fullscreen.
     if ZoomLevel < 1 then
     begin
-      FullScreen := true;
+      FullScreen := True;
       ZoomLevel := Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod);
     end;
 
@@ -638,11 +638,11 @@ begin
     if FileExists(AppPath + SFSaveData + 'settings.ini') then
     begin
       SL.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
-      LoadedConfig := true;
+      LoadedConfig := True;
     end else if UnderWine then
     begin
       // When running under WINE without an existing config, let's default to windowed.
-      FullScreen := false;
+      FullScreen := False;
       ZoomLevel := Max(Max((Screen.Width - 100) div 444 div ResMod, (Screen.Height - 100) div 200 div ResMod), 1);
       TMainForm(GameParams.MainForm).RestoreDefaultSize;
       TMainForm(GameParams.MainForm).RestoreDefaultPosition;
@@ -728,7 +728,7 @@ begin
   except
     on E: Exception do
     begin
-      fDisableSaveOptions := true;
+      fDisableSaveOptions := True;
       ShowMessage('Error during settings loading:' + #10 +
                    E.ClassName + ': ' + E.Message + #10 +
                    'Default settings have been loaded. Customizations to settings during this session will not be saved.');
@@ -746,7 +746,7 @@ var
   var
     i: Integer;
   begin
-    Result := false;
+    Result := False;
 
     for i := 0 to aGroup.Children.Count-1 do
     begin
@@ -759,7 +759,7 @@ var
       begin
         SetLevel(aGroup.Levels[i]);
         LoadCurrentLevel(True);
-        Result := true;
+        Result := True;
       end;
   end;
 begin
@@ -873,7 +873,7 @@ begin
     ShowMessage('No .nxlv files found in directory: ' + LevelsDir);
 end;
 
-procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
+procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = False);
 begin
   if CurrentLevel = nil then Exit;
 
@@ -889,7 +889,7 @@ begin
   Renderer.PrepareGameRendering(Level, NoOutput);
 end;
 
-procedure TDosGameParams.ReloadCurrentLevel(NoOutput: Boolean = false);
+procedure TDosGameParams.ReloadCurrentLevel(NoOutput: Boolean = False);
 begin
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);
@@ -920,7 +920,7 @@ begin
   end else
     fCurrentLevel := CurLevelGroup.Levels[CurLevelIndex + 1];
 
-  ShownText := false;
+  ShownText := False;
 end;
 
 procedure TDosGameParams.PrevLevel(aCanCrossRank: Boolean);
@@ -944,7 +944,7 @@ begin
     fCurrentLevel := CurLevelGroup.Levels[CurLevelIndex - 1];
   end;
 
-  ShownText := false;
+  ShownText := False;
 end;
 
 procedure TDosGameParams.SetCurrentLevelToBestMatch(aPattern: String);
@@ -1042,9 +1042,9 @@ begin
 
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
-  fDumpMode := false;
-  fShownText := false;
-  fOneLevelMode := false;
+  fDumpMode := False;
+  fShownText := False;
+  fOneLevelMode := False;
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
   fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
@@ -1053,7 +1053,7 @@ begin
   fShowLevelSelectOptions := True;
 
   PlaybackOrder := poByLevel;
-  fAutoSkipPreviewPostview := true;
+  fAutoSkipPreviewPostview := True;
 
   LemDataInResource := True;
   LemSoundsInResource := True;

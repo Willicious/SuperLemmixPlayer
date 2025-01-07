@@ -110,17 +110,17 @@ end;
 function TIdentifiedPiece.GetFlip: Boolean;
 begin
   // False, if not overridden
-  Result := false;
+  Result := False;
 end;
 
 function TIdentifiedPiece.GetInvert: Boolean;
 begin
-  Result := false;
+  Result := False;
 end;
 
 function TIdentifiedPiece.GetRotate: Boolean;
 begin
-  Result := false;
+  Result := False;
 end;
 
 function TIdentifiedPiece.GetIdentifier: String;

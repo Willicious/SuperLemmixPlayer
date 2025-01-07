@@ -56,7 +56,7 @@ type
       constructor Create;
       destructor Destroy; override;
 
-      procedure ExportPackage(aDest: TFilename; aMetaInfo: TFilename = ''; aPackageInfoText: Boolean = true);
+      procedure ExportPackage(aDest: TFilename; aMetaInfo: TFilename = ''; aPackageInfoText: Boolean = True);
 
       procedure LoadFromFile(aFile: TFilename);
       procedure SaveToFile(aFile: TFilename);
@@ -97,7 +97,7 @@ begin
   fFiles.Free;
 end;
 
-procedure TPackageRecipe.ExportPackage(aDest: TFileName; aMetaInfo: TFileName = ''; aPackageInfoText: Boolean = true);
+procedure TPackageRecipe.ExportPackage(aDest: TFileName; aMetaInfo: TFileName = ''; aPackageInfoText: Boolean = True);
 var
   ZipFile: TZipFile;
 
@@ -355,7 +355,7 @@ begin
   SubSL := TStringList.Create;
   try
     SubSL.Delimiter := '|';
-    SubSL.StrictDelimiter := true;
+    SubSL.StrictDelimiter := True;
 
     SL.LoadFromStream(aStream);
 
@@ -386,7 +386,7 @@ begin
         begin
           NewStyle := TRecipeStyle.Create;
         
-          NewStyle.AutoAdded := false;
+          NewStyle.AutoAdded := False;
           NewStyle.StyleName := SubSL.Values['NAME'];
 
           if Uppercase(SubSL.Values['INCLUDE']) = 'PARTIAL' then
@@ -407,7 +407,7 @@ begin
         begin
           NewFile := TRecipeFile.Create;
           
-          NewFile.AutoAdded := false;
+          NewFile.AutoAdded := False;
           NewFile.FilePath := SubSL.Values['PATH'];
 
           Files.Add(NewFile);
@@ -439,7 +439,7 @@ begin
   SubSL := TStringList.Create;
   try
     SubSL.Delimiter := '|';
-    SubSL.StrictDelimiter := true;
+    SubSL.StrictDelimiter := True;
 
     SubSL.Add('META');
     SubSL.Add('NAME=' + fPackageName);
@@ -602,7 +602,7 @@ var
 
     SoundList := TStringList.Create;
     try
-      SoundList.Sorted := true;
+      SoundList.Sorted := True;
       SoundList.Duplicates := dupIgnore;
 
       if aStyle.Include = siPartial then
@@ -612,7 +612,7 @@ var
           if LeftStr(aObjects[i], Length(aStyle.StyleName) + 1) <> aStyle.StyleName + ':' then
             Continue;
 
-          Info := PieceManager.Objects[aObjects[i]].GetInterface(false, false, false);
+          Info := PieceManager.Objects[aObjects[i]].GetInterface(False, False, False);
           if Info.SoundEffect <> '' then
             SoundList.Add(Info.SoundEffect);
         end;
@@ -620,7 +620,7 @@ var
         if FindFirst(AppPath + 'styles\' + aStyle.StyleName + '\objects\*.nxmo', faReadOnly, SearchRec) = 0 then
         begin
           repeat
-            Info := PieceManager.Objects[aStyle.StyleName + ':' + ChangeFileExt(SearchRec.Name, '')].GetInterface(false, false, false);
+            Info := PieceManager.Objects[aStyle.StyleName + ':' + ChangeFileExt(SearchRec.Name, '')].GetInterface(False, False, False);
             if Info.SoundEffect <> '' then
               SoundList.Add(Info.SoundEffect);
           until FindNext(SearchRec) <> 0;
@@ -630,21 +630,21 @@ var
 
       for i := 0 to SoundList.Count-1 do
       begin
-        S := 'sound\' + SoundList[i] + SoundManager.FindExtension(SoundList[i], false);
+        S := 'sound\' + SoundList[i] + SoundManager.FindExtension(SoundList[i], False);
 
         if IsFileDefaultContent(s) then
           Continue;
 
-        SkipThis := false;
+        SkipThis := False;
         for n := 0 to fFiles.Count-1 do
           if fFiles[n].FilePath = S then
-            SkipThis := true;
+            SkipThis := True;
 
         if SkipThis then
           Continue;
 
         NewFile := TRecipeFile.Create;
-        NewFile.AutoAdded := true;
+        NewFile.AutoAdded := True;
         NewFile.FilePath := S;
 
         fFiles.Add(NewFile);
@@ -654,14 +654,14 @@ var
     end;
   end;
 begin
-  if (aPack.NewStylesInclude = siNone) and (aPack.NewMusicInclude = false) then
+  if (aPack.NewStylesInclude = siNone) and (aPack.NewMusicInclude = False) then
     Exit;
     
   UsedStyles := TStringList.Create;
   try
     BuildPackAutoAddLists(aPack, aObjects, aTerrains, aBackgrounds, aThemes, aLemmings, aMusic);
 
-    UsedStyles.Sorted := true;
+    UsedStyles.Sorted := True;
     UsedStyles.Duplicates := dupIgnore;
     AddStyleFromList(aObjects);
     AddStyleFromList(aTerrains);
@@ -674,16 +674,16 @@ begin
       if IsStyleDefaultContent(UsedStyles[i]) then
         Continue;
 
-      SkipThis := false;
+      SkipThis := False;
       for n := 0 to fStyles.Count-1 do
         if fStyles[n].StyleName = UsedStyles[i] then
-          SkipThis := true;
+          SkipThis := True;
         
       if SkipThis then
         Continue;
 
       NewStyle := TRecipeStyle.Create;
-      NewStyle.AutoAdded := true;
+      NewStyle.AutoAdded := True;
       NewStyle.StyleName := UsedStyles[i];
       NewStyle.Include := aPack.NewStylesInclude;
 
@@ -697,16 +697,16 @@ begin
       if IsFileDefaultContent(aMusic[i]) then
         Continue;
 
-      SkipThis := false;
+      SkipThis := False;
       for n := 0 to fFiles.Count-1 do
         if fFiles[n].FilePath = aMusic[i] then
-          SkipThis := true;
+          SkipThis := True;
 
       if SkipThis then
         Continue;
 
       NewFile := TRecipeFile.Create;
-      NewFile.AutoAdded := true;
+      NewFile.AutoAdded := True;
       NewFile.FilePath := 'music/' + aMusic[i];
 
       fFiles.Add(NewFile);
@@ -742,20 +742,20 @@ var
 
     if aPack.NewMusicInclude then
       for i := 0 to aGroup.MusicList.Count-1 do
-        UsedMusic.Add(aGroup.MusicList[i] + SoundManager.FindExtension(aGroup.MusicList[i], true));
+        UsedMusic.Add(aGroup.MusicList[i] + SoundManager.FindExtension(aGroup.MusicList[i], True));
 
     TempTheme := TNeoTheme.Create;
     try
       for i := 0 to aGroup.Levels.Count-1 do
       begin
         GameParams.SetLevel(aGroup.Levels[i]);
-        GameParams.LoadCurrentLevel(true);
+        GameParams.LoadCurrentLevel(True);
         Level := GameParams.Level;
       
         S := Trim(Level.Info.MusicFile);
         if (S <> '') and (S[1] <> '?') and (aPack.NewMusicInclude) then
         begin
-          S := S + SoundManager.FindExtension(S, true);
+          S := S + SoundManager.FindExtension(S, True);
           UsedMusic.Add(S);
         end;
 
@@ -793,12 +793,12 @@ begin
   if (aPack.NewStylesInclude = siNone) and not aPack.NewMusicInclude then
     Exit;
 
-  FoundPack := false;
+  FoundPack := False;
   for i := 0 to GameParams.BaseLevelPack.Children.Count-1 do
     if GameParams.BaseLevelPack.Children[i].Folder = aPack.PackFolder then
     begin
       GameParams.SetGroup(GameParams.BaseLevelPack.Children[i]);
-      FoundPack := true;
+      FoundPack := True;
     end;
 
   if not FoundPack then
@@ -811,12 +811,12 @@ begin
   UsedLemmings := TStringList.Create;
   UsedMusic := TStringList.Create;
   try
-    UsedObjects.Sorted := true;
-    UsedTerrain.Sorted := true;
-    UsedBackgrounds.Sorted := true;
-    UsedThemes.Sorted := true;
-    UsedLemmings.Sorted := true;
-    UsedMusic.Sorted := true;
+    UsedObjects.Sorted := True;
+    UsedTerrain.Sorted := True;
+    UsedBackgrounds.Sorted := True;
+    UsedThemes.Sorted := True;
+    UsedLemmings.Sorted := True;
+    UsedMusic.Sorted := True;
     UsedObjects.Duplicates := dupIgnore;
     UsedTerrain.Duplicates := dupIgnore;
     UsedBackgrounds.Duplicates := dupIgnore;

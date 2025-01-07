@@ -169,7 +169,7 @@ begin
                 + #13#10 + 'Please try restarting SuperLemmix to fix this issue.');
   end else begin
     ShowMessage('BASS.DLL not found. SuperLemmix will run but music and sound will not play.');
-    fIsBassLoaded := false;
+    fIsBassLoaded := False;
   end;
 end;
 
@@ -191,7 +191,7 @@ begin
   if not fIsBassLoaded then Exit;
   if fMusicChannel = $FFFFFFFF then Exit;
   BASS_StreamFree(fMusicChannel);
-  fMusicPlaying := false;
+  fMusicPlaying := False;
   fMusicChannel := $FFFFFFFF;
   fMusicStream.Clear;
   fMusicName := '';
@@ -203,11 +203,11 @@ begin
 
   CustomAssert(fMusicChannel = $FFFFFFFF, 'TSoundManager.ObtainMusicBassChannel: A channel already exists!');
 
-  fMusicChannel := BASS_StreamCreateFile(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP);
+  fMusicChannel := BASS_StreamCreateFile(True, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP);
 
   if fMusicChannel = 0 then // This means we have a module-based file
   begin
-    fMusicChannel := BASS_MusicLoad(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP, 0);
+    fMusicChannel := BASS_MusicLoad(True, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP, 0);
     BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume / 2);
   end else begin
     BASS_LoadLoopData(fMusicChannel); // Yay, this was added to the BASS unit rather than GameSound
@@ -523,7 +523,7 @@ begin
   aName := Lowercase(aName);
   if fMusicName = aName then Exit; // Saves some time
 
-  Ext := FindExtension(aName, true);
+  Ext := FindExtension(aName, True);
   if Ext = '' then
   begin
     FreeMusic;
@@ -557,7 +557,7 @@ procedure TSoundManager.PlayMusic;
 begin
   if not fIsBassLoaded then Exit;
 
-  fMusicPlaying := true;
+  fMusicPlaying := True;
 
   if fMuteMusic then
     Exit;
@@ -565,14 +565,14 @@ begin
   if fMusicChannel = $FFFFFFFF then
     ObtainMusicBassChannel;
 
-  BASS_ChannelPlay(fMusicChannel, false);
+  BASS_ChannelPlay(fMusicChannel, False);
 end;
 
 procedure TSoundManager.StopMusic;
 begin
   if not fIsBassLoaded then Exit;
 
-  fMusicPlaying := false;
+  fMusicPlaying := False;
   BASS_ChannelStop(fMusicChannel);
 end;
 
@@ -606,7 +606,7 @@ begin
 
   if aIndex <> -1 then
   begin
-    SampleChannel := BASS_SampleGetChannel(fSoundEffects[aIndex].BassSample, true);
+    SampleChannel := BASS_SampleGetChannel(fSoundEffects[aIndex].BassSample, True);
 
     if aBalance <> 0 then
       BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100));
@@ -618,7 +618,7 @@ begin
       BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_FREQ, aFrequency);
     end;
 
-    BASS_ChannelPlay(SampleChannel, true);
+    BASS_ChannelPlay(SampleChannel, True);
   end;
 end;
 
@@ -648,7 +648,7 @@ end;
 procedure TSoundEffect.ObtainBassSample;
 begin
   FreeBassSample;
-  fBassSample := BASS_SampleLoad(true, fStream.Memory, 0, fStream.Size, 65535, 0);
+  fBassSample := BASS_SampleLoad(True, fStream.Memory, 0, fStream.Size, 65535, 0);
 end;
 
 procedure TSoundEffect.LoadFromFile(aFile: String);
@@ -680,7 +680,7 @@ constructor TSoundEffects.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 

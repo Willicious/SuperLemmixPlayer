@@ -192,7 +192,7 @@ begin
   NewPack.PackFolder := PackFolder;
   NewPack.NewStylesInclude := TStyleInclude(rgPackGraphicSets.ItemIndex);
   NewPack.NewMusicInclude := rgPackMusic.ItemIndex = 0;
-  NewPack.ResourcesOnly := false;
+  NewPack.ResourcesOnly := False;
 
   fRecipe.Packs.Add(NewPack);
   fRecipe.BuildAutoAdds;

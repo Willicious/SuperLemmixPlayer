@@ -90,8 +90,8 @@ type
 
     constructor Create;
     procedure Prepare(aWidth, aHeight: Integer);
-    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false; aTransparentBackground: Boolean = false); overload;
-    procedure CombineTo(aDst: TBitmap32; aClearPhysics: Boolean = false); overload;
+    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = False; aTransparentBackground: Boolean = False); overload;
+    procedure CombineTo(aDst: TBitmap32; aClearPhysics: Boolean = False); overload;
     property Items[Index: TRenderLayer]: TBitmap32 read GetItem; default;
     property Width: Integer read fWidth;
     property Height: Integer read fHeight;
@@ -463,7 +463,7 @@ var
   i: TRenderLayer;
   BMP: TBitmap32;
 begin
-  inherited Create(true);
+  inherited Create(True);
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
     BMP := TBitmap32.Create;
@@ -549,12 +549,12 @@ begin
   end;
 end;
 
-procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aClearPhysics: Boolean = false);
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aClearPhysics: Boolean = False);
 begin
   CombineTo(aDst, fPhysicsMap.BoundsRect, aClearPhysics);
 end;
 
-procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false; aTransparentBackground: Boolean = false);
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = False; aTransparentBackground: Boolean = False);
 var
   i: TRenderLayer;
   LRRegion: TRect;

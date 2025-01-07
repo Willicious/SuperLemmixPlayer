@@ -849,7 +849,7 @@ var
    oldmode : integer;
 begin
   if BASSCD_Handle <> 0 then // is it already there ?
-     result := true
+     result := True
    else
      begin {go & load the dll}
     {   oldmode := SetErrorMode($8001);
@@ -867,7 +867,7 @@ var
   oldmode:integer;
 begin
  if BASS_Handle <> 0 then
-  Result:= true {is it already there ?}
+  Result:= True {is it already there ?}
  else
   begin
   (*go & load the dll*)
@@ -1235,7 +1235,7 @@ var
   ac : ^boolean;
 begin
   ac := user;
-  ac^ := false;
+  ac^ := False;
 end;
 
 procedure BASS_WipeChannel(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;

@@ -258,7 +258,7 @@ begin
 
   // Some general settings for the panel
   Color := $000000;
-  ParentBackground := false;
+  ParentBackground := False;
 
   // Initialize images
   fImage := TImage32.Create(Self);
@@ -1343,7 +1343,7 @@ begin
     end;
 
     // Skill numbers
-    if self.fShowUsedSkills then
+    if Self.fShowUsedSkills then
     begin
       for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
         DrawSkillCount(i, Game.SkillsUsed[i]);
@@ -1655,7 +1655,7 @@ begin
       GameParams.PlaybackModeActive := False;
 
     // Cancel replay if the "R" icon is clicked
-    Game.RegainControl(true);
+    Game.RegainControl(True);
   end;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
@@ -1735,7 +1735,7 @@ begin
         Game.RegainControl;
         if GameParams.Hotkeys.CheckForKey(lka_Highlight) or (Button = mbRight) then
         begin
-          Game.SetSelectedSkill(i, True, true);
+          Game.SetSelectedSkill(i, True, True);
           fGameWindow.GotoSaveState(Game.CurrentIteration, 0, Game.CurrentIteration - 85);
         end else
           Game.SetSelectedSkill(i, True);
@@ -1804,11 +1804,11 @@ procedure TBaseSkillPanel.ImgMouseMove(Sender: TObject;
 begin
   if fGameWindow.DoSuspendCursor then Exit;
 
-  Game.HitTestAutoFail := true;
+  Game.HitTestAutoFail := True;
   Game.HitTest;
   fGameWindow.SetCurrentCursor;
 
-  MinimapScrollFreeze := false;
+  MinimapScrollFreeze := False;
 end;
 
 procedure TBaseSkillPanel.ImgMouseUp(Sender: TObject; Button: TMouseButton;
@@ -1824,7 +1824,7 @@ procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton
     Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
-  fMinimapScrollFreeze := true;
+  fMinimapScrollFreeze := True;
 
   if Assigned(fOnMinimapClick) then
     fOnMinimapClick(Self, MousePosMinimap(X, Y));
@@ -1837,7 +1837,7 @@ var
 begin
   if fGameWindow.DoSuspendCursor then Exit;
 
-  Game.HitTestAutoFail := true;
+  Game.HitTestAutoFail := True;
   Game.HitTest;
   fGameWindow.SetCurrentCursor;
 
@@ -1854,7 +1854,7 @@ end;
 procedure TBaseSkillPanel.MinimapMouseUp(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
-  fMinimapScrollFreeze := false;
+  fMinimapScrollFreeze := False;
   DrawMinimap;
 end;
 
@@ -2006,7 +2006,7 @@ begin
   fMinimapImage.Top := MinimapRect.Top * NewZoom;
   fMinimapImage.Scale := NewZoom;
 
-  fSetInitialZoom := true;
+  fSetInitialZoom := True;
 end;
 
 function TBaseSkillPanel.GetZoom: Integer;

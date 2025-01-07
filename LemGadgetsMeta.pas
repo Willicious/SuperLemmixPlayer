@@ -252,7 +252,7 @@ var
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
-  GadgetAccessor := GetInterface(false, false, false);
+  GadgetAccessor := GetInterface(False, False, False);
 
   Parser := TParser.Create;
   try
@@ -363,8 +363,8 @@ begin
 
     if Sec.Line['resize_both'] <> nil then
     begin
-      GadgetAccessor.CanResizeHorizontal := true;
-      GadgetAccessor.CanResizeVertical := true;
+      GadgetAccessor.CanResizeHorizontal := True;
+      GadgetAccessor.CanResizeVertical := True;
     end else begin
       GadgetAccessor.CanResizeHorizontal := Sec.Line['resize_horizontal'] <> nil;
       GadgetAccessor.CanResizeVertical := Sec.Line['resize_vertical'] <> nil;
@@ -411,8 +411,8 @@ var
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fGeneratedVariableInfo[i] := false;
-    fGeneratedVariableImage[i] := false;
+    fGeneratedVariableInfo[i] := False;
+    fGeneratedVariableImage[i] := False;
   end;
 end;
 
@@ -422,7 +422,7 @@ var
 begin
   // There may be times where we want to wipe the metadata without wiping the images.
   for i := 0 to ALIGNMENT_COUNT-1 do
-    fGeneratedVariableInfo[i] := false;
+    fGeneratedVariableInfo[i] := False;
 end;
 
 procedure TGadgetMetaInfo.RegenerateAutoAnims(aTheme: TNeoTheme;
@@ -442,10 +442,10 @@ var
       EraseAnim := fVariableInfo[0].Animations['skill_mask'];
 
     SrcAnim.GeneratePickupSkills(aTheme, aAni, EraseAnim);
-    AnyChanged := true;
+    AnyChanged := True;
   end;
 begin
-  AnyChanged := false;
+  AnyChanged := False;
   for SrcAnim in fVariableInfo[0].Animations do
   begin
     NameUpper := Uppercase(Trim(SrcAnim.Name));
@@ -473,9 +473,9 @@ procedure TGadgetMetaInfo.EnsureAllVariationsMade;
 var
   Flip, Invert, Rotate: Boolean;
 begin
-  for Flip in [true, false] do
-    for Invert in [true, false] do
-      for Rotate in [true, false] do
+  for Flip in [True, False] do
+    for Invert in [True, False] do
+      for Rotate in [True, False] do
         EnsureVariationMade(Flip, Invert, Rotate);
 end;
 
@@ -507,8 +507,8 @@ var
 begin
   Index := GetImageIndex(Flip, Invert, Rotate);
 
-  fGeneratedVariableImage[Index] := true;
-  fGeneratedVariableInfo[Index] := true;
+  fGeneratedVariableImage[Index] := True;
+  fGeneratedVariableInfo[Index] := True;
 
   if Index = 0 then Exit;
 
@@ -573,7 +573,7 @@ var
 begin
   i := GetImageIndex(Flip, Invert, Rotate);
   if fInterfaces[i] = nil then
-    fInterfaces[i] := TGadgetMetaAccessor.Create(self, Flip, Invert, Rotate);
+    fInterfaces[i] := TGadgetMetaAccessor.Create(Self, Flip, Invert, Rotate);
   Result := fInterfaces[i];
 end;
 
@@ -754,7 +754,7 @@ end;
 
 function TGadgetMetaAccessor.GetDigitAnimation: TGadgetAnimation;
 begin
-  Result := fGadgetMetaInfo.Animations[false, false, false]['DIGITS'];
+  Result := fGadgetMetaInfo.Animations[False, False, False]['DIGITS'];
 end;
 
 function TGadgetMetaAccessor.GetAnimations: TGadgetAnimations;
@@ -796,7 +796,7 @@ constructor TGadgetMetaInfoList.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 

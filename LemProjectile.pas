@@ -251,40 +251,40 @@ end;
 constructor TProjectile.CreateGrenade(aPhysicsMap: TBitmap32;
   aLemming: TLemming);
 begin
-  //fIsBat := false;  // Batter
-  fIsSpear := false;
-  fIsGrenade := true;
+  //fIsBat := False;  // Batter
+  fIsSpear := False;
+  fIsGrenade := True;
   Create(aPhysicsMap, aLemming);
   SetPositionFromLemming;
 end;
 
 constructor TProjectile.CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
 begin
-  //fIsBat := false;
-  fIsSpear := true;
-  fIsGrenade := false;
+  //fIsBat := False;
+  fIsSpear := True;
+  fIsGrenade := False;
   Create(aPhysicsMap, aLemming);
   SetPositionFromLemming;
 end;
 
 //constructor TProjectile.CreateBat(aPhysicsMap: TBitmap32; aLemming: TLemming);  // Batter
 //begin
-//  fIsBat := true;
-//  fIsSpear := false;
-//  fIsGrenade := false;
+//  fIsBat := True;
+//  fIsSpear := False;
+//  fIsGrenade := False;
 //  Create(aPhysicsMap, aLemming);
 //  SetPositionFromLemming; // This might not be needed - position can probably be set right here
 //end;
 
 procedure TProjectile.Discard;
 begin
-  fSilentRemove := true;
+  fSilentRemove := True;
   fLemming.LemHoldingProjectileIndex := -1;
 end;
 
 procedure TProjectile.Fire;
 begin
-  fFired := true;
+  fFired := True;
   fLemming.LemHoldingProjectileIndex := -1;
 end;
 
@@ -396,7 +396,7 @@ var
 begin
   ImgRect := SPEAR_GRAPHIC_RECTS[SpearGraphic];
   case SpearGraphic of
-    pgSpearFlat: AtTop := false; // Counterintuitively (due to small height of this one) it DOES put it at the top pixel
+    pgSpearFlat: AtTop := False; // Counterintuitively (due to small height of this one) it DOES put it at the top pixel
 
     pgSpearSlightTLBR,
     pgSpear45TLBR,
@@ -408,7 +408,7 @@ begin
     pgSpearSteepBLTR:
       AtTop := fDX > 0;
 
-    else AtTop := false; // Shouldn't happen
+    else AtTop := False; // Shouldn't happen
   end;
 
   if fDX < 0 then
@@ -483,22 +483,22 @@ var
       Inc(PosCount);
 
       if ((fPhysicsMap.PixelS[fX, fY] and PM_SOLID) <> 0) then
-        fHit := true;
+        fHit := True;
 
       if fIsGrenade and GlobalGame.HasTriggerAt(fX, fY, trZombie) then
-        fHit := true;
+        fHit := True;
 
       if fIsSpear and ((fPhysicsMap.PixelS[fX, fY + 1] and PM_SOLID) <> 0) then
-        fHit := true;
+        fHit := True;
 
 //      if fIsBat and fLemming.LemPhysicsFrame = ? then // Batter - this is key, need to apply the correct "hit" frame here
-//        fHit := true;
+//        fHit := True;
 
       if (fX = fLemming.LemX) and (dX <> 0) then
         for n := fY + 1 to fLemming.LemY - 5 do
           if (fPhysicsMap.PixelS[fX, n] and PM_SOLID) <> 0 then
           begin
-            fHit := true;
+            fHit := True;
             Break;
           end;
 
@@ -506,7 +506,7 @@ var
       begin
         if ((fDX < 0) and (fX > fLemming.LemX)) or
            ((fDX > 0) and (fX < fLemming.LemX)) then
-          fHit := false;
+          fHit := False;
       end;
     end;
   end;

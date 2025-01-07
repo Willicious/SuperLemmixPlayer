@@ -118,7 +118,7 @@ begin
   ThisFileStream := TMemoryStream.Create;
   try
     Zip.Open(aStream, zmRead);
-    FileList.Sorted := true;
+    FileList.Sorted := True;
 
     for i := 0 to Zip.FileCount-1 do
       FileList.Add(Zip.FileNames[i]);

@@ -77,7 +77,7 @@ type
   public
     function Add(Item: TBitmap32): Integer;
     procedure Insert(Index: Integer; Item: TBitmap32);
-    procedure Generate(Src: TBitmap32; Frames: Integer; Horizontal: Boolean = false);
+    procedure Generate(Src: TBitmap32; Frames: Integer; Horizontal: Boolean = False);
     property Items[Index: Integer]: TBitmap32 read GetItem; default;
     property List;
   published
@@ -94,7 +94,7 @@ function MusicsPath: string;
 procedure MoveRect(var aRect: TRect; const DeltaX, DeltaY: Integer);
 
 function UnderWine: Boolean;
-function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
+function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = True): String;
 
 procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Settings: TUpscaleSettings; Dst: TBitmap32 = nil);
 procedure Upscale(Src: TBitmap32; Settings: TUpscaleSettings; Dst: TBitmap32 = nil);
@@ -135,7 +135,7 @@ begin
   until not FileExists(Result);
 end;
 
-function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
+function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = True): String;
 var
   i, i2: Integer;
 const
@@ -158,9 +158,9 @@ function UnderWine: Boolean;
 var
   H: cardinal;
 begin
-  Result := false;
+  Result := False;
 
-  if _UnderWine = 2 then Result := true;
+  if _UnderWine = 2 then Result := True;
   if _UnderWine > 0 then Exit;
 
   H := LoadLibrary('ntdll.dll');
@@ -244,12 +244,12 @@ var
     // - Equivalent for height
 
     CenterRect := Rect(Margins.Left, Margins.Top, SrcRect.Width - Margins.Right, SrcRect.Height - Margins.Bottom);
-    Result := false;
+    Result := False;
 
     if (CenterRect.Width <= 0) and (DstRect.Width > Margins.Left + Margins.Right) then Exit;
     if (CenterRect.Height <= 0) and (DstRect.Height > Margins.Top + Margins.Bottom) then Exit;
 
-    Result := true;
+    Result := True;
   end;
 
   procedure TrimMargins(var LeftMargin, RightMargin: Integer; dstSize: Integer);
@@ -452,23 +452,23 @@ var
 
       function MayBeTransparentAdjacent(x, y, dx, dy: Integer): Boolean;
       begin
-        Result := false;
+        Result := False;
 
         dx := Min(1, Max(dx, -1));
         dy := Min(1, Max(dy, -1));
 
         if IsTransparentInSrc(x + dX, y + dY) then
-          Result := true;
+          Result := True;
 
         if (not Result) then
           if IsTransparentInSrc(x + dX + dY, y + dY + dX) then
             if not (IsTransparentInSrc(x + dX * 2 + dY, y + dY * 2 + dX) and IsTransparentInSrc(x + dX * 3 + dY, y + dY * 3 + dX)) then
-              Result := true;
+              Result := True;
 
         if (not Result) then
           if IsTransparentInSrc(x + dX - dY, y + dY - dX) then
             if not (IsTransparentInSrc(x + dX * 2 - dY, y + dY * 2 - dX) and IsTransparentInSrc(x + dX * 3 - dY, y + dY * 3 - dX)) then
-              Result := true;
+              Result := True;
       end;
 
       function PickMostCommon(aFallback, aColorAdjA, aColorAdjB, aColorDiag: TColor32): TColor32;
@@ -754,7 +754,7 @@ begin
   inherited Insert(Index, Item);
 end;
 
-procedure TBitmaps.Generate(Src: TBitmap32; Frames: Integer; Horizontal: Boolean = false);
+procedure TBitmaps.Generate(Src: TBitmap32; Frames: Integer; Horizontal: Boolean = False);
 var
   BMP: TBitmap32;
   i: Integer;

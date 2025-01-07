@@ -36,8 +36,8 @@ object FNLSetup: TFNLSetup
       object lblWelcome: TLabel
         Left = 132
         Top = 10
-        Width = 151
-        Height = 24
+        Width = 149
+        Height = 30
         Caption = 'SUPERLEMMIX'
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText

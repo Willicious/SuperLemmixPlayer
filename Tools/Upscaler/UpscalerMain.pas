@@ -51,7 +51,7 @@ procedure TForm1.btnLoadImageClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
 begin
-  OpenDlg := TOpenDialog.Create(self);
+  OpenDlg := TOpenDialog.Create(Self);
   try
     OpenDlg.Filter := 'Image file (BMP or PNG)|*.bmp;*.png|All files|*';
     OpenDlg.Options := [ofFileMustExist, ofHideReadOnly];
@@ -78,7 +78,7 @@ var
 begin
   if imgDest.Bitmap.Width * imgDest.Bitmap.Height = 0 then Exit;  
 
-  SaveDlg := TSaveDialog.Create(self);
+  SaveDlg := TSaveDialog.Create(Self);
   try
     SaveDlg.Filter := 'PNG Image|*.png|BMP Image|*.bmp';
     SaveDlg.Options := [ofOverwritePrompt];

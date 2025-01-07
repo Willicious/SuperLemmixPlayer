@@ -49,7 +49,7 @@ type
     private
       function GetItem(Index: Integer): TTerrain;
     public
-      constructor Create(aOwnsObjects: Boolean = true);
+      constructor Create(aOwnsObjects: Boolean = True);
       function Add(Item: TTerrain): Integer; overload;
       function Add: TTerrain; overload;
       procedure Insert(Index: Integer; Item: TTerrain); overload;
@@ -205,7 +205,7 @@ end;
 
 { TTerrains }
 
-constructor TTerrains.Create(aOwnsObjects: Boolean = true);
+constructor TTerrains.Create(aOwnsObjects: Boolean = True);
 begin
   inherited Create(aOwnsObjects);
 end;

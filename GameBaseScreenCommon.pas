@@ -412,7 +412,7 @@ var
       else begin
         while not (G.IsBasePack or (G.Parent.Parent = nil)) do
           G := G.Parent;
-        Result := MakeSafeForFilename(G.Name, false) + '\';
+        Result := MakeSafeForFilename(G.Name, False) + '\';
       end;
     end;
   begin
@@ -432,10 +432,10 @@ begin
 
   if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive then
   begin
-    Result := True; // Return true if SLX was opened by replay or if PlaybackMode is active
+    Result := True; // Return True if SLX was opened by replay or if PlaybackMode is active
     s := GameParams.LoadedReplayFile;
   end else begin
-    Dlg := TOpenDialog.Create(self);
+    Dlg := TOpenDialog.Create(Self);
     try
       Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
       Dlg.Filter := 'SuperLemmix Replay File (*.nxrp)|*.nxrp';
@@ -455,9 +455,9 @@ begin
       begin
         s := Dlg.filename;
         LastReplayDir := ExtractFilePath(s);
-        Result := True; // Return true if the file was successfully selected
+        Result := True; // Return True if the file was successfully selected
       end else
-        Result := False; // Return false if the user cancelled the dialog
+        Result := False; // Return False if the user cancelled the dialog
     finally
       Dlg.Free;
     end;

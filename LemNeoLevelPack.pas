@@ -364,15 +364,15 @@ var
   IsRelative: Boolean;
   IsPercent: Boolean;
 begin
-  IsRelative := false;
-  IsPercent := false;
+  IsRelative := False;
+  IsPercent := False;
   if (LeftStr(aConditionString, 1) = '+') or (LeftStr(aConditionString, 1) = '-') then
-    IsRelative := true;
+    IsRelative := True;
 
   if RightStr(aConditionString, 1) = '%' then
   begin
     aConditionString := LeftStr(aConditionString, Length(aConditionString)-1);
-    IsPercent := true;
+    IsPercent := True;
   end;
 
   ConditionValue := StrToIntDef(aConditionString, 0);
@@ -396,7 +396,7 @@ constructor TNeoLevelEntry.Create(aGroup: TNeoLevelGroup);
 begin
   inherited Create;
   fGroup := aGroup;
-  fTalismans := TObjectList<TTalisman>.Create(true);
+  fTalismans := TObjectList<TTalisman>.Create(True);
   fUnlockedTalismanList := TList<LongWord>.Create;
 
   WipeRecords;
@@ -434,14 +434,14 @@ var
       if CountRecursive(aPack.Children[P]) then
         Break;
 
-    LevelIndex := aPack.Levels.IndexOf(self);
+    LevelIndex := aPack.Levels.IndexOf(Self);
 
     if LevelIndex < 0 then
     begin
-      Result := false;
+      Result := False;
       Inc(MusicIndex, aPack.Levels.Count)
     end else begin
-      Result := true;
+      Result := True;
       Inc(MusicIndex, LevelIndex);
     end;
   end;
@@ -507,7 +507,7 @@ begin
         if (aExtent = lls_Full) then
         begin
           fTalismans.Clear;
-          // Set talisman.Data to "self"
+          // Set talisman.Data to "Self"
           TalInfoLevel := TLevel.Create;
           try
             try
@@ -557,7 +557,7 @@ begin
   if fGroup = nil then
     Result := -1
   else
-    Result := fGroup.LevelIndex[self];
+    Result := fGroup.LevelIndex[Self];
 end;
 
 function TNeoLevelEntry.GetTalismans: TObjectList<TTalisman>;
@@ -586,12 +586,12 @@ function TNeoLevelEntry.GetTalismanStatus(aIndex: Cardinal): Boolean;
 var
   i: Integer;
 begin
-  Result := false;
+  Result := False;
   ValidateTalismans;
   for i := 0 to fUnlockedTalismanList.Count-1 do
     if fUnlockedTalismanList[i] = aIndex then
     begin
-      Result := true;
+      Result := True;
       Exit;
     end;
 end;
@@ -644,25 +644,25 @@ procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: 
 var
   Skill: TSkillPanelButton;
 begin
-  Apply(WorldRecords.LemmingsRescued, aRecords.LemmingsRescued, true);
-  Apply(WorldRecords.TimeTaken, aRecords.TimeTaken, false);
-  Apply(WorldRecords.CollectiblesGathered, aRecords.CollectiblesGathered, true);
-  Apply(WorldRecords.TotalSkills, aRecords.TotalSkills, false);
-  Apply(WorldRecords.SkillTypes, aRecords.SkillTypes, false);
+  Apply(WorldRecords.LemmingsRescued, aRecords.LemmingsRescued, True);
+  Apply(WorldRecords.TimeTaken, aRecords.TimeTaken, False);
+  Apply(WorldRecords.CollectiblesGathered, aRecords.CollectiblesGathered, True);
+  Apply(WorldRecords.TotalSkills, aRecords.TotalSkills, False);
+  Apply(WorldRecords.SkillTypes, aRecords.SkillTypes, False);
   if aUserRecords then
   begin
-    Apply(UserRecords.LemmingsRescued, aRecords.LemmingsRescued, true);
-    Apply(UserRecords.TimeTaken, aRecords.TimeTaken, false);
-    Apply(UserRecords.CollectiblesGathered, aRecords.CollectiblesGathered, true);
-    Apply(UserRecords.TotalSkills, aRecords.TotalSkills, false);
-    Apply(UserRecords.SkillTypes, aRecords.SkillTypes, false);
+    Apply(UserRecords.LemmingsRescued, aRecords.LemmingsRescued, True);
+    Apply(UserRecords.TimeTaken, aRecords.TimeTaken, False);
+    Apply(UserRecords.CollectiblesGathered, aRecords.CollectiblesGathered, True);
+    Apply(UserRecords.TotalSkills, aRecords.TotalSkills, False);
+    Apply(UserRecords.SkillTypes, aRecords.SkillTypes, False);
   end;
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
-    Apply(WorldRecords.SkillCount[Skill], aRecords.SkillCount[Skill], false);
+    Apply(WorldRecords.SkillCount[Skill], aRecords.SkillCount[Skill], False);
     if aUserRecords then
-      Apply(UserRecords.SkillCount[Skill], aRecords.SkillCount[Skill], false);
+      Apply(UserRecords.SkillCount[Skill], aRecords.SkillCount[Skill], False);
   end;
 end;
 
@@ -677,8 +677,8 @@ begin
     fFolder := LeftStr(fFolder, Length(fFolder)-1);
   fName := ExtractFileName(fFolder);
 
-  fChildGroups := TNeoLevelGroups.Create(self);
-  fLevels := TNeoLevelEntries.Create(self);
+  fChildGroups := TNeoLevelGroups.Create(Self);
+  fLevels := TNeoLevelEntries.Create(Self);
   fParentGroup := aParentGroup;
 
   fEnableSave := fParentGroup = nil;
@@ -737,7 +737,7 @@ var
             SL.Free;
           end;
         end else
-          CopyFile(PWideChar(Path + aSubPath + SearchRec.Name), PWideChar(aPath + aSubPath + SearchRec.Name), false);
+          CopyFile(PWideChar(Path + aSubPath + SearchRec.Name), PWideChar(aPath + aSubPath + SearchRec.Name), False);
       until FindNext(SearchRec) <> 0;
       FindClose(SearchRec);
     end;
@@ -763,13 +763,13 @@ var
           aOutput.Add('');
 
         aOutput.Add('WARNINGS for ' + L.Filename);
-        WrittenAny := true;
+        WrittenAny := True;
       end;
 
       aOutput.Add('  ' + aText);
     end;
   begin
-    WrittenAny := false;
+    WrittenAny := False;
     Level := GameParams.Level;
 
     Ident := SplitIdentifier(Level.Info.Background);
@@ -801,10 +801,10 @@ begin
 
   if aOutput = nil then
   begin
-    IsStartingPoint := true;
+    IsStartingPoint := True;
     aOutput := TStringList.Create;
   end else
-    IsStartingPoint := false;
+    IsStartingPoint := False;
 
   if IsStartingPoint then
     RecursiveCopy('');
@@ -859,7 +859,7 @@ begin
       L := Levels[i];
       try
         GameParams.SetLevel(L);
-        GameParams.LoadCurrentLevel(true);
+        GameParams.LoadCurrentLevel(True);
 
         CheckForWarnings;
 
@@ -922,10 +922,10 @@ begin
       GameParams.LoadCurrentLevel;
 
       if GameParams.Level.HasAnyFallbacks then
-        DumpImagesFallbackFlag := true;
+        DumpImagesFallbackFlag := True;
 
       Output.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
-      GameParams.Renderer.RenderWorld(Output, true);
+      GameParams.Renderer.RenderWorld(Output, True);
       TPngInterface.SavePngFile(aPath + aPrefix + LeadZeroStr(i+1, 2) + '.png', Output);
     end;
   finally
@@ -965,7 +965,7 @@ begin
   Titles := TStringList.Create;
   Stats := TStringList.Create;
   try
-    AddGroup(self, '');
+    AddGroup(Self, '');
     InternalDumpSuperLemmixWebsiteMetaInfo(Titles, Stats);
 
     Ranks.SaveToFile(aPath + 'ranks.txt');
@@ -1106,10 +1106,10 @@ begin
       fPackVersion := fParentGroup.PackVersion;
 
     fScrollerList := fParentGroup.ScrollerList;
-    fHasOwnScrollerList := false;
+    fHasOwnScrollerList := False;
   end else begin
     fScrollerList := TStringList.Create;
-    fHasOwnScrollerList := true;
+    fHasOwnScrollerList := True;
   end;
 end;
 
@@ -1124,7 +1124,7 @@ begin
   if not fHasOwnScrollerList then
   begin
     fScrollerList := TStringList.Create;
-    fHasOwnScrollerList := true;
+    fHasOwnScrollerList := True;
   end;
 
   Parser := TParser.Create;
@@ -1160,12 +1160,12 @@ begin
   if (fParentGroup <> nil) and not FileExists(Path + 'music.nxmi') then
   begin
     fMusicList := fParentGroup.MusicList;
-    fHasOwnMusicList := false;
+    fHasOwnMusicList := False;
     Exit;
   end;
 
   fMusicList := TStringList.Create;
-  fHasOwnMusicList := true;
+  fHasOwnMusicList := True;
   Parser := TParser.Create;
   try
     if FileExists(Path + 'music.nxmi') then
@@ -1195,12 +1195,12 @@ begin
   if (fParentGroup <> nil) and not FileExists(Path + 'postview.nxmi') then
   begin
     fPostviewTexts := fParentGroup.PostviewTexts;
-    fHasOwnPostviewTexts := false;
+    fHasOwnPostviewTexts := False;
     Exit;
   end;
 
   fPostviewTexts := TPostviewTexts.Create;
-  fHasOwnPostviewTexts := true;
+  fHasOwnPostviewTexts := True;
   Parser := TParser.Create;
   try
     if FileExists(Path + 'postview.nxmi') then
@@ -1324,7 +1324,7 @@ var
       Sec.DoForEachLine('talisman',
                         procedure(aLine: TParserLine; const aIteration: Integer)
                         begin
-                          aLevel.TalismanStatus[aLine.ValueNumeric] := true;
+                          aLevel.TalismanStatus[aLine.ValueNumeric] := True;
                         end);
     end;
 
@@ -1355,11 +1355,11 @@ begin
     fLevels.Sort(SortAlphabetical);
 
     if LevelSec <> nil then
-      HandleGroup(self);
+      HandleGroup(Self);
   except
     on E: Exception do
     begin
-      fDisableSaveProgress := true;
+      fDisableSaveProgress := True;
       raise E;
     end;
   end;
@@ -1459,7 +1459,7 @@ begin
   try
     LevelSec := Parser.MainSection.SectionList.Add('levels');
 
-    HandleGroup(self);
+    HandleGroup(Self);
 
     ForceDirectories(AppPath + SFSaveData);
     Parser.SaveToFile(AppPath + SFSaveData + 'userdata.nxsv');
@@ -1509,7 +1509,7 @@ begin
       MainSec.DoForEachSection('group', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
-    fIsOrdered := true;
+    fIsOrdered := True;
 
     { We do NOT want to sort alphabetically here, we want them to stay in the order
       the metainfo file lists them in! }
@@ -1530,7 +1530,7 @@ begin
       if SearchRec.Attr and faDirectory <> faDirectory then Continue;
       if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
       G := fChildGroups.Add(SearchRec.Name + '\');
-      if Parent = nil then G.IsBasePack := true;
+      if Parent = nil then G.IsBasePack := True;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
   end;
@@ -1551,7 +1551,7 @@ begin
     fLevels.Sort(SortAlphabetical);
   end;
 
-  fIsOrdered := false;
+  fIsOrdered := False;
 end;
 
 function TNeoLevelGroup.GetFullPath: String;
@@ -1624,7 +1624,7 @@ begin
   if fParentGroup = nil then
     Result := -1
   else
-    Result := fParentGroup.GroupIndex[self];
+    Result := fParentGroup.GroupIndex[Self];
 end;
 
 function TNeoLevelGroup.GetFirstUnbeatenLevel: TNeoLevelEntry;
@@ -1704,7 +1704,7 @@ var
       Result := Result.Children[0];
   end;
 begin
-  Result := self; // Failsafe
+  Result := Self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat
@@ -1719,14 +1719,14 @@ begin
       end else
         Result := Result.Parent;
     end;
-  until (Result.Levels.Count > 0) or (Result = self);
+  until (Result.Levels.Count > 0) or (Result = Self);
 end;
 
 function TNeoLevelGroup.GetPrevGroup: TNeoLevelGroup;
 var
   AsChildIndex: Integer;
 begin
-  Result := self; // Failsafe
+  Result := Self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat
@@ -1743,14 +1743,14 @@ begin
       if (AsChildIndex > 0) and not Result.IsBasePack then
         Result := Result.Parent.Children[AsChildIndex - 1];
     end;
-  until (Result.Levels.Count > 0) or (Result = self);
+  until (Result.Levels.Count > 0) or (Result = Self);
 end;
 
 function TNeoLevelGroup.GetHighestGroup: TNeoLevelGroup;
 var
   AsChildIndex: Integer;
 begin
-  Result := self; // Failsafe
+  Result := Self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat
@@ -1767,7 +1767,7 @@ begin
       if (AsChildIndex < Result.Parent.Children.Count - 1) and not Result.IsBasePack then
         Result := Result.Parent.Children[AsChildIndex + 1];
     end;
-  until (Result.Levels.Count > 0) or (Result = self);
+  until (Result.Levels.Count > 0) or (Result = Self);
 end;
 
 function TNeoLevelGroup.GetLowestGroup: TNeoLevelGroup;
@@ -1780,7 +1780,7 @@ var
       Result := Result.Children[0];
   end;
 begin
-  Result := self; // Failsafe
+  Result := Self; // Failsafe
   if Result.Parent = nil then Exit;
 
   repeat
@@ -1795,7 +1795,7 @@ begin
       end else
         Result := Result.Parent;
     end;
-  until (Result.Levels.Count > 0) or (Result = self);
+  until (Result.Levels.Count > 0) or (Result = Self);
 end;
 
 function TNeoLevelGroup.IsHighestGroup: Boolean;
@@ -1803,7 +1803,7 @@ var
   LastGroup: TNeoLevelGroup;
 begin
   LastGroup := GetHighestGroup;
-  Result := (self = LastGroup);
+  Result := (Self = LastGroup);
 end;
 
 function TNeoLevelGroup.IsLowestGroup: Boolean;
@@ -1811,7 +1811,7 @@ var
   FirstGroup: TNeoLevelGroup;
 begin
   FirstGroup := GetLowestGroup;
-  Result := (self = FirstGroup);
+  Result := (Self = FirstGroup);
 end;
 
 function TNeoLevelGroup.GetStatus: TNeoLevelStatus;
@@ -1821,14 +1821,14 @@ var
   HasAttempted: Boolean;
 begin
   Result := lst_Completed;
-  HasAttempted := false;
+  HasAttempted := False;
 
   for i := 0 to fChildGroups.Count-1 do
   begin
     TempStatus := fChildGroups[i].Status;
     if TempStatus > lst_None then
     begin
-      HasAttempted := true;
+      HasAttempted := True;
       if (TempStatus < Result) then
         Result := TempStatus;
       if Result = lst_Attempted then
@@ -1842,7 +1842,7 @@ begin
     TempStatus := fLevels[i].Status;
     if TempStatus > lst_None then
     begin
-      HasAttempted := true;
+      HasAttempted := True;
       if (TempStatus < Result) then
         Result := TempStatus;
       if Result = lst_Attempted then
@@ -1885,7 +1885,7 @@ var
 begin
   if fTalismans = nil then
   begin
-    fTalismans := TObjectList<TTalisman>.Create(false);
+    fTalismans := TObjectList<TTalisman>.Create(False);
 
     if Parent <> nil then
       for i := 0 to Children.Count-1 do
@@ -1913,7 +1913,7 @@ end;
 function TNeoLevelGroup.GetParentBasePack: TNeoLevelGroup;
 begin
   if IsBasePack or (Parent = nil) or (Parent.Parent = nil) then
-    Result := self
+    Result := Self
   else
     Result := Parent.ParentBasePack;
 end;
@@ -1926,7 +1926,7 @@ constructor TNeoLevelEntries.Create(aOwner: TNeoLevelGroup);
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
   fOwner := aOwner;
 end;
@@ -1948,7 +1948,7 @@ constructor TNeoLevelGroups.Create(aOwner: TNeoLevelGroup);
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
   fOwner := aOwner;
 end;
@@ -1970,7 +1970,7 @@ constructor TPostviewTexts.Create;
 var
   aOwnsObjects: Boolean;
 begin
-  aOwnsObjects := true;
+  aOwnsObjects := True;
   inherited Create(aOwnsObjects);
 end;
 

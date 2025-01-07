@@ -95,7 +95,7 @@ begin
     begin
       //if GameParams.EnableOnline then
       //begin
-        //case RunCustomPopup(self, 'Missing styles',
+        //case RunCustomPopup(Self, 'Missing styles',
           //'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
           //'Yes|No|Open Style Manager') of
           //1:
@@ -105,7 +105,7 @@ begin
             //end;
           //3:
             //begin
-              //F := TFManageStyles.Create(self);
+              //F := TFManageStyles.Create(Self);
               //try
                 //F.ShowModal;
               //finally
@@ -224,7 +224,7 @@ begin
     mbRight: ExitToMenu;
     mbMiddle:
     begin
-      GameParams.ShownText := false;
+      GameParams.ShownText := False;
       BeginPlay;
     end;
   end;
@@ -422,7 +422,7 @@ var
   SaveName: String;
   TempBitmap: TBitmap32;
 begin
-  Dlg := TSaveDialog.Create(self);
+  Dlg := TSaveDialog.Create(Self);
   Dlg.Filter := 'PNG Image (*.png)|*.png';
   Dlg.FilterIndex := 1;
   Dlg.DefaultExt := '.png';
@@ -438,7 +438,7 @@ begin
   TempBitmap := TBitmap32.Create;
   TempBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
   GameParams.Renderer.RenderWorld(TempBitmap, not GameParams.NoBackgrounds);
-  TPngInterface.SavePngFile(SaveName, TempBitmap, true);
+  TPngInterface.SavePngFile(SaveName, TempBitmap, True);
   TempBitmap.Free;
 end;
 
@@ -658,7 +658,7 @@ begin
   // Clears the current-replay-in-memory when the level loads
   if (GameParams.ClassicMode and not (GameParams.PlaybackModeActive or GameParams.OpenedViaReplay))
     or not GameParams.ReplayAfterRestart then
-      GlobalGame.ReplayManager.Clear(true);
+      GlobalGame.ReplayManager.Clear(True);
 
   if GameParams.PlaybackModeActive or GameParams.OpenedViaReplay then
     GameParams.OpenedViaReplay := False; // Reset flag once replay has been successfully loaded
