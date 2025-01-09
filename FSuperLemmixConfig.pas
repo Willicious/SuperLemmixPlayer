@@ -217,7 +217,7 @@ begin
   for i := 1 to MaxZoom do
     cmbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
 
-  if aValue < 0 then
+  if (aValue < 0) then
     aValue := GameParams.PanelZoomLevel - 1;
 
   cmbPanelZoom.ItemIndex := Max(0, Min(aValue, cmbPanelZoom.Items.Count - 1));

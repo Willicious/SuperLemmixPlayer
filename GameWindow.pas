@@ -311,11 +311,14 @@ begin
   begin
     SkillPanel.ResizePanelWithWindow;
     CurPanelHeight := SkillPanel.ResizedPanelHeight;
+
+    // Set the correct zoom level for if switching back to zoom rather than resize
+    SkillPanel.Zoom := Floor(SkillPanel.ResizePercentage);
   end else begin
     if GameParams.ShowMinimap then
-      SkillPanel.Zoom := Min(GameParams.PanelZoomLevel,GameParams.MainForm.ClientWidth div 444 div ResMod)
+      SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod)
     else
-      SkillPanel.Zoom := Min(GameParams.PanelZoomLevel,GameParams.MainForm.ClientWidth div 336 div ResMod);
+      SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 336 div ResMod);
 
     CurPanelHeight := SkillPanel.Zoom * SkillPanel.PanelHeight;
   end;
@@ -351,8 +354,12 @@ begin
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
   end;
 
+  // Update stored panel zoom level
+  GameParams.PanelZoomLevel := SkillPanel.Zoom;
+
   fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
 end;
+
 
 function TGameWindow.IsGameplayScreen: Boolean;
 begin
