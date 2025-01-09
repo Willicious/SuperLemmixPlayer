@@ -202,11 +202,11 @@ begin
     MaxWidth := GameParams.MainForm.ClientWidth;
 
   if cbShowMinimap.Checked then
-    begin
-      MaxZoom := Max(MaxWidth div 444, 1);
-    end else begin
-      MaxZoom := Max(MaxWidth div 336, 1);
-    end;
+  begin
+    MaxZoom := Max(MaxWidth div 444, 1);
+  end else begin
+    MaxZoom := Max(MaxWidth div 336, 1);
+  end;
 
   MaxZoom := Max(1, MaxZoom div 2);
 

@@ -210,18 +210,6 @@ begin
   fChildForm.OnMouseMove(Sender, Shift, X, Y);
 end;
 
-procedure TMainForm.FormResize(Sender: TObject);
-begin
-  if GameParams = nil then Exit;
-  if not (fChildForm is TGameBaseScreen) then Exit;
-  TGameBaseScreen(fChildForm).MainFormResized;
-  GameParams.WindowWidth := ClientWidth;
-  GameParams.WindowHeight := ClientHeight;
-  { Seems pointless? Yes. But apparently, changing between maximized and not maximized
-    causes the handle to change, which was causing the fullscreen-windowed change glitch. }
-  MainFormHandle := Handle;
-end;
-
 procedure TMainForm.FormShow(Sender: TObject);
 begin
   inherited;
@@ -245,8 +233,19 @@ begin
   end;
 end;
 
-procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,
-  NewHeight: Integer; var Resize: Boolean);
+procedure TMainForm.FormResize(Sender: TObject);
+begin
+  if GameParams = nil then Exit;
+  if not (fChildForm is TGameBaseScreen) then Exit;
+  TGameBaseScreen(fChildForm).MainFormResized;
+  GameParams.WindowWidth := ClientWidth;
+  GameParams.WindowHeight := ClientHeight;
+  { Seems pointless? Yes. But apparently, changing between maximized and not maximized
+    causes the handle to change, which was causing the fullscreen-windowed change glitch. }
+  MainFormHandle := Handle;
+end;
+
+procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth, NewHeight: Integer; var Resize: Boolean);
 var
   CWDiff, CHDiff: Integer;
   NewCW, NewCH: Integer;
@@ -266,12 +265,15 @@ begin
   NewCW := NewWidth - CWDiff;
   NewCH := NewHeight - CHDiff;
 
+  // Apply minimum dimensions
   NewCW := Max(444 * ResMod, NewCW);
   NewCH := Max(200 * ResMod, NewCH);
 
+  // Apply maximum dimensions
   NewCW := Min(NewCW, Screen.Width - CWDiff);
   NewCH := Min(NewCH, Screen.Height - CHDiff);
 
+  // Update the new width and height
   NewWidth := NewCW + CWDiff;
   NewHeight := NewCH + CHDiff;
 end;

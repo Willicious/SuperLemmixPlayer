@@ -74,9 +74,11 @@ type
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
     fReplayKilled: Boolean;
+
     fInternalZoom: Integer;
     fMaxZoom: Integer;
     fMinimapBuffer: TBitmap32;
+
   { detecting if redraw is needed. These are a bit kludgy but I'm strongly considering a full rewrite of TGameWindow }
     fNeedRedraw: TRedrawOption;
     fLastSelectedLemming: TLemming;
@@ -84,6 +86,7 @@ type
     fLastSelectedSkill: TSkillPanelButton;
     fLastHelperIcon: THelperIcon;
     fLastDrawPaused: Boolean;
+
   { current gameplay }
     fGameSpeed: TGameSpeed;               // Do NOT set directly, set via GameSpeed property
     fSpecialStartIteration: Integer;
@@ -1887,6 +1890,7 @@ begin
   end;
 
   CheckShifts(Shift);
+
   SkillPanel.RemoveButtonHighlights;
   SkillPanel.RRIsPressed := False;
 end;
