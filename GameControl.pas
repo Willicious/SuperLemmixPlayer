@@ -147,6 +147,8 @@ type
     fCursorResize: Double;
     fZoomLevel: Integer;
     fPanelZoomLevel: Integer;
+    fMinimumWindowHeight: Integer;
+
     fWindowLeft: Integer;
     fWindowTop: Integer;
     fWindowWidth: Integer;
@@ -302,6 +304,8 @@ type
     property EdgeScrollSpeed: Integer read fEdgeScrollSpeed write fEdgeScrollSpeed;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property PanelZoomLevel: Integer read fPanelZoomLevel write fPanelZoomLevel;
+    property MinimumWindowHeight: Integer read fMinimumWindowHeight write fMinimumWindowHeight;
+
     property WindowLeft: Integer read fWindowLeft write fWindowLeft;
     property WindowTop: Integer read fWindowTop write fWindowTop;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
@@ -1052,6 +1056,8 @@ begin
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
   fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
+  fMinimumWindowHeight := 0;
+
   fEdgeScrollSpeed := 2;
   fCursorResize := 1;
   fShowLevelSelectOptions := True;

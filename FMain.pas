@@ -259,6 +259,9 @@ begin
     Exit;
   end;
 
+  if (GameParams.MinimumWindowHeight <= 0) then
+    GameParams.MinimumWindowHeight := 200 * ResMod;
+
   CWDiff := Width - ClientWidth;
   CHDiff := Height - ClientHeight;
 
@@ -267,7 +270,7 @@ begin
 
   // Apply minimum dimensions
   NewCW := Max(444 * ResMod, NewCW);
-  NewCH := Max(200 * ResMod, NewCH);
+  NewCH := Max(GameParams.MinimumWindowHeight, NewCH);
 
   // Apply maximum dimensions
   NewCW := Min(NewCW, Screen.Width - CWDiff);

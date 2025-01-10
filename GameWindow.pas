@@ -136,6 +136,7 @@ type
     function GetClearPhysics: Boolean;
     procedure SetProjectionType(aValue: Integer);
     procedure ProcessGameMessages;
+    procedure SetMinimumWindowHeight(CurPanelHeight: Integer);
     procedure ApplyResize(NoRecenter: Boolean = False);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
     procedure FreeCursors;
@@ -295,6 +296,27 @@ begin
   end;
 end;
 
+procedure TGameWindow.SetMinimumWindowHeight(CurPanelHeight: Integer);
+var
+  LevelHeight, TaskbarBuffer: Integer;
+begin
+  { A cute method for calculating the minimum window size (for dynamic resizing purposes).
+    It works well enough, but assumes that (a) the user has the Windows taskbar visible,
+    and (b) that the taskbar is no more than 100px in height (depending on scaling).
+    In the vast majority of use cases, this will absolutely suffice. }
+
+  LevelHeight := GameParams.Level.Info.Height;
+  TaskbarBuffer := 100; // A reasonable estimate in the absence of a foolproof way to get the user's taskbar height
+
+  // Use displayed level height for levels that don't exceed the standard average of 160px
+  if (LevelHeight <= 160) then
+    GameParams.MinimumWindowHeight := (CurPanelHeight + LevelHeight * fInternalZoom * ResMod);
+
+  // Fallback to default if the calculated size would exceed the top of the taskbar
+  if (GameParams.MinimumWindowHeight > Screen.Height - TaskbarBuffer) then
+    GameParams.MinimumWindowHeight := 200 * ResMod;
+end;
+
 procedure TGameWindow.ApplyResize(NoRecenter: Boolean = False);
 var
   OSHorz, OSVert: Single;
@@ -307,13 +329,13 @@ begin
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
 
+  // Get skill panel height according to zoom (zoom mode) or resize percentage (resize mode)
   if GameParams.ResizePanelWithWindow then
   begin
     SkillPanel.ResizePanelWithWindow;
-    CurPanelHeight := SkillPanel.ResizedPanelHeight;
+    SkillPanel.Zoom := Floor(SkillPanel.ResizePercentage); // For if user switches back to zoom
 
-    // Set the correct zoom level for if switching back to zoom rather than resize
-    SkillPanel.Zoom := Floor(SkillPanel.ResizePercentage);
+    CurPanelHeight := SkillPanel.ResizedPanelHeight;
   end else begin
     if GameParams.ShowMinimap then
       SkillPanel.Zoom := Min(GameParams.PanelZoomLevel, GameParams.MainForm.ClientWidth div 444 div ResMod)
@@ -323,22 +345,35 @@ begin
     CurPanelHeight := SkillPanel.Zoom * SkillPanel.PanelHeight;
   end;
 
-  // Set the width, height and position of the game image
+  // Calculate the minimum window height to see if we can continue resizing
+  SetMinimumWindowHeight(CurPanelHeight);
+
+  // Set the width, height, and position of the game image
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
   Img.Height := Min(ClientHeight - CurPanelHeight, GameParams.Level.Info.Height * fInternalZoom * ResMod);
 
+  // Offset the level to the vertical centre of the screen
   VertOffset := ((ClientHeight - CurPanelHeight - Img.Height) div 2);
   Img.Top := VertOffset;
   Img.Left := (ClientWidth - Img.Width) div 2;
 
+  if GameParams.ResizePanelWithWindow then
+    // Magnetize panel to bottom of window
+    SkillPanel.Top := ClientHeight - CurPanelHeight
+  else
+    // Magnetize panel to bottom of level
+    SkillPanel.Top := Img.Top + Img.Height;
+
   SkillPanel.ClientWidth := ClientWidth;
-  SkillPanel.Top := Img.Top + Img.Height;
   SkillPanel.Height := Max(CurPanelHeight, ClientHeight - SkillPanel.Top);
   SkillPanel.Image.Left := (SkillPanel.ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
 
   if not GameParams.ResizePanelWithWindow then
     SkillPanel.ResetMinimapPosition;
+
+  // Don't push the level above the top of the window when resizing
+  if Img.Top <= 0 then Img.Top := 0;//Exit;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom * ResMod) - Img.Width);
   MaxScroll := 0;
