@@ -110,18 +110,19 @@ const
     //moCheckUpdates,
     moAutoReplaySave,
     moLoadNextUnsolvedLevel,
+    moEdgeScroll,
     moPauseAfterBackwards,
-    moLinearResampleMenu,
-    moAutoReplayMode,
     moReplayAfterRestart,
+    moAutoReplayMode,
+    moShowButtonHints,
     moFullScreen,
-    moMinimapHighQuality,
-    moShowMinimap,
+    moHighResolution,
     //moLinearResampleMenu,
     moColourCycle,
-    moIncreaseZoom,
+    moShowMinimap,
+    moMinimapHighQuality,
     moResizePanelWithWindow,
-    moEdgeScroll,
+    moIncreaseZoom,
     moPreferYippee,
     moMenuSounds
   ];
@@ -271,8 +272,8 @@ type
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
-    property ResizePanelWithWindow: boolean Index moResizePanelWithWindow read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
+    property ResizePanelWithWindow: boolean Index moResizePanelWithWindow read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
