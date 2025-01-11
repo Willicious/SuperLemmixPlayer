@@ -68,9 +68,9 @@ type
 
 type
   TMiscOption = (
+    //moEnableOnline,
+    //moCheckUpdates,
     moAutoReplaySave,
-    moEnableOnline,
-    moCheckUpdates,
     moLoadNextUnsolvedLevel,
     moAutoReplayMode,
     moReplayAfterRestart,
@@ -107,7 +107,7 @@ type
 
 const
   DEF_MISCOPTIONS = [
-    moCheckUpdates,
+    //moCheckUpdates,
     moAutoReplaySave,
     moLoadNextUnsolvedLevel,
     moPauseAfterBackwards,
@@ -251,9 +251,9 @@ type
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
+    //property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
+    //property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
-    property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
-    property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property AutoReplayMode: boolean Index moAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property LoadNextUnsolvedLevel: boolean Index moLoadNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;

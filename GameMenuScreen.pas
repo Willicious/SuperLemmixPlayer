@@ -8,7 +8,7 @@ uses
   GameBaseMenuScreen,
   GameControl,
   LemNeoLevelPack,
-  LemNeoOnline,
+  //LemNeoOnline,
   LemNeoParser,
   LemStrings,
   LemTypes,

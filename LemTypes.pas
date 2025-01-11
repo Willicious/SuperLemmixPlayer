@@ -6,7 +6,7 @@ interface
 uses
   Generics.Collections,
   UMisc,
-  LemNeoOnline,
+  //LemNeoOnline,
   Dialogs,
   Classes, SysUtils, Contnrs,
   Math,
