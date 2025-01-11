@@ -70,12 +70,12 @@ begin
     1, 3: begin
          GameParams.ShowMinimap := True;
          GameParams.MinimapHighQuality := True;
-         GameParams.LinearResampleMenu := True;
+         //GameParams.LinearResampleMenu := True;
        end;
     0, 2: begin
          GameParams.ShowMinimap := True;
          GameParams.MinimapHighQuality := False;
-         GameParams.LinearResampleMenu := False;
+         //GameParams.LinearResampleMenu := False;
        end;
   end;
 

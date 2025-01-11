@@ -420,7 +420,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 3
       object imgAmigaTick: TImage
         Left = 72
-        Top = 128
+        Top = 107
         Width = 35
         Height = 33
         Picture.Data = {
@@ -2592,7 +2592,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbZoomOptions: TGroupBox
         Left = 21
-        Top = 242
+        Top = 224
         Width = 273
         Height = 137
         Caption = 'Zoom Options'
@@ -2658,7 +2658,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbFullScreen: TCheckBox
         Left = 49
-        Top = 19
+        Top = 23
         Width = 205
         Height = 17
         Caption = 'Full Screen'
@@ -2667,7 +2667,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbHighResolution: TCheckBox
         Left = 166
-        Top = 19
+        Top = 23
         Width = 118
         Height = 17
         Caption = 'High Resolution'
@@ -2675,17 +2675,19 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object cbLinearResampleMenu: TCheckBox
-        Left = 49
-        Top = 51
-        Width = 205
+        Left = 3
+        Top = 3
+        Width = 314
         Height = 17
-        Caption = 'Use Smooth Resampling In Menus'
+        Caption = 'Use Smooth Resampling In Menus (invisible for now)'
+        Enabled = False
         TabOrder = 3
+        Visible = False
         OnClick = OptionChanged
       end
       object gbMinimapOptions: TGroupBox
         Left = 21
-        Top = 178
+        Top = 160
         Width = 273
         Height = 54
         Caption = 'Minimap Options'
@@ -2729,7 +2731,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbNoBackgrounds: TCheckBox
         Left = 49
-        Top = 74
+        Top = 53
         Width = 205
         Height = 17
         Caption = 'Deactivate Background Images'
@@ -2738,7 +2740,7 @@ object FormNXConfig: TFormNXConfig
       end
       object ResetWindow: TGroupBox
         Left = 21
-        Top = 406
+        Top = 388
         Width = 273
         Height = 57
         TabOrder = 8
@@ -2763,7 +2765,7 @@ object FormNXConfig: TFormNXConfig
       end
       object btnResetWindow: TButton
         Left = 89
-        Top = 391
+        Top = 373
         Width = 135
         Height = 34
         Caption = 'Reset Window'
@@ -2772,7 +2774,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbColourCycle: TCheckBox
         Left = 49
-        Top = 97
+        Top = 76
         Width = 235
         Height = 17
         Caption = 'Use Colour Cycle For Fall Distance Ruler'
@@ -2781,7 +2783,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbAmigaTheme: TCheckBox
         Left = 91
-        Top = 138
+        Top = 117
         Width = 135
         Height = 17
         Caption = 'Activate Amiga Theme'

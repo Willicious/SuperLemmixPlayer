@@ -42,7 +42,11 @@ type
     lblGameZoom: TLabel;
     lblPanelZoom: TLabel;
     cmbGameZoom: TComboBox;
+
+    // Bookmark - FIF "LinearResample" and remove this option eventually
+    // ...pending community feedback
     cbLinearResampleMenu: TCheckBox;
+
     cbFullScreen: TCheckBox;
     cbMinimapHighQuality: TCheckBox;
     cbIncreaseZoom: TCheckBox;
@@ -292,7 +296,7 @@ begin
     cbHighResolution.Checked := GameParams.HighResolution; // Must be done before SetZoomDropdown
     cbResizePanelWithWindow.Checked := GameParams.ResizePanelWithWindow;
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
-    cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
+    //cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
     cbShowMinimap.Checked := GameParams.ShowMinimap;
@@ -364,7 +368,7 @@ begin
   GameParams.HighResolution := cbHighResolution.Checked;
   GameParams.ResizePanelWithWindow := cbResizePanelWithWindow.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
-  GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
+  //GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
 
   GameParams.ShowMinimap := cbShowMinimap.Checked;

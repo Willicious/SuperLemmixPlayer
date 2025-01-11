@@ -13754,12 +13754,12 @@ object FNLSetup: TFNLSetup
         Style = csDropDownList
         ItemIndex = 3
         TabOrder = 1
-        Text = 'High-resolution, enhancements'
+        Text = 'High-resolution, high quality minimap'
         Items.Strings = (
-          'Low-resolution, no enhancements'
-          'Low-resolution, enhancements'
-          'High-resolution, no enhancements'
-          'High-resolution, enhancements')
+          'Low-resolution, standard minimap'
+          'Low-resolution, high quality minimap'
+          'High-resolution, standard minimap'
+          'High-resolution, high quality minimap')
       end
       object cbGameplay: TComboBox
         Left = 135

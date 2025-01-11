@@ -304,8 +304,8 @@ begin
     ScreenImg.ScaleMode := smResize;
     ScreenImg.BitmapAlign := baCenter;
 
-    if GameParams.LinearResampleMenu then
-      TLinearResampler.Create(ScreenImg.Bitmap);
+    //if GameParams.LinearResampleMenu then
+    TLinearResampler.Create(ScreenImg.Bitmap);
   end;
 end;
 
@@ -1219,14 +1219,14 @@ begin
     PieceManager.Clear;
   end;
 
-  if GameParams.LinearResampleMenu then
-  begin
-    if ScreenImg.Bitmap.Resampler is TNearestResampler then
-      TLinearResampler.Create(ScreenImg.Bitmap);
-  end else begin
-    if ScreenImg.Bitmap.Resampler is TLinearResampler then
-      TNearestResampler.Create(ScreenImg.Bitmap);
-  end;
+//  if GameParams.LinearResampleMenu then
+//  begin
+//  if ScreenImg.Bitmap.Resampler is TNearestResampler then
+  TLinearResampler.Create(ScreenImg.Bitmap);
+//  end else begin
+//    if ScreenImg.Bitmap.Resampler is TLinearResampler then
+//      TNearestResampler.Create(ScreenImg.Bitmap);
+//  end;
 end;
 
 { TClickableRegion }

@@ -346,8 +346,8 @@ begin
     Renderer := GameParams.Renderer; // Shortcut
     Renderer.SetInterface(Game.RenderInterface);
 
-    if ScreenImg.Bitmap.Resampler is TLinearResampler then
-      TNearestResampler.Create(ScreenImg.Bitmap);
+    //if ScreenImg.Bitmap.Resampler is TLinearResampler then
+      //TNearestResampler.Create(ScreenImg.Bitmap);
 
     for i := 0 to fReplays.Count-1 do
     begin
@@ -467,8 +467,8 @@ begin
        fScreenText.AddStrings(['', '', '', '', '']);
       end;
 
-      if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
-        TLinearResampler.Create(ScreenImg.Bitmap);
+      //if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
+      TLinearResampler.Create(ScreenImg.Bitmap);
 
       if GameParams.ShowMinimap and not GameParams.FullScreen then
       begin

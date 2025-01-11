@@ -84,7 +84,7 @@ type
     moHideHelpers,
     moHideSkillQ,
     moHighResolution,
-    moLinearResampleMenu,
+    //moLinearResampleMenu,
     moFullScreen,
     moMinimapHighQuality,
     moShowMinimap,
@@ -117,6 +117,7 @@ const
     moFullScreen,
     moMinimapHighQuality,
     moShowMinimap,
+    //moLinearResampleMenu,
     moColourCycle,
     moIncreaseZoom,
     moResizePanelWithWindow,
@@ -266,7 +267,7 @@ type
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
     property HideSkillQ: boolean Index moHideSkillQ read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
-    property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
+    //property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
@@ -503,7 +504,7 @@ begin
     end;
 
     SaveBoolean('HighResolution', HighResolution);
-    SaveBoolean('LinearResampleMenu', LinearResampleMenu);
+    //SaveBoolean('LinearResampleMenu', LinearResampleMenu);
 
     LevelSavePath := CurrentLevel.Path;
     if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
@@ -720,7 +721,7 @@ begin
     fLoadedWindowWidth := WindowWidth;
     fLoadedWindowHeight := WindowHeight;
 
-    LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
+    //LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
 
     PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
     MenuSounds := LoadBoolean('MenuSounds', MenuSounds);
