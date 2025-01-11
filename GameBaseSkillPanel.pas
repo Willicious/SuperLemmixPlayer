@@ -285,9 +285,6 @@ begin
   fImage.RepaintMode := rmOptimizer;
   fImage.ScaleMode := smResize;
 
-  //if GameParams.LinearResampleMenu then
-  fImage.Bitmap.Resampler := TLinearResampler.Create;
-
   fMinimapImage := TImage32.Create(Self);
   fMinimapImage.Parent := Self;
   fMinimapImage.RepaintMode := rmOptimizer;
@@ -302,6 +299,9 @@ begin
   fMinimap := TBitmap32.Create;
 
   fOriginal := TBitmap32.Create;
+
+  //if GameParams.LinearResampleMenu then
+  fOriginal.Resampler := TLinearResampler.Create;
 
   // Initialize event handlers
   fImage.OnMouseDown := ImgMouseDown;
