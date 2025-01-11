@@ -119,6 +119,7 @@ const
     moShowMinimap,
     moColourCycle,
     moIncreaseZoom,
+    moResizePanelWithWindow,
     moEdgeScroll,
     moPreferYippee,
     moMenuSounds
