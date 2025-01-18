@@ -1064,6 +1064,8 @@ var
   end;
 
   procedure GetWindowData;
+  var
+    FlipXOffset: Integer;
   begin
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
     if (aSection.Line['slider'] <> nil) then   O.TarLev := O.TarLev or 256;
@@ -1077,6 +1079,9 @@ var
                                                O.TarLev := O.TarLev or 128;
     if (aSection.Line['rival'] <> nil) and not (aSection.Line['zombie'] <> nil) then
                                                O.TarLev := O.TarLev or 512;
+
+    FlipXOffset := aSection.LineNumeric['flip_x_offset'];
+    if (FlipXOffset <> 0) then O.Left := O.Left + FlipXOffset;
 
     O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
