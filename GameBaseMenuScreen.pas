@@ -156,6 +156,7 @@ type
       destructor Destroy; override;
       procedure MainFormResized; override;
       procedure GetInternalScreenVars;
+      procedure ResetMinimumWindowHeight;
 
       procedure DrawClassicModeButton;
       procedure HandleClassicModeClick;
@@ -308,6 +309,8 @@ begin
 
     //if GameParams.LinearResampleMenu then
     TLinearResampler.Create(ScreenImg.Bitmap);
+
+    ResetMinimumWindowHeight;
   end;
 end;
 
@@ -319,6 +322,11 @@ begin
   ClientHeight := GameParams.MainForm.ClientHeight;
 
   SetBasicCursor;
+end;
+
+procedure TGameBaseMenuScreen.ResetMinimumWindowHeight;
+begin
+  GameParams.MinimumWindowHeight := 0;
 end;
 
 function TGameBaseMenuScreen.MakeClickableImage(aImageCenter: TPoint;
