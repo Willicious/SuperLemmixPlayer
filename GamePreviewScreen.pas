@@ -250,23 +250,12 @@ begin
     LevelPreviewImage.DrawMode := dmBlend;
     LevelPreviewImage.CombineMode := cmMerge;
 
-    // Draw the level preview
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      LevelScale := MM_INTERNAL_SCREEN_WIDTH / lw
-    else if GameParams.FullScreen then
-      LevelScale := FS_INTERNAL_SCREEN_WIDTH / lw
-    else
-      LevelScale := INTERNAL_SCREEN_WIDTH / lw;
+    LevelScale := INTERNAL_SCREEN_WIDTH / lw;
 
     if LevelScale > 160 / lh then LevelScale := 160 / lh;
     DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
 
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      OffsetRect(DstRect, (MM_INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2))
-    else if GameParams.FullScreen then
-      OffsetRect(DstRect, (FS_INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2))
-    else
-      OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
+    OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
     LevelPreviewImage.DrawTo(ScreenImg.Bitmap, DstRect, LevelPreviewImage.BoundsRect);
   finally
@@ -281,12 +270,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
-    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
-  else if GameParams.FullScreen then
-    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay)
-  else
-    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
+  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
 
   R.AddKeysFromFunction(lka_LoadReplay);
 end;
@@ -298,12 +282,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
-    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-  else if GameParams.FullScreen then
-    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-  else
-    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
 
   R.ShortcutKeys.Add(VK_F3);
 end;
@@ -317,22 +296,10 @@ begin
   if GameParams.PlaybackModeActive then
   begin
     S := 'Cancel Playback Mode';
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else
-      P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
   end else begin
     S := SOptionToMenu;
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else
-      P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
   end;
 
   R := MakeClickableText(Point(P), S, ExitToMenu);

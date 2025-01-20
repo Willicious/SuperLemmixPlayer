@@ -21,47 +21,26 @@ uses
   IOUtils, Vcl.FileCtrl, // For Playback Mode
   SharedGlobals;
 
-const
-  // Determines the size of the available window space
-  INTERNAL_SCREEN_WIDTH = 836;
-  INTERNAL_SCREEN_HEIGHT = 492;
+var
+  // Stores the size of the available window space
+  INTERNAL_SCREEN_WIDTH          : Integer;
+  INTERNAL_SCREEN_HEIGHT         : Integer;
 
-  // MM = Minimap - different menu sizes required for ShowMinimap
-  MM_INTERNAL_SCREEN_WIDTH = 1092;
+  FOOTER_OPTIONS_ONE_ROW_Y       : Integer;
 
-  // FS = FullScreen - different menu size required for FullScreen mode
-  FS_INTERNAL_SCREEN_WIDTH = 874;
+  FOOTER_OPTIONS_TWO_ROWS_HIGH_Y : Integer;
+  FOOTER_OPTIONS_TWO_ROWS_LOW_Y  : Integer;
 
-  FOOTER_OPTIONS_ONE_ROW_Y = 460;
+  FOOTER_ONE_OPTION_X            : Integer;
 
-  FOOTER_OPTIONS_TWO_ROWS_HIGH_Y = 440;
-  FOOTER_OPTIONS_TWO_ROWS_LOW_Y = 460;
+  FOOTER_TWO_OPTIONS_X_LEFT      : Integer;
+  FOOTER_TWO_OPTIONS_X_RIGHT     : Integer;
 
-  MM_FOOTER_ONE_OPTION_X = MM_INTERNAL_SCREEN_WIDTH div 2;
-  FS_FOOTER_ONE_OPTION_X = FS_INTERNAL_SCREEN_WIDTH div 2;
-  FOOTER_ONE_OPTION_X = INTERNAL_SCREEN_WIDTH div 2;
+  FOOTER_THREE_OPTIONS_X_LEFT    : Integer;
+  FOOTER_THREE_OPTIONS_X_MID     : Integer;
+  FOOTER_THREE_OPTIONS_X_RIGHT   : Integer;
 
-  MM_FOOTER_TWO_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 5 div 16;
-  FS_FOOTER_TWO_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 5 div 16;
-  FOOTER_TWO_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 5 div 16;
-
-  MM_FOOTER_TWO_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 11 div 16;
-  FS_FOOTER_TWO_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 11 div 16;
-  FOOTER_TWO_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 11 div 16;
-
-  MM_FOOTER_THREE_OPTIONS_X_LEFT = MM_INTERNAL_SCREEN_WIDTH * 3 div 16;
-  FS_FOOTER_THREE_OPTIONS_X_LEFT = FS_INTERNAL_SCREEN_WIDTH * 3 div 16;
-  FOOTER_THREE_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 3 div 16;
-
-  MM_FOOTER_THREE_OPTIONS_X_MID = MM_INTERNAL_SCREEN_WIDTH div 2;
-  FS_FOOTER_THREE_OPTIONS_X_MID = FS_INTERNAL_SCREEN_WIDTH div 2;
-  FOOTER_THREE_OPTIONS_X_MID = INTERNAL_SCREEN_WIDTH div 2;
-
-  MM_FOOTER_THREE_OPTIONS_X_RIGHT = MM_INTERNAL_SCREEN_WIDTH * 13 div 16;
-  FS_FOOTER_THREE_OPTIONS_X_RIGHT = FS_INTERNAL_SCREEN_WIDTH * 13 div 16;
-  FOOTER_THREE_OPTIONS_X_RIGHT = INTERNAL_SCREEN_WIDTH * 13 div 16;
-
-  TALISMAN_PADDING = 8;
+  TALISMAN_PADDING               : Integer;
 
 type
   TRegionState = (rsNormal, rsHover, rsClick);
@@ -175,11 +154,11 @@ type
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
-
       procedure MainFormResized; override;
+      procedure GetInternalScreenVars;
+
       procedure DrawClassicModeButton;
       procedure HandleClassicModeClick;
-
       procedure MakeTalismanOptions;
       procedure HandleTalismanClick;
       procedure HandleCollectibleClick;
@@ -228,6 +207,7 @@ begin
   LoadBasicCursor('menu');
   SetBasicCursor;
 
+  GetInternalScreenVars;
   InitializeImage;
 
   OnKeyDown := Form_KeyDown;
@@ -283,17 +263,39 @@ begin
   end;
 end;
 
+// Determines the size of the available window space
+procedure TGameBaseMenuScreen.GetInternalScreenVars;
+begin
+  if GameParams.ShowMinimap and not GameParams.FullScreen then
+    INTERNAL_SCREEN_WIDTH := 1092
+  else if GameParams.FullScreen then
+    INTERNAL_SCREEN_WIDTH := 874
+  else
+    INTERNAL_SCREEN_WIDTH := 836;
+
+  INTERNAL_SCREEN_HEIGHT := 492;
+
+  FOOTER_OPTIONS_ONE_ROW_Y := 460;
+
+  FOOTER_OPTIONS_TWO_ROWS_HIGH_Y := 440;
+  FOOTER_OPTIONS_TWO_ROWS_LOW_Y := 460;
+
+  FOOTER_ONE_OPTION_X := INTERNAL_SCREEN_WIDTH div 2;
+
+  FOOTER_TWO_OPTIONS_X_LEFT := INTERNAL_SCREEN_WIDTH * 5 div 16;
+  FOOTER_TWO_OPTIONS_X_RIGHT := INTERNAL_SCREEN_WIDTH * 11 div 16;
+
+  FOOTER_THREE_OPTIONS_X_LEFT := INTERNAL_SCREEN_WIDTH * 3 div 16;
+  FOOTER_THREE_OPTIONS_X_MID := INTERNAL_SCREEN_WIDTH div 2;
+  FOOTER_THREE_OPTIONS_X_RIGHT := INTERNAL_SCREEN_WIDTH * 13 div 16;
+
+  TALISMAN_PADDING := 8;
+end;
+
 procedure TGameBaseMenuScreen.InitializeImage;
 begin
   with ScreenImg do
   begin
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-    Bitmap.SetSize(MM_INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-
-    if GameParams.FullScreen then
-    Bitmap.SetSize(FS_INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-
-    if not GameParams.ShowMinimap and not GameParams.FullScreen then
     Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
 
     DrawWallpaper;

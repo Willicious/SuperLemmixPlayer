@@ -115,22 +115,10 @@ begin
   if GameParams.PlaybackModeActive then
   begin
     S := 'Cancel Playback Mode';
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
-    else
-      P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+    P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
   end else begin
     S := SOptionToMenu;
-
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else
-      P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
   end;
 
   R := MakeClickableText(Point(P), S, ExitToMenu);
@@ -144,12 +132,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
-    R := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
-  else if GameParams.FullScreen then
-    R := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel)
-  else
-    R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
+  R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
@@ -162,12 +145,7 @@ var
 begin
   S := 'Playback Next Level';
 
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
-    R := MakeClickableText(Point(MM_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel)
-  else if GameParams.FullScreen then
-    R := MakeClickableText(Point(FS_FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel)
-  else
-    R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel);
+  R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
@@ -182,21 +160,9 @@ begin
     Exit;
 
   if LevelPassed then
-  begin
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
-    else
-      P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
-  end else begin
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
-    else
-      P := Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
-  end;
+    P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+  else
+    P := Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
 
   R := MakeClickableText(Point(P), SOptionRetryLevel, ReplaySameLevel);
 
@@ -219,20 +185,9 @@ begin
     if not GlobalGame.ReplayManager.ActionAddedDuringPlayback then
       Exit;
 
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else
-      P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
-  end else begin
-    if GameParams.ShowMinimap and not GameParams.FullScreen then
-      P := Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else if GameParams.FullScreen then
-      P := Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
-    else
-      P := Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
-  end;
+    P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+  end else
+    P := Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
 
   R := MakeClickableText(P, SOptionSaveReplay, SaveReplay);
   R.AddKeysFromFunction(lka_SaveReplay);
@@ -245,12 +200,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
-    R := MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-  else if GameParams.FullScreen then
-    R := MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect)
-  else
-    R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
 
   R.ShortcutKeys.Add(VK_F3);
 end;

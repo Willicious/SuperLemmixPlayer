@@ -470,51 +470,18 @@ begin
       //if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
       TLinearResampler.Create(ScreenImg.Bitmap);
 
-      if GameParams.ShowMinimap and not GameParams.FullScreen then
+      with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
       begin
-        with MakeClickableText(Point(MM_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
-          begin
-            ShortcutKeys.Add(VK_RETURN);
-            ShortcutKeys.Add(VK_SPACE);
-          end;
-        with MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
-          begin
-            ShortcutKeys.Add(VK_UP);
-          end;
-        with MakeClickableText(Point(MM_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
-          begin
-            ShortcutKeys.Add(VK_DOWN);
-          end;
-      end else
-      if GameParams.FullScreen then
+        ShortcutKeys.Add(VK_RETURN);
+        ShortcutKeys.Add(VK_SPACE);
+      end;
+      with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
       begin
-        with MakeClickableText(Point(FS_FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
-          begin
-            ShortcutKeys.Add(VK_RETURN);
-            ShortcutKeys.Add(VK_SPACE);
-          end;
-        with MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
-          begin
-            ShortcutKeys.Add(VK_UP);
-          end;
-        with MakeClickableText(Point(FS_FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
-          begin
-            ShortcutKeys.Add(VK_DOWN);
-          end;
-      end else begin
-        with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
-          begin
-            ShortcutKeys.Add(VK_RETURN);
-            ShortcutKeys.Add(VK_SPACE);
-          end;
-        with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
-          begin
-            ShortcutKeys.Add(VK_UP);
-          end;
-        with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
-          begin
-            ShortcutKeys.Add(VK_DOWN);
-          end;
+        ShortcutKeys.Add(VK_UP);
+      end;
+      with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
+      begin
+        ShortcutKeys.Add(VK_DOWN);
       end;
 
       // Calculate the start line index to always display the latest text
