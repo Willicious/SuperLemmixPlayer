@@ -2400,7 +2400,7 @@ const
   PermSkillSet = [baSliding, baClimbing, baFloating, baGliding, baFixing, baSwimming];
 var
   L, LQueue: TLemming;
-  OldHTAF: Boolean;
+  OldHTAF, MayQueueSkill: Boolean;
 begin
   Result := False;
 
@@ -2417,8 +2417,9 @@ begin
   // Queue skill assignment if current assignment is impossible
   if not Assigned(L) or not CheckSkillAvailable(Skill, L) then
   begin
+    MayQueueSkill := (not GameParams.HideSkillQ) or (Skill = baShimmying);
 
-  if not GameParams.HideSkillQ then
+    if MayQueueSkill then
     begin
       if Assigned(LQueue) and not (Skill in PermSkillSet) then
       begin
