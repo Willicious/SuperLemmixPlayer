@@ -533,11 +533,15 @@ begin
     SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
 
   // Helper for selected lemming
-  if (Selected and aLemming.CannotReceiveSkills) or UsefulOnly or
-     ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds) then
+  if (Selected and aLemming.CannotReceiveSkills) or UsefulOnly
+    or ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds
+      and not GameParams.HideHelpers) then
   begin
-    if not GameParams.HideHelpers then DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
-    fLayers.fIsEmpty[rlObjectHelpers] := False;
+    if not GameParams.ClassicMode then
+    begin
+      DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
+      fLayers.fIsEmpty[rlObjectHelpers] := False;
+    end;
   end;
 
   // Draw blocker areas on the triggerLayer
@@ -3381,7 +3385,7 @@ procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = T
 var
   Gadget: TGadget;
   i, i2: Integer;
-  DrawOtherHatchHelper: Boolean;
+  DrawPreassignedHelper, DrawOtherHatchHelper: Boolean;
   HatchPoint: TPoint;
 begin
   fGadgets := Gadgets;
@@ -3424,16 +3428,22 @@ begin
     Gadget := Gadgets[i];
     if (Gadget.TriggerEffect = DOM_WINDOW) then
     begin
+      DrawPreassignedHelper := Gadget.HasPreassignedSkills and
+                              (not GameParams.HideHelpers or UsefulOnly);
+
       DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
                               (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
 
       fLayers.fIsEmpty[rlObjectHelpers] := False;
 
-      if Gadget.HasPreassignedSkills and not GameParams.HideHelpers then
-        DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, False);
+      if not GameParams.ClassicMode then
+      begin
+        if DrawPreassignedHelper then
+          DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, false);
 
-      if DrawOtherHatchHelper and not GameParams.HideHelpers then
-        DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
+        if DrawOtherHatchHelper then
+          DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
+      end;
 
       if fUsefulOnly then
       begin
@@ -3483,6 +3493,8 @@ begin
   // Draw object helpers
   if DrawHelper and UsefulOnly then
   begin
+    if GameParams.ClassicMode then Exit;
+
     for i := 0 to Gadgets.Count-1 do
     begin
       Gadget := Gadgets[i];
@@ -3491,7 +3503,7 @@ begin
         Continue;
 
       // Otherwise, draw its helper
-      if not GameParams.HideHelpers then DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
+      DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       fLayers.fIsEmpty[rlObjectHelpers] := False;
 
       // If it's a teleporter or receiver, draw all paired helpers too
@@ -3499,7 +3511,7 @@ begin
         for i2 := 0 to Gadgets.Count-1 do
         begin
           if i = i2 then Continue;
-          if (Gadgets[i2].PairingId = Gadget.PairingId) and not GameParams.HideHelpers then
+          if (Gadgets[i2].PairingId = Gadget.PairingId) then
             DrawObjectHelpers(fLayers[rlObjectHelpers], Gadgets[i2]);
         end;
     end;
@@ -3610,7 +3622,8 @@ begin
   fLaserGraphic.DrawMode := dmCustom;
   fLaserGraphic.OnPixelCombine := CombineFixedColor;
 
-  if not GameParams.HideHelpers then LoadHelperImages;
+  if not GameParams.ClassicMode then
+    LoadHelperImages;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := TResourceStream.Create(HInstance, 'particles', 'lemdata');
@@ -4046,7 +4059,7 @@ end;
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = False);
 begin
 
-  if GameParams.HighResolution <> fHelpersAreHighRes and not GameParams.HideHelpers then
+  if (GameParams.HighResolution <> fHelpersAreHighRes) and not GameParams.ClassicMode then
     LoadHelperImages;
 
   RenderInfoRec.Level := aLevel;

@@ -1039,12 +1039,11 @@ end;
 
 procedure TGameWindow.CheckUserHelpers;
 begin
-  if not GameParams.HideHelpers then
-  begin
-    fRenderInterface.UserHelper := hpi_None;
-    if GameParams.Hotkeys.CheckForKey(lka_FallDistance) then
-      fRenderInterface.UserHelper := hpi_FallDist;
-  end;
+  if GameParams.ClassicMode then Exit;
+
+  fRenderInterface.UserHelper := hpi_None;
+  if GameParams.Hotkeys.CheckForKey(lka_FallDistance) then
+    fRenderInterface.UserHelper := hpi_FallDist;
 end;
 
 procedure TGameWindow.DoDraw;
