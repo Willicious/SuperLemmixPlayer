@@ -49,6 +49,7 @@ type
     btnCloseSearch: TButton;
     lblEditingOptions: TLabel;
     btnEditLevel: TButton;
+    btnClose: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -78,6 +79,7 @@ type
     procedure lbSearchResultsClick(Sender: TObject);
     procedure btnCloseSearchClick(Sender: TObject);
     procedure btnEditLevelClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -921,8 +923,10 @@ begin
   { Resizes and recenters the main form to show the option buttons }
 
   Self.Width := btnClearRecords.Left + btnClearRecords.Width + 20;
-  btnOK.Width := pnLevelInfo.Width;
-  btnShowHideOptions.Left := btnClearRecords.Left;
+
+  btnOK.Width := pnLevelInfo.Width - btnClose.Width;
+  btnClose.Left := btnClearRecords.Left;
+
   btnShowHideOptions.Caption := '< Hide Options';
 
   Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
@@ -935,8 +939,9 @@ begin
 
   Self.Width := btnClearRecords.Left - 5;
   btnShowHideOptions.Caption := 'Show Options >';
-  btnOK.Width := btnOK.Width - btnShowHideOptions.Width - 10;
-  btnShowHideOptions.Left := btnOK.Left + btnOK.Width + 10;
+
+  btnOK.Width := pnLevelInfo.Width - (btnClose.Width * 2) - 20;
+  btnClose.Left := btnOK.Left + btnOK.Width + 10;
 
   Self.Left := (Application.MainForm.Left + (Application.MainForm.Width div 2)) - (Self.Width div 2);
   Self.Top := (Application.MainForm.Top + (Application.MainForm.Height div 2)) - (Self.Height div 2);
@@ -1493,6 +1498,11 @@ begin
   sbSearchLevels.Text := '';
 
   tvLevelSelect.Visible := True;
+end;
+
+procedure TFLevelSelect.btnCloseClick(Sender: TObject);
+begin
+  ModalResult := mrCancel;
 end;
 
 procedure TFLevelSelect.btnCloseSearchClick(Sender: TObject);

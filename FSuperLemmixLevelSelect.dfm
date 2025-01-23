@@ -165,9 +165,9 @@ object FLevelSelect: TFLevelSelect
     OnKeyDown = tvLevelSelectKeyDown
   end
   object btnOK: TButton
-    Left = 375
+    Left = 521
     Top = 495
-    Width = 606
+    Width = 469
     Height = 25
     Caption = 'Play'
     TabOrder = 15
@@ -274,7 +274,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnPlaybackModeClick
   end
   object btnShowHideOptions: TButton
-    Left = 996
+    Left = 381
     Top = 495
     Width = 134
     Height = 25
@@ -321,7 +321,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCloseSearchClick
   end
   object btnEditLevel: TButton
-    Left = 1000
+    Left = 996
     Top = 407
     Width = 134
     Height = 25
@@ -331,6 +331,15 @@ object FLevelSelect: TFLevelSelect
     ShowHint = True
     TabOrder = 16
     OnClick = btnEditLevelClick
+  end
+  object btnClose: TButton
+    Left = 996
+    Top = 495
+    Width = 134
+    Height = 25
+    Caption = 'Close'
+    TabOrder = 17
+    OnClick = btnCloseClick
   end
   object ilStatuses: TImageList
     AllocBy = 8
