@@ -26,7 +26,7 @@ type
     cmbPostviewSaveReplayPattern: TComboBox;
     btnHotkeys: TButton;
     ebUserName: TEdit;
-    cbAutoReplay: TCheckBox;
+    cbReplayAfterBackskip: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
     cbSpawnInterval: TCheckBox;
     cbNoBackgrounds: TCheckBox;
@@ -273,7 +273,7 @@ begin
     // --- Page 2 (Interface Options) --- //
     // Checkboxes
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
-    cbAutoReplay.Checked := GameParams.AutoReplayMode;
+    cbReplayAfterBackskip.Checked := GameParams.ReplayAfterBackskip;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbColourCycle.Checked := GameParams.ColourCycle;
@@ -346,7 +346,7 @@ begin
   // --- Page 2 (Interface Options) --- //
   // Checkboxes
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
-  GameParams.AutoReplayMode := cbAutoReplay.Checked;
+  GameParams.ReplayAfterBackskip := cbReplayAfterBackskip.Checked;
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;

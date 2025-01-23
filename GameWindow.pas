@@ -553,10 +553,10 @@ begin
 
       if (ModalResult = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
       begin
-        OldClearReplay := not GameParams.AutoReplayMode;
+        OldClearReplay := not GameParams.ReplayAfterBackskip;
         fSaveList.ClearAfterIteration(0);
         GotoSaveState(Game.CurrentIteration);
-        GameParams.AutoReplayMode := not OldClearReplay;
+        GameParams.ReplayAfterBackskip := not OldClearReplay;
       end;
 
     until ModalResult <> mrRetry;
@@ -658,7 +658,7 @@ begin
   begin
     GotoSaveState(Max(Game.CurrentIteration-1, 0));
 
-    if not GameParams.AutoReplayMode then
+    if not GameParams.ReplayAfterBackskip then
       Game.RegainControl(True);
   end;
 
@@ -1695,7 +1695,7 @@ begin
                           Game.ReplayManager.LoadFromStream(fSaveStateReplayStream, True);
                           GotoSaveState(fSaveStateFrame, 1);
 
-                          if not GameParams.AutoReplayMode then
+                          if not GameParams.ReplayAfterBackskip then
                             Game.RegainControl(True);
                         end;
                       end;
@@ -1812,7 +1812,7 @@ begin
                       Game.IsBackstepping := True;
                       GotoSaveState(CurrentIteration + func.Modifier);
 
-                      if not GameParams.AutoReplayMode then
+                      if not GameParams.ReplayAfterBackskip then
                         Game.RegainControl(True);
                     end else begin
                       Game.IsBackstepping := False;
@@ -1885,7 +1885,7 @@ begin
                         Game.IsBackstepping := True;
                         GotoSaveState(Max(TargetFrame, 0));
 
-                        if not GameParams.AutoReplayMode then
+                        if not GameParams.ReplayAfterBackskip then
                           Game.RegainControl(True);
                      end;
       ssc_NextShrugger: begin

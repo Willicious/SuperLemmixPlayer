@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 328
     Height = 500
-    ActivePage = Graphics
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -342,7 +342,7 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbAutoReplay: TCheckBox
+        object cbReplayAfterBackskip: TCheckBox
           Left = 12
           Top = 45
           Width = 234

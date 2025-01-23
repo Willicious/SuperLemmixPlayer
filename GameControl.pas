@@ -72,7 +72,7 @@ type
     //moCheckUpdates,
     moAutoReplaySave,
     moLoadNextUnsolvedLevel,
-    moAutoReplayMode,
+    moReplayAfterBackskip,
     moReplayAfterRestart,
     moPauseAfterBackwards,
     moTurboFF,
@@ -113,7 +113,7 @@ const
     moEdgeScroll,
     moPauseAfterBackwards,
     moReplayAfterRestart,
-    moAutoReplayMode,
+    moReplayAfterBackskip,
     moShowButtonHints,
     moFullScreen,
     moHighResolution,
@@ -255,7 +255,7 @@ type
     //property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     //property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
-    property AutoReplayMode: boolean Index moAutoReplayMode read GetOptionFlag write SetOptionFlag;
+    property ReplayAfterBackskip: boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;
     property LoadNextUnsolvedLevel: boolean Index moLoadNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
@@ -469,7 +469,7 @@ begin
     SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
     SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
     SaveBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
-    SaveBoolean('AutoReplay', AutoReplayMode);
+    SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     SaveBoolean('TurboFastForward', TurboFF);
@@ -669,7 +669,7 @@ begin
     if IngameSaveReplayPattern = '' then IngameSaveReplayPattern := DEFAULT_REPLAY_PATTERN_INGAME;
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
 
-    AutoReplayMode := LoadBoolean('AutoReplay', AutoReplayMode);
+    ReplayAfterBackskip := LoadBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     LoadNextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
