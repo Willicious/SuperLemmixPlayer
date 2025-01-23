@@ -95,7 +95,7 @@ begin
    in the high-res graphics for them not being loaded, causing errors later. }
   PieceManager.Clear;
 
-  GameParams.MainForm.Caption := 'SuperLemmix';
+  GameParams.MainForm.Caption := SProgramName;
   Application.Title := GameParams.MainForm.Caption;
 
   GameParams.Renderer.BackgroundColor := $000000;

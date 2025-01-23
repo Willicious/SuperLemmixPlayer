@@ -359,28 +359,29 @@ end;
 
 procedure TGamePreviewScreen.SetWindowCaption;
 var
-  s, Title: string;
+  S, Title, Pack: string;
   CurTheme: TNeoTheme;
   RescueCount, LemCount, CollectibleCount: Integer;
 begin
-  Title := GameParams.Level.Info.TItle;
+  Title := GameParams.Level.Info.Title;
+  Pack := GameParams.CurrentLevel.Group.ParentBasePack.Name;
   RescueCount := GameParams.Level.Info.RescueCount;
   LemCount := GameParams.Level.Info.LemmingsCount;
   CollectibleCount := GameParams.Level.Info.CollectibleCount;
   CurTheme := GameParams.Renderer.Theme;
 
-  s := 'SuperLemmix - ' + Title + ' - Save ' + IntToStr(RescueCount)
+  S := SProgramName + ' - ' + Pack + ' - ' + Title + ' - Save ' + IntToStr(RescueCount)
        + ' of ' + IntToStr(LemCount) + ' ';
 
   if LemCount = 1 then
-    s := s + CurTheme.LemNamesSingular
+    S := S + CurTheme.LemNamesSingular
   else
-    s := s + CurTheme.LemNamesPlural;
+    S := S + CurTheme.LemNamesPlural;
 
   if CollectibleCount <> 0 then
-    s := s + ' - ' + IntToStr(CollectibleCount) + ' Diamonds to collect';
+    S := S + ' - ' + IntToStr(CollectibleCount) + ' Diamonds to collect';
 
-  GameParams.MainForm.Caption := s;
+  GameParams.MainForm.Caption := S;
 end;
 
 procedure TGamePreviewScreen.SaveLevelImage;

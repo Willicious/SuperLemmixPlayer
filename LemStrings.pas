@@ -96,7 +96,7 @@ const
   SFTemp = 'temp\';
 
 resourcestring
-  SProgramName = 'SuperLemmix Player';
+  SProgramName = 'SuperLemmix';
   SDummyString = '';
 
   {-------------------------------------------------------------------------------

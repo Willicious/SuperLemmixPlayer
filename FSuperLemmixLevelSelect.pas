@@ -526,11 +526,11 @@ begin
   if Obj is TNeoLevelGroup then
   begin
     TargetPath := G.Path;
-    Description := 'SuperLemmix - ' + MakeNameRecursive(G);
+    Description := SProgramName + ' - ' + MakeNameRecursive(G);
   end else if Obj is TNeoLevelEntry then
   begin
     TargetPath := L.Path;
-    Description := 'SuperLemmix - ' + MakeNameRecursive(L.Group) + ' :: ' + L.Title;
+    Description := SProgramName + ' - ' + MakeNameRecursive(L.Group) + ' :: ' + L.Title;
   end else
     Exit;
 

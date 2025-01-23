@@ -103,7 +103,7 @@ begin
   fStartLine := 0;
   Self.OnKeyDown := FormKeyDown;
 
-  GameParams.MainForm.Caption := 'SuperLemmix - Replay Check';
+  GameParams.MainForm.Caption := SProgramName + ' - Replay Check';
 end;
 
 destructor TGameReplayCheckScreen.Destroy;

@@ -79,7 +79,7 @@ begin
   {$endif}
 
   Application.Initialize;
-  Application.Title := 'SuperLemmix';
+  Application.Title := SProgramName;
   Application.CreateForm(TMainForm, MainForm);
   Application.HintHidePause := 100000;
   Application.Run;

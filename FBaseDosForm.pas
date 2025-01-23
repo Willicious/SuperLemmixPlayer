@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Gr32,
-  GameControl,
+  GameControl, LemStrings,
   SharedGlobals;
 
 type
@@ -42,7 +42,7 @@ end;
 constructor TBaseDosForm.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-  Caption := 'SuperLemmix';
+  Caption := SProgramName;
   Color := clBlack;
   BorderStyle := bsNone;
   BorderIcons := [];

@@ -151,7 +151,7 @@ begin
   fGroupGraphic := TBitmap32.Create;
 
   fScrollerTextList := TStringList.Create;
-  GameParams.MainForm.Caption := 'SuperLemmix';
+  GameParams.MainForm.Caption := SProgramName;
 end;
 
 destructor TGameMenuScreen.Destroy;
@@ -408,7 +408,7 @@ begin
   else
     PackInfoText := #13 + 'No Pack';
 
-  NLInfoText := 'SuperLemmix Player V' + CurrentVersionString;
+  NLInfoText := SProgramName + ' Player ' + CurrentVersionString;
   {$ifdef exp}if COMMIT_ID <> '' then NLInfoText := NLInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
