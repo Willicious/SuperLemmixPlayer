@@ -84,11 +84,9 @@ type
     moHideHelpers,
     moHideSkillQ,
     moHighResolution,
-    //moLinearResampleMenu,
     moFullScreen,
     moMinimapHighQuality,
     moShowMinimap,
-    moResizePanelWithWindow,
     moIncreaseZoom,
     moLoadedConfig,
     moMatchBlankReplayUsername,
@@ -117,11 +115,9 @@ const
     moShowButtonHints,
     moFullScreen,
     moHighResolution,
-    //moLinearResampleMenu,
     moColourCycle,
     moShowMinimap,
     moMinimapHighQuality,
-    moResizePanelWithWindow,
     moIncreaseZoom,
     moPreferYippee,
     moMenuSounds
@@ -149,7 +145,8 @@ type
     fEdgeScrollSpeed: Integer;
     fCursorResize: Double;
     fZoomLevel: Integer;
-    fPanelZoomLevel: Integer;
+
+    fMinimumWindowWidth: Integer;
     fMinimumWindowHeight: Integer;
 
     fWindowLeft: Integer;
@@ -199,6 +196,9 @@ type
     Level        : TLevel;
     Renderer     : TRenderer;
 
+    DefaultMinWidth  : Integer;
+    DefaultMinHeight : Integer;
+
     LevelString: String;
     BaseLevelPack: TNeoLevelGroup;
 
@@ -236,7 +236,6 @@ type
     procedure SetCurrentLevelToBestMatch(aPattern: String);
 
     procedure CreateBasePack;
-
     procedure SetLevel(aLevel: TNeoLevelEntry);
     procedure NextLevel(aCanCrossRank: Boolean = False);
     procedure PrevLevel(aCanCrossRank: Boolean = False);
@@ -268,12 +267,10 @@ type
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
     property HideSkillQ: boolean Index moHideSkillQ read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
-    //property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
-    property ResizePanelWithWindow: boolean Index moResizePanelWithWindow read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
@@ -306,7 +303,8 @@ type
     property CursorResize: Double read fCursorResize write fCursorResize;
     property EdgeScrollSpeed: Integer read fEdgeScrollSpeed write fEdgeScrollSpeed;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
-    property PanelZoomLevel: Integer read fPanelZoomLevel write fPanelZoomLevel;
+
+    property MinimumWindowWidth: Integer read fMinimumWindowWidth write fMinimumWindowWidth;
     property MinimumWindowHeight: Integer read fMinimumWindowHeight write fMinimumWindowHeight;
 
     property WindowLeft: Integer read fWindowLeft write fWindowLeft;
@@ -490,9 +488,7 @@ begin
     SL.Add('EdgeScrollSpeed=' + IntToStr(EdgeScrollSpeed));
 
     SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
-    SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
     SL.Add('CursorResize=' + FloatToStr(CursorResize));
-    SaveBoolean('ResizePanelWithWindow', ResizePanelWithWindow);
     SaveBoolean('IncreaseZoom', IncreaseZoom);
     SaveBoolean('FullScreen', FullScreen);
 
@@ -505,7 +501,6 @@ begin
     end;
 
     SaveBoolean('HighResolution', HighResolution);
-    //SaveBoolean('LinearResampleMenu', LinearResampleMenu);
 
     LevelSavePath := CurrentLevel.Path;
     if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
@@ -605,20 +600,6 @@ var
     // Disallow zoom levels that are too high
     if fZoomLevel > Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod) + EXTRA_ZOOM_LEVELS then
       fZoomLevel := Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod);
-
-    // Now validate the panel zoom
-    if fPanelZoomLevel < 0 then
-      fPanelZoomLevel := fZoomLevel;
-
-      if GameParams.ShowMinimap then
-      begin
-        fPanelZoomLevel := Min(Screen.Width div 444 div ResMod, fPanelZoomLevel);
-      end else begin
-        fPanelZoomLevel := Min(Screen.Width div 336 div ResMod, fPanelZoomLevel);
-      end;
-
-    if fPanelZoomLevel < 1 then
-      fPanelZoomLevel := 1;
   end;
 
   procedure ValidateEdgeScrollSpeed;
@@ -683,7 +664,6 @@ begin
     HideSkillQ := LoadBoolean('HideSkillQ', HideSkillQ);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     ShowMinimap := LoadBoolean('ShowMinimap', ShowMinimap);
-    ResizePanelWithWindow := LoadBoolean('ResizePanelWithWindow', ResizePanelWithWindow);
     IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
     SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
     PreferYippee := LoadBoolean('PreferYippee', PreferYippee);
@@ -700,8 +680,6 @@ begin
     FileCaching := LoadBoolean('FileCaching', FileCaching);
 
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
-    PanelZoomLevel := StrToIntDef(SL.Values['PanelZoomLevel'], -1);
-
     CursorResize := StrToFloatDef(SL.Values['CursorResize'], CursorResize);
 
     if (StrToIntDef(SL.Values['LastVersion'], 0) div 1000) mod 100 < 16 then
@@ -721,8 +699,6 @@ begin
     fLoadedWindowTop := WindowTop;
     fLoadedWindowWidth := WindowWidth;
     fLoadedWindowHeight := WindowHeight;
-
-    //LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
 
     PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
     MenuSounds := LoadBoolean('MenuSounds', MenuSounds);
@@ -1058,8 +1034,11 @@ begin
   fOneLevelMode := False;
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
-  fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 444);
-  fMinimumWindowHeight := 0;
+
+  DefaultMinWidth := 444;
+  DefaultMinHeight := 200;
+  fMinimumWindowWidth := DefaultMinWidth;
+  fMinimumWindowHeight := DefaultMinHeight;
 
   fEdgeScrollSpeed := 2;
   fCursorResize := 1;

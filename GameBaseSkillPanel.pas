@@ -26,8 +26,6 @@ type
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
 
-    fSetInitialZoom       : Boolean;
-
     fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
     fOnMinimapClick       : TMinimapClickEvent; // Event handler for minimap
@@ -39,9 +37,6 @@ type
     procedure LoadSkillFont;
 
     function GetLevel: TLevel;
-    function GetZoom: Integer;
-    procedure SetZoom(NewZoom: Integer);
-    function GetMaxZoom: Integer;
 
     procedure CombineShift(F: TColor32; var B: TColor32; M: Cardinal);
     procedure SetShowUsedSkills(const Value: Boolean);
@@ -175,7 +170,6 @@ type
     procedure RemoveButtonHighlights;
 
     procedure DrawMinimap; virtual;
-    procedure ResetMinimapPosition;
 
     procedure ResizePanelWithWindow;
     procedure GetButtonHints(aButton: TSkillPanelButton);
@@ -201,9 +195,6 @@ type
     property ResizedMinimapTop: Integer read fResizedMinimapTop write fResizedMinimapTop;
     property ResizedMinimapWidth: Integer read fResizedMinimapWidth write fResizedMinimapWidth;
     property ResizedMinimapHeight: Integer read fResizedMinimapHeight write fResizedMinimapHeight;
-
-    property Zoom: Integer read GetZoom write SetZoom;
-    property MaxZoom: Integer read GetMaxZoom;
 
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
@@ -299,8 +290,6 @@ begin
   fMinimap := TBitmap32.Create;
 
   fOriginal := TBitmap32.Create;
-
-  //if GameParams.LinearResampleMenu then
   fOriginal.Resampler := TLinearResampler.Create;
 
   // Initialize event handlers
@@ -1165,16 +1154,6 @@ begin
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 end;
 
-
-
-procedure TBaseSkillPanel.ResetMinimapPosition;
-begin
-  if GameParams.ResizePanelWithWindow then Exit; // Just in case
-
-  fMinimapImage.Left := MinimapRect.Left * Trunc(fMinimapImage.Scale) + Image.Left;
-  fMinimapImage.Top := MinimapRect.Top * Trunc(fMinimapImage.Scale);
-end;
-
 procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer; CursorOverInvincible: Boolean = False);
 var
   ButtonLeft, ButtonTop: Integer;
@@ -2022,8 +2001,6 @@ end;
 
 procedure TBaseSkillPanel.ResizePanelWithWindow;
 begin
-  if not GameParams.ResizePanelWithWindow then Exit; // Should never happen
-
   // Resize and reposition the panel relative to the width of the window
   fImage.Width := GameParams.MainForm.ClientWidth;
   fImage.Left := (GameParams.MainForm.ClientWidth - fImage.Width) div 2;
@@ -2050,49 +2027,6 @@ begin
   fMinimapImage.Left := ResizedMinimapLeft;
   fMinimapImage.Top := ResizedMinimapTop;
   fMinimapImage.Scale := ResizePercentage;
-end;
-
-procedure TBaseSkillPanel.SetZoom(NewZoom: Integer);
-begin
-  if GameParams.ResizePanelWithWindow then // Should never happen
-  begin
-    ResizePanelWithWindow;
-    Exit;
-  end;
-
-  if GameParams.HighResolution then
-    NewZoom := NewZoom * 2;
-  NewZoom := Max(Min(MaxZoom, NewZoom), 1);
-  if (NewZoom = Trunc(fImage.Scale)) and fSetInitialZoom then Exit;
-
-  Width := GameParams.MainForm.ClientWidth;    // For the whole skill panel
-  Height := GameParams.MainForm.ClientHeight;  // For the whole skill panel
-
-  fImage.Width := PanelWidth * NewZoom;
-  fImage.Height := PanelHeight * NewZoom;
-  fImage.Left := (Width - Image.Width) div 2;
-  fImage.Scale := NewZoom;
-
-  fMinimapImage.Width := MinimapWidth * NewZoom;
-  fMinimapImage.Height := MinimapHeight * NewZoom;
-  fMinimapImage.Left := MinimapRect.Left * NewZoom + Image.Left;
-  fMinimapImage.Top := MinimapRect.Top * NewZoom;
-  fMinimapImage.Scale := NewZoom;
-
-  fSetInitialZoom := True;
-end;
-
-function TBaseSkillPanel.GetZoom: Integer;
-begin
-  if GameParams.ResizePanelWithWindow then
-    Result := Round(ResizePercentage) // Should never happen
-  else
-    Result := Trunc(fImage.Scale);
-end;
-
-function TBaseSkillPanel.GetMaxZoom: Integer;
-begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 80), 1);
 end;
 
 procedure TBaseSkillPanel.SetMinimapScrollFreeze(aValue: Boolean);

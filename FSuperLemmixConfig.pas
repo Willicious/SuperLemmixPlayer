@@ -40,12 +40,7 @@ type
     tbMusicVol: TTrackBar;
     cbDisableTestplayMusic: TCheckBox;
     lblGameZoom: TLabel;
-    lblPanelZoom: TLabel;
     cmbGameZoom: TComboBox;
-
-    // Bookmark - FIF "LinearResample" and remove this option eventually
-    // ...pending community feedback
-    cbLinearResampleMenu: TCheckBox;
 
     cbFullScreen: TCheckBox;
     cbMinimapHighQuality: TCheckBox;
@@ -53,7 +48,6 @@ type
     cbHighResolution: TCheckBox;
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
-    cmbPanelZoom: TComboBox;
     btnResetWindow: TButton;
     rgExitSound: TRadioGroup;
     cbShowMinimap: TCheckBox;
@@ -73,7 +67,7 @@ type
     lblScrollSpeed: TLabel;
     cmbScrollSpeed: TComboBox;
     gbZoomOptions: TGroupBox;
-    cbResizePanelWithWindow: TCheckBox;
+    gbWindowOptions: TGroupBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -87,7 +81,6 @@ type
     procedure btnResetWindowClick(Sender: TObject);
     procedure cbShowMinimapClick(Sender: TObject);
     procedure cbEdgeScrollingClick(Sender: TObject);
-    procedure cbResizePanelWithWindowClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -97,7 +90,6 @@ type
     procedure SaveToParams;
 
     procedure SetZoomDropdown(aValue: Integer = -1);
-    procedure SetPanelZoomDropdown(aValue: Integer = -1);
     procedure SetCheckboxes;
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
@@ -196,43 +188,6 @@ begin
   cmbGameZoom.ItemIndex := Max(0, Min(aValue, cmbGameZoom.Items.Count - 1));
 end;
 
-procedure TFormNXConfig.SetPanelZoomDropdown(aValue: Integer);
-var
-  i: Integer;
-  MaxWidth: Integer;
-  MaxZoom: Integer;
-begin
-  cmbPanelZoom.Items.Clear;
-
-  if GameParams.FullScreen or cbFullScreen.Checked then
-    MaxWidth := Screen.Width
-  else
-    MaxWidth := GameParams.MainForm.ClientWidth;
-
-  if cbShowMinimap.Checked then
-  begin
-    MaxZoom := Max(MaxWidth div 444, 1);
-  end else begin
-    MaxZoom := Max(MaxWidth div 336, 1);
-  end;
-
-  MaxZoom := Max(1, MaxZoom div 2);
-
-  for i := 1 to MaxZoom do
-    cmbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
-
-  if (aValue < 0) then
-    aValue := GameParams.PanelZoomLevel - 1;
-
-  cmbPanelZoom.ItemIndex := Max(0, Min(aValue, cmbPanelZoom.Items.Count - 1));
-
-  if cbResizePanelWithWindow.Checked then
-  begin
-    lblPanelZoom.Enabled := False;
-    cmbPanelZoom.Enabled := False;
-  end;
-end;
-
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
 begin
   SaveToParams;
@@ -294,17 +249,13 @@ begin
     cbResetWindowPosition.Enabled := not GameParams.FullScreen;
     cbResetWindowPosition.Checked := False;
     cbHighResolution.Checked := GameParams.HighResolution; // Must be done before SetZoomDropdown
-    cbResizePanelWithWindow.Checked := GameParams.ResizePanelWithWindow;
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
-    //cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
     cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
     cbShowMinimap.Checked := GameParams.ShowMinimap;
     cbTurboFF.Checked := GameParams.TurboFF;
 
-    // Zoom Dropdown
     SetZoomDropdown;
-    SetPanelZoomDropdown;
 
     // --- Page 3 (Audio Options) --- //
     if SoundManager.MuteSound then
@@ -366,9 +317,7 @@ begin
   fResetWindowSize := cbResetWindowSize.Checked;
   fResetWindowPosition := cbResetWindowPosition.Checked;
   GameParams.HighResolution := cbHighResolution.Checked;
-  GameParams.ResizePanelWithWindow := cbResizePanelWithWindow.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
-  //GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
 
   GameParams.ShowMinimap := cbShowMinimap.Checked;
@@ -376,7 +325,6 @@ begin
 
   // Zoom Dropdown
   GameParams.ZoomLevel := cmbGameZoom.ItemIndex + 1;
-  GameParams.PanelZoomLevel := cmbPanelZoom.ItemIndex + 1;
 
   // --- Page 3 (Audio Options) --- //
   SoundManager.MuteSound := tbSoundVol.Position = 0;
@@ -427,36 +375,25 @@ end;
 procedure TFormNXConfig.OptionChanged(Sender: TObject);
 var
   NewZoom: Integer;
-  NewPanelZoom: Integer;
 begin
   if not fIsSetting then
   begin
     NewZoom := -1;
-    NewPanelZoom := -1;
 
     if Sender = cbHighResolution then
     begin
       if cbHighResolution.Checked then
-      begin
-        NewZoom := cmbGameZoom.ItemIndex div 2;
-        NewPanelZoom := cmbPanelZoom.ItemIndex div 2;
-      end else begin
+        NewZoom := cmbGameZoom.ItemIndex div 2
+      else
         NewZoom := cmbGameZoom.ItemIndex * 2 + 1;
-        NewPanelZoom := cmbGameZoom.ItemIndex * 2 + 1;
-      end;
 
       // If changing showminimap, we need to reset window
       if (Sender = cbShowMinimap) then
         AutoCheckResetWindow;
     end;
 
-    if (Sender = cbFullScreen) and not GameParams.FullScreen then
-      NewPanelZoom := cmbPanelZoom.ItemIndex;
-
     if NewZoom >= 0 then
       SetZoomDropdown(NewZoom);
-
-    if NewPanelZoom >= 0 then SetPanelZoomDropdown(NewPanelZoom);
 
     btnApply.Enabled := True;
   end;
@@ -492,25 +429,6 @@ begin
 
   if P.ItemIndex >= 0 then
     P.Text := PRESET_REPLAY_PATTERNS[P.ItemIndex];
-end;
-
-procedure TFormNXConfig.cbResizePanelWithWindowClick(Sender: TObject);
-begin
-  if not fIsSetting then
-  begin
-    if cbResizePanelWithWindow.Checked then
-    begin
-      lblPanelZoom.Enabled := False;
-      cmbPanelZoom.Enabled := False;
-    end else begin
-      lblPanelZoom.Enabled := True;
-      cmbPanelZoom.Enabled := True;
-    end;
-
-    AutoCheckResetWindow;
-  end;
-
-  OptionChanged(Sender);
 end;
 
 procedure TFormNXConfig.cbShowMinimapClick(Sender: TObject);

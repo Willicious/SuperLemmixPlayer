@@ -270,7 +270,7 @@ begin
   if GameParams.ShowMinimap and not GameParams.FullScreen then
     INTERNAL_SCREEN_WIDTH := 1092
   else if GameParams.FullScreen then
-    INTERNAL_SCREEN_WIDTH := 874
+    INTERNAL_SCREEN_WIDTH := 820
   else
     INTERNAL_SCREEN_WIDTH := 836;
 
@@ -304,10 +304,9 @@ begin
     BoundsRect := Rect(0, 0, ClientWidth, ClientHeight);
 
     ScreenImg.Align := alClient;
-    ScreenImg.ScaleMode := smResize;
+    ScreenImg.ScaleMode := smStretch;
     ScreenImg.BitmapAlign := baCenter;
 
-    //if GameParams.LinearResampleMenu then
     TLinearResampler.Create(ScreenImg.Bitmap);
 
     ResetMinimumWindowHeight;
@@ -326,7 +325,7 @@ end;
 
 procedure TGameBaseMenuScreen.ResetMinimumWindowHeight;
 begin
-  GameParams.MinimumWindowHeight := 0;
+  GameParams.MinimumWindowHeight := GameParams.DefaultMinHeight;
 end;
 
 function TGameBaseMenuScreen.MakeClickableImage(aImageCenter: TPoint;
@@ -1211,8 +1210,11 @@ begin
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
 
-    if ResetWindowSize then TMainForm(GameParams.MainForm).RestoreDefaultSize;
-    if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
+    if ResetWindowSize then
+      TMainForm(GameParams.MainForm).RestoreDefaultSize;
+
+    if ResetWindowPos then
+      TMainForm(GameParams.MainForm).RestoreDefaultPosition;
   end;
 
   if (GameParams.FullScreen <> OldFullScreen)
@@ -1229,14 +1231,7 @@ begin
     PieceManager.Clear;
   end;
 
-//  if GameParams.LinearResampleMenu then
-//  begin
-//  if ScreenImg.Bitmap.Resampler is TNearestResampler then
   TLinearResampler.Create(ScreenImg.Bitmap);
-//  end else begin
-//    if ScreenImg.Bitmap.Resampler is TLinearResampler then
-//      TNearestResampler.Create(ScreenImg.Bitmap);
-//  end;
 end;
 
 { TClickableRegion }

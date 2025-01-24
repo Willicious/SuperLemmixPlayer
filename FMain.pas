@@ -152,11 +152,11 @@ begin
 
   if GameParams.ShowMinimap then
   begin
-    ClientWidth := Max(WindowScale * 444, 444 * ResMod);     // 1776
-    ClientHeight := ClientWidth * 50 div 111;                // 800
+    ClientWidth := Max(WindowScale * 444, 444 * ResMod);   // 1776
+    ClientHeight := ClientWidth * 50 div 111;              //  800
   end else begin
-    ClientWidth := Max(WindowScale * 340, 340 * ResMod);
-    ClientHeight := ClientWidth * 10 div 17;
+    ClientWidth := Max(WindowScale * 340, 340 * ResMod);   // 1360
+    ClientHeight := ClientWidth * 401 div 680;             //  802
   end;
 end;
 
@@ -259,9 +259,6 @@ begin
     Exit;
   end;
 
-  if (GameParams.MinimumWindowHeight <= 0) then
-    GameParams.MinimumWindowHeight := 200 * ResMod;
-
   CWDiff := Width - ClientWidth;
   CHDiff := Height - ClientHeight;
 
@@ -269,7 +266,7 @@ begin
   NewCH := NewHeight - CHDiff;
 
   // Apply minimum dimensions
-  NewCW := Max(444 * ResMod, NewCW);
+  NewCW := Max(GameParams.MinimumWindowWidth, NewCW);
   NewCH := Max(GameParams.MinimumWindowHeight, NewCH);
 
   // Apply maximum dimensions
