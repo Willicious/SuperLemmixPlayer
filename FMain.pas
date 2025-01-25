@@ -237,9 +237,12 @@ procedure TMainForm.FormResize(Sender: TObject);
 begin
   if GameParams = nil then Exit;
   if not (fChildForm is TGameBaseScreen) then Exit;
+
   TGameBaseScreen(fChildForm).MainFormResized;
+
   GameParams.WindowWidth := ClientWidth;
   GameParams.WindowHeight := ClientHeight;
+
   { Seems pointless? Yes. But apparently, changing between maximized and not maximized
     causes the handle to change, which was causing the fullscreen-windowed change glitch. }
   MainFormHandle := Handle;

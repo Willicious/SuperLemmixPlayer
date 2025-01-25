@@ -582,7 +582,6 @@ begin
         fReelForceDirection := 0;
       end;
 
-
     if (fReelTextPos <= -ScrollerText.Width) or (fReelTextPos >= LayoutInfo.ScrollerWidth) then
       PrepareNextReelText;
   end;

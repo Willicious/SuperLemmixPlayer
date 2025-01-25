@@ -266,13 +266,18 @@ end;
 
 // Determines the size of the available window space
 procedure TGameBaseMenuScreen.GetInternalScreenVars;
+var
+  WindowWidth: Integer;
+  UseLargerWidth: Boolean;
 begin
-  if GameParams.ShowMinimap and not GameParams.FullScreen then
+  WindowWidth := GameParams.MainForm.ClientWidth;
+
+  UseLargerWidth := (WindowWidth > 1400) and not GameParams.FullScreen;
+
+  if UseLargerWidth then
     INTERNAL_SCREEN_WIDTH := 1092
-  else if GameParams.FullScreen then
-    INTERNAL_SCREEN_WIDTH := 820
   else
-    INTERNAL_SCREEN_WIDTH := 836;
+    INTERNAL_SCREEN_WIDTH := 888;
 
   INTERNAL_SCREEN_HEIGHT := 492;
 
