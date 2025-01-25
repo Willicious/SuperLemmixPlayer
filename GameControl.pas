@@ -1035,8 +1035,8 @@ begin
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
 
-  DefaultMinWidth := 444;
-  DefaultMinHeight := 200;
+  DefaultMinWidth := 600;
+  DefaultMinHeight := 400;
   fMinimumWindowWidth := DefaultMinWidth;
   fMinimumWindowHeight := DefaultMinHeight;
 
