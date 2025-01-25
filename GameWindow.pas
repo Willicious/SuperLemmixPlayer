@@ -312,9 +312,10 @@ begin
   if (LevelHeight <= 160) then
     GameParams.MinimumWindowHeight := (CurPanelHeight + LevelHeight * fInternalZoom * ResMod);
 
-  // Fallback to default if the calculated size would exceed the top of the taskbar
-  if (GameParams.MinimumWindowHeight > Screen.Height - TaskbarBuffer) then
-    GameParams.MinimumWindowHeight := GameParams.DefaultMinHeight;
+  // Fallback to default if the calculated size would exceed the top of the taskbar or be lower than the default
+  if (GameParams.MinimumWindowHeight > Screen.Height - TaskbarBuffer)
+    or (GameParams.MinimumWindowHeight < GameParams.DefaultMinHeight) then
+      GameParams.MinimumWindowHeight := GameParams.DefaultMinHeight;
 end;
 
 procedure TGameWindow.ApplyResize(NoRecenter: Boolean = False);
