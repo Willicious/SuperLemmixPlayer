@@ -6,8 +6,8 @@ object FReplayEditor: TFReplayEditor
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'Replay Editor'
-  ClientHeight = 441
-  ClientWidth = 225
+  ClientHeight = 525
+  ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,47 +18,58 @@ object FReplayEditor: TFReplayEditor
   Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lblLevelName: TLabel
-    Left = 14
+    Left = 8
     Top = 8
-    Width = 3
+    Width = 77
     Height = 13
+    Caption = '<Level Name>'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Segoe UI'
-    Font.Style = [fsBold, fsUnderline]
+    Font.Style = [fsBold]
     ParentFont = False
   end
   object lblFrame: TLabel
-    Left = 14
-    Top = 24
-    Width = 195
+    Left = 8
+    Top = 27
+    Width = 257
     Height = 13
     AutoSize = False
+    Caption = '<Current Frame>'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Segoe UI'
-    Font.Style = [fsBold, fsUnderline]
+    Font.Style = []
     ParentFont = False
   end
+  object stFocus: TStaticText
+    Left = 25
+    Top = 176
+    Width = 216
+    Height = 89
+    Caption = 'Focus'
+    TabOrder = 6
+  end
   object btnOK: TButton
-    Left = 32
-    Top = 400
-    Width = 75
-    Height = 25
+    Left = 25
+    Top = 480
+    Width = 106
+    Height = 36
     Caption = 'OK'
     ModalResult = 1
     TabOrder = 2
   end
   object btnCancel: TButton
-    Left = 113
-    Top = 400
-    Width = 75
-    Height = 25
+    Left = 137
+    Top = 480
+    Width = 104
+    Height = 36
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
@@ -67,11 +78,14 @@ object FReplayEditor: TFReplayEditor
   end
   object lbReplayActions: TListBox
     Left = 8
-    Top = 43
-    Width = 209
-    Height = 289
+    Top = 54
+    Width = 257
+    Height = 302
     Style = lbOwnerDrawVariable
+    DoubleBuffered = True
     ItemHeight = 13
+    MultiSelect = True
+    ParentDoubleBuffered = False
     TabOrder = 0
     OnClick = lbReplayActionsClick
     OnDblClick = lbReplayActionsDblClick
@@ -79,22 +93,32 @@ object FReplayEditor: TFReplayEditor
     OnKeyDown = lbReplayActionsKeyDown
   end
   object btnDelete: TButton
-    Left = 72
-    Top = 338
-    Width = 83
-    Height = 25
-    Caption = 'Delete'
+    Left = 25
+    Top = 396
+    Width = 216
+    Height = 36
+    Caption = 'Delete Selected Replay Events'
     Enabled = False
     TabOrder = 3
     OnClick = btnDeleteClick
   end
   object btnGoToReplayEvent: TButton
-    Left = 48
-    Top = 369
-    Width = 129
-    Height = 25
-    Caption = 'Go To Replay Event'
+    Left = 25
+    Top = 438
+    Width = 216
+    Height = 36
+    Caption = 'Skip To Selected Replay Event'
     TabOrder = 4
     OnClick = btnGoToReplayEventClick
+  end
+  object cbSelectFutureEvents: TCheckBox
+    Left = 25
+    Top = 370
+    Width = 240
+    Height = 17
+    Caption = 'Select All Future Events For Lemming XYZ'
+    TabOrder = 5
+    Visible = False
+    OnClick = cbSelectFutureEventsClick
   end
 end
