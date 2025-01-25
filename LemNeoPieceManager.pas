@@ -148,7 +148,7 @@ begin
   fAliases.Clear;
   fUpscaling.Clear;
   fNeedCheckStyles.Clear;
-  LoadProperties('default');
+  LoadProperties(SFDefaultStyle);
 end;
 
 constructor TNeoPieceManager.Create;
@@ -165,7 +165,7 @@ begin
   fNeedCheckStyles.Sorted := True;
   fNeedCheckStyles.Duplicates := dupIgnore;
 
-  LoadProperties('default');
+  LoadProperties(SFDefaultStyle);
 end;
 
 destructor TNeoPieceManager.Destroy;

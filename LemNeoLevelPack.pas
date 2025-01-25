@@ -752,7 +752,7 @@ var
 
     function IsPlaceholder(aIdent: TLabelRecord): Boolean;
     begin
-      Result := (Ident.GS = 'default') and (Ident.Piece = 'fallback');
+      Result := (Ident.GS = SFDefaultStyle) and (Ident.Piece = 'fallback');
     end;
 
     procedure Write(aText: String);

@@ -7,7 +7,7 @@ uses
   LemNeoParser,
   Dialogs,
   Classes,
-  LemPiece,
+  LemPiece, LemStrings,
   Contnrs,
   SysUtils,
   SharedGlobals;
@@ -142,7 +142,7 @@ begin
     if (CompareText(GS, COMPOSITE_PIECE_STYLE) <> 0) then
     begin
       PieceManager.NeedCheckStyles.Add(GS);
-      GS := 'default';
+      GS := SFDefaultStyle;
       Piece := 'fallback';
     end;
 

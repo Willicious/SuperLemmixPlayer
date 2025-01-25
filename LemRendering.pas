@@ -3889,7 +3889,7 @@ var
   begin
     if IsFallback then
     begin
-      Collection := 'default';
+      Collection := SFDefaultStyle;
       Piece := 'fallback';
     end else begin
       SplitPos := pos(':', RenderInfoRec.Level.Info.Background);

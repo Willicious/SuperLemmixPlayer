@@ -460,17 +460,17 @@ var
   procedure GetThemeFolder(aDirectory: String; UseLemSpritesTheme: Boolean);
   begin
     if (fTheme = nil) then
-      ThemeFolder := 'default'
+      ThemeFolder := SFDefaultStyle
     else if UseLemSpritesTheme then
       ThemeFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS
     else
       ThemeFolder := fTheme.Name;
 
     if ThemeFolder = '' then
-      ThemeFolder := 'default';
+      ThemeFolder := SFDefaultStyle;
 
     if not DirectoryExists(AppPath + SFStyles + ThemeFolder + aDirectory) then
-      ThemeFolder := 'default';
+      ThemeFolder := SFDefaultStyle;
   end;
 
   procedure UpscalePieces(Bitmap: TBitmap32);
@@ -630,7 +630,7 @@ begin
     { Customisable Effects - these are replaced with defaults if not present in the spriteset's effects folder }
     GetThemeFolder(SFPiecesEffects, False);
     EffectsPath := AppPath + SFStyles + ThemeFolder + SFPiecesEffects;
-    DefaultPath := AppPath + SFStyles + 'default' + SFPiecesEffects;
+    DefaultPath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
 
     LoadEffects('countdown.png', 'countdown-hr.png', fCountDownDigitsBitmap);
     LoadEffects('radiation.png', 'radiation-hr.png', fRadiationDigitsBitmap);

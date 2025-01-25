@@ -86,7 +86,7 @@ end;
 
 procedure TNeoTheme.Clear;
 begin
-  fLemmings := 'default';
+  fLemmings := SFDefaultStyle;
   SetLength(fColors, 0);
   MissingSoundsList.Clear;
   SpriteFallbackMessage := '';
@@ -109,7 +109,7 @@ begin
     Parser.LoadFromFile('theme.nxtm');
 
     fLemmings := Parser.MainSection.LineString['lemmings'];
-    if fLemmings = '' then fLemmings := 'default';
+    if fLemmings = '' then fLemmings := SFDefaultStyle;
 
     fLemNamesPlural := Parser.MainSection.LineString['names_plural'];
     if fLemNamesPlural = '' then fLemNamesPlural := 'Lemmings';

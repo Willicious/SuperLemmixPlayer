@@ -887,7 +887,7 @@ begin
     if not FileExists(AppPath + SFStyles + GraphicSetName + '\theme.nxtm') then
     begin
       PieceManager.NeedCheckStyles.Add(GraphicSetName);
-      GraphicSetName := 'default'; // Tidier than using a fake "fallback"
+      GraphicSetName := SFDefaultStyle; // Tidier than using a fake "fallback"
     end;
 
     MusicFile := aSection.LineTrimString['music'];
@@ -1122,7 +1122,7 @@ begin
   if MO = nil then
   begin
     PieceManager.NeedCheckStyles.Add(O.GS);
-    O.GS := 'default';
+    O.GS := SFDefaultStyle;
     O.Piece := 'fallback';
     MO := PieceManager.Objects[O.Identifier];
   end;
@@ -1546,7 +1546,7 @@ begin
   begin
     aSection.AddLine('TITLE', Title);
     aSection.AddLine('AUTHOR', Author);
-    if (GraphicSetName = 'default') then
+    if (GraphicSetName = SFDefaultStyle) then
     begin
       aSection.AddLine('THEME', LoadGraphicSetName);
       aSection.AddLine('#', 'Theme not found');
