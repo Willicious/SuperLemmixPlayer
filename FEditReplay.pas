@@ -301,6 +301,7 @@ begin
   SelectFutureEvents;
 end;
 
+
 procedure TFReplayEditor.SetControls;
 var
   CurrentItem: TBaseReplayItem;
@@ -311,9 +312,9 @@ begin
                   (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] <> nil);
 
   btnDelete.Enabled := ItemSelected;
-  btnGoToReplayEvent.Enabled := ItemSelected;
+  btnGoToReplayEvent.Enabled := ItemSelected and not (lbReplayActions.SelCount > 1);
 
-  SkillEventSelected := ItemSelected and
+  SkillEventSelected := ItemSelected and (not (lbReplayActions.SelCount > 1)) and
                         (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] is TReplaySkillAssignment);
 
   if SkillEventSelected then
@@ -339,6 +340,12 @@ var
   CurrentItem: TBaseReplayItem;
   FutureItem: TBaseReplayItem;
   CurrentLemmingIndex: Integer;
+
+  procedure ResetSelection;
+  begin
+    lbReplayActions.ClearSelection;
+    lbReplayActions.Selected[fOriginalSkillEvent] := True;
+  end;
 begin
   // Check if the current item is a skill assignment
   if not ((lbReplayActions.ItemIndex <> -1) and
@@ -350,6 +357,8 @@ begin
 
   if cbSelectFutureEvents.Checked then
   begin
+    ResetSelection;
+
     // Select any future items with the same lem index
     for I := lbReplayActions.ItemIndex + 1 to lbReplayActions.Count - 1 do
     begin
@@ -360,18 +369,16 @@ begin
         lbReplayActions.Selected[I] := True;
       end;
     end;
-  end else begin
-    lbReplayActions.ClearSelection;
-
-    // Reselect the original item
-    lbReplayActions.Selected[fOriginalSkillEvent] := True;
-  end;
+  end else
+    ResetSelection;
 end;
+
 
 procedure TFReplayEditor.UpdateFrameLabelCaption(aFrame: Integer);
 begin
   lblFrame.Caption := 'Current frame: ' + IntToStr(aFrame);
 end;
+
 
 procedure TFReplayEditor.GoToSelectedReplayEvent;
 var
