@@ -48,6 +48,8 @@ private
     procedure SetControls;
 
     function SFrame: String;
+    procedure AddCurrentFrameString;
+    procedure AddTargetFrameString;
   public
     procedure SetReplay(aReplay: TReplay; aIteration: Integer = -1);
     property EarliestChange: Integer read fEarliestChange;
@@ -75,9 +77,27 @@ end;
 function TFReplayEditor.SFrame: String;
 begin
   if (fTargetFrame <> -1) then
-    Result := 'Starting'
+    Result := 'Starting Frame: '
   else
-    Result := 'Current';
+    Result := 'Current Frame: ';
+end;
+
+procedure TFReplayEditor.AddCurrentFrameString;
+var
+  S: String;
+begin
+  S := '--- ' + SFrame + IntToStr(fCurrentIteration) +  ' ---';
+
+  lbReplayActions.AddItem(S, nil);
+end;
+
+procedure TFReplayEditor.AddTargetFrameString;
+var
+  S: String;
+begin
+  S := '--- Target Frame: ' + IntToStr(fTargetFrame) +  ' ---';
+
+  lbReplayActions.AddItem(S, nil);
 end;
 
 procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = False);
@@ -85,6 +105,7 @@ var
   Selected: TObject;
   i: Integer;
   Action: TBaseReplayItem;
+  CurrentFrameAdded: Boolean;
 
   function GetString(aItem: TBaseReplayItem): String;
   var
@@ -167,21 +188,24 @@ begin
     Selected := lbReplayActions.Items.Objects[lbReplayActions.ItemIndex];
     SelectNil := (Selected = nil); // ItemIndex is not -1 if we reached here
   end;
+
   lbReplayActions.OnClick := nil;
+
   lbReplayActions.Items.BeginUpdate;
   try
     lbReplayActions.Items.Clear;
+    CurrentFrameAdded := False;
+
     for i := 0 to fReplay.LastActionFrame do
     begin
       if (fTargetFrame <> -1) and (i = fTargetFrame) then
-        lbReplayActions.AddItem('--- Target Frame: ' +
-                                IntToStr(fTargetFrame) +  ' ---',
-                                nil);
+        AddTargetFrameString;
 
       if i = fCurrentIteration then
-        lbReplayActions.AddItem('--- ' + SFrame + ' Frame: ' +
-                                IntToStr(fCurrentIteration) +  ' ---',
-                                nil);
+      begin
+        AddCurrentFrameString;
+        CurrentFrameAdded := True;
+      end;
 
       Action := fReplay.SpawnIntervalChange[i, 0];
       if Action <> nil then
@@ -199,6 +223,10 @@ begin
       if Action <> nil then
         AddAction(Action);
     end;
+
+    // Always add the current frame string, even if the list is empty
+    if not CurrentFrameAdded then
+      AddCurrentFrameString;
   finally
     for i := 0 to lbReplayActions.Items.Count-1 do
       if (lbReplayActions.Items.Objects[i] = Selected) and
