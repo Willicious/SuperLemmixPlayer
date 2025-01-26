@@ -6,9 +6,10 @@ object FReplayEditor: TFReplayEditor
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'Replay Editor'
-  ClientHeight = 525
+  ClientHeight = 537
   ClientWidth = 273
   Color = clBtnFace
+  DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -34,13 +35,13 @@ object FReplayEditor: TFReplayEditor
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object lblFrame: TLabel
+  object lblSelectEvents: TLabel
     Left = 8
     Top = 27
     Width = 257
     Height = 13
     AutoSize = False
-    Caption = '<Current Frame>'
+    Caption = 'Select one or more events to edit'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -51,24 +52,24 @@ object FReplayEditor: TFReplayEditor
   object stFocus: TStaticText
     Left = 25
     Top = 176
-    Width = 216
-    Height = 89
+    Width = 34
+    Height = 17
     Caption = 'Focus'
     TabOrder = 6
   end
   object btnOK: TButton
     Left = 25
-    Top = 480
-    Width = 106
+    Top = 494
+    Width = 105
     Height = 36
     Caption = 'OK'
     ModalResult = 1
     TabOrder = 2
   end
   object btnCancel: TButton
-    Left = 137
-    Top = 480
-    Width = 104
+    Left = 136
+    Top = 494
+    Width = 105
     Height = 36
     Cancel = True
     Caption = 'Cancel'
@@ -78,7 +79,7 @@ object FReplayEditor: TFReplayEditor
   end
   object lbReplayActions: TListBox
     Left = 8
-    Top = 54
+    Top = 53
     Width = 257
     Height = 302
     Style = lbOwnerDrawVariable
@@ -112,8 +113,8 @@ object FReplayEditor: TFReplayEditor
     OnClick = btnGoToReplayEventClick
   end
   object cbSelectFutureEvents: TCheckBox
-    Left = 25
-    Top = 370
+    Left = 23
+    Top = 368
     Width = 240
     Height = 17
     Caption = 'Select All Future Events For Lemming XYZ'

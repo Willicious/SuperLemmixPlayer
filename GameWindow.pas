@@ -525,9 +525,13 @@ begin
     repeat
       ModalResult := F.ShowModal;
 
-      if (ModalResult = mrRetry) and (F.TargetFrame <> -1) then
-        GoToSaveState(F.TargetFrame)
-      else if (ModalResult = mrCancel) and (F.TargetFrame <> -1) then
+      if (ModalResult = mrRetry) then
+      begin
+        if (F.TargetFrame <> -1) then
+          GoToSaveState(F.TargetFrame)
+        else
+          GoToSaveState(F.CurrentIteration);
+      end else if (ModalResult = mrCancel) and (F.TargetFrame <> -1) then
         GoToSaveState(F.CurrentIteration);
 
       if (ModalResult = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then

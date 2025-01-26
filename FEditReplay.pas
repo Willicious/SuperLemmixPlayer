@@ -5,7 +5,7 @@ interface
 uses
   LemReplay, UMisc, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, StrUtils,
   SharedGlobals;
 
 type
@@ -15,7 +15,7 @@ type
     lbReplayActions: TListBox;
     lblLevelName: TLabel;
     btnDelete: TButton;
-    lblFrame: TLabel;
+    lblSelectEvents: TLabel;
     btnGoToReplayEvent: TButton;
     cbSelectFutureEvents: TCheckBox;
     stFocus: TStaticText;
@@ -42,11 +42,12 @@ private
 
     procedure ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = False);
     procedure NoteChangeAtFrame(aFrame: Integer);
-    procedure UpdateFrameLabelCaption(aFrame: Integer);
     procedure DeleteSelectedReplayEvents;
     procedure GoToSelectedReplayEvent;
     procedure SelectFutureEvents;
     procedure SetControls;
+
+    function SFrame: String;
   public
     procedure SetReplay(aReplay: TReplay; aIteration: Integer = -1);
     property EarliestChange: Integer read fEarliestChange;
@@ -69,6 +70,14 @@ procedure TFReplayEditor.NoteChangeAtFrame(aFrame: Integer);
 begin
   if (fEarliestChange = -1) or (aFrame < fEarliestChange) then
     fEarliestChange := aFrame;
+end;
+
+function TFReplayEditor.SFrame: String;
+begin
+  if (fTargetFrame <> -1) then
+    Result := 'Starting'
+  else
+    Result := 'Current';
 end;
 
 procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil; SelectNil: Boolean = False);
@@ -164,8 +173,15 @@ begin
     lbReplayActions.Items.Clear;
     for i := 0 to fReplay.LastActionFrame do
     begin
+      if (fTargetFrame <> -1) and (i = fTargetFrame) then
+        lbReplayActions.AddItem('--- Target Frame: ' +
+                                IntToStr(fTargetFrame) +  ' ---',
+                                nil);
+
       if i = fCurrentIteration then
-        lbReplayActions.AddItem('--- CURRENT FRAME ---', nil);
+        lbReplayActions.AddItem('--- ' + SFrame + ' Frame: ' +
+                                IntToStr(fCurrentIteration) +  ' ---',
+                                nil);
 
       Action := fReplay.SpawnIntervalChange[i, 0];
       if Action <> nil then
@@ -204,9 +220,6 @@ begin
   fSavedReplay.Clear;
   fReplay.SaveToStream(fSavedReplay, False, True);
   lblLevelName.Caption := Trim(fReplay.LevelName);
-
-  if (fCurrentIteration <> -1) then
-    UpdateFrameLabelCaption(fCurrentIteration);
 
   ListReplayActions;
 end;
@@ -261,13 +274,16 @@ begin
   try
     if Action = nil then
     begin
-      lbReplayActions.Canvas.Font.Color := $007F00;
+     if ContainsText(lbReplayActions.Items[Index], 'Target Frame') then
+        lbReplayActions.Canvas.Font.Color := clBlue
+      else
+        lbReplayActions.Canvas.Font.Color := clGreen;
     end else begin
       IsLatest := fReplay.IsThisLatestAction(Action);
       IsInsert := Action.AddedByInsert;
 
       if IsLatest then lbReplayActions.Canvas.Font.Style := [fsBold];
-      if IsInsert then lbReplayActions.Canvas.Font.Color := $FF0000; // BGR, bleurgh
+      if IsInsert then lbReplayActions.Canvas.Font.Color := clBlue;
     end;
 
     lbReplayActions.Canvas.TextOut(Rect.Left, Rect.Top, lbReplayActions.Items[Index]);
@@ -308,20 +324,29 @@ var
   CurrentLemmingIndex: Integer;
   ItemSelected, SkillEventSelected: Boolean;
 begin
+  // Set variables
   ItemSelected := (lbReplayActions.ItemIndex <> -1) and lbReplayActions.Selected[lbReplayActions.ItemIndex] and
                   (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] <> nil);
 
+  SkillEventSelected := ItemSelected and (not (lbReplayActions.SelCount > 1)) and
+                        (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] is TReplaySkillAssignment);
+
+  if ItemSelected then
+    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+
+  // Update controls
   btnDelete.Enabled := ItemSelected;
   btnGoToReplayEvent.Enabled := ItemSelected and not (lbReplayActions.SelCount > 1);
 
-  SkillEventSelected := ItemSelected and (not (lbReplayActions.SelCount > 1)) and
-                        (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] is TReplaySkillAssignment);
+  if (fTargetFrame <> -1) and (CurrentItem.Frame = fTargetFrame) then
+    btnGoToReplayEvent.Caption := 'Return To Starting Frame'
+  else
+    btnGoToReplayEvent.Caption := 'Skip To Selected Replay Event';
 
   if SkillEventSelected then
   begin
     fOriginalSkillEvent := lbReplayActions.ItemIndex;
 
-    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
     CurrentLemmingIndex := TReplaySkillAssignment(CurrentItem).LemmingIndex;
 
     cbSelectFutureEvents.Visible := True;
@@ -373,32 +398,39 @@ begin
     ResetSelection;
 end;
 
-
-procedure TFReplayEditor.UpdateFrameLabelCaption(aFrame: Integer);
-begin
-  lblFrame.Caption := 'Current frame: ' + IntToStr(aFrame);
-end;
-
-
 procedure TFReplayEditor.GoToSelectedReplayEvent;
 var
   I: Integer;
   ReplayItem: TBaseReplayItem;
 begin
   // Find the first selected item
-  for I := 0 to lbReplayActions.Count - 1 do
+  I := lbReplayActions.ItemIndex;
+
+  if (I <> -1) then
   begin
-    if lbReplayActions.Selected[I] then
+    ReplayItem := TBaseReplayItem(lbReplayActions.Items.Objects[I]);
+
+    if ReplayItem <> nil then
     begin
-      ReplayItem := TBaseReplayItem(lbReplayActions.Items.Objects[I]);
-      if ReplayItem <> nil then
+      if (fTargetFrame <> -1) and (ReplayItem.Frame = fTargetFrame) then
       begin
-        TargetFrame := ReplayItem.Frame;
-        UpdateFrameLabelCaption(TargetFrame);
-        ModalResult := mrRetry;
+        fTargetFrame := -1;
+
+        ListReplayActions;
+        lbReplayActions.ClearSelection;
+      end else begin
+        fTargetFrame := ReplayItem.Frame;
+
+        ListReplayActions;
+
+        if ContainsText(lbReplayActions.Items[I], 'Target Frame') and (I + 1 < lbReplayActions.Count) then
+          lbReplayActions.Selected[I + 1] := True
+        else
+          lbReplayActions.Selected[I] := True;
       end;
 
-      Exit;
+      SetControls;
+      ModalResult := mrRetry;
     end;
   end;
 end;
