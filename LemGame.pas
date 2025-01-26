@@ -5306,7 +5306,7 @@ begin
      Dec(LemmingsOut);
 
    if ((L.LemX <= 0) and (L.LemDX = -1)) or ((L.LemX >= Level.Info.Width - 1) and (L.LemDX = 1)) then
-    RemoveLemming(L, RM_NEUTRAL); // Shouldn't happen
+     RemoveLemming(L, RM_NEUTRAL); // Shouldn't happen
 
    // Let lemming fall
    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then
@@ -7378,6 +7378,9 @@ end;
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = False);
 begin
   if IsSimulating then Exit;
+
+  if L.LemAction = baSleeping then
+    Inc(LemmingsOut); // Keeps the number the same
 
   if L.LemIsZombie then
   begin
