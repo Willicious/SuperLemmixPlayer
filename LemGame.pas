@@ -4883,6 +4883,13 @@ begin
   end else
     Inc(L.LemX, L.LemDx);
 
+  // Bookmark - Control walking with the mouse!
+//  if (GetAsyncKeyState(VK_LBUTTON) and $8000) <> 0 then
+//  begin
+//    Inc(L.LemX, L.LemDx);
+//  end else
+//    Dec(L.LemFrame);
+
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
   if (LemDy > 0) and (L.LemIsSlider) and (LemCanDehoist(L, True)) then
