@@ -1,15 +1,14 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.5
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE A Dead Good Level
  AUTHOR WillLem
- MUSIC orig_04_lemming2_amiga
  ID x0665EED42E737307
- VERSION x0000000000000075
+ VERSION x0000000000000077
  
 #       Level dimensions        
 # ----------------------------- 
@@ -36,9 +35,9 @@
  $END 
  
  $TALISMAN 
-   TITLE The Purifier
+   TITLE Gold Talisman
    ID 0
-   COLOR Bronze
+   COLOR Gold
    KILL_ZOMBIES 0
  $END 
  

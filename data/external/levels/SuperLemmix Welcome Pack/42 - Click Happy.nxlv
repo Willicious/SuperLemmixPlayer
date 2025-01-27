@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Click Happy
  AUTHOR WillLem
  ID x1C1A26CF2067AED9
- VERSION x0000000000000008
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -21,7 +21,7 @@
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 20
- SAVE_REQUIREMENT 20
+ SAVE_REQUIREMENT 16
  TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 53
  SPAWN_INTERVAL_LOCKED
@@ -35,18 +35,27 @@
  $END 
  
  $TALISMAN 
-   TITLE Silver Talisman
+   TITLE Bronze Talisman
    ID 0
-   COLOR Silver
+   COLOR Bronze
    CLASSIC_MODE 0
  $END 
  
  $TALISMAN 
-   TITLE Gold Talisman
+   TITLE Silver Talisman
    ID 1
+   COLOR Silver
+   CLASSIC_MODE 0
+   NO_PAUSE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 2
    COLOR Gold
    CLASSIC_MODE 0
    NO_PAUSE 0
+   SAVE_REQUIREMENT 20
  $END 
  
 #     Interactive objects       
@@ -83,6 +92,7 @@
    Y 3
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    RIVAL 
  $END
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE It's Lonely At The Top
  AUTHOR WillLem
  ID x374005663B129420
- VERSION x0000000000000022
+ VERSION x0000000000000023
  
 #       Level dimensions        
 # ----------------------------- 
@@ -26,13 +26,13 @@
  MAX_SPAWN_INTERVAL 102
  
  $SKILLSET 
-   WALKER 22
+   WALKER 20
    JUMPER 2
    BLOCKER 2
    LADDERER 2
    BUILDER 2
-   SPEARER 8
-   GRENADER 8
+   SPEARER 15
+   GRENADER 15
    LASERER 2
    BASHER 2
    MINER 2

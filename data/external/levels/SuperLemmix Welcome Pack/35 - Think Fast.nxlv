@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Think Fast!
  AUTHOR WillLem
  ID x2FA76C0043059276
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -26,7 +26,7 @@
  SUPERLEMMING
  
  $SKILLSET 
-   WALKER 4
+   WALKER 8
    JUMPER 1
    CLIMBER 1
    SWIMMER 1
@@ -41,11 +41,20 @@
  $END 
  
  $TALISMAN 
-   TITLE Gold Talisman
+   TITLE Silver Talisman
    ID 0
-   COLOR Bronze
+   COLOR Silver
    CLASSIC_MODE 0
    NO_PAUSE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+   NO_PAUSE 0
+   WALKER_LIMIT 4
  $END 
  
 #     Interactive objects       
@@ -57,6 +66,7 @@
    Y 52
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
  $END
  
  $GADGET

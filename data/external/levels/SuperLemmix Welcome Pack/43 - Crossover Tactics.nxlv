@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Crossover Tactics
  AUTHOR DMA Design / WillLem
  ID xE379EAF4A4630284
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -21,7 +21,7 @@
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 80
- SAVE_REQUIREMENT 80
+ SAVE_REQUIREMENT 70
  TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 18
  SPAWN_INTERVAL_LOCKED
@@ -43,7 +43,8 @@
    TITLE Gold Talisman
    ID 0
    COLOR Gold
-   BLOCKER_LIMIT 0
+   SAVE_REQUIREMENT 80
+   BLOCKER_LIMIT 2
  $END 
  
 #     Interactive objects       
@@ -55,6 +56,7 @@
    Y 0
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    RIVAL 
  $END
  
@@ -569,7 +571,6 @@
    PIECE steel_01
    X 424
    Y 148
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -577,7 +578,6 @@
    PIECE steel_01
    X 513
    Y 148
-   ONE_WAY
  $END
  
  

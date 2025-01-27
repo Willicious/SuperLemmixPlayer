@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Death or Glory
  AUTHOR WillLem
  ID x378AF91A19142D4D
- VERSION x000000000000000F
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -114,6 +114,63 @@
    Y 17
    NO_OVERWRITE
    FLIP_HORIZONTAL
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-684483227
+   
+   $TERRAIN
+     STYLE ohno_bubble
+     PIECE pipe_small_01
+     X 164
+     Y 7
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE ohno_bubble
+     PIECE pipe_small_10
+     X 193
+     Y 7
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE ohno_bubble
+     PIECE pipe_small_01
+     X 135
+     Y 7
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE ohno_bubble
+     PIECE pipe_small_01
+     X 105
+     Y 7
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE ohno_bubble
+     PIECE pipe_small_01
+     X 75
+     Y 7
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE ohno_bubble
+     PIECE pipe_small_10
+     X 65
+     Y 7
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
  $END
  
  
@@ -358,18 +415,10 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_small_01
-   X 164
-   Y 7
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_small_10
-   X 193
-   Y 7
+   STYLE *group
+   PIECE Group-684483227
+   X 65
+   Y 11
    ONE_WAY
  $END
  
@@ -386,39 +435,6 @@
    PIECE pipe_large_10
    X 194
    Y 34
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_small_01
-   X 135
-   Y 7
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_small_01
-   X 105
-   Y 7
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_small_01
-   X 75
-   Y 7
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_small_10
-   X 65
-   Y 7
-   FLIP_HORIZONTAL
    ONE_WAY
  $END
  

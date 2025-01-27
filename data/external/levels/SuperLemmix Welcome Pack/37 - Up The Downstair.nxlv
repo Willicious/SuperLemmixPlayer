@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.5
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Up The Downstair
  AUTHOR WillLem
  ID x4507104435B8608D
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -31,6 +31,7 @@
    TIMEBOMBER 4
    LADDERER 16
    STACKER 4
+   DIGGER 1
  $END 
  
  $TALISMAN 
@@ -49,6 +50,7 @@
    Y 88
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
  $END
  
  $GADGET
