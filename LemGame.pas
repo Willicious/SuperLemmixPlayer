@@ -6216,7 +6216,7 @@ end;
 
 function TLemmingGame.HandleReaching(L: TLemming): Boolean;
 const
-  MovementList: array[0..7] of Byte = (0, 3, 2, 2, 1, 1, 1, 0);
+  MovementList: array[0..7] of Byte = (0, 3, 2, 2, 2, 1, 1, 0);
 var
   MinimumReachDistance: Integer;
   CannotAscendOrShimmy: Boolean;
