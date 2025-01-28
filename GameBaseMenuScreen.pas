@@ -89,6 +89,9 @@ type
       fBasicCursor                : TNLCursor;
       fKeyStates                  : TDictionary<Word, UInt64>;
 
+      fInConfigMenu  : Boolean;
+      fInLevelSelect : Boolean;
+
       fTalRects: TList<TRect>;
       fTalismanImage : TBitmap32;
 
@@ -163,6 +166,9 @@ type
       procedure MakeTalismanOptions;
       procedure HandleTalismanClick;
       procedure HandleCollectibleClick;
+
+      property InConfigMenu: Boolean read fInConfigMenu write fInConfigMenu;
+      property InLevelSelect: Boolean read fInLevelSelect write fInLevelSelect;
   end;
 
 implementation
@@ -908,6 +914,8 @@ end;
 
 procedure TGameBaseMenuScreen.ReloadCursor(aName: string);
 begin
+  if InConfigMenu or InLevelSelect then Exit;
+
   LoadBasicCursor(aName);
   SetBasicCursor;
 end;
@@ -1128,11 +1136,14 @@ begin
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(Self);
   try
+    InLevelSelect := True;
+
     PopupResult := F.ShowModal;
     Success := PopupResult = mrOk;
     LoadAsPack := F.LoadAsPack;
   finally
     F.Free;
+    InLevelSelect := False;
   end;
 
   if PopupResult = mrRetry then
@@ -1171,6 +1182,7 @@ begin
   ConfigDlg := TFormNXConfig.Create(Self);
   try
     ConfigDlg.SetGameParams;
+    InConfigMenu := True;
 
     // Skip the dialog and go straight to result
     if fCalledFromClassicModeButton and (GameParams.TestModeLevel <> nil) then
@@ -1185,6 +1197,7 @@ begin
     end;
   finally
     ConfigDlg.Free;
+    InConfigMenu := False;
   end;
 
   { Wise advice from Simon - save these things on exiting the config dialog, rather than
