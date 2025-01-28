@@ -57,13 +57,16 @@ type
     cbAddSaveAllTalisman: TCheckBox;
     cbChangeAuthor: TCheckBox;
     ebAuthor: TEdit;
-    cbUpdateWater: TCheckBox;
     gbSkillConversions: TGroupBox;
     cbTimebomberToBomber: TCheckBox;
     cbBomberToTimebomber: TCheckBox;
     cbStonerToFreezer: TCheckBox;
-    cbUpdateExitPositions: TCheckBox;
-    gbNLConversions: TGroupBox;
+    cbFreezerToStoner: TCheckBox;
+    gbCrossPlatformConversions: TGroupBox;
+    cbConvertLevels: TCheckBox;
+    rbNeoToSuper: TRadioButton;
+    rbSuperToNeo: TRadioButton;
+    lblConversionInfo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -71,6 +74,8 @@ type
     procedure cbTimebomberChangeClick(Sender: TObject);
     procedure cbSuperlemmingClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
+    procedure cbConvertLevelsClick(Sender: TObject);
+    procedure cbFreezerChangeClick(Sender: TObject);
   private
     AppPath: String;
 
@@ -142,6 +147,21 @@ begin
   end;
 end;
 
+procedure TFQuickmodMain.cbConvertLevelsClick(Sender: TObject);
+begin
+  if cbConvertLevels.Checked then
+  begin
+    rbNeoToSuper.Enabled := True;
+    rbSuperToNeo.Enabled := True;
+  end else begin
+    rbNeoToSuper.Checked := False;
+    rbSuperToNeo.Checked := False;
+
+    rbNeoToSuper.Enabled := False;
+    rbSuperToNeo.Enabled := False;
+  end;
+end;
+
 procedure TFQuickmodMain.cbCustomSkillsetClick(Sender: TObject);
 var
   i: Integer;
@@ -165,12 +185,29 @@ begin
   begin
     cbCustomSkillset.Checked := False;
     cbCustomSkillset.Enabled := False;
-  end;
+  end else
+    cbCustomSkillSet.Enabled := True;
 
   if cbBomberToTimebomber.Checked and cbTimebomberToBomber.Checked then
   begin
     if Sender <> cbBomberToTimebomber then cbBomberToTimebomber.Checked := False;
     if Sender <> cbTimebomberToBomber then cbTimebomberToBomber.Checked := False;
+  end;
+end;
+
+procedure TFQuickmodMain.cbFreezerChangeClick(Sender: TObject);
+begin
+  if cbStonerToFreezer.Checked or cbFreezerToStoner.Checked then
+  begin
+    cbCustomSkillset.Checked := False;
+    cbCustomSkillset.Enabled := False;
+  end else
+    cbCustomSkillSet.Enabled := True;
+
+  if cbStonerToFreezer.Checked and cbFreezerToStoner.Checked then
+  begin
+    if Sender <> cbStonerToFreezer then cbStonerToFreezer.Checked := False;
+    if Sender <> cbFreezerToStoner then cbFreezerToStoner.Checked := False;
   end;
 end;
 
@@ -210,18 +247,14 @@ end;
 
 procedure TFQuickmodMain.btnApplyClick(Sender: TObject);
 var
-  UpdateExit, AreYouSure, SelectedPack, NoUndo: String;
+  SelectedChanges, SelectedPack, NoUndo, AreYouSure: String;
 begin
-  if cbUpdateExitPositions.Checked then
-    UpdateExit := 'Please note that updating Exit positions should only be performed ONCE per pack!' + sLineBreak
-  else
-    UpdateExit := '';
+  SelectedChanges := 'Your selected changes will now be applied to' + sLineBreak;
+  SelectedPack := ' ' + sLineBreak + cbPack.Text + sLineBreak;
+  NoUndo := sLineBreak + 'This action cannot be undone. Please make sure you have a backup copy before proceeding!' + sLineBreak;
+  AreYouSure := sLineBreak + 'Would you like to go ahead?';
 
-  AreYouSure := 'Are you sure you want to apply these changes to' + sLineBreak;
-  SelectedPack := ' ' + sLineBreak + cbPack.Text + '?' + sLineBreak;
-  NoUndo := sLineBreak + 'This action cannot be undone. Please make sure you have a backup copy before proceeding!';
-
-  if MessageDlg(UpdateExit + AreYouSure + SelectedPack + NoUndo,
+  if MessageDlg(SelectedChanges + SelectedPack + NoUndo + AreYouSure,
                 mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
     ApplyChanges;
 end;
@@ -411,10 +444,14 @@ var
   ThisLine: String;
   SecLevel: Integer;
   n, i, p, YPos: Integer;
+  ExitOffset: Integer;
   NewID: String;
   LevelHasZombies: Boolean;
   AlreadyModified: Boolean;
   ShouldConvertSkills: Boolean;
+  ShouldConvertLevels: Boolean;
+  NeoToSuper: Boolean;
+  SuperToNeo: Boolean;
 begin
   SecLevel := 0;
   n := 0;
@@ -427,7 +464,14 @@ begin
 
   ShouldConvertSkills := cbBomberToTimebomber.Checked
                       or cbTimebomberToBomber.Checked
-                      or cbStonerToFreezer.Checked;
+                      or cbStonerToFreezer.Checked
+                      or cbFreezerToStoner.Checked;
+
+  ShouldConvertLevels := cbConvertLevels.Checked and
+                         (rbNeoToSuper.Checked or rbSuperToNeo.Checked);
+
+  NeoToSuper := rbNeoToSuper.Checked;
+  SuperToNeo := rbSuperToNeo.Checked;
 
   try
     SL.LoadFromFile(aFile);
@@ -481,11 +525,13 @@ begin
           ThisLine := Uppercase(Trim(SL[n]));
 
           if (LeftStr(ThisLine, 10) = 'TIMEBOMBER') and cbTimebomberToBomber.Checked then
-            SL[n] := '  BOMBER ' + Copy(ThisLine, 12, Length(ThisLine))
+            SL[n] := '   BOMBER ' + Copy(ThisLine, 12, Length(ThisLine))
           else if (LeftStr(ThisLine, 6) = 'BOMBER') and cbBomberToTimebomber.Checked then
-            SL[n] := '  TIMEBOMBER ' + Copy(ThisLine, 8, Length(ThisLine))
+            SL[n] := '   TIMEBOMBER ' + Copy(ThisLine, 8, Length(ThisLine))
           else if (LeftStr(ThisLine, 6) = 'STONER') and cbStonerToFreezer.Checked then
-            SL[n] := '  FREEZER ' + Copy(ThisLine, 8, Length(ThisLine));
+            SL[n] := '   FREEZER ' + Copy(ThisLine, 8, Length(ThisLine))
+          else if (LeftStr(ThisLine, 7) = 'FREEZER') and cbFreezerToStoner.Checked then
+            SL[n] := '   STONER ' + Copy(ThisLine, 9, Length(ThisLine));
 
           Inc(n);
         until ThisLine = '$END';
@@ -496,145 +542,15 @@ begin
           SL[n] := '# ' + SL[n];
           Inc(n);
         until ThisLine = '$END';
-      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbUpdateWater.Checked) then
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and ShouldConvertLevels then
       begin
+        {======================================================================}
+        {=============== Correct Water Objects & Exit Positions ===============}
+        {======================================================================}
         repeat
           ThisLine := Uppercase(Trim(SL[n]));
 
-          if (Trim(ThisLine) = 'STYLE ORIG_FIRE') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE WATER') then
-              SL[n] := '   PIECE lava';
-          end;
-
-          if (Trim(ThisLine) = 'STYLE ORIG_MARBLE') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE WATER') then
-              SL[n] := '   PIECE poison';
-          end;
-
-          if (Trim(ThisLine) = 'STYLE OHNO_BUBBLE') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE WATER') then
-              SL[n] := '   PIECE blasticine';
-          end;
-
-          if (Trim(ThisLine) = 'STYLE OHNO_ROCK') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE WATER') then
-              SL[n] := '   PIECE vinewater';
-          end;
-
-          Inc(n);
-        until ThisLine = '$END';
-      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbRemoveSpecialLemmings.Checked) then
-      begin
-        repeat
-          ThisLine := Uppercase(Trim(SL[n]));
-          if (LeftStr(ThisLine, 8) = 'LEMMINGS') or (ThisLine = 'ZOMBIE') or (ThisLine = 'NEUTRAL') then
-            SL[n] := '# ' + SL[n];
-          Inc(n);
-        until ThisLine = '$END';
-      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbUpdateExitPositions.Checked) then
-      begin
-        repeat
-          ThisLine := Uppercase(Trim(SL[n]));
-
-          // Brick - move regular exits down 13px
-          if (Trim(ThisLine) = 'STYLE OHNO_BRICK') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE EXIT') then
-            begin
-              repeat
-                Inc(n);
-                ThisLine := Uppercase(Trim(SL[n]));
-              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
-
-              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos + 13);
-            end;
-          end;
-
-          // Bubble - move locked exits up 8px
-          if (Trim(ThisLine) = 'STYLE OHNO_BUBBLE') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
-            begin
-              repeat
-                Inc(n);
-                ThisLine := Uppercase(Trim(SL[n]));
-              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
-
-              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos - 8);
-            end;
-          end;
-
-          // Rock - regular exits down 6px / move locked exits up 8px
-          if (Trim(ThisLine) = 'STYLE OHNO_ROCK') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE EXIT') then
-            begin
-              repeat
-                Inc(n);
-                ThisLine := Uppercase(Trim(SL[n]));
-              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
-
-              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos + 6);
-
-            end else if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
-            begin
-              repeat
-                Inc(n);
-                ThisLine := Uppercase(Trim(SL[n]));
-              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
-
-              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos - 8);
-            end;
-          end;
-
-          // Snow - move regular exits down 5px
-          if (Trim(ThisLine) = 'STYLE OHNO_SNOW') then
-          begin
-            Inc(n);
-            ThisLine := Uppercase(Trim(SL[n]));
-
-            if (Trim(ThisLine) = 'PIECE EXIT') then
-            begin
-              repeat
-                Inc(n);
-                ThisLine := Uppercase(Trim(SL[n]));
-              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
-
-              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos + 5);
-            end;
-          end;
-
-          // Crystal - move locked exits up 8px
+          // Crystal - move locked exits 8px
           if (Trim(ThisLine) = 'STYLE ORIG_CRYSTAL') then
           begin
             Inc(n);
@@ -648,11 +564,19 @@ begin
               until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
 
               YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos - 8);
+
+              if NeoToSuper then
+                ExitOffset := -8
+              else if SuperToNeo then
+                ExitOffset := 8
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
             end;
           end;
 
-          // Dirt - move locked exits up 3px
+          // Dirt - move locked exits 3px
           if (Trim(ThisLine) = 'STYLE ORIG_DIRT') then
           begin
             Inc(n);
@@ -666,16 +590,36 @@ begin
               until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
 
               YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos - 3);
+
+              if NeoToSuper then
+                ExitOffset := -3
+              else if SuperToNeo then
+                ExitOffset := 3
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
             end;
           end;
 
-          // Fire - move locked exits up 24px
+          // Fire - swap water/lava, move locked exits 24px
           if (Trim(ThisLine) = 'STYLE ORIG_FIRE') then
           begin
             Inc(n);
             ThisLine := Uppercase(Trim(SL[n]));
 
+            if (Trim(ThisLine) = 'PIECE WATER') or (Trim(ThisLine) = 'PIECE LAVA') then
+            begin
+              if NeoToSuper then
+              begin
+                if (Trim(ThisLine) = 'PIECE WATER') then
+                  SL[n] := '   PIECE lava';
+              end else if SuperToNeo then
+              begin
+                if (Trim(ThisLine) = 'PIECE LAVA') then
+                  SL[n] := '   PIECE water';
+              end;
+            end else
             if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
             begin
               repeat
@@ -684,10 +628,189 @@ begin
               until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
 
               YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
-              SL[n] := '   Y ' + IntToStr(YPos - 24);
+
+              if NeoToSuper then
+                ExitOffset := -24
+              else if SuperToNeo then
+                ExitOffset := 24
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
             end;
           end;
 
+          // Marble - swap water/poison
+          if (Trim(ThisLine) = 'STYLE ORIG_MARBLE') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if NeoToSuper then
+            begin
+              if (Trim(ThisLine) = 'PIECE WATER') then
+                SL[n] := '   PIECE poison';
+            end else if SuperToNeo then
+            begin
+              if (Trim(ThisLine) = 'PIECE POISON') then
+                SL[n] := '   PIECE water';
+            end;
+          end;
+
+          // Brick - move regular exits 13px
+          if (Trim(ThisLine) = 'STYLE OHNO_BRICK') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+
+              if NeoToSuper then
+                ExitOffset := 13
+              else if SuperToNeo then
+                ExitOffset := -13
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
+            end;
+          end;
+
+          // Bubble - swap water/blasticine, move exits 8px
+          if (Trim(ThisLine) = 'STYLE OHNO_BUBBLE') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE WATER') or (Trim(ThisLine) = 'PIECE BLASTICINE') then
+            begin
+              if NeoToSuper then
+              begin
+                if (Trim(ThisLine) = 'PIECE WATER') then
+                  SL[n] := '   PIECE blasticine';
+              end else if SuperToNeo then
+              begin
+                if (Trim(ThisLine) = 'PIECE BLASTICINE') then
+                  SL[n] := '   PIECE water';
+              end;
+            end else
+            if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+
+              if NeoToSuper then
+                ExitOffset := -8
+              else if SuperToNeo then
+                ExitOffset := 8
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
+            end;
+          end;
+
+          // Rock - swap water/vinewater, move regular exits 6px, move locked exits 8px
+          if (Trim(ThisLine) = 'STYLE OHNO_ROCK') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE WATER') or (Trim(ThisLine) = 'PIECE VINEWATER') then
+            begin
+              if NeoToSuper then
+              begin
+                if (Trim(ThisLine) = 'PIECE WATER') then
+                  SL[n] := '   PIECE vinewater';
+              end else if SuperToNeo then
+              begin
+                if (Trim(ThisLine) = 'PIECE VINEWATER') then
+                  SL[n] := '   PIECE water';
+              end;
+            end else
+            if (Trim(ThisLine) = 'PIECE EXIT') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+
+              if NeoToSuper then
+                ExitOffset := 6
+              else if SuperToNeo then
+                ExitOffset := -6
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
+
+            end else if (Trim(ThisLine) = 'PIECE EXIT_LOCKED') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+
+              if NeoToSuper then
+                ExitOffset := -8
+              else if SuperToNeo then
+                ExitOffset := 8
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
+            end;
+          end;
+
+          // Snow - move regular exits 5px
+          if (Trim(ThisLine) = 'STYLE OHNO_SNOW') then
+          begin
+            Inc(n);
+            ThisLine := Uppercase(Trim(SL[n]));
+
+            if (Trim(ThisLine) = 'PIECE EXIT') then
+            begin
+              repeat
+                Inc(n);
+                ThisLine := Uppercase(Trim(SL[n]));
+              until (Copy(ThisLine, 1, 1) = 'Y') and (Length(ThisLine) > 1);
+
+              YPos := StrToIntDef(Copy(ThisLine, 3, Length(ThisLine) - 2), 0);
+
+              if NeoToSuper then
+                ExitOffset := 5
+              else if SuperToNeo then
+                ExitOffset := -5
+              else
+                ExitOffset := 0; // Just in case
+
+              SL[n] := '   Y ' + IntToStr(YPos + ExitOffset);
+            end;
+          end;
+
+          Inc(n);
+        until (ThisLine = '$END');
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and (cbRemoveSpecialLemmings.Checked) then
+      begin
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+          if (LeftStr(ThisLine, 8) = 'LEMMINGS') or (ThisLine = 'ZOMBIE') or (ThisLine = 'NEUTRAL') then
+            SL[n] := '# ' + SL[n];
           Inc(n);
         until ThisLine = '$END';
       end else if (SecLevel = 0) and (Trim(ThisLine) = '$LEMMING') and (cbRemovePreplaced.Checked or cbRemoveSpecialLemmings.Checked) then
@@ -786,8 +909,9 @@ begin
     if cbBomberToTimebomber.Checked then SL.Add('# BOMBERS CHANGED TO TIMEBOMBERS');
     if cbTimebomberToBomber.Checked then SL.Add('# TIMEBOMBERS CHANGED TO BOMBERS');
     if cbStonerToFreezer.Checked then SL.Add('# STONERS CHANGED TO FREEZERS');
-    if cbUpdateWater.Checked then SL.Add('# WATER OBJECTS UPDATED');
-    if cbUpdateExitPositions.Checked then SL.Add('# EXIT POSITIONS UPDATED');
+    if cbFreezerToStoner.Checked then SL.Add('# FREEZERS CHANGED TO STONERS');
+    if ShouldConvertLevels then SL.Add('# WATER OBJECTS UPDATED');
+    if ShouldConvertLevels then SL.Add('# EXIT POSITIONS UPDATED');
     if cbRemoveTalismans.Checked then SL.Add('# TALISMANS REMOVED');
     if cbRemoveSpecialLemmings.Checked then SL.Add('# SPECIAL LEMS REMOVED');
     if cbRemovePreplaced.Checked then SL.Add('# PRE-PLACED LEMS REMOVED');

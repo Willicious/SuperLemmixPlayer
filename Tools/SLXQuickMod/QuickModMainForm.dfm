@@ -5,7 +5,7 @@ object FQuickmodMain: TFQuickmodMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'SuperLemmix QuickMod'
-  ClientHeight = 451
+  ClientHeight = 508
   ClientWidth = 870
   Color = clBtnFace
   DoubleBuffered = True
@@ -19,7 +19,7 @@ object FQuickmodMain: TFQuickmodMain
   OnCreate = FormCreate
   DesignSize = (
     870
-    451)
+    508)
   PixelsPerInch = 96
   TextHeight = 13
   object lblPack: TLabel
@@ -43,10 +43,11 @@ object FQuickmodMain: TFQuickmodMain
     Left = 8
     Top = 34
     Width = 481
-    Height = 378
+    Height = 435
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
+    ExplicitHeight = 378
     object cbLemCount: TCheckBox
       Left = 16
       Top = 53
@@ -206,12 +207,12 @@ object FQuickmodMain: TFQuickmodMain
       Left = 16
       Top = 193
       Width = 453
-      Height = 94
+      Height = 136
       Caption = 'Talismans'
       TabOrder = 10
       object cbRemoveTalismans: TCheckBox
-        Left = 260
-        Top = 22
+        Left = 16
+        Top = 23
         Width = 145
         Height = 17
         Caption = 'Remove All Talismans'
@@ -220,7 +221,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddKillZombiesTalisman: TCheckBox
         Left = 16
-        Top = 68
+        Top = 100
         Width = 369
         Height = 17
         Caption = 'Add '#39'Kill All Zombies'#39' Talisman to all levels with Zombies'
@@ -228,7 +229,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddClassicModeTalisman: TCheckBox
         Left = 16
-        Top = 22
+        Top = 54
         Width = 206
         Height = 17
         Caption = 'Add '#39'Play in Classic Mode'#39' Talisman'
@@ -236,7 +237,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object cbAddSaveAllTalisman: TCheckBox
         Left = 16
-        Top = 45
+        Top = 77
         Width = 369
         Height = 17
         Caption = 'Add '#39'Save All Lemmings'#39' Talisman to all levels without Zombies'
@@ -258,40 +259,56 @@ object FQuickmodMain: TFQuickmodMain
       Height = 21
       TabOrder = 13
     end
-    object gbNLConversions: TGroupBox
+    object gbCrossPlatformConversions: TGroupBox
       Left = 16
-      Top = 293
+      Top = 350
       Width = 453
-      Height = 76
-      Caption = 'For NeoLemmix-to-SuperLemmix Conversions'
+      Height = 75
+      Caption = 'Cross-Platform Conversions'
       TabOrder = 14
-      object cbUpdateWater: TCheckBox
+      object lblConversionInfo: TLabel
         Left = 16
-        Top = 22
-        Width = 425
-        Height = 17
+        Top = 21
+        Width = 416
+        Height = 13
         Caption = 
-          'Replace Water Objects (orig_fire | orig_marble | ohno_bubble | o' +
-          'hno_rock)'
-        TabOrder = 0
+          'This feature auto-corrects all water objects and exit positions ' +
+          'to fit the target platform'
       end
-      object cbUpdateExitPositions: TCheckBox
+      object cbConvertLevels: TCheckBox
         Left = 16
         Top = 45
-        Width = 425
+        Width = 97
         Height = 17
-        Caption = 
-          'Update Orig/OhNo Exit Positions (NOTE - this should only be done' +
-          ' ONCE per pack)'
+        Caption = 'Convert Levels'
+        TabOrder = 0
+        OnClick = cbConvertLevelsClick
+      end
+      object rbNeoToSuper: TRadioButton
+        Left = 119
+        Top = 45
+        Width = 161
+        Height = 17
+        Caption = 'NeoLemmix to SuperLemmix'
+        Enabled = False
         TabOrder = 1
+      end
+      object rbSuperToNeo: TRadioButton
+        Left = 286
+        Top = 45
+        Width = 161
+        Height = 17
+        Caption = 'SuperLemmix to NeoLemmix'
+        Enabled = False
+        TabOrder = 2
       end
     end
   end
   object gbSkillset: TGroupBox
     Left = 503
-    Top = 34
+    Top = 40
     Width = 359
-    Height = 378
+    Height = 429
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Level Skillset'
     TabOrder = 2
@@ -305,9 +322,9 @@ object FQuickmodMain: TFQuickmodMain
       OnClick = cbCustomSkillsetClick
     end
     object gbSkillConversions: TGroupBox
-      Left = 9
-      Top = 293
-      Width = 342
+      Left = 14
+      Top = 344
+      Width = 331
       Height = 76
       Caption = 'Skill Conversions'
       TabOrder = 1
@@ -336,17 +353,28 @@ object FQuickmodMain: TFQuickmodMain
         Height = 17
         Caption = 'Stoners to Freezers'
         TabOrder = 2
+        OnClick = cbFreezerChangeClick
+      end
+      object cbFreezerToStoner: TCheckBox
+        Left = 172
+        Top = 45
+        Width = 129
+        Height = 17
+        Caption = 'Freezers to Stoners'
+        TabOrder = 3
+        OnClick = cbFreezerChangeClick
       end
     end
   end
   object btnApply: TButton
     Left = 40
-    Top = 418
+    Top = 475
     Width = 783
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Changes To All Levels in Selected Pack'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 418
   end
 end
