@@ -1198,6 +1198,8 @@ procedure TGameWindow.SetCurrentCursor(aCursor: Integer = 0);
 var
   NewCursor: Integer;
 begin
+  if DoSuspendCursor then Exit;
+
   if aCursor = 0 then
   begin
     if (fRenderInterface.SelectedLemming = nil) or not PtInRect(Img.BoundsRect, ScreenToClient(Mouse.CursorPos)) then
