@@ -106,9 +106,6 @@ type
     procedure SetSkillIcons;
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer; CursorOverInvincible: Boolean = False);
 
-    procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
-    procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
-
     // Drawing routines for the info string at the top
     function DrawStringLength: Integer; virtual; abstract;
     function DrawStringTemplate: string; virtual; abstract;
@@ -165,9 +162,11 @@ type
 
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
+    procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
     procedure DrawSquiggleHighlight;
     procedure DrawTurboHighlight;
     procedure RemoveButtonHighlights;
+    procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
     procedure DrawMinimap; virtual;
 

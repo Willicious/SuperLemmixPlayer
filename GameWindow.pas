@@ -672,8 +672,10 @@ begin
       RewindTimer.Enabled := False
     else
       RewindTimer.Enabled := True;
-  end else
+  end else begin
     RewindTimer.Enabled := False;
+    SkillPanel.RemoveHighlight(spbRewind);
+  end;
 
   // Fast-forward
   if Fast then
@@ -1136,15 +1138,15 @@ begin
 
   if not (GameSpeed = gspRewind) then
   begin
-  if PauseAfterSkip < 0 then
-  begin
-    Game.IsBackstepping := False;
-    GameSpeed := gspNormal;
-  end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
-    or (PauseAfterSkip > 0) then
+    if PauseAfterSkip < 0 then
     begin
-      if Game.IsBackstepping then GameSpeed := gspPause;
-    end;
+      Game.IsBackstepping := False;
+      GameSpeed := gspNormal;
+    end else if ((aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip)
+      or (PauseAfterSkip > 0) then
+      begin
+        if Game.IsBackstepping then GameSpeed := gspPause;
+      end;
   end;
 
   if (aTargetIteration <> Game.CurrentIteration) or fRanOneUpdate then
