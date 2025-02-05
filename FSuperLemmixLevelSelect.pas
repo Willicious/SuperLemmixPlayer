@@ -871,8 +871,10 @@ var
       Result := 'Level ' + IntToStr(L.GroupIndex + 1) + ' of ' + L.Group.Name;
   end;
 begin
+  if SearchingLevels then
+    Exit;
+
   LoadNodeLabels;
-  if SearchingLevels then Exit;
 
   N := tvLevelSelect.Selected;
   if N = nil then Exit;
@@ -1445,6 +1447,7 @@ procedure TFLevelSelect.SearchLevels;
 var
   SearchText: string;
   i: Integer;
+  L: TNeoLevelEntry;
   Node: TTreeNode;
   Progress: Integer;
 begin
@@ -1496,11 +1499,16 @@ begin
       if SearchCancelled then
         Break;
 
-      Node := tvLevelSelect.Items[i];
+      if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
+      begin
+        L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
 
-      // Add matching nodes to the list
-      if AnsiContainsText(Node.Text, SearchText) then
-        lbSearchResults.Items.AddObject(Node.Text, Node);
+        if AnsiContainsText(L.Title, SearchText) then
+        begin
+          Node := tvLevelSelect.Items[i];
+          lbSearchResults.Items.AddObject(L.Title, Node);
+        end;
+      end;
     end;
   finally
     tvLevelSelect.Items.EndUpdate;
