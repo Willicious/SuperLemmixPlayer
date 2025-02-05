@@ -237,7 +237,10 @@ object FLevelSelect: TFLevelSelect
     Top = 171
     Width = 134
     Height = 25
+    Hint = 'Save an image of the current level as a .png file'
     Caption = 'Screenshot Level'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 10
     OnClick = btnSaveImageClick
   end
@@ -260,7 +263,12 @@ object FLevelSelect: TFLevelSelect
     Top = 67
     Width = 134
     Height = 25
+    Hint = 
+      'Reset completion status of all talismans for the current level t' +
+      'o unobtained'
     Caption = 'Reset Talismans'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 3
     OnClick = btnResetTalismansClick
   end
@@ -269,7 +277,12 @@ object FLevelSelect: TFLevelSelect
     Top = 338
     Width = 134
     Height = 25
+    Hint = 
+      'Play a full collection of replays for the currently-selected pac' +
+      'k as a continuous playlist'
     Caption = 'Playback Mode'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 8
     OnClick = btnPlaybackModeClick
   end
@@ -325,7 +338,9 @@ object FLevelSelect: TFLevelSelect
     Top = 407
     Width = 134
     Height = 25
-    Hint = 'Perform a replay check for every level in the selected pack'
+    Hint = 
+      'Open the current level in the Super/NeoLemmix Editor (whichever ' +
+      'is present in the root folder)'
     Caption = 'Edit Level'
     ParentShowHint = False
     ShowHint = True
