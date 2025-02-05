@@ -16,6 +16,7 @@ object FQuickmodMain: TFQuickmodMain
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClick = FormClick
   OnCreate = FormCreate
   DesignSize = (
     870
@@ -47,7 +48,6 @@ object FQuickmodMain: TFQuickmodMain
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
-    ExplicitHeight = 378
     object cbLemCount: TCheckBox
       Left = 16
       Top = 53
@@ -207,7 +207,7 @@ object FQuickmodMain: TFQuickmodMain
       Left = 16
       Top = 193
       Width = 453
-      Height = 136
+      Height = 151
       Caption = 'Talismans'
       TabOrder = 10
       object cbRemoveTalismans: TCheckBox
@@ -304,28 +304,50 @@ object FQuickmodMain: TFQuickmodMain
       end
     end
   end
-  object gbSkillset: TGroupBox
-    Left = 503
-    Top = 40
-    Width = 359
-    Height = 429
+  object btnApply: TButton
+    Left = 40
+    Top = 475
+    Width = 783
+    Height = 25
     Anchors = [akLeft, akRight, akBottom]
-    Caption = 'Level Skillset'
+    Caption = 'Apply Changes To All Levels in Selected Pack'
+    TabOrder = 3
+    OnClick = btnApplyClick
+  end
+  object gbSkills: TGroupBox
+    Left = 500
+    Top = 34
+    Width = 362
+    Height = 435
+    Caption = 'Skills'
     TabOrder = 2
-    object cbCustomSkillset: TCheckBox
-      Left = 16
-      Top = 20
-      Width = 130
-      Height = 17
-      Caption = 'Apply Custom Skillset'
+    OnClick = gbSkillsClick
+    DesignSize = (
+      362
+      435)
+    object gbCustomSkillset: TGroupBox
+      Left = 13
+      Top = 57
+      Width = 338
+      Height = 287
+      Anchors = [akLeft, akRight, akBottom]
+      Caption = 'Custom Skillset'
       TabOrder = 0
-      OnClick = cbCustomSkillsetClick
+      object cbCustomSkillset: TCheckBox
+        Left = 16
+        Top = 21
+        Width = 185
+        Height = 17
+        Caption = 'Apply Custom Skillset to All Levels'
+        TabOrder = 0
+        OnClick = cbCustomSkillsetClick
+      end
     end
     object gbSkillConversions: TGroupBox
-      Left = 14
-      Top = 344
-      Width = 331
-      Height = 76
+      Left = 13
+      Top = 350
+      Width = 338
+      Height = 75
       Caption = 'Skill Conversions'
       TabOrder = 1
       object cbTimebomberToBomber: TCheckBox
@@ -365,16 +387,26 @@ object FQuickmodMain: TFQuickmodMain
         OnClick = cbFreezerChangeClick
       end
     end
-  end
-  object btnApply: TButton
-    Left = 40
-    Top = 475
-    Width = 783
-    Height = 25
-    Anchors = [akLeft, akRight, akBottom]
-    Caption = 'Apply Changes To All Levels in Selected Pack'
-    TabOrder = 3
-    OnClick = btnApplyClick
-    ExplicitTop = 418
+    object cbSetAllSkillCounts: TCheckBox
+      Left = 29
+      Top = 24
+      Width = 188
+      Height = 17
+      Caption = 'Set Skill Counts For All Levels To:'
+      TabOrder = 2
+      OnClick = cbSetAllSkillCountsClick
+    end
+    object seSkillCounts: TSpinEdit
+      Left = 229
+      Top = 24
+      Width = 74
+      Height = 22
+      MaxValue = 100
+      MinValue = 1
+      TabOrder = 3
+      Value = 20
+      OnChange = seSkillCountsChange
+      OnKeyDown = seSkillCountsKeyDown
+    end
   end
 end

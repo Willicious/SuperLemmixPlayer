@@ -5,14 +5,14 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.UITypes, StrUtils,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, Vcl.Samples.Spin;
 
 const
-  SKILL_COUNT = 26;
+  SKILL_COUNT = 27;
   SKILLS: array[0..SKILL_COUNT-1] of String =
    ('Walker', 'Jumper', 'Shimmier', 'Ballooner',
     'Slider', 'Climber', 'Swimmer', 'Floater', 'Glider', 'Disarmer',
-    'Timebomber', 'Bomber', 'Freezer', 'Blocker',
+    'Timebomber', 'Bomber', 'Freezer', 'Stoner', 'Blocker',
     'Ladderer', 'Platformer', 'Builder', 'Stacker',
     'Spearer', 'Grenader', 'Laserer', 'Basher',
     'Fencer', 'Miner', 'Digger', 'Cloner');
@@ -39,8 +39,7 @@ type
     cbUnlockRR: TCheckBox;
     cbTimeLimit: TCheckBox;
     ebTimeLimit: TEdit;
-
-    gbSkillset: TGroupBox;
+    gbCustomSkillset: TGroupBox;
     btnApply: TButton;
     cbCustomSkillset: TCheckBox;
     cbRemoveTalismans: TCheckBox;
@@ -67,6 +66,9 @@ type
     rbNeoToSuper: TRadioButton;
     rbSuperToNeo: TRadioButton;
     lblConversionInfo: TLabel;
+    gbSkills: TGroupBox;
+    cbSetAllSkillCounts: TCheckBox;
+    seSkillCounts: TSpinEdit;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -76,6 +78,12 @@ type
     procedure btnApplyClick(Sender: TObject);
     procedure cbConvertLevelsClick(Sender: TObject);
     procedure cbFreezerChangeClick(Sender: TObject);
+    procedure cbSetAllSkillCountsClick(Sender: TObject);
+    procedure seSkillCountsChange(Sender: TObject);
+    procedure seSkillCountsKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormClick(Sender: TObject);
+    procedure gbSkillsClick(Sender: TObject);
   private
     AppPath: String;
 
@@ -168,6 +176,26 @@ var
 begin
   for i := 0 to SKILL_COUNT-1 do
     fSkillInputs[i].SIEdit.Enabled := cbCustomSkillset.Checked;
+
+  if cbCustomSkillset.Checked then
+  begin
+    cbSetAllSkillCounts.Checked := False;
+    cbSetAllSkillCounts.Enabled := False;
+    cbBomberToTimebomber.Checked := False;
+    cbBomberToTimebomber.Enabled := False;
+    cbTimebomberToBomber.Checked := False;
+    cbTimebomberToBomber.Enabled := False;
+    cbStonerToFreezer.Checked := False;
+    cbStonerToFreezer.Enabled := False;
+    cbFreezerToStoner.Checked := False;
+    cbFreezerToStoner.Enabled := False;
+    end else begin
+    cbSetAllSkillCounts.Enabled := True;
+    cbBomberToTimebomber.Enabled := True;
+    cbTimebomberToBomber.Enabled := True;
+    cbStonerToFreezer.Enabled := True;
+    cbFreezerToStoner.Enabled := True;
+  end;
 end;
 
 procedure TFQuickmodMain.cbLockRRClick(Sender: TObject);
@@ -217,6 +245,17 @@ begin
   begin
     if Sender <> cbActivateSuperlemming then cbActivateSuperlemming.Checked := False;
     if Sender <> cbDeactivateSuperlemming then cbDeactivateSuperlemming.Checked := False;
+  end;
+end;
+
+procedure TFQuickmodMain.cbSetAllSkillCountsClick(Sender: TObject);
+begin
+  if cbSetAllSkillCounts.Checked then
+  begin
+    cbCustomSkillset.Enabled := False;
+    cbCustomSkillset.Checked := False;
+  end else begin
+    cbCustomSkillset.Enabled := True;
   end;
 end;
 
@@ -325,7 +364,7 @@ const
   LABEL_WIDTH = 100;
   EDIT_WIDTH = 40;
 begin
-  gbSkillset.Anchors := [akLeft, akTop, akRight, akBottom];
+  gbCustomSkillset.Anchors := [akLeft, akTop, akRight, akBottom];
 
   for i := 0 to SKILL_COUNT-1 do
   begin
@@ -334,7 +373,7 @@ begin
 
     with ThisInput.SILabel do
     begin
-      Parent := gbSkillset;
+      Parent := gbCustomSkillset;
       Caption := SKILLS[i];
       Height := 22;
       Left := ORIGIN_X + (SPACING_X * (i mod 3)) + EDIT_WIDTH + 8;
@@ -344,7 +383,7 @@ begin
 
     with ThisInput.SIEdit do
     begin
-      Parent := gbSkillset;
+      Parent := gbCustomSkillset;
       Enabled := False;
       Height := 22;
       Left := ORIGIN_X + (SPACING_X * (i mod 3));
@@ -358,6 +397,16 @@ begin
   end;
 end;
 
+
+procedure TFQuickmodMain.FormClick(Sender: TObject);
+begin
+  cbPack.SetFocus;
+end;
+
+procedure TFQuickmodMain.gbSkillsClick(Sender: TObject);
+begin
+  cbPack.SetFocus;
+end;
 
 procedure TFQuickmodMain.FormCreate(Sender: TObject);
 begin
@@ -374,6 +423,22 @@ begin
             '   COLOR Gold' + sLineBreak +
             '   SAVE_REQUIREMENT ' + IntToStr(TotalLemmings) + sLineBreak +
             ' $END' + sLineBreak;
+end;
+
+procedure TFQuickmodMain.seSkillCountsChange(Sender: TObject);
+begin
+  if seSkillCounts.Value < 1 then
+    seSkillCounts.Value := 1;
+
+  if seSkillCounts.Value > 100 then
+    seSkillCounts.Value := 100;
+end;
+
+procedure TFQuickmodMain.seSkillCountsKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    cbPack.SetFocus;
 end;
 
 function TFQuickmodMain.ClassicModeTalisman: string;
@@ -441,6 +506,7 @@ end;
 procedure TFQuickmodMain.ApplyChangesToLevelFile(aFile: String);
 var
   SL: TStringList;
+  LevelSkillsList: TStringList;
   ThisLine: String;
   SecLevel: Integer;
   n, i, p, YPos: Integer;
@@ -472,6 +538,8 @@ begin
 
   NeoToSuper := rbNeoToSuper.Checked;
   SuperToNeo := rbSuperToNeo.Checked;
+
+  LevelSkillsList := TStringList.Create;
 
   try
     SL.LoadFromFile(aFile);
@@ -512,7 +580,19 @@ begin
       begin
         Dec(SecLevel);
         if SecLevel < 0 then Break;
-      end else if (SecLevel = 0) and (Trim(ThisLine) = '$SKILLSET') and (cbCustomSkillset.Checked) then
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$SKILLSET') and cbSetAllSkillCounts.Checked then
+      begin
+        LevelSkillsList.Clear;
+        repeat
+          ThisLine := Uppercase(Trim(SL[n]));
+          SL[n] := '# ' + SL[n];
+
+          if (ThisLine <> '$SKILLSET') and (ThisLine <> '$END') then
+            LevelSkillsList.Add(Copy(ThisLine, 1, Pos(' ', ThisLine + ' ') - 1));
+
+          Inc(n);
+        until ThisLine = '$END';
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$SKILLSET') and cbCustomSkillset.Checked then
       begin
         repeat
           ThisLine := Uppercase(Trim(SL[n]));
@@ -917,6 +997,33 @@ begin
     if cbRemovePreplaced.Checked then SL.Add('# PRE-PLACED LEMS REMOVED');
     if cbDeactivateSuperlemming.Checked then SL.Add('# SUPERLEMMING DEACTIVATED');
 
+    if cbSetAllSkillCounts.Checked then
+    begin
+      SL.Add('# SKILLSET CHANGED:');
+      SL.Add('$SKILLSET');
+
+      for i := 0 to LevelSkillsList.Count - 1 do
+      begin
+        var Skill := LevelSkillsList[i];
+
+        if ShouldConvertSkills then
+        begin
+          if (Skill = 'BOMBER') and cbBomberToTimebomber.Checked then
+            Skill := 'TIMEBOMBER'
+          else if (Skill = 'TIMEBOMBER') and cbTimebomberToBomber.Checked then
+            Skill := 'BOMBER'
+          else if (Skill = 'STONER') and cbStonerToFreezer.Checked then
+            Skill := 'FREEZER'
+          else if (Skill = 'FREEZER') and cbFreezerToStoner.Checked then
+            Skill := 'STONER';
+        end;
+
+        SL.Add('  ' + Skill + ' ' + IntToStr(seSkillCounts.Value));
+      end;
+
+      SL.Add('$END');
+    end;
+
     if cbCustomSkillset.Checked then
     begin
       SL.Add('# SKILLSET CHANGED:');
@@ -931,6 +1038,7 @@ begin
 
     SL.SaveToFile(aFile);
   finally
+    LevelSkillsList.Free;
     SL.Free;
   end;
 end;
