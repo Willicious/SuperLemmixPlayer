@@ -144,9 +144,17 @@ object FLevelSelect: TFLevelSelect
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblSearchResultsInfo: TLabel
+    Left = 8
+    Top = 42
+    Width = 311
+    Height = 13
+    Caption = 'Single-click a search result to load the level into the preview:'
+    Visible = False
+  end
   object tvLevelSelect: TTreeView
     Left = 8
-    Top = 37
+    Top = 35
     Width = 353
     Height = 480
     Font.Charset = DEFAULT_CHARSET
@@ -306,7 +314,7 @@ object FLevelSelect: TFLevelSelect
   end
   object pbSearchProgress: TProgressBar
     Left = 8
-    Top = 37
+    Top = 35
     Width = 353
     Height = 17
     TabOrder = 13
@@ -355,6 +363,16 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Close'
     TabOrder = 17
     OnClick = btnCloseClick
+  end
+  object btnCancelSearch: TButton
+    Left = 128
+    Top = 67
+    Width = 113
+    Height = 25
+    Caption = 'Cancel Search'
+    TabOrder = 18
+    Visible = False
+    OnClick = btnCancelSearchClick
   end
   object ilStatuses: TImageList
     AllocBy = 8
