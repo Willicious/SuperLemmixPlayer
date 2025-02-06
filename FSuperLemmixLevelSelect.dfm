@@ -364,16 +364,6 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 17
     OnClick = btnCloseClick
   end
-  object btnCancelSearch: TButton
-    Left = 128
-    Top = 67
-    Width = 113
-    Height = 25
-    Caption = 'Cancel Search'
-    TabOrder = 18
-    Visible = False
-    OnClick = btnCancelSearchClick
-  end
   object ilStatuses: TImageList
     AllocBy = 8
     Height = 24
