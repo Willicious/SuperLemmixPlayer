@@ -1512,23 +1512,63 @@ end;
 
 procedure TFLevelSelect.lbSearchResultsClick(Sender: TObject);
 var
-  SelectedNode: TTreeNode;
+  TargetNode, CurrentNode, Node: TTreeNode;
+  TreeFlow: array of TTreeNode;
+  Count, i: Integer;
 begin
-  if lbSearchResults.ItemIndex = -1 then Exit;
+  if lbSearchResults.ItemIndex = -1 then
+    Exit;
 
-  // Get the associated TreeNode object from the clicked search result
-  SelectedNode := TTreeNode(lbSearchResults.Items.Objects[lbSearchResults.ItemIndex]);
+  // Set the target node to the clicked search result
+  TargetNode := TTreeNode(lbSearchResults.Items.Objects[lbSearchResults.ItemIndex]);
 
-  if Assigned(SelectedNode) then
+  if not Assigned(TargetNode) then
+    Exit;
+
+  SearchingLevels := True; // Prevent unnecessary UI loading
+
+  // Build the treeflow from the target node up to the root
+  Count := 0;
+  CurrentNode := TargetNode;
+  while Assigned(CurrentNode) do
   begin
-    // Select the node and refocus the treeview
-    tvLevelSelect.Selected := SelectedNode;
-    SelectedNode.MakeVisible;
-
-    // Reset Search panel visibility
-    CloseSearchResultsPanel;
-    tvLevelSelect.SetFocus;
+    Inc(Count);
+    SetLength(TreeFlow, Count);
+    TreeFlow[Count - 1] := CurrentNode;
+    CurrentNode := CurrentNode.Parent;
   end;
+
+  // Reverse the treeflow so that TreeFlow[0] is now the top-most node
+  for i := 0 to (Count div 2) - 1 do
+  begin
+    CurrentNode := TreeFlow[i];
+    TreeFlow[i] := TreeFlow[Count - 1 - i];
+    TreeFlow[Count - 1 - i] := CurrentNode;
+  end;
+
+  // For each node in the treeflow except the last (the target node),
+  // expand it, and then collapse any node not in the treeflow
+  for i := 0 to Count - 2 do
+  begin
+    if not TreeFlow[i].Expanded then
+      TreeFlow[i].Expand(False);
+
+    Node := TreeFlow[i].GetFirstChild;
+    while Assigned(Node) do
+    begin
+      if Node <> TreeFlow[i+1] then
+        Node.Collapse(False);
+      Node := Node.GetNextSibling;
+    end;
+  end;
+
+  SearchingLevels := False; // Let the UI load (labels, preview, etc)
+
+  // Finally, select the chosen level
+  tvLevelSelect.Selected := TargetNode;
+
+  CloseSearchResultsPanel;
+  tvLevelSelect.SetFocus;
 end;
 
 procedure TFLevelSelect.CloseSearchResultsPanel;
