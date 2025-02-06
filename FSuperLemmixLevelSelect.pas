@@ -1449,7 +1449,7 @@ begin
 
   // Initialize progress bar and counter
   pbSearchProgress.Position := 0;
-  pbSearchProgress.Max := tvLevelSelect.Items.Count;
+  pbSearchProgress.Max := tvLevelSelect.Items.Count * 2;
   pbSearchProgress.Visible := True;
 
   Progress := 0;
