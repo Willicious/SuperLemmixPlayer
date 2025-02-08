@@ -1,4 +1,7 @@
-REM Symlinks can safely be deleted if desired, and will not be created if the folder already exists.
+REM ==== this creates and populates all necessary folders for SLX to run ====
+
+if not exist "bin" mkdir "bin"
+
 mklink /J bin\data data\external\data
 mklink /J bin\gfx data\external\gfx
 mklink /J bin\music data\external\music
