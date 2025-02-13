@@ -120,6 +120,7 @@ type
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // Currently selected skill restricted by F3-F9
 
     fDoneAssignmentThisFrame   : Boolean;
+    fAssignFailPlayedThisFrame : Boolean;
 
   { internal objects }
     LemmingList                : TLemmingList; // List of lemmings
@@ -192,6 +193,7 @@ type
     HatchesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // Method for each basic lemming state
     NewSkillMethods            : TNewSkillMethodArray; // The replacement of SkillMethods
+    fLemAssigned               : TLemming; // Lemming that has been assigned a skill this frame
     fLemSelected               : TLemming; // Lem under cursor, who would receive the skill
     fLemWithShadow             : TLemming; // Needed for CheckForNewShadow to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // Correct skill to be erased
@@ -1274,6 +1276,8 @@ begin
       CueSoundEffect(SFX_Steel_OWW, SelectedLemming.Position)
     else
       CueSoundEffect(SFX_AssignFail, SelectedLemming.Position);
+
+    fAssignFailPlayedThisFrame := True;
   end else if (GetHighlitLemming <> nil) and PlayForHighlit then
     begin
     if  (HasSteelAt(HighlitLemming.LemX, HighlitLemming.LemY)
@@ -1281,6 +1285,8 @@ begin
       CueSoundEffect(SFX_Steel_OWW, HighlitLemming.Position)
     else
       CueSoundEffect(SFX_AssignFail, HighlitLemming.Position);
+
+    fAssignFailPlayedThisFrame := True;
   end;
 end;
 
@@ -2434,7 +2440,7 @@ begin
   begin
     Result := DoSkillAssignment(L, Skill);
     if Result then
-      CueSoundEffect(SFX_AssignSkill, L.Position);
+      fLemAssigned := L;
   end
 
   // Record new skill assignment to be assigned once we call again UpdateLemmings
@@ -7480,7 +7486,15 @@ begin
 
   // Check lemmings under cursor
   HitTest;
-  fSoundList.Clear(); // Clear list of played sound effects - just to be safe
+
+  // Handle skill assignment sound effect
+  if fDoneAssignmentThisFrame and not fAssignFailPlayedThisFrame then
+    CueSoundEffect(SFX_AssignSkill, fLemAssigned.Position);
+
+  fLemAssigned := nil;
+  fAssignFailPlayedThisFrame := False;
+
+  fSoundList.Clear();
 end;
 
 procedure TLemmingGame.UpdateLevelRecords;
