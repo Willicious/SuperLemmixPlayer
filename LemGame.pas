@@ -7913,12 +7913,12 @@ begin
           CheckForNewShadow;
         end;
 
-        if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
+        if (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
         begin
-          if ProcessSkillAssignment(True) then
-            fRenderInterface.ForceUpdate := True
-          else
+          if not ProcessSkillAssignment(True) then
             PlayAssignFailSound(True);
+
+          fRenderInterface.ForceUpdate := True
         end;
       end;
   end;
