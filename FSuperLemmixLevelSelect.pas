@@ -405,6 +405,7 @@ end;
 
 procedure TFLevelSelect.FormShow(Sender: TObject);
 begin
+  LoadNodeLabels;
   SetInfo;
 end;
 
@@ -682,11 +683,22 @@ end;
 
 procedure TFLevelSelect.tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
 begin
+  // Update the UI first
+  Node.Selected := True;
+  tvLevelSelect.Update;
+  Application.ProcessMessages;
+
   SetInfo;
 end;
 
 procedure TFLevelSelect.tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
 begin
+  // Update the UI first
+  Node.Selected := True;
+  tvLevelSelect.Update;
+  Application.ProcessMessages;
+
+  LoadNodeLabels;
   SetInfo;
 end;
 
@@ -869,8 +881,6 @@ var
 begin
   if SearchingLevels then
     Exit;
-
-  LoadNodeLabels;
 
   N := tvLevelSelect.Selected;
   if N = nil then Exit;
@@ -1638,22 +1648,22 @@ end;
 // --- Advanced options --- //
 procedure TFLevelSelect.SetAdvancedOptionsGroup(G: TNeoLevelGroup);
 begin
-    btnSaveImage.Caption := 'Save Level Images';
-    btnReplayManager.Enabled := True;
-    btnCleanseLevels.Enabled := True;
-    btnCleanseOne.Enabled := False;
-    btnResetTalismans.Enabled := False;
-    btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
+  btnSaveImage.Caption := 'Save Level Images';
+  btnReplayManager.Enabled := True;
+  btnCleanseLevels.Enabled := True;
+  btnCleanseOne.Enabled := False;
+  btnResetTalismans.Enabled := False;
+  btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
 end;
 
 procedure TFLevelSelect.SetAdvancedOptionsLevel(L: TNeoLevelEntry);
 begin
-    btnSaveImage.Caption := 'Save Image';
-    btnReplayManager.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
-    btnCleanseLevels.Enabled := btnReplayManager.Enabled;
-    btnCleanseOne.Enabled := True;
-    btnResetTalismans.Enabled := L.Talismans.Count <> 0;
-    btnOK.Enabled := True;
+  btnSaveImage.Caption := 'Save Image';
+  btnReplayManager.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
+  btnCleanseLevels.Enabled := btnReplayManager.Enabled;
+  btnCleanseOne.Enabled := True;
+  btnResetTalismans.Enabled := L.Talismans.Count <> 0;
+  btnOK.Enabled := True;
 end;
 
 procedure TFLevelSelect.btnSaveImageClick(Sender: TObject);
