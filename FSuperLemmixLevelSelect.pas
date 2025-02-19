@@ -100,7 +100,6 @@ type
     procedure LoadNodeLabels;
     procedure WriteToParams;
 
-    function GetCompletedLevelString(G: TNeoLevelGroup): String;
     function GetPackResultsString(G: TNeoLevelGroup): String;
 
     procedure DisplayLevelInfo(RefreshLevel: Boolean = False);
@@ -711,76 +710,23 @@ begin
     LoadCurrentLevelToPlayer;
 end;
 
-function TFLevelSelect.GetCompletedLevelString(G: TNeoLevelGroup): String;
-var
-  CompletedCount, ProcessedLevels: Integer;
-
-  procedure ProcessGroup(Group: TNeoLevelGroup);
-  var
-    k, l: Integer;
-    ChildGroup: TNeoLevelGroup;
-  begin
-    if (Group = nil) then Exit;
-
-    // Process levels in the current group
-    for k := 0 to Group.Levels.Count - 1 do
-    begin
-      if Group.Levels[k].Status = lst_Completed then
-        Inc(CompletedCount);
-
-      Inc(ProcessedLevels);
-
-      pbUIProgress.Position := ProcessedLevels;  // Update progress
-
-      // Ensure UI responsiveness every 50 levels
-      if (ProcessedLevels mod 50 = 0) then
-        Application.ProcessMessages;
-    end;
-
-    // Process subgroups (packs and other groups)
-    for l := 0 to Group.Children.Count - 1 do
-    begin
-      ChildGroup := Group.Children[l];
-      ProcessGroup(ChildGroup);  // Recursive call for subgroups
-    end;
-  end;
-
-begin
-  Result := '';
-  CompletedCount := 0;
-  ProcessedLevels := 0;
-
-  // Set up the progress bar
-  pbUIProgress.Visible := True;
-  pbUIProgress.Position := 0;
-  pbUIProgress.Max := G.LevelCount;
-
-  // Process everything in one pass
-  ProcessGroup(G);
-
-  // Final result
-  Result := Format('%d of %d levels ', [CompletedCount, G.LevelCount]);
-
-  // Hide progress bar when done
-  pbUIProgress.Visible := False;
-end;
-
 function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
 begin
   Result := '';
 
+  Caption := 'SuperLemmix Level Select - Gathering level completion info...';
   if G.LevelCount > 0 then
-    Result := GetCompletedLevelString(G);
-
-  if Result <> '' then
-    Result := Result + 'completed';
+    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(G.LevelCount)
+    + ' levels completed';
 
   if G.Talismans.Count > 0 then
   begin
     if Result <> '' then
       Result := Result + '; ';
 
-    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count) + ' talismans unlocked';
+    Caption := 'SuperLemmix Level Select - Gathering talisman completion info...';
+    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count)
+    + ' talismans unlocked';
   end;
 end;
 
@@ -879,7 +825,7 @@ begin
     if G.PackVersion <> '' then
       lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
 
-    Caption := 'SuperLemmix Level Select - Loading level completion info...';
+    Caption := 'SuperLemmix Level Select - Updating pack completion info...';
     lblCompletion.Caption := GetPackResultsString(G);
     lblCompletion.Visible := True;
 
