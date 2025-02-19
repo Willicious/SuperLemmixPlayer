@@ -98,7 +98,7 @@ type
     fIsHandlingActivation: Boolean;
 
     procedure InitializeTreeview;
-    procedure SetInfo;
+    procedure SetInfo(FormOpening: Boolean = False);
     procedure LoadNodeLabels;
     procedure WriteToParams;
 
@@ -408,7 +408,7 @@ end;
 procedure TFLevelSelect.FormShow(Sender: TObject);
 begin
   LoadNodeLabels;
-  SetInfo;
+  SetInfo(True);
 end;
 
 function TFLevelSelect.GetCurrentlySelectedPack: String;
@@ -777,7 +777,7 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.SetInfo;
+procedure TFLevelSelect.SetInfo(FormOpening: Boolean = False);
 var
   Obj: TObject;
   G: TNeoLevelGroup;
@@ -810,6 +810,9 @@ begin
 
   if Obj is TNeoLevelGroup then
   begin
+    if FormOpening then
+      Exit;
+
     G := TNeoLevelGroup(Obj);
     lblName.Caption := G.Name;
     lblPosition.Caption := GetGroupPositionText;
