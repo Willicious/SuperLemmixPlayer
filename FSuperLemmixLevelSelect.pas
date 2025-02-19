@@ -713,37 +713,56 @@ end;
 
 function TFLevelSelect.GetCompletedLevelString(G: TNeoLevelGroup): String;
 var
-  i, j, CompletedCount: Integer;
-  SubGroup: TNeoLevelGroup;
-  LevelProcessed: Integer;
-begin
-  Result := '';
-  CompletedCount := 0;
-  LevelProcessed := 0;
+  CompletedCount, ProcessedLevels: Integer;
 
-//  pbUIProgress.Visible := True;
-//  pbUIProgress.Max := G.LevelCount;
-
-  for i := 0 to G.Children.Count -1 do
+  procedure ProcessGroup(Group: TNeoLevelGroup);
+  var
+    k, l: Integer;
+    ChildGroup: TNeoLevelGroup;
   begin
-    SubGroup := G.Children[i];
+    if (Group = nil) then Exit;
 
-    for j := 0 to SubGroup.Levels.Count -1 do
+    // Process levels in the current group
+    for k := 0 to Group.Levels.Count - 1 do
     begin
-      Inc(LevelProcessed);
-
-      if SubGroup.Levels[j].Status = lst_Completed then
+      if Group.Levels[k].Status = lst_Completed then
         Inc(CompletedCount);
 
-      //pbUIProgress.Position := LevelProcessed;
+      Inc(ProcessedLevels);
 
-      // Call every 50 processed levels to ensure UI responsiveness
-      if (LevelProcessed mod 50 = 0) then
+      pbUIProgress.Position := ProcessedLevels;  // Update progress
+
+      // Ensure UI responsiveness every 50 levels
+      if (ProcessedLevels mod 50 = 0) then
         Application.ProcessMessages;
+    end;
+
+    // Process subgroups (packs and other groups)
+    for l := 0 to Group.Children.Count - 1 do
+    begin
+      ChildGroup := Group.Children[l];
+      ProcessGroup(ChildGroup);  // Recursive call for subgroups
     end;
   end;
 
-  Result := IntToStr(CompletedCount) + ' of ' + IntToStr(G.LevelCount) + ' levels ';
+begin
+  Result := '';
+  CompletedCount := 0;
+  ProcessedLevels := 0;
+
+  // Set up the progress bar
+  pbUIProgress.Visible := True;
+  pbUIProgress.Position := 0;
+  pbUIProgress.Max := G.LevelCount;
+
+  // Process everything in one pass
+  ProcessGroup(G);
+
+  // Final result
+  Result := Format('%d of %d levels ', [CompletedCount, G.LevelCount]);
+
+  // Hide progress bar when done
+  pbUIProgress.Visible := False;
 end;
 
 function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
