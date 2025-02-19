@@ -156,7 +156,7 @@ object FLevelSelect: TFLevelSelect
     Left = 8
     Top = 35
     Width = 353
-    Height = 480
+    Height = 485
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -168,9 +168,10 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
     ReadOnly = True
     TabOrder = 14
-    OnChange = tvLevelSelectChange
+    OnClick = tvLevelSelectClick
     OnExpanded = tvLevelSelectExpanded
     OnKeyDown = tvLevelSelectKeyDown
+    OnKeyUp = tvLevelSelectKeyUp
   end
   object btnOK: TButton
     Left = 521
@@ -365,9 +366,9 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCloseClick
   end
   object pbUIProgress: TProgressBar
-    Left = 389
-    Top = 99
-    Width = 592
+    Left = 8
+    Top = 503
+    Width = 353
     Height = 17
     TabOrder = 18
     Visible = False

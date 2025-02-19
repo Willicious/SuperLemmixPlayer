@@ -64,7 +64,6 @@ type
     procedure btnCleanseLevelsClick(Sender: TObject);
     procedure btnCleanseOneClick(Sender: TObject);
     procedure btnClearRecordsClick(Sender: TObject);
-    procedure tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
     procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
@@ -82,6 +81,9 @@ type
     procedure btnCloseSearchClick(Sender: TObject);
     procedure btnEditLevelClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
+    procedure tvLevelSelectClick(Sender: TObject);
+    procedure tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -681,25 +683,14 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.tvLevelSelectChange(Sender: TObject; Node: TTreeNode);
+procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
 begin
-  // Update the UI first
-  Node.Selected := True;
-  tvLevelSelect.Update;
-  Application.ProcessMessages;
-
   SetInfo;
 end;
 
 procedure TFLevelSelect.tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
 begin
-  // Update the UI first
-  Node.Selected := True;
-  tvLevelSelect.Update;
-  Application.ProcessMessages;
-
   LoadNodeLabels;
-  SetInfo;
 end;
 
 // When treeview is active, pressing return loads the currently selected level
@@ -710,24 +701,11 @@ begin
     LoadCurrentLevelToPlayer;
 end;
 
-function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
+procedure TFLevelSelect.tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
-  Result := '';
-
-  Caption := 'SuperLemmix Level Select - Gathering level completion info...';
-  if G.LevelCount > 0 then
-    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(G.LevelCount)
-    + ' levels completed';
-
-  if G.Talismans.Count > 0 then
-  begin
-    if Result <> '' then
-      Result := Result + '; ';
-
-    Caption := 'SuperLemmix Level Select - Gathering talisman completion info...';
-    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count)
-    + ' talismans unlocked';
-  end;
+  if Key in [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT] then
+    SetInfo;
 end;
 
 procedure TFLevelSelect.LoadNodeLabels;
@@ -782,6 +760,23 @@ begin
   end;
 end;
 
+function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
+begin
+  Result := '';
+
+  if G.LevelCount > 0 then
+    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(G.LevelCount)
+    + ' levels completed';
+
+  if G.Talismans.Count > 0 then
+  begin
+    if Result <> '' then
+      Result := Result + '; ';
+    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count)
+    + ' talismans unlocked';
+  end;
+end;
+
 procedure TFLevelSelect.SetInfo;
 var
   Obj: TObject;
@@ -815,32 +810,26 @@ begin
 
   if Obj is TNeoLevelGroup then
   begin
-    Caption := 'SuperLemmix Level Select - Pack selected...';
     G := TNeoLevelGroup(Obj);
     lblName.Caption := G.Name;
     lblPosition.Caption := GetGroupPositionText;
 
     lblAuthor.Caption := G.Author;
-
     if G.PackVersion <> '' then
       lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
 
-    Caption := 'SuperLemmix Level Select - Updating pack completion info...';
     lblCompletion.Caption := GetPackResultsString(G);
     lblCompletion.Visible := True;
 
     // Set the first unsolved level in the pack as the current level (or first level if pack is completed)
-    Caption := 'SuperLemmix Level Select - Updating user settings...';
     WriteToParams;
     GameParams.LoadCurrentLevel(False);
 
     ClearTalismanButtons;
     fInfoForm.Visible := False;
 
-    Caption := 'SuperLemmix Level Select - Gathering talisman completion info...';
     DisplayPackTalismanInfo(G);
     SetAdvancedOptionsGroup(G);
-    Caption := 'SuperLemmix Level Select';
   end else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
