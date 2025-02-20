@@ -52,6 +52,7 @@ type
     btnClose: TButton;
     lblSearchResultsInfo: TLabel;
     pbUIProgress: TProgressBar;
+    lblLoadingInfo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -103,6 +104,7 @@ type
     procedure WriteToParams;
 
     function GetPackResultsString(G: TNeoLevelGroup): String;
+    function IsCompilationPack(G: TNeoLevelGroup): Boolean;
 
     procedure DisplayLevelInfo(RefreshLevel: Boolean = False);
     procedure SetTalismanInfo;
@@ -117,6 +119,7 @@ type
     procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aEraseColor: TColor);
     procedure OverlayIcon(aIconIndex: Integer; aDst: TBitmap32);
 
+    procedure SetAdvancedOptionsCompilation(G: TNeoLevelGroup);
     procedure SetAdvancedOptionsGroup(G: TNeoLevelGroup);
     procedure SetAdvancedOptionsLevel(L: TNeoLevelEntry);
     procedure WMActivate(var Msg: TWMActivate); message WM_ACTIVATE;
@@ -317,6 +320,35 @@ begin
     tvLevelSelect.Items.EndUpdate;
     tvLevelSelect.Update;
   end;
+end;
+
+function TFLevelSelect.IsCompilationPack(G: TNeoLevelGroup): Boolean;
+var
+  SubGroup, SubSubGroup: TNeoLevelGroup;
+begin
+  Result := False;
+
+  if (G = nil) then
+    Exit;
+
+  // Parent Group must have no levels or at least one subgroup
+  if (G.Levels.Count > 0) or (G.Children.Count = 0) then
+    Exit;
+
+  // Get the first subgroup
+  SubGroup := G.Children[0];
+
+  // SubGroup must also have no levels or at least one subgroup
+  if (SubGroup.Levels.Count > 0) or (SubGroup.Children.Count = 0) then
+    Exit;
+
+  // Get the first sub-subgroup
+  SubSubGroup := SubGroup.Children[0];
+
+  // If the sub-subgroup has levels, it is *probably* a compilation
+  // If it has at least one more subgroup, it is *definitely* a compilation
+  if (SubSubGroup.Levels.Count > 0) or (SubSubGroup.Children.Count > 0) then
+    Result := True;
 end;
 
 procedure TFLevelSelect.LoadCurrentLevelToPlayer;
@@ -814,7 +846,31 @@ begin
       Exit;
 
     G := TNeoLevelGroup(Obj);
+
+    if IsCompilationPack(G) then
+    begin
+      lblName.Caption := G.Name;
+      lblPosition.Caption := 'This pack is a compilation. Click an individual pack for more info.';
+      lblAuthor.Caption := '';
+      lblCompletion.Caption := '';
+      ClearTalismanButtons;
+      fInfoForm.Visible := False;
+      fPackTalBox.Visible := False;
+      SetAdvancedOptionsCompilation(G);
+      Exit;
+    end;
+
+    if (G.IsBasePack) then
+    begin
+      lblLoadingInfo.Visible := True;
+      lblPosition.Visible := False;
+      lblAuthor.Caption := '';
+      lblCompletion.Caption := '';
+    end;
+
     lblName.Caption := G.Name;
+    Application.ProcessMessages; // Ensure UI update
+
     lblPosition.Caption := GetGroupPositionText;
 
     lblAuthor.Caption := G.Author;
@@ -833,6 +889,9 @@ begin
 
     DisplayPackTalismanInfo(G);
     SetAdvancedOptionsGroup(G);
+
+    lblLoadingInfo.Visible := False;
+    lblPosition.Visible := True;
   end else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
@@ -1547,6 +1606,18 @@ begin
 end;
 
 // --- Advanced options --- //
+procedure TFLevelSelect.SetAdvancedOptionsCompilation(G: TNeoLevelGroup);
+begin
+  btnSaveImage.Caption := 'Save Level Images';
+  btnReplayManager.Enabled := False;
+  btnPlaybackMode.Enabled := False;
+  btnCleanseLevels.Enabled := True;
+  btnCleanseOne.Enabled := False;
+  btnResetTalismans.Enabled := False;
+  btnEditLevel.Enabled := False;
+  btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
+end;
+
 procedure TFLevelSelect.SetAdvancedOptionsGroup(G: TNeoLevelGroup);
 begin
   btnSaveImage.Caption := 'Save Level Images';

@@ -152,6 +152,21 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Single-click a search result to load the level into the preview:'
     Visible = False
   end
+  object lblLoadingInfo: TLabel
+    Left = 360
+    Top = 40
+    Width = 103
+    Height = 13
+    Caption = 'Loading pack info...'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Transparent = False
+    Visible = False
+  end
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 35
