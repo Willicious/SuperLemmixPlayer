@@ -7,7 +7,7 @@ object FLevelSelect: TFLevelSelect
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Level Select'
   ClientHeight = 528
-  ClientWidth = 1142
+  ClientWidth = 1112
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,7 +24,7 @@ object FLevelSelect: TFLevelSelect
   PixelsPerInch = 96
   TextHeight = 13
   object lblName: TLabel
-    Left = 389
+    Left = 360
     Top = 9
     Width = 592
     Height = 25
@@ -38,7 +38,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblPosition: TLabel
-    Left = 389
+    Left = 360
     Top = 40
     Width = 592
     Height = 16
@@ -52,7 +52,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAuthor: TLabel
-    Left = 389
+    Left = 360
     Top = 62
     Width = 592
     Height = 16
@@ -66,7 +66,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblCompletion: TLabel
-    Left = 389
+    Left = 360
     Top = 84
     Width = 592
     Height = 32
@@ -80,7 +80,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblRecordsOptions: TLabel
-    Left = 1021
+    Left = 992
     Top = 17
     Width = 85
     Height = 13
@@ -93,7 +93,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblAdvancedOptions: TLabel
-    Left = 1016
+    Left = 987
     Top = 119
     Width = 96
     Height = 13
@@ -106,7 +106,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblReplayOptions: TLabel
-    Left = 1021
+    Left = 992
     Top = 288
     Width = 79
     Height = 13
@@ -132,7 +132,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
   end
   object lblEditingOptions: TLabel
-    Left = 1021
+    Left = 992
     Top = 388
     Width = 81
     Height = 13
@@ -155,7 +155,7 @@ object FLevelSelect: TFLevelSelect
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 35
-    Width = 353
+    Width = 329
     Height = 485
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -174,7 +174,7 @@ object FLevelSelect: TFLevelSelect
     OnKeyUp = tvLevelSelectKeyUp
   end
   object btnOK: TButton
-    Left = 521
+    Left = 492
     Top = 495
     Width = 469
     Height = 25
@@ -183,7 +183,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnOKClick
   end
   object pnLevelInfo: TPanel
-    Left = 381
+    Left = 352
     Top = 120
     Width = 600
     Height = 369
@@ -192,7 +192,7 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 11
   end
   object btnClearRecords: TButton
-    Left = 996
+    Left = 967
     Top = 36
     Width = 134
     Height = 25
@@ -204,7 +204,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnClearRecordsClick
   end
   object btnCleanseOne: TButton
-    Left = 996
+    Left = 967
     Top = 233
     Width = 134
     Height = 25
@@ -216,7 +216,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCleanseOneClick
   end
   object btnCleanseLevels: TButton
-    Left = 996
+    Left = 967
     Top = 202
     Width = 134
     Height = 25
@@ -230,7 +230,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCleanseLevelsClick
   end
   object btnReplayManager: TButton
-    Left = 996
+    Left = 967
     Top = 307
     Width = 134
     Height = 25
@@ -242,7 +242,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnReplayManagerClick
   end
   object btnSaveImage: TButton
-    Left = 996
+    Left = 967
     Top = 171
     Width = 134
     Height = 25
@@ -254,7 +254,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnSaveImageClick
   end
   object btnMakeShortcut: TButton
-    Left = 996
+    Left = 967
     Top = 138
     Width = 134
     Height = 25
@@ -268,7 +268,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnMakeShortcutClick
   end
   object btnResetTalismans: TBitBtn
-    Left = 996
+    Left = 967
     Top = 67
     Width = 134
     Height = 25
@@ -282,7 +282,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnResetTalismansClick
   end
   object btnPlaybackMode: TButton
-    Left = 996
+    Left = 967
     Top = 338
     Width = 134
     Height = 25
@@ -296,7 +296,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnPlaybackModeClick
   end
   object btnShowHideOptions: TButton
-    Left = 381
+    Left = 352
     Top = 495
     Width = 134
     Height = 25
@@ -307,7 +307,7 @@ object FLevelSelect: TFLevelSelect
   object sbSearchLevels: TSearchBox
     Left = 90
     Top = 8
-    Width = 271
+    Width = 247
     Height = 21
     TabOrder = 12
     OnKeyDown = sbSearchLevelsKeyDown
@@ -316,7 +316,7 @@ object FLevelSelect: TFLevelSelect
   object pbSearchProgress: TProgressBar
     Left = 8
     Top = 35
-    Width = 353
+    Width = 329
     Height = 17
     TabOrder = 13
     Visible = False
@@ -324,7 +324,7 @@ object FLevelSelect: TFLevelSelect
   object lbSearchResults: TListBox
     Left = 8
     Top = 61
-    Width = 353
+    Width = 329
     Height = 319
     Cursor = crHandPoint
     ItemHeight = 13
@@ -333,7 +333,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = lbSearchResultsClick
   end
   object btnCloseSearch: TButton
-    Left = 144
+    Left = 128
     Top = 386
     Width = 75
     Height = 25
@@ -343,7 +343,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnCloseSearchClick
   end
   object btnEditLevel: TButton
-    Left = 996
+    Left = 967
     Top = 407
     Width = 134
     Height = 25
@@ -357,7 +357,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = btnEditLevelClick
   end
   object btnClose: TButton
-    Left = 996
+    Left = 967
     Top = 495
     Width = 134
     Height = 25
@@ -368,7 +368,7 @@ object FLevelSelect: TFLevelSelect
   object pbUIProgress: TProgressBar
     Left = 8
     Top = 503
-    Width = 353
+    Width = 329
     Height = 17
     TabOrder = 18
     Visible = False
