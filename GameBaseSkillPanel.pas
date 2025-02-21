@@ -576,7 +576,7 @@ const
 var
   BrickColor: TColor32;
   Button: TSkillPanelButton;
-  X, Y: Integer;
+  X, Y, FloaterY: Integer;
   Offset: TPoint;
   IconsImg: TBitmap32;
 
@@ -662,16 +662,21 @@ begin
       // Set Offset for each button
       Offset := Point(0, 0);
 
+      if GameParams.AmigaTheme then
+        FloaterY := 16
+      else
+        FloaterY := 12;
+
       case Button of
         spbWalker:    Offset := Point(1, 14);
         spbJumper:    Offset := Point(0, 16);
         spbShimmier:  Offset := Point(0, 16);
-        spbBallooner: Offset := Point(0, 12);
+        spbBallooner: Offset := Point(0, FloaterY);
         spbSlider:    Offset := Point(-2, 15);
         spbClimber:   Offset := Point(-1, 13);
         spbSwimmer:   Offset := Point(0, 12);
-        spbFloater:   Offset := Point(0, 12);
-        spbGlider:    Offset := Point(0, 12);
+        spbFloater:   Offset := Point(0, FloaterY);
+        spbGlider:    Offset := Point(0, FloaterY);
         spbDisarmer:  Offset := Point(-2, 16);
         spbTimebomber:Offset := Point(-1, 12);
         spbBomber:    Offset := Point(-1, 12);
@@ -1198,7 +1203,7 @@ begin
         fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
     end else
       fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
-  end else if aNumber < 10 then
+  end else if (aNumber < 10) and not GameParams.AmigaTheme then
   begin
     NumberStr := LeadZeroStr(aNumber, 2);
     FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 2, ButtonTop + 2);
