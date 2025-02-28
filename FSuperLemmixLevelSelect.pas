@@ -850,7 +850,7 @@ begin
     if IsCompilationPack(G) then
     begin
       lblName.Caption := G.Name;
-      lblPosition.Caption := 'This pack is a compilation. Click an individual pack for more info.';
+      lblPosition.Caption := 'This pack is a compilation. Expand the tree and click an individual pack for more info.';
       lblAuthor.Caption := '';
       lblCompletion.Caption := '';
       ClearTalismanButtons;
