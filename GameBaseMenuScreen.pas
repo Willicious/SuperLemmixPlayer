@@ -268,15 +268,24 @@ end;
 procedure TGameBaseMenuScreen.GetInternalScreenVars;
 var
   WindowWidth: Integer;
-  UseLargerWidth: Boolean;
+  UseLargerWidth, UseMediumWidth: Boolean;
 begin
   WindowWidth := GameParams.MainForm.ClientWidth;
 
-  UseLargerWidth := (WindowWidth > 1400) and not GameParams.FullScreen;
+  UseLargerWidth := (WindowWidth > 1600) and not GameParams.FullScreen;
+
+  UseMediumWidth := (WindowWidth > 1400) and (WindowWidth < 1599)
+                     and not GameParams.FullScreen;
 
   if UseLargerWidth then
+  begin
+    Output('Using larger width, window width', WindowWidth);
     INTERNAL_SCREEN_WIDTH := 1092
-  else
+  end else if UseMediumWidth then
+  begin
+    Output('Using medium width, window width', WindowWidth);
+    INTERNAL_SCREEN_WIDTH := 990
+  end else
     INTERNAL_SCREEN_WIDTH := 888;
 
   INTERNAL_SCREEN_HEIGHT := 492;
