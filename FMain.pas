@@ -118,10 +118,9 @@ procedure TMainForm.PlayGame;
 begin
   try
     if not AppController.Execute then
-    begin
-      Close;
-    end else if Assigned(ChildForm.OnActivate) then
-      ChildForm.OnActivate(ChildForm); 
+      Close
+    else if (ChildForm <> nil) and Assigned(ChildForm.OnActivate) then
+      ChildForm.OnActivate(ChildForm);
   except
     on E: Exception do
     begin
