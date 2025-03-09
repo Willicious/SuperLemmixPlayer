@@ -3,7 +3,7 @@ unit LemNeoLevelPack;
 interface
 
 uses
-  System.Generics.Collections, System.Generics.Defaults,
+  System.Generics.Collections, System.Generics.Defaults, System.IOUtils,
   GR32, CRC32, PngInterface, LemLevel,
   Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms, ComCtrls, StdCtrls,
   LemTalisman,
@@ -1465,6 +1465,7 @@ begin
 
     ForceDirectories(AppPath + SFSaveData);
     Parser.SaveToFile(AppPath + SFSaveData + 'userdata.nxsv');
+    GameParams.LastUserDataWriteTime := TFile.GetLastWriteTime(AppPath + SFSaveData + 'userdata.nxsv');
   finally
     Parser.Free;
   end;
