@@ -375,16 +375,11 @@ begin
   begin
     ReloadSettings := True;
   end;
+
   if ReloadSettings or ReloadUserData then
   begin
-    if MessageDlg('Settings have been modified either manually or by another open instance of SuperLemmix.' + #13#10 + #13#10 +
-                  'Click OK to load the latest settings, or Cancel to discard.' + #13#10 + #13#10 +
-                  'If unsure, just click OK.',
-                  mtWarning, [mbOK, mbCancel], 0) = mrOk then
-    begin
-      if ReloadSettings then Load;
-      if ReloadUserData then BaseLevelPack.LoadUserData;
-    end;
+    if ReloadSettings then Load;
+    if ReloadUserData then BaseLevelPack.LoadUserData;
   end;
 
   ElevateSaveCriticality(aCriticality);
