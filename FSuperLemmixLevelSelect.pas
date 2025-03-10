@@ -422,7 +422,10 @@ begin
 
   fPackTalBox := TScrollBox.Create(Self);
   fPackTalBox.Parent := Self;
-  fPackTalBox.BoundsRect := pnLevelInfo.BoundsRect;
+  fPackTalBox.Top := lblCompletion.Top + lblCompletion.Height;
+  fPackTalBox.Left := pnLevelInfo.Left;
+  fPackTalBox.Width := pnLevelInfo.Width;
+  fPackTalBox.Height := pnLevelInfo.Height;
   fPackTalBox.VertScrollBar.Tracking := True;
   fPackTalBox.Visible := False;
 
