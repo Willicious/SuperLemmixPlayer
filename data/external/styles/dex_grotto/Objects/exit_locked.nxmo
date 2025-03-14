@@ -1,0 +1,61 @@
+EFFECT LOCKEDEXIT
+TRIGGER_X 15
+TRIGGER_Y 24
+TRIGGER_WIDTH 2
+TRIGGER_HEIGHT 5
+
+SOUND_EXHAUST electric
+
+$PRIMARY_ANIMATION
+  NAME *blank
+  FRAMES 17
+  WIDTH 32
+  HEIGHT 28
+$END
+
+
+$ANIMATION
+  NAME opening
+  FRAMES 17
+  STATE MatchPhysics
+  
+  $TRIGGER
+    CONDITION Ready
+    HIDE
+  $END
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+
+$ANIMATION
+  NAME main
+  FRAMES 16
+  HIDE
+  
+  $TRIGGER
+    CONDITION Ready
+  $END
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+
+$ANIMATION
+  NAME closing
+  FRAMES 10
+  INITIAL_FRAME 1
+  HIDE
+  
+  $TRIGGER
+    CONDITION Exhausted
+    STATE LoopToZero
+  $END
+$END
+

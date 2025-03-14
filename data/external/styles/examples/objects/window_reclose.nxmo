@@ -1,0 +1,55 @@
+# Shows how to create a window (entrance) that has a closing animation when all lemmings have been released.
+# This animation will only apply if the window has a lemming limit; not if it's infinite and the *level* limit is reached.
+
+# Effect and trigger position are as normal.
+
+EFFECT ENTRANCE
+TRIGGER_X 19
+TRIGGER_Y 14
+
+# SOUND_EXHAUST specifies the sound to play when the window is exhausted (runs out of lemmings).
+
+SOUND_EXHAUST ohno
+
+# We don't actually display anything for the primary animation. You can include a blank image of the correct size if you
+# like, but using *BLANK is a useful shortcut. (*BLANK requires NeoLemmix V12.8.0 or higher.)
+# We set the frame count to the same as the opening animation.
+
+$PRIMARY_ANIMATION
+  NAME *blank
+  FRAMES 17
+  WIDTH 38
+  HEIGHT 10
+$END
+
+# Secondary animation for opening.
+# This one uses the "MatchPhysics" state so that it displays the same frame as the (invisible) primary animation.
+# We use a secondary animation so that we can hide it when the window becomes exhausted.
+
+$ANIMATION
+  NAME opening
+  FRAMES 17
+  STATE MatchPhysics
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+# Secondary animation for closing. Here's the magic - we start this on Frame 1, and hide it. Then, when the window becomes
+# exhausted, we make this visible with a LoopToZero state. LoopToZero pauses when it reaches frame 0, but because we don't
+# actually hide the animation in Exhausted state, it remains visible.
+
+$ANIMATION
+  NAME closing
+  FRAMES 17
+  INITIAL_FRAME 1
+  HIDE
+  
+  $TRIGGER
+    CONDITION Exhausted
+    STATE LoopToZero
+    # "SHOW" is implied by a lack of "HIDE". We don't need to explicitly state it.
+  $END
+$END

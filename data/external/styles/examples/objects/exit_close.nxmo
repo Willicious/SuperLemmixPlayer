@@ -1,0 +1,54 @@
+# Shows how to create a exit that has a closing animation when the lemming limit is reached.
+
+# Effect and trigger position are as normal.
+
+EFFECT EXIT
+TRIGGER_X 18
+TRIGGER_Y 7
+TRIGGER_WIDTH 4
+TRIGGER_HEIGHT 4
+
+# SOUND_EXHAUST specifies the sound to play when the exit is exhausted (cannot take any further lemmings).
+
+SOUND_EXHAUST ohno
+
+# We don't actually display anything for the primary animation. You can include a blank image of the correct size if you
+# like, but using *BLANK is a useful shortcut. (*BLANK requires NeoLemmix V12.8.0 or higher.)
+# We only need it to have one frame.
+
+$PRIMARY_ANIMATION
+  NAME *blank
+  FRAMES 1
+  WIDTH 38
+  HEIGHT 10
+$END
+
+# Secondary animation for open state.
+# We mostly just let this one animate normally.
+
+$ANIMATION
+  NAME normal
+  FRAMES 10
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+# Secondary animation for closing. Here's the magic - we start this on Frame 1, and hide it. Then, when the exit becomes
+# exhausted, we make this visible with a LoopToZero state. LoopToZero pauses when it reaches frame 0, but because we don't
+# actually hide the animation in Exhausted state, it remains visible.
+
+$ANIMATION
+  NAME closing
+  FRAMES 17
+  INITIAL_FRAME 1
+  HIDE
+  
+  $TRIGGER
+    CONDITION Exhausted
+    STATE LoopToZero
+    # "SHOW" is implied by a lack of "HIDE". We don't need to explicitly state it.
+  $END
+$END

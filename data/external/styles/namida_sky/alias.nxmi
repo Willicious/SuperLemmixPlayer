@@ -1,0 +1,4 @@
+$GADGET
+  FROM :rain
+  TO arty_special:rain
+$END

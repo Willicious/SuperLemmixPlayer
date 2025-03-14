@@ -1,0 +1,61 @@
+EFFECT LOCKEDEXIT
+TRIGGER_X 16
+TRIGGER_Y 49
+TRIGGER_WIDTH 2
+TRIGGER_HEIGHT 5
+
+SOUND_EXHAUST tenton
+
+$PRIMARY_ANIMATION
+  NAME *blank
+  FRAMES 9
+  WIDTH 34
+  HEIGHT 53
+$END
+
+
+$ANIMATION
+  NAME opening
+  FRAMES 9
+  STATE MatchPhysics
+  
+  $TRIGGER
+    CONDITION Ready
+    HIDE
+  $END
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+
+$ANIMATION
+  NAME main
+  FRAMES 8
+  HIDE
+  
+  $TRIGGER
+    CONDITION Ready
+  $END
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+
+$ANIMATION
+  NAME closing
+  FRAMES 11
+  INITIAL_FRAME 1
+  HIDE
+  
+  $TRIGGER
+    CONDITION Exhausted
+    STATE LoopToZero
+  $END
+$END
+

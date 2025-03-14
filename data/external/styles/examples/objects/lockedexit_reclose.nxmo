@@ -1,0 +1,86 @@
+# Shows how to create a locked exit that has a closing animation when the lemming limit is reached, while
+# also having an idle animation (when it's open).
+
+# Effect and trigger position are as normal.
+
+EFFECT LOCKEDEXIT
+TRIGGER_X 18
+TRIGGER_Y 7
+TRIGGER_WIDTH 4
+TRIGGER_HEIGHT 4
+
+# SOUND_ACTIVATE specifies the sound to play when the exit opens (replaces "SOUND" in older files; backwards
+# compatible until V12.11.0).
+# SOUND_EXHAUST specifies the sound to play when the exit is exhausted (cannot take any further lemmings).
+
+SOUND_ACTIVATE zombie
+SOUND_EXHAUST ohno
+
+# We don't actually display anything for the primary animation. You can include a blank image of the correct size if you
+# like, but using *BLANK is a useful shortcut. (*BLANK requires NeoLemmix V12.8.0 or higher.)
+# The frame count must match the opening animation.
+
+$PRIMARY_ANIMATION
+  NAME *blank
+  FRAMES 17
+  WIDTH 38
+  HEIGHT 10
+$END
+
+# Secondary animation for opening.
+# This one uses the "MatchPhysics" state so that it displays the same frame as the (invisible) primary animation.
+# We use a secondary animation so that we can hide it when the exit finishes opening.
+
+$ANIMATION
+  NAME opening
+  FRAMES 17
+  STATE MatchPhysics
+  
+  $TRIGGER
+    CONDITION Ready
+    HIDE
+  $END
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+# Secondary animation for open state.
+# We mostly just let this one animate normally. In terms of visibility, it's hidden initially, becomes visible
+# when the exit goes into the "Ready" condition, then hides when the exit becomes exhausted.
+
+$ANIMATION
+  NAME normal
+  FRAMES 10
+  HIDE
+  
+  $TRIGGER
+    CONDITION Ready
+    # "STATE Play" and "SHOW" are implied, don't have to actually write them.
+  $END
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+# Secondary animation for closing. Here's the magic - we start this on Frame 1, and hide it. Then, when the exit becomes
+# exhausted, we make this visible with a LoopToZero state. LoopToZero pauses when it reaches frame 0, but because we don't
+# actually hide the animation in Exhausted state, it remains visible.
+# For the record, this works exactly the same way as a non-locked exit's closing animation.
+
+$ANIMATION
+  NAME closing
+  FRAMES 17
+  INITIAL_FRAME 1
+  HIDE
+  
+  $TRIGGER
+    CONDITION Exhausted
+    STATE LoopToZero
+    # "SHOW" is implied by a lack of "HIDE". We don't need to explicitly state it.
+  $END
+$END

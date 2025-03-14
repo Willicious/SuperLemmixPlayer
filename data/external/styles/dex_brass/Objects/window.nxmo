@@ -1,0 +1,35 @@
+EFFECT ENTRANCE
+TRIGGER_X 24
+TRIGGER_Y 13
+
+$PRIMARY_ANIMATION
+  NAME *blank
+  FRAMES 10
+  WIDTH 48
+  HEIGHT 27
+$END
+
+
+$ANIMATION
+  NAME opening
+  FRAMES 10
+  STATE MatchPhysics
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+
+$ANIMATION
+  NAME closing
+  FRAMES 16
+  INITIAL_FRAME 1
+  HIDE
+  
+  $TRIGGER
+    CONDITION Exhausted
+    STATE LoopToZero
+  $END
+$END
