@@ -938,7 +938,7 @@ end;
 {$ifdef exp}
 procedure TNeoLevelGroup.DumpSuperLemmixWebsiteMetaInfo(aPath: String);
 var
-  Ranks: TStringList;
+  Groups: TStringList;
   Titles: TStringList;
   Stats: TStringList;
 
@@ -957,24 +957,24 @@ var
       AddGroup(Group.Children[i], Prefix);
 
     if Group.Levels.Count > 0 then
-      Ranks.Add(Prefix + '>' + IntToStr(Group.Levels.Count));
+      Groups.Add(Prefix + '>' + IntToStr(Group.Levels.Count));
   end;
 begin
   aPath := IncludeTrailingPathDelimiter(aPath);
   ForceDirectories(aPath);
 
-  Ranks := TStringList.Create;
+  Groups := TStringList.Create;
   Titles := TStringList.Create;
   Stats := TStringList.Create;
   try
     AddGroup(Self, '');
     InternalDumpSuperLemmixWebsiteMetaInfo(Titles, Stats);
 
-    Ranks.SaveToFile(aPath + 'ranks.txt');
+    Groups.SaveToFile(aPath + 'groups.txt');
     Titles.SaveToFile(aPath + 'titles.txt');
     Stats.SaveToFile(aPath + 'stats.txt');
   finally
-    Ranks.Free;
+    Groups.Free;
     Titles.Free;
     Stats.Free;
   end;
@@ -1636,7 +1636,7 @@ var
 begin
   if fLevels.Count = 0 then
   begin
-    raise EAccessViolation.Create('No levels contained in selected rank!');
+    raise EAccessViolation.Create('No levels contained in selected group!');
     Exit;
   end;
 

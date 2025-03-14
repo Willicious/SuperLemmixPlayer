@@ -1395,7 +1395,7 @@ begin
     fReplayManager.LevelName := Level.Info.Title;
     fReplayManager.LevelAuthor := Level.Info.Author;
     fReplayManager.LevelGame := GameParams.BaseLevelPack.Name;
-    fReplayManager.LevelRank := GameParams.CurrentGroupName;
+    fReplayManager.LevelGroup := GameParams.CurrentGroupName;
     fReplayManager.LevelPosition := GameParams.CurrentLevel.GroupIndex+1;
     fReplayManager.LevelID := Level.Info.LevelID;
     fReplayManager.LevelVersion := Level.Info.LevelVersion;
@@ -8763,7 +8763,7 @@ begin
     LevelName := Trim(fLevel.Info.Title);
     LevelAuthor := Trim(fLevel.Info.Author);
     LevelGame := GameParams.CurrentLevel.Group.ParentBasePack.Name;
-    LevelRank := GameParams.CurrentGroupName;
+    LevelGroup := GameParams.CurrentGroupName;
     LevelPosition := GameParams.CurrentLevel.GroupIndex + 1;
     LevelID := fLevel.Info.LevelID;
   end;

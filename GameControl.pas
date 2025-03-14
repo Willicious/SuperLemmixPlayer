@@ -241,8 +241,8 @@ type
 
     procedure CreateBasePack;
     procedure SetLevel(aLevel: TNeoLevelEntry);
-    procedure NextLevel(aCanCrossRank: Boolean = False);
-    procedure PrevLevel(aCanCrossRank: Boolean = False);
+    procedure NextLevel(aCanCrossGroup: Boolean = False);
+    procedure PrevLevel(aCanCrossGroup: Boolean = False);
     procedure SetGroup(aGroup: TNeoLevelGroup);
     procedure NextGroup;
     procedure PrevGroup;
@@ -912,7 +912,7 @@ begin
   fCurrentLevel := aLevel;
 end;
 
-procedure TDosGameParams.NextLevel(aCanCrossRank: Boolean);
+procedure TDosGameParams.NextLevel(aCanCrossGroup: Boolean);
 var
   CurLevel: TNeoLevelEntry;
   CurLevelGroup: TNeoLevelGroup;
@@ -923,7 +923,7 @@ begin
   CurLevelIndex := CurLevelGroup.LevelIndex[CurLevel];
   if CurLevelIndex = CurLevelGroup.Levels.Count-1 then
   begin
-    if aCanCrossRank then
+    if aCanCrossGroup then
     begin
       NextGroup;
       CurLevelGroup := fCurrentLevel.Group;
@@ -935,7 +935,7 @@ begin
   ShownText := False;
 end;
 
-procedure TDosGameParams.PrevLevel(aCanCrossRank: Boolean);
+procedure TDosGameParams.PrevLevel(aCanCrossGroup: Boolean);
 var
   CurLevel: TNeoLevelEntry;
   CurLevelGroup: TNeoLevelGroup;
@@ -946,7 +946,7 @@ begin
   CurLevelIndex := CurLevelGroup.LevelIndex[CurLevel];
   if CurLevelIndex = 0 then
   begin
-    if aCanCrossRank then
+    if aCanCrossGroup then
     begin
       PrevGroup;
       CurLevelGroup := fCurrentLevel.Group;
@@ -1004,8 +1004,8 @@ var
     end;
   end;
 begin
-  // Tries to set the exact level. If the level is missing, try to set to the rank it's supposedly in;
-  // If that fails, the pack the rank is in, etc. If there's no sane result whatsoever, do nothing.
+  // Tries to set the exact level. If the level is missing, try to set to the group it's supposedly in;
+  // If that fails, the pack the group is in, etc. If there's no sane result whatsoever, do nothing.
   // This is used for the LastActiveLevel setting in settings.ini, and the -shortcut command line parameter.
 
   if not TPath.IsPathRooted(aPattern) then

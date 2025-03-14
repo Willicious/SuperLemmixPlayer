@@ -152,7 +152,7 @@ type
       fLevelName: String;
       fLevelAuthor: String;
       fLevelGame: String;
-      fLevelRank: String;
+      fLevelGroup: String;
       fLevelPosition: Integer;
       fLevelID: Int64;
       fLevelVersion: Int64;
@@ -189,7 +189,7 @@ type
       property LevelName: String read fLevelName write fLevelName;
       property LevelAuthor: String read fLevelAuthor write fLevelAuthor;
       property LevelGame: String read fLevelGame write fLevelGame;
-      property LevelRank: String read fLevelRank write fLevelRank;
+      property LevelGroup: String read fLevelGroup write fLevelGroup;
       property LevelPosition: Integer read fLevelPosition write fLevelPosition;
       property LevelID: Int64 read fLevelID write fLevelID;
       property LevelVersion: Int64 read fLevelVersion write fLevelVersion;
@@ -312,7 +312,7 @@ begin
     Result := StringReplace(Result, TAG_VERSION, IntToStr(GameParams.Level.Info.LevelVersion), [rfReplaceAll]);
   end else begin
     Result := StringReplace(Result, TAG_TITLE, MakeSafeForFilename(aReplay.LevelName), [rfReplaceAll]);
-    Result := StringReplace(Result, TAG_GROUP, MakeSafeForFilename(aReplay.LevelRank), [rfReplaceAll]);
+    Result := StringReplace(Result, TAG_GROUP, MakeSafeForFilename(aReplay.LevelGroup), [rfReplaceAll]);
     Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(aReplay.LevelPosition, 2), [rfReplaceAll]);
     Result := StringReplace(Result, TAG_PACK, MakeSafeForFilename(aReplay.LevelGame), [rfReplaceAll]);
     Result := StringReplace(Result, TAG_USERNAME, MakeSafeForFilename(aReplay.PlayerName), [rfReplaceAll]);
@@ -448,7 +448,7 @@ begin
   fLevelName := '';
   fLevelAuthor := '';
   fLevelGame := '';
-  fLevelRank := '';
+  fLevelGroup := '';
   fLevelPosition := 0;
   fLevelID := 0;
   fLevelVersion := 0;
@@ -594,7 +594,7 @@ begin
     fLevelName := Sec.LineString['title'];
     fLevelAuthor := Sec.LineString['author'];
     fLevelGame := Sec.LineString['game'];
-    fLevelRank := Sec.LineString['group'];
+    fLevelGroup := Sec.LineString['group'];
     fLevelPosition := Sec.LineNumeric['level'];
     fLevelID := Sec.LineNumeric['id'];
     fLevelVersion := Sec.LineNumeric['version'];
@@ -688,7 +688,7 @@ begin
     if Trim(fLevelGame) <> '' then
     begin
       Sec.AddLine('GAME', fLevelGame);
-      Sec.AddLine('GROUP', fLevelRank);
+      Sec.AddLine('GROUP', fLevelGroup);
       Sec.AddLine('LEVEL', fLevelPosition);
     end;
     Sec.AddLine('ID', fLevelID, 16);

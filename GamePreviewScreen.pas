@@ -27,8 +27,8 @@ type
 
       procedure NextLevel;
       procedure PreviousLevel;
-      procedure NextRank;
-      procedure PreviousRank;
+      procedure NextGroup;
+      procedure PreviousGroup;
 
       procedure BeginPlay;
       procedure ExitToMenu;
@@ -144,13 +144,13 @@ begin
   end;
 end;
 
-procedure TGamePreviewScreen.NextRank;
+procedure TGamePreviewScreen.NextGroup;
 begin
   GameParams.NextGroup;
   CloseScreen(gstPreview);
 end;
 
-procedure TGamePreviewScreen.PreviousRank;
+procedure TGamePreviewScreen.PreviousGroup;
 begin
   GameParams.PrevGroup;
   CloseScreen(gstPreview);
@@ -342,8 +342,8 @@ begin
     begin
       MakeHiddenOption(VK_LEFT, PreviousLevel);
       MakeHiddenOption(VK_RIGHT, NextLevel);
-      MakeHiddenOption(VK_DOWN, PreviousRank);
-      MakeHiddenOption(VK_UP, NextRank);
+      MakeHiddenOption(VK_DOWN, PreviousGroup);
+      MakeHiddenOption(VK_UP, NextGroup);
     end;
 
     MakeTalismanOptions;
