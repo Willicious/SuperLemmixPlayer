@@ -6513,6 +6513,12 @@ var
         // Ignore pixels below original head height
         if (L.LemJumpProgress > 2) then
         begin
+          if (L.LemJumpProgress >= 8) and HasTriggerAt(L.LemX, L.LemY, trSplat) then
+          begin
+            fLemNextAction := baSplatting;
+            Exit;
+          end;
+
           fLemNextAction := baWalking;
           Exit;
         end;
