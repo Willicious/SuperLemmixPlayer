@@ -3243,19 +3243,18 @@ begin
     // Transition if we are at the end position and need to do one
     // Except if we try to splat and there is water at the lemming position - then let this take precedence.
     if (fLemNextAction <> baNone) and ([CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY])
-      and ((fLemNextAction <> baSplatting)
-      or not HasWaterObjectAt(L.LemX, L.LemY)) then
-    begin
-      Transition(L, fLemNextAction);
-      if fLemJumpToHoistAdvance then
+      and ((fLemNextAction <> baSplatting) or not HasWaterObjectAt(L.LemX, L.LemY)) then
       begin
-        Inc(L.LemFrame, 2);
-        Inc(L.LemPhysicsFrame, 2);
-      end;
+        Transition(L, fLemNextAction);
+        if fLemJumpToHoistAdvance then
+        begin
+          Inc(L.LemFrame, 2);
+          Inc(L.LemPhysicsFrame, 2);
+        end;
 
-      fLemNextAction := baNone;
-      fLemJumpToHoistAdvance := False;
-    end;
+        fLemNextAction := baNone;
+        fLemJumpToHoistAdvance := False;
+      end;
 
     // Pickup Skills
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
