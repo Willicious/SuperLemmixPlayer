@@ -3338,24 +3338,24 @@ begin
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       L.LemInSplitter := DOM_NOOBJECT;
+
+    // Check for water object to transition to swimmer/drifter only at final position
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
+      AbortChecks := HandleWaterSwim(L);
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trBlasticine) then
+      AbortChecks := HandleBlasticineSwim(L);
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trVinewater) then
+      AbortChecks := HandleVinewaterSwim(L);
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trLava) then
+      AbortChecks := HandleLavaSwim(L);
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPoison) then
+      AbortChecks := HandlePoison(L);
   until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY);
 
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
 
   { end of AbortChecks }
-
-  // Check for water object to transition to swimmer/drifter only at final position
-  if HasTriggerAt(L.LemX, L.LemY, trWater) then
-    HandleWaterSwim(L);
-  if HasTriggerAt(L.LemX, L.LemY, trBlasticine) then
-    HandleBlasticineSwim(L);
-  if HasTriggerAt(L.LemX, L.LemY, trVinewater) then
-    HandleVinewaterSwim(L);
-  if HasTriggerAt(L.LemX, L.LemY, trLava) then
-    HandleLavaSwim(L);
-  if HasTriggerAt(L.LemX, L.LemY, trPoison) then
-    HandlePoison(L);
 
   { Check for blocker fields and force-fields | not for Jumpers, as this is handled during movement.
     Also not for miners removing terrain, see www.lemmingsforums.net/index.php?topic=2710.0 }
