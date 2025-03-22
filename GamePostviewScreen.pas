@@ -335,7 +335,7 @@ var
   WhichText: TPostviewText;
   STarget, SRescued, STimeSR, STimeTotal: string;
   SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
-  InfiniteHotkeysUsed, LevelHasTalismans, ShowSavedRecord: Boolean;
+  InfiniteHotkeysUsed, LevelHasTalismans, LevelPassed, ShowSavedRecord: Boolean;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -413,6 +413,9 @@ begin
     end;
   end;
 
+  LevelPassed := (Results.gSuccess) or ((GameParams.TestModeLevel <> nil) and
+                                        (Results.gRescued >= Results.gToRescue));
+
   // Top text
   HueShift.HShift := TopTextShift;
 
@@ -431,7 +434,7 @@ begin
 
   // Rescue result - needed
   HueShift.HShift := RescueRecordShift;
-  if LevelHasTalismans and Results.gSuccess then
+  if LevelHasTalismans and LevelPassed then
     Result[1].Line := ''
   else
     Result[1].Line := SYouNeeded + ' ' + STarget + StringOfChar(' ', 3 - STarget.Length);
@@ -439,7 +442,7 @@ begin
   Result[1].ColorShift := HueShift;
 
   // Rescue result - rescued
-  if LevelHasTalismans and Results.gSuccess then
+  if LevelHasTalismans and LevelPassed then
     Result[2].Line := ''
   else
     Result[2].Line := SYouRescued + SRescued + StringOfChar(' ', 3 - SRescued.Length);
@@ -452,7 +455,7 @@ begin
                      and (not Results.gToRescue <= 0)
                      and not InfiniteHotkeysUsed;
 
-  if LevelHasTalismans and Results.gSuccess then
+  if LevelHasTalismans and LevelPassed then
   begin
     SThisLine := SYouNeeded + STarget + ' | ' + SYouRescued + SRescued;
 
