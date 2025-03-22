@@ -1,45 +1,21 @@
-LEVEL 01 - Lucky 14.nxlv
-LEVEL 02 - The Helium Party.nxlv
-LEVEL 03 - A Ladderer Would Be Handy.nxlv
-LEVEL 04 - Cookie Chuckers.nxlv
-LEVEL 05 - Spearmint Superhighway.nxlv
-LEVEL 06 - Uppers & Downers.nxlv
-LEVEL 07 - Cool Runnings.nxlv
-LEVEL 08 - The Timebomber Returns.nxlv
-LEVEL 09 - One Lem To Free Them All.nxlv
-LEVEL 10 - Choices, Choices.nxlv
-LEVEL 11 - Trust The Sides.nxlv
-LEVEL 12 - It's Lonely At The Top.nxlv
-LEVEL 13 - R-Rated Release.nxlv
-LEVEL 14 - The Juicy Dangler.nxlv
-LEVEL 15 - Sleeping On The Job.nxlv
-LEVEL 16 - Take Your Time, Mr. Climber.nxlv
-LEVEL 17 - Kill All Zombies.nxlv
-LEVEL 18 - MPL Classic Mode Edition.nxlv
-LEVEL 19 - Zombie Apocalypse.nxlv
-LEVEL 20 - Re-inroducing SUPERLEMMING.nxlv
-LEVEL 21 - The Direct Approach.nxlv
-LEVEL 22 - The Completionist.nxlv
-LEVEL 23 - The Nudge.nxlv
-LEVEL 24 - Pooling The Resources.nxlv
-LEVEL 25 - Welcome, Lemminara Croft.nxlv
-LEVEL 26 - Blasticine Modelling.nxlv
-LEVEL 27 - Vine Tuning.nxlv
-LEVEL 28 - Running Jump Lava Edition.nxlv
-LEVEL 29 - Lemmy's Psychedelic Bath.nxlv
-LEVEL 30 - The Conveyor Belts.nxlv
-LEVEL 31 - Carbonated Lemming Soda.NXLV
-LEVEL 32 - Death or Glory.nxlv
-LEVEL 33 - Diamond Dynamo.nxlv
-LEVEL 34 - Let's Think About This Carefully.nxlv
-LEVEL 35 - Think Fast.nxlv
-LEVEL 36 - Snow Place Like Home.nxlv
-LEVEL 37 - Up The Downstair.nxlv
-LEVEL 38 - Heaven is a Half Pipe.nxlv
-LEVEL 39 - A Dead Good Level.nxlv
-LEVEL 40 - Fireworks.nxlv
-LEVEL 41 - Left To Right Right To Left.nxlv
-LEVEL 42 - Click Happy.nxlv
-LEVEL 43 - Crossover Tactics.nxlv
-LEVEL 44 - Building Bridges.nxlv
-LEVEL 45 - Degrees of Separation.nxlv
+BASE
+
+$GROUP
+  NAME New Skills & Actions
+  FOLDER Group 1 - New Skills & Actions
+$END
+
+$GROUP
+  NAME New Physics
+  FOLDER Group 2 - New Physics
+$END
+
+$GROUP
+  NAME Challenges
+  FOLDER Group 3 - Challenges
+$END
+
+$GROUP
+  NAME Rivals
+  FOLDER Group 4 - Rivals
+$END

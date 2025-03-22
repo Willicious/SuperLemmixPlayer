@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE A Ladderer Would Be Handy
  AUTHOR WillLem
  ID x4DC50F326231F6D9
- VERSION x000000000000003C
+ VERSION x0000000000000042
  
 #       Level dimensions        
 # ----------------------------- 
@@ -58,7 +58,7 @@
    STYLE orig_crystal
    PIECE window
    X 514
-   Y 13
+   Y 15
    NO_OVERWRITE
  $END
  
@@ -101,6 +101,43 @@
 #        Terrain groups         
 # ----------------------------- 
  $TERRAINGROUP
+   NAME Group40067174
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 202
+     Y 140
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 197
+     Y 132
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 191
+     Y 125
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE orb
+     X 181
+     Y 123
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
    NAME Group1258260739
    
    $TERRAIN
@@ -122,9 +159,89 @@
    
  $END
  
+ $TERRAINGROUP
+   NAME Group-1623340904
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE crystal_03
+     X 193
+     Y 28
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE block
+     X 189
+     Y 37
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE block
+     X 190
+     Y 51
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group156156124
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE mesh_07
+     X 538
+     Y 137
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_03
+     X 526
+     Y 128
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_03
+     X 520
+     Y 132
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_03
+     X 542
+     Y 118
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 512
+   Y 76
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
@@ -162,6 +279,32 @@
  $END
  
  $TERRAIN
+   STYLE *group
+   PIECE Group40067174
+   X 181
+   Y 123
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 192
+   Y 152
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 168
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
    STYLE orig_crystal
    PIECE bar_01
    X 196
@@ -189,47 +332,10 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 201
-   Y 29
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 204
-   Y 29
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 202
-   Y 29
-   FLIP_VERTICAL
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
    STYLE *group
    PIECE Group1258260739
    X 239
    Y 42
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group1258260739
-   X 160
-   Y 152
    FLIP_HORIZONTAL
    ONE_WAY
  $END
@@ -303,7 +409,6 @@
    PIECE steel_02
    X 196
    Y 39
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -311,7 +416,6 @@
    PIECE steel_02
    X 196
    Y 64
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -388,7 +492,7 @@
    STYLE orig_crystal
    PIECE bar_04
    X 535
-   Y 58
+   Y 60
    FLIP_HORIZONTAL
    ONE_WAY
  $END
@@ -397,7 +501,7 @@
    STYLE orig_crystal
    PIECE bar_04
    X 481
-   Y 58
+   Y 60
    FLIP_HORIZONTAL
    ONE_WAY
  $END
@@ -406,7 +510,7 @@
    STYLE *group
    PIECE Group1258260739
    X 479
-   Y 58
+   Y 60
    FLIP_HORIZONTAL
    ONE_WAY
  $END
@@ -415,7 +519,7 @@
    STYLE *group
    PIECE Group1258260739
    X 479
-   Y 58
+   Y 60
    FLIP_HORIZONTAL
    ONE_WAY
  $END
@@ -425,7 +529,6 @@
    PIECE steel_02
    X 620
    Y 58
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -433,7 +536,6 @@
    PIECE steel_02
    X 620
    Y 83
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -441,7 +543,6 @@
    PIECE steel_02
    X 620
    Y 108
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -453,19 +554,10 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_01
-   X 512
-   Y 74
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
    STYLE *group
    PIECE Group1258260739
    X 597
-   Y 58
+   Y 60
    FLIP_HORIZONTAL
    ONE_WAY
  $END
@@ -473,8 +565,8 @@
  $TERRAIN
    STYLE orig_crystal
    PIECE line_04
-   X 239
-   Y 26
+   X 148
+   Y 76
    ONE_WAY
  $END
  
@@ -505,19 +597,9 @@
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE bar_04
-   X 192
-   Y 152
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
    PIECE steel_02
    X 153
    Y 61
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -525,7 +607,6 @@
    PIECE steel_02
    X 18
    Y 61
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -542,16 +623,6 @@
    STYLE orig_crystal
    PIECE bar_04
    X 18
-   Y 86
-   ERASE
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 105
    Y 86
    ERASE
    FLIP_HORIZONTAL
@@ -581,7 +652,6 @@
    PIECE steel_03
    X 93
    Y 109
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -589,6 +659,265 @@
    PIECE steel_03
    X 68
    Y 109
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1623340904
+   X 196
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 119
+   Y 86
+   ERASE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 144
+   Y 76
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 141
+   Y 76
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 121
+   Y 101
+   ERASE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 36
+   Y 76
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 11
+   Y 86
+   ERASE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X -7
+   Y 94
+   ERASE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 40
+   Y 76
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 144
+   Y 92
+   ERASE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 43
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 43
+   Y 94
+   ERASE
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE line_04
+   X 239
+   Y 26
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 158
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 148
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 138
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 127
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 119
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 111
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 102
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 93
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE mesh_08
+   X 528
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group156156124
+   X 548
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group156156124
+   X 564
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group156156124
+   X 520
+   Y 135
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group156156124
+   X 504
+   Y 151
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group156156124
+   X 550
+   Y 136
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group156156124
+   X 534
+   Y 152
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group156156124
+   X 570
+   Y 128
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
    ONE_WAY
  $END
  

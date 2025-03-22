@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Cool Runnings
  AUTHOR WillLem
  ID x19AACEB83383E841
- VERSION x000000000000000D
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -28,7 +28,8 @@
    WALKER 0
    SWIMMER 0
    FLOATER 0
-   FREEZER 20
+   BOMBER 5
+   FREEZER 15
    BUILDER 0
    GRENADER 0
    LASERER 0
@@ -39,6 +40,18 @@
    ID 0
    COLOR Gold
    SAVE_REQUIREMENT 80
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 1
+   COLOR Silver
+   WALKER_LIMIT 0
+   SWIMMER_LIMIT 0
+   FLOATER_LIMIT 0
+   BUILDER_LIMIT 0
+   GRENADER_LIMIT 0
+   LASERER_LIMIT 0
  $END 
  
 #     Interactive objects       
@@ -69,6 +82,7 @@
    Y 3
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
  $END
  
  $GADGET
@@ -156,6 +170,7 @@
    Y 125
    NO_OVERWRITE
    SKILL BUILDER
+   SKILL_COUNT 2
  $END
  
  $GADGET
@@ -483,6 +498,14 @@
    PIECE bar_04
    X 574
    Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE gelato_melted
+   X 625
+   Y 54
    ONE_WAY
  $END
  

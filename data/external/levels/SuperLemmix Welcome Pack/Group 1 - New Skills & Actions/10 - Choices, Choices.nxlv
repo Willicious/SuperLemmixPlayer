@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Choices, Choices
  AUTHOR WillLem
  ID x11490813722C8FA2
- VERSION x0000000000000030
+ VERSION x0000000000000032
  
 #       Level dimensions        
 # ----------------------------- 
@@ -21,23 +21,23 @@
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 40
- SAVE_REQUIREMENT 30
+ SAVE_REQUIREMENT 25
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-   WALKER 10
-   JUMPER 10
-   SHIMMIER 10
-   BALLOONER 10
-   FLOATER 10
-   TIMEBOMBER 10
-   FREEZER 10
-   LADDERER 10
-   PLATFORMER 10
-   BUILDER 10
-   SPEARER 10
-   GRENADER 10
-   BASHER 10
+   WALKER 14
+   JUMPER 14
+   SHIMMIER 14
+   BALLOONER 14
+   FLOATER 14
+   TIMEBOMBER 14
+   FREEZER 14
+   LADDERER 14
+   PLATFORMER 14
+   BUILDER 14
+   SPEARER 14
+   GRENADER 14
+   BASHER 14
    CLONER 0
  $END 
  
@@ -1015,22 +1015,6 @@
    PIECE steel_01
    X 294
    Y 62
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_large_01
-   X 336
-   Y 161
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_large_01
-   X 832
-   Y 161
-   ONE_WAY
  $END
  
  $TERRAIN
