@@ -302,7 +302,6 @@ type
       function HandleLavaFatality(L: TLemming): Boolean;
       function HandleLavaSwim(L: TLemming): Boolean;
       function HandlePoison(L: TLemming): Boolean;
-      function NoWaterFound(L: TLemming): Boolean;
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForQueuedAction;
@@ -1809,6 +1808,15 @@ begin
   // Transition to faller instead walker, if no pixel below lemming
   if (not HasPixelAt(L.LemX, L.LemY)) and (NewAction = baWalking) then
     NewAction := baFalling;
+
+  // Check if the lem has fallen through water
+  if (NewAction = baFalling) and L.LemIsSwimmer then
+  begin
+    for i := 0 to 4 do
+      if HasWaterObjectAt(L.LemX, L.LemY - i)
+        and not HasPixelAt(L.LemX, L.LemY - i)then
+          Dec(L.LemY, i);
+  end;
 
   // Should not happen, except for assigning walkers to walkers
   if L.LemAction = NewAction then Exit;
@@ -3338,22 +3346,22 @@ begin
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       L.LemInSplitter := DOM_NOOBJECT;
-
-    // Check for water object to transition to swimmer/drifter only at final position
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
-      AbortChecks := HandleWaterSwim(L);
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trBlasticine) then
-      AbortChecks := HandleBlasticineSwim(L);
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trVinewater) then
-      AbortChecks := HandleVinewaterSwim(L);
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trLava) then
-      AbortChecks := HandleLavaSwim(L);
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPoison) then
-      AbortChecks := HandlePoison(L);
   until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY);
 
   if NeedShiftPosition then
     Inc(L.LemX, L.LemDX);
+
+  // Check for water object to transition to swimmer/drifter only at final position
+  if HasTriggerAt(L.LemX, L.LemY, trWater) then
+    HandleWaterSwim(L);
+  if HasTriggerAt(L.LemX, L.LemY, trBlasticine) then
+    HandleBlasticineSwim(L);
+  if HasTriggerAt(L.LemX, L.LemY, trVinewater) then
+    HandleVinewaterSwim(L);
+  if HasTriggerAt(L.LemX, L.LemY, trLava) then
+    HandleLavaSwim(L);
+  if HasTriggerAt(L.LemX, L.LemY, trPoison) then
+    HandlePoison(L);
 
   { end of AbortChecks }
 
@@ -3878,14 +3886,6 @@ end;
 
 { Water objects}
 
-function TLemmingGame.NoWaterFound(L: TLemming): Boolean;
-begin
-  Result := False;
-
-  if HasPixelAt(L.LemX, L.LemY) and not HasWaterObjectAt(L.LemX, L.LemY) then
-    Result := True;
-end;
-
 procedure TLemmingGame.StartSwimming(L: TLemming);
 begin
   Transition(L, baSwimming);
@@ -3920,9 +3920,6 @@ const
 begin
   Result := True;
 
-  if NoWaterFound(L) then
-    Exit;
-
   if (L.LemIsSwimmer or L.LemIsInvincible) and not (L.LemAction in ActionSet) then
     StartSwimming(L);
 end;
@@ -3954,9 +3951,6 @@ const
                baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
-
-  if NoWaterFound(L) then
-    Exit;
 
   if L.LemIsInvincible and not (L.LemAction in ActionSet) then
     StartSwimming(L);
@@ -3990,9 +3984,6 @@ const
 begin
   Result := True;
 
-  if NoWaterFound(L) then
-    Exit;
-
   if L.LemIsInvincible and not (L.LemAction in ActionSet) then
     StartSwimming(L);
 end;
@@ -4025,9 +4016,6 @@ const
 begin
   Result := True;
 
-  if NoWaterFound(L) then
-    Exit;
-
   if L.LemIsInvincible and not (L.LemAction in ActionSet) then
     StartSwimming(L);
 end;
@@ -4040,9 +4028,6 @@ const
                baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
-
-  if NoWaterFound(L) then
-    Exit;
 
   if not (L.LemIsZombie or L.LemIsInvincible) then
     RemoveLemming(L, RM_ZOMBIE);
