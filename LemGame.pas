@@ -3917,7 +3917,7 @@ end;
 
 function TLemmingGame.HandleBlasticineFatality(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baExploding, baFreezerExplosion, baVaporizing,
+  ActionSet = [baExploding, baFreezerExplosion, baVaporizing,
                baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
@@ -3949,7 +3949,7 @@ end;
 
 function TLemmingGame.HandleVinewaterFatality(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baExploding, baFreezerExplosion, baVaporizing,
+  ActionSet = [baExploding, baFreezerExplosion, baVaporizing,
                baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
@@ -3981,7 +3981,7 @@ end;
 
 function TLemmingGame.HandleLavaFatality(L: TLemming): Boolean;
 const
-  ActionSet = [baSwimming, baExploding, baFreezerExplosion, baVaporizing,
+  ActionSet = [baExploding, baFreezerExplosion, baVaporizing,
                baVinetrapping, baExiting, baSplatting];
 begin
   Result := False;
@@ -4020,11 +4020,11 @@ const
 begin
   Result := True;
 
+  if not (L.LemIsZombie or L.LemIsInvincible) then
+    RemoveLemming(L, RM_ZOMBIE);
+
   if not (L.LemAction in ActionSet) then
   begin
-    if not (L.LemIsZombie or L.LemIsInvincible) then
-      RemoveLemming(L, RM_ZOMBIE);
-
     if (L.LemIsSwimmer or L.LemIsInvincible) then
       StartSwimming(L)
     else begin
