@@ -302,6 +302,7 @@ type
       function HandleLavaFatality(L: TLemming): Boolean;
       function HandleLavaSwim(L: TLemming): Boolean;
       function HandlePoison(L: TLemming): Boolean;
+      function NoWaterFound(L: TLemming): Boolean;
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForQueuedAction;
@@ -3877,6 +3878,14 @@ end;
 
 { Water objects}
 
+function TLemmingGame.NoWaterFound(L: TLemming): Boolean;
+begin
+  Result := False;
+
+  if HasPixelAt(L.LemX, L.LemY) and not HasWaterObjectAt(L.LemX, L.LemY) then
+    Result := True;
+end;
+
 procedure TLemmingGame.StartSwimming(L: TLemming);
 begin
   Transition(L, baSwimming);
@@ -3911,6 +3920,9 @@ const
 begin
   Result := True;
 
+  if NoWaterFound(L) then
+    Exit;
+
   if (L.LemIsSwimmer or L.LemIsInvincible) and not (L.LemAction in ActionSet) then
     StartSwimming(L);
 end;
@@ -3942,6 +3954,9 @@ const
                baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
+
+  if NoWaterFound(L) then
+    Exit;
 
   if L.LemIsInvincible and not (L.LemAction in ActionSet) then
     StartSwimming(L);
@@ -3975,6 +3990,9 @@ const
 begin
   Result := True;
 
+  if NoWaterFound(L) then
+    Exit;
+
   if L.LemIsInvincible and not (L.LemAction in ActionSet) then
     StartSwimming(L);
 end;
@@ -4007,6 +4025,9 @@ const
 begin
   Result := True;
 
+  if NoWaterFound(L) then
+    Exit;
+
   if L.LemIsInvincible and not (L.LemAction in ActionSet) then
     StartSwimming(L);
 end;
@@ -4019,6 +4040,9 @@ const
                baVaporizing, baVinetrapping, baExiting, baSplatting];
 begin
   Result := True;
+
+  if NoWaterFound(L) then
+    Exit;
 
   if not (L.LemIsZombie or L.LemIsInvincible) then
     RemoveLemming(L, RM_ZOMBIE);
