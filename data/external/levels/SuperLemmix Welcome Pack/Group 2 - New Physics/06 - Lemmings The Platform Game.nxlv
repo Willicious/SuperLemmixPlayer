@@ -1,0 +1,1159 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8.7
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Lemmings: The Platform Game
+ AUTHOR WillLem
+ ID x65A8E45F61293734
+ VERSION x0000000000000027
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1216
+ HEIGHT 160
+ START_X 208
+ START_Y 80
+ THEME ohno_brick
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 1
+ SAVE_REQUIREMENT 1
+ MAX_SPAWN_INTERVAL 102
+ 
+ $SKILLSET 
+   WALKER 16
+   JUMPER 16
+   SHIMMIER 16
+   CLIMBER 1
+   SWIMMER 1
+   FLOATER 1
+   GLIDER 1
+   BUILDER 16
+   BASHER 16
+   DIGGER 16
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   SKILL_EACH_LIMIT 10
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 605
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 595
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 615
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 740
+   Y 36
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 480
+   Y 57
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 470
+   Y 57
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 490
+   Y 57
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 281
+   Y 27
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 321
+   Y 27
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 884
+   Y 51
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 884
+   Y 35
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 884
+   Y 19
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 806
+   Y 14
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 694
+   Y 14
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_special
+   PIECE coin
+   X 766
+   Y 36
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas_monochrome
+   PIECE water
+   X 34
+   Y 144
+   WIDTH 128
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas_monochrome
+   PIECE water
+   X 481
+   Y 144
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE willlem_lemminas_monochrome
+   PIECE water
+   X 1113
+   Y 144
+   WIDTH 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE exit
+   X 1047
+   Y 54
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_brick
+   PIECE window
+   X 170
+   Y 78
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME GROUP-1942290313
+   
+   $TERRAIN
+     STYLE willlem_lemminas_monochrome
+     PIECE bar
+     X 274
+     Y 98
+     ROTATE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas_slushworld
+     PIECE blue_spike
+     X 252
+     Y 92
+     ROTATE
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas_slushworld
+     PIECE blue_spike
+     X 317
+     Y 92
+     ROTATE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas_monochrome
+     PIECE spike
+     X 317
+     Y 92
+     ROTATE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas_monochrome
+     PIECE spike
+     X 252
+     Y 92
+     ROTATE
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas
+     PIECE bar_01
+     X 274
+     Y 82
+     ERASE
+     ROTATE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE willlem_lemminas
+     PIECE bar_01
+     X 274
+     Y 114
+     ERASE
+     ROTATE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 1017
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 1017
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 1017
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 1002
+   Y 41
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 1098
+   Y 89
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 1162
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 825
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 874
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 857
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 654
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 654
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE pillar
+   X 592
+   Y 73
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE pillar
+   X 592
+   Y 33
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE pillar_end
+   X 582
+   Y 17
+   ROTATE
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 545
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 545
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 469
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 387
+   Y 0
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 387
+   Y 98
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 387
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar_diagonal
+   X 688
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar_diagonal
+   X 648
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 831
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 831
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 824
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE GROUP-1942290313
+   X 252
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_tealkingdom
+   PIECE sonic_monitor
+   X 291
+   Y 9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 387
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 403
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 371
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 161
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 225
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 289
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 353
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 417
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 889
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 953
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 1049
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 889
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 906
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 889
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 953
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 1049
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 1049
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 953
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 953
+   Y 41
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 953
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 921
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 545
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bricks_02
+   X 609
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE spike
+   X 20
+   Y 127
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE GROUP-1942290313
+   X 430
+   Y 66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE block
+   X 273
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE block
+   X 305
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 647
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 728
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star
+   X 203
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 188
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 195
+   Y 17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 123
+   Y 9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 51
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 59
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 35
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star
+   X 108
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star
+   X 1116
+   Y 28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 1079
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 1092
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 1099
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star
+   X 1044
+   Y 17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 1057
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas
+   PIECE star _small
+   X 1065
+   Y 16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_01
+   X 622
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE ruby_clump
+   X 631
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_01
+   X 675
+   Y 120
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE ruby_clump
+   X 648
+   Y 137
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_02
+   X 788
+   Y 138
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE ruby_clump
+   X 797
+   Y 136
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 946
+   Y 142
+   NO_OVERWRITE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 915
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE bar
+   X 930
+   Y 86
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 995
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 998
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1002
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1009
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1016
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1025
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1034
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1043
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1054
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1064
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1073
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1082
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1088
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1094
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 920
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 926
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 934
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 945
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 956
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 968
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 978
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 987
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 995
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1003
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE willlem_lemminas_monochrome
+   PIECE orb
+   X 1009
+   Y 146
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE ohno_brick
+   PIECE bricks_large_01
+   X 164
+   Y 124
+   ONE_WAY
+ $END
+ 
+ 

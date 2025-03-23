@@ -1,14 +1,14 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
- TITLE Take Your Time, Mr. Climber
+ TITLE Take Your Turn, Mr. Climber
  AUTHOR WillLem
  ID x7E5AD7F731A1714A
- VERSION x000000000000000D
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -29,11 +29,18 @@
  $END 
  
  $TALISMAN 
-   TITLE Gold Talisman
+   TITLE Silver Talisman
    ID 0
-   COLOR Gold
+   COLOR Silver
    CLASSIC_MODE 0
    NO_PAUSE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 1
+   COLOR Gold
+   TIME_LIMIT 510
  $END 
  
 #     Interactive objects       
@@ -562,7 +569,6 @@
    PIECE steel_03
    X 185
    Y 88
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -570,7 +576,6 @@
    PIECE steel_03
    X 160
    Y 88
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -602,7 +607,7 @@
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 195
+   X 179
    Y 120
    CLIMBER 
  $END

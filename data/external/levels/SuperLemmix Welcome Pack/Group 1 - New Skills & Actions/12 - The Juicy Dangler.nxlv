@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Juicy Dangler
  AUTHOR WillLem
  ID x0652D4CC45F88611
- VERSION x0000000000000043
+ VERSION x0000000000000044
  
 #       Level dimensions        
 # ----------------------------- 
@@ -28,7 +28,7 @@
    WALKER 5
    SHIMMIER 5
    SLIDER 1
-   BASHER 1
+   BASHER 5
    CLONER 0
  $END 
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Sleeping On The Job
  AUTHOR WillLem
  ID x75B245C846063EB5
- VERSION x000000000000003A
+ VERSION x000000000000003B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -20,8 +20,8 @@
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 40
- SAVE_REQUIREMENT 20
+ LEMMINGS 4
+ SAVE_REQUIREMENT 4
  TIME_LIMIT 10
  MAX_SPAWN_INTERVAL 53
  

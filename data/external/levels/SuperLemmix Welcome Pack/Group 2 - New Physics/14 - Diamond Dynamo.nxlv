@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Diamond Dynamo
  AUTHOR WillLem
  ID x6F35981B6DECC9B6
- VERSION x0000000000000049
+ VERSION x000000000000004B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -352,33 +352,6 @@
    PIECE block
    X 336
    Y 143
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE block
-   X 248
-   Y 168
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE block
-   X 224
-   Y 168
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE block
-   X 184
-   Y 168
-   ERASE
    ONE_WAY
  $END
  

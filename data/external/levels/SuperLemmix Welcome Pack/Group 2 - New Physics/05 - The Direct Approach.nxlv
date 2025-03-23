@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8.2
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Direct Approach
  AUTHOR WillLem
  ID x3278D9715D450C26
- VERSION x000000000000002E
+ VERSION x0000000000000030
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,6 +23,7 @@
  LEMMINGS 80
  SAVE_REQUIREMENT 60
  MAX_SPAWN_INTERVAL 102
+ COLLECTIBLES 1
  
  $SKILLSET 
    WALKER 1
@@ -111,6 +112,14 @@
    PIECE shredder
    X 131
    Y 21
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE diamond
+   X 313
+   Y 71
    NO_OVERWRITE
  $END
  

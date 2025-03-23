@@ -1,0 +1,560 @@
+# ----------------------------- 
+#        SuperLemmix Level        
+#   Created with SLXEditor 2.8.7
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Gaining in Height
+ AUTHOR WillLem
+ ID x76DCF9112E89C414
+ VERSION x0000000000000031
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 440
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME orig_marble
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 1
+ SAVE_REQUIREMENT 1
+ MAX_SPAWN_INTERVAL 102
+ 
+ $SKILLSET 
+   JUMPER 10
+   SHIMMIER 10
+ $END 
+ 
+ $PRETEXT 
+   LINE Lemmings can now jump through platforms
+   LINE as long as the top of the platform is
+   LINE below the lemming's head height.
+   LINE 
+   LINE It's also possible to use the "Reacher" phase
+   LINE of the Shimmier skill action to jump
+   LINE through the platforms as well.
+   LINE 
+   LINE Give it a try!
+   LINE 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_marble
+   PIECE exit
+   X 347
+   Y 22
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 248
+   Y 23
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 104
+   Y 136
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 79
+   Y 67
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE orig_marble
+   PIECE shredder
+   X 31
+   Y 43
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group162458883
+   
+   $TERRAIN
+     STYLE orig_marble
+     PIECE bar_04
+     X 269
+     Y 82
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_marble
+     PIECE bar_04
+     X 278
+     Y 82
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 207
+   Y 119
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 60
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 156
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 180
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 204
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 228
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 252
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 276
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 300
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 324
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 348
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 372
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 396
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 324
+   Y 111
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE structure_04
+   X 348
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_01
+   X 271
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 252
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 163
+   Y 127
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 207
+   Y 127
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_01
+   X 252
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 252
+   Y 42
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 276
+   Y 119
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 276
+   Y 126
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 292
+   Y 126
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 308
+   Y 119
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 162
+   Y 83
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 162
+   Y 39
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 206
+   Y 75
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 206
+   Y 35
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 162
+   Y -1
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 206
+   Y -5
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 293
+   Y 68
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 293
+   Y 28
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 293
+   Y -12
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 294
+   Y 111
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group162458883
+   X 269
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group162458883
+   X 250
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 84
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 99
+   Y 127
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 57
+   Y 127
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 13
+   Y 127
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 132
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 12
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 36
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 12
+   Y 83
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 12
+   Y 39
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 12
+   Y -1
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_01
+   X 108
+   Y 157
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE steel_01
+   X 108
+   Y 155
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE structure_04
+   X 95
+   Y -47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE structure_04
+   X 71
+   Y -23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE structure_04
+   X 23
+   Y -47
+   ONE_WAY
+ $END
+ 
+ 
+#      Preplaced lemmings       
+# ----------------------------- 
+ $LEMMING
+   X 24
+   Y 136
+   CLIMBER 
+   FLOATER 
+ $END
+ 
+ 
