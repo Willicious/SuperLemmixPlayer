@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC awesome_amiga
  ID xDA4E2B370FC2267F
- VERSION x000000000000001F
+ VERSION x0000000000000025
  
 #       Level dimensions        
 # ----------------------------- 
@@ -35,17 +35,9 @@
    TIMEBOMBER 5
    FREEZER 5
    BUILDER 20
+   SPEARER 10
    GRENADER 5
    LASERER 5
- $END 
- 
- $TALISMAN 
-   TITLE Gold Talisman
-   ID 0
-   COLOR Gold
-   SAVE_REQUIREMENT 100
-   FLOATER_LIMIT 0
-   CLASSIC_MODE 0
  $END 
  
  $TALISMAN 
@@ -57,11 +49,19 @@
  
  $TALISMAN 
    TITLE Silver Talisman
-   ID 1
+   ID 0
    COLOR Silver
    SAVE_REQUIREMENT 100
-   FREEZER_LIMIT 1
-   CLASSIC_MODE 0
+   FLOATER_LIMIT 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 1
+   COLOR Gold
+   SAVE_REQUIREMENT 100
+   FREEZER_LIMIT 0
+   BUILDER_LIMIT 0
  $END 
  
 #     Interactive objects       

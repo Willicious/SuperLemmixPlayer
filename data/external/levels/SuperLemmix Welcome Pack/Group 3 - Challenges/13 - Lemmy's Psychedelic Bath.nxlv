@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
@@ -8,34 +8,36 @@
  TITLE Lemmy's Psychedelic Bath
  AUTHOR WillLem
  ID x6A9F098C0B166333
- VERSION x0000000000000039
+ VERSION x0000000000000042
  
 #       Level dimensions        
 # ----------------------------- 
- WIDTH 1544
+ WIDTH 1408
  HEIGHT 160
- START_X 464
+ START_X 432
  START_Y 80
  THEME orig_marble
  
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 40
- SAVE_REQUIREMENT 15
+ SAVE_REQUIREMENT 25
  MAX_SPAWN_INTERVAL 93
  
  $SKILLSET 
-   WALKER 10
+   WALKER 20
    JUMPER 20
-   BALLOONER 10
+   BALLOONER 20
    CLIMBER 20
-   SWIMMER 40
+   SWIMMER 20
    TIMEBOMBER 10
-   BOMBER 1
+   BOMBER 10
    FREEZER 20
+   BLOCKER 2
    LADDERER 20
-   PLATFORMER 10
-   GRENADER 0
+   PLATFORMER 20
+   SPEARER 10
+   GRENADER 10
  $END 
  
  $TALISMAN 
@@ -99,47 +101,20 @@
  $GADGET
    STYLE orig_marble
    PIECE window
-   X 576
-   Y 23
+   X 687
+   Y 47
    NO_OVERWRITE
+   FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
+   SWIMMER 
  $END
  
  $GADGET
    STYLE orig_fire
    PIECE water
    X 616
-   Y 80
-   WIDTH 64
-   HEIGHT 80
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_marble
-   PIECE poison
-   X 712
-   Y 78
-   WIDTH 72
-   HEIGHT 88
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 784
-   Y 69
-   WIDTH 69
-   HEIGHT 39
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_fire
-   PIECE water
-   X 853
-   Y 80
-   WIDTH 64
+   Y 97
+   WIDTH 128
    HEIGHT 80
    NO_OVERWRITE
  $END
@@ -172,68 +147,50 @@
  $END
  
  $GADGET
-   STYLE orig_fire
-   PIECE lava
-   X 942
-   Y 77
-   WIDTH 88
-   HEIGHT 83
+   STYLE orig_crystal
+   PIECE water
+   X 776
+   Y 97
+   WIDTH 128
+   HEIGHT 64
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE exit
+   X 881
+   Y 26
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE water
+   X 904
+   Y 49
+   WIDTH 128
+   HEIGHT 112
    NO_OVERWRITE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE flamethrower
-   X 936
-   Y 13
+   PIECE flamethrower_blue
+   X 1026
+   Y 12
    NO_OVERWRITE
+   ROTATE
  $END
  
  $GADGET
    STYLE orig_fire
-   PIECE flamethrower
-   X 843
-   Y 13
+   PIECE flamethrower_blue
+   X 1017
+   Y 12
    NO_OVERWRITE
+   ROTATE
    FLIP_HORIZONTAL
- $END
- 
- $GADGET
-   STYLE orig_crystal
-   PIECE exit_vortex
-   X 1320
-   Y 6
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_crystal
-   PIECE water
-   X 1223
-   Y 84
-   WIDTH 120
-   HEIGHT 80
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_crystal
-   PIECE water
-   X 1343
-   Y 40
-   WIDTH 120
-   HEIGHT 120
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE willlem_lemminas
-   PIECE pickup
-   X 811
-   Y 131
-   NO_OVERWRITE
-   SKILL GRENADER
-   SKILL_COUNT 30
  $END
  
  
@@ -245,24 +202,24 @@
    $TERRAIN
      STYLE orig_marble
      PIECE bar_thin_04
-     X 721
-     Y 24
+     X 345
+     Y 139
      ONE_WAY
    $END
    
    $TERRAIN
      STYLE orig_marble
      PIECE bar_thin_04
-     X 721
-     Y 25
+     X 345
+     Y 140
      ONE_WAY
    $END
    
    $TERRAIN
      STYLE orig_marble
      PIECE bar_thin_04
-     X 723
-     Y 24
+     X 347
+     Y 139
      ERASE
      ONE_WAY
    $END
@@ -270,8 +227,8 @@
    $TERRAIN
      STYLE orig_marble
      PIECE bar_thin_04
-     X 723
-     Y 25
+     X 347
+     Y 140
      ERASE
      ONE_WAY
    $END
@@ -301,26 +258,59 @@
  $END
  
  $TERRAINGROUP
-   NAME Group-166229629
+   NAME Group-2065307213
    
    $TERRAIN
-     STYLE *group
-     PIECE Group-1734800802
-     X 745
-     Y 29
-     ROTATE
-     FLIP_VERTICAL
+     STYLE orig_crystal
+     PIECE bar_03
+     X 871
+     Y 69
      ONE_WAY
    $END
    
    $TERRAIN
-     STYLE *group
-     PIECE Group-1734800802
-     X 745
-     Y 28
+     STYLE orig_crystal
+     PIECE bar_01
+     X 903
+     Y 74
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_02
+     X 879
+     Y 69
+     NO_OVERWRITE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_03
+     X 864
+     Y 85
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_03
+     X 856
+     Y 93
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_crystal
+     PIECE bar_03
+     X 898
+     Y 77
      ERASE
      ROTATE
-     FLIP_VERTICAL
      ONE_WAY
    $END
    
@@ -329,6 +319,14 @@
  
 #        Terrain pieces         
 # ----------------------------- 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_04
+   X 1039
+   Y -2
+   ONE_WAY
+ $END
+ 
  $TERRAIN
    STYLE orig_marble
    PIECE block_07
@@ -343,103 +341,6 @@
    X 511
    Y 77
    ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 1016
-   Y 56
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_diag_01
-   X 1227
-   Y 67
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 1204
-   Y 120
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 1210
-   Y 144
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 1186
-   Y 56
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 1194
-   Y 48
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group-1734800802
-   X 721
-   Y 24
-   ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_01
-   X 720
-   Y -20
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 952
-   Y 56
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 1017
-   Y 28
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1051
-   Y 65
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1044
-   Y 41
    ONE_WAY
  $END
  
@@ -472,22 +373,6 @@
    PIECE steel_01
    X 166
    Y 129
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_05
-   X 818
-   Y 147
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_05
-   X 786
-   Y 147
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -622,7 +507,7 @@
    STYLE orig_marble
    PIECE brick_small_05
    X 584
-   Y 133
+   Y 150
    ONE_WAY
  $END
  
@@ -630,7 +515,7 @@
    STYLE orig_marble
    PIECE brick_small_05
    X 584
-   Y 101
+   Y 118
    ONE_WAY
  $END
  
@@ -638,7 +523,7 @@
    STYLE orig_marble
    PIECE brick_small_05
    X 584
-   Y 69
+   Y 86
    ONE_WAY
  $END
  
@@ -662,7 +547,7 @@
    STYLE *group
    PIECE Group-1734800802
    X 575
-   Y 66
+   Y 83
    ONE_WAY
  $END
  
@@ -670,7 +555,7 @@
    STYLE *group
    PIECE Group-1734800802
    X 623
-   Y 66
+   Y 83
    ONE_WAY
  $END
  
@@ -678,7 +563,7 @@
    STYLE orig_marble
    PIECE bar_03
    X 576
-   Y 65
+   Y 82
    ONE_WAY
  $END
  
@@ -840,48 +725,40 @@
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 680
-   Y 149
+   X 744
+   Y 134
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE brick_small_05
-   X 680
-   Y 117
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE brick_small_05
-   X 680
-   Y 85
+   X 744
+   Y 102
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE *group
    PIECE Group-1734800802
-   X 671
-   Y 82
+   X 735
+   Y 99
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE *group
    PIECE Group-1734800802
-   X 719
-   Y 82
+   X 783
+   Y 99
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE bar_03
-   X 672
-   Y 81
+   X 736
+   Y 98
    ONE_WAY
  $END
  
@@ -1030,124 +907,10 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_06
-   X 779
-   Y 95
-   ROTATE
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_12
-   X 777
-   Y 81
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_08
-   X 777
-   Y 123
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_08
-   X 777
-   Y 140
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_06
-   X 825
-   Y 95
-   ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_09
-   X 802
-   Y 102
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_12
-   X 843
-   Y 81
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_08
-   X 843
-   Y 123
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE ohno_bubble
-   PIECE pipe_large_08
-   X 843
-   Y 140
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_01
-   X 918
-   Y 71
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 917
-   Y 82
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 917
-   Y 107
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 917
-   Y 132
- $END
- 
- $TERRAIN
    STYLE orig_fire
    PIECE steel_01
    X 166
    Y 154
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 917
-   Y 157
  $END
  
  $TERRAIN
@@ -1295,753 +1058,192 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
-   PIECE bars_diag_01
-   X 1020
-   Y 35
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_01
-   X 1031
-   Y 71
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1051
-   Y 129
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1043
-   Y 97
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 1030
-   Y 82
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 1030
-   Y 107
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 1030
-   Y 132
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 1030
-   Y 157
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1067
-   Y 97
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1067
-   Y 65
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1067
-   Y 33
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1083
-   Y 41
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1091
-   Y 73
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1083
-   Y 105
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1067
-   Y 129
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1091
-   Y 129
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1115
-   Y 137
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1107
-   Y 105
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1107
-   Y 41
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1112
-   Y 72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1128
-   Y 104
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1136
-   Y 133
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1126
-   Y 68
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1129
-   Y 36
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1113
-   Y 12
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1089
-   Y 17
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1041
-   Y 17
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1065
-   Y 12
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_05
-   X 1022
-   Y 9
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 985
-   Y 28
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_03
-   X 1003
-   Y 23
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE rock_01
-   X 918
-   Y 15
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE pillar_end
-   X 915
-   Y 14
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE pillar
-   X 921
-   Y -10
-   ONE_WAY
- $END
- 
- $TERRAIN
    STYLE orig_marble
-   PIECE arch
-   X 602
-   Y -28
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_01
-   X 744
-   Y -12
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_01
-   X 760
-   Y -24
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_01
-   X 776
-   Y -36
+   PIECE block_07
+   X 446
+   Y 24
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE *group
-   PIECE Group-1734800802
-   X 777
-   Y 50
-   ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_01
-   X 776
-   Y 6
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_10
-   X 739
-   Y 30
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group-166229629
-   X 745
-   Y 30
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_10
-   X 755
-   Y 18
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group-166229629
-   X 761
-   Y 18
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1142
-   Y 41
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1150
-   Y 73
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1142
-   Y 105
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1150
-   Y 129
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1174
-   Y 137
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1166
-   Y 105
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1166
-   Y 41
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1171
-   Y 72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1187
-   Y 104
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1195
-   Y 133
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_diag_01
-   X 1188
-   Y 41
-   ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1185
-   Y 68
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1188
-   Y 36
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1172
-   Y 12
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1148
-   Y 17
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1134
-   Y 14
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_05
-   X 1231
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_03
-   X 1220
-   Y 113
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_s
-   X 1068
-   Y 119
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_w
-   X 1093
-   Y 112
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_i
-   X 1130
-   Y 118
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_m
-   X 1158
-   Y 118
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_g
-   X 1069
-   Y 29
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_o
-   X 1096
-   Y 33
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_n
-   X 1158
-   Y 40
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_i
-   X 1126
-   Y 32
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_f
-   X 1063
-   Y 76
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_o
-   X 1090
-   Y 73
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_a
-   X 1171
-   Y 71
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE letter_r
-   X 1121
-   Y 78
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE orb
-   X 1315
-   Y 38
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE orb
-   X 1340
-   Y 35
+   PIECE Group-2065307213
+   X 871
+   Y 69
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE block
-   X 1327
-   Y 36
+   X 871
+   Y 49
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE bar_02
-   X 1332
-   Y 36
+   PIECE block
+   X 903
+   Y 49
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE bar_03
-   X 1298
-   Y 37
+   PIECE clump_01
+   X 1113
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_01
+   X 1047
+   Y 49
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 1032
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 1032
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_01
+   X 1086
+   Y 81
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_01
+   X 1061
+   Y 105
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 1032
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE block
+   X 1032
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE clump_01
+   X 1046
+   Y 96
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE spider_web
+   X 1184
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 1279
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE bar_01
+   X 1338
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1331
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_crystal
+   PIECE orb
+   X 1272
+   Y 116
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE bar_04
-   X 1311
-   Y 29
+   X 1109
+   Y -2
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE orb
-   X 1296
-   Y 28
+   X 1162
+   Y -9
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE orb
-   X 1358
-   Y 28
+   X 1305
+   Y -17
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE orb
-   X 1328
-   Y 62
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1223
-   Y 84
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bricks_03
-   X 1198
-   Y 84
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 1203
-   Y 88
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 1203
-   Y 113
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE steel_01
-   X 1203
-   Y 138
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE block
-   X 1463
-   Y 40
+   X 1014
+   Y -9
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE orig_crystal
-   PIECE block
-   X 1463
-   Y 72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE block
-   X 1463
-   Y 104
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE block
-   X 1463
-   Y 136
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_fire
-   PIECE bars_06
-   X 984
-   Y 56
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE block_07
-   X 446
-   Y 24
+   PIECE bar_04
+   X 1069
+   Y -2
    ONE_WAY
  $END
  

@@ -8,7 +8,7 @@
  TITLE The Timebomber Returns...
  AUTHOR WillLem
  ID x20D4A9CC00FC3EB5
- VERSION x000000000000001A
+ VERSION x000000000000001C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -265,9 +265,74 @@
    
  $END
  
+ $TERRAINGROUP
+   NAME Group-861106245
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE bridge_05
+     X 558
+     Y 120
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE bridge_05
+     X 562
+     Y 124
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE bridge_05
+     X 562
+     Y 123
+     ERASE
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_dirt
+     PIECE bridge_05
+     X 561
+     Y 124
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_03
+   X 547
+   Y 114
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_03
+   X 561
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE circle_02
+   X 562
+   Y 120
+   ONE_WAY
+ $END
+ 
  $TERRAIN
    STYLE orig_dirt
    PIECE sign_04
@@ -1262,6 +1327,68 @@
    PIECE rocks_02
    X 548
    Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_01
+   X 546
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-861106245
+   X 558
+   Y 120
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE grass_03
+   X 558
+   Y 128
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-861106245
+   X 545
+   Y 130
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-861106245
+   X 545
+   Y 129
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-861106245
+   X 544
+   Y 127
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-861106245
+   X 544
+   Y 125
+   ERASE
    ONE_WAY
  $END
  

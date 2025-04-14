@@ -8,14 +8,14 @@
  TITLE The Helium Party
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x000000000000007A
+ VERSION x000000000000007E
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 616
  HEIGHT 160
- START_X 240
- START_Y 120
+ START_X 200
+ START_Y 80
  THEME orig_marble
  
 #         Level stats           
@@ -25,6 +25,7 @@
  MAX_SPAWN_INTERVAL 63
  
  $SKILLSET 
+   WALKER 20
    JUMPER 40
    BALLOONER 80
    BLOCKER 10
@@ -44,6 +45,7 @@
    SAVE_REQUIREMENT 10
    JUMPER_LIMIT 0
    BLOCKER_LIMIT 0
+   WALKER_LIMIT 0
  $END 
  
 #     Interactive objects       

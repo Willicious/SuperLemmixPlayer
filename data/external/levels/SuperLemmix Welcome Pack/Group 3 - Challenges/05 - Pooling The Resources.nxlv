@@ -1,14 +1,15 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8.2
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Pooling The Resources
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x0D05EC381BEFC6FB
- VERSION x000000000000001D
+ VERSION x0000000000000020
  
 #       Level dimensions        
 # ----------------------------- 
@@ -21,22 +22,29 @@
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 30
- SAVE_REQUIREMENT 20
+ SAVE_REQUIREMENT 15
  MAX_SPAWN_INTERVAL 93
  
  $SKILLSET 
-   WALKER 10
-   FREEZER 10
-   BLOCKER 10
-   GRENADER 10
+   WALKER 15
+   FREEZER 15
+   BLOCKER 15
+   GRENADER 15
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 0
+   COLOR Silver
+   CLASSIC_MODE 0
+   NO_PAUSE 0
  $END 
  
  $TALISMAN 
    TITLE Gold Talisman
-   ID 0
+   ID 1
    COLOR Gold
-   CLASSIC_MODE 0
-   NO_PAUSE 0
+   SAVE_REQUIREMENT 20
  $END 
  
 #     Interactive objects       

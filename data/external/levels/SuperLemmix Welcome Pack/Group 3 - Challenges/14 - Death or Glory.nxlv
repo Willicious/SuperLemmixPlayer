@@ -1,14 +1,15 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8.5
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Death or Glory
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x378AF91A19142D4D
- VERSION x0000000000000014
+ VERSION x0000000000000016
  
 #       Level dimensions        
 # ----------------------------- 

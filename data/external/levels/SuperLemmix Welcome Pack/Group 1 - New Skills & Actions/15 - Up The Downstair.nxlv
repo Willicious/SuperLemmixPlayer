@@ -7,30 +7,40 @@
 # ----------------------------- 
  TITLE Up The Downstair
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x4507104435B8608D
- VERSION x0000000000000011
+ VERSION x0000000000000015
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 736
  HEIGHT 160
- START_X 432
+ START_X 496
  START_Y 80
  THEME willlem_lemminas
  
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 40
- SAVE_REQUIREMENT 36
+ SAVE_REQUIREMENT 35
  TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 28
  
  $SKILLSET 
    WALKER 8
    BALLOONER 8
-   TIMEBOMBER 4
+   CLIMBER 2
+   TIMEBOMBER 5
    LADDERER 16
-   DIGGER 1
+   BUILDER 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 1
+   COLOR Silver
+   BUILDER_LIMIT 0
+   CLIMBER_LIMIT 0
  $END 
  
  $TALISMAN 

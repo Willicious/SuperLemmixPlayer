@@ -1,14 +1,15 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
- TITLE The Conveyor Belts
+ TITLE The Conveyor Belts / All That A Swimmer Can Do
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x395644D72FB2EFF3
- VERSION x0000000000000029
+ VERSION x0000000000000039
  
 #       Level dimensions        
 # ----------------------------- 
@@ -16,40 +17,45 @@
  HEIGHT 160
  START_X 205
  START_Y 80
- THEME orig_crystal
+ THEME ohno_bubble
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 30
+ LEMMINGS 40
  SAVE_REQUIREMENT 30
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 
-   WALKER 10
-   JUMPER 10
-   BALLOONER 10
+   WALKER 15
+   JUMPER 15
+   BALLOONER 15
+   FREEZER 10
    BLOCKER 10
+   LADDERER 10
    BUILDER 20
    GRENADER 10
  $END 
  
  $TALISMAN 
-   TITLE Silver Talisman
-   ID 0
-   COLOR Silver
-   JUMPER_LIMIT 0
-   GRENADER_LIMIT 0
- $END 
- 
- $TALISMAN 
    TITLE Gold Talisman
-   ID 1
+   ID 0
    COLOR Gold
-   BUILDER_LIMIT 6
+   SAVE_REQUIREMENT 38
+   FREEZER_LIMIT 0
  $END 
  
 #     Interactive objects       
 # ----------------------------- 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 0
+   Y 144
+   WIDTH 416
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
  $GADGET
    STYLE willlem_special
    PIECE conveyor_left
@@ -81,6 +87,7 @@
    Y 23
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
  $END
  
  $GADGET
@@ -95,110 +102,9 @@
    STYLE orig_crystal
    PIECE window
    X 180
-   Y 86
+   Y 94
    NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 0
-   Y -5
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 0
-   Y 32
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 0
-   Y 69
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 0
-   Y 106
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 385
-   Y -5
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
-   FLIP_HORIZONTAL
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 385
-   Y 32
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
-   FLIP_HORIZONTAL
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 385
-   Y 69
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
-   FLIP_HORIZONTAL
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 385
-   Y 106
-   WIDTH 31
-   HEIGHT 40
-   NO_OVERWRITE
-   ROTATE
-   FLIP_HORIZONTAL
- $END
- 
- $GADGET
-   STYLE ohno_bubble
-   PIECE blasticine
-   X 0
-   Y 121
-   WIDTH 424
-   HEIGHT 39
-   NO_OVERWRITE
+   SWIMMER 
  $END
  
  $GADGET
@@ -210,6 +116,56 @@
    HEIGHT 31
    NO_OVERWRITE
    FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 54
+   Y 23
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 306
+   Y 23
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_crystal
+   PIECE window
+   X 181
+   Y 94
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
+   SWIMMER 
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 385
+   Y -5
+   WIDTH 31
+   HEIGHT 168
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE blasticine
+   X 0
+   Y -5
+   WIDTH 31
+   HEIGHT 168
+   ROTATE
  $END
  
  
@@ -352,86 +308,6 @@
    PIECE bar_04
    X 45
    Y 68
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_01
-   X 85
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_01
-   X 310
-   Y 124
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 85
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 109
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 157
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 213
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 245
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE bar_04
-   X 262
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 85
-   Y 122
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_crystal
-   PIECE line_04
-   X 324
-   Y 122
-   ONE_WAY
  $END
  
  $TERRAIN

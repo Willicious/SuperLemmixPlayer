@@ -8,7 +8,7 @@
  TITLE Cookie Chuckers
  AUTHOR WillLem
  ID x2AEEE9597E5931AE
- VERSION x0000000000000012
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -20,8 +20,8 @@
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 40
- SAVE_REQUIREMENT 40
+ LEMMINGS 20
+ SAVE_REQUIREMENT 20
  MAX_SPAWN_INTERVAL 53
  
  $SKILLSET 

@@ -7,8 +7,9 @@
 # ----------------------------- 
  TITLE Diamond Dynamo
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x6F35981B6DECC9B6
- VERSION x000000000000004B
+ VERSION x0000000000000051
  
 #       Level dimensions        
 # ----------------------------- 
@@ -35,7 +36,6 @@
    FREEZER 10
    BUILDER 10
    SPEARER 10
-   GRENADER 10
    LASERER 10
    BASHER 10
  $END 
@@ -306,7 +306,7 @@
  $GADGET
    STYLE orig_crystal
    PIECE exit_vortex
-   X 524
+   X 520
    Y 122
    NO_OVERWRITE
    LEMMINGS 9
@@ -604,14 +604,14 @@
    STYLE orig_crystal
    PIECE steel_02
    X 492
-   Y 136
+   Y 135
  $END
  
  $TERRAIN
    STYLE orig_crystal
    PIECE steel_02
    X 492
-   Y 111
+   Y 110
  $END
  
  $TERRAIN

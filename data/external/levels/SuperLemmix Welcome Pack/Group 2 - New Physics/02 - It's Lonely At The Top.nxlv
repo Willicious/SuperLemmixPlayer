@@ -1,14 +1,15 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8.5
+#   Created with SLXEditor 2.8.7
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE It's Lonely At The Top
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x374005663B129420
- VERSION x0000000000000023
+ VERSION x0000000000000025
  
 #       Level dimensions        
 # ----------------------------- 
@@ -61,7 +62,7 @@
  $GADGET
    STYLE ohno_brick
    PIECE exit
-   X 55
+   X 76
    Y 111
    NO_OVERWRITE
  $END
@@ -538,6 +539,35 @@
    
  $END
  
+ $TERRAINGROUP
+   NAME Group1302085702
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1461825063
+     X 366
+     Y 19
+   $END
+   
+   $TERRAIN
+     STYLE ohno_brick
+     PIECE steel_03
+     X 387
+     Y 8
+     ERASE
+     ROTATE
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group1461825063
+     X 382
+     Y 19
+     NO_OVERWRITE
+   $END
+   
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -743,21 +773,21 @@
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 85
+   X 106
    Y 146
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 61
+   X 82
    Y 146
  $END
  
  $TERRAIN
    STYLE ohno_brick
    PIECE steel_03
-   X 37
+   X 58
    Y 146
  $END
  
@@ -1228,6 +1258,28 @@
    PIECE pole_silver_02
    X 792
    Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1461825063
+   X 342
+   Y 19
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1461825063
+   X 406
+   Y 19
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1302085702
+   X 366
+   Y 19
    ONE_WAY
  $END
  

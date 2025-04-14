@@ -8,7 +8,7 @@
  TITLE A Ladderer Would Be Handy
  AUTHOR WillLem
  ID x4DC50F326231F6D9
- VERSION x0000000000000042
+ VERSION x0000000000000044
  
 #       Level dimensions        
 # ----------------------------- 
@@ -20,14 +20,14 @@
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 40
- SAVE_REQUIREMENT 30
+ LEMMINGS 20
+ SAVE_REQUIREMENT 15
  MAX_SPAWN_INTERVAL 93
  
  $SKILLSET 
    WALKER 10
    BALLOONER 10
-   BOMBER 10
+   BOMBER 5
    BLOCKER 10
    LADDERER 10
    CLONER 10

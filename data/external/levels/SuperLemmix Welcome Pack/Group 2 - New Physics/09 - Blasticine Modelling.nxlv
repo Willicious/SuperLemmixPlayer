@@ -8,7 +8,7 @@
  TITLE Blasticine Modelling
  AUTHOR WillLem
  ID x395644D72FB2EFF3
- VERSION x000000000000004E
+ VERSION x0000000000000055
  
 #       Level dimensions        
 # ----------------------------- 
@@ -20,8 +20,8 @@
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 10
- SAVE_REQUIREMENT 8
+ LEMMINGS 5
+ SAVE_REQUIREMENT 4
  MAX_SPAWN_INTERVAL 83
  
  $SKILLSET 
@@ -32,7 +32,7 @@
    TITLE Gold Talisman
    ID 0
    COLOR Gold
-   SAVE_REQUIREMENT 10
+   SAVE_REQUIREMENT 5
  $END 
  
 #     Interactive objects       

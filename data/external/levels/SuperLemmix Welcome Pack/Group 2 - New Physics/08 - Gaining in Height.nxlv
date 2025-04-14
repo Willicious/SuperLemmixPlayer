@@ -8,7 +8,7 @@
  TITLE Gaining in Height
  AUTHOR WillLem
  ID x76DCF9112E89C414
- VERSION x0000000000000031
+ VERSION x0000000000000041
  
 #       Level dimensions        
 # ----------------------------- 
@@ -29,17 +29,11 @@
    SHIMMIER 10
  $END 
  
- $PRETEXT 
-   LINE Lemmings can now jump through platforms
-   LINE as long as the top of the platform is
-   LINE below the lemming's head height.
-   LINE 
-   LINE It's also possible to use the "Reacher" phase
-   LINE of the Shimmier skill action to jump
-   LINE through the platforms as well.
-   LINE 
-   LINE Give it a try!
-   LINE 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 0
+   COLOR Gold
+   USE_ONLY_SKILL Shimmier
  $END 
  
 #     Interactive objects       
@@ -55,8 +49,8 @@
  $GADGET
    STYLE orig_marble
    PIECE shredder
-   X 248
-   Y 23
+   X 225
+   Y 10
    NO_OVERWRITE
  $END
  
@@ -90,22 +84,69 @@
 #        Terrain groups         
 # ----------------------------- 
  $TERRAINGROUP
-   NAME Group162458883
+   NAME Group357387769
    
    $TERRAIN
      STYLE orig_marble
-     PIECE bar_04
-     X 269
-     Y 82
+     PIECE bar_thin_01
+     X 251
+     Y 60
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
      ONE_WAY
    $END
    
    $TERRAIN
      STYLE orig_marble
-     PIECE bar_04
-     X 278
-     Y 82
+     PIECE bar_thin_01
+     X 251
+     Y 40
      ERASE
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group383229304
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group357387769
+     X 273
+     Y 57
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE *group
+     PIECE Group357387769
+     X 273
+     Y 49
+     ERASE
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group2122736032
+   
+   $TERRAIN
+     STYLE orig_marble
+     PIECE bar_10
+     X 287
+     Y 69
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE orig_marble
+     PIECE bar_10
+     X 287
+     Y 71
      ONE_WAY
    $END
    
@@ -117,8 +158,17 @@
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_01
+   X 252
+   Y 102
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
    X 207
-   Y 119
+   Y 118
    ROTATE
    ONE_WAY
  $END
@@ -211,7 +261,7 @@
    STYLE orig_marble
    PIECE bar_thin_01
    X 324
-   Y 111
+   Y 109
    ROTATE
    ONE_WAY
  $END
@@ -221,14 +271,6 @@
    PIECE structure_04
    X 348
    Y 46
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_01
-   X 271
-   Y 82
    ONE_WAY
  $END
  
@@ -259,24 +301,16 @@
  
  $TERRAIN
    STYLE orig_marble
-   PIECE bar_01
-   X 252
-   Y 60
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
    PIECE steel_01
-   X 252
-   Y 42
+   X 229
+   Y 29
  $END
  
  $TERRAIN
    STYLE orig_marble
    PIECE bar_thin_01
    X 276
-   Y 119
+   Y 118
    ROTATE
    ONE_WAY
  $END
@@ -285,7 +319,7 @@
    STYLE orig_marble
    PIECE bar_thin_01
    X 276
-   Y 126
+   Y 127
    ROTATE
    ONE_WAY
  $END
@@ -294,7 +328,7 @@
    STYLE orig_marble
    PIECE bar_thin_01
    X 292
-   Y 126
+   Y 127
    ROTATE
    ONE_WAY
  $END
@@ -303,7 +337,7 @@
    STYLE orig_marble
    PIECE bar_thin_01
    X 308
-   Y 119
+   Y 118
    ROTATE
    ONE_WAY
  $END
@@ -372,17 +406,7 @@
    STYLE orig_marble
    PIECE bar_thin_01
    X 293
-   Y 68
-   FLIP_VERTICAL
-   FLIP_HORIZONTAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE orig_marble
-   PIECE bar_thin_01
-   X 293
-   Y 28
+   Y 67
    FLIP_VERTICAL
    FLIP_HORIZONTAL
    ONE_WAY
@@ -402,24 +426,8 @@
    STYLE orig_marble
    PIECE bar_thin_01
    X 294
-   Y 111
+   Y 109
    ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group162458883
-   X 269
-   Y 82
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE *group
-   PIECE Group162458883
-   X 250
-   Y 100
    ONE_WAY
  $END
  
@@ -544,6 +552,119 @@
    PIECE structure_04
    X 23
    Y -47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 209
+   Y 84
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 273
+   Y 75
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 273
+   Y 66
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 273
+   Y 57
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 273
+   Y 48
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 273
+   Y 39
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group357387769
+   X 252
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_thin_01
+   X 296
+   Y 102
+   ERASE
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group383229304
+   X 273
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group383229304
+   X 316
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group383229304
+   X 316
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group383229304
+   X 273
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group2122736032
+   X 287
+   Y 69
+   ERASE
    ONE_WAY
  $END
  
