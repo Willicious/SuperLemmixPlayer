@@ -18,3 +18,7 @@ FOOTER_TEXT_TOP_Y 330
 SCROLLER_TOP_Y 440
 SCROLLER_LENGTH 40
 SCROLLER_LEMMING_FRAMES 16
+
+# Use TILE to tile the background image
+# Use STRETCH to stretch the background image to fit
+BACKGROUND_DRAW_MODE TILE

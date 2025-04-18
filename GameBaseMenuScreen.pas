@@ -3,10 +3,14 @@ unit GameBaseMenuScreen;
 interface
 
 uses
+  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
+  Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows,
+  StrUtils, ShellApi,
   Types, UMisc,
   LemCursor,
   LemMenuFont,
   LemNeoLevelPack,
+  LemNeoParser,
   LemNeoPieceManager,
   LemStrings,
   LemTalisman,
@@ -15,9 +19,7 @@ uses
   FLevelInfo,
   GameBaseScreenCommon,
   GameControl,
-  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
-  Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils, Windows,
   IOUtils, Vcl.FileCtrl, // For Playback Mode
   SharedGlobals;
 
@@ -125,6 +127,7 @@ type
 
       procedure DrawWallpaper; overload;
       procedure DrawWallpaper(aRegion: TRect); overload;
+      function GetWallpaperDrawMode: String;
 
       function MakeClickableImage(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
                                    aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
@@ -1019,11 +1022,33 @@ begin
   DrawWallpaper(ScreenImg.Bitmap.BoundsRect);
 end;
 
+function TGameBaseMenuScreen.GetWallpaperDrawMode: String;
+var
+  Parser: TParser;
+  Sec: TParserSection;
+begin
+  Parser := TParser.Create;
+  try
+    Result := 'TILE'; // Default
+
+    Sec := Parser.MainSection;
+    Parser.LoadFromFile(AppPath + SFData + 'title.nxmi');
+
+    if GameParams.CurrentLevel.Group.FindFile('title.nxmi') <> '' then
+      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile('title.nxmi'));
+
+    Result := Sec.LineTrimString['BACKGROUND_DRAW_MODE'];
+  finally
+    Parser.Free;
+  end;
+end;
+
 procedure TGameBaseMenuScreen.DrawWallpaper(aRegion: TRect);
 var
   aX, aY: Integer;
   BgImage, Dst: TBitmap32;
-  SrcRect: TRect;
+  SrcRect, DstRect: TRect;
+  WallpaperDrawMode: String;
   WallpaperPath: String;
 begin
   Dst := ScreenImg.Bitmap;
@@ -1044,28 +1069,37 @@ begin
       Exit;
     end;
 
-    aY := aRegion.Top;
-    aX := aRegion.Left;
-    while aY < aRegion.Bottom do
+    WallpaperDrawMode := GetWallpaperDrawMode;
+
+    if (WallpaperDrawMode <> 'STRETCH') then
     begin
-      SrcRect.Left := 0;
-      SrcRect.Top := 0;
-      SrcRect.Bottom := Min(BgImage.Height, aRegion.Bottom - aY);
-
-      while aX < aRegion.Right do
-      begin
-        SrcRect.Right := Min(BgImage.Width, aRegion.Right - aX);
-
-        BgImage.DrawTo(Dst, aX, aY, SrcRect);
-        Inc(aX, BgImage.Width);
-      end;
-      Inc(aY, BgImage.Height);
+      aY := aRegion.Top;
       aX := aRegion.Left;
+      while aY < aRegion.Bottom do
+      begin
+        SrcRect.Left := 0;
+        SrcRect.Top := 0;
+        SrcRect.Bottom := Min(BgImage.Height, aRegion.Bottom - aY);
+
+        while aX < aRegion.Right do
+        begin
+          SrcRect.Right := Min(BgImage.Width, aRegion.Right - aX);
+
+          BgImage.DrawTo(Dst, aX, aY, SrcRect);
+          Inc(aX, BgImage.Width);
+        end;
+        Inc(aY, BgImage.Height);
+        aX := aRegion.Left;
+      end;
+    end else begin
+      SrcRect := Rect(0, 0, BgImage.Width, BgImage.Height);
+      DstRect := aRegion;
+
+      Dst.Draw(DstRect, SrcRect, BgImage);
     end;
   finally
     BgImage.Free;
   end;
-
 end;
 
 procedure TGameBaseMenuScreen.Form_KeyDown(Sender: TObject; var Key: Word;
