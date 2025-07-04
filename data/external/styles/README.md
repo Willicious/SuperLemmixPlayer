@@ -28,6 +28,14 @@ I absolutely couldn't have done this by myself
 
 Changelog:
 
+2.8.8
++ Changed orig_ and ohno_ styles to slx_
++ Re-added orig_ and ohno_ from NeoLemmix, but with some differences:
+  + Backgrounds changed to Amiga Blue
+  + Water objects changed to Blasticine (bubble), Vinewater (rock), Lava (fire) and Poison (marble)
+  + Modified trap animations - see this post for a list of the differences:
+    https://www.lemmingsforums.net/index.php?topic=5420.msg90074#msg90074
+
 2.8.7
 + Added 5 of Dex's sets (dex_brass, dex_grotto, dex_hoard, dex_jade, dex_lush)
   ~ Updated styles.ini to include these
