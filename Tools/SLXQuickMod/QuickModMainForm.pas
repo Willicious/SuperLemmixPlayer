@@ -62,7 +62,7 @@ type
     cbStonerToFreezer: TCheckBox;
     cbFreezerToStoner: TCheckBox;
     gbCrossPlatformConversions: TGroupBox;
-    cbConvertLevels: TCheckBox;
+    cbSwapStyles: TCheckBox;
     rbNeoToSuper: TRadioButton;
     rbSuperToNeo: TRadioButton;
     lblConversionInfo: TLabel;
@@ -76,7 +76,7 @@ type
     procedure cbTimebomberChangeClick(Sender: TObject);
     procedure cbSuperlemmingClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
-    procedure cbConvertLevelsClick(Sender: TObject);
+    procedure cbSwapStylesClick(Sender: TObject);
     procedure cbFreezerChangeClick(Sender: TObject);
     procedure cbSetAllSkillCountsClick(Sender: TObject);
     procedure seSkillCountsChange(Sender: TObject);
@@ -155,9 +155,9 @@ begin
   end;
 end;
 
-procedure TFQuickmodMain.cbConvertLevelsClick(Sender: TObject);
+procedure TFQuickmodMain.cbSwapStylesClick(Sender: TObject);
 begin
-  if cbConvertLevels.Checked then
+  if cbSwapStyles.Checked then
   begin
     rbNeoToSuper.Enabled := True;
     rbSuperToNeo.Enabled := True;
@@ -533,7 +533,7 @@ begin
                       or cbStonerToFreezer.Checked
                       or cbFreezerToStoner.Checked;
 
-  ShouldConvertLevels := cbConvertLevels.Checked and
+  ShouldConvertLevels := cbSwapStyles.Checked and
                          (rbNeoToSuper.Checked or rbSuperToNeo.Checked);
 
   NeoToSuper := rbNeoToSuper.Checked;
@@ -544,6 +544,27 @@ begin
   try
     SL.LoadFromFile(aFile);
 
+    // First, make sure all styles are correct
+    if ShouldConvertLevels and SuperToNeo then
+    begin
+      for n := 0 to SL.Count - 1 do
+      begin
+        SL[n] := StringReplace(SL[n], 'slx_crystal', 'orig_crystal', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_dirt', 'orig_dirt', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_fire', 'orig_fire', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_marble', 'orig_marble', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_pillar', 'orig_pillar', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_brick', 'ohno_brick', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_bubble', 'ohno_bubble', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_rock', 'ohno_rock', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'slx_snow', 'ohno_snow', [rfReplaceAll, rfIgnoreCase]);
+      end;
+    end;
+
+    // Reset to the start of the level file
+    n := 0;
+
+    // Go ahead and make changes
     while n < SL.Count do
     begin
       ThisLine := Uppercase(TrimLeft(SL[n]));
@@ -930,6 +951,23 @@ begin
       end;
 
       Inc(n);
+    end;
+
+    // If necessary, update all styles after other changes have been made
+    if ShouldConvertLevels and NeoToSuper then
+    begin
+      for n := 0 to SL.Count - 1 do
+      begin
+        SL[n] := StringReplace(SL[n], 'orig_crystal', 'slx_crystal', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'orig_dirt', 'slx_dirt', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'orig_fire', 'slx_fire', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'orig_marble', 'slx_marble', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'orig_pillar', 'slx_pillar', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'ohno_brick', 'slx_brick', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'ohno_bubble', 'slx_bubble', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'ohno_rock', 'slx_rock', [rfReplaceAll, rfIgnoreCase]);
+        SL[n] := StringReplace(SL[n], 'ohno_snow', 'slx_snow', [rfReplaceAll, rfIgnoreCase]);
+      end;
     end;
 
     if not AlreadyModified then

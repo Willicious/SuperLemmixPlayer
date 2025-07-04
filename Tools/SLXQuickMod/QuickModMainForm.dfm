@@ -6,7 +6,7 @@ object FQuickmodMain: TFQuickmodMain
   BorderStyle = bsSingle
   Caption = 'SuperLemmix QuickMod'
   ClientHeight = 508
-  ClientWidth = 870
+  ClientWidth = 902
   Color = clBtnFace
   DoubleBuffered = True
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object FQuickmodMain: TFQuickmodMain
   OnClick = FormClick
   OnCreate = FormCreate
   DesignSize = (
-    870
+    902
     508)
   PixelsPerInch = 96
   TextHeight = 13
@@ -33,7 +33,7 @@ object FQuickmodMain: TFQuickmodMain
   object cbPack: TComboBox
     Left = 40
     Top = 7
-    Width = 822
+    Width = 854
     Height = 21
     Style = csDropDownList
     Anchors = [akLeft, akTop, akRight]
@@ -43,7 +43,7 @@ object FQuickmodMain: TFQuickmodMain
   object gbStats: TGroupBox
     Left = 8
     Top = 34
-    Width = 481
+    Width = 497
     Height = 435
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
@@ -135,7 +135,7 @@ object FQuickmodMain: TFQuickmodMain
     object gbReleaseRate: TGroupBox
       Left = 244
       Top = 57
-      Width = 225
+      Width = 237
       Height = 76
       Caption = 'Release Rate'
       TabOrder = 8
@@ -180,7 +180,7 @@ object FQuickmodMain: TFQuickmodMain
     object gbSuperlemming: TGroupBox
       Left = 244
       Top = 139
-      Width = 225
+      Width = 237
       Height = 48
       Caption = 'Superlemming Mode'
       TabOrder = 4
@@ -206,7 +206,7 @@ object FQuickmodMain: TFQuickmodMain
     object gbTalismans: TGroupBox
       Left = 16
       Top = 193
-      Width = 453
+      Width = 465
       Height = 151
       Caption = 'Talismans'
       TabOrder = 10
@@ -262,27 +262,27 @@ object FQuickmodMain: TFQuickmodMain
     object gbCrossPlatformConversions: TGroupBox
       Left = 16
       Top = 350
-      Width = 453
+      Width = 465
       Height = 75
-      Caption = 'Cross-Platform Conversions'
+      Caption = 'Cross-Platform OG Style Swap'
       TabOrder = 14
       object lblConversionInfo: TLabel
         Left = 16
         Top = 21
-        Width = 416
+        Width = 429
         Height = 13
         Caption = 
-          'This feature auto-corrects all water objects and exit positions ' +
-          'to fit the target platform'
+          'Swap between Orig/OhNo and SLX styles (auto-corrects water objec' +
+          'ts and exit positions)'
       end
-      object cbConvertLevels: TCheckBox
+      object cbSwapStyles: TCheckBox
         Left = 16
         Top = 45
         Width = 97
         Height = 17
-        Caption = 'Convert Levels'
+        Caption = 'Swap OG Styles'
         TabOrder = 0
-        OnClick = cbConvertLevelsClick
+        OnClick = cbSwapStylesClick
       end
       object rbNeoToSuper: TRadioButton
         Left = 119
@@ -307,7 +307,7 @@ object FQuickmodMain: TFQuickmodMain
   object btnApply: TButton
     Left = 40
     Top = 475
-    Width = 783
+    Width = 815
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Changes To All Levels in Selected Pack'
@@ -315,20 +315,20 @@ object FQuickmodMain: TFQuickmodMain
     OnClick = btnApplyClick
   end
   object gbSkills: TGroupBox
-    Left = 500
+    Left = 504
     Top = 34
-    Width = 362
+    Width = 390
     Height = 435
     Caption = 'Skills'
     TabOrder = 2
     OnClick = gbSkillsClick
     DesignSize = (
-      362
+      390
       435)
     object gbCustomSkillset: TGroupBox
       Left = 13
       Top = 57
-      Width = 338
+      Width = 366
       Height = 287
       Anchors = [akLeft, akRight, akBottom]
       Caption = 'Custom Skillset'
@@ -346,7 +346,7 @@ object FQuickmodMain: TFQuickmodMain
     object gbSkillConversions: TGroupBox
       Left = 13
       Top = 350
-      Width = 338
+      Width = 366
       Height = 75
       Caption = 'Skill Conversions'
       TabOrder = 1
