@@ -7,7 +7,7 @@ SOUND tenton
 
 $ANIMATION
   NAME constant
-  FRAMES 10
+  FRAMES 1
   OFFSET_X 0
   OFFSET_Y 38
   
