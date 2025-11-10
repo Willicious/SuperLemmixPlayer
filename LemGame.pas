@@ -188,6 +188,7 @@ type
     fIsSelectUnassignedHotkey  : Boolean;
     fIsShowAthleteInfo         : Boolean;
     fIsHighlightHotkey         : Boolean;
+    fPlayTimeUpSound           : Boolean;
     TimePlay                   : Integer; // Positive when time limit
                                           // Negative when just counting time used
     fPlaying                   : Boolean; // Game in active playing mode?
@@ -1357,6 +1358,7 @@ begin
 
   LemmingsToRelease := Level.Info.LemmingsCount;
   LemmingsCloned := 0;
+  fPlayTimeUpSound := False;
   TimePlay := Level.Info.TimeLimit;
   if not Level.Info.HasTimeLimit then
     TimePlay := 0; // Infinite time
@@ -7700,19 +7702,25 @@ begin
   if fParticleFinishTimer > 0 then
     Dec(fParticleFinishTimer);
 
+  if fPlayTimeUpSound then
+  begin
+    CueSoundEffect(SFX_TimeUp);
+    fPlayTimeUpSound := False;
+  end;
+
   if IsSuperLemmingMode then
   begin
     if fClockFrame = 50 then
     begin
       fClockFrame := 0;
       if TimePlay > -5999 then Dec(TimePlay);
-      if TimePlay = 0 then CueSoundEffect(SFX_TimeUp);
+      if TimePlay = 0 then fPlayTimeUpSound := True;
     end;
   end else if fClockFrame = 17 then
     begin
       fClockFrame := 0;
       if TimePlay > -5999 then Dec(TimePlay);
-      if TimePlay = 0 then CueSoundEffect(SFX_TimeUp);
+      if TimePlay = 0 then fPlayTimeUpSound := True;
     end;
 
   // Hard coded dos frame numbers
