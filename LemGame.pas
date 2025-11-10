@@ -7708,20 +7708,13 @@ begin
     fPlayTimeUpSound := False;
   end;
 
-  if IsSuperLemmingMode then
+  if (IsSuperLemmingMode and (fClockFrame = 50)) or
+     ((fClockFrame = 17) and not IsSuperLemmingMode) then
   begin
-    if fClockFrame = 50 then
-    begin
-      fClockFrame := 0;
-      if TimePlay > -5999 then Dec(TimePlay);
-      if TimePlay = 0 then fPlayTimeUpSound := True;
-    end;
-  end else if fClockFrame = 17 then
-    begin
-      fClockFrame := 0;
-      if TimePlay > -5999 then Dec(TimePlay);
-      if TimePlay = 0 then fPlayTimeUpSound := True;
-    end;
+    fClockFrame := 0;
+    if TimePlay > -5999 then Dec(TimePlay);
+    if TimePlay = 0 then fPlayTimeUpSound := True;
+  end;
 
   // Hard coded dos frame numbers
   case CurrentIteration of
