@@ -766,7 +766,7 @@ begin
                             Break;
                           end;
 
-                          if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baStacking, baPlatforming] then
+                          if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baStacking, baPlatforming, baLaddering] then
                             ContinueHyper := True;
                         end;
           SHE_HIGHLIT: if not CheckHighlitLemmingChange then ContinueHyper := True;
@@ -1881,7 +1881,7 @@ begin
                           begin
                             if fRenderInterface.LemmingList[i].LemRemoved then Continue;
 
-                            if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking] then
+                            if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking, baLaddering] then
                             begin
                               HasSuitableSkill := True;
                               Break;

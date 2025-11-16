@@ -5577,7 +5577,7 @@ begin
   end;
 
   if LadderHitObstacle or L.LemEndOfAnimation then
-    Transition(L, baWalking);
+    Transition(L, baShrugging);
 end;
 
 
