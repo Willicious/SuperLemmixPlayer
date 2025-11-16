@@ -133,7 +133,7 @@ type
                                    aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
       function MakeClickableImageAuto(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
                                    aNormal: TBitmap32; aMargin: Integer = -1): TClickableRegion;
-      function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction): TClickableRegion;
+      function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction; SwapHues: Boolean = False): TClickableRegion;
 
       function MakeHiddenOption(aKey: Word; aAction: TRegionAction): TClickableRegion; overload;
       function MakeHiddenOption(aFunc: TLemmixHotkeyAction; aAction: TRegionAction): TClickableRegion; overload;
@@ -471,7 +471,7 @@ end;
 
 // Changes hue of clickable text in pre-level screen
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
-  aText: String; aAction: TRegionAction): TClickableRegion;
+  aText: String; aAction: TRegionAction; SwapHues: Boolean = False): TClickableRegion;
 const
   HUE_SHIFT_NORMAL = 0.250;
   HUE_SHIFT_HOVER = 0;
@@ -487,8 +487,14 @@ begin
   FillChar(HoverShift, SizeOf(TColorDiff), 0);
   FillChar(ClickShift, SizeOf(TColorDiff), 0);
 
-  NormalShift.HShift := HUE_SHIFT_NORMAL;
-  HoverShift.HShift := HUE_SHIFT_HOVER;
+  if SwapHues then
+  begin
+    NormalShift.HShift := HUE_SHIFT_HOVER;
+    HoverShift.HShift := HUE_SHIFT_NORMAL;
+  end else begin
+    NormalShift.HShift := HUE_SHIFT_NORMAL;
+    HoverShift.HShift := HUE_SHIFT_HOVER;
+  end;
 
   ClickShift.HShift := HUE_SHIFT_HOVER;
   ClickShift.VShift := VALUE_SHIFT_CLICK;

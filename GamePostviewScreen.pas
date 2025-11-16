@@ -37,6 +37,7 @@ type
       procedure ReplaySameLevel;
       procedure ExitToMenu;
 
+      procedure MakeShowSkillsUsedClickable;
       procedure MakeNextLevelClickable;
       procedure MakePlaybackNextLevelClickable;
       procedure MakeRetryLevelClickable(LevelPassed: Boolean);
@@ -51,6 +52,7 @@ type
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
       procedure DoAfterConfig; override;
+      procedure ShowSkillsUsed;
   end;
 
 implementation
@@ -104,6 +106,19 @@ end;
 procedure TGamePostviewScreen.ReplaySameLevel;
 begin
   CloseScreen(gstPreview);
+end;
+
+procedure TGamePostviewScreen.MakeShowSkillsUsedClickable;
+var
+  R: TClickableRegion;
+begin
+  if GameParams.PlaybackModeActive or (GameParams.TestModeLevel = nil) then
+    Exit;
+
+  R := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y - 40), 'Show Skills Used', ShowSkillsUsed, True);
+
+  R.ShortcutKeys.Add(VK_RETURN);
+  R.ShortcutKeys.Add(VK_SPACE);
 end;
 
 procedure TGamePostviewScreen.MakeExitToMenuClickable;
@@ -248,6 +263,10 @@ begin
     end else begin
       MakeRetryLevelClickable(False);
     end;
+
+    // If in Playtest mode, show the Skills Used clickable
+    if (GameParams.TestModeLevel <> nil) then
+      MakeShowSkillsUsedClickable;
 
     // Prepare some more clickables and hotkey options
     MakeLevelSelectClickable;
@@ -587,6 +606,51 @@ procedure TGamePostviewScreen.DoAfterConfig;
 begin
   inherited;
   ReloadCursor('postview');
+end;
+
+procedure TGamePostviewScreen.ShowSkillsUsed;
+var
+  i, TotalSkills, TotalTypes: Integer;
+  S: TStringList;
+  Results: TGameResultsRec;
+begin
+  if GameParams.TestModeLevel = nil then
+    Exit;
+
+  Results := GameParams.GameResult;
+
+  TotalSkills := 0;
+  TotalTypes := 0;
+
+  S := TStringList.Create;
+  try
+    S.Add('Skills used during this playtest:');
+    S.Add('');
+
+    for i := 0 to High(Results.gSkillsUsedList) do
+    begin
+      if Results.gSkillsUsedList[i].Count > 0 then
+      begin
+        Inc(TotalSkills, Results.gSkillsUsedList[i].Count);
+        Inc(TotalTypes);
+        S.Add(Format('%s: %d',
+          [Results.gSkillsUsedList[i].Name,
+           Results.gSkillsUsedList[i].Count]));
+      end;
+    end;
+
+    if (TotalTypes = 0) then
+      S.Add('(None)')
+    else begin
+      S.Add('');
+      S.Add(Format('Total Skills: %d', [TotalSkills]));
+      S.Add(Format('Total Skill Types: %d', [TotalTypes]));
+    end;
+
+    MessageDlg(S.Text, mtInformation, [mbOK], 0);
+  finally
+    S.Free;
+  end;
 end;
 
 end.

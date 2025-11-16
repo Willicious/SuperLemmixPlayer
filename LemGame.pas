@@ -99,7 +99,6 @@ type
       property List;
   end;
 
-
   TLemmingMethod = function (L: TLemming): Boolean of object;
   TLemmingMethodArray = array[TBasicLemmingAction] of TLemmingMethod;
 
@@ -504,6 +503,7 @@ type
     procedure CheckAdjustSpawnInterval;
     procedure AdjustSpawnInterval(aSI: Integer);
     function CheckIfLegalSI(aSI: Integer): Boolean;
+    function BuildSkillsUsedList: TSkillsUsedList;
     procedure Finish(aReason: Integer);
     procedure Cheat;
     procedure HitTest(Autofail: Boolean = False);
@@ -8630,6 +8630,21 @@ begin
   end;
 end;
 
+function TLemmingGame.BuildSkillsUsedList: TSkillsUsedList;
+var
+  Skill: TSkillPanelButton;
+  i: Integer;
+begin
+  SetLength(Result, Ord(LAST_SKILL_BUTTON) + 1);
+
+  i := 0;
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+  begin
+    Result[i].Name := AnsiUpperCase(SKILL_NAMES[Skill][1]) + Copy(SKILL_NAMES[Skill], 2, MaxInt);
+    Result[i].Count := SkillsUsed[Skill];
+    Inc(i);
+  end;
+end;
 
 procedure TLemmingGame.SetGameResult;
 begin
@@ -8644,6 +8659,7 @@ begin
     gSuccess            := (gRescued >= gToRescue) or gCheated;
     gTimeIsUp           := IsOutOfTime;
     gLastIteration      := fCurrentIteration;
+    gSkillsUsedList     := BuildSkillsUsedList;
 
     if fGameCheated then
     begin

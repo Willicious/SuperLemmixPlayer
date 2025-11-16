@@ -27,6 +27,13 @@ var
                         be replaced once proper level select menus are introduced. }
 
 type
+  TSkillsUsedRec = record
+    Name  : string;
+    Count : Integer;
+  end;
+
+  TSkillsUsedList = array of TSkillsUsedRec;
+
   TGameResultsRec = record
     gSuccess            : Boolean; // Level played successfully
     gCheated            : Boolean; // Level cheated
@@ -38,6 +45,7 @@ type
     gLastRescueIteration: Integer; // Final rescue frame
     gGotTalisman        : Boolean; // Talisman achieved
     gGotNewTalisman     : Boolean; // New talisman achieved
+    gSkillsUsedList     : TSkillsUsedList;  // Dynamic list of (name, count)
   end;
 
 type
