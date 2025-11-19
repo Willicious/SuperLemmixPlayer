@@ -211,7 +211,6 @@ type
     fIsInfiniteTimeMode        : Boolean;
     fNukeIsActive              : Boolean;
     ExploderAssignInProgress   : Boolean;
-    DoExplosionCrater          : Boolean;
     Index_LemmingToBeNuked     : Integer;
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
@@ -2050,7 +2049,7 @@ begin
 
   Dec(L.LemExplosionTimer);
 
-  DoExplosionCrater := True;
+  L.LemDoExplosionCrater := True;
 
   if NukeIsActive and L.LemIsRadiating then
   begin
@@ -3181,7 +3180,7 @@ begin
     begin
       if HasLaserAt(L.LemX, L.LemY - YOffset) then
       begin
-        DoExplosionCrater := False;
+        L.LemDoExplosionCrater := False;
 
         if L.LemAction = baBallooning then
           PopBalloon(L, 1, baExploding)
@@ -3205,7 +3204,7 @@ begin
       if HasProjectileAt(L.LemX - XOffset, L.LemY - YOffset)
         and not (L.LemAction in [baSpearing, baGrenading]) then
       begin
-        DoExplosionCrater := False;
+        L.LemDoExplosionCrater := False;
 
         if L.LemAction = baBallooning then
           PopBalloon(L, 1, baExploding)
@@ -3939,7 +3938,7 @@ begin
 
     if not (L.LemAction in ActionSet) then
     begin
-      DoExplosionCrater := False;
+      L.LemDoExplosionCrater := False;
       Transition(L, baExploding);
     end;
   end;
@@ -7246,7 +7245,7 @@ begin
   Result := True;
   if L.LemEndOfAnimation then
   begin
-    DoExplosionCrater := True;
+    L.LemDoExplosionCrater := True;
     Transition(L, baExploding);
     L.LemHasBlockerField := False; // Remove blocker field
     SetBlockerMap;
@@ -7270,7 +7269,7 @@ begin
   Renderer.IsFreezerExplosion := False;
   Result := False;
 
-  if (L.LemAction = baExploding) and DoExplosionCrater then
+  if (L.LemAction = baExploding) and L.LemDoExplosionCrater then
     ApplyExplosionMask(L);
 
   // Invincible lems aren't removed, but still create fireworks and a crater
