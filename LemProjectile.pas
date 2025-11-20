@@ -74,7 +74,7 @@ type
 
       fOffsetX: Integer;
 
-      fDX: Integer;
+      fDX: Integer; // Direction L/R
 
       fFired: Boolean;
       fHit: Boolean;
@@ -115,6 +115,8 @@ type
 
       property X: Integer read fX;
       property Y: Integer read fY;
+
+      property DX: Integer read fDX;
 
       property Fired: Boolean read fFired;
       property Hit: Boolean read fHit;

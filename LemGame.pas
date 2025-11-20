@@ -7630,6 +7630,7 @@ procedure TLemmingGame.UpdateProjectiles;
 var
   i: Integer;
   P: TProjectile;
+  //OWWDetected: Boolean;
 
   function IsOutOfBounds(P: TProjectile): Boolean;
   begin
@@ -7637,6 +7638,8 @@ var
               (P.Y < -108) or (P.Y >= Level.Info.Height + 108);
   end;
 begin
+  //OWWDetected := False;
+
   for i := ProjectileList.Count-1 downto 0 do
   begin
     P := ProjectileList[i];
@@ -7665,6 +7668,9 @@ begin
         ProjectileList.Delete(i);
       end else //if P.IsGrenade then
       begin
+//        OWWDetected := ((P.DX < 0) and HasTriggerAt(P.X - 1, P.Y, trOWRight))
+//                    or ((P.DX > 0) and HasTriggerAt(P.X + 1, P.Y, trOWLeft));
+
         ApplyGrenadeExplosionMask(P);
         CueSoundEffect(SFX_Pop, Point(P.X, P.Y));
       end //else       // Batter
