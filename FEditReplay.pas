@@ -360,7 +360,9 @@ begin
                         (lbReplayActions.Items.Objects[lbReplayActions.ItemIndex] is TReplaySkillAssignment);
 
   if ItemSelected then
-    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex])
+  else
+    CurrentItem := TBaseReplayItem(lbReplayActions.Items.Objects[0]);
 
   // Update controls
   btnDelete.Enabled := ItemSelected;

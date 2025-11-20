@@ -8,7 +8,7 @@ uses
   Types,
   LemNeoLevelPack,
   LemmixHotkeys,
-  Windows, Classes, SysUtils, StrUtils, Controls, Dialogs,
+  Windows, Classes, SysUtils, StrUtils, Controls, Dialogs, UITypes,
   UMisc, Math,
   Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
