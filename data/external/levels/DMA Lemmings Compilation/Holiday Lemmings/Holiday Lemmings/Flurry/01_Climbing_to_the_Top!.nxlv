@@ -65,7 +65,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE pillar_01
    X 44
    Y 96
@@ -73,7 +73,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE pillar_01
    X 44
    Y 32
@@ -81,7 +81,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE pillar_01
    X 344
    Y 96
@@ -89,7 +89,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE pillar_01
    X 344
    Y 32
@@ -97,7 +97,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE pillar_02
    X 44
    Y 8
@@ -105,7 +105,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE pillar_02
    X 344
    Y 8
@@ -113,7 +113,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_10
    X 88
    Y 102
@@ -121,7 +121,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_09
    X 55
    Y 144
@@ -129,7 +129,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_09
    X 70
    Y 135
@@ -137,7 +137,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 103
    Y 105
@@ -145,7 +145,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE icicle_01
    X 230
    Y 96
@@ -154,7 +154,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE icicle_01
    X 238
    Y 96
@@ -163,7 +163,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE icicle_01
    X 234
    Y 32
@@ -172,7 +172,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE icicle_01
    X 234
    Y 98
@@ -180,7 +180,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE icicle_01
    X 234
    Y 96
@@ -188,7 +188,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_16
    X 239
    Y 50
@@ -196,7 +196,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_16
    X 281
    Y 48

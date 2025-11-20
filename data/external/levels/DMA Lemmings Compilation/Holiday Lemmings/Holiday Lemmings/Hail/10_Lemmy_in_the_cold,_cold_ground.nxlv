@@ -88,7 +88,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 223
    Y 68
@@ -96,7 +96,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 290
    Y 26
@@ -104,7 +104,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 381
    Y 53
@@ -112,7 +112,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 468
    Y 39
@@ -121,7 +121,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 508
    Y -7
@@ -130,7 +130,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 586
    Y 64
@@ -138,7 +138,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 675
    Y 61
@@ -146,7 +146,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 707
    Y -2
@@ -155,7 +155,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 768
    Y 61
@@ -163,7 +163,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 617
    Y 2
@@ -172,7 +172,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 225
    Y 29
@@ -181,7 +181,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 290
    Y 85
@@ -189,7 +189,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 310
    Y 55
@@ -197,7 +197,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 370
    Y 77
@@ -206,7 +206,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 511
    Y 107
@@ -214,7 +214,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 564
    Y 13
@@ -222,7 +222,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 717
    Y 96
@@ -230,7 +230,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_01
    X 803
    Y 21
@@ -239,7 +239,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 249
    Y 123
@@ -248,7 +248,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 288
    Y 146
@@ -257,7 +257,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 316
    Y 136
@@ -266,7 +266,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 387
    Y 129
@@ -275,7 +275,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 442
    Y 134
@@ -284,7 +284,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 491
    Y 140
@@ -293,7 +293,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 553
    Y 96
@@ -302,7 +302,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 625
    Y 118
@@ -311,7 +311,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 751
    Y 88
@@ -320,7 +320,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 809
    Y 106
@@ -329,7 +329,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 855
    Y 83
@@ -337,7 +337,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 866
    Y 130
@@ -345,7 +345,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 685
    Y 104
@@ -354,7 +354,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_03
    X 622
    Y 96
@@ -362,7 +362,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_06
    X 512
    Y 102
@@ -371,7 +371,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_02
    X 830
    Y 117
@@ -380,7 +380,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_02
    X 868
    Y 93
@@ -388,7 +388,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_02
    X 884
    Y 109
@@ -397,7 +397,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_02
    X 884
    Y 73
@@ -406,7 +406,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_16
    X 243
    Y 63
@@ -415,7 +415,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_16
    X 131
    Y 39
@@ -423,7 +423,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_16
    X 160
    Y 52
@@ -431,7 +431,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_16
    X 193
    Y 47
@@ -440,7 +440,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_16
    X 87
    Y 49
@@ -448,7 +448,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_01
    X 80
    Y 58
@@ -457,7 +457,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_05
    X 114
    Y 138
@@ -466,7 +466,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_05
    X 132
    Y 133
@@ -474,7 +474,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_05
    X 151
    Y 139
@@ -482,7 +482,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_05
    X 172
    Y 142
@@ -490,7 +490,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_05
    X 200
    Y 138
@@ -499,7 +499,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE rocks_05
    X 268
    Y 141
@@ -508,7 +508,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_04
    X 931
    Y 128
@@ -516,7 +516,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_09
    X 923
    Y 127
@@ -524,7 +524,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_20
    X 967
    Y 128
@@ -533,7 +533,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE pillar_02
    X 201
    Y 146
@@ -543,7 +543,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_15
    X 790
    Y 34
@@ -552,7 +552,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE steel_01
    X 853
    Y 99
@@ -560,7 +560,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE icicle_02
    X 672
    Y 117

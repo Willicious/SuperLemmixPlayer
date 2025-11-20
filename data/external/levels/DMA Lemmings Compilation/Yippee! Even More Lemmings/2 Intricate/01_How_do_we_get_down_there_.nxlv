@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 232
  START_Y 80
- THEME ohno_rock
+ THEME slx_rock
  
 #         Level stats           
 # ----------------------------- 
@@ -46,7 +46,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE exit
    X 456
    Y 116
@@ -54,7 +54,7 @@
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE vinewater
    X 192
    Y 136
@@ -63,7 +63,7 @@
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE vinewater
    X 128
    Y 136
@@ -72,7 +72,7 @@
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE vinewater
    X 64
    Y 136
@@ -81,7 +81,7 @@
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE vinewater
    X 0
    Y 136
@@ -90,14 +90,14 @@
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE weed_trap
    X 376
    Y 128
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE vinewater
    X 256
    Y 136
@@ -107,14 +107,14 @@
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE lizard_trap_01
    X 518
    Y 121
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE window
    X 104
    Y 0
@@ -124,7 +124,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_08
    X 263
    Y 137
@@ -132,7 +132,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_08
    X 373
    Y 138
@@ -140,7 +140,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_08
    X 484
    Y 132
@@ -149,7 +149,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_01
    X 217
    Y 54
@@ -157,7 +157,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_08
    X 79
    Y 37

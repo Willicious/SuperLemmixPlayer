@@ -18,7 +18,7 @@
  HEIGHT 160
  START_X 260
  START_Y 80
- THEME orig_crystal
+ THEME slx_crystal
  
 #         Level stats           
 # ----------------------------- 
@@ -43,7 +43,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE window
    X 155
    Y 28
@@ -51,7 +51,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE exit
    X 635
    Y 108
@@ -59,7 +59,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 139
    Y 144
@@ -69,7 +69,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 203
    Y 144
@@ -78,7 +78,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 251
    Y 144
@@ -87,7 +87,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 315
    Y 144
@@ -97,7 +97,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 123
    Y 136
@@ -107,7 +107,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 187
    Y 136
@@ -117,7 +117,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 251
    Y 136
@@ -127,7 +127,7 @@
  $END
  
  $GADGET
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE water
    X 299
    Y 136
@@ -140,7 +140,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 137
    Y 76
@@ -148,7 +148,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 201
    Y 76
@@ -156,7 +156,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 264
    Y 76
@@ -164,7 +164,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_01
    X 285
    Y 12
@@ -173,7 +173,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_01
    X 285
    Y -11
@@ -182,7 +182,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 323
    Y 76
@@ -191,7 +191,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 360
    Y 38
@@ -199,7 +199,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 415
    Y 79
@@ -208,7 +208,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 421
    Y 62
@@ -217,7 +217,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 385
    Y 18
@@ -226,7 +226,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 395
    Y -14
@@ -235,7 +235,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 347
    Y 4
@@ -244,7 +244,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 385
    Y -16
@@ -254,7 +254,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_03
    X 367
    Y 81
@@ -264,7 +264,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_03
    X 366
    Y 81
@@ -274,7 +274,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_03
    X 364
    Y 80
@@ -284,7 +284,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_03
    X 362
    Y 79
@@ -294,7 +294,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE circle_02
    X 427
    Y 65
@@ -303,7 +303,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE circle_02
    X 433
    Y 62
@@ -312,7 +312,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 417
    Y -9
@@ -321,7 +321,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 388
    Y 9
@@ -330,7 +330,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 335
    Y 17
@@ -340,7 +340,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 328
    Y -17
@@ -349,7 +349,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 324
    Y -29
@@ -358,7 +358,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 313
    Y -41
@@ -367,7 +367,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 358
    Y 15
@@ -376,7 +376,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 335
    Y 3
@@ -385,7 +385,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 337
    Y -1
@@ -394,7 +394,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 331
    Y -2
@@ -403,7 +403,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE circle_02
    X 428
    Y 66
@@ -412,7 +412,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 371
    Y -8
@@ -421,7 +421,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 448
    Y -33
@@ -430,7 +430,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 627
    Y 131
@@ -439,7 +439,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 564
    Y 131
@@ -448,7 +448,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 502
    Y 131
@@ -457,7 +457,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 484
    Y 131
@@ -466,7 +466,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE block
    X 463
    Y 115
@@ -474,7 +474,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 426
    Y 90
@@ -483,7 +483,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 486
    Y -65
@@ -491,7 +491,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE crystal_04
    X 96
    Y 28
@@ -499,7 +499,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 74
    Y 98
@@ -508,7 +508,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 84
    Y 99
@@ -516,7 +516,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 61
    Y 114
@@ -525,7 +525,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 100
    Y 121
@@ -534,7 +534,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 342
    Y 85
@@ -543,7 +543,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 353
    Y 106
@@ -552,7 +552,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 344
    Y 89
@@ -561,7 +561,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 313
    Y 121
@@ -570,7 +570,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 365
    Y 138
@@ -579,7 +579,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 374
    Y 148
@@ -588,7 +588,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 70
    Y -60
@@ -596,7 +596,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 132
    Y -56
@@ -605,7 +605,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 150
    Y -60
@@ -614,7 +614,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 209
    Y -51
@@ -623,7 +623,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 245
    Y -56
@@ -632,7 +632,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 286
    Y -53
@@ -641,7 +641,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 113
    Y -58
@@ -650,7 +650,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 53
    Y -40
@@ -659,7 +659,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 32
    Y -54
@@ -668,7 +668,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE crystal_02
    X 209
    Y 128
@@ -677,7 +677,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE crystal_03
    X 289
    Y 123
@@ -685,7 +685,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 342
    Y 100
@@ -694,7 +694,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 675
    Y 131
@@ -702,7 +702,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 698
    Y 131
@@ -710,7 +710,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 734
    Y 131
@@ -719,7 +719,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE block
    X 798
    Y 115
@@ -727,7 +727,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_01
    X 807
    Y 59
@@ -736,7 +736,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE orb
    X 799
    Y 39
@@ -744,7 +744,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 760
    Y -1
@@ -753,7 +753,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 736
    Y -25
@@ -762,7 +762,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 819
    Y -4
@@ -771,7 +771,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 852
    Y -37
@@ -780,7 +780,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 597
    Y 72
@@ -789,7 +789,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 547
    Y 72
@@ -798,7 +798,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 657
    Y 72
@@ -807,7 +807,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 707
    Y 72
@@ -816,7 +816,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 602
    Y 17
@@ -825,7 +825,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 662
    Y 17
@@ -834,7 +834,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 539
    Y 72
@@ -843,7 +843,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 583
    Y 28
@@ -852,7 +852,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 607
    Y 4
@@ -861,7 +861,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 720
    Y 72
@@ -870,7 +870,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 675
    Y 27
@@ -879,7 +879,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 650
    Y 2
@@ -888,7 +888,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 729
    Y 62
@@ -897,7 +897,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 738
    Y 49
@@ -906,7 +906,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 679
    Y 9
@@ -915,7 +915,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 690
    Y 1
@@ -924,7 +924,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 698
    Y 0
@@ -933,7 +933,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 532
    Y 66
@@ -942,7 +942,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 520
    Y 55
@@ -951,7 +951,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 584
    Y 5
@@ -960,7 +960,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 569
    Y 1
@@ -969,7 +969,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 611
    Y 86
@@ -978,7 +978,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 648
    Y 86
@@ -987,7 +987,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 617
    Y 95
@@ -996,7 +996,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 623
    Y 107
@@ -1005,7 +1005,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 631
    Y 118
@@ -1014,7 +1014,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 611
    Y 131
@@ -1022,7 +1022,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 650
    Y 131
@@ -1030,7 +1030,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 507
    Y 72
@@ -1039,7 +1039,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 530
    Y 46
@@ -1048,7 +1048,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 522
    Y 54
@@ -1057,7 +1057,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 499
    Y 72
@@ -1066,7 +1066,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 496
    Y 58
@@ -1075,7 +1075,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 491
    Y 41
@@ -1084,7 +1084,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 468
    Y -5
@@ -1093,7 +1093,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 518
    Y -5
@@ -1102,7 +1102,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 478
    Y 15
@@ -1111,7 +1111,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_05
    X 558
    Y -15
@@ -1120,7 +1120,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 580
    Y -9
@@ -1129,7 +1129,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 551
    Y 20
@@ -1138,7 +1138,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 581
    Y 6
@@ -1147,7 +1147,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 588
    Y 14
@@ -1156,7 +1156,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 488
    Y 33
@@ -1165,7 +1165,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 492
    Y 36
@@ -1174,7 +1174,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 503
    Y 47
@@ -1183,7 +1183,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_03
    X 467
    Y 57
@@ -1192,7 +1192,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_02
    X 525
    Y -56
@@ -1200,7 +1200,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 544
    Y -70
@@ -1208,7 +1208,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 533
    Y -68
@@ -1216,7 +1216,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE clump_01
    X 530
    Y -65
@@ -1225,7 +1225,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE mesh_06
    X 547
    Y 82
@@ -1233,7 +1233,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 565
    Y 44
@@ -1242,7 +1242,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 556
    Y 35
@@ -1251,7 +1251,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 504
    Y 67
@@ -1260,7 +1260,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 512
    Y 115
@@ -1269,7 +1269,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_02
    X 516
    Y 118
@@ -1278,7 +1278,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_crystal
+   STYLE slx_crystal
    PIECE bar_04
    X 518
    Y 131

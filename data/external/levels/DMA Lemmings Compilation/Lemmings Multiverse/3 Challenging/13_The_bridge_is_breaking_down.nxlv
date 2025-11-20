@@ -18,7 +18,7 @@
  HEIGHT 160
  START_X 160
  START_Y 80
- THEME orig_fire
+ THEME slx_fire
  
  
 #         Level stats           
@@ -45,7 +45,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE firepit
    X 384
    Y 32
@@ -53,7 +53,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE exit
    X 464
    Y 68
@@ -61,7 +61,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE window
    X 48
    Y 68
@@ -69,7 +69,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE flamethrower_flip
    X 224
    Y 116
@@ -77,7 +77,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE flamethrower_flip
    X 224
    Y 132
@@ -88,7 +88,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_06
    X -12
    Y 116
@@ -96,7 +96,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_06
    X -18
    Y 77
@@ -105,7 +105,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_06
    X 5
    Y 118
@@ -113,7 +113,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_06
    X 8
    Y 135
@@ -122,7 +122,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_06
    X 12
    Y 150
@@ -131,7 +131,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_06
    X 30
    Y 154
@@ -140,7 +140,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_05
    X 42
    Y 112
@@ -149,7 +149,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_05
    X 17
    Y 76
@@ -157,7 +157,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_05
    X 4
    Y 70
@@ -165,7 +165,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_05
    X -7
    Y 36
@@ -173,7 +173,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 36
    Y 35
@@ -181,7 +181,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 46
    Y 74
@@ -190,7 +190,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 74
    Y 114
@@ -199,7 +199,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X 39
    Y 129
@@ -207,7 +207,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X 32
    Y 124
@@ -215,7 +215,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X 82
    Y 121
@@ -223,7 +223,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X 98
    Y 121
@@ -232,7 +232,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 16
    Y 18
@@ -241,7 +241,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X -19
    Y 19
@@ -251,7 +251,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 58
    Y 34
@@ -261,7 +261,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 34
    Y 44
@@ -271,7 +271,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 35
    Y 61
@@ -280,7 +280,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 50
    Y 70
@@ -289,7 +289,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_04
    X 66
    Y 71
@@ -298,7 +298,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE circle_02
    X 98
    Y 103
@@ -307,7 +307,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE circle_02
    X 113
    Y 99
@@ -316,7 +316,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X -17
    Y 27
@@ -325,7 +325,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X -39
    Y 34
@@ -334,7 +334,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X -45
    Y 37
@@ -343,7 +343,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_03
    X 26
    Y 26
@@ -352,7 +352,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 184
    Y 117
@@ -360,7 +360,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 195
    Y 108
@@ -368,7 +368,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 207
    Y 100
@@ -376,7 +376,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 220
    Y 93
@@ -384,7 +384,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 234
    Y 87
@@ -392,7 +392,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 250
    Y 83
@@ -400,7 +400,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 270
    Y 83
@@ -408,7 +408,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 292
    Y 85
@@ -416,7 +416,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 318
    Y 91
@@ -424,7 +424,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 344
    Y 101
@@ -432,7 +432,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 369
    Y 114
@@ -440,7 +440,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 391
    Y 130
@@ -448,7 +448,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 412
    Y 147
@@ -456,7 +456,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE platform
    X 463
    Y 120
@@ -464,7 +464,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE platform
    X 431
    Y 120
@@ -472,7 +472,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_04
    X 200
    Y 80
@@ -481,7 +481,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_03
    X 208
    Y 50
@@ -489,7 +489,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_04
    X 200
    Y 20
@@ -498,7 +498,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_03
    X 208
    Y -11
@@ -506,7 +506,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 432
    Y 28
@@ -514,7 +514,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 457
    Y 28
@@ -522,7 +522,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 482
    Y 28
@@ -530,7 +530,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 507
    Y 28
@@ -538,7 +538,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 432
    Y -8
@@ -546,7 +546,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 457
    Y -8
@@ -554,7 +554,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 482
    Y -8
@@ -562,7 +562,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 507
    Y -8
@@ -570,7 +570,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_07
    X 406
    Y 52
@@ -579,7 +579,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 312
    Y 78
@@ -588,7 +588,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 312
    Y 54
@@ -597,7 +597,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar_end
    X 306
    Y 42
@@ -605,7 +605,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar_end
    X 306
    Y 20
@@ -614,7 +614,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 312
    Y -4
@@ -622,7 +622,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE spike
    X 457
    Y 127
@@ -631,7 +631,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE spike
    X 441
    Y 128
@@ -641,7 +641,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE spike
    X 473
    Y 129
@@ -651,35 +651,35 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE steel_01
    X 432
    Y 39
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE steel_01
    X 457
    Y 39
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE steel_01
    X 482
    Y 39
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE steel_01
    X 507
    Y 39
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE spike
    X 386
    Y 46
@@ -688,7 +688,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_04
    X 174
    Y 127
@@ -697,7 +697,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE spike
    X 168
    Y 140
@@ -707,7 +707,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_04
    X 125
    Y 136
@@ -716,7 +716,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_04
    X 141
    Y 137
@@ -725,7 +725,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_04
    X 157
    Y 142
@@ -734,7 +734,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_05
    X 173
    Y 139
@@ -743,7 +743,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 88
    Y 16
@@ -752,7 +752,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 88
    Y -8
@@ -761,7 +761,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 21
    Y 117
@@ -770,7 +770,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_02
    X 308
    Y 28
@@ -779,7 +779,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_01
    X 308
    Y 40
@@ -788,7 +788,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 312
    Y 86
@@ -797,7 +797,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 312
    Y 110
@@ -806,7 +806,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_03
    X 208
    Y 110
@@ -815,7 +815,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_04
    X 200
    Y 140
@@ -824,7 +824,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_04
    X 321
    Y -17
@@ -833,7 +833,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE steel_01
    X 308
    Y 124
@@ -841,7 +841,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar_end
    X 306
    Y 124
@@ -850,7 +850,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar_end
    X 306
    Y 141
@@ -858,7 +858,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE pillar
    X 312
    Y 153
@@ -866,7 +866,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_01
    X 309
    Y 127
@@ -875,7 +875,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE chain_01
    X 309
    Y 127
@@ -884,7 +884,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_06
    X 290
    Y 126
@@ -893,7 +893,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_06
    X 290
    Y 132
@@ -902,7 +902,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_06
    X 290
    Y 142
@@ -911,7 +911,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_06
    X 290
    Y 148
@@ -920,7 +920,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_06
    X 302
    Y 129
@@ -929,7 +929,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bars_06
    X 302
    Y 145
@@ -938,7 +938,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE bricks_03
    X 273
    Y 125

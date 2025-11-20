@@ -18,7 +18,7 @@
  HEIGHT 160
  START_X 168
  START_Y 80
- THEME orig_marble
+ THEME slx_marble
  
 #         Level stats           
 # ----------------------------- 
@@ -48,7 +48,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE window
    X 120
    Y 44
@@ -56,7 +56,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE exit
    X 648
    Y 52
@@ -67,7 +67,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 116
    Y 94
@@ -75,7 +75,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 164
    Y 94
@@ -83,7 +83,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 212
    Y 94
@@ -91,7 +91,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 260
    Y 94
@@ -99,7 +99,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 308
    Y 94
@@ -107,7 +107,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 356
    Y 94
@@ -115,7 +115,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 404
    Y 94
@@ -123,7 +123,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 452
    Y 94
@@ -131,7 +131,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 500
    Y 94
@@ -139,7 +139,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 548
    Y 94
@@ -147,7 +147,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 596
    Y 94
@@ -155,7 +155,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 657
    Y 75
@@ -163,7 +163,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_03
    X 691
    Y 75

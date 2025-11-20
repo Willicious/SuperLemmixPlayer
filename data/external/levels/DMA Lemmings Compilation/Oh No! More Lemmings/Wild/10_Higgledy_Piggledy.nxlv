@@ -18,7 +18,7 @@
  HEIGHT 160
  START_X 192
  START_Y 80
- THEME ohno_rock
+ THEME slx_rock
  BACKGROUND special:amiga_blue
  
 #         Level stats           
@@ -44,7 +44,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE window
    X 48
    Y 104
@@ -52,7 +52,7 @@
  $END
  
  $GADGET
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE exit
    X 48
    Y 30
@@ -63,7 +63,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_08
    X 40
    Y 147
@@ -71,7 +71,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_11
    X 154
    Y 135
@@ -80,7 +80,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_11
    X 169
    Y 120
@@ -89,7 +89,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_11
    X 182
    Y 107
@@ -98,28 +98,28 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE steel_01
    X 246
    Y 89
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE steel_01
    X 246
    Y 113
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE steel_01
    X 246
    Y 137
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_11
    X 198
    Y 91
@@ -128,7 +128,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_12
    X 203
    Y 105
@@ -136,7 +136,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_11
    X 182
    Y 111
@@ -144,7 +144,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_12
    X 193
    Y 120
@@ -152,7 +152,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_11
    X 162
    Y 127
@@ -160,7 +160,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_12
    X 186
    Y 125
@@ -168,7 +168,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_12
    X 175
    Y 133
@@ -176,7 +176,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_01
    X 173
    Y 138
@@ -184,7 +184,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_01
    X 165
    Y 145
@@ -192,7 +192,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_03
    X 185
    Y 135
@@ -200,7 +200,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 262
    Y 88
@@ -209,7 +209,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 263
    Y 95
@@ -218,7 +218,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 263
    Y 101
@@ -227,7 +227,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 261
    Y 105
@@ -236,7 +236,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 262
    Y 109
@@ -245,7 +245,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 260
    Y 113
@@ -254,7 +254,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 262
    Y 117
@@ -263,7 +263,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 259
    Y 117
@@ -272,7 +272,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 259
    Y 120
@@ -281,7 +281,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 262
    Y 123
@@ -290,7 +290,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_07
    X 261
    Y 125
@@ -299,21 +299,21 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE steel_01
    X 292
    Y 89
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE steel_01
    X 292
    Y 65
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_02
    X 298
    Y 126
@@ -321,7 +321,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 306
    Y 121
@@ -329,7 +329,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_08
    X 332
    Y 130
@@ -337,7 +337,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_02
    X 337
    Y 104
@@ -345,7 +345,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_02
    X 362
    Y 91
@@ -353,7 +353,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_02
    X 388
    Y 77
@@ -361,7 +361,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_09
    X 409
    Y 74
@@ -369,7 +369,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_09
    X 434
    Y 73
@@ -377,7 +377,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_03
    X 459
    Y 51
@@ -386,7 +386,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_02
    X 455
    Y 41
@@ -395,7 +395,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE crystal_04
    X 463
    Y 33
@@ -404,7 +404,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_03
    X 343
    Y 105
@@ -413,7 +413,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_04
    X 363
    Y 95
@@ -422,7 +422,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_04
    X 380
    Y 86
@@ -431,7 +431,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_05
    X 419
    Y 77
@@ -440,7 +440,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 399
    Y 81
@@ -449,7 +449,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 412
    Y 97
@@ -458,7 +458,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 410
    Y 115
@@ -467,7 +467,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_02
    X 451
    Y 81
@@ -476,7 +476,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_02
    X 448
    Y 118
@@ -485,7 +485,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_02
    X 410
    Y 125
@@ -494,7 +494,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_03
    X 302
    Y 51
@@ -503,7 +503,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_04
    X 314
    Y 37
@@ -512,7 +512,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 257
    Y 35
@@ -521,7 +521,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 245
    Y 46
@@ -530,7 +530,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 204
    Y 37
@@ -539,7 +539,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 158
    Y 31
@@ -548,7 +548,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 175
    Y 48
@@ -557,7 +557,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 129
    Y 40
@@ -566,7 +566,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 104
    Y 32
@@ -575,7 +575,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 84
    Y 43
@@ -584,7 +584,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_05
    X 240
    Y -7
@@ -593,7 +593,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_05
    X 194
    Y -10
@@ -602,7 +602,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_05
    X 139
    Y -12
@@ -611,7 +611,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_09
    X 315
    Y 62
@@ -620,7 +620,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_10
    X 346
    Y 52
@@ -629,7 +629,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE rocks_08
    X 82
    Y 47
@@ -637,7 +637,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE platform_02
    X 68
    Y 55
@@ -645,7 +645,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE platform_02
    X 52
    Y 55
@@ -653,7 +653,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE platform_01
    X 44
    Y 55
@@ -661,7 +661,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE tree_01
    X 479
    Y 66
@@ -670,7 +670,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE tree_04
    X 483
    Y 51
@@ -679,7 +679,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_06
    X 475
    Y 38
@@ -687,7 +687,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_06
    X 481
    Y 58
@@ -695,7 +695,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_06
    X 473
    Y 52
@@ -703,7 +703,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE tree_14
    X 501
    Y 51
@@ -712,7 +712,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE tree_14
    X 487
    Y 34
@@ -721,7 +721,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_11
    X 514
    Y 50
@@ -730,7 +730,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_11
    X 501
    Y 31
@@ -739,7 +739,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE tree_03
    X 482
    Y 27
@@ -748,7 +748,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_08
    X 472
    Y 21
@@ -757,7 +757,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_rock
+   STYLE slx_rock
    PIECE grass_08
    X 508
    Y 47

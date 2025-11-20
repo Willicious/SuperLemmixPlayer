@@ -126,7 +126,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 432
    Y 135
@@ -135,7 +135,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 368
    Y 135
@@ -144,7 +144,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 304
    Y 135
@@ -153,7 +153,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 240
    Y 135
@@ -162,7 +162,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 176
    Y 135
@@ -171,7 +171,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 112
    Y 135
@@ -180,7 +180,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 48
    Y 135
@@ -197,7 +197,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X -16
    Y 135
@@ -206,7 +206,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 496
    Y 135

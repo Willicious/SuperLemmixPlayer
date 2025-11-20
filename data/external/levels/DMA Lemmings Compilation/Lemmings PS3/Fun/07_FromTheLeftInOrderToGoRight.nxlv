@@ -60,7 +60,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 408
    Y 135
@@ -70,7 +70,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 344
    Y 135
@@ -80,7 +80,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 280
    Y 135
@@ -126,7 +126,7 @@
  $END
  
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE trap_01
    X 28
    Y 83
@@ -170,7 +170,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE poison
    X 472
    Y 135

@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 248
  START_Y 80
- THEME ohno_brick
+ THEME slx_brick
  
 #         Level stats           
 # ----------------------------- 
@@ -53,42 +53,42 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE window
    X 97
    Y 0
  $END
  
  $GADGET
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE window
    X 209
    Y 0
  $END
  
  $GADGET
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE window
    X 321
    Y 0
  $END
  
  $GADGET
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE trap_01
    X 161
    Y 10
  $END
  
  $GADGET
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE trap_01
    X 273
    Y 10
  $END
  
  $GADGET
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE exit
    X 209
    Y 100
@@ -98,7 +98,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 152
    Y 43
@@ -106,7 +106,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 120
    Y 43
@@ -114,7 +114,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 88
    Y 43
@@ -122,7 +122,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 184
    Y 43
@@ -130,7 +130,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 216
    Y 43
@@ -138,7 +138,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 248
    Y 43
@@ -146,7 +146,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 280
    Y 43
@@ -154,7 +154,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 312
    Y 43
@@ -162,7 +162,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 344
    Y 43
@@ -170,7 +170,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE platform_01
    X 376
    Y 43
@@ -178,7 +178,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE blocks_01
    X 220
    Y 135
@@ -186,7 +186,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE blocks_01
    X 236
    Y 135
@@ -194,7 +194,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE blocks_01
    X 204
    Y 135
@@ -202,7 +202,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE pole_silver_03
    X 234
    Y 151
@@ -210,7 +210,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE pole_silver_03
    X 209
    Y 151
@@ -218,7 +218,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE bricks_small_05
    X 204
    Y 85
@@ -226,7 +226,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_brick
+   STYLE slx_brick
    PIECE bricks_small_05
    X 241
    Y 85

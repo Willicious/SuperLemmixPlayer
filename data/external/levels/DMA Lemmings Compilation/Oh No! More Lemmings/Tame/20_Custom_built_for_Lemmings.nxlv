@@ -18,7 +18,7 @@
  HEIGHT 160
  START_X 256
  START_Y 80
- THEME ohno_bubble
+ THEME slx_bubble
  BACKGROUND special:amiga_blue
  
 #         Level stats           
@@ -49,7 +49,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE window
    X 112
    Y 44
@@ -57,7 +57,7 @@
  $END
  
  $GADGET
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE exit
    X 368
    Y 31
@@ -65,7 +65,7 @@
  $END
  
  $GADGET
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE spinning_arrow
    X 384
    Y 31
@@ -78,7 +78,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 130
    Y 128
@@ -86,7 +86,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 162
    Y 128
@@ -94,7 +94,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 194
    Y 128
@@ -102,7 +102,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 226
    Y 128
@@ -110,7 +110,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 258
    Y 128
@@ -118,7 +118,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 290
    Y 128
@@ -126,7 +126,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 322
    Y 128
@@ -134,7 +134,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 354
    Y 128
@@ -142,7 +142,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_02
    X 98
    Y 128
@@ -150,7 +150,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_02
    X 130
    Y 96
@@ -158,7 +158,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 162
    Y 96
@@ -166,7 +166,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 194
    Y 96
@@ -174,7 +174,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 226
    Y 96
@@ -182,7 +182,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 258
    Y 96
@@ -190,7 +190,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 290
    Y 96
@@ -198,7 +198,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 322
    Y 96
@@ -206,7 +206,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_02
    X 162
    Y 64
@@ -214,7 +214,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 194
    Y 64
@@ -222,7 +222,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_01
    X 226
    Y 64
@@ -230,7 +230,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_02
    X 194
    Y 32
@@ -238,7 +238,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_03
    X 226
    Y 32
@@ -246,7 +246,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_03
    X 258
    Y 64
@@ -254,7 +254,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_02
    X 290
    Y 64
@@ -262,7 +262,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_03
    X 322
    Y 64
@@ -270,7 +270,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_03
    X 354
    Y 96
@@ -278,7 +278,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE fence_blue_03
    X 386
    Y 128
@@ -286,7 +286,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_01
    X 364
    Y 67
@@ -295,7 +295,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_01
    X 396
    Y 67
@@ -304,7 +304,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_11
    X 351
    Y 67
@@ -313,7 +313,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_05
    X 428
    Y 62
@@ -322,7 +322,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_02
    X 433
    Y 33
@@ -330,7 +330,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_02
    X 433
    Y 2
@@ -338,7 +338,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_02
    X 433
    Y -7
@@ -346,7 +346,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_03
    X 433
    Y 19
@@ -354,7 +354,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_05
    X 449
    Y 14
@@ -362,7 +362,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_04
    X 417
    Y 14
@@ -371,7 +371,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_06
    X 444
    Y 30
@@ -380,7 +380,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_06
    X 421
    Y 30
@@ -389,7 +389,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_02
    X 413
    Y -14
@@ -398,7 +398,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_small_02
    X 454
    Y -12
@@ -407,7 +407,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_07
    X 88
    Y 75
@@ -415,7 +415,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 120
    Y 83
@@ -423,7 +423,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 152
    Y 83
@@ -431,7 +431,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 183
    Y 83
@@ -439,7 +439,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_04
    X 209
    Y 65
@@ -447,7 +447,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_02
    X 230
    Y 53
@@ -455,7 +455,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_04
    X 257
    Y 32
@@ -463,7 +463,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_05
    X 268
    Y 9
@@ -471,7 +471,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_04
    X 300
    Y -12
@@ -479,7 +479,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_01
    X 238
    Y -12
@@ -487,7 +487,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_06
    X 196
    Y 86
@@ -495,7 +495,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_01
    X 206
    Y 112
@@ -503,7 +503,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_05
    X 237
    Y 133
@@ -511,7 +511,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 269
    Y 130
@@ -519,7 +519,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 298
    Y 130
@@ -527,7 +527,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 329
    Y 130
@@ -535,7 +535,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 361
    Y 130
@@ -543,7 +543,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 392
    Y 130
@@ -551,7 +551,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 424
    Y 130
@@ -559,7 +559,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_05
    X 431
    Y 133
@@ -567,7 +567,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_09
    X 463
    Y 130
@@ -575,7 +575,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_04
    X 494
    Y 112
@@ -583,7 +583,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_03
    X 494
    Y 80
@@ -591,7 +591,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_02
    X 464
    Y 80
@@ -599,7 +599,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_12
    X 462
    Y 106
@@ -608,7 +608,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_07
    X 58
    Y 75
@@ -616,7 +616,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 97
    Y 43
@@ -624,7 +624,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 97
    Y 11
@@ -632,7 +632,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 97
    Y -18
@@ -640,7 +640,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 97
    Y 106
@@ -648,7 +648,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 97
    Y 132
@@ -656,7 +656,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 67
    Y 107
@@ -664,7 +664,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 67
    Y 137
@@ -672,7 +672,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 67
    Y 45
@@ -680,7 +680,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 67
    Y 15
@@ -688,7 +688,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_08
    X 67
    Y -15
@@ -696,7 +696,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_01
    X 26
    Y 65
@@ -704,7 +704,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE pipe_large_12
    X 24
    Y 50
@@ -712,7 +712,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_01
    X 70
    Y -25
@@ -721,7 +721,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_01
    X 87
    Y -25
@@ -730,7 +730,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_01
    X 113
    Y -25
@@ -739,7 +739,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_01
    X 143
    Y -25
@@ -748,7 +748,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 166
    Y -23
@@ -757,7 +757,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 93
    Y -15
@@ -766,7 +766,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_01
    X 115
    Y -5
@@ -775,7 +775,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 134
    Y -9
@@ -784,7 +784,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 184
    Y -25
@@ -793,7 +793,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 202
    Y -25
@@ -802,7 +802,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 226
    Y -16
@@ -811,7 +811,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 246
    Y -10
@@ -820,7 +820,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 268
    Y -15
@@ -829,7 +829,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 293
    Y -11
@@ -838,7 +838,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 312
    Y -11
@@ -847,7 +847,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 330
    Y -14
@@ -856,7 +856,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 348
    Y -18
@@ -865,7 +865,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_bubble
+   STYLE slx_bubble
    PIECE bubbles_blue_02
    X 369
    Y -23

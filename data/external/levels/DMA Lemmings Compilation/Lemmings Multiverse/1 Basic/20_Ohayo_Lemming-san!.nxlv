@@ -18,7 +18,7 @@
  HEIGHT 160
  START_X 350
  START_Y 80
- THEME orig_fire
+ THEME slx_fire
  
 #         Level stats           
 # ----------------------------- 
@@ -48,7 +48,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE exit
    X 838
    Y 81
@@ -56,7 +56,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE window
    X 243
    Y 96
@@ -64,7 +64,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 118
    Y 144
@@ -73,7 +73,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 182
    Y 144
@@ -83,7 +83,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 246
    Y 144
@@ -93,7 +93,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 310
    Y 144
@@ -103,7 +103,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 374
    Y 144
@@ -113,7 +113,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 438
    Y 144
@@ -123,7 +123,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 502
    Y 144
@@ -133,7 +133,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 630
    Y 144
@@ -143,7 +143,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 566
    Y 144
@@ -153,7 +153,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 694
    Y 144
@@ -163,7 +163,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 758
    Y 144
@@ -172,7 +172,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 822
    Y 144
@@ -182,7 +182,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 886
    Y 144
@@ -192,7 +192,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 950
    Y 144
@@ -202,7 +202,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 1014
    Y 144
@@ -211,7 +211,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 54
    Y 144
@@ -220,7 +220,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X -10
    Y 144
@@ -229,7 +229,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 1078
    Y 144
@@ -238,7 +238,7 @@
  $END
  
  $GADGET
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE lava
    X 1142
    Y 144
@@ -250,7 +250,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 287
    Y 6
@@ -258,7 +258,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 291
    Y 52
@@ -266,7 +266,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 291
    Y 74
@@ -274,7 +274,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 292
    Y 93
@@ -282,7 +282,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 291
    Y 110
@@ -290,7 +290,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 282
    Y 120
@@ -298,7 +298,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 270
    Y 129
@@ -306,7 +306,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 258
    Y 133
@@ -314,7 +314,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 242
    Y 128
@@ -322,7 +322,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 229
    Y 115
@@ -330,7 +330,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 224
    Y 100
@@ -338,7 +338,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 223
    Y 84
@@ -346,7 +346,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 228
    Y 75
@@ -354,7 +354,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 238
    Y 68
@@ -362,7 +362,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 250
    Y 62
@@ -370,7 +370,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 271
    Y 60
@@ -378,7 +378,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 291
    Y 63
@@ -386,7 +386,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 313
    Y 63
@@ -394,7 +394,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 331
    Y 64
@@ -402,7 +402,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 341
    Y 68
@@ -410,7 +410,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 353
    Y 73
@@ -418,7 +418,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 359
    Y 84
@@ -426,7 +426,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 362
    Y 96
@@ -434,7 +434,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 361
    Y 104
@@ -442,7 +442,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 360
    Y 113
@@ -450,7 +450,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 353
    Y 121
@@ -458,7 +458,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 345
    Y 128
@@ -466,7 +466,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 290
    Y 31
@@ -474,7 +474,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 288
    Y 38
@@ -482,7 +482,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 239
    Y 31
@@ -490,7 +490,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 254
    Y 32
@@ -498,7 +498,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 267
    Y 30
@@ -506,7 +506,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 280
    Y 29
@@ -514,7 +514,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 299
    Y 29
@@ -522,7 +522,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 318
    Y 30
@@ -530,7 +530,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 329
    Y 30
@@ -538,7 +538,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 342
    Y 31
@@ -546,7 +546,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 391
    Y 43
@@ -554,7 +554,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 400
    Y 52
@@ -562,7 +562,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 455
    Y 24
@@ -570,7 +570,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 454
    Y 37
@@ -578,7 +578,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 455
    Y 52
@@ -586,7 +586,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 454
    Y 62
@@ -594,7 +594,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 452
    Y 74
@@ -602,7 +602,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 450
    Y 94
@@ -610,7 +610,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 450
    Y 113
@@ -618,7 +618,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 452
    Y 130
@@ -626,7 +626,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 515
    Y 22
@@ -634,7 +634,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 532
    Y 24
@@ -642,7 +642,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 547
    Y 23
@@ -650,7 +650,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 571
    Y 35
@@ -658,7 +658,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 587
    Y 23
@@ -666,7 +666,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 602
    Y 24
@@ -674,7 +674,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 612
    Y 28
@@ -682,7 +682,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 560
    Y 1
@@ -690,7 +690,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 567
    Y 17
@@ -698,7 +698,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 573
    Y 41
@@ -706,7 +706,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 573
    Y 56
@@ -714,7 +714,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 573
    Y 65
@@ -722,7 +722,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 573
    Y 73
@@ -730,7 +730,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 572
    Y 80
@@ -738,7 +738,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 572
    Y 92
@@ -746,7 +746,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 570
    Y 105
@@ -754,7 +754,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 565
    Y 116
@@ -762,7 +762,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 558
    Y 128
@@ -770,7 +770,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 543
    Y 132
@@ -778,7 +778,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 528
    Y 128
@@ -786,7 +786,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 517
    Y 119
@@ -794,7 +794,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 515
    Y 105
@@ -802,7 +802,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 517
    Y 89
@@ -810,7 +810,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 524
    Y 79
@@ -818,7 +818,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 532
    Y 72
@@ -826,7 +826,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 543
    Y 68
@@ -834,7 +834,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 551
    Y 69
@@ -842,7 +842,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 561
    Y 68
@@ -850,7 +850,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 572
    Y 70
@@ -858,7 +858,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 585
    Y 72
@@ -866,7 +866,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 592
    Y 73
@@ -874,7 +874,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 599
    Y 73
@@ -882,7 +882,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 613
    Y 75
@@ -890,7 +890,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 713
    Y 21
@@ -898,7 +898,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 714
    Y 32
@@ -906,7 +906,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 714
    Y 43
@@ -914,7 +914,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 714
    Y 57
@@ -922,7 +922,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 716
    Y 70
@@ -930,7 +930,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 722
    Y 86
@@ -938,7 +938,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 723
    Y 95
@@ -946,7 +946,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 721
    Y 105
@@ -954,7 +954,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 717
    Y 118
@@ -962,7 +962,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 707
    Y 129
@@ -970,7 +970,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 690
    Y 132
@@ -978,7 +978,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 672
    Y 128
@@ -986,7 +986,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 658
    Y 113
@@ -994,7 +994,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 658
    Y 97
@@ -1002,7 +1002,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 659
    Y 86
@@ -1010,7 +1010,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 668
    Y 77
@@ -1018,7 +1018,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 675
    Y 69
@@ -1026,7 +1026,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 682
    Y 66
@@ -1034,7 +1034,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 691
    Y 68
@@ -1042,7 +1042,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 701
    Y 65
@@ -1050,7 +1050,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 714
    Y 67
@@ -1058,7 +1058,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 729
    Y 67
@@ -1066,7 +1066,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 743
    Y 67
@@ -1074,7 +1074,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 756
    Y 69
@@ -1082,7 +1082,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 717
    Y 17
@@ -1090,7 +1090,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 729
    Y 20
@@ -1098,7 +1098,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 740
    Y 22
@@ -1106,7 +1106,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 752
    Y 25
@@ -1114,7 +1114,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 817
    Y 12
@@ -1122,7 +1122,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 836
    Y 13
@@ -1130,7 +1130,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 853
    Y 13
@@ -1138,7 +1138,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 868
    Y 11
@@ -1146,7 +1146,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 882
    Y 9
@@ -1154,7 +1154,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 801
    Y 63
@@ -1162,7 +1162,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 817
    Y 58
@@ -1170,7 +1170,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 830
    Y 58
@@ -1178,7 +1178,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 842
    Y 58
@@ -1186,7 +1186,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 858
    Y 58
@@ -1194,7 +1194,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 872
    Y 59
@@ -1202,7 +1202,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 880
    Y 64
@@ -1210,7 +1210,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 892
    Y 66
@@ -1218,7 +1218,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 899
    Y 71
@@ -1226,7 +1226,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 902
    Y 78
@@ -1234,7 +1234,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 902
    Y 85
@@ -1242,7 +1242,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 900
    Y 94
@@ -1250,7 +1250,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 897
    Y 107
@@ -1258,7 +1258,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 893
    Y 114
@@ -1266,7 +1266,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 886
    Y 122
@@ -1274,7 +1274,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 871
    Y 128
@@ -1282,7 +1282,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 855
    Y 132
@@ -1290,7 +1290,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 833
    Y 130
@@ -1298,7 +1298,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 815
    Y 125
@@ -1306,7 +1306,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 801
    Y 119
@@ -1314,7 +1314,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 971
    Y 15
@@ -1322,7 +1322,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 968
    Y 30
@@ -1330,7 +1330,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 966
    Y 42
@@ -1338,7 +1338,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 963
    Y 54
@@ -1346,7 +1346,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 960
    Y 66
@@ -1354,7 +1354,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 958
    Y 77
@@ -1362,7 +1362,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 957
    Y 90
@@ -1370,7 +1370,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 957
    Y 130
@@ -1378,7 +1378,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 331
    Y 131
@@ -1386,7 +1386,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_fire
+   STYLE slx_fire
    PIECE rock_02
    X 709
    Y 8

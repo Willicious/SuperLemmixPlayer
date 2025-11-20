@@ -17,7 +17,7 @@
  HEIGHT 160
  START_X 168
  START_Y 80
- THEME orig_dirt
+ THEME slx_dirt
 
  
 #         Level stats           
@@ -44,7 +44,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE window
    X 104
    Y 0
@@ -52,7 +52,7 @@
  $END
  
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE exit
    X 168
    Y 12
@@ -60,7 +60,7 @@
  $END
  
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE water
    X 104
    Y 144
@@ -69,7 +69,7 @@
  $END
  
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE water
    X 168
    Y 144
@@ -78,7 +78,7 @@
  $END
  
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE water
    X 360
    Y 144
@@ -90,7 +90,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE rocks_05
    X 113
    Y 35
@@ -98,7 +98,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_06
    X 49
    Y -19
@@ -106,7 +106,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_06
    X 39
    Y 21
@@ -114,7 +114,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_06
    X 68
    Y 62
@@ -122,7 +122,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_06
    X 86
    Y 88
@@ -130,7 +130,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X 12
    Y 124
@@ -138,7 +138,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X -28
    Y 117
@@ -146,7 +146,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X -28
    Y 80
@@ -154,7 +154,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X -27
    Y 45
@@ -162,7 +162,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X -26
    Y 10
@@ -170,7 +170,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X -22
    Y -21
@@ -178,7 +178,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_03
    X -9
    Y 28
@@ -186,7 +186,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_03
    X 50
    Y 33
@@ -195,7 +195,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_01
    X -4
    Y 28
@@ -203,7 +203,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 34
    Y 43
@@ -211,7 +211,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_02
    X 78
    Y 57
@@ -220,7 +220,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_02
    X 97
    Y 85
@@ -229,7 +229,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_03
    X 78
    Y 61
@@ -239,7 +239,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_03
    X 83
    Y 67
@@ -249,7 +249,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_03
    X 100
    Y 89
@@ -259,7 +259,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_01
    X 77
    Y 63
@@ -268,7 +268,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_01
    X 92
    Y 84
@@ -277,7 +277,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_01
    X 94
    Y 86
@@ -286,7 +286,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_01
    X 98
    Y 94
@@ -295,7 +295,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_04
    X 77
    Y 81
@@ -304,7 +304,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_04
    X 77
    Y 78
@@ -313,7 +313,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE tree
    X 112
    Y 129
@@ -321,7 +321,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_04
    X 154
    Y 105
@@ -330,7 +330,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_02
    X 132
    Y 140
@@ -338,7 +338,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_02
    X 117
    Y 47
@@ -347,7 +347,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE moss_02
    X 126
    Y 44
@@ -356,7 +356,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_01
    X 143
    Y 45
@@ -364,7 +364,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_01
    X 190
    Y 49
@@ -372,7 +372,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE bridge_04
    X 178
    Y 106
@@ -381,7 +381,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 171
    Y 28
@@ -391,7 +391,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 200
    Y 105
@@ -400,7 +400,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X 238
    Y 85
@@ -408,7 +408,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X 232
    Y 107
@@ -417,7 +417,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_07
    X 260
    Y 122
@@ -426,7 +426,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_03
    X 237
    Y 113
@@ -435,7 +435,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_03
    X 296
    Y 47
@@ -444,7 +444,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_04
    X 273
    Y 72
@@ -453,7 +453,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_04
    X 290
    Y 62
@@ -463,7 +463,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_04
    X 301
    Y 52
@@ -473,7 +473,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_04
    X 191
    Y 32
@@ -483,7 +483,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_04
    X 167
    Y 36
@@ -493,7 +493,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE bridge_05
    X 255
    Y 39
@@ -502,7 +502,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_04
    X 278
    Y 65
@@ -512,7 +512,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_03
    X 302
    Y 13
@@ -522,7 +522,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_01
    X 299
    Y 39
@@ -531,7 +531,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_03
    X 220
    Y -9
@@ -541,7 +541,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE tree
    X 333
    Y 105
@@ -549,7 +549,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 404
    Y 110
@@ -557,7 +557,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 435
    Y 69
@@ -566,7 +566,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 443
    Y 102
@@ -574,7 +574,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 471
    Y 57
@@ -582,7 +582,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_05
    X 463
    Y 101
@@ -590,7 +590,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_04
    X 439
    Y 72
@@ -600,7 +600,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE sign_01
    X 111
    Y 27
@@ -608,21 +608,21 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE steel_03
    X 455
    Y 124
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE steel_03
    X 479
    Y 124
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_03
    X 237
    Y 94
@@ -632,7 +632,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_03
    X 245
    Y 89
@@ -642,7 +642,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_03
    X 249
    Y 88
@@ -652,7 +652,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_03
    X 263
    Y 80
@@ -662,7 +662,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_01
    X 434
    Y 71
@@ -671,7 +671,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE grass_01
    X 437
    Y 77
@@ -680,7 +680,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE moss_03
    X 432
    Y 96
@@ -688,7 +688,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_01
    X 387
    Y 118
@@ -696,7 +696,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_03
    X 361
    Y 117
@@ -704,7 +704,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE rocks_01
    X 493
    Y 42
@@ -712,7 +712,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE rocks_05
    X 165
    Y 33
@@ -720,7 +720,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE steel_02
    X 152
    Y 24
@@ -728,7 +728,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE steel_02
    X 152
    Y 0
@@ -736,7 +736,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE clump_10
    X 162
    Y 36
@@ -745,7 +745,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE moss_06
    X 163
    Y 46
@@ -754,7 +754,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE bridge_05
    X 255
    Y 48
@@ -762,7 +762,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE roots_04
    X 279
    Y 48
@@ -772,7 +772,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE sign_04
    X 499
    Y 30
@@ -781,7 +781,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE bridge_05
    X 259
    Y 47
@@ -790,7 +790,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE bridge_05
    X 258
    Y 46
@@ -799,7 +799,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE circle_02
    X 290
    Y 61
@@ -808,7 +808,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE circle_02
    X 287
    Y 63

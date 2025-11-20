@@ -18,7 +18,7 @@
  HEIGHT 160
  START_X 208
  START_Y 80
- THEME orig_marble
+ THEME slx_marble
  
 #         Level stats           
 # ----------------------------- 
@@ -48,7 +48,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE window
    X 144
    Y 0
@@ -56,7 +56,7 @@
  $END
  
  $GADGET
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE exit
    X 400
    Y 88
@@ -67,7 +67,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE block_01
    X 144
    Y 145
@@ -75,7 +75,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE block_05
    X 144
    Y 97
@@ -83,7 +83,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE block_05
    X 176
    Y 97
@@ -91,7 +91,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE block_02
    X 144
    Y 81
@@ -99,7 +99,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE block_05
    X 144
    Y 33
@@ -107,7 +107,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE block_05
    X 176
    Y 33
@@ -115,7 +115,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 192
    Y 33
@@ -123,7 +123,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 192
    Y 65
@@ -131,7 +131,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 192
    Y 97
@@ -139,7 +139,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 224
    Y 33
@@ -147,7 +147,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 224
    Y 65
@@ -155,7 +155,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 224
    Y 97
@@ -163,7 +163,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 256
    Y 33
@@ -171,7 +171,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 288
    Y 33
@@ -179,7 +179,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 320
    Y 33
@@ -187,7 +187,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 352
    Y 33
@@ -195,7 +195,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 272
    Y 65
@@ -203,7 +203,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 304
    Y 65
@@ -211,7 +211,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 336
    Y 65
@@ -219,7 +219,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE brick_small_05
    X 352
    Y 65
@@ -227,7 +227,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE structure_04
    X 276
    Y 114
@@ -235,7 +235,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE structure_04
    X 332
    Y 122
@@ -243,7 +243,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE structure_04
    X 402
    Y 112
@@ -251,7 +251,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 174
    Y 148
@@ -260,7 +260,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 186
    Y 152
@@ -269,7 +269,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 198
    Y 148
@@ -278,7 +278,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 209
    Y 149
@@ -286,7 +286,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 223
    Y 149
@@ -295,7 +295,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 237
    Y 144
@@ -303,7 +303,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 248
    Y 147
@@ -311,7 +311,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 257
    Y 146
@@ -320,7 +320,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 271
    Y 149
@@ -329,7 +329,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 294
    Y 150
@@ -338,7 +338,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 307
    Y 146
@@ -346,7 +346,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 322
    Y 149
@@ -355,7 +355,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 349
    Y 149
@@ -364,7 +364,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 365
    Y 145
@@ -372,7 +372,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 380
    Y 147
@@ -381,7 +381,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 375
    Y 143
@@ -390,7 +390,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 394
    Y 145
@@ -399,7 +399,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_01
    X 256
    Y 49
@@ -408,7 +408,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 33
@@ -416,7 +416,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 143
    Y 33
@@ -424,7 +424,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 142
    Y 33
@@ -433,7 +433,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 145
    Y 33
@@ -442,7 +442,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 146
    Y 33
@@ -451,7 +451,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 37
@@ -459,7 +459,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 41
@@ -467,7 +467,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 45
@@ -475,7 +475,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 113
@@ -483,7 +483,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 143
    Y 113
@@ -491,7 +491,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 145
    Y 113
@@ -500,7 +500,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 116
@@ -508,7 +508,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 119
@@ -516,7 +516,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 122
@@ -524,7 +524,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 176
    Y 108
@@ -532,7 +532,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 176
    Y 111
@@ -540,7 +540,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 176
    Y 114
@@ -548,7 +548,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 176
    Y 132
@@ -556,7 +556,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 176
    Y 135
@@ -564,7 +564,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 176
    Y 55
@@ -572,7 +572,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 176
    Y 58
@@ -580,7 +580,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 146
    Y 113
@@ -589,7 +589,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 142
    Y 113
@@ -598,7 +598,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 109
@@ -607,7 +607,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 110
@@ -616,7 +616,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 109
@@ -625,7 +625,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE pillar_end_01
    X 144
    Y 30
@@ -634,7 +634,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_04
    X 254
    Y 44
@@ -642,7 +642,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE bar_04
    X 260
    Y 44
@@ -650,7 +650,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 420
    Y -6
@@ -658,7 +658,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 440
    Y -5
@@ -667,7 +667,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 452
    Y 12
@@ -676,7 +676,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 481
    Y 16
@@ -685,7 +685,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 464
    Y 23
@@ -693,7 +693,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 467
    Y 49
@@ -701,7 +701,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 484
    Y 45
@@ -709,7 +709,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 483
    Y 36
@@ -718,7 +718,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 490
    Y 16
@@ -727,7 +727,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 475
    Y 28
@@ -736,7 +736,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 467
    Y 12
@@ -745,7 +745,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 494
    Y 3
@@ -754,7 +754,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 427
    Y -15
@@ -763,7 +763,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 454
    Y -14
@@ -772,7 +772,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 459
    Y 3
@@ -781,7 +781,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 462
    Y -10
@@ -790,7 +790,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 474
    Y 0
@@ -799,7 +799,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 498
    Y -12
@@ -808,7 +808,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 482
    Y -15
@@ -817,7 +817,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 514
    Y -10
@@ -826,7 +826,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 498
    Y 14
@@ -835,7 +835,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 499
    Y 6
@@ -844,7 +844,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 448
    Y 17
@@ -852,7 +852,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 426
    Y -13
@@ -860,7 +860,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 408
    Y -10
@@ -868,7 +868,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 397
    Y -15
@@ -876,7 +876,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 383
    Y -19
@@ -884,7 +884,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 384
    Y -27
@@ -892,7 +892,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 513
    Y -20
@@ -900,7 +900,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 524
    Y -12
@@ -908,7 +908,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 547
    Y -24
@@ -916,7 +916,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 113
    Y 126
@@ -925,7 +925,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 102
    Y 137
@@ -934,7 +934,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 102
    Y 127
@@ -943,7 +943,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 94
    Y 139
@@ -952,7 +952,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 86
    Y 140
@@ -961,7 +961,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 97
    Y 129
@@ -970,7 +970,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 90
    Y 133
@@ -979,7 +979,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 82
    Y 139
@@ -988,7 +988,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 84
    Y 133
@@ -997,7 +997,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 77
    Y 139
@@ -1006,7 +1006,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 78
    Y 129
@@ -1015,7 +1015,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 91
    Y 126
@@ -1024,7 +1024,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 98
    Y 119
@@ -1033,7 +1033,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 89
    Y 123
@@ -1042,7 +1042,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 86
    Y 117
@@ -1051,7 +1051,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 94
    Y 107
@@ -1060,7 +1060,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 103
    Y 109
@@ -1069,7 +1069,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 94
    Y 99
@@ -1078,7 +1078,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 68
    Y 137
@@ -1087,7 +1087,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 69
    Y 127
@@ -1096,7 +1096,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 74
    Y 118
@@ -1105,7 +1105,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 73
    Y 107
@@ -1114,7 +1114,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 74
    Y 102
@@ -1123,7 +1123,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 74
    Y 91
@@ -1132,7 +1132,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 78
    Y 87
@@ -1141,7 +1141,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 86
    Y 84
@@ -1150,7 +1150,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 102
    Y 95
@@ -1159,7 +1159,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 58
    Y 122
@@ -1168,7 +1168,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 67
    Y 105
@@ -1177,7 +1177,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 47
    Y 131
@@ -1186,7 +1186,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 56
    Y 116
@@ -1195,7 +1195,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 62
    Y 103
@@ -1204,7 +1204,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 64
    Y 87
@@ -1213,7 +1213,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 70
    Y 81
@@ -1222,7 +1222,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 76
    Y 73
@@ -1231,7 +1231,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 80
    Y 66
@@ -1240,7 +1240,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 94
    Y 79
@@ -1249,7 +1249,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 99
    Y 73
@@ -1258,7 +1258,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 92
    Y 64
@@ -1267,7 +1267,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 88
    Y 57
@@ -1276,7 +1276,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 85
    Y 55
@@ -1285,7 +1285,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 35
    Y 144
@@ -1294,7 +1294,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_01
    X 52
    Y 128
@@ -1303,7 +1303,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_01
    X 59
    Y 104
@@ -1312,7 +1312,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_01
    X 57
    Y 119
@@ -1321,7 +1321,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_01
    X 67
    Y 89
@@ -1330,7 +1330,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 70
    Y 67
@@ -1339,7 +1339,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 78
    Y 50
@@ -1348,7 +1348,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 72
    Y 59
@@ -1357,7 +1357,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 65
    Y 73
@@ -1366,7 +1366,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 62
    Y 81
@@ -1375,7 +1375,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 60
    Y 89
@@ -1384,7 +1384,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 467
    Y 127
@@ -1393,7 +1393,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 485
    Y 126
@@ -1402,7 +1402,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 470
    Y 109
@@ -1411,7 +1411,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 460
    Y 98
@@ -1420,7 +1420,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 491
    Y 107
@@ -1429,7 +1429,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 512
    Y 131
@@ -1438,7 +1438,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 475
    Y 99
@@ -1447,7 +1447,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 458
    Y 118
@@ -1456,7 +1456,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 449
    Y 118
@@ -1465,7 +1465,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 436
    Y 129
@@ -1474,7 +1474,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 444
    Y 112
@@ -1483,7 +1483,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 431
    Y 124
@@ -1492,7 +1492,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 438
    Y 113
@@ -1501,7 +1501,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 427
    Y 113
@@ -1510,7 +1510,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 421
    Y 115
@@ -1519,7 +1519,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 452
    Y 102
@@ -1528,7 +1528,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 449
    Y 98
@@ -1537,7 +1537,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE rock_02
    X 460
    Y 91
@@ -1546,7 +1546,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 368
    Y -27
@@ -1555,7 +1555,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 337
    Y -23
@@ -1564,7 +1564,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 325
    Y -24
@@ -1573,7 +1573,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 323
    Y -24
@@ -1582,7 +1582,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 298
    Y -22
@@ -1591,7 +1591,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 286
    Y -26
@@ -1600,7 +1600,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 276
    Y -21
@@ -1609,7 +1609,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 278
    Y -26
@@ -1618,7 +1618,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 266
    Y -27
@@ -1627,7 +1627,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 238
    Y -21
@@ -1636,7 +1636,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 226
    Y -22
@@ -1645,7 +1645,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 226
    Y -25
@@ -1654,7 +1654,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 200
    Y -21
@@ -1663,7 +1663,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 189
    Y -23
@@ -1672,7 +1672,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 183
    Y -25
@@ -1681,7 +1681,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 291
    Y -23
@@ -1690,7 +1690,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 97
    Y -16
@@ -1699,7 +1699,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 75
    Y -7
@@ -1708,7 +1708,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 61
    Y 7
@@ -1717,7 +1717,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 40
    Y 10
@@ -1726,7 +1726,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 41
    Y 16
@@ -1735,7 +1735,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 45
    Y 9
@@ -1744,7 +1744,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 44
    Y 3
@@ -1753,7 +1753,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 41
    Y -4
@@ -1762,7 +1762,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 71
    Y -23
@@ -1771,7 +1771,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 65
    Y -13
@@ -1780,7 +1780,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_01
    X 42
    Y -18
@@ -1789,7 +1789,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_marble
+   STYLE slx_marble
    PIECE stuff_02
    X 38
    Y -5

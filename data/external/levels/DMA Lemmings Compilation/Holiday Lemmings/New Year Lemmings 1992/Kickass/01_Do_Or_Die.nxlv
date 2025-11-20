@@ -16,7 +16,7 @@
  HEIGHT 160
  START_X 848
  START_Y 0
- THEME ohno_snow
+ THEME slx_snow
  
 #         Level stats           
 # ----------------------------- 
@@ -38,7 +38,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE exit
    X 896
    Y 101
@@ -46,7 +46,7 @@
  $END
  
  $GADGET
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE window
    X 760
    Y 48
@@ -54,7 +54,7 @@
  $END
  
  $GADGET
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE window
    X 800
    Y 64
@@ -62,7 +62,7 @@
  $END
  
  $GADGET
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE water
    X -16
    Y 136
@@ -72,7 +72,7 @@
  $END
  
  $GADGET
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE water
    X -16
    Y 136
@@ -85,7 +85,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_10
    X 738
    Y 101
@@ -93,7 +93,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_03
    X 756
    Y 145
@@ -101,7 +101,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_04
    X 790
    Y 142
@@ -109,7 +109,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_08
    X 826
    Y 136
@@ -117,7 +117,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_03
    X 841
    Y 141
@@ -125,7 +125,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_05
    X 869
    Y 139
@@ -133,7 +133,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_04
    X 904
    Y 143
@@ -141,7 +141,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_19
    X 795
    Y 97
@@ -149,7 +149,7 @@
  $END
  
  $TERRAIN
-   STYLE ohno_snow
+   STYLE slx_snow
    PIECE snow_19
    X 759
    Y 77

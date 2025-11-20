@@ -19,7 +19,7 @@
  HEIGHT 160
  START_X 160
  START_Y 80
- THEME orig_dirt
+ THEME slx_dirt
  
  
 #         Level stats           
@@ -50,7 +50,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE window
    X 0
    Y 16
@@ -58,7 +58,7 @@
  $END
  
  $GADGET
-   STYLE orig_dirt
+   STYLE slx_dirt
    PIECE exit
    X 432
    Y 112
