@@ -43,7 +43,7 @@
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE window
    X 44
    Y 76
@@ -51,7 +51,7 @@
  $END
  
  $GADGET
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE exit
    X 388
    Y 96
@@ -65,7 +65,7 @@
    NAME Group1345323717
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE block_05
      X 203
      Y 141
@@ -73,7 +73,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE block_03
      X 184
      Y 141
@@ -81,7 +81,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE block_04
      X 223
      Y 142
@@ -89,7 +89,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE block_05
      X 203
      Y 141
@@ -98,7 +98,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE wood_14
      X 203
      Y 141
@@ -106,7 +106,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE wood_12
      X 203
      Y 141
@@ -115,7 +115,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE stairs_01
      X 203
      Y 149
@@ -124,7 +124,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE stairs_04
      X 207
      Y 149
@@ -138,14 +138,14 @@
    NAME Group1092489318
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 241
      Y 94
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 262
      Y 94
@@ -153,7 +153,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 259
      Y 94
@@ -161,7 +161,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 220
      Y 94
@@ -169,7 +169,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 223
      Y 94
@@ -182,7 +182,7 @@
    NAME Group1749331445
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 281
      Y 141
@@ -190,7 +190,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 297
      Y 141
@@ -199,7 +199,7 @@
    $END
    
    $TERRAIN
-     STYLE orig_pillar
+     STYLE slx_pillar
      PIECE steel_01
      X 289
      Y 141
@@ -213,7 +213,7 @@
 #        Terrain pieces         
 # ----------------------------- 
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 241
    Y 125
@@ -221,7 +221,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 261
    Y 125
@@ -229,7 +229,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 221
    Y 83
@@ -237,7 +237,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 241
    Y 83
@@ -245,7 +245,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 261
    Y 83
@@ -253,7 +253,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 221
    Y 41
@@ -261,7 +261,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 241
    Y 41
@@ -269,7 +269,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 261
    Y 41
@@ -277,7 +277,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 137
    Y 140
@@ -285,7 +285,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 137
    Y 120
@@ -293,7 +293,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 281
    Y 140
@@ -301,7 +301,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 323
    Y 140
@@ -309,7 +309,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 365
    Y 140
@@ -317,7 +317,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 323
    Y 120
@@ -325,7 +325,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 365
    Y 120
@@ -333,7 +333,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 187
    Y 100
@@ -342,7 +342,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 188
    Y 100
@@ -351,7 +351,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 189
    Y 100
@@ -360,7 +360,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 190
    Y 100
@@ -369,7 +369,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 187
    Y 88
@@ -378,7 +378,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 194
    Y 96
@@ -386,7 +386,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 195
    Y 96
@@ -395,7 +395,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 196
    Y 96
@@ -404,7 +404,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 197
    Y 96
@@ -413,7 +413,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 198
    Y 96
@@ -422,7 +422,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 195
    Y 84
@@ -431,7 +431,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 202
    Y 92
@@ -440,7 +440,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 203
    Y 92
@@ -449,7 +449,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 204
    Y 92
@@ -458,7 +458,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 205
    Y 92
@@ -467,7 +467,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 206
    Y 92
@@ -476,7 +476,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 201
    Y 80
@@ -485,7 +485,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 210
    Y 88
@@ -494,7 +494,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 211
    Y 88
@@ -503,7 +503,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 212
    Y 88
@@ -512,7 +512,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 213
    Y 88
@@ -521,7 +521,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 214
    Y 88
@@ -530,7 +530,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 201
    Y 76
@@ -539,7 +539,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 121
    Y 103
@@ -548,7 +548,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 149
    Y 105
@@ -557,7 +557,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 235
    Y 111
@@ -566,7 +566,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 260
    Y 111
@@ -575,7 +575,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 288
    Y 112
@@ -584,7 +584,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 320
    Y 109
@@ -593,7 +593,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 349
    Y 108
@@ -602,7 +602,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 382
    Y 111
@@ -611,7 +611,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 209
    Y 68
@@ -620,7 +620,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 238
    Y 69
@@ -629,7 +629,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 261
    Y 69
@@ -638,7 +638,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 214
    Y 29
@@ -647,7 +647,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 240
    Y 29
@@ -656,7 +656,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_02
    X 260
    Y 29
@@ -665,7 +665,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 373
    Y 121
@@ -673,7 +673,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 331
    Y 121
@@ -681,7 +681,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 331
    Y 141
@@ -689,7 +689,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 311
    Y 121
@@ -697,7 +697,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 269
    Y 141
@@ -705,7 +705,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_01
    X 247
    Y 130
@@ -714,7 +714,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_02
    X 235
    Y 124
@@ -722,7 +722,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_03
    X 236
    Y 124
@@ -730,7 +730,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 243
    Y 121
@@ -738,7 +738,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 263
    Y 121
@@ -746,7 +746,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 223
    Y 121
@@ -754,7 +754,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 243
    Y 79
@@ -762,7 +762,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 263
    Y 79
@@ -770,7 +770,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 223
    Y 79
@@ -778,7 +778,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 243
    Y 37
@@ -786,7 +786,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 263
    Y 37
@@ -794,7 +794,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 223
    Y 37
@@ -802,7 +802,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 269
    Y 141
@@ -811,7 +811,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 185
    Y 109
@@ -820,7 +820,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 186
    Y 109
@@ -829,7 +829,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 187
    Y 109
@@ -838,7 +838,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 188
    Y 109
@@ -847,7 +847,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 189
    Y 109
@@ -856,7 +856,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 187
    Y 97
@@ -865,7 +865,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 193
    Y 105
@@ -873,7 +873,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 194
    Y 105
@@ -882,7 +882,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 195
    Y 105
@@ -891,7 +891,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 196
    Y 105
@@ -900,7 +900,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 197
    Y 105
@@ -909,7 +909,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 193
    Y 93
@@ -918,7 +918,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 201
    Y 101
@@ -926,7 +926,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 202
    Y 101
@@ -935,7 +935,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 203
    Y 101
@@ -944,7 +944,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 204
    Y 101
@@ -953,7 +953,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 205
    Y 101
@@ -962,7 +962,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 201
    Y 89
@@ -971,7 +971,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 209
    Y 97
@@ -980,7 +980,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 210
    Y 97
@@ -989,7 +989,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 211
    Y 97
@@ -998,7 +998,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 212
    Y 97
@@ -1007,7 +1007,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 213
    Y 97
@@ -1016,7 +1016,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 214
    Y 97
@@ -1025,7 +1025,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 203
    Y 85
@@ -1034,7 +1034,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_10
    X 92
    Y 121
@@ -1042,7 +1042,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_07
    X 112
    Y 121
@@ -1050,7 +1050,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_07
    X 112
    Y 141
@@ -1058,7 +1058,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_10
    X 154
    Y 121
@@ -1066,7 +1066,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_02
    X 174
    Y 121
@@ -1082,7 +1082,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_01
    X 200
    Y 141
@@ -1090,7 +1090,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_05
    X 283
    Y 141
@@ -1099,7 +1099,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_05
    X 291
    Y 140
@@ -1108,7 +1108,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_03
    X 264
    Y 141
@@ -1116,7 +1116,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_12
    X 283
    Y 141
@@ -1124,7 +1124,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_14
    X 291
    Y 141
@@ -1132,7 +1132,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_04
    X 295
    Y 149
@@ -1140,7 +1140,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE stairs_01
    X 283
    Y 149
@@ -1148,7 +1148,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 243
    Y 37
@@ -1156,7 +1156,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 243
    Y 57
@@ -1164,7 +1164,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 243
    Y 99
@@ -1172,7 +1172,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_03
    X 243
    Y 141
@@ -1180,7 +1180,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_04
    X 311
    Y 141
@@ -1188,7 +1188,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_thin_01
    X 351
    Y -12
@@ -1196,7 +1196,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_thin_01
    X 351
    Y 8
@@ -1204,7 +1204,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_13
    X 339
    Y 46
@@ -1212,7 +1212,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_12
    X 381
    Y 34
@@ -1220,7 +1220,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_12
    X 319
    Y 36
@@ -1228,7 +1228,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_13
    X 160
    Y 28
@@ -1236,7 +1236,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_12
    X 140
    Y 17
@@ -1244,7 +1244,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_13
    X 98
    Y 28
@@ -1252,7 +1252,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE pillar_thin_01
    X 142
    Y -11
@@ -1261,7 +1261,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE bump_01
    X 134
    Y -5
@@ -1269,7 +1269,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE bump_01
    X 343
    Y -1
@@ -1277,7 +1277,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_13
    X 129
    Y 34
@@ -1285,7 +1285,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_11
    X 138
    Y 34
@@ -1293,7 +1293,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_15
    X 160
    Y 34
@@ -1301,7 +1301,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_13
    X 327
    Y 52
@@ -1309,7 +1309,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_15
    X 333
    Y 52
@@ -1317,7 +1317,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_15
    X 372
    Y 52
@@ -1325,7 +1325,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE wood_12
    X 362
    Y 52
@@ -1333,56 +1333,56 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_04
    X 105
    Y 14
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_04
    X 122
    Y 14
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_04
    X 111
    Y 0
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_04
    X 182
    Y 14
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_04
    X 326
    Y 22
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_04
    X 379
    Y 20
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE steel_04
    X 383
    Y 6
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_07
    X 50
    Y 121
@@ -1390,7 +1390,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_07
    X 50
    Y 141
@@ -1398,7 +1398,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_10
    X 30
    Y 121
@@ -1406,7 +1406,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_02
    X 435
    Y 121
@@ -1414,7 +1414,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 393
    Y 121
@@ -1422,7 +1422,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE sandblock_01
    X 393
    Y 141
@@ -1454,7 +1454,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_02
    X 223
    Y 37
@@ -1462,7 +1462,7 @@
  $END
  
  $TERRAIN
-   STYLE orig_pillar
+   STYLE slx_pillar
    PIECE block_01
    X 264
    Y 37
