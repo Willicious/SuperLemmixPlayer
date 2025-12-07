@@ -1905,8 +1905,14 @@ begin
   if (NewAction = baFreezerExplosion) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY + 3;
 
-  if (NewAction = baBallooning) and (L.LemAction = baSwimming) then
-    L.LemY := L.LemY - 1;
+  if (NewAction = baBallooning) then
+  begin
+    if (L.LemAction = baSwimming) then
+      L.LemY := L.LemY - 1;
+
+    if (L.LemAction = baBlocking) and HasWaterObjectAt(L.LemX, L.LemY) then
+      L.LemY := L.LemY - 4;
+  end;
 
   if (NewAction = baBlocking) and (L.LemAction = baSwimming) then
     L.LemY := L.LemY + 2;
