@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Lemmy's Psychedelic Bath
  AUTHOR WillLem
  ID x6A9F098C0B166333
- VERSION x0000000000000042
+ VERSION x000000000000004F
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,27 +25,43 @@
  MAX_SPAWN_INTERVAL 93
  
  $SKILLSET 
-   WALKER 20
-   JUMPER 20
-   BALLOONER 20
-   CLIMBER 20
+   WALKER 10
+   JUMPER 10
+   BALLOONER 10
+   CLIMBER 10
    SWIMMER 20
    TIMEBOMBER 10
    BOMBER 10
-   FREEZER 20
+   FREEZER 10
    BLOCKER 2
-   LADDERER 20
-   PLATFORMER 20
+   LADDERER 10
+   PLATFORMER 10
    SPEARER 10
    GRENADER 10
  $END 
  
  $TALISMAN 
-   TITLE Gold Talisman
-   ID 0
-   COLOR Gold
-   SAVE_REQUIREMENT 30
+   TITLE Bronze Talisman
+   ID 2
+   COLOR Bronze
    KILL_ZOMBIES 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 0
+   COLOR Silver
+   KILL_ZOMBIES 0
+   SAVE_REQUIREMENT 35
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 1
+   COLOR Gold
+   SAVE_REQUIREMENT 35
+   KILL_ZOMBIES 0
+   PLATFORMER_LIMIT 0
  $END 
  
 #     Interactive objects       
@@ -177,7 +193,7 @@
  $GADGET
    STYLE slx_fire
    PIECE flamethrower_blue
-   X 1026
+   X 1025
    Y 12
    NO_OVERWRITE
    ROTATE
@@ -186,7 +202,7 @@
  $GADGET
    STYLE slx_fire
    PIECE flamethrower_blue
-   X 1017
+   X 1016
    Y 12
    NO_OVERWRITE
    ROTATE
@@ -1062,6 +1078,14 @@
    PIECE block_07
    X 446
    Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 886
+   Y 64
    ONE_WAY
  $END
  
