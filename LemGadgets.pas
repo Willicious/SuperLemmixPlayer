@@ -656,7 +656,8 @@ end;
 
 procedure TGadget.UnifyFlippingFlagsOfTeleporter();
 begin
-  CustomAssert(MetaObj.TriggerEffect = DOM_TELEPORT, 'UnifyFlippingFlagsOfTeleporter called for object that isn''t a teleporter!');
+  CustomAssert(MetaObj.TriggerEffect in [DOM_TELEPORT, DOM_PORTAL], 'UnifyFlippingFlagsOfTeleporter called for object that isn''t a teleporter!');
+
   if IsFlipPhysics then
     Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem
   else
@@ -671,8 +672,14 @@ end;
 
 procedure TGadget.SetFlipOfReceiverTo(Teleporter: TGadget);
 begin
-  CustomAssert(Teleporter.MetaObj.TriggerEffect = DOM_TELEPORT, 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
-  CustomAssert(MetaObj.TriggerEffect = DOM_RECEIVER, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
+  CustomAssert(Teleporter.MetaObj.TriggerEffect in [DOM_TELEPORT, DOM_PORTAL], 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
+
+  if Teleporter.TriggerEffect = DOM_TELEPORT then
+    CustomAssert(MetaObj.TriggerEffect = DOM_RECEIVER, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
+
+  if Teleporter.TriggerEffect = DOM_PORTAL then
+    CustomAssert(MetaObj.TriggerEffect = DOM_PORTAL, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
+
   CustomAssert(Teleporter.IsFlipImage = Teleporter.IsFlipPhysics, 'Teleporter in SetFlipOfReceiverTo has diverging flipping image and flipping physics!');
 
   if Teleporter.IsFlipImage then
@@ -763,6 +770,37 @@ begin
         TestGadget.SetFlipOfReceiverTo(Gadget);
       end;
     end; // End test whether object is teleporter
+
+    if (Gadget.TriggerEffect = DOM_PORTAL) and not (IsReceiverUsed[i]) then
+    begin
+      // Find receiver for this portal with index i
+      TestID := i;
+      repeat
+        Inc(TestID);
+        TestGadget := List[TestId mod ItemCount];
+      until ((TestGadget.TriggerEffect = DOM_PORTAL) and (TestGadget.Obj.Skill = Gadget.Obj.Skill))
+            or (TestID = i + ItemCount);
+
+      TestID := TestID mod ItemCount;
+      if i = TestID then
+        // If TestID = i then there is no second portal and we disable the portal
+        Gadget.TriggerEffect := DOM_NONE
+      else begin
+        Gadget.sReceiverId := TestID;
+        TestGadget.sReceiverId := i;
+
+        IsReceiverUsed[i] := True;
+        IsReceiverUsed[TestID] := True;
+
+        Gadget.sPairingId := PairCount;
+        TestGadget.sPairingId := PairCount;
+        Inc(PairCount);
+
+        // Flip receiver according to teleporter
+        Gadget.UnifyFlippingFlagsOfTeleporter();
+        TestGadget.SetFlipOfReceiverTo(Gadget);
+      end;
+    end; // end test whether object is portal
   end; // Next gadget
 
   for i := 0 to ItemCount - 1 do

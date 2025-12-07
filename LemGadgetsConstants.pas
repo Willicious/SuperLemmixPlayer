@@ -26,19 +26,20 @@ const
   DOM_BLOCKER          = 19; // The middle part of a blocker
   DOM_TELEPORT         = 20; // Sends lems to receiver
   DOM_RECEIVER         = 21; // Receives lems from teleporter
-  DOM_PICKUP           = 22; // Pickup skills
-  DOM_COLLECTIBLE      = 23; // Collectibles with optional effects
-  DOM_UPDRAFT          = 24; // Slows falling lems, sends Gliders upwards, speeds up Ballooners
-  DOM_SPLITTER         = 25; // Alternates direction of lemmings
-  DOM_RADIATION        = 26; // Assigns timebomber with a variable countdown
-  DOM_SLOWFREEZE       = 27; // Assigns freezer with a variable countdown
-  DOM_NOSPLAT          = 28; // Makes any fall safe regardless of distance
-  DOM_SPLAT            = 29; // Makes any fall deadly regardless of distance
-  DOM_DECORATION       = 30; // Decoration-only graphics, can move at a set direction & speed if specified
-  DOM_ANIMATION        = 31; // Animated graphics
-  DOM_ANIMONCE         = 32; // Single-animated graphics
-  // DOM_STEEL         = 33; // Steel
-  // DOM_LEMMING       = 34; // Pre-placed lemming
+  DOM_PORTAL           = 22; // Two-way teleporter, essentially
+  DOM_PICKUP           = 23; // Pickup skills
+  DOM_COLLECTIBLE      = 24; // Collectibles with optional effects
+  DOM_UPDRAFT          = 25; // Slows falling lems, sends Gliders upwards, speeds up Ballooners
+  DOM_SPLITTER         = 26; // Alternates direction of lemmings
+  DOM_RADIATION        = 27; // Assigns timebomber with a variable countdown
+  DOM_SLOWFREEZE       = 28; // Assigns freezer with a variable countdown
+  DOM_NOSPLAT          = 29; // Makes any fall safe regardless of distance
+  DOM_SPLAT            = 30; // Makes any fall deadly regardless of distance
+  DOM_DECORATION       = 31; // Decoration-only graphics, can move at a set direction & speed if specified
+  DOM_ANIMATION        = 32; // Animated graphics
+  DOM_ANIMONCE         = 33; // Single-animated graphics
+  // DOM_STEEL         = 34; // Steel
+  // DOM_LEMMING       = 35; // Pre-placed lemming
 
 implementation
 

@@ -39,6 +39,7 @@ var
   SFX_OK,
   SFX_Pickup,
   SFX_Pop,
+  SFX_Portal,
   // SFX_Propeller, // Propeller
   SFX_ReleaseRate,
   SFX_SkillButton,

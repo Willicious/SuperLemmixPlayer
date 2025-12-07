@@ -1099,9 +1099,9 @@ var
   MO: TGadgetMetaInfo;
   DealiasInfo: TDealiasResult;
 const
-  NO_FLIP_HORIZONTAL_TYPES = [DOM_PICKUP];
-  NO_FLIP_VERTICAL_TYPES = [DOM_WINDOW, DOM_PICKUP, DOM_UPDRAFT];
-  NO_ROTATE_TYPES = [DOM_WINDOW, DOM_FORCELEFT, DOM_FORCERIGHT, DOM_PICKUP, DOM_UPDRAFT, DOM_SPLITTER];
+  NO_FLIP_HORIZONTAL_TYPES = [DOM_PICKUP, DOM_PORTAL];
+  NO_FLIP_VERTICAL_TYPES = [DOM_WINDOW, DOM_PICKUP, DOM_UPDRAFT, DOM_PORTAL];
+  NO_ROTATE_TYPES = [DOM_WINDOW, DOM_FORCELEFT, DOM_FORCERIGHT, DOM_PICKUP, DOM_UPDRAFT, DOM_SPLITTER, DOM_PORTAL];
 begin
   O := fInteractiveObjects.Add;
 
@@ -1143,7 +1143,7 @@ begin
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
 
   case MO.TriggerEffect of
-    DOM_TELEPORT: GetTeleporterData;
+    DOM_TELEPORT, DOM_PORTAL: GetTeleporterData;
     DOM_RECEIVER: GetReceiverData;
     DOM_PICKUP: GetPickupData;
     DOM_SPLITTER: GetSplitterData;
@@ -1769,7 +1769,7 @@ begin
     end else begin
       case PieceManager.Objects[O.Identifier].TriggerEffect of
         DOM_EXIT, DOM_LOCKEXIT: SetExitData;
-        DOM_TELEPORT: SetTeleporterData;
+        DOM_TELEPORT, DOM_PORTAL: SetTeleporterData;
         DOM_RECEIVER: SetReceiverData;
         DOM_PICKUP: SetPickupData;
         DOM_WINDOW: SetWindowData;

@@ -381,6 +381,7 @@ begin
   SFX_OK := 'OK';
   SFX_Pickup := 'pickup';
   SFX_Pop := 'pop';
+  SFX_Portal := 'portal';
   // SFX_Propeller := 'propeller'; // Propeller
   SFX_ReleaseRate := 'changerr';
   SFX_SuccessJingle := 'success';
@@ -441,6 +442,7 @@ begin
   Load(SFX_OK);
   Load(SFX_Pickup);
   Load(SFX_Pop);
+  Load(SFX_Portal);
   // Load(SFX_Propeller); // Propeller
   Load(SFX_ReleaseRate);
   Load(SFX_SuccessJingle);

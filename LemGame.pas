@@ -38,7 +38,8 @@ const
                           DOM_DECORATION, DOM_WATER, DOM_FIRE, DOM_UPDRAFT,
                           DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
                           DOM_NOSPLAT, DOM_SPLAT, DOM_RADIATION, DOM_SLOWFREEZE,
-                          DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA];
+                          DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA,
+                          DOM_PORTAL];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie // Rivals are lkNormal for the purposes of TLemmingKind
@@ -134,6 +135,7 @@ type
     FireMap                    : TArrayArrayBoolean;
     TrapMap                    : TArrayArrayBoolean;
     TeleporterMap              : TArrayArrayBoolean;
+    PortalMap                  : TArrayArrayBoolean;
     UpdraftMap                 : TArrayArrayBoolean;
     PickupMap                  : TArrayArrayBoolean;
     ButtonMap                  : TArrayArrayBoolean;
@@ -281,6 +283,7 @@ type
       function HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleAnimation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandlePortal(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleCollectible(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -306,6 +309,7 @@ type
     procedure CheckForQueuedAction;
     procedure CheckForReplayAction(PausedRRCheck: Boolean = False);
     procedure CheckLemmings;
+    function CheckLemPortalWarping(L: TLemming): Boolean;
     function CheckLemTeleporting(L: TLemming): Boolean;
     procedure HandlePostTeleport(L: TLemming);
     procedure CheckReleaseLemming;
@@ -2226,6 +2230,8 @@ begin
   SetLength(FireMap, Level.Info.Width, Level.Info.Height);
   SetLength(TeleporterMap, 0, 0);
   SetLength(TeleporterMap, Level.Info.Width, Level.Info.Height);
+  SetLength(PortalMap, 0, 0);
+  SetLength(PortalMap, Level.Info.Width, Level.Info.Height);
   SetLength(UpdraftMap, 0, 0);
   SetLength(UpdraftMap, Level.Info.Width, Level.Info.Height);
   SetLength(ButtonMap, 0, 0);
@@ -2396,6 +2402,7 @@ begin
       DOM_TRAP:       WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
       DOM_TRAPONCE:   WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
       DOM_TELEPORT:   WriteTriggerMap(TeleporterMap, Gadgets[i].TriggerRect);
+      DOM_PORTAL:     WriteTriggerMap(PortalMap, Gadgets[i].TriggerRect);
       DOM_UPDRAFT:    WriteTriggerMap(UpdraftMap, Gadgets[i].TriggerRect);
       DOM_PICKUP:     WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
@@ -2710,7 +2717,7 @@ begin
     if (IsHighlight and not (L = GetHighlitLemming))
     or (IsReplay and not (L = GetTargetLemming)) then Continue;
     // Does Lemming exist
-    if L.LemRemoved or L.LemTeleporting then Continue;
+    if L.LemRemoved or L.LemTeleporting or (L.LemPortalWarpFrame > 0) then Continue;
     // Is the Lemming unable to receive skills, because zombie, neutral, or was-ohnoer? (remove unless we haven't yet had any lem under the cursor)
     if L.CannotReceiveSkills and Assigned(PriorityLem) then Continue;
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
@@ -3324,6 +3331,10 @@ begin
       if (L.LemAction = baFixing) then CheckPos[0, i] := L.LemX;
     end;
 
+    // Portal
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPortal) and not IsPostTeleportCheck then
+      AbortChecks := HandlePortal(L, CheckPos[0, i], CheckPos[1, i]);
+
     // Teleporter
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) and not IsPostTeleportCheck then
       AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
@@ -3352,7 +3363,12 @@ begin
     // Set L.LemInSplitter correctly
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
-      L.LemInSplitter := DOM_NOOBJECT;
+          L.LemInSplitter := DOM_NOOBJECT;
+
+    // Set L.LemInPortal correctly
+    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPortal) then
+      L.LemInPortal := DOM_NOOBJECT;
+
   until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY);
 
   if NeedShiftPosition then
@@ -3431,6 +3447,7 @@ begin
                             or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
     trTeleport:   Result :=     ReadTriggerMap(X, Y, TeleporterMap);
+    trPortal:     Result :=     ReadTriggerMap(X, Y, PortalMap);
     trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap);
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
     trCollectible:Result :=     ReadTriggerMap(X, Y, CollectibleMap);
@@ -3623,6 +3640,36 @@ begin
   SetBlockerMap;
 
   Gadgets[Gadget.ReceiverID].HoldActive := True;
+end;
+
+function TLemmingGame.HandlePortal(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  Gadget: TGadget;
+  GadgetID: Word;
+begin
+  Result := False;
+
+  GadgetID := FindGadgetID(PosX, PosY, trPortal);
+
+  // Exit if there is no Object
+  if GadgetID = 65535 then Exit;
+  if GadgetID = L.LemInPortal then Exit;
+
+  Result := True;
+
+  Gadget := Gadgets[GadgetID];
+
+  CustomAssert((Gadget.ReceiverID >= 0) and (Gadget.ReceiverID < Gadgets.Count), 'ReceiverID for portal out of bounds.');
+  CustomAssert(Gadgets[Gadget.ReceiverID].TriggerEffect = DOM_PORTAL, 'Receiving object for portal has wrong trigger effect.');
+
+  CueSoundEffect(SFX_Portal, L.Position);
+  L.LemPortalWarpFrame := 1;
+
+  // Make sure to remove the blocker field and the Dehoister pin
+  L.LemHasBlockerField := False;
+  L.LemDehoistPinY := -1;
+
+  SetBlockerMap;
 end;
 
 function TLemmingGame.HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -6697,6 +6744,7 @@ var
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
           and (not HasTriggerAt(L.LemX, L.LemY, trExit))
+          and (not HasTriggerAt(L.LemX, L.LemY, trPortal))
           and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
@@ -8408,6 +8456,9 @@ begin
       if LemTeleporting then
         ContinueWithLem := CheckLemTeleporting(CurrentLemming);
 
+      if ContinueWithLem and (LemPortalWarpFrame > 0) then
+        ContinueWithLem := CheckLemPortalWarping(CurrentLemming);
+
       // Explosion-Countdown
       if ContinueWithLem and (LemExplosionTimer <> 0) then
         ContinueWithLem := not UpdateExplosionTimer(CurrentLemming);
@@ -8515,16 +8566,18 @@ begin
         fLemJumpToHoistAdvance := False;
       end;
 
-      if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+      if    (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
              and not (L.LemIsDisarmer or L.LemIsInvincible))
          or ((L.LemAction = baBallooning) and (L.LemY <= 30))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit))
          or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
          or (HasWaterObjectAt(LemPosArray[0, i], LemPosArray[1, i]) and not L.LemIsInvincible)
-         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
-         or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
+         or  HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trPortal)
+             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trPortal) <> 65535))
          then
       begin
         L.LemAction := baExploding; // This always stops the simulation!
@@ -8567,7 +8620,41 @@ begin
   Result := LemPosArray;
 end;
 
+function TLemmingGame.CheckLemPortalWarping(L: TLemming): Boolean;
+var
+  GadgetID: Integer;
+  Gadget: TGadget;
 
+  DestGadgetID: Integer;
+  DestGadget: TGadget;
+begin
+  Result := False;
+
+  CustomAssert(L.LemPortalWarpFrame > 0, 'CheckLemPortalWarping called for non-warping lemming');
+
+  Inc(L.LemPortalWarpFrame);
+
+  if L.LemPortalWarpFrame = 4 then
+  begin
+    // Search for Portal, the lemming is in
+    GadgetID := FindGadgetID(L.LemX, L.LemY, trPortal);
+
+    CustomAssert(GadgetID < Gadgets.Count, 'Portal associated to warping lemming not found');
+
+    Gadget := Gadgets[GadgetID];
+    if Gadget.TriggerEffect <> DOM_PORTAL then Exit;
+
+    DestGadgetID := Gadget.ReceiverId;
+    DestGadget := Gadgets[DestGadgetID];
+
+    L.LemX := DestGadget.TriggerRect.Left + ((DestGadget.TriggerRect.Width + 1) div 2) - 1;
+    L.LemY := DestGadget.TriggerRect.Bottom - 1;
+    L.LemInPortal := DestGadgetID;
+
+    HandlePostTeleport(L);
+  end else if L.LemPortalWarpFrame >= 7 then
+    L.LemPortalWarpFrame := 0;
+end;
 
 function TLemmingGame.CheckLemTeleporting(L: TLemming): Boolean;
 // This function checks, whether a lemming appears out of a receiver

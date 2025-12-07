@@ -189,6 +189,7 @@ type
     fMetaLemmingAnimations : TMetaLemmingAnimations; // Meta data lemmings
     fLemmingAnimations     : TBitmaps; // List of lemmings bitmaps
 
+    fPortalWarpBitmap       : TBitmap32;
     fCountDownDigitsBitmap  : TBitmap32;
     fRadiationDigitsBitmap  : TBitmap32;
     fSlowfreezeDigitsBitmap : TBitmap32;
@@ -228,6 +229,7 @@ type
 
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
+    property PortalWarpBitmap      : TBitmap32 read fPortalWarpBitmap;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
     property RadiationDigitsBitmap : TBitmap32 read fRadiationDigitsBitmap;
     property SlowfreezeDigitsBitmap: TBitmap32 read fSlowfreezeDigitsBitmap;
@@ -573,6 +575,9 @@ begin
 
     { ==================== Effects (countdown digits, etc) =================== }
 
+    fPortalWarpBitmap.DrawMode := dmBlend;
+    fPortalWarpBitmap.CombineMode := cmMerge;
+
     fCountDownDigitsBitmap.DrawMode := dmBlend;
     fCountDownDigitsBitmap.CombineMode := cmMerge;
 
@@ -632,6 +637,7 @@ begin
     EffectsPath := AppPath + SFStyles + ThemeFolder + SFPiecesEffects;
     DefaultPath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
 
+    LoadEffects('portalwarp.png', 'portalwarp-hr.png', fPortalWarpBitmap);
     LoadEffects('countdown.png', 'countdown-hr.png', fCountDownDigitsBitmap);
     LoadEffects('radiation.png', 'radiation-hr.png', fRadiationDigitsBitmap);
     LoadEffects('slowfreeze.png', 'slowfreeze-hr.png', fSlowfreezeDigitsBitmap);
@@ -657,6 +663,7 @@ procedure TBaseAnimationSet.ClearData;
 begin
   fLemmingAnimations.Clear;
   fMetaLemmingAnimations.Clear;
+  fPortalWarpBitmap.Clear;
   fCountDownDigitsBitmap.Clear;
   fRadiationDigitsBitmap.Clear;
   fSlowfreezeDigitsBitmap.Clear;
@@ -685,6 +692,7 @@ begin
   fMetaLemmingAnimations := TMetaLemmingAnimations.Create(TMetaLemmingAnimation);
   fLemmingAnimations := TBitmaps.Create;
   fRecolorer := TRecolorImage.Create;
+  fPortalWarpBitmap := TBitmap32.Create;
   fCountDownDigitsBitmap := TBitmap32.Create;
   fRadiationDigitsBitmap := TBitmap32.Create;
   fSlowfreezeDigitsBitmap := TBitmap32.Create;
@@ -707,6 +715,7 @@ destructor TBaseAnimationSet.Destroy;
 begin
   fMetaLemmingAnimations.Free;
   fLemmingAnimations.Free;
+  fPortalWarpBitmap.Free;
   fCountDownDigitsBitmap.Free;
   fRadiationDigitsBitmap.Free;
   fSlowfreezeDigitsBitmap.Free;

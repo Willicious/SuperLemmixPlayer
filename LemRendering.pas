@@ -370,10 +370,10 @@ begin
       fLayers.fIsEmpty[rlCountdown] := False;
     end;
 
-   if (LemmingList[i].LemAction = baLasering) and not (LemmingList[i].LemRemoved or LemmingList[i].LemTeleporting
-   // or (LemmingList[i].LemPortalWarpFrame > 0) // Portals - NOT YET IMPLEMENTED IN SLX
-   ) then
-      DrawLemmingLaser(LemmingList[i]);
+   if (LemmingList[i].LemAction = baLasering) and not
+      (LemmingList[i].LemRemoved or LemmingList[i].LemTeleporting or
+      (LemmingList[i].LemPortalWarpFrame > 0)) then
+        DrawLemmingLaser(LemmingList[i]);
 
     if LemmingList[i].LemAction = baFreezing then
       DrawFreezingOverlay(LemmingList[i]);
@@ -395,6 +395,7 @@ var
   SrcMetaAnim: TMetaLemmingAnimation;
   TriggerRect: TRect;
   TriggerLeft, TriggerTop: Integer;
+  PortalWarpWidth: Integer;
   i: Integer;
 
   Selected, Highlit: Boolean;
@@ -531,6 +532,28 @@ begin
     SrcAnim.DrawTo(fLayers[rlLemmingsLow], DstRect, SrcRect)
   else
     SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
+
+  // Portal lemmings
+  if (aLemming.LemPortalWarpFrame < 3) or (aLemming.LemPortalWarpFrame > 4) then
+  begin
+    SrcAnim.DrawMode := dmCustom;
+    SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
+    SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
+  end;
+
+  if (aLemming.LemPortalWarpFrame > 0) then
+  begin
+    PortalWarpWidth := fAni.PortalWarpBitmap.Width div 3;
+    SrcRect := SizedRect(PortalWarpWidth * ((aLemming.LemPortalWarpFrame + 2) mod 3), 0,
+                         PortalWarpWidth, fAni.PortalWarpBitmap.Height);
+    DstRect := SizedRect(
+                           DstRect.Left + SrcMetaAnim.FootX - (PortalWarpWidth div 2) + 1,
+                           (DstRect.Top + DstRect.Bottom - fAni.PortalWarpBitmap.Height) div 2,
+                           PortalWarpWidth, fAni.PortalWarpBitmap.Height
+                         );
+
+    fAni.PortalWarpBitmap.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
+  end;
 
   // Helper for selected lemming
   if (Selected and aLemming.CannotReceiveSkills) or UsefulOnly
@@ -2790,6 +2813,12 @@ begin
     DOM_UPDRAFT:
       begin
         fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
+      end;
+
+    DOM_PORTAL:
+      begin
+        fHelperImages[hpi_Portal].DrawTo(Dst, DrawX - 25 * ResMod, DrawY);
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX + 15 * ResMod, DrawY);
       end;
 
     DOM_SPLITTER:

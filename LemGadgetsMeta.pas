@@ -276,6 +276,7 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'onewayright' then fTriggerEffect := DOM_ONEWAYRIGHT;
     if Lowercase(Sec.LineTrimString['effect']) = 'teleporter' then fTriggerEffect := DOM_TELEPORT;
     if Lowercase(Sec.LineTrimString['effect']) = 'receiver' then fTriggerEffect := DOM_RECEIVER;
+    if Lowercase(Sec.LineTrimString['effect']) = 'portal' then fTriggerEffect := DOM_PORTAL;
     if Lowercase(Sec.LineTrimString['effect']) = 'pickupskill' then fTriggerEffect := DOM_PICKUP;
     if Lowercase(Sec.LineTrimString['effect']) = 'lockedexit' then fTriggerEffect := DOM_LOCKEXIT;
     if Lowercase(Sec.LineTrimString['effect']) = 'unlockbutton' then fTriggerEffect := DOM_BUTTON;

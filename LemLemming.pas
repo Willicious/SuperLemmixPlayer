@@ -148,6 +148,9 @@ type
     LemActionNew                  : TBasicLemmingAction; // New action after fixing a trap, see www.lemmingsforums.net/index.php?topic=3004.0
     LemJumpPositions              : array[0..5, 0..1] of Integer; // Tracking exact positions is the only way jumper shadows can be accurate
 
+    LemPortalWarpFrame            : Integer;
+    LemInPortal                   : Integer;
+
     LemQueueAction                : TBasicLemmingAction; // Queued action to be assigned within the next few frames
     LemQueueFrame                 : Integer; // Number of frames the skill is already queued
 
@@ -261,6 +264,7 @@ end;
 constructor TLemming.Create;
 begin
   inherited;
+  LemInPortal := -1;
   LemInSplitter := -1;
   LemParticleTimer := -1;
   LemHoldingProjectileIndex := -1;
@@ -339,7 +343,6 @@ begin
   LemMaxPhysicsFrame := Source.LemMaxPhysicsFrame;
   LemParticleTimer := Source.LemParticleTimer;
   LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
-
   LemAction := Source.LemAction;
   LemRemoved := Source.LemRemoved;
   LemTeleporting := Source.LemTeleporting;
@@ -377,13 +380,14 @@ begin
   LemHoldingProjectileIndex := Source.LemHoldingProjectileIndex;
   LemConstructivePositionFreeze := Source.LemConstructivePositionFreeze;
   LemWalkerPositionAdjusted := Source.LemWalkerPositionAdjusted;
-
   LemXOld := Source.LemXOld;
   LemYOld := Source.LemYOld;
   LemDXOld := Source.LemDXOld;
   LemActionOld := Source.LemActionOld;
   LemActionNew := Source.LemActionNew;
   LemJumpPositions := Source.LemJumpPositions;
+  LemPortalWarpFrame := Source.LemPortalWarpFrame;
+  LemInPortal := Source.LemInPortal;
   // Does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
 end;
 

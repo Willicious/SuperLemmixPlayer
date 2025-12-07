@@ -199,6 +199,7 @@ type
     trBlocker,    // Total blocker area!
     trSteel,
     trTeleport,
+    trPortal,
     trPickup,
     trCollectible,
     trUpdraft,
@@ -346,7 +347,7 @@ const
 const
   // All objects that don't have trigger areas get mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..34] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..35] of TTriggerTypes = (
     trZombie,                 // -1 No-object
     trZombie,                 // 0  No trigger area
     trZombie,                 // 1  Hatch
@@ -370,19 +371,20 @@ const
     trZombie,                 // 19 Blocker (note - there is no blocker object!)
     trTeleport,               // 20 Teleporter
     trZombie,                 // 21 Receiver
-    trPickup,                 // 22 Pickup skill
-    trCollectible,            // 23 Collectible
-    trUpdraft,                // 24 Updraft
-    trSplitter,               // 25 Splitter
-    trRadiation,              // 26 Radiation
-    trSlowfreeze,             // 27 Slowfreeze
-    trNoSplat,                // 28 No-splat
-    trSplat,                  // 29 Splat
-    trZombie,                 // 30 Decoration
-    trAnim,                   // 31 Triggered animation
-    trAnim,                   // 32 Once animation
-    trSteel,                  // 33 Steel
-    trZombie                  // 34 Preplaced lemming
+    trPortal,                 // 22 Portal
+    trPickup,                 // 23 Pickup skill
+    trCollectible,            // 24 Collectible
+    trUpdraft,                // 25 Updraft
+    trSplitter,               // 26 Splitter
+    trRadiation,              // 27 Radiation
+    trSlowfreeze,             // 28 Slowfreeze
+    trNoSplat,                // 29 No-splat
+    trSplat,                  // 30 Splat
+    trZombie,                 // 31 Decoration
+    trAnim,                   // 32 Triggered animation
+    trAnim,                   // 33 Once animation
+    trSteel,                  // 34 Steel
+    trZombie                  // 35 Preplaced lemming
   );
 
 type
