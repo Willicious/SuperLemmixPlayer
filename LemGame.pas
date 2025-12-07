@@ -39,7 +39,7 @@ const
                           DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
                           DOM_NOSPLAT, DOM_SPLAT, DOM_RADIATION, DOM_SLOWFREEZE,
                           DOM_BLASTICINE, DOM_VINEWATER, DOM_POISON, DOM_LAVA,
-                          DOM_PORTAL];
+                          DOM_PORTAL, DOM_NORMALIZER];
 
 type
   TLemmingKind = (lkNormal, lkNeutral, lkZombie // Rivals are lkNormal for the purposes of TLemmingKind
@@ -141,6 +141,7 @@ type
     ButtonMap                  : TArrayArrayBoolean;
     CollectibleMap             : TArrayArrayBoolean;
     SplitterMap                : TArrayArrayBoolean;
+    NormalizerMap              : TArrayArrayBoolean;
     NoSplatMap                 : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
     ForceLeftMap               : TArrayArrayBoolean;
@@ -293,6 +294,7 @@ type
       function HandleSplitter(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleRadiation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleSlowfreeze(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleNormalizer(L: TLemming): Boolean;
 
       procedure StartSwimming(L: TLemming);
       function HandleWaterFatality(L: TLemming): Boolean;
@@ -2242,6 +2244,8 @@ begin
   SetLength(PickupMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplitterMap, 0, 0);
   SetLength(SplitterMap, Level.Info.Width, Level.Info.Height);
+  SetLength(NormalizerMap, 0, 0);
+  SetLength(NormalizerMap, Level.Info.Width, Level.Info.Height);
   SetLength(NoSplatMap, 0, 0);
   SetLength(NoSplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplatMap, 0, 0);
@@ -2420,6 +2424,7 @@ begin
       DOM_LAVA:       WriteTriggerMap(LavaMap, Gadgets[i].TriggerRect);
       DOM_RADIATION:  WriteTriggerMap(RadiationMap, Gadgets[i].TriggerRect);
       DOM_SLOWFREEZE: WriteTriggerMap(SlowfreezeMap, Gadgets[i].TriggerRect);
+      DOM_NORMALIZER: WriteTriggerMap(NormalizerMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -3339,6 +3344,10 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) and not IsPostTeleportCheck then
       AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
 
+    // Normalizer
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trNormalizer) then
+      HandleNormalizer(L); // never aborts checks
+
     // Splitter (except for blockers / jumpers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
                          and not (L.LemAction = baBlocking)
@@ -3452,7 +3461,7 @@ begin
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
     trCollectible:Result :=     ReadTriggerMap(X, Y, CollectibleMap);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
-    trSplitter:    Result :=     ReadTriggerMap(X, Y, SplitterMap);
+    trSplitter:   Result :=     ReadTriggerMap(X, Y, SplitterMap);
     trNoSplat:    Result :=     ReadTriggerMap(X, Y, NoSplatMap);
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
@@ -3462,6 +3471,7 @@ begin
     trLava:       Result :=     ReadTriggerMap(X, Y, LavaMap);
     trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap);
     trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);
+    trNormalizer: Result :=     ReadTriggerMap(X, Y, NormalizerMap);
   end;
 end;
 
@@ -3930,6 +3940,18 @@ begin
     else
       L.LemFreezerExplosionTimer := 169;
     L.LemHideCountdown := False;
+  end;
+end;
+
+function TLemmingGame.HandleNormalizer(L: TLemming): Boolean;
+begin
+  Result := False;
+
+  if L.LemIsNeutral {or L.LemIsRival} then
+  begin
+    CueSoundEffect(SFX_Normalize, L.Position);
+    L.LemIsNeutral := False;
+    {L.LemIsRival := False;}
   end;
 end;
 
