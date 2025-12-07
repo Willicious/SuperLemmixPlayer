@@ -3609,11 +3609,6 @@ var
 begin
   Result := False;
 
-  // Exit if lemming is splatting
-  if L.LemAction = baSplatting then Exit;
-  // Exit if lemming is falling, has ground under his feet and will splat
-  if (L.LemAction = baFalling) and HasPixelAt(PosX, PosY) and (L.LemFallen > MAX_FALLDISTANCE) then Exit;
-
   GadgetID := FindGadgetID(PosX, PosY, trTeleport);
 
   // Exit if there is no Object
@@ -6746,6 +6741,7 @@ var
           and (not HasTriggerAt(L.LemX, L.LemY, trExit))
           and (not HasTriggerAt(L.LemX, L.LemY, trPortal))
           and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
+          and (not HasTriggerAt(L.LemX, L.LemY, trTeleport))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
 
