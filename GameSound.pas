@@ -377,6 +377,7 @@ begin
   SFX_Jump := 'jump';
   SFX_Laser := 'laser';
   SFX_LetsGo := 'letsgo';
+  SFX_Normalize := 'normalize';
   SFX_OhNo := 'ohno';
   SFX_OK := 'OK';
   SFX_Pickup := 'pickup';
@@ -438,6 +439,7 @@ begin
   Load(SFX_Jump);
   Load(SFX_Laser);
   Load(SFX_LetsGo);
+  Load(SFX_Normalize);
   Load(SFX_OhNo);
   Load(SFX_OK);
   Load(SFX_Pickup);

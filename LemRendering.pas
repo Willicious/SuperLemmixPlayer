@@ -2892,6 +2892,11 @@ begin
       begin
         fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
       end;
+
+    DOM_NORMALIZER:
+      begin
+        fHelperImages[hpi_Normalizer].DrawTo(Dst, DrawX - 10 * ResMod, DrawY - 2);
+      end;
   end;
 end;
 

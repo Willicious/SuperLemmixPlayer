@@ -35,6 +35,7 @@ var
   SFX_Jump,
   SFX_Laser,
   SFX_LetsGo,
+  SFX_Normalize,
   SFX_OhNo,
   SFX_OK,
   SFX_Pickup,
