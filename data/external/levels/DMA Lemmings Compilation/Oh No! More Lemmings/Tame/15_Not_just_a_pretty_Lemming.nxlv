@@ -1,8 +1,6 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -10,7 +8,7 @@
  TITLE Not just a pretty Lemming
  AUTHOR DMA Design
  ID x84F8E14684F8E146
- VERSION x0000000000000005
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -69,14 +67,6 @@
    PIECE exit_flag
    X 1088
    Y 100
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_snow
-   PIECE window
-   X 573
-   Y 68
    NO_OVERWRITE
  $END
  
@@ -1086,7 +1076,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED
