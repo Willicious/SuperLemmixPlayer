@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Careless clicking costs lives
  AUTHOR DMA Design 
+ MUSIC awesome_amiga
  ID xE0408609E0408609
- VERSION x0000000000000005
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1907,7 +1906,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

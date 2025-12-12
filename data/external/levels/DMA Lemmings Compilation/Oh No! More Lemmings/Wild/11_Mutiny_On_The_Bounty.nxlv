@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Mutiny On The Bounty
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID x8EF9BE1E8EF9BE1E
- VERSION x0000000000000003
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 
@@ -951,7 +950,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

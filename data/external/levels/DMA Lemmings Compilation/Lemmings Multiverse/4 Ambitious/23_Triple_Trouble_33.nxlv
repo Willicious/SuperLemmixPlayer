@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Triple Trouble 33.3
  AUTHOR DMA / WillLem
+ MUSIC menace_amiga
  ID x9EEB529F9EEB529F
- VERSION x000000000000000A
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 

@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Who's That Lemming
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xFC8005E9FC8005E9
- VERSION x0000000000000006
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -801,14 +800,6 @@
  
  $TERRAIN
    STYLE slx_snow
-   PIECE pillar_01
-   X 820
-   Y -65
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_snow
    PIECE pillar_02
    X 820
    Y -9
@@ -817,7 +808,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

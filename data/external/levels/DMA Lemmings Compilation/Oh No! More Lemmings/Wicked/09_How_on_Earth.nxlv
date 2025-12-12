@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE How on Earth?
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xDBA25672DBA25672
- VERSION x0000000000000007
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -583,7 +582,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Roar of the big machine
  AUTHOR Sony / Minim
+ MUSIC menace_amiga
  ID x8F21E2918F21E291
- VERSION x0000000000000002
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1272,7 +1271,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

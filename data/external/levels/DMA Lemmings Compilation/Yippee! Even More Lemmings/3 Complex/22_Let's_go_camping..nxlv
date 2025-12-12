@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Let's go camping.
  AUTHOR SEGA Genesis Sunsoft Lemmings
+ MUSIC menace_amiga
  ID xE0D6E1A2E0D6E1A2
- VERSION x0000000000000002
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 

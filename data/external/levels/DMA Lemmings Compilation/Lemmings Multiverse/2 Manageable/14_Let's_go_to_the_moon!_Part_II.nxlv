@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Let's go to the moon! (Part II)
  AUTHOR SEGA Genesis Lemmings / WillLem
+ MUSIC menace_amiga
  ID xB32FB423B32FB423
- VERSION x0000000000000004
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -835,60 +836,6 @@
    PIECE stars_01
    X 122
    Y 38
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE circle_01
-   X -26
-   Y 133
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE circle_01
-   X -26
-   Y 120
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE circle_01
-   X -27
-   Y 123
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE circle_01
-   X -22
-   Y 112
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE circle_01
-   X -24
-   Y 117
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE circle_01
-   X -26
-   Y 121
-   ERASE
    ONE_WAY
  $END
  

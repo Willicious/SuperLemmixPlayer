@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Save the Lemmings with Floaters
  AUTHOR PSP Lemmings 
+ MUSIC menace_amiga
  ID xAAF7039CAAF7039C
- VERSION x0000000000000003
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 

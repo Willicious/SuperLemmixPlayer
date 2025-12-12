@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE One Way to Freedom
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID xBDD22BC4BDD22BC4
- VERSION x0000000000000003
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 
@@ -749,7 +748,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

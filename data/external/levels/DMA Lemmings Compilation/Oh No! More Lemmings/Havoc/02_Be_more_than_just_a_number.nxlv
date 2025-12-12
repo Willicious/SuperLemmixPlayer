@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Be more than just a number
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xA4D88051A4D88051
- VERSION x0000000000000005
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -601,7 +600,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

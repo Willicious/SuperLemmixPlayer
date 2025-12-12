@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE LET'S GET CREATIVE!
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID xA539A58FA539A58F
- VERSION x000000000000000D
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 

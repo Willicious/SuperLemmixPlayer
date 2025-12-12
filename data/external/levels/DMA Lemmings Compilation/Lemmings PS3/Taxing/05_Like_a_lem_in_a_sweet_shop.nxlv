@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Like a lem in a sweet shop
  AUTHOR Sony / Minim
+ MUSIC menace_amiga
  ID x538E6ECC538E6ECC
- VERSION x0000000000000003
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 
@@ -553,7 +552,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

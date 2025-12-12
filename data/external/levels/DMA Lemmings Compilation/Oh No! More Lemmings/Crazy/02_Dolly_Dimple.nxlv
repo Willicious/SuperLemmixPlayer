@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Dolly Dimple
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID x94E8DBF494E8DBF4
- VERSION x0000000000000006
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -302,7 +301,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

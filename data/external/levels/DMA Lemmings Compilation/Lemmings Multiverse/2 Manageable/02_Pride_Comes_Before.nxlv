@@ -1,17 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with NLEditor 1.1
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Pride Comes Before...
  AUTHOR ZX Spectrum Lemmings
- 
+ MUSIC menace_amiga
  ID x978BCB9D978BCB9D
- VERSION x0000000000000002
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -33,13 +31,13 @@
    BUILDER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -2172,42 +2170,6 @@
  
  $TERRAIN
    STYLE slx_crystal
-   PIECE block
-   X 548
-   Y 80
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE block
-   X 548
-   Y 112
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE block
-   X 548
-   Y 121
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE block
-   X 552
-   Y 116
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
    PIECE line_03
    X 20
    Y 159
@@ -2331,7 +2293,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

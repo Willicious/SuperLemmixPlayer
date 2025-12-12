@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Down the tube
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xB2CA0CABB2CA0CAB
- VERSION x0000000000000005
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -82,30 +81,10 @@
  
  $GADGET
    STYLE slx_bubble
-   PIECE spinning_arrow
-   X 64
-   Y 82
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
- $END
- 
- $GADGET
-   STYLE slx_bubble
    PIECE exit
    X 343
    Y 82
    NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE spinning_arrow
-   X 359
-   Y 82
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
  $END
  
  
@@ -639,7 +618,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE ROCKY ROAD
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xABDB967EABDB967E
- VERSION x0000000000000005
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -3419,37 +3418,9 @@
  $TERRAIN
    STYLE slx_rock
    PIECE platform_01
-   X -13
-   Y 50
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_rock
-   PIECE platform_01
    X 61
    Y 85
    ONE_WAY
  $END
  
- $TERRAIN
-   STYLE slx_rock
-   PIECE platform_01
-   X -9
-   Y 85
-   ONE_WAY
- $END
  
- $TERRAIN
-   STYLE slx_rock
-   PIECE platform_01
-   X -11
-   Y 135
-   ONE_WAY
- $END
- 
- 
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

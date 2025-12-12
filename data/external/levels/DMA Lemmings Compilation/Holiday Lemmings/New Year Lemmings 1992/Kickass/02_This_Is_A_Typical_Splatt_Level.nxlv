@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE This is a typical Splatt level
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xDFB15DAFDFB15DAF
- VERSION x0000000000000003
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -80,16 +81,6 @@
  
  $GADGET
    STYLE slx_bubble
-   PIECE spinning_arrow
-   X 1400
-   Y 100
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
- $END
- 
- $GADGET
-   STYLE slx_bubble
    PIECE trap_01
    X 1064
    Y 112
@@ -101,30 +92,6 @@
    PIECE trap_02
    X 960
    Y 44
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE trap_01_base
-   X 1032
-   Y 132
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE trap_01_base
-   X -16
-   Y 128
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE trap_02
-   X -16
-   Y 56
    NO_OVERWRITE
  $END
  

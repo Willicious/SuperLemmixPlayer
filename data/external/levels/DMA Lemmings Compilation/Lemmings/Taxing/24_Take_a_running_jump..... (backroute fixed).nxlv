@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Take a running jump.....
  AUTHOR DMA Design 
+ MUSIC awesome_amiga
  ID xEE9EB544EE9EB544
- VERSION x0000000000000009
+ VERSION x000000000000000D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -2375,7 +2374,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

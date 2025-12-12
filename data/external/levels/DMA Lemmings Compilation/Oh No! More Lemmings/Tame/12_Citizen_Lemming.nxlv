@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Citizen Lemming
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xD0ACF0C8D0ACF0C8
- VERSION x0000000000000005
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -62,16 +61,6 @@
    X 560
    Y 67
    NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE spinning_arrow
-   X 576
-   Y 67
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
  $END
  
  
@@ -1256,7 +1245,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

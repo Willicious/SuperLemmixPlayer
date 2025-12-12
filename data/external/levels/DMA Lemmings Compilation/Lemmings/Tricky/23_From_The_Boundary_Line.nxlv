@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE From The Boundary Line
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID x86FAC59786FAC597
- VERSION x0000000000000007
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1587,7 +1586,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

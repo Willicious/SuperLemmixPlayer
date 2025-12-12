@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Got The T-Shirt
  AUTHOR DMA / WillLem
+ MUSIC menace_amiga
  ID xBC4387D7BC4387D7
- VERSION x000000000000000D
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 

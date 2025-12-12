@@ -1,15 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Roman In The Ruins
  AUTHOR NES Lemmings Ron Stard / WillLem
- 
+ MUSIC menace_amiga
  ID x58B424EA58B424EA
- VERSION x0000000000000004
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -696,7 +696,6 @@
    PIECE steel_01
    X 325
    Y 142
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -704,7 +703,6 @@
    PIECE steel_01
    X 277
    Y 142
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -712,7 +710,6 @@
    PIECE steel_01
    X 374
    Y 142
-   ONE_WAY
  $END
  
  

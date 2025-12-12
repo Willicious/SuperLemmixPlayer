@@ -1,17 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Just 17
  AUTHOR PSP Lemmings 
- 
+ MUSIC menace_amiga
  ID xE1F092CDE1F092CD
- VERSION x0000000000000001
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -39,13 +37,13 @@
    DIGGER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -881,14 +879,6 @@
  $TERRAIN
    STYLE slx_pillar
    PIECE block_14
-   X -20
-   Y 141
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE block_14
    X 33
    Y 121
    ONE_WAY
@@ -944,7 +934,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

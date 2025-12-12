@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Lemmings standing on the earth
  AUTHOR SEGA Genesis Present Lemmings
+ MUSIC menace_amiga
  ID xD088A44CD088A44C
- VERSION x0000000000000001
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -19,7 +18,6 @@
  START_X 160
  START_Y 80
  THEME slx_marble
- 
  
 #         Level stats           
 # ----------------------------- 
@@ -39,13 +37,13 @@
    DIGGER 10
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -1596,7 +1594,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

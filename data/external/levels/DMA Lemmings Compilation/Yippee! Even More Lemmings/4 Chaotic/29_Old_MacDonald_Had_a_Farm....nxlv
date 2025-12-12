@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Old MacDonald Had a Farm...
  AUTHOR Prima Lemmings
+ MUSIC menace_amiga
  ID xE1F536E3E1F536E3
- VERSION x0000000000000003
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 

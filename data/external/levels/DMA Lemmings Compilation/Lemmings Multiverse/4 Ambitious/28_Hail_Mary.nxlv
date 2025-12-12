@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Hail Mary
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID xD666D6C3D666D6C3
- VERSION x0000000000000006
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 

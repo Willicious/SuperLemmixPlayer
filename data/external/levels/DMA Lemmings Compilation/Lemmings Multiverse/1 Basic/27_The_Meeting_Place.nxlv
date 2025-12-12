@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE The Meeting Place
  AUTHOR SEGA Genesis Lemmings / WillLem
+ MUSIC menace_amiga
  ID x4040404F4040404F
- VERSION x0000000000000001
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 

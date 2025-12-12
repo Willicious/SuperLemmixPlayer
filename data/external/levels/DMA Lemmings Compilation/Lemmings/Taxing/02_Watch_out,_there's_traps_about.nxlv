@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Watch out, there`s traps about
  AUTHOR DMA Design 
+ MUSIC beastii_amiga
  ID xA41E2D4FA41E2D4F
- VERSION x0000000000000004
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -2196,7 +2195,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

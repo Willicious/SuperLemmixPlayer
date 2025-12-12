@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE DON'T PANIC
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xFB8EA675FB8EA675
- VERSION x0000000000000006
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -47,14 +46,6 @@
  
 #     Interactive objects       
 # ----------------------------- 
- $GADGET
-   STYLE slx_bubble
-   PIECE trap_01_base
-   X 84
-   Y 120
-   NO_OVERWRITE
- $END
- 
  $GADGET
    STYLE slx_bubble
    PIECE window
@@ -107,16 +98,6 @@
    X 676
    Y 55
    NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE spinning_arrow
-   X 692
-   Y 55
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
  $END
  
  $GADGET
@@ -1549,7 +1530,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

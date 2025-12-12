@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Climb to victory
  AUTHOR PSP Lemmings
+ MUSIC menace_amiga
  ID xE1FE3046E1FE3046
- VERSION x0000000000000002
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 

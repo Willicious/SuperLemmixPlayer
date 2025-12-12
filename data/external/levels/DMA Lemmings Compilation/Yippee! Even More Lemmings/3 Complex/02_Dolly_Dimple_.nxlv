@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.2
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Dolly Dimple?
  AUTHOR Prima Lemmings
+ MUSIC menace_amiga
  ID x8B98901E8B98901E
- VERSION x0000000000000002
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -37,13 +36,13 @@
    DIGGER 1
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -69,15 +68,7 @@
    Y 0
    NO_OVERWRITE
    FLIP_HORIZONTAL
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE spinning_arrow
-   X 240
-   Y 111
-   SPEED 0
-   ANGLE 0
+   FLIP_X_OFFSET 1
  $END
  
  $GADGET
@@ -255,7 +246,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

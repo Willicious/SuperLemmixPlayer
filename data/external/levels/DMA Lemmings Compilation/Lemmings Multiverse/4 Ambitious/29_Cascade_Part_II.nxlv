@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Cascade Part II
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID xADC0F43EADC0F43E
- VERSION x0000000000000006
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 

@@ -1,17 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.40
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Reflex Actions
  AUTHOR ZX Spectrum Lemmings
- 
+ MUSIC menace_amiga
  ID x9E77D60C9E77D60C
- VERSION x0000000000000001
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -32,13 +30,13 @@
    BUILDER 11
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -2132,24 +2130,6 @@
  
  $TERRAIN
    STYLE slx_crystal
-   PIECE mesh_02
-   X 644
-   Y 128
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE mesh_04
-   X 644
-   Y 113
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
    PIECE mesh_04
    X 634
    Y 103
@@ -2224,7 +2204,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

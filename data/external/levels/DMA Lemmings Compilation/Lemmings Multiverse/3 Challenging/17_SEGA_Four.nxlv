@@ -1,15 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE SEGA Four
  AUTHOR SMS Lemmings 
+ MUSIC menace_amiga
  ID xE1998F54E1998F54
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -37,13 +37,13 @@
    DIGGER 20
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -52,6 +52,7 @@
    X 8
    Y 120
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -65,14 +66,6 @@
  $GADGET
    STYLE orig_sega
    PIECE exit
-   X 208
-   Y 32
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_sega
-   PIECE exit_flames
    X 208
    Y 32
    NO_OVERWRITE
@@ -2910,7 +2903,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

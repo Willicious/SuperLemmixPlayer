@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Rendezvous at the Mountain
  AUTHOR DMA Design 
+ MUSIC beastii_amiga
  ID xE0829393E0829393
- VERSION x0000000000000004
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1656,78 +1655,6 @@
  $TERRAIN
    STYLE slx_dirt
    PIECE circle_02
-   X 1603
-   Y 134
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
-   X 1602
-   Y 136
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
-   X 1603
-   Y 145
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
-   X 1603
-   Y 150
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
-   X 1603
-   Y 153
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
-   X 1603
-   Y 142
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
-   X 1602
-   Y 141
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
-   X 1600
-   Y 138
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_dirt
-   PIECE circle_02
    X 1596
    Y 134
    ERASE
@@ -1918,7 +1845,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED
