@@ -31,10 +31,12 @@ Changelog:
 3.0
 + Changed orig_ and ohno_ styles to slx_
 + Re-added orig_ and ohno_ from NeoLemmix, but with some differences:
-  + Backgrounds changed to Amiga Blue
+  + Backgrounds changed to Amiga Blue (tile also added to backgrounds)
+  + Proxima's background tiles added to each style
   + Water objects changed to Blasticine (bubble), Vinewater (rock), Lava (fire) and Poison (marble)
   + Modified trap animations - see this post for a list of the differences:
     https://www.lemmingsforums.net/index.php?topic=5420.msg90074#msg90074
++ Removed deprecated pieces from slx_bubble, ohno_bubble and orig_sega
 	
 (No changes for 2.9)
 
