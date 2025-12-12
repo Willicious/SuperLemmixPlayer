@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Persevere If You Love Lemminas
  AUTHOR WillLem/DMA
  ID x79D689B168AB5473
- VERSION x0000000000000038
+ VERSION x0000000000000039
  
 #       Level dimensions        
 # ----------------------------- 
@@ -271,6 +271,7 @@
    Y 4
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
  $END
  
  

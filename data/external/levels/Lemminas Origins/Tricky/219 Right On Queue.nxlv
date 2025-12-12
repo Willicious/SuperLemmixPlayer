@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Right On Queue
  AUTHOR WillLem/DMA
  ID x2450B58A0C955DC8
- VERSION x000000000000000E
+ VERSION x000000000000000F
  
 #       Level dimensions        
 # ----------------------------- 
@@ -186,7 +186,6 @@
      PIECE steel_01
      X 281
      Y 141
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -195,7 +194,6 @@
      X 297
      Y 141
      ERASE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -204,7 +202,6 @@
      X 289
      Y 141
      NO_OVERWRITE
-     ONE_WAY
    $END
    
  $END
@@ -1086,7 +1083,6 @@
    PIECE steel_01
    X 200
    Y 141
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1434,7 +1430,6 @@
    PIECE Group1092489318
    X 223
    Y 94
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1442,7 +1437,6 @@
    PIECE Group1749331445
    X 281
    Y 141
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -1450,7 +1444,6 @@
    PIECE Group1092489318
    X 223
    Y 37
-   ONE_WAY
  $END
  
  $TERRAIN

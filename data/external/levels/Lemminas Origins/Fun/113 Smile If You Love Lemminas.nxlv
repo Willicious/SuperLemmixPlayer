@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Smile If You Love Lemminas
  AUTHOR WillLem/DMA
  ID x55A27E8855A27E87
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -304,6 +304,7 @@
    Y 4
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
  $END
  
  

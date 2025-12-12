@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE There's Always One...
  AUTHOR WillLem
  ID x8CAFB1438CAFB142
- VERSION x0000000000000057
+ VERSION x0000000000000058
  
 #       Level dimensions        
 # ----------------------------- 
@@ -173,7 +173,6 @@
      PIECE steel_03
      X 427
      Y 109
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -182,7 +181,6 @@
      X 427
      Y 106
      ERASE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -191,7 +189,6 @@
      X 427
      Y 114
      NO_OVERWRITE
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -200,7 +197,6 @@
      X 427
      Y 123
      ERASE
-     ONE_WAY
    $END
    
  $END
@@ -633,7 +629,6 @@
    PIECE Group108832618
    X 427
    Y 114
-   ONE_WAY
  $END
  
  

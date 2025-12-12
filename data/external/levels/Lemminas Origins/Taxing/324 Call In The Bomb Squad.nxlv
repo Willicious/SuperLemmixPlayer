@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Call In The Bomb Squad
  AUTHOR WillLem/DMA
  ID x9CA035789CA03577
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -881,16 +881,6 @@
    PIECE steel_02
    X 1024
    Y 142
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE block_13
-   X 4079
-   Y 65
-   NO_OVERWRITE
-   FLIP_VERTICAL
-   ONE_WAY
  $END
  
  $TERRAIN
