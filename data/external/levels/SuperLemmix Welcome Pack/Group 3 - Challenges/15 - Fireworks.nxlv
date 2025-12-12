@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Fireworks
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x1AE4A94F5A3E1A77
- VERSION x0000000000000024
+ VERSION x0000000000000025
  
 #       Level dimensions        
 # ----------------------------- 

@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Don't Forget The Chameleon
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x54AD42C90436F483
- VERSION x0000000000000029
+ VERSION x000000000000002A
  
 #       Level dimensions        
 # ----------------------------- 

@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Take A Swimming Jump
  AUTHOR DMA Design/WillLem
+ MUSIC awesome_amiga
  ID x72DB01337101C73D
- VERSION x000000000000003F
+ VERSION x0000000000000040
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,8 +35,8 @@
    TITLE Silver Talisman
    ID 0
    COLOR Silver
-   TIME_LIMIT 2040
    SAVE_REQUIREMENT 5
+   TIME_LIMIT 2040
  $END 
  
  $TALISMAN 

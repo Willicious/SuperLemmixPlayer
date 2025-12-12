@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Let's Think About This Carefully...
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x21081BBB4343A5C5
- VERSION x0000000000000020
+ VERSION x0000000000000021
  
 #       Level dimensions        
 # ----------------------------- 

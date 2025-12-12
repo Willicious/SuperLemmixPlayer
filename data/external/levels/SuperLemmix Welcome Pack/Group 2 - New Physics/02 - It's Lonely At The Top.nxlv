@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC awesome_amiga
  ID x374005663B129420
- VERSION x0000000000000025
+ VERSION x0000000000000026
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1280,7 +1280,6 @@
    PIECE Group1302085702
    X 366
    Y 19
-   ONE_WAY
  $END
  
  

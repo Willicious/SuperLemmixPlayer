@@ -1,5 +1,5 @@
 # ----------------------------- 
-#        SuperLemmix Level        
+#        SuperLemmix Level      
 #   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
@@ -7,8 +7,9 @@
 # ----------------------------- 
  TITLE Lemmy's Psychedelic Bath
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x6A9F098C0B166333
- VERSION x000000000000004F
+ VERSION x0000000000000050
  
 #       Level dimensions        
 # ----------------------------- 
@@ -51,8 +52,8 @@
    TITLE Silver Talisman
    ID 0
    COLOR Silver
-   KILL_ZOMBIES 0
    SAVE_REQUIREMENT 35
+   KILL_ZOMBIES 0
  $END 
  
  $TALISMAN 
@@ -60,8 +61,8 @@
    ID 1
    COLOR Gold
    SAVE_REQUIREMENT 35
-   KILL_ZOMBIES 0
    PLATFORMER_LIMIT 0
+   KILL_ZOMBIES 0
  $END 
  
 #     Interactive objects       

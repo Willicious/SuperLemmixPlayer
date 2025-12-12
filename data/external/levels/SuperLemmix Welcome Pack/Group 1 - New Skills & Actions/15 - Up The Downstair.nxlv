@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC awesome_amiga
  ID x4507104435B8608D
- VERSION x0000000000000015
+ VERSION x0000000000000016
  
 #       Level dimensions        
 # ----------------------------- 
@@ -39,8 +39,8 @@
    TITLE Silver Talisman
    ID 1
    COLOR Silver
-   BUILDER_LIMIT 0
    CLIMBER_LIMIT 0
+   BUILDER_LIMIT 0
  $END 
  
  $TALISMAN 

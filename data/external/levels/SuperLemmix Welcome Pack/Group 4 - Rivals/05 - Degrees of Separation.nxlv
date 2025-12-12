@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Degrees of Separation
  AUTHOR DMA Design
+ MUSIC awesome_amiga
  ID x7F19FA417850EEC7
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -85,6 +86,7 @@
    Y 16
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    RIVAL 
  $END
  
@@ -103,6 +105,7 @@
    Y 16
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    RIVAL 
  $END
  
@@ -121,6 +124,7 @@
    Y 16
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    RIVAL 
  $END
  
@@ -139,6 +143,7 @@
    Y 56
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    RIVAL 
  $END
  
@@ -157,6 +162,7 @@
    Y 56
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    RIVAL 
  $END
  

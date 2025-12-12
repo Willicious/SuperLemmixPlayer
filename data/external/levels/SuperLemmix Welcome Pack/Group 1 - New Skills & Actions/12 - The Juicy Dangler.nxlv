@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE The Juicy Dangler
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x0652D4CC45F88611
- VERSION x0000000000000044
+ VERSION x0000000000000045
  
 #       Level dimensions        
 # ----------------------------- 

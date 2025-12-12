@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Building Bridges
  AUTHOR DMA Design
+ MUSIC awesome_amiga
  ID xA1451D7EE96BEBDC
- VERSION x000000000000000C
+ VERSION x000000000000000D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -48,8 +49,8 @@
    TITLE Gold Talisman
    ID 1
    COLOR Gold
-   TIME_LIMIT 5100
    SAVE_REQUIREMENT 50
+   TIME_LIMIT 5100
  $END 
  
 #     Interactive objects       
@@ -114,6 +115,7 @@
    Y 88
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
    RIVAL 
  $END
  

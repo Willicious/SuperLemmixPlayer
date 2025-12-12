@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Re-inroducing SUPERLEMMING
  AUTHOR WillLem / DMA Design
+ MUSIC awesome_amiga
  ID x2FA76C0043059276
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1985,7 +1986,6 @@
    PIECE steel_01
    X 1331
    Y 47
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -2002,7 +2002,6 @@
    PIECE steel_01
    X 1297
    Y 47
-   ONE_WAY
  $END
  
  $TERRAIN

@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Heaven is a Half Pipe
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x6795A47212184BF5
- VERSION x0000000000000012
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -102,6 +103,7 @@
    Y 83
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
  $END
  
  

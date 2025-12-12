@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.5
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Think Fast!
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x2FA76C0043059276
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -52,9 +53,9 @@
    TITLE Gold Talisman
    ID 1
    COLOR Gold
+   WALKER_LIMIT 4
    CLASSIC_MODE 0
    NO_PAUSE 0
-   WALKER_LIMIT 4
  $END 
  
 #     Interactive objects       
