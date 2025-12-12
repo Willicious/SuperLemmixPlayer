@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Here's One I Prepared Earlier
  AUTHOR WillLem/DMA
  ID x2E69CF572E69CF56
- VERSION x0000000000000008
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -3157,7 +3157,6 @@
    PIECE Group790860284
    X 645
    Y 88
-   ONE_WAY
  $END
  
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Don't Work Too Hard
  AUTHOR WillLem
  ID x0B89485428A583EB
- VERSION x0000000000000060
+ VERSION x0000000000000061
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1150,13 +1150,6 @@
    X 4
    Y 22
    ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE steel_03
-   X 329
-   Y 167
  $END
  
  $TERRAIN

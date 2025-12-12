@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Worra Lorra Lemminas
  AUTHOR WillLem/DMA
  ID x9FEEC2E19FEEC2E0
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -554,24 +554,6 @@
  $TERRAIN
    STYLE slx_pillar
    PIECE block_08
-   X 190
-   Y 160
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE block_08
-   X 191
-   Y 160
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE block_08
    X 186
    Y 148
    NO_OVERWRITE
@@ -637,15 +619,6 @@
    PIECE block_08
    X 378
    Y 157
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE block_08
-   X 395
-   Y 160
    NO_OVERWRITE
    ONE_WAY
  $END

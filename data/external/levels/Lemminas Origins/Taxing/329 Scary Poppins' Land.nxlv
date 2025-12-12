@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Scary Poppins' Land
  AUTHOR WillLem
  ID x5E5FF8ED5E5FF8EC
- VERSION x000000000000001B
+ VERSION x000000000000001C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1832,7 +1832,6 @@
    PIECE Group1613283318
    X 1071
    Y 89
-   ONE_WAY
  $END
  
  $TERRAIN

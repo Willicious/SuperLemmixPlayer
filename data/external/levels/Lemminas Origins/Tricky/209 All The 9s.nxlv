@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE All The 9's.........
  AUTHOR WillLem/DMA
  ID x6CA349176CA34916
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -168,16 +168,6 @@
    PIECE lava
    X 952
    Y 142
-   WIDTH 64
-   HEIGHT 20
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_fire
-   PIECE lava
-   X 1024
-   Y 140
    WIDTH 64
    HEIGHT 20
    NO_OVERWRITE
