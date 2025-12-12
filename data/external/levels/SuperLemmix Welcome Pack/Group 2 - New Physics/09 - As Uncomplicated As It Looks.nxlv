@@ -1,5 +1,5 @@
 # ----------------------------- 
-#        SuperLemmix Level        
+#        SuperLemmix Level      
 #   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
@@ -7,8 +7,9 @@
 # ----------------------------- 
  TITLE As Uncomplicated As It Looks
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x325EDC9A6FA78EFF
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 

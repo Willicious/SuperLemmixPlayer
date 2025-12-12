@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Carbonated Lemming Soda
  AUTHOR DMA Design / WillLem
+ MUSIC awesome_amiga
  ID xE7FFB383E7FFB384
- VERSION x000000000000000C
+ VERSION x000000000000000D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -48,6 +49,7 @@
    Y 36
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
  $END
  
  $GADGET

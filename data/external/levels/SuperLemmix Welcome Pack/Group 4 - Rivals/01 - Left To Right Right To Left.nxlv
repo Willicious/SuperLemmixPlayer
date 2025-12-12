@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Left To Right, Right To Left
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x5E31C01E39DD38DC
- VERSION x0000000000000003
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -93,6 +94,7 @@
    Y 14
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
    RIVAL 
  $END
  

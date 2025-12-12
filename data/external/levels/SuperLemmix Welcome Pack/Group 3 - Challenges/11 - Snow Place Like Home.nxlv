@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Snow Place Like Home
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x47C3367D62C4D956
- VERSION x000000000000002E
+ VERSION x0000000000000030
  
 #       Level dimensions        
 # ----------------------------- 
@@ -20,8 +21,8 @@
  
 #         Level stats           
 # ----------------------------- 
- LEMMINGS 50
- SAVE_REQUIREMENT 25
+ LEMMINGS 2
+ SAVE_REQUIREMENT 2
  TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 53
  COLLECTIBLES 9

@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Sleeping On The Job
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x75B245C846063EB5
- VERSION x000000000000003B
+ VERSION x000000000000003C
  
 #       Level dimensions        
 # ----------------------------- 

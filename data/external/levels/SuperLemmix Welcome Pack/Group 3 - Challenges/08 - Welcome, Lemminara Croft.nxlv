@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Welcome, Lemminara Croft!
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x6AA5E70110305EC3
- VERSION x0000000000000017
+ VERSION x0000000000000018
  
 #       Level dimensions        
 # ----------------------------- 

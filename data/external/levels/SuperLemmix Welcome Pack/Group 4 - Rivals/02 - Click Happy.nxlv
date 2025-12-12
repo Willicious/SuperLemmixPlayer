@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.5
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Click Happy
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x1C1A26CF2067AED9
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -53,9 +54,9 @@
    TITLE Gold Talisman
    ID 2
    COLOR Gold
+   SAVE_REQUIREMENT 20
    CLASSIC_MODE 0
    NO_PAUSE 0
-   SAVE_REQUIREMENT 20
  $END 
  
 #     Interactive objects       

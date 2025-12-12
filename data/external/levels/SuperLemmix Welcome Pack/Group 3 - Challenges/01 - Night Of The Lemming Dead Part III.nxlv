@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Night Of The Lemming Dead (Part III)
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x0DA4E2B370FC2267
- VERSION x0000000000000012
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -85,6 +86,7 @@
    Y 4
    NO_OVERWRITE
    FLIP_HORIZONTAL
+   FLIP_X_OFFSET 1
    ZOMBIE 
  $END
  

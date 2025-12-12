@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Running Jump (Floor Is Lava Edition)
  AUTHOR DMA Design/WillLem
+ MUSIC awesome_amiga
  ID x72DB01337101C73D
- VERSION x0000000000000032
+ VERSION x0000000000000033
  
 #       Level dimensions        
 # ----------------------------- 
@@ -264,7 +265,6 @@
      PIECE steel_04
      X 1078
      Y 107
-     ONE_WAY
    $END
    
    $TERRAIN
@@ -273,7 +273,6 @@
      X 1078
      Y 103
      ERASE
-     ONE_WAY
    $END
    
  $END
@@ -2566,13 +2565,6 @@
  $TERRAIN
    STYLE slx_fire
    PIECE steel_01
-   X 158
-   Y -42
- $END
- 
- $TERRAIN
-   STYLE slx_fire
-   PIECE steel_01
    X 174
    Y -17
  $END
@@ -2589,13 +2581,6 @@
    PIECE steel_01
    X 174
    Y 33
- $END
- 
- $TERRAIN
-   STYLE slx_fire
-   PIECE steel_01
-   X 158
-   Y -67
  $END
  
  $TERRAIN
@@ -3049,7 +3034,6 @@
    PIECE steel_01
    X 993
    Y 36
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3057,7 +3041,6 @@
    PIECE steel_01
    X 1009
    Y 52
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3065,7 +3048,6 @@
    PIECE steel_01
    X 1025
    Y 68
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3073,7 +3055,6 @@
    PIECE steel_04
    X 1043
    Y 85
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3081,7 +3062,6 @@
    PIECE steel_04
    X 1051
    Y 93
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3089,7 +3069,6 @@
    PIECE steel_04
    X 1059
    Y 101
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3097,7 +3076,6 @@
    PIECE steel_04
    X 1067
    Y 109
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3105,7 +3083,6 @@
    PIECE Group-296805094
    X 1078
    Y 117
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3113,7 +3090,6 @@
    PIECE Group-296805094
    X 1090
    Y 119
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3121,7 +3097,6 @@
    PIECE Group-296805094
    X 1101
    Y 121
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -3129,7 +3104,6 @@
    PIECE Group-296805094
    X 1107
    Y 122
-   ONE_WAY
  $END
  
  

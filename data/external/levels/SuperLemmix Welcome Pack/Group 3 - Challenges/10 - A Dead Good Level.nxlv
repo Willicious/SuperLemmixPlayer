@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.5
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE A Dead Good Level
  AUTHOR WillLem
+ MUSIC awesome_amiga
  ID x0665EED42E737307
- VERSION x0000000000000077
+ VERSION x0000000000000078
  
 #       Level dimensions        
 # ----------------------------- 

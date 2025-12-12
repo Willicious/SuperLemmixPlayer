@@ -1,6 +1,6 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Uppers & Downers
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000060
+ VERSION x0000000000000061
  
 #       Level dimensions        
 # ----------------------------- 
@@ -179,24 +179,6 @@
  $TERRAIN
    STYLE slx_marble
    PIECE pillar_02
-   X 323
-   Y -18
-   ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE pillar_02
-   X -16
-   Y -18
-   ROTATE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE pillar_02
    X -19
    Y 152
    ONE_WAY
@@ -247,14 +229,6 @@
    PIECE bar_06
    X 100
    Y 135
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE pillar_02
-   X 399
-   Y 144
    ONE_WAY
  $END
  
