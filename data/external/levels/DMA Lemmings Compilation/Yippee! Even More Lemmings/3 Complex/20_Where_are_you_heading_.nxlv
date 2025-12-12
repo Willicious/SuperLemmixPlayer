@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Where are you heading?
  AUTHOR SEGA Genesis Present Lemmings
+ MUSIC menace_amiga
  ID x8BA68CBB8BA68CBB
- VERSION x0000000000000001
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -19,7 +18,6 @@
  START_X 240
  START_Y 80
  THEME slx_crystal
- 
  
 #         Level stats           
 # ----------------------------- 
@@ -32,13 +30,13 @@
    BASHER 20
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -627,14 +625,6 @@
  
  $TERRAIN
    STYLE slx_crystal
-   PIECE bar_03
-   X -56
-   Y -29
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
    PIECE bar_02
    X 15
    Y -14
@@ -862,7 +852,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE SUPERLEMMING Retuns
  AUTHOR WillLem
+ MUSIC menace_amiga
  ID x2B9DDB942B9DDB94
- VERSION x0000000000000001
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -448,23 +449,6 @@
  $TERRAIN
    STYLE slx_brick
    PIECE arch_03
-   X 965
-   Y 168
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_brick
-   PIECE arch_03
-   X 965
-   Y 183
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_brick
-   PIECE arch_03
    X 1363
    Y 78
    ONE_WAY
@@ -695,24 +679,6 @@
    PIECE blocks_02
    X 995
    Y 144
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_brick
-   PIECE blocks_02
-   X 981
-   Y 175
-   NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_brick
-   PIECE blocks_02
-   X 965
-   Y 175
    NO_OVERWRITE
    ONE_WAY
  $END

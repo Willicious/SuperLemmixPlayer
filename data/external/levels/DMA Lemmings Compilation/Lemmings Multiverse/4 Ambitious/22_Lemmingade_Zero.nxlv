@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Lemmingade Zero
  AUTHOR DMA / WillLem
+ MUSIC menace_amiga
  ID x3B5AE9823B5AE981
- VERSION x0000000000000007
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -826,26 +827,6 @@
    PIECE pillar_01
    X -44
    Y 21
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -74
-   Y 93
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -73
-   Y 65
    ERASE
    FLIP_VERTICAL
    ONE_WAY

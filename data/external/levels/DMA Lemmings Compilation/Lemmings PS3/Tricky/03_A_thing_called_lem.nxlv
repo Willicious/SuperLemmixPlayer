@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE A thing called lem
  AUTHOR Sony / Minim
+ MUSIC menace_amiga
  ID x54DC9DDC54DC9DDC
- VERSION x0000000000000003
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -468,14 +467,6 @@
  $TERRAIN
    STYLE slx_fire
    PIECE bars_05
-   X -4
-   Y 63
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_fire
-   PIECE bars_05
    X 32
    Y 63
    ONE_WAY
@@ -485,14 +476,6 @@
    STYLE slx_fire
    PIECE bars_05
    X 32
-   Y 33
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_fire
-   PIECE bars_05
-   X -4
    Y 33
    ONE_WAY
  $END
@@ -514,7 +497,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

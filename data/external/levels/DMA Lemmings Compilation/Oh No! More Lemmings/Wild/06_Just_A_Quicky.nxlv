@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Just A Quicky
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xBAC61E43BAC61E43
- VERSION x0000000000000004
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -59,16 +58,6 @@
    X 114
    Y 86
    NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE spinning_arrow
-   X 130
-   Y 86
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
  $END
  
  
@@ -848,7 +837,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

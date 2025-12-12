@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 1.3
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Lemmings-preying iron plate
  AUTHOR SEGA Genesis Present Lemmings
+ MUSIC menace_amiga
  ID xEF47F07CEF47F07C
- VERSION x0000000000000001
+ VERSION x0000000000000005
  
 #       Level dimensions        
 # ----------------------------- 
@@ -19,7 +18,6 @@
  START_X 160
  START_Y 80
  THEME slx_pillar
- 
  
 #         Level stats           
 # ----------------------------- 
@@ -34,13 +32,13 @@
    DIGGER 5
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -1943,7 +1941,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

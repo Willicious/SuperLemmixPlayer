@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.7
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Floating Lemming Flurry
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xA0D9593DA0D9593D
- VERSION x0000000000000004
+ VERSION x0000000000000008
  
 #       Level dimensions        
 # ----------------------------- 
@@ -429,14 +428,6 @@
  $TERRAIN
    STYLE slx_snow
    PIECE snow_08
-   X -42
-   Y 131
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_snow
-   PIECE snow_08
    X 93
    Y 119
    ONE_WAY
@@ -560,7 +551,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

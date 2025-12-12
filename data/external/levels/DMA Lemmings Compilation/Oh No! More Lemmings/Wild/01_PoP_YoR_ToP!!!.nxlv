@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE PoP YoR ToP!!!
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID x9EEB5BA29EEB5BA2
- VERSION x0000000000000005
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -74,16 +73,6 @@
    X 56
    Y 0
    NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE spinning_arrow
-   X 168
-   Y 112
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
  $END
  
  $GADGET
@@ -1408,7 +1397,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

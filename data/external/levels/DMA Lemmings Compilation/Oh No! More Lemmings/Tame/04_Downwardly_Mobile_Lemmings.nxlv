@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Downwardly Mobile Lemmings
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xE29F8833E29F8833
- VERSION x0000000000000006
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -54,16 +53,6 @@
    X 152
    Y 115
    NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_bubble
-   PIECE spinning_arrow
-   X 168
-   Y 115
-   NO_OVERWRITE
-   SPEED 0
-   ANGLE 0
  $END
  
  $GADGET
@@ -551,7 +540,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

@@ -1,15 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Dangerous balcony
  AUTHOR SEGA Genesis Lemmings 
+ MUSIC menace_amiga
  ID x83B484B483B484B4
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -18,7 +18,6 @@
  START_X 256
  START_Y 80
  THEME slx_fire
-
  
 #         Level stats           
 # ----------------------------- 
@@ -33,13 +32,13 @@
    DIGGER 2
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -72,6 +71,7 @@
    X 32
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -81,6 +81,7 @@
    X 288
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -90,6 +91,7 @@
    X 352
    Y 140
    WIDTH 64
+   HEIGHT 20
    NO_OVERWRITE
  $END
  
@@ -1072,7 +1074,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

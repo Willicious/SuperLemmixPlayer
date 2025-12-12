@@ -1,17 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with NLEditor 1.1
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Jon's Mayhem Level
  AUTHOR ZX Spectrum Lemmings
- 
+ MUSIC menace_amiga
  ID xCE3041A8CE3041A8
- VERSION x0000000000000002
+ VERSION x0000000000000006
  
 #       Level dimensions        
 # ----------------------------- 
@@ -39,13 +37,13 @@
    DIGGER 5
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -399,24 +397,6 @@
    PIECE mesh_04
    X 638
    Y 124
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE mesh_04
-   X 648
-   Y 134
-   ERASE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_crystal
-   PIECE mesh_04
-   X 658
-   Y 144
    ERASE
    ONE_WAY
  $END
@@ -914,7 +894,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

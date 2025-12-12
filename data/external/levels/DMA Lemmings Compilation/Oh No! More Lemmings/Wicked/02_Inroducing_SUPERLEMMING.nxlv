@@ -1,17 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Inroducing SUPERLEMMING
  AUTHOR DMA Design
- MUSIC Acorn ONML/AcornONMLSuperLem
+ MUSIC menace_amiga
  ID xFF86647EFF86647E
- VERSION x0000000000000008
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1999,7 +1997,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

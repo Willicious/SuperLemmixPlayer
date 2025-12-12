@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Let's be careful out there
  AUTHOR DMA Design 
+ MUSIC beasti_amiga
  ID xFC495740FC495740
- VERSION x0000000000000008
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1622,7 +1621,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

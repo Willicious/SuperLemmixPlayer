@@ -1,14 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE The Steel Mines of Kessel
  AUTHOR DMA Design 
+ MUSIC menace_amiga
  ID x9E8753A49E8753A4
- VERSION x0000000000000007
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 

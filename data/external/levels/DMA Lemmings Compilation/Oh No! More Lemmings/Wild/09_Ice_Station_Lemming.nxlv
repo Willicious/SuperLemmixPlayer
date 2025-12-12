@@ -1,16 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Ice Station Lemming
  AUTHOR DMA Design
+ MUSIC menace_amiga
  ID xA3DFDDF6A3DFDDF6
- VERSION x0000000000000006
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -369,14 +368,6 @@
  
  $TERRAIN
    STYLE slx_snow
-   PIECE rocks_05
-   X -38
-   Y 1
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_snow
    PIECE rocks_06
    X 38
    Y 11
@@ -388,14 +379,6 @@
    PIECE rocks_06
    X 44
    Y 23
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_snow
-   PIECE rocks_06
-   X -62
-   Y -10
    ONE_WAY
  $END
  
@@ -448,7 +431,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED

@@ -1,15 +1,15 @@
 # ----------------------------- 
-#        SuperLemmix Level        
-#   Created with SLXEditor 2.8
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE Heaven Can Wait (We Hope!!!!)
  AUTHOR ZX Spectrum Lemmings
- 
+ MUSIC menace_amiga
  ID x9DCFDB279DCFDB27
- VERSION x0000000000000003
+ VERSION x0000000000000007
  
 #       Level dimensions        
 # ----------------------------- 

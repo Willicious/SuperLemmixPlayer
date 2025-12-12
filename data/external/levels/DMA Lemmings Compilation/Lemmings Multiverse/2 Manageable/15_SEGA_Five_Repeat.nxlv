@@ -1,15 +1,15 @@
-# Level file modified by SLX QuickMod
-
 # ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE SEGA Five
  AUTHOR SMS Lemmings 
+ MUSIC menace_amiga
  ID x0C0C7F2D0C0C7F2D
+ VERSION x0000000000000004
  
 #       Level dimensions        
 # ----------------------------- 
@@ -37,13 +37,13 @@
    DIGGER 10
  $END 
  
- $TALISMAN
+ $TALISMAN 
    TITLE Play in Classic Mode
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
- $END
-
+ $END 
+ 
 #     Interactive objects       
 # ----------------------------- 
  $GADGET
@@ -60,6 +60,7 @@
    X 72
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -68,6 +69,7 @@
    X 96
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -76,6 +78,7 @@
    X 256
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -84,6 +87,7 @@
    X 304
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -92,6 +96,7 @@
    X 352
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -100,6 +105,7 @@
    X 400
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -116,6 +122,7 @@
    X 496
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -124,6 +131,7 @@
    X 512
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -140,6 +148,7 @@
    X 592
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -148,6 +157,7 @@
    X 640
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -156,6 +166,7 @@
    X 688
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -164,6 +175,7 @@
    X 736
    Y 144
    WIDTH 48
+   HEIGHT 16
  $END
  
  $GADGET
@@ -172,14 +184,7 @@
    X 776
    Y 144
    WIDTH 48
- $END
- 
- $GADGET
-   STYLE orig_sega
-   PIECE exit_flames
-   X 456
-   Y 112
-   NO_OVERWRITE
+   HEIGHT 16
  $END
  
  $GADGET
@@ -195,21 +200,6 @@
    PIECE window
    X 480
    Y 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE orig_sega
-   PIECE exit_flames
-   X 16
-   Y 104
- $END
- 
- $GADGET
-   STYLE orig_sega
-   PIECE exit_flames
-   X 856
-   Y 96
    NO_OVERWRITE
  $END
  
@@ -2876,7 +2866,3 @@
  $END
  
  
-
-# SLX QuickMod modifications
-
-# EXIT POSITIONS UPDATED
