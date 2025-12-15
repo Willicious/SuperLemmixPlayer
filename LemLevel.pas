@@ -1063,6 +1063,31 @@ var
     O.CountdownLength := aSection.LineNumeric['countdown'];
   end;
 
+  procedure GetSkillAssignerData;
+  var
+    S: String;
+  begin
+    S := Lowercase(aSection.LineTrimString['skill']);
+
+    // NOTE: Timebomber and Freezer have dedicated Radiation and Slowfreeze objects
+
+    if S = 'walker' then O.Skill := Integer(spbWalker);
+    if S = 'jumper' then O.Skill := Integer(spbJumper);
+    if S = 'shimmier' then O.Skill := Integer(spbShimmier);
+    if S = 'ballooner' then O.Skill := Integer(spbBallooner);
+    if S = 'slider' then O.Skill := Integer(spbSlider);
+    if S = 'climber' then O.Skill := Integer(spbClimber);
+    if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
+    if S = 'floater' then O.Skill := Integer(spbFloater);
+    if S = 'glider' then O.Skill := Integer(spbGlider);
+    if S = 'disarmer' then O.Skill := Integer(spbDisarmer);
+    if S = 'blocker' then O.Skill := Integer(spbBlocker);
+    if S = 'spearer' then O.Skill := Integer(spbSpearer);
+    if S = 'grenader' then O.Skill := Integer(spbGrenader);
+    if S = 'laserer' then O.Skill := Integer(spbLaserer);
+    if S = 'cloner' then O.Skill := Integer(spbCloner);
+  end;
+
   procedure GetWindowData;
   var
     FlipXOffset: Integer;
@@ -1151,6 +1176,7 @@ begin
     DOM_DECORATION: GetMovingDecorationData;
     DOM_EXIT, DOM_LOCKEXIT: GetExitData;
     DOM_SLOWFREEZE, DOM_RADIATION: GetRadiationSlowfreezeData;
+    DOM_SKILLASSIGNER: GetSkillAssignerData;
   end;
 
   if MO.TriggerEffect in NO_FLIP_HORIZONTAL_TYPES then O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
@@ -1666,39 +1692,65 @@ var
     S: String;
   begin
     case TSkillPanelButton(O.Skill) of
-     spbWalker: s := 'WALKER';
-     spbJumper: s := 'JUMPER';
-     spbShimmier: s := 'SHIMMIER';
-     spbBallooner: s := 'BALLOONER';
-     spbSwimmer: s := 'SWIMMER';
-     spbSlider: s := 'SLIDER';
-     spbClimber: s := 'CLIMBER';
-     spbFloater: s := 'FLOATER';
-     spbGlider: s := 'GLIDER';
-     spbDisarmer: s := 'DISARMER';
-     spbTimebomber: s := 'TIMEBOMBER';
-     spbBomber: s := 'BOMBER';
-     spbFreezer: s := 'FREEZER';
-     spbBlocker: s := 'BLOCKER';
-     spbLadderer: s := 'LADDERER';
-     spbPlatformer: s := 'PLATFORMER';
-     spbBuilder: s := 'BUILDER';
-     spbStacker: s := 'STACKER';
-     spbSpearer: s := 'SPEARER';
-     spbGrenader: s := 'GRENADER';
-     //spbPropeller: s := 'PROPELLER';  // Propeller
-     spbLaserer: s := 'LASERER';
-     spbBasher: s := 'BASHER';
-     spbFencer: s := 'FENCER';     
-     spbMiner: s := 'MINER';
-     spbDigger: s := 'DIGGER';
-     //spbBatter: s := 'BATTER';  // Batter
-     spbCloner: s := 'CLONER';
+      spbWalker: s := 'WALKER';
+      spbJumper: s := 'JUMPER';
+      spbShimmier: s := 'SHIMMIER';
+      spbBallooner: s := 'BALLOONER';
+      spbSwimmer: s := 'SWIMMER';
+      spbSlider: s := 'SLIDER';
+      spbClimber: s := 'CLIMBER';
+      spbFloater: s := 'FLOATER';
+      spbGlider: s := 'GLIDER';
+      spbDisarmer: s := 'DISARMER';
+      spbTimebomber: s := 'TIMEBOMBER';
+      spbBomber: s := 'BOMBER';
+      spbFreezer: s := 'FREEZER';
+      spbBlocker: s := 'BLOCKER';
+      spbLadderer: s := 'LADDERER';
+      spbPlatformer: s := 'PLATFORMER';
+      spbBuilder: s := 'BUILDER';
+      spbStacker: s := 'STACKER';
+      spbSpearer: s := 'SPEARER';
+      spbGrenader: s := 'GRENADER';
+      //spbPropeller: s := 'PROPELLER';  // Propeller
+      spbLaserer: s := 'LASERER';
+      spbBasher: s := 'BASHER';
+      spbFencer: s := 'FENCER';
+      spbMiner: s := 'MINER';
+      spbDigger: s := 'DIGGER';
+      //spbBatter: s := 'BATTER';  // Batter
+      spbCloner: s := 'CLONER';
     end;
 
     Sec.AddLine('SKILL', S);
     if O.TarLev > 1 then
       Sec.AddLine('SKILL_COUNT', O.TarLev);
+  end;
+
+  procedure SetSkillAssignerData;
+  var
+    S: String;
+  begin
+    case TSkillPanelButton(O.Skill) of
+      // NOTE: Timebomber and Freezer have dedicated Radiation and Slowfreeze objects
+      spbWalker: s := 'WALKER';
+      spbJumper: s := 'JUMPER';
+      spbShimmier: s := 'SHIMMIER';
+      spbBallooner: s := 'BALLOONER';
+      spbSwimmer: s := 'SWIMMER';
+      spbSlider: s := 'SLIDER';
+      spbClimber: s := 'CLIMBER';
+      spbFloater: s := 'FLOATER';
+      spbGlider: s := 'GLIDER';
+      spbDisarmer: s := 'DISARMER';
+      spbBlocker: s := 'BLOCKER';
+      spbSpearer: s := 'SPEARER';
+      spbGrenader: s := 'GRENADER';
+      spbLaserer: s := 'LASERER';
+      spbCloner: s := 'CLONER';
+    end;
+
+    Sec.AddLine('SKILL', S);
   end;
 
   procedure SetWindowData;
@@ -1774,6 +1826,7 @@ begin
         DOM_PICKUP: SetPickupData;
         DOM_WINDOW: SetWindowData;
         DOM_DECORATION: SetMovingDecorationData;
+        DOM_SKILLASSIGNER: SetSkillAssignerData;
       end;
     end;
   end;

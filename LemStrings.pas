@@ -43,6 +43,7 @@ var
   SFX_Portal,
   // SFX_Propeller, // Propeller
   SFX_ReleaseRate,
+  SFX_SkillAssigner,
   SFX_SkillButton,
   SFX_SpearHit,
   SFX_SpearThrow,

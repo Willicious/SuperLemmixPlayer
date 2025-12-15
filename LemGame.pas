@@ -142,6 +142,7 @@ type
     CollectibleMap             : TArrayArrayBoolean;
     SplitterMap                : TArrayArrayBoolean;
     NormalizerMap              : TArrayArrayBoolean;
+    SkillAssignerMap           : TArrayArrayBoolean;
     NoSplatMap                 : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
     ForceLeftMap               : TArrayArrayBoolean;
@@ -295,6 +296,7 @@ type
       function HandleRadiation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleSlowfreeze(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleNormalizer(L: TLemming): Boolean;
+      function HandleSkillAssigner(L: TLemming; PosX, PosY: Integer): Boolean;
 
       procedure StartSwimming(L: TLemming);
       function HandleWaterFatality(L: TLemming): Boolean;
@@ -2246,6 +2248,8 @@ begin
   SetLength(SplitterMap, Level.Info.Width, Level.Info.Height);
   SetLength(NormalizerMap, 0, 0);
   SetLength(NormalizerMap, Level.Info.Width, Level.Info.Height);
+  SetLength(SkillAssignerMap, 0, 0);
+  SetLength(SkillAssignerMap, Level.Info.Width, Level.Info.Height);
   SetLength(NoSplatMap, 0, 0);
   SetLength(NoSplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplatMap, 0, 0);
@@ -2401,30 +2405,31 @@ begin
                       WriteTriggerMap(LockedExitMap, Gadgets[i].TriggerRect);
                       if ButtonsRemain = 0 then Gadgets[i].CurrentFrame := 0;
                     end;
-      DOM_WATER:      WriteTriggerMap(WaterMap, Gadgets[i].TriggerRect);
-      DOM_FIRE:       WriteTriggerMap(FireMap, Gadgets[i].TriggerRect);
-      DOM_TRAP:       WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
-      DOM_TRAPONCE:   WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
-      DOM_TELEPORT:   WriteTriggerMap(TeleporterMap, Gadgets[i].TriggerRect);
-      DOM_PORTAL:     WriteTriggerMap(PortalMap, Gadgets[i].TriggerRect);
-      DOM_UPDRAFT:    WriteTriggerMap(UpdraftMap, Gadgets[i].TriggerRect);
-      DOM_PICKUP:     WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
-      DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
-      DOM_COLLECTIBLE:WriteTriggerMap(CollectibleMap, Gadgets[i].TriggerRect);
-      DOM_SPLITTER:   WriteTriggerMap(SplitterMap, Gadgets[i].TriggerRect);
-      DOM_NOSPLAT:    WriteTriggerMap(NoSplatMap, Gadgets[i].TriggerRect);
-      DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
-      DOM_FORCELEFT:  WriteTriggerMap(ForceLeftMap, Gadgets[i].TriggerRect);
-      DOM_FORCERIGHT: WriteTriggerMap(ForceRightMap, Gadgets[i].TriggerRect);
-      DOM_ANIMATION:  WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
-      DOM_ANIMONCE:   WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
-      DOM_BLASTICINE: WriteTriggerMap(BlasticineMap, Gadgets[i].TriggerRect);
-      DOM_VINEWATER:  WriteTriggerMap(VinewaterMap, Gadgets[i].TriggerRect);
-      DOM_POISON:     WriteTriggerMap(PoisonMap, Gadgets[i].TriggerRect);
-      DOM_LAVA:       WriteTriggerMap(LavaMap, Gadgets[i].TriggerRect);
-      DOM_RADIATION:  WriteTriggerMap(RadiationMap, Gadgets[i].TriggerRect);
-      DOM_SLOWFREEZE: WriteTriggerMap(SlowfreezeMap, Gadgets[i].TriggerRect);
-      DOM_NORMALIZER: WriteTriggerMap(NormalizerMap, Gadgets[i].TriggerRect);
+      DOM_WATER:         WriteTriggerMap(WaterMap, Gadgets[i].TriggerRect);
+      DOM_FIRE:          WriteTriggerMap(FireMap, Gadgets[i].TriggerRect);
+      DOM_TRAP:          WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
+      DOM_TRAPONCE:      WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
+      DOM_TELEPORT:      WriteTriggerMap(TeleporterMap, Gadgets[i].TriggerRect);
+      DOM_PORTAL:        WriteTriggerMap(PortalMap, Gadgets[i].TriggerRect);
+      DOM_UPDRAFT:       WriteTriggerMap(UpdraftMap, Gadgets[i].TriggerRect);
+      DOM_PICKUP:        WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
+      DOM_BUTTON:        WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
+      DOM_COLLECTIBLE:   WriteTriggerMap(CollectibleMap, Gadgets[i].TriggerRect);
+      DOM_SPLITTER:      WriteTriggerMap(SplitterMap, Gadgets[i].TriggerRect);
+      DOM_NOSPLAT:       WriteTriggerMap(NoSplatMap, Gadgets[i].TriggerRect);
+      DOM_SPLAT:         WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
+      DOM_FORCELEFT:     WriteTriggerMap(ForceLeftMap, Gadgets[i].TriggerRect);
+      DOM_FORCERIGHT:    WriteTriggerMap(ForceRightMap, Gadgets[i].TriggerRect);
+      DOM_ANIMATION:     WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
+      DOM_ANIMONCE:      WriteTriggerMap(AnimMap, Gadgets[i].TriggerRect);
+      DOM_BLASTICINE:    WriteTriggerMap(BlasticineMap, Gadgets[i].TriggerRect);
+      DOM_VINEWATER:     WriteTriggerMap(VinewaterMap, Gadgets[i].TriggerRect);
+      DOM_POISON:        WriteTriggerMap(PoisonMap, Gadgets[i].TriggerRect);
+      DOM_LAVA:          WriteTriggerMap(LavaMap, Gadgets[i].TriggerRect);
+      DOM_RADIATION:     WriteTriggerMap(RadiationMap, Gadgets[i].TriggerRect);
+      DOM_SLOWFREEZE:    WriteTriggerMap(SlowfreezeMap, Gadgets[i].TriggerRect);
+      DOM_NORMALIZER:    WriteTriggerMap(NormalizerMap, Gadgets[i].TriggerRect);
+      DOM_SKILLASSIGNER: WriteTriggerMap(SkillAssignerMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -3348,6 +3353,10 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trNormalizer) then
       HandleNormalizer(L); // never aborts checks
 
+    // Skill Assigner
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSkillAssigner) then
+      HandleSkillAssigner(L, CheckPos[0, i], CheckPos[1, i]); // never aborts checks
+
     // Splitter (except for blockers / jumpers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSplitter)
                          and not (L.LemAction = baBlocking)
@@ -3377,6 +3386,10 @@ begin
     // Set L.LemInPortal correctly
     if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPortal) then
       L.LemInPortal := DOM_NOOBJECT;
+
+    // Set L.LemLastSkillAssigner value
+    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSkillAssigner) then
+      L.LemLastSkillAssigner := DOM_NOOBJECT;
 
   until (CheckPos[0, i] = L.LemX) and (CheckPos[1, i] = L.LemY);
 
@@ -3439,39 +3452,42 @@ begin
   fLastBlockerCheckLem := nil;
 
   case TriggerType of
-    trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
-                             or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
-    trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT) or ReadTriggerMap(X, Y, ForceLeftMap);
-    trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT) or ReadTriggerMap(X, Y, ForceRightMap);
-    trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
-    trAnim:       Result :=     ReadTriggerMap(X, Y, AnimMap);
-    trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
-    trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
-    trOWLeft:     Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYLEFT <> 0);
-    trOWRight:    Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYRIGHT <> 0);
-    trOWDown:     Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYDOWN <> 0);
-    trOWUp:       Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYUP <> 0);
-    trSteel:      Result :=     (PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0);
-    trBlocker:    Result :=     (ReadBlockerMap(X, Y) = DOM_BLOCKER)
-                            or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
-                            or  (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
-    trTeleport:   Result :=     ReadTriggerMap(X, Y, TeleporterMap);
-    trPortal:     Result :=     ReadTriggerMap(X, Y, PortalMap);
-    trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap);
-    trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
-    trCollectible:Result :=     ReadTriggerMap(X, Y, CollectibleMap);
-    trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
-    trSplitter:   Result :=     ReadTriggerMap(X, Y, SplitterMap);
-    trNoSplat:    Result :=     ReadTriggerMap(X, Y, NoSplatMap);
-    trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
-    trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
-    trBlasticine: Result :=     ReadTriggerMap(X, Y, BlasticineMap);
-    trVinewater:  Result :=     ReadTriggerMap(X, Y, VinewaterMap);
-    trPoison:     Result :=     ReadTriggerMap(X, Y, PoisonMap);
-    trLava:       Result :=     ReadTriggerMap(X, Y, LavaMap);
-    trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap);
-    trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);
-    trNormalizer: Result :=     ReadTriggerMap(X, Y, NormalizerMap);
+    trExit:         Result := ReadTriggerMap(X, Y, ExitMap)
+                           or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
+    trForceLeft:    Result := (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT)
+                           or ReadTriggerMap(X, Y, ForceLeftMap);
+    trForceRight:   Result := (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT)
+                           or ReadTriggerMap(X, Y, ForceRightMap);
+    trTrap:         Result := ReadTriggerMap(X, Y, TrapMap);
+    trAnim:         Result := ReadTriggerMap(X, Y, AnimMap);
+    trWater:        Result := ReadTriggerMap(X, Y, WaterMap);
+    trFire:         Result := ReadTriggerMap(X, Y, FireMap);
+    trOWLeft:       Result := (PhysicsMap.PixelS[X, Y] and PM_ONEWAYLEFT <> 0);
+    trOWRight:      Result := (PhysicsMap.PixelS[X, Y] and PM_ONEWAYRIGHT <> 0);
+    trOWDown:       Result := (PhysicsMap.PixelS[X, Y] and PM_ONEWAYDOWN <> 0);
+    trOWUp:         Result := (PhysicsMap.PixelS[X, Y] and PM_ONEWAYUP <> 0);
+    trSteel:        Result := (PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0);
+    trBlocker:      Result := (ReadBlockerMap(X, Y) = DOM_BLOCKER)
+                           or (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
+                           or (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
+    trTeleport:     Result := ReadTriggerMap(X, Y, TeleporterMap);
+    trPortal:       Result := ReadTriggerMap(X, Y, PortalMap);
+    trPickup:       Result := ReadTriggerMap(X, Y, PickupMap);
+    trButton:       Result := ReadTriggerMap(X, Y, ButtonMap);
+    trCollectible:  Result := ReadTriggerMap(X, Y, CollectibleMap);
+    trUpdraft:      Result := ReadTriggerMap(X, Y, UpdraftMap);
+    trSplitter:     Result := ReadTriggerMap(X, Y, SplitterMap);
+    trNoSplat:      Result := ReadTriggerMap(X, Y, NoSplatMap);
+    trSplat:        Result := ReadTriggerMap(X, Y, SplatMap);
+    trZombie:       Result := (ReadZombieMap(X, Y) and 1 <> 0);
+    trBlasticine:   Result := ReadTriggerMap(X, Y, BlasticineMap);
+    trVinewater:    Result := ReadTriggerMap(X, Y, VinewaterMap);
+    trPoison:       Result := ReadTriggerMap(X, Y, PoisonMap);
+    trLava:         Result := ReadTriggerMap(X, Y, LavaMap);
+    trRadiation:    Result := ReadTriggerMap(X, Y, RadiationMap);
+    trSlowfreeze:   Result := ReadTriggerMap(X, Y, SlowfreezeMap);
+    trNormalizer:   Result := ReadTriggerMap(X, Y, NormalizerMap);
+    trSkillAssigner:Result := ReadTriggerMap(X, Y, SkillAssignerMap);
   end;
 end;
 
@@ -3952,6 +3968,123 @@ begin
     CueSoundEffect(SFX_Normalize, L.Position);
     L.LemIsNeutral := False;
     {L.LemIsRival := False;}
+  end;
+end;
+
+function TLemmingGame.HandleSkillAssigner(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  Gadget: TGadget;
+  GadgetID: Word;
+  SkillAction: TBasicLemmingAction;
+  IsPermaskillAssigner, OnSolidTerrain: Boolean;
+
+  procedure ApplySkill(L: TLemming; aAction: TBasicLemmingAction; aPermaskill: TSkillPanelButton = spbNone);
+  begin
+    CueSoundEffect(SFX_SkillAssigner, L.Position);
+    L.LemLastSkillAssigner := GadgetID;
+
+    if aAction <> baNone then
+      Transition(L, aAction);
+
+    if aPermaskill <> spbNone then
+    begin
+      case aPermaskill of
+        spbSlider:   L.LemIsSlider   := True;
+        spbClimber:  L.LemIsClimber  := True;
+        spbSwimmer:  L.LemIsSwimmer  := True;
+        spbFloater:  L.LemIsFloater  := True;
+        spbGlider:   L.LemIsGlider   := True;
+        spbDisarmer: L.LemIsDisarmer := True;
+      end;
+    end;
+  end;
+begin
+  Result := False;
+
+  if not L.LemHasBeenOhnoer then
+  begin
+    GadgetID := FindGadgetID(PosX, PosY, trSkillAssigner);
+
+    // Exit if there is no Object
+    if GadgetID = 65535 then Exit;
+
+    // Prevent repeated assignment by the same object
+    if L.LemLastSkillAssigner = GadgetID then Exit;
+
+    Gadget := Gadgets[GadgetID];
+    SkillAction := baNone;
+    OnSolidTerrain := HasPixelAt(L.LemX, L.LemY);
+
+    IsPermaskillAssigner := (Gadget.SkillType in
+      [spbSlider, spbClimber, spbSwimmer, spbFloater, spbGlider, spbDisarmer]);
+
+    { Non-Permaskills }
+
+    if not IsPermaskillAssigner then
+    begin
+      if (Gadget.SkillType = spbWalker) then
+      begin
+        if L.LemAction = baWalking then
+          TurnAround(L)
+        else
+          Transition(L, baWalking);
+
+        ApplySkill(L, baNone);
+        Exit;
+      end;
+
+      if (Gadget.SkillType = spbBallooner) then
+      begin
+        ApplySkill(L, baBallooning);
+        Exit;
+      end;
+
+      if (Gadget.SkillType = spbCloner) then
+      begin
+        ApplySkill(L, baNone);
+        GenerateClonedLem(L);
+        Exit;
+      end;
+
+      if OnSolidTerrain then
+      begin
+        if (Gadget.SkillType = spbJumper) then SkillAction := baJumping;
+        if (Gadget.SkillType = spbShimmier) then SkillAction := baReaching;
+        if (Gadget.SkillType = spbBlocker) then SkillAction := baBlocking;
+        if (Gadget.SkillType = spbSpearer) then SkillAction := baSpearing;
+        if (Gadget.SkillType = spbGrenader) then SkillAction := baGrenading;
+        if (Gadget.SkillType = spbLaserer) then SkillAction := baLasering;
+      end else
+        Exit;
+
+      ApplySkill(L, SkillAction);
+      Exit;
+    end;
+
+    { Permaskills }
+
+    if (Gadget.SkillType = spbSwimmer) and (not L.LemIsSwimmer) then
+    begin
+      ApplySkill(L, baNone, spbSwimmer);
+
+      if L.LemAction = baDrowning then
+        Transition(L, baSwimming);
+    end;
+
+    if (Gadget.SkillType = spbSlider) and (not L.LemIsSlider) then
+      ApplySkill(L, baNone, spbSlider);
+
+    if (Gadget.SkillType = spbClimber) and (not L.LemIsClimber) then
+      ApplySkill(L, baNone, spbClimber);
+
+    if (Gadget.SkillType = spbFloater) and (not (L.LemIsFloater or L.LemIsGlider)) then
+      ApplySkill(L, baNone, spbFloater);
+
+    if (Gadget.SkillType = spbGlider) and (not (L.LemIsFloater or L.LemIsGlider)) then
+      ApplySkill(L, baNone, spbGlider);
+
+    if (Gadget.SkillType = spbDisarmer) and (not L.LemIsDisarmer) then
+      ApplySkill(L, baNone, spbDisarmer);
   end;
 end;
 
