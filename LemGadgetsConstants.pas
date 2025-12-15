@@ -35,12 +35,13 @@ const
   DOM_SLOWFREEZE       = 28; // Assigns freezer with a variable countdown
   DOM_NOSPLAT          = 29; // Makes any fall safe regardless of distance
   DOM_SPLAT            = 30; // Makes any fall deadly regardless of distance
-  DOM_NORMALIZER       = 31; // Normalizes neutrals and rivals
-  DOM_DECORATION       = 32; // Decoration-only graphics, can move at a set direction & speed if specified
-  DOM_ANIMATION        = 33; // Animated graphics
-  DOM_ANIMONCE         = 34; // Single-animated graphics
-  // DOM_STEEL         = 35; // Steel
-  // DOM_LEMMING       = 36; // Pre-placed lemming
+  DOM_NORMALIZER       = 31; // Normalizes neutrals
+  DOM_SKILLASSIGNER    = 32; // Assigns designated skill to lemming
+  DOM_DECORATION       = 33; // Decoration-only graphics, can move at a set direction & speed if specified
+  DOM_ANIMATION        = 34; // Animated graphics
+  DOM_ANIMONCE         = 35; // Single-animated graphics
+  // DOM_STEEL         = 36; // Steel
+  // DOM_LEMMING       = 37; // Pre-placed lemming
 
 implementation
 

@@ -2897,6 +2897,28 @@ begin
       begin
         fHelperImages[hpi_Normalizer].DrawTo(Dst, DrawX - 10 * ResMod, DrawY - 2);
       end;
+
+    DOM_SKILLASSIGNER:
+      begin
+        fHelperImages[hpi_SkillAssigner].DrawTo(Dst, DrawX - 9 * ResMod, DrawY - 1);
+        case Gadget.SkillType of
+          spbWalker: fHelperImages[hpi_Skill_Walker].DrawTo(Dst, DrawX, DrawY - 1);
+          spbJumper: fHelperImages[hpi_Skill_Jumper].DrawTo(Dst, DrawX, DrawY - 1);
+          spbShimmier: fHelperImages[hpi_Skill_Shimmier].DrawTo(Dst, DrawX, DrawY - 1);
+          spbBallooner: fHelperImages[hpi_Skill_Ballooner].DrawTo(Dst, DrawX, DrawY - 1);
+          spbSlider: fHelperImages[hpi_Skill_Slider].DrawTo(Dst, DrawX, DrawY - 1);
+          spbClimber: fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX, DrawY - 1);
+          spbSwimmer: fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX, DrawY - 1);
+          spbFloater: fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX, DrawY - 1);
+          spbGlider: fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX, DrawY - 1);
+          spbDisarmer: fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX, DrawY - 1);
+          spbBlocker: fHelperImages[hpi_Skill_Blocker].DrawTo(Dst, DrawX, DrawY - 1);
+          spbSpearer: fHelperImages[hpi_Skill_Spearer].DrawTo(Dst, DrawX, DrawY - 1);
+          spbGrenader: fHelperImages[hpi_Skill_Grenader].DrawTo(Dst, DrawX, DrawY - 1);
+          spbLaserer: fHelperImages[hpi_Skill_Laserer].DrawTo(Dst, DrawX, DrawY - 1);
+          spbCloner: fHelperImages[hpi_Skill_Cloner].DrawTo(Dst, DrawX, DrawY - 1);
+        end;
+      end;
   end;
 end;
 

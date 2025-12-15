@@ -135,6 +135,7 @@ type
     LemHoldingProjectileIndex     : Integer;
     LemConstructivePositionFreeze : Boolean;
     LemWalkerPositionAdjusted     : Boolean;
+    LemLastSkillAssigner          : Word;
 
     LemInitialFall                : Boolean; // Set during the lemming's initial fall at the start of a level for a glider / floater special case
 
@@ -268,6 +269,7 @@ begin
   LemInSplitter := -1;
   LemParticleTimer := -1;
   LemHoldingProjectileIndex := -1;
+  LemLastSkillAssigner := 65535;
 end;
 
 function TLemming.CheckForPermanentSkills: Boolean;
@@ -388,6 +390,7 @@ begin
   LemJumpPositions := Source.LemJumpPositions;
   LemPortalWarpFrame := Source.LemPortalWarpFrame;
   LemInPortal := Source.LemInPortal;
+  LemLastSkillAssigner := Source.LemLastSkillAssigner;
   // Does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
 end;
 

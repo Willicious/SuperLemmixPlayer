@@ -386,6 +386,7 @@ begin
   // SFX_Propeller := 'propeller'; // Propeller
   SFX_ReleaseRate := 'changerr';
   SFX_SuccessJingle := 'success';
+  SFX_SkillAssigner := 'skill_assigner';
   SFX_SkillButton := 'changeskill';
   SFX_SpearHit := 'spearhit';
   SFX_SpearThrow := 'spearthrow';
@@ -448,6 +449,7 @@ begin
   // Load(SFX_Propeller); // Propeller
   Load(SFX_ReleaseRate);
   Load(SFX_SuccessJingle);
+  Load(SFX_SkillAssigner);
   Load(SFX_SkillButton);
   Load(SFX_SpearHit);
   Load(SFX_SpearThrow);

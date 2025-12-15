@@ -301,6 +301,9 @@ begin
     if (Lowercase(Sec.LineTrimString['effect']) = 'normalizer')
     or (Lowercase(Sec.LineTrimString['effect']) = 'deneutralizer') then
       fTriggerEffect := DOM_NORMALIZER;
+    if (Lowercase(Sec.LineTrimString['effect']) = 'addskill')
+    or (Lowercase(Sec.LineTrimString['effect']) = 'skillassigner') then
+      fTriggerEffect := DOM_SKILLASSIGNER;
     if (Lowercase(Sec.LineTrimString['effect']) = 'decoration')
     or (Lowercase(Sec.LineTrimString['effect']) = 'paint') then
       fTriggerEffect := DOM_DECORATION;
