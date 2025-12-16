@@ -91,7 +91,7 @@ type
     function MinimapRect: TRect; virtual; abstract;
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
-    function ReplayMarkRect: TRect; virtual; abstract;
+    function ReplayIconRect: TRect; virtual; abstract;
     function RescueCountRect: TRect; virtual; abstract;
 
     function FirstSkillButtonIndex: Integer; virtual;
@@ -123,7 +123,7 @@ type
     procedure SetInfoLemAlive(Pos: Integer);
     procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
-    procedure SetReplayMark(Pos: Integer);
+    procedure SetReplayIcon(Pos: Integer);
     procedure SetCollectibleIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
     procedure SetExitIcon(Pos: Integer);
@@ -176,11 +176,11 @@ type
     function PanelWidth: Integer; virtual; abstract;
     function PanelHeight: Integer; virtual; abstract;
 
-    function CursorOverClickableItem: Boolean;
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
-    function CursorOverReplayMark: Boolean;
-    function CursorOverMinimap: Boolean;
+    function CursorOverClickableItem: Boolean;
     function CursorOverRescueCount: Boolean;
+    function CursorOverReplayIcon: Boolean;
+    function CursorOverMinimap: Boolean;
 
     property Image: TImage32 read fImage;
 
@@ -1595,7 +1595,7 @@ begin
   ModString(fNewDrawStr, S, PosSec);
 end;
 
-procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
+procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
 var
   TickCount: Cardinal;
   FrameIndex: Integer;
@@ -1667,7 +1667,7 @@ var
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
 
-  if PtInRect(ReplayMarkRect, MousePos(X, Y)) then
+  if CursorOverReplayIcon then
   begin
     // Stop playback if the "P" icon is clicked (replay must have finished or been cancelled, so this needs to be called first)
     if GameParams.PlaybackModeActive and (Game.CurrentIteration > Game.ReplayManager.LastActionFrame) then
@@ -1708,7 +1708,7 @@ begin
     spbSlower:
       begin
         Game.IsBackstepping := False; // Ensures RR sound will be cued
-        RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
+        RRIsPressed := True; // Prevents replay icon being drawn when using RR buttons
         DrawButtonSelector(spbSlower, True);
 
         // Deactivates min/max RR jumping in ClassicMode
@@ -1721,7 +1721,7 @@ begin
     spbFaster:
       begin
         Game.IsBackstepping := False; // Ensures RR sound will be cued
-        RRIsPressed := True; // Prevents replay marker being drawn when using RR buttons
+        RRIsPressed := True; // Prevents replay icon being drawn when using RR buttons
         DrawButtonSelector(spbFaster, True);
 
         // Deactivates min/max RR jumping in ClassicMode
@@ -1883,7 +1883,7 @@ begin
 
   if CursorOverMinimap then
                    ButtonHint := 'MINIMAP'
-  else if CursorOverReplayMark then
+  else if CursorOverReplayIcon then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
                    ButtonHint := 'CANCEL REPLAY'
@@ -1954,7 +1954,7 @@ begin
   Button := spbNone;
 end;
 
-function TBaseSkillPanel.CursorOverReplayMark: Boolean;
+function TBaseSkillPanel.CursorOverReplayIcon: Boolean;
 var
   CursorPos: TPoint;
   P: TPoint;
@@ -1963,7 +1963,7 @@ begin
   CursorPos := Mouse.CursorPos;
   P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
 
-  if PtInRect(ReplayMarkRect, P) then
+  if PtInRect(ReplayIconRect, P) then
   begin
     Result := True;
     Exit;
@@ -1991,7 +1991,7 @@ var
   aButton: TSkillPanelButton;
 begin
   Result := False or CursorOverSkillButton(aButton)
-                  or CursorOverReplayMark
+                  or CursorOverReplayIcon
                   or CursorOverMinimap;
 end;
 

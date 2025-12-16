@@ -574,7 +574,7 @@ begin
                  P + 'which it was originally inputted.' + sLineBreak +
                  sLineBreak +
                  P + 'Replay Insert Mode is indicated by changing the color' + sLineBreak +
-                 P + 'of the "R" replay marker in the skill panel from' + sLineBreak +
+                 P + 'of the "R" replay icon in the skill panel from' + sLineBreak +
                  P + 'red to blue.' + sLineBreak +
                  sLineBreak +
                  P + 'Press ESC or close the window when ready.';
