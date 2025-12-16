@@ -18,7 +18,7 @@ type
     function PanelHeight: Integer; override;
 
     function MinimapRect: TRect; override;
-    function ReplayMarkRect: TRect; override;
+    function ReplayIconRect: TRect; override;
     function RescueCountRect: TRect; override;
 
     procedure CreateNewInfoString; override;
@@ -70,14 +70,14 @@ function TSkillPanelStandard.DrawStringTemplate: string;
 begin
   if GameParams.AmigaTheme then
     Result := '..............' +       // 0 Cursor info
-              '.' + ' ' +              // 14 Replay mark
+              '.' + ' ' +              // 14 Replay icon
               '.' + ' ' +              // 16 Collectible icon
               'OUT' + ' ...' + ' ' +   // 18 Lemmings out       // 22 LemAlive
               'IN' + ' ...' + ' ' +    // 26 Lemmings in (home) // 29 LemIn
               'TIME' + ' .-..'         // 34 Time               // 39 Time limit
   else
     Result := '..............' +       // 0 Cursor info
-              '.' + ' ' +              // 14 Replay mark
+              '.' + ' ' +              // 14 Replay icon
               '.' + ' ' +              // 16 Collectible icon
               #93 + '_...' + ' ' +     // 18 Hatch icon        // 19 LemHatch
               #94 + '_...' + ' ' +     // 24 Lem icon          // 25 LemAlive
@@ -101,7 +101,7 @@ begin
 end;
 
 // Assigns a clickable rectangle to the replay "R" icon
-function TSkillPanelStandard.ReplayMarkRect: TRect;
+function TSkillPanelStandard.ReplayIconRect: TRect;
 begin
   Result := Rect(212, 4, 232, 32);
 end;
@@ -143,14 +143,14 @@ begin
   if GameParams.AmigaTheme then
   begin
     SetInfoCursor(1);
-    SetReplayMark(14);
+    SetReplayIcon(14);
     SetCollectibleIcon(16);
     SetInfoLemAlive(22);
     SetInfoLemIn(29);
     SetInfoTime(38, 41);
   end else begin
     SetInfoCursor(1);
-    SetReplayMark(14);
+    SetReplayIcon(14);
     SetCollectibleIcon(16);
     SetInfoLemHatch(20);
     SetInfoLemAlive(26);
