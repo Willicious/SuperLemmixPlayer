@@ -204,7 +204,8 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 50;
+  NUM_FONT_CHARS = 50; // <--- If increasing this
+  FINAL_CHAR = #102;   // <--- You also need to increase this
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -1255,11 +1256,11 @@ begin
     New := fNewDrawStr[CurChar];
 
     case New of
-      '%':         CharID := 0;
-      '0'..'9':    CharID := ord(New) - ord('0') + 1;
-      '-':         CharID := 11;
-      'A'..'Z':    CharID := ord(New) - ord('A') + 12;
-      #91 .. #102: CharID := ord(New) - ord('A') + 12;
+      '%':               CharID := 0;
+      '0'..'9':          CharID := ord(New) - ord('0') + 1;
+      '-':               CharID := 11;
+      'A'..'Z':          CharID := ord(New) - ord('A') + 12;
+      #91 .. FINAL_CHAR: CharID := ord(New) - ord('A') + 12;
     else CharID := -1;
     end;
 
@@ -1398,7 +1399,7 @@ begin
   fInfoFont[i].SetSize(280, 32);
   fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
 
-  fNewDrawStr[Pos] := #102;
+  fNewDrawStr[Pos] := FINAL_CHAR;
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
