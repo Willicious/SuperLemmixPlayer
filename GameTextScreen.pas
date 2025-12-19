@@ -50,7 +50,6 @@ begin
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
 
     NewOption := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionContinue, ToNextScreen);
-
     NewOption.ShortcutKeys.Add(VK_RETURN);
     NewOption.ShortcutKeys.Add(VK_SPACE);
 
