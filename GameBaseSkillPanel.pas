@@ -204,7 +204,7 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_FONT_CHARS = 53;
+  NUM_FONT_CHARS = 50;
 
 const
   // WARNING: The order of the strings has to correspond to the one
@@ -1259,7 +1259,7 @@ begin
       '0'..'9':    CharID := ord(New) - ord('0') + 1;
       '-':         CharID := 11;
       'A'..'Z':    CharID := ord(New) - ord('A') + 12;
-      #91 .. #105: CharID := ord(New) - ord('A') + 12;
+      #91 .. #102: CharID := ord(New) - ord('A') + 12;
     else CharID := -1;
     end;
 
@@ -1398,7 +1398,7 @@ begin
   fInfoFont[i].SetSize(280, 32);
   fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
 
-  fNewDrawStr[Pos] := #105;
+  fNewDrawStr[Pos] := #102;
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
@@ -1598,24 +1598,22 @@ end;
 procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
 var
   TickCount: Cardinal;
-  FrameIndex: Integer;
-  IsReplaying, IsClassicModeRewind: Boolean;
+  BlinkIcon, IsReplaying, IsClassicModeRewind: Boolean;
 begin
-  // Calculate the frame index based on the tick count
   TickCount := GetTickCount;
-  FrameIndex := (TickCount div 500) mod 2;
+  BlinkIcon := ((TickCount div 500) mod 2) = 0;
 
   IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
   IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
 
-  if Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
+  if BlinkIcon or Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     fNewDrawStr[Pos] := ' '
   else if GameParams.PlaybackModeActive and not IsReplaying then
-    fNewDrawStr[Pos] := Chr(103 + FrameIndex) // Purple "P" (#103 and #104)
+    fNewDrawStr[Pos] := #101 // Purple "R"
   else if Game.ReplayInsert and not IsClassicModeRewind then
-    fNewDrawStr[Pos] := Chr(101 + FrameIndex) // Blue "R" (#101 and #102)
+    fNewDrawStr[Pos] := #100 // Blue "R"
   else if not (RRIsPressed or IsClassicModeRewind) then
-    fNewDrawStr[Pos] := Chr(99 + FrameIndex); // Red "R" (#99 and #100)
+    fNewDrawStr[Pos] := #99  // Red "R"
 end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
