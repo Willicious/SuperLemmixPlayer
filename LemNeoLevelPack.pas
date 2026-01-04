@@ -577,11 +577,8 @@ begin
     for i := 0 to fUnlockedTalismanList.Count-1 do
       if fUnlockedTalismanList[i] = aIndex then Exit;
     fUnlockedTalismanList.Add(aIndex);
-  end else begin
-    for i := fUnlockedTalismanList.Count-1 downto 0 do
-      if fUnlockedTalismanList[i] = aIndex then
-        fUnlockedTalismanList.Delete(i);
-  end;
+  end else
+    fUnlockedTalismanList.Clear;
 end;
 
 function TNeoLevelEntry.GetTalismanStatus(aIndex: Cardinal): Boolean;
