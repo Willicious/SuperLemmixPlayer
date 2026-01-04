@@ -217,19 +217,18 @@ begin
   begin
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
-    GameParams.MainForm.ClientWidth := GameParams.LoadedWindowWidth;
-    GameParams.MainForm.ClientHeight := GameParams.LoadedWindowHeight;
     GameParams.MainForm.Left := GameParams.LoadedWindowLeft;
     GameParams.MainForm.Top := GameParams.LoadedWindowTop;
+    GameParams.MainForm.ClientWidth := GameParams.LoadedWindowWidth;
+    GameParams.MainForm.ClientHeight := GameParams.LoadedWindowHeight;
   end else begin
+    GameParams.MainForm.Left := 0;
+    GameParams.MainForm.Top := 0;
     GameParams.MainForm.BorderStyle := bsNone;
     GameParams.MainForm.WindowState := wsMaximized;
 
     GameParams.MainForm.ClientWidth := Screen.Width;
     GameParams.MainForm.ClientHeight := Screen.Height;
-
-    GameParams.MainForm.Left := 0;
-    GameParams.MainForm.Top := 0;
   end;
 end;
 
