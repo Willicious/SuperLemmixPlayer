@@ -751,12 +751,14 @@ begin
   end else begin
     if MessageDlg('Are you sure you want to clear records for the level "' + L.Title + '"?',
                   mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+    begin
       L.WipeRecords;
 
-    if fDisplayRecords <> rdNone then
-      fInfoForm.PrepareEmbedRecords(fDisplayRecords);
+      if fDisplayRecords <> rdNone then
+        fInfoForm.PrepareEmbedRecords(fDisplayRecords);
 
-    SetTalismanInfo;
+      SetTalismanInfo;
+    end;
   end;
 end;
 
