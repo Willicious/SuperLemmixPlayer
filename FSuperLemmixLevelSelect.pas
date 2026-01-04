@@ -949,11 +949,9 @@ end;
 procedure TFLevelSelect.SetOptionButtons;
 begin
   if GameParams.ShowLevelSelectOptions then
-  begin
-    ShowOptionButtons;
-  end else begin
+    ShowOptionButtons
+  else
     HideOptionButtons;
-  end;
 end;
 
 procedure TFLevelSelect.DisplayLevelInfo(RefreshLevel: Boolean = False);
