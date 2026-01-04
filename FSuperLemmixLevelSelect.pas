@@ -97,16 +97,20 @@ type
     fSearchingLevels: Boolean;
     fCurrentLevelVersion: Int64; // Used to check if we need to re-load the current level info
     fIsHandlingActivation: Boolean;
+    fTreeviewImagesLoaded: Boolean;
 
     procedure InitializeTreeview;
-    procedure SetInfo(FormOpening: Boolean = False);
+    procedure MakeTreeviewImages;
+    function GetImageIndexFromCompletionStatus(Status: TNeoLevelStatus): Integer;
     procedure LoadNodeLabels;
+
     procedure WriteToParams;
 
     function GetPackResultsString(G: TNeoLevelGroup): String;
     function IsCompilationPack(G: TNeoLevelGroup): Boolean;
 
     procedure DisplayLevelInfo(RefreshLevel: Boolean = False);
+    procedure SetInfo(FormOpening: Boolean = False);
     procedure SetTalismanInfo;
     procedure DrawTalismanButtons;
     procedure ClearTalismanButtons;
@@ -126,6 +130,7 @@ type
     procedure MaybeReloadLevelInfo;
 
     property SearchingLevels: Boolean read fSearchingLevels write fSearchingLevels;
+    property TreeviewImagesLoaded: Boolean read fTreeviewImagesLoaded write fTreeviewImagesLoaded;
  public
     property LoadAsPack: Boolean read fLoadAsPack;
     procedure LoadIcons;
@@ -224,19 +229,59 @@ const
 
 {$R *.dfm}
 
-procedure TFLevelSelect.InitializeTreeview;
+procedure TFLevelSelect.MakeTreeviewImages;
+var
+  BMP32, TempBMP: TBitmap32;
+  ImgBMP, MaskBMP: TBitmap;
 
+  procedure Load(aName: String; aName2: String = '');
+  begin
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, BMP32);
+    if aName2 <> '' then
+    begin
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName2, TempBMP);
+      TempBMP.DrawMode := dmBlend;
+      TempBMP.CombineMode := cmMerge;
+      TempBMP.DrawTo(BMP32);
+    end;
+    TPngInterface.SplitBmp32(BMP32, ImgBMP, MaskBMP);
+    tvLevelSelect.Images.Add(ImgBMP, MaskBMP);
+  end;
+begin
+  if TreeviewImagesLoaded then Exit;
+  tvLevelSelect.Images.Clear;
+
+  BMP32 := TBitmap32.Create;
+  TempBMP := TBitmap32.Create;
+  ImgBMP := TBitmap.Create;
+  MaskBMP := TBitmap.Create;
+  try
+    Load('level_not_attempted.png');
+    Load('level_attempted.png');
+    Load('level_completed_outdated.png');
+    Load('level_completed.png');
+
+    Load('level_talisman.png', 'level_not_attempted.png');
+    Load('level_talisman.png', 'level_attempted.png',);
+    Load('level_talisman.png', 'level_completed_outdated.png');
+    Load('level_talisman.png', 'level_completed.png');
+  finally
+    TempBMP.Free;
+    BMP32.Free;
+    ImgBMP.Free;
+    MaskBMP.Free;
+  end;
+
+  TreeviewImagesLoaded := True;
+end;
+
+procedure TFLevelSelect.InitializeTreeview;
   procedure AddLevel(aLevel: TNeoLevelEntry; ParentNode: TTreeNode);
   var
     N: TTreeNode;
   begin
     N := tvLevelSelect.Items.AddChildObject(ParentNode, '', aLevel);
-    case aLevel.Status of
-      lst_None: N.ImageIndex := 0;
-      lst_Attempted: N.ImageIndex := 1;
-      lst_Completed_Outdated: N.ImageIndex := 2;
-      lst_Completed: N.ImageIndex := 3;
-    end;
+    N.ImageIndex := GetImageIndexFromCompletionStatus(aLevel.Status);
     N.SelectedIndex := N.ImageIndex;
 
     if GameParams.CurrentLevel = aLevel then
@@ -259,59 +304,11 @@ procedure TFLevelSelect.InitializeTreeview;
 
     if GroupNode <> nil then
     begin
-      case aGroup.Status of
-        lst_None: GroupNode.ImageIndex := 0;
-        lst_Attempted: GroupNode.ImageIndex := 1;
-        lst_Completed_Outdated: GroupNode.ImageIndex := 2;
-        lst_Completed: GroupNode.ImageIndex := 3;
-      end;
+      GroupNode.ImageIndex := GetImageIndexFromCompletionStatus(aGroup.Status);
       GroupNode.SelectedIndex := GroupNode.ImageIndex;
     end;
   end;
-
-  procedure MakeImages;
-  var
-    BMP32, TempBMP: TBitmap32;
-    ImgBMP, MaskBMP: TBitmap;
-
-    procedure Load(aName: String; aName2: String = '');
-    begin
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, BMP32);
-      if aName2 <> '' then
-      begin
-        TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName2, TempBMP);
-        TempBMP.DrawMode := dmBlend;
-        TempBMP.CombineMode := cmMerge;
-        TempBMP.DrawTo(BMP32);
-      end;
-      TPngInterface.SplitBmp32(BMP32, ImgBMP, MaskBMP);
-      tvLevelSelect.Images.Add(ImgBMP, MaskBMP);
-    end;
-  begin
-    BMP32 := TBitmap32.Create;
-    TempBMP := TBitmap32.Create;
-    ImgBMP := TBitmap.Create;
-    MaskBMP := TBitmap.Create;
-    try
-      Load('level_not_attempted.png');
-      Load('level_attempted.png');
-      Load('level_completed_outdated.png');
-      Load('level_completed.png');
-
-      Load('level_talisman.png', 'level_not_attempted.png');
-      Load('level_talisman.png', 'level_attempted.png',);
-      Load('level_talisman.png', 'level_completed_outdated.png');
-      Load('level_talisman.png', 'level_completed.png');
-    finally
-      TempBMP.Free;
-      BMP32.Free;
-      ImgBMP.Free;
-      MaskBMP.Free;
-    end;
-  end;
 begin
-  MakeImages;
-
   tvLevelSelect.Items.BeginUpdate;
   try
     tvLevelSelect.Items.Clear;
@@ -319,6 +316,18 @@ begin
   finally
     tvLevelSelect.Items.EndUpdate;
     tvLevelSelect.Update;
+  end;
+end;
+
+function TFLevelSelect.GetImageIndexFromCompletionStatus(Status: TNeoLevelStatus): Integer;
+begin
+  case Status of
+    lst_None:                Result := 0;
+    lst_Attempted:           Result := 1;
+    lst_Completed_Outdated:  Result := 2;
+    lst_Completed:           Result := 3;
+  else
+    Result := 0;
   end;
 end;
 
@@ -435,7 +444,9 @@ begin
   btnOK.Enabled := False;
 
   SearchingLevels := False;
+  TreeviewImagesLoaded := False;
 
+  MakeTreeviewImages;
   InitializeTreeview;
   SetOptionButtons;
 end;
