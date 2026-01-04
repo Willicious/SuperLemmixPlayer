@@ -8,7 +8,7 @@
  TITLE Cookie Chuckers
  AUTHOR WillLem
  ID x2AEEE9597E5931AE
- VERSION x0000000000000015
+ VERSION x0000000000000016
  
 #       Level dimensions        
 # ----------------------------- 
@@ -34,7 +34,7 @@
    TITLE Gold Talisman
    ID 0
    COLOR Gold
-   SAVE_REQUIREMENT 50
+   SAVE_REQUIREMENT 30
  $END 
  
 #     Interactive objects       

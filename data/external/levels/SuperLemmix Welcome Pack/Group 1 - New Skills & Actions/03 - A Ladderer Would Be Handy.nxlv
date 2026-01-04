@@ -8,7 +8,7 @@
  TITLE A Ladderer Would Be Handy
  AUTHOR WillLem
  ID x4DC50F326231F6D9
- VERSION x0000000000000045
+ VERSION x0000000000000046
  
 #       Level dimensions        
 # ----------------------------- 
@@ -37,7 +37,7 @@
    TITLE Gold Talisman
    ID 0
    COLOR Gold
-   SAVE_REQUIREMENT 40
+   SAVE_REQUIREMENT 30
    WALKER_LIMIT 0
    BOMBER_LIMIT 0
    BLOCKER_LIMIT 0
