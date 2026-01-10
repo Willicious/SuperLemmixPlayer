@@ -94,7 +94,7 @@ begin
 
   DstFile := ParamStr(3);
   if DstFile = '' then
-    DstFile := ChangeFileExt(GameParams.CurrentLevel.Path, '.nxlv')
+    DstFile := ChangeFileExt(GameParams.CurrentLevel.Path, '.sxlv')
   else if Pos(':', DstFile) = 0 then
     DstFile := AppPath + DstFile;
 

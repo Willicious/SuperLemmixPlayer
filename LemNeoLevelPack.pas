@@ -863,7 +863,7 @@ begin
         CheckForWarnings;
 
         GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion +1;
-        GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+        GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.sxlv')); // Bookmark - ask user which format to output (nxlv or sxlv)?
         GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion -1; // Just in case
 
         CurrentGroupLabel.Caption := 'Cleansing level: ' + Levels.GetItem(i).Title;
@@ -1535,6 +1535,17 @@ begin
     FindClose(SearchRec);
   end;
 
+  // Load .sxlv files first
+  if FindFirst(Path + '*.sxlv', 0, SearchRec) = 0 then
+  begin
+    repeat
+      L := fLevels.Add;
+      L.Filename := SearchRec.Name;
+    until FindNext(SearchRec) <> 0;
+    FindClose(SearchRec);
+  end;
+
+  // Then load .nxlv files
   if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
   begin
     repeat

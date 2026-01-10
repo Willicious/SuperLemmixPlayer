@@ -539,10 +539,18 @@ begin
   SaveDlg := TSaveDialog.Create(Self);
   try
     SaveDlg.Title := 'Select file to save to';
-    SaveDlg.Filter := 'NXLV Level Files|*.nxlv';
+    SaveDlg.Filter :=
+      'Level Files (*.sxlv;*.nxlv)|*.sxlv;*.nxlv|' +
+      'SXLV Level Files (*.sxlv)|*.sxlv|' +
+      'NXLV Level Files (*.nxlv)|*.nxlv';
+
     SaveDlg.InitialDir := AppPath + SFLevels;
-    SaveDlg.FileName := MakeSafeForFilename(GameParams.Level.Info.Title) + '.nxlv';
+
+    // Default to .sxlv
+    SaveDlg.FileName := MakeSafeForFilename(GameParams.Level.Info.Title) + '.sxlv';
+
     SaveDlg.Options := [ofOverwritePrompt];
+
     if SaveDlg.Execute then
     begin
       GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion + 1;

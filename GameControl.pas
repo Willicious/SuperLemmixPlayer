@@ -791,13 +791,39 @@ end;
 
 function TDosGameParams.FindLevelFileByID(LevelID: string): string;
 var
-  LevelFiles: TStringDynArray;
-  RootDir, LevelsDir, RelativePath, FolderNames: string;
+  RootDir, LevelsDir: string;
   MatchingFiles: TStringList;
+  LevelDialog: TFLevelListDialog;
   i, ListWidth, StringWidth: Integer;
   AdjustDialogWidth: Boolean;
-  FileContent: TStringList;
-  LevelDialog: TFLevelListDialog;
+
+  procedure FindMatchingFiles(const FileMask: string);
+  var
+    LevelFiles: TStringDynArray;
+    FileContent: TStringList;
+    i: Integer;
+  begin
+    LevelFiles := TDirectory.GetFiles(
+      LevelsDir, FileMask, TSearchOption.soAllDirectories
+    );
+
+    for i := 0 to Length(LevelFiles) - 1 do
+    begin
+      FileContent := TStringList.Create;
+      try
+        FileContent.LoadFromFile(LevelFiles[i]);
+
+        if Pos('ID ' + LevelID, FileContent.Text) > 0 then
+          MatchingFiles.Add(LevelFiles[i]);
+      finally
+        FileContent.Free;
+      end;
+    end;
+  end;
+
+var
+  RelativePath, FolderNames, DisplayString: string;
+
 begin
   Result := '';
 
@@ -805,92 +831,74 @@ begin
   RootDir := ExtractFilePath(ParamStr(0));
   LevelsDir := TPath.Combine(RootDir, SFLevels);
 
-  // Search for .nxlv files in the levels folder, or cancel if it doesn't exist
-  if TDirectory.Exists(LevelsDir) then
-    LevelFiles := TDirectory.GetFiles(LevelsDir, '*.nxlv', TSearchOption.soAllDirectories)
-  else
+  if not TDirectory.Exists(LevelsDir) then
   begin
     ShowMessage('Levels folder not found.');
     Exit;
   end;
 
-  if Length(LevelFiles) > 0 then
-  begin
-    MatchingFiles := TStringList.Create;
+  MatchingFiles := TStringList.Create;
+  try
+    // Search both formats, list .sxlv first for priority
+    FindMatchingFiles('*.sxlv');
+    FindMatchingFiles('*.nxlv');
 
-    try
-      // Check each .nxlv file for matching LevelID
-      for i := 0 to Length(LevelFiles) - 1 do
-      begin
-        FileContent := TStringList.Create;
-        try
-          FileContent.LoadFromFile(LevelFiles[i]);
-
-          if Pos('ID ' + LevelID, FileContent.Text) > 0 then
-            MatchingFiles.Add(LevelFiles[i]);
-        finally
-          FileContent.Free;
-        end;
-      end;
-
-      if MatchingFiles.Count = 0 then
-      begin
-        ShowMessage('No .nxlv files found with Level ID: ' + LevelID);
-        Exit;
-      // If only one matching file is found, load it directly
-      end else if MatchingFiles.Count = 1 then
-        Result := MatchingFiles[0]
-      else begin
-        // If multiple matching files are found, show level select dialog
-        LevelDialog := TFLevelListDialog.Create(nil);
-        try
-          ListWidth := LevelDialog.MatchingLevelsList.Width;
-          AdjustDialogWidth := False;
-
-          for i := 0 to MatchingFiles.Count - 1 do
-          begin
-            // Extract the relative path starting after the 'levels' directory
-            RelativePath := StringReplace(MatchingFiles[i], LevelsDir, '', [rfIgnoreCase]);
-
-            // Extract the folder names and replace characters
-            FolderNames := ExtractFileDir(RelativePath);
-            FolderNames := StringReplace(FolderNames, '\', ' / ', [rfReplaceAll]);
-            FolderNames := StringReplace(FolderNames, '_', ' ', [rfReplaceAll]);
-
-            // Construct the display string and add it to the matching levels list
-            var DisplayString := ExtractFileName(MatchingFiles[i]) + ' (' + FolderNames + ')';
-            LevelDialog.MatchingLevelsList.Items.Add(DisplayString);
-
-            // Measure the width of the string so the dialog can fully accomodate it
-            StringWidth := LevelDialog.Canvas.TextWidth(DisplayString);
-
-            if StringWidth > ListWidth then
-            begin
-              ListWidth := StringWidth;
-              AdjustDialogWidth := True;
-            end;
-          end;
-
-          // If necessary, adjust the width of the dialog (include padding)
-          if AdjustDialogWidth then
-          begin
-            LevelDialog.ClientWidth := ListWidth + 40;
-            LevelDialog.MatchingLevelsList.Width := ListWidth + 20;
-          end;
-
-          if LevelDialog.ShowModal = mrOk then
-            Result := MatchingFiles[LevelDialog.MatchingLevelsList.ItemIndex]
-          else
-            Exit;
-        finally
-          LevelDialog.Free;
-        end;
-      end;
-    finally
-      MatchingFiles.Free;
+    if MatchingFiles.Count = 0 then
+    begin
+      ShowMessage('No level files found with Level ID: ' + LevelID);
+      Exit;
     end;
-  end else
-    ShowMessage('No .nxlv files found in directory: ' + LevelsDir);
+
+    // If a single match is found, return immediately
+    if MatchingFiles.Count = 1 then
+    begin
+      Result := MatchingFiles[0];
+      Exit;
+    end;
+
+    // If multiple matches are found, show selection dialog
+    LevelDialog := TFLevelListDialog.Create(nil);
+    try
+      ListWidth := LevelDialog.MatchingLevelsList.Width;
+      AdjustDialogWidth := False;
+
+      for i := 0 to MatchingFiles.Count - 1 do
+      begin
+        RelativePath :=
+          StringReplace(MatchingFiles[i], LevelsDir, '', [rfIgnoreCase]);
+
+        FolderNames := ExtractFileDir(RelativePath);
+        FolderNames := StringReplace(FolderNames, '\', ' / ', [rfReplaceAll]);
+        FolderNames := StringReplace(FolderNames, '_', ' ', [rfReplaceAll]);
+
+        DisplayString :=
+          ExtractFileName(MatchingFiles[i]) + ' (' + FolderNames + ')';
+
+        LevelDialog.MatchingLevelsList.Items.Add(DisplayString);
+
+        StringWidth := LevelDialog.Canvas.TextWidth(DisplayString);
+        if StringWidth > ListWidth then
+        begin
+          ListWidth := StringWidth;
+          AdjustDialogWidth := True;
+        end;
+      end;
+
+      if AdjustDialogWidth then
+      begin
+        LevelDialog.ClientWidth := ListWidth + 40;
+        LevelDialog.MatchingLevelsList.Width := ListWidth + 20;
+      end;
+
+      if LevelDialog.ShowModal = mrOk then
+        Result := MatchingFiles[LevelDialog.MatchingLevelsList.ItemIndex];
+    finally
+      LevelDialog.Free;
+    end;
+
+  finally
+    MatchingFiles.Free;
+  end;
 end;
 
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = False);
