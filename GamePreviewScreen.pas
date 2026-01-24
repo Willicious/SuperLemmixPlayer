@@ -250,12 +250,12 @@ begin
     LevelPreviewImage.DrawMode := dmBlend;
     LevelPreviewImage.CombineMode := cmMerge;
 
-    LevelScale := INTERNAL_SCREEN_WIDTH / lw;
+    LevelScale := InternalScreenWidth / lw;
 
     if LevelScale > 160 / lh then LevelScale := 160 / lh;
     DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
 
-    OffsetRect(DstRect, (INTERNAL_SCREEN_WIDTH div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
+    OffsetRect(DstRect, (InternalScreenWidth div 2) - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
     LevelPreviewImage.DrawTo(ScreenImg.Bitmap, DstRect, LevelPreviewImage.BoundsRect);
   finally
@@ -270,7 +270,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
+  R := MakeClickableText(Point(FooterThreeOptionsLeftX, FooterOptionsTwoRowsLowY), SOptionLoadReplay, TryLoadReplay);
 
   R.AddKeysFromFunction(lka_LoadReplay);
 end;
@@ -282,7 +282,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+  R := MakeClickableText(Point(FooterThreeOptionsMidX, FooterOptionsTwoRowsLowY), SOptionLevelSelect, DoLevelSelect);
 
   R.ShortcutKeys.Add(VK_F3);
 end;
@@ -296,10 +296,10 @@ begin
   if GameParams.PlaybackModeActive then
   begin
     S := 'Cancel Playback Mode';
-    P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    P := Point(FooterThreeOptionsMidX, FooterOptionsTwoRowsLowY)
   end else begin
     S := SOptionToMenu;
-    P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    P := Point(FooterThreeOptionsRightX, FooterOptionsTwoRowsLowY)
   end;
 
   R := MakeClickableText(Point(P), S, ExitToMenu);

@@ -466,16 +466,16 @@ begin
 
       TLinearResampler.Create(ScreenImg.Bitmap);
 
-      with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
+      with MakeClickableText(Point(FooterOneOptionX, FooterOptionsOneRowY), SOptionToMenu, ExitToMenu) do
       begin
         ShortcutKeys.Add(VK_RETURN);
         ShortcutKeys.Add(VK_SPACE);
       end;
-      with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Up', ScrollUp) do
+      with MakeClickableText(Point(FooterThreeOptionsRightX, FooterOptionsOneRowY), 'Scroll Up', ScrollUp) do
       begin
         ShortcutKeys.Add(VK_UP);
       end;
-      with MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), 'Scroll Down', ScrollDown) do
+      with MakeClickableText(Point(FooterThreeOptionsLeftX, FooterOptionsOneRowY), 'Scroll Down', ScrollDown) do
       begin
         ShortcutKeys.Add(VK_DOWN);
       end;

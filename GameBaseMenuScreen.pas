@@ -25,24 +25,24 @@ uses
 
 var
   // Stores the size of the available window space
-  INTERNAL_SCREEN_WIDTH          : Integer;
-  INTERNAL_SCREEN_HEIGHT         : Integer;
+  InternalScreenWidth      : Integer;
+  InternalScreenHeight     : Integer;
 
-  FOOTER_OPTIONS_ONE_ROW_Y       : Integer;
+  FooterOptionsOneRowY     : Integer;
 
-  FOOTER_OPTIONS_TWO_ROWS_HIGH_Y : Integer;
-  FOOTER_OPTIONS_TWO_ROWS_LOW_Y  : Integer;
+  FooterOptionsTwoRowsHighY: Integer;
+  FooterOptionsTwoRowsLowY : Integer;
 
-  FOOTER_ONE_OPTION_X            : Integer;
+  FooterOneOptionX         : Integer;
 
-  FOOTER_TWO_OPTIONS_X_LEFT      : Integer;
-  FOOTER_TWO_OPTIONS_X_RIGHT     : Integer;
+  FooterTwoOptionsLeftX    : Integer;
+  FooterTwoOptionsRightX   : Integer;
 
-  FOOTER_THREE_OPTIONS_X_LEFT    : Integer;
-  FOOTER_THREE_OPTIONS_X_MID     : Integer;
-  FOOTER_THREE_OPTIONS_X_RIGHT   : Integer;
+  FooterThreeOptionsLeftX  : Integer;
+  FooterThreeOptionsMidX   : Integer;
+  FooterThreeOptionsRightX : Integer;
 
-  TALISMAN_PADDING               : Integer;
+  TalismanPadding          : Integer;
 
 type
   TRegionState = (rsNormal, rsHover, rsClick);
@@ -281,36 +281,36 @@ begin
                      and not GameParams.FullScreen;
 
   if UseLargerWidth then
-    INTERNAL_SCREEN_WIDTH := 1092
+    InternalScreenWidth := 1092
   else if UseMediumWidth then
-    INTERNAL_SCREEN_WIDTH := 990
+    InternalScreenWidth := 990
   else
-    INTERNAL_SCREEN_WIDTH := 888;
+    InternalScreenWidth := 888;
 
-  INTERNAL_SCREEN_HEIGHT := 492;
+  InternalScreenHeight := 492;
 
-  FOOTER_OPTIONS_ONE_ROW_Y := 460;
+  FooterOptionsOneRowY := 460;
 
-  FOOTER_OPTIONS_TWO_ROWS_HIGH_Y := 440;
-  FOOTER_OPTIONS_TWO_ROWS_LOW_Y := 460;
+  FooterOptionsTwoRowsHighY := 440;
+  FooterOptionsTwoRowsLowY := 460;
 
-  FOOTER_ONE_OPTION_X := INTERNAL_SCREEN_WIDTH div 2;
+  FooterOneOptionX := InternalScreenWidth div 2;
 
-  FOOTER_TWO_OPTIONS_X_LEFT := INTERNAL_SCREEN_WIDTH * 5 div 16;
-  FOOTER_TWO_OPTIONS_X_RIGHT := INTERNAL_SCREEN_WIDTH * 11 div 16;
+  FooterTwoOptionsLeftX := InternalScreenWidth * 5 div 16;
+  FooterTwoOptionsRightX := InternalScreenWidth * 11 div 16;
 
-  FOOTER_THREE_OPTIONS_X_LEFT := INTERNAL_SCREEN_WIDTH * 3 div 16;
-  FOOTER_THREE_OPTIONS_X_MID := INTERNAL_SCREEN_WIDTH div 2;
-  FOOTER_THREE_OPTIONS_X_RIGHT := INTERNAL_SCREEN_WIDTH * 13 div 16;
+  FooterThreeOptionsLeftX := InternalScreenWidth * 3 div 16;
+  FooterThreeOptionsMidX := InternalScreenWidth div 2;
+  FooterThreeOptionsRightX := InternalScreenWidth * 13 div 16;
 
-  TALISMAN_PADDING := 8;
+  TalismanPadding := 8;
 end;
 
 procedure TGameBaseMenuScreen.InitializeImage;
 begin
   with ScreenImg do
   begin
-    Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+    Bitmap.SetSize(InternalScreenWidth, InternalScreenHeight);
 
     DrawWallpaper;
 
@@ -557,7 +557,7 @@ var
       NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
 
     fTalRects.Add(NewRegion.ClickArea);
-    TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
+    TalPoint.X := TalPoint.X + Temp.Width + TalismanPadding;
   end;
 const
   TALISMANS_Y_POSITION = 408;
@@ -602,7 +602,7 @@ begin
     TalCount := GameParams.Level.Talismans.Count;
     if HasCollectibles then TalCount := TalCount + 1;
 
-    TotalTalWidth := (TalCount * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
+    TotalTalWidth := (TalCount * (Temp.Width + TalismanPadding)) - TalismanPadding;
     TalPoint := Point((ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2,
                        TALISMANS_Y_POSITION - YOffset);
 

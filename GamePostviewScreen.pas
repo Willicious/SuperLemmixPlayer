@@ -115,7 +115,7 @@ begin
   if GameParams.PlaybackModeActive or (GameParams.TestModeLevel = nil) then
     Exit;
 
-  R := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y - 40), 'Show Skills Used', ShowSkillsUsed, True);
+  R := MakeClickableText(Point(FooterOneOptionX, FooterOptionsTwoRowsHighY - 40), 'Show Skills Used', ShowSkillsUsed, True);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
@@ -130,10 +130,10 @@ begin
   if GameParams.PlaybackModeActive then
   begin
     S := 'Cancel Playback Mode';
-    P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+    P := Point(FooterTwoOptionsLeftX, FooterOptionsTwoRowsHighY);
   end else begin
     S := SOptionToMenu;
-    P := Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y)
+    P := Point(FooterThreeOptionsRightX, FooterOptionsTwoRowsLowY)
   end;
 
   R := MakeClickableText(Point(P), S, ExitToMenu);
@@ -147,7 +147,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
+  R := MakeClickableText(Point(FooterTwoOptionsRightX, FooterOptionsTwoRowsHighY), SOptionNextLevel, NextLevel);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
@@ -160,7 +160,7 @@ var
 begin
   S := 'Playback Next Level';
 
-  R := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), S, NextLevel);
+  R := MakeClickableText(Point(FooterTwoOptionsRightX, FooterOptionsTwoRowsHighY), S, NextLevel);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
@@ -175,9 +175,9 @@ begin
     Exit;
 
   if LevelPassed then
-    P := Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y)
+    P := Point(FooterTwoOptionsLeftX, FooterOptionsTwoRowsHighY)
   else
-    P := Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y);
+    P := Point(FooterOneOptionX, FooterOptionsTwoRowsHighY);
 
   R := MakeClickableText(Point(P), SOptionRetryLevel, ReplaySameLevel);
 
@@ -200,9 +200,9 @@ begin
     if not GlobalGame.ReplayManager.ActionAddedDuringPlayback then
       Exit;
 
-    P := Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+    P := Point(FooterThreeOptionsMidX, FooterOptionsTwoRowsLowY);
   end else
-    P := Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y);
+    P := Point(FooterThreeOptionsLeftX, FooterOptionsTwoRowsLowY);
 
   R := MakeClickableText(P, SOptionSaveReplay, SaveReplay);
   R.AddKeysFromFunction(lka_SaveReplay);
@@ -215,7 +215,7 @@ begin
   if GameParams.PlaybackModeActive then
     Exit;
 
-  R := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+  R := MakeClickableText(Point(FooterThreeOptionsMidX, FooterOptionsTwoRowsLowY), SOptionLevelSelect, DoLevelSelect);
 
   R.ShortcutKeys.Add(VK_F3);
 end;
