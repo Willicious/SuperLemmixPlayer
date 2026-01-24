@@ -391,7 +391,7 @@ begin
   SFX_SpearHit := 'spearhit';
   SFX_SpearThrow := 'spearthrow';
   SFX_Splat := 'splat';
-  SFX_Steel_OWW := 'clink';
+  SFX_Steel_OWW := 'dink';
   SFX_Swim := 'splash';
   SFX_TimeUp := 'timeup';
   SFX_Vinetrap := 'vinetrap';
