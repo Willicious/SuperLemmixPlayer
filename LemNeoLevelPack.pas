@@ -863,7 +863,7 @@ begin
         CheckForWarnings;
 
         GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion +1;
-        GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.sxlv')); // Bookmark - ask user which format to output (nxlv or sxlv)?
+        GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.sxlv'));
         GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion -1; // Just in case
 
         CurrentGroupLabel.Caption := 'Cleansing level: ' + Levels.GetItem(i).Title;

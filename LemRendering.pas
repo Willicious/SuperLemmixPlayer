@@ -183,7 +183,6 @@ type
     procedure DrawExploderShadow(L: TLemming);
     procedure DrawFreezerShadow(L: TLemming);
     procedure DrawProjectileShadow(L: TLemming);
-    procedure DrawProjectionShadow(L: TLemming); // Bookmark - need to remove associated code
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -1016,82 +1015,27 @@ procedure TRenderer.DrawShadows(L: TLemming; SkillButton: TSkillPanelButton;
   SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
 var
   CopyL: TLemming;
-
-  DoProjection: Boolean;
-const
-                                                               // Propeller    // Batter
-  PROJECTION_STATES = [baWalking, baAscending, baLaddering, // baPropelling, Batting is not included
-                       baDigging, baClimbing, baHoisting, baBuilding, baBashing,
-                       baMining, baFalling, baFloating, baShrugging, baPlatforming,
-                       baStacking, baSwimming, baGliding, baFixing, baFencing,
-                       baReaching, baShimmying, baTurning, baJumping, baBallooning,
-                       baDehoisting, baSliding, baDangling, baLasering, baLooking];
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
   CopyL.Assign(L);
 
-  if (fRenderInterface.ProjectionType <> 0) and
-     ((L.LemAction in PROJECTION_STATES) or
-        ((L.LemAction = baDrowning) and (fRenderInterface.ProjectionType = 2) and
-          (SelectedSkill = spbSwimmer))) then
-  begin
-    DoProjection := True;
-
-    if IsCloneShadow and (fRenderInterface.ProjectionType = 1) then
-      DoProjection := False;
-
-    if (fRenderInterface.ProjectionType = 2) then
-    begin
-      case SelectedSkill of
-        spbWalker: if CopyL.LemAction = baWalking then
-                     CopyL.LemDX := -CopyL.LemDX
-                   else
-                     fRenderInterface.SimulateTransitionLem(CopyL, baToWalking);
-        spbShimmier: fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
-        spbSlider: CopyL.LemIsSlider := True;
-        spbClimber: CopyL.LemIsClimber := True;
-        spbSwimmer: CopyL.LemIsSwimmer := True;
-        spbFloater: CopyL.LemIsFloater := True;
-        spbGlider: CopyL.LemIsGlider := True;
-        spbDisarmer: CopyL.LemIsDisarmer := True;
-        spbBomber: DoProjection := False;
-        spbFreezer: DoProjection := False;
-        spbBlocker: DoProjection := False;
-        spbCloner: CopyL.LemDX := -CopyL.LemDX;
-        spbNone: ; // Do nothing
-        else fRenderInterface.SimulateTransitionLem(CopyL, SkillPanelButtonToAction[SelectedSkill]);
-      end;
-    end;
-
-    if DoProjection then
-    begin
-      DrawProjectionShadow(CopyL);
-
-      CopyL.Assign(L); // Reset to initial state
-    end;
-  end else
-    DoProjection := False;
-
   if (not GameParams.HideShadows) or fUsefulOnly then
   begin
     case SkillButton of
     spbJumper:
-      if not DoProjection then
       begin
         fRenderInterface.SimulateTransitionLem(CopyL, baJumping);
         DrawJumperShadow(CopyL);
       end;
 
     spbBallooner:
-      if not DoProjection then
       begin
         fRenderInterface.SimulateTransitionLem(CopyL, baBallooning);
         DrawBalloonerShadow(CopyL);
       end;
 
     spbShimmier:
-      if not DoProjection then
       begin
         if CopyL.LemAction in [baJumping, baDangling, baTurning] then
           fRenderInterface.SimulateTransitionLem(CopyL, baShimmying)
@@ -1159,7 +1103,6 @@ begin
       end;
 
     spbGlider:
-      if not DoProjection then
       begin
         CopyL.LemIsGlider := True;
         DrawGliderShadow(CopyL);
@@ -1269,49 +1212,6 @@ begin
     fAni.SpearBitmap.DrawTo(fLayers[rlLemmingsLow], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
 //  else  // Batter
 //    fAni.BatBitmap.DrawTo(fLayers[rlLemmingsLow], BatTarget.X - BatHotspot.X, BatTarget.Y - BatHotspot.Y, SrcRectBat);
-end;
-
-procedure TRenderer.DrawProjectionShadow(L: TLemming);
-var
-  FrameCount: Integer;
-  LemPosArray: TArrayArrayInt;
-  i: Integer;
-
-  SavePhysicsMap: TBitmap32;
-const
-  MAX_FRAME_COUNT = 510; // 30 in-game seconds
-begin
-  fLayers.fIsEmpty[rlShadowsLow] := False;
-  fLayers.fIsEmpty[rlShadowsHigh] := False;
-  FrameCount := 0;
-  LemPosArray := nil;
-
-  // Make a deep copy of the PhysicsMap
-  SavePhysicsMap := TBitmap32.Create;
-  SavePhysicsMap.Assign(PhysicsMap);
-
-  // We simulate as long as the lemming exists, unless we time out
-  while (FrameCount < MAX_FRAME_COUNT)
-    and Assigned(L)
-    and (not L.LemRemoved) do
-  begin
-    Inc(FrameCount);
-
-    LemPosArray := fRenderInterface.SimulateLem(L);
-
-    if Assigned(LemPosArray) then
-      for i := 0 to Length(LemPosArray[0]) do
-      begin
-//        if (LemPosArray[0, i] < 0) or (LemPosArray[0, i] >= RenderInfoRec.Level.Info.Width) or (LemPosArray[1, i] <= 0) then
-//          Exit;
-
-        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
-        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
-      end;
-  end;
-
-  PhysicsMap.Assign(SavePhysicsMap);
-  SavePhysicsMap.Free;
 end;
 
 procedure TRenderer.DrawJumperShadow(L: TLemming);
@@ -2277,7 +2177,7 @@ begin
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
 
-    // Bookmark - for "steel is always steel", replace this line:
+    // TODO (add steel behaviour level property) - for "steel is always steel", replace this line:
     dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
 
     // With this:

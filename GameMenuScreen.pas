@@ -908,7 +908,7 @@ begin
   end;
 end;
 
-// Bookmark - FIF "UpdateCheck" to find all related code in case you want to re-implement this
+// TODO - FIF "UpdateCheck" to find all related code in case you want to re-implement this
 //procedure TGameMenuScreen.InitiateUpdateCheck;
 //begin
 //  GameParams.DoneUpdateCheck := True;

@@ -66,8 +66,6 @@ type
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
     fClearPhysics: Boolean;
-    fProjectionType: Integer;
-    fLastProjectionType: Integer;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedResetMouseTrap : Boolean;
@@ -134,7 +132,6 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     function GetClearPhysics: Boolean;
-    procedure SetProjectionType(aValue: Integer);
     procedure ProcessGameMessages;
     procedure SetMinimumWindowHeight(CurPanelHeight: Integer);
     procedure ApplyResize(NoRecenter: Boolean = False);
@@ -207,7 +204,6 @@ type
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
-    property ProjectionType: Integer read fProjectionType write SetProjectionType;
     function DoSuspendCursor: Boolean;
     function ShouldDisplayHQMinimap: Boolean;
 
@@ -804,7 +800,7 @@ begin
   // Update drawing
   DoDraw;
 
-  // Bookmark - use this logic for VisualSFX
+  // TODO - use this logic for VisualSFX
   {$ifdef debug}
 //  case GetLemmingOffscreenEdge of
 //    0: Output('Lemming ' + IntToStr(i) + ' is onscreen');
@@ -1047,7 +1043,6 @@ begin
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
   or (fRenderInterface.UserHelper = hpi_FallDist)
   or (fClearPhysics)
-  or (fProjectionType <> fLastProjectionType)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     SetRedraw(rdRedraw);
 
@@ -1089,7 +1084,6 @@ begin
       fLastSelectedSkill := fRenderInterface.SelectedSkill;
       fLastHelperIcon := fRenderInterface.UserHelper;
       fLastDrawPaused := GameSpeed = gspPause;
-      fLastProjectionType := fProjectionType;
 
       fNeedRedraw := rdNone;
     except
@@ -2498,19 +2492,6 @@ end;
 procedure TGameWindow.SetHyperSpeedTarget(aValue: Integer);
 begin
   fHyperSpeedTarget := aValue;
-end;
-
-
-procedure TGameWindow.SetProjectionType(aValue: Integer);
-begin
-  if fProjectionType <> aValue then
-  begin
-    fProjectionType := aValue;
-    if fRenderInterface <> nil then
-      fRenderInterface.ProjectionType := aValue;
-
-    Game.CheckForNewShadow(True);
-  end;
 end;
 
 procedure TGameWindow.SetRedraw(aRedraw: TRedrawOption);

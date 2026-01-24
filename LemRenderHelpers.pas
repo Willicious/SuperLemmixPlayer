@@ -164,7 +164,6 @@ type
       fIsStartingSecondsRoutine: TIsStartingSecondsRoutine;
       fUserHelperIcon: THelperIcon;
       fForceUpdate: Boolean;
-      fProjectionType: Integer;
       function GetSelectedSkill: TSkillPanelButton;
       function GetHighlitLemming: TLemming;
       function GetSelectedLemming: TLemming;
@@ -203,7 +202,6 @@ type
       property MousePos: TPoint read fMousePos write fMousePos;
       property UserHelper: THelperIcon read fUserHelperIcon write fUserHelperIcon;
       property ForceUpdate: Boolean read fForceUpdate write fForceUpdate; // Used after a assign-to-highlit while paused
-      property ProjectionType: Integer read fProjectionType write fProjectionType;
   end;
 
 const
