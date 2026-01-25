@@ -204,10 +204,6 @@ type
       function GetTotalLevelsCompletedCount: Integer;
 
       function GetParentBasePack: TNeoLevelGroup;
-
-      {$ifdef exp}
-      procedure InternalDumpSuperLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
-      {$endif}
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
@@ -219,10 +215,6 @@ type
 
       procedure DumpImages(aPath: String; aPrefix: String = '');
       procedure CleanseLevels(aPath: String; aOutput: TStringList = nil; ProgressDialog: TForm = nil; ProgressBar: TProgressBar = nil; StatusLabel: TLabel = nil);
-
-      {$ifdef exp}
-      procedure DumpSuperLemmixWebsiteMetaInfo(aPath: String);
-      {$endif}
 
       function GetLevelForTalisman(aTalisman: TTalisman): TNeoLevelEntry;
       procedure WipeAllRecords;
@@ -931,136 +923,6 @@ begin
     Output.Free;
   end;
 end;
-
-{$ifdef exp}
-procedure TNeoLevelGroup.DumpSuperLemmixWebsiteMetaInfo(aPath: String);
-var
-  Groups: TStringList;
-  Titles: TStringList;
-  Stats: TStringList;
-
-  procedure AddGroup(Group: TNeoLevelGroup; Prefix: String);
-  var
-    i: Integer;
-  begin
-    if not Group.IsBasePack then
-    begin
-      if Prefix <> '' then
-        Prefix := Prefix + ':';
-      Prefix := Prefix + Group.Name;
-    end;
-
-    for i := 0 to Group.Children.Count-1 do
-      AddGroup(Group.Children[i], Prefix);
-
-    if Group.Levels.Count > 0 then
-      Groups.Add(Prefix + '>' + IntToStr(Group.Levels.Count));
-  end;
-begin
-  aPath := IncludeTrailingPathDelimiter(aPath);
-  ForceDirectories(aPath);
-
-  Groups := TStringList.Create;
-  Titles := TStringList.Create;
-  Stats := TStringList.Create;
-  try
-    AddGroup(Self, '');
-    InternalDumpSuperLemmixWebsiteMetaInfo(Titles, Stats);
-
-    Groups.SaveToFile(aPath + 'groups.txt');
-    Titles.SaveToFile(aPath + 'titles.txt');
-    Stats.SaveToFile(aPath + 'stats.txt');
-  finally
-    Groups.Free;
-    Titles.Free;
-    Stats.Free;
-  end;
-end;
-
-procedure TNeoLevelGroup.InternalDumpSuperLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
-var
-  i: Integer;
-
-  Level: TLevel;
-
-  function LemmingCountString: String;
-  var
-    i: Integer;
-    PreplacedZombieCount: Integer;
-  begin
-    PreplacedZombieCount := 0;
-
-    for i := 0 to Level.PreplacedLemmings.Count-1 do
-      if Level.PreplacedLemmings[i].IsZombie then
-        Inc(PreplacedZombieCount);
-
-    Result := IntToStr(Level.Info.LemmingsCount) + '|' +
-              IntToStr(Level.Info.ZombieCount) + '|' +
-              IntToStr(Level.PreplacedLemmings.Count) + '|' +
-              IntToStr(PreplacedZombieCount);
-  end;
-
-  function MiscString: String;
-  begin
-    Result := IntToStr(Level.Info.RescueCount) + '|';
-
-    if Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = 4) then
-      Result := Result + '-';
-    Result := Result + IntToStr(103 - Level.Info.SpawnInterval) + '|';
-
-    if Level.Info.HasTimeLimit then
-      Result := Result + IntToStr(Level.Info.TimeLimit)
-    else
-      Result := Result + '0';
-
-    if Level.Info.SuperLemmingMode then
-      Result := 'superlemming' + Result + BoolToStr(Level.Info.SuperLemmingMode);
-
-    if Level.Info.InvincibilityMode then
-      Result := 'invincibility' + Result + BoolToStr(Level.Info.InvincibilityMode);
-
-    if (Level.Info.CollectibleCount > 0) then
-      Result := Result + IntToStr(Level.Info.CollectibleCount);
-  end;
-
-  function SkillsetString: String;
-  var
-    Skill: TSkillPanelButton;
-  begin
-    Result := '';
-
-    for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    begin
-      if not (Skill in Level.Info.Skillset) then
-        Result := Result + '-1'
-      else
-        Result := Result + IntToStr(Level.Info.SkillCount[Skill]);
-
-      if Skill < LAST_SKILL_BUTTON then
-        Result := Result + '|';
-    end;
-  end;
-begin
-  for i := 0 to Children.Count-1 do
-    Children[i].InternalDumpSuperLemmixWebsiteMetaInfo(Titles, Stats);
-
-  for i := 0 to Levels.Count-1 do
-  begin
-    GameParams.SetLevel(Levels[i]);
-    GameParams.LoadCurrentLevel;
-
-    Level := GameParams.Level;
-    Level.PrepareForUse;
-
-    Titles.Add(Level.Info.Title);
-
-    Stats.Add(LemmingCountString + '|' +
-              MiscString + '|' +
-              SkillsetString);
-  end;
-end;
-
-{$endif}
 
 function TNeoLevelGroup.FindFile(aName: String): String;
 begin

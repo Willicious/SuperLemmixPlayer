@@ -1719,9 +1719,6 @@ begin
     PathString := MakeSafeForFilename(BasePack.Name);
 
     BasePack.DumpImages(AppPath + 'Dump\' + PathString + '\');
-    {$ifdef exp}
-    BasePack.DumpSuperLemmixWebsiteMetaInfo(AppPath + 'Dump\' + PathString + '\');
-    {$endif}
 
     if DumpImagesFallbackFlag then
       ShowMessage('Some styles used in this group appear to be missing. Use the Style Manager to download these. Level images with fallbacks saved to "Dump\' + PathString + '"')
