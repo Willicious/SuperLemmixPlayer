@@ -22,6 +22,7 @@ type
   protected
     fSpawnIntervalLocked : Boolean;
     fSpawnInterval   : Integer;
+    fSteelType       : Integer;
     fLemmingsCount   : Integer;
     fZombieCount     : Integer;
     fNeutralCount    : Integer;
@@ -68,8 +69,9 @@ type
     constructor Create;
     procedure Clear; virtual;
 
-    property SpawnInterval  : Integer read fSpawnInterval write fSpawnInterval;
     property SpawnIntervalLocked: Boolean read fSpawnIntervalLocked write fSpawnIntervalLocked;
+    property SpawnInterval  : Integer read fSpawnInterval write fSpawnInterval;
+    property SteelType      : Integer read fSteelType write fSteelType;
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
     property ZombieCount    : Integer read fZombieCount write fZombieCount;
     property NeutralCount   : Integer read fNeutralCount write fNeutralCount;
@@ -186,8 +188,9 @@ uses
 
 procedure TLevelInfo.Clear;
 begin
-  SpawnInterval     := 53;
   SpawnIntervalLocked := False;
+  SpawnInterval   := 53;
+  SteelType       := 0;
   LemmingsCount   := 1;
   ZombieCount     := 0;
   NeutralCount    := 0;
@@ -902,7 +905,7 @@ begin
     if aSection.Line['max_spawn_interval'] <> nil then
       SpawnInterval := aSection.LineNumeric['max_spawn_interval'];
     SpawnIntervalLocked := (aSection.Line['spawn_interval_locked'] <> nil) or (aSection.Line['release_rate_locked'] <> nil);
-
+    SteelType := aSection.LineNumeric['steel_type'];
     SuperLemmingMode := (aSection.Line['superlemming'] <> nil);
     InvincibilityMode := (aSection.Line['invincibility'] <> nil);
 
@@ -1588,18 +1591,20 @@ begin
     if HasTimeLimit then
       aSection.AddLine('TIME_LIMIT', TimeLimit);
 
+    aSection.AddLine('MAX_SPAWN_INTERVAL', SpawnInterval);
+    if SpawnIntervalLocked then
+      aSection.AddLine('SPAWN_INTERVAL_LOCKED');
+
+    aSection.AddLine('STEEL_TYPE', SteelType);
+
+    if CollectibleCount > 0 then
+      aSection.AddLine('COLLECTIBLES', CollectibleCount);
+
     if SuperLemmingMode then
       aSection.AddLine('SUPERLEMMING');
 
     if InvincibilityMode then
       aSection.AddLine('INVINCIBILITY');
-
-    aSection.AddLine('MAX_SPAWN_INTERVAL', SpawnInterval);
-    if SpawnIntervalLocked then
-      aSection.AddLine('SPAWN_INTERVAL_LOCKED');
-
-    if CollectibleCount > 0 then
-      aSection.AddLine('COLLECTIBLES', CollectibleCount);
 
     aSection.AddLine('WIDTH', Width);
     aSection.AddLine('HEIGHT', Height);

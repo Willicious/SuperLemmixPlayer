@@ -2177,14 +2177,12 @@ begin
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
 
-    // TODO (add steel behaviour level property) - for "steel is always steel", replace this line:
-    dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
-
-    // With this:
-  { if srcSolidity > 0 then
-    begin
+    if (GameParams.Level.Info.SteelType <= 0) then
+      // NeoLemmix style - steel is steel only where visible
+      dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity)
+    else if (srcSolidity > 0) and (GameParams.Level.Info.SteelType >= 1) then
+      // Steel is always steel, even if partially or fully obscured
       dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSteel);
-    end; }
 
     dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
   end;
