@@ -1,0 +1,1065 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Clickbait
+ AUTHOR 
+ ID xF4D410D3F4D410D2
+ VERSION x000000000000000A
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1600
+ HEIGHT 160
+ START_X 550
+ START_Y 80
+ THEME willlem_lemminas_classic
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 100
+ SAVE_REQUIREMENT 100
+ TIME_LIMIT 120
+ MAX_SPAWN_INTERVAL 4
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   MINER 44
+ $END 
+ 
+ $TALISMAN 
+   TITLE Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Super Classic Mode
+   ID 0
+   COLOR Gold
+   CLASSIC_MODE 0
+   NO_PAUSE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_crystal
+   PIECE exit
+   X 1084
+   Y 120
+ $END
+ 
+ $GADGET
+   STYLE slx_crystal
+   PIECE window
+   X 391
+   Y 99
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE mesh_06
+   X 466
+   Y 130
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_crystal
+     PIECE mesh_06
+     X 497
+     Y 130
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_crystal
+       PIECE mesh_06
+       X 466
+       Y 99
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_crystal
+         PIECE mesh_06
+         X 497
+         Y 99
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_crystal
+           PIECE mesh_06
+           X 790
+           Y 100
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_crystal
+             PIECE mesh_06
+             X 528
+             Y 130
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_crystal
+               PIECE mesh_06
+               X 559
+               Y 131
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_crystal
+                 PIECE mesh_06
+                 X 789
+                 Y 131
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_crystal
+                   PIECE mesh_07
+                   X 518
+                   Y 69
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_crystal
+                     PIECE mesh_06
+                     X 548
+                     Y 69
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_crystal
+                       PIECE mesh_06
+                       X 487
+                       Y 69
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_crystal
+                         PIECE mesh_06
+                         X 517
+                         Y 39
+                         ONE_WAY
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_crystal
+                           PIECE mesh_07
+                           X 548
+                           Y 38
+                           ONE_WAY
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_crystal
+                             PIECE mesh_06
+                             X 578
+                             Y 39
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_crystal
+                               PIECE mesh_07
+                               X 487
+                               Y 38
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_crystal
+                                 PIECE mesh_06
+                                 X 457
+                                 Y 38
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_crystal
+                                   PIECE mesh_08
+                                   X 811
+                                   Y 29
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_crystal
+                                     PIECE mesh_06
+                                     X 821
+                                     Y 91
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_crystal
+                                       PIECE mesh_06
+                                       X 852
+                                       Y 91
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_crystal
+                                         PIECE mesh_07
+                                         X 821
+                                         Y 121
+                                         ONE_WAY
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_crystal
+                                           PIECE mesh_07
+                                           X 852
+                                           Y 122
+                                           ONE_WAY
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_crystal
+                                             PIECE mesh_07
+                                             X 821
+                                             Y 151
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_crystal
+                                               PIECE mesh_07
+                                               X 852
+                                               Y 153
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_crystal
+                                                 PIECE mesh_07
+                                                 X 873
+                                                 Y 60
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_crystal
+                                                   PIECE mesh_07
+                                                   X 873
+                                                   Y 29
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_crystal
+                                                     PIECE mesh_06
+                                                     X 883
+                                                     Y 91
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_crystal
+                                                       PIECE bar_04
+                                                       X 404
+                                                       Y 140
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_crystal
+                                                         PIECE bar_04
+                                                         X 345
+                                                         Y 140
+                                                         ONE_WAY
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_crystal
+                                                           PIECE crystal_04
+                                                           X 319
+                                                           Y 99
+                                                           ONE_WAY
+                                                         $END
+                                                         
+                                                           $TERRAIN
+                                                             STYLE slx_crystal
+                                                             PIECE thread_01
+                                                             X 456
+                                                             Y 67
+                                                             ONE_WAY
+                                                           $END
+                                                           
+                                                             $TERRAIN
+                                                               STYLE slx_crystal
+                                                               PIECE thread_02
+                                                               X 425
+                                                               Y 38
+                                                               ONE_WAY
+                                                             $END
+                                                             
+                                                               $TERRAIN
+                                                                 STYLE slx_crystal
+                                                                 PIECE thread_02
+                                                                 X 497
+                                                                 Y 6
+                                                                 ONE_WAY
+                                                               $END
+                                                               
+                                                                 $TERRAIN
+                                                                   STYLE slx_crystal
+                                                                   PIECE spider_web
+                                                                   X 901
+                                                                   Y 24
+                                                                   ONE_WAY
+                                                                 $END
+                                                                 
+                                                                   $TERRAIN
+                                                                     STYLE slx_crystal
+                                                                     PIECE line_01
+                                                                     X 904
+                                                                     Y 7
+                                                                     ONE_WAY
+                                                                   $END
+                                                                   
+                                                                     $TERRAIN
+                                                                       STYLE slx_crystal
+                                                                       PIECE line_01
+                                                                       X 1030
+                                                                       Y 2
+                                                                       ONE_WAY
+                                                                     $END
+                                                                     
+                                                                       $TERRAIN
+                                                                         STYLE slx_crystal
+                                                                         PIECE line_01
+                                                                         X 1042
+                                                                         Y -10
+                                                                         ONE_WAY
+                                                                       $END
+                                                                       
+                                                                         $TERRAIN
+                                                                           STYLE slx_crystal
+                                                                           PIECE line_02
+                                                                           X 1025
+                                                                           Y 39
+                                                                           ONE_WAY
+                                                                         $END
+                                                                         
+                                                                           $TERRAIN
+                                                                             STYLE slx_crystal
+                                                                             PIECE line_02
+                                                                             X 1046
+                                                                             Y 60
+                                                                             ONE_WAY
+                                                                           $END
+                                                                           
+                                                                             $TERRAIN
+                                                                               STYLE slx_crystal
+                                                                               PIECE line_01
+                                                                               X 1035
+                                                                               Y 81
+                                                                               ONE_WAY
+                                                                             $END
+                                                                             
+                                                                               $TERRAIN
+                                                                                 STYLE slx_crystal
+                                                                                 PIECE mesh_01
+                                                                                 X 903
+                                                                                 Y 81
+                                                                                 ONE_WAY
+                                                                               $END
+                                                                               
+                                                                                 $TERRAIN
+                                                                                   STYLE slx_crystal
+                                                                                   PIECE mesh_01
+                                                                                   X 903
+                                                                                   Y 71
+                                                                                   ONE_WAY
+                                                                                 $END
+                                                                                 
+                                                                                   $TERRAIN
+                                                                                     STYLE slx_crystal
+                                                                                     PIECE mesh_01
+                                                                                     X 903
+                                                                                     Y 60
+                                                                                     ONE_WAY
+                                                                                   $END
+                                                                                   
+                                                                                     $TERRAIN
+                                                                                       STYLE slx_crystal
+                                                                                       PIECE mesh_01
+                                                                                       X 903
+                                                                                       Y 49
+                                                                                       ONE_WAY
+                                                                                     $END
+                                                                                     
+                                                                                       $TERRAIN
+                                                                                         STYLE slx_crystal
+                                                                                         PIECE mesh_01
+                                                                                         X 883
+                                                                                         Y 122
+                                                                                         ONE_WAY
+                                                                                       $END
+                                                                                       
+                                                                                         $TERRAIN
+                                                                                           STYLE slx_crystal
+                                                                                           PIECE mesh_01
+                                                                                           X 883
+                                                                                           Y 132
+                                                                                           ONE_WAY
+                                                                                         $END
+                                                                                         
+                                                                                           $TERRAIN
+                                                                                             STYLE slx_crystal
+                                                                                             PIECE mesh_01
+                                                                                             X 883
+                                                                                             Y 142
+                                                                                             ONE_WAY
+                                                                                           $END
+                                                                                           
+                                                                                             $TERRAIN
+                                                                                               STYLE slx_crystal
+                                                                                               PIECE mesh_01
+                                                                                               X 873
+                                                                                               Y 152
+                                                                                               ONE_WAY
+                                                                                             $END
+                                                                                             
+                                                                                               $TERRAIN
+                                                                                                 STYLE slx_crystal
+                                                                                                 PIECE mesh_01
+                                                                                                 X 883
+                                                                                                 Y 152
+                                                                                                 ONE_WAY
+                                                                                               $END
+                                                                                               
+                                                                                                 $TERRAIN
+                                                                                                   STYLE slx_crystal
+                                                                                                   PIECE line_03
+                                                                                                   X 1080
+                                                                                                   Y 143
+                                                                                                   ONE_WAY
+                                                                                                 $END
+                                                                                                 
+                                                                                                   $TERRAIN
+                                                                                                     STYLE slx_crystal
+                                                                                                     PIECE line_03
+                                                                                                     X 1112
+                                                                                                     Y 143
+                                                                                                     ONE_WAY
+                                                                                                   $END
+                                                                                                   
+                                                                                                     $TERRAIN
+                                                                                                       STYLE slx_crystal
+                                                                                                       PIECE line_03
+                                                                                                       X 1049
+                                                                                                       Y 143
+                                                                                                       ONE_WAY
+                                                                                                     $END
+                                                                                                     
+                                                                                                       $TERRAIN
+                                                                                                         STYLE slx_crystal
+                                                                                                         PIECE mesh_04
+                                                                                                         X 904
+                                                                                                         Y 56
+                                                                                                         ONE_WAY
+                                                                                                       $END
+                                                                                                       
+                                                                                                         $TERRAIN
+                                                                                                           STYLE slx_crystal
+                                                                                                           PIECE mesh_04
+                                                                                                           X 903
+                                                                                                           Y 46
+                                                                                                           ONE_WAY
+                                                                                                         $END
+                                                                                                         
+                                                                                                           $TERRAIN
+                                                                                                             STYLE slx_crystal
+                                                                                                             PIECE mesh_04
+                                                                                                             X 903
+                                                                                                             Y 68
+                                                                                                             ONE_WAY
+                                                                                                           $END
+                                                                                                           
+                                                                                                             $TERRAIN
+                                                                                                               STYLE slx_crystal
+                                                                                                               PIECE mesh_04
+                                                                                                               X 902
+                                                                                                               Y 79
+                                                                                                               ONE_WAY
+                                                                                                             $END
+                                                                                                             
+                                                                                                               $TERRAIN
+                                                                                                                 STYLE slx_crystal
+                                                                                                                 PIECE mesh_03
+                                                                                                                 X 890
+                                                                                                                 Y 25
+                                                                                                                 ONE_WAY
+                                                                                                               $END
+                                                                                                               
+                                                                                                                 $TERRAIN
+                                                                                                                   STYLE slx_crystal
+                                                                                                                   PIECE line_04
+                                                                                                                   X 893
+                                                                                                                   Y -1
+                                                                                                                   ONE_WAY
+                                                                                                                 $END
+                                                                                                                 
+                                                                                                                   $TERRAIN
+                                                                                                                     STYLE slx_crystal
+                                                                                                                     PIECE thread_03
+                                                                                                                     X 893
+                                                                                                                     Y -10
+                                                                                                                     ONE_WAY
+                                                                                                                   $END
+                                                                                                                   
+                                                                                                                     $TERRAIN
+                                                                                                                       STYLE slx_crystal
+                                                                                                                       PIECE mesh_06
+                                                                                                                       X 588
+                                                                                                                       Y 100
+                                                                                                                       ONE_WAY
+                                                                                                                     $END
+                                                                                                                     
+                                                                                                                       $TERRAIN
+                                                                                                                         STYLE slx_crystal
+                                                                                                                         PIECE mesh_06
+                                                                                                                         X 618
+                                                                                                                         Y 100
+                                                                                                                         ONE_WAY
+                                                                                                                       $END
+                                                                                                                       
+                                                                                                                         $TERRAIN
+                                                                                                                           STYLE slx_crystal
+                                                                                                                           PIECE mesh_06
+                                                                                                                           X 588
+                                                                                                                           Y 130
+                                                                                                                           ONE_WAY
+                                                                                                                         $END
+                                                                                                                         
+                                                                                                                           $TERRAIN
+                                                                                                                             STYLE slx_crystal
+                                                                                                                             PIECE mesh_06
+                                                                                                                             X 619
+                                                                                                                             Y 131
+                                                                                                                             ONE_WAY
+                                                                                                                           $END
+                                                                                                                           
+                                                                                                                             $TERRAIN
+                                                                                                                               STYLE slx_crystal
+                                                                                                                               PIECE mesh_06
+                                                                                                                               X 608
+                                                                                                                               Y 69
+                                                                                                                               ONE_WAY
+                                                                                                                             $END
+                                                                                                                             
+                                                                                                                               $TERRAIN
+                                                                                                                                 STYLE slx_crystal
+                                                                                                                                 PIECE mesh_06
+                                                                                                                                 X 638
+                                                                                                                                 Y 70
+                                                                                                                                 ONE_WAY
+                                                                                                                               $END
+                                                                                                                               
+                                                                                                                                 $TERRAIN
+                                                                                                                                   STYLE slx_crystal
+                                                                                                                                   PIECE mesh_07
+                                                                                                                                   X 608
+                                                                                                                                   Y 38
+                                                                                                                                   ONE_WAY
+                                                                                                                                 $END
+                                                                                                                                 
+                                                                                                                                   $TERRAIN
+                                                                                                                                     STYLE slx_crystal
+                                                                                                                                     PIECE mesh_06
+                                                                                                                                     X 638
+                                                                                                                                     Y 39
+                                                                                                                                     ONE_WAY
+                                                                                                                                   $END
+                                                                                                                                   
+                                                                                                                                     $TERRAIN
+                                                                                                                                       STYLE slx_crystal
+                                                                                                                                       PIECE mesh_06
+                                                                                                                                       X 679
+                                                                                                                                       Y 101
+                                                                                                                                       ONE_WAY
+                                                                                                                                     $END
+                                                                                                                                     
+                                                                                                                                       $TERRAIN
+                                                                                                                                         STYLE slx_crystal
+                                                                                                                                         PIECE mesh_06
+                                                                                                                                         X 649
+                                                                                                                                         Y 131
+                                                                                                                                         ONE_WAY
+                                                                                                                                       $END
+                                                                                                                                       
+                                                                                                                                         $TERRAIN
+                                                                                                                                           STYLE slx_crystal
+                                                                                                                                           PIECE mesh_06
+                                                                                                                                           X 680
+                                                                                                                                           Y 132
+                                                                                                                                           ONE_WAY
+                                                                                                                                         $END
+                                                                                                                                         
+                                                                                                                                           $TERRAIN
+                                                                                                                                             STYLE slx_crystal
+                                                                                                                                             PIECE mesh_06
+                                                                                                                                             X 669
+                                                                                                                                             Y 70
+                                                                                                                                             ONE_WAY
+                                                                                                                                           $END
+                                                                                                                                           
+                                                                                                                                             $TERRAIN
+                                                                                                                                               STYLE slx_crystal
+                                                                                                                                               PIECE mesh_06
+                                                                                                                                               X 699
+                                                                                                                                               Y 70
+                                                                                                                                               ONE_WAY
+                                                                                                                                             $END
+                                                                                                                                             
+                                                                                                                                               $TERRAIN
+                                                                                                                                                 STYLE slx_crystal
+                                                                                                                                                 PIECE mesh_07
+                                                                                                                                                 X 669
+                                                                                                                                                 Y 39
+                                                                                                                                                 ONE_WAY
+                                                                                                                                               $END
+                                                                                                                                               
+                                                                                                                                                 $TERRAIN
+                                                                                                                                                   STYLE slx_crystal
+                                                                                                                                                   PIECE mesh_06
+                                                                                                                                                   X 699
+                                                                                                                                                   Y 39
+                                                                                                                                                   ONE_WAY
+                                                                                                                                                 $END
+                                                                                                                                                 
+                                                                                                                                                   $TERRAIN
+                                                                                                                                                     STYLE slx_crystal
+                                                                                                                                                     PIECE line_04
+                                                                                                                                                     X 626
+                                                                                                                                                     Y 7
+                                                                                                                                                     ONE_WAY
+                                                                                                                                                   $END
+                                                                                                                                                   
+                                                                                                                                                     $TERRAIN
+                                                                                                                                                       STYLE slx_crystal
+                                                                                                                                                       PIECE line_04
+                                                                                                                                                       X 626
+                                                                                                                                                       Y -21
+                                                                                                                                                       ONE_WAY
+                                                                                                                                                     $END
+                                                                                                                                                     
+                                                                                                                                                       $TERRAIN
+                                                                                                                                                         STYLE slx_crystal
+                                                                                                                                                         PIECE line_04
+                                                                                                                                                         X 567
+                                                                                                                                                         Y -21
+                                                                                                                                                         ONE_WAY
+                                                                                                                                                       $END
+                                                                                                                                                       
+                                                                                                                                                         $TERRAIN
+                                                                                                                                                           STYLE slx_crystal
+                                                                                                                                                           PIECE line_04
+                                                                                                                                                           X 567
+                                                                                                                                                           Y 7
+                                                                                                                                                           ONE_WAY
+                                                                                                                                                         $END
+                                                                                                                                                         
+                                                                                                                                                           $TERRAIN
+                                                                                                                                                             STYLE slx_crystal
+                                                                                                                                                             PIECE line_04
+                                                                                                                                                             X 689
+                                                                                                                                                             Y -21
+                                                                                                                                                             ONE_WAY
+                                                                                                                                                           $END
+                                                                                                                                                           
+                                                                                                                                                             $TERRAIN
+                                                                                                                                                               STYLE slx_crystal
+                                                                                                                                                               PIECE line_04
+                                                                                                                                                               X 689
+                                                                                                                                                               Y 7
+                                                                                                                                                               ONE_WAY
+                                                                                                                                                             $END
+                                                                                                                                                             
+                                                                                                                                                               $TERRAIN
+                                                                                                                                                                 STYLE slx_crystal
+                                                                                                                                                                 PIECE line_04
+                                                                                                                                                                 X 830
+                                                                                                                                                                 Y -30
+                                                                                                                                                                 ONE_WAY
+                                                                                                                                                               $END
+                                                                                                                                                               
+                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                   STYLE slx_crystal
+                                                                                                                                                                   PIECE line_04
+                                                                                                                                                                   X 830
+                                                                                                                                                                   Y -2
+                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                 $END
+                                                                                                                                                                 
+                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                     STYLE slx_crystal
+                                                                                                                                                                     PIECE mesh_07
+                                                                                                                                                                     X 579
+                                                                                                                                                                     Y 70
+                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                   $END
+                                                                                                                                                                   
+                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                       STYLE slx_crystal
+                                                                                                                                                                       PIECE mesh_06
+                                                                                                                                                                       X 648
+                                                                                                                                                                       Y 100
+                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                     $END
+                                                                                                                                                                     
+                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                         STYLE slx_crystal
+                                                                                                                                                                         PIECE mesh_07
+                                                                                                                                                                         X 548
+                                                                                                                                                                         Y 100
+                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                       $END
+                                                                                                                                                                       
+                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                           STYLE slx_crystal
+                                                                                                                                                                           PIECE mesh_06
+                                                                                                                                                                           X 578
+                                                                                                                                                                           Y 100
+                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                         $END
+                                                                                                                                                                         
+                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                             STYLE slx_crystal
+                                                                                                                                                                             PIECE mesh_06
+                                                                                                                                                                             X 517
+                                                                                                                                                                             Y 99
+                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                           $END
+                                                                                                                                                                           
+                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                               STYLE slx_crystal
+                                                                                                                                                                               PIECE mesh_05
+                                                                                                                                                                               X 729
+                                                                                                                                                                               Y 100
+                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                             $END
+                                                                                                                                                                             
+                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                 STYLE slx_crystal
+                                                                                                                                                                                 PIECE mesh_05
+                                                                                                                                                                                 X 729
+                                                                                                                                                                                 Y 40
+                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                               $END
+                                                                                                                                                                               
+                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                   STYLE slx_crystal
+                                                                                                                                                                                   PIECE mesh_05
+                                                                                                                                                                                   X 729
+                                                                                                                                                                                   Y -20
+                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                 $END
+                                                                                                                                                                                 
+                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                     STYLE slx_crystal
+                                                                                                                                                                                     PIECE line_04
+                                                                                                                                                                                     X 729
+                                                                                                                                                                                     Y 7
+                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                   $END
+                                                                                                                                                                                   
+                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                       STYLE slx_crystal
+                                                                                                                                                                                       PIECE line_04
+                                                                                                                                                                                       X 729
+                                                                                                                                                                                       Y -17
+                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                     $END
+                                                                                                                                                                                     
+                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                         STYLE slx_crystal
+                                                                                                                                                                                         PIECE line_04
+                                                                                                                                                                                         X 789
+                                                                                                                                                                                         Y -17
+                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                       $END
+                                                                                                                                                                                       
+                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                           STYLE slx_crystal
+                                                                                                                                                                                           PIECE line_04
+                                                                                                                                                                                           X 789
+                                                                                                                                                                                           Y 7
+                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                         $END
+                                                                                                                                                                                         
+                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                             STYLE slx_crystal
+                                                                                                                                                                                             PIECE line_04
+                                                                                                                                                                                             X 789
+                                                                                                                                                                                             Y 39
+                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                           $END
+                                                                                                                                                                                           
+                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                               STYLE slx_crystal
+                                                                                                                                                                                               PIECE line_04
+                                                                                                                                                                                               X 789
+                                                                                                                                                                                               Y 71
+                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                             $END
+                                                                                                                                                                                             
+                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                 STYLE slx_crystal
+                                                                                                                                                                                                 PIECE steel_01
+                                                                                                                                                                                                 X 771
+                                                                                                                                                                                                 Y -15
+                                                                                                                                                                                               $END
+                                                                                                                                                                                               
+                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                   STYLE slx_crystal
+                                                                                                                                                                                                   PIECE steel_01
+                                                                                                                                                                                                   X 746
+                                                                                                                                                                                                   Y -15
+                                                                                                                                                                                                 $END
+                                                                                                                                                                                                 
+                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                     STYLE slx_crystal
+                                                                                                                                                                                                     PIECE steel_01
+                                                                                                                                                                                                     X 721
+                                                                                                                                                                                                     Y -15
+                                                                                                                                                                                                   $END
+                                                                                                                                                                                                   
+                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                       STYLE slx_crystal
+                                                                                                                                                                                                       PIECE steel_02
+                                                                                                                                                                                                       X 780
+                                                                                                                                                                                                       Y 9
+                                                                                                                                                                                                     $END
+                                                                                                                                                                                                     
+                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                         STYLE slx_crystal
+                                                                                                                                                                                                         PIECE steel_02
+                                                                                                                                                                                                         X 780
+                                                                                                                                                                                                         Y 34
+                                                                                                                                                                                                       $END
+                                                                                                                                                                                                       
+                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                           STYLE slx_crystal
+                                                                                                                                                                                                           PIECE steel_02
+                                                                                                                                                                                                           X 780
+                                                                                                                                                                                                           Y 59
+                                                                                                                                                                                                         $END
+                                                                                                                                                                                                         
+                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                             STYLE slx_crystal
+                                                                                                                                                                                                             PIECE line_03
+                                                                                                                                                                                                             X 1021
+                                                                                                                                                                                                             Y 143
+                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                           $END
+                                                                                                                                                                                                           
+                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                               STYLE slx_crystal
+                                                                                                                                                                                                               PIECE line_03
+                                                                                                                                                                                                               X 1003
+                                                                                                                                                                                                               Y 143
+                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                             $END
+                                                                                                                                                                                                             
+                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                 STYLE slx_crystal
+                                                                                                                                                                                                                 PIECE line_01
+                                                                                                                                                                                                                 X 1041
+                                                                                                                                                                                                                 Y 112
+                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                               $END
+                                                                                                                                                                                                               
+                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                   STYLE slx_crystal
+                                                                                                                                                                                                                   PIECE line_01
+                                                                                                                                                                                                                   X 1075
+                                                                                                                                                                                                                   Y 62
+                                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                 
+                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                     STYLE slx_crystal
+                                                                                                                                                                                                                     PIECE line_01
+                                                                                                                                                                                                                     X 1047
+                                                                                                                                                                                                                     Y 90
+                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                   
+                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                       STYLE slx_crystal
+                                                                                                                                                                                                                       PIECE line_01
+                                                                                                                                                                                                                       X 1061
+                                                                                                                                                                                                                       Y 92
+                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                     
+                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                         STYLE slx_crystal
+                                                                                                                                                                                                                         PIECE line_01
+                                                                                                                                                                                                                         X 1089
+                                                                                                                                                                                                                         Y 64
+                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                       
+                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                           STYLE slx_crystal
+                                                                                                                                                                                                                           PIECE line_01
+                                                                                                                                                                                                                           X 1103
+                                                                                                                                                                                                                           Y 34
+                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                                             STYLE slx_crystal
+                                                                                                                                                                                                                             PIECE line_01
+                                                                                                                                                                                                                             X 1113
+                                                                                                                                                                                                                             Y 40
+                                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                                           $END
+                                                                                                                                                                                                                           
+                                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                                               STYLE slx_crystal
+                                                                                                                                                                                                                               PIECE crystal_02
+                                                                                                                                                                                                                               X 927
+                                                                                                                                                                                                                               Y -33
+                                                                                                                                                                                                                               FLIP_VERTICAL
+                                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                                             $END
+                                                                                                                                                                                                                             
+                                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                                 STYLE slx_crystal
+                                                                                                                                                                                                                                 PIECE mesh_08
+                                                                                                                                                                                                                                 X 1046
+                                                                                                                                                                                                                                 Y 8
+                                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                                               $END
+                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                                   STYLE slx_crystal
+                                                                                                                                                                                                                                   PIECE line_01
+                                                                                                                                                                                                                                   X 1129
+                                                                                                                                                                                                                                   Y 24
+                                                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                                     STYLE slx_crystal
+                                                                                                                                                                                                                                     PIECE line_03
+                                                                                                                                                                                                                                     X 1140
+                                                                                                                                                                                                                                     Y 143
+                                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                                       STYLE slx_crystal
+                                                                                                                                                                                                                                       PIECE stars_01
+                                                                                                                                                                                                                                       X 1176
+                                                                                                                                                                                                                                       Y 64
+                                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                                         STYLE slx_crystal
+                                                                                                                                                                                                                                         PIECE stars_01
+                                                                                                                                                                                                                                         X 1192
+                                                                                                                                                                                                                                         Y 48
+                                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                                           STYLE slx_crystal
+                                                                                                                                                                                                                                           PIECE stars_01
+                                                                                                                                                                                                                                           X 1205
+                                                                                                                                                                                                                                           Y 59
+                                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                                                             STYLE slx_crystal
+                                                                                                                                                                                                                                             PIECE stars_01
+                                                                                                                                                                                                                                             X 357
+                                                                                                                                                                                                                                             Y 43
+                                                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                                                           $END
+                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                                                               STYLE slx_crystal
+                                                                                                                                                                                                                                               PIECE stars_01
+                                                                                                                                                                                                                                               X 373
+                                                                                                                                                                                                                                               Y 31
+                                                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                                                             $END
+                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                                                 STYLE slx_crystal
+                                                                                                                                                                                                                                                 PIECE stars_01
+                                                                                                                                                                                                                                                 X 313
+                                                                                                                                                                                                                                                 Y 15
+                                                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                                                               $END
+                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                                                   STYLE slx_crystal
+                                                                                                                                                                                                                                                   PIECE mesh_07
+                                                                                                                                                                                                                                                   X 857
+                                                                                                                                                                                                                                                   Y 44
+                                                                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                                                     STYLE slx_crystal
+                                                                                                                                                                                                                                                     PIECE mesh_01
+                                                                                                                                                                                                                                                     X 892
+                                                                                                                                                                                                                                                     Y 151
+                                                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                                                       STYLE slx_crystal
+                                                                                                                                                                                                                                                       PIECE line_01
+                                                                                                                                                                                                                                                       X 879
+                                                                                                                                                                                                                                                       Y 143
+                                                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                                                         STYLE slx_crystal
+                                                                                                                                                                                                                                                         PIECE crystal_01
+                                                                                                                                                                                                                                                         X 970
+                                                                                                                                                                                                                                                         Y 141
+                                                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                                                           STYLE slx_crystal
+                                                                                                                                                                                                                                                           PIECE crystal_03
+                                                                                                                                                                                                                                                           X 989
+                                                                                                                                                                                                                                                           Y 130
+                                                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                                                         
+ 

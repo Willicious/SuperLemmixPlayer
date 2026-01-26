@@ -1,0 +1,1004 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Decaf Sugar-Free Lemminas
+ AUTHOR WillLem
+ ID x3720017837200177
+ VERSION x000000000000000F
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 600
+ HEIGHT 160
+ START_X 295
+ START_Y 80
+ THEME willlem_lemminas_classic
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 60
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 4
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 5
+   FLOATER 5
+   TIMEBOMBER 5
+   BLOCKER 5
+   BUILDER 5
+   BASHER 5
+   MINER 5
+   DIGGER 5
+ $END 
+ 
+ $TALISMAN 
+   TITLE Save All Lemminas
+   ID 0
+   COLOR Gold
+   SAVE_REQUIREMENT 80
+ $END 
+ 
+ $TALISMAN 
+   TITLE Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 193
+   Y 74
+   WIDTH 64
+   HEIGHT 25
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE window
+   X 189
+   Y 111
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE exit
+   X 197
+   Y 30
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_right
+   X 381
+   Y 31
+   WIDTH 16
+   HEIGHT 80
+   ONLY_ON_TERRAIN
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_06
+   X 128
+   Y 51
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_marble
+     PIECE bar_05
+     X 305
+     Y 7
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_marble
+       PIECE bar_06
+       X 332
+       Y 7
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_marble
+         PIECE bar_05
+         X 390
+         Y 7
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_marble
+           PIECE bar_06
+           X 172
+           Y 7
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_marble
+             PIECE bar_06
+             X 392
+             Y 103
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_marble
+               PIECE pillar_01
+               X 431
+               Y 79
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_marble
+                 PIECE pillar_01
+                 X 431
+                 Y 7
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_marble
+                   PIECE pillar_01
+                   X 143
+                   Y 79
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_marble
+                     PIECE pillar_01
+                     X 143
+                     Y 7
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_marble
+                       PIECE steel_01
+                       X 379
+                       Y 151
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_marble
+                         PIECE steel_01
+                         X 355
+                         Y 151
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_marble
+                           PIECE steel_01
+                           X 331
+                           Y 151
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_marble
+                             PIECE steel_01
+                             X 307
+                             Y 151
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_marble
+                               PIECE steel_01
+                               X 283
+                               Y 151
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_marble
+                                 PIECE steel_01
+                                 X 259
+                                 Y 151
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_marble
+                                   PIECE steel_01
+                                   X 235
+                                   Y 151
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_marble
+                                     PIECE steel_01
+                                     X 211
+                                     Y 151
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_marble
+                                       PIECE steel_01
+                                       X 187
+                                       Y 151
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_marble
+                                         PIECE pillar_end_01
+                                         X 431
+                                         Y 7
+                                         ONE_WAY
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_marble
+                                           PIECE pillar_end_01
+                                           X 143
+                                           Y 7
+                                           ONE_WAY
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_marble
+                                             PIECE pillar_01
+                                             X 159
+                                             Y 79
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_marble
+                                               PIECE pillar_01
+                                               X 159
+                                               Y 7
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_marble
+                                                 PIECE pillar_end_01
+                                                 X 159
+                                                 Y 7
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_marble
+                                                   PIECE pillar_01
+                                                   X 415
+                                                   Y 79
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_marble
+                                                     PIECE pillar_01
+                                                     X 415
+                                                     Y 7
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_marble
+                                                       PIECE pillar_end_01
+                                                       X 415
+                                                       Y 7
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_marble
+                                                         PIECE steel_01
+                                                         X 139
+                                                         Y 151
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_marble
+                                                           PIECE steel_01
+                                                           X 163
+                                                           Y 151
+                                                         $END
+                                                         
+                                                           $TERRAIN
+                                                             STYLE slx_marble
+                                                             PIECE steel_01
+                                                             X 403
+                                                             Y 151
+                                                           $END
+                                                           
+                                                             $TERRAIN
+                                                               STYLE slx_marble
+                                                               PIECE steel_01
+                                                               X 427
+                                                               Y 151
+                                                             $END
+                                                             
+                                                               $TERRAIN
+                                                                 STYLE slx_marble
+                                                                 PIECE bar_thin_07
+                                                                 X 128
+                                                                 Y 71
+                                                                 ONE_WAY
+                                                               $END
+                                                               
+                                                                 $TERRAIN
+                                                                   STYLE slx_marble
+                                                                   PIECE bar_thin_07
+                                                                   X 94
+                                                                   Y 71
+                                                                   ERASE
+                                                                   ONE_WAY
+                                                                 $END
+                                                                 
+                                                                   $TERRAIN
+                                                                     STYLE slx_marble
+                                                                     PIECE bar_thin_07
+                                                                     X 128
+                                                                     Y 74
+                                                                     ONE_WAY
+                                                                   $END
+                                                                   
+                                                                     $TERRAIN
+                                                                       STYLE slx_marble
+                                                                       PIECE bar_thin_07
+                                                                       X 94
+                                                                       Y 74
+                                                                       ERASE
+                                                                       ONE_WAY
+                                                                     $END
+                                                                     
+                                                                       $TERRAIN
+                                                                         STYLE slx_marble
+                                                                         PIECE bar_thin_07
+                                                                         X 128
+                                                                         Y 77
+                                                                         ONE_WAY
+                                                                       $END
+                                                                       
+                                                                         $TERRAIN
+                                                                           STYLE slx_marble
+                                                                           PIECE bar_thin_07
+                                                                           X 94
+                                                                           Y 77
+                                                                           ERASE
+                                                                           ONE_WAY
+                                                                         $END
+                                                                         
+                                                                           $TERRAIN
+                                                                             STYLE slx_marble
+                                                                             PIECE bar_thin_07
+                                                                             X 414
+                                                                             Y 77
+                                                                             ONE_WAY
+                                                                           $END
+                                                                           
+                                                                             $TERRAIN
+                                                                               STYLE slx_marble
+                                                                               PIECE bar_thin_07
+                                                                               X 448
+                                                                               Y 77
+                                                                               ERASE
+                                                                               ONE_WAY
+                                                                             $END
+                                                                             
+                                                                               $TERRAIN
+                                                                                 STYLE slx_marble
+                                                                                 PIECE bar_thin_07
+                                                                                 X 414
+                                                                                 Y 74
+                                                                                 ONE_WAY
+                                                                               $END
+                                                                               
+                                                                                 $TERRAIN
+                                                                                   STYLE slx_marble
+                                                                                   PIECE bar_thin_07
+                                                                                   X 448
+                                                                                   Y 74
+                                                                                   ERASE
+                                                                                   ONE_WAY
+                                                                                 $END
+                                                                                 
+                                                                                   $TERRAIN
+                                                                                     STYLE slx_marble
+                                                                                     PIECE bar_thin_07
+                                                                                     X 414
+                                                                                     Y 71
+                                                                                     ONE_WAY
+                                                                                   $END
+                                                                                   
+                                                                                     $TERRAIN
+                                                                                       STYLE slx_marble
+                                                                                       PIECE bar_thin_07
+                                                                                       X 448
+                                                                                       Y 71
+                                                                                       ERASE
+                                                                                       ONE_WAY
+                                                                                     $END
+                                                                                     
+                                                                                       $TERRAIN
+                                                                                         STYLE slx_marble
+                                                                                         PIECE bar_thin_07
+                                                                                         X 448
+                                                                                         Y 32
+                                                                                         ERASE
+                                                                                         ONE_WAY
+                                                                                       $END
+                                                                                       
+                                                                                         $TERRAIN
+                                                                                           STYLE slx_marble
+                                                                                           PIECE block_01
+                                                                                           X 309
+                                                                                           Y 95
+                                                                                           ONE_WAY
+                                                                                         $END
+                                                                                         
+                                                                                           $TERRAIN
+                                                                                             STYLE slx_marble
+                                                                                             PIECE bar_03
+                                                                                             X 345
+                                                                                             Y 106
+                                                                                           $END
+                                                                                           
+                                                                                             $TERRAIN
+                                                                                               STYLE slx_marble
+                                                                                               PIECE bar_thin_07
+                                                                                               X 414
+                                                                                               Y 137
+                                                                                               ONE_WAY
+                                                                                             $END
+                                                                                             
+                                                                                               $TERRAIN
+                                                                                                 STYLE slx_marble
+                                                                                                 PIECE bar_thin_07
+                                                                                                 X 448
+                                                                                                 Y 137
+                                                                                                 ERASE
+                                                                                                 ONE_WAY
+                                                                                               $END
+                                                                                               
+                                                                                                 $TERRAIN
+                                                                                                   STYLE slx_marble
+                                                                                                   PIECE bar_thin_07
+                                                                                                   X 414
+                                                                                                   Y 134
+                                                                                                   ONE_WAY
+                                                                                                 $END
+                                                                                                 
+                                                                                                   $TERRAIN
+                                                                                                     STYLE slx_marble
+                                                                                                     PIECE bar_thin_07
+                                                                                                     X 448
+                                                                                                     Y 134
+                                                                                                     ERASE
+                                                                                                     ONE_WAY
+                                                                                                   $END
+                                                                                                   
+                                                                                                     $TERRAIN
+                                                                                                       STYLE slx_marble
+                                                                                                       PIECE bar_thin_07
+                                                                                                       X 414
+                                                                                                       Y 131
+                                                                                                       ONE_WAY
+                                                                                                     $END
+                                                                                                     
+                                                                                                       $TERRAIN
+                                                                                                         STYLE slx_marble
+                                                                                                         PIECE bar_thin_07
+                                                                                                         X 448
+                                                                                                         Y 131
+                                                                                                         ERASE
+                                                                                                         ONE_WAY
+                                                                                                       $END
+                                                                                                       
+                                                                                                         $TERRAIN
+                                                                                                           STYLE slx_marble
+                                                                                                           PIECE bar_05
+                                                                                                           X 286
+                                                                                                           Y 72
+                                                                                                           ONE_WAY
+                                                                                                         $END
+                                                                                                         
+                                                                                                           $TERRAIN
+                                                                                                             STYLE slx_marble
+                                                                                                             PIECE bar_05
+                                                                                                             X 285
+                                                                                                             Y 82
+                                                                                                             ONE_WAY
+                                                                                                           $END
+                                                                                                           
+                                                                                                             $TERRAIN
+                                                                                                               STYLE slx_marble
+                                                                                                               PIECE bar_05
+                                                                                                               X 268
+                                                                                                               Y 54
+                                                                                                               ONE_WAY
+                                                                                                             $END
+                                                                                                             
+                                                                                                               $TERRAIN
+                                                                                                                 STYLE slx_marble
+                                                                                                                 PIECE bar_05
+                                                                                                                 X 268
+                                                                                                                 Y 65
+                                                                                                                 ONE_WAY
+                                                                                                               $END
+                                                                                                               
+                                                                                                                 $TERRAIN
+                                                                                                                   STYLE slx_marble
+                                                                                                                   PIECE pillar_end_01
+                                                                                                                   X 381
+                                                                                                                   Y 107
+                                                                                                                   ONE_WAY
+                                                                                                                 $END
+                                                                                                                 
+                                                                                                                   $TERRAIN
+                                                                                                                     STYLE slx_marble
+                                                                                                                     PIECE bar_03
+                                                                                                                     X 175
+                                                                                                                     Y 7
+                                                                                                                   $END
+                                                                                                                   
+                                                                                                                     $TERRAIN
+                                                                                                                       STYLE slx_marble
+                                                                                                                       PIECE bar_03
+                                                                                                                       X 223
+                                                                                                                       Y 7
+                                                                                                                     $END
+                                                                                                                     
+                                                                                                                       $TERRAIN
+                                                                                                                         STYLE slx_marble
+                                                                                                                         PIECE pillar_01
+                                                                                                                         X 341
+                                                                                                                         Y 69
+                                                                                                                         ONE_WAY
+                                                                                                                       $END
+                                                                                                                       
+                                                                                                                         $TERRAIN
+                                                                                                                           STYLE slx_marble
+                                                                                                                           PIECE block_01
+                                                                                                                           X 309
+                                                                                                                           Y 95
+                                                                                                                           ONE_WAY
+                                                                                                                         $END
+                                                                                                                         
+                                                                                                                           $TERRAIN
+                                                                                                                             STYLE slx_marble
+                                                                                                                             PIECE block_01
+                                                                                                                             X 301
+                                                                                                                             Y 127
+                                                                                                                             ONE_WAY
+                                                                                                                           $END
+                                                                                                                           
+                                                                                                                             $TERRAIN
+                                                                                                                               STYLE slx_marble
+                                                                                                                               PIECE block_01
+                                                                                                                               X 349
+                                                                                                                               Y 127
+                                                                                                                               ONE_WAY
+                                                                                                                             $END
+                                                                                                                             
+                                                                                                                               $TERRAIN
+                                                                                                                                 STYLE slx_marble
+                                                                                                                                 PIECE brick_small_05
+                                                                                                                                 X 331
+                                                                                                                                 Y 63
+                                                                                                                                 ERASE
+                                                                                                                                 ONE_WAY
+                                                                                                                               $END
+                                                                                                                               
+                                                                                                                                 $TERRAIN
+                                                                                                                                   STYLE slx_marble
+                                                                                                                                   PIECE bar_01
+                                                                                                                                   X 256
+                                                                                                                                   Y 58
+                                                                                                                                   ONE_WAY
+                                                                                                                                 $END
+                                                                                                                                 
+                                                                                                                                   $TERRAIN
+                                                                                                                                     STYLE slx_marble
+                                                                                                                                     PIECE bar_01
+                                                                                                                                     X 189
+                                                                                                                                     Y 58
+                                                                                                                                     ONE_WAY
+                                                                                                                                   $END
+                                                                                                                                   
+                                                                                                                                     $TERRAIN
+                                                                                                                                       STYLE slx_marble
+                                                                                                                                       PIECE block_01
+                                                                                                                                       X 175
+                                                                                                                                       Y 54
+                                                                                                                                       ONE_WAY
+                                                                                                                                     $END
+                                                                                                                                     
+                                                                                                                                       $TERRAIN
+                                                                                                                                         STYLE slx_marble
+                                                                                                                                         PIECE block_01
+                                                                                                                                         X 223
+                                                                                                                                         Y 54
+                                                                                                                                         ONE_WAY
+                                                                                                                                       $END
+                                                                                                                                       
+                                                                                                                                         $TERRAIN
+                                                                                                                                           STYLE slx_marble
+                                                                                                                                           PIECE steel_03
+                                                                                                                                           X 237
+                                                                                                                                           Y 94
+                                                                                                                                         $END
+                                                                                                                                         
+                                                                                                                                           $TERRAIN
+                                                                                                                                             STYLE slx_marble
+                                                                                                                                             PIECE steel_03
+                                                                                                                                             X 213
+                                                                                                                                             Y 94
+                                                                                                                                           $END
+                                                                                                                                           
+                                                                                                                                             $TERRAIN
+                                                                                                                                               STYLE slx_marble
+                                                                                                                                               PIECE steel_03
+                                                                                                                                               X 189
+                                                                                                                                               Y 94
+                                                                                                                                             $END
+                                                                                                                                             
+                                                                                                                                               $TERRAIN
+                                                                                                                                                 STYLE slx_marble
+                                                                                                                                                 PIECE steel_01
+                                                                                                                                                 X 451
+                                                                                                                                                 Y 151
+                                                                                                                                               $END
+                                                                                                                                               
+                                                                                                                                                 $TERRAIN
+                                                                                                                                                   STYLE slx_marble
+                                                                                                                                                   PIECE steel_01
+                                                                                                                                                   X 115
+                                                                                                                                                   Y 151
+                                                                                                                                                 $END
+                                                                                                                                                 
+                                                                                                                                                   $TERRAIN
+                                                                                                                                                     STYLE slx_marble
+                                                                                                                                                     PIECE pillar_end_01
+                                                                                                                                                     X 47
+                                                                                                                                                     Y 93
+                                                                                                                                                     ONE_WAY
+                                                                                                                                                   $END
+                                                                                                                                                   
+                                                                                                                                                     $TERRAIN
+                                                                                                                                                       STYLE slx_marble
+                                                                                                                                                       PIECE pillar_01
+                                                                                                                                                       X 47
+                                                                                                                                                       Y 93
+                                                                                                                                                       ONE_WAY
+                                                                                                                                                     $END
+                                                                                                                                                     
+                                                                                                                                                       $TERRAIN
+                                                                                                                                                         STYLE slx_marble
+                                                                                                                                                         PIECE pillar_01
+                                                                                                                                                         X 71
+                                                                                                                                                         Y 55
+                                                                                                                                                         ONE_WAY
+                                                                                                                                                       $END
+                                                                                                                                                       
+                                                                                                                                                         $TERRAIN
+                                                                                                                                                           STYLE slx_marble
+                                                                                                                                                           PIECE pillar_end_01
+                                                                                                                                                           X 71
+                                                                                                                                                           Y 55
+                                                                                                                                                           ONE_WAY
+                                                                                                                                                         $END
+                                                                                                                                                         
+                                                                                                                                                           $TERRAIN
+                                                                                                                                                             STYLE slx_marble
+                                                                                                                                                             PIECE pillar_01
+                                                                                                                                                             X 71
+                                                                                                                                                             Y 93
+                                                                                                                                                             ONE_WAY
+                                                                                                                                                           $END
+                                                                                                                                                           
+                                                                                                                                                             $TERRAIN
+                                                                                                                                                               STYLE slx_marble
+                                                                                                                                                               PIECE steel_01
+                                                                                                                                                               X 67
+                                                                                                                                                               Y 151
+                                                                                                                                                             $END
+                                                                                                                                                             
+                                                                                                                                                               $TERRAIN
+                                                                                                                                                                 STYLE slx_marble
+                                                                                                                                                                 PIECE pillar_end_01
+                                                                                                                                                                 X 47
+                                                                                                                                                                 Y 93
+                                                                                                                                                                 ONE_WAY
+                                                                                                                                                               $END
+                                                                                                                                                               
+                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                   STYLE slx_marble
+                                                                                                                                                                   PIECE pillar_01
+                                                                                                                                                                   X 527
+                                                                                                                                                                   Y 81
+                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                 $END
+                                                                                                                                                                 
+                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                     STYLE slx_marble
+                                                                                                                                                                     PIECE pillar_end_01
+                                                                                                                                                                     X 527
+                                                                                                                                                                     Y 81
+                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                   $END
+                                                                                                                                                                   
+                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                       STYLE slx_marble
+                                                                                                                                                                       PIECE bar_06
+                                                                                                                                                                       X 332
+                                                                                                                                                                       Y 23
+                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                     $END
+                                                                                                                                                                     
+                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                         STYLE slx_marble
+                                                                                                                                                                         PIECE bar_06
+                                                                                                                                                                         X 350
+                                                                                                                                                                         Y 5
+                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                       $END
+                                                                                                                                                                       
+                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                           STYLE slx_marble
+                                                                                                                                                                           PIECE bar_03
+                                                                                                                                                                           X 367
+                                                                                                                                                                           Y 7
+                                                                                                                                                                         $END
+                                                                                                                                                                         
+                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                             STYLE slx_marble
+                                                                                                                                                                             PIECE bar_03
+                                                                                                                                                                             X 367
+                                                                                                                                                                             Y 2
+                                                                                                                                                                             ERASE
+                                                                                                                                                                           $END
+                                                                                                                                                                           
+                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                               STYLE slx_marble
+                                                                                                                                                                               PIECE bar_05
+                                                                                                                                                                               X 305
+                                                                                                                                                                               Y 23
+                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                             $END
+                                                                                                                                                                             
+                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                 STYLE slx_marble
+                                                                                                                                                                                 PIECE bar_05
+                                                                                                                                                                                 X 287
+                                                                                                                                                                                 Y 5
+                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                               $END
+                                                                                                                                                                               
+                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                   STYLE slx_marble
+                                                                                                                                                                                   PIECE bar_03
+                                                                                                                                                                                   X 263
+                                                                                                                                                                                   Y 2
+                                                                                                                                                                                   ERASE
+                                                                                                                                                                                 $END
+                                                                                                                                                                                 
+                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                     STYLE slx_marble
+                                                                                                                                                                                     PIECE bar_03
+                                                                                                                                                                                     X 271
+                                                                                                                                                                                     Y 7
+                                                                                                                                                                                   $END
+                                                                                                                                                                                   
+                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                       STYLE slx_marble
+                                                                                                                                                                                       PIECE bar_01
+                                                                                                                                                                                       X 330
+                                                                                                                                                                                       Y 50
+                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                     $END
+                                                                                                                                                                                     
+                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                         STYLE slx_marble
+                                                                                                                                                                                         PIECE bar_01
+                                                                                                                                                                                         X 330
+                                                                                                                                                                                         Y 14
+                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                       $END
+                                                                                                                                                                                       
+                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                           STYLE slx_marble
+                                                                                                                                                                                           PIECE bar_03
+                                                                                                                                                                                           X 319
+                                                                                                                                                                                           Y 7
+                                                                                                                                                                                         $END
+                                                                                                                                                                                         
+                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                             STYLE slx_marble
+                                                                                                                                                                                             PIECE bar_06
+                                                                                                                                                                                             X 111
+                                                                                                                                                                                             Y 68
+                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                           $END
+                                                                                                                                                                                           
+                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                               STYLE slx_marble
+                                                                                                                                                                                               PIECE bar_06
+                                                                                                                                                                                               X 99
+                                                                                                                                                                                               Y 80
+                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                             $END
+                                                                                                                                                                                             
+                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                 STYLE slx_marble
+                                                                                                                                                                                                 PIECE bar_05
+                                                                                                                                                                                                 X 454
+                                                                                                                                                                                                 Y 71
+                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                               $END
+                                                                                                                                                                                               
+                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                   STYLE slx_marble
+                                                                                                                                                                                                   PIECE bar_05
+                                                                                                                                                                                                   X 442
+                                                                                                                                                                                                   Y 59
+                                                                                                                                                                                                   NO_OVERWRITE
+                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                 $END
+                                                                                                                                                                                                 
+                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                     STYLE slx_marble
+                                                                                                                                                                                                     PIECE arch
+                                                                                                                                                                                                     X 236
+                                                                                                                                                                                                     Y -17
+                                                                                                                                                                                                     NO_OVERWRITE
+                                                                                                                                                                                                     FLIP_VERTICAL
+                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                   $END
+                                                                                                                                                                                                   
+                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                       STYLE slx_marble
+                                                                                                                                                                                                       PIECE arch
+                                                                                                                                                                                                       X 22
+                                                                                                                                                                                                       Y -19
+                                                                                                                                                                                                       FLIP_VERTICAL
+                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                     $END
+                                                                                                                                                                                                     
+                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                         STYLE slx_marble
+                                                                                                                                                                                                         PIECE arch
+                                                                                                                                                                                                         X 370
+                                                                                                                                                                                                         Y -19
+                                                                                                                                                                                                         FLIP_VERTICAL
+                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                       $END
+                                                                                                                                                                                                       
+                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                           STYLE slx_marble
+                                                                                                                                                                                                           PIECE pillar_01
+                                                                                                                                                                                                           X 479
+                                                                                                                                                                                                           Y 103
+                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                         $END
+                                                                                                                                                                                                         
+                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                             STYLE slx_marble
+                                                                                                                                                                                                             PIECE steel_01
+                                                                                                                                                                                                             X 475
+                                                                                                                                                                                                             Y 151
+                                                                                                                                                                                                           $END
+                                                                                                                                                                                                           
+                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                               STYLE slx_marble
+                                                                                                                                                                                                               PIECE pillar_01
+                                                                                                                                                                                                               X 95
+                                                                                                                                                                                                               Y 29
+                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                             $END
+                                                                                                                                                                                                             
+                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                 STYLE slx_marble
+                                                                                                                                                                                                                 PIECE pillar_01
+                                                                                                                                                                                                                 X 95
+                                                                                                                                                                                                                 Y 103
+                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                               $END
+                                                                                                                                                                                                               
+                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                   STYLE slx_marble
+                                                                                                                                                                                                                   PIECE steel_01
+                                                                                                                                                                                                                   X 91
+                                                                                                                                                                                                                   Y 151
+                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                 
+                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                     STYLE slx_marble
+                                                                                                                                                                                                                     PIECE pillar_end_01
+                                                                                                                                                                                                                     X 95
+                                                                                                                                                                                                                     Y 29
+                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                   
+                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                       STYLE slx_marble
+                                                                                                                                                                                                                       PIECE pillar_01
+                                                                                                                                                                                                                       X 479
+                                                                                                                                                                                                                       Y 31
+                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                     
+                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                         STYLE slx_marble
+                                                                                                                                                                                                                         PIECE pillar_end_01
+                                                                                                                                                                                                                         X 479
+                                                                                                                                                                                                                         Y 31
+                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                       
+                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                           STYLE slx_marble
+                                                                                                                                                                                                                           PIECE pillar_01
+                                                                                                                                                                                                                           X 503
+                                                                                                                                                                                                                           Y 105
+                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                                             STYLE slx_marble
+                                                                                                                                                                                                                             PIECE pillar_end_01
+                                                                                                                                                                                                                             X 503
+                                                                                                                                                                                                                             Y 105
+                                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                                           $END
+                                                                                                                                                                                                                           
+                                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                                               STYLE slx_marble
+                                                                                                                                                                                                                               PIECE steel_01
+                                                                                                                                                                                                                               X 523
+                                                                                                                                                                                                                               Y 151
+                                                                                                                                                                                                                             $END
+                                                                                                                                                                                                                             
+                                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                                 STYLE slx_marble
+                                                                                                                                                                                                                                 PIECE steel_01
+                                                                                                                                                                                                                                 X 499
+                                                                                                                                                                                                                                 Y 151
+                                                                                                                                                                                                                               $END
+                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                                   STYLE slx_marble
+                                                                                                                                                                                                                                   PIECE steel_01
+                                                                                                                                                                                                                                   X 43
+                                                                                                                                                                                                                                   Y 151
+                                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                                     STYLE slx_marble
+                                                                                                                                                                                                                                     PIECE pillar_01
+                                                                                                                                                                                                                                     X 381
+                                                                                                                                                                                                                                     Y 33
+                                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                                       STYLE slx_marble
+                                                                                                                                                                                                                                       PIECE pillar_end_01
+                                                                                                                                                                                                                                       X 381
+                                                                                                                                                                                                                                       Y 29
+                                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                                     
+ 

@@ -1,0 +1,730 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The Chain with no name
+ AUTHOR DMA Design
+ MUSIC menace_amiga
+ ID xCFB309B0CFB309B0
+ VERSION x000000000000000D
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 460
+ HEIGHT 160
+ START_X 184
+ START_Y 80
+ THEME slx_brick
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 80
+ TIME_LIMIT 180
+ MAX_SPAWN_INTERVAL 53
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 3
+   TIMEBOMBER 1
+   BLOCKER 2
+   BUILDER 10
+   BASHER 3
+   MINER 3
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_brick
+   PIECE window
+   X 72
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_brick
+   PIECE exit
+   X 360
+   Y 76
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_03
+   X 130
+   Y 0
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_brick
+     PIECE pole_silver_02
+     X 130
+     Y 8
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_brick
+       PIECE pole_silver_02
+       X 130
+       Y 24
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_brick
+         PIECE pole_silver_02
+         X 130
+         Y 40
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_brick
+           PIECE pole_silver_01
+           X 130
+           Y 55
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_brick
+             PIECE platform_06
+             X 120
+             Y 63
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_brick
+               PIECE platform_06
+               X 148
+               Y 63
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_brick
+                 PIECE platform_06
+                 X 89
+                 Y 63
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_brick
+                   PIECE bricks_tiny_01
+                   X 177
+                   Y 61
+                   ERASE
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_brick
+                     PIECE platform_05
+                     X 73
+                     Y 63
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_brick
+                       PIECE pole_silver_03
+                       X 164
+                       Y 0
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_brick
+                         PIECE pole_silver_02
+                         X 164
+                         Y 8
+                         ONE_WAY
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_brick
+                           PIECE pole_silver_02
+                           X 164
+                           Y 24
+                           ONE_WAY
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_brick
+                             PIECE pole_silver_02
+                             X 164
+                             Y 39
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_brick
+                               PIECE pole_silver_02
+                               X 164
+                               Y 45
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_brick
+                                 PIECE pole_silver_01
+                                 X 164
+                                 Y 55
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_brick
+                                   PIECE platform_05
+                                   X 172
+                                   Y 63
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_brick
+                                     PIECE platform_04
+                                     X 162
+                                     Y 63
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_brick
+                                       PIECE platform_04
+                                       X 137
+                                       Y 51
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_brick
+                                         PIECE pole_silver_02
+                                         X 164
+                                         Y 43
+                                         ONE_WAY
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_brick
+                                           PIECE pole_silver_01
+                                           X 147
+                                           Y 55
+                                           ONE_WAY
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_brick
+                                             PIECE pole_silver_02
+                                             X 147
+                                             Y 40
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_brick
+                                               PIECE pole_silver_02
+                                               X 147
+                                               Y 24
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_brick
+                                                 PIECE pole_silver_02
+                                                 X 147
+                                                 Y 8
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_brick
+                                                   PIECE pole_silver_02
+                                                   X 147
+                                                   Y 0
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_brick
+                                                     PIECE pole_silver_03
+                                                     X 147
+                                                     Y 0
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_brick
+                                                       PIECE platform_04
+                                                       X 138
+                                                       Y 39
+                                                       NO_OVERWRITE
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_brick
+                                                         PIECE platform_04
+                                                         X 139
+                                                         Y 26
+                                                         NO_OVERWRITE
+                                                         ONE_WAY
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_brick
+                                                           PIECE platform_04
+                                                           X 136
+                                                           Y 14
+                                                           NO_OVERWRITE
+                                                           ONE_WAY
+                                                         $END
+                                                         
+                                                           $TERRAIN
+                                                             STYLE slx_brick
+                                                             PIECE bricks_small_01
+                                                             X 161
+                                                             Y 67
+                                                             ONE_WAY
+                                                           $END
+                                                           
+                                                             $TERRAIN
+                                                               STYLE slx_brick
+                                                               PIECE bricks_small_01
+                                                               X 193
+                                                               Y 67
+                                                               ONE_WAY
+                                                             $END
+                                                             
+                                                               $TERRAIN
+                                                                 STYLE slx_brick
+                                                                 PIECE bricks_small_01
+                                                                 X 198
+                                                                 Y 67
+                                                                 ERASE
+                                                                 ONE_WAY
+                                                               $END
+                                                               
+                                                                 $TERRAIN
+                                                                   STYLE slx_brick
+                                                                   PIECE bricks_small_01
+                                                                   X 73
+                                                                   Y 67
+                                                                   ONE_WAY
+                                                                 $END
+                                                                 
+                                                                   $TERRAIN
+                                                                     STYLE slx_brick
+                                                                     PIECE bricks_small_01
+                                                                     X 105
+                                                                     Y 67
+                                                                     ONE_WAY
+                                                                   $END
+                                                                   
+                                                                     $TERRAIN
+                                                                       STYLE slx_brick
+                                                                       PIECE bricks_small_01
+                                                                       X 131
+                                                                       Y 67
+                                                                       ONE_WAY
+                                                                     $END
+                                                                     
+                                                                       $TERRAIN
+                                                                         STYLE slx_brick
+                                                                         PIECE steel_04
+                                                                         X 194
+                                                                         Y 87
+                                                                       $END
+                                                                       
+                                                                         $TERRAIN
+                                                                           STYLE slx_brick
+                                                                           PIECE steel_02
+                                                                           X 194
+                                                                           Y 63
+                                                                         $END
+                                                                         
+                                                                           $TERRAIN
+                                                                             STYLE slx_brick
+                                                                             PIECE steel_04
+                                                                             X 194
+                                                                             Y 101
+                                                                           $END
+                                                                           
+                                                                             $TERRAIN
+                                                                               STYLE slx_brick
+                                                                               PIECE platform_04
+                                                                               X 208
+                                                                               Y 63
+                                                                               ONE_WAY
+                                                                             $END
+                                                                             
+                                                                               $TERRAIN
+                                                                                 STYLE slx_brick
+                                                                                 PIECE platform_04
+                                                                                 X 240
+                                                                                 Y 63
+                                                                                 ONE_WAY
+                                                                               $END
+                                                                               
+                                                                                 $TERRAIN
+                                                                                   STYLE slx_brick
+                                                                                   PIECE platform_04
+                                                                                   X 272
+                                                                                   Y 63
+                                                                                   ONE_WAY
+                                                                                 $END
+                                                                                 
+                                                                                   $TERRAIN
+                                                                                     STYLE slx_brick
+                                                                                     PIECE platform_04
+                                                                                     X 208
+                                                                                     Y 81
+                                                                                     ONE_WAY
+                                                                                   $END
+                                                                                   
+                                                                                     $TERRAIN
+                                                                                       STYLE slx_brick
+                                                                                       PIECE platform_04
+                                                                                       X 240
+                                                                                       Y 81
+                                                                                       ONE_WAY
+                                                                                     $END
+                                                                                     
+                                                                                       $TERRAIN
+                                                                                         STYLE slx_brick
+                                                                                         PIECE platform_04
+                                                                                         X 272
+                                                                                         Y 81
+                                                                                         ONE_WAY
+                                                                                       $END
+                                                                                       
+                                                                                         $TERRAIN
+                                                                                           STYLE slx_brick
+                                                                                           PIECE platform_04
+                                                                                           X 208
+                                                                                           Y 111
+                                                                                           ONE_WAY
+                                                                                         $END
+                                                                                         
+                                                                                           $TERRAIN
+                                                                                             STYLE slx_brick
+                                                                                             PIECE platform_04
+                                                                                             X 240
+                                                                                             Y 111
+                                                                                             ONE_WAY
+                                                                                           $END
+                                                                                           
+                                                                                             $TERRAIN
+                                                                                               STYLE slx_brick
+                                                                                               PIECE platform_04
+                                                                                               X 272
+                                                                                               Y 111
+                                                                                               ONE_WAY
+                                                                                             $END
+                                                                                             
+                                                                                               $TERRAIN
+                                                                                                 STYLE slx_brick
+                                                                                                 PIECE pole_silver_01
+                                                                                                 X 293
+                                                                                                 Y 55
+                                                                                                 ONE_WAY
+                                                                                               $END
+                                                                                               
+                                                                                                 $TERRAIN
+                                                                                                   STYLE slx_brick
+                                                                                                   PIECE pole_silver_02
+                                                                                                   X 293
+                                                                                                   Y 39
+                                                                                                   ONE_WAY
+                                                                                                 $END
+                                                                                                 
+                                                                                                   $TERRAIN
+                                                                                                     STYLE slx_brick
+                                                                                                     PIECE pole_silver_02
+                                                                                                     X 293
+                                                                                                     Y 23
+                                                                                                     ONE_WAY
+                                                                                                   $END
+                                                                                                   
+                                                                                                     $TERRAIN
+                                                                                                       STYLE slx_brick
+                                                                                                       PIECE pole_silver_02
+                                                                                                       X 293
+                                                                                                       Y 8
+                                                                                                       ONE_WAY
+                                                                                                     $END
+                                                                                                     
+                                                                                                       $TERRAIN
+                                                                                                         STYLE slx_brick
+                                                                                                         PIECE pole_silver_02
+                                                                                                         X 293
+                                                                                                         Y 0
+                                                                                                         ONE_WAY
+                                                                                                       $END
+                                                                                                       
+                                                                                                         $TERRAIN
+                                                                                                           STYLE slx_brick
+                                                                                                           PIECE pole_silver_03
+                                                                                                           X 293
+                                                                                                           Y 0
+                                                                                                           ONE_WAY
+                                                                                                         $END
+                                                                                                         
+                                                                                                           $TERRAIN
+                                                                                                             STYLE slx_brick
+                                                                                                             PIECE platform_06
+                                                                                                             X 145
+                                                                                                             Y 146
+                                                                                                             ONE_WAY
+                                                                                                           $END
+                                                                                                           
+                                                                                                             $TERRAIN
+                                                                                                               STYLE slx_brick
+                                                                                                               PIECE platform_06
+                                                                                                               X 176
+                                                                                                               Y 146
+                                                                                                               ONE_WAY
+                                                                                                             $END
+                                                                                                             
+                                                                                                               $TERRAIN
+                                                                                                                 STYLE slx_brick
+                                                                                                                 PIECE platform_06
+                                                                                                                 X 205
+                                                                                                                 Y 146
+                                                                                                                 ONE_WAY
+                                                                                                               $END
+                                                                                                               
+                                                                                                                 $TERRAIN
+                                                                                                                   STYLE slx_brick
+                                                                                                                   PIECE platform_06
+                                                                                                                   X 236
+                                                                                                                   Y 146
+                                                                                                                   ONE_WAY
+                                                                                                                 $END
+                                                                                                                 
+                                                                                                                   $TERRAIN
+                                                                                                                     STYLE slx_brick
+                                                                                                                     PIECE platform_06
+                                                                                                                     X 268
+                                                                                                                     Y 146
+                                                                                                                     ONE_WAY
+                                                                                                                   $END
+                                                                                                                   
+                                                                                                                     $TERRAIN
+                                                                                                                       STYLE slx_brick
+                                                                                                                       PIECE platform_06
+                                                                                                                       X 300
+                                                                                                                       Y 146
+                                                                                                                       ONE_WAY
+                                                                                                                     $END
+                                                                                                                     
+                                                                                                                       $TERRAIN
+                                                                                                                         STYLE slx_brick
+                                                                                                                         PIECE platform_06
+                                                                                                                         X 332
+                                                                                                                         Y 146
+                                                                                                                         ONE_WAY
+                                                                                                                       $END
+                                                                                                                       
+                                                                                                                         $TERRAIN
+                                                                                                                           STYLE slx_brick
+                                                                                                                           PIECE chain_01
+                                                                                                                           X 249
+                                                                                                                           Y 0
+                                                                                                                           ONE_WAY
+                                                                                                                         $END
+                                                                                                                         
+                                                                                                                           $TERRAIN
+                                                                                                                             STYLE slx_brick
+                                                                                                                             PIECE chain_03
+                                                                                                                             X 243
+                                                                                                                             Y 0
+                                                                                                                             ONE_WAY
+                                                                                                                           $END
+                                                                                                                           
+                                                                                                                             $TERRAIN
+                                                                                                                               STYLE slx_brick
+                                                                                                                               PIECE chain_clip
+                                                                                                                               X 242
+                                                                                                                               Y 32
+                                                                                                                               ONE_WAY
+                                                                                                                             $END
+                                                                                                                             
+                                                                                                                               $TERRAIN
+                                                                                                                                 STYLE slx_brick
+                                                                                                                                 PIECE chain_03
+                                                                                                                                 X 31
+                                                                                                                                 Y 0
+                                                                                                                                 ONE_WAY
+                                                                                                                               $END
+                                                                                                                               
+                                                                                                                                 $TERRAIN
+                                                                                                                                   STYLE slx_brick
+                                                                                                                                   PIECE chain_03
+                                                                                                                                   X 31
+                                                                                                                                   Y 32
+                                                                                                                                   ONE_WAY
+                                                                                                                                 $END
+                                                                                                                                 
+                                                                                                                                   $TERRAIN
+                                                                                                                                     STYLE slx_brick
+                                                                                                                                     PIECE hook_01
+                                                                                                                                     X 28
+                                                                                                                                     Y 63
+                                                                                                                                     ONE_WAY
+                                                                                                                                   $END
+                                                                                                                                   
+                                                                                                                                     $TERRAIN
+                                                                                                                                       STYLE slx_brick
+                                                                                                                                       PIECE hook_01
+                                                                                                                                       X 267
+                                                                                                                                       Y 2
+                                                                                                                                       ONE_WAY
+                                                                                                                                     $END
+                                                                                                                                     
+                                                                                                                                       $TERRAIN
+                                                                                                                                         STYLE slx_brick
+                                                                                                                                         PIECE steel_01
+                                                                                                                                         X 364
+                                                                                                                                         Y 0
+                                                                                                                                       $END
+                                                                                                                                       
+                                                                                                                                         $TERRAIN
+                                                                                                                                           STYLE slx_brick
+                                                                                                                                           PIECE steel_01
+                                                                                                                                           X 364
+                                                                                                                                           Y 24
+                                                                                                                                         $END
+                                                                                                                                         
+                                                                                                                                           $TERRAIN
+                                                                                                                                             STYLE slx_brick
+                                                                                                                                             PIECE steel_01
+                                                                                                                                             X 388
+                                                                                                                                             Y 0
+                                                                                                                                           $END
+                                                                                                                                           
+                                                                                                                                             $TERRAIN
+                                                                                                                                               STYLE slx_brick
+                                                                                                                                               PIECE steel_01
+                                                                                                                                               X 388
+                                                                                                                                               Y 24
+                                                                                                                                             $END
+                                                                                                                                             
+                                                                                                                                               $TERRAIN
+                                                                                                                                                 STYLE slx_brick
+                                                                                                                                                 PIECE steel_01
+                                                                                                                                                 X 340
+                                                                                                                                                 Y 0
+                                                                                                                                               $END
+                                                                                                                                               
+                                                                                                                                                 $TERRAIN
+                                                                                                                                                   STYLE slx_brick
+                                                                                                                                                   PIECE steel_01
+                                                                                                                                                   X 316
+                                                                                                                                                   Y 0
+                                                                                                                                                 $END
+                                                                                                                                                 
+                                                                                                                                                   $TERRAIN
+                                                                                                                                                     STYLE slx_brick
+                                                                                                                                                     PIECE steel_01
+                                                                                                                                                     X 412
+                                                                                                                                                     Y 0
+                                                                                                                                                   $END
+                                                                                                                                                   
+                                                                                                                                                     $TERRAIN
+                                                                                                                                                       STYLE slx_brick
+                                                                                                                                                       PIECE steel_01
+                                                                                                                                                       X 388
+                                                                                                                                                       Y 48
+                                                                                                                                                     $END
+                                                                                                                                                     
+                                                                                                                                                       $TERRAIN
+                                                                                                                                                         STYLE slx_brick
+                                                                                                                                                         PIECE bricks_small_01
+                                                                                                                                                         X 355
+                                                                                                                                                         Y 111
+                                                                                                                                                         ONE_WAY
+                                                                                                                                                       $END
+                                                                                                                                                       
+                                                                                                                                                         $TERRAIN
+                                                                                                                                                           STYLE slx_brick
+                                                                                                                                                           PIECE bricks_small_01
+                                                                                                                                                           X 366
+                                                                                                                                                           Y 111
+                                                                                                                                                           ONE_WAY
+                                                                                                                                                         $END
+                                                                                                                                                         
+                                                                                                                                                           $TERRAIN
+                                                                                                                                                             STYLE slx_brick
+                                                                                                                                                             PIECE steel_01
+                                                                                                                                                             X 42
+                                                                                                                                                             Y 0
+                                                                                                                                                           $END
+                                                                                                                                                           
+                                                                                                                                                             $TERRAIN
+                                                                                                                                                               STYLE slx_brick
+                                                                                                                                                               PIECE steel_01
+                                                                                                                                                               X 42
+                                                                                                                                                               Y 24
+                                                                                                                                                             $END
+                                                                                                                                                             
+                                                                                                                                                               $TERRAIN
+                                                                                                                                                                 STYLE slx_brick
+                                                                                                                                                                 PIECE steel_01
+                                                                                                                                                                 X 42
+                                                                                                                                                                 Y 48
+                                                                                                                                                               $END
+                                                                                                                                                               
+                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                   STYLE slx_brick
+                                                                                                                                                                   PIECE steel_01
+                                                                                                                                                                   X 42
+                                                                                                                                                                   Y 72
+                                                                                                                                                                 $END
+                                                                                                                                                                 
+                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                     STYLE slx_brick
+                                                                                                                                                                     PIECE steel_01
+                                                                                                                                                                     X 42
+                                                                                                                                                                     Y 96
+                                                                                                                                                                   $END
+                                                                                                                                                                   
+                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                       STYLE slx_brick
+                                                                                                                                                                       PIECE steel_01
+                                                                                                                                                                       X 42
+                                                                                                                                                                       Y 120
+                                                                                                                                                                     $END
+                                                                                                                                                                     
+                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                         STYLE slx_brick
+                                                                                                                                                                         PIECE steel_01
+                                                                                                                                                                         X 42
+                                                                                                                                                                         Y 144
+                                                                                                                                                                       $END
+                                                                                                                                                                       
+ 

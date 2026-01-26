@@ -1,0 +1,287 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Left To Right, Right To Left
+ AUTHOR WillLem
+ MUSIC awesome_amiga
+ ID x5E31C01E39DD38DC
+ VERSION x0000000000000008
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 320
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME slx_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 30
+ MAX_SPAWN_INTERVAL 78
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   WALKER 2
+   JUMPER 2
+   BALLOONER 20
+   BOMBER 2
+   FREEZER 2
+   BUILDER 2
+   LASERER 2
+   BASHER 2
+   DIGGER 2
+ $END 
+ 
+ $TALISMAN 
+   TITLE Bronze Talisman
+   ID 0
+   COLOR Bronze
+   SAVE_REQUIREMENT 40
+ $END 
+ 
+ $TALISMAN 
+   TITLE Silver Talisman
+   ID 1
+   COLOR Silver
+   SAVE_REQUIREMENT 40
+   BUILDER_LIMIT 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Gold Talisman
+   ID 2
+   COLOR Gold
+   SAVE_REQUIREMENT 40
+   BUILDER_LIMIT 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_crystal
+   PIECE exit
+   X 98
+   Y 50
+   NO_OVERWRITE
+   RIVAL 
+ $END
+ 
+ $GADGET
+   STYLE slx_crystal
+   PIECE exit
+   X 178
+   Y 50
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_crystal
+   PIECE window
+   X 56
+   Y 14
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_crystal
+   PIECE window
+   X 215
+   Y 14
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   FLIP_X_OFFSET -1
+   RIVAL 
+ $END
+ 
+ $GADGET
+   STYLE slx_crystal
+   PIECE water
+   X 37
+   Y 145
+   WIDTH 128
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_crystal
+   PIECE water
+   X 165
+   Y 145
+   WIDTH 120
+   HEIGHT 16
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 22
+   Y 73
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_crystal
+     PIECE bar_03
+     X 245
+     Y 74
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_crystal
+       PIECE bar_04
+       X 66
+       Y 73
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_crystal
+         PIECE bar_04
+         X 192
+         Y 73
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_crystal
+           PIECE bar_01
+           X 21
+           Y 118
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_crystal
+             PIECE bar_01
+             X 285
+             Y 118
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_crystal
+               PIECE thread_02
+               X 36
+               Y 87
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_crystal
+                 PIECE thread_01
+                 X 254
+                 Y 88
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_crystal
+                   PIECE bar_04
+                   X 129
+                   Y 73
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_crystal
+                     PIECE orb
+                     X 178
+                     Y 142
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_crystal
+                       PIECE orb
+                       X 177
+                       Y 134
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_crystal
+                         PIECE orb
+                         X 174
+                         Y 126
+                         ONE_WAY
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_crystal
+                           PIECE orb
+                           X 168
+                           Y 118
+                           ONE_WAY
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_crystal
+                             PIECE orb
+                             X 160
+                             Y 114
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_crystal
+                               PIECE orb
+                               X 152
+                               Y 112
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_crystal
+                                 PIECE orb
+                                 X 144
+                                 Y 114
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_crystal
+                                   PIECE orb
+                                   X 136
+                                   Y 119
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_crystal
+                                     PIECE orb
+                                     X 131
+                                     Y 127
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_crystal
+                                       PIECE orb
+                                       X 128
+                                       Y 135
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_crystal
+                                         PIECE orb
+                                         X 127
+                                         Y 144
+                                         ONE_WAY
+                                       $END
+                                       
+ 

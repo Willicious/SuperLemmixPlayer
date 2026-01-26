@@ -1,0 +1,638 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE There's Always One...
+ AUTHOR WillLem
+ ID x8CAFB1438CAFB142
+ VERSION x000000000000005C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 808
+ HEIGHT 160
+ START_X 394
+ START_Y 80
+ THEME willlem_lemminas_classic
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 10
+ SAVE_REQUIREMENT 10
+ TIME_LIMIT 60
+ MAX_SPAWN_INTERVAL 15
+ SPAWN_INTERVAL_LOCKED
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   DIGGER 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_fire
+   PIECE lava
+   X 423
+   Y 148
+   WIDTH 152
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE window
+   X 251
+   Y 1
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE exit
+   X 338
+   Y 88
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE lava
+   X 631
+   Y 140
+   WIDTH 136
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE lava
+   X 36
+   Y 140
+   WIDTH 240
+   HEIGHT 20
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE firepit
+   X 272
+   Y 65
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE firepit
+   X 244
+   Y 65
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE firepit
+   X 90
+   Y 66
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE firepit
+   X 679
+   Y 66
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE flamethrower
+   X 422
+   Y 52
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_fire
+   PIECE flamethrower_flip
+   X 497
+   Y 87
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group1523671440
+   
+   $TERRAIN
+     STYLE slx_fire
+     PIECE platform
+     X 513
+     Y 114
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE slx_fire
+     PIECE platform
+     X 470
+     Y 114
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE slx_fire
+     PIECE platform
+     X 427
+     Y 114
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ $TERRAINGROUP
+   NAME Group108832618
+   
+   $TERRAIN
+     STYLE slx_fire
+     PIECE steel_03
+     X 427
+     Y 109
+   $END
+   
+   $TERRAIN
+     STYLE slx_fire
+     PIECE steel_03
+     X 427
+     Y 106
+     ERASE
+   $END
+   
+   $TERRAIN
+     STYLE slx_fire
+     PIECE steel_03
+     X 427
+     Y 114
+     NO_OVERWRITE
+   $END
+   
+   $TERRAIN
+     STYLE slx_fire
+     PIECE steel_03
+     X 427
+     Y 123
+     ERASE
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_01
+   X 284
+   Y 140
+ $END
+ 
+   $TERRAIN
+     STYLE slx_fire
+     PIECE bars_06
+     X 230
+     Y 80
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_fire
+       PIECE bars_06
+       X 281
+       Y 80
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_fire
+         PIECE bars_06
+         X 247
+         Y 80
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_fire
+           PIECE bars_06
+           X 266
+           Y 80
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_fire
+             PIECE spike
+             X 306
+             Y 42
+             FLIP_VERTICAL
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_fire
+               PIECE spike
+               X 216
+               Y 42
+               FLIP_VERTICAL
+               FLIP_HORIZONTAL
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_fire
+                 PIECE steel_01
+                 X 359
+                 Y 140
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_fire
+                   PIECE steel_01
+                   X 334
+                   Y 140
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_fire
+                     PIECE steel_01
+                     X 309
+                     Y 140
+                   $END
+                   
+                     $TERRAIN
+                       STYLE *group
+                       PIECE Group1523671440
+                       X 427
+                       Y 114
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_fire
+                         PIECE platform
+                         X 524
+                         Y 140
+                         ONE_WAY
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_fire
+                           PIECE pillar
+                           X 221
+                           Y 18
+                           ONE_WAY
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_fire
+                             PIECE pillar_end
+                             X 215
+                             Y 7
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_fire
+                               PIECE bricks_03
+                               X 572
+                               Y 113
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_fire
+                                 PIECE bricks_03
+                                 X 572
+                                 Y 77
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_fire
+                                   PIECE bricks_03
+                                   X 572
+                                   Y 42
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_fire
+                                     PIECE bricks_03
+                                     X 402
+                                     Y 87
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_fire
+                                       PIECE bricks_03
+                                       X 402
+                                       Y 51
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_fire
+                                         PIECE steel_01
+                                         X 19
+                                         Y 140
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_fire
+                                           PIECE steel_01
+                                           X 762
+                                           Y 140
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_fire
+                                             PIECE chain_04
+                                             X 132
+                                             Y -12
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_fire
+                                               PIECE chain_04
+                                               X 132
+                                               Y 44
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_fire
+                                                 PIECE chain_03
+                                                 X 140
+                                                 Y 17
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_fire
+                                                   PIECE rock_03
+                                                   X 92
+                                                   Y 74
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_fire
+                                                     PIECE chain_04
+                                                     X 56
+                                                     Y -12
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_fire
+                                                       PIECE chain_03
+                                                       X 64
+                                                       Y 17
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_fire
+                                                         PIECE chain_04
+                                                         X 56
+                                                         Y 44
+                                                         ONE_WAY
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_fire
+                                                           PIECE rock_03
+                                                           X 36
+                                                           Y 74
+                                                           ONE_WAY
+                                                         $END
+                                                         
+                                                           $TERRAIN
+                                                             STYLE slx_fire
+                                                             PIECE rock_03
+                                                             X 76
+                                                             Y 74
+                                                             ONE_WAY
+                                                           $END
+                                                           
+                                                             $TERRAIN
+                                                               STYLE slx_fire
+                                                               PIECE chain_04
+                                                               X 719
+                                                               Y 44
+                                                               ONE_WAY
+                                                             $END
+                                                             
+                                                               $TERRAIN
+                                                                 STYLE slx_fire
+                                                                 PIECE chain_04
+                                                                 X 643
+                                                                 Y 44
+                                                                 ONE_WAY
+                                                               $END
+                                                               
+                                                                 $TERRAIN
+                                                                   STYLE slx_fire
+                                                                   PIECE chain_04
+                                                                   X 719
+                                                                   Y -12
+                                                                   ONE_WAY
+                                                                 $END
+                                                                 
+                                                                   $TERRAIN
+                                                                     STYLE slx_fire
+                                                                     PIECE chain_04
+                                                                     X 643
+                                                                     Y -12
+                                                                     ONE_WAY
+                                                                   $END
+                                                                   
+                                                                     $TERRAIN
+                                                                       STYLE slx_fire
+                                                                       PIECE rock_03
+                                                                       X 623
+                                                                       Y 74
+                                                                       ONE_WAY
+                                                                     $END
+                                                                     
+                                                                       $TERRAIN
+                                                                         STYLE slx_fire
+                                                                         PIECE rock_03
+                                                                         X 679
+                                                                         Y 74
+                                                                         ONE_WAY
+                                                                       $END
+                                                                       
+                                                                         $TERRAIN
+                                                                           STYLE slx_fire
+                                                                           PIECE rock_03
+                                                                           X 663
+                                                                           Y 74
+                                                                           ONE_WAY
+                                                                         $END
+                                                                         
+                                                                           $TERRAIN
+                                                                             STYLE slx_fire
+                                                                             PIECE chain_03
+                                                                             X 651
+                                                                             Y 17
+                                                                             ONE_WAY
+                                                                           $END
+                                                                           
+                                                                             $TERRAIN
+                                                                               STYLE slx_fire
+                                                                               PIECE chain_03
+                                                                               X 727
+                                                                               Y 17
+                                                                               ONE_WAY
+                                                                             $END
+                                                                             
+                                                                               $TERRAIN
+                                                                                 STYLE slx_fire
+                                                                                 PIECE bricks_03
+                                                                                 X 572
+                                                                                 Y 149
+                                                                                 ONE_WAY
+                                                                               $END
+                                                                               
+                                                                                 $TERRAIN
+                                                                                   STYLE slx_fire
+                                                                                   PIECE bricks_07
+                                                                                   X 588
+                                                                                   Y 108
+                                                                                   ONE_WAY
+                                                                                 $END
+                                                                                 
+                                                                                   $TERRAIN
+                                                                                     STYLE slx_fire
+                                                                                     PIECE bricks_04
+                                                                                     X 607
+                                                                                     Y 146
+                                                                                     ONE_WAY
+                                                                                   $END
+                                                                                   
+                                                                                     $TERRAIN
+                                                                                       STYLE slx_fire
+                                                                                       PIECE bricks_04
+                                                                                       X 587
+                                                                                       Y 145
+                                                                                       ONE_WAY
+                                                                                     $END
+                                                                                     
+                                                                                       $TERRAIN
+                                                                                         STYLE slx_fire
+                                                                                         PIECE bricks_04
+                                                                                         X 627
+                                                                                         Y 146
+                                                                                         ONE_WAY
+                                                                                       $END
+                                                                                       
+                                                                                         $TERRAIN
+                                                                                           STYLE slx_fire
+                                                                                           PIECE bricks_07
+                                                                                           X 247
+                                                                                           Y 130
+                                                                                           FLIP_HORIZONTAL
+                                                                                           ONE_WAY
+                                                                                         $END
+                                                                                         
+                                                                                           $TERRAIN
+                                                                                             STYLE slx_fire
+                                                                                             PIECE steel_01
+                                                                                             X 383
+                                                                                             Y 140
+                                                                                           $END
+                                                                                           
+                                                                                             $TERRAIN
+                                                                                               STYLE slx_fire
+                                                                                               PIECE steel_01
+                                                                                               X 408
+                                                                                               Y 140
+                                                                                             $END
+                                                                                             
+                                                                                               $TERRAIN
+                                                                                                 STYLE *group
+                                                                                                 PIECE Group1523671440
+                                                                                                 X 427
+                                                                                                 Y 42
+                                                                                                 ONE_WAY
+                                                                                               $END
+                                                                                               
+                                                                                                 $TERRAIN
+                                                                                                   STYLE *group
+                                                                                                   PIECE Group1523671440
+                                                                                                   X 438
+                                                                                                   Y 81
+                                                                                                   ONE_WAY
+                                                                                                 $END
+                                                                                                 
+                                                                                                   $TERRAIN
+                                                                                                     STYLE *group
+                                                                                                     PIECE Group1523671440
+                                                                                                     X 433
+                                                                                                     Y 140
+                                                                                                     ONE_WAY
+                                                                                                   $END
+                                                                                                   
+                                                                                                     $TERRAIN
+                                                                                                       STYLE *group
+                                                                                                       PIECE Group1523671440
+                                                                                                       X 297
+                                                                                                       Y 42
+                                                                                                       ONE_WAY
+                                                                                                     $END
+                                                                                                     
+                                                                                                       $TERRAIN
+                                                                                                         STYLE slx_fire
+                                                                                                         PIECE platform
+                                                                                                         X 253
+                                                                                                         Y 42
+                                                                                                         ONE_WAY
+                                                                                                       $END
+                                                                                                       
+                                                                                                         $TERRAIN
+                                                                                                           STYLE slx_fire
+                                                                                                           PIECE platform
+                                                                                                           X 209
+                                                                                                           Y 42
+                                                                                                           ONE_WAY
+                                                                                                         $END
+                                                                                                         
+                                                                                                           $TERRAIN
+                                                                                                             STYLE *group
+                                                                                                             PIECE Group108832618
+                                                                                                             X 427
+                                                                                                             Y 114
+                                                                                                           $END
+                                                                                                           
+ 

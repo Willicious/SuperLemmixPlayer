@@ -1,0 +1,1367 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Smile if you love lemmings
+ AUTHOR DMA Design 
+ MUSIC menace_amiga
+ ID xBAC0F043BAC0F043
+ VERSION x000000000000000E
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1600
+ HEIGHT 160
+ START_X 840
+ START_Y 80
+ THEME slx_pillar
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 20
+ SAVE_REQUIREMENT 10
+ TIME_LIMIT 300
+ MAX_SPAWN_INTERVAL 28
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 20
+   FLOATER 20
+   TIMEBOMBER 20
+   BLOCKER 20
+   BUILDER 20
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_pillar
+   PIECE window
+   X 816
+   Y 4
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_pillar
+   PIECE exit
+   X 752
+   Y 120
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 912
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 976
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 656
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1376
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1312
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1248
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1184
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1120
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 592
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 104
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1440
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1504
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X -24
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 40
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 168
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 232
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 296
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 360
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 424
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 488
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE water
+   X 1568
+   Y 144
+   WIDTH 64
+   HEIGHT 16
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_07
+   X 735
+   Y 145
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_pillar
+     PIECE block_08
+     X 777
+     Y 145
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_pillar
+       PIECE block_08
+       X 817
+       Y 145
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_pillar
+         PIECE block_07
+         X 857
+         Y 145
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_pillar
+           PIECE block_13
+           X 872
+           Y 105
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_pillar
+             PIECE block_14
+             X 894
+             Y 85
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_pillar
+               PIECE block_13
+               X 819
+               Y 105
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_pillar
+                 PIECE block_13
+                 X 819
+                 Y 85
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_pillar
+                   PIECE block_13
+                   X 819
+                   Y 65
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_pillar
+                     PIECE block_13
+                     X 819
+                     Y 45
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_pillar
+                       PIECE block_13
+                       X 757
+                       Y 65
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_pillar
+                         PIECE steel_01
+                         X 711
+                         Y 142
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_pillar
+                           PIECE steel_01
+                           X 899
+                           Y 142
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_pillar
+                             PIECE block_14
+                             X 757
+                             Y 45
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_pillar
+                               PIECE pillar_end_04
+                               X 682
+                               Y 101
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_pillar
+                                 PIECE pillar_02
+                                 X 682
+                                 Y 38
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_pillar
+                                   PIECE pillar_02
+                                   X 682
+                                   Y -15
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_pillar
+                                     PIECE pillar_02
+                                     X 948
+                                     Y -8
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_pillar
+                                       PIECE pillar_end_04
+                                       X 948
+                                       Y 55
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_pillar
+                                         PIECE steel_01
+                                         X 1040
+                                         Y 142
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_pillar
+                                           PIECE steel_01
+                                           X 568
+                                           Y 143
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_pillar
+                                             PIECE block_11
+                                             X 548
+                                             Y 123
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_pillar
+                                               PIECE block_11
+                                               X 548
+                                               Y 81
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_pillar
+                                                 PIECE block_11
+                                                 X 548
+                                                 Y 39
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_pillar
+                                                   PIECE block_11
+                                                   X 548
+                                                   Y -3
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_pillar
+                                                     PIECE block_11
+                                                     X 567
+                                                     Y 101
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_pillar
+                                                       PIECE block_10
+                                                       X 567
+                                                       Y 60
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_pillar
+                                                         PIECE block_10
+                                                         X 548
+                                                         Y 39
+                                                         ONE_WAY
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_pillar
+                                                           PIECE block_10
+                                                           X 547
+                                                           Y 123
+                                                           ONE_WAY
+                                                         $END
+                                                         
+                                                           $TERRAIN
+                                                             STYLE slx_pillar
+                                                             PIECE block_10
+                                                             X 528
+                                                             Y 123
+                                                             ONE_WAY
+                                                           $END
+                                                           
+                                                             $TERRAIN
+                                                               STYLE slx_pillar
+                                                               PIECE block_03
+                                                               X 529
+                                                               Y 104
+                                                               ONE_WAY
+                                                             $END
+                                                             
+                                                               $TERRAIN
+                                                                 STYLE slx_pillar
+                                                                 PIECE block_02
+                                                                 X 568
+                                                                 Y 42
+                                                                 FLIP_VERTICAL
+                                                                 ONE_WAY
+                                                               $END
+                                                               
+                                                                 $TERRAIN
+                                                                   STYLE slx_pillar
+                                                                   PIECE block_06
+                                                                   X 508
+                                                                   Y 143
+                                                                   ONE_WAY
+                                                                 $END
+                                                                 
+                                                                   $TERRAIN
+                                                                     STYLE slx_pillar
+                                                                     PIECE block_03
+                                                                     X 510
+                                                                     Y 124
+                                                                     ONE_WAY
+                                                                   $END
+                                                                   
+                                                                     $TERRAIN
+                                                                       STYLE slx_pillar
+                                                                       PIECE block_03
+                                                                       X 489
+                                                                       Y 145
+                                                                       ONE_WAY
+                                                                     $END
+                                                                     
+                                                                       $TERRAIN
+                                                                         STYLE slx_pillar
+                                                                         PIECE pillar_end_05
+                                                                         X 567
+                                                                         Y -3
+                                                                         ONE_WAY
+                                                                       $END
+                                                                       
+                                                                         $TERRAIN
+                                                                           STYLE slx_pillar
+                                                                           PIECE pillar_05
+                                                                           X 580
+                                                                           Y 7
+                                                                           ONE_WAY
+                                                                         $END
+                                                                         
+                                                                           $TERRAIN
+                                                                             STYLE slx_pillar
+                                                                             PIECE pillar_05
+                                                                             X 610
+                                                                             Y 7
+                                                                             ONE_WAY
+                                                                           $END
+                                                                           
+                                                                             $TERRAIN
+                                                                               STYLE slx_pillar
+                                                                               PIECE pillar_05
+                                                                               X 642
+                                                                               Y 7
+                                                                               ONE_WAY
+                                                                             $END
+                                                                             
+                                                                               $TERRAIN
+                                                                                 STYLE slx_pillar
+                                                                                 PIECE pillar_end_06
+                                                                                 X 660
+                                                                                 Y -3
+                                                                                 ONE_WAY
+                                                                               $END
+                                                                               
+                                                                                 $TERRAIN
+                                                                                   STYLE slx_pillar
+                                                                                   PIECE block_06
+                                                                                   X 1043
+                                                                                   Y 122
+                                                                                   ONE_WAY
+                                                                                 $END
+                                                                                 
+                                                                                   $TERRAIN
+                                                                                     STYLE slx_pillar
+                                                                                     PIECE block_06
+                                                                                     X 1063
+                                                                                     Y 122
+                                                                                     ONE_WAY
+                                                                                   $END
+                                                                                   
+                                                                                     $TERRAIN
+                                                                                       STYLE slx_pillar
+                                                                                       PIECE block_06
+                                                                                       X 1064
+                                                                                       Y 141
+                                                                                       ONE_WAY
+                                                                                     $END
+                                                                                     
+                                                                                       $TERRAIN
+                                                                                         STYLE slx_pillar
+                                                                                         PIECE block_06
+                                                                                         X 1053
+                                                                                         Y 102
+                                                                                         ONE_WAY
+                                                                                       $END
+                                                                                       
+                                                                                         $TERRAIN
+                                                                                           STYLE slx_pillar
+                                                                                           PIECE block_06
+                                                                                           X 1073
+                                                                                           Y 102
+                                                                                           ONE_WAY
+                                                                                         $END
+                                                                                         
+                                                                                           $TERRAIN
+                                                                                             STYLE slx_pillar
+                                                                                             PIECE block_06
+                                                                                             X 1083
+                                                                                             Y 122
+                                                                                             ONE_WAY
+                                                                                           $END
+                                                                                           
+                                                                                             $TERRAIN
+                                                                                               STYLE slx_pillar
+                                                                                               PIECE block_06
+                                                                                               X 1084
+                                                                                               Y 141
+                                                                                               ONE_WAY
+                                                                                             $END
+                                                                                             
+                                                                                               $TERRAIN
+                                                                                                 STYLE slx_pillar
+                                                                                                 PIECE block_05
+                                                                                                 X 1104
+                                                                                                 Y 142
+                                                                                                 ONE_WAY
+                                                                                               $END
+                                                                                               
+                                                                                                 $TERRAIN
+                                                                                                   STYLE slx_pillar
+                                                                                                   PIECE block_05
+                                                                                                   X 1103
+                                                                                                   Y 122
+                                                                                                   ONE_WAY
+                                                                                                 $END
+                                                                                                 
+                                                                                                   $TERRAIN
+                                                                                                     STYLE slx_pillar
+                                                                                                     PIECE block_05
+                                                                                                     X 1093
+                                                                                                     Y 102
+                                                                                                     ONE_WAY
+                                                                                                   $END
+                                                                                                   
+                                                                                                     $TERRAIN
+                                                                                                       STYLE slx_pillar
+                                                                                                       PIECE block_05
+                                                                                                       X 1060
+                                                                                                       Y 82
+                                                                                                       ONE_WAY
+                                                                                                     $END
+                                                                                                     
+                                                                                                       $TERRAIN
+                                                                                                         STYLE slx_pillar
+                                                                                                         PIECE block_05
+                                                                                                         X 1084
+                                                                                                         Y 82
+                                                                                                         ONE_WAY
+                                                                                                       $END
+                                                                                                       
+                                                                                                         $TERRAIN
+                                                                                                           STYLE slx_pillar
+                                                                                                           PIECE block_05
+                                                                                                           X 1071
+                                                                                                           Y 62
+                                                                                                           ONE_WAY
+                                                                                                         $END
+                                                                                                         
+                                                                                                           $TERRAIN
+                                                                                                             STYLE slx_pillar
+                                                                                                             PIECE block_05
+                                                                                                             X 1129
+                                                                                                             Y 143
+                                                                                                             ONE_WAY
+                                                                                                           $END
+                                                                                                           
+                                                                                                             $TERRAIN
+                                                                                                               STYLE slx_pillar
+                                                                                                               PIECE block_05
+                                                                                                               X 1123
+                                                                                                               Y 122
+                                                                                                               ONE_WAY
+                                                                                                             $END
+                                                                                                             
+                                                                                                               $TERRAIN
+                                                                                                                 STYLE slx_pillar
+                                                                                                                 PIECE block_05
+                                                                                                                 X 1117
+                                                                                                                 Y 102
+                                                                                                                 ONE_WAY
+                                                                                                               $END
+                                                                                                               
+                                                                                                                 $TERRAIN
+                                                                                                                   STYLE slx_pillar
+                                                                                                                   PIECE block_05
+                                                                                                                   X 1108
+                                                                                                                   Y 81
+                                                                                                                   ONE_WAY
+                                                                                                                 $END
+                                                                                                                 
+                                                                                                                   $TERRAIN
+                                                                                                                     STYLE slx_pillar
+                                                                                                                     PIECE block_05
+                                                                                                                     X 1097
+                                                                                                                     Y 61
+                                                                                                                     ONE_WAY
+                                                                                                                   $END
+                                                                                                                   
+                                                                                                                     $TERRAIN
+                                                                                                                       STYLE slx_pillar
+                                                                                                                       PIECE block_05
+                                                                                                                       X 1085
+                                                                                                                       Y 41
+                                                                                                                       ONE_WAY
+                                                                                                                     $END
+                                                                                                                     
+                                                                                                                       $TERRAIN
+                                                                                                                         STYLE slx_pillar
+                                                                                                                         PIECE wood_09
+                                                                                                                         X 1156
+                                                                                                                         Y 140
+                                                                                                                         ONE_WAY
+                                                                                                                       $END
+                                                                                                                       
+                                                                                                                         $TERRAIN
+                                                                                                                           STYLE slx_pillar
+                                                                                                                           PIECE wood_02
+                                                                                                                           X 1156
+                                                                                                                           Y 108
+                                                                                                                           ONE_WAY
+                                                                                                                         $END
+                                                                                                                         
+                                                                                                                           $TERRAIN
+                                                                                                                             STYLE slx_pillar
+                                                                                                                             PIECE block_08
+                                                                                                                             X 1123
+                                                                                                                             Y 61
+                                                                                                                             ONE_WAY
+                                                                                                                           $END
+                                                                                                                           
+                                                                                                                             $TERRAIN
+                                                                                                                               STYLE slx_pillar
+                                                                                                                               PIECE wood_03
+                                                                                                                               X 1156
+                                                                                                                               Y 81
+                                                                                                                               ONE_WAY
+                                                                                                                             $END
+                                                                                                                             
+                                                                                                                               $TERRAIN
+                                                                                                                                 STYLE slx_pillar
+                                                                                                                                 PIECE wood_06
+                                                                                                                                 X 1156
+                                                                                                                                 Y 80
+                                                                                                                                 ONE_WAY
+                                                                                                                               $END
+                                                                                                                               
+                                                                                                                                 $TERRAIN
+                                                                                                                                   STYLE slx_pillar
+                                                                                                                                   PIECE wood_06
+                                                                                                                                   X 1138
+                                                                                                                                   Y 81
+                                                                                                                                   ONE_WAY
+                                                                                                                                 $END
+                                                                                                                                 
+                                                                                                                                   $TERRAIN
+                                                                                                                                     STYLE slx_pillar
+                                                                                                                                     PIECE wood_09
+                                                                                                                                     X 1138
+                                                                                                                                     Y 102
+                                                                                                                                     ONE_WAY
+                                                                                                                                   $END
+                                                                                                                                   
+                                                                                                                                     $TERRAIN
+                                                                                                                                       STYLE slx_pillar
+                                                                                                                                       PIECE wood_02
+                                                                                                                                       X 1138
+                                                                                                                                       Y 86
+                                                                                                                                       ONE_WAY
+                                                                                                                                     $END
+                                                                                                                                     
+                                                                                                                                       $TERRAIN
+                                                                                                                                         STYLE slx_pillar
+                                                                                                                                         PIECE block_06
+                                                                                                                                         X 1113
+                                                                                                                                         Y 42
+                                                                                                                                         NO_OVERWRITE
+                                                                                                                                         ONE_WAY
+                                                                                                                                       $END
+                                                                                                                                       
+                                                                                                                                         $TERRAIN
+                                                                                                                                           STYLE slx_pillar
+                                                                                                                                           PIECE pillar_05
+                                                                                                                                           X 715
+                                                                                                                                           Y -21
+                                                                                                                                           NO_OVERWRITE
+                                                                                                                                           ONE_WAY
+                                                                                                                                         $END
+                                                                                                                                         
+                                                                                                                                           $TERRAIN
+                                                                                                                                             STYLE slx_pillar
+                                                                                                                                             PIECE pillar_05
+                                                                                                                                             X 743
+                                                                                                                                             Y -21
+                                                                                                                                             NO_OVERWRITE
+                                                                                                                                             ONE_WAY
+                                                                                                                                           $END
+                                                                                                                                           
+                                                                                                                                             $TERRAIN
+                                                                                                                                               STYLE slx_pillar
+                                                                                                                                               PIECE pillar_05
+                                                                                                                                               X 767
+                                                                                                                                               Y -21
+                                                                                                                                               NO_OVERWRITE
+                                                                                                                                               ONE_WAY
+                                                                                                                                             $END
+                                                                                                                                             
+                                                                                                                                               $TERRAIN
+                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                 PIECE pillar_end_06
+                                                                                                                                                 X 780
+                                                                                                                                                 Y -31
+                                                                                                                                                 ONE_WAY
+                                                                                                                                               $END
+                                                                                                                                               
+                                                                                                                                                 $TERRAIN
+                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                   PIECE pillar_05
+                                                                                                                                                   X 881
+                                                                                                                                                   Y -21
+                                                                                                                                                   NO_OVERWRITE
+                                                                                                                                                   ONE_WAY
+                                                                                                                                                 $END
+                                                                                                                                                 
+                                                                                                                                                   $TERRAIN
+                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                     PIECE pillar_end_05
+                                                                                                                                                     X 868
+                                                                                                                                                     Y -31
+                                                                                                                                                     ONE_WAY
+                                                                                                                                                   $END
+                                                                                                                                                   
+                                                                                                                                                     $TERRAIN
+                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                       PIECE pillar_05
+                                                                                                                                                       X 916
+                                                                                                                                                       Y -21
+                                                                                                                                                       NO_OVERWRITE
+                                                                                                                                                       ONE_WAY
+                                                                                                                                                     $END
+                                                                                                                                                     
+                                                                                                                                                       $TERRAIN
+                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                         PIECE pillar_05
+                                                                                                                                                         X 907
+                                                                                                                                                         Y -21
+                                                                                                                                                         NO_OVERWRITE
+                                                                                                                                                         ONE_WAY
+                                                                                                                                                       $END
+                                                                                                                                                       
+                                                                                                                                                         $TERRAIN
+                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                           PIECE pillar_end_05
+                                                                                                                                                           X 715
+                                                                                                                                                           Y -31
+                                                                                                                                                           ONE_WAY
+                                                                                                                                                         $END
+                                                                                                                                                         
+                                                                                                                                                           $TERRAIN
+                                                                                                                                                             STYLE slx_pillar
+                                                                                                                                                             PIECE pillar_end_06
+                                                                                                                                                             X 926
+                                                                                                                                                             Y -31
+                                                                                                                                                             ONE_WAY
+                                                                                                                                                           $END
+                                                                                                                                                           
+                                                                                                                                                             $TERRAIN
+                                                                                                                                                               STYLE slx_pillar
+                                                                                                                                                               PIECE pillar_05
+                                                                                                                                                               X 1061
+                                                                                                                                                               Y 7
+                                                                                                                                                               ONE_WAY
+                                                                                                                                                             $END
+                                                                                                                                                             
+                                                                                                                                                               $TERRAIN
+                                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                                 PIECE pillar_05
+                                                                                                                                                                 X 1029
+                                                                                                                                                                 Y 7
+                                                                                                                                                                 ONE_WAY
+                                                                                                                                                               $END
+                                                                                                                                                               
+                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                                   PIECE pillar_05
+                                                                                                                                                                   X 997
+                                                                                                                                                                   Y 7
+                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                 $END
+                                                                                                                                                                 
+                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                                     PIECE pillar_05
+                                                                                                                                                                     X 985
+                                                                                                                                                                     Y 7
+                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                   $END
+                                                                                                                                                                   
+                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                                       PIECE pillar_end_05
+                                                                                                                                                                       X 981
+                                                                                                                                                                       Y -3
+                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                     $END
+                                                                                                                                                                     
+                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                                         PIECE pillar_end_03
+                                                                                                                                                                         X 1093
+                                                                                                                                                                         Y 7
+                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                       $END
+                                                                                                                                                                       
+                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                                           PIECE pillar_thin_02
+                                                                                                                                                                           X 1141
+                                                                                                                                                                           Y 49
+                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                         $END
+                                                                                                                                                                         
+                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                             STYLE slx_pillar
+                                                                                                                                                                             PIECE pillar_thin_02
+                                                                                                                                                                             X 1141
+                                                                                                                                                                             Y 37
+                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                           $END
+                                                                                                                                                                           
+                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                               STYLE slx_pillar
+                                                                                                                                                                               PIECE pillar_thin_02
+                                                                                                                                                                               X 1141
+                                                                                                                                                                               Y 26
+                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                             $END
+                                                                                                                                                                             
+                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                                                 PIECE pillar_thin_02
+                                                                                                                                                                                 X 1141
+                                                                                                                                                                                 Y 14
+                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                               $END
+                                                                                                                                                                               
+                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                                                   PIECE pillar_thin_02
+                                                                                                                                                                                   X 1141
+                                                                                                                                                                                   Y 3
+                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                 $END
+                                                                                                                                                                                 
+                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                                                     PIECE pillar_thin_02
+                                                                                                                                                                                     X 1141
+                                                                                                                                                                                     Y -6
+                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                   $END
+                                                                                                                                                                                   
+                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                                                       PIECE wood_12
+                                                                                                                                                                                       X 1104
+                                                                                                                                                                                       Y 16
+                                                                                                                                                                                       NO_OVERWRITE
+                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                     $END
+                                                                                                                                                                                     
+                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                                                         PIECE wood_10
+                                                                                                                                                                                         X 1121
+                                                                                                                                                                                         Y 16
+                                                                                                                                                                                         NO_OVERWRITE
+                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                       $END
+                                                                                                                                                                                       
+                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                                                           PIECE stairs_03
+                                                                                                                                                                                           X 1028
+                                                                                                                                                                                           Y 48
+                                                                                                                                                                                           NO_OVERWRITE
+                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                         $END
+                                                                                                                                                                                         
+                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                             STYLE slx_pillar
+                                                                                                                                                                                             PIECE stairs_03
+                                                                                                                                                                                             X 1022
+                                                                                                                                                                                             Y 40
+                                                                                                                                                                                             NO_OVERWRITE
+                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                           $END
+                                                                                                                                                                                           
+                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                               STYLE slx_pillar
+                                                                                                                                                                                               PIECE stairs_03
+                                                                                                                                                                                               X 1046
+                                                                                                                                                                                               Y 28
+                                                                                                                                                                                               NO_OVERWRITE
+                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                             $END
+                                                                                                                                                                                             
+                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                                                                 PIECE stairs_04
+                                                                                                                                                                                                 X 1056
+                                                                                                                                                                                                 Y 46
+                                                                                                                                                                                                 NO_OVERWRITE
+                                                                                                                                                                                                 FLIP_VERTICAL
+                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                               $END
+                                                                                                                                                                                               
+                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                                                                   PIECE stairs_04
+                                                                                                                                                                                                   X 1050
+                                                                                                                                                                                                   Y 54
+                                                                                                                                                                                                   NO_OVERWRITE
+                                                                                                                                                                                                   FLIP_VERTICAL
+                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                 $END
+                                                                                                                                                                                                 
+                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                                                                     PIECE stairs_04
+                                                                                                                                                                                                     X 1047
+                                                                                                                                                                                                     Y 58
+                                                                                                                                                                                                     NO_OVERWRITE
+                                                                                                                                                                                                     FLIP_VERTICAL
+                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                   $END
+                                                                                                                                                                                                   
+                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                                                                       PIECE stairs_04
+                                                                                                                                                                                                       X 1028
+                                                                                                                                                                                                       Y 38
+                                                                                                                                                                                                       NO_OVERWRITE
+                                                                                                                                                                                                       FLIP_VERTICAL
+                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                     $END
+                                                                                                                                                                                                     
+                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                                                                         PIECE stairs_04
+                                                                                                                                                                                                         X 1072
+                                                                                                                                                                                                         Y 39
+                                                                                                                                                                                                         NO_OVERWRITE
+                                                                                                                                                                                                         FLIP_VERTICAL
+                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                       $END
+                                                                                                                                                                                                       
+                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                                                                           PIECE stairs_04
+                                                                                                                                                                                                           X 1069
+                                                                                                                                                                                                           Y 43
+                                                                                                                                                                                                           NO_OVERWRITE
+                                                                                                                                                                                                           FLIP_VERTICAL
+                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                         $END
+                                                                                                                                                                                                         
+                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                             STYLE slx_pillar
+                                                                                                                                                                                                             PIECE pillar_02
+                                                                                                                                                                                                             X 985
+                                                                                                                                                                                                             Y 104
+                                                                                                                                                                                                             NO_OVERWRITE
+                                                                                                                                                                                                             FLIP_VERTICAL
+                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                           $END
+                                                                                                                                                                                                           
+                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                               STYLE slx_pillar
+                                                                                                                                                                                                               PIECE pillar_end_01
+                                                                                                                                                                                                               X 985
+                                                                                                                                                                                                               Y 82
+                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                             $END
+                                                                                                                                                                                                             
+                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                                                                                 PIECE pillar_02
+                                                                                                                                                                                                                 X 609
+                                                                                                                                                                                                                 Y 98
+                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                               $END
+                                                                                                                                                                                                               
+                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                                                                                   PIECE pillar_end_01
+                                                                                                                                                                                                                   X 609
+                                                                                                                                                                                                                   Y 77
+                                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                 
+                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                                                                                     PIECE pillar_02
+                                                                                                                                                                                                                     X 609
+                                                                                                                                                                                                                     Y -13
+                                                                                                                                                                                                                     NO_OVERWRITE
+                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                   
+                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                                                                                       PIECE pillar_end_04
+                                                                                                                                                                                                                       X 609
+                                                                                                                                                                                                                       Y 51
+                                                                                                                                                                                                                       NO_OVERWRITE
+                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                     
+                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                                                                                         PIECE pillar_end_01
+                                                                                                                                                                                                                         X 280
+                                                                                                                                                                                                                         Y 94
+                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                       
+                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                                                                                           PIECE pillar_02
+                                                                                                                                                                                                                           X 280
+                                                                                                                                                                                                                           Y 116
+                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                         
+                                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                                             STYLE slx_pillar
+                                                                                                                                                                                                                             PIECE pillar_03
+                                                                                                                                                                                                                             X 378
+                                                                                                                                                                                                                             Y 89
+                                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                                           $END
+                                                                                                                                                                                                                           
+                                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                                               STYLE slx_pillar
+                                                                                                                                                                                                                               PIECE pillar_02
+                                                                                                                                                                                                                               X 378
+                                                                                                                                                                                                                               Y 124
+                                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                                             $END
+                                                                                                                                                                                                                             
+                                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                                                                                                 PIECE pillar_end_04
+                                                                                                                                                                                                                                 X 414
+                                                                                                                                                                                                                                 Y 124
+                                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                                               $END
+                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                                                                                                   PIECE pillar_02
+                                                                                                                                                                                                                                   X 111
+                                                                                                                                                                                                                                   Y 102
+                                                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                                                                                                     PIECE pillar_02
+                                                                                                                                                                                                                                     X 111
+                                                                                                                                                                                                                                     Y 41
+                                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                                                                                                       PIECE pillar_02
+                                                                                                                                                                                                                                       X 111
+                                                                                                                                                                                                                                       Y -23
+                                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                                                                                                         PIECE pillar_02
+                                                                                                                                                                                                                                         X 56
+                                                                                                                                                                                                                                         Y 95
+                                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                                                                                                           PIECE pillar_02
+                                                                                                                                                                                                                                           X 59
+                                                                                                                                                                                                                                           Y -31
+                                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                                                             STYLE slx_pillar
+                                                                                                                                                                                                                                             PIECE pillar_end_01
+                                                                                                                                                                                                                                             X 56
+                                                                                                                                                                                                                                             Y 73
+                                                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                                                           $END
+                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                                                               STYLE slx_pillar
+                                                                                                                                                                                                                                               PIECE pillar_end_04
+                                                                                                                                                                                                                                               X 59
+                                                                                                                                                                                                                                               Y 33
+                                                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                                                             $END
+                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                                                                                                                 PIECE block_07
+                                                                                                                                                                                                                                                 X 1276
+                                                                                                                                                                                                                                                 Y 141
+                                                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                                                               $END
+                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                                                                                                                   PIECE block_07
+                                                                                                                                                                                                                                                   X 1318
+                                                                                                                                                                                                                                                   Y 142
+                                                                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                                                                                                                     PIECE block_07
+                                                                                                                                                                                                                                                     X 1302
+                                                                                                                                                                                                                                                     Y 122
+                                                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                                                                                                                       PIECE block_07
+                                                                                                                                                                                                                                                       X 1359
+                                                                                                                                                                                                                                                       Y 143
+                                                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                                                                                                                         PIECE block_07
+                                                                                                                                                                                                                                                         X 1383
+                                                                                                                                                                                                                                                         Y 123
+                                                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                                                                                                                           PIECE block_07
+                                                                                                                                                                                                                                                           X 1410
+                                                                                                                                                                                                                                                           Y 143
+                                                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                           $TERRAIN
+                                                                                                                                                                                                                                                             STYLE slx_pillar
+                                                                                                                                                                                                                                                             PIECE block_07
+                                                                                                                                                                                                                                                             X 1445
+                                                                                                                                                                                                                                                             Y 123
+                                                                                                                                                                                                                                                             ONE_WAY
+                                                                                                                                                                                                                                                           $END
+                                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                             $TERRAIN
+                                                                                                                                                                                                                                                               STYLE slx_pillar
+                                                                                                                                                                                                                                                               PIECE block_07
+                                                                                                                                                                                                                                                               X 1462
+                                                                                                                                                                                                                                                               Y 143
+                                                                                                                                                                                                                                                               ONE_WAY
+                                                                                                                                                                                                                                                             $END
+                                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                               $TERRAIN
+                                                                                                                                                                                                                                                                 STYLE slx_pillar
+                                                                                                                                                                                                                                                                 PIECE block_07
+                                                                                                                                                                                                                                                                 X 1417
+                                                                                                                                                                                                                                                                 Y 103
+                                                                                                                                                                                                                                                                 ONE_WAY
+                                                                                                                                                                                                                                                               $END
+                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                 $TERRAIN
+                                                                                                                                                                                                                                                                   STYLE slx_pillar
+                                                                                                                                                                                                                                                                   PIECE block_07
+                                                                                                                                                                                                                                                                   X 1332
+                                                                                                                                                                                                                                                                   Y 102
+                                                                                                                                                                                                                                                                   ONE_WAY
+                                                                                                                                                                                                                                                                 $END
+                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                   $TERRAIN
+                                                                                                                                                                                                                                                                     STYLE slx_pillar
+                                                                                                                                                                                                                                                                     PIECE block_07
+                                                                                                                                                                                                                                                                     X 1375
+                                                                                                                                                                                                                                                                     Y 103
+                                                                                                                                                                                                                                                                     ONE_WAY
+                                                                                                                                                                                                                                                                   $END
+                                                                                                                                                                                                                                                                   
+                                                                                                                                                                                                                                                                     $TERRAIN
+                                                                                                                                                                                                                                                                       STYLE slx_pillar
+                                                                                                                                                                                                                                                                       PIECE block_07
+                                                                                                                                                                                                                                                                       X 1354
+                                                                                                                                                                                                                                                                       Y 83
+                                                                                                                                                                                                                                                                       ONE_WAY
+                                                                                                                                                                                                                                                                     $END
+                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                       $TERRAIN
+                                                                                                                                                                                                                                                                         STYLE slx_pillar
+                                                                                                                                                                                                                                                                         PIECE block_06
+                                                                                                                                                                                                                                                                         X 1361
+                                                                                                                                                                                                                                                                         Y 123
+                                                                                                                                                                                                                                                                         ONE_WAY
+                                                                                                                                                                                                                                                                       $END
+                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                         $TERRAIN
+                                                                                                                                                                                                                                                                           STYLE slx_pillar
+                                                                                                                                                                                                                                                                           PIECE block_06
+                                                                                                                                                                                                                                                                           X 1360
+                                                                                                                                                                                                                                                                           Y 122
+                                                                                                                                                                                                                                                                           ONE_WAY
+                                                                                                                                                                                                                                                                         $END
+                                                                                                                                                                                                                                                                         
+ 

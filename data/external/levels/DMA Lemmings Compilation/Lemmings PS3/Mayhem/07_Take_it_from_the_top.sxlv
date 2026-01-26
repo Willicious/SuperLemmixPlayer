@@ -1,0 +1,638 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Take it from the top
+ AUTHOR Sony / Minim
+ MUSIC menace_amiga
+ ID x88B82D7D88B82D7D
+ VERSION x000000000000000C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 528
+ HEIGHT 160
+ START_X 176
+ START_Y 80
+ THEME minim_ps3factory
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 10
+ SAVE_REQUIREMENT 1
+ TIME_LIMIT 480
+ MAX_SPAWN_INTERVAL 53
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 3
+   BUILDER 0
+   BASHER 0
+   MINER 1
+   DIGGER 8
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE entrance
+   X 39
+   Y 80
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 113
+   Y 15
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 231
+   Y 15
+   NO_OVERWRITE
+   SKILL BUILDER
+ $END
+ 
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE exit_01
+   X 453
+   Y 94
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 32
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 96
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 160
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 224
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 288
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 352
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 416
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 16
+   Y 135
+   WIDTH 16
+   HEIGHT 25
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 408
+   Y 115
+   NO_OVERWRITE
+   SKILL BASHER
+ $END
+ 
+ $GADGET
+   STYLE minim_ps3factory
+   PIECE entrance
+   X 39
+   Y 0
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_marble
+   PIECE poison
+   X 480
+   Y 135
+   WIDTH 64
+   HEIGHT 25
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain groups         
+# ----------------------------- 
+ $TERRAINGROUP
+   NAME Group-1101940366
+   
+   $TERRAIN
+     STYLE minim_ps3factory
+     PIECE beam_blue_02
+     X 435
+     Y 0
+     FLIP_VERTICAL
+     FLIP_HORIZONTAL
+     ONE_WAY
+   $END
+   
+   $TERRAIN
+     STYLE minim_ps3factory
+     PIECE beam_blue_02
+     X 424
+     Y 0
+     ERASE
+     FLIP_VERTICAL
+     ONE_WAY
+   $END
+   
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 36
+   Y 28
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE minim_ps3factory
+     PIECE board_narrow_01
+     X 84
+     Y 28
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE minim_ps3factory
+       PIECE board_narrow_01
+       X 132
+       Y 28
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE minim_ps3factory
+         PIECE board_narrow_01
+         X 180
+         Y 28
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE minim_ps3factory
+           PIECE board_narrow_01
+           X 228
+           Y 28
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE minim_ps3factory
+             PIECE board_narrow_01
+             X 276
+             Y 28
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE minim_ps3factory
+               PIECE board_narrow_01
+               X 324
+               Y 28
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE minim_ps3factory
+                 PIECE pipe
+                 X 16
+                 Y -8
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE minim_ps3factory
+                   PIECE board_small_01
+                   X 90
+                   Y 20
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE minim_ps3factory
+                     PIECE pipe
+                     X 16
+                     Y 40
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE minim_ps3factory
+                       PIECE pipe
+                       X 16
+                       Y 88
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE minim_ps3factory
+                         PIECE steel_large
+                         X 16
+                         Y 128
+                       $END
+                       
+                         $TERRAIN
+                           STYLE minim_ps3factory
+                           PIECE steel_large
+                           X 40
+                           Y 128
+                         $END
+                         
+                           $TERRAIN
+                             STYLE minim_ps3factory
+                             PIECE steel_large
+                             X 64
+                             Y 128
+                           $END
+                           
+                             $TERRAIN
+                               STYLE minim_ps3factory
+                               PIECE steel_large
+                               X 88
+                               Y 128
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE minim_ps3factory
+                                 PIECE steel_large
+                                 X 112
+                                 Y 128
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE minim_ps3factory
+                                   PIECE steel_large
+                                   X 136
+                                   Y 128
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE minim_ps3factory
+                                     PIECE steel_large
+                                     X 160
+                                     Y 128
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE minim_ps3factory
+                                       PIECE steel_large
+                                       X 184
+                                       Y 128
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE minim_ps3factory
+                                         PIECE steel_large
+                                         X 232
+                                         Y 128
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE minim_ps3factory
+                                           PIECE steel_large
+                                           X 256
+                                           Y 128
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE minim_ps3factory
+                                             PIECE steel_large
+                                             X 280
+                                             Y 128
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE minim_ps3factory
+                                               PIECE steel_large
+                                               X 304
+                                               Y 128
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE minim_ps3factory
+                                                 PIECE steel_large
+                                                 X 320
+                                                 Y 128
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE minim_ps3factory
+                                                   PIECE steel_large
+                                                   X 368
+                                                   Y 128
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE minim_ps3factory
+                                                     PIECE board_narrow_01
+                                                     X 160
+                                                     Y 112
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE minim_ps3factory
+                                                       PIECE steel_large
+                                                       X 392
+                                                       Y 128
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE minim_ps3factory
+                                                         PIECE steel_large
+                                                         X 416
+                                                         Y 128
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE minim_ps3factory
+                                                           PIECE steel_large
+                                                           X 440
+                                                           Y 128
+                                                         $END
+                                                         
+                                                           $TERRAIN
+                                                             STYLE minim_ps3factory
+                                                             PIECE steel_large
+                                                             X 464
+                                                             Y 128
+                                                           $END
+                                                           
+                                                             $TERRAIN
+                                                               STYLE minim_ps3factory
+                                                               PIECE steel_large
+                                                               X 488
+                                                               Y 128
+                                                             $END
+                                                             
+                                                               $TERRAIN
+                                                                 STYLE minim_ps3factory
+                                                                 PIECE board_small_row_01
+                                                                 X 16
+                                                                 Y 144
+                                                                 ERASE
+                                                                 ONE_WAY
+                                                               $END
+                                                               
+                                                                 $TERRAIN
+                                                                   STYLE minim_ps3factory
+                                                                   PIECE board_small_row_01
+                                                                   X 80
+                                                                   Y 144
+                                                                   ERASE
+                                                                   ONE_WAY
+                                                                 $END
+                                                                 
+                                                                   $TERRAIN
+                                                                     STYLE minim_ps3factory
+                                                                     PIECE board_small_row_01
+                                                                     X 144
+                                                                     Y 144
+                                                                     ERASE
+                                                                     ONE_WAY
+                                                                   $END
+                                                                   
+                                                                     $TERRAIN
+                                                                       STYLE minim_ps3factory
+                                                                       PIECE board_small_row_01
+                                                                       X 272
+                                                                       Y 144
+                                                                       ERASE
+                                                                       ONE_WAY
+                                                                     $END
+                                                                     
+                                                                       $TERRAIN
+                                                                         STYLE minim_ps3factory
+                                                                         PIECE board_small_row_01
+                                                                         X 336
+                                                                         Y 144
+                                                                         ERASE
+                                                                         ONE_WAY
+                                                                       $END
+                                                                       
+                                                                         $TERRAIN
+                                                                           STYLE minim_ps3factory
+                                                                           PIECE board_small_row_01
+                                                                           X 400
+                                                                           Y 144
+                                                                           ERASE
+                                                                           ONE_WAY
+                                                                         $END
+                                                                         
+                                                                           $TERRAIN
+                                                                             STYLE minim_ps3factory
+                                                                             PIECE board_small_row_01
+                                                                             X 432
+                                                                             Y 144
+                                                                             ERASE
+                                                                             ONE_WAY
+                                                                           $END
+                                                                           
+                                                                             $TERRAIN
+                                                                               STYLE minim_ps3factory
+                                                                               PIECE beam_blue_02
+                                                                               X 469
+                                                                               Y 0
+                                                                               FLIP_VERTICAL
+                                                                               ONE_WAY
+                                                                             $END
+                                                                             
+                                                                               $TERRAIN
+                                                                                 STYLE minim_ps3factory
+                                                                                 PIECE beam_blue_02
+                                                                                 X 427
+                                                                                 Y 0
+                                                                                 FLIP_VERTICAL
+                                                                                 FLIP_HORIZONTAL
+                                                                                 ONE_WAY
+                                                                               $END
+                                                                               
+                                                                                 $TERRAIN
+                                                                                   STYLE minim_ps3factory
+                                                                                   PIECE beam_blue_02
+                                                                                   X 491
+                                                                                   Y 24
+                                                                                   ROTATE
+                                                                                   FLIP_VERTICAL
+                                                                                   FLIP_HORIZONTAL
+                                                                                   ONE_WAY
+                                                                                 $END
+                                                                                 
+                                                                                   $TERRAIN
+                                                                                     STYLE minim_ps3factory
+                                                                                     PIECE beam_blue_02
+                                                                                     X 491
+                                                                                     Y 58
+                                                                                     ROTATE
+                                                                                     FLIP_HORIZONTAL
+                                                                                     ONE_WAY
+                                                                                   $END
+                                                                                   
+                                                                                     $TERRAIN
+                                                                                       STYLE minim_ps3factory
+                                                                                       PIECE beam_blue_01
+                                                                                       X 443
+                                                                                       Y 36
+                                                                                       FLIP_HORIZONTAL
+                                                                                       ONE_WAY
+                                                                                     $END
+                                                                                     
+                                                                                       $TERRAIN
+                                                                                         STYLE minim_ps3factory
+                                                                                         PIECE beam_gray_03
+                                                                                         X 208
+                                                                                         Y 111
+                                                                                         FLIP_VERTICAL
+                                                                                         FLIP_HORIZONTAL
+                                                                                         ONE_WAY
+                                                                                       $END
+                                                                                       
+                                                                                         $TERRAIN
+                                                                                           STYLE minim_ps3factory
+                                                                                           PIECE beam_gray_03
+                                                                                           X 216
+                                                                                           Y 111
+                                                                                           FLIP_VERTICAL
+                                                                                           ONE_WAY
+                                                                                         $END
+                                                                                         
+                                                                                           $TERRAIN
+                                                                                             STYLE minim_ps3factory
+                                                                                             PIECE beam_gray_03
+                                                                                             X 216
+                                                                                             Y 121
+                                                                                             ONE_WAY
+                                                                                           $END
+                                                                                           
+                                                                                             $TERRAIN
+                                                                                               STYLE minim_ps3factory
+                                                                                               PIECE beam_gray_03
+                                                                                               X 208
+                                                                                               Y 121
+                                                                                               FLIP_HORIZONTAL
+                                                                                               ONE_WAY
+                                                                                             $END
+                                                                                             
+                                                                                               $TERRAIN
+                                                                                                 STYLE minim_ps3factory
+                                                                                                 PIECE belt_screw_03
+                                                                                                 X 210
+                                                                                                 Y 115
+                                                                                                 ONE_WAY
+                                                                                               $END
+                                                                                               
+                                                                                                 $TERRAIN
+                                                                                                   STYLE minim_ps3factory
+                                                                                                   PIECE steel_large
+                                                                                                   X 208
+                                                                                                   Y 128
+                                                                                                 $END
+                                                                                                 
+                                                                                                   $TERRAIN
+                                                                                                     STYLE minim_ps3factory
+                                                                                                     PIECE board_small_row_01
+                                                                                                     X 208
+                                                                                                     Y 144
+                                                                                                     ERASE
+                                                                                                     ONE_WAY
+                                                                                                   $END
+                                                                                                   
+                                                                                                     $TERRAIN
+                                                                                                       STYLE minim_ps3factory
+                                                                                                       PIECE steel_large
+                                                                                                       X 512
+                                                                                                       Y 128
+                                                                                                     $END
+                                                                                                     
+                                                                                                       $TERRAIN
+                                                                                                         STYLE minim_ps3factory
+                                                                                                         PIECE board_small_row_01
+                                                                                                         X 488
+                                                                                                         Y 144
+                                                                                                         ERASE
+                                                                                                         ONE_WAY
+                                                                                                       $END
+                                                                                                       
+                                                                                                         $TERRAIN
+                                                                                                           STYLE *group
+                                                                                                           PIECE Group-1101940366
+                                                                                                           X 448
+                                                                                                           Y 16
+                                                                                                           ONE_WAY
+                                                                                                         $END
+                                                                                                         
+ 

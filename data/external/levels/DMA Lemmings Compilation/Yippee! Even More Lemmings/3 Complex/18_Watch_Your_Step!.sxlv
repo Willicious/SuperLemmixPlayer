@@ -1,0 +1,305 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Watch Your Step!
+ AUTHOR Prima Lemmings
+ MUSIC menace_amiga
+ ID xB4BF5E95B4BF5E95
+ VERSION x000000000000000A
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 1040
+ HEIGHT 160
+ START_X 200
+ START_Y 80
+ THEME slx_brick
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 78
+ TIME_LIMIT 180
+ MAX_SPAWN_INTERVAL 13
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 2
+   FLOATER 2
+   TIMEBOMBER 2
+   BLOCKER 3
+   BUILDER 2
+   BASHER 1
+   MINER 1
+   DIGGER 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_brick
+   PIECE window
+   X 72
+   Y 8
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_brick
+   PIECE exit
+   X 920
+   Y 23
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 71
+   Y 72
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_brick
+     PIECE platform_01
+     X 103
+     Y 72
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_brick
+       PIECE platform_01
+       X 135
+       Y 72
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_brick
+         PIECE platform_01
+         X 167
+         Y 72
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_brick
+           PIECE platform_01
+           X 199
+           Y 72
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_brick
+             PIECE platform_01
+             X 231
+             Y 72
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_brick
+               PIECE platform_01
+               X 263
+               Y 72
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_brick
+                 PIECE platform_01
+                 X 295
+                 Y 72
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_brick
+                   PIECE platform_01
+                   X 327
+                   Y 72
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_brick
+                     PIECE platform_01
+                     X 359
+                     Y 72
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_brick
+                       PIECE platform_01
+                       X 391
+                       Y 72
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_brick
+                         PIECE platform_01
+                         X 423
+                         Y 72
+                         ONE_WAY
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_brick
+                           PIECE platform_01
+                           X 455
+                           Y 72
+                           ONE_WAY
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_brick
+                             PIECE platform_01
+                             X 487
+                             Y 72
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_brick
+                               PIECE platform_01
+                               X 519
+                               Y 72
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_brick
+                                 PIECE platform_01
+                                 X 551
+                                 Y 72
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_brick
+                                   PIECE platform_01
+                                   X 583
+                                   Y 72
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_brick
+                                     PIECE platform_01
+                                     X 615
+                                     Y 72
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_brick
+                                       PIECE platform_01
+                                       X 647
+                                       Y 72
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_brick
+                                         PIECE platform_01
+                                         X 679
+                                         Y 72
+                                         ONE_WAY
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_brick
+                                           PIECE platform_01
+                                           X 711
+                                           Y 72
+                                           ONE_WAY
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_brick
+                                             PIECE platform_01
+                                             X 743
+                                             Y 72
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_brick
+                                               PIECE platform_01
+                                               X 775
+                                               Y 72
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_brick
+                                                 PIECE platform_01
+                                                 X 807
+                                                 Y 72
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_brick
+                                                   PIECE platform_01
+                                                   X 839
+                                                   Y 72
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_brick
+                                                     PIECE platform_01
+                                                     X 871
+                                                     Y 72
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_brick
+                                                       PIECE platform_01
+                                                       X 903
+                                                       Y 58
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_brick
+                                                         PIECE platform_01
+                                                         X 935
+                                                         Y 58
+                                                         ONE_WAY
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_brick
+                                                           PIECE bricks_diagonal_04
+                                                           X 402
+                                                           Y 71
+                                                           ERASE
+                                                           ONE_WAY
+                                                         $END
+                                                         
+ 

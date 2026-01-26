@@ -1,0 +1,334 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Rent-a-Lemming
+ AUTHOR DMA Design 
+ MUSIC menace_amiga
+ ID xDAA4B886DAA4B886
+ VERSION x000000000000000C
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 464
+ HEIGHT 160
+ START_X 180
+ START_Y 80
+ THEME slx_rock
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 25
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 53
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 20
+   FLOATER 20
+   TIMEBOMBER 20
+   BLOCKER 20
+   BUILDER 20
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_rock
+   PIECE window
+   X 60
+   Y 84
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_rock
+   PIECE exit
+   X 316
+   Y 74
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 39
+   Y 137
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_rock
+     PIECE rocks_08
+     X 143
+     Y 134
+     NO_OVERWRITE
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_rock
+       PIECE rocks_08
+       X 215
+       Y 146
+       NO_OVERWRITE
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_rock
+         PIECE rocks_08
+         X 308
+         Y 138
+         NO_OVERWRITE
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_rock
+           PIECE rocks_08
+           X 225
+           Y 124
+           NO_OVERWRITE
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_rock
+             PIECE rocks_09
+             X 110
+             Y 126
+             NO_OVERWRITE
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_rock
+               PIECE rocks_09
+               X 127
+               Y 119
+               NO_OVERWRITE
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_rock
+                 PIECE rocks_08
+                 X 155
+                 Y 106
+                 NO_OVERWRITE
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_rock
+                   PIECE rocks_08
+                   X 173
+                   Y 94
+                   NO_OVERWRITE
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_rock
+                     PIECE rocks_08
+                     X 251
+                     Y 101
+                     NO_OVERWRITE
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_rock
+                       PIECE rocks_03
+                       X 336
+                       Y 106
+                       NO_OVERWRITE
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_rock
+                         PIECE crystal_11
+                         X 204
+                         Y 77
+                         NO_OVERWRITE
+                         ONE_WAY
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_rock
+                           PIECE crystal_01
+                           X 242
+                           Y 78
+                           NO_OVERWRITE
+                           ONE_WAY
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_rock
+                             PIECE crystal_03
+                             X 281
+                             Y 73
+                             NO_OVERWRITE
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_rock
+                               PIECE crystal_02
+                               X 289
+                               Y 58
+                               NO_OVERWRITE
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_rock
+                                 PIECE crystal_02
+                                 X 289
+                                 Y 70
+                                 NO_OVERWRITE
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_rock
+                                   PIECE rocks_01
+                                   X 28
+                                   Y 64
+                                   NO_OVERWRITE
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_rock
+                                     PIECE rocks_01
+                                     X 26
+                                     Y 4
+                                     NO_OVERWRITE
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_rock
+                                       PIECE rocks_05
+                                       X 19
+                                       Y 110
+                                       NO_OVERWRITE
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_rock
+                                         PIECE rocks_08
+                                         X 36
+                                         Y -10
+                                         NO_OVERWRITE
+                                         ONE_WAY
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_rock
+                                           PIECE rocks_08
+                                           X 136
+                                           Y -10
+                                           NO_OVERWRITE
+                                           ONE_WAY
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_rock
+                                             PIECE rocks_09
+                                             X 232
+                                             Y -10
+                                             NO_OVERWRITE
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_rock
+                                               PIECE rocks_08
+                                               X 291
+                                               Y -20
+                                               NO_OVERWRITE
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_rock
+                                                 PIECE rocks_01
+                                                 X 351
+                                                 Y 0
+                                                 NO_OVERWRITE
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_rock
+                                                   PIECE rocks_02
+                                                   X 367
+                                                   Y 99
+                                                   NO_OVERWRITE
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_rock
+                                                     PIECE platform_02
+                                                     X 342
+                                                     Y 99
+                                                     NO_OVERWRITE
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_rock
+                                                       PIECE platform_02
+                                                       X 326
+                                                       Y 99
+                                                       NO_OVERWRITE
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_rock
+                                                         PIECE platform_02
+                                                         X 310
+                                                         Y 99
+                                                         NO_OVERWRITE
+                                                         ONE_WAY
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_rock
+                                                           PIECE platform_02
+                                                           X 297
+                                                           Y 99
+                                                           NO_OVERWRITE
+                                                           ONE_WAY
+                                                         $END
+                                                         
+ 

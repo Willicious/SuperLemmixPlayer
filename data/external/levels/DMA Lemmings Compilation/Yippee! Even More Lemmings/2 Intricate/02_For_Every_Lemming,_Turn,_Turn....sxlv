@@ -1,0 +1,142 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE For Every Lemming, Turn, Turn...
+ AUTHOR Prima Lemmings
+ MUSIC menace_amiga
+ ID xB0A4B2EAB0A4B2EA
+ VERSION x000000000000000A
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 576
+ HEIGHT 160
+ START_X 384
+ START_Y 80
+ THEME slx_brick
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 79
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 41
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 1
+   TIMEBOMBER 1
+   BLOCKER 1
+   BUILDER 1
+   MINER 1
+   DIGGER 1
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_brick
+   PIECE exit
+   X 496
+   Y 77
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_brick
+   PIECE trap_02
+   X 48
+   Y 105
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_brick
+   PIECE window
+   X 224
+   Y 68
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_02
+   X 32
+   Y 136
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_brick
+     PIECE bricks_large_02
+     X 96
+     Y 136
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_brick
+       PIECE bricks_large_02
+       X 160
+       Y 136
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_brick
+         PIECE bricks_large_02
+         X 224
+         Y 136
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_brick
+           PIECE bricks_large_02
+           X 288
+           Y 136
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_brick
+             PIECE bricks_large_02
+             X 352
+             Y 136
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_brick
+               PIECE bricks_large_01
+               X 416
+               Y 112
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_brick
+                 PIECE bricks_large_01
+                 X 480
+                 Y 112
+                 ONE_WAY
+               $END
+               
+ 

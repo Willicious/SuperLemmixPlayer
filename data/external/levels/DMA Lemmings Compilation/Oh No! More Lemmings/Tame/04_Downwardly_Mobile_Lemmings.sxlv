@@ -1,0 +1,546 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Downwardly Mobile Lemmings
+ AUTHOR DMA Design
+ MUSIC menace_amiga
+ ID xE29F8833E29F8833
+ VERSION x000000000000000E
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 392
+ HEIGHT 160
+ START_X 160
+ START_Y 80
+ THEME slx_bubble
+ BACKGROUND special:amiga_blue
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 50
+ SAVE_REQUIREMENT 25
+ TIME_LIMIT 240
+ MAX_SPAWN_INTERVAL 53
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 20
+   FLOATER 20
+   TIMEBOMBER 20
+   BLOCKER 20
+   BUILDER 20
+   BASHER 20
+   MINER 20
+   DIGGER 20
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_bubble
+   PIECE exit
+   X 152
+   Y 115
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_bubble
+   PIECE window
+   X 168
+   Y 4
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE balls_blue_01
+   X 165
+   Y 38
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE slx_bubble
+     PIECE balls_blue_01
+     X 209
+     Y 38
+     ONE_WAY
+   $END
+   
+     $TERRAIN
+       STYLE slx_bubble
+       PIECE balls_blue_01
+       X 148
+       Y 64
+       ONE_WAY
+     $END
+     
+       $TERRAIN
+         STYLE slx_bubble
+         PIECE balls_blue_01
+         X 104
+         Y 64
+         ONE_WAY
+       $END
+       
+         $TERRAIN
+           STYLE slx_bubble
+           PIECE balls_blue_01
+           X 185
+           Y 95
+           ONE_WAY
+         $END
+         
+           $TERRAIN
+             STYLE slx_bubble
+             PIECE balls_blue_01
+             X 141
+             Y 95
+             ONE_WAY
+           $END
+           
+             $TERRAIN
+               STYLE slx_bubble
+               PIECE pipe_large_09
+               X 169
+               Y 152
+               ONE_WAY
+             $END
+             
+               $TERRAIN
+                 STYLE slx_bubble
+                 PIECE pipe_large_09
+                 X 201
+                 Y 152
+                 ONE_WAY
+               $END
+               
+                 $TERRAIN
+                   STYLE slx_bubble
+                   PIECE pipe_large_09
+                   X 233
+                   Y 152
+                   ONE_WAY
+                 $END
+                 
+                   $TERRAIN
+                     STYLE slx_bubble
+                     PIECE pipe_large_07
+                     X 265
+                     Y 144
+                     ONE_WAY
+                   $END
+                   
+                     $TERRAIN
+                       STYLE slx_bubble
+                       PIECE pipe_large_09
+                       X 137
+                       Y 152
+                       ONE_WAY
+                     $END
+                     
+                       $TERRAIN
+                         STYLE slx_bubble
+                         PIECE pipe_large_09
+                         X 105
+                         Y 152
+                         ONE_WAY
+                       $END
+                       
+                         $TERRAIN
+                           STYLE slx_bubble
+                           PIECE pipe_large_07
+                           X 73
+                           Y 144
+                           ONE_WAY
+                         $END
+                         
+                           $TERRAIN
+                             STYLE slx_bubble
+                             PIECE pipe_large_10
+                             X 57
+                             Y 152
+                             ONE_WAY
+                           $END
+                           
+                             $TERRAIN
+                               STYLE slx_bubble
+                               PIECE pipe_large_11
+                               X 297
+                               Y 152
+                               ONE_WAY
+                             $END
+                             
+                               $TERRAIN
+                                 STYLE slx_bubble
+                                 PIECE pipe_large_12
+                                 X 274
+                                 Y 128
+                                 ONE_WAY
+                               $END
+                               
+                                 $TERRAIN
+                                   STYLE slx_bubble
+                                   PIECE pipe_large_12
+                                   X 82
+                                   Y 128
+                                   ONE_WAY
+                                 $END
+                                 
+                                   $TERRAIN
+                                     STYLE slx_bubble
+                                     PIECE pipe_large_07
+                                     X 202
+                                     Y 144
+                                     ONE_WAY
+                                   $END
+                                   
+                                     $TERRAIN
+                                       STYLE slx_bubble
+                                       PIECE pipe_large_12
+                                       X 211
+                                       Y 128
+                                       ONE_WAY
+                                     $END
+                                     
+                                       $TERRAIN
+                                         STYLE slx_bubble
+                                         PIECE balls_blue_01
+                                         X 297
+                                         Y 38
+                                         ONE_WAY
+                                       $END
+                                       
+                                         $TERRAIN
+                                           STYLE slx_bubble
+                                           PIECE balls_blue_02
+                                           X 237
+                                           Y 49
+                                           NO_OVERWRITE
+                                           ONE_WAY
+                                         $END
+                                         
+                                           $TERRAIN
+                                             STYLE slx_bubble
+                                             PIECE balls_blue_02
+                                             X 259
+                                             Y 49
+                                             NO_OVERWRITE
+                                             ONE_WAY
+                                           $END
+                                           
+                                             $TERRAIN
+                                               STYLE slx_bubble
+                                               PIECE balls_blue_02
+                                               X 281
+                                               Y 49
+                                               NO_OVERWRITE
+                                               ONE_WAY
+                                             $END
+                                             
+                                               $TERRAIN
+                                                 STYLE slx_bubble
+                                                 PIECE balls_blue_04
+                                                 X 324
+                                                 Y 50
+                                                 ONE_WAY
+                                               $END
+                                               
+                                                 $TERRAIN
+                                                   STYLE slx_bubble
+                                                   PIECE balls_blue_02
+                                                   X 99
+                                                   Y 75
+                                                   ONE_WAY
+                                                 $END
+                                                 
+                                                   $TERRAIN
+                                                     STYLE slx_bubble
+                                                     PIECE balls_blue_03
+                                                     X 145
+                                                     Y 104
+                                                     ONE_WAY
+                                                   $END
+                                                   
+                                                     $TERRAIN
+                                                       STYLE slx_bubble
+                                                       PIECE balls_blue_03
+                                                       X 227
+                                                       Y 102
+                                                       ONE_WAY
+                                                     $END
+                                                     
+                                                       $TERRAIN
+                                                         STYLE slx_bubble
+                                                         PIECE balls_blue_04
+                                                         X 94
+                                                         Y -4
+                                                         ONE_WAY
+                                                       $END
+                                                       
+                                                         $TERRAIN
+                                                           STYLE slx_bubble
+                                                           PIECE balls_blue_05
+                                                           X 106
+                                                           Y -4
+                                                           ONE_WAY
+                                                         $END
+                                                         
+                                                           $TERRAIN
+                                                             STYLE slx_bubble
+                                                             PIECE balls_blue_06
+                                                             X 67
+                                                             Y -4
+                                                             ONE_WAY
+                                                           $END
+                                                           
+                                                             $TERRAIN
+                                                               STYLE slx_bubble
+                                                               PIECE pipe_tiny_02
+                                                               X 286
+                                                               Y 61
+                                                               NO_OVERWRITE
+                                                               ONE_WAY
+                                                             $END
+                                                             
+                                                               $TERRAIN
+                                                                 STYLE slx_bubble
+                                                                 PIECE bubbles_gold_03
+                                                                 X 284
+                                                                 Y 93
+                                                                 ONE_WAY
+                                                               $END
+                                                               
+                                                                 $TERRAIN
+                                                                   STYLE slx_bubble
+                                                                   PIECE pipe_tiny_02
+                                                                   X 325
+                                                                   Y 84
+                                                                   ONE_WAY
+                                                                 $END
+                                                                 
+                                                                   $TERRAIN
+                                                                     STYLE slx_bubble
+                                                                     PIECE bubbles_gold_03
+                                                                     X 322
+                                                                     Y 98
+                                                                     ONE_WAY
+                                                                   $END
+                                                                   
+                                                                     $TERRAIN
+                                                                       STYLE slx_bubble
+                                                                       PIECE pipe_tiny_02
+                                                                       X 105
+                                                                       Y 83
+                                                                       NO_OVERWRITE
+                                                                       ONE_WAY
+                                                                     $END
+                                                                     
+                                                                       $TERRAIN
+                                                                         STYLE slx_bubble
+                                                                         PIECE pipe_tiny_02
+                                                                         X 55
+                                                                         Y 81
+                                                                         NO_OVERWRITE
+                                                                         ONE_WAY
+                                                                       $END
+                                                                       
+                                                                         $TERRAIN
+                                                                           STYLE slx_bubble
+                                                                           PIECE bubbles_gold_03
+                                                                           X 103
+                                                                           Y 107
+                                                                           ONE_WAY
+                                                                         $END
+                                                                         
+                                                                           $TERRAIN
+                                                                             STYLE slx_bubble
+                                                                             PIECE bubbles_gold_03
+                                                                             X 53
+                                                                             Y 100
+                                                                             ONE_WAY
+                                                                           $END
+                                                                           
+                                                                             $TERRAIN
+                                                                               STYLE slx_bubble
+                                                                               PIECE balls_blue_03
+                                                                               X 286
+                                                                               Y 59
+                                                                               ONE_WAY
+                                                                             $END
+                                                                             
+                                                                               $TERRAIN
+                                                                                 STYLE slx_bubble
+                                                                                 PIECE balls_blue_03
+                                                                                 X 303
+                                                                                 Y 49
+                                                                                 NO_OVERWRITE
+                                                                                 ONE_WAY
+                                                                               $END
+                                                                               
+                                                                                 $TERRAIN
+                                                                                   STYLE slx_bubble
+                                                                                   PIECE balls_blue_01
+                                                                                   X 66
+                                                                                   Y 75
+                                                                                   NO_OVERWRITE
+                                                                                   ONE_WAY
+                                                                                 $END
+                                                                                 
+                                                                                   $TERRAIN
+                                                                                     STYLE slx_bubble
+                                                                                     PIECE balls_blue_01
+                                                                                     X 55
+                                                                                     Y 75
+                                                                                     ONE_WAY
+                                                                                   $END
+                                                                                   
+                                                                                     $TERRAIN
+                                                                                       STYLE slx_bubble
+                                                                                       PIECE balls_blue_01
+                                                                                       X 16
+                                                                                       Y 65
+                                                                                       ONE_WAY
+                                                                                     $END
+                                                                                     
+                                                                                       $TERRAIN
+                                                                                         STYLE slx_bubble
+                                                                                         PIECE fence_gold_03
+                                                                                         X 207
+                                                                                         Y -16
+                                                                                         FLIP_VERTICAL
+                                                                                         ONE_WAY
+                                                                                       $END
+                                                                                       
+                                                                                         $TERRAIN
+                                                                                           STYLE slx_bubble
+                                                                                           PIECE fence_gold_04
+                                                                                           X 239
+                                                                                           Y -16
+                                                                                           FLIP_VERTICAL
+                                                                                           ONE_WAY
+                                                                                         $END
+                                                                                         
+                                                                                           $TERRAIN
+                                                                                             STYLE slx_bubble
+                                                                                             PIECE fence_gold_03
+                                                                                             X 238
+                                                                                             Y -16
+                                                                                             FLIP_VERTICAL
+                                                                                             ONE_WAY
+                                                                                           $END
+                                                                                           
+                                                                                             $TERRAIN
+                                                                                               STYLE slx_bubble
+                                                                                               PIECE fence_gold_04
+                                                                                               X 270
+                                                                                               Y -16
+                                                                                               FLIP_VERTICAL
+                                                                                               ONE_WAY
+                                                                                             $END
+                                                                                             
+                                                                                               $TERRAIN
+                                                                                                 STYLE slx_bubble
+                                                                                                 PIECE fence_gold_03
+                                                                                                 X 269
+                                                                                                 Y -15
+                                                                                                 FLIP_VERTICAL
+                                                                                                 ONE_WAY
+                                                                                               $END
+                                                                                               
+                                                                                                 $TERRAIN
+                                                                                                   STYLE slx_bubble
+                                                                                                   PIECE fence_gold_04
+                                                                                                   X 301
+                                                                                                   Y -15
+                                                                                                   FLIP_VERTICAL
+                                                                                                   ONE_WAY
+                                                                                                 $END
+                                                                                                 
+                                                                                                   $TERRAIN
+                                                                                                     STYLE slx_bubble
+                                                                                                     PIECE fence_gold_03
+                                                                                                     X 293
+                                                                                                     Y -7
+                                                                                                     FLIP_VERTICAL
+                                                                                                     ONE_WAY
+                                                                                                   $END
+                                                                                                   
+                                                                                                     $TERRAIN
+                                                                                                       STYLE slx_bubble
+                                                                                                       PIECE fence_gold_04
+                                                                                                       X 325
+                                                                                                       Y -7
+                                                                                                       FLIP_VERTICAL
+                                                                                                       ONE_WAY
+                                                                                                     $END
+                                                                                                     
+                                                                                                       $TERRAIN
+                                                                                                         STYLE slx_bubble
+                                                                                                         PIECE pipe_tiny_01
+                                                                                                         X 224
+                                                                                                         Y -8
+                                                                                                         NO_OVERWRITE
+                                                                                                         FLIP_VERTICAL
+                                                                                                         ONE_WAY
+                                                                                                       $END
+                                                                                                       
+                                                                                                         $TERRAIN
+                                                                                                           STYLE slx_bubble
+                                                                                                           PIECE pipe_tiny_01
+                                                                                                           X 251
+                                                                                                           Y -8
+                                                                                                           NO_OVERWRITE
+                                                                                                           FLIP_VERTICAL
+                                                                                                           ONE_WAY
+                                                                                                         $END
+                                                                                                         
+                                                                                                           $TERRAIN
+                                                                                                             STYLE slx_bubble
+                                                                                                             PIECE pipe_tiny_01
+                                                                                                             X 284
+                                                                                                             Y -8
+                                                                                                             NO_OVERWRITE
+                                                                                                             FLIP_VERTICAL
+                                                                                                             ONE_WAY
+                                                                                                           $END
+                                                                                                           
+                                                                                                             $TERRAIN
+                                                                                                               STYLE slx_bubble
+                                                                                                               PIECE pipe_tiny_01
+                                                                                                               X 315
+                                                                                                               Y -8
+                                                                                                               NO_OVERWRITE
+                                                                                                               FLIP_VERTICAL
+                                                                                                               ONE_WAY
+                                                                                                             $END
+                                                                                                             
+                                                                                                               $TERRAIN
+                                                                                                                 STYLE slx_bubble
+                                                                                                                 PIECE balls_blue_01
+                                                                                                                 X 330
+                                                                                                                 Y 38
+                                                                                                                 NO_OVERWRITE
+                                                                                                                 ONE_WAY
+                                                                                                               $END
+                                                                                                               
+ 

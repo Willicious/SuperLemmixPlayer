@@ -1,0 +1,95 @@
+# ----------------------------- 
+#        SuperLemmix Level      
+#   Created with SLXEditor 2.9.4
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE The COVOX Level
+ AUTHOR Covox Lemmings
+ MUSIC menace_amiga
+ ID xBDB28C35BDB28C35
+ VERSION x000000000000000B
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 940
+ HEIGHT 160
+ START_X 477
+ START_Y 79
+ THEME slx_crystal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 80
+ SAVE_REQUIREMENT 40
+ TIME_LIMIT 540
+ MAX_SPAWN_INTERVAL 28
+ STEEL_TYPE 0
+ 
+ $SKILLSET 
+   CLIMBER 25
+   FLOATER 25
+   TIMEBOMBER 25
+   BLOCKER 25
+   BUILDER 25
+   BASHER 25
+   MINER 25
+   DIGGER 25
+ $END 
+ 
+ $TALISMAN 
+   TITLE Play in Classic Mode
+   ID 1
+   COLOR Gold
+   CLASSIC_MODE 0
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE slx_bubble
+   PIECE exit
+   X 784
+   Y 92
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_bubble
+   PIECE window
+   X 432
+   Y 36
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE slx_bubble
+   PIECE exit
+   X 128
+   Y 92
+   NO_OVERWRITE
+ $END
+ 
+ 
+#           Rulers              
+# ----------------------------- 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE special
+   PIECE covox_terrain
+   X 18
+   Y 0
+   ONE_WAY
+ $END
+ 
+   $TERRAIN
+     STYLE special
+     PIECE covox_steel
+     X 18
+     Y 0
+   $END
+   
+ 
