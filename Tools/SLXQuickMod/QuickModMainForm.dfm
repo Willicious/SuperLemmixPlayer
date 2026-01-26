@@ -207,7 +207,7 @@ object FQuickmodMain: TFQuickmodMain
       Left = 16
       Top = 193
       Width = 465
-      Height = 151
+      Height = 136
       Caption = 'Talismans'
       TabOrder = 10
       object cbRemoveTalismans: TCheckBox
@@ -261,23 +261,21 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbCrossPlatformConversions: TGroupBox
       Left = 16
-      Top = 350
+      Top = 335
       Width = 465
-      Height = 75
+      Height = 90
       Caption = 'Cross-Platform OG Style Swap'
       TabOrder = 14
       object lblConversionInfo: TLabel
         Left = 16
         Top = 21
-        Width = 429
+        Width = 197
         Height = 13
-        Caption = 
-          'Swap between Orig/OhNo and SLX styles (auto-corrects water objec' +
-          'ts and exit positions)'
+        Caption = 'Swap between Orig/OhNo and SLX styles'
       end
       object cbSwapStyles: TCheckBox
         Left = 16
-        Top = 45
+        Top = 41
         Width = 97
         Height = 17
         Caption = 'Swap OG Styles'
@@ -286,7 +284,7 @@ object FQuickmodMain: TFQuickmodMain
       end
       object rbNeoToSuper: TRadioButton
         Left = 119
-        Top = 45
+        Top = 41
         Width = 161
         Height = 17
         Caption = 'NeoLemmix to SuperLemmix'
@@ -295,12 +293,21 @@ object FQuickmodMain: TFQuickmodMain
       end
       object rbSuperToNeo: TRadioButton
         Left = 286
-        Top = 45
+        Top = 41
         Width = 161
         Height = 17
         Caption = 'SuperLemmix to NeoLemmix'
         Enabled = False
         TabOrder = 2
+      end
+      object cbCorrectWaterAndExits: TCheckBox
+        Left = 16
+        Top = 64
+        Width = 421
+        Height = 17
+        Caption = 'Auto-correct water objects and exit positions'
+        Enabled = False
+        TabOrder = 3
       end
     end
   end

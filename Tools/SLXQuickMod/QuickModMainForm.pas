@@ -69,6 +69,7 @@ type
     gbSkills: TGroupBox;
     cbSetAllSkillCounts: TCheckBox;
     seSkillCounts: TSpinEdit;
+    cbCorrectWaterAndExits: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -161,12 +162,17 @@ begin
   begin
     rbNeoToSuper.Enabled := True;
     rbSuperToNeo.Enabled := True;
+    cbCorrectWaterAndExits.Enabled := True;
+    cbCorrectWaterAndExits.Checked := True;
   end else begin
+    rbNeoToSuper.Enabled := False;
     rbNeoToSuper.Checked := False;
+
+    rbSuperToNeo.Enabled := False;
     rbSuperToNeo.Checked := False;
 
-    rbNeoToSuper.Enabled := False;
-    rbSuperToNeo.Enabled := False;
+    cbCorrectWaterAndExits.Enabled := False;
+    cbCorrectWaterAndExits.Checked := False;
   end;
 end;
 
@@ -489,6 +495,17 @@ begin
     end;
   end;
 
+  if FindFirst(aBaseFolder + '*.sxlv', 0, SearchRec) = 0 then
+  begin
+    try
+      repeat
+        ApplyChangesToLevelFile(aBaseFolder + SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+    finally
+      FindClose(SearchRec);
+    end;
+  end;
+
   if FindFirst(aBaseFolder + '*.nxlv', 0, SearchRec) = 0 then
   begin
     try
@@ -516,6 +533,7 @@ var
   AlreadyModified: Boolean;
   ShouldConvertSkills: Boolean;
   ShouldConvertLevels: Boolean;
+  ShouldCorrectWaterAndExits: Boolean;
   NeoToSuper: Boolean;
   SuperToNeo: Boolean;
 begin
@@ -535,6 +553,9 @@ begin
 
   ShouldConvertLevels := cbSwapStyles.Checked and
                          (rbNeoToSuper.Checked or rbSuperToNeo.Checked);
+
+  ShouldCorrectWaterAndExits := ShouldConvertLevels and
+                                cbCorrectWaterAndExits.Checked;
 
   NeoToSuper := rbNeoToSuper.Checked;
   SuperToNeo := rbSuperToNeo.Checked;
@@ -643,7 +664,7 @@ begin
           SL[n] := '# ' + SL[n];
           Inc(n);
         until ThisLine = '$END';
-      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and ShouldConvertLevels then
+      end else if (SecLevel = 0) and (Trim(ThisLine) = '$GADGET') and ShouldCorrectWaterAndExits then
       begin
         {======================================================================}
         {=============== Correct Water Objects & Exit Positions ===============}
