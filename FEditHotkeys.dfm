@@ -59,7 +59,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   object lblSkillButton: TLabel
     Left = 364
     Top = 290
-    Width = 62
+    Width = 63
     Height = 13
     Caption = 'Skill Button:'
     Visible = False
@@ -160,6 +160,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Fall Distance Template'
       'Zoom In'
       'Zoom Out'
+      'Cycle Zoom'
       'Hold-To-Scroll'
       'Nudge Up'
       'Nudge Down'

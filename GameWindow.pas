@@ -74,6 +74,7 @@ type
     fReplayKilled: Boolean;
 
     fInternalZoom: Integer;
+    fZoomDirection: Integer;
     fMaxZoom: Integer;
     fMinimapBuffer: TBitmap32;
 
@@ -132,10 +133,12 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     function GetClearPhysics: Boolean;
+    function GetInternalZoom: Integer;
     procedure ProcessGameMessages;
     procedure SetMinimumWindowHeight(CurPanelHeight: Integer);
     procedure ApplyResize(NoRecenter: Boolean = False);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
+    procedure CycleZoom;
     procedure FreeCursors;
     procedure HandleMouseWheelFramestep(Ctrl: Boolean = False; Shift: Boolean = False; Alt: Boolean = False; Up: Boolean = False);
     procedure HandleSpecialSkip(aSkipType: Integer);
@@ -205,6 +208,7 @@ type
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
+    //property InternalZoom: Integer read fInternalZoom;
     function DoSuspendCursor: Boolean;
     function ShouldDisplayHQMinimap: Boolean;
 
@@ -319,6 +323,32 @@ begin
   finally
     SkillPanel.Image.EndUpdate;
   end;
+end;
+
+procedure TGameWindow.CycleZoom;
+begin
+  if fZoomDirection = 1 then
+  begin
+    if fInternalZoom >= fMaxZoom then
+      fZoomDirection := -1
+    else
+      ChangeZoom(fInternalZoom + 1);
+  end;
+
+  if fZoomDirection = -1 then
+  begin
+    if fInternalZoom <= 1 then
+      fZoomDirection := 1
+    else
+      ChangeZoom(fInternalZoom - 1);
+  end;
+
+  //SkillPanel.ShowMinimapZoomText := True;
+end;
+
+function TGameWindow.GetInternalZoom: Integer;
+begin
+  Result := fInternalZoom;
 end;
 
 procedure TGameWindow.SetMinimumWindowHeight(CurPanelHeight: Integer);
@@ -1590,6 +1620,7 @@ const
                          lka_ShowUsedSkills,
                          lka_ZoomIn,
                          lka_ZoomOut,
+                         lka_CycleZoom,
                          lka_Scroll,
                          lka_NudgeUp,
                          lka_NudgeDown,
@@ -1848,6 +1879,7 @@ begin
       lka_ReplayInsert: if not GameParams.ClassicMode then Game.ReplayInsert := not Game.ReplayInsert;
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
       lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
+      lka_CycleZoom: CycleZoom;
       lka_Scroll: begin
                     CursorPointForm := ScreenToClient(Mouse.CursorPos);
                     if PtInRect(Img.BoundsRect, CursorPointForm) and not fHoldScrollData.Active then
@@ -2222,6 +2254,8 @@ begin
   Sca := Max(Min(Sca, fMaxZoom), 1);
 
   fInternalZoom := Sca;
+  fZoomDirection := 1;
+
   GameParams.TargetBitmap := Img.Bitmap;
   GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
   fGame.PrepareParams;

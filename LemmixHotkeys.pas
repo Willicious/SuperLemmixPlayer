@@ -61,6 +61,7 @@ type
                          lka_FallDistance,
                          lka_ZoomIn,
                          lka_ZoomOut,
+                         lka_CycleZoom,
                          lka_Scroll,
                          lka_NudgeUp,
                          lka_NudgeDown,
@@ -357,6 +358,7 @@ begin
   if s = 'replay_insert' then Result := lka_ReplayInsert;
   if s = 'zoom_in' then Result := lka_ZoomIn;
   if s = 'zoom_out' then Result := lka_ZoomOut;
+  if s = 'cycle_zoom' then Result := lka_CycleZoom;
   if s = 'scroll' then Result := lka_Scroll;
   if s = 'nudge_up' then Result := lka_NudgeUp;
   if s = 'nudge_down' then Result := lka_NudgeDown;
@@ -523,6 +525,7 @@ var
       lka_ReplayInsert:     Result := 'Replay_Insert';
       lka_ZoomIn:           Result := 'Zoom_In';
       lka_ZoomOut:          Result := 'Zoom_Out';
+      lka_CycleZoom:        Result := 'Cycle_Zoom';
       lka_Scroll:           Result := 'Scroll';
       lka_NudgeUp:          Result := 'Nudge_Up';
       lka_NudgeDown:        Result := 'Nudge_Down';
