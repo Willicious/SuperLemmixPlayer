@@ -281,8 +281,6 @@ var
   Ext: String;
   BasePath, PackPath: String;
 begin
-  Result := -1;
-
   BasePath := '';
   PackPath := '';
 

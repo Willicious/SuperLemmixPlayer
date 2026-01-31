@@ -14,9 +14,6 @@ type
   protected
     function GetButtonList: TPanelButtonArray; override;
 
-    function PanelWidth: Integer; override;
-    function PanelHeight: Integer; override;
-
     function MinimapRect: TRect; override;
     function ReplayIconRect: TRect; override;
     function RescueCountRect: TRect; override;
@@ -29,6 +26,9 @@ type
     function LemmingCountStartIndex: Integer; override;
     function LemmingSavedStartIndex: Integer; override;
   public
+    function PanelWidth: Integer; override;
+    function PanelHeight: Integer; override;
+
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
   end;
