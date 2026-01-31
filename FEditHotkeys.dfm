@@ -21,7 +21,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   TextHeight = 13
   object lblSkill: TLabel
     Left = 341
-    Top = 263
+    Top = 247
     Width = 24
     Height = 13
     Caption = 'Skill:'
@@ -29,7 +29,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblDuration: TLabel
     Left = 318
-    Top = 318
+    Top = 302
     Width = 114
     Height = 13
     Caption = 'Skip Amount (Frames):'
@@ -37,7 +37,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblSkip: TLabel
     Left = 340
-    Top = 376
+    Top = 360
     Width = 25
     Height = 13
     Caption = 'Skip:'
@@ -45,7 +45,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblFindKey: TLabel
     Left = 321
-    Top = 212
+    Top = 190
     Width = 3
     Height = 13
     Alignment = taCenter
@@ -58,7 +58,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblSkillButton: TLabel
     Left = 364
-    Top = 290
+    Top = 274
     Width = 63
     Height = 13
     Caption = 'Skill Button:'
@@ -66,7 +66,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object lblNudgeAmount: TLabel
     Left = 318
-    Top = 345
+    Top = 329
     Width = 119
     Height = 13
     Caption = 'Nudge Amount (Pixels):'
@@ -74,7 +74,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnFindKey: TButton
     Left = 342
-    Top = 133
+    Top = 120
     Width = 138
     Height = 40
     Caption = 'Find Key'
@@ -106,11 +106,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbFunctions: TComboBox
     Left = 314
-    Top = 233
+    Top = 211
     Width = 197
     Height = 21
     Style = csDropDownList
-    DropDownCount = 14
+    DropDownCount = 20
     Enabled = False
     TabOrder = 1
     OnChange = cbFunctionsChange
@@ -179,11 +179,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSkill: TComboBox
     Left = 373
-    Top = 260
+    Top = 244
     Width = 129
     Height = 21
     Style = csDropDownList
-    DropDownCount = 12
+    DropDownCount = 18
     Enabled = False
     TabOrder = 3
     Visible = False
@@ -218,7 +218,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbShowUnassigned: TCheckBox
     Left = 343
-    Top = 181
+    Top = 169
     Width = 145
     Height = 17
     Caption = 'Show Unassigned Keys'
@@ -227,7 +227,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object ebSkipDuration: TEdit
     Left = 438
-    Top = 315
+    Top = 299
     Width = 73
     Height = 21
     Enabled = False
@@ -238,7 +238,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbHardcodedNames: TCheckBox
     Left = 343
-    Top = 432
+    Top = 420
     Width = 145
     Height = 17
     Caption = 'Use Hardcoded Names'
@@ -251,7 +251,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbHoldKey: TCheckBox
     Left = 378
-    Top = 407
+    Top = 391
     Width = 97
     Height = 17
     Caption = 'Hold Key'
@@ -261,10 +261,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSpecialSkip: TComboBox
     Left = 373
-    Top = 373
+    Top = 357
     Width = 129
     Height = 21
     Style = csDropDownList
+    DropDownCount = 10
     Enabled = False
     TabOrder = 9
     Visible = False
@@ -276,7 +277,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnClassicLayout: TButton
     Left = 322
-    Top = 51
+    Top = 38
     Width = 178
     Height = 25
     Caption = 'Set to Classic Layout'
@@ -285,7 +286,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object btnAdvancedLayout: TButton
     Left = 322
-    Top = 76
+    Top = 63
     Width = 178
     Height = 25
     Caption = 'Set to Advanced Layout'
@@ -293,17 +294,17 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnClick = btnAdvancedLayoutClick
   end
   object btnClearAllKeys: TButton
-    Left = 342
+    Left = 343
     Top = 5
-    Width = 138
-    Height = 40
+    Width = 137
+    Height = 28
     Caption = 'Clear All Keys'
     TabOrder = 12
     OnClick = btnClearAllKeysClick
   end
   object btnNeoLemmixLayout: TBitBtn
     Left = 322
-    Top = 101
+    Top = 88
     Width = 178
     Height = 25
     Caption = 'Set to NeoLemmix Layout'
@@ -331,7 +332,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object seSkillButton: TSpinEdit
     Left = 432
-    Top = 287
+    Top = 271
     Width = 41
     Height = 22
     Enabled = False
@@ -344,7 +345,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object ebNudgeAmount: TEdit
     Left = 443
-    Top = 342
+    Top = 326
     Width = 68
     Height = 21
     Enabled = False
