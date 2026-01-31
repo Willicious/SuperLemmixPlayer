@@ -6884,10 +6884,14 @@ var
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
           and (not HasTriggerAt(L.LemX, L.LemY, trExit))
-          and (not HasTriggerAt(L.LemX, L.LemY, trPortal))
           and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
-          and (not HasTriggerAt(L.LemX, L.LemY, trTeleport))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
+  end;
+
+  function InTransporter: Boolean;
+  begin
+    Result := HasTriggerAt(L.LemX, L.LemY, trTeleport) or
+              HasTriggerAt(L.LemX, L.LemY, trPortal);
   end;
 
   function CheckFloaterOrGliderTransition: Boolean;
@@ -6934,9 +6938,12 @@ begin
   if L.LemFallen > MAX_FALLDISTANCE then L.LemFallen := MAX_FALLDISTANCE + 1;
   if L.LemTrueFallen > MAX_FALLDISTANCE then L.LemTrueFallen := MAX_FALLDISTANCE + 1;
 
+  // Object checks at hitting ground
   if CurrFallDist < MaxFallDist then
   begin
-    // Object checks at hitting ground
+    if InTransporter then // Let teleporters and portals handle next action
+      Exit;
+
     if IsFallFatal and not L.LemIsInvincible then
       fLemNextAction := baSplatting
     else
