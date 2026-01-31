@@ -153,8 +153,8 @@ begin
   SetKeyFunction($27, lka_SkillRight);
   SetKeyFunction($0D, lka_ReleaseMouse);
   SetKeyFunction($20, lka_ShowUsedSkills);
-  SetKeyFunction($68, lka_InfiniteSkills);
-  SetKeyFunction($69, lka_InfiniteTime);
+  SetKeyFunction($6A, lka_InfiniteSkills);
+  SetKeyFunction($6F, lka_InfiniteTime);
   SetKeyFunction($59, lka_CancelPlayback);
   SetKeyFunction($31, lka_Skill, Integer(spbClimber));
   SetKeyFunction($32, lka_Skill, Integer(spbFloater));
@@ -164,10 +164,10 @@ begin
   SetKeyFunction($36, lka_Skill, Integer(spbBasher));
   SetKeyFunction($37, lka_Skill, Integer(spbMiner));
   SetKeyFunction($38, lka_Skill, Integer(spbDigger));
-  SetKeyFunction($65, lka_NudgeUp, 160);
+  SetKeyFunction($68, lka_NudgeUp, 160);
   SetKeyFunction($62, lka_NudgeDown, 160);
-  SetKeyFunction($61, lka_NudgeLeft, 160);
-  SetKeyFunction($63, lka_NudgeRight, 160);
+  SetKeyFunction($64, lka_NudgeLeft, 160);
+  SetKeyFunction($66, lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAdvanced;
@@ -211,8 +211,8 @@ begin
   SetKeyFunction($30, lka_SlowMotion);
   SetKeyFunction($BE, lka_SlowMotion);
   SetKeyFunction($2E, lka_Cheat);
-  SetKeyFunction($68, lka_InfiniteSkills);
-  SetKeyFunction($69, lka_InfiniteTime);
+  SetKeyFunction($6A, lka_InfiniteSkills);
+  SetKeyFunction($6F, lka_InfiniteTime);
   SetKeyFunction($56, lka_ClearPhysics, 1);
   SetKeyFunction($14, lka_ClearPhysics, 0);
   SetKeyFunction($4C, lka_LoadReplay);
@@ -238,10 +238,10 @@ begin
   SetKeyFunction($71, lka_SkillButton, 12);
   SetKeyFunction($72, lka_SkillButton, 13);
   SetKeyFunction($73, lka_SkillButton, 14);
-  SetKeyFunction($65, lka_NudgeUp, 160);
+  SetKeyFunction($68, lka_NudgeUp, 160);
   SetKeyFunction($62, lka_NudgeDown, 160);
-  SetKeyFunction($61, lka_NudgeLeft, 160);
-  SetKeyFunction($63, lka_NudgeRight, 160);
+  SetKeyFunction($64, lka_NudgeLeft, 160);
+  SetKeyFunction($66, lka_NudgeRight, 160);
 end;
 
 procedure TLemmixHotkeyManager.SetDefaultsAlternative;
@@ -301,13 +301,13 @@ begin
   SetKeyFunction($43, lka_Skill, Integer(spbFencer));
   SetKeyFunction($47, lka_Skill, Integer(spbMiner));
   SetKeyFunction($57, lka_Skill, Integer(spbDigger));
-  SetKeyFunction($68, lka_InfiniteSkills);
-  SetKeyFunction($69, lka_InfiniteTime);
+  SetKeyFunction($6A, lka_InfiniteSkills);
+  SetKeyFunction($6F, lka_InfiniteTime);
   SetKeyFunction($59, lka_CancelPlayback);
-  SetKeyFunction($65, lka_NudgeUp, 160);
+  SetKeyFunction($68, lka_NudgeUp, 160);
   SetKeyFunction($62, lka_NudgeDown, 160);
-  SetKeyFunction($61, lka_NudgeLeft, 160);
-  SetKeyFunction($63, lka_NudgeRight, 160);
+  SetKeyFunction($64, lka_NudgeLeft, 160);
+  SetKeyFunction($66, lka_NudgeRight, 160);
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
