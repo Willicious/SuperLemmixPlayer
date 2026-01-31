@@ -393,6 +393,7 @@ var
   SrcRect, DstRect: TRect;
   SrcAnim: TBitmap32;
   SrcMetaAnim: TMetaLemmingAnimation;
+  LemLayer: TRenderLayer;
   TriggerRect: TRect;
   TriggerLeft, TriggerTop: Integer;
   PortalWarpWidth: Integer;
@@ -511,36 +512,28 @@ begin
 
   // Swimmer-Blockers are drawn behind all objects
   if (aLemming.LemAction = baBlocking) and aLemming.LemIsWaterblocker then
-  begin
-    if fLayers.fIsEmpty[rlDecorations] then
-      fLayers.fIsEmpty[rlDecorations] := False;
-
-    SrcAnim.DrawTo(fLayers[rlDecorations], DstRect, SrcRect);
-  end else
+    LemLayer := rlDecorations
   // Frozen lems are drawn behind terrain
-  if aLemming.LemAction = baFrozen then
-  begin
-    if fLayers.fIsEmpty[rlGadgetsLow] then
-      fLayers.fIsEmpty[rlGadgetsLow] := False;
-
-    SrcAnim.DrawTo(fLayers[rlGadgetsLow], DstRect, SrcRect);
-  end else
+  else if aLemming.LemAction = baFrozen then
+    LemLayer := rlGadgetsLow
   // Explosion states are drawn behind other lems
-  if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing,
-                            baFreezerExplosion, baOhNoing, baExploding,
-                            baTimebombing, baTimebombFinish] then
-    SrcAnim.DrawTo(fLayers[rlLemmingsLow], DstRect, SrcRect)
+  else if aLemming.LemAction in [baFreezing, baFrozen, baUnfreezing,
+                                 baFreezerExplosion, baOhNoing, baExploding,
+                                 baTimebombing, baTimebombFinish] then
+    LemLayer := rlLemmingsLow
   else
-    SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
+    LemLayer := rlLemmingsHigh;
 
-  // Portal lemmings
+  // Draw lems unless they're portal-warping
   if (aLemming.LemPortalWarpFrame < 3) or (aLemming.LemPortalWarpFrame > 4) then
   begin
-    SrcAnim.DrawMode := dmCustom;
-    SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
-    SrcAnim.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
+    if fLayers.fIsEmpty[LemLayer] then
+      fLayers.fIsEmpty[LemLayer] := False;
+
+    SrcAnim.DrawTo(fLayers[LemLayer], DstRect, SrcRect);
   end;
 
+  // Draw the portal warp overlay
   if (aLemming.LemPortalWarpFrame > 0) then
   begin
     PortalWarpWidth := fAni.PortalWarpBitmap.Width div 3;
@@ -551,8 +544,7 @@ begin
                            (DstRect.Top + DstRect.Bottom - fAni.PortalWarpBitmap.Height) div 2,
                            PortalWarpWidth, fAni.PortalWarpBitmap.Height
                          );
-
-    fAni.PortalWarpBitmap.DrawTo(fLayers[rlLemmingsHigh], DstRect, SrcRect);
+    fAni.PortalWarpBitmap.DrawTo(fLayers[LemLayer], DstRect, SrcRect);
   end;
 
   // Helper for selected lemming
