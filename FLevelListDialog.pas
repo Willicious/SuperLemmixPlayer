@@ -5,6 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  LemNeoLevelPack,
   SharedGlobals;
 
 type
@@ -14,9 +15,9 @@ type
     procedure btnSelectClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
   private
-    FSelectedFileName: string;
+    fSelectedLevel: TNeoLevelEntry;
   public
-    property SelectedFileName: string read FSelectedFileName write FSelectedFileName;
+    property SelectedLevel: TNeoLevelEntry read fSelectedLevel write fSelectedLevel;
   end;
 
 implementation
@@ -26,7 +27,8 @@ implementation
 procedure TFLevelListDialog.btnSelectClick(Sender: TObject);
 begin
   if MatchingLevelsList.ItemIndex <> -1 then
-    SelectedFileName := MatchingLevelsList.Items[MatchingLevelsList.ItemIndex];
+    SelectedLevel := TNeoLevelEntry(MatchingLevelsList.Items.Objects[MatchingLevelsList.ItemIndex]);
+
   ModalResult := mrOk;
 end;
 
