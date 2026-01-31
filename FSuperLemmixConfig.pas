@@ -68,6 +68,7 @@ type
     cmbScrollSpeed: TComboBox;
     gbZoomOptions: TGroupBox;
     gbWindowOptions: TGroupBox;
+    cbInvertMouseWheelFramesteps: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -233,6 +234,7 @@ begin
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
     cbColourCycle.Checked := GameParams.ColourCycle;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
+    cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbHideHelpers.Checked := GameParams.HideHelpers;
@@ -303,6 +305,7 @@ begin
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.ColourCycle := cbColourCycle.Checked;
   GameParams.ShowButtonHints := cbShowButtonHints.Checked;
+  GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.HideHelpers := cbHideHelpers.Checked;

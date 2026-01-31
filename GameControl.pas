@@ -89,6 +89,7 @@ type
     moNoBackgrounds,
     moColourCycle,
     moShowButtonHints,
+    moInvertMouseWheelFramesteps,
     moClassicMode,
     moHideShadows,
     moHideHelpers,
@@ -278,6 +279,7 @@ type
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property ColourCycle: boolean Index moColourCycle read GetOptionFlag write SetOptionFlag;
     property ShowButtonHints: boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
+    property InvertMouseWheelFramesteps: boolean Index moInvertMouseWheelFramesteps read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
     property HideHelpers: boolean Index moHideHelpers read GetOptionFlag write SetOptionFlag;
@@ -509,6 +511,7 @@ begin
     SaveBoolean('NoBackgrounds', NoBackgrounds);
     SaveBoolean('ColourCycle', ColourCycle);
     SaveBoolean('ShowButtonHints', ShowButtonHints);
+    SaveBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
     SaveBoolean('ClassicMode', ClassicMode);
     SaveBoolean('HideShadows', HideShadows);
     SaveBoolean('HideHelpers', HideHelpers);
@@ -694,6 +697,7 @@ begin
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
     ColourCycle := LoadBoolean('ColourCycle', ColourCycle);
     ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
+    InvertMouseWheelFramesteps := LoadBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     HideHelpers := LoadBoolean('HideHelpers', HideHelpers);

@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 328
     Height = 500
-    ActivePage = Graphics
+    ActivePage = TabSheet2
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
@@ -234,14 +234,14 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 4
       object lblScrollSpeed: TLabel
         Left = 50
-        Top = 45
+        Top = 36
         Width = 66
         Height = 13
         Caption = 'Scroll Speed:'
       end
       object cbEdgeScrolling: TCheckBox
         Left = 33
-        Top = 22
+        Top = 13
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
@@ -250,10 +250,10 @@ object FormNXConfig: TFormNXConfig
       end
       object cbPauseAfterBackwards: TCheckBox
         Left = 33
-        Top = 81
+        Top = 63
         Width = 205
         Height = 17
-        Caption = 'Pause After Backwards Frameskip'
+        Caption = 'Pause After Backwards Framestep'
         TabOrder = 1
         OnClick = OptionChanged
       end
@@ -399,7 +399,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cmbScrollSpeed: TComboBox
         Left = 129
-        Top = 42
+        Top = 33
         Width = 102
         Height = 21
         Style = csDropDownList
@@ -413,6 +413,15 @@ object FormNXConfig: TFormNXConfig
           'Medium'
           'Fast'
           'Fastest')
+      end
+      object cbInvertMouseWheelFramesteps: TCheckBox
+        Left = 33
+        Top = 86
+        Width = 261
+        Height = 17
+        Caption = 'Invert Mousewheel Framestep Direction'
+        TabOrder = 6
+        OnClick = OptionChanged
       end
     end
     object Graphics: TTabSheet

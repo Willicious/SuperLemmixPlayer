@@ -137,6 +137,7 @@ type
     procedure ApplyResize(NoRecenter: Boolean = False);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
     procedure FreeCursors;
+    procedure HandleMouseWheelFramestep(Ctrl: Boolean = False; Shift: Boolean = False; Alt: Boolean = False; Up: Boolean = False);
     procedure HandleSpecialSkip(aSkipType: Integer);
     procedure HandleInfiniteSkillsHotkey;
     procedure HandleInfiniteTimeHotkey;
@@ -248,17 +249,45 @@ procedure TGameWindow.Form_MouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
 var
   Key: Word;
+  CtrlPressed, ShiftPressed, AltPressed: Boolean;
 begin
   Key := 0;
+  CtrlPressed := ssCtrl in Shift;
+  ShiftPressed := ssShift in Shift;
+  AltPressed := ssAlt in Shift;
+
   if WheelDelta > 0 then
-    Key := $05
-  else if WheelDelta < 0 then
-    Key := $06;
+  begin
+    if (CtrlPressed or ShiftPressed or AltPressed) then
+      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, GameParams.InvertMouseWheelFramesteps)
+    else
+      Key := $05
+  end else if WheelDelta < 0 then
+  begin
+    if (CtrlPressed or ShiftPressed or AltPressed) then
+      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, not GameParams.InvertMouseWheelFramesteps)
+    else
+      Key := $06;
+  end;
 
   if Key <> 0 then
     OnKeyDown(Sender, Key, Shift);
 
   Handled := True;
+end;
+
+procedure TGameWindow.HandleMouseWheelFramestep(Ctrl: Boolean = False; Shift: Boolean = False; Alt: Boolean = False; Up: Boolean = False);
+begin
+  if (Up) then
+  begin
+    if (Ctrl ) then GoToSaveState(Game.CurrentIteration - 1);
+    if (Shift) then GoToSaveState(Game.CurrentIteration - 10);
+    if (Alt  ) then GoToSaveState(Game.CurrentIteration - 100);
+  end else begin
+    if (Ctrl ) then fHyperSpeedTarget := Game.CurrentIteration + 1;
+    if (Shift) then fHyperSpeedTarget := Game.CurrentIteration + 10;
+    if (Alt  ) then fHyperSpeedTarget := Game.CurrentIteration + 100;
+  end;
 end;
 
 procedure TGameWindow.MainFormResized;
