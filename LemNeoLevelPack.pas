@@ -109,7 +109,8 @@ type
       destructor Destroy; override;
 
       procedure WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);
-      procedure WipeRecords;
+      procedure ResetCompletionData;
+      procedure ResetRecords;
       procedure ResetTalismans;
 
       property Group: TNeoLevelGroup read fGroup;
@@ -217,7 +218,9 @@ type
       procedure CleanseLevels(aPath: String; aOutput: TStringList = nil; ProgressDialog: TForm = nil; ProgressBar: TProgressBar = nil; StatusLabel: TLabel = nil);
 
       function GetLevelForTalisman(aTalisman: TTalisman): TNeoLevelEntry;
-      procedure WipeAllRecords;
+      procedure ResetAllCompletionData;
+      procedure ResetAllRecords;
+      procedure ResetAllTalismans;
 
       property Parent: TNeoLevelGroup read fParentGroup;
       property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
@@ -393,7 +396,7 @@ begin
   fTalismans := TObjectList<TTalisman>.Create(True);
   fUnlockedTalismanList := TList<LongWord>.Create;
 
-  WipeRecords;
+  ResetRecords;
 end;
 
 destructor TNeoLevelEntry.Destroy;
@@ -601,7 +604,12 @@ begin
         Break;
 end;
 
-procedure TNeoLevelEntry.WipeRecords;
+procedure TNeoLevelEntry.ResetCompletionData;
+begin
+  Status := lst_None;
+end;
+
+procedure TNeoLevelEntry.ResetRecords;
 begin
   UserRecords.Wipe;
   WorldRecords.Wipe;
@@ -613,6 +621,39 @@ aIndex: Cardinal;
 begin
   for aIndex := 0 to fTalismans.Count do
   SetTalismanStatus(aIndex, False);
+end;
+
+procedure TNeoLevelGroup.ResetAllCompletionData;
+var
+  i: Integer;
+begin
+  for i := 0 to fChildGroups.Count-1 do
+    fChildGroups[i].ResetAllCompletionData;
+
+  for i := 0 to fLevels.Count-1 do
+    fLevels[i].ResetCompletionData;
+end;
+
+procedure TNeoLevelGroup.ResetAllRecords;
+var
+  i: Integer;
+begin
+  for i := 0 to fChildGroups.Count-1 do
+    fChildGroups[i].ResetAllRecords;
+
+  for i := 0 to fLevels.Count-1 do
+    fLevels[i].ResetRecords;
+end;
+
+procedure TNeoLevelGroup.ResetAllTalismans;
+var
+  i: Integer;
+begin
+  for i := 0 to fChildGroups.Count-1 do
+    fChildGroups[i].ResetAllTalismans;
+
+  for i := 0 to fLevels.Count-1 do
+    fLevels[i].ResetTalismans;
 end;
 
 procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords; aUserRecords: Boolean);
@@ -938,17 +979,6 @@ begin
   LoadScrollerDataDefault;
   LoadMusicData;
   LoadPostviewData;
-end;
-
-procedure TNeoLevelGroup.WipeAllRecords;
-var
-  i: Integer;
-begin
-  for i := 0 to fChildGroups.Count-1 do
-    fChildGroups[i].WipeAllRecords;
-
-  for i := 0 to fLevels.Count-1 do
-    fLevels[i].WipeRecords;
 end;
 
 procedure TNeoLevelGroup.LoadScrollerDataDefault;

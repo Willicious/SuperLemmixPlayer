@@ -36,7 +36,7 @@ type
     btnReplayManager: TButton;
     btnCleanseLevels: TButton;
     btnCleanseOne: TButton;
-    btnClearRecords: TButton;
+    btnResetRecords: TButton;
     btnResetTalismans: TBitBtn;
     btnPlaybackMode: TButton;
     lblAdvancedOptions: TLabel;
@@ -53,6 +53,7 @@ type
     lblSearchResultsInfo: TLabel;
     pbUIProgress: TProgressBar;
     lblLoadingInfo: TLabel;
+    btnResetAllProgress: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure LoadCurrentLevelToPlayer;
@@ -64,7 +65,7 @@ type
     procedure btnPlaybackModeClick(Sender:TObject);
     procedure btnCleanseLevelsClick(Sender: TObject);
     procedure btnCleanseOneClick(Sender: TObject);
-    procedure btnClearRecordsClick(Sender: TObject);
+    procedure btnResetRecordsClick(Sender: TObject);
     procedure tvLevelSelectKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnResetTalismansClick(Sender: TObject);
     procedure tvLevelSelectExpanded(Sender: TObject; Node: TTreeNode);
@@ -85,6 +86,7 @@ type
     procedure tvLevelSelectClick(Sender: TObject);
     procedure tvLevelSelectKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnResetAllProgressClick(Sender: TObject);
   private
     fLastLevelPath: String;
     fLastGroup: TNeoLevelGroup;
@@ -102,6 +104,7 @@ type
     procedure InitializeTreeview;
     procedure MakeTreeviewImages;
     function GetImageIndexFromCompletionStatus(Status: TNeoLevelStatus): Integer;
+    procedure UpdateNodeImages(N: TTreeNode);
     procedure UpdateNodeImage(N: TTreeNode);
     procedure LoadNodeLabels;
 
@@ -332,6 +335,20 @@ begin
   end;
 end;
 
+procedure TFLevelSelect.UpdateNodeImages(N: TTreeNode);
+var
+  C: TTreeNode;
+begin
+  UpdateNodeImage(N);
+
+  C := N.getFirstChild;
+  while C <> nil do
+  begin
+    UpdateNodeImages(C);
+    C := C.getNextSibling;
+  end;
+end;
+
 procedure TFLevelSelect.UpdateNodeImage(N: TTreeNode);
 var
   BaseIndex: Integer;
@@ -470,7 +487,6 @@ begin
 
   pnLevelInfo.Visible := False;
 
-  btnResetTalismans.Enabled := False;
   btnOK.Enabled := False;
 
   SearchingLevels := False;
@@ -681,25 +697,122 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.btnResetTalismansClick(Sender: TObject);
+procedure TFLevelSelect.btnResetAllProgressClick(Sender: TObject);
 var
   Obj: TObject;
+  G: TNeoLevelGroup absolute Obj;
   L: TNeoLevelEntry absolute Obj;
   N: TTreeNode;
+  GroupWord: String;
 begin
   N := tvLevelSelect.Selected;
   if N = nil then Exit; // Safeguard
 
   Obj := TObject(N.Data);
 
-  if Obj is TNeoLevelGroup then Exit;
-
-  if MessageDlg('Are you sure you want to reset talismans for the level "' + L.Title + '"?',
-                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+  if Obj is TNeoLevelGroup then
   begin
-    L.ResetTalismans;
-    SetTalismanInfo;
-    UpdateNodeImage(N);
+    if G.IsBasePack then
+      GroupWord := 'pack'
+    else
+      GroupWord := 'group';
+
+    if MessageDlg('Are you sure you want to reset completion status, records and talismans for all levels in the ' + GroupWord + ' "' + G.Name + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+      G.ResetAllCompletionData;
+      G.ResetAllRecords;
+      G.ResetAllTalismans;
+      UpdateNodeImages(N);
+  end else begin
+    if MessageDlg('Are you sure you want to reset completion status, records and talismans for the level "' + L.Title + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+    begin
+      L.ResetCompletionData;
+      L.ResetRecords;
+      L.ResetTalismans;
+
+      if fDisplayRecords <> rdNone then
+        fInfoForm.PrepareEmbedRecords(fDisplayRecords);
+
+      SetTalismanInfo;
+      UpdateNodeImage(N);
+    end;
+  end;
+end;
+
+procedure TFLevelSelect.btnResetRecordsClick(Sender: TObject);
+var
+  Obj: TObject;
+  G: TNeoLevelGroup absolute Obj;
+  L: TNeoLevelEntry absolute Obj;
+  N: TTreeNode;
+  GroupWord: String;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit; // Safeguard
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+  begin
+    if G.IsBasePack then
+      GroupWord := 'pack'
+    else
+      GroupWord := 'group';
+
+    if MessageDlg('Are you sure you want to clear records for all levels in the ' + GroupWord + ' "' + G.Name + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+      G.ResetAllRecords;
+  end else begin
+    if MessageDlg('Are you sure you want to clear records for the level "' + L.Title + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+    begin
+      L.ResetRecords;
+
+      if fDisplayRecords <> rdNone then
+        fInfoForm.PrepareEmbedRecords(fDisplayRecords);
+
+      SetTalismanInfo;
+    end;
+  end;
+end;
+
+procedure TFLevelSelect.btnResetTalismansClick(Sender: TObject);
+var
+  Obj: TObject;
+  G: TNeoLevelGroup absolute Obj;
+  L: TNeoLevelEntry absolute Obj;
+  N: TTreeNode;
+  GroupWord: String;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit; // Safeguard
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+  begin
+    if G.IsBasePack then
+      GroupWord := 'pack'
+    else
+      GroupWord := 'group';
+
+    if MessageDlg('Are you sure you want to reset talismans for all levels in the ' + GroupWord + ' "' + G.Name + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+      G.ResetAllTalismans;
+      UpdateNodeImages(N);
+  end else begin
+    if MessageDlg('Are you sure you want to reset talismans for the level "' + L.Title + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+    begin
+      L.ResetTalismans;
+
+      if fDisplayRecords <> rdNone then
+        fInfoForm.PrepareEmbedRecords(fDisplayRecords);
+
+      SetTalismanInfo;
+      UpdateNodeImage(N);
+    end;
   end;
 end;
 
@@ -730,44 +843,6 @@ begin
   end
   else if Obj is TNeoLevelEntry then
     GameParams.SetLevel(L);
-end;
-
-procedure TFLevelSelect.btnClearRecordsClick(Sender: TObject);
-var
-  Obj: TObject;
-  G: TNeoLevelGroup absolute Obj;
-  L: TNeoLevelEntry absolute Obj;
-  N: TTreeNode;
-
-  GroupWord: String;
-begin
-  N := tvLevelSelect.Selected;
-  if N = nil then Exit; // Safeguard
-
-  Obj := TObject(N.Data);
-
-  if Obj is TNeoLevelGroup then
-  begin
-    if G.IsBasePack then
-      GroupWord := 'pack'
-    else
-      GroupWord := 'group';
-
-    if MessageDlg('Are you sure you want to clear records for all levels in the ' + GroupWord + ' "' + G.Name + '"?',
-                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
-      G.WipeAllRecords;
-  end else begin
-    if MessageDlg('Are you sure you want to clear records for the level "' + L.Title + '"?',
-                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
-    begin
-      L.WipeRecords;
-
-      if fDisplayRecords <> rdNone then
-        fInfoForm.PrepareEmbedRecords(fDisplayRecords);
-
-      SetTalismanInfo;
-    end;
-  end;
 end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
@@ -973,10 +1048,10 @@ procedure TFLevelSelect.ShowOptionButtons;
 begin
   { Resizes and recenters the main form to show the option buttons }
 
-  Self.Width := btnClearRecords.Left + btnClearRecords.Width + 20;
+  Self.Width := btnResetRecords.Left + btnResetRecords.Width + 20;
 
   btnOK.Width := pnLevelInfo.Width - btnClose.Width;
-  btnClose.Left := btnClearRecords.Left;
+  btnClose.Left := btnResetRecords.Left;
 
   btnShowHideOptions.Caption := '< Hide Options';
 
@@ -988,7 +1063,7 @@ procedure TFLevelSelect.HideOptionButtons;
 begin
   { Resizes and recenters the main form to hide the option buttons }
 
-  Self.Width := btnClearRecords.Left - 5;
+  Self.Width := btnResetRecords.Left - 5;
   btnShowHideOptions.Caption := 'Show Options >';
 
   btnOK.Width := pnLevelInfo.Width - (btnClose.Width * 2) - 20;
@@ -1666,7 +1741,6 @@ begin
   btnPlaybackMode.Enabled := False;
   btnCleanseLevels.Enabled := True;
   btnCleanseOne.Enabled := False;
-  btnResetTalismans.Enabled := False;
   btnEditLevel.Enabled := False;
   btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
 end;
@@ -1678,7 +1752,6 @@ begin
   btnPlaybackMode.Enabled := True;
   btnCleanseLevels.Enabled := True;
   btnCleanseOne.Enabled := False;
-  btnResetTalismans.Enabled := False;
   btnEditLevel.Enabled := False;
   btnOk.Enabled := G.LevelCount > 0; // N.B: Levels.Count is not recursive; LevelCount is
 end;
@@ -1690,7 +1763,6 @@ begin
   btnPlaybackMode.Enabled := btnReplayManager.Enabled;
   btnCleanseLevels.Enabled := btnReplayManager.Enabled;
   btnCleanseOne.Enabled := True;
-  btnResetTalismans.Enabled := L.Talismans.Count <> 0;
   btnEditLevel.Enabled := True;
   btnOK.Enabled := True;
 end;

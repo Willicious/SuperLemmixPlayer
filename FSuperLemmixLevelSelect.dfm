@@ -82,9 +82,9 @@ object FLevelSelect: TFLevelSelect
   object lblRecordsOptions: TLabel
     Left = 992
     Top = 17
-    Width = 85
+    Width = 89
     Height = 13
-    Caption = 'Records Options'
+    Caption = 'Progress Options'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -94,7 +94,7 @@ object FLevelSelect: TFLevelSelect
   end
   object lblAdvancedOptions: TLabel
     Left = 987
-    Top = 119
+    Top = 150
     Width = 96
     Height = 13
     Caption = 'Advanced Options'
@@ -107,7 +107,7 @@ object FLevelSelect: TFLevelSelect
   end
   object lblReplayOptions: TLabel
     Left = 992
-    Top = 288
+    Top = 319
     Width = 79
     Height = 13
     Caption = 'Replay Options'
@@ -133,7 +133,7 @@ object FLevelSelect: TFLevelSelect
   end
   object lblEditingOptions: TLabel
     Left = 992
-    Top = 388
+    Top = 419
     Width = 81
     Height = 13
     Caption = 'Editing Options'
@@ -206,21 +206,21 @@ object FLevelSelect: TFLevelSelect
     Caption = '<placeholder for level info>'
     TabOrder = 11
   end
-  object btnClearRecords: TButton
+  object btnResetRecords: TButton
     Left = 967
-    Top = 36
+    Top = 68
     Width = 134
     Height = 25
     Hint = 'Reset all user records for the selected level pack'
-    Caption = 'Clear Records'
+    Caption = 'Reset Records'
     ParentShowHint = False
     ShowHint = True
     TabOrder = 2
-    OnClick = btnClearRecordsClick
+    OnClick = btnResetRecordsClick
   end
   object btnCleanseOne: TButton
     Left = 967
-    Top = 233
+    Top = 264
     Width = 134
     Height = 25
     Hint = 'Save a copy of this level in the latest SuperLemmix format'
@@ -232,7 +232,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnCleanseLevels: TButton
     Left = 967
-    Top = 202
+    Top = 233
     Width = 134
     Height = 25
     Hint = 
@@ -246,7 +246,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnReplayManager: TButton
     Left = 967
-    Top = 307
+    Top = 338
     Width = 134
     Height = 25
     Hint = 'Perform a replay check for every level in the selected pack'
@@ -258,7 +258,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnSaveImage: TButton
     Left = 967
-    Top = 171
+    Top = 202
     Width = 134
     Height = 25
     Hint = 'Save an image of the current level as a .png file'
@@ -270,7 +270,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnMakeShortcut: TButton
     Left = 967
-    Top = 138
+    Top = 169
     Width = 134
     Height = 25
     Hint = 
@@ -284,7 +284,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnResetTalismans: TBitBtn
     Left = 967
-    Top = 67
+    Top = 100
     Width = 134
     Height = 25
     Hint = 
@@ -298,7 +298,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnPlaybackMode: TButton
     Left = 967
-    Top = 338
+    Top = 369
     Width = 134
     Height = 25
     Hint = 
@@ -359,7 +359,7 @@ object FLevelSelect: TFLevelSelect
   end
   object btnEditLevel: TButton
     Left = 967
-    Top = 407
+    Top = 438
     Width = 134
     Height = 25
     Hint = 
@@ -387,6 +387,18 @@ object FLevelSelect: TFLevelSelect
     Height = 17
     TabOrder = 18
     Visible = False
+  end
+  object btnResetAllProgress: TButton
+    Left = 967
+    Top = 37
+    Width = 134
+    Height = 25
+    Hint = 'Reset all user records for the selected level pack'
+    Caption = 'Reset All Progress'
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 19
+    OnClick = btnResetAllProgressClick
   end
   object ilStatuses: TImageList
     AllocBy = 8
