@@ -293,6 +293,49 @@ var
     end;
   end;
 
+  procedure MaybeDeleteUnchangedZips;
+  var
+    i: Integer;
+    Choice: string;
+    ZipName: String;
+  begin
+    WriteLn('');
+    WriteLn('Type "keep" to keep all zips');
+    WriteLn('Type "delete" to delete unchanged zips');
+    ReadLn(Choice);
+
+    if Choice = 'delete' then
+    begin
+      for i := 0 to ChecksumReport.Count-1 do
+      begin
+        if Pos('UNCHANGED:', ChecksumReport[i]) = 1 then
+        begin
+          ZipName := Trim(Copy(ChecksumReport[i], Length('UNCHANGED:') + 1, MaxInt));
+          if FileExists(AppPath + 'style_zips\' + ZipName) then
+          begin
+            DeleteFile(AppPath + 'style_zips\' + ZipName);
+            WriteLn('Deleted unchanged zip: ' + ZipName);
+          end;
+        end;
+      end;
+      WriteLn('');
+    end;
+  end;
+
+  procedure MaybeCreateAllStylesZip;
+  var
+    Choice: String;
+  begin
+    WriteLn('');
+    WriteLn('Type "all" to make all-styles zip');
+    ReadLn(Choice);
+
+    if (Choice = 'all') then
+    begin
+      WriteLn('Making all-styles zip.');
+      MakeDirectoryZip('styles|sound', '_all_styles.zip');
+    end;
+  end;
 begin
   ChecksumList := TStringList.Create;
   ChecksumReport := TStringList.Create;
@@ -304,15 +347,16 @@ begin
         ChecksumList.LoadFromFile(AppPath + '..\data\styles_checksums.ini');
 
       ZipStyles;
-
-      WriteLn('Making all-styles zip.');
-      MakeDirectoryZip('styles|sound', '_all_styles.zip');
+      MaybeDeleteUnchangedZips;
+      MaybeCreateAllStylesZip;
 
       ChecksumList.Sorted := true;
       ChecksumList.SaveToFile(AppPath + '..\data\styles_checksums.ini');
+      WriteLn('Checksum list saved to ' + AppPath + '..\data\styles_checksums.ini');
 
       ChecksumReport.Sort;
       ChecksumReport.SaveToFile(AppPath + 'style_zip_report.txt');
+      WriteLn('Checksum report saved to ' + AppPath + 'style_zip_report.txt');
 
       WriteLn('Done.');
       WriteLn('');
