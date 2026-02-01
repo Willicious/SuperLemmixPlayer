@@ -23,20 +23,6 @@ object FLevelSelect: TFLevelSelect
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lblName: TLabel
-    Left = 360
-    Top = 9
-    Width = 592
-    Height = 25
-    AutoSize = False
-    Caption = '<Name>'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
   object lblPosition: TLabel
     Left = 360
     Top = 40
@@ -166,6 +152,20 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
     Transparent = False
     Visible = False
+  end
+  object lblName: TLabel
+    Left = 360
+    Top = 9
+    Width = 592
+    Height = 25
+    AutoSize = False
+    Caption = '<Name>'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
   end
   object tvLevelSelect: TTreeView
     Left = 8

@@ -46,6 +46,7 @@ uses
 procedure TFNLSetup.FormCreate(Sender: TObject);
 begin
   SetupPages.TabIndex := 0;
+  lblWelcome.Font.Name := 'Hobo Std';
 end;
 
 procedure TFNLSetup.lblWelcomeClick(Sender: TObject);

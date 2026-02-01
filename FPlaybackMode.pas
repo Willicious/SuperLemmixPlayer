@@ -138,6 +138,8 @@ end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
 begin
+  stPackName.Font.Name := 'Hobo Std';
+
   // Set options and clear lists
   rgPlaybackOrder.ItemIndex := Ord(GameParams.PlaybackOrder);
   cbAutoSkip.Checked := GameParams.AutoSkipPreviewPostview;

@@ -2,6 +2,8 @@
 
 program SuperLemmix;
 
+{$R 'SuperLemmixResources.res' 'SuperLemmixResources.rc'}
+
 uses
   Windows,
   LemRes,
