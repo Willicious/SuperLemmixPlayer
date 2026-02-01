@@ -28,7 +28,7 @@ I absolutely couldn't have done this by myself
 
 Changelog:
 
-3.0
+3.0 MAJOR UPDATE
 + Changed orig_ and ohno_ styles to slx_
 + Re-added orig_ and ohno_ from NeoLemmix, but with some differences:
   + Backgrounds changed to Amiga Blue (tile also added to backgrounds)
@@ -81,8 +81,6 @@ Changelog:
 2.7.2
 ~ Corrected digits alignment for orig and ohno exits
 ~ Corrected digits alignment for default pickup
-
-Changelog:
 
 2.7 MAJOR UPDATE
 + Turner sprite added to the following styles:
