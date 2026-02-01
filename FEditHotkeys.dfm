@@ -316,6 +316,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Top = 501
     Width = 65
     Height = 30
+    Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 14
