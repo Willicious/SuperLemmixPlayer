@@ -377,6 +377,11 @@ var
     else
       Result := aOldValue;
   end;
+
+  function SPadding(S: String): String;
+  begin
+    Result := StringOfChar(' ', Max(0, 3 - S.Length));
+  end;
 begin
   Results := GameParams.GameResult;
   Entry := GameParams.CurrentLevel;
@@ -456,7 +461,7 @@ begin
   if LevelHasTalismans and LevelPassed then
     Result[1].Line := ''
   else
-    Result[1].Line := SYouNeeded + ' ' + STarget + StringOfChar(' ', 3 - STarget.Length);
+    Result[1].Line := SYouNeeded + SPadding(STarget) + STarget;
   Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
   Result[1].ColorShift := HueShift;
 
@@ -464,7 +469,7 @@ begin
   if LevelHasTalismans and LevelPassed then
     Result[2].Line := ''
   else
-    Result[2].Line := SYouRescued + SRescued + StringOfChar(' ', 3 - SRescued.Length);
+    Result[2].Line := SYouRescued + SPadding(SRescued) + SRescued;
   Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
   Result[2].ColorShift := HueShift;
 
@@ -483,8 +488,7 @@ begin
     else
       Result[3].Line := SThisLine;
   end else if ShowSavedRecord then
-    Result[3].Line := SYourRecord + SRescueRecord +
-                      StringOfChar(' ', 3 - SRescueRecord.Length)
+    Result[3].Line := SYourRecord + SPadding(SRescueRecord) + SRescueRecord
   else
     Result[3].Line := '';
 
