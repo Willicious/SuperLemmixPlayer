@@ -208,6 +208,9 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <RcCompile Include="SuperLemmixResources.rc">
+            <Form>SuperLemmixResources.res</Form>
+        </RcCompile>
         <DCCReference Include="FMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
@@ -297,9 +300,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <Form>FormStyleUpdater</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <RcCompile Include="SuperLemmixResources.rc">
-            <Form>SuperLemmixResources.res</Form>
-        </RcCompile>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
