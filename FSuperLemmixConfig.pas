@@ -3,7 +3,10 @@ unit FSuperLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, LemStrings, FEditHotkeys, LemmixHotkeys, Math,
+  GameControl, GameSound, LemStrings,
+  FEditHotkeys, LemmixHotkeys,
+  FStyleUpdater,
+  Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
   SharedGlobals;
@@ -69,6 +72,7 @@ type
     gbZoomOptions: TGroupBox;
     gbWindowOptions: TGroupBox;
     cbInvertMouseWheelFramesteps: TCheckBox;
+    btnStyleUpdater: TButton;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -82,6 +86,7 @@ type
     procedure btnResetWindowClick(Sender: TObject);
     procedure cbShowMinimapClick(Sender: TObject);
     procedure cbEdgeScrollingClick(Sender: TObject);
+    procedure btnStyleUpdaterClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -353,27 +358,26 @@ procedure TFormNXConfig.btnHotkeysClick(Sender: TObject);
 var
   HotkeyForm: TFLemmixHotkeys;
 begin
-  HotkeyForm := TFLemmixHotkeys.Create(Self);
-  HotkeyForm.HotkeyManager := GameParams.Hotkeys;
-  HotkeyForm.ShowModal;
-  HotkeyForm.Free;
+  try
+    HotkeyForm := TFLemmixHotkeys.Create(Self);
+    HotkeyForm.HotkeyManager := GameParams.Hotkeys;
+    HotkeyForm.ShowModal;
+  finally
+    HotkeyForm.Free;
+  end;
 end;
 
-//procedure TFormNXConfig.btnStylesClick(Sender: TObject);
-//var
-  //F: TFManageStyles;
-  //OldEnableOnline: Boolean;
-//begin
-  //OldEnableOnline := GameParams.EnableOnline;
-  //GameParams.EnableOnline := cbEnableOnline.Checked; // Behave as checkbox indicates; but don't break the Cancel button.
-  //F := TFManageStyles.Create(Self);
-  //try
-    //F.ShowModal;
-  //finally
-    //F.Free;
-   // GameParams.EnableOnline := OldEnableOnline;
-  //end;
-//end;
+procedure TFormNXConfig.btnStyleUpdaterClick(Sender: TObject);
+var
+  StyleUpdater: TFormStyleUpdater;
+begin
+  try
+    StyleUpdater := TFormStyleUpdater.Create(Self);
+    StyleUpdater.ShowModal;
+  finally
+    StyleUpdater.Free;
+  end;
+end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);
 var

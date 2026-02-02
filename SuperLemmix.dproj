@@ -293,8 +293,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <Form>TFPlaybackMode</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="FStyleManager.pas">
-            <Form>FormStyleManager</Form>
+        <DCCReference Include="FStyleUpdater.pas">
+            <Form>FormStyleUpdater</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <RcCompile Include="SuperLemmixResources.rc">
@@ -339,12 +339,6 @@ $(PreBuildEvent)]]></PreBuildEvent>
             </Platforms>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="3">
-                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>SuperLemmix.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="RC Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
@@ -352,6 +346,12 @@ $(PreBuildEvent)]]></PreBuildEvent>
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>SuperLemmix.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="bin\SuperLemmix.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>SuperLemmix.exe</RemoteName>
                         <Overwrite>true</Overwrite>

@@ -58,14 +58,14 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 328
     Height = 500
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
         Left = 21
-        Top = 28
+        Top = 16
         Width = 54
         Height = 13
         Hint = 'Add your username to in-game records and replays'
@@ -75,7 +75,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayNamingOptions: TGroupBox
         Left = 21
-        Top = 157
+        Top = 183
         Width = 273
         Height = 183
         Caption = 'Replay Naming Options'
@@ -196,9 +196,9 @@ object FormNXConfig: TFormNXConfig
       end
       object btnHotkeys: TButton
         Left = 21
-        Top = 75
+        Top = 57
         Width = 273
-        Height = 52
+        Height = 48
         Hint = 'Setup your own hotkey configuration'
         Caption = 'Configure Hotkeys'
         ParentShowHint = False
@@ -208,7 +208,7 @@ object FormNXConfig: TFormNXConfig
       end
       object ebUserName: TEdit
         Left = 81
-        Top = 25
+        Top = 13
         Width = 213
         Height = 21
         Hint = 'Add your username to in-game records and replays'
@@ -218,7 +218,7 @@ object FormNXConfig: TFormNXConfig
       end
       object rgGameLoading: TRadioGroup
         Left = 21
-        Top = 370
+        Top = 386
         Width = 273
         Height = 73
         Caption = 'Game Loading Options'
@@ -227,6 +227,18 @@ object FormNXConfig: TFormNXConfig
           'Always Load Most Recently Active Level')
         TabOrder = 3
         OnClick = OptionChanged
+      end
+      object btnStyleUpdater: TButton
+        Left = 21
+        Top = 111
+        Width = 273
+        Height = 48
+        Hint = 'Setup your own hotkey configuration'
+        Caption = 'Update Styles'
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 4
+        OnClick = btnStyleUpdaterClick
       end
     end
     object TabSheet2: TTabSheet

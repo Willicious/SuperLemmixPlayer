@@ -71,7 +71,8 @@ uses
   FReplayManager in 'FReplayManager.pas' {FReplayManager},
   LemProjectile in 'LemProjectile.pas',
   FLevelListDialog in 'FLevelListDialog.pas',
-  FPlaybackMode in 'FPlaybackMode.pas';
+  FPlaybackMode in 'FPlaybackMode.pas' {TFPlaybackMode},
+  FStyleUpdater in 'FStyleUpdater.pas' {FormStyleUpdater};
 
 {$R *.res}
 
