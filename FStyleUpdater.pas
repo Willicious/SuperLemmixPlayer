@@ -112,8 +112,7 @@ var
   ResponseLines: TStringList;
   ResponseStream: TStringStream;
   Http: THttpClient;
-  Msg: string; // temporary message to inspect lists
-  styleName, localChecksum, onlineChecksum: string;
+  styleName, stylePath, localChecksum, onlineChecksum: string;
   ZipPath, StyleFolder: string;
   i, posEq: Integer;
   line, key, val: string;
@@ -127,14 +126,13 @@ begin
   Http := THttpClient.Create;
   try
     // ----------------------
-    // 1) Local checksums
+    // 1) Get Local checksums
     // ----------------------
     if FileExists(fChecksumsLocal) then
       LocalChecksums.LoadFromFile(fChecksumsLocal)
     else
       lblHint.Caption := 'Style timestamp data unavailable. It is recommended that you download all available styles.';
 
-    // Get all style folders first
     StyleFolders := TDirectory.GetDirectories(AppPath + SFStyles);
 
     for i := 0 to Length(StyleFolders) - 1 do
@@ -150,7 +148,7 @@ begin
     end;
 
     // ----------------------
-    // 2) Online checksums
+    // 2) Get Online checksums
     // ----------------------
     ResponseStream := TStringStream.Create('', TEncoding.UTF8);
     try
@@ -184,14 +182,24 @@ begin
     end;
 
     // ----------------------
-    // 3) Compare
+    // 3) Compare to see if the style is missing or outdated
     // ----------------------
     for i := 0 to fOnlineChecksums.Count - 1 do
     begin
       styleName := fOnlineChecksums.Names[i];
       onlineChecksum := fOnlineChecksums.ValueFromIndex[i];
-      localChecksum := LocalChecksums.Values[styleName];
 
+      stylePath := AppPath + SFStyles + styleName;
+
+      // 3a) Missing locally (folder does not exist)
+      if not DirectoryExists(stylePath) then
+      begin
+        lvAvailableUpdates.AddItem(styleName, nil);
+        Continue;
+      end;
+
+      // 3b) Present but checksum differs
+      localChecksum := LocalChecksums.Values[styleName];
       if localChecksum <> onlineChecksum then
         lvAvailableUpdates.AddItem(styleName, nil);
     end;
