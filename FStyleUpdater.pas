@@ -28,13 +28,16 @@ type
     procedure FormCreate(Sender: TObject);
     procedure lvAvailableUpdatesSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     fChecksumsLocal: String;
+    fOnlineChecksums: TStringList;
 
     procedure UpdateControls;
     procedure LoadLocalStylesToList;
     procedure LoadAvailableUpdatesToList;
+    procedure UpdateLocalChecksum(const StyleName, NewChecksum: string);
     procedure DownloadAndInstallStyle(const StyleName: string);
   public
     { Public declarations }
@@ -55,12 +58,18 @@ implementation
 procedure TFormStyleUpdater.FormCreate(Sender: TObject);
 begin
   fChecksumsLocal := AppPath + SFSaveData + 'styletimes.ini';
+  fOnlineChecksums := TStringList.Create;
 
   LoadLocalStylesToList;
   LoadAvailableUpdatesToList;
   UpdateControls;
 
   lblHint.Caption := 'Welcome to SuperLemmix Style Updater. Select which styles you want to download or download all';
+end;
+
+procedure TFormStyleUpdater.FormDestroy(Sender: TObject);
+begin
+  fOnlineChecksums.Free;
 end;
 
 procedure TFormStyleUpdater.UpdateControls;
@@ -98,7 +107,7 @@ end;
 
 procedure TFormStyleUpdater.LoadAvailableUpdatesToList;
 var
-  LocalChecksums, OnlineChecksums: TStringList;
+  LocalChecksums: TStringList;
   StyleFolders: TArray<string>;
   ResponseLines: TStringList;
   ResponseStream: TStringStream;
@@ -114,7 +123,6 @@ begin
   lvAvailableUpdates.Items.Clear;
 
   LocalChecksums := TStringList.Create;
-  OnlineChecksums := TStringList.Create;
   ResponseLines := TStringList.Create;
   Http := THttpClient.Create;
   try
@@ -153,7 +161,7 @@ begin
       ResponseStream.Free;
     end;
 
-    OnlineChecksums.Clear;
+    fOnlineChecksums.Clear;
 
     for i := 0 to ResponseLines.Count - 1 do
     begin
@@ -172,16 +180,16 @@ begin
 
       val := Copy(line, posEq + 1, MaxInt);
 
-      OnlineChecksums.Values[key] := val;
+      fOnlineChecksums.Values[key] := val;
     end;
 
     // ----------------------
     // 3) Compare
     // ----------------------
-    for i := 0 to OnlineChecksums.Count - 1 do
+    for i := 0 to fOnlineChecksums.Count - 1 do
     begin
-      styleName := OnlineChecksums.Names[i];
-      onlineChecksum := OnlineChecksums.ValueFromIndex[i];
+      styleName := fOnlineChecksums.Names[i];
+      onlineChecksum := fOnlineChecksums.ValueFromIndex[i];
       localChecksum := LocalChecksums.Values[styleName];
 
       if localChecksum <> onlineChecksum then
@@ -193,9 +201,25 @@ begin
 
   finally
     LocalChecksums.Free;
-    OnlineChecksums.Free;
     ResponseLines.Free;
     Http.Free;
+  end;
+end;
+
+procedure TFormStyleUpdater.UpdateLocalChecksum(const StyleName, NewChecksum: string);
+var
+  Checksums: TStringList;
+begin
+  Checksums := TStringList.Create;
+  try
+    if FileExists(fChecksumsLocal) then
+      Checksums.LoadFromFile(fChecksumsLocal);
+
+    Checksums.Values[StyleName] := NewChecksum;
+
+    Checksums.SaveToFile(fChecksumsLocal);
+  finally
+    Checksums.Free;
   end;
 end;
 
@@ -244,6 +268,9 @@ begin
     if TFile.Exists(TempZipFile) then
       TFile.Delete(TempZipFile);
   end;
+
+  if fOnlineChecksums.Values[StyleName] <> '' then
+    UpdateLocalChecksum(StyleName, fOnlineChecksums.Values[StyleName]);
 
   lblHint.Caption := StyleName + ' installed!';
 end;
