@@ -35,6 +35,7 @@ type
     procedure UpdateControls;
     procedure LoadLocalStylesToList;
     procedure LoadAvailableUpdatesToList;
+    procedure DownloadAndInstallStyle(const StyleName: string);
   public
     { Public declarations }
   end;
@@ -45,7 +46,7 @@ var
 const
 
   CHECKSUMS_URL = 'https://raw.githubusercontent.com/Willicious/SuperLemmix-Download/refs/heads/main/StyleManager/styles_checksums.ini';
-  //STYLES_URL = '';
+  STYLES_URL = 'https://github.com/Willicious/SuperLemmix-Download/raw/refs/heads/main/StyleManager/';
 
 implementation
 
@@ -198,40 +199,102 @@ begin
   end;
 end;
 
-//procedure ReplaceStyle(const StyleName: string);
-//var
-//  ZipURL, ZipFile, StyleDir: string;
-//begin
-//  ZipURL := STYLES_URL + StyleName + '.zip';
-//  ZipFile := TPath.GetTempFileName;
-//  StyleDir := TPath.Combine(AppPath + SFStyles, StyleName);
-//
-//  // 1) Download zip
-//  // 2) Delete StyleDir
-//  // 3) Extract zip to SFStyles
-//end;
+procedure TFormStyleUpdater.DownloadAndInstallStyle(const StyleName: string);
+var
+  ZipURL, TempZipFile, StyleDir: string;
+  Zip: TZipFile;
+  Http: THttpClient;
+  FileStream: TFileStream;
+begin
+  ZipURL := STYLES_URL + StyleName + '.zip';
+  TempZipFile := TPath.GetTempFileName;
+  StyleDir := TPath.Combine(AppPath + SFStyles, StyleName);
+
+  Http := THttpClient.Create;
+  Zip := TZipFile.Create;
+  try
+    // Download the zip
+    pbProgress.Position := 0;
+    pbProgress.Max := 100;
+    lblHint.Caption := 'Downloading ' + StyleName + '...';
+    Application.ProcessMessages;
+
+    FileStream := TFileStream.Create(TempZipFile, fmCreate);
+    try
+      Http.Get(ZipURL, FileStream);
+    finally
+      FileStream.Free;
+    end;
+
+    // Delete old style folder if it exists
+    if TDirectory.Exists(StyleDir) then
+      TDirectory.Delete(StyleDir, True);
+
+    // Extract zip to style folder
+    Zip.Open(TempZipFile, zmRead);
+    try
+      Zip.ExtractAll(StyleDir);
+    finally
+      Zip.Close;
+    end;
+
+  finally
+    Zip.Free;
+    Http.Free;
+    if TFile.Exists(TempZipFile) then
+      TFile.Delete(TempZipFile);
+  end;
+
+  lblHint.Caption := StyleName + ' installed!';
+end;
 
 procedure TFormStyleUpdater.btnCloseClick(Sender: TObject);
 begin
   ModalResult := mrCancel;
 end;
 
-procedure TFormStyleUpdater.btnDownloadAllClick(Sender: TObject);
-begin
-  lblHint.Caption := 'Downloading all styles...';
-  Exit;
-  // This should download only the styles which
-  // have been determined as different by the checksum check
-  // (and so are appearing in lvAvailableUpdates)
-  // and extract them to AppPath + SFStyles
-end;
-
 procedure TFormStyleUpdater.btnDownloadSelectedClick(Sender: TObject);
+var
+  i: Integer;
+  Item: TListItem;
 begin
   lblHint.Caption := 'Downloading selected styles...';
-  Exit;
-  // This should download only the styles which
-  // the user has selected (multi-select is possible)
+
+  for i := 0 to lvAvailableUpdates.Items.Count - 1 do
+  begin
+    Item := lvAvailableUpdates.Items[i];
+    if Assigned(Item) and Item.Selected then
+      DownloadAndInstallStyle(Item.Caption);
+  end;
+
+  // Refresh lists after download
+  LoadLocalStylesToList;
+  LoadAvailableUpdatesToList;
+  UpdateControls;
+
+  lblHint.Caption := 'Selected styles installed successfully!';
+end;
+
+procedure TFormStyleUpdater.btnDownloadAllClick(Sender: TObject);
+var
+  i: Integer;
+  Item: TListItem;
+begin
+  lblHint.Caption := 'Downloading all styles...';
+
+  for i := 0 to lvAvailableUpdates.Items.Count - 1 do
+  begin
+    Item := lvAvailableUpdates.Items[i];
+    if Assigned(Item) then
+      DownloadAndInstallStyle(Item.Caption);
+  end;
+
+  // Refresh lists after download
+  LoadLocalStylesToList;
+  LoadAvailableUpdatesToList;
+  UpdateControls;
+
+  lblHint.Caption := 'All styles installed successfully!';
 end;
 
 end.
