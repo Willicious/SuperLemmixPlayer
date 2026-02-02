@@ -21,7 +21,7 @@ uses
 const
   MIN_BUTTON_WIDTH = 75;
   MIN_FORM_WIDTH = 160;
-  PADDING_SIZE = 12;
+  PADDING_SIZE = 20;
 
 type
   TButtonList = class(TObjectList)
@@ -93,7 +93,7 @@ begin
     we must configure the properties that differ from default manually. }
   Name := 'POPUP_WINDOW';
   BorderStyle := bsToolWindow;
-  Position := poOwnerFormCenter;
+  Position := poScreenCenter;
   OnShow := Build;
   BorderIcons := [];
 end;
@@ -199,6 +199,7 @@ begin
     Caption := aCaption;
     Tag := aTag;
     Width := Max(Canvas.TextWidth(Caption) + PADDING_SIZE, MIN_BUTTON_WIDTH);
+    Height := 34;
     OnClick := ButtonClick;
   end;
 end;

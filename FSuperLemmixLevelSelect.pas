@@ -1796,7 +1796,7 @@ begin
     BasePack.DumpImages(AppPath + 'Dump\' + PathString + '\');
 
     if DumpImagesFallbackFlag then
-      ShowMessage('Some styles used in this group appear to be missing. Use the Style Manager to download these. Level images with fallbacks saved to "Dump\' + PathString + '"')
+      ShowMessage('Some styles used in this group appear to be missing. Use the Style Updater to download these. Level images with fallbacks saved to "Dump\' + PathString + '"')
     else
       ShowMessage('Level images saved to "Dump\' + PathString + '"');
   end else if Obj is TNeoLevelEntry then
@@ -1805,7 +1805,7 @@ begin
     SaveDlg := TSaveDialog.Create(Self);
     try
       if GameParams.Level.HasAnyFallbacks then
-        ShowMessage('Some styles used by this level appear to be missing. Use the Style Manager to download these.');
+        ShowMessage('Some styles used by this level appear to be missing. Use the Style Updater to download these.');
       SaveDlg.Options := [ofOverwritePrompt];
       SaveDlg.Filter := 'PNG File|*.png';
       SaveDlg.DefaultExt := '.png';

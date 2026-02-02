@@ -13,6 +13,7 @@ uses
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers, GR32_Image,
   UMisc, Dialogs,
+  FStyleUpdater,
   LemCore, LemStrings, LemRendering, LemLevel, LemNeoTheme, LemGame,
   LemGadgetsMeta, LemGadgets, LemMenuFont,
   LemTalisman,
@@ -86,38 +87,32 @@ begin
 end;
 
 procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
-//var
-  //F: TFManageStyles;
+var
+  F: TFormStyleUpdater;
+  Choice: Integer;
 begin
   if NextScreen = gstPlay then
   begin
     if GameParams.Level.HasAnyFallbacks then
     begin
-      //if GameParams.EnableOnline then
-      //begin
-        //case RunCustomPopup(Self, 'Missing styles',
-          //'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
-          //'Yes|No|Open Style Manager') of
-          //1:
-            //begin
-              //DownloadMissingStyles;
-              //inherited CloseScreen(gstPreview);
-            //end;
-          //3:
-            //begin
-              //F := TFManageStyles.Create(Self);
-              //try
-                //F.ShowModal;
-              //finally
-                //F.Free;
-                //inherited CloseScreen(gstPreview);
-              //end;
-            //end;
-        //end;
-      //end else
-        ShowMessage('This level contains pieces which are missing from the styles folder. ' +
-                    'Please contact the level author or download the style manually ' +
-                    'via www.lemmingsforums.net.');
+      Choice := RunCustomPopup(Self,
+        'Missing styles',
+        'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
+        'Yes|No|Open Style Updater');
+
+      if (Choice = 1) or (Choice = 3) then
+      begin
+        F := TFormStyleUpdater.Create(Self);
+        try
+          case Choice of
+            1: F.DownloadMissingStyles; // Yes
+            3: F.ShowModal;             // Open Style Updater
+          end;
+        finally
+          F.Free;
+          inherited CloseScreen(gstPreview);
+        end;
+      end;
     end else
       inherited CloseScreen(gstPlay);
   end else if NextScreen = gstText then

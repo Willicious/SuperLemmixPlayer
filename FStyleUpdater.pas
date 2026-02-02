@@ -32,6 +32,7 @@ type
     { Private declarations }
     fChecksumsLocal: String;
     fOnlineChecksums: TStringList;
+    fStylesToUpdate: TStringList;
 
     function DownloadAndInstallStyle(const StyleName: string): Boolean;
 
@@ -41,6 +42,7 @@ type
     procedure UpdateLocalChecksum(const StyleName, NewChecksum: string);
   public
     { Public declarations }
+    procedure DownloadMissingStyles;
   end;
 
 var
@@ -59,6 +61,7 @@ procedure TFormStyleUpdater.FormCreate(Sender: TObject);
 begin
   fChecksumsLocal := AppPath + SFSaveData + 'styletimes.ini';
   fOnlineChecksums := TStringList.Create;
+  fStylesToUpdate := TStringList.Create;
 
   lblHint.Caption := 'Welcome to SuperLemmix Style Updater. Select which styles you want to download or download all';
 
@@ -70,6 +73,7 @@ end;
 procedure TFormStyleUpdater.FormDestroy(Sender: TObject);
 begin
   fOnlineChecksums.Free;
+  fStylesToUpdate.Free;
 end;
 
 procedure TFormStyleUpdater.UpdateControls;
@@ -160,6 +164,7 @@ begin
     end;
 
     fOnlineChecksums.Clear;
+    fStylesToUpdate.Clear;
 
     for i := 0 to ResponseLines.Count - 1 do
     begin
@@ -195,13 +200,17 @@ begin
       if not DirectoryExists(stylePath) then
       begin
         lvAvailableUpdates.AddItem(styleName, nil);
+        fStylesToUpdate.Add(styleName);
         Continue;
       end;
 
       // 3b) Present but checksum differs
       localChecksum := LocalChecksums.Values[styleName];
       if localChecksum <> onlineChecksum then
+      begin
         lvAvailableUpdates.AddItem(styleName, nil);
+        fStylesToUpdate.Add(styleName);
+      end;
     end;
 
     if lvAvailableUpdates.Items.Count = 0 then
@@ -228,6 +237,20 @@ begin
     Checksums.SaveToFile(fChecksumsLocal);
   finally
     Checksums.Free;
+  end;
+end;
+
+procedure TFormStyleUpdater.DownloadMissingStyles;
+var
+  i: Integer;
+  Style: string;
+begin
+  for i := 0 to fStylesToUpdate.Count - 1 do
+  begin
+    Style := fStylesToUpdate[i];
+
+    if not DownloadAndInstallStyle(Style) then
+      Break;
   end;
 end;
 
