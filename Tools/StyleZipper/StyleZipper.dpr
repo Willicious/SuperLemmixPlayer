@@ -156,7 +156,7 @@ var
                 PngStream.SaveToFile(Base + aRelPath + SearchRec.Name);
             end;
 
-            Zip.Add(Base + aRelPath + SearchRec.Name, 'styles/' + aName + '/' + aRelPath + SearchRec.Name);
+            Zip.Add(Base + aRelPath + SearchRec.Name, aRelPath + SearchRec.Name);
             if CompareText(ExtractFileExt(SearchRec.Name), '.nxmo') = 0 then
             begin
               ObjSL.LoadFromFile(Base + aRelPath + SearchRec.Name);
