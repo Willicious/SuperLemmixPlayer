@@ -60,11 +60,11 @@ begin
   fChecksumsLocal := AppPath + SFSaveData + 'styletimes.ini';
   fOnlineChecksums := TStringList.Create;
 
+  lblHint.Caption := 'Welcome to SuperLemmix Style Updater. Select which styles you want to download or download all';
+
   LoadLocalStylesToList;
   LoadAvailableUpdatesToList;
   UpdateControls;
-
-  lblHint.Caption := 'Welcome to SuperLemmix Style Updater. Select which styles you want to download or download all';
 end;
 
 procedure TFormStyleUpdater.FormDestroy(Sender: TObject);
