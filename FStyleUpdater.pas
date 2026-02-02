@@ -20,7 +20,6 @@ type
     btnDownloadSelected: TButton;
     btnDownloadAll: TButton;
     btnClose: TButton;
-    pbProgress: TProgressBar;
     lblHint: TLabel;
     procedure btnCloseClick(Sender: TObject);
     procedure btnDownloadAllClick(Sender: TObject);
@@ -34,11 +33,12 @@ type
     fChecksumsLocal: String;
     fOnlineChecksums: TStringList;
 
+    function DownloadAndInstallStyle(const StyleName: string): Boolean;
+
     procedure UpdateControls;
     procedure LoadLocalStylesToList;
     procedure LoadAvailableUpdatesToList;
     procedure UpdateLocalChecksum(const StyleName, NewChecksum: string);
-    procedure DownloadAndInstallStyle(const StyleName: string);
   public
     { Public declarations }
   end;
@@ -223,56 +223,64 @@ begin
   end;
 end;
 
-procedure TFormStyleUpdater.DownloadAndInstallStyle(const StyleName: string);
+function TFormStyleUpdater.DownloadAndInstallStyle(const StyleName: string): Boolean;
 var
   ZipURL, TempZipFile, StyleDir: string;
   Zip: TZipFile;
   Http: THttpClient;
   FileStream: TFileStream;
 begin
-  ZipURL := STYLES_URL + StyleName + '.zip';
-  TempZipFile := TPath.GetTempFileName;
-  StyleDir := TPath.Combine(AppPath + SFStyles, StyleName);
+  Result := False;
 
-  Http := THttpClient.Create;
-  Zip := TZipFile.Create;
   try
-    // Download the zip
-    pbProgress.Position := 0;
-    pbProgress.Max := 100;
-    lblHint.Caption := 'Downloading ' + StyleName + '...';
-    Application.ProcessMessages;
+    ZipURL := STYLES_URL + StyleName + '.zip';
+    TempZipFile := TPath.GetTempFileName;
+    StyleDir := TPath.Combine(AppPath + SFStyles, StyleName);
 
-    FileStream := TFileStream.Create(TempZipFile, fmCreate);
+    Http := THttpClient.Create;
+    Zip := TZipFile.Create;
     try
-      Http.Get(ZipURL, FileStream);
+      // Download the zip
+      lblHint.Caption := 'Downloading ' + StyleName + '...';
+      Application.ProcessMessages;
+
+      FileStream := TFileStream.Create(TempZipFile, fmCreate);
+      try
+        Http.Get(ZipURL, FileStream);
+      finally
+        FileStream.Free;
+      end;
+
+      // Delete old style folder if it exists
+      if TDirectory.Exists(StyleDir) then
+        TDirectory.Delete(StyleDir, True);
+
+      // Extract zip to style folder
+      Zip.Open(TempZipFile, zmRead);
+      try
+        Zip.ExtractAll(StyleDir);
+      finally
+        Zip.Close;
+      end;
+
     finally
-      FileStream.Free;
+      Zip.Free;
+      Http.Free;
+      if TFile.Exists(TempZipFile) then
+        TFile.Delete(TempZipFile);
     end;
 
-    // Delete old style folder if it exists
-    if TDirectory.Exists(StyleDir) then
-      TDirectory.Delete(StyleDir, True);
+    if fOnlineChecksums.Values[StyleName] <> '' then
+      UpdateLocalChecksum(StyleName, fOnlineChecksums.Values[StyleName]);
 
-    // Extract zip to style folder
-    Zip.Open(TempZipFile, zmRead);
-    try
-      Zip.ExtractAll(StyleDir);
-    finally
-      Zip.Close;
-    end;
+    lblHint.Caption := StyleName + ' installed!';
 
-  finally
-    Zip.Free;
-    Http.Free;
-    if TFile.Exists(TempZipFile) then
-      TFile.Delete(TempZipFile);
+    Result := True;
+  except
+    on E: Exception do
+      MessageDlg(Format('Failed to install style "%s".'#13#10#13#10'%s',
+          [StyleName, E.Message]), mtError, [mbOK], 0);
   end;
-
-  if fOnlineChecksums.Values[StyleName] <> '' then
-    UpdateLocalChecksum(StyleName, fOnlineChecksums.Values[StyleName]);
-
-  lblHint.Caption := StyleName + ' installed!';
 end;
 
 procedure TFormStyleUpdater.btnCloseClick(Sender: TObject);
@@ -287,19 +295,26 @@ var
 begin
   lblHint.Caption := 'Downloading selected styles...';
 
-  for i := 0 to lvAvailableUpdates.Items.Count - 1 do
-  begin
-    Item := lvAvailableUpdates.Items[i];
-    if Assigned(Item) and Item.Selected then
-      DownloadAndInstallStyle(Item.Caption);
+  try
+    for i := 0 to lvAvailableUpdates.Items.Count - 1 do
+    begin
+      Item := lvAvailableUpdates.Items[i];
+      if Assigned(Item) and Item.Selected then
+      begin
+        if not DownloadAndInstallStyle(Item.Caption) then
+        begin
+          lblHint.Caption := 'Update stopped due to an error. Already installed styles are kept.';
+          Break
+        end;
+      end;
+    end;
+  finally
+    LoadLocalStylesToList;
+    LoadAvailableUpdatesToList;
+    UpdateControls;
+
+    lblHint.Caption := 'Selected styles installed successfully!';
   end;
-
-  // Refresh lists after download
-  LoadLocalStylesToList;
-  LoadAvailableUpdatesToList;
-  UpdateControls;
-
-  lblHint.Caption := 'Selected styles installed successfully!';
 end;
 
 procedure TFormStyleUpdater.btnDownloadAllClick(Sender: TObject);
@@ -309,19 +324,27 @@ var
 begin
   lblHint.Caption := 'Downloading all styles...';
 
-  for i := 0 to lvAvailableUpdates.Items.Count - 1 do
-  begin
-    Item := lvAvailableUpdates.Items[i];
-    if Assigned(Item) then
-      DownloadAndInstallStyle(Item.Caption);
+  try
+    for i := 0 to lvAvailableUpdates.Items.Count - 1 do
+    begin
+      Item := lvAvailableUpdates.Items[i];
+      if Assigned(Item) then
+      begin
+        if not DownloadAndInstallStyle(Item.Caption) then
+        begin
+          lblHint.Caption := 'Update stopped due to an error. Already installed styles are kept.';
+          Break
+        end;
+      end;
+    end;
+  finally
+    // Refresh lists after download
+    LoadLocalStylesToList;
+    LoadAvailableUpdatesToList;
+    UpdateControls;
+
+    lblHint.Caption := 'All styles installed successfully!';
   end;
-
-  // Refresh lists after download
-  LoadLocalStylesToList;
-  LoadAvailableUpdatesToList;
-  UpdateControls;
-
-  lblHint.Caption := 'All styles installed successfully!';
 end;
 
 end.

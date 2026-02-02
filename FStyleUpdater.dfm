@@ -3,7 +3,7 @@ object FormStyleUpdater: TFormStyleUpdater
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Style Updater'
-  ClientHeight = 476
+  ClientHeight = 442
   ClientWidth = 545
   Color = clBtnFace
   DoubleBuffered = True
@@ -57,7 +57,7 @@ object FormStyleUpdater: TFormStyleUpdater
   end
   object btnDownloadSelected: TButton
     Left = 226
-    Top = 426
+    Top = 394
     Width = 202
     Height = 37
     Caption = 'Download Selected Styles'
@@ -66,7 +66,7 @@ object FormStyleUpdater: TFormStyleUpdater
   end
   object btnDownloadAll: TButton
     Left = 13
-    Top = 426
+    Top = 394
     Width = 207
     Height = 37
     Caption = 'Download All Available Styles'
@@ -75,19 +75,12 @@ object FormStyleUpdater: TFormStyleUpdater
   end
   object btnClose: TButton
     Left = 434
-    Top = 426
+    Top = 394
     Width = 98
     Height = 37
     Cancel = True
     Caption = 'Close'
     TabOrder = 4
     OnClick = btnCloseClick
-  end
-  object pbProgress: TProgressBar
-    Left = 13
-    Top = 396
-    Width = 519
-    Height = 24
-    TabOrder = 5
   end
 end
