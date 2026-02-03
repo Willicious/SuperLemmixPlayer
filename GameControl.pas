@@ -78,7 +78,6 @@ type
 
 type
   TMiscOption = (
-    //moEnableOnline,
     //moCheckUpdates,
     moAutoReplaySave,
     moLoadNextUnsolvedLevel,
@@ -268,7 +267,6 @@ type
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
-    //property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     //property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property ReplayAfterBackskip: boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;

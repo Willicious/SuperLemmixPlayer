@@ -1745,6 +1745,9 @@ var
   i: Integer;
   OldIsStartingAction: Boolean;
 const
+  { TODO - For some reason, the first frame of the animation is skipped for many of these actions
+           Find out why this is, and whether it can/should be fixed }
+
   // Number of physics frames for the various lemming actions.
   ANIM_FRAMECOUNT: array[TBasicLemmingAction] of Integer =
     (
@@ -1797,8 +1800,7 @@ const
     17, // 47 baBallooning
     25, // 48 baLaddering
     8,  // 49 baDrifting
-    10, // 50 baBatting TODO - Figure out why the first frame of the animation isn't shown
-                          // - Setting the number to 11 doesn't help either, the first frame then gets shown at the end
+    10, // 50 baBatting
     20  // 51 baSleeping
      //4, // 47 baPropelling // Propeller
     );
