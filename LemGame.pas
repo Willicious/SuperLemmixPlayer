@@ -3203,8 +3203,8 @@ end;
 
 procedure TLemmingGame.CheckForBatter(L: TLemming);
 var
+  XOffset, YOffset, BatHitFrame: Integer;
   NextAction: TBasicLemmingAction;
-  XOffset, YOffset: Integer;
   BatterFacingAway: Boolean;
   Batter: TLemming;
 begin
@@ -3230,24 +3230,28 @@ begin
 
     if not BatterFacingAway then
     begin
-      L.LemDoExplosionCrater := False;
+      BatHitFrame := IfThen(L.LemIsZombie, 3, 4);
 
-      if L.LemIsZombie then
-        NextAction := baExploding
-      else
-        NextAction := baJumping; // TODO - this will later be baBalling
+      if (Batter.LemFrame = BatHitFrame) then
+      begin
+        CueSoundEffect(SFX_BatHit, L.Position);
+        L.LemDoExplosionCrater := False;
 
-      // If the lem is facing towards the Batter, turn them around
-      if (L.LemDX <> Batter.LemDX) then
-        TurnAround(L);
+        if L.LemIsZombie then
+          NextAction := baExploding
+        else
+          NextAction := baJumping; // TODO - this will later be baBalling
 
-      if L.LemAction = baBallooning then
-        PopBalloon(L, 1, NextAction)
-      else
-        Transition(L, NextAction);
+        // If the lem is facing towards the Batter, turn them around
+        if (L.LemDX <> Batter.LemDX) then
+          TurnAround(L);
 
-      CueSoundEffect(SFX_BatHit, L.Position);
-      Exit;
+        if L.LemAction = baBallooning then
+          PopBalloon(L, 1, NextAction)
+        else
+          Transition(L, NextAction);
+        Exit;
+      end;
     end;
   end;
 end;
@@ -7351,13 +7355,8 @@ end;
 
 function TLemmingGame.HandleBatting(L: TLemming): Boolean;
 begin
-  if (L.LemFrame = 1) then
+  if (L.LemFrame = 3) then
     CueSoundEffect(SFX_BatSwish, L.Position);
-
-  if (L.LemFrame in [3, 4]) then
-    L.LemIsBatting := True
-  else
-    L.LemIsBatting := False;
 
   if L.LemEndOfAnimation then
     Transition(L, baWalking);
@@ -7845,7 +7844,7 @@ begin
     if (L = CurLem) then
       Continue;
 
-    if (L.LemX = X) and (L.LemY = Y) and L.LemIsBatting then
+    if (L.LemX = X) and (L.LemY = Y) and (L.LemAction = baBatting) then
     begin
       Result := L;
       Exit;
