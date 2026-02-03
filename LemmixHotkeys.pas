@@ -390,12 +390,12 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else if s = 'stacker' then Result := Integer(spbStacker)
     else if s = 'spearer' then Result := Integer(spbSpearer)
     else if s = 'grenader' then Result := Integer(spbGrenader)
-    //else if s = 'propeller' then Result := Integer(spbPropeller) // Propeller
     else if s = 'laserer' then Result := Integer(spbLaserer)
     else if s = 'basher' then Result := Integer(spbBasher)
     else if s = 'fencer' then Result := Integer(spbFencer)
     else if s = 'miner' then Result := Integer(spbMiner)
     else if s = 'digger' then Result := Integer(spbDigger)
+    else if s = 'propeller' then Result := Integer(spbPropeller)
     else if s = 'batter' then Result := Integer(spbBatter)
     else if s = 'cloner' then Result := Integer(spbCloner)
     else if s = 'lastskill' then Result := 0
@@ -559,12 +559,12 @@ var
                     Integer(spbStacker):      Result := 'Stacker';
                     Integer(spbSpearer):      Result := 'Spearer';
                     Integer(spbGrenader):     Result := 'Grenader';
-                    //Integer(spbPropeller):    Result := 'Propeller'; // Propeller
                     Integer(spbLaserer):      Result := 'Laserer';
                     Integer(spbBasher):       Result := 'Basher';
                     Integer(spbFencer):       Result := 'Fencer';
                     Integer(spbMiner):        Result := 'Miner';
                     Integer(spbDigger):       Result := 'Digger';
+                    Integer(spbPropeller):    Result := 'Propeller';
                     Integer(spbBatter):       Result := 'Batter';
                     Integer(spbCloner):       Result := 'Cloner';
                   end;

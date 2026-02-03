@@ -1032,7 +1032,7 @@ begin
       spbBuilder: SL.Add('  fRenderInterface.SelectedSkill: Builder');
       spbStacker: SL.Add('  fRenderInterface.SelectedSkill: Stacker');
       spbLaserer: SL.Add('  fRenderInterface.SelectedSkill: Laserer');
-      //spbPropeller: SL.Add('  fRenderInterface.SelectedSkill: Propeller'); // Propeller
+      spbPropeller: SL.Add('  fRenderInterface.SelectedSkill: Propeller');
       spbBasher: SL.Add('  fRenderInterface.SelectedSkill: Basher');
       spbFencer: SL.Add('  fRenderInterface.SelectedSkill: Fencer');
       spbMiner: SL.Add('  fRenderInterface.SelectedSkill: Miner');

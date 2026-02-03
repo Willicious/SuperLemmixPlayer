@@ -190,9 +190,7 @@ begin
   if (aName = 'MENU_OK') then SFX_OK := aSound;
   if (aName = 'PICKUP') then SFX_Pickup := aSound;
   if (aName = 'EXPLODE') then SFX_Pop := aSound;
-
-  //SFX_Propeller := aSound;  Propeller
-
+  if (aName = 'PROPELLER') then SFX_Propeller := aSound;
   if (aName = 'RELEASE_RATE') then SFX_ReleaseRate := aSound;
   if (aName = 'SKILL_BUTTON') then SFX_SkillButton := aSound;
   if (aName = 'SPEAR_HIT') then SFX_SpearHit := aSound;

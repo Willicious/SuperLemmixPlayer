@@ -970,12 +970,12 @@ begin
   HandleSkill('stacker', spbStacker);
   HandleSkill('spearer', spbSpearer);
   HandleSkill('grenader', spbGrenader);
-  //HandleSkill('propeller', spbPropeller);  // Propeller
   HandleSkill('laserer', spbLaserer);
   HandleSkill('basher', spbBasher);
   HandleSkill('fencer', spbFencer);
   HandleSkill('miner', spbMiner);
   HandleSkill('digger', spbDigger);
+  HandleSkill('propeller', spbPropeller);
   HandleSkill('batter', spbBatter);
   HandleSkill('cloner', spbCloner);
 end;
@@ -1038,12 +1038,12 @@ var
     if S = 'stacker' then O.Skill := Integer(spbStacker);
     if S = 'spearer' then O.Skill := Integer(spbSpearer);
     if S = 'grenader' then O.Skill := Integer(spbGrenader);
-    //if S = 'propeller' then O.Skill := Integer(spbPropeller); // Propeller
     if S = 'laserer' then O.Skill := Integer(spbLaserer);
     if S = 'basher' then O.Skill := Integer(spbBasher);
     if S = 'fencer' then O.Skill := Integer(spbFencer);
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
+    if S = 'propeller' then O.Skill := Integer(spbPropeller);
     if S = 'batter' then O.Skill := Integer(spbBatter);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
 
@@ -1660,12 +1660,12 @@ begin
   HandleSkill('STACKER', spbStacker);
   HandleSkill('SPEARER', spbSpearer);
   HandleSkill('GRENADER', spbGrenader);
-  //HandleSkill('PROPELLER', spbPropeller);  // Propeller
   HandleSkill('LASERER', spbLaserer);
   HandleSkill('BASHER', spbBasher);
   HandleSkill('FENCER', spbFencer);
   HandleSkill('MINER', spbMiner);
   HandleSkill('DIGGER', spbDigger);
+  HandleSkill('PROPELLER', spbPropeller);
   HandleSkill('BATTER', spbBatter);
   HandleSkill('CLONER', spbCloner);
 end;
@@ -1717,12 +1717,12 @@ var
       spbStacker: s := 'STACKER';
       spbSpearer: s := 'SPEARER';
       spbGrenader: s := 'GRENADER';
-      //spbPropeller: s := 'PROPELLER';  // Propeller
       spbLaserer: s := 'LASERER';
       spbBasher: s := 'BASHER';
       spbFencer: s := 'FENCER';
       spbMiner: s := 'MINER';
       spbDigger: s := 'DIGGER';
+      spbPropeller: s := 'PROPELLER';
       spbBatter: s := 'BATTER';
       spbCloner: s := 'CLONER';
     end;

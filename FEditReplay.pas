@@ -142,12 +142,12 @@ var
             baStacking:      Result := 'Stacker';
             baSpearing:      Result := 'Spearer';
             baGrenading:     Result := 'Grenader';
-            //baPropelling:    Result := 'Propeller'; // Propeller
             baLasering:      Result := 'Laserer';
             baBashing:       Result := 'Basher';
             baFencing:       Result := 'Fencer';
             baMining:        Result := 'Miner';
             baDigging:       Result := 'Digger';
+            baPropelling:    Result := 'Propeller';
             baBatting:       Result := 'Batter';
             baCloning:       Result := 'Cloner';
         else Result := '(Invalid skill)';

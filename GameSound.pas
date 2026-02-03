@@ -381,7 +381,7 @@ begin
   SFX_Pickup := 'pickup';
   SFX_Pop := 'pop';
   SFX_Portal := 'portal';
-  // SFX_Propeller := 'propeller'; // Propeller
+  SFX_Propeller := 'propeller';
   SFX_ReleaseRate := 'changerr';
   SFX_SuccessJingle := 'success';
   SFX_SkillAssigner := 'skill_assigner';
@@ -444,7 +444,7 @@ begin
   Load(SFX_Pickup);
   Load(SFX_Pop);
   Load(SFX_Portal);
-  // Load(SFX_Propeller); // Propeller
+  Load(SFX_Propeller);
   Load(SFX_ReleaseRate);
   Load(SFX_SuccessJingle);
   Load(SFX_SkillAssigner);

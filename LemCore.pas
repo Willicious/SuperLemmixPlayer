@@ -61,9 +61,9 @@ type
     baBallooning,      // 47
     baLaddering,       // 48
     baDrifting,        // 49
-    baBatting,         // 50
-    baSleeping         // 51
-    //baPropelling,      // // Propeller
+    baPropelling,      // 50
+    baBatting,         // 51
+    baSleeping         // 52
   );
 
 const
@@ -93,12 +93,12 @@ type
     spbStacker,
     spbSpearer,
     spbGrenader,
-    //spbPropeller,  // Propeller
     spbLaserer,
     spbBasher,
     spbFencer,
     spbMiner,
     spbDigger,
+    spbPropeller,
     spbBatter,
     spbCloner,
 
@@ -137,12 +137,12 @@ const
     'stacker',
     'spearer',
     'grenader',
-    //'propeller',  // Propeller
     'laserer',
     'basher',
     'fencer',
     'miner',
     'digger',
+    'propeller',
     'batter',
     'cloner'
     );
@@ -168,12 +168,12 @@ const
     'stackers',
     'spearers',
     'grenaders',
-    //'propellers', // Propeller
     'laserers',
     'bashers',
     'fencers',
     'miners',
     'diggers',
+    'propellers',
     'batters',
     'cloners'
     );
@@ -240,8 +240,8 @@ const
     baSpearing,
     baGrenading,
     baLasering,
-    //baPropelling, // Propeller
     baBallooning,
+    baPropelling,
     baBatting,
     baLaddering
   ];
@@ -297,10 +297,9 @@ const
     spbBallooner,   // 47  baBallooning
     spbLadderer,    // 48  baLaddering
     spbNone,        // 49  baDrifting
-    spbBatter,      // 50  baBatting
-    spbNone         // 51  baSleeping
-
-    //spbPropeller,   // 47  baPropelling // Propeller
+    spbPropeller,   // 50  baPropelling
+    spbBatter,      // 51  baBatting
+    spbNone         // 52  baSleeping
   );
 
 const
@@ -332,9 +331,9 @@ const
     baFencing,      // 23
     baMining,       // 24
     baDigging,      // 25
-    baBatting,      // 26
-    baCloning,      // 27
-    //baPropelling,   // 21 // Propeller
+    baPropelling,   // 26
+    baBatting,      // 27
+    baCloning,      // 28
     baNone, // Null
     baNone, // RR-
     baNone, // RR+

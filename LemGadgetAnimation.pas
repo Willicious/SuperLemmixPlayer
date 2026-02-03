@@ -535,7 +535,7 @@ begin
 
   // Batter, Propeller, Laserer, Basher, Fencer, Miner are all simple
   DrawAnimationFrame(SkillIcons[Integer(spbBatter)], BATTING, 2, PICKUP_MID - 1, PICKUP_BASELINE - 2);
-  // Propeller //DrawAnimationFrame(SkillIcons[Integer(spbPropeller)], PROPELLING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbPropeller)], PROPELLING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbLaserer)], LASERING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
   DrawAnimationFrame(SkillIcons[Integer(spbFencer)], FENCING, 1, PICKUP_MID, PICKUP_BASELINE - 2);

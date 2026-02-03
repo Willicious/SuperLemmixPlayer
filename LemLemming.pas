@@ -127,6 +127,7 @@ type
     LemDoExplosionCrater          : Boolean;
     LemHideCountdown              : Boolean; // Used to ensure countdown is not displayed when assigned Bomber / Freezer --- needs to be set to "False" for Timebomber
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
+    LemPropellerFoundTerrain      : Boolean; // The Propelling lem has hit terrain for the first time
     LemJumpProgress               : Integer;
     LemDehoistPinY                : Integer; // The Y coordinate the lemming started dehoisting on
     LemLaserHit                   : Boolean;
@@ -374,6 +375,7 @@ begin
   LemDoExplosionCrater := Source.LemDoExplosionCrater;
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
+  LemPropellerFoundTerrain := Source.LemPropellerFoundTerrain;
   LemJumpProgress := Source.LemJumpProgress;
   LemDehoistPinY := Source.LemDehoistPinY;
   LemLaserHit := Source.LemLaserHit;

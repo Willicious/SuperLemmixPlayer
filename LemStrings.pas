@@ -41,7 +41,7 @@ var
   SFX_Pickup,
   SFX_Pop,
   SFX_Portal,
-  // SFX_Propeller, // Propeller
+  SFX_Propeller,
   SFX_ReleaseRate,
   SFX_SkillAssigner,
   SFX_SkillButton,
@@ -161,7 +161,6 @@ resourcestring
   SGrenader = 'Grenader';
   SLooker = 'Looker';
   SLaserer = 'Laserer';
-  //SPropeller = 'Propeller'; // Propeller
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
@@ -169,6 +168,7 @@ resourcestring
   SInvincible = 'Invincible';
   SBallooner = 'Ballooner';
   SDrifter = 'Drifter';
+  SPropeller = 'Propeller';
   SBatter = 'Batter';
   SSleeper = 'Sleeper';
 
@@ -251,9 +251,9 @@ const
     SBallooner,   // 47
     SLadderer,    // 48
     SDrifter,     // 49
-    SBatter,      // 50
-    SSleeper      // 51
-    //SPropeller,   // 47  // Propeller
+    SPropeller,   // 50
+    SBatter,      // 51
+    SSleeper      // 52
   );
 
 implementation

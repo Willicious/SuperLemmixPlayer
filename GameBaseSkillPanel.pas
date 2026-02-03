@@ -221,8 +221,8 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', //'empty_slot.png',
-    {Skills end here}                                     // Propeller
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    {Skills end here}
 
     'empty_slot.png',
     'button_rr_plus.png',

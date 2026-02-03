@@ -322,7 +322,7 @@ type
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
     //procedure CueSoundEffectFrequency(aSound: String; aFrequency: Single);
     function DigOneRow(PosX, PosY: Integer): Boolean;
-    //function PropellerOneRow(PosX, PosY: Integer): Boolean; // Propeller
+    function PropellerOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedGadgets;
     procedure IncrementIteration;
     procedure InitializeAllTriggerMaps;
@@ -420,7 +420,7 @@ type
     function HandleSliding(L: TLemming) : Boolean;
       function LemSliderTerrainChecks(L: TLemming; MaxYCheckOffset: Integer = 7): Boolean;
     function HandleDangling(L: TLemming) : Boolean;
-    //function HandlePropelling(L: TLemming) : Boolean; // Propeller
+    function HandlePropelling(L: TLemming) : Boolean;
     function HandleLasering(L: TLemming) : Boolean;
     function HandleThrowing(L: TLemming) : Boolean;
     function HandleBatting(L: TLemming) : Boolean;
@@ -464,7 +464,7 @@ type
     function MayAssignJumper(L: TLemming) : Boolean;
     function MayAssignSlider(L: TLemming) : Boolean;
     function MayAssignLaserer(L: TLemming) : Boolean;
-    //function MayAssignPropeller(L: TLemming) : Boolean; // Propeller
+    function MayAssignPropeller(L: TLemming) : Boolean;
     function MayAssignBatter(L: TLemming) : Boolean;
     function MayAssignThrowingSkill(L: TLemming) : Boolean;
 
@@ -670,13 +670,13 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..26] of TBasicLemmingAction =
+  ActionListArray: array[0..27] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
-             baBallooning, baLaddering, baBatting//, baPropelling // Propeller
-             );                       // Double-check these skills are in the correct place after adding them
+             baBallooning, baLaddering, baBatting, baPropelling
+             );                       // TODO - Double-check these skills are in the correct place after adding them
 
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
@@ -1180,7 +1180,7 @@ begin
   LemmingMethods[baSliding]       := HandleSliding;
   LemmingMethods[baDangling]      := HandleDangling;
   LemmingMethods[baLasering]      := HandleLasering;
-  //LemmingMethods[baPropelling]    := HandlePropelling; // Propeller
+  LemmingMethods[baPropelling]    := HandlePropelling;
   LemmingMethods[baSpearing]      := HandleThrowing;
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
@@ -1226,7 +1226,7 @@ begin
   NewSkillMethods[baSliding]      := MayAssignSlider;
   NewSkillMethods[baDangling]     := nil;
   NewSkillMethods[baLasering]     := MayAssignLaserer;
-  //NewSkillMethods[baPropelling]   := MayAssignPropeller; // Propeller
+  NewSkillMethods[baPropelling]   := MayAssignPropeller;
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
@@ -1800,9 +1800,9 @@ const
     17, // 47 baBallooning
     25, // 48 baLaddering
     8,  // 49 baDrifting
-    10, // 50 baBatting
-    20  // 51 baSleeping
-     //4, // 47 baPropelling // Propeller
+    4,  // 50 baPropelling
+    10, // 51 baBatting
+    20  // 52 baSleeping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -2040,7 +2040,10 @@ begin
                      L.LemLaserRemainTime := 10;
                      CueSoundEffect(SFX_Laser, L.Position);
                     end;
-    //baPropelling : CueSoundEffect(SFX_Propeller, L.Position); // Propeller
+    baPropelling : begin
+                     L.LemPropellerFoundTerrain := False;
+                     CueSoundEffect(SFX_Propeller, L.Position);
+                   end;
     baBallooning : CueSoundEffect(SFX_BalloonInflate, L.Position);
   end;
 end;
@@ -2999,14 +3002,16 @@ begin
   and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining)
 end;
 
-//function TLemmingGame.MayAssignPropeller(L: TLemming): Boolean; // Propeller
-//const
-//  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
-//               baBashing, baFencing, baMining, baLasering, baLooking];
-//begin
-////  Result := (L.LemAction in ActionSet);
-////  //and not HasIndestructibleAt(L.LemX, L.LemY - 1, L.LemDx, baPropelling);
-//end;
+function TLemmingGame.MayAssignPropeller(L: TLemming): Boolean;
+const
+  ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
+               baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
+               baVaporizing, baVinetrapping, baSplatting, baDrowning,
+               baExiting, baSleeping, baPropelling];
+begin
+  Result := not (L.LemAction in ActionSet)
+    and not HasIndestructibleAt(L.LemX, L.LemY - 1, L.LemDx, baPropelling);
+end;
 
 function TLemmingGame.MayAssignDigger(L: TLemming): Boolean;
 const
@@ -4547,7 +4552,7 @@ var
   ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbLadderer, spbPlatformer, spbBuilder, spbStacker, spbDigger,
-                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer,
+                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer, spbPropeller,
                     spbSpearer, spbGrenader, spbLaserer, spbBallooner]; // Timebomber not included by choice
 begin
   if fHyperSpeed then Exit;
@@ -4747,25 +4752,25 @@ begin
   end;
 end;
 
-//function TLemmingGame.PropellerOneRow(PosX, PosY: Integer): Boolean; // Propeller
-//// The central pixel of the removed row lies at (PosX, PosY)
-//var
-//  n: Integer;
-//begin
-//  Result := False;
-//
-//  For n := -4 to 4 do
-//  begin
-//    if HasPixelAt(PosX + n, PosY) and not HasIndestructibleAt(PosX + n, PosY, 0, baPropelling) then // We can live with not passing a proper LemDx here
-//    begin
-//      RemovePixelAt(PosX + n, PosY);
-//      if (n > -4) and (n < 4) then Result := True;
-//    end;
-//
-//    // Delete these pixels from the terrain layer
-//    if not IsSimulating then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
-//  end;
-//end;
+function TLemmingGame.PropellerOneRow(PosX, PosY: Integer): Boolean;
+// The central pixel of the removed row lies at (PosX, PosY)
+var
+  n: Integer;
+begin
+  Result := False;
+
+  For n := -4 to 4 do
+  begin
+    if HasPixelAt(PosX + n, PosY) and not HasIndestructibleAt(PosX + n, PosY, 0, baPropelling) then
+    begin
+      RemovePixelAt(PosX + n, PosY);
+      Result := True;
+    end;
+
+    // Delete these pixels from the terrain layer
+    if not IsSimulating then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
+  end;
+end;
 
 function TLemmingGame.HandleLasering(L: TLemming): Boolean;
 type
@@ -5405,44 +5410,61 @@ begin
   end;
 end;
 
-//function TLemmingGame.HandlePropelling(L: TLemming): Boolean; // Propeller
-//var
-//  ContinueUpwards, FoundTerrain, FoundAir, NudgeDown: Boolean;
-//  XChecks: Integer;
-//begin
-//  Result := True;
-//
-//  for XChecks := -4 to 4 do
-//  begin
-//    FoundAir := not HasPixelAt(L.LemX + XChecks, L.LemY - 11);
-//    FoundTerrain := HasPixelAt(L.LemX + XChecks, L.LemY - 10);
-//    NudgeDown := HasPixelAt(L.LemX + XChecks, L.LemY - 9);
-//  end;
-//
-//  if (L.LemY <= 10) then
-//    Transition(L, baFalling)
-//  else if (FoundTerrain and NudgeDown) then
-//    Inc(L.LemY)
-//  else if not FoundTerrain then
-//    Dec(L.LemY, 2);
-//
-//  if FoundTerrain then
-//  begin
-//    ContinueUpwards := PropellerOneRow(L.LemX, L.LemY - 10) and not FoundAir;
-//
-//    Dec(L.LemY);
-//
-//    if HasIndestructibleAt(L.LemX, L.LemY - 10, L.LemDX, baPropelling) then
-//    begin
-//      if HasSteelAt(L.LemX, L.LemY - 10) then
-//        CueSoundEffect(SFX_Steel_OWW, L.Position);
-//      Transition(L, baFalling);
-//    end
-//
-//    else if not ContinueUpwards then
-//      Transition(L, baJumping);
-//  end;
-//end;
+function TLemmingGame.HandlePropelling(L: TLemming): Boolean;
+var
+  XChecks, YChecks: Integer;
+  FoundTerrain, FoundAir, NudgeDown: Boolean;
+begin
+  Result := True;
+
+  if (L.LemPhysicsFrame in [1, 3]) then
+    TurnAround(L);
+
+  if (L.LemY <= 10) then
+  begin
+    Transition(L, baFalling);
+    Exit;
+  end;
+
+  if HasIndestructibleAt(L.LemX, L.LemY - 10, L.LemDX, baPropelling) then
+  begin
+    CueSoundEffect(SFX_Steel_OWW, L.Position);
+    Transition(L, baFalling);
+    Exit;
+  end;
+
+  if not L.LemPropellerFoundTerrain then
+  begin
+    for XChecks := -4 to 4 do
+    begin
+      NudgeDown := HasPixelAt(L.LemX + XChecks, L.LemY - 9);
+
+      if NudgeDown then
+        Inc(L.LemY);
+
+      if HasPixelAt(L.LemX + XChecks, L.LemY - 10) then
+      begin
+        L.LemPropellerFoundTerrain := True;
+        Break;
+      end;
+    end;
+
+    if not L.LemPropellerFoundTerrain then
+    begin
+      Dec(L.LemY, 2);
+      Exit;
+    end;
+  end;
+
+  FoundAir := not PropellerOneRow(L.LemX, L.LemY - 10);
+  if FoundAir then
+  begin
+    Transition(L, baJumping);
+    Exit;
+  end;
+
+  Dec(L.LemY);
+end;
 
 function TLemmingGame.HandleDigging(L: TLemming): Boolean;
 var
@@ -6834,8 +6856,8 @@ function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
 begin
   // Check for indestructible terrain at position (x, y), depending on skill.
   Result := (    ( HasTriggerAt(X, Y, trSteel) )
-              or ( HasTriggerAt(X, Y, trOWUp) and (Skill in [baBashing, baMining, baDigging]))  // Propeller
-              or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing, baLasering//, baPropelling
+              or ( HasTriggerAt(X, Y, trOWUp) and (Skill in [baBashing, baMining, baDigging]))
+              or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing, baLasering, baPropelling
               ]))
               or ( HasTriggerAt(X, Y, trOWLeft) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
               or ( HasTriggerAt(X, Y, trOWRight) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
