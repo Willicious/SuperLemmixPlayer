@@ -165,10 +165,8 @@ procedure TNeoTheme.SetSoundsFromTheme(aName: String; aSound: String);
 begin
   if (aName = 'ASSIGN_FAIL') then SFX_AssignFail := aSound;
   if (aName = 'ASSIGN_SKILL') then SFX_AssignSkill := aSound;
-
-//  if (aName = 'BAT_HIT') then  SFX_BatHit := aSound     // Batter
-//  if (aName = 'BAT_SWISH') then  SFX_BatSwish := aSound // Batter
-
+  if (aName = 'BAT_HIT') then  SFX_BatHit := aSound;
+  if (aName = 'BAT_SWISH') then  SFX_BatSwish := aSound;
   if (aName = 'BALLOON_INFLATE') then SFX_BalloonInflate := aSound;
   if (aName = 'BALLOON_POP') then SFX_BalloonPop := aSound;
   if (aName = 'MENU_QUIT') then SFX_Bye := aSound;

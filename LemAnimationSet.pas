@@ -27,8 +27,8 @@ const
 -------------------------------------------------------------------------------}
   // MUST MATCH BELOW (not the next list, the one after that)
   // And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 90;   // Num lem sprites
-  NUM_LEM_SPRITE_TYPE = 45;         // Num lem sprite types
+  NUM_LEM_SPRITES     = 92;   // Num lem sprites
+  NUM_LEM_SPRITE_TYPE = 46;         // Num lem sprite types
   WALKING             = 0;    // 1  // 1
   WALKING_RTL         = 1;    // 2
   ZOMBIEWALKING       = 2;    // 3  // 2
@@ -117,12 +117,13 @@ const
   LADDERING_RTL       = 85;   // 86
   DRIFTING            = 86;   // 87 // 44
   DRIFTING_RTL        = 87;   // 88
-  SLEEPING            = 88;   // 99 // 45
-  SLEEPING_RTL        = 89;   // 90
-  //BATTING             = ?;   //?  //?  // Batter - REMEMBER to change numbers in list AND at the top
-  //BATTING_RTL         = ?;   //?
+  BATTING             = 88;   // 89 // 45
+  BATTING_RTL         = 89;   // 90
+  SLEEPING            = 90;   // 91 // 46
+  SLEEPING_RTL        = 91;   // 92
   //PROPELLING          = ?;   //?  //?
   //PROPELLING_RTL      = ?;   //?    // Propeller
+  // N.B. REMEMBER to change the numbers at the top!
 
   // This one must match TBasicLemmingAction in LemCore / LemStrings
   AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
@@ -175,9 +176,9 @@ const
     (BALLOONING, BALLOONING_RTL),             // 47 baBallooning
     (LADDERING, LADDERING_RTL),               // 48 baPlatforming
     (DRIFTING, DRIFTING_RTL),                 // 49 baDrifting
-    //(BATTING, BATTING_RTL),                 // Batter
-    (SLEEPING, SLEEPING_RTL)                  // 50 baSleeping
-    //(PROPELLING, PROPELLING_RTL),             // 47 baPropelling // Propeller
+    (BATTING, BATTING_RTL),                   // 50 baBatting
+    (SLEEPING, SLEEPING_RTL)                  // 51 baSleeping
+    //(PROPELLING, PROPELLING_RTL),           // 47 baPropelling // Propeller
   );
 
 type
@@ -204,7 +205,6 @@ type
     fExitMarkerZombieBitmap : TBitmap32;
     fGrenadeBitmap          : TBitmap32;
     fSpearBitmap            : TBitmap32;
-    //fBatBitmap              : TBitmap32; // Batter
     fIceCubeBitmap          : TBitmap32;
     fTheme                  : TNeoTheme;
 
@@ -243,7 +243,6 @@ type
     property ExitMarkerRivalBitmap : TBitmap32 read fExitMarkerRivalBitmap;
     property ExitMarkerZombieBitmap: TBitmap32 read fExitMarkerZombieBitmap;
     property GrenadeBitmap         : TBitmap32 read fGrenadeBitmap;
-    //property BatBitmap             : TBitmap32 read fBatBitmap; // Batter
     property SpearBitmap           : TBitmap32 read fSpearBitmap;
     property IceCubeBitmap         : TBitmap32 read fIceCubeBitmap;
     property Recolorer             : TRecolorImage read fRecolorer;
@@ -269,7 +268,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..44] of String =  (
+  ANIM_NAMES: array[0..45] of String =  (
   'WALKER',        // 1
   'ZOMBIEWALKER',  // 2
   'ASCENDER',      // 3
@@ -312,11 +311,11 @@ const
   'LOOKER',        // 40
   'LASERER',       // 41
   //'PROPELLER',     // ? // Propeller
-  //'BATTER',        // ? // Batter
   'BALLOONER',     // 43
   'LADDERER',      // 44
   'DRIFTER',       // 45
-  'SLEEPER'        // 46
+  'BATTER',        // 46
+  'SLEEPER'        // 47
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
@@ -620,9 +619,6 @@ begin
     fSpearBitmap.DrawMode := dmBlend;
     fSpearBitmap.CombineMode := cmMerge;
 
-    //fBatBitmap.DrawMode := dmBlend;      // Batter
-    //fBatBitmap.CombineMode := cmMerge;
-
     fIceCubeBitmap.DrawMode := dmBlend;
     fIceCubeBitmap.CombineMode := cmMerge;
 
@@ -678,7 +674,6 @@ begin
   fExitMarkerZombieBitmap.Clear;
   fGrenadeBitmap.Clear;
   fSpearBitmap.Clear;
-  //fBatBitmap.Clear;  // Batter
   fIceCubeBitmap.Clear;
   fHasZombieColor := False;
   fHasNeutralColor := False;
@@ -707,7 +702,6 @@ begin
   fExitMarkerZombieBitmap := TBitmap32.Create;
   fGrenadeBitmap := TBitmap32.Create;
   fSpearBitmap := TBitmap32.Create;
-  //fBatBitmap := TBitmap32.Create;  // Batter
   fIceCubeBitmap := TBitmap32.Create;
 end;
 
@@ -730,7 +724,6 @@ begin
   fExitMarkerZombieBitmap.Free;
   fGrenadeBitmap.Free;
   fSpearBitmap.Free;
-  //fBatBitmap.Free;  // Batter
   fIceCubeBitmap.Free;
   fRecolorer.Free;
   inherited Destroy;

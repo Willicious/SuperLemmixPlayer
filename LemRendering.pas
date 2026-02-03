@@ -1153,33 +1153,22 @@ end;
 
 procedure TRenderer.DrawThisProjectile(P: TProjectile);
 var
-  //SrcRectBat: TRect;  // Batter
   SrcRectSpear: TRect;
   SrcRectGrenade: TRect;
-  //BatHotspot: TPoint; // Batter
   SpearHotspot: TPoint;
   GrenadeHotspot: TPoint;
-  //BatTarget: TPoint;  // Batter
   SpearTarget: TPoint;
   GrenadeTarget: TPoint;
 begin
-  //SrcRectBat := ?;  // Batter
   SrcRectSpear := SPEAR_GRAPHIC_RECTS[P.SpearGraphic];
   SrcRectGrenade := GRENADE_GRAPHIC_RECTS[P.GrenadeGraphic];
-  //BatHotspot := P.BatHotspot; // Batter
   SpearHotspot := P.SpearHotspot;
   GrenadeHotspot := P.GrenadeHotspot;
-  //BatTarget := Point(P.X, P.Y); // Batter
   SpearTarget := Point(P.X, P.Y);
   GrenadeTarget := Point(P.X, P.Y);
 
   if GameParams.HighResolution then
   begin
-//    SrcRectBat.Left := SrcRectBat.Left * 2;   // Batter
-//    SrcRectBat.Top := SrcRectBat.Top * 2;
-//    SrcRectBat.Right := SrcRectBat.Right * 2;
-//    SrcRectBat.Bottom := SrcRectBat.Bottom * 2;
-
     SrcRectSpear.Left := SrcRectSpear.Left * 2;
     SrcRectSpear.Top := SrcRectSpear.Top * 2;
     SrcRectSpear.Right := SrcRectSpear.Right * 2;
@@ -1189,11 +1178,6 @@ begin
     SrcRectGrenade.Top := SrcRectGrenade.Top * 2;
     SrcRectGrenade.Right := SrcRectGrenade.Right * 2;
     SrcRectGrenade.Bottom := SrcRectGrenade.Bottom * 2;
-
-//    BatHotspot.X := BatHotspot.X * 2; // Batter
-//    BatHotspot.Y := BatHotspot.Y * 2;
-//    BatTarget.X := BatTarget.X * 2;
-//    BatTarget.Y := BatTarget.Y * 2;
 
     SpearHotspot.X := SpearHotspot.X * 2;
     SpearHotspot.Y := SpearHotspot.Y * 2;
@@ -1210,8 +1194,6 @@ begin
     fAni.GrenadeBitmap.DrawTo(fLayers[rlLemmingsLow], GrenadeTarget.X - GrenadeHotspot.X, GrenadeTarget.Y - GrenadeHotspot.Y, SrcRectGrenade)
   else //if P.IsSpear then
     fAni.SpearBitmap.DrawTo(fLayers[rlLemmingsLow], SpearTarget.X - SpearHotspot.X, SpearTarget.Y - SpearHotspot.Y, SrcRectSpear);
-//  else  // Batter
-//    fAni.BatBitmap.DrawTo(fLayers[rlLemmingsLow], BatTarget.X - BatHotspot.X, BatTarget.Y - BatHotspot.Y, SrcRectBat);
 end;
 
 procedure TRenderer.DrawJumperShadow(L: TLemming);
@@ -1881,7 +1863,6 @@ begin
   LevelHeight := GameParams.Level.Info.Height;
 
   case L.LemAction of
-    //baBatting: Projectile := TProjectile.CreateBat(fRenderInterface.PhysicsMap, L); // Batter
     baSpearing: Projectile := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
     baGrenading: Projectile := TProjectile.CreateGrenade(fRenderInterface.PhysicsMap, L);
     else raise Exception.Create('TRenderer.DrawProjectileShadow passed an invalid lemming');

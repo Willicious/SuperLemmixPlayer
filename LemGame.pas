@@ -170,7 +170,6 @@ type
     MinerMasks                 : TBitmap32;
     GrenadeMask                : TBitmap32;
     SpearMasks                 : TBitmap32;
-    //BatMask                    : TBitmap32; // Batter
     LaserMask                  : TBitmap32;
     fMasksLoaded               : Boolean;
 
@@ -264,7 +263,6 @@ type
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplySpear(P: TProjectile);
-    //procedure ApplyBat(P: TProjectile); // Batter
     procedure ApplyGrenadeExplosionMask(P: TProjectile);
     procedure ApplyLaserMask(P: TPoint; L: TLemming);
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
@@ -277,6 +275,7 @@ type
     function CalculateNextLemmingCountdown: Integer;
     procedure ZombieCheckForProjectiles(L: TLemming);
     procedure ZombieCheckForLaser(L: TLemming);
+    procedure CheckForBatter(L: TLemming);
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming; IsPostTeleportCheck: Boolean = False);
       function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -424,7 +423,7 @@ type
     //function HandlePropelling(L: TLemming) : Boolean; // Propeller
     function HandleLasering(L: TLemming) : Boolean;
     function HandleThrowing(L: TLemming) : Boolean;
-    //function HandleBatting(L: TLemming) : Boolean; // Batter
+    function HandleBatting(L: TLemming) : Boolean;
     function HandleLooking(L: TLemming) : Boolean;
     function HandleSleeping(L: TLemming): Boolean;
 
@@ -466,6 +465,7 @@ type
     function MayAssignSlider(L: TLemming) : Boolean;
     function MayAssignLaserer(L: TLemming) : Boolean;
     //function MayAssignPropeller(L: TLemming) : Boolean; // Propeller
+    function MayAssignBatter(L: TLemming) : Boolean;
     function MayAssignThrowingSkill(L: TLemming) : Boolean;
 
     // For properties
@@ -503,6 +503,8 @@ type
     function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
     function HasLaserAt(X, Y: Integer): Boolean;
     function HasProjectileAt(X, Y: Integer): Boolean;
+    function HasLemmingAt(X, Y: Integer; CurLem: TLemming): Boolean;
+    function GetBatterAt(X, Y: Integer; CurLem: TLemming): TLemming;
 
     function ShouldExitToPostview: Boolean;
     procedure MaybeExitToPostview;
@@ -668,12 +670,12 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..25] of TBasicLemmingAction =
+  ActionListArray: array[0..26] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
-             baBallooning, baLaddering//, baBatting, baPropelling // Batter // Propeller
+             baBallooning, baLaddering, baBatting//, baPropelling // Propeller
              );                       // Double-check these skills are in the correct place after adding them
 
 function CheckRectCopy(const A, B: TRect): Boolean;
@@ -1118,7 +1120,6 @@ begin
   MinerMasks              := TBitmap32.Create;
   GrenadeMask             := TBitmap32.Create;
   SpearMasks              := TBitmap32.Create;
-  //BatMask                 := TBitmap32.Create;  // Batter
   LaserMask               := TBitmap32.Create;
 
   Gadgets        := TGadgetList.Create;
@@ -1184,7 +1185,7 @@ begin
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
   LemmingMethods[baBallooning]    := HandleBallooning;
-  //LemmingMethods[baBatting]       := HandleBatting; // Batter
+  LemmingMethods[baBatting]       := HandleBatting;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1230,7 +1231,7 @@ begin
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
   NewSkillMethods[baBallooning]   := MayAssignBallooner;
-  //NewSkillMethods[baBatting]      := MayAssignBatter; // Batter
+  NewSkillMethods[baBatting]      := MayAssignBatter;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1251,7 +1252,6 @@ begin
   FreezerMask.Free;
   GrenadeMask.Free;
   SpearMasks.Free;
-  //BatMask.Free; // Batter
   LaserMask.Free;
   BasherMasks.Free;
   FencerMasks.Free;
@@ -1328,7 +1328,6 @@ begin
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
     LoadMask(GrenadeMask, 'grenader.png', CombineMaskPixelsNeutral);
     LoadMask(SpearMasks, 'spears.png', CombineNoOverwriteMask);
-    //LoadMask(BatMask, 'bat.png', CombineNoOverwriteMask); // Batter
     LoadMask(LaserMask, 'laser.png', CombineMaskPixelsNeutral);
     fMasksLoaded := True;
   end;
@@ -1798,8 +1797,9 @@ const
     17, // 47 baBallooning
     25, // 48 baLaddering
     8,  // 49 baDrifting
-    //10, // batting // Batter
-    20  // 50 baSleeping
+    10, // 50 baBatting TODO - Figure out why the first frame of the animation isn't shown
+                          // - Setting the number to 11 doesn't help either, the first frame then gets shown at the end
+    20  // 51 baSleeping
      //4, // 47 baPropelling // Propeller
     );
 begin
@@ -3103,6 +3103,14 @@ begin
   Result := (L.LemAction in ActionSet);
 end;
 
+function TLemmingGame.MayAssignBatter(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baLaddering,
+               baBashing, baFencing, baDigging, baLasering, baLooking];
+begin
+  Result := (L.LemAction in ActionSet)
+end;
+
 function TLemmingGame.GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
 // The intermediate checks are made according to www.lemmingsforums.net/index.php?topic=2604.7
 var
@@ -3189,6 +3197,57 @@ begin
     else begin
       MoveVertical;
       MoveHorizontal;
+    end;
+  end;
+end;
+
+procedure TLemmingGame.CheckForBatter(L: TLemming);
+var
+  NextAction: TBasicLemmingAction;
+  XOffset, YOffset: Integer;
+  BatterFacingAway: Boolean;
+  Batter: TLemming;
+begin
+  if not (spbBatter in Level.Info.Skillset) then
+    Exit;
+
+  if L.LemIsInvincible then
+    Exit;
+
+  for YOffset := -5 to 5 do
+  for XOffset := -9 to 9 do
+  begin
+    Batter := GetBatterAt(L.LemX - XOffset, L.LemY - YOffset, L);
+    if (Batter = nil) then Continue;
+
+    BatterFacingAway := False;
+
+    // Batters to the right of the checking lem
+    if (Batter.LemX > L.LemX) and (Batter.LemDX = 1)
+    // Batters to the left of the checking lem
+    or (Batter.LemX < L.LemX) and (Batter.LemDX = -1) then
+      BatterFacingAway := True;
+
+    if not BatterFacingAway then
+    begin
+      L.LemDoExplosionCrater := False;
+
+      if L.LemIsZombie then
+        NextAction := baExploding
+      else
+        NextAction := baJumping; // TODO - this will later be baBalling
+
+      // If the lem is facing towards the Batter, turn them around
+      if (L.LemDX <> Batter.LemDX) then
+        TurnAround(L);
+
+      if L.LemAction = baBallooning then
+        PopBalloon(L, 1, NextAction)
+      else
+        Transition(L, NextAction);
+
+      CueSoundEffect(SFX_BatHit, L.Position);
+      Exit;
     end;
   end;
 end;
@@ -4307,15 +4366,6 @@ begin
     fRenderInterface.AddTerrainSpear(P);
 end;
 
-//procedure TLemmingGame.ApplyBat(P: TProjectile); // Batter
-//var
-//  Hotspot: TPoint;
-//begin
-//  Hotspot := P.SpearHotspot;
-//
-//  BatMask.DrawTo(PhysicsMap, P.X - Hotspot.X, P.Y - Hotspot.Y);
-//end;
-
 procedure TLemmingGame.ApplyGrenadeExplosionMask(P: TProjectile);
 begin
   GrenadeMask.DrawTo(PhysicsMap, P.X - 9, P.Y - 9);
@@ -4813,7 +4863,8 @@ const
                       baShrugging, baTimebombing, baOhnoing, baExploding,
                       baFreezerExplosion, baFreezing, baFrozen, baUnfreezing,
                       baReaching, baTurning, baDehoisting, baVaporizing,
-                      baVinetrapping, baDangling, baLooking, baLaddering];
+                      baVinetrapping, baDangling, baLooking, baLaddering,
+                      baBatting];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -6790,8 +6841,6 @@ begin
   Result := (PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0);
 end;
 
-
-
 function TLemmingGame.HandleMining(L: TLemming): Boolean;
   procedure MinerTurn(L: TLemming; X, Y: Integer);
   begin
@@ -7300,27 +7349,21 @@ begin
   Result := True;
 end;
 
-//function TLemmingGame.HandleBatting(L: TLemming): Boolean; // Batter
-//var
-//  NewProjectile: TProjectile;
-//begin
-//  if L.LemPhysicsFrame = 4 then
-//  begin
-//     if not IsSimulating then // Is this needed? We will never simulate Batters
-//     begin
-//       NewProjectile := TProjectile.CreateBat(PhysicsMap, L);
-//
-//       ProjectileList.Add(NewProjectile);
-//
-//       L.LemHoldingProjectileIndex := ProjectileList.Count - 1;
-//     end;
-//  end;
-//
-//  if L.LemEndOfAnimation then
-//    Transition(L, baWalking);
-//
-//  Result := True;
-//end;
+function TLemmingGame.HandleBatting(L: TLemming): Boolean;
+begin
+  if (L.LemFrame = 1) then
+    CueSoundEffect(SFX_BatSwish, L.Position);
+
+  if (L.LemFrame in [3, 4]) then
+    L.LemIsBatting := True
+  else
+    L.LemIsBatting := False;
+
+  if L.LemEndOfAnimation then
+    Transition(L, baWalking);
+
+  Result := True;
+end;
 
 function TLemmingGame.HandleLooking(L: TLemming): Boolean;
 begin
@@ -7766,6 +7809,50 @@ begin
   end;
 end;
 
+function TLemmingGame.HasLemmingAt(X, Y: Integer; CurLem: TLemming): Boolean;
+var
+  i: Integer;
+  L: TLemming;
+begin
+  Result := False;
+
+  for i := 0 to LemmingList.Count - 1 do
+  begin
+    L := LemmingList[i];
+
+    if (L = CurLem) then
+      Continue;
+
+    if (L.LemX = X) and (L.LemY = Y) then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
+end;
+
+function TLemmingGame.GetBatterAt(X, Y: Integer; CurLem: TLemming): TLemming;
+var
+  i: Integer;
+  L: TLemming;
+begin
+  Result := nil;
+
+  for i := 0 to LemmingList.Count - 1 do
+  begin
+    L := LemmingList[i];
+
+    if (L = CurLem) then
+      Continue;
+
+    if (L.LemX = X) and (L.LemY = Y) and L.LemIsBatting then
+    begin
+      Result := L;
+      Exit;
+    end;
+  end;
+end;
+
 function TLemmingGame.HasLaserAt(X, Y: Integer): Boolean;
 var
   i: Integer;
@@ -7845,8 +7932,7 @@ begin
   for i := ProjectileList.Count-1 downto 0 do
   begin
     P := ProjectileList[i];
-    if P.Hit and (P.IsGrenade //or P.IsBat  // Batter
-    ) then
+    if P.Hit and (P.IsGrenade) then
        ProjectileList.Delete(i);
   end;
 
@@ -7868,16 +7954,14 @@ begin
         ApplySpear(P);
         CueSoundEffect(SFX_SpearHit);
         ProjectileList.Delete(i);
-      end else //if P.IsGrenade then
+      end else //if P.IsGrenade then // Bookmark - Grenaders and OWWs...?
       begin
 //        OWWDetected := ((P.DX < 0) and HasTriggerAt(P.X - 1, P.Y, trOWRight))
 //                    or ((P.DX > 0) and HasTriggerAt(P.X + 1, P.Y, trOWLeft));
 
         ApplyGrenadeExplosionMask(P);
         CueSoundEffect(SFX_Pop, Point(P.X, P.Y));
-      end //else       // Batter
-        //ApplyBat(P)
-        ;
+      end;
     end;
   end;
 end;
@@ -8638,6 +8722,10 @@ begin
       // Check whether the lem has moved over trigger areas
       if ContinueWithLem then
         CheckTriggerArea(CurrentLemming);
+
+      // Check whether the lem has encountered a batter
+      if ContinueWithLem then
+        CheckForBatter(CurrentLemming);
 
       // Check to see whether a laser or projectile has hit the lemming {applies to Zombies only}
       if ContinueWithLem and CurrentLemming.LemIsZombie then

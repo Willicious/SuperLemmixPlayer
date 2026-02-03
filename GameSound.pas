@@ -353,8 +353,8 @@ begin
   SFX_AmigaDisk2 := 'amigadisk2';
   SFX_AssignFail := 'assignfail';
   SFX_AssignSkill := 'assignskill';
-  // SFX_BatHit = 'bathit';      // Batter
-  // SFX_BatSwish = 'batswish';   // Batter
+  SFX_BatHit := 'bathit'; // TODO - Add this sound
+  SFX_BatSwish := 'batswish'; // TODO - Add this sound
   SFX_BalloonInflate := 'balloon';
   SFX_BalloonPop := 'balloonpop';
   SFX_Boing := 'boing';
@@ -416,8 +416,8 @@ begin
   Load(SFX_AmigaDisk2);
   Load(SFX_AssignFail);
   Load(SFX_AssignSkill);
-  // Load(SFX_BatHit);   // Batter
-  // Load(SFX_BatSwish); // Batter
+  Load(SFX_BatHit);
+  Load(SFX_BatSwish);
   Load(SFX_BalloonInflate);
   Load(SFX_BalloonPop);
   Load(SFX_Boing);

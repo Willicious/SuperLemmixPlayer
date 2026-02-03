@@ -13,8 +13,8 @@ var
   SFX_AmigaDisk2,
   SFX_AssignFail,
   SFX_AssignSkill,
-  // SFX_BatHit, // Batter
-  // SFX_BatSwish, // Batter
+  SFX_BatHit,
+  SFX_BatSwish,
   SFX_BalloonInflate,
   SFX_BalloonPop,
   SFX_Boing,
@@ -169,7 +169,7 @@ resourcestring
   SInvincible = 'Invincible';
   SBallooner = 'Ballooner';
   SDrifter = 'Drifter';
-  //SBatter = 'Batter';  // Batter
+  SBatter = 'Batter';
   SSleeper = 'Sleeper';
 
   SRadiator = 'Radiator';
@@ -251,8 +251,8 @@ const
     SBallooner,   // 47
     SLadderer,    // 48
     SDrifter,     // 49
-    //SBatter,  // Batter
-    SSleeper      // 50
+    SBatter,      // 50
+    SSleeper      // 51
     //SPropeller,   // 47  // Propeller
   );
 

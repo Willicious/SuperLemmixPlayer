@@ -103,6 +103,7 @@ type
                                              // Equal to (LemFrame > LemMaxFrame)
     LemIsPhysicsSimulation        : Boolean; { For simulations that are used for physics (eg. Basher/Fencer checks)
                                                as opposed to simulations to determine shadows }
+    LemIsBatting                  : Boolean;
     LemIsSlider                   : Boolean;
     LemIsClimber                  : Boolean;
     LemIsSwimmer                  : Boolean;
@@ -350,6 +351,7 @@ begin
   LemTeleporting := Source.LemTeleporting;
   LemEndOfAnimation := Source.LemEndOfAnimation;
   LemIsPhysicsSimulation := Source.LemIsPhysicsSimulation;
+  LemIsBatting := Source.LemIsBatting;
   LemIsSlider := Source.LemIsSlider;
   LemIsClimber := Source.LemIsClimber;
   LemIsSwimmer := Source.LemIsSwimmer;

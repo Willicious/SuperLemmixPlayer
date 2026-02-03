@@ -11,7 +11,6 @@ uses
   SharedGlobals;
 
 type
-//TBatGraphic = (pgBatR); // Batter
 
   TSpearGraphic =
    (
@@ -28,7 +27,6 @@ type
    );
 
 const
-//BAT_FLIP: TBatGraphic = (pgBatL); // Batter
 
   SPEAR_FLIP: array[TSpearGraphic] of TSpearGraphic =
   (
@@ -83,7 +81,6 @@ type
       fLemming: TLemming;
       fLemmingIndex: Integer;
 
-      //fIsBat: Boolean;  // Batter
       fIsSpear: Boolean;
       fIsGrenade: Boolean;
 
@@ -95,15 +92,12 @@ type
       procedure Discard;
       procedure SetPositionFromLemming;
 
-      //function GetBatGraphic: TBatGraphic;  // Batter
-      //function GetBatHotspot: TPoint;   // Batter
       function GetSpearGraphic: TSpearGraphic;
       function GetSpearHotspot: TPoint;
       function GetGrenadeGraphic: TGrenadeGraphic;
       function GetGrenadeHotspot: TPoint;
     public
       constructor CreateAssign(aSrc: TProjectile);
-      //constructor CreateBat(aPhysicsMap: TBitmap32; aLemming: TLemming);   // Batter
       constructor CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
       constructor CreateGrenade(aPhysicsMap: TBitmap32; aLemming: TLemming);
       constructor CreateForCloner(aPhysicsMap: TBitmap32; aNewLemming: TLemming; aOldProjectile: TProjectile);
@@ -121,14 +115,11 @@ type
       property Fired: Boolean read fFired;
       property Hit: Boolean read fHit;
 
-      //property BatGraphic: TBatGraphic read GetBatGraphic;  // Batter
-      //property BatHotspot: TPoint read GetBatHotspot;  // Batter
       property SpearGraphic: TSpearGraphic read GetSpearGraphic;
       property SpearHotspot: TPoint read GetSpearHotspot;
       property GrenadeGraphic: TGrenadeGraphic read GetGrenadeGraphic;
       property GrenadeHotspot: TPoint read GetGrenadeHotspot;
 
-      //property IsBat: Boolean read fIsBat;  // Batter
       property IsSpear: Boolean read fIsSpear;
       property IsGrenade: Boolean read fIsGrenade;
 
@@ -216,7 +207,6 @@ begin
   // Don't assign physicsmap or lemming
   fLemmingIndex := aSrc.fLemmingIndex;
 
-  //fIsBat :- aSrc.fIsBat;  // Batter
   fIsSpear := aSrc.fIsSpear;
   fIsGrenade := aSrc.fIsGrenade;
 
@@ -253,7 +243,6 @@ end;
 constructor TProjectile.CreateGrenade(aPhysicsMap: TBitmap32;
   aLemming: TLemming);
 begin
-  //fIsBat := False;  // Batter
   fIsSpear := False;
   fIsGrenade := True;
   Create(aPhysicsMap, aLemming);
@@ -268,15 +257,6 @@ begin
   Create(aPhysicsMap, aLemming);
   SetPositionFromLemming;
 end;
-
-//constructor TProjectile.CreateBat(aPhysicsMap: TBitmap32; aLemming: TLemming);  // Batter
-//begin
-//  fIsBat := True;
-//  fIsSpear := False;
-//  fIsGrenade := False;
-//  Create(aPhysicsMap, aLemming);
-//  SetPositionFromLemming; // This might not be needed - position can probably be set right here
-//end;
 
 procedure TProjectile.Discard;
 begin
@@ -353,32 +333,6 @@ begin
     Result := SPEAR_FLIP[Result];
 end;
 
-//function TProjectile.GetBatGraphic: TBatGraphic;  // Batter
-//begin
-//  if fIsBat then
-//  begin
-//    if not fFired then
-//      case fLemming.LemPhysicsFrame of
-//        0:
-//        1:
-//      end;
-//  end;
-//
-//  if fDX < 0 then
-//    Result := BAT_FLIP[Result];
-//end;
-
-//function TProjectile.GetBatHotspot: TPoint;   // Batter
-//var
-//  ImgRect: TRect;
-//begin
-//  ImgRect := BatGraphic;
-//  if BatGraphic in [pgBatR, pgBatL] then
-//  begin
-//    Result := Point(ImgRect.Width div 2, ImgRect.Height div 2);
-//  end;
-//end;
-
 function TProjectile.GetGrenadeHotspot: TPoint;
 var
   ImgRect: TRect;
@@ -436,14 +390,6 @@ procedure TProjectile.SetPositionFromLemming;
 begin
   fDX := fLemming.LemDX;
 
-//  if fIsBat then  // Batter - might not need this here
-//  begin
-//    if fLemming.LemPhysicsFrame = ? then
-//            fX := fLemming.LemX - (? * fLemming.LemDX);
-//            fY := fLemming.LemY - ?;
-//    Exit;
-//  end;
-
   case fLemming.LemPhysicsFrame of
     0..3: begin
             fX := fLemming.LemX - (4 * fLemming.LemDX);
@@ -492,9 +438,6 @@ var
 
       if fIsSpear and ((fPhysicsMap.PixelS[fX, fY + 1] and PM_SOLID) <> 0) then
         fHit := True;
-
-//      if fIsBat and fLemming.LemPhysicsFrame = ? then // Batter - this is key, need to apply the correct "hit" frame here
-//        fHit := True;
 
       if (fX = fLemming.LemX) and (dX <> 0) then
         for n := fY + 1 to fLemming.LemY - 5 do
@@ -572,7 +515,7 @@ begin
 
       if fHit then
         Break;
-    end;                                                                       //baBatting // Batter
+    end;
   end else if (fLemming.LemRemoved) or not (fLemming.LemAction in [baSpearing, baGrenading]) then
     Discard
   else begin
