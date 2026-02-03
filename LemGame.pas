@@ -3214,8 +3214,8 @@ begin
   if L.LemIsInvincible then
     Exit;
 
-  for YOffset := -5 to 5 do
-  for XOffset := -9 to 9 do
+  for YOffset := -6 to 6 do
+  for XOffset := -11 to 11 do
   begin
     Batter := GetBatterAt(L.LemX - XOffset, L.LemY - YOffset, L);
     if (Batter = nil) then Continue;
