@@ -215,7 +215,7 @@ const // Icon indexes
     // 56, Empty slot
     // 57, Empty slot
 
-    58, // 25 Batter TODO: Add Batter to levelinfo icons
+    58, // 25 Batter
     59  // 26 Cloner
 
     //?, // // Propeller

@@ -677,6 +677,7 @@ begin
         spbJumper:    Offset := Point(0, 16);
         spbShimmier:  Offset := Point(0, 16);
         spbBallooner: Offset := Point(0, FloaterY);
+        spbBatter:    Offset := Point(0, 14);
         spbSlider:    Offset := Point(-2, 15);
         spbClimber:   Offset := Point(-1, 13);
         spbSwimmer:   Offset := Point(0, 12);
