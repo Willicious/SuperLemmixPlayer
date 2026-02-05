@@ -11,7 +11,7 @@ uses
 const
   FORMAT_VERSION = 3;
   CORE_VERSION = 0;
-  FEATURES_VERSION = 0;
+  FEATURES_VERSION = 1;
   HOTFIX_VERSION = 0; // Or RC version
 
   function COMMIT_ID: String;

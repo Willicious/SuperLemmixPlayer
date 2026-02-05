@@ -975,8 +975,8 @@ begin
   HandleSkill('fencer', spbFencer);
   HandleSkill('miner', spbMiner);
   HandleSkill('digger', spbDigger);
-  HandleSkill('propeller', spbPropeller);
-  HandleSkill('batter', spbBatter);
+  //HandleSkill('propeller', spbPropeller);
+  //HandleSkill('batter', spbBatter);
   HandleSkill('cloner', spbCloner);
 end;
 
@@ -1043,8 +1043,8 @@ var
     if S = 'fencer' then O.Skill := Integer(spbFencer);
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
-    if S = 'propeller' then O.Skill := Integer(spbPropeller);
-    if S = 'batter' then O.Skill := Integer(spbBatter);
+    //if S = 'propeller' then O.Skill := Integer(spbPropeller);
+    //if S = 'batter' then O.Skill := Integer(spbBatter);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
 
     if aSection.Line['skill_count'] = nil then
@@ -1652,7 +1652,7 @@ begin
   HandleSkill('DISARMER', spbDisarmer);
   HandleSkill('TIMEBOMBER', spbTimebomber);
   HandleSkill('BOMBER', spbBomber);
-  HandleSkill('Freezer', spbFreezer);
+  HandleSkill('FREEZER', spbFreezer);
   HandleSkill('BLOCKER', spbBlocker);
   HandleSkill('LADDERER', spbLadderer);
   HandleSkill('PLATFORMER', spbPlatformer);
@@ -1665,8 +1665,8 @@ begin
   HandleSkill('FENCER', spbFencer);
   HandleSkill('MINER', spbMiner);
   HandleSkill('DIGGER', spbDigger);
-  HandleSkill('PROPELLER', spbPropeller);
-  HandleSkill('BATTER', spbBatter);
+//  HandleSkill('PROPELLER', spbPropeller);
+//  HandleSkill('BATTER', spbBatter);
   HandleSkill('CLONER', spbCloner);
 end;
 
@@ -1722,8 +1722,8 @@ var
       spbFencer: s := 'FENCER';
       spbMiner: s := 'MINER';
       spbDigger: s := 'DIGGER';
-      spbPropeller: s := 'PROPELLER';
-      spbBatter: s := 'BATTER';
+      //spbPropeller: s := 'PROPELLER';
+      //spbBatter: s := 'BATTER';
       spbCloner: s := 'CLONER';
     end;
 
