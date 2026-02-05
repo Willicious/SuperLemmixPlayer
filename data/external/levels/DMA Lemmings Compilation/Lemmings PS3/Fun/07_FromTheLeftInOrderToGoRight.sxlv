@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Sony / Minim
  MUSIC menace_amiga
  ID x68586B2868586B28
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -193,274 +193,274 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE minim_ps3factory
-     PIECE board_large_02
-     X 24
-     Y 104
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE minim_ps3factory
-       PIECE board_large_01
-       X 56
-       Y 136
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE minim_ps3factory
-         PIECE board_large_01
-         X 88
-         Y 136
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE minim_ps3factory
-           PIECE board_large_01
-           X 120
-           Y 136
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE minim_ps3factory
-             PIECE steel_small
-             X 80
-             Y 120
-           $END
-           
-             $TERRAIN
-               STYLE minim_ps3factory
-               PIECE steel_small
-               X 80
-               Y 104
-             $END
-             
-               $TERRAIN
-                 STYLE minim_ps3factory
-                 PIECE steel_small
-                 X 96
-                 Y 104
-               $END
-               
-                 $TERRAIN
-                   STYLE minim_ps3factory
-                   PIECE steel_large
-                   X 152
-                   Y 136
-                 $END
-                 
-                   $TERRAIN
-                     STYLE minim_ps3factory
-                     PIECE steel_large
-                     X 176
-                     Y 136
-                   $END
-                   
-                     $TERRAIN
-                       STYLE minim_ps3factory
-                       PIECE steel_large
-                       X 200
-                       Y 136
-                     $END
-                     
-                       $TERRAIN
-                         STYLE minim_ps3factory
-                         PIECE steel_large
-                         X 224
-                         Y 136
-                       $END
-                       
-                         $TERRAIN
-                           STYLE minim_ps3factory
-                           PIECE belt_end_left_02
-                           X 117
-                           Y 38
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE minim_ps3factory
-                             PIECE belt_end_right_02
-                             X 149
-                             Y 38
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE minim_ps3factory
-                               PIECE board_large_02
-                               X 160
-                               Y 38
-                               NO_OVERWRITE
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE minim_ps3factory
-                                 PIECE board_narrow_01
-                                 X 184
-                                 Y 38
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE minim_ps3factory
-                                   PIECE board_narrow_01
-                                   X 184
-                                   Y 54
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE minim_ps3factory
-                                     PIECE board_large_02
-                                     X 232
-                                     Y 38
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE minim_ps3factory
-                                       PIECE board_narrow_02
-                                       X 248
-                                       Y 70
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE minim_ps3factory
-                                         PIECE board_narrow_02
-                                         X 248
-                                         Y 118
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE minim_ps3factory
-                                           PIECE board_large_01
-                                           X 248
-                                           Y 14
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE minim_ps3factory
-                                             PIECE board_large_02
-                                             X 256
-                                             Y 38
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE minim_ps3factory
-                                               PIECE board_narrow_02
-                                               X 264
-                                               Y 64
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE minim_ps3factory
-                                                 PIECE board_narrow_02
-                                                 X 264
-                                                 Y 112
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE minim_ps3factory
-                                                   PIECE belt_screw_02
-                                                   X 272
-                                                   Y 63
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE minim_ps3factory
-                                                     PIECE pipe
-                                                     X 254
-                                                     Y 65
-                                                     FLIP_VERTICAL
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE minim_ps3factory
-                                                       PIECE pipe
-                                                       X 254
-                                                       Y 113
-                                                       FLIP_VERTICAL
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE minim_ps3factory
-                                                         PIECE pipe_end
-                                                         X 254
-                                                         Y 17
-                                                         FLIP_VERTICAL
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE minim_ps3factory
-                                                           PIECE machine_part_02
-                                                           X 232
-                                                           Y 3
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE minim_ps3factory
-                                                             PIECE steel_large
-                                                             X 280
-                                                             Y 38
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE minim_ps3factory
-                                                               PIECE steel_large
-                                                               X 304
-                                                               Y 38
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE minim_ps3factory
-                                                                 PIECE steel_large
-                                                                 X 328
-                                                                 Y 38
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE minim_ps3factory
-                                                                   PIECE steel_large
-                                                                   X 352
-                                                                   Y 38
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE minim_ps3factory
-                                                                     PIECE steel_large
-                                                                     X 376
-                                                                     Y 38
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE minim_ps3factory
-                                                                       PIECE steel_large
-                                                                       X 400
-                                                                       Y 38
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE minim_ps3factory
-                                                                         PIECE steel_large
-                                                                         X 424
-                                                                         Y 38
-                                                                       $END
-                                                                       
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 24
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 56
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 88
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 120
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_small
+   X 80
+   Y 120
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_small
+   X 80
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_small
+   X 96
+   Y 104
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 152
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 176
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 200
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 224
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE belt_end_left_02
+   X 117
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE belt_end_right_02
+   X 149
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 160
+   Y 38
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 184
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_01
+   X 184
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 232
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 248
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 248
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_01
+   X 248
+   Y 14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_large_02
+   X 256
+   Y 38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 264
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE board_narrow_02
+   X 264
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE belt_screw_02
+   X 272
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE pipe
+   X 254
+   Y 65
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE pipe
+   X 254
+   Y 113
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE pipe_end
+   X 254
+   Y 17
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE machine_part_02
+   X 232
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 280
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 304
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 328
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 352
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 376
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 400
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3factory
+   PIECE steel_large
+   X 424
+   Y 38
+ $END
+ 
  

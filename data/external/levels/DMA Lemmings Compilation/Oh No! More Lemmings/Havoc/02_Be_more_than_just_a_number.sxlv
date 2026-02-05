@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID xA4D88051A4D88051
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -74,533 +74,533 @@
    Y 0
  $END
  
-   $TERRAIN
-     STYLE slx_brick
-     PIECE steel_03
-     X 202
-     Y 14
-   $END
-   
-     $TERRAIN
-       STYLE slx_brick
-       PIECE steel_03
-       X 202
-       Y 28
-     $END
-     
-       $TERRAIN
-         STYLE slx_brick
-         PIECE steel_03
-         X 202
-         Y 42
-       $END
-       
-         $TERRAIN
-           STYLE slx_brick
-           PIECE steel_03
-           X 202
-           Y 56
-         $END
-         
-           $TERRAIN
-             STYLE slx_brick
-             PIECE steel_03
-             X 202
-             Y 70
-           $END
-           
-             $TERRAIN
-               STYLE slx_brick
-               PIECE steel_03
-               X 178
-               Y 42
-             $END
-             
-               $TERRAIN
-                 STYLE slx_brick
-                 PIECE steel_03
-                 X 154
-                 Y 42
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_brick
-                   PIECE steel_03
-                   X 130
-                   Y 42
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_brick
-                     PIECE steel_03
-                     X 178
-                     Y 70
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_brick
-                       PIECE steel_03
-                       X 154
-                       Y 70
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_brick
-                         PIECE steel_03
-                         X 130
-                         Y 70
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_brick
-                           PIECE steel_03
-                           X 202
-                           Y 84
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_brick
-                             PIECE steel_03
-                             X 202
-                             Y 98
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_brick
-                               PIECE steel_03
-                               X 202
-                               Y 112
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_brick
-                                 PIECE steel_03
-                                 X 178
-                                 Y 98
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_brick
-                                   PIECE steel_03
-                                   X 154
-                                   Y 98
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_brick
-                                     PIECE steel_03
-                                     X 130
-                                     Y 98
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_brick
-                                       PIECE steel_03
-                                       X 96
-                                       Y 98
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_brick
-                                         PIECE steel_03
-                                         X 97
-                                         Y 147
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_brick
-                                           PIECE steel_03
-                                           X 121
-                                           Y 147
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_brick
-                                             PIECE steel_03
-                                             X 145
-                                             Y 147
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_brick
-                                               PIECE steel_03
-                                               X 169
-                                               Y 147
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_brick
-                                                 PIECE steel_03
-                                                 X 193
-                                                 Y 147
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_brick
-                                                   PIECE steel_03
-                                                   X 202
-                                                   Y 126
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_brick
-                                                     PIECE steel_03
-                                                     X 217
-                                                     Y 147
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_brick
-                                                       PIECE steel_03
-                                                       X 241
-                                                       Y 147
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_brick
-                                                         PIECE steel_03
-                                                         X 226
-                                                         Y 84
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_brick
-                                                           PIECE steel_03
-                                                           X 250
-                                                           Y 84
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_brick
-                                                             PIECE steel_03
-                                                             X 274
-                                                             Y 84
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_brick
-                                                               PIECE platform_02
-                                                               X 115
-                                                               Y 109
-                                                               NO_OVERWRITE
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_brick
-                                                                 PIECE steel_03
-                                                                 X 96
-                                                                 Y 70
-                                                                 NO_OVERWRITE
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_brick
-                                                                   PIECE platform_01
-                                                                   X 115
-                                                                   Y 81
-                                                                   NO_OVERWRITE
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_brick
-                                                                     PIECE bricks_small_09
-                                                                     X 226
-                                                                     Y 96
-                                                                     NO_OVERWRITE
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_brick
-                                                                       PIECE bricks_small_08
-                                                                       X 171
-                                                                       Y 106
-                                                                       NO_OVERWRITE
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_brick
-                                                                         PIECE steel_02
-                                                                         X 130
-                                                                         Y 19
-                                                                         NO_OVERWRITE
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_brick
-                                                                           PIECE steel_04
-                                                                           X 130
-                                                                           Y 14
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_brick
-                                                                             PIECE steel_04
-                                                                             X 331
-                                                                             Y 85
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_brick
-                                                                               PIECE pole_silver_01
-                                                                               X 234
-                                                                               Y 7
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_brick
-                                                                                 PIECE pole_silver_01
-                                                                                 X 243
-                                                                                 Y 7
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_brick
-                                                                                   PIECE pole_silver_01
-                                                                                   X 252
-                                                                                   Y 7
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_brick
-                                                                                     PIECE pole_silver_01
-                                                                                     X 261
-                                                                                     Y 7
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_brick
-                                                                                       PIECE pole_silver_01
-                                                                                       X 270
-                                                                                       Y 7
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_brick
-                                                                                         PIECE pole_silver_01
-                                                                                         X 225
-                                                                                         Y 7
-                                                                                         ONE_WAY
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_brick
-                                                                                           PIECE pole_silver_01
-                                                                                           X 279
-                                                                                           Y 7
-                                                                                           ONE_WAY
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_brick
-                                                                                             PIECE pole_silver_01
-                                                                                             X 288
-                                                                                             Y 7
-                                                                                             ONE_WAY
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_brick
-                                                                                               PIECE pole_silver_02
-                                                                                               X 225
-                                                                                               Y -8
-                                                                                               ONE_WAY
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_brick
-                                                                                                 PIECE pole_silver_02
-                                                                                                 X 234
-                                                                                                 Y -7
-                                                                                                 ONE_WAY
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_brick
-                                                                                                   PIECE pole_silver_02
-                                                                                                   X 243
-                                                                                                   Y -8
-                                                                                                   ONE_WAY
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_brick
-                                                                                                     PIECE pole_silver_02
-                                                                                                     X 252
-                                                                                                     Y -8
-                                                                                                     ONE_WAY
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_brick
-                                                                                                       PIECE pole_silver_02
-                                                                                                       X 261
-                                                                                                       Y -8
-                                                                                                       ONE_WAY
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_brick
-                                                                                                         PIECE pole_silver_02
-                                                                                                         X 270
-                                                                                                         Y -8
-                                                                                                         ONE_WAY
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_brick
-                                                                                                           PIECE pole_silver_02
-                                                                                                           X 279
-                                                                                                           Y -8
-                                                                                                           ONE_WAY
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_brick
-                                                                                                             PIECE pole_silver_02
-                                                                                                             X 288
-                                                                                                             Y -8
-                                                                                                             ONE_WAY
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_brick
-                                                                                                               PIECE stairs_01
-                                                                                                               X 265
-                                                                                                               Y 147
-                                                                                                               ONE_WAY
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_brick
-                                                                                                                 PIECE stairs_02
-                                                                                                                 X 65
-                                                                                                                 Y 147
-                                                                                                                 ONE_WAY
-                                                                                                               $END
-                                                                                                               
-                                                                                                                 $TERRAIN
-                                                                                                                   STYLE slx_brick
-                                                                                                                   PIECE chain_03
-                                                                                                                   X 372
-                                                                                                                   Y -4
-                                                                                                                   ONE_WAY
-                                                                                                                 $END
-                                                                                                                 
-                                                                                                                   $TERRAIN
-                                                                                                                     STYLE slx_brick
-                                                                                                                     PIECE chain_03
-                                                                                                                     X 372
-                                                                                                                     Y 20
-                                                                                                                     ONE_WAY
-                                                                                                                   $END
-                                                                                                                   
-                                                                                                                     $TERRAIN
-                                                                                                                       STYLE slx_brick
-                                                                                                                       PIECE chain_03
-                                                                                                                       X 372
-                                                                                                                       Y 44
-                                                                                                                       ONE_WAY
-                                                                                                                     $END
-                                                                                                                     
-                                                                                                                       $TERRAIN
-                                                                                                                         STYLE slx_brick
-                                                                                                                         PIECE chain_03
-                                                                                                                         X 372
-                                                                                                                         Y 68
-                                                                                                                         ONE_WAY
-                                                                                                                       $END
-                                                                                                                       
-                                                                                                                         $TERRAIN
-                                                                                                                           STYLE slx_brick
-                                                                                                                           PIECE hook_02
-                                                                                                                           X 370
-                                                                                                                           Y 95
-                                                                                                                           ONE_WAY
-                                                                                                                         $END
-                                                                                                                         
-                                                                                                                           $TERRAIN
-                                                                                                                             STYLE slx_brick
-                                                                                                                             PIECE hook_02
-                                                                                                                             X 387
-                                                                                                                             Y 29
-                                                                                                                             ONE_WAY
-                                                                                                                           $END
-                                                                                                                           
-                                                                                                                             $TERRAIN
-                                                                                                                               STYLE slx_brick
-                                                                                                                               PIECE chain_03
-                                                                                                                               X 389
-                                                                                                                               Y 1
-                                                                                                                               NO_OVERWRITE
-                                                                                                                               ONE_WAY
-                                                                                                                             $END
-                                                                                                                             
-                                                                                                                               $TERRAIN
-                                                                                                                                 STYLE slx_brick
-                                                                                                                                 PIECE chain_03
-                                                                                                                                 X 403
-                                                                                                                                 Y -3
-                                                                                                                                 NO_OVERWRITE
-                                                                                                                                 ONE_WAY
-                                                                                                                               $END
-                                                                                                                               
-                                                                                                                                 $TERRAIN
-                                                                                                                                   STYLE slx_brick
-                                                                                                                                   PIECE chain_03
-                                                                                                                                   X 403
-                                                                                                                                   Y 21
-                                                                                                                                   NO_OVERWRITE
-                                                                                                                                   ONE_WAY
-                                                                                                                                 $END
-                                                                                                                                 
-                                                                                                                                   $TERRAIN
-                                                                                                                                     STYLE slx_brick
-                                                                                                                                     PIECE chain_03
-                                                                                                                                     X 403
-                                                                                                                                     Y 37
-                                                                                                                                     NO_OVERWRITE
-                                                                                                                                     ONE_WAY
-                                                                                                                                   $END
-                                                                                                                                   
-                                                                                                                                     $TERRAIN
-                                                                                                                                       STYLE slx_brick
-                                                                                                                                       PIECE hook_02
-                                                                                                                                       X 401
-                                                                                                                                       Y 65
-                                                                                                                                       ONE_WAY
-                                                                                                                                     $END
-                                                                                                                                     
-                                                                                                                                       $TERRAIN
-                                                                                                                                         STYLE slx_brick
-                                                                                                                                         PIECE chain_01
-                                                                                                                                         X 338
-                                                                                                                                         Y -1
-                                                                                                                                         ONE_WAY
-                                                                                                                                       $END
-                                                                                                                                       
-                                                                                                                                         $TERRAIN
-                                                                                                                                           STYLE slx_brick
-                                                                                                                                           PIECE chain_02
-                                                                                                                                           X 389
-                                                                                                                                           Y -3
-                                                                                                                                           ONE_WAY
-                                                                                                                                         $END
-                                                                                                                                         
-                                                                                                                                           $TERRAIN
-                                                                                                                                             STYLE slx_brick
-                                                                                                                                             PIECE chain_02
-                                                                                                                                             X 296
-                                                                                                                                             Y -2
-                                                                                                                                             ONE_WAY
-                                                                                                                                           $END
-                                                                                                                                           
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 28
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 42
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 70
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 178
+   Y 42
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 154
+   Y 42
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 130
+   Y 42
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 178
+   Y 70
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 154
+   Y 70
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 130
+   Y 70
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 178
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 154
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 130
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 96
+   Y 98
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 97
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 121
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 145
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 169
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 193
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 202
+   Y 126
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 217
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 241
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 226
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 250
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 274
+   Y 84
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_02
+   X 115
+   Y 109
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_03
+   X 96
+   Y 70
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 115
+   Y 81
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_small_09
+   X 226
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_small_08
+   X 171
+   Y 106
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_02
+   X 130
+   Y 19
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_04
+   X 130
+   Y 14
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE steel_04
+   X 331
+   Y 85
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 234
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 243
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 252
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 261
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 270
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 225
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 279
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_01
+   X 288
+   Y 7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 225
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 234
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 243
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 252
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 261
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 270
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 279
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE pole_silver_02
+   X 288
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE stairs_01
+   X 265
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE stairs_02
+   X 65
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 372
+   Y -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 372
+   Y 20
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 372
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 372
+   Y 68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE hook_02
+   X 370
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE hook_02
+   X 387
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 389
+   Y 1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 403
+   Y -3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 403
+   Y 21
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_03
+   X 403
+   Y 37
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE hook_02
+   X 401
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_01
+   X 338
+   Y -1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_02
+   X 389
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE chain_02
+   X 296
+   Y -2
+   ONE_WAY
+ $END
+ 
  

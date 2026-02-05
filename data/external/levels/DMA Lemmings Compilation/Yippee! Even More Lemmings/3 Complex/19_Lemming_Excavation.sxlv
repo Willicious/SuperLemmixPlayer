@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Prima Lemmings
  MUSIC menace_amiga
  ID x8293B52F8293B52F
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -70,148 +70,148 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_brick
-     PIECE bricks_large_01
-     X 40
-     Y 64
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_brick
-       PIECE bricks_large_01
-       X 104
-       Y 64
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_brick
-         PIECE bricks_large_01
-         X 104
-         Y 112
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_brick
-           PIECE bricks_large_01
-           X 168
-           Y 64
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_brick
-             PIECE bricks_large_01
-             X 168
-             Y 112
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_brick
-               PIECE bricks_large_01
-               X 232
-               Y 64
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_brick
-                 PIECE bricks_large_01
-                 X 232
-                 Y 112
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_brick
-                   PIECE bricks_large_01
-                   X 296
-                   Y 64
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_brick
-                     PIECE bricks_large_01
-                     X 360
-                     Y 64
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_brick
-                       PIECE bricks_large_01
-                       X 360
-                       Y 112
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_brick
-                         PIECE bricks_large_01
-                         X 424
-                         Y 64
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_brick
-                           PIECE bricks_large_01
-                           X 424
-                           Y 112
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_brick
-                             PIECE bricks_large_01
-                             X 488
-                             Y 64
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_brick
-                               PIECE bricks_large_01
-                               X 488
-                               Y 112
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_brick
-                                 PIECE bricks_large_01
-                                 X 552
-                                 Y 64
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_brick
-                                   PIECE bricks_large_01
-                                   X 552
-                                   Y 112
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_brick
-                                     PIECE platform_04
-                                     X 296
-                                     Y 156
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_brick
-                                       PIECE platform_04
-                                       X 328
-                                       Y 156
-                                       ONE_WAY
-                                     $END
-                                     
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 40
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 104
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 104
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 168
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 168
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 232
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 232
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 296
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 360
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 360
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 424
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 424
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 488
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 488
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 552
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 552
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_04
+   X 296
+   Y 156
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_04
+   X 328
+   Y 156
+   ONE_WAY
+ $END
+ 
  

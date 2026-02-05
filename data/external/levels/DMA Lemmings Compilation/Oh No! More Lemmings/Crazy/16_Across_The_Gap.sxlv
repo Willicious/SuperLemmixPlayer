@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID xEF929C4FEF929C4F
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -78,448 +78,448 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_brick
-     PIECE crate
-     X 188
-     Y 139
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_brick
-       PIECE crate
-       X 204
-       Y 139
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_brick
-         PIECE crate
-         X 204
-         Y 107
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_brick
-           PIECE crate
-           X 140
-           Y 139
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_brick
-             PIECE crate
-             X 140
-             Y 107
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_brick
-               PIECE crate
-               X 156
-               Y 107
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_brick
-                 PIECE crate
-                 X 156
-                 Y 91
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_brick
-                   PIECE crate
-                   X 156
-                   Y 75
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_brick
-                     PIECE crate
-                     X 140
-                     Y 75
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_brick
-                       PIECE crate
-                       X 124
-                       Y 75
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_brick
-                         PIECE crate
-                         X 124
-                         Y 59
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_brick
-                           PIECE crate
-                           X 124
-                           Y 43
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_brick
-                             PIECE crate
-                             X 140
-                             Y 43
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_brick
-                               PIECE crate
-                               X 156
-                               Y 43
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_brick
-                                 PIECE crate
-                                 X 156
-                                 Y 27
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_brick
-                                   PIECE crate
-                                   X 156
-                                   Y 11
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_brick
-                                     PIECE crate
-                                     X 188
-                                     Y 11
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_brick
-                                       PIECE crate
-                                       X 188
-                                       Y 27
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_brick
-                                         PIECE crate
-                                         X 188
-                                         Y 43
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_brick
-                                           PIECE crate
-                                           X 204
-                                           Y 43
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_brick
-                                             PIECE crate
-                                             X 220
-                                             Y 43
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_brick
-                                               PIECE crate
-                                               X 220
-                                               Y 59
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_brick
-                                                 PIECE crate
-                                                 X 220
-                                                 Y 75
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_brick
-                                                   PIECE crate
-                                                   X 204
-                                                   Y 75
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_brick
-                                                     PIECE crate
-                                                     X 188
-                                                     Y 75
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_brick
-                                                       PIECE crate
-                                                       X 188
-                                                       Y 91
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_brick
-                                                         PIECE crate
-                                                         X 188
-                                                         Y 107
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_brick
-                                                           PIECE crate
-                                                           X 220
-                                                           Y 107
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_brick
-                                                             PIECE crate
-                                                             X 220
-                                                             Y 123
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_brick
-                                                               PIECE crate
-                                                               X 220
-                                                               Y 139
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_brick
-                                                                 PIECE crate
-                                                                 X 220
-                                                                 Y 139
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_brick
-                                                                   PIECE crate
-                                                                   X 124
-                                                                   Y 107
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_brick
-                                                                     PIECE crate
-                                                                     X 124
-                                                                     Y 139
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_brick
-                                                                       PIECE crate
-                                                                       X 124
-                                                                       Y 123
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_brick
-                                                                         PIECE crate
-                                                                         X 220
-                                                                         Y 91
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_brick
-                                                                           PIECE crate
-                                                                           X 124
-                                                                           Y 91
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_brick
-                                                                             PIECE platform_01
-                                                                             X 282
-                                                                             Y 51
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_brick
-                                                                               PIECE platform_02
-                                                                               X 314
-                                                                               Y 51
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_brick
-                                                                                 PIECE platform_01
-                                                                                 X 250
-                                                                                 Y 51
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_brick
-                                                                                   PIECE platform_01
-                                                                                   X 234
-                                                                                   Y 51
-                                                                                   NO_OVERWRITE
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_brick
-                                                                                     PIECE platform_01
-                                                                                     X 92
-                                                                                     Y 51
-                                                                                     NO_OVERWRITE
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_brick
-                                                                                       PIECE platform_01
-                                                                                       X 60
-                                                                                       Y 51
-                                                                                       NO_OVERWRITE
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_brick
-                                                                                         PIECE platform_01
-                                                                                         X 44
-                                                                                         Y 51
-                                                                                         NO_OVERWRITE
-                                                                                         ONE_WAY
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_brick
-                                                                                           PIECE crate
-                                                                                           X 188
-                                                                                           Y 155
-                                                                                           ONE_WAY
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_brick
-                                                                                             PIECE crate
-                                                                                             X 220
-                                                                                             Y 155
-                                                                                             ONE_WAY
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_brick
-                                                                                               PIECE crate
-                                                                                               X 156
-                                                                                               Y 155
-                                                                                               ONE_WAY
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_brick
-                                                                                                 PIECE crate
-                                                                                                 X 124
-                                                                                                 Y 155
-                                                                                                 ONE_WAY
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_brick
-                                                                                                   PIECE crate
-                                                                                                   X 124
-                                                                                                   Y 27
-                                                                                                   ONE_WAY
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_brick
-                                                                                                     PIECE crate
-                                                                                                     X 124
-                                                                                                     Y 11
-                                                                                                     ONE_WAY
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_brick
-                                                                                                       PIECE crate
-                                                                                                       X 140
-                                                                                                       Y 11
-                                                                                                       ONE_WAY
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_brick
-                                                                                                         PIECE crate
-                                                                                                         X 204
-                                                                                                         Y 11
-                                                                                                         ONE_WAY
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_brick
-                                                                                                           PIECE crate
-                                                                                                           X 220
-                                                                                                           Y 11
-                                                                                                           ONE_WAY
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_brick
-                                                                                                             PIECE crate
-                                                                                                             X 220
-                                                                                                             Y 27
-                                                                                                             ONE_WAY
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_brick
-                                                                                                               PIECE crate
-                                                                                                               X 156
-                                                                                                               Y -5
-                                                                                                               ONE_WAY
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_brick
-                                                                                                                 PIECE crate
-                                                                                                                 X 188
-                                                                                                                 Y -5
-                                                                                                                 ONE_WAY
-                                                                                                               $END
-                                                                                                               
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 204
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 204
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 140
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 140
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y 91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 140
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 140
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 204
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 204
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 282
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_02
+   X 314
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 250
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 234
+   Y 51
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 92
+   Y 51
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 60
+   Y 51
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE platform_01
+   X 44
+   Y 51
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 155
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 124
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 140
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 204
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 220
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 156
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE crate
+   X 188
+   Y -5
+   ONE_WAY
+ $END
+ 
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Sony / Minim
  MUSIC menace_amiga
  ID x570BD251570BD251
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -122,245 +122,245 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE minim_ps3dark
-     PIECE bricks_13
-     X 48
-     Y 136
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE minim_ps3dark
-       PIECE bricks_13
-       X 96
-       Y 136
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE minim_ps3dark
-         PIECE bricks_13
-         X 144
-         Y 136
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE minim_ps3dark
-           PIECE bricks_13
-           X 192
-           Y 136
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE minim_ps3dark
-             PIECE bricks_13
-             X 240
-             Y 136
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE minim_ps3dark
-               PIECE bricks_13
-               X 288
-               Y 136
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_fire
-                 PIECE platform
-                 X 92
-                 Y 88
-                 ROTATE
-                 FLIP_VERTICAL
-                 FLIP_HORIZONTAL
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_fire
-                   PIECE bars_04
-                   X 2
-                   Y 97
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_fire
-                     PIECE bars_04
-                     X 18
-                     Y 97
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_fire
-                       PIECE bars_04
-                       X 2
-                       Y 58
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_fire
-                         PIECE bars_04
-                         X 18
-                         Y 58
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_fire
-                           PIECE bars_04
-                           X 2
-                           Y 19
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_fire
-                             PIECE bars_04
-                             X 18
-                             Y 19
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_fire
-                               PIECE bars_04
-                               X 2
-                               Y 3
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_fire
-                                 PIECE bars_04
-                                 X 18
-                                 Y 3
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_fire
-                                   PIECE bricks_01
-                                   X 5
-                                   Y 6
-                                   FLIP_HORIZONTAL
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_fire
-                                     PIECE bricks_01
-                                     X 18
-                                     Y 0
-                                     FLIP_HORIZONTAL
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_fire
-                                       PIECE bricks_01
-                                       X -7
-                                       Y 0
-                                       FLIP_HORIZONTAL
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_fire
-                                         PIECE bars_04
-                                         X 287
-                                         Y 97
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_fire
-                                           PIECE bars_04
-                                           X 303
-                                           Y 97
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_fire
-                                             PIECE bars_04
-                                             X 287
-                                             Y 58
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_fire
-                                               PIECE bars_04
-                                               X 303
-                                               Y 58
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_fire
-                                                 PIECE bars_04
-                                                 X 287
-                                                 Y 19
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_fire
-                                                   PIECE bars_04
-                                                   X 303
-                                                   Y 19
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_fire
-                                                     PIECE bars_04
-                                                     X 287
-                                                     Y 3
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_fire
-                                                       PIECE bars_04
-                                                       X 303
-                                                       Y 3
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_fire
-                                                         PIECE bricks_01
-                                                         X 290
-                                                         Y 6
-                                                         FLIP_HORIZONTAL
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_fire
-                                                           PIECE bricks_01
-                                                           X 303
-                                                           Y 0
-                                                           FLIP_HORIZONTAL
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_fire
-                                                             PIECE bricks_01
-                                                             X 278
-                                                             Y 0
-                                                             FLIP_HORIZONTAL
-                                                             ONE_WAY
-                                                           $END
-                                                           
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 48
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 96
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 144
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 192
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 240
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 288
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 92
+   Y 88
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 2
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 18
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 2
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 18
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 2
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 18
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 2
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 18
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 5
+   Y 6
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 18
+   Y 0
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X -7
+   Y 0
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 287
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 303
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 287
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 303
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 287
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 303
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 287
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_04
+   X 303
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 290
+   Y 6
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 303
+   Y 0
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 278
+   Y 0
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
  

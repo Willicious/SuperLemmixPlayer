@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC awesome_amiga
  ID x0665EED42E737307
- VERSION x000000000000007C
+ VERSION x000000000000007D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -161,143 +161,143 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_crystal
-     PIECE bar_01
-     X 296
-     Y 80
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_crystal
-       PIECE bar_04
-       X 212
-       Y 75
-       ROTATE
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE *group
-         PIECE Group-404073448
-         X 80
-         Y 72
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_crystal
-           PIECE block
-           X 272
-           Y 64
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_crystal
-             PIECE block
-             X 304
-             Y 64
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_crystal
-               PIECE block
-               X 48
-               Y 64
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_crystal
-                 PIECE block
-                 X 16
-                 Y 64
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_crystal
-                   PIECE bar_01
-                   X 136
-                   Y 112
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_crystal
-                     PIECE bar_01
-                     X 296
-                     Y 112
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_crystal
-                       PIECE block
-                       X 320
-                       Y 152
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_crystal
-                         PIECE block
-                         X 288
-                         Y 152
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_crystal
-                           PIECE block
-                           X 256
-                           Y 152
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_crystal
-                             PIECE block
-                             X 128
-                             Y 152
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_crystal
-                               PIECE block
-                               X 224
-                               Y 152
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_crystal
-                                 PIECE block
-                                 X 192
-                                 Y 152
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_crystal
-                                   PIECE block
-                                   X 160
-                                   Y 152
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_crystal
-                                     PIECE block
-                                     X 204
-                                     Y 109
-                                     ONE_WAY
-                                   $END
-                                   
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 296
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 212
+   Y 75
+   ROTATE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-404073448
+   X 80
+   Y 72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 272
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 304
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 48
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 16
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 136
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 296
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 320
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 288
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 256
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 128
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 224
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 192
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 160
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 204
+   Y 109
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 

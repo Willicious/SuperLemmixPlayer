@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Sony / Minim
  MUSIC menace_amiga
  ID xE084E7D3E084E7D3
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -125,308 +125,308 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE minim_ps3dark
-     PIECE bricks_12
-     X 64
-     Y 93
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE minim_ps3dark
-       PIECE bricks_13
-       X 28
-       Y 117
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE minim_ps3dark
-         PIECE bricks_13
-         X 28
-         Y 141
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE minim_ps3dark
-           PIECE bricks_12
-           X 64
-           Y 141
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_fire
-             PIECE bricks_02
-             X 88
-             Y 93
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_fire
-               PIECE bricks_02
-               X 113
-               Y 93
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_fire
-                 PIECE bricks_02
-                 X 138
-                 Y 93
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_fire
-                   PIECE bricks_02
-                   X 163
-                   Y 93
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_fire
-                     PIECE bricks_02
-                     X 188
-                     Y 93
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_fire
-                       PIECE bricks_02
-                       X 213
-                       Y 93
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_fire
-                         PIECE bricks_02
-                         X 238
-                         Y 93
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE minim_ps3dark
-                           PIECE bricks_12
-                           X 263
-                           Y 93
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE minim_ps3dark
-                             PIECE bricks_12
-                             X 263
-                             Y 141
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE minim_ps3dark
-                               PIECE bricks_10
-                               X 287
-                               Y 93
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE minim_ps3dark
-                                 PIECE bricks_10
-                                 X 287
-                                 Y 117
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE minim_ps3dark
-                                   PIECE bricks_10
-                                   X 287
-                                   Y 141
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE minim_ps3dark
-                                     PIECE bricks_10
-                                     X 281
-                                     Y 135
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE minim_ps3dark
-                                       PIECE bricks_10
-                                       X 281
-                                       Y 111
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE minim_ps3dark
-                                         PIECE bricks_10
-                                         X 281
-                                         Y 147
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE minim_ps3dark
-                                           PIECE bricks_10
-                                           X 281
-                                           Y 99
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE minim_ps3dark
-                                             PIECE bricks_10
-                                             X 281
-                                             Y 123
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE minim_ps3dark
-                                               PIECE bricks_10
-                                               X 287
-                                               Y 105
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE minim_ps3dark
-                                                 PIECE bricks_10
-                                                 X 287
-                                                 Y 129
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE minim_ps3dark
-                                                   PIECE bricks_13
-                                                   X 103
-                                                   Y 148
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE minim_ps3dark
-                                                     PIECE bricks_13
-                                                     X 151
-                                                     Y 148
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE minim_ps3dark
-                                                       PIECE bricks_13
-                                                       X 199
-                                                       Y 148
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE minim_ps3dark
-                                                         PIECE bricks_12
-                                                         X 223
-                                                         Y 136
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE minim_ps3dark
-                                                           PIECE bricks_12
-                                                           X 211
-                                                           Y 136
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE minim_ps3dark
-                                                             PIECE bricks_10
-                                                             X 287
-                                                             Y 153
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE minim_ps3dark
-                                                               PIECE bricks_10
-                                                               X 281
-                                                               Y 159
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_fire
-                                                                 PIECE bricks_01
-                                                                 X 118
-                                                                 Y 21
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_fire
-                                                                   PIECE bricks_01
-                                                                   X 143
-                                                                   Y 21
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_fire
-                                                                     PIECE bricks_01
-                                                                     X 168
-                                                                     Y 21
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_fire
-                                                                       PIECE bricks_01
-                                                                       X 193
-                                                                       Y 21
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_fire
-                                                                         PIECE bricks_01
-                                                                         X 218
-                                                                         Y 21
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_fire
-                                                                           PIECE bricks_01
-                                                                           X 243
-                                                                           Y 21
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_fire
-                                                                             PIECE bricks_01
-                                                                             X 268
-                                                                             Y 21
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_fire
-                                                                               PIECE bricks_01
-                                                                               X 293
-                                                                               Y 21
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 64
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 28
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 28
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 64
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_02
+   X 88
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_02
+   X 113
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_02
+   X 138
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_02
+   X 163
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_02
+   X 188
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_02
+   X 213
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_02
+   X 238
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 263
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 263
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 287
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 287
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 287
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 281
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 281
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 281
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 281
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 281
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 287
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 287
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 103
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 151
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_13
+   X 199
+   Y 148
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 223
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_12
+   X 211
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 287
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE minim_ps3dark
+   PIECE bricks_10
+   X 281
+   Y 159
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 118
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 143
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 168
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 193
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 218
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 243
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 268
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 293
+   Y 21
+   ONE_WAY
+ $END
+ 
  

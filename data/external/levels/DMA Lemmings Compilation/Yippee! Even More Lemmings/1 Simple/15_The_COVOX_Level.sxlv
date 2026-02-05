@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Covox Lemmings
  MUSIC menace_amiga
  ID xBDB28C35BDB28C35
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -85,11 +85,11 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE special
-     PIECE covox_steel
-     X 18
-     Y 0
-   $END
-   
+ $TERRAIN
+   STYLE special
+   PIECE covox_steel
+   X 18
+   Y 0
+ $END
+ 
  

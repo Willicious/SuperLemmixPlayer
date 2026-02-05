@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC awesome_amiga
  ID x6795A47212184BF5
- VERSION x0000000000000017
+ VERSION x0000000000000018
  
 #       Level dimensions        
 # ----------------------------- 
@@ -246,335 +246,335 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_marble
-     PIECE block_04
-     X 376
-     Y 75
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_marble
-       PIECE block_01
-       X 314
-       Y 144
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_marble
-         PIECE block_08
-         X 354
-         Y 123
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_marble
-           PIECE block_04
-           X 376
-           Y 27
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_marble
-             PIECE block_01
-             X 266
-             Y 144
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_marble
-               PIECE block_01
-               X 218
-               Y 144
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_marble
-                 PIECE block_09
-                 X 189
-                 Y 123
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_marble
-                   PIECE block_07
-                   X 189
-                   Y 123
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_marble
-                     PIECE block_04
-                     X 189
-                     Y 75
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_marble
-                       PIECE block_04
-                       X 189
-                       Y 27
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_marble
-                         PIECE block_07
-                         X 189
-                         Y 86
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_marble
-                           PIECE block_07
-                           X 226
-                           Y 123
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_marble
-                             PIECE block_06
-                             X 354
-                             Y 86
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_marble
-                               PIECE block_06
-                               X 317
-                               Y 123
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE *group
-                                 PIECE Group-1706203977
-                                 X 205
-                                 Y 92
-                                 ERASE
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE *group
-                                   PIECE Group-1706203977
-                                   X 322
-                                   Y 92
-                                   ERASE
-                                   FLIP_HORIZONTAL
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_marble
-                                     PIECE block_06
-                                     X 152
-                                     Y 27
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_marble
-                                       PIECE block_06
-                                       X 115
-                                       Y 64
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_marble
-                                         PIECE block_06
-                                         X 152
-                                         Y 64
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_marble
-                                           PIECE block_08
-                                           X 152
-                                           Y 64
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_marble
-                                             PIECE block_06
-                                             X 152
-                                             Y 101
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_marble
-                                               PIECE block_08
-                                               X 152
-                                               Y 101
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE *group
-                                                 PIECE Group527403
-                                                 X 152
-                                                 Y 138
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_marble
-                                                   PIECE block_06
-                                                   X 115
-                                                   Y 101
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_marble
-                                                     PIECE block_08
-                                                     X 115
-                                                     Y 101
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_marble
-                                                       PIECE block_06
-                                                       X 115
-                                                       Y 138
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_marble
-                                                         PIECE block_08
-                                                         X 115
-                                                         Y 138
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_marble
-                                                           PIECE block_06
-                                                           X 78
-                                                           Y 138
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_marble
-                                                             PIECE block_08
-                                                             X 78
-                                                             Y 138
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_marble
-                                                               PIECE block_06
-                                                               X 78
-                                                               Y 101
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_marble
-                                                                 PIECE block_06
-                                                                 X 41
-                                                                 Y 138
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE *group
-                                                                   PIECE Group527403
-                                                                   X 392
-                                                                   Y 138
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE *group
-                                                                     PIECE Group527403
-                                                                     X 392
-                                                                     Y 101
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE *group
-                                                                       PIECE Group527403
-                                                                       X 392
-                                                                       Y 64
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE *group
-                                                                         PIECE Group527403
-                                                                         X 429
-                                                                         Y 101
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE *group
-                                                                           PIECE Group527403
-                                                                           X 429
-                                                                           Y 138
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE *group
-                                                                             PIECE Group527403
-                                                                             X 466
-                                                                             Y 138
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_marble
-                                                                               PIECE block_07
-                                                                               X 392
-                                                                               Y 27
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_marble
-                                                                                 PIECE block_07
-                                                                                 X 429
-                                                                                 Y 64
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_marble
-                                                                                   PIECE block_07
-                                                                                   X 466
-                                                                                   Y 101
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_marble
-                                                                                     PIECE block_07
-                                                                                     X 503
-                                                                                     Y 138
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_04
+   X 376
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_01
+   X 314
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_08
+   X 354
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_04
+   X 376
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_01
+   X 266
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_01
+   X 218
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_09
+   X 189
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 189
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_04
+   X 189
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_04
+   X 189
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 189
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 226
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 354
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 317
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1706203977
+   X 205
+   Y 92
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-1706203977
+   X 322
+   Y 92
+   ERASE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 152
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 115
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 152
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_08
+   X 152
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 152
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_08
+   X 152
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group527403
+   X 152
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 115
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_08
+   X 115
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 115
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_08
+   X 115
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 78
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_08
+   X 78
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 78
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 41
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group527403
+   X 392
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group527403
+   X 392
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group527403
+   X 392
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group527403
+   X 429
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group527403
+   X 429
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group527403
+   X 466
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 392
+   Y 27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 429
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 466
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 503
+   Y 138
+   ONE_WAY
+ $END
+ 
  

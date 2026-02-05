@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design 
  MUSIC beasti_amiga
  ID x957595B1957595B1
- VERSION x000000000000000C
+ VERSION x000000000000000D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -121,822 +121,822 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_fire
-     PIECE bricks_06
-     X 112
-     Y 84
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_fire
-       PIECE bricks_06
-       X 36
-       Y 8
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_fire
-         PIECE bricks_06
-         X 116
-         Y 8
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_fire
-           PIECE bricks_06
-           X 37
-           Y -11
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_fire
-             PIECE bricks_06
-             X 97
-             Y -10
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_fire
-               PIECE bricks_04
-               X 178
-               Y -12
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_fire
-                 PIECE bricks_06
-                 X 188
-                 Y 141
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_fire
-                   PIECE bricks_06
-                   X 267
-                   Y 140
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_fire
-                     PIECE bricks_06
-                     X 347
-                     Y 140
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_fire
-                       PIECE bricks_05
-                       X 201
-                       Y 141
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_fire
-                         PIECE bricks_05
-                         X 281
-                         Y 140
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_fire
-                           PIECE bricks_05
-                           X 360
-                           Y 139
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_fire
-                             PIECE bricks_09
-                             X 192
-                             Y 61
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_fire
-                               PIECE bricks_09
-                               X 196
-                               Y -14
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_fire
-                                 PIECE bricks_01
-                                 X 203
-                                 Y 62
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_fire
-                                   PIECE bricks_01
-                                   X 228
-                                   Y 62
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_fire
-                                     PIECE bricks_01
-                                     X 253
-                                     Y 62
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_fire
-                                       PIECE pillar_end
-                                       X 226
-                                       Y 63
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_fire
-                                         PIECE pillar_end
-                                         X 226
-                                         Y 72
-                                         FLIP_VERTICAL
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_fire
-                                           PIECE pillar
-                                           X 232
-                                           Y 78
-                                           NO_OVERWRITE
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_fire
-                                             PIECE pillar
-                                             X 232
-                                             Y 102
-                                             NO_OVERWRITE
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_fire
-                                               PIECE pillar
-                                               X 232
-                                               Y 126
-                                               NO_OVERWRITE
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_fire
-                                                 PIECE pillar_end
-                                                 X 226
-                                                 Y 135
-                                                 FLIP_VERTICAL
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_fire
-                                                   PIECE pillar_end
-                                                   X 226
-                                                   Y 125
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_fire
-                                                     PIECE platform
-                                                     X 297
-                                                     Y 102
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_fire
-                                                       PIECE platform
-                                                       X 345
-                                                       Y 102
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_fire
-                                                         PIECE rock_03
-                                                         X 301
-                                                         Y 93
-                                                         NO_OVERWRITE
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_fire
-                                                           PIECE platform
-                                                           X 309
-                                                           Y 93
-                                                           ERASE
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_fire
-                                                             PIECE platform
-                                                             X 337
-                                                             Y 93
-                                                             ERASE
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_fire
-                                                               PIECE steel_02
-                                                               X 339
-                                                               Y 63
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_fire
-                                                                 PIECE steel_02
-                                                                 X 339
-                                                                 Y 38
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_fire
-                                                                   PIECE steel_02
-                                                                   X 339
-                                                                   Y 13
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_fire
-                                                                     PIECE steel_02
-                                                                     X 339
-                                                                     Y -12
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_fire
-                                                                       PIECE steel_01
-                                                                       X 354
-                                                                       Y 63
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_fire
-                                                                         PIECE steel_03
-                                                                         X 354
-                                                                         Y 49
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_fire
-                                                                           PIECE steel_03
-                                                                           X 354
-                                                                           Y 35
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_fire
-                                                                             PIECE steel_04
-                                                                             X 354
-                                                                             Y 21
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_fire
-                                                                               PIECE steel_04
-                                                                               X 354
-                                                                               Y 7
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_fire
-                                                                                 PIECE steel_04
-                                                                                 X 365
-                                                                                 Y 21
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_fire
-                                                                                   PIECE steel_04
-                                                                                   X 365
-                                                                                   Y 7
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_fire
-                                                                                     PIECE steel_04
-                                                                                     X 359
-                                                                                     Y 15
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_fire
-                                                                                       PIECE steel_03
-                                                                                       X 354
-                                                                                       Y -7
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_fire
-                                                                                         PIECE steel_03
-                                                                                         X 346
-                                                                                         Y 54
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_fire
-                                                                                           PIECE steel_02
-                                                                                           X 344
-                                                                                           Y 25
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_fire
-                                                                                             PIECE steel_02
-                                                                                             X 344
-                                                                                             Y -7
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_fire
-                                                                                               PIECE steel_04
-                                                                                               X 274
-                                                                                               Y 62
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_fire
-                                                                                                 PIECE steel_02
-                                                                                                 X 189
-                                                                                                 Y 118
-                                                                                                 NO_OVERWRITE
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_fire
-                                                                                                   PIECE steel_02
-                                                                                                   X 189
-                                                                                                   Y 89
-                                                                                                   NO_OVERWRITE
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_fire
-                                                                                                     PIECE steel_02
-                                                                                                     X 189
-                                                                                                     Y 70
-                                                                                                     NO_OVERWRITE
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_fire
-                                                                                                       PIECE steel_02
-                                                                                                       X 193
-                                                                                                       Y 33
-                                                                                                       NO_OVERWRITE
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_fire
-                                                                                                         PIECE steel_02
-                                                                                                         X 193
-                                                                                                         Y 16
-                                                                                                         NO_OVERWRITE
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_fire
-                                                                                                           PIECE steel_02
-                                                                                                           X 193
-                                                                                                           Y -4
-                                                                                                           NO_OVERWRITE
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_fire
-                                                                                                             PIECE steel_04
-                                                                                                             X 226
-                                                                                                             Y 67
-                                                                                                             NO_OVERWRITE
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_fire
-                                                                                                               PIECE steel_04
-                                                                                                               X 226
-                                                                                                               Y 70
-                                                                                                               NO_OVERWRITE
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_fire
-                                                                                                                 PIECE steel_04
-                                                                                                                 X 239
-                                                                                                                 Y 70
-                                                                                                                 NO_OVERWRITE
-                                                                                                               $END
-                                                                                                               
-                                                                                                                 $TERRAIN
-                                                                                                                   STYLE slx_fire
-                                                                                                                   PIECE steel_04
-                                                                                                                   X 239
-                                                                                                                   Y 63
-                                                                                                                   NO_OVERWRITE
-                                                                                                                 $END
-                                                                                                                 
-                                                                                                                   $TERRAIN
-                                                                                                                     STYLE slx_fire
-                                                                                                                     PIECE steel_04
-                                                                                                                     X 241
-                                                                                                                     Y 67
-                                                                                                                     NO_OVERWRITE
-                                                                                                                   $END
-                                                                                                                   
-                                                                                                                     $TERRAIN
-                                                                                                                       STYLE slx_fire
-                                                                                                                       PIECE steel_04
-                                                                                                                       X 235
-                                                                                                                       Y 82
-                                                                                                                       NO_OVERWRITE
-                                                                                                                     $END
-                                                                                                                     
-                                                                                                                       $TERRAIN
-                                                                                                                         STYLE slx_fire
-                                                                                                                         PIECE steel_04
-                                                                                                                         X 235
-                                                                                                                         Y 92
-                                                                                                                         NO_OVERWRITE
-                                                                                                                       $END
-                                                                                                                       
-                                                                                                                         $TERRAIN
-                                                                                                                           STYLE slx_fire
-                                                                                                                           PIECE steel_04
-                                                                                                                           X 235
-                                                                                                                           Y 109
-                                                                                                                           NO_OVERWRITE
-                                                                                                                         $END
-                                                                                                                         
-                                                                                                                           $TERRAIN
-                                                                                                                             STYLE slx_fire
-                                                                                                                             PIECE steel_04
-                                                                                                                             X 235
-                                                                                                                             Y 119
-                                                                                                                             NO_OVERWRITE
-                                                                                                                           $END
-                                                                                                                           
-                                                                                                                             $TERRAIN
-                                                                                                                               STYLE slx_fire
-                                                                                                                               PIECE steel_04
-                                                                                                                               X 232
-                                                                                                                               Y 111
-                                                                                                                               NO_OVERWRITE
-                                                                                                                             $END
-                                                                                                                             
-                                                                                                                               $TERRAIN
-                                                                                                                                 STYLE slx_fire
-                                                                                                                                 PIECE steel_04
-                                                                                                                                 X 232
-                                                                                                                                 Y 118
-                                                                                                                                 NO_OVERWRITE
-                                                                                                                               $END
-                                                                                                                               
-                                                                                                                                 $TERRAIN
-                                                                                                                                   STYLE slx_fire
-                                                                                                                                   PIECE steel_04
-                                                                                                                                   X 232
-                                                                                                                                   Y 103
-                                                                                                                                   NO_OVERWRITE
-                                                                                                                                 $END
-                                                                                                                                 
-                                                                                                                                   $TERRAIN
-                                                                                                                                     STYLE slx_fire
-                                                                                                                                     PIECE steel_04
-                                                                                                                                     X 232
-                                                                                                                                     Y 94
-                                                                                                                                     NO_OVERWRITE
-                                                                                                                                   $END
-                                                                                                                                   
-                                                                                                                                     $TERRAIN
-                                                                                                                                       STYLE slx_fire
-                                                                                                                                       PIECE steel_04
-                                                                                                                                       X 232
-                                                                                                                                       Y 84
-                                                                                                                                       NO_OVERWRITE
-                                                                                                                                     $END
-                                                                                                                                     
-                                                                                                                                       $TERRAIN
-                                                                                                                                         STYLE slx_fire
-                                                                                                                                         PIECE platform
-                                                                                                                                         X 484
-                                                                                                                                         Y 100
-                                                                                                                                         NO_OVERWRITE
-                                                                                                                                         ONE_WAY
-                                                                                                                                       $END
-                                                                                                                                       
-                                                                                                                                         $TERRAIN
-                                                                                                                                           STYLE slx_fire
-                                                                                                                                           PIECE platform
-                                                                                                                                           X 532
-                                                                                                                                           Y 100
-                                                                                                                                           NO_OVERWRITE
-                                                                                                                                           ONE_WAY
-                                                                                                                                         $END
-                                                                                                                                         
-                                                                                                                                           $TERRAIN
-                                                                                                                                             STYLE slx_fire
-                                                                                                                                             PIECE rock_03
-                                                                                                                                             X 489
-                                                                                                                                             Y 92
-                                                                                                                                             NO_OVERWRITE
-                                                                                                                                             ONE_WAY
-                                                                                                                                           $END
-                                                                                                                                           
-                                                                                                                                             $TERRAIN
-                                                                                                                                               STYLE slx_fire
-                                                                                                                                               PIECE platform
-                                                                                                                                               X 512
-                                                                                                                                               Y 91
-                                                                                                                                               ERASE
-                                                                                                                                               ONE_WAY
-                                                                                                                                             $END
-                                                                                                                                             
-                                                                                                                                               $TERRAIN
-                                                                                                                                                 STYLE slx_fire
-                                                                                                                                                 PIECE platform
-                                                                                                                                                 X 504
-                                                                                                                                                 Y 91
-                                                                                                                                                 ERASE
-                                                                                                                                                 ONE_WAY
-                                                                                                                                               $END
-                                                                                                                                               
-                                                                                                                                                 $TERRAIN
-                                                                                                                                                   STYLE slx_fire
-                                                                                                                                                   PIECE rock_06
-                                                                                                                                                   X 565
-                                                                                                                                                   Y 88
-                                                                                                                                                   ONE_WAY
-                                                                                                                                                 $END
-                                                                                                                                                 
-                                                                                                                                                   $TERRAIN
-                                                                                                                                                     STYLE slx_fire
-                                                                                                                                                     PIECE rock_06
-                                                                                                                                                     X 585
-                                                                                                                                                     Y 126
-                                                                                                                                                     ONE_WAY
-                                                                                                                                                   $END
-                                                                                                                                                   
-                                                                                                                                                     $TERRAIN
-                                                                                                                                                       STYLE slx_fire
-                                                                                                                                                       PIECE rock_06
-                                                                                                                                                       X 558
-                                                                                                                                                       Y 53
-                                                                                                                                                       ONE_WAY
-                                                                                                                                                     $END
-                                                                                                                                                     
-                                                                                                                                                       $TERRAIN
-                                                                                                                                                         STYLE slx_fire
-                                                                                                                                                         PIECE rock_06
-                                                                                                                                                         X 549
-                                                                                                                                                         Y 3
-                                                                                                                                                         ONE_WAY
-                                                                                                                                                       $END
-                                                                                                                                                       
-                                                                                                                                                         $TERRAIN
-                                                                                                                                                           STYLE slx_fire
-                                                                                                                                                           PIECE rock_06
-                                                                                                                                                           X 516
-                                                                                                                                                           Y -21
-                                                                                                                                                           ONE_WAY
-                                                                                                                                                         $END
-                                                                                                                                                         
-                                                                                                                                                           $TERRAIN
-                                                                                                                                                             STYLE slx_fire
-                                                                                                                                                             PIECE rock_03
-                                                                                                                                                             X 443
-                                                                                                                                                             Y -14
-                                                                                                                                                             ONE_WAY
-                                                                                                                                                           $END
-                                                                                                                                                           
-                                                                                                                                                             $TERRAIN
-                                                                                                                                                               STYLE slx_fire
-                                                                                                                                                               PIECE rock_03
-                                                                                                                                                               X 379
-                                                                                                                                                               Y -14
-                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                               ONE_WAY
-                                                                                                                                                             $END
-                                                                                                                                                             
-                                                                                                                                                               $TERRAIN
-                                                                                                                                                                 STYLE slx_fire
-                                                                                                                                                                 PIECE rock_04
-                                                                                                                                                                 X 578
-                                                                                                                                                                 Y 25
-                                                                                                                                                                 ONE_WAY
-                                                                                                                                                               $END
-                                                                                                                                                               
-                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                   STYLE slx_fire
-                                                                                                                                                                   PIECE rock_04
-                                                                                                                                                                   X 602
-                                                                                                                                                                   Y 63
-                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                 $END
-                                                                                                                                                                 
-                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                     STYLE slx_fire
-                                                                                                                                                                     PIECE rock_04
-                                                                                                                                                                     X 607
-                                                                                                                                                                     Y 94
-                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                   $END
-                                                                                                                                                                   
-                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                       STYLE slx_fire
-                                                                                                                                                                       PIECE rock_04
-                                                                                                                                                                       X 626
-                                                                                                                                                                       Y 118
-                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                     $END
-                                                                                                                                                                     
-                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                         STYLE slx_fire
-                                                                                                                                                                         PIECE rock_04
-                                                                                                                                                                         X 563
-                                                                                                                                                                         Y -17
-                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                       $END
-                                                                                                                                                                       
-                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                           STYLE slx_fire
-                                                                                                                                                                           PIECE rock_04
-                                                                                                                                                                           X 593
-                                                                                                                                                                           Y 84
-                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                         $END
-                                                                                                                                                                         
-                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                             STYLE slx_fire
-                                                                                                                                                                             PIECE bars_05
-                                                                                                                                                                             X 644
-                                                                                                                                                                             Y 48
-                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                           $END
-                                                                                                                                                                           
-                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                               STYLE slx_fire
-                                                                                                                                                                               PIECE bars_05
-                                                                                                                                                                               X 669
-                                                                                                                                                                               Y 95
-                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                             $END
-                                                                                                                                                                             
-                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                 STYLE slx_fire
-                                                                                                                                                                                 PIECE bars_05
-                                                                                                                                                                                 X 624
-                                                                                                                                                                                 Y 2
-                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                               $END
-                                                                                                                                                                               
-                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                   STYLE slx_fire
-                                                                                                                                                                                   PIECE bars_06
-                                                                                                                                                                                   X 604
-                                                                                                                                                                                   Y 15
-                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                 $END
-                                                                                                                                                                                 
-                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                     STYLE slx_fire
-                                                                                                                                                                                     PIECE bars_06
-                                                                                                                                                                                     X 626
-                                                                                                                                                                                     Y 56
-                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                   $END
-                                                                                                                                                                                   
-                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                       STYLE slx_fire
-                                                                                                                                                                                       PIECE bars_06
-                                                                                                                                                                                       X 622
-                                                                                                                                                                                       Y 36
-                                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                     $END
-                                                                                                                                                                                     
-                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                         STYLE slx_fire
-                                                                                                                                                                                         PIECE bars_06
-                                                                                                                                                                                         X 638
-                                                                                                                                                                                         Y 79
-                                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                       $END
-                                                                                                                                                                                       
-                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                           STYLE slx_fire
-                                                                                                                                                                                           PIECE bars_06
-                                                                                                                                                                                           X 645
-                                                                                                                                                                                           Y 103
-                                                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                         $END
-                                                                                                                                                                                         
-                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                             STYLE slx_fire
-                                                                                                                                                                                             PIECE bars_06
-                                                                                                                                                                                             X 654
-                                                                                                                                                                                             Y 128
-                                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                           $END
-                                                                                                                                                                                           
-                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                               STYLE slx_fire
-                                                                                                                                                                                               PIECE bars_06
-                                                                                                                                                                                               X 664
-                                                                                                                                                                                               Y 149
-                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                             $END
-                                                                                                                                                                                             
-                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                 STYLE slx_fire
-                                                                                                                                                                                                 PIECE bars_05
-                                                                                                                                                                                                 X 644
-                                                                                                                                                                                                 Y 33
-                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                               $END
-                                                                                                                                                                                               
-                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                   STYLE slx_fire
-                                                                                                                                                                                                   PIECE rock_03
-                                                                                                                                                                                                   X 550
-                                                                                                                                                                                                   Y 96
-                                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                 $END
-                                                                                                                                                                                                 
-                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                     STYLE slx_fire
-                                                                                                                                                                                                     PIECE rock_03
-                                                                                                                                                                                                     X 552
-                                                                                                                                                                                                     Y 100
-                                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                   $END
-                                                                                                                                                                                                   
-                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                       STYLE slx_fire
-                                                                                                                                                                                                       PIECE spike
-                                                                                                                                                                                                       X 450
-                                                                                                                                                                                                       Y 147
-                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                     $END
-                                                                                                                                                                                                     
-                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                         STYLE slx_fire
-                                                                                                                                                                                                         PIECE spike
-                                                                                                                                                                                                         X 482
-                                                                                                                                                                                                         Y 147
-                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                       $END
-                                                                                                                                                                                                       
-                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                           STYLE slx_fire
-                                                                                                                                                                                                           PIECE spike
-                                                                                                                                                                                                           X 514
-                                                                                                                                                                                                           Y 147
-                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                         $END
-                                                                                                                                                                                                         
-                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                             STYLE slx_fire
-                                                                                                                                                                                                             PIECE spike
-                                                                                                                                                                                                             X 545
-                                                                                                                                                                                                             Y 147
-                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                           $END
-                                                                                                                                                                                                           
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 112
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 36
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 116
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 37
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 97
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_04
+   X 178
+   Y -12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 188
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 267
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_06
+   X 347
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_05
+   X 201
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_05
+   X 281
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_05
+   X 360
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_09
+   X 192
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_09
+   X 196
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 203
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 228
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bricks_01
+   X 253
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE pillar_end
+   X 226
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE pillar_end
+   X 226
+   Y 72
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE pillar
+   X 232
+   Y 78
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE pillar
+   X 232
+   Y 102
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE pillar
+   X 232
+   Y 126
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE pillar_end
+   X 226
+   Y 135
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE pillar_end
+   X 226
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 297
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 345
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_03
+   X 301
+   Y 93
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 309
+   Y 93
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 337
+   Y 93
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 339
+   Y 63
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 339
+   Y 38
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 339
+   Y 13
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 339
+   Y -12
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_01
+   X 354
+   Y 63
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_03
+   X 354
+   Y 49
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_03
+   X 354
+   Y 35
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 354
+   Y 21
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 354
+   Y 7
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 365
+   Y 21
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 365
+   Y 7
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 359
+   Y 15
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_03
+   X 354
+   Y -7
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_03
+   X 346
+   Y 54
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 344
+   Y 25
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 344
+   Y -7
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 274
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 189
+   Y 118
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 189
+   Y 89
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 189
+   Y 70
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 193
+   Y 33
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 193
+   Y 16
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_02
+   X 193
+   Y -4
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 226
+   Y 67
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 226
+   Y 70
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 239
+   Y 70
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 239
+   Y 63
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 241
+   Y 67
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 235
+   Y 82
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 235
+   Y 92
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 235
+   Y 109
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 235
+   Y 119
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 232
+   Y 111
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 232
+   Y 118
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 232
+   Y 103
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 232
+   Y 94
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE steel_04
+   X 232
+   Y 84
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 484
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 532
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_03
+   X 489
+   Y 92
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 512
+   Y 91
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE platform
+   X 504
+   Y 91
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_06
+   X 565
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_06
+   X 585
+   Y 126
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_06
+   X 558
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_06
+   X 549
+   Y 3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_06
+   X 516
+   Y -21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_03
+   X 443
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_03
+   X 379
+   Y -14
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_04
+   X 578
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_04
+   X 602
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_04
+   X 607
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_04
+   X 626
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_04
+   X 563
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_04
+   X 593
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_05
+   X 644
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_05
+   X 669
+   Y 95
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_05
+   X 624
+   Y 2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_06
+   X 604
+   Y 15
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_06
+   X 626
+   Y 56
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_06
+   X 622
+   Y 36
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_06
+   X 638
+   Y 79
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_06
+   X 645
+   Y 103
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_06
+   X 654
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_06
+   X 664
+   Y 149
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE bars_05
+   X 644
+   Y 33
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_03
+   X 550
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE rock_03
+   X 552
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE spike
+   X 450
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE spike
+   X 482
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE spike
+   X 514
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_fire
+   PIECE spike
+   X 545
+   Y 147
+   ONE_WAY
+ $END
+ 
  

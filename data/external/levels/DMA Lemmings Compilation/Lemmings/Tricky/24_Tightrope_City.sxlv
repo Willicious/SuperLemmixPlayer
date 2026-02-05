@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design 
  MUSIC menace_amiga
  ID x96EA785696EA7856
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -77,101 +77,101 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_marble
-     PIECE bar_03
-     X 164
-     Y 94
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_marble
-       PIECE bar_03
-       X 212
-       Y 94
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_marble
-         PIECE bar_03
-         X 260
-         Y 94
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_marble
-           PIECE bar_03
-           X 308
-           Y 94
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_marble
-             PIECE bar_03
-             X 356
-             Y 94
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_marble
-               PIECE bar_03
-               X 404
-               Y 94
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_marble
-                 PIECE bar_03
-                 X 452
-                 Y 94
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_marble
-                   PIECE bar_03
-                   X 500
-                   Y 94
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_marble
-                     PIECE bar_03
-                     X 548
-                     Y 94
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_marble
-                       PIECE bar_03
-                       X 596
-                       Y 94
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_marble
-                         PIECE bar_03
-                         X 657
-                         Y 75
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_marble
-                           PIECE bar_03
-                           X 691
-                           Y 75
-                           ERASE
-                           ONE_WAY
-                         $END
-                         
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 164
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 212
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 260
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 308
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 356
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 404
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 452
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 500
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 548
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 596
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 657
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_03
+   X 691
+   Y 75
+   ERASE
+   ONE_WAY
+ $END
+ 
  

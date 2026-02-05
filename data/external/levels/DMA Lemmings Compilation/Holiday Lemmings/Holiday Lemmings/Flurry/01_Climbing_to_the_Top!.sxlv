@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID xDEA28200DEA28200
- VERSION x000000000000000C
+ VERSION x000000000000000D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -75,135 +75,135 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_snow
-     PIECE pillar_01
-     X 44
-     Y 32
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_snow
-       PIECE pillar_01
-       X 344
-       Y 96
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_snow
-         PIECE pillar_01
-         X 344
-         Y 32
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_snow
-           PIECE pillar_02
-           X 44
-           Y 8
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_snow
-             PIECE pillar_02
-             X 344
-             Y 8
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_snow
-               PIECE snow_10
-               X 88
-               Y 102
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_snow
-                 PIECE snow_09
-                 X 55
-                 Y 144
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_snow
-                   PIECE snow_09
-                   X 70
-                   Y 135
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_snow
-                     PIECE snow_01
-                     X 103
-                     Y 105
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_snow
-                       PIECE icicle_01
-                       X 230
-                       Y 96
-                       FLIP_VERTICAL
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_snow
-                         PIECE icicle_01
-                         X 238
-                         Y 96
-                         FLIP_VERTICAL
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_snow
-                           PIECE icicle_01
-                           X 234
-                           Y 32
-                           FLIP_VERTICAL
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_snow
-                             PIECE icicle_01
-                             X 234
-                             Y 98
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_snow
-                               PIECE icicle_01
-                               X 234
-                               Y 96
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_snow
-                                 PIECE snow_16
-                                 X 239
-                                 Y 50
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_snow
-                                   PIECE snow_16
-                                   X 281
-                                   Y 48
-                                   ONE_WAY
-                                 $END
-                                 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE pillar_01
+   X 44
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE pillar_01
+   X 344
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE pillar_01
+   X 344
+   Y 32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE pillar_02
+   X 44
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE pillar_02
+   X 344
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_10
+   X 88
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_09
+   X 55
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_09
+   X 70
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_01
+   X 103
+   Y 105
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_01
+   X 230
+   Y 96
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_01
+   X 238
+   Y 96
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_01
+   X 234
+   Y 32
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_01
+   X 234
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_01
+   X 234
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_16
+   X 239
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_16
+   X 281
+   Y 48
+   ONE_WAY
+ $END
+ 
  

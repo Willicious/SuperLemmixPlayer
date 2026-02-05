@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR SEGA Genesis Lemmings 
  MUSIC menace_amiga
  ID x0F0F0F360F0F0F36
- VERSION x0000000000000008
+ VERSION x0000000000000009
  
 #       Level dimensions        
 # ----------------------------- 
@@ -96,863 +96,863 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_crystal
-     PIECE bar_02
-     X 64
-     Y 11
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_crystal
-       PIECE bar_02
-       X 64
-       Y 34
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_crystal
-         PIECE bar_02
-         X 64
-         Y 57
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_crystal
-           PIECE bar_02
-           X 64
-           Y 80
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_crystal
-             PIECE bar_02
-             X 64
-             Y 103
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_crystal
-               PIECE bar_02
-               X 64
-               Y 126
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_crystal
-                 PIECE bar_02
-                 X 64
-                 Y -35
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_crystal
-                   PIECE bar_02
-                   X 109
-                   Y -34
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_crystal
-                     PIECE bar_02
-                     X 109
-                     Y -11
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_crystal
-                       PIECE bar_02
-                       X 109
-                       Y 12
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_crystal
-                         PIECE bar_02
-                         X 154
-                         Y -33
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_crystal
-                           PIECE bar_02
-                           X 109
-                           Y 35
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_crystal
-                             PIECE bar_02
-                             X 154
-                             Y -10
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_crystal
-                               PIECE bar_02
-                               X 184
-                               Y -40
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_crystal
-                                 PIECE bar_02
-                                 X 109
-                                 Y 58
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_crystal
-                                   PIECE bar_02
-                                   X 154
-                                   Y 13
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_crystal
-                                     PIECE bar_02
-                                     X 199
-                                     Y -32
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_crystal
-                                       PIECE bar_02
-                                       X 108
-                                       Y 82
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_crystal
-                                         PIECE bar_02
-                                         X 153
-                                         Y 37
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_crystal
-                                           PIECE bar_02
-                                           X 228
-                                           Y -38
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_crystal
-                                             PIECE bar_02
-                                             X 93
-                                             Y 120
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_crystal
-                                               PIECE bar_02
-                                               X 138
-                                               Y 75
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_crystal
-                                                 PIECE bar_02
-                                                 X 183
-                                                 Y 30
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_crystal
-                                                   PIECE bar_02
-                                                   X 118
-                                                   Y 118
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_crystal
-                                                     PIECE bar_02
-                                                     X 163
-                                                     Y 73
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_crystal
-                                                       PIECE bar_02
-                                                       X 134
-                                                       Y 125
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_crystal
-                                                         PIECE bar_04
-                                                         X 158
-                                                         Y 120
-                                                         ERASE
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_crystal
-                                                           PIECE bar_04
-                                                           X 187
-                                                           Y 72
-                                                           ERASE
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_crystal
-                                                             PIECE bar_04
-                                                             X 213
-                                                             Y 25
-                                                             ERASE
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_crystal
-                                                               PIECE bar_02
-                                                               X 121
-                                                               Y 92
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_crystal
-                                                                 PIECE bar_02
-                                                                 X 141
-                                                                 Y 95
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_crystal
-                                                                   PIECE bar_02
-                                                                   X 167
-                                                                   Y 46
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_crystal
-                                                                     PIECE bar_02
-                                                                     X 184
-                                                                     Y 6
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_crystal
-                                                                       PIECE line_03
-                                                                       X 184
-                                                                       Y 136
-                                                                       NO_OVERWRITE
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_crystal
-                                                                         PIECE line_03
-                                                                         X 215
-                                                                         Y 136
-                                                                         NO_OVERWRITE
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_crystal
-                                                                           PIECE line_03
-                                                                           X 245
-                                                                           Y 136
-                                                                           NO_OVERWRITE
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_crystal
-                                                                             PIECE line_03
-                                                                             X 275
-                                                                             Y 136
-                                                                             NO_OVERWRITE
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_crystal
-                                                                               PIECE line_03
-                                                                               X 210
-                                                                               Y 88
-                                                                               NO_OVERWRITE
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_crystal
-                                                                                 PIECE line_03
-                                                                                 X 239
-                                                                                 Y 88
-                                                                                 NO_OVERWRITE
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_crystal
-                                                                                   PIECE line_03
-                                                                                   X 269
-                                                                                   Y 88
-                                                                                   NO_OVERWRITE
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_crystal
-                                                                                     PIECE line_03
-                                                                                     X 234
-                                                                                     Y 41
-                                                                                     NO_OVERWRITE
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_crystal
-                                                                                       PIECE line_03
-                                                                                       X 264
-                                                                                       Y 41
-                                                                                       NO_OVERWRITE
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_crystal
-                                                                                         PIECE line_03
-                                                                                         X 285
-                                                                                         Y 41
-                                                                                         NO_OVERWRITE
-                                                                                         ONE_WAY
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_crystal
-                                                                                           PIECE line_03
-                                                                                           X 296
-                                                                                           Y 88
-                                                                                           NO_OVERWRITE
-                                                                                           ONE_WAY
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_crystal
-                                                                                             PIECE line_03
-                                                                                             X 296
-                                                                                             Y 136
-                                                                                             NO_OVERWRITE
-                                                                                             ONE_WAY
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_crystal
-                                                                                               PIECE bar_01
-                                                                                               X 315
-                                                                                               Y 30
-                                                                                               ONE_WAY
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_crystal
-                                                                                                 PIECE bar_01
-                                                                                                 X 315
-                                                                                                 Y 94
-                                                                                                 ONE_WAY
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_crystal
-                                                                                                   PIECE bar_01
-                                                                                                   X 315
-                                                                                                   Y 106
-                                                                                                   ONE_WAY
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_crystal
-                                                                                                     PIECE bar_01
-                                                                                                     X 315
-                                                                                                     Y -28
-                                                                                                     ONE_WAY
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_crystal
-                                                                                                       PIECE steel_03
-                                                                                                       X 331
-                                                                                                       Y 136
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_crystal
-                                                                                                         PIECE steel_03
-                                                                                                         X 356
-                                                                                                         Y 136
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_crystal
-                                                                                                           PIECE steel_03
-                                                                                                           X 331
-                                                                                                           Y 88
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_crystal
-                                                                                                             PIECE steel_03
-                                                                                                             X 356
-                                                                                                             Y 88
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_crystal
-                                                                                                               PIECE steel_03
-                                                                                                               X 331
-                                                                                                               Y 40
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_crystal
-                                                                                                                 PIECE steel_03
-                                                                                                                 X 356
-                                                                                                                 Y 40
-                                                                                                               $END
-                                                                                                               
-                                                                                                                 $TERRAIN
-                                                                                                                   STYLE slx_crystal
-                                                                                                                   PIECE bar_02
-                                                                                                                   X 369
-                                                                                                                   Y -1
-                                                                                                                   NO_OVERWRITE
-                                                                                                                   ONE_WAY
-                                                                                                                 $END
-                                                                                                                 
-                                                                                                                   $TERRAIN
-                                                                                                                     STYLE slx_crystal
-                                                                                                                     PIECE bar_02
-                                                                                                                     X 368
-                                                                                                                     Y 48
-                                                                                                                     NO_OVERWRITE
-                                                                                                                     ONE_WAY
-                                                                                                                   $END
-                                                                                                                   
-                                                                                                                     $TERRAIN
-                                                                                                                       STYLE slx_crystal
-                                                                                                                       PIECE bar_02
-                                                                                                                       X 369
-                                                                                                                       Y 96
-                                                                                                                       NO_OVERWRITE
-                                                                                                                       ONE_WAY
-                                                                                                                     $END
-                                                                                                                     
-                                                                                                                       $TERRAIN
-                                                                                                                         STYLE slx_crystal
-                                                                                                                         PIECE bar_04
-                                                                                                                         X 370
-                                                                                                                         Y 7
-                                                                                                                         ERASE
-                                                                                                                         ONE_WAY
-                                                                                                                       $END
-                                                                                                                       
-                                                                                                                         $TERRAIN
-                                                                                                                           STYLE slx_crystal
-                                                                                                                           PIECE bar_04
-                                                                                                                           X 378
-                                                                                                                           Y -1
-                                                                                                                           ERASE
-                                                                                                                           ONE_WAY
-                                                                                                                         $END
-                                                                                                                         
-                                                                                                                           $TERRAIN
-                                                                                                                             STYLE slx_crystal
-                                                                                                                             PIECE bar_04
-                                                                                                                             X 380
-                                                                                                                             Y 55
-                                                                                                                             ERASE
-                                                                                                                             ONE_WAY
-                                                                                                                           $END
-                                                                                                                           
-                                                                                                                             $TERRAIN
-                                                                                                                               STYLE slx_crystal
-                                                                                                                               PIECE bar_04
-                                                                                                                               X 395
-                                                                                                                               Y 45
-                                                                                                                               ERASE
-                                                                                                                               ONE_WAY
-                                                                                                                             $END
-                                                                                                                             
-                                                                                                                               $TERRAIN
-                                                                                                                                 STYLE slx_crystal
-                                                                                                                                 PIECE bar_04
-                                                                                                                                 X 386
-                                                                                                                                 Y 103
-                                                                                                                                 ERASE
-                                                                                                                                 ONE_WAY
-                                                                                                                               $END
-                                                                                                                               
-                                                                                                                                 $TERRAIN
-                                                                                                                                   STYLE slx_crystal
-                                                                                                                                   PIECE bar_04
-                                                                                                                                   X 394
-                                                                                                                                   Y 95
-                                                                                                                                   ERASE
-                                                                                                                                   ONE_WAY
-                                                                                                                                 $END
-                                                                                                                                 
-                                                                                                                                   $TERRAIN
-                                                                                                                                     STYLE slx_crystal
-                                                                                                                                     PIECE line_03
-                                                                                                                                     X 407
-                                                                                                                                     Y 23
-                                                                                                                                     NO_OVERWRITE
-                                                                                                                                     ONE_WAY
-                                                                                                                                   $END
-                                                                                                                                   
-                                                                                                                                     $TERRAIN
-                                                                                                                                       STYLE slx_crystal
-                                                                                                                                       PIECE line_03
-                                                                                                                                       X 438
-                                                                                                                                       Y 23
-                                                                                                                                       NO_OVERWRITE
-                                                                                                                                       ONE_WAY
-                                                                                                                                     $END
-                                                                                                                                     
-                                                                                                                                       $TERRAIN
-                                                                                                                                         STYLE slx_crystal
-                                                                                                                                         PIECE line_03
-                                                                                                                                         X 467
-                                                                                                                                         Y 23
-                                                                                                                                         NO_OVERWRITE
-                                                                                                                                         ONE_WAY
-                                                                                                                                       $END
-                                                                                                                                       
-                                                                                                                                         $TERRAIN
-                                                                                                                                           STYLE slx_crystal
-                                                                                                                                           PIECE line_03
-                                                                                                                                           X 407
-                                                                                                                                           Y 71
-                                                                                                                                           NO_OVERWRITE
-                                                                                                                                           ONE_WAY
-                                                                                                                                         $END
-                                                                                                                                         
-                                                                                                                                           $TERRAIN
-                                                                                                                                             STYLE slx_crystal
-                                                                                                                                             PIECE line_03
-                                                                                                                                             X 437
-                                                                                                                                             Y 71
-                                                                                                                                             NO_OVERWRITE
-                                                                                                                                             ONE_WAY
-                                                                                                                                           $END
-                                                                                                                                           
-                                                                                                                                             $TERRAIN
-                                                                                                                                               STYLE slx_crystal
-                                                                                                                                               PIECE line_03
-                                                                                                                                               X 467
-                                                                                                                                               Y 71
-                                                                                                                                               NO_OVERWRITE
-                                                                                                                                               ONE_WAY
-                                                                                                                                             $END
-                                                                                                                                             
-                                                                                                                                               $TERRAIN
-                                                                                                                                                 STYLE slx_crystal
-                                                                                                                                                 PIECE line_03
-                                                                                                                                                 X 410
-                                                                                                                                                 Y 119
-                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                 ONE_WAY
-                                                                                                                                               $END
-                                                                                                                                               
-                                                                                                                                                 $TERRAIN
-                                                                                                                                                   STYLE slx_crystal
-                                                                                                                                                   PIECE line_03
-                                                                                                                                                   X 440
-                                                                                                                                                   Y 119
-                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                   ONE_WAY
-                                                                                                                                                 $END
-                                                                                                                                                 
-                                                                                                                                                   $TERRAIN
-                                                                                                                                                     STYLE slx_crystal
-                                                                                                                                                     PIECE line_03
-                                                                                                                                                     X 466
-                                                                                                                                                     Y 119
-                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                     ONE_WAY
-                                                                                                                                                   $END
-                                                                                                                                                   
-                                                                                                                                                     $TERRAIN
-                                                                                                                                                       STYLE slx_crystal
-                                                                                                                                                       PIECE bar_01
-                                                                                                                                                       X 492
-                                                                                                                                                       Y -5
-                                                                                                                                                       ONE_WAY
-                                                                                                                                                     $END
-                                                                                                                                                     
-                                                                                                                                                       $TERRAIN
-                                                                                                                                                         STYLE slx_crystal
-                                                                                                                                                         PIECE bar_01
-                                                                                                                                                         X 492
-                                                                                                                                                         Y 59
-                                                                                                                                                         ONE_WAY
-                                                                                                                                                       $END
-                                                                                                                                                       
-                                                                                                                                                         $TERRAIN
-                                                                                                                                                           STYLE slx_crystal
-                                                                                                                                                           PIECE bar_01
-                                                                                                                                                           X 492
-                                                                                                                                                           Y 113
-                                                                                                                                                           ONE_WAY
-                                                                                                                                                         $END
-                                                                                                                                                         
-                                                                                                                                                           $TERRAIN
-                                                                                                                                                             STYLE slx_crystal
-                                                                                                                                                             PIECE line_01
-                                                                                                                                                             X 255
-                                                                                                                                                             Y 57
-                                                                                                                                                             ONE_WAY
-                                                                                                                                                           $END
-                                                                                                                                                           
-                                                                                                                                                             $TERRAIN
-                                                                                                                                                               STYLE slx_crystal
-                                                                                                                                                               PIECE line_01
-                                                                                                                                                               X 288
-                                                                                                                                                               Y 105
-                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                               ONE_WAY
-                                                                                                                                                             $END
-                                                                                                                                                             
-                                                                                                                                                               $TERRAIN
-                                                                                                                                                                 STYLE slx_crystal
-                                                                                                                                                                 PIECE line_01
-                                                                                                                                                                 X 247
-                                                                                                                                                                 Y 89
-                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                 ONE_WAY
-                                                                                                                                                               $END
-                                                                                                                                                               
-                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                   STYLE slx_crystal
-                                                                                                                                                                   PIECE line_02
-                                                                                                                                                                   X 256
-                                                                                                                                                                   Y 96
-                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                 $END
-                                                                                                                                                                 
-                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                     STYLE slx_crystal
-                                                                                                                                                                     PIECE line_02
-                                                                                                                                                                     X 241
-                                                                                                                                                                     Y 41
-                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                   $END
-                                                                                                                                                                   
-                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                       STYLE slx_crystal
-                                                                                                                                                                       PIECE line_02
-                                                                                                                                                                       X 286
-                                                                                                                                                                       Y -1
-                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                     $END
-                                                                                                                                                                     
-                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                         STYLE slx_crystal
-                                                                                                                                                                         PIECE line_02
-                                                                                                                                                                         X 196
-                                                                                                                                                                         Y 101
-                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                       $END
-                                                                                                                                                                       
-                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                           STYLE slx_crystal
-                                                                                                                                                                           PIECE line_04
-                                                                                                                                                                           X 297
-                                                                                                                                                                           Y 42
-                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                         $END
-                                                                                                                                                                         
-                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                             STYLE slx_crystal
-                                                                                                                                                                             PIECE line_04
-                                                                                                                                                                             X 209
-                                                                                                                                                                             Y 132
-                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                           $END
-                                                                                                                                                                           
-                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                               STYLE slx_crystal
-                                                                                                                                                                               PIECE line_04
-                                                                                                                                                                               X 270
-                                                                                                                                                                               Y 19
-                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                             $END
-                                                                                                                                                                             
-                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                 STYLE slx_crystal
-                                                                                                                                                                                 PIECE line_04
-                                                                                                                                                                                 X 266
-                                                                                                                                                                                 Y 118
-                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                               $END
-                                                                                                                                                                               
-                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                   STYLE slx_crystal
-                                                                                                                                                                                   PIECE line_04
-                                                                                                                                                                                   X 226
-                                                                                                                                                                                   Y 61
-                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                 $END
-                                                                                                                                                                                 
-                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                     STYLE slx_crystal
-                                                                                                                                                                                     PIECE bar_01
-                                                                                                                                                                                     X 3
-                                                                                                                                                                                     Y -10
-                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                   $END
-                                                                                                                                                                                   
-                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                       STYLE slx_crystal
-                                                                                                                                                                                       PIECE bar_01
-                                                                                                                                                                                       X 3
-                                                                                                                                                                                       Y 54
-                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                     $END
-                                                                                                                                                                                     
-                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                         STYLE slx_crystal
-                                                                                                                                                                                         PIECE bar_01
-                                                                                                                                                                                         X 3
-                                                                                                                                                                                         Y 117
-                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                       $END
-                                                                                                                                                                                       
-                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                           STYLE slx_crystal
-                                                                                                                                                                                           PIECE thread_02
-                                                                                                                                                                                           X 33
-                                                                                                                                                                                           Y 33
-                                                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                         $END
-                                                                                                                                                                                         
-                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                             STYLE slx_crystal
-                                                                                                                                                                                             PIECE thread_02
-                                                                                                                                                                                             X 13
-                                                                                                                                                                                             Y 53
-                                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                           $END
-                                                                                                                                                                                           
-                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                               STYLE slx_crystal
-                                                                                                                                                                                               PIECE thread_02
-                                                                                                                                                                                               X 38
-                                                                                                                                                                                               Y 74
-                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                             $END
-                                                                                                                                                                                             
-                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                 STYLE slx_crystal
-                                                                                                                                                                                                 PIECE thread_02
-                                                                                                                                                                                                 X 14
-                                                                                                                                                                                                 Y 98
-                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                               $END
-                                                                                                                                                                                               
-                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                   STYLE slx_crystal
-                                                                                                                                                                                                   PIECE thread_02
-                                                                                                                                                                                                   X 40
-                                                                                                                                                                                                   Y 118
-                                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                 $END
-                                                                                                                                                                                                 
-                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                     STYLE slx_crystal
-                                                                                                                                                                                                     PIECE thread_02
-                                                                                                                                                                                                     X 15
-                                                                                                                                                                                                     Y 143
-                                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                   $END
-                                                                                                                                                                                                   
-                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                       STYLE slx_crystal
-                                                                                                                                                                                                       PIECE thread_01
-                                                                                                                                                                                                       X 15
-                                                                                                                                                                                                       Y 44
-                                                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                     $END
-                                                                                                                                                                                                     
-                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                         STYLE slx_crystal
-                                                                                                                                                                                                         PIECE thread_01
-                                                                                                                                                                                                         X 4
-                                                                                                                                                                                                         Y 84
-                                                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                       $END
-                                                                                                                                                                                                       
-                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                           STYLE slx_crystal
-                                                                                                                                                                                                           PIECE thread_01
-                                                                                                                                                                                                           X 16
-                                                                                                                                                                                                           Y 113
-                                                                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                         $END
-                                                                                                                                                                                                         
-                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                             STYLE slx_crystal
-                                                                                                                                                                                                             PIECE mesh_04
-                                                                                                                                                                                                             X 51
-                                                                                                                                                                                                             Y 79
-                                                                                                                                                                                                             ERASE
-                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                           $END
-                                                                                                                                                                                                           
-                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                               STYLE slx_crystal
-                                                                                                                                                                                                               PIECE line_04
-                                                                                                                                                                                                               X 270
-                                                                                                                                                                                                               Y -10
-                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                             $END
-                                                                                                                                                                                                             
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 64
+   Y 11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 64
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 64
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 64
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 64
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 64
+   Y 126
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 64
+   Y -35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 109
+   Y -34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 109
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 109
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 154
+   Y -33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 109
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 154
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 184
+   Y -40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 109
+   Y 58
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 154
+   Y 13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 199
+   Y -32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 108
+   Y 82
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 153
+   Y 37
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 228
+   Y -38
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 93
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 138
+   Y 75
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 183
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 118
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 163
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 134
+   Y 125
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 158
+   Y 120
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 187
+   Y 72
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 213
+   Y 25
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 121
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 141
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 167
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 184
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 184
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 215
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 245
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 275
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 210
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 239
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 269
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 234
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 264
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 285
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 296
+   Y 88
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 296
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 315
+   Y 30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 315
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 315
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 315
+   Y -28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_03
+   X 331
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_03
+   X 356
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_03
+   X 331
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_03
+   X 356
+   Y 88
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_03
+   X 331
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_03
+   X 356
+   Y 40
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 369
+   Y -1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 368
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 369
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 370
+   Y 7
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 378
+   Y -1
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 380
+   Y 55
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 395
+   Y 45
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 386
+   Y 103
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 394
+   Y 95
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 407
+   Y 23
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 438
+   Y 23
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 467
+   Y 23
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 407
+   Y 71
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 437
+   Y 71
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 467
+   Y 71
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 410
+   Y 119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 440
+   Y 119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 466
+   Y 119
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 492
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 492
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 492
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_01
+   X 255
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_01
+   X 288
+   Y 105
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_01
+   X 247
+   Y 89
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_02
+   X 256
+   Y 96
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_02
+   X 241
+   Y 41
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_02
+   X 286
+   Y -1
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_02
+   X 196
+   Y 101
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_04
+   X 297
+   Y 42
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_04
+   X 209
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_04
+   X 270
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_04
+   X 266
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_04
+   X 226
+   Y 61
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 3
+   Y -10
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 3
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 3
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_02
+   X 33
+   Y 33
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_02
+   X 13
+   Y 53
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_02
+   X 38
+   Y 74
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_02
+   X 14
+   Y 98
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_02
+   X 40
+   Y 118
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_02
+   X 15
+   Y 143
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_01
+   X 15
+   Y 44
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_01
+   X 4
+   Y 84
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE thread_01
+   X 16
+   Y 113
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE mesh_04
+   X 51
+   Y 79
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_04
+   X 270
+   Y -10
+   ONE_WAY
+ $END
+ 
  

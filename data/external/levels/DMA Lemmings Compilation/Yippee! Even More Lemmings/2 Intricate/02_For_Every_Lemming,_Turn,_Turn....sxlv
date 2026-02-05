@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Prima Lemmings
  MUSIC menace_amiga
  ID xB0A4B2EAB0A4B2EA
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -83,60 +83,60 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_brick
-     PIECE bricks_large_02
-     X 96
-     Y 136
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_brick
-       PIECE bricks_large_02
-       X 160
-       Y 136
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_brick
-         PIECE bricks_large_02
-         X 224
-         Y 136
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_brick
-           PIECE bricks_large_02
-           X 288
-           Y 136
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_brick
-             PIECE bricks_large_02
-             X 352
-             Y 136
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_brick
-               PIECE bricks_large_01
-               X 416
-               Y 112
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_brick
-                 PIECE bricks_large_01
-                 X 480
-                 Y 112
-                 ONE_WAY
-               $END
-               
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_02
+   X 96
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_02
+   X 160
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_02
+   X 224
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_02
+   X 288
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_02
+   X 352
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 416
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_brick
+   PIECE bricks_large_01
+   X 480
+   Y 112
+   ONE_WAY
+ $END
+ 
  

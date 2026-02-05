@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Helium Party
  AUTHOR WillLem
  ID x467AB59C5D2EBD92
- VERSION x0000000000000083
+ VERSION x0000000000000084
  
 #       Level dimensions        
 # ----------------------------- 
@@ -120,307 +120,307 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_marble
-     PIECE block_07
-     X 252
-     Y 137
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_marble
-       PIECE structure_04
-       X 390
-       Y 62
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_marble
-         PIECE pillar_02
-         X 0
-         Y 152
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_marble
-           PIECE block_06
-           X 142
-           Y 138
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_marble
-             PIECE pillar_02
-             X 80
-             Y 152
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_marble
-               PIECE pillar_02
-               X 240
-               Y 152
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_marble
-                 PIECE pillar_02
-                 X 320
-                 Y 152
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_marble
-                   PIECE pillar_02
-                   X 160
-                   Y 152
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_marble
-                     PIECE bar_06
-                     X 150
-                     Y 136
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_marble
-                       PIECE bar_05
-                       X 253
-                       Y 137
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_marble
-                         PIECE pillar_02
-                         X 176
-                         Y 136
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_marble
-                           PIECE arch
-                           X -110
-                           Y -10
-                           FLIP_VERTICAL
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_marble
-                             PIECE arch
-                             X -30
-                             Y -29
-                             FLIP_VERTICAL
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_marble
-                               PIECE arch
-                               X 50
-                               Y -28
-                               FLIP_VERTICAL
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_marble
-                                 PIECE block_08
-                                 X 5
-                                 Y 0
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_marble
-                                   PIECE brick_large_01
-                                   X 303
-                                   Y 29
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_marble
-                                     PIECE brick_large_01
-                                     X 287
-                                     Y 29
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_marble
-                                       PIECE brick_large_01
-                                       X 271
-                                       Y 29
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_marble
-                                         PIECE brick_large_01
-                                         X 223
-                                         Y 85
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_marble
-                                           PIECE brick_large_01
-                                           X 207
-                                           Y 85
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_marble
-                                             PIECE brick_large_01
-                                             X 191
-                                             Y 85
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_marble
-                                               PIECE arch
-                                               X 487
-                                               Y -15
-                                               FLIP_VERTICAL
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_marble
-                                                 PIECE arch
-                                                 X 427
-                                                 Y -29
-                                                 FLIP_VERTICAL
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_marble
-                                                   PIECE pillar_02
-                                                   X 400
-                                                   Y 152
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_marble
-                                                     PIECE pillar_02
-                                                     X 480
-                                                     Y 152
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_marble
-                                                       PIECE pillar_02
-                                                       X 560
-                                                       Y 152
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_marble
-                                                         PIECE bar_06
-                                                         X -1
-                                                         Y 19
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE *group
-                                                           PIECE Group1962290236
-                                                           X 0
-                                                           Y 65
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE *group
-                                                             PIECE Group1962290236
-                                                             X 0
-                                                             Y -19
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE *group
-                                                               PIECE Group1962290236
-                                                               X 611
-                                                               Y 65
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_marble
-                                                                 PIECE bar_05
-                                                                 X 593
-                                                                 Y 23
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_marble
-                                                                   PIECE arch
-                                                                   X 478
-                                                                   Y -27
-                                                                   FLIP_VERTICAL
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE *group
-                                                                     PIECE Group1962290236
-                                                                     X 611
-                                                                     Y -19
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_marble
-                                                                       PIECE bar_06
-                                                                       X 21
-                                                                       Y -3
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_marble
-                                                                         PIECE block_09
-                                                                         X 574
-                                                                         Y 0
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_marble
-                                                                           PIECE bar_05
-                                                                           X 567
-                                                                           Y -3
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_marble
-                                                                             PIECE arch
-                                                                             X -11
-                                                                             Y -26
-                                                                             FLIP_VERTICAL
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_07
+   X 252
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE structure_04
+   X 390
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 0
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_06
+   X 142
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 80
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 240
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 320
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 160
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_06
+   X 150
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_05
+   X 253
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 176
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE arch
+   X -110
+   Y -10
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE arch
+   X -30
+   Y -29
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE arch
+   X 50
+   Y -28
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_08
+   X 5
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_large_01
+   X 303
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_large_01
+   X 287
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_large_01
+   X 271
+   Y 29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_large_01
+   X 223
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_large_01
+   X 207
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_large_01
+   X 191
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE arch
+   X 487
+   Y -15
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE arch
+   X 427
+   Y -29
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 400
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 480
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 560
+   Y 152
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_06
+   X -1
+   Y 19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1962290236
+   X 0
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1962290236
+   X 0
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1962290236
+   X 611
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_05
+   X 593
+   Y 23
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE arch
+   X 478
+   Y -27
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1962290236
+   X 611
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_06
+   X 21
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_09
+   X 574
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE bar_05
+   X 567
+   Y -3
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE arch
+   X -11
+   Y -26
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
  

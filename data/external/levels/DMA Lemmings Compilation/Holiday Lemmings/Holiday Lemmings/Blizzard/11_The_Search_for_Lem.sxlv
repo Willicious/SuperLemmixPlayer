@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID xB7C21443B7C21443
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -135,171 +135,171 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_snow
-     PIECE snow_01
-     X 129
-     Y 106
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_snow
-       PIECE snow_03
-       X 95
-       Y 101
-       NO_OVERWRITE
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_snow
-         PIECE snow_03
-         X 128
-         Y 100
-         NO_OVERWRITE
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_snow
-           PIECE snow_03
-           X 167
-           Y 102
-           NO_OVERWRITE
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_snow
-             PIECE steel_01
-             X 284
-             Y 136
-           $END
-           
-             $TERRAIN
-               STYLE slx_snow
-               PIECE steel_01
-               X 332
-               Y 136
-             $END
-             
-               $TERRAIN
-                 STYLE slx_snow
-                 PIECE snow_20
-                 X 244
-                 Y 147
-                 NO_OVERWRITE
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_snow
-                   PIECE snow_20
-                   X 246
-                   Y 148
-                   NO_OVERWRITE
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_snow
-                     PIECE steel_01
-                     X 380
-                     Y 136
-                     NO_OVERWRITE
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_snow
-                       PIECE steel_01
-                       X 428
-                       Y 137
-                       NO_OVERWRITE
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_snow
-                         PIECE steel_01
-                         X 556
-                         Y 92
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_snow
-                           PIECE steel_01
-                           X 580
-                           Y 92
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_snow
-                             PIECE steel_01
-                             X 604
-                             Y 92
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_snow
-                               PIECE steel_01
-                               X 148
-                               Y 136
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_snow
-                                 PIECE icicle_02
-                                 X 165
-                                 Y 0
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_snow
-                                   PIECE icicle_02
-                                   X 228
-                                   Y 0
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_snow
-                                     PIECE icicle_02
-                                     X 293
-                                     Y 0
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_snow
-                                       PIECE icicle_02
-                                       X 357
-                                       Y 0
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_snow
-                                         PIECE icicle_02
-                                         X 421
-                                         Y 0
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_snow
-                                           PIECE icicle_02
-                                           X 484
-                                           Y 0
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_snow
-                                             PIECE icicle_02
-                                             X 548
-                                             Y 0
-                                             ONE_WAY
-                                           $END
-                                           
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_01
+   X 129
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_03
+   X 95
+   Y 101
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_03
+   X 128
+   Y 100
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_03
+   X 167
+   Y 102
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 284
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 332
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_20
+   X 244
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_20
+   X 246
+   Y 148
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 380
+   Y 136
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 428
+   Y 137
+   NO_OVERWRITE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 556
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 580
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 604
+   Y 92
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 148
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_02
+   X 165
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_02
+   X 228
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_02
+   X 293
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_02
+   X 357
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_02
+   X 421
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_02
+   X 484
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_02
+   X 548
+   Y 0
+   ONE_WAY
+ $END
+ 
  

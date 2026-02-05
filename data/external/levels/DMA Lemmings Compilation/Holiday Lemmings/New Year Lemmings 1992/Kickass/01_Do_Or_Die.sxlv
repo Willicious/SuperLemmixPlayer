@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID x87E4E3EF87E4E3EF
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -97,68 +97,68 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_snow
-     PIECE snow_03
-     X 756
-     Y 145
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_snow
-       PIECE snow_04
-       X 790
-       Y 142
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_snow
-         PIECE snow_08
-         X 826
-         Y 136
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_snow
-           PIECE snow_03
-           X 841
-           Y 141
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_snow
-             PIECE snow_05
-             X 869
-             Y 139
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_snow
-               PIECE snow_04
-               X 904
-               Y 143
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_snow
-                 PIECE snow_19
-                 X 795
-                 Y 97
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_snow
-                   PIECE snow_19
-                   X 759
-                   Y 77
-                   ONE_WAY
-                 $END
-                 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_03
+   X 756
+   Y 145
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_04
+   X 790
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_08
+   X 826
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_03
+   X 841
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_05
+   X 869
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_04
+   X 904
+   Y 143
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_19
+   X 795
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_19
+   X 759
+   Y 77
+   ONE_WAY
+ $END
+ 
  

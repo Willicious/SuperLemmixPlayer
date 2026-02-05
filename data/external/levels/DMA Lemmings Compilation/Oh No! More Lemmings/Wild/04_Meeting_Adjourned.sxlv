@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID xCEB3EF15CEB3EF15
- VERSION x000000000000000E
+ VERSION x000000000000000F
  
 #       Level dimensions        
 # ----------------------------- 
@@ -76,875 +76,875 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_rock
-     PIECE platform_02
-     X 481
-     Y 45
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_rock
-       PIECE platform_03
-       X 496
-       Y 45
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_rock
-         PIECE platform_02
-         X 479
-         Y 57
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_rock
-           PIECE platform_01
-           X 473
-           Y 57
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_rock
-             PIECE platform_03
-             X 495
-             Y 57
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_rock
-               PIECE grass_08
-               X 473
-               Y 40
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_rock
-                 PIECE grass_08
-                 X 484
-                 Y 40
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_rock
-                   PIECE grass_08
-                   X 472
-                   Y 51
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_rock
-                     PIECE grass_08
-                     X 485
-                     Y 51
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_rock
-                       PIECE grass_09
-                       X 470
-                       Y 50
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_rock
-                         PIECE grass_09
-                         X 470
-                         Y 39
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_rock
-                           PIECE grass_09
-                           X 498
-                           Y 45
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_rock
-                             PIECE grass_09
-                             X 530
-                             Y 46
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_rock
-                               PIECE grass_13
-                               X 490
-                               Y 60
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_rock
-                                 PIECE grass_13
-                                 X 470
-                                 Y 60
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_rock
-                                   PIECE tree_01
-                                   X 508
-                                   Y 63
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_rock
-                                     PIECE grass_13
-                                     X 504
-                                     Y 55
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_rock
-                                       PIECE grass_12
-                                       X 514
-                                       Y 55
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_rock
-                                         PIECE grass_12
-                                         X 500
-                                         Y 55
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_rock
-                                           PIECE grass_11
-                                           X 510
-                                           Y 57
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_rock
-                                             PIECE grass_12
-                                             X 525
-                                             Y 53
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_rock
-                                               PIECE tree_01
-                                               X 543
-                                               Y 57
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_rock
-                                                 PIECE grass_13
-                                                 X 539
-                                                 Y 55
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_rock
-                                                   PIECE grass_12
-                                                   X 548
-                                                   Y 56
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_rock
-                                                     PIECE grass_12
-                                                     X 527
-                                                     Y 60
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_rock
-                                                       PIECE platform_02
-                                                       X 504
-                                                       Y 95
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_rock
-                                                         PIECE platform_02
-                                                         X 520
-                                                         Y 95
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_rock
-                                                           PIECE platform_02
-                                                           X 540
-                                                           Y 89
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_rock
-                                                             PIECE platform_01
-                                                             X 532
-                                                             Y 89
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_rock
-                                                               PIECE platform_03
-                                                               X 555
-                                                               Y 89
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_rock
-                                                                 PIECE platform_03
-                                                                 X 534
-                                                                 Y 95
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_rock
-                                                                   PIECE platform_01
-                                                                   X 498
-                                                                   Y 95
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_rock
-                                                                     PIECE rocks_02
-                                                                     X 464
-                                                                     Y 91
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_rock
-                                                                       PIECE rocks_03
-                                                                       X 474
-                                                                       Y 141
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_rock
-                                                                         PIECE rocks_03
-                                                                         X 453
-                                                                         Y 118
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_rock
-                                                                           PIECE rocks_03
-                                                                           X 431
-                                                                           Y 96
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_rock
-                                                                             PIECE rocks_03
-                                                                             X 425
-                                                                             Y 118
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_rock
-                                                                               PIECE rocks_02
-                                                                               X 427
-                                                                               Y 69
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_rock
-                                                                                 PIECE rocks_03
-                                                                                 X 399
-                                                                                 Y 109
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_rock
-                                                                                   PIECE rocks_03
-                                                                                   X 402
-                                                                                   Y 69
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_rock
-                                                                                     PIECE rocks_03
-                                                                                     X 368
-                                                                                     Y 120
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_rock
-                                                                                       PIECE rocks_03
-                                                                                       X 378
-                                                                                       Y 86
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_rock
-                                                                                         PIECE steel_01
-                                                                                         X 429
-                                                                                         Y 0
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_rock
-                                                                                           PIECE steel_01
-                                                                                           X 429
-                                                                                           Y 24
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_rock
-                                                                                             PIECE steel_01
-                                                                                             X 405
-                                                                                             Y 24
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_rock
-                                                                                               PIECE steel_01
-                                                                                               X 405
-                                                                                               Y 0
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_rock
-                                                                                                 PIECE steel_01
-                                                                                                 X 381
-                                                                                                 Y 24
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_rock
-                                                                                                   PIECE tree_13
-                                                                                                   X 504
-                                                                                                   Y 76
-                                                                                                   ONE_WAY
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_rock
-                                                                                                     PIECE tree_13
-                                                                                                     X 506
-                                                                                                     Y 70
-                                                                                                     ONE_WAY
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_rock
-                                                                                                       PIECE tree_12
-                                                                                                       X 534
-                                                                                                       Y 69
-                                                                                                       ONE_WAY
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_rock
-                                                                                                         PIECE tree_14
-                                                                                                         X 515
-                                                                                                         Y 67
-                                                                                                         ONE_WAY
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_rock
-                                                                                                           PIECE grass_13
-                                                                                                           X 381
-                                                                                                           Y 48
-                                                                                                           ONE_WAY
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_rock
-                                                                                                             PIECE grass_12
-                                                                                                             X 392
-                                                                                                             Y 48
-                                                                                                             ONE_WAY
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_rock
-                                                                                                               PIECE grass_12
-                                                                                                               X 405
-                                                                                                               Y 48
-                                                                                                               ONE_WAY
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_rock
-                                                                                                                 PIECE grass_13
-                                                                                                                 X 421
-                                                                                                                 Y 47
-                                                                                                                 ONE_WAY
-                                                                                                               $END
-                                                                                                               
-                                                                                                                 $TERRAIN
-                                                                                                                   STYLE slx_rock
-                                                                                                                   PIECE grass_13
-                                                                                                                   X 434
-                                                                                                                   Y 48
-                                                                                                                   ONE_WAY
-                                                                                                                 $END
-                                                                                                                 
-                                                                                                                   $TERRAIN
-                                                                                                                     STYLE slx_rock
-                                                                                                                     PIECE grass_13
-                                                                                                                     X 540
-                                                                                                                     Y 96
-                                                                                                                     ONE_WAY
-                                                                                                                   $END
-                                                                                                                   
-                                                                                                                     $TERRAIN
-                                                                                                                       STYLE slx_rock
-                                                                                                                       PIECE grass_13
-                                                                                                                       X 518
-                                                                                                                       Y 102
-                                                                                                                       ONE_WAY
-                                                                                                                     $END
-                                                                                                                     
-                                                                                                                       $TERRAIN
-                                                                                                                         STYLE slx_rock
-                                                                                                                         PIECE rocks_01
-                                                                                                                         X 360
-                                                                                                                         Y 54
-                                                                                                                         ONE_WAY
-                                                                                                                       $END
-                                                                                                                       
-                                                                                                                         $TERRAIN
-                                                                                                                           STYLE slx_rock
-                                                                                                                           PIECE rocks_01
-                                                                                                                           X 340
-                                                                                                                           Y 21
-                                                                                                                           ONE_WAY
-                                                                                                                         $END
-                                                                                                                         
-                                                                                                                           $TERRAIN
-                                                                                                                             STYLE slx_rock
-                                                                                                                             PIECE rocks_02
-                                                                                                                             X 344
-                                                                                                                             Y 129
-                                                                                                                             ONE_WAY
-                                                                                                                           $END
-                                                                                                                           
-                                                                                                                             $TERRAIN
-                                                                                                                               STYLE slx_rock
-                                                                                                                               PIECE rocks_02
-                                                                                                                               X 331
-                                                                                                                               Y 137
-                                                                                                                               ONE_WAY
-                                                                                                                             $END
-                                                                                                                             
-                                                                                                                               $TERRAIN
-                                                                                                                                 STYLE slx_rock
-                                                                                                                                 PIECE rocks_05
-                                                                                                                                 X 290
-                                                                                                                                 Y 65
-                                                                                                                                 ONE_WAY
-                                                                                                                               $END
-                                                                                                                               
-                                                                                                                                 $TERRAIN
-                                                                                                                                   STYLE slx_rock
-                                                                                                                                   PIECE rocks_05
-                                                                                                                                   X 290
-                                                                                                                                   Y 114
-                                                                                                                                   ONE_WAY
-                                                                                                                                 $END
-                                                                                                                                 
-                                                                                                                                   $TERRAIN
-                                                                                                                                     STYLE slx_rock
-                                                                                                                                     PIECE rocks_04
-                                                                                                                                     X 300
-                                                                                                                                     Y 115
-                                                                                                                                     ONE_WAY
-                                                                                                                                   $END
-                                                                                                                                   
-                                                                                                                                     $TERRAIN
-                                                                                                                                       STYLE slx_rock
-                                                                                                                                       PIECE rocks_04
-                                                                                                                                       X 253
-                                                                                                                                       Y 119
-                                                                                                                                       ONE_WAY
-                                                                                                                                     $END
-                                                                                                                                     
-                                                                                                                                       $TERRAIN
-                                                                                                                                         STYLE slx_rock
-                                                                                                                                         PIECE rocks_05
-                                                                                                                                         X 255
-                                                                                                                                         Y 67
-                                                                                                                                         ONE_WAY
-                                                                                                                                       $END
-                                                                                                                                       
-                                                                                                                                         $TERRAIN
-                                                                                                                                           STYLE slx_rock
-                                                                                                                                           PIECE rocks_01
-                                                                                                                                           X 583
-                                                                                                                                           Y 80
-                                                                                                                                           ONE_WAY
-                                                                                                                                         $END
-                                                                                                                                         
-                                                                                                                                           $TERRAIN
-                                                                                                                                             STYLE slx_rock
-                                                                                                                                             PIECE rocks_01
-                                                                                                                                             X 537
-                                                                                                                                             Y 112
-                                                                                                                                             ONE_WAY
-                                                                                                                                           $END
-                                                                                                                                           
-                                                                                                                                             $TERRAIN
-                                                                                                                                               STYLE slx_rock
-                                                                                                                                               PIECE rocks_01
-                                                                                                                                               X 561
-                                                                                                                                               Y 112
-                                                                                                                                               ONE_WAY
-                                                                                                                                             $END
-                                                                                                                                             
-                                                                                                                                               $TERRAIN
-                                                                                                                                                 STYLE slx_rock
-                                                                                                                                                 PIECE rocks_02
-                                                                                                                                                 X 599
-                                                                                                                                                 Y 84
-                                                                                                                                                 ONE_WAY
-                                                                                                                                               $END
-                                                                                                                                               
-                                                                                                                                                 $TERRAIN
-                                                                                                                                                   STYLE slx_rock
-                                                                                                                                                   PIECE rocks_03
-                                                                                                                                                   X 602
-                                                                                                                                                   Y 121
-                                                                                                                                                   ONE_WAY
-                                                                                                                                                 $END
-                                                                                                                                                 
-                                                                                                                                                   $TERRAIN
-                                                                                                                                                     STYLE slx_rock
-                                                                                                                                                     PIECE rocks_03
-                                                                                                                                                     X 622
-                                                                                                                                                     Y 135
-                                                                                                                                                     ONE_WAY
-                                                                                                                                                   $END
-                                                                                                                                                   
-                                                                                                                                                     $TERRAIN
-                                                                                                                                                       STYLE slx_rock
-                                                                                                                                                       PIECE rocks_01
-                                                                                                                                                       X 643
-                                                                                                                                                       Y 0
-                                                                                                                                                       ONE_WAY
-                                                                                                                                                     $END
-                                                                                                                                                     
-                                                                                                                                                       $TERRAIN
-                                                                                                                                                         STYLE slx_rock
-                                                                                                                                                         PIECE rocks_02
-                                                                                                                                                         X 570
-                                                                                                                                                         Y 17
-                                                                                                                                                         ONE_WAY
-                                                                                                                                                       $END
-                                                                                                                                                       
-                                                                                                                                                         $TERRAIN
-                                                                                                                                                           STYLE slx_rock
-                                                                                                                                                           PIECE rocks_01
-                                                                                                                                                           X 624
-                                                                                                                                                           Y 0
-                                                                                                                                                           ONE_WAY
-                                                                                                                                                         $END
-                                                                                                                                                         
-                                                                                                                                                           $TERRAIN
-                                                                                                                                                             STYLE slx_rock
-                                                                                                                                                             PIECE rocks_04
-                                                                                                                                                             X 588
-                                                                                                                                                             Y 0
-                                                                                                                                                             ONE_WAY
-                                                                                                                                                           $END
-                                                                                                                                                           
-                                                                                                                                                             $TERRAIN
-                                                                                                                                                               STYLE slx_rock
-                                                                                                                                                               PIECE rocks_04
-                                                                                                                                                               X 584
-                                                                                                                                                               Y 57
-                                                                                                                                                               ONE_WAY
-                                                                                                                                                             $END
-                                                                                                                                                             
-                                                                                                                                                               $TERRAIN
-                                                                                                                                                                 STYLE slx_rock
-                                                                                                                                                                 PIECE steel_01
-                                                                                                                                                                 X 257
-                                                                                                                                                                 Y 0
-                                                                                                                                                               $END
-                                                                                                                                                               
-                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                   STYLE slx_rock
-                                                                                                                                                                   PIECE steel_01
-                                                                                                                                                                   X 281
-                                                                                                                                                                   Y 0
-                                                                                                                                                                 $END
-                                                                                                                                                                 
-                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                     STYLE slx_rock
-                                                                                                                                                                     PIECE steel_01
-                                                                                                                                                                     X 305
-                                                                                                                                                                     Y 0
-                                                                                                                                                                   $END
-                                                                                                                                                                   
-                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                       STYLE slx_rock
-                                                                                                                                                                       PIECE steel_01
-                                                                                                                                                                       X 281
-                                                                                                                                                                       Y 23
-                                                                                                                                                                     $END
-                                                                                                                                                                     
-                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                         STYLE slx_rock
-                                                                                                                                                                         PIECE steel_01
-                                                                                                                                                                         X 213
-                                                                                                                                                                         Y 66
-                                                                                                                                                                       $END
-                                                                                                                                                                       
-                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                           STYLE slx_rock
-                                                                                                                                                                           PIECE steel_01
-                                                                                                                                                                           X 213
-                                                                                                                                                                           Y 90
-                                                                                                                                                                         $END
-                                                                                                                                                                         
-                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                             STYLE slx_rock
-                                                                                                                                                                             PIECE steel_01
-                                                                                                                                                                             X 213
-                                                                                                                                                                             Y 114
-                                                                                                                                                                           $END
-                                                                                                                                                                           
-                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                               STYLE slx_rock
-                                                                                                                                                                               PIECE steel_01
-                                                                                                                                                                               X 213
-                                                                                                                                                                               Y 138
-                                                                                                                                                                             $END
-                                                                                                                                                                             
-                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                 STYLE slx_rock
-                                                                                                                                                                                 PIECE steel_01
-                                                                                                                                                                                 X 169
-                                                                                                                                                                                 Y 0
-                                                                                                                                                                               $END
-                                                                                                                                                                               
-                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                   STYLE slx_rock
-                                                                                                                                                                                   PIECE steel_01
-                                                                                                                                                                                   X 169
-                                                                                                                                                                                   Y 37
-                                                                                                                                                                                 $END
-                                                                                                                                                                                 
-                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                     STYLE slx_rock
-                                                                                                                                                                                     PIECE steel_01
-                                                                                                                                                                                     X 169
-                                                                                                                                                                                     Y 61
-                                                                                                                                                                                   $END
-                                                                                                                                                                                   
-                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                       STYLE slx_rock
-                                                                                                                                                                                       PIECE steel_01
-                                                                                                                                                                                       X 169
-                                                                                                                                                                                       Y 85
-                                                                                                                                                                                     $END
-                                                                                                                                                                                     
-                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                         STYLE slx_rock
-                                                                                                                                                                                         PIECE steel_01
-                                                                                                                                                                                         X 169
-                                                                                                                                                                                         Y 109
-                                                                                                                                                                                       $END
-                                                                                                                                                                                       
-                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                           STYLE slx_rock
-                                                                                                                                                                                           PIECE steel_01
-                                                                                                                                                                                           X 169
-                                                                                                                                                                                           Y 133
-                                                                                                                                                                                         $END
-                                                                                                                                                                                         
-                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                             STYLE slx_rock
-                                                                                                                                                                                             PIECE steel_01
-                                                                                                                                                                                             X 169
-                                                                                                                                                                                             Y 156
-                                                                                                                                                                                           $END
-                                                                                                                                                                                           
-                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                               STYLE slx_rock
-                                                                                                                                                                                               PIECE platform_03
-                                                                                                                                                                                               X 151
-                                                                                                                                                                                               Y 35
-                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                             $END
-                                                                                                                                                                                             
-                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                 STYLE slx_rock
-                                                                                                                                                                                                 PIECE platform_02
-                                                                                                                                                                                                 X 135
-                                                                                                                                                                                                 Y 35
-                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                               $END
-                                                                                                                                                                                               
-                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                   STYLE slx_rock
-                                                                                                                                                                                                   PIECE platform_02
-                                                                                                                                                                                                   X 119
-                                                                                                                                                                                                   Y 35
-                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                 $END
-                                                                                                                                                                                                 
-                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                     STYLE slx_rock
-                                                                                                                                                                                                     PIECE platform_02
-                                                                                                                                                                                                     X 103
-                                                                                                                                                                                                     Y 35
-                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                   $END
-                                                                                                                                                                                                   
-                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                       STYLE slx_rock
-                                                                                                                                                                                                       PIECE platform_02
-                                                                                                                                                                                                       X 96
-                                                                                                                                                                                                       Y 35
-                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                     $END
-                                                                                                                                                                                                     
-                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                         STYLE slx_rock
-                                                                                                                                                                                                         PIECE platform_01
-                                                                                                                                                                                                         X 88
-                                                                                                                                                                                                         Y 35
-                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                       $END
-                                                                                                                                                                                                       
-                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                           STYLE slx_rock
-                                                                                                                                                                                                           PIECE rocks_05
-                                                                                                                                                                                                           X 141
-                                                                                                                                                                                                           Y 102
-                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                         $END
-                                                                                                                                                                                                         
-                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                             STYLE slx_rock
-                                                                                                                                                                                                             PIECE rocks_04
-                                                                                                                                                                                                             X 98
-                                                                                                                                                                                                             Y 129
-                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                           $END
-                                                                                                                                                                                                           
-                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                               STYLE slx_rock
-                                                                                                                                                                                                               PIECE rocks_05
-                                                                                                                                                                                                               X 122
-                                                                                                                                                                                                               Y 84
-                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                             $END
-                                                                                                                                                                                                             
-                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                 STYLE slx_rock
-                                                                                                                                                                                                                 PIECE rocks_04
-                                                                                                                                                                                                                 X 77
-                                                                                                                                                                                                                 Y 117
-                                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                                               $END
-                                                                                                                                                                                                               
-                                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                                   STYLE slx_rock
-                                                                                                                                                                                                                   PIECE rocks_02
-                                                                                                                                                                                                                   X 11
-                                                                                                                                                                                                                   Y 113
-                                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                                 $END
-                                                                                                                                                                                                                 
-                                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                                     STYLE slx_rock
-                                                                                                                                                                                                                     PIECE rocks_03
-                                                                                                                                                                                                                     X 50
-                                                                                                                                                                                                                     Y 85
-                                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                                   $END
-                                                                                                                                                                                                                   
-                                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                                       STYLE slx_rock
-                                                                                                                                                                                                                       PIECE rocks_02
-                                                                                                                                                                                                                       X 65
-                                                                                                                                                                                                                       Y 87
-                                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                                     $END
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                                         STYLE slx_rock
-                                                                                                                                                                                                                         PIECE rocks_03
-                                                                                                                                                                                                                         X 89
-                                                                                                                                                                                                                         Y 63
-                                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                                       $END
-                                                                                                                                                                                                                       
-                                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                                           STYLE slx_rock
-                                                                                                                                                                                                                           PIECE rocks_06
-                                                                                                                                                                                                                           X 323
-                                                                                                                                                                                                                           Y 90
-                                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                                         $END
-                                                                                                                                                                                                                         
-                                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                                             STYLE slx_rock
-                                                                                                                                                                                                                             PIECE rocks_01
-                                                                                                                                                                                                                             X 609
-                                                                                                                                                                                                                             Y -36
-                                                                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                                           $END
-                                                                                                                                                                                                                           
-                                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                                               STYLE slx_rock
-                                                                                                                                                                                                                               PIECE rocks_01
-                                                                                                                                                                                                                               X 635
-                                                                                                                                                                                                                               Y -52
-                                                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                                             $END
-                                                                                                                                                                                                                             
-                                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                                 STYLE slx_rock
-                                                                                                                                                                                                                                 PIECE rocks_01
-                                                                                                                                                                                                                                 X 646
-                                                                                                                                                                                                                                 Y -34
-                                                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                                                               $END
-                                                                                                                                                                                                                               
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 481
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_03
+   X 496
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 479
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_01
+   X 473
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_03
+   X 495
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_08
+   X 473
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_08
+   X 484
+   Y 40
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_08
+   X 472
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_08
+   X 485
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_09
+   X 470
+   Y 50
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_09
+   X 470
+   Y 39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_09
+   X 498
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_09
+   X 530
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 490
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 470
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE tree_01
+   X 508
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 504
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_12
+   X 514
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_12
+   X 500
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_11
+   X 510
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_12
+   X 525
+   Y 53
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE tree_01
+   X 543
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 539
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_12
+   X 548
+   Y 56
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_12
+   X 527
+   Y 60
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 504
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 520
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 540
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_01
+   X 532
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_03
+   X 555
+   Y 89
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_03
+   X 534
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_01
+   X 498
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 464
+   Y 91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 474
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 453
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 431
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 425
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 427
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 399
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 402
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 368
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 378
+   Y 86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 429
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 429
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 405
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 405
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 381
+   Y 24
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE tree_13
+   X 504
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE tree_13
+   X 506
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE tree_12
+   X 534
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE tree_14
+   X 515
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 381
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_12
+   X 392
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_12
+   X 405
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 421
+   Y 47
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 434
+   Y 48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 540
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE grass_13
+   X 518
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 360
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 340
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 344
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 331
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_05
+   X 290
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_05
+   X 290
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_04
+   X 300
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_04
+   X 253
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_05
+   X 255
+   Y 67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 583
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 537
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 561
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 599
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 602
+   Y 121
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 622
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 643
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 570
+   Y 17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 624
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_04
+   X 588
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_04
+   X 584
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 257
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 281
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 305
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 281
+   Y 23
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 213
+   Y 66
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 213
+   Y 90
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 213
+   Y 114
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 213
+   Y 138
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 169
+   Y 0
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 169
+   Y 37
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 169
+   Y 61
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 169
+   Y 85
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 169
+   Y 109
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 169
+   Y 133
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE steel_01
+   X 169
+   Y 156
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_03
+   X 151
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 135
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 119
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 103
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_02
+   X 96
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE platform_01
+   X 88
+   Y 35
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_05
+   X 141
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_04
+   X 98
+   Y 129
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_05
+   X 122
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_04
+   X 77
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 11
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 50
+   Y 85
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 65
+   Y 87
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 89
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_06
+   X 323
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 609
+   Y -36
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 635
+   Y -52
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 646
+   Y -34
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
  

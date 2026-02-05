@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID xD0ACF0C8D0ACF0C8
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -78,1174 +78,1174 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_bubble
-     PIECE pipe_large_09
-     X 196
-     Y 73
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_bubble
-       PIECE pipe_large_09
-       X 227
-       Y 73
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_bubble
-         PIECE pipe_large_09
-         X 259
-         Y 73
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_bubble
-           PIECE pipe_large_09
-           X 291
-           Y 73
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_bubble
-             PIECE pipe_large_09
-             X 323
-             Y 73
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_bubble
-               PIECE pipe_large_09
-               X 355
-               Y 73
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_bubble
-                 PIECE pipe_large_09
-                 X 387
-                 Y 73
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_bubble
-                   PIECE pipe_large_06
-                   X 228
-                   Y 76
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_bubble
-                     PIECE pipe_large_06
-                     X 296
-                     Y 76
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_bubble
-                       PIECE pipe_large_01
-                       X 238
-                       Y 102
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_bubble
-                         PIECE pipe_large_04
-                         X 285
-                         Y 102
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_bubble
-                           PIECE pipe_large_05
-                           X 257
-                           Y 123
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_bubble
-                             PIECE pipe_large_08
-                             X 265
-                             Y 140
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_bubble
-                               PIECE pipe_large_07
-                               X 132
-                               Y 65
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_bubble
-                                 PIECE pipe_large_07
-                                 X 132
-                                 Y 96
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_bubble
-                                   PIECE pipe_large_03
-                                   X 162
-                                   Y 107
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_bubble
-                                     PIECE pipe_large_02
-                                     X 102
-                                     Y 107
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_bubble
-                                       PIECE pipe_large_01
-                                       X 102
-                                       Y 123
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_bubble
-                                         PIECE pipe_large_04
-                                         X 162
-                                         Y 123
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_bubble
-                                           PIECE pipe_large_05
-                                           X 131
-                                           Y 144
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_bubble
-                                             PIECE pipe_large_12
-                                             X 141
-                                             Y 120
-                                             FLIP_VERTICAL
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_bubble
-                                               PIECE pipe_large_10
-                                               X 117
-                                               Y 73
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_bubble
-                                                 PIECE pipe_large_12
-                                                 X 141
-                                                 Y 49
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_bubble
-                                                   PIECE pipe_large_07
-                                                   X 367
-                                                   Y 65
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_bubble
-                                                     PIECE pipe_large_07
-                                                     X 367
-                                                     Y 81
-                                                     ERASE
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_bubble
-                                                       PIECE pipe_large_09
-                                                       X 377
-                                                       Y 73
-                                                       NO_OVERWRITE
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_bubble
-                                                         PIECE pipe_large_06
-                                                         X 368
-                                                         Y 51
-                                                         NO_OVERWRITE
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_bubble
-                                                           PIECE pipe_large_04
-                                                           X 400
-                                                           Y 30
-                                                           NO_OVERWRITE
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_bubble
-                                                             PIECE pipe_large_01
-                                                             X 337
-                                                             Y 30
-                                                             NO_OVERWRITE
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_bubble
-                                                               PIECE pipe_large_02
-                                                               X 337
-                                                               Y 12
-                                                               NO_OVERWRITE
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_bubble
-                                                                 PIECE pipe_large_09
-                                                                 X 368
-                                                                 Y 9
-                                                                 NO_OVERWRITE
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_bubble
-                                                                   PIECE pipe_large_09
-                                                                   X 383
-                                                                   Y 9
-                                                                   NO_OVERWRITE
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_bubble
-                                                                     PIECE pipe_large_03
-                                                                     X 400
-                                                                     Y 12
-                                                                     NO_OVERWRITE
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_bubble
-                                                                       PIECE pipe_large_09
-                                                                       X 419
-                                                                       Y 73
-                                                                       NO_OVERWRITE
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_bubble
-                                                                         PIECE pipe_large_09
-                                                                         X 450
-                                                                         Y 73
-                                                                         NO_OVERWRITE
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_bubble
-                                                                           PIECE pipe_large_07
-                                                                           X 271
-                                                                           Y 65
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_bubble
-                                                                             PIECE pipe_large_08
-                                                                             X 280
-                                                                             Y 33
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_bubble
-                                                                               PIECE pipe_large_08
-                                                                               X 280
-                                                                               Y 2
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_bubble
-                                                                                 PIECE pipe_large_08
-                                                                                 X 280
-                                                                                 Y -4
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_bubble
-                                                                                   PIECE pipe_large_12
-                                                                                   X 280
-                                                                                   Y 94
-                                                                                   FLIP_VERTICAL
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_bubble
-                                                                                     PIECE pipe_large_04
-                                                                                     X 475
-                                                                                     Y 55
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_bubble
-                                                                                       PIECE pipe_large_08
-                                                                                       X 494
-                                                                                       Y 24
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_bubble
-                                                                                         PIECE pipe_large_08
-                                                                                         X 494
-                                                                                         Y -7
-                                                                                         ONE_WAY
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_bubble
-                                                                                           PIECE pipe_large_08
-                                                                                           X 409
-                                                                                           Y 132
-                                                                                           ONE_WAY
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_bubble
-                                                                                             PIECE pipe_large_02
-                                                                                             X 411
-                                                                                             Y 107
-                                                                                             ONE_WAY
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_bubble
-                                                                                               PIECE pipe_large_05
-                                                                                               X 443
-                                                                                               Y 107
-                                                                                               ONE_WAY
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_bubble
-                                                                                                 PIECE pipe_large_05
-                                                                                                 X 475
-                                                                                                 Y 107
-                                                                                                 ONE_WAY
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_bubble
-                                                                                                   PIECE pipe_large_05
-                                                                                                   X 506
-                                                                                                   Y 107
-                                                                                                   ONE_WAY
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_bubble
-                                                                                                     PIECE pipe_large_09
-                                                                                                     X 538
-                                                                                                     Y 104
-                                                                                                     ONE_WAY
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_bubble
-                                                                                                       PIECE pipe_large_08
-                                                                                                       X 451
-                                                                                                       Y 139
-                                                                                                       ONE_WAY
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_bubble
-                                                                                                         PIECE pipe_large_08
-                                                                                                         X 514
-                                                                                                         Y 138
-                                                                                                         ONE_WAY
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_bubble
-                                                                                                           PIECE pipe_large_12
-                                                                                                           X 483
-                                                                                                           Y 135
-                                                                                                           FLIP_VERTICAL
-                                                                                                           ONE_WAY
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_bubble
-                                                                                                             PIECE pipe_large_09
-                                                                                                             X 568
-                                                                                                             Y 104
-                                                                                                             ONE_WAY
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_bubble
-                                                                                                               PIECE pipe_large_09
-                                                                                                               X 588
-                                                                                                               Y 104
-                                                                                                               ONE_WAY
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_bubble
-                                                                                                                 PIECE pipe_large_11
-                                                                                                                 X 619
-                                                                                                                 Y 104
-                                                                                                                 ONE_WAY
-                                                                                                               $END
-                                                                                                               
-                                                                                                                 $TERRAIN
-                                                                                                                   STYLE slx_bubble
-                                                                                                                   PIECE bubbles_gold_01
-                                                                                                                   X 331
-                                                                                                                   Y 100
-                                                                                                                   ONE_WAY
-                                                                                                                 $END
-                                                                                                                 
-                                                                                                                   $TERRAIN
-                                                                                                                     STYLE slx_bubble
-                                                                                                                     PIECE bubbles_gold_01
-                                                                                                                     X 356
-                                                                                                                     Y 110
-                                                                                                                     ONE_WAY
-                                                                                                                   $END
-                                                                                                                   
-                                                                                                                     $TERRAIN
-                                                                                                                       STYLE slx_bubble
-                                                                                                                       PIECE bubbles_gold_01
-                                                                                                                       X 328
-                                                                                                                       Y 131
-                                                                                                                       ONE_WAY
-                                                                                                                     $END
-                                                                                                                     
-                                                                                                                       $TERRAIN
-                                                                                                                         STYLE slx_bubble
-                                                                                                                         PIECE bubbles_gold_01
-                                                                                                                         X 352
-                                                                                                                         Y 138
-                                                                                                                         ONE_WAY
-                                                                                                                       $END
-                                                                                                                       
-                                                                                                                         $TERRAIN
-                                                                                                                           STYLE slx_bubble
-                                                                                                                           PIECE bubbles_gold_01
-                                                                                                                           X 235
-                                                                                                                           Y -11
-                                                                                                                           ONE_WAY
-                                                                                                                         $END
-                                                                                                                         
-                                                                                                                           $TERRAIN
-                                                                                                                             STYLE slx_bubble
-                                                                                                                             PIECE bubbles_gold_01
-                                                                                                                             X 234
-                                                                                                                             Y 14
-                                                                                                                             ONE_WAY
-                                                                                                                           $END
-                                                                                                                           
-                                                                                                                             $TERRAIN
-                                                                                                                               STYLE slx_bubble
-                                                                                                                               PIECE bubbles_gold_01
-                                                                                                                               X 201
-                                                                                                                               Y 132
-                                                                                                                               ONE_WAY
-                                                                                                                             $END
-                                                                                                                             
-                                                                                                                               $TERRAIN
-                                                                                                                                 STYLE slx_bubble
-                                                                                                                                 PIECE bubbles_gold_01
-                                                                                                                                 X 103
-                                                                                                                                 Y -11
-                                                                                                                                 ONE_WAY
-                                                                                                                               $END
-                                                                                                                               
-                                                                                                                                 $TERRAIN
-                                                                                                                                   STYLE slx_bubble
-                                                                                                                                   PIECE bubbles_gold_01
-                                                                                                                                   X 88
-                                                                                                                                   Y 17
-                                                                                                                                   ONE_WAY
-                                                                                                                                 $END
-                                                                                                                                 
-                                                                                                                                   $TERRAIN
-                                                                                                                                     STYLE slx_bubble
-                                                                                                                                     PIECE bubbles_gold_01
-                                                                                                                                     X 83
-                                                                                                                                     Y -11
-                                                                                                                                     ONE_WAY
-                                                                                                                                   $END
-                                                                                                                                   
-                                                                                                                                     $TERRAIN
-                                                                                                                                       STYLE slx_bubble
-                                                                                                                                       PIECE bubbles_gold_01
-                                                                                                                                       X 72
-                                                                                                                                       Y 36
-                                                                                                                                       ONE_WAY
-                                                                                                                                     $END
-                                                                                                                                     
-                                                                                                                                       $TERRAIN
-                                                                                                                                         STYLE slx_bubble
-                                                                                                                                         PIECE bubbles_gold_01
-                                                                                                                                         X 67
-                                                                                                                                         Y 12
-                                                                                                                                         ONE_WAY
-                                                                                                                                       $END
-                                                                                                                                       
-                                                                                                                                         $TERRAIN
-                                                                                                                                           STYLE slx_bubble
-                                                                                                                                           PIECE bubbles_gold_01
-                                                                                                                                           X 58
-                                                                                                                                           Y -11
-                                                                                                                                           ONE_WAY
-                                                                                                                                         $END
-                                                                                                                                         
-                                                                                                                                           $TERRAIN
-                                                                                                                                             STYLE slx_bubble
-                                                                                                                                             PIECE bubbles_gold_01
-                                                                                                                                             X 119
-                                                                                                                                             Y -22
-                                                                                                                                             ONE_WAY
-                                                                                                                                           $END
-                                                                                                                                           
-                                                                                                                                             $TERRAIN
-                                                                                                                                               STYLE slx_bubble
-                                                                                                                                               PIECE bubbles_gold_01
-                                                                                                                                               X 142
-                                                                                                                                               Y -29
-                                                                                                                                               ONE_WAY
-                                                                                                                                             $END
-                                                                                                                                             
-                                                                                                                                               $TERRAIN
-                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                 PIECE bubbles_gold_01
-                                                                                                                                                 X 219
-                                                                                                                                                 Y -19
-                                                                                                                                                 ONE_WAY
-                                                                                                                                               $END
-                                                                                                                                               
-                                                                                                                                                 $TERRAIN
-                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                   PIECE bubbles_gold_01
-                                                                                                                                                   X 198
-                                                                                                                                                   Y -28
-                                                                                                                                                   ONE_WAY
-                                                                                                                                                 $END
-                                                                                                                                                 
-                                                                                                                                                   $TERRAIN
-                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                     PIECE bubbles_gold_01
-                                                                                                                                                     X 170
-                                                                                                                                                     Y -29
-                                                                                                                                                     ONE_WAY
-                                                                                                                                                   $END
-                                                                                                                                                   
-                                                                                                                                                     $TERRAIN
-                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                       PIECE bubbles_gold_02
-                                                                                                                                                       X 249
-                                                                                                                                                       Y -15
-                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                       ONE_WAY
-                                                                                                                                                     $END
-                                                                                                                                                     
-                                                                                                                                                       $TERRAIN
-                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                         PIECE bubbles_gold_01
-                                                                                                                                                         X 274
-                                                                                                                                                         Y -20
-                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                         ONE_WAY
-                                                                                                                                                       $END
-                                                                                                                                                       
-                                                                                                                                                         $TERRAIN
-                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                           PIECE bubbles_gold_02
-                                                                                                                                                           X 246
-                                                                                                                                                           Y -3
-                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                           ONE_WAY
-                                                                                                                                                         $END
-                                                                                                                                                         
-                                                                                                                                                           $TERRAIN
-                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                             PIECE bubbles_gold_02
-                                                                                                                                                             X 266
-                                                                                                                                                             Y -10
-                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                             ONE_WAY
-                                                                                                                                                           $END
-                                                                                                                                                           
-                                                                                                                                                             $TERRAIN
-                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                               PIECE bubbles_gold_01
-                                                                                                                                                               X 290
-                                                                                                                                                               Y -29
-                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                               ONE_WAY
-                                                                                                                                                             $END
-                                                                                                                                                             
-                                                                                                                                                               $TERRAIN
-                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                 PIECE bubbles_gold_01
-                                                                                                                                                                 X 240
-                                                                                                                                                                 Y 2
-                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                 ONE_WAY
-                                                                                                                                                               $END
-                                                                                                                                                               
-                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                   PIECE bubbles_gold_01
-                                                                                                                                                                   X 63
-                                                                                                                                                                   Y 59
-                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                 $END
-                                                                                                                                                                 
-                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                     PIECE bubbles_gold_01
-                                                                                                                                                                     X 48
-                                                                                                                                                                     Y 25
-                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                   $END
-                                                                                                                                                                   
-                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                       PIECE bubbles_gold_01
-                                                                                                                                                                       X 51
-                                                                                                                                                                       Y 84
-                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                     $END
-                                                                                                                                                                     
-                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                         PIECE bubbles_gold_01
-                                                                                                                                                                         X 41
-                                                                                                                                                                         Y 113
-                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                       $END
-                                                                                                                                                                       
-                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                                           PIECE bubbles_gold_01
-                                                                                                                                                                           X 48
-                                                                                                                                                                           Y 139
-                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                         $END
-                                                                                                                                                                         
-                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                                             PIECE bubbles_gold_01
-                                                                                                                                                                             X 21
-                                                                                                                                                                             Y 137
-                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                           $END
-                                                                                                                                                                           
-                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                                               PIECE bubbles_gold_01
-                                                                                                                                                                               X 35
-                                                                                                                                                                               Y 120
-                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                             $END
-                                                                                                                                                                             
-                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                                 PIECE bubbles_gold_01
-                                                                                                                                                                                 X 41
-                                                                                                                                                                                 Y 99
-                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                               $END
-                                                                                                                                                                               
-                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                                   PIECE bubbles_gold_01
-                                                                                                                                                                                   X 50
-                                                                                                                                                                                   Y 54
-                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                 $END
-                                                                                                                                                                                 
-                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                                     PIECE bubbles_gold_01
-                                                                                                                                                                                     X 42
-                                                                                                                                                                                     Y -5
-                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                   $END
-                                                                                                                                                                                   
-                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                                       PIECE bubbles_gold_01
-                                                                                                                                                                                       X 27
-                                                                                                                                                                                       Y -16
-                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                     $END
-                                                                                                                                                                                     
-                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                                         PIECE bubbles_gold_01
-                                                                                                                                                                                         X 224
-                                                                                                                                                                                         Y 142
-                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                       $END
-                                                                                                                                                                                       
-                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                                                           PIECE bubbles_gold_01
-                                                                                                                                                                                           X 525
-                                                                                                                                                                                           Y -29
-                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                         $END
-                                                                                                                                                                                         
-                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                                                             PIECE bubbles_gold_01
-                                                                                                                                                                                             X 540
-                                                                                                                                                                                             Y -17
-                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                           $END
-                                                                                                                                                                                           
-                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                                                               PIECE bubbles_gold_01
-                                                                                                                                                                                               X 559
-                                                                                                                                                                                               Y -8
-                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                             $END
-                                                                                                                                                                                             
-                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                                                 PIECE bubbles_gold_01
-                                                                                                                                                                                                 X 577
-                                                                                                                                                                                                 Y -2
-                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                               $END
-                                                                                                                                                                                               
-                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                                                   PIECE bubbles_gold_01
-                                                                                                                                                                                                   X 592
-                                                                                                                                                                                                   Y -21
-                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                 $END
-                                                                                                                                                                                                 
-                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                                                     PIECE bubbles_gold_01
-                                                                                                                                                                                                     X 601
-                                                                                                                                                                                                     Y 0
-                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                   $END
-                                                                                                                                                                                                   
-                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                                                       PIECE bubbles_gold_01
-                                                                                                                                                                                                       X 615
-                                                                                                                                                                                                       Y -19
-                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                     $END
-                                                                                                                                                                                                     
-                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                                                         PIECE bubbles_gold_01
-                                                                                                                                                                                                         X 643
-                                                                                                                                                                                                         Y -26
-                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                       $END
-                                                                                                                                                                                                       
-                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                                                                           PIECE bubbles_gold_01
-                                                                                                                                                                                                           X 624
-                                                                                                                                                                                                           Y -5
-                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                         $END
-                                                                                                                                                                                                         
-                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                                                                             PIECE bubbles_gold_01
-                                                                                                                                                                                                             X 636
-                                                                                                                                                                                                             Y -16
-                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                           $END
-                                                                                                                                                                                                           
-                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                                                                               PIECE bubbles_blue_02
-                                                                                                                                                                                                               X 523
-                                                                                                                                                                                                               Y 112
-                                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                             $END
-                                                                                                                                                                                                             
-                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                                                                 PIECE bubbles_blue_02
-                                                                                                                                                                                                                 X 523
-                                                                                                                                                                                                                 Y 134
-                                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                                               $END
-                                                                                                                                                                                                               
-                                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                                                                   PIECE bubbles_blue_02
-                                                                                                                                                                                                                   X 544
-                                                                                                                                                                                                                   Y 112
-                                                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                                 $END
-                                                                                                                                                                                                                 
-                                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                                                                     PIECE bubbles_blue_02
-                                                                                                                                                                                                                     X 543
-                                                                                                                                                                                                                     Y 133
-                                                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                                   $END
-                                                                                                                                                                                                                   
-                                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                                                                       PIECE bubbles_blue_02
-                                                                                                                                                                                                                       X 552
-                                                                                                                                                                                                                       Y 135
-                                                                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                                     $END
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                                                                         PIECE bubbles_blue_02
-                                                                                                                                                                                                                         X 562
-                                                                                                                                                                                                                         Y 115
-                                                                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                                       $END
-                                                                                                                                                                                                                       
-                                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                                                                                           PIECE bubbles_blue_02
-                                                                                                                                                                                                                           X 577
-                                                                                                                                                                                                                           Y 112
-                                                                                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                                         $END
-                                                                                                                                                                                                                         
-                                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                                                                                             PIECE bubbles_blue_02
-                                                                                                                                                                                                                             X 571
-                                                                                                                                                                                                                             Y 138
-                                                                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                                           $END
-                                                                                                                                                                                                                           
-                                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                                                                                               PIECE bubbles_blue_02
-                                                                                                                                                                                                                               X 589
-                                                                                                                                                                                                                               Y 109
-                                                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                                             $END
-                                                                                                                                                                                                                             
-                                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                                                                                 PIECE bubbles_blue_02
-                                                                                                                                                                                                                                 X 589
-                                                                                                                                                                                                                                 Y 132
-                                                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                                                               $END
-                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                                                                                   PIECE bubbles_blue_02
-                                                                                                                                                                                                                                   X 608
-                                                                                                                                                                                                                                   Y 112
-                                                                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                                                 $END
-                                                                                                                                                                                                                                 
-                                                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                                                                                     PIECE bubbles_blue_02
-                                                                                                                                                                                                                                     X 608
-                                                                                                                                                                                                                                     Y 136
-                                                                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                                                   $END
-                                                                                                                                                                                                                                   
-                                                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                                                                                       PIECE bubbles_blue_02
-                                                                                                                                                                                                                                       X 625
-                                                                                                                                                                                                                                       Y 116
-                                                                                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                                                     $END
-                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                                                                                         PIECE bubbles_blue_02
-                                                                                                                                                                                                                                         X 633
-                                                                                                                                                                                                                                         Y 136
-                                                                                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                                                       $END
-                                                                                                                                                                                                                                       
-                                                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                                                                                                           PIECE bubbles_blue_02
-                                                                                                                                                                                                                                           X 648
-                                                                                                                                                                                                                                           Y 114
-                                                                                                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                                                         $END
-                                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                                                                                                             PIECE bubbles_blue_02
-                                                                                                                                                                                                                                             X 654
-                                                                                                                                                                                                                                             Y 128
-                                                                                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                                                           $END
-                                                                                                                                                                                                                                           
-                                                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                                                                                                               PIECE bubbles_blue_02
-                                                                                                                                                                                                                                               X 671
-                                                                                                                                                                                                                                               Y 107
-                                                                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                                                             $END
-                                                                                                                                                                                                                                             
-                                                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                                                                                                 PIECE bubbles_blue_02
-                                                                                                                                                                                                                                                 X 666
-                                                                                                                                                                                                                                                 Y 120
-                                                                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                                                                               $END
-                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                                                                                                   PIECE bubbles_blue_02
-                                                                                                                                                                                                                                                   X 685
-                                                                                                                                                                                                                                                   Y 95
-                                                                                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                                                                 $END
-                                                                                                                                                                                                                                                 
-                                                                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                                                                                                     PIECE bubbles_blue_02
-                                                                                                                                                                                                                                                     X 679
-                                                                                                                                                                                                                                                     Y 106
-                                                                                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                                                                   $END
-                                                                                                                                                                                                                                                   
-                                                                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                                                                                                       PIECE bubbles_blue_02
-                                                                                                                                                                                                                                                       X 687
-                                                                                                                                                                                                                                                       Y 73
-                                                                                                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                                                                     $END
-                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                                                                                                         PIECE bubbles_blue_02
-                                                                                                                                                                                                                                                         X 680
-                                                                                                                                                                                                                                                         Y 56
-                                                                                                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                                                                       $END
-                                                                                                                                                                                                                                                       
-                                                                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                                                                                                                           PIECE bubbles_blue_02
-                                                                                                                                                                                                                                                           X 668
-                                                                                                                                                                                                                                                           Y 48
-                                                                                                                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                                                                         $END
-                                                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                                                                                                                             PIECE bubbles_blue_02
-                                                                                                                                                                                                                                                             X 656
-                                                                                                                                                                                                                                                             Y 44
-                                                                                                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                                                                           $END
-                                                                                                                                                                                                                                                           
-                                                                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                                                                                                                               PIECE bubbles_blue_01
-                                                                                                                                                                                                                                                               X 642
-                                                                                                                                                                                                                                                               Y 48
-                                                                                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                                                                             $END
-                                                                                                                                                                                                                                                             
-                                                                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                                                                                                                 PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                 X 379
-                                                                                                                                                                                                                                                                 Y 128
-                                                                                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                                                                                               $END
-                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                                                                                                                   PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                   X 399
-                                                                                                                                                                                                                                                                   Y 131
-                                                                                                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                                                                                 $END
-                                                                                                                                                                                                                                                                 
-                                                                                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                                                                                                                     PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                     X 423
-                                                                                                                                                                                                                                                                     Y 136
-                                                                                                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                                                                                   $END
-                                                                                                                                                                                                                                                                   
-                                                                                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                                                                                                                       PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                       X 442
-                                                                                                                                                                                                                                                                       Y 139
-                                                                                                                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                                                                                     $END
-                                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                                                                                                                         PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                         X 465
-                                                                                                                                                                                                                                                                         Y 129
-                                                                                                                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                                                                                       $END
-                                                                                                                                                                                                                                                                       
-                                                                                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                                                                                           STYLE slx_bubble
-                                                                                                                                                                                                                                                                           PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                           X 488
-                                                                                                                                                                                                                                                                           Y 129
-                                                                                                                                                                                                                                                                           NO_OVERWRITE
-                                                                                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                                                                                         $END
-                                                                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                                                                                             STYLE slx_bubble
-                                                                                                                                                                                                                                                                             PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                             X 310
-                                                                                                                                                                                                                                                                             Y 141
-                                                                                                                                                                                                                                                                             NO_OVERWRITE
-                                                                                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                                                                                           $END
-                                                                                                                                                                                                                                                                           
-                                                                                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                                                                                               STYLE slx_bubble
-                                                                                                                                                                                                                                                                               PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                               X 288
-                                                                                                                                                                                                                                                                               Y 147
-                                                                                                                                                                                                                                                                               NO_OVERWRITE
-                                                                                                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                                                                                                             $END
-                                                                                                                                                                                                                                                                             
-                                                                                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                                                                                 STYLE slx_bubble
-                                                                                                                                                                                                                                                                                 PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                                 X 263
-                                                                                                                                                                                                                                                                                 Y 149
-                                                                                                                                                                                                                                                                                 NO_OVERWRITE
-                                                                                                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                                                                                                               $END
-                                                                                                                                                                                                                                                                               
-                                                                                                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                                                                                                   STYLE slx_bubble
-                                                                                                                                                                                                                                                                                   PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                                   X 241
-                                                                                                                                                                                                                                                                                   Y 147
-                                                                                                                                                                                                                                                                                   NO_OVERWRITE
-                                                                                                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                                                                                                 $END
-                                                                                                                                                                                                                                                                                 
-                                                                                                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                                                                                                     STYLE slx_bubble
-                                                                                                                                                                                                                                                                                     PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                                     X 64
-                                                                                                                                                                                                                                                                                     Y 131
-                                                                                                                                                                                                                                                                                     NO_OVERWRITE
-                                                                                                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                                                                                                   $END
-                                                                                                                                                                                                                                                                                   
-                                                                                                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                                                                                                       STYLE slx_bubble
-                                                                                                                                                                                                                                                                                       PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                                       X 62
-                                                                                                                                                                                                                                                                                       Y 106
-                                                                                                                                                                                                                                                                                       NO_OVERWRITE
-                                                                                                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                                                                                                     $END
-                                                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                                                                                                         STYLE slx_bubble
-                                                                                                                                                                                                                                                                                         PIECE bubbles_gold_02
-                                                                                                                                                                                                                                                                                         X 63
-                                                                                                                                                                                                                                                                                         Y 78
-                                                                                                                                                                                                                                                                                         NO_OVERWRITE
-                                                                                                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                                                                                                       $END
-                                                                                                                                                                                                                                                                                       
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 196
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 227
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 259
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 291
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 323
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 355
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 387
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_06
+   X 228
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_06
+   X 296
+   Y 76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_01
+   X 238
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_04
+   X 285
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_05
+   X 257
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 265
+   Y 140
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_07
+   X 132
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_07
+   X 132
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_03
+   X 162
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_02
+   X 102
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_01
+   X 102
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_04
+   X 162
+   Y 123
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_05
+   X 131
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_12
+   X 141
+   Y 120
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_10
+   X 117
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_12
+   X 141
+   Y 49
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_07
+   X 367
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_07
+   X 367
+   Y 81
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 377
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_06
+   X 368
+   Y 51
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_04
+   X 400
+   Y 30
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_01
+   X 337
+   Y 30
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_02
+   X 337
+   Y 12
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 368
+   Y 9
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 383
+   Y 9
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_03
+   X 400
+   Y 12
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 419
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 450
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_07
+   X 271
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 280
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 280
+   Y 2
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 280
+   Y -4
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_12
+   X 280
+   Y 94
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_04
+   X 475
+   Y 55
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 494
+   Y 24
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 494
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 409
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_02
+   X 411
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_05
+   X 443
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_05
+   X 475
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_05
+   X 506
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 538
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 451
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_08
+   X 514
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_12
+   X 483
+   Y 135
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 568
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_09
+   X 588
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE pipe_large_11
+   X 619
+   Y 104
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 331
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 356
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 328
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 352
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 235
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 234
+   Y 14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 201
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 103
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 88
+   Y 17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 83
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 72
+   Y 36
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 67
+   Y 12
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 58
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 119
+   Y -22
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 142
+   Y -29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 219
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 198
+   Y -28
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 170
+   Y -29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 249
+   Y -15
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 274
+   Y -20
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 246
+   Y -3
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 266
+   Y -10
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 290
+   Y -29
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 240
+   Y 2
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 63
+   Y 59
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 48
+   Y 25
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 51
+   Y 84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 41
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 48
+   Y 139
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 21
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 35
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 41
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 50
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 42
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 27
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 224
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 525
+   Y -29
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 540
+   Y -17
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 559
+   Y -8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 577
+   Y -2
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 592
+   Y -21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 601
+   Y 0
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 615
+   Y -19
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 643
+   Y -26
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 624
+   Y -5
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_01
+   X 636
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 523
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 523
+   Y 134
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 544
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 543
+   Y 133
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 552
+   Y 135
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 562
+   Y 115
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 577
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 571
+   Y 138
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 589
+   Y 109
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 589
+   Y 132
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 608
+   Y 112
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 608
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 625
+   Y 116
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 633
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 648
+   Y 114
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 654
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 671
+   Y 107
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 666
+   Y 120
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 685
+   Y 95
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 679
+   Y 106
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 687
+   Y 73
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 680
+   Y 56
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 668
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_02
+   X 656
+   Y 44
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_blue_01
+   X 642
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 379
+   Y 128
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 399
+   Y 131
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 423
+   Y 136
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 442
+   Y 139
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 465
+   Y 129
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 488
+   Y 129
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 310
+   Y 141
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 288
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 263
+   Y 149
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 241
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 64
+   Y 131
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 62
+   Y 106
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_bubble
+   PIECE bubbles_gold_02
+   X 63
+   Y 78
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Prima Lemmings
  MUSIC menace_amiga
  ID x948E5505948E5505
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -129,330 +129,330 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_rock
-     PIECE rocks_08
-     X 201
-     Y 112
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_rock
-       PIECE rocks_08
-       X 179
-       Y 134
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_rock
-         PIECE rocks_08
-         X 296
-         Y 98
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_rock
-           PIECE rocks_08
-           X 298
-           Y 119
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_rock
-             PIECE rocks_08
-             X 264
-             Y 142
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_rock
-               PIECE rocks_08
-               X 396
-               Y 95
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_rock
-                 PIECE rocks_08
-                 X 387
-                 Y 111
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_rock
-                   PIECE rocks_08
-                   X 360
-                   Y 137
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_rock
-                     PIECE rocks_08
-                     X 468
-                     Y 100
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_rock
-                       PIECE rocks_08
-                       X 465
-                       Y 122
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_rock
-                         PIECE rocks_08
-                         X 465
-                         Y 141
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_rock
-                           PIECE rocks_08
-                           X 564
-                           Y 94
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_rock
-                             PIECE rocks_08
-                             X 564
-                             Y 115
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_rock
-                               PIECE rocks_08
-                               X 557
-                               Y 136
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_rock
-                                 PIECE rocks_01
-                                 X 573
-                                 Y 6
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_rock
-                                   PIECE rocks_01
-                                   X 560
-                                   Y 8
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_rock
-                                     PIECE rocks_02
-                                     X 670
-                                     Y 94
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_rock
-                                       PIECE rocks_02
-                                       X 641
-                                       Y 118
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_rock
-                                         PIECE crystal_03
-                                         X 133
-                                         Y 132
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_rock
-                                           PIECE crystal_03
-                                           X 133
-                                           Y 111
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_rock
-                                             PIECE crystal_03
-                                             X 133
-                                             Y 90
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_rock
-                                               PIECE crystal_01
-                                               X 123
-                                               Y 100
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_rock
-                                                 PIECE crystal_01
-                                                 X 123
-                                                 Y 122
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_rock
-                                                   PIECE crystal_01
-                                                   X 123
-                                                   Y 97
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_rock
-                                                     PIECE crystal_04
-                                                     X 130
-                                                     Y 89
-                                                     NO_OVERWRITE
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_rock
-                                                       PIECE crystal_02
-                                                       X 143
-                                                       Y 127
-                                                       NO_OVERWRITE
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_rock
-                                                         PIECE crystal_06
-                                                         X 110
-                                                         Y 104
-                                                         NO_OVERWRITE
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_rock
-                                                           PIECE crystal_06
-                                                           X 116
-                                                           Y 127
-                                                           NO_OVERWRITE
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_rock
-                                                             PIECE crystal_06
-                                                             X 108
-                                                             Y 130
-                                                             NO_OVERWRITE
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_rock
-                                                               PIECE crystal_07
-                                                               X 100
-                                                               Y 116
-                                                               NO_OVERWRITE
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_rock
-                                                                 PIECE crystal_07
-                                                                 X 109
-                                                                 Y 118
-                                                                 NO_OVERWRITE
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_rock
-                                                                   PIECE crystal_07
-                                                                   X 108
-                                                                   Y 147
-                                                                   NO_OVERWRITE
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_rock
-                                                                     PIECE crystal_12
-                                                                     X 146
-                                                                     Y 138
-                                                                     NO_OVERWRITE
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_rock
-                                                                       PIECE crystal_12
-                                                                       X 147
-                                                                       Y 127
-                                                                       NO_OVERWRITE
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_rock
-                                                                         PIECE crystal_12
-                                                                         X 145
-                                                                         Y 152
-                                                                         NO_OVERWRITE
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_rock
-                                                                           PIECE crystal_12
-                                                                           X 139
-                                                                           Y 116
-                                                                           NO_OVERWRITE
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_rock
-                                                                             PIECE rocks_01
-                                                                             X 539
-                                                                             Y 16
-                                                                             NO_OVERWRITE
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_rock
-                                                                               PIECE rocks_01
-                                                                               X 527
-                                                                               Y 48
-                                                                               NO_OVERWRITE
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_rock
-                                                                                 PIECE rocks_03
-                                                                                 X 514
-                                                                                 Y 86
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 201
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 179
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 296
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 298
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 264
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 396
+   Y 95
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 387
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 360
+   Y 137
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 468
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 465
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 465
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 564
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 564
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 557
+   Y 136
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 573
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 560
+   Y 8
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 670
+   Y 94
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_02
+   X 641
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_03
+   X 133
+   Y 132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_03
+   X 133
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_03
+   X 133
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_01
+   X 123
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_01
+   X 123
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_01
+   X 123
+   Y 97
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_04
+   X 130
+   Y 89
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_02
+   X 143
+   Y 127
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_06
+   X 110
+   Y 104
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_06
+   X 116
+   Y 127
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_06
+   X 108
+   Y 130
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_07
+   X 100
+   Y 116
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_07
+   X 109
+   Y 118
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_07
+   X 108
+   Y 147
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_12
+   X 146
+   Y 138
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_12
+   X 147
+   Y 127
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_12
+   X 145
+   Y 152
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE crystal_12
+   X 139
+   Y 116
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 539
+   Y 16
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 527
+   Y 48
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_03
+   X 514
+   Y 86
+   ONE_WAY
+ $END
+ 
  

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR Covox Lemmings
  MUSIC menace_amiga
  ID xA3BDAC88A3BDAC88
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -136,37 +136,37 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_rock
-     PIECE rocks_08
-     X 373
-     Y 138
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_rock
-       PIECE rocks_08
-       X 484
-       Y 132
-       FLIP_VERTICAL
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_rock
-         PIECE rocks_01
-         X 217
-         Y 54
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_rock
-           PIECE rocks_08
-           X 79
-           Y 37
-           ONE_WAY
-         $END
-         
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 373
+   Y 138
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 484
+   Y 132
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_01
+   X 217
+   Y 54
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_rock
+   PIECE rocks_08
+   X 79
+   Y 37
+   ONE_WAY
+ $END
+ 
  

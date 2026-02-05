@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC awesome_amiga
  ID x395644D72FB2EFF3
- VERSION x000000000000003E
+ VERSION x000000000000003F
  
 #       Level dimensions        
 # ----------------------------- 
@@ -279,74 +279,74 @@
    Y 68
  $END
  
-   $TERRAIN
-     STYLE slx_crystal
-     PIECE bar_04
-     X 196
-     Y 68
-   $END
-   
-     $TERRAIN
-       STYLE slx_crystal
-       PIECE bar_04
-       X 243
-       Y 68
-     $END
-     
-       $TERRAIN
-         STYLE slx_crystal
-         PIECE bar_04
-         X 299
-         Y 68
-       $END
-       
-         $TERRAIN
-           STYLE slx_crystal
-           PIECE bar_04
-           X 109
-           Y 68
-         $END
-         
-           $TERRAIN
-             STYLE slx_crystal
-             PIECE bar_04
-             X 45
-             Y 68
-           $END
-           
-             $TERRAIN
-               STYLE slx_crystal
-               PIECE block
-               X 18
-               Y 59
-               ERASE
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_crystal
-                 PIECE block
-                 X 358
-                 Y 57
-                 ERASE
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE *group
-                   PIECE Group1761926758
-                   X 45
-                   Y 69
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE *group
-                     PIECE Group1761926758
-                     X 358
-                     Y 69
-                     FLIP_HORIZONTAL
-                     ONE_WAY
-                   $END
-                   
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 196
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 243
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 299
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 109
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 45
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 18
+   Y 59
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 358
+   Y 57
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1761926758
+   X 45
+   Y 69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1761926758
+   X 358
+   Y 69
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
  

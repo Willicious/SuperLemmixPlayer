@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC menace_amiga
  ID xFA827CC5FA827CC5
- VERSION x000000000000000C
+ VERSION x000000000000000D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -89,206 +89,206 @@
    Y 56
  $END
  
-   $TERRAIN
-     STYLE slx_snow
-     PIECE steel_01
-     X 122
-     Y 56
-   $END
-   
-     $TERRAIN
-       STYLE slx_snow
-       PIECE steel_01
-       X 146
-       Y 56
-     $END
-     
-       $TERRAIN
-         STYLE slx_snow
-         PIECE steel_01
-         X 170
-         Y 56
-       $END
-       
-         $TERRAIN
-           STYLE slx_snow
-           PIECE steel_01
-           X 194
-           Y 56
-         $END
-         
-           $TERRAIN
-             STYLE slx_snow
-             PIECE steel_01
-             X 92
-             Y 136
-           $END
-           
-             $TERRAIN
-               STYLE slx_snow
-               PIECE steel_01
-               X 116
-               Y 136
-             $END
-             
-               $TERRAIN
-                 STYLE slx_snow
-                 PIECE steel_01
-                 X 140
-                 Y 136
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_snow
-                   PIECE steel_01
-                   X 164
-                   Y 136
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_snow
-                     PIECE steel_01
-                     X 188
-                     Y 136
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_snow
-                       PIECE snow_05
-                       X 211
-                       Y 63
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_snow
-                         PIECE snow_01
-                         X 214
-                         Y 102
-                         NO_OVERWRITE
-                         ONE_WAY
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_snow
-                           PIECE snow_06
-                           X 240
-                           Y 64
-                           NO_OVERWRITE
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_snow
-                             PIECE snow_04
-                             X 265
-                             Y 79
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_snow
-                               PIECE icicle_01
-                               X 200
-                               Y 71
-                               NO_OVERWRITE
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_snow
-                                 PIECE icicle_01
-                                 X 239
-                                 Y 63
-                                 ERASE
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_snow
-                                   PIECE snow_17
-                                   X 98
-                                   Y 66
-                                   NO_OVERWRITE
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_snow
-                                     PIECE snow_17
-                                     X 98
-                                     Y 144
-                                     NO_OVERWRITE
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_snow
-                                       PIECE snow_17
-                                       X 153
-                                       Y 142
-                                       NO_OVERWRITE
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_snow
-                                         PIECE snow_16
-                                         X 155
-                                         Y 56
-                                         NO_OVERWRITE
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_snow
-                                           PIECE rocks_01
-                                           X 61
-                                           Y 44
-                                           FLIP_VERTICAL
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_snow
-                                             PIECE rocks_02
-                                             X 69
-                                             Y 110
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_snow
-                                               PIECE rocks_04
-                                               X 80
-                                               Y 128
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_snow
-                                                 PIECE snow_08
-                                                 X 61
-                                                 Y 33
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_snow
-                                                   PIECE snow_16
-                                                   X 209
-                                                   Y 127
-                                                   NO_OVERWRITE
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_snow
-                                                     PIECE snow_16
-                                                     X 183
-                                                     Y 134
-                                                     NO_OVERWRITE
-                                                     ONE_WAY
-                                                   $END
-                                                   
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 122
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 146
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 170
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 194
+   Y 56
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 92
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 116
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 140
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 164
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE steel_01
+   X 188
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_05
+   X 211
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_01
+   X 214
+   Y 102
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_06
+   X 240
+   Y 64
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_04
+   X 265
+   Y 79
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_01
+   X 200
+   Y 71
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE icicle_01
+   X 239
+   Y 63
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_17
+   X 98
+   Y 66
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_17
+   X 98
+   Y 144
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_17
+   X 153
+   Y 142
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_16
+   X 155
+   Y 56
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE rocks_01
+   X 61
+   Y 44
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE rocks_02
+   X 69
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE rocks_04
+   X 80
+   Y 128
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_08
+   X 61
+   Y 33
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_16
+   X 209
+   Y 127
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_snow
+   PIECE snow_16
+   X 183
+   Y 134
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
  

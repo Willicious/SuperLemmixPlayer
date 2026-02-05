@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Beam Of Excitement
  AUTHOR WillLem/Shmoley
  ID x7BE1E2867BE1E285
- VERSION x0000000000000011
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
@@ -154,532 +154,532 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_crystal
-     PIECE crystal_04
-     X 494
-     Y 18
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_crystal
-       PIECE clump_02
-       X 473
-       Y 81
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_crystal
-         PIECE clump_02
-         X 320
-         Y 63
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_crystal
-           PIECE clump_01
-           X 260
-           Y 63
-           FLIP_VERTICAL
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_crystal
-             PIECE clump_01
-             X 344
-             Y 63
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_crystal
-               PIECE clump_01
-               X 502
-               Y 101
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_crystal
-                 PIECE clump_02
-                 X 252
-                 Y 63
-                 ONE_WAY
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_crystal
-                   PIECE clump_02
-                   X 230
-                   Y 64
-                   ONE_WAY
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_crystal
-                     PIECE bar_04
-                     X 193
-                     Y 51
-                     ONE_WAY
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_crystal
-                       PIECE spider_web
-                       X 650
-                       Y -1
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_crystal
-                         PIECE steel_01
-                         X 168
-                         Y 118
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_crystal
-                           PIECE steel_01
-                           X 168
-                           Y 93
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_crystal
-                             PIECE steel_01
-                             X 168
-                             Y 68
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_crystal
-                               PIECE bar_04
-                               X 112
-                               Y 147
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_crystal
-                                 PIECE steel_01
-                                 X 168
-                                 Y 143
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_crystal
-                                   PIECE steel_01
-                                   X 168
-                                   Y 43
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_crystal
-                                     PIECE bar_04
-                                     X 257
-                                     Y 51
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_crystal
-                                       PIECE bar_04
-                                       X 321
-                                       Y 51
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_crystal
-                                         PIECE bar_04
-                                         X 385
-                                         Y 51
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_crystal
-                                           PIECE orb
-                                           X 444
-                                           Y 44
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_crystal
-                                             PIECE bar_04
-                                             X 367
-                                             Y 99
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_crystal
-                                               PIECE bar_04
-                                               X 219
-                                               Y 99
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_crystal
-                                                 PIECE block
-                                                 X 270
-                                                 Y 67
-                                                 ERASE
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_crystal
-                                                   PIECE block
-                                                   X 302
-                                                   Y 67
-                                                   ERASE
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_crystal
-                                                     PIECE block
-                                                     X 366
-                                                     Y 67
-                                                     ERASE
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_crystal
-                                                       PIECE block
-                                                       X 334
-                                                       Y 67
-                                                       ERASE
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_crystal
-                                                         PIECE block
-                                                         X 398
-                                                         Y 67
-                                                         ERASE
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_crystal
-                                                           PIECE orb
-                                                           X 426
-                                                           Y 92
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_crystal
-                                                             PIECE orb
-                                                             X 313
-                                                             Y -13
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_crystal
-                                                               PIECE orb
-                                                               X 393
-                                                               Y -7
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_crystal
-                                                                 PIECE block
-                                                                 X 238
-                                                                 Y 67
-                                                                 ERASE
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_crystal
-                                                                   PIECE block
-                                                                   X 493
-                                                                   Y 134
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_crystal
-                                                                     PIECE block
-                                                                     X 493
-                                                                     Y 102
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_crystal
-                                                                       PIECE block
-                                                                       X 493
-                                                                       Y 70
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_crystal
-                                                                         PIECE block
-                                                                         X 461
-                                                                         Y 119
-                                                                         ERASE
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_crystal
-                                                                           PIECE clump_01
-                                                                           X 550
-                                                                           Y 109
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_crystal
-                                                                             PIECE clump_02
-                                                                             X 517
-                                                                             Y 77
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_crystal
-                                                                               PIECE clump_02
-                                                                               X 466
-                                                                               Y 107
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_crystal
-                                                                                 PIECE clump_01
-                                                                                 X 518
-                                                                                 Y 88
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_crystal
-                                                                                   PIECE clump_01
-                                                                                   X 578
-                                                                                   Y 121
-                                                                                   FLIP_VERTICAL
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_crystal
-                                                                                     PIECE orb
-                                                                                     X 770
-                                                                                     Y -18
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_crystal
-                                                                                       PIECE orb
-                                                                                       X 634
-                                                                                       Y -11
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_crystal
-                                                                                         PIECE bar_01
-                                                                                         X 745
-                                                                                         Y 131
-                                                                                         ONE_WAY
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_crystal
-                                                                                           PIECE bar_01
-                                                                                           X 805
-                                                                                           Y 111
-                                                                                           ONE_WAY
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_crystal
-                                                                                             PIECE orb
-                                                                                             X 738
-                                                                                             Y 114
-                                                                                             ONE_WAY
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_crystal
-                                                                                               PIECE orb
-                                                                                               X 798
-                                                                                               Y 90
-                                                                                               ONE_WAY
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_crystal
-                                                                                                 PIECE bar_01
-                                                                                                 X 63
-                                                                                                 Y -30
-                                                                                                 ONE_WAY
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_crystal
-                                                                                                   PIECE orb
-                                                                                                   X 56
-                                                                                                   Y 21
-                                                                                                   ONE_WAY
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_crystal
-                                                                                                     PIECE bar_01
-                                                                                                     X 91
-                                                                                                     Y 83
-                                                                                                     ONE_WAY
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_crystal
-                                                                                                       PIECE block
-                                                                                                       X 88
-                                                                                                       Y 107
-                                                                                                       ONE_WAY
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_crystal
-                                                                                                         PIECE orb
-                                                                                                         X 84
-                                                                                                         Y 57
-                                                                                                         ONE_WAY
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_crystal
-                                                                                                           PIECE bar_01
-                                                                                                           X 233
-                                                                                                           Y -43
-                                                                                                           ONE_WAY
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_crystal
-                                                                                                             PIECE orb
-                                                                                                             X 225
-                                                                                                             Y 9
-                                                                                                             ONE_WAY
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_crystal
-                                                                                                               PIECE bar_04
-                                                                                                               X 313
-                                                                                                               Y 99
-                                                                                                               ONE_WAY
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_crystal
-                                                                                                                 PIECE orb
-                                                                                                                 X 198
-                                                                                                                 Y 92
-                                                                                                                 ONE_WAY
-                                                                                                               $END
-                                                                                                               
-                                                                                                                 $TERRAIN
-                                                                                                                   STYLE slx_crystal
-                                                                                                                   PIECE bar_04
-                                                                                                                   X 277
-                                                                                                                   Y 99
-                                                                                                                   ONE_WAY
-                                                                                                                 $END
-                                                                                                                 
-                                                                                                                   $TERRAIN
-                                                                                                                     STYLE slx_crystal
-                                                                                                                     PIECE steel_01
-                                                                                                                     X 96
-                                                                                                                     Y 147
-                                                                                                                   $END
-                                                                                                                   
-                                                                                                                     $TERRAIN
-                                                                                                                       STYLE slx_crystal
-                                                                                                                       PIECE bar_01
-                                                                                                                       X 63
-                                                                                                                       Y 88
-                                                                                                                       ONE_WAY
-                                                                                                                     $END
-                                                                                                                     
-                                                                                                                       $TERRAIN
-                                                                                                                         STYLE slx_crystal
-                                                                                                                         PIECE steel_01
-                                                                                                                         X 71
-                                                                                                                         Y 147
-                                                                                                                       $END
-                                                                                                                       
-                                                                                                                         $TERRAIN
-                                                                                                                           STYLE slx_crystal
-                                                                                                                           PIECE block
-                                                                                                                           X 56
-                                                                                                                           Y 107
-                                                                                                                           ONE_WAY
-                                                                                                                         $END
-                                                                                                                         
-                                                                                                                           $TERRAIN
-                                                                                                                             STYLE slx_crystal
-                                                                                                                             PIECE orb
-                                                                                                                             X 56
-                                                                                                                             Y 65
-                                                                                                                             ONE_WAY
-                                                                                                                           $END
-                                                                                                                           
-                                                                                                                             $TERRAIN
-                                                                                                                               STYLE slx_crystal
-                                                                                                                               PIECE bar_01
-                                                                                                                               X 35
-                                                                                                                               Y 96
-                                                                                                                               ONE_WAY
-                                                                                                                             $END
-                                                                                                                             
-                                                                                                                               $TERRAIN
-                                                                                                                                 STYLE slx_crystal
-                                                                                                                                 PIECE block
-                                                                                                                                 X 24
-                                                                                                                                 Y 107
-                                                                                                                                 ONE_WAY
-                                                                                                                               $END
-                                                                                                                               
-                                                                                                                                 $TERRAIN
-                                                                                                                                   STYLE slx_crystal
-                                                                                                                                   PIECE orb
-                                                                                                                                   X 28
-                                                                                                                                   Y 73
-                                                                                                                                   ONE_WAY
-                                                                                                                                 $END
-                                                                                                                                 
-                                                                                                                                   $TERRAIN
-                                                                                                                                     STYLE slx_crystal
-                                                                                                                                     PIECE steel_01
-                                                                                                                                     X 21
-                                                                                                                                     Y 147
-                                                                                                                                   $END
-                                                                                                                                   
-                                                                                                                                     $TERRAIN
-                                                                                                                                       STYLE slx_crystal
-                                                                                                                                       PIECE steel_01
-                                                                                                                                       X 46
-                                                                                                                                       Y 147
-                                                                                                                                     $END
-                                                                                                                                     
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE crystal_04
+   X 494
+   Y 18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_02
+   X 473
+   Y 81
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_02
+   X 320
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_01
+   X 260
+   Y 63
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_01
+   X 344
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_01
+   X 502
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_02
+   X 252
+   Y 63
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_02
+   X 230
+   Y 64
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 193
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE spider_web
+   X 650
+   Y -1
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 168
+   Y 118
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 168
+   Y 93
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 168
+   Y 68
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 112
+   Y 147
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 168
+   Y 143
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 168
+   Y 43
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 257
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 321
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 385
+   Y 51
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 444
+   Y 44
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 367
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 219
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 270
+   Y 67
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 302
+   Y 67
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 366
+   Y 67
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 334
+   Y 67
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 398
+   Y 67
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 426
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 313
+   Y -13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 393
+   Y -7
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 238
+   Y 67
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 493
+   Y 134
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 493
+   Y 102
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 493
+   Y 70
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 461
+   Y 119
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_01
+   X 550
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_02
+   X 517
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_02
+   X 466
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_01
+   X 518
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE clump_01
+   X 578
+   Y 121
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 770
+   Y -18
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 634
+   Y -11
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 745
+   Y 131
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 805
+   Y 111
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 738
+   Y 114
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 798
+   Y 90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 63
+   Y -30
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 56
+   Y 21
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 91
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 88
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 84
+   Y 57
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 233
+   Y -43
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 225
+   Y 9
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 313
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 198
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 277
+   Y 99
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 96
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 63
+   Y 88
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 71
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 56
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 56
+   Y 65
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 35
+   Y 96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE block
+   X 24
+   Y 107
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE orb
+   X 28
+   Y 73
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 21
+   Y 147
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_01
+   X 46
+   Y 147
+ $END
+ 
  

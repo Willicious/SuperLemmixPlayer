@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design
  MUSIC awesome_amiga
  ID xA1451D7EE96BEBDC
- VERSION x0000000000000011
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
@@ -141,882 +141,882 @@
    Y 136
  $END
  
-   $TERRAIN
-     STYLE slx_pillar
-     PIECE steel_01
-     X 336
-     Y 136
-   $END
-   
-     $TERRAIN
-       STYLE slx_pillar
-       PIECE steel_01
-       X 640
-       Y 136
-     $END
-     
-       $TERRAIN
-         STYLE slx_pillar
-         PIECE steel_01
-         X 664
-         Y 136
-       $END
-       
-         $TERRAIN
-           STYLE slx_pillar
-           PIECE steel_01
-           X 360
-           Y 112
-         $END
-         
-           $TERRAIN
-             STYLE slx_pillar
-             PIECE steel_01
-             X 336
-             Y 112
-           $END
-           
-             $TERRAIN
-               STYLE slx_pillar
-               PIECE steel_01
-               X 640
-               Y 112
-             $END
-             
-               $TERRAIN
-                 STYLE slx_pillar
-                 PIECE steel_01
-                 X 664
-                 Y 112
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_pillar
-                   PIECE steel_02
-                   X 322
-                   Y 136
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_pillar
-                     PIECE steel_04
-                     X 322
-                     Y 122
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_pillar
-                       PIECE steel_04
-                       X 688
-                       Y 122
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_pillar
-                         PIECE steel_02
-                         X 688
-                         Y 136
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_pillar
-                           PIECE sandblock_01
-                           X 280
-                           Y 122
-                           ONE_WAY
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_pillar
-                             PIECE sandblock_01
-                             X 198
-                             Y 122
-                             ONE_WAY
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_pillar
-                               PIECE sandblock_01
-                               X 702
-                               Y 122
-                               ONE_WAY
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_pillar
-                                 PIECE sandblock_01
-                                 X 784
-                                 Y 122
-                                 ONE_WAY
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_pillar
-                                   PIECE sandblock_03
-                                   X 702
-                                   Y 142
-                                   ONE_WAY
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_pillar
-                                     PIECE sandblock_01
-                                     X 722
-                                     Y 142
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_pillar
-                                       PIECE sandblock_03
-                                       X 764
-                                       Y 142
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_pillar
-                                         PIECE sandblock_03
-                                         X 302
-                                         Y 142
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_pillar
-                                           PIECE sandblock_01
-                                           X 260
-                                           Y 142
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_pillar
-                                             PIECE sandblock_03
-                                             X 240
-                                             Y 142
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_pillar
-                                               PIECE sandblock_03
-                                               X 220
-                                               Y 142
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_pillar
-                                                 PIECE sandblock_01
-                                                 X 178
-                                                 Y 142
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_pillar
-                                                   PIECE sandblock_03
-                                                   X 784
-                                                   Y 142
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_pillar
-                                                     PIECE wood_10
-                                                     X 78
-                                                     Y 142
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_pillar
-                                                       PIECE wood_10
-                                                       X 50
-                                                       Y 142
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_pillar
-                                                         PIECE wood_10
-                                                         X 26
-                                                         Y 142
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_pillar
-                                                           PIECE wood_10
-                                                           X 3
-                                                           Y 142
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_pillar
-                                                             PIECE wood_10
-                                                             X 80
-                                                             Y 150
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_pillar
-                                                               PIECE wood_10
-                                                               X 49
-                                                               Y 150
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_pillar
-                                                                 PIECE wood_10
-                                                                 X 18
-                                                                 Y 150
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_pillar
-                                                                   PIECE wood_10
-                                                                   X -1
-                                                                   Y 150
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_pillar
-                                                                     PIECE wood_10
-                                                                     X -4
-                                                                     Y 142
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_pillar
-                                                                       PIECE wood_14
-                                                                       X 11
-                                                                       Y 150
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_pillar
-                                                                         PIECE wood_14
-                                                                         X 66
-                                                                         Y 142
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_pillar
-                                                                           PIECE wood_12
-                                                                           X 86
-                                                                           Y 142
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_pillar
-                                                                             PIECE wood_12
-                                                                             X 31
-                                                                             Y 150
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_pillar
-                                                                               PIECE wood_10
-                                                                               X 919
-                                                                               Y 142
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_pillar
-                                                                                 PIECE wood_10
-                                                                                 X 950
-                                                                                 Y 142
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_pillar
-                                                                                   PIECE wood_10
-                                                                                   X 979
-                                                                                   Y 142
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_pillar
-                                                                                     PIECE wood_10
-                                                                                     X 1002
-                                                                                     Y 142
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_pillar
-                                                                                       PIECE wood_10
-                                                                                       X 938
-                                                                                       Y 150
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_pillar
-                                                                                         PIECE wood_10
-                                                                                         X 969
-                                                                                         Y 150
-                                                                                         ONE_WAY
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_pillar
-                                                                                           PIECE wood_10
-                                                                                           X 992
-                                                                                           Y 150
-                                                                                           ONE_WAY
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_pillar
-                                                                                             PIECE wood_15
-                                                                                             X 958
-                                                                                             Y 150
-                                                                                             ONE_WAY
-                                                                                           $END
-                                                                                           
-                                                                                             $TERRAIN
-                                                                                               STYLE slx_pillar
-                                                                                               PIECE wood_15
-                                                                                               X 992
-                                                                                               Y 142
-                                                                                               ONE_WAY
-                                                                                             $END
-                                                                                             
-                                                                                               $TERRAIN
-                                                                                                 STYLE slx_pillar
-                                                                                                 PIECE wood_13
-                                                                                                 X 978
-                                                                                                 Y 150
-                                                                                                 ONE_WAY
-                                                                                               $END
-                                                                                               
-                                                                                                 $TERRAIN
-                                                                                                   STYLE slx_pillar
-                                                                                                   PIECE wood_13
-                                                                                                   X 384
-                                                                                                   Y 115
-                                                                                                   ONE_WAY
-                                                                                                 $END
-                                                                                                 
-                                                                                                   $TERRAIN
-                                                                                                     STYLE slx_pillar
-                                                                                                     PIECE wood_13
-                                                                                                     X 403
-                                                                                                     Y 116
-                                                                                                     ONE_WAY
-                                                                                                   $END
-                                                                                                   
-                                                                                                     $TERRAIN
-                                                                                                       STYLE slx_pillar
-                                                                                                       PIECE wood_13
-                                                                                                       X 422
-                                                                                                       Y 117
-                                                                                                       ONE_WAY
-                                                                                                     $END
-                                                                                                     
-                                                                                                       $TERRAIN
-                                                                                                         STYLE slx_pillar
-                                                                                                         PIECE wood_11
-                                                                                                         X 441
-                                                                                                         Y 118
-                                                                                                         ONE_WAY
-                                                                                                       $END
-                                                                                                       
-                                                                                                         $TERRAIN
-                                                                                                           STYLE slx_pillar
-                                                                                                           PIECE wood_11
-                                                                                                           X 473
-                                                                                                           Y 119
-                                                                                                           ONE_WAY
-                                                                                                         $END
-                                                                                                         
-                                                                                                           $TERRAIN
-                                                                                                             STYLE slx_pillar
-                                                                                                             PIECE wood_11
-                                                                                                             X 489
-                                                                                                             Y 119
-                                                                                                             ONE_WAY
-                                                                                                           $END
-                                                                                                           
-                                                                                                             $TERRAIN
-                                                                                                               STYLE slx_pillar
-                                                                                                               PIECE wood_13
-                                                                                                               X 621
-                                                                                                               Y 115
-                                                                                                               ONE_WAY
-                                                                                                             $END
-                                                                                                             
-                                                                                                               $TERRAIN
-                                                                                                                 STYLE slx_pillar
-                                                                                                                 PIECE wood_13
-                                                                                                                 X 602
-                                                                                                                 Y 116
-                                                                                                                 ONE_WAY
-                                                                                                               $END
-                                                                                                               
-                                                                                                                 $TERRAIN
-                                                                                                                   STYLE slx_pillar
-                                                                                                                   PIECE wood_13
-                                                                                                                   X 583
-                                                                                                                   Y 117
-                                                                                                                   ONE_WAY
-                                                                                                                 $END
-                                                                                                                 
-                                                                                                                   $TERRAIN
-                                                                                                                     STYLE slx_pillar
-                                                                                                                     PIECE wood_11
-                                                                                                                     X 551
-                                                                                                                     Y 118
-                                                                                                                     ONE_WAY
-                                                                                                                   $END
-                                                                                                                   
-                                                                                                                     $TERRAIN
-                                                                                                                       STYLE slx_pillar
-                                                                                                                       PIECE wood_11
-                                                                                                                       X 519
-                                                                                                                       Y 119
-                                                                                                                       ONE_WAY
-                                                                                                                     $END
-                                                                                                                     
-                                                                                                                       $TERRAIN
-                                                                                                                         STYLE slx_pillar
-                                                                                                                         PIECE wood_11
-                                                                                                                         X 505
-                                                                                                                         Y 122
-                                                                                                                         ERASE
-                                                                                                                         ONE_WAY
-                                                                                                                       $END
-                                                                                                                       
-                                                                                                                         $TERRAIN
-                                                                                                                           STYLE slx_pillar
-                                                                                                                           PIECE wood_11
-                                                                                                                           X 489
-                                                                                                                           Y 121
-                                                                                                                           ERASE
-                                                                                                                           ONE_WAY
-                                                                                                                         $END
-                                                                                                                         
-                                                                                                                           $TERRAIN
-                                                                                                                             STYLE slx_pillar
-                                                                                                                             PIECE wood_11
-                                                                                                                             X 519
-                                                                                                                             Y 121
-                                                                                                                             ERASE
-                                                                                                                             ONE_WAY
-                                                                                                                           $END
-                                                                                                                           
-                                                                                                                             $TERRAIN
-                                                                                                                               STYLE slx_pillar
-                                                                                                                               PIECE wood_11
-                                                                                                                               X 551
-                                                                                                                               Y 120
-                                                                                                                               ERASE
-                                                                                                                               ONE_WAY
-                                                                                                                             $END
-                                                                                                                             
-                                                                                                                               $TERRAIN
-                                                                                                                                 STYLE slx_pillar
-                                                                                                                                 PIECE wood_11
-                                                                                                                                 X 583
-                                                                                                                                 Y 119
-                                                                                                                                 ERASE
-                                                                                                                                 ONE_WAY
-                                                                                                                               $END
-                                                                                                                               
-                                                                                                                                 $TERRAIN
-                                                                                                                                   STYLE slx_pillar
-                                                                                                                                   PIECE wood_11
-                                                                                                                                   X 602
-                                                                                                                                   Y 118
-                                                                                                                                   ERASE
-                                                                                                                                   ONE_WAY
-                                                                                                                                 $END
-                                                                                                                                 
-                                                                                                                                   $TERRAIN
-                                                                                                                                     STYLE slx_pillar
-                                                                                                                                     PIECE wood_13
-                                                                                                                                     X 621
-                                                                                                                                     Y 117
-                                                                                                                                     ERASE
-                                                                                                                                     ONE_WAY
-                                                                                                                                   $END
-                                                                                                                                   
-                                                                                                                                     $TERRAIN
-                                                                                                                                       STYLE slx_pillar
-                                                                                                                                       PIECE wood_10
-                                                                                                                                       X 583
-                                                                                                                                       Y 117
-                                                                                                                                       ONE_WAY
-                                                                                                                                     $END
-                                                                                                                                     
-                                                                                                                                       $TERRAIN
-                                                                                                                                         STYLE slx_pillar
-                                                                                                                                         PIECE wood_10
-                                                                                                                                         X 602
-                                                                                                                                         Y 116
-                                                                                                                                         ONE_WAY
-                                                                                                                                       $END
-                                                                                                                                       
-                                                                                                                                         $TERRAIN
-                                                                                                                                           STYLE slx_pillar
-                                                                                                                                           PIECE wood_10
-                                                                                                                                           X 583
-                                                                                                                                           Y 119
-                                                                                                                                           ERASE
-                                                                                                                                           ONE_WAY
-                                                                                                                                         $END
-                                                                                                                                         
-                                                                                                                                           $TERRAIN
-                                                                                                                                             STYLE slx_pillar
-                                                                                                                                             PIECE wood_10
-                                                                                                                                             X 603
-                                                                                                                                             Y 118
-                                                                                                                                             ERASE
-                                                                                                                                             ONE_WAY
-                                                                                                                                           $END
-                                                                                                                                           
-                                                                                                                                             $TERRAIN
-                                                                                                                                               STYLE slx_pillar
-                                                                                                                                               PIECE wood_13
-                                                                                                                                               X 621
-                                                                                                                                               Y 117
-                                                                                                                                               ERASE
-                                                                                                                                               ONE_WAY
-                                                                                                                                             $END
-                                                                                                                                             
-                                                                                                                                               $TERRAIN
-                                                                                                                                                 STYLE slx_pillar
-                                                                                                                                                 PIECE wood_11
-                                                                                                                                                 X 384
-                                                                                                                                                 Y 116
-                                                                                                                                                 ONE_WAY
-                                                                                                                                               $END
-                                                                                                                                               
-                                                                                                                                                 $TERRAIN
-                                                                                                                                                   STYLE slx_pillar
-                                                                                                                                                   PIECE wood_11
-                                                                                                                                                   X 407
-                                                                                                                                                   Y 117
-                                                                                                                                                   ONE_WAY
-                                                                                                                                                 $END
-                                                                                                                                                 
-                                                                                                                                                   $TERRAIN
-                                                                                                                                                     STYLE slx_pillar
-                                                                                                                                                     PIECE wood_11
-                                                                                                                                                     X 473
-                                                                                                                                                     Y 121
-                                                                                                                                                     ERASE
-                                                                                                                                                     ONE_WAY
-                                                                                                                                                   $END
-                                                                                                                                                   
-                                                                                                                                                     $TERRAIN
-                                                                                                                                                       STYLE slx_pillar
-                                                                                                                                                       PIECE wood_11
-                                                                                                                                                       X 441
-                                                                                                                                                       Y 120
-                                                                                                                                                       ERASE
-                                                                                                                                                       ONE_WAY
-                                                                                                                                                     $END
-                                                                                                                                                     
-                                                                                                                                                       $TERRAIN
-                                                                                                                                                         STYLE slx_pillar
-                                                                                                                                                         PIECE wood_11
-                                                                                                                                                         X 409
-                                                                                                                                                         Y 119
-                                                                                                                                                         ERASE
-                                                                                                                                                         ONE_WAY
-                                                                                                                                                       $END
-                                                                                                                                                       
-                                                                                                                                                         $TERRAIN
-                                                                                                                                                           STYLE slx_pillar
-                                                                                                                                                           PIECE wood_11
-                                                                                                                                                           X 390
-                                                                                                                                                           Y 118
-                                                                                                                                                           ERASE
-                                                                                                                                                           ONE_WAY
-                                                                                                                                                         $END
-                                                                                                                                                         
-                                                                                                                                                           $TERRAIN
-                                                                                                                                                             STYLE slx_pillar
-                                                                                                                                                             PIECE wood_13
-                                                                                                                                                             X 384
-                                                                                                                                                             Y 117
-                                                                                                                                                             ERASE
-                                                                                                                                                             ONE_WAY
-                                                                                                                                                           $END
-                                                                                                                                                           
-                                                                                                                                                             $TERRAIN
-                                                                                                                                                               STYLE slx_pillar
-                                                                                                                                                               PIECE wood_04
-                                                                                                                                                               X 640
-                                                                                                                                                               Y 93
-                                                                                                                                                               ONE_WAY
-                                                                                                                                                             $END
-                                                                                                                                                             
-                                                                                                                                                               $TERRAIN
-                                                                                                                                                                 STYLE slx_pillar
-                                                                                                                                                                 PIECE wood_04
-                                                                                                                                                                 X 376
-                                                                                                                                                                 Y 93
-                                                                                                                                                                 ONE_WAY
-                                                                                                                                                               $END
-                                                                                                                                                               
-                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                   STYLE slx_pillar
-                                                                                                                                                                   PIECE pillar_end_08
-                                                                                                                                                                   X 689
-                                                                                                                                                                   Y 109
-                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                 $END
-                                                                                                                                                                 
-                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                     STYLE slx_pillar
-                                                                                                                                                                     PIECE pillar_06
-                                                                                                                                                                     X 699
-                                                                                                                                                                     Y 77
-                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                   $END
-                                                                                                                                                                   
-                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                       STYLE slx_pillar
-                                                                                                                                                                       PIECE pillar_06
-                                                                                                                                                                       X 699
-                                                                                                                                                                       Y 45
-                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                     $END
-                                                                                                                                                                     
-                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                         STYLE slx_pillar
-                                                                                                                                                                         PIECE pillar_06
-                                                                                                                                                                         X 699
-                                                                                                                                                                         Y 14
-                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                       $END
-                                                                                                                                                                       
-                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                           STYLE slx_pillar
-                                                                                                                                                                           PIECE pillar_end_07
-                                                                                                                                                                           X 689
-                                                                                                                                                                           Y 6
-                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                         $END
-                                                                                                                                                                         
-                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                             STYLE slx_pillar
-                                                                                                                                                                             PIECE block_08
-                                                                                                                                                                             X 697
-                                                                                                                                                                             Y -14
-                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                           $END
-                                                                                                                                                                           
-                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                               STYLE slx_pillar
-                                                                                                                                                                               PIECE block_07
-                                                                                                                                                                               X 655
-                                                                                                                                                                               Y -14
-                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                             $END
-                                                                                                                                                                             
-                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                 STYLE slx_pillar
-                                                                                                                                                                                 PIECE block_07
-                                                                                                                                                                                 X 613
-                                                                                                                                                                                 Y -14
-                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                               $END
-                                                                                                                                                                               
-                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                   STYLE slx_pillar
-                                                                                                                                                                                   PIECE block_08
-                                                                                                                                                                                   X 573
-                                                                                                                                                                                   Y -14
-                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                 $END
-                                                                                                                                                                                 
-                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                     STYLE slx_pillar
-                                                                                                                                                                                     PIECE block_08
-                                                                                                                                                                                     X 533
-                                                                                                                                                                                     Y -14
-                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                   $END
-                                                                                                                                                                                   
-                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                       STYLE slx_pillar
-                                                                                                                                                                                       PIECE block_08
-                                                                                                                                                                                       X 473
-                                                                                                                                                                                       Y -14
-                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                     $END
-                                                                                                                                                                                     
-                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                         STYLE slx_pillar
-                                                                                                                                                                                         PIECE block_08
-                                                                                                                                                                                         X 433
-                                                                                                                                                                                         Y -14
-                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                       $END
-                                                                                                                                                                                       
-                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                           STYLE slx_pillar
-                                                                                                                                                                                           PIECE block_07
-                                                                                                                                                                                           X 391
-                                                                                                                                                                                           Y -14
-                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                         $END
-                                                                                                                                                                                         
-                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                             STYLE slx_pillar
-                                                                                                                                                                                             PIECE block_07
-                                                                                                                                                                                             X 349
-                                                                                                                                                                                             Y -14
-                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                           $END
-                                                                                                                                                                                           
-                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                               STYLE slx_pillar
-                                                                                                                                                                                               PIECE pillar_end_08
-                                                                                                                                                                                               X 281
-                                                                                                                                                                                               Y 109
-                                                                                                                                                                                               ONE_WAY
-                                                                                                                                                                                             $END
-                                                                                                                                                                                             
-                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                 STYLE slx_pillar
-                                                                                                                                                                                                 PIECE pillar_06
-                                                                                                                                                                                                 X 291
-                                                                                                                                                                                                 Y 78
-                                                                                                                                                                                                 ONE_WAY
-                                                                                                                                                                                               $END
-                                                                                                                                                                                               
-                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                   STYLE slx_pillar
-                                                                                                                                                                                                   PIECE pillar_06
-                                                                                                                                                                                                   X 291
-                                                                                                                                                                                                   Y 46
-                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                 $END
-                                                                                                                                                                                                 
-                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                     STYLE slx_pillar
-                                                                                                                                                                                                     PIECE pillar_06
-                                                                                                                                                                                                     X 291
-                                                                                                                                                                                                     Y 15
-                                                                                                                                                                                                     ONE_WAY
-                                                                                                                                                                                                   $END
-                                                                                                                                                                                                   
-                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                       STYLE slx_pillar
-                                                                                                                                                                                                       PIECE pillar_end_07
-                                                                                                                                                                                                       X 281
-                                                                                                                                                                                                       Y 6
-                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                     $END
-                                                                                                                                                                                                     
-                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                         STYLE slx_pillar
-                                                                                                                                                                                                         PIECE block_07
-                                                                                                                                                                                                         X 307
-                                                                                                                                                                                                         Y -14
-                                                                                                                                                                                                         ONE_WAY
-                                                                                                                                                                                                       $END
-                                                                                                                                                                                                       
-                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                           STYLE slx_pillar
-                                                                                                                                                                                                           PIECE block_08
-                                                                                                                                                                                                           X 283
-                                                                                                                                                                                                           Y -14
-                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                         $END
-                                                                                                                                                                                                         
-                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                             STYLE slx_pillar
-                                                                                                                                                                                                             PIECE steel_01
-                                                                                                                                                                                                             X 934
-                                                                                                                                                                                                             Y 137
-                                                                                                                                                                                                           $END
-                                                                                                                                                                                                           
-                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                               STYLE slx_pillar
-                                                                                                                                                                                                               PIECE steel_01
-                                                                                                                                                                                                               X 66
-                                                                                                                                                                                                               Y 137
-                                                                                                                                                                                                             $END
-                                                                                                                                                                                                             
-                                                                                                                                                                                                               $TERRAIN
-                                                                                                                                                                                                                 STYLE slx_pillar
-                                                                                                                                                                                                                 PIECE steel_01
-                                                                                                                                                                                                                 X 90
-                                                                                                                                                                                                                 Y 137
-                                                                                                                                                                                                               $END
-                                                                                                                                                                                                               
-                                                                                                                                                                                                                 $TERRAIN
-                                                                                                                                                                                                                   STYLE slx_pillar
-                                                                                                                                                                                                                   PIECE wood_13
-                                                                                                                                                                                                                   X 629
-                                                                                                                                                                                                                   Y 112
-                                                                                                                                                                                                                   ONE_WAY
-                                                                                                                                                                                                                 $END
-                                                                                                                                                                                                                 
-                                                                                                                                                                                                                   $TERRAIN
-                                                                                                                                                                                                                     STYLE slx_pillar
-                                                                                                                                                                                                                     PIECE steel_01
-                                                                                                                                                                                                                     X 640
-                                                                                                                                                                                                                     Y 112
-                                                                                                                                                                                                                   $END
-                                                                                                                                                                                                                   
-                                                                                                                                                                                                                     $TERRAIN
-                                                                                                                                                                                                                       STYLE slx_pillar
-                                                                                                                                                                                                                       PIECE wood_14
-                                                                                                                                                                                                                       X 376
-                                                                                                                                                                                                                       Y 112
-                                                                                                                                                                                                                       ONE_WAY
-                                                                                                                                                                                                                     $END
-                                                                                                                                                                                                                     
-                                                                                                                                                                                                                       $TERRAIN
-                                                                                                                                                                                                                         STYLE slx_pillar
-                                                                                                                                                                                                                         PIECE steel_01
-                                                                                                                                                                                                                         X 360
-                                                                                                                                                                                                                         Y 112
-                                                                                                                                                                                                                       $END
-                                                                                                                                                                                                                       
-                                                                                                                                                                                                                         $TERRAIN
-                                                                                                                                                                                                                           STYLE slx_pillar
-                                                                                                                                                                                                                           PIECE block_08
-                                                                                                                                                                                                                           X 505
-                                                                                                                                                                                                                           Y -14
-                                                                                                                                                                                                                           ONE_WAY
-                                                                                                                                                                                                                         $END
-                                                                                                                                                                                                                         
-                                                                                                                                                                                                                           $TERRAIN
-                                                                                                                                                                                                                             STYLE slx_pillar
-                                                                                                                                                                                                                             PIECE sandblock_01
-                                                                                                                                                                                                                             X 804
-                                                                                                                                                                                                                             Y 142
-                                                                                                                                                                                                                             ONE_WAY
-                                                                                                                                                                                                                           $END
-                                                                                                                                                                                                                           
-                                                                                                                                                                                                                             $TERRAIN
-                                                                                                                                                                                                                               STYLE slx_pillar
-                                                                                                                                                                                                                               PIECE steel_01
-                                                                                                                                                                                                                               X 910
-                                                                                                                                                                                                                               Y 137
-                                                                                                                                                                                                                             $END
-                                                                                                                                                                                                                             
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 336
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 640
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 664
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 360
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 336
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 640
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 664
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_02
+   X 322
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_04
+   X 322
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_04
+   X 688
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_02
+   X 688
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 280
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 198
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 702
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 784
+   Y 122
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_03
+   X 702
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 722
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_03
+   X 764
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_03
+   X 302
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 260
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_03
+   X 240
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_03
+   X 220
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 178
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_03
+   X 784
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 78
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 50
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 26
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 3
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 80
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 49
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 18
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X -1
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X -4
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_14
+   X 11
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_14
+   X 66
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_12
+   X 86
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_12
+   X 31
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 919
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 950
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 979
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 1002
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 938
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 969
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 992
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_15
+   X 958
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_15
+   X 992
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 978
+   Y 150
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 384
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 403
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 422
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 441
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 473
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 489
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 621
+   Y 115
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 602
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 583
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 551
+   Y 118
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 519
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 505
+   Y 122
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 489
+   Y 121
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 519
+   Y 121
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 551
+   Y 120
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 583
+   Y 119
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 602
+   Y 118
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 621
+   Y 117
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 583
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 602
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 583
+   Y 119
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_10
+   X 603
+   Y 118
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 621
+   Y 117
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 384
+   Y 116
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 407
+   Y 117
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 473
+   Y 121
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 441
+   Y 120
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 409
+   Y 119
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_11
+   X 390
+   Y 118
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 384
+   Y 117
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_04
+   X 640
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_04
+   X 376
+   Y 93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_end_08
+   X 689
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_06
+   X 699
+   Y 77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_06
+   X 699
+   Y 45
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_06
+   X 699
+   Y 14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_end_07
+   X 689
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_08
+   X 697
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_07
+   X 655
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_07
+   X 613
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_08
+   X 573
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_08
+   X 533
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_08
+   X 473
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_08
+   X 433
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_07
+   X 391
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_07
+   X 349
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_end_08
+   X 281
+   Y 109
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_06
+   X 291
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_06
+   X 291
+   Y 46
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_06
+   X 291
+   Y 15
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE pillar_end_07
+   X 281
+   Y 6
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_07
+   X 307
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_08
+   X 283
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 934
+   Y 137
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 66
+   Y 137
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 90
+   Y 137
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_13
+   X 629
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 640
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE wood_14
+   X 376
+   Y 112
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 360
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE block_08
+   X 505
+   Y -14
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE sandblock_01
+   X 804
+   Y 142
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_pillar
+   PIECE steel_01
+   X 910
+   Y 137
+ $END
+ 
  

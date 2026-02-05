@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR WillLem
  MUSIC awesome_amiga
  ID x0652D4CC45F88611
- VERSION x0000000000000049
+ VERSION x000000000000004A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -260,194 +260,194 @@
    ONE_WAY
  $END
  
-   $TERRAIN
-     STYLE slx_crystal
-     PIECE bar_04
-     X 164
-     Y 149
-     ONE_WAY
-   $END
-   
-     $TERRAIN
-       STYLE slx_crystal
-       PIECE bar_04
-       X 220
-       Y 149
-       ONE_WAY
-     $END
-     
-       $TERRAIN
-         STYLE slx_crystal
-         PIECE bar_03
-         X 334
-         Y 149
-         ONE_WAY
-       $END
-       
-         $TERRAIN
-           STYLE slx_crystal
-           PIECE bar_04
-           X 282
-           Y 149
-           ONE_WAY
-         $END
-         
-           $TERRAIN
-             STYLE slx_crystal
-             PIECE bar_02
-             X 8
-             Y 149
-             ONE_WAY
-           $END
-           
-             $TERRAIN
-               STYLE slx_crystal
-               PIECE bar_04
-               X 52
-               Y 149
-               ONE_WAY
-             $END
-             
-               $TERRAIN
-                 STYLE slx_crystal
-                 PIECE steel_02
-                 X 55
-                 Y 18
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_crystal
-                   PIECE steel_02
-                   X 55
-                   Y -7
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_crystal
-                     PIECE steel_02
-                     X 297
-                     Y 62
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_crystal
-                       PIECE line_02
-                       X 133
-                       Y 62
-                       ONE_WAY
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_crystal
-                         PIECE steel_02
-                         X 156
-                         Y 62
-                       $END
-                       
-                         $TERRAIN
-                           STYLE *group
-                           PIECE Group1811485270
-                           X 172
-                           Y 78
-                         $END
-                         
-                           $TERRAIN
-                             STYLE *group
-                             PIECE Group1811485270
-                             X 197
-                             Y 78
-                           $END
-                           
-                             $TERRAIN
-                               STYLE *group
-                               PIECE Group1811485270
-                               X 222
-                               Y 78
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE *group
-                                 PIECE Group1811485270
-                                 X 247
-                                 Y 78
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE *group
-                                   PIECE Group1811485270
-                                   X 272
-                                   Y 78
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_crystal
-                                     PIECE line_03
-                                     X 125
-                                     Y 62
-                                     ONE_WAY
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_crystal
-                                       PIECE steel_02
-                                       X 156
-                                       Y 87
-                                       ERASE
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_crystal
-                                         PIECE bar_01
-                                         X 156
-                                         Y 120
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_crystal
-                                           PIECE line_03
-                                           X 148
-                                           Y 119
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE *group
-                                             PIECE Group-82477224
-                                             X 71
-                                             Y 34
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE *group
-                                               PIECE Group-82477224
-                                               X 135
-                                               Y 34
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE *group
-                                                 PIECE Group-82477224
-                                                 X 199
-                                                 Y 34
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE *group
-                                                   PIECE Group-82477224
-                                                   X 253
-                                                   Y 34
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE *group
-                                                     PIECE Group1827998673
-                                                     X 313
-                                                     Y 34
-                                                   $END
-                                                   
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 164
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 220
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_03
+   X 334
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 282
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_02
+   X 8
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_04
+   X 52
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_02
+   X 55
+   Y 18
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_02
+   X 55
+   Y -7
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_02
+   X 297
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_02
+   X 133
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_02
+   X 156
+   Y 62
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 172
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 197
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 222
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 247
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1811485270
+   X 272
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 125
+   Y 62
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE steel_02
+   X 156
+   Y 87
+   ERASE
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE bar_01
+   X 156
+   Y 120
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_crystal
+   PIECE line_03
+   X 148
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 71
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 135
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 199
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group-82477224
+   X 253
+   Y 34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE *group
+   PIECE Group1827998673
+   X 313
+   Y 34
+ $END
+ 
  

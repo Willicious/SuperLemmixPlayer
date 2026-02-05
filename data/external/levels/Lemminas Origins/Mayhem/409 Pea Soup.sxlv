@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 2.9.4
+#   Created with SLXEditor 3.0.1
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Pea Soup
  AUTHOR WillLem/DMA
  ID x6F494A486F494A47
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -124,344 +124,344 @@
    Y 125
  $END
  
-   $TERRAIN
-     STYLE slx_marble
-     PIECE steel_01
-     X 343
-     Y 125
-   $END
-   
-     $TERRAIN
-       STYLE slx_marble
-       PIECE steel_01
-       X 367
-       Y 125
-     $END
-     
-       $TERRAIN
-         STYLE slx_marble
-         PIECE steel_01
-         X 391
-         Y 125
-       $END
-       
-         $TERRAIN
-           STYLE slx_marble
-           PIECE steel_01
-           X 415
-           Y 125
-         $END
-         
-           $TERRAIN
-             STYLE slx_marble
-             PIECE steel_01
-             X 439
-             Y 125
-           $END
-           
-             $TERRAIN
-               STYLE slx_marble
-               PIECE steel_01
-               X 463
-               Y 125
-             $END
-             
-               $TERRAIN
-                 STYLE slx_marble
-                 PIECE steel_01
-                 X 487
-                 Y 125
-               $END
-               
-                 $TERRAIN
-                   STYLE slx_marble
-                   PIECE steel_02
-                   X 559
-                   Y 122
-                 $END
-                 
-                   $TERRAIN
-                     STYLE slx_marble
-                     PIECE steel_02
-                     X 573
-                     Y 119
-                   $END
-                   
-                     $TERRAIN
-                       STYLE slx_marble
-                       PIECE steel_02
-                       X 587
-                       Y 114
-                     $END
-                     
-                       $TERRAIN
-                         STYLE slx_marble
-                         PIECE steel_02
-                         X 601
-                         Y 107
-                       $END
-                       
-                         $TERRAIN
-                           STYLE slx_marble
-                           PIECE steel_02
-                           X 615
-                           Y 101
-                         $END
-                         
-                           $TERRAIN
-                             STYLE slx_marble
-                             PIECE steel_02
-                             X 281
-                             Y 122
-                           $END
-                           
-                             $TERRAIN
-                               STYLE slx_marble
-                               PIECE steel_02
-                               X 267
-                               Y 119
-                             $END
-                             
-                               $TERRAIN
-                                 STYLE slx_marble
-                                 PIECE steel_02
-                                 X 253
-                                 Y 115
-                               $END
-                               
-                                 $TERRAIN
-                                   STYLE slx_marble
-                                   PIECE steel_02
-                                   X 239
-                                   Y 109
-                                 $END
-                                 
-                                   $TERRAIN
-                                     STYLE slx_marble
-                                     PIECE steel_02
-                                     X 225
-                                     Y 101
-                                   $END
-                                   
-                                     $TERRAIN
-                                       STYLE slx_marble
-                                       PIECE pillar_02
-                                       X 441
-                                       Y 149
-                                       ONE_WAY
-                                     $END
-                                     
-                                       $TERRAIN
-                                         STYLE slx_marble
-                                         PIECE pillar_02
-                                         X 521
-                                         Y 149
-                                         ONE_WAY
-                                       $END
-                                       
-                                         $TERRAIN
-                                           STYLE slx_marble
-                                           PIECE pillar_02
-                                           X 601
-                                           Y 149
-                                           ONE_WAY
-                                         $END
-                                         
-                                           $TERRAIN
-                                             STYLE slx_marble
-                                             PIECE pillar_02
-                                             X 681
-                                             Y 149
-                                             ONE_WAY
-                                           $END
-                                           
-                                             $TERRAIN
-                                               STYLE slx_marble
-                                               PIECE pillar_02
-                                               X 361
-                                               Y 149
-                                               ONE_WAY
-                                             $END
-                                             
-                                               $TERRAIN
-                                                 STYLE slx_marble
-                                                 PIECE pillar_02
-                                                 X 281
-                                                 Y 149
-                                                 ONE_WAY
-                                               $END
-                                               
-                                                 $TERRAIN
-                                                   STYLE slx_marble
-                                                   PIECE pillar_02
-                                                   X 201
-                                                   Y 149
-                                                   ONE_WAY
-                                                 $END
-                                                 
-                                                   $TERRAIN
-                                                     STYLE slx_marble
-                                                     PIECE pillar_02
-                                                     X 156
-                                                     Y 149
-                                                     ONE_WAY
-                                                   $END
-                                                   
-                                                     $TERRAIN
-                                                       STYLE slx_marble
-                                                       PIECE pillar_02
-                                                       X 77
-                                                       Y 149
-                                                       ONE_WAY
-                                                     $END
-                                                     
-                                                       $TERRAIN
-                                                         STYLE slx_marble
-                                                         PIECE steps_02
-                                                         X 61
-                                                         Y 141
-                                                         ONE_WAY
-                                                       $END
-                                                       
-                                                         $TERRAIN
-                                                           STYLE slx_marble
-                                                           PIECE steps_02
-                                                           X 45
-                                                           Y 149
-                                                           ONE_WAY
-                                                         $END
-                                                         
-                                                           $TERRAIN
-                                                             STYLE slx_marble
-                                                             PIECE steps_02
-                                                             X 29
-                                                             Y 157
-                                                             ONE_WAY
-                                                           $END
-                                                           
-                                                             $TERRAIN
-                                                               STYLE slx_marble
-                                                               PIECE steps_02
-                                                               X 61
-                                                               Y 153
-                                                               ONE_WAY
-                                                             $END
-                                                             
-                                                               $TERRAIN
-                                                                 STYLE slx_marble
-                                                                 PIECE steps_04
-                                                                 X 753
-                                                                 Y 141
-                                                                 ONE_WAY
-                                                               $END
-                                                               
-                                                                 $TERRAIN
-                                                                   STYLE slx_marble
-                                                                   PIECE steps_04
-                                                                   X 769
-                                                                   Y 149
-                                                                   ONE_WAY
-                                                                 $END
-                                                                 
-                                                                   $TERRAIN
-                                                                     STYLE slx_marble
-                                                                     PIECE steps_04
-                                                                     X 785
-                                                                     Y 157
-                                                                     ONE_WAY
-                                                                   $END
-                                                                   
-                                                                     $TERRAIN
-                                                                       STYLE slx_marble
-                                                                       PIECE steps_04
-                                                                       X 753
-                                                                       Y 153
-                                                                       ONE_WAY
-                                                                     $END
-                                                                     
-                                                                       $TERRAIN
-                                                                         STYLE slx_marble
-                                                                         PIECE brick_small_01
-                                                                         X 77
-                                                                         Y 149
-                                                                         ONE_WAY
-                                                                       $END
-                                                                       
-                                                                         $TERRAIN
-                                                                           STYLE slx_marble
-                                                                           PIECE brick_small_01
-                                                                           X 753
-                                                                           Y 149
-                                                                           ONE_WAY
-                                                                         $END
-                                                                         
-                                                                           $TERRAIN
-                                                                             STYLE slx_marble
-                                                                             PIECE circle_01
-                                                                             X 466
-                                                                             Y 98
-                                                                             ONE_WAY
-                                                                           $END
-                                                                           
-                                                                             $TERRAIN
-                                                                               STYLE slx_marble
-                                                                               PIECE circle_01
-                                                                               X 319
-                                                                               Y 98
-                                                                               ONE_WAY
-                                                                             $END
-                                                                             
-                                                                               $TERRAIN
-                                                                                 STYLE slx_marble
-                                                                                 PIECE circle_02
-                                                                                 X 414
-                                                                                 Y 101
-                                                                                 ONE_WAY
-                                                                               $END
-                                                                               
-                                                                                 $TERRAIN
-                                                                                   STYLE slx_marble
-                                                                                   PIECE circle_02
-                                                                                   X 527
-                                                                                   Y 100
-                                                                                   ONE_WAY
-                                                                                 $END
-                                                                                 
-                                                                                   $TERRAIN
-                                                                                     STYLE slx_marble
-                                                                                     PIECE circle_02
-                                                                                     X 368
-                                                                                     Y 100
-                                                                                     ONE_WAY
-                                                                                   $END
-                                                                                   
-                                                                                     $TERRAIN
-                                                                                       STYLE slx_marble
-                                                                                       PIECE block_01
-                                                                                       X 682
-                                                                                       Y 144
-                                                                                       ONE_WAY
-                                                                                     $END
-                                                                                     
-                                                                                       $TERRAIN
-                                                                                         STYLE slx_marble
-                                                                                         PIECE steel_01
-                                                                                         X 295
-                                                                                         Y 125
-                                                                                       $END
-                                                                                       
-                                                                                         $TERRAIN
-                                                                                           STYLE slx_marble
-                                                                                           PIECE steel_01
-                                                                                           X 511
-                                                                                           Y 125
-                                                                                         $END
-                                                                                         
-                                                                                           $TERRAIN
-                                                                                             STYLE slx_marble
-                                                                                             PIECE steel_01
-                                                                                             X 535
-                                                                                             Y 125
-                                                                                           $END
-                                                                                           
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 343
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 367
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 391
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 415
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 439
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 463
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 487
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 559
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 573
+   Y 119
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 587
+   Y 114
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 601
+   Y 107
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 615
+   Y 101
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 281
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 267
+   Y 119
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 253
+   Y 115
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 239
+   Y 109
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_02
+   X 225
+   Y 101
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 441
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 521
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 601
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 681
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 361
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 281
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 201
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 156
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE pillar_02
+   X 77
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_02
+   X 61
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_02
+   X 45
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_02
+   X 29
+   Y 157
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_02
+   X 61
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_04
+   X 753
+   Y 141
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_04
+   X 769
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_04
+   X 785
+   Y 157
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steps_04
+   X 753
+   Y 153
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_small_01
+   X 77
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE brick_small_01
+   X 753
+   Y 149
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE circle_01
+   X 466
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE circle_01
+   X 319
+   Y 98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE circle_02
+   X 414
+   Y 101
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE circle_02
+   X 527
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE circle_02
+   X 368
+   Y 100
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE block_01
+   X 682
+   Y 144
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 295
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 511
+   Y 125
+ $END
+ 
+ $TERRAIN
+   STYLE slx_marble
+   PIECE steel_01
+   X 535
+   Y 125
+ $END
+ 
  
