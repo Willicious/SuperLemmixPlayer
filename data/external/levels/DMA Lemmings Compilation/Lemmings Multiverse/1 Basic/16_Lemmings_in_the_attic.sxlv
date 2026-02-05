@@ -7,9 +7,8 @@
 # ----------------------------- 
  TITLE Lemmings in the attic
  AUTHOR SEGA Genesis Lemmings 
- MUSIC menace_amiga
  ID x0F0F0F360F0F0F36
- VERSION x0000000000000009
+ VERSION x000000000000000A
  
 #       Level dimensions        
 # ----------------------------- 
