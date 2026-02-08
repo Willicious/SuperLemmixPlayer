@@ -214,8 +214,8 @@ const // Icon indexes
     // 55, Empty slot
     // 56, Empty slot
     // 57, Empty slot
-    57, // 25 Propeller TODO: Create hi-res Propeller sprite and add it to level info icons
-    58, // 26 Batter
+    //57, // 25 Propeller TODO: Create hi-res Propeller sprite and add it to level info icons
+    //58, // 26 Batter
     59  // 27 Cloner
   );
 
