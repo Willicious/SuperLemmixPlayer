@@ -1126,11 +1126,11 @@ begin
         DrawProjectileShadow(CopyL);
       end;
 
-    spbPropeller:
-      begin
-        fRenderInterface.SimulateTransitionLem(CopyL, baPropelling);
-        DrawPropellerShadow(CopyL);
-      end;
+//    spbPropeller:
+//      begin
+//        fRenderInterface.SimulateTransitionLem(CopyL, baPropelling);
+//        DrawPropellerShadow(CopyL);
+//      end;
 
     spbLaserer:
       begin
@@ -1722,42 +1722,43 @@ var
   SavePhysicsMap: TBitmap32;
   CurFrameCount: Integer;
 begin
-  fLayers.fIsEmpty[rlShadowsHigh] := False;
-
-  // Deep copy PhysicsMap
-  SavePhysicsMap := TBitmap32.Create;
-  SavePhysicsMap.Assign(PhysicsMap);
-
-  PosX := L.LemX;
-  PosY := L.LemY - 10;
-
-  CurFrameCount := 0;
-
-  while Assigned(L) and (L.LemAction = baPropelling) and (CurFrameCount < MAX_FRAME_COUNT) do
-  begin
-    SetHighShadowPixel(PosX - 4, PosY);
-    SetHighShadowPixel(PosX + 4, PosY);
-
-    PosX := L.LemX;
-    PosY := L.LemY - 10;
-
-    // Simulate next frame
-    fRenderInterface.SimulateLem(L);
-    Inc(CurFrameCount);
-  end;
-  // Draw tunnel cap if lem has hit steel
-  if (L.LemAction = baFalling) then
-  begin
-
-    SetHighShadowPixel(PosX - 4, PosY + 1);
-    SetHighShadowPixel(PosX + 4, PosY + 1);
-
-    for i := -4 to 4 do
-      SetHighShadowPixel(PosX + i, PosY + 1);
-  end;
-
-  PhysicsMap.Assign(SavePhysicsMap);
-  SavePhysicsMap.Free;
+  Exit;
+//  fLayers.fIsEmpty[rlShadowsHigh] := False;
+//
+//  // Deep copy PhysicsMap
+//  SavePhysicsMap := TBitmap32.Create;
+//  SavePhysicsMap.Assign(PhysicsMap);
+//
+//  PosX := L.LemX;
+//  PosY := L.LemY - 10;
+//
+//  CurFrameCount := 0;
+//
+//  while Assigned(L) and (L.LemAction = baPropelling) and (CurFrameCount < MAX_FRAME_COUNT) do
+//  begin
+//    SetHighShadowPixel(PosX - 4, PosY);
+//    SetHighShadowPixel(PosX + 4, PosY);
+//
+//    PosX := L.LemX;
+//    PosY := L.LemY - 10;
+//
+//    // Simulate next frame
+//    fRenderInterface.SimulateLem(L);
+//    Inc(CurFrameCount);
+//  end;
+//  // Draw tunnel cap if lem has hit steel
+//  if (L.LemAction = baFalling) then
+//  begin
+//
+//    SetHighShadowPixel(PosX - 4, PosY + 1);
+//    SetHighShadowPixel(PosX + 4, PosY + 1);
+//
+//    for i := -4 to 4 do
+//      SetHighShadowPixel(PosX + i, PosY + 1);
+//  end;
+//
+//  PhysicsMap.Assign(SavePhysicsMap);
+//  SavePhysicsMap.Free;
 end;
 
 procedure TRenderer.DrawExploderShadow(L: TLemming);

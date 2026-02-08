@@ -221,7 +221,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png', 'empty_slot.png', //'empty_slot.png', 'empty_slot.png',
     {Skills end here}
 
     'empty_slot.png',
@@ -677,7 +677,6 @@ begin
         spbJumper:    Offset := Point(0, 16);
         spbShimmier:  Offset := Point(0, 16);
         spbBallooner: Offset := Point(0, FloaterY);
-        spbBatter:    Offset := Point(0, 14);
         spbSlider:    Offset := Point(-2, 15);
         spbClimber:   Offset := Point(-1, 13);
         spbSwimmer:   Offset := Point(0, 12);
@@ -699,6 +698,8 @@ begin
         spbFencer:    Offset := Point(-2, 16);
         spbMiner:     Offset := Point(0, 15);
         spbDigger:    Offset := Point(-1, 16);
+        //spbPropeller: Offset := Point(0, 14);
+        //spbBatter:    Offset := Point(0, 14);
         spbCloner:    Offset := Point(-1, 15);
         else          Offset := Point(0, 0);
       end;

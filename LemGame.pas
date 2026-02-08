@@ -670,12 +670,12 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..27] of TBasicLemmingAction =
+  ActionListArray: array[0..25] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baTimebombing, baExploding, baFreezing, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
              baJumping, baSliding, baLasering, baSpearing, baGrenading,
-             baBallooning, baLaddering, baBatting, baPropelling
+             baBallooning, baLaddering//, baBatting, baPropelling
              );                       // TODO - Double-check these skills are in the correct place after adding them
 
 function CheckRectCopy(const A, B: TRect): Boolean;
@@ -1180,12 +1180,12 @@ begin
   LemmingMethods[baSliding]       := HandleSliding;
   LemmingMethods[baDangling]      := HandleDangling;
   LemmingMethods[baLasering]      := HandleLasering;
-  LemmingMethods[baPropelling]    := HandlePropelling;
   LemmingMethods[baSpearing]      := HandleThrowing;
   LemmingMethods[baGrenading]     := HandleThrowing;
   LemmingMethods[baLooking]       := HandleLooking;
   LemmingMethods[baBallooning]    := HandleBallooning;
-  LemmingMethods[baBatting]       := HandleBatting;
+  //LemmingMethods[baPropelling]    := HandlePropelling;
+  //LemmingMethods[baBatting]       := HandleBatting;
   LemmingMethods[baSleeping]      := HandleSleeping;
 
   NewSkillMethods[baNone]         := nil;
@@ -1226,12 +1226,12 @@ begin
   NewSkillMethods[baSliding]      := MayAssignSlider;
   NewSkillMethods[baDangling]     := nil;
   NewSkillMethods[baLasering]     := MayAssignLaserer;
-  NewSkillMethods[baPropelling]   := MayAssignPropeller;
   NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
   NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
   NewSkillMethods[baLooking]      := nil;
   NewSkillMethods[baBallooning]   := MayAssignBallooner;
-  NewSkillMethods[baBatting]      := MayAssignBatter;
+//  NewSkillMethods[baPropelling]   := MayAssignPropeller;
+//  NewSkillMethods[baBatting]      := MayAssignBatter;
   NewSkillMethods[baSleeping]     := nil;
 
   P := AppPath;
@@ -1800,8 +1800,8 @@ const
     17, // 47 baBallooning
     25, // 48 baLaddering
     8,  // 49 baDrifting
-    4,  // 50 baPropelling
-    10, // 51 baBatting
+    //4,  // 50 baPropelling
+    //10, // 51 baBatting
     20  // 52 baSleeping
     );
 begin
@@ -2040,10 +2040,10 @@ begin
                      L.LemLaserRemainTime := 10;
                      CueSoundEffect(SFX_Laser, L.Position);
                     end;
-    baPropelling : begin
-                     L.LemPropellerFoundTerrain := False;
-                     CueSoundEffect(SFX_Propeller, L.Position);
-                   end;
+//    baPropelling : begin
+//                     L.LemPropellerFoundTerrain := False;
+//                     CueSoundEffect(SFX_Propeller, L.Position);
+//                   end;
     baBallooning : CueSoundEffect(SFX_BalloonInflate, L.Position);
   end;
 end;
@@ -3007,10 +3007,12 @@ const
   ActionSet = [baTimebombing, baTimebombFinish, baOhnoing, baExploding,
                baFreezing, baFreezerExplosion, baFrozen, baUnfreezing,
                baVaporizing, baVinetrapping, baSplatting, baDrowning,
-               baExiting, baSleeping, baPropelling];
+               baExiting, baSleeping//, baPropelling
+               ];
 begin
   Result := not (L.LemAction in ActionSet)
-    and not HasIndestructibleAt(L.LemX, L.LemY - 1, L.LemDx, baPropelling);
+    //and not HasIndestructibleAt(L.LemX, L.LemY - 1, L.LemDx, baPropelling)
+    ;
 end;
 
 function TLemmingGame.MayAssignDigger(L: TLemming): Boolean;
@@ -3215,8 +3217,10 @@ var
   BatterFacingAway: Boolean;
   Batter: TLemming;
 begin
-  if not (spbBatter in Level.Info.Skillset) then
-    Exit;
+  Exit;   // <--- TODO - delete this
+
+//  if not (spbBatter in Level.Info.Skillset) then
+//    Exit;
 
   if L.LemIsInvincible then
     Exit;
@@ -4552,7 +4556,7 @@ var
   ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbLadderer, spbPlatformer, spbBuilder, spbStacker, spbDigger,
-                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer, spbPropeller,
+                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner, spbFreezer, //spbPropeller,
                     spbSpearer, spbGrenader, spbLaserer, spbBallooner]; // Timebomber not included by choice
 begin
   if fHyperSpeed then Exit;
@@ -4759,17 +4763,17 @@ var
 begin
   Result := False;
 
-  For n := -4 to 4 do
-  begin
-    if HasPixelAt(PosX + n, PosY) and not HasIndestructibleAt(PosX + n, PosY, 0, baPropelling) then
-    begin
-      RemovePixelAt(PosX + n, PosY);
-      Result := True;
-    end;
-
-    // Delete these pixels from the terrain layer
-    if not IsSimulating then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
-  end;
+//  For n := -4 to 4 do
+//  begin
+//    if HasPixelAt(PosX + n, PosY) and not HasIndestructibleAt(PosX + n, PosY, 0, baPropelling) then
+//    begin
+//      RemovePixelAt(PosX + n, PosY);
+//      Result := True;
+//    end;
+//
+//    // Delete these pixels from the terrain layer
+//    if not IsSimulating then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
+//  end;
 end;
 
 function TLemmingGame.HandleLasering(L: TLemming): Boolean;
@@ -4874,8 +4878,9 @@ const
                       baShrugging, baTimebombing, baOhnoing, baExploding,
                       baFreezerExplosion, baFreezing, baFrozen, baUnfreezing,
                       baReaching, baTurning, baDehoisting, baVaporizing,
-                      baVinetrapping, baDangling, baLooking, baLaddering,
-                      baBatting];
+                      baVinetrapping, baDangling, baLooking, baLaddering//,
+                      //baBatting
+                      ];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -5426,12 +5431,12 @@ begin
     Exit;
   end;
 
-  if HasIndestructibleAt(L.LemX, L.LemY - 10, L.LemDX, baPropelling) then
-  begin
-    CueSoundEffect(SFX_Steel_OWW, L.Position);
-    Transition(L, baFalling);
-    Exit;
-  end;
+//  if HasIndestructibleAt(L.LemX, L.LemY - 10, L.LemDX, baPropelling) then
+//  begin
+//    CueSoundEffect(SFX_Steel_OWW, L.Position);
+//    Transition(L, baFalling);
+//    Exit;
+//  end;
 
   if not L.LemPropellerFoundTerrain then
   begin
@@ -6857,7 +6862,7 @@ begin
   // Check for indestructible terrain at position (x, y), depending on skill.
   Result := (    ( HasTriggerAt(X, Y, trSteel) )
               or ( HasTriggerAt(X, Y, trOWUp) and (Skill in [baBashing, baMining, baDigging]))
-              or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing, baLasering, baPropelling
+              or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing, baLasering//, baPropelling
               ]))
               or ( HasTriggerAt(X, Y, trOWLeft) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
               or ( HasTriggerAt(X, Y, trOWRight) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
@@ -7861,19 +7866,19 @@ var
 begin
   Result := nil;
 
-  for i := 0 to LemmingList.Count - 1 do
-  begin
-    L := LemmingList[i];
-
-    if (L = CurLem) then
-      Continue;
-
-    if (L.LemX = X) and (L.LemY = Y) and (L.LemAction = baBatting) then
-    begin
-      Result := L;
-      Exit;
-    end;
-  end;
+//  for i := 0 to LemmingList.Count - 1 do
+//  begin
+//    L := LemmingList[i];
+//
+//    if (L = CurLem) then
+//      Continue;
+//
+//    if (L.LemX = X) and (L.LemY = Y) and (L.LemAction = baBatting) then
+//    begin
+//      Result := L;
+//      Exit;
+//    end;
+//  end;
 end;
 
 function TLemmingGame.HasLaserAt(X, Y: Integer): Boolean;

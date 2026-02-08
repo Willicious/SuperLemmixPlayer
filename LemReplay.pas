@@ -23,7 +23,7 @@ uses
   SharedGlobals;
 
 const
-  SKILL_REPLAY_NAME_COUNT = 28;
+  SKILL_REPLAY_NAME_COUNT = 26;
   SKILL_REPLAY_NAMES: array[0..SKILL_REPLAY_NAME_COUNT -1] of String =
                                                ('WALKER', 'JUMPER', 'SHIMMIER',
                                                 'BALLOONER',
@@ -34,8 +34,9 @@ const
                                                 'PLATFORMER', 'BUILDER',
                                                 'STACKER', 'SPEARER', 'GRENADER',
                                                 'LASERER', 'BASHER', 'FENCER',
-                                                'MINER', 'DIGGER', 'PROPELLER',
-                                                'BATTER','CLONER');
+                                                'MINER', 'DIGGER',
+                                                //'PROPELLER', 'BATTER',
+                                                'CLONER');
 
 
 type

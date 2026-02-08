@@ -147,8 +147,8 @@ var
             baFencing:       Result := 'Fencer';
             baMining:        Result := 'Miner';
             baDigging:       Result := 'Digger';
-            baPropelling:    Result := 'Propeller';
-            baBatting:       Result := 'Batter';
+            //baPropelling:    Result := 'Propeller';
+            //baBatting:       Result := 'Batter';
             baCloning:       Result := 'Cloner';
         else Result := '(Invalid skill)';
       end;

@@ -27,8 +27,8 @@ const
 -------------------------------------------------------------------------------}
   // MUST MATCH BELOW (not the next list, the one after that)
   // And don't forget to update the numbers! ;P
-  NUM_LEM_SPRITES     = 94;   // Num lem sprites
-  NUM_LEM_SPRITE_TYPE = 47;         // Num lem sprite types
+  NUM_LEM_SPRITES     = 90;   // Num lem sprites
+  NUM_LEM_SPRITE_TYPE = 45;         // Num lem sprite types
   WALKING             = 0;    // 1  // 1
   WALKING_RTL         = 1;    // 2
   ZOMBIEWALKING       = 2;    // 3  // 2
@@ -117,12 +117,12 @@ const
   LADDERING_RTL       = 85;   // 86
   DRIFTING            = 86;   // 87 // 44
   DRIFTING_RTL        = 87;   // 88
-  PROPELLING          = 88;   // 89 // 45
-  PROPELLING_RTL      = 89;   // 90
-  BATTING             = 90;   // 91 // 46
-  BATTING_RTL         = 91;   // 92
-  SLEEPING            = 92;   // 93 // 47
-  SLEEPING_RTL        = 93;   // 94
+  //PROPELLING          = 88;   // 89 // 45
+  //PROPELLING_RTL      = 89;   // 90
+  //BATTING             = 90;   // 91 // 46
+  //BATTING_RTL         = 91;   // 92
+  SLEEPING            =88;//= 92;   // 93 // 47
+  SLEEPING_RTL        =89;//= 93;   // 94
   // N.B. REMEMBER to change the numbers at the top!
 
   // This one must match TBasicLemmingAction in LemCore / LemStrings
@@ -176,8 +176,8 @@ const
     (BALLOONING, BALLOONING_RTL),             // 47 baBallooning
     (LADDERING, LADDERING_RTL),               // 48 baPlatforming
     (DRIFTING, DRIFTING_RTL),                 // 49 baDrifting
-    (PROPELLING, PROPELLING_RTL),             // 50 baPropelling
-    (BATTING, BATTING_RTL),                   // 51 baBatting
+    //(PROPELLING, PROPELLING_RTL),             // 50 baPropelling
+    //(BATTING, BATTING_RTL),                   // 51 baBatting
     (SLEEPING, SLEEPING_RTL)                  // 52 baSleeping
   );
 
@@ -268,7 +268,7 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
 // MUST MATCH ABOVE (not the next list, the one after that)
 // They also need to appear in "scheme.nxmi", but the order doesn't matter there
-  ANIM_NAMES: array[0..46] of String =  (
+  ANIM_NAMES: array[0..44] of String =  (
   'WALKER',        // 1
   'ZOMBIEWALKER',  // 2
   'ASCENDER',      // 3
@@ -313,8 +313,8 @@ const
   'BALLOONER',     // 43
   'LADDERER',      // 44
   'DRIFTER',       // 45
-  'PROPELLER',     // 46
-  'BATTER',        // 46
+  //'PROPELLER',     // 46
+  //'BATTER',        // 46
   'SLEEPER'        // 47
   );
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');

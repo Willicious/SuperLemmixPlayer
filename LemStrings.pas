@@ -168,8 +168,8 @@ resourcestring
   SInvincible = 'Invincible';
   SBallooner = 'Ballooner';
   SDrifter = 'Drifter';
-  SPropeller = 'Propeller';
-  SBatter = 'Batter';
+  //SPropeller = 'Propeller';
+  //SBatter = 'Batter';
   SSleeper = 'Sleeper';
 
   SRadiator = 'Radiator';
@@ -251,8 +251,8 @@ const
     SBallooner,   // 47
     SLadderer,    // 48
     SDrifter,     // 49
-    SPropeller,   // 50
-    SBatter,      // 51
+    //SPropeller,   // 50
+    //SBatter,      // 51
     SSleeper      // 52
   );
 
