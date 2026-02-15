@@ -31,6 +31,7 @@ type
   private
     { Private declarations }
     fChecksumsLocal: String;
+    fChecksumsLocalLegacy: String;
     fOnlineChecksums: TStringList;
     fStylesToUpdate: TStringList;
 
@@ -59,7 +60,15 @@ implementation
 
 procedure TFormStyleUpdater.FormCreate(Sender: TObject);
 begin
-  fChecksumsLocal := AppPath + SFSaveData + 'styletimes.ini';
+  fChecksumsLocal := AppPath + SFStyles + 'styletimes.ini';
+  fChecksumsLocalLegacy := AppPath + SFSaveData + 'styletimes.ini';
+
+  if not TFile.Exists(fChecksumsLocal) then
+  begin
+    if TFile.Exists(fChecksumsLocalLegacy) then
+      TFile.Move(fChecksumsLocalLegacy, fChecksumsLocal);
+  end;
+
   fOnlineChecksums := TStringList.Create;
   fStylesToUpdate := TStringList.Create;
 
