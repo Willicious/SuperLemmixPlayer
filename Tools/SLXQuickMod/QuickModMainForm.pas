@@ -70,6 +70,7 @@ type
     cbSetAllSkillCounts: TCheckBox;
     seSkillCounts: TSpinEdit;
     cbCorrectWaterAndExits: TCheckBox;
+    cbSetSteelTypeToAlways: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbStatCheckboxClicked(Sender: TObject);
     procedure cbCustomSkillsetClick(Sender: TObject);
@@ -590,7 +591,7 @@ begin
     begin
       ThisLine := Uppercase(TrimLeft(SL[n]));
 
-      if (Trim(ThisLine) = '# LEVEL FILE MODIFIED BY SLX QUICKMOD') then
+      if Pos('modified by slx quickmod', LowerCase(Trim(ThisLine))) > 0 then
         AlreadyModified := True;
 
       // Get some values for adding Talismans
@@ -964,6 +965,9 @@ begin
         if (Trim(ThisLine) = 'SUPERLEMMING') and cbDeactivateSuperlemming.Checked then
           SL[n] := '# ' + SL[n];
 
+        if (LeftStr(ThisLine, 10) = 'STEEL_TYPE') and cbSetSteelTypeToAlways.Checked then
+          SL[n] := '# ' + SL[n];
+
         if (LeftStr(ThisLine, 6) = 'AUTHOR') and cbChangeAuthor.Checked then
           SL[n] := '# ' + SL[n];
 
@@ -993,7 +997,7 @@ begin
 
     if not AlreadyModified then
     begin
-      SL.Insert(0, '# Level file modified by SLX QuickMod');
+      SL.Insert(0, '# Modified by SLX QuickMod Version ' + GetAppVersion);
       SL.Insert(1, '');
     end;
 
@@ -1019,6 +1023,7 @@ begin
     if cbTimeLimit.Checked and (StrToIntDef(ebTimeLimit.Text, 0) >= 1) then
       SL.Add('TIME_LIMIT ' + IntToStr(StrToIntDef(ebTimeLimit.Text, 0)));
     if cbActivateSuperlemming.Checked then SL.Add('SUPERLEMMING');
+    if cbSetSteelTypeToAlways.Checked then SL.Add('STEEL_TYPE 1');
 
     if cbAddSaveAllTalisman.Checked and not (TotalLemmings = SaveRequirement)
       and not LevelHasZombies then

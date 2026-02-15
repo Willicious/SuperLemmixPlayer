@@ -5,7 +5,7 @@ object FQuickmodMain: TFQuickmodMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'SuperLemmix QuickMod'
-  ClientHeight = 508
+  ClientHeight = 532
   ClientWidth = 902
   Color = clBtnFace
   DoubleBuffered = True
@@ -20,7 +20,7 @@ object FQuickmodMain: TFQuickmodMain
   OnCreate = FormCreate
   DesignSize = (
     902
-    508)
+    532)
   PixelsPerInch = 96
   TextHeight = 13
   object lblPack: TLabel
@@ -44,10 +44,11 @@ object FQuickmodMain: TFQuickmodMain
     Left = 8
     Top = 34
     Width = 497
-    Height = 435
+    Height = 459
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Level Stats'
     TabOrder = 1
+    ExplicitHeight = 435
     object cbLemCount: TCheckBox
       Left = 16
       Top = 53
@@ -205,7 +206,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbTalismans: TGroupBox
       Left = 16
-      Top = 193
+      Top = 215
       Width = 465
       Height = 136
       Caption = 'Talismans'
@@ -261,7 +262,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbCrossPlatformConversions: TGroupBox
       Left = 16
-      Top = 335
+      Top = 359
       Width = 465
       Height = 90
       Caption = 'Cross-Platform OG Style Swap'
@@ -310,33 +311,43 @@ object FQuickmodMain: TFQuickmodMain
         TabOrder = 3
       end
     end
+    object cbSetSteelTypeToAlways: TCheckBox
+      Left = 16
+      Top = 185
+      Width = 211
+      Height = 17
+      Caption = 'Set Steel Type to '#39'Always Steel'#39
+      TabOrder = 15
+      OnClick = cbStatCheckboxClicked
+    end
   end
   object btnApply: TButton
     Left = 40
-    Top = 475
+    Top = 499
     Width = 815
     Height = 25
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Apply Changes To All Levels in Selected Pack'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 475
   end
   object gbSkills: TGroupBox
     Left = 504
     Top = 34
     Width = 390
-    Height = 435
+    Height = 459
     Caption = 'Skills'
     TabOrder = 2
     OnClick = gbSkillsClick
     DesignSize = (
       390
-      435)
+      459)
     object gbCustomSkillset: TGroupBox
       Left = 13
       Top = 57
       Width = 366
-      Height = 287
+      Height = 311
       Anchors = [akLeft, akRight, akBottom]
       Caption = 'Custom Skillset'
       TabOrder = 0
@@ -352,7 +363,7 @@ object FQuickmodMain: TFQuickmodMain
     end
     object gbSkillConversions: TGroupBox
       Left = 13
-      Top = 350
+      Top = 374
       Width = 366
       Height = 75
       Caption = 'Skill Conversions'
