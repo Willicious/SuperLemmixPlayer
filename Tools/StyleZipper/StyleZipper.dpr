@@ -16,7 +16,7 @@ const
   DEFAULT_SOUNDS: array[0..28] of string =
    ('chain',
     'changeop',
-    'chink',
+    'dink',
     'die',
     'door',
     'electric',
@@ -336,6 +336,32 @@ var
       MakeDirectoryZip('styles|sound', '_all_styles.zip');
     end;
   end;
+
+  procedure UpdateChecksumListForStyleTimes;
+  var
+    StyleTimesList: TStringList;
+    I: Integer;
+    Key, Value: string;
+  begin
+    StyleTimesList := TStringList.Create;
+    try
+      for I := 0 to ChecksumList.Count - 1 do
+      begin
+        Key := ChecksumList.Names[I];
+        Value := ChecksumList.ValueFromIndex[I];
+
+        if Key.EndsWith('.zip', True) then
+          Key := Copy(Key, 1, Length(Key) - 4);
+
+        StyleTimesList.Add(Key + '=' + Value);
+      end;
+
+      StyleTimesList.Sorted := True;
+      StyleTimesList.SaveToFile(AppPath + '..\data\external\styles\styletimes.ini');
+    finally
+      StyleTimesList.Free;
+    end;
+  end;
 begin
   ChecksumList := TStringList.Create;
   ChecksumReport := TStringList.Create;
@@ -353,6 +379,9 @@ begin
       ChecksumList.Sorted := true;
       ChecksumList.SaveToFile(AppPath + '..\data\styles_checksums.ini');
       WriteLn('Checksum list saved to ' + AppPath + '..\data\styles_checksums.ini');
+
+      UpdateChecksumListForStyleTimes;
+      WriteLn('StyleTimes list saved to ' + AppPath + 'styletimes.ini');
 
       ChecksumReport.Sort;
       ChecksumReport.SaveToFile(AppPath + 'style_zip_report.txt');
