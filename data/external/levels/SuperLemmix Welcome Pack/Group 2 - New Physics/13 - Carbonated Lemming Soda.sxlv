@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Carbonated Lemming Soda
  AUTHOR DMA Design / WillLem
  ID xE7FFB383E7FFB384
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 10
  SAVE_REQUIREMENT 10
  MAX_SPAWN_INTERVAL 53
- STEEL_TYPE 0
+ STEEL_TYPE 1
  COLLECTIBLES 1
  INVINCIBILITY
  

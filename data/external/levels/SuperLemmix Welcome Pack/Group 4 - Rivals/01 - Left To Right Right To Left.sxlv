@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Left To Right, Right To Left
  AUTHOR WillLem
  ID x5E31C01E39DD38DC
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 40
  SAVE_REQUIREMENT 30
  MAX_SPAWN_INTERVAL 78
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 2

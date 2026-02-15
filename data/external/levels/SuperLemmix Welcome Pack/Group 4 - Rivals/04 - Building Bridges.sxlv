@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Building Bridges
  AUTHOR DMA Design
  ID xA1451D7EE96BEBDC
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  TIME_LIMIT 480
  MAX_SPAWN_INTERVAL 28
  SPAWN_INTERVAL_LOCKED
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 10

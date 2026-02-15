@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Nudge
  AUTHOR WillLem
  ID x07DAEAE3767ECE2F
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 5
  SAVE_REQUIREMENT 4
  MAX_SPAWN_INTERVAL 15
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 5

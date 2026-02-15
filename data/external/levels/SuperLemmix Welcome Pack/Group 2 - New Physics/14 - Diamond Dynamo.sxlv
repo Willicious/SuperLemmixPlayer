@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Diamond Dynamo
  AUTHOR WillLem
  ID x6F35981B6DECC9B6
- VERSION x0000000000000058
+ VERSION x0000000000000059
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 19
  MAX_SPAWN_INTERVAL 63
  SPAWN_INTERVAL_LOCKED
- STEEL_TYPE 0
+ STEEL_TYPE 1
  COLLECTIBLES 3
  INVINCIBILITY
  

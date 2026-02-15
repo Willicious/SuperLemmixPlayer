@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Heaven is a Half Pipe
  AUTHOR WillLem
  ID x6795A47212184BF5
- VERSION x0000000000000019
+ VERSION x000000000000001A
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 2
  SAVE_REQUIREMENT 2
  MAX_SPAWN_INTERVAL 53
- STEEL_TYPE 0
+ STEEL_TYPE 1
  COLLECTIBLES 3
  INVINCIBILITY
  

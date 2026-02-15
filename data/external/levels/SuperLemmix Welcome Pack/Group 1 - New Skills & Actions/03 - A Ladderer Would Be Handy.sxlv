@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE A Ladderer Would Be Handy
  AUTHOR WillLem
  ID x4DC50F326231F6D9
- VERSION x000000000000004C
+ VERSION x000000000000004D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 20
  SAVE_REQUIREMENT 15
  MAX_SPAWN_INTERVAL 93
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 10

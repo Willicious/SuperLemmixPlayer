@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Crossover Tactics
  AUTHOR DMA Design / WillLem
  ID xE379EAF4A4630284
- VERSION x0000000000000018
+ VERSION x0000000000000019
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 18
  SPAWN_INTERVAL_LOCKED
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 10

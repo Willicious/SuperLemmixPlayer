@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Lemmy's Psychedelic Bath
  AUTHOR WillLem
  ID x6A9F098C0B166333
- VERSION x0000000000000056
+ VERSION x0000000000000057
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 40
  SAVE_REQUIREMENT 25
  MAX_SPAWN_INTERVAL 93
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 10

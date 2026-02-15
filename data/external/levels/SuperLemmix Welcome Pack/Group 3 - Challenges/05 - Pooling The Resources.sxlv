@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Pooling The Resources
  AUTHOR WillLem
  ID x0D05EC381BEFC6FB
- VERSION x0000000000000027
+ VERSION x0000000000000028
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 30
  SAVE_REQUIREMENT 15
  MAX_SPAWN_INTERVAL 93
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 15

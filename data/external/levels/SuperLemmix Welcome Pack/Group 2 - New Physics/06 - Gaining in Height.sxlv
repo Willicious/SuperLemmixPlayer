@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Gaining in Height
  AUTHOR WillLem
  ID x76DCF9112E89C414
- VERSION x0000000000000048
+ VERSION x0000000000000049
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 1
  SAVE_REQUIREMENT 1
  MAX_SPAWN_INTERVAL 102
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    JUMPER 10

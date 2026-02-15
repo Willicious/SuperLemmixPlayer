@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Zombie Apocalypse
  AUTHOR WillLem
  ID x76737B301437095F
- VERSION x0000000000000018
+ VERSION x0000000000000019
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 80
  SAVE_REQUIREMENT 1
  MAX_SPAWN_INTERVAL 4
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    WALKER 99

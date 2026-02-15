@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE One Lem To Free Them All
  AUTHOR WillLem
  ID x71BAB8F451C16C96
- VERSION x000000000000001C
+ VERSION x000000000000001D
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 75
  SAVE_REQUIREMENT 74
  MAX_SPAWN_INTERVAL 102
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    TIMEBOMBER 1
