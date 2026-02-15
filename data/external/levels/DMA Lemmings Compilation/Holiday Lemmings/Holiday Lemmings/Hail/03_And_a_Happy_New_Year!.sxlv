@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE And a Happy New Year!
  AUTHOR DMA Design
  ID xB4B681EDB4B681ED
- VERSION x000000000000000D
+ VERSION x000000000000000F
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 25
  TIME_LIMIT 540
  MAX_SPAWN_INTERVAL 51
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 50

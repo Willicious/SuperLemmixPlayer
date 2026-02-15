@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Timebomb not bash
  AUTHOR Sony / Minim
  ID xC7A4A8C3C7A4A8C3
- VERSION x000000000000000E
+ VERSION x000000000000000F
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 1
  TIME_LIMIT 600
  MAX_SPAWN_INTERVAL 53
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 1

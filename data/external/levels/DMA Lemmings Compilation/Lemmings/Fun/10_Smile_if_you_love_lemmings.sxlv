@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Smile if you love lemmings
  AUTHOR DMA Design 
  ID xBAC0F043BAC0F043
- VERSION x0000000000000010
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 10
  TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 28
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 20

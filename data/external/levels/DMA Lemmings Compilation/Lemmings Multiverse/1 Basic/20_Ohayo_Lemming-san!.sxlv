@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Ohayo Lemming-san!
  AUTHOR SNES Lemmings
  ID x9695513D9695513D
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 60
  TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 28
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 20

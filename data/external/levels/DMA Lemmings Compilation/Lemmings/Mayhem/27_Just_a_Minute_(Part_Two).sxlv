@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Just a Minute (Part Two)
  AUTHOR DMA Design 
  ID xD2A854FBD2A854FB
- VERSION x000000000000000E
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 50
  TIME_LIMIT 60
  MAX_SPAWN_INTERVAL 48
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 1

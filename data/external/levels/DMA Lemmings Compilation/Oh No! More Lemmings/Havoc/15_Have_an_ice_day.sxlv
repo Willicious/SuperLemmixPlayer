@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Have an ice day
  AUTHOR DMA Design
  ID xF98DEDE7F98DEDE7
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  SAVE_REQUIREMENT 8
  TIME_LIMIT 360
  MAX_SPAWN_INTERVAL 43
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    TIMEBOMBER 2

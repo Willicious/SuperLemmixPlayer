@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE At Home in a Cave
  AUTHOR DMA Design
  ID xB2CFC8EFB2CFC8EF
- VERSION x000000000000000E
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 78
  TIME_LIMIT 240
  MAX_SPAWN_INTERVAL 48
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 10

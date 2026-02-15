@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE One way digging to freedom
  AUTHOR DMA Design 
  ID xF085E7CEF085E7CE
- VERSION x000000000000000F
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 95
  TIME_LIMIT 240
  MAX_SPAWN_INTERVAL 23
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 3

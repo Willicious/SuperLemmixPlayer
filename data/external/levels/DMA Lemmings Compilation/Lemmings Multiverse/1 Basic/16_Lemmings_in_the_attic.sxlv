@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Lemmings in the attic
  AUTHOR SEGA Genesis Lemmings 
  ID x0F0F0F360F0F0F36
- VERSION x000000000000000A
+ VERSION x000000000000000B
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 80
  TIME_LIMIT 180
  MAX_SPAWN_INTERVAL 48
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    BASHER 4

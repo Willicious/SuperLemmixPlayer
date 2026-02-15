@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE One way or another
  AUTHOR DMA Design 
  ID x81FE839981FE8399
- VERSION x000000000000000F
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 75
  TIME_LIMIT 240
  MAX_SPAWN_INTERVAL 28
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    TIMEBOMBER 10

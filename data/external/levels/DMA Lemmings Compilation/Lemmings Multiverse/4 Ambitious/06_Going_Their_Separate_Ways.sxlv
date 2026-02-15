@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Going Their Separate Ways
  AUTHOR Apple Mac Lemmings
  ID xEC2C7566EC2C7566
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -23,7 +23,7 @@
  LEMMINGS 20
  SAVE_REQUIREMENT 20
  MAX_SPAWN_INTERVAL 53
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 10

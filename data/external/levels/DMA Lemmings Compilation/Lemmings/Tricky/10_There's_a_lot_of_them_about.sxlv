@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE There's a lot of them about
  AUTHOR DMA Design 
  ID x5C5C5C3D5C5C5C3D
- VERSION x000000000000000E
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 94
  TIME_LIMIT 480
  MAX_SPAWN_INTERVAL 23
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 20

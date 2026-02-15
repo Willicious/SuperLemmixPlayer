@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Mutiny On The Bounty
  AUTHOR DMA Design 
  ID x8EF9BE1E8EF9BE1E
- VERSION x000000000000000D
+ VERSION x000000000000000E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  SAVE_REQUIREMENT 49
  TIME_LIMIT 180
  MAX_SPAWN_INTERVAL 53
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 2

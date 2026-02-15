@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Stepping Stones
  AUTHOR DMA Design 
  ID xCDB93A82CDB93A82
- VERSION x000000000000000E
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 70
  TIME_LIMIT 240
  MAX_SPAWN_INTERVAL 28
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 5

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Is That Lemming Licensed?
  AUTHOR NES Lemmings Ron Stard
  ID x895EE4C6895EE4C6
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 14
  TIME_LIMIT 480
  MAX_SPAWN_INTERVAL 8
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    FLOATER 1

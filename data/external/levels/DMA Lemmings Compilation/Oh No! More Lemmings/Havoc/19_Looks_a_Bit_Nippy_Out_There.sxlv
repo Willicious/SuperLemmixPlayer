@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Looks a Bit Nippy Out There
  AUTHOR DMA Design
  ID xEB9D9073EB9D9073
- VERSION x0000000000000010
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  SAVE_REQUIREMENT 80
  TIME_LIMIT 180
  MAX_SPAWN_INTERVAL 38
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 1

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -9,7 +9,7 @@
  AUTHOR DMA Design 
  MUSIC awesome_amiga
  ID xCBB73390CBB73390
- VERSION x0000000000000011
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  SAVE_REQUIREMENT 80
  TIME_LIMIT 360
  MAX_SPAWN_INTERVAL 28
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 20

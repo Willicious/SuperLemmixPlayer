@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Pea Soup
  AUTHOR DMA Design 
  ID x92E50A4C92E50A4C
- VERSION x000000000000000E
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 75
  TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 18
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    TIMEBOMBER 10

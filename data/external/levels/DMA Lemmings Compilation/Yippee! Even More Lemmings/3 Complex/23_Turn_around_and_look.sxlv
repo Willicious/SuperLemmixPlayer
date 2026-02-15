@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Turn around and look.
  AUTHOR SEGA Genesis Sunsoft Lemmings
  ID x9EF89FD09EF89FD0
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 45
  TIME_LIMIT 180
  MAX_SPAWN_INTERVAL 53
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    BUILDER 5

@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Bomboozal
  AUTHOR DMA Design 
  ID x8AC575AB8AC575AB
- VERSION x0000000000000010
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 64
  TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 13
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    TIMEBOMBER 15

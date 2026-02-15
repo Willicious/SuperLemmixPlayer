@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Turn around young lemmings!
  AUTHOR DMA Design 
  ID xF5C182B1F5C182B1
- VERSION x000000000000000F
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 90
  TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 9
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    FLOATER 1

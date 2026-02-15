@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Where Lemmings Dare
  AUTHOR DMA Design 
  ID xBACB8A48BACB8A48
- VERSION x000000000000000F
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  SAVE_REQUIREMENT 78
  TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 43
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    FLOATER 2

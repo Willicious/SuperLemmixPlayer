@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Art Gallery
  AUTHOR DMA Design 
  ID xEA19C02CEA19C02C
- VERSION x000000000000000F
+ VERSION x0000000000000011
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 100
  TIME_LIMIT 240
  MAX_SPAWN_INTERVAL 43
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 10

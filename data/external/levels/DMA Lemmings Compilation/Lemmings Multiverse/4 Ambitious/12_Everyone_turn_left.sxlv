@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Everyone turn left
  AUTHOR SEGA Genesis Lemmings
  ID x1F1F1F601F1F1F60
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 60
  TIME_LIMIT 180
  MAX_SPAWN_INTERVAL 13
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    MINER 60
