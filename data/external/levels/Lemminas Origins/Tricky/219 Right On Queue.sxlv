@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Right On Queue
  AUTHOR WillLem/DMA
  ID x2450B58A0C955DC8
- VERSION x0000000000000014
+ VERSION x0000000000000015
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 100
  TIME_LIMIT 300
  MAX_SPAWN_INTERVAL 4
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 1

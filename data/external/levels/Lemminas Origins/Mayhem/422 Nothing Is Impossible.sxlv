@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Nothing Is Impossible
  AUTHOR WillLem
  ID x0A9536CF5FD5E4C9
- VERSION x0000000000000012
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 40
  TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 38
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    BUILDER 20

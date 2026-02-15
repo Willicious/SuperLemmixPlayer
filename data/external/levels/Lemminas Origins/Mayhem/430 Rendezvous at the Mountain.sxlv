@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Rendezvous at the Mountain
  AUTHOR WillLem/DMA
  ID xD896E76DD896E76C
- VERSION x0000000000000017
+ VERSION x0000000000000018
  
 #       Level dimensions        
 # ----------------------------- 
@@ -24,7 +24,7 @@
  SAVE_REQUIREMENT 72
  TIME_LIMIT 240
  MAX_SPAWN_INTERVAL 43
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 8

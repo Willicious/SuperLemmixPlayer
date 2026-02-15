@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.1
+#   Created with SLXEditor 3.0.2
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE With A Twist Of Lemmina Please
  AUTHOR WillLem/DMA
  ID xF0AF4F92F0AF4F91
- VERSION x0000000000000012
+ VERSION x0000000000000013
  
 #       Level dimensions        
 # ----------------------------- 
@@ -25,7 +25,7 @@
  TIME_LIMIT 120
  MAX_SPAWN_INTERVAL 53
  SPAWN_INTERVAL_LOCKED
- STEEL_TYPE 0
+ STEEL_TYPE 1
  
  $SKILLSET 
    CLIMBER 1
