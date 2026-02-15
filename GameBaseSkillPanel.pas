@@ -1310,16 +1310,12 @@ begin
         if CursorOverRescueCount then
         begin
           SpecialCombine := True;
-          fCombineHueShift := Blue;
+          fCombineHueShift := Teal;
         end else begin
-          if Game.LemmingsSaved <= 0 then
+          if Game.LemmingsSaved < Level.Info.RescueCount then
           begin
             SpecialCombine := True;
-            fCombineHueShift := Red;
-          end else if Game.LemmingsSaved < Level.Info.RescueCount then
-          begin
-            SpecialCombine := True;
-            fCombineHueShift := Yellow;
+            fCombineHueShift := Blue;
           end else
             SpecialCombine := False;
         end;
@@ -1569,14 +1565,20 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
+  SaveCount, TotalSaved: Integer;
   S: string;
 const
   LEN = 4;
 begin
+  TotalSaved := Game.LemmingsSaved;
+  SaveCount := Level.Info.RescueCount - TotalSaved;
+
   if CursorOverRescueCount then
     S := IntToStr(Level.Info.RescueCount)
-  else
-    S := IntToStr(Game.LemmingsSaved);
+  else if (SaveCount < 0) then
+      S := IntToStr(TotalSaved)
+    else
+      S := IntToStr(SaveCount);
 
   if (Game.LemmingsSaved <= -99) then
     S := ' -99'
