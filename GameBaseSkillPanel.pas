@@ -487,9 +487,10 @@ begin
   if not FileExists(SrcFile) then
   begin
     if GameParams.AmigaTheme then
-      aName := 'amiga/' + aName;
+      SrcFile := AppPath + SFGraphicsPanel + 'amiga/' + aName;
 
-    SrcFile := AppPath + SFGraphicsPanel + aName;
+    if not FileExists(SrcFile) or not GameParams.AmigaTheme then
+      SrcFile := AppPath + SFGraphicsPanel + aName;
   end;
 
   TPngInterface.LoadPngFile(SrcFile, aDst)
