@@ -56,23 +56,25 @@ begin
   lblStyleTimesPath.Caption := ChooseApp;
   lblZIPChecksumsPath.Caption := ChooseApp;
 
-  if not (FileExists(AppPath + 'SuperLemmix.exe')) then
-  begin
-    rbSuperLemmix.Enabled := False;
-    rbSuperLemmix.Caption := 'SuperLemmix (SuperLemmix.exe not detected in app folder)'
-  end;
-
-  if not (DirectoryExists(AppPath + 'resources\')) then
-  begin
-    rbRetroLemmini.Enabled := False;
-    rbRetroLemmini.Caption := 'RetroLemmini (RetroLemmini resources not detected in app folder)'
-  end;
-
   ChooseApp := 'Choose an app to initialize Style Zipper';
   lblProgress.Caption := ChooseApp;
   lblProgress.Font.Color := clBlue;
   btnRunStyleZipper.Enabled := False;
   btnUpdateStyleManager.Enabled := False;
+
+  if not (DirectoryExists(AppPath + 'resources\')) then
+  begin
+    rbRetroLemmini.Enabled := False;
+    rbRetroLemmini.Caption := 'RetroLemmini (RetroLemmini resources not detected in app folder)'
+  end else
+    rbRetroLemmini.Checked := True;
+
+  if not (FileExists(AppPath + 'SuperLemmix.exe')) then
+  begin
+    rbSuperLemmix.Enabled := False;
+    rbSuperLemmix.Caption := 'SuperLemmix (SuperLemmix.exe not detected in app folder)'
+  end else
+    rbSuperLemmix.Checked := True;
 end;
 
 procedure TFormStyleZipper.RadioButtonClick(Sender: TObject);
