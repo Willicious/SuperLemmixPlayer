@@ -133,7 +133,6 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     function GetClearPhysics: Boolean;
-    function GetInternalZoom: Integer;
     procedure ProcessGameMessages;
     procedure SetMinimumWindowHeight(CurPanelHeight: Integer);
     procedure ApplyResize(NoRecenter: Boolean = False);
@@ -342,13 +341,6 @@ begin
     else
       ChangeZoom(fInternalZoom - 1);
   end;
-
-  //SkillPanel.ShowMinimapZoomText := True;
-end;
-
-function TGameWindow.GetInternalZoom: Integer;
-begin
-  Result := fInternalZoom;
 end;
 
 procedure TGameWindow.SetMinimumWindowHeight(CurPanelHeight: Integer);

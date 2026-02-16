@@ -59,7 +59,6 @@ type
     fResizedMinimapHeight : Integer;
 
     fMinimapScrollFreeze  : Boolean;
-    //fShowMinimapZoomText  : Boolean;
 
     fSkillFont            : TFontBitmapArray;
     fSkillFontInvert      : TFontBitmapArray;
@@ -172,7 +171,6 @@ type
     procedure RemoveButtonHighlights;
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
-    //procedure DrawMinimapZoomText;
     procedure DrawMinimap; virtual;
 
     procedure ResizePanelWithWindow;
@@ -201,7 +199,6 @@ type
     property ResizedMinimapHeight: Integer read fResizedMinimapHeight write fResizedMinimapHeight;
 
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
-    //property ShowMinimapZoomText: Boolean read fShowMinimapZoomText write fShowMinimapZoomText;
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
     property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
     property ButtonHint: String read fButtonHint write fButtonHint;
@@ -382,7 +379,6 @@ begin
     fSkillOvercount[i] := TBitmap32.Create;
 
   fRRIsPressed := False;
-  //fShowMinimapZoomText := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -1033,24 +1029,7 @@ begin
   end;
 
   fMinimapImage.Changed;
-
-//  if ShowMinimapZoomText then
-//    DrawMinimapZoomText;
 end;
-
-//procedure TBaseSkillPanel.DrawMinimapZoomText;
-//var
-//  ZoomText: String;
-//  TextX, TextY: Integer;
-//begin
-//  ZoomText := 'Z' + IntToStr(fGameWindow.InternalZoom - 1);
-//  TextX := fMinimapImage.Bitmap.Width - (9 * ResMod);
-//  TextY := ResMod;
-//  fMinimapImage.Bitmap.Font.Name := 'Tahoma';
-//  fMinimapImage.Bitmap.Font.Size := 3 * ResMod;
-//  fMinimapImage.Bitmap.Font.Color := clWhite;
-//  fMinimapImage.Bitmap.Textout(TextX, TextY, ZoomText);
-//end;
 
 procedure TBaseSkillPanel.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
 var
