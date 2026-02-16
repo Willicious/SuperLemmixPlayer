@@ -1,9 +1,10 @@
 object FormStyleZipper: TFormStyleZipper
   Left = 0
   Top = 0
+  BorderStyle = bsSingle
   Caption = 'Style Zipper'
-  ClientHeight = 376
-  ClientWidth = 587
+  ClientHeight = 386
+  ClientWidth = 597
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -118,9 +119,9 @@ object FormStyleZipper: TFormStyleZipper
     Caption = 'Progress info...'
   end
   object btnRunStyleZipper: TButton
-    Left = 24
-    Top = 317
-    Width = 544
+    Left = 25
+    Top = 319
+    Width = 208
     Height = 49
     Caption = 'Run Style Zipper'
     TabOrder = 0
@@ -174,5 +175,23 @@ object FormStyleZipper: TFormStyleZipper
     Width = 426
     Height = 21
     TabOrder = 6
+  end
+  object btnUpdateStyleManager: TButton
+    Left = 239
+    Top = 319
+    Width = 208
+    Height = 49
+    Caption = 'Update Style Manager'
+    TabOrder = 7
+    OnClick = btnUpdateStyleManagerClick
+  end
+  object btnClose: TButton
+    Left = 453
+    Top = 319
+    Width = 116
+    Height = 49
+    Caption = 'Close'
+    TabOrder = 8
+    OnClick = btnCloseClick
   end
 end

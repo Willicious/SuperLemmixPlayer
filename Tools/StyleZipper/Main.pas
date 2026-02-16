@@ -3,7 +3,8 @@ unit Main;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, Winapi.ShellAPI,
+  System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   StyleZipCore;
 
@@ -25,9 +26,13 @@ type
     lblChecksums: TLabel;
     lblZIPChecksumsPath: TLabel;
     lblProgress: TLabel;
+    btnUpdateStyleManager: TButton;
+    btnClose: TButton;
     procedure btnRunStyleZipperClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RadioButtonClick(Sender: TObject);
+    procedure btnUpdateStyleManagerClick(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,23 +72,27 @@ begin
   lblProgress.Caption := ChooseApp;
   lblProgress.Font.Color := clBlue;
   btnRunStyleZipper.Enabled := False;
+  btnUpdateStyleManager.Enabled := False;
 end;
 
 procedure TFormStyleZipper.RadioButtonClick(Sender: TObject);
 var
   StyleTimesDirectory, ZipChecksumsDirectory: String;
 begin
-  StylesDirectory := AppPath + 'styles\';
-  OutputDirectory := AppPath + 'style_zips\';
-
   if (rbSuperLemmix.Checked) then
   begin
+    StylesDirectory := AppPath + 'styles\';
+    OutputDirectory := AppPath + 'style_zips\';
     StyleTimesDirectory := ExpandFileName(AppPath + '..\data\external\styles\');
     ZipChecksumsDirectory := ExpandFileName(AppPath + '..\data\');
   end else if (rbRetroLemmini.Checked) then
   begin
-    StyleTimesDirectory := '..\src\resources\styles\';
-    ZipChecksumsDirectory := '..\src\';
+    StylesDirectory := ExpandFileName(AppPath + '..\src\resources\styles\');
+    OutputDirectory := AppPath + 'style_zips\';
+    StyleTimesDirectory := StylesDirectory;
+    ZipChecksumsDirectory := ExpandFileName(AppPath + '..\src\');
+
+    cbMakeAllStylesZip.Checked := True;
   end;
 
   StyleTimesINI := StyleTimesDirectory + 'styletimes.ini';
@@ -97,6 +106,11 @@ begin
   lblProgress.Caption := 'Choose settings and click "Run Style Zipper" when ready';
   lblProgress.Font.Color := clGreen;
   btnRunStyleZipper.Enabled := True;
+end;
+
+procedure TFormStyleZipper.btnCloseClick(Sender: TObject);
+begin
+  Application.Terminate;
 end;
 
 procedure TFormStyleZipper.btnRunStyleZipperClick(Sender: TObject);
@@ -115,8 +129,25 @@ begin
       ShowMessage(E.ClassName + ': ' + E.Message);
   end;
 
-  lblProgress.Caption := 'All done!';
-  btnRunStyleZipper.Enabled := True;
+  lblProgress.Caption := 'All done! Style Manager can now be updated';
+  btnUpdateStyleManager.Enabled := True;
+end;
+
+procedure TFormStyleZipper.btnUpdateStyleManagerClick(Sender: TObject);
+var
+  Bat: String;
+begin
+  btnUpdateStyleManager.Enabled := False;
+
+  Bat := AppPath + 'UpdateStyleManager.bat';
+
+  if not FileExists(AppPath + 'UpdateStyleManager.bat') then
+  begin
+    ShowMessage('Batch file not found: ' + AppPath + 'UpdateStyleManager.bat');
+    Exit;
+  end;
+
+  ShellExecute(Handle, 'open', PChar(Bat), nil, nil, SW_SHOWNORMAL);
 end;
 
 end.

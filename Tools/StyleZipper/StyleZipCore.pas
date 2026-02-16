@@ -6,6 +6,7 @@ uses
   Vcl.Forms,
   GR32,
   GR32_Png,
+  GR32_PortableNetworkGraphic,
   Zip,
   Classes,
   StrUtils,
@@ -231,8 +232,7 @@ implementation
         Inc(UnchangedStyles);
     end;
 
-    if UnchangedStyles = 0 then
-      Exit;
+    if UnchangedStyles = 0 then Exit;
 
     for i := 0 to ChecksumReport.Count-1 do
     begin
@@ -247,6 +247,36 @@ implementation
         if FileExists(OutputDirectory + ZipName) then
           DeleteFile(OutputDirectory + ZipName);
       end;
+    end;
+  end;
+
+  procedure DeleteAllZips;
+  var
+    SearchRec: TSearchRec;
+    ZipCount, i: Integer;
+  begin
+    ZipCount := 0;
+    if FindFirst(OutputDirectory + '*.zip', faAnyFile, SearchRec) = 0 then
+    begin
+      repeat
+        Inc(ZipCount);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+
+    if ZipCount = 0 then Exit;
+
+    i := ZipCount;
+    if FindFirst(OutputDirectory + '*.zip', faAnyFile, SearchRec) = 0 then
+    begin
+      repeat
+        FormStyleZipper.lblProgress.Caption := IntToStr(i) + ' - Deleting zip: ' + SearchRec.Name;
+        Application.ProcessMessages;
+        Dec(i);
+
+        DeleteFile(OutputDirectory + SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
     end;
   end;
 
@@ -292,7 +322,7 @@ implementation
         DeleteUnchangedZips;
 
       if MakeAllStyles then
-        MakeDirectoryZip('_all_styles.zip');
+        MakeDirectoryZip('styles.zip');
 
       ChecksumList.Sorted := true;
       ChecksumList.SaveToFile(ZipChecksumsINI);
