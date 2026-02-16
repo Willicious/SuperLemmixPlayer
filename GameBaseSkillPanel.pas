@@ -93,7 +93,10 @@ type
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
     function ReplayIconRect: TRect; virtual; abstract;
-    function RescueCountRect: TRect; virtual; abstract;
+    function HatchIconRect: TRect; virtual; abstract;
+    function AliveIconRect: TRect; virtual; abstract;
+    function ExitIconRect: TRect; virtual; abstract;
+    function TimeIconRect: TRect; virtual; abstract;
 
     function FirstSkillButtonIndex: Integer; virtual;
     function LastSkillButtonIndex: Integer; virtual;
@@ -180,8 +183,8 @@ type
 
     function CursorOverSkillButton(out Button: TSkillPanelButton): Boolean;
     function CursorOverClickableItem: Boolean;
-    function CursorOverRescueCount: Boolean;
-    function CursorOverReplayIcon: Boolean;
+    function CursorOverPanelItem: Boolean;
+    function CursorOverIcon(aIconRect: TRect): Boolean;
     function CursorOverMinimap: Boolean;
 
     property Image: TImage32 read fImage;
@@ -1308,12 +1311,13 @@ begin
           SpecialCombine := False;
       end else if (CurChar > LemmingSavedStartIndex) and (CurChar <= LemmingSavedStartIndex + 4) then
       begin
-        if CursorOverRescueCount then
+        var LevelPassed := Game.LemmingsSaved >= Level.Info.RescueCount;
+        if CursorOverIcon(ExitIconRect) and GameParams.AmigaTheme and not LevelPassed then
         begin
           SpecialCombine := True;
           fCombineHueShift := Teal;
         end else begin
-          if Game.LemmingsSaved < Level.Info.RescueCount then
+          if not LevelPassed then
           begin
             SpecialCombine := True;
             fCombineHueShift := Blue;
@@ -1333,7 +1337,7 @@ begin
           fCombineHueShift := Red
         else
           fCombineHueShift := Blue;
-      end else if (CurChar <= CursorInfoEndIndex) and CursorOverClickableItem
+      end else if (CurChar <= CursorInfoEndIndex) and CursorOverPanelItem
         and not Game.StateIsUnplayable then
       begin
         SpecialCombine := True;
@@ -1500,7 +1504,7 @@ begin
 
   S := '';
 
-  if CursorOverClickableItem and GameParams.ShowButtonHints then
+  if CursorOverPanelItem and GameParams.ShowButtonHints then
     S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
   else begin
 
@@ -1566,24 +1570,31 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
 var
-  SaveCount, TotalSaved: Integer;
+  ToSave, Required, TotalSaved: Integer;
   S: string;
 const
   LEN = 4;
 begin
   TotalSaved := Game.LemmingsSaved;
-  SaveCount := Level.Info.RescueCount - TotalSaved;
+  Required := Level.Info.RescueCount;
+  ToSave := Required - TotalSaved;
 
-  if CursorOverRescueCount then
-    S := IntToStr(Level.Info.RescueCount)
-  else if (SaveCount < 0) then
-      S := IntToStr(TotalSaved)
+  if GameParams.AmigaTheme then
+  begin
+    if CursorOverIcon(ExitIconRect) and (ToSave > 0) then
+      S := IntToStr(Required)
     else
-      S := IntToStr(SaveCount);
+      S := IntToStr(TotalSaved);
+  end else begin
+    if (ToSave < 0) then
+      S := IntToStr(TotalSaved)
+  else
+      S := IntToStr(ToSave);
+  end;
 
-  if (Game.LemmingsSaved <= -99) then
+  if (TotalSaved <= -99) or (ToSave <= -99) then // Should never happen
     S := ' -99'
-  else if (Game.LemmingsSaved >= 999) then
+  else if (TotalSaved >= 999) or (Required >= 999) or (ToSave >= 999) then
     S := ' 999'
   else if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN)
@@ -1692,7 +1703,7 @@ var
 begin
   if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
 
-  if CursorOverReplayIcon then
+  if CursorOverIcon(ReplayIconRect) then
   begin
     // Stop playback if the "P" icon is clicked (replay must have finished or been cancelled, so this needs to be called first)
     if GameParams.PlaybackModeActive and (Game.CurrentIteration > Game.ReplayManager.LastActionFrame) then
@@ -1908,7 +1919,25 @@ begin
 
   if CursorOverMinimap then
                    ButtonHint := 'MINIMAP'
-  else if CursorOverReplayIcon then
+  else if CursorOverIcon(HatchIconRect) then
+                   ButtonHint := 'TO SPAWN'
+  else if CursorOverIcon(AliveIconRect) then
+                   ButtonHint := 'AVAILABLE'
+  else if CursorOverIcon(TimeIconRect)then
+                   ButtonHint := 'TIMER'
+  else if CursorOverIcon(ExitIconRect) then
+  begin
+    var ShowToSaveHint: Boolean;
+    if GameParams.AmigaTheme then
+      ShowToSaveHint := Game.LemmingsSaved < Level.Info.RescueCount
+    else
+      ShowToSaveHint := Game.LemmingsSaved <= Level.Info.RescueCount;
+
+    if ShowToSaveHint then
+                   ButtonHint := 'TO SAVE'
+    else
+                   ButtonHint := 'SAVED';
+  end else if CursorOverIcon(ReplayIconRect) then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
                    ButtonHint := 'CANCEL REPLAY'
@@ -1937,7 +1966,7 @@ begin
   end;
 end;
 
-function TBaseSkillPanel.CursorOverRescueCount: Boolean;
+function TBaseSkillPanel.CursorOverIcon(aIconRect: TRect): Boolean;
 var
   CursorPos: TPoint;
   P: TPoint;
@@ -1946,7 +1975,7 @@ begin
   CursorPos := Mouse.CursorPos;
   P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
 
-  if PtInRect(RescueCountRect, P) then
+  if PtInRect(aIconRect, P) then
   begin
     Result := True;
     Exit;
@@ -1979,22 +2008,6 @@ begin
   Button := spbNone;
 end;
 
-function TBaseSkillPanel.CursorOverReplayIcon: Boolean;
-var
-  CursorPos: TPoint;
-  P: TPoint;
-begin
-  Result := False;
-  CursorPos := Mouse.CursorPos;
-  P := Image.ControlToBitmap(Image.ScreenToClient(CursorPos));
-
-  if PtInRect(ReplayIconRect, P) then
-  begin
-    Result := True;
-    Exit;
-  end;
-end;
-
 function TBaseSkillPanel.CursorOverMinimap: Boolean;
 var
   CursorPos: TPoint;
@@ -2016,7 +2029,20 @@ var
   aButton: TSkillPanelButton;
 begin
   Result := False or CursorOverSkillButton(aButton)
-                  or CursorOverReplayIcon
+                  or CursorOverIcon(ReplayIconRect)
+                  or CursorOverMinimap;
+end;
+
+function TBaseSkillPanel.CursorOverPanelItem: Boolean;
+var
+  aButton: TSkillPanelButton;
+begin
+  Result := False or CursorOverSkillButton(aButton)
+                  or CursorOverIcon(ReplayIconRect)
+                  or CursorOverIcon(HatchIconRect)
+                  or CursorOverIcon(AliveIconRect)
+                  or CursorOverIcon(ExitIconRect)
+                  or CursorOverIcon(TimeIconRect)
                   or CursorOverMinimap;
 end;
 

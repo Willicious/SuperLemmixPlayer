@@ -16,7 +16,12 @@ type
 
     function MinimapRect: TRect; override;
     function ReplayIconRect: TRect; override;
-    function RescueCountRect: TRect; override;
+    function TimeIconRect: TRect; override;
+
+    function HatchIconRect: TRect; override;
+    function AliveIconRect: TRect; override;
+    function ExitIconRect: TRect; override;
+    function GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
 
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
@@ -106,33 +111,91 @@ begin
   Result := Rect(212, 4, 232, 32);
 end;
 
-// Assigns a non-clickable rectangle to the rescue count icon & digits
-function TSkillPanelStandard.RescueCountRect: TRect;
+// Assigns a non-clickable rectangle to the timer icon & digits
+function TSkillPanelStandard.TimeIconRect: TRect;
 var
-  LemmingsSaved, DigitCount: Integer;
+  Left: Integer;
 begin
-  LemmingsSaved := Game.LemmingsSaved;
+  if GameParams.AmigaTheme then
+    Result := Rect(0, 0, 0, 0) // No need to show panel hint in Amiga theme
+  else
+    Result := Rect(578, 2, 672, 32)
+end;
 
-  if LemmingsSaved >= 0 then // For positive numbers
+// Assigns a non-clickable rectangle to the hatch count icon & digits
+function TSkillPanelStandard.HatchIconRect: TRect;
+begin
+  if GameParams.AmigaTheme then
+    Result := Rect(0, 0, 0, 0) // Amiga theme doesn't show hatch count
+  else
+    Result := GetPanelRect(288, Game.LemmingsToSpawn - Game.SpawnedDead, 32);
+end;
+
+// Assigns a non-clickable rectangle to the alive count icon & digits
+function TSkillPanelStandard.AliveIconRect: TRect;
+var
+  Left, ThemeOffset, LemAliveCount: Integer;
+begin
+  if GameParams.AmigaTheme then
   begin
-    if LemmingsSaved < 10 then
+    Left := 288;
+    ThemeOffset := 64;
+    LemAliveCount := Game.LemmingsActive;
+  end else begin
+    Left := 386;
+    ThemeOffset := 32;
+    LemAliveCount := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
+  end;
+
+  Result := GetPanelRect(Left, ThemeOffset, LemAliveCount);
+end;
+
+// Assigns a non-clickable rectangle to the exit count icon & digits
+function TSkillPanelStandard.ExitIconRect: TRect;
+var
+  Left, ThemeOffset, SaveCount: Integer;
+begin
+  if GameParams.AmigaTheme then
+  begin
+    Left := 418;
+    ThemeOffset := 46;
+  end else begin
+    Left := 478;
+    ThemeOffset := 32;
+  end;
+
+  if (Game.LemmingsSaved > Level.Info.RescueCount) then
+    SaveCount := Game.LemmingsSaved
+  else
+    SaveCount := Level.Info.RescueCount;
+
+  Result := GetPanelRect(Left, ThemeOffset, SaveCount)
+end;
+
+function TSkillPanelStandard.GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
+var
+  Left, Right, DigitCount: Integer;
+begin
+  if aValue >= 0 then // For positive numbers
+  begin
+    if aValue < 10 then
       DigitCount := 1
-    else if LemmingsSaved < 100 then
+    else if aValue < 100 then
       DigitCount := 2
     else
       DigitCount := 3;
   end else
   begin
-    if LemmingsSaved > -10 then // For negative numbers, including the '-' sign
+    if aValue > -10 then // For negative numbers, including the '-' sign
       DigitCount := 2
     else
       DigitCount := 3;
   end;
 
-  if GameParams.AmigaTheme then
-    Result := Rect(418, 4, 466 + DigitCount * 16, 32)
-  else
-    Result := Rect(478, 4, 512 + DigitCount * 16, 32);
+  Left := aPos;
+  Right := Left + aOffset + (DigitCount * 16);
+
+  Result := Rect(Left, 4, Right, 32);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
