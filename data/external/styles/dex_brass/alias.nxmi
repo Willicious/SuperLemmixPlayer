@@ -1,0 +1,82 @@
+$TERRAIN
+FROM :pipe_45bend_03
+TO :pipe_bend_big_03
+$END
+
+$TERRAIN
+FROM :pipe_45bend_04
+TO :pipe_bend_big_04
+$END
+
+$TERRAIN
+FROM :pipe_45bend_05
+TO :pipe_bend_big_05
+$END
+
+$TERRAIN
+FROM :pipe_45bend_06
+TO :pipe_bend_big_06
+$END
+
+$TERRAIN
+FROM :pipe_45bend_09
+TO :pipe_bend_05
+$END
+
+$TERRAIN
+FROM :pipe_45bend_10
+TO :pipe_bend_06
+$END
+
+$TERRAIN
+FROM :pipe_45bend_11
+TO :pipe_bend_07
+$END
+
+$TERRAIN
+FROM :pipe_45bend_12
+TO :pipe_bend_08
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_03
+TO :steelpipe_bend_big_03
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_04
+TO :steelpipe_bend_big_04
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_05
+TO :steelpipe_bend_big_05
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_06
+TO :steelpipe_bend_big_06
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_09
+TO :steelpipe_bend_05
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_10
+TO :steelpipe_bend_06
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_11
+TO :steelpipe_bend_07
+$END
+
+$TERRAIN
+FROM :steelpipe_45bend_12
+TO :steelpipe_bend_08
+$END
+
+
+
