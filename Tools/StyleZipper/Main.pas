@@ -137,19 +137,48 @@ end;
 
 procedure TFormStyleZipper.btnUpdateStyleManagerClick(Sender: TObject);
 var
-  Bat: String;
+  S, Bat, StylesZip, TargetZip, TargetPath: String;
+
+  function GetSuperParent(const Dir: string): string;
+  begin
+    Result := IncludeTrailingPathDelimiter(ExtractFilePath(ExcludeTrailingPathDelimiter(ExtractFilePath(ExcludeTrailingPathDelimiter(Dir)))));
+  end;
 begin
   btnUpdateStyleManager.Enabled := False;
+  S := 'Style Manager updated - check styles.zip and commit to repo. StyleZipper can now be closed.';
 
   Bat := AppPath + 'UpdateStyleManager.bat';
 
   if not FileExists(AppPath + 'UpdateStyleManager.bat') then
   begin
-    ShowMessage('Batch file not found: ' + AppPath + 'UpdateStyleManager.bat');
+    if (rbRetroLemmini.Checked) then
+    begin
+      TargetPath := GetSuperParent(OutputDirectory);
+      TargetZip := TargetPath + 'styles.zip';
+      StylesZip := OutputDirectory + 'styles.zip';
+
+      if FileExists(StylesZip) then
+      begin
+        if FileExists(TargetZip) then
+          DeleteFile(TargetZip);
+
+        RenameFile(StylesZip, TargetZip);
+
+        if FileExists(TargetZip) then
+        begin
+          lblProgress.Caption := S;
+          Exit;
+        end;
+      end;
+    end;
+
+    lblProgress.Caption := 'Batch file not found: ' + AppPath + 'UpdateStyleManager.bat';
+    lblProgress.Font.Color := clBlue;
     Exit;
   end;
 
   ShellExecute(Handle, 'open', PChar(Bat), nil, nil, SW_SHOWNORMAL);
+  lblProgress.Caption := S;
 end;
 
 end.
