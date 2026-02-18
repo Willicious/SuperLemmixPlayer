@@ -180,26 +180,41 @@ implementation
 
   procedure MakeDirectoryZip(aZipFilename: String);
   var
-    SearchRec: TSearchRec;
-    Base: String;
     Zip: TZipFile;
+    RemainingStyles: Integer;
+    StyleCounter: TSearchRec;
 
-    procedure AddRecursive(aRelPath: String);
+    procedure AddRecursive(const aRelPath: String);
+    var
+      SearchRec: TSearchRec;
     begin
-      if FindFirst(Base + aRelPath + '*', faDirectory, SearchRec) = 0 then
+      if FindFirst(StylesDirectory + aRelPath + '*', faAnyFile, SearchRec) = 0 then
       begin
-        repeat
-          if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
+        try
+          repeat
+            if (SearchRec.Name = '.') or (SearchRec.Name = '..') then
+              Continue;
 
-          if (SearchRec.Attr and faDirectory) = 0 then
-            Zip.Add(Base + aRelPath + SearchRec.Name, aRelPath + SearchRec.Name)
-          else
-            AddRecursive(aRelPath + SearchRec.Name + '\');
-        until FindNext(SearchRec) <> 0;
-        FindClose(SearchRec);
+            if (SearchRec.Attr and faDirectory) = 0 then
+              Zip.Add(StylesDirectory + aRelPath + SearchRec.Name, aRelPath + SearchRec.Name)
+            else begin
+              if aRelPath = '' then
+              begin
+                FormStyleZipper.lblProgress.Caption := IntToStr(RemainingStyles) +
+                  ' - Adding style to .zip: ' + SearchRec.Name;
+
+                Application.ProcessMessages;
+                Dec(RemainingStyles);
+              end;
+
+              AddRecursive(aRelPath + SearchRec.Name + '\');
+            end;
+          until FindNext(SearchRec) <> 0;
+        finally
+          FindClose(SearchRec);
+        end;
       end;
     end;
-
   begin
     Zip := TZipFile.Create;
     try
@@ -208,9 +223,22 @@ implementation
 
       Zip.Open(OutputDirectory + aZipFilename, zmWrite);
 
-      Base := StylesDirectory;
-      FormStyleZipper.lblProgress.Caption := 'Creating "' + aZipFilename + '" ...';
+      FormStyleZipper.lblProgress.Caption := 'Creating "' + aZipFilename + '" ... ';
       Application.ProcessMessages;
+
+      RemainingStyles := 0;
+
+      if FindFirst(StylesDirectory + '*', faDirectory, StyleCounter) = 0 then
+      begin
+        try
+          repeat
+            if (StyleCounter.Name <> '.') and (StyleCounter.Name <> '..') and ((StyleCounter.Attr and faDirectory) <> 0) then
+              Inc(RemainingStyles);
+          until FindNext(StyleCounter) <> 0;
+        finally
+          FindClose(StyleCounter);
+        end;
+      end;
 
       AddRecursive('');
 
