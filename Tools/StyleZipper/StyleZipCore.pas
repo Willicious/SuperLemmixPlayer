@@ -183,23 +183,25 @@ implementation
     SearchRec: TSearchRec;
     Base: String;
     Zip: TZipFile;
+    StyleCount: Integer;
 
-    procedure AddRecursive(aRelPath: String);
+    procedure AddRecursive(const Base, aRelPath: String);
+    var
+      SearchRec: TSearchRec;
     begin
-      if FindFirst(Base + aRelPath + '*', faDirectory, SearchRec) = 0 then
+      if FindFirst(Base + aRelPath + '*', faAnyFile, SearchRec) = 0 then
       begin
         repeat
-          if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
+          if (SearchRec.Name = '.') or (SearchRec.Name = '..') then Continue;
 
           if (SearchRec.Attr and faDirectory) = 0 then
-            Zip.Add(Base + aRelPath + SearchRec.Name, aRelPath + SearchRec.Name)
+            Zip.Add(Base + aRelPath + SearchRec.Name, SearchRec.Name)
           else
-            AddRecursive(aRelPath + SearchRec.Name + '\');
+            AddRecursive(Base, aRelPath + SearchRec.Name + '\');
         until FindNext(SearchRec) <> 0;
         FindClose(SearchRec);
       end;
     end;
-
   begin
     Zip := TZipFile.Create;
     try
@@ -208,11 +210,33 @@ implementation
 
       Zip.Open(OutputDirectory + aZipFilename, zmWrite);
 
-      Base := StylesDirectory;
-      FormStyleZipper.lblProgress.Caption := 'Creating "' + aZipFilename + '" ...';
-      Application.ProcessMessages;
+      StyleCount := 0;
+      if FindFirst(StylesDirectory + '*', faDirectory, SearchRec) = 0 then
+      begin
+        repeat
+          Inc(StyleCount);
+        until FindNext(SearchRec) <> 0;
+        FindClose(SearchRec);
+      end;
 
-      AddRecursive('');
+      if FindFirst(StylesDirectory + '*', faDirectory, SearchRec) = 0 then
+      begin
+        repeat
+          if (SearchRec.Name = '.') or (SearchRec.Name = '..') then Continue;
+
+          if (SearchRec.Attr and faDirectory) <> 0 then
+          begin
+            Base := StylesDirectory + SearchRec.Name + '\';
+
+            FormStyleZipper.lblProgress.Caption := IntToStr(StyleCount) + ' - Adding style to "styles.zip": ' + SearchRec.Name;
+            Application.ProcessMessages;
+            Dec(StyleCount);
+
+            AddRecursive(Base, '');
+          end;
+        until FindNext(SearchRec) <> 0;
+        FindClose(SearchRec);
+      end;
 
       Zip.Close;
     finally
