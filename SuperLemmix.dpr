@@ -72,7 +72,8 @@ uses
   LemProjectile in 'LemProjectile.pas',
   FLevelListDialog in 'FLevelListDialog.pas',
   FPlaybackMode in 'FPlaybackMode.pas' {TFPlaybackMode},
-  FStyleUpdater in 'FStyleUpdater.pas' {FormStyleUpdater};
+  FStyleUpdater in 'FStyleUpdater.pas' {FormStyleUpdater},
+  SLXManifest in 'SLXManifest.pas';
 
 {$R *.res}
 
