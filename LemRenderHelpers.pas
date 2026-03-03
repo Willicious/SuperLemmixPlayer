@@ -8,7 +8,7 @@ interface
 
 uses
   System.Types,
-  LemProjectile, LemTypes, LemGadgets, LemLemming, LemCore,
+  LemProjectile, LemTypes, LemGadgets, LemGadgetsConstants, LemLemming, LemCore,
   GR32, GR32_Blend,
   Contnrs, Classes,
   SharedGlobals;
@@ -170,6 +170,7 @@ type
       procedure SetSelectedLemming(aValue: TLemming);
       function GetReplayLemming: TLemming;
       procedure SetReplayLemming(aValue: TLemming);
+      function GetPickupInCursor: TGadget;
     public
       constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
@@ -192,6 +193,7 @@ type
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ProjectileList: TProjectileList read fProjectileList write fProjectileList;
       property Gadgets: TGadgetList read fGadgets write fGadgets;
+      property PickupInCursor: TGadget read GetPickupInCursor;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
       property SelectedLemming: TLemming read GetSelectedLemming write SetSelectedLemming;
       property HighlitLemming: TLemming read GetHighlitLemming;
@@ -419,6 +421,29 @@ begin
     Result := nil
   else
     Result := fLemmingList[fReplayLemmingID];
+end;
+
+function TRenderInterface.GetPickupInCursor: TGadget;
+var
+  Pickup: TGadget;
+  i: Integer;
+  function IsCursorOnGadget(P: TGadget): Boolean;
+  begin
+    // Magic numbers are needed due to some offset of MousePos
+    Result := System.Types.PtInRect(Rect(P.Left - 4 div ResMod, P.Top + 1, P.Left + (P.Width - 2) div ResMod, P.Top + (P.Height + 3) div ResMod), MousePos);
+  end;
+begin
+  Result := nil;
+
+  for i := 0 to Gadgets.Count-1 do
+  begin
+    Pickup := Gadgets[i];
+    if not (Pickup.TriggerEffect = DOM_PICKUP) then
+      Continue;
+
+    if IsCursorOnGadget(Pickup) then
+      Result := Pickup;
+  end;
 end;
 
 procedure TRenderInterface.SetSelectedSkillPointer(var aButton: TSkillPanelButton);
