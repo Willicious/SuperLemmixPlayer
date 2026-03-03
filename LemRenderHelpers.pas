@@ -426,11 +426,24 @@ end;
 function TRenderInterface.GetPickupInCursor: TGadget;
 var
   Pickup: TGadget;
-  i: Integer;
+  i, W, H, DefaultPickupSize: Integer;
   function IsCursorOnGadget(P: TGadget): Boolean;
   begin
+    { Use the default_width and default_height properties in the
+      pickup's .nxmo to set the hitbox size }
+    W := P.MetaObj.DefaultWidth;
+    H := P.MetaObj.DefaultHeight;
+    DefaultPickupSize := 16;
+
+    if (W <= 0) then
+      W := DefaultPickupSize;
+    if (H <= 0) then
+      H := DefaultPickupSize;
+
     // Magic numbers are needed due to some offset of MousePos
-    Result := System.Types.PtInRect(Rect(P.Left - 4 div ResMod, P.Top + 1, P.Left + (P.Width - 2) div ResMod, P.Top + (P.Height + 3) div ResMod), MousePos);
+    Result := System.Types.PtInRect(Rect(
+      P.Left - 4, P.Top  + 1, P.Left - 2 + (W * ResMod), P.Top  + 3 + (H * ResMod)),
+      MousePos);
   end;
 begin
   Result := nil;
