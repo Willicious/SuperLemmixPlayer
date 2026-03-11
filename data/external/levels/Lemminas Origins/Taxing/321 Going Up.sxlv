@@ -8,7 +8,7 @@
  TITLE Going Up.......
  AUTHOR WillLem/DMA
  ID xEDC46C84EDC46C83
- VERSION x0000000000000015
+ VERSION x0000000000000017
  
 #       Level dimensions        
 # ----------------------------- 
@@ -21,8 +21,8 @@
 #         Level stats           
 # ----------------------------- 
  LEMMINGS 100
- SAVE_REQUIREMENT 100
- TIME_LIMIT 300
+ SAVE_REQUIREMENT 99
+ TIME_LIMIT 360
  MAX_SPAWN_INTERVAL 18
  STEEL_TYPE 1
  
@@ -38,6 +38,14 @@
    ID 0
    COLOR Gold
    CLASSIC_MODE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Going For Gold
+   ID 1
+   COLOR Gold
+   TIME_LIMIT 5100
+   SAVE_REQUIREMENT 100
  $END 
  
 #     Interactive objects       

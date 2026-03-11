@@ -502,14 +502,6 @@
  
  $TERRAIN
    STYLE slx_pillar
-   PIECE pillar_01
-   X 217
-   Y 153
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
    PIECE pillar_end_05
    X 113
    Y 150
@@ -535,7 +527,7 @@
  $TERRAIN
    STYLE slx_pillar
    PIECE pillar_end_03
-   X 269
+   X 227
    Y 153
    ONE_WAY
  $END
@@ -743,135 +735,26 @@
  $TERRAIN
    STYLE slx_pillar
    PIECE pillar_01
-   X -54
-   Y 87
-   FLIP_VERTICAL
+   X 204
+   Y 98
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE slx_pillar
    PIECE pillar_01
-   X -54
-   Y 85
+   X 204
+   Y 100
    ERASE
-   FLIP_VERTICAL
    ONE_WAY
  $END
  
  $TERRAIN
    STYLE slx_pillar
    PIECE pillar_01
-   X -51
-   Y 71
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -51
-   Y 69
+   X 252
+   Y 90
    ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -46
-   Y 55
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -46
-   Y 53
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -44
-   Y 39
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -44
-   Y 37
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -44
-   Y 23
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -44
-   Y 21
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -52
-   Y 45
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -38
-   Y 45
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -42
-   Y 80
-   ERASE
-   FLIP_VERTICAL
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_pillar
-   PIECE pillar_01
-   X -43
-   Y 109
-   ERASE
-   FLIP_VERTICAL
    ONE_WAY
  $END
  

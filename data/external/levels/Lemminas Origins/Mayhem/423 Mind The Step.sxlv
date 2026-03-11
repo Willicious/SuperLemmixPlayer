@@ -8,7 +8,7 @@
  TITLE Mind The Step.....
  AUTHOR WillLem/DMA
  ID x0A7667EC0A7667EB
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -892,32 +892,8 @@
  $TERRAIN
    STYLE slx_marble
    PIECE steps_03
-   X 751
-   Y 35
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE steps_03
-   X 759
-   Y 27
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE steps_03
    X 775
    Y 23
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE steps_03
-   X 783
-   Y 15
    ONE_WAY
  $END
  
@@ -932,24 +908,8 @@
  $TERRAIN
    STYLE slx_marble
    PIECE steps_03
-   X 807
-   Y 3
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE steps_03
    X 823
    Y -1
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE steps_03
-   X 831
-   Y -9
    ONE_WAY
  $END
  
@@ -1022,14 +982,6 @@
    PIECE brick_small_01
    X 847
    Y 47
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE brick_small_01
-   X 823
-   Y 59
    ONE_WAY
  $END
  

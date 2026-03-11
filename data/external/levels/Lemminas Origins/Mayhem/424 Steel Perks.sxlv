@@ -8,13 +8,13 @@
  TITLE Steel Perks
  AUTHOR WillLem/DMA
  ID x497358DA497358D9
- VERSION x0000000000000025
+ VERSION x0000000000000026
  
 #       Level dimensions        
 # ----------------------------- 
  WIDTH 1040
  HEIGHT 160
- START_X 572
+ START_X 508
  START_Y 80
  THEME willlem_lemminas_classic
  

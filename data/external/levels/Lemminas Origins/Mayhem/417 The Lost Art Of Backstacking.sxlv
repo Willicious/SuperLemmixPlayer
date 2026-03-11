@@ -8,7 +8,7 @@
  TITLE The Lost Art Of Backstacking
  AUTHOR WillLem
  ID x45AEBD5471862DE1
- VERSION x0000000000000026
+ VERSION x000000000000002C
  
 #       Level dimensions        
 # ----------------------------- 
@@ -53,7 +53,7 @@
    STYLE slx_marble
    PIECE exit
    X 493
-   Y 18
+   Y 13
    NO_OVERWRITE
  $END
  
@@ -484,7 +484,7 @@
    STYLE slx_marble
    PIECE structure_04
    X 495
-   Y 42
+   Y 37
    ONE_WAY
  $END
  
@@ -538,7 +538,7 @@
    STYLE slx_marble
    PIECE brick_small_01
    X 487
-   Y 42
+   Y 37
    ONE_WAY
  $END
  
@@ -546,23 +546,7 @@
    STYLE slx_marble
    PIECE brick_small_01
    X 543
-   Y 42
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE brick_small_01
-   X 487
-   Y 88
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_marble
-   PIECE brick_small_01
-   X 543
-   Y 88
+   Y 37
    ONE_WAY
  $END
  
