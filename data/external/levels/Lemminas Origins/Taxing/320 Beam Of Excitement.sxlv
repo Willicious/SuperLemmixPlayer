@@ -8,7 +8,7 @@
  TITLE Beam Of Excitement
  AUTHOR WillLem/Shmoley
  ID x7BE1E2867BE1E285
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -45,7 +45,7 @@
    TITLE Save Maximum Possible
    ID 0
    COLOR Gold
-   SAVE_REQUIREMENT 17
+   SAVE_REQUIREMENT 18
  $END 
  
 #     Interactive objects       

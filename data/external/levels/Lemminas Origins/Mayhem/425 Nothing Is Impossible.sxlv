@@ -8,7 +8,7 @@
  TITLE Nothing Is Impossible
  AUTHOR WillLem
  ID x0A9536CF5FD5E4C9
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -37,6 +37,13 @@
    ID 0
    COLOR Gold
    CLASSIC_MODE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Just a Minute
+   ID 1
+   COLOR Gold
+   TIME_LIMIT 1020
  $END 
  
 #     Interactive objects       

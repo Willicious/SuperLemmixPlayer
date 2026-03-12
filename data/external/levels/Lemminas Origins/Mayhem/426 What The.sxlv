@@ -8,7 +8,7 @@
  TITLE What The...?
  AUTHOR WillLem
  ID x787B9A12787B9A11
- VERSION x000000000000003D
+ VERSION x000000000000003E
  
 #       Level dimensions        
 # ----------------------------- 
@@ -135,16 +135,6 @@
    STYLE slx_marble
    PIECE poison
    X 208
-   Y 143
-   WIDTH 64
-   HEIGHT 25
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_marble
-   PIECE poison
-   X 400
    Y 143
    WIDTH 64
    HEIGHT 25
@@ -297,7 +287,7 @@
    $TERRAIN
      STYLE slx_marble
      PIECE bar_01
-     X 495
+     X 500
      Y 141
      ONE_WAY
    $END
@@ -305,7 +295,7 @@
    $TERRAIN
      STYLE slx_marble
      PIECE bar_06
-     X 486
+     X 491
      Y 123
      ERASE
      ONE_WAY
@@ -314,7 +304,7 @@
    $TERRAIN
      STYLE slx_marble
      PIECE bar_03
-     X 452
+     X 457
      Y 141
      NO_OVERWRITE
      ONE_WAY
@@ -447,7 +437,7 @@
  $TERRAIN
    STYLE *group
    PIECE Group-1757122132
-   X 452
+   X 457
    Y 141
    ONE_WAY
  $END

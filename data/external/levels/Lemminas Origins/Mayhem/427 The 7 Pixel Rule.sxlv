@@ -8,7 +8,7 @@
  TITLE The 7 Pixel Rule
  AUTHOR WillLem
  ID x35CEB9BB784390F1
- VERSION x0000000000000051
+ VERSION x0000000000000052
  
 #       Level dimensions        
 # ----------------------------- 
@@ -39,6 +39,13 @@
    ID 1
    COLOR Gold
    CLASSIC_MODE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Poptacular
+   ID 0
+   COLOR Gold
+   FLOATER_LIMIT 0
  $END 
  
 #     Interactive objects       

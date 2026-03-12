@@ -8,7 +8,7 @@
  TITLE The Steel Mines Of Kessel
  AUTHOR WillLem/DMA
  ID x7152E0B37152E0B2
- VERSION x0000000000000013
+ VERSION x0000000000000014
  
 #       Level dimensions        
 # ----------------------------- 
@@ -33,18 +33,18 @@
  $END 
  
  $TALISMAN 
+   TITLE Plain Popcorn
+   ID 1
+   COLOR Bronze
+   BLOCKER_LIMIT 4
+ $END 
+ 
+ $TALISMAN 
    TITLE Salted Popcorn
    ID 0
    COLOR Silver
    BLOCKER_LIMIT 5
    CLASSIC_MODE 0
- $END 
- 
- $TALISMAN 
-   TITLE Plain Popcorn
-   ID 1
-   COLOR Bronze
-   BLOCKER_LIMIT 4
  $END 
  
  $TALISMAN 
@@ -54,6 +54,13 @@
    BLOCKER_LIMIT 3
    CLASSIC_MODE 0
    NO_PAUSE 0
+ $END 
+ 
+ $TALISMAN 
+   TITLE Hot Toffee Popcorn
+   ID 3
+   COLOR Gold
+   BLOCKER_LIMIT 2
  $END 
  
 #     Interactive objects       
