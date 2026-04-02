@@ -301,7 +301,7 @@ var
   LemmingList: TLemmingList;
 begin
   if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
-  if not fLayers.fIsEmpty[rlCountdown] then fLayers[rlCountdown].Clear(0);
+  if not fLayers.fIsEmpty[rlEffects] then fLayers[rlEffects].Clear(0);
   if not fLayers.fIsEmpty[rlLemmingsLow] then fLayers[rlLemmingsLow].Clear(0);
   if not fLayers.fIsEmpty[rlLemmingsHigh] then fLayers[rlLemmingsHigh].Clear(0);
 
@@ -345,7 +345,7 @@ begin
 
   // Draw particles for exploding lemmings, laser for laserers
   fLayers.fIsEmpty[rlParticles] := True;
-  fLayers.fIsEmpty[rlCountdown] := True;
+  fLayers.fIsEmpty[rlEffects] := True;
 
   for i := 0 to LemmingList.Count-1 do
   begin
@@ -360,13 +360,13 @@ begin
       or (LemmingList[i] = fRenderInterface.HighlitLemming) then
     begin
       DrawLemmingCountdown(LemmingList[i]);
-      fLayers.fIsEmpty[rlCountdown] := False;
+      fLayers.fIsEmpty[rlEffects] := False;
     end;
 
     if LemmingList[i].LemIsInvincible then
     begin
       DrawInvinciblityOverlay(LemmingList[i]);
-      fLayers.fIsEmpty[rlCountdown] := False;
+      fLayers.fIsEmpty[rlEffects] := False;
     end;
 
    if (LemmingList[i].LemAction = baLasering) and not
@@ -775,9 +775,9 @@ begin
   end;
 
   if L.LemDX < 0 then
-    fAni.InvincibilityOverlay.DrawTo(fLayers[rlCountdown], (L.LemX - 8) * ResMod, (L.LemY - YOffset) * ResMod, FrameRect)
+    fAni.InvincibilityOverlay.DrawTo(fLayers[rlEffects], (L.LemX - 8) * ResMod, (L.LemY - YOffset) * ResMod, FrameRect)
   else
-    fAni.InvincibilityOverlay.DrawTo(fLayers[rlCountdown], (L.LemX - 7) * ResMod, (L.LemY - YOffset) * ResMod, FrameRect);
+    fAni.InvincibilityOverlay.DrawTo(fLayers[rlEffects], (L.LemX - 7) * ResMod, (L.LemY - YOffset) * ResMod, FrameRect);
 end;
 
 procedure TRenderer.DrawFreezingOverlay(L: TLemming);
@@ -896,7 +896,7 @@ begin
     begin
       SrcRect := SizedRect(tensDigit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
 
-      Countdown.DrawTo(fLayers[rlCountdown], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
+      Countdown.DrawTo(fLayers[rlEffects], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
 
       if tensDigit = 1 then
         Inc(xPos, 6 * ResMod)
@@ -907,9 +907,9 @@ begin
     // Draw ones digit
     SrcRect := SizedRect(onesDigit * 6 * ResMod, 0, 6 * ResMod, 5 * ResMod);
 
-    Countdown.DrawTo(fLayers[rlCountdown], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
+    Countdown.DrawTo(fLayers[rlEffects], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlCountdown], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
+    fAni.HighlightBitmap.DrawTo(fLayers[rlEffects], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);

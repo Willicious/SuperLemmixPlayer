@@ -63,7 +63,7 @@ type
                   rlObjectHelpers,
                   rlParticles,
                   rlLemmingsHigh,
-                  rlCountdown);
+                  rlEffects);
 
 const
   SCALE_ON_MERGE_LAYERS = [rlShadowsLow, rlShadowsHigh, rlParticles];
