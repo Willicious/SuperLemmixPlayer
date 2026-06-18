@@ -434,11 +434,20 @@ end;
 procedure TFLevelSelect.MaybeReloadLevelInfo;
 var
   NewVersion: Int64;
+  CurLevelInfo: TLevelInfo;
 begin
   GameParams.LoadCurrentLevel;
-  NewVersion := GameParams.Level.Info.LevelVersion;
+  CurLevelInfo := GameParams.Level.Info;
+  NewVersion := CurLevelInfo.LevelVersion;
   if (NewVersion <> fCurrentLevelVersion) then
   begin
+    lblName.Caption := CurLevelInfo.Title;
+
+    if CurLevelInfo.Author <> '' then
+      lblAuthor.Caption := 'Author: ' + CurLevelInfo.Author
+    else
+      lblAuthor.Caption := '';
+
     DisplayLevelInfo(True);
     fCurrentLevelVersion := NewVersion;
   end;
