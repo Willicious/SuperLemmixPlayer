@@ -58,10 +58,10 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 328
     Height = 500
-    ActivePage = TabSheet1
+    ActivePage = tsGeneral
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
-    object TabSheet1: TTabSheet
+    object tsGeneral: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
         Left = 21
@@ -241,7 +241,7 @@ object FormNXConfig: TFormNXConfig
         OnClick = btnStyleUpdaterClick
       end
     end
-    object TabSheet2: TTabSheet
+    object tsGameplay: TTabSheet
       Caption = 'Gameplay'
       ImageIndex = 4
       object lblScrollSpeed: TLabel
@@ -436,7 +436,7 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
     end
-    object Graphics: TTabSheet
+    object tsGraphics: TTabSheet
       Caption = 'Graphics'
       ImageIndex = 3
       object imgAmigaTick: TImage
@@ -2780,20 +2780,20 @@ object FormNXConfig: TFormNXConfig
         end
       end
     end
-    object TabSheet3: TTabSheet
+    object tsAudio: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
       DesignSize = (
         320
         472)
-      object Label3: TLabel
+      object lblSound: TLabel
         Left = 40
         Top = 42
         Width = 34
         Height = 13
         Caption = 'Sound'
       end
-      object Label5: TLabel
+      object lblMusic: TLabel
         Left = 44
         Top = 85
         Width = 30

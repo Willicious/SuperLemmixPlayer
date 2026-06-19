@@ -17,8 +17,10 @@ type
     btnCancel: TButton;
     btnApply: TButton;
     NXConfigPages: TPageControl;
-    Graphics: TTabSheet;
-    TabSheet1: TTabSheet;
+    tsGraphics: TTabSheet;
+    tsGeneral: TTabSheet;
+    tsGameplay: TTabSheet;
+    tsAudio: TTabSheet;
     lblUserName: TLabel;
     lblIngameSaveReplay: TLabel;
     lblPostviewSaveReplay: TLabel;
@@ -37,8 +39,8 @@ type
     cbClassicMode: TCheckbox;
     cbHideShadows: TCheckBox;
     cbHideHelpers: TCheckBox;
-    Label3: TLabel;
-    Label5: TLabel;
+    lblSound: TLabel;
+    lblMusic: TLabel;
     tbSoundVol: TTrackBar;
     tbMusicVol: TTrackBar;
     cbDisableTestplayMusic: TCheckBox;
