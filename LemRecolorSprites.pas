@@ -11,15 +11,15 @@ uses
   GR32, GR32_Blend,
   SharedGlobals;
 
-const
-  CPM_LEMMING_NORMAL     = $FF0000FF; // Used for a non-athlete
-  CPM_LEMMING_ATHLETE    = $FF00FFFF; // Used for an athlete
-  CPM_LEMMING_SELECTED   = $007F0000; // OR'd to base value for selected lemming
-  CPM_LEMMING_INVINCIBLE = $0000FFFF; // OR'd to base value for invincible lemming
-  CPM_LEMMING_RIVAL      = $00FF00FF; // OR'd to base value for rival lemming
-  CPM_LEMMING_ZOMBIE_OR  = $00007F00; // OR'd to base value for zombies
-  CPM_LEMMING_ZOMBIE_NOT = $000000C0; // AND-NOT'd to base value for zombies
-  CPM_LEMMING_NEUTRAL    = $00FFFFFF; // XOR'd to base value for neutrals
+var
+  ClearPhysicsLemmingNormal: TColor32;
+  ClearPhysicsLemmingRival: TColor32;
+  ClearPhysicsLemmingAthleteNormal: TColor32;
+  ClearPhysicsLemmingAthleteRival: TColor32;
+  ClearPhysicsLemmingNeutral: TColor32;
+  ClearPhysicsLemmingZombie: TColor32;
+  ClearPhysicsLemmingInvincible: TColor32;
+  ClearPhysicsLemmingSelected: TColor32;
 
 type
   TColorSwapType = (rcl_Selected,
@@ -60,6 +60,7 @@ type
       procedure ApplyPaletteSwapping(aColorDict: TColorDict; aShadeDict: TShadeDict; aTheme: TNeoTheme);
       procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: Cardinal);
       procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: Cardinal);
+      procedure LoadClearPhysicsShades;
 
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
@@ -79,6 +80,7 @@ begin
 
   // Until proper loading exists
   LoadSwaps(SFDefaultStyle);
+  LoadClearPhysicsShades;
 end;
 
 procedure TRecolorImage.SwapColors(F: TColor32; var B: TColor32);
@@ -93,24 +95,29 @@ begin
   if fClearPhysics then
   begin
     if fLemming.HasPermanentSkills then
-      B := CPM_LEMMING_ATHLETE
-    else
-      B := CPM_LEMMING_NORMAL;
-
-    if fDrawAsSelected then
-      B := B or CPM_LEMMING_SELECTED;
+    begin
+      if fLemming.LemIsRival then
+        B := ClearPhysicsLemmingAthleteRival
+      else
+        B := ClearPhysicsLemmingAthleteNormal;
+    end else begin
+      if fLemming.LemIsRival then
+        B := ClearPhysicsLemmingRival
+      else
+        B := ClearPhysicsLemmingNormal;
+    end;
 
     if fLemming.LemIsInvincible then
-      B := B or CPM_LEMMING_INVINCIBLE;
-
-    if fLemming.LemIsRival then
-      B := B or CPM_LEMMING_RIVAL;
+      B := ClearPhysicsLemmingInvincible;
 
     if fLemming.LemIsNeutral then
-      B := B xor CPM_LEMMING_NEUTRAL;
+      B := ClearPhysicsLemmingNeutral;
 
     if fLemming.LemIsZombie then
-      B := (B or CPM_LEMMING_ZOMBIE_OR) and not CPM_LEMMING_ZOMBIE_NOT;
+      B := ClearPhysicsLemmingZombie;
+
+    if fDrawAsSelected then
+      B := ClearPhysicsLemmingSelected;
   end
   else
   begin
@@ -280,6 +287,18 @@ begin
         Inc(i);
       end;
   end;
+end;
+
+procedure TRecolorImage.LoadClearPhysicsShades;
+begin
+  ClearPhysicsLemmingNormal := $FF7777FF;
+  ClearPhysicsLemmingRival := $FFFF0077;
+  ClearPhysicsLemmingAthleteNormal := $FF00FFFF;
+  ClearPhysicsLemmingAthleteRival := $FFFF99FF;
+  ClearPhysicsLemmingNeutral := $FFAA00FF;
+  ClearPhysicsLemmingZombie := $FF777744;
+  ClearPhysicsLemmingInvincible := $FFFFFFFF;
+  ClearPhysicsLemmingSelected := $FFFFFF77;
 end;
 
 class procedure TRecolorImage.CombineDefaultPixels(F: TColor32; var B: TColor32; M: Cardinal);
