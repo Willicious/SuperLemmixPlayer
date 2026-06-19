@@ -3321,7 +3321,12 @@ begin
   fUsefulOnly := UsefulOnly;
 
   if fUsefulOnly then
-    MakeColorCycle;
+  begin
+    if GameParams.ColourCycle then
+      MakeColorCycle
+    else
+      fFixedDrawColor := $FF004400;
+  end;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);

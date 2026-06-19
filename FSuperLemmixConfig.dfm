@@ -2722,9 +2722,9 @@ object FormNXConfig: TFormNXConfig
       object cbColourCycle: TCheckBox
         Left = 49
         Top = 76
-        Width = 235
+        Width = 256
         Height = 17
-        Caption = 'Use Colour Cycle For Fall Distance Ruler'
+        Caption = 'Use Colour Cycle For Player Assists'
         TabOrder = 4
         OnClick = OptionChanged
       end
