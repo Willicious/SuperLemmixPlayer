@@ -195,6 +195,20 @@ $ANIMATIONS
       FOOT_Y 14
     $END
   $END
+  
+  $BALLER
+    FRAMES 4
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+  $END
 
   $DIGGER
     FRAMES 16
