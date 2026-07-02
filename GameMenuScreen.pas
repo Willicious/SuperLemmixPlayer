@@ -880,17 +880,17 @@ begin
         FMVer := StrToIntDef(SL[0], -1);
         CVer := StrToIntDef(SL[1], -1);
 
-        if (FMVer < FORMAT_VERSION) or
-           ((FMVer = FORMAT_VERSION) and (CVer < CORE_VERSION)) then
-          fCleanInstallFail := True;
+        if (FMVer < MAJOR_VERSION) or
+          ((FMVer = MAJOR_VERSION) and (CVer < MINOR_VERSION)) then
+            fCleanInstallFail := True;
       end;
     end;
 
     SL.Clear;
-    SL.Add(IntToStr(FORMAT_VERSION));
-    SL.Add(IntToStr(CORE_VERSION));
-    SL.Add(IntToStr(FEATURES_VERSION));
+    SL.Add(IntToStr(MAJOR_VERSION));
+    SL.Add(IntToStr(MINOR_VERSION));
     SL.Add(IntToStr(HOTFIX_VERSION));
+    SL.Add(IntToStr(RC_VERSION));
     {$ifdef rc}
       SL.Add('RC');
     {$else}

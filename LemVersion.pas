@@ -9,10 +9,10 @@ uses
   SharedGlobals;
 
 const
-  FORMAT_VERSION = 3;
-  CORE_VERSION = 0;
-  FEATURES_VERSION = 2;
-  HOTFIX_VERSION = 0; // Or RC version
+  MAJOR_VERSION = 3;
+  MINOR_VERSION = 0;
+  HOTFIX_VERSION = 2;
+  RC_VERSION = 0;
 
   function COMMIT_ID: String;
 
@@ -33,12 +33,12 @@ end;
 
 function CurrentVersionString: String;
 begin
-  Result := MakeVersionString(FORMAT_VERSION, CORE_VERSION, FEATURES_VERSION, HOTFIX_VERSION);
+  Result := MakeVersionString(MAJOR_VERSION, MINOR_VERSION, HOTFIX_VERSION, RC_VERSION);
 end;
 
 function CurrentVersionID: Int64;
 begin
-  Result := MakeVersionID(FORMAT_VERSION, CORE_VERSION, FEATURES_VERSION, HOTFIX_VERSION);
+  Result := MakeVersionID(MAJOR_VERSION, MINOR_VERSION, HOTFIX_VERSION, RC_VERSION);
 end;
 
 function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
