@@ -1241,7 +1241,7 @@ var
   CurChar, CharID: Integer;
 
   SpecialCombine: Boolean;
-  Red, Blue, Purple, Teal, Yellow{, Orange}: Single;
+  Red, Blue, Purple, Teal{, Yellow, Orange}: Single;
 
   LemmingKinds: TLemmingKinds;
 begin
@@ -1252,7 +1252,7 @@ begin
   Blue   :=  1 / 4;
   Purple :=  1 / 2;
   Teal   :=  1 / 6;
-  Yellow := -1 / 6;
+  //Yellow := -1 / 6;
   //Orange := -1 / 4;
 
   // Erase previous text there

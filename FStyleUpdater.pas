@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages,
-  System.SysUtils, System.Variants, System.Classes,
+  System.SysUtils, System.Variants, System.Classes, System.UITypes,
   System.IOUtils, System.Hash, System.Net.HttpClient, System.Zip,
   System.Types, System.Generics.Collections, System.NetEncoding,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
@@ -126,11 +126,10 @@ var
   ResponseStream: TStringStream;
   Http: THttpClient;
   styleName, stylePath, localChecksum, onlineChecksum: string;
-  ZipPath, StyleFolder: string;
+  StyleFolder: string;
   i, posEq: Integer;
   line, key, val: string;
   styleKey: string;
-  Zip: TZipFile;
 begin
   lvAvailableUpdates.Items.Clear;
 
@@ -319,7 +318,7 @@ begin
   except
     on E: Exception do
       MessageDlg(Format('Failed to install style "%s".'#13#10#13#10'%s',
-          [StyleName, E.Message]), mtError, [mbOK], 0);
+        [StyleName, E.Message]), mtError, [mbOK], 0);
   end;
 end;
 

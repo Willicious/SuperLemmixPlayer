@@ -4758,8 +4758,8 @@ end;
 
 function TLemmingGame.PropellerOneRow(PosX, PosY: Integer): Boolean;
 // The central pixel of the removed row lies at (PosX, PosY)
-var
-  n: Integer;
+//var
+//  n: Integer;
 begin
   Result := False;
 
@@ -5417,8 +5417,11 @@ end;
 
 function TLemmingGame.HandlePropelling(L: TLemming): Boolean;
 var
-  XChecks, YChecks: Integer;
-  FoundTerrain, FoundAir, NudgeDown: Boolean;
+  XChecks
+  //, YChecks
+  : Integer;
+  //FoundTerrain,
+  FoundAir, NudgeDown: Boolean;
 begin
   Result := True;
 
@@ -7860,9 +7863,9 @@ begin
 end;
 
 function TLemmingGame.GetBatterAt(X, Y: Integer; CurLem: TLemming): TLemming;
-var
-  i: Integer;
-  L: TLemming;
+//var
+//  i: Integer;
+//  L: TLemming;
 begin
   Result := nil;
 

@@ -113,8 +113,6 @@ end;
 
 // Assigns a non-clickable rectangle to the timer icon & digits
 function TSkillPanelStandard.TimeIconRect: TRect;
-var
-  Left: Integer;
 begin
   if GameParams.AmigaTheme then
     Result := Rect(0, 0, 0, 0) // No need to show panel hint in Amiga theme

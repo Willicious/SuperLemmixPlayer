@@ -1717,10 +1717,10 @@ end;
 procedure TRenderer.DrawPropellerShadow(L: TLemming);
 const
   MAX_FRAME_COUNT = 10000;
-var
-  PosX, PosY, i: Integer;
-  SavePhysicsMap: TBitmap32;
-  CurFrameCount: Integer;
+//var
+//  PosX, PosY, i: Integer;
+//  SavePhysicsMap: TBitmap32;
+//  CurFrameCount: Integer;
 begin
   Exit;
 //  fLayers.fIsEmpty[rlShadowsHigh] := False;

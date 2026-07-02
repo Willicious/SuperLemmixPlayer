@@ -360,6 +360,7 @@ procedure TFormNXConfig.btnHotkeysClick(Sender: TObject);
 var
   HotkeyForm: TFLemmixHotkeys;
 begin
+  HotkeyForm := nil;
   try
     HotkeyForm := TFLemmixHotkeys.Create(Self);
     HotkeyForm.HotkeyManager := GameParams.Hotkeys;
@@ -373,6 +374,7 @@ procedure TFormNXConfig.btnStyleUpdaterClick(Sender: TObject);
 var
   StyleUpdater: TFormStyleUpdater;
 begin
+  StyleUpdater := nil;
   try
     StyleUpdater := TFormStyleUpdater.Create(Self);
     StyleUpdater.ShowModal;
