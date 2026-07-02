@@ -139,7 +139,6 @@ type
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
     procedure CycleZoom;
     procedure FreeCursors;
-    procedure HandleMouseWheelFramestep(Ctrl: Boolean = False; Shift: Boolean = False; Alt: Boolean = False; Up: Boolean = False);
     procedure HandleSpecialSkip(aSkipType: Integer);
     procedure HandleInfiniteSkillsHotkey;
     procedure HandleInfiniteTimeHotkey;
@@ -251,46 +250,48 @@ end;
 procedure TGameWindow.Form_MouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
 var
+  FrameStepAmount: Integer;
+  Direction: Integer;
   Key: Word;
-  CtrlPressed, ShiftPressed, AltPressed: Boolean;
 begin
+  Handled := True;
   Key := 0;
-  CtrlPressed := ssCtrl in Shift;
-  ShiftPressed := ssShift in Shift;
-  AltPressed := ssAlt in Shift;
 
-  if WheelDelta > 0 then
+  if ssCtrl in Shift then
+    FrameStepAmount := 1
+  else if ssShift in Shift then
+    FrameStepAmount := 10
+  else if ssAlt in Shift then
+    FrameStepAmount := 100
+  else
+    FrameStepAmount := 0;
+
+  // Normal wheel handling if no framestep modifier
+  if FrameStepAmount = 0 then
   begin
-    if (CtrlPressed or ShiftPressed or AltPressed) then
-      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, GameParams.InvertMouseWheelFramesteps)
-    else
+    if WheelDelta > 0 then
       Key := $05
-  end else if WheelDelta < 0 then
-  begin
-    if (CtrlPressed or ShiftPressed or AltPressed) then
-      HandleMouseWheelFramestep(CtrlPressed, ShiftPressed, AltPressed, not GameParams.InvertMouseWheelFramesteps)
     else
       Key := $06;
-  end;
 
-  if Key <> 0 then
     OnKeyDown(Sender, Key, Shift);
-
-  Handled := True;
-end;
-
-procedure TGameWindow.HandleMouseWheelFramestep(Ctrl: Boolean = False; Shift: Boolean = False; Alt: Boolean = False; Up: Boolean = False);
-begin
-  if (Up) then
-  begin
-    if (Ctrl ) then GoToSaveState(Game.CurrentIteration - 1);
-    if (Shift) then GoToSaveState(Game.CurrentIteration - 10);
-    if (Alt  ) then GoToSaveState(Game.CurrentIteration - 100);
-  end else begin
-    if (Ctrl ) then fHyperSpeedTarget := Game.CurrentIteration + 1;
-    if (Shift) then fHyperSpeedTarget := Game.CurrentIteration + 10;
-    if (Alt  ) then fHyperSpeedTarget := Game.CurrentIteration + 100;
+    Exit;
   end;
+
+  // Determine framestep direction
+  if WheelDelta > 0 then
+    Direction := -1
+  else
+    Direction := 1;
+
+  if GameParams.InvertMouseWheelFramesteps then
+    Direction := -Direction;
+
+  // Apply framestep action
+  if Direction < 0 then
+    GoToSaveState(Game.CurrentIteration - FrameStepAmount)
+  else
+    fHyperSpeedTarget := Game.CurrentIteration + FrameStepAmount;
 end;
 
 procedure TGameWindow.MainFormResized;
