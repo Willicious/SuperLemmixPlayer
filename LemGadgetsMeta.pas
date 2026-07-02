@@ -287,7 +287,6 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'entrance' then fTriggerEffect := DOM_WINDOW;
     if Lowercase(Sec.LineTrimString['effect']) = 'antisplatpad' then fTriggerEffect := DOM_NOSPLAT;
     if Lowercase(Sec.LineTrimString['effect']) = 'splatpad' then fTriggerEffect := DOM_SPLAT;
-    if Lowercase(Sec.LineTrimString['effect']) = 'decoration' then fTriggerEffect := DOM_DECORATION;
     if Lowercase(Sec.LineTrimString['effect']) = 'traponce' then fTriggerEffect := DOM_TRAPONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewayup' then fTriggerEffect := DOM_ONEWAYUP;
     if Lowercase(Sec.LineTrimString['effect']) = 'animation' then fTriggerEffect := DOM_ANIMATION;
@@ -305,6 +304,8 @@ begin
     or (Lowercase(Sec.LineTrimString['effect']) = 'skillassigner') then
       fTriggerEffect := DOM_SKILLASSIGNER;
     if (Lowercase(Sec.LineTrimString['effect']) = 'decoration')
+    or (Lowercase(Sec.LineTrimString['effect']) = 'background')
+    or (Lowercase(Sec.LineTrimString['effect']) = 'no_effect')
     or (Lowercase(Sec.LineTrimString['effect']) = 'paint') then
       fTriggerEffect := DOM_DECORATION;
 

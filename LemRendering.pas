@@ -3165,7 +3165,7 @@ const
         [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_BLOCKER,
          DOM_ONEWAYDOWN, DOM_WINDOW, DOM_DECORATION, DOM_ONEWAYUP];
 begin
-  if (Gadget.TriggerEffect in [DOM_ANIMATION, DOM_ANIMONCE]) and GameParams.NoBackgrounds then
+  if (Gadget.TriggerEffect in [DOM_ANIMATION, DOM_ANIMONCE, DOM_DECORATION]) and GameParams.NoBackgrounds then
     Exit;
 
   if not (Gadget.TriggerEffect in DO_NOT_DRAW) then
@@ -3260,7 +3260,7 @@ var
     Gadget: TGadget;
   begin
     Gadget := fGadgets[aIndex];
-    if (Gadget.TriggerEffectBase in [DOM_ANIMATION, DOM_ANIMONCE]) and GameParams.NoBackgrounds then Exit;
+    if (Gadget.TriggerEffectBase in [DOM_ANIMATION, DOM_ANIMONCE, DOM_DECORATION]) and GameParams.NoBackgrounds then Exit;
     if not (IsValidForLayer(Gadget) and IsUseful(Gadget)) then Exit;
 
     if (aLayer = rlDecorations) and (Gadget.CanDrawToBackground) then
