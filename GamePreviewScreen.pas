@@ -55,6 +55,7 @@ type
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
 
+      function ResolvedMissingPieces: Boolean;
       procedure BuildScreen; override;
       procedure PrepareGameParams; override;
       procedure CloseScreen(NextScreen: TGameScreenType); override;
@@ -86,36 +87,51 @@ begin
   inherited;
 end;
 
-procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
+function TGamePreviewScreen.ResolvedMissingPieces: Boolean;
 var
   F: TFormStyleUpdater;
   Choice: Integer;
 begin
-  if NextScreen = gstPlay then
-  begin
-    if GameParams.Level.HasAnyFallbacks then
-    begin
-      Choice := RunCustomPopup(Self,
-        'Missing styles',
-        'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
-        'Yes|No|Open Style Updater');
+  Result := True;
 
-      if (Choice = 1) or (Choice = 3) then
-      begin
-        F := TFormStyleUpdater.Create(Self);
-        try
-          case Choice of
-            1: F.DownloadMissingStyles; // Yes
-            3: F.ShowModal;             // Open Style Updater
-          end;
-        finally
-          F.Free;
-          inherited CloseScreen(gstPreview);
-        end;
+  if not GameParams.Level.HasAnyFallbacks then
+    Exit;
+
+  Choice := RunCustomPopup(Self,
+    'Missing styles',
+    'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
+    'Yes|No|Open Style Updater');
+
+  if (Choice = 1) or (Choice = 3) then
+  begin
+    F := TFormStyleUpdater.Create(Self);
+    try
+      case Choice of
+        1: begin
+             F.DownloadMissingStyles;
+             Result := False; // Need to reload preview and check again
+             CloseScreen(gstPreview);
+           end;
+
+        2: Result := False;
+
+        3: begin
+             F.ShowModal;     // Open Style Updater
+             Result := False; // Need to reload preview and check again
+             CloseScreen(gstPreview);
+           end;
       end;
-    end else
-      inherited CloseScreen(gstPlay);
-  end else if NextScreen = gstText then
+    finally
+      F.Free;
+    end;
+  end;
+end;
+
+procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
+begin
+  if (NextScreen = gstPlay) then
+    inherited CloseScreen(gstPlay)
+  else if (NextScreen = gstText) then
     inherited CloseScreen(gstText)
   else
     inherited;
@@ -167,6 +183,10 @@ begin
   CurLevel := GameParams.Level;
   CurInfo := CurLevel.Info;
   CurTheme := GameParams.Renderer.Theme;
+
+  // Check for missing pieces
+  if not ResolvedMissingPieces then
+    Exit;
 
   // See if we need to show the sprites fallback message
   if (CurTheme.SpriteFallbackMessage <> '') then
