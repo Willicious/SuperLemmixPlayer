@@ -171,7 +171,7 @@ procedure TGamePreviewScreen.AfterCancelLevelSelect;
 begin
   inherited;
   GameParams.LoadCurrentLevel;
-  GameParams.Renderer.RenderWorld(nil, not GameParams.NoBackgrounds); // Some necessary prep work is done in here
+  GameParams.Renderer.RenderWorld(nil, GameParams.ShowDecorations); // Some necessary prep work is done in here
 end;
 
 procedure TGamePreviewScreen.BeginPlay;
@@ -260,7 +260,7 @@ begin
     LevelPreviewImage.SetSize(Lw, Lh);
     LevelPreviewImage.Clear(0);
 
-    GameParams.Renderer.RenderWorld(LevelPreviewImage, not GameParams.NoBackgrounds);
+    GameParams.Renderer.RenderWorld(LevelPreviewImage, GameParams.ShowDecorations);
     TLinearResampler.Create(LevelPreviewImage);
     LevelPreviewImage.DrawMode := dmBlend;
     LevelPreviewImage.CombineMode := cmMerge;
@@ -420,7 +420,7 @@ begin
 
   TempBitmap := TBitmap32.Create;
   TempBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
-  GameParams.Renderer.RenderWorld(TempBitmap, not GameParams.NoBackgrounds);
+  GameParams.Renderer.RenderWorld(TempBitmap, GameParams.ShowDecorations);
   TPngInterface.SavePngFile(SaveName, TempBitmap, True);
   TempBitmap.Free;
 end;

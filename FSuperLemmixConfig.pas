@@ -34,7 +34,7 @@ type
     cbReplayAfterBackskip: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
     cbSpawnInterval: TCheckBox;
-    cbNoBackgrounds: TCheckBox;
+    cbShowDecorations: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     cbClassicMode: TCheckbox;
     cbHideShadows: TCheckBox;
@@ -238,7 +238,7 @@ begin
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbReplayAfterBackskip.Checked := GameParams.ReplayAfterBackskip;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
-    cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+    cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbColourCycle.Checked := GameParams.ColourCycle;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
     cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
@@ -309,7 +309,7 @@ begin
   GameParams.ReplayAfterBackskip := cbReplayAfterBackskip.Checked;
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
 
-  GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ColourCycle := cbColourCycle.Checked;
   GameParams.ShowButtonHints := cbShowButtonHints.Checked;
   GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;

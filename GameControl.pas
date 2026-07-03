@@ -85,7 +85,7 @@ type
     moReplayAfterRestart,
     moPauseAfterBackwards,
     moTurboFF,
-    moNoBackgrounds,
+    moShowDecorations,
     moColourCycle,
     moShowButtonHints,
     moInvertMouseWheelFramesteps,
@@ -125,6 +125,7 @@ const
     moShowButtonHints,
     moFullScreen,
     moHighResolution,
+    moShowDecorations,
     moColourCycle,
     moShowMinimap,
     moMinimapHighQuality,
@@ -274,7 +275,7 @@ type
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
-    property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
+    property ShowDecorations: boolean Index moShowDecorations read GetOptionFlag write SetOptionFlag;
     property ColourCycle: boolean Index moColourCycle read GetOptionFlag write SetOptionFlag;
     property ShowButtonHints: boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
     property InvertMouseWheelFramesteps: boolean Index moInvertMouseWheelFramesteps read GetOptionFlag write SetOptionFlag;
@@ -506,7 +507,7 @@ begin
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     SaveBoolean('TurboFastForward', TurboFF);
-    SaveBoolean('NoBackgrounds', NoBackgrounds);
+    SaveBoolean('ShowDecorations', ShowDecorations);
     SaveBoolean('ColourCycle', ColourCycle);
     SaveBoolean('ShowButtonHints', ShowButtonHints);
     SaveBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
@@ -692,7 +693,7 @@ begin
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
-    NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+    ShowDecorations := LoadBoolean('ShowDecorations', ShowDecorations);
     ColourCycle := LoadBoolean('ColourCycle', ColourCycle);
     ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
     InvertMouseWheelFramesteps := LoadBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
@@ -750,6 +751,9 @@ begin
     SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
     SoundManager.MuteMusic := not LoadBoolean('MusicEnabled', not SoundManager.MuteMusic);
     SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
+
+    // Backwards compatibility
+    ShowDecorations := not LoadBoolean('NoBackgrounds', ShowDecorations);
   except
     on E: Exception do
     begin

@@ -58,7 +58,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 328
     Height = 500
-    ActivePage = tsGeneral
+    ActivePage = tsGraphics
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
     object tsGeneral: TTabSheet
@@ -2710,12 +2710,12 @@ object FormNXConfig: TFormNXConfig
           OnClick = cbShowMinimapClick
         end
       end
-      object cbNoBackgrounds: TCheckBox
+      object cbShowDecorations: TCheckBox
         Left = 49
         Top = 53
         Width = 205
         Height = 17
-        Caption = 'Deactivate Background Images'
+        Caption = 'Show Backgrounds and Decorations'
         TabOrder = 3
         OnClick = OptionChanged
       end
