@@ -220,6 +220,7 @@ type
     NextLemmingCountDown       : Integer;
 
     fTargetIteration           : Integer; // This is used in hyperspeed
+    fLastDisplayedIteration    : Integer; // last fully rendered iteration
     fHyperSpeedCounter         : Integer; // No screenoutput
     fHyperSpeed                : Boolean; // We are at hyperspeed no targetbitmap output
     fLeavingHyperSpeed         : Boolean; // In between state (see UpdateLemmings)
@@ -572,6 +573,7 @@ type
     property IsBackstepping: Boolean read fIsBackstepping write fIsBackstepping;
 
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
+    property LastDisplayedIteration: Integer read fLastDisplayedIteration write fLastDisplayedIteration;
     property IsSuperlemmingMode: Boolean read fIsSuperlemmingMode;
 
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
@@ -1348,6 +1350,7 @@ begin
 
   // Hyperspeed things
   fTargetIteration := 0;
+  fLastDisplayedIteration := 0;
   fHyperSpeedCounter := 0;
   fHyperSpeed := False;
   fLeavingHyperSpeed := False;

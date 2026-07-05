@@ -289,7 +289,7 @@ begin
 
   // Apply framestep action
   if Direction < 0 then
-    GoToSaveState(Game.CurrentIteration - FrameStepAmount)
+    GotoSaveState(Max(Game.LastDisplayedIteration - FrameStepAmount, 0))
   else
     fHyperSpeedTarget := Game.CurrentIteration + FrameStepAmount;
 end;
@@ -633,7 +633,7 @@ begin
     SkillPanel.DrawButtonSelector(spbRewind, False);
   end else begin
     Game.IsBackstepping := True;
-    GoToSaveState(Game.CurrentIteration - 3);
+    GotoSaveState(Max(Game.LastDisplayedIteration - 3, 0));
   end;
 end;
 
@@ -687,7 +687,7 @@ begin
 
   if MouseClickFrameSkip < 0 then
   begin
-    GotoSaveState(Max(Game.CurrentIteration-1, 0));
+    GotoSaveState(Max(Game.LastDisplayedIteration - 1, 0));
 
     if not GameParams.ReplayAfterBackskip then
       Game.RegainControl(True);
@@ -715,10 +715,11 @@ begin
   // Rewind mode
   if Rewind then
   begin
-    // Ensures that rendering has caught up before the next backwards skip is performed
-    if IsHyperSpeed then
-      RewindTimer.Enabled := False
-    else
+      // BOOKMARK - Test new overshoot prevention for a while, then remove this if it proves to be more reliabe
+//    // Ensures that rendering has caught up before the next backwards skip is performed
+//    if IsHyperSpeed then
+//      RewindTimer.Enabled := False
+//    else
       RewindTimer.Enabled := True;
   end else begin
     RewindTimer.Enabled := False;
@@ -851,6 +852,10 @@ begin
 
   // Update drawing
   DoDraw;
+
+  // BOOKMARK - New overshoot prevention
+  // Ensure this frame has been rendered (prevents overshooting when backstepping)
+  Game.LastDisplayedIteration := Game.CurrentIteration;
 
   // TODO - use this logic for VisualSFX
   {$ifdef debug}
@@ -1844,7 +1849,7 @@ begin
                     if CurrentIteration > (func.Modifier * -1) then
                     begin
                       Game.IsBackstepping := True;
-                      GotoSaveState(CurrentIteration + func.Modifier);
+                      GotoSaveState(Max(Game.LastDisplayedIteration + func.Modifier, 0));
 
                       if not GameParams.ReplayAfterBackskip then
                         Game.RegainControl(True);
