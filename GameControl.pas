@@ -83,6 +83,7 @@ type
     moLoadNextUnsolvedLevel,
     moReplayAfterBackskip,
     moReplayAfterRestart,
+    moSameLemmingOverwrite,
     moPauseAfterBackwards,
     moTurboFF,
     moShowDecorations,
@@ -273,6 +274,7 @@ type
     property ReplayAfterBackskip: boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;
     property LoadNextUnsolvedLevel: boolean Index moLoadNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
+    property SameLemmingOverwrite: boolean Index moSameLemmingOverwrite read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
     property ShowDecorations: boolean Index moShowDecorations read GetOptionFlag write SetOptionFlag;
@@ -505,6 +507,7 @@ begin
     SaveBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
     SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
+    SaveBoolean('SameLemmingOverwrite', SameLemmingOverwrite);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     SaveBoolean('TurboFastForward', TurboFF);
     SaveBoolean('ShowDecorations', ShowDecorations);
@@ -691,6 +694,7 @@ begin
     ReplayAfterBackskip := LoadBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     LoadNextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
+    SameLemmingOverwrite := LoadBoolean('SameLemmingOverwrite', SameLemmingOverwrite);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
     ShowDecorations := LoadBoolean('ShowDecorations', ShowDecorations);

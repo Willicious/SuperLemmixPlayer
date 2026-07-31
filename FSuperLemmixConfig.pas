@@ -75,6 +75,7 @@ type
     gbWindowOptions: TGroupBox;
     cbInvertMouseWheelFramesteps: TCheckBox;
     btnStyleUpdater: TButton;
+    cbSameLemmingOverwrite: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -238,6 +239,7 @@ begin
     cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
     cbReplayAfterBackskip.Checked := GameParams.ReplayAfterBackskip;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
+    cbSameLemmingOverwrite.Checked := GameParams.SameLemmingOverwrite;
     cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbColourCycle.Checked := GameParams.ColourCycle;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
@@ -308,6 +310,7 @@ begin
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.ReplayAfterBackskip := cbReplayAfterBackskip.Checked;
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
+  GameParams.SameLemmingOverwrite := cbSameLemmingOverwrite.Checked;
 
   GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ColourCycle := cbColourCycle.Checked;

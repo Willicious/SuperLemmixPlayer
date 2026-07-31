@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Configuration'
-  ClientHeight = 531
+  ClientHeight = 559
   ClientWidth = 328
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,12 +19,12 @@ object FormNXConfig: TFormNXConfig
   OnCreate = FormCreate
   DesignSize = (
     328
-    531)
+    559)
   PixelsPerInch = 96
   TextHeight = 13
   object btnOK: TButton
-    Left = 25
-    Top = 502
+    Left = 27
+    Top = 530
     Width = 92
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -33,8 +33,8 @@ object FormNXConfig: TFormNXConfig
     OnClick = btnOKClick
   end
   object btnCancel: TButton
-    Left = 122
-    Top = 502
+    Left = 124
+    Top = 530
     Width = 80
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -44,8 +44,8 @@ object FormNXConfig: TFormNXConfig
     TabOrder = 1
   end
   object btnApply: TButton
-    Left = 206
-    Top = 502
+    Left = 208
+    Top = 530
     Width = 92
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -57,10 +57,11 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 328
-    Height = 500
-    ActivePage = tsGraphics
+    Height = 528
+    ActivePage = tsGameplay
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
+    ExplicitHeight = 500
     object tsGeneral: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -245,14 +246,14 @@ object FormNXConfig: TFormNXConfig
       Caption = 'Gameplay'
       ImageIndex = 4
       object lblScrollSpeed: TLabel
-        Left = 50
+        Left = 44
         Top = 36
         Width = 66
         Height = 13
         Caption = 'Scroll Speed:'
       end
       object cbEdgeScrolling: TCheckBox
-        Left = 33
+        Left = 27
         Top = 13
         Width = 234
         Height = 17
@@ -261,7 +262,7 @@ object FormNXConfig: TFormNXConfig
         OnClick = cbEdgeScrollingClick
       end
       object cbPauseAfterBackwards: TCheckBox
-        Left = 33
+        Left = 27
         Top = 63
         Width = 205
         Height = 17
@@ -270,9 +271,9 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object gbClassicMode: TGroupBox
-        Left = 21
-        Top = 335
-        Width = 273
+        Left = 15
+        Top = 373
+        Width = 290
         Height = 124
         Caption = 'Classic Mode Options'
         TabOrder = 2
@@ -339,10 +340,10 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object gbReplayOptions: TGroupBox
-        Left = 21
+        Left = 15
         Top = 121
-        Width = 273
-        Height = 77
+        Width = 290
+        Height = 96
         Caption = 'Replay Options'
         TabOrder = 4
         object cbReplayAfterRestart: TCheckBox
@@ -363,11 +364,20 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 1
           OnClick = OptionChanged
         end
+        object cbSameLemmingOverwrite: TCheckBox
+          Left = 12
+          Top = 68
+          Width = 275
+          Height = 17
+          Caption = 'Allow Same-Lemming-Overwrite in Replay Insert'
+          TabOrder = 2
+          OnClick = OptionChanged
+        end
       end
       object gbSkillPanelOptions: TGroupBox
-        Left = 21
-        Top = 219
-        Width = 273
+        Left = 15
+        Top = 251
+        Width = 290
         Height = 99
         Caption = 'Skill Panel Options'
         TabOrder = 3
@@ -410,7 +420,7 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object cmbScrollSpeed: TComboBox
-        Left = 129
+        Left = 123
         Top = 33
         Width = 102
         Height = 21
@@ -427,7 +437,7 @@ object FormNXConfig: TFormNXConfig
           'Fastest')
       end
       object cbInvertMouseWheelFramesteps: TCheckBox
-        Left = 33
+        Left = 27
         Top = 86
         Width = 261
         Height = 17
@@ -2785,7 +2795,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 3
       DesignSize = (
         320
-        472)
+        500)
       object lblSound: TLabel
         Left = 40
         Top = 42
@@ -2831,7 +2841,7 @@ object FormNXConfig: TFormNXConfig
       end
       object rgExitSound: TRadioGroup
         Left = 55
-        Top = 217
+        Top = 232
         Width = 210
         Height = 65
         Anchors = []
