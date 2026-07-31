@@ -2488,7 +2488,7 @@ end;
 
 procedure TGameWindow.CloseScreen(aNextScreen: TGameScreenType);
 var
-  S: String;
+  S, LevelID: String;
 begin
   CanPlay := False;
   Application.OnIdle := nil;
@@ -2505,12 +2505,21 @@ begin
   begin
     if gCheated then
     begin
-      GameParams.NextLevel(True);
-      GameParams.ShownText := False;
+      NextLevel(True);
+      ShownText := False;
       aNextScreen := gstPreview;
     end;
 
-    if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
+    if IsPlaytesting then
+    begin
+      Game.EnsureCorrectReplayDetails;
+      LevelID := IntToHex(Level.Info.LevelID, 16);
+      S := AppPath + SFReplaysAutoPlaytest + LevelID + '_(Playtest).nxrp';
+      ForceDirectories(ExtractFilePath(S));
+      Game.ReplayManager.SaveToFile(S, True);
+    end;
+
+    if AutoSaveReplay and (Game.ReplayManager.IsModified) and gSuccess and not gCheated then
     begin
       Game.EnsureCorrectReplayDetails;
       S := Game.ReplayManager.GetSaveFileName(Self, rsoAuto, Game.ReplayManager);

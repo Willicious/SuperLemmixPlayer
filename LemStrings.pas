@@ -89,6 +89,7 @@ const
 
   SFLevels = 'levels\';
   SFReplays = 'replays\';
+    SFReplaysAutoPlaytest = SFReplays + 'Auto_Playtest\';
 
   SFSounds = 'sounds\';
   SFMusic = 'music\';

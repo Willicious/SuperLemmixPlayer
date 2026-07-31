@@ -430,9 +430,9 @@ begin
   s := '';
   GlobalGame.ReplayManager.ReplayLoadSuccess := False;
 
-  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive then
+  if GameParams.OpenedViaReplay or GameParams.PlaybackModeActive or GameParams.IsPlaytesting then
   begin
-    Result := True; // Return True if SLX was opened by replay or if PlaybackMode is active
+    Result := True; // Return True if opened via replay or SLX is in Playback/Playtest Mode
     s := GameParams.LoadedReplayFile;
   end else begin
     Dlg := TOpenDialog.Create(Self);

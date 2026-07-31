@@ -301,6 +301,8 @@ begin
 end;
 
 class procedure TCommandLineHandler.HandleTestMode;
+var
+  PlaytestReplay, LevelID: String;
 begin
   InitializeNoGuiMode; // Misleading in this case, because a GUI *is* used for testplay mode.
                        // But, it does the required things.
@@ -308,6 +310,11 @@ begin
   GameParams.TestModeLevel.Filename := ParamStr(2);
   if Pos(':', GameParams.TestModeLevel.Filename) = 0 then
     GameParams.TestModeLevel.Filename := AppPath + GameParams.TestModeLevel.Filename;
+
+  LevelID := IntToHex(GameParams.TestModeLevel.LevelID, 16);
+  PlaytestReplay := AppPath + SFReplaysAutoPlaytest + LevelID + '_(Playtest).nxrp';
+  if (FileExists(PlaytestReplay)) then
+    GameParams.LoadedReplayFile := PlaytestReplay;
 end;
 
 class procedure TCommandLineHandler.HandleUpscale;

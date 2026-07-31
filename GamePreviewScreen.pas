@@ -645,6 +645,10 @@ begin
 
   if GameParams.PlaybackModeActive or GameParams.OpenedViaReplay then
     GameParams.OpenedViaReplay := False; // Reset flag once replay has been successfully loaded
+
+  // Attempt to load the playtest replay if in playtest mode
+  if GameParams.IsPlaytesting then
+    TryLoadReplay;
 end;
 
 end.
