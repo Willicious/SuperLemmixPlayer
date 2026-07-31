@@ -4921,7 +4921,7 @@ var
 begin
   // This feature is for test/debug mode only
   {$ifndef debug}
-  if GameParams.TestModeLevel = nil then Exit;
+  if not GameParams.IsPlaytesting then Exit;
   {$endif}
 
   NewLemming := TLemming.Create;

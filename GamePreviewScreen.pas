@@ -207,7 +207,7 @@ begin
   end;
 
   // Make sure there is at least one exit if we're not in test mode
-  if (CurInfo.NormalExitCount + CurInfo.RivalExitCount <= 0) and (GameParams.TestModeLevel = nil) then
+  if (CurInfo.NormalExitCount + CurInfo.RivalExitCount <= 0) and not GameParams.IsPlaytesting then
   begin
     ShowMessage('This level cannot be played as it doesn''t have an exit!');
     Exit;
@@ -444,7 +444,7 @@ end;
 
 procedure TGamePreviewScreen.ExitToMenu;
 begin
-  if GameParams.TestModeLevel <> nil then
+  if GameParams.IsPlaytesting then
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;

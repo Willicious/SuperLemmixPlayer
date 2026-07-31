@@ -112,7 +112,7 @@ procedure TGamePostviewScreen.MakeShowSkillsUsedClickable;
 var
   R: TClickableRegion;
 begin
-  if GameParams.PlaybackModeActive or (GameParams.TestModeLevel = nil) then
+  if GameParams.PlaybackModeActive or not GameParams.IsPlaytesting then
     Exit;
 
   R := MakeClickableText(Point(FooterOneOptionX, FooterOptionsTwoRowsHighY - 40), 'Show Skills Used', ShowSkillsUsed, True);
@@ -265,7 +265,7 @@ begin
     end;
 
     // If in Playtest mode, show the Skills Used clickable
-    if (GameParams.TestModeLevel <> nil) then
+    if GameParams.IsPlaytesting then
       MakeShowSkillsUsedClickable;
 
     // Prepare some more clickables and hotkey options
@@ -287,7 +287,7 @@ end;
 
 procedure TGamePostviewScreen.ExitToMenu;
 begin
-  if GameParams.TestModeLevel <> nil then
+  if GameParams.IsPlaytesting then
     CloseScreen(gstExit)
   else begin
     GameParams.PlaybackModeActive := False;
@@ -355,6 +355,7 @@ var
   STarget, SRescued, STimeSR, STimeTotal: string;
   SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
   InfiniteHotkeysUsed, LevelHasTalismans, LevelPassed, ShowSavedRecord: Boolean;
+  Playtesting: Boolean;
 
   function MakeTimeString(aFrames: Integer): String;
   const
@@ -404,32 +405,32 @@ begin
 
   with GameParams, Results do
   begin
-    if GameParams.OneLevelMode then
+    if OneLevelMode then
     begin
      gSuccess := False;
      gCheated := False;
      fLevelOverride := $0000;
     end;
 
-    if TestModeLevel <> nil then
+    if IsPlaytesting then
     begin
       gSuccess := False;
       gCheated := False;
       fLevelOverride := $0000;
     end;
 
-    if GameParams.PostviewJingles or GameParams.AmigaTheme then
+    if PostviewJingles or AmigaTheme then
     begin
       SoundManager.PurgePackSounds;
 
       if gRescued >= Level.Info.RescueCount then
       begin
-        if GameParams.AmigaTheme then
+        if AmigaTheme then
           SoundManager.PlaySound(SFX_AmigaDisk1)
         else
           SoundManager.PlaySound(SFX_SuccessJingle);
       end else begin
-        if GameParams.AmigaTheme then
+        if AmigaTheme then
           SoundManager.PlaySound(SFX_AmigaDisk2)
         else
           SoundManager.PlaySound(SFX_FailureJingle);
@@ -437,8 +438,10 @@ begin
     end;
   end;
 
-  LevelPassed := (Results.gSuccess) or ((GameParams.TestModeLevel <> nil) and
-                                        (Results.gRescued >= Results.gToRescue));
+  Playtesting := GameParams.IsPlaytesting;
+
+  LevelPassed := (Results.gSuccess) or
+    (Playtesting and (Results.gRescued >= Results.gToRescue));
 
   // Top text
   HueShift.HShift := TopTextShift;
@@ -529,7 +532,7 @@ begin
 
   // Time taken to reach SR
   if (Results.gSuccess and not (Results.gToRescue <= 0))
-  or ((GameParams.TestModeLevel <> nil) and (Results.gRescued >= Results.gToRescue)) then
+  or (Playtesting and (Results.gRescued >= Results.gToRescue)) then
     Result[7].Line := SYourTime + STimeSR
   else
     Result[7].Line := '';
@@ -618,7 +621,7 @@ var
   S: TStringList;
   Results: TGameResultsRec;
 begin
-  if GameParams.TestModeLevel = nil then
+  if not GameParams.IsPlaytesting then
     Exit;
 
   Results := GameParams.GameResult;

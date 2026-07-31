@@ -719,7 +719,7 @@ begin
   end;
 
   // Reload config to apply changes and redraw button
-  if GameParams.TestModeLevel <> nil then
+  if GameParams.IsPlaytesting then
   begin
     fCalledFromClassicModeButton := True;
     ShowConfigMenu;
@@ -1168,7 +1168,7 @@ var
 
   PopupResult: Integer;
 begin
-  if GameParams.TestModeLevel <> nil then Exit;
+  if GameParams.IsPlaytesting then Exit;
 
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(Self);
@@ -1218,7 +1218,7 @@ begin
     ConfigDlg.SetGameParams;
 
     // Skip the dialog and go straight to result
-    if fCalledFromClassicModeButton and (GameParams.TestModeLevel <> nil) then
+    if fCalledFromClassicModeButton and GameParams.IsPlaytesting then
       ConfigDlg.ModalResult := MrOK
 
     // Show the dialog
