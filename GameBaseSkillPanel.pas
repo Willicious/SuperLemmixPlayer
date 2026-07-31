@@ -121,6 +121,7 @@ type
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetPanelMessage(Pos: Integer);
     procedure SetInfoCursor(Pos: Integer);
+      function GetLemReplayTaskString(L: TLemming): String;
       function GetSkillString(L: TLemming): String;
       function GetPickupString(P: TGadget): String;
     procedure SetInfoLemHatch(Pos: Integer);
@@ -1244,8 +1245,10 @@ var
   Red, Blue, Purple, Teal{, Yellow, Orange}: Single;
 
   LemmingKinds: TLemmingKinds;
+  SelectedLemming: TLemming;
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
+  SelectedLemming := Game.RenderInterface.SelectedLemming;
 
   // Define hue shift colours
   Red    := -1 / 3;
@@ -1317,11 +1320,17 @@ begin
           fCombineHueShift := Red
         else
           fCombineHueShift := Blue;
-      end else if (CurChar <= CursorInfoEndIndex) and CursorOverPanelItem
+      end else if (CurChar <= CursorInfoEndIndex) and (CursorOverPanelItem or (SelectedLemming <> nil))
         and not Game.StateIsUnplayable then
       begin
         SpecialCombine := True;
-        fCombineHueShift := Blue;
+
+        if CursorOverPanelItem then
+          fCombineHueShift := Blue
+        else if (Game.SelectedLemFutureTaskCount > 0) then
+          fCombineHueShift := Purple
+        else
+          SpecialCombine := False;
       end else
         SpecialCombine := False;
 
@@ -1409,6 +1418,14 @@ end;
 function TBaseSkillPanel.GetPickupString(P: TGadget): String;
 begin
   Result := IntToStr(P.SkillCount) + ' ' + Uppercase(SKILL_NAMES[P.SkillType] + IfThen(P.SkillCount > 1, 'S', ''));
+end;
+
+function TBaseSkillPanel.GetLemReplayTaskString(L: TLemming): String;
+var
+  Tasks: Integer;
+begin
+  Tasks := Game.SelectedLemFutureTaskCount;
+  Result := 'CUT ' + IntToStr(Tasks) + ' TASK' + IfThen(Tasks > 1, 'S', ' ');
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;
@@ -1499,13 +1516,17 @@ begin
   else if CursorOverPanelItem and GameParams.ShowButtonHints then
     S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
   else begin
-    S := Uppercase(GetSkillString(SelectedLemming));
-    if S = '' then
-      S := StringOfChar(' ', LEN)
-    else if (Game.GetCursorLemmingCount = 0) then
-      S := PadR(S, LEN)
-    else
-      S := PadR(S + ' ' + IntToStr(Game.GetCursorLemmingCount), LEN);
+    if (Game.SelectedLemFutureTaskCount > 0) then
+      S := Uppercase(GetLemReplayTaskString(SelectedLemming))
+    else begin
+      S := Uppercase(GetSkillString(SelectedLemming));
+      if S = '' then
+        S := StringOfChar(' ', LEN)
+      else if (Game.GetCursorLemmingCount = 0) then
+        S := PadR(S, LEN)
+      else
+        S := PadR(S + ' ' + IntToStr(Game.GetCursorLemmingCount), LEN);
+    end;
   end;
 
   ModString(fNewDrawStr, S, Pos);
