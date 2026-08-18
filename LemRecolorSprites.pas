@@ -7,7 +7,7 @@ uses
   Classes, SysUtils,
   LemNeoParser,
   LemNeoTheme,
-  LemLemming, LemTypes, LemStrings,
+  LemLemming, LemTypes, LemStrings, LemPalette,
   GR32, GR32_Blend,
   SharedGlobals;
 
@@ -97,27 +97,27 @@ begin
     if fLemming.HasPermanentSkills then
     begin
       if fLemming.LemIsRival then
-        B := ClearPhysicsLemmingAthleteRival
+        B := ResolveColor(ClearPhysicsLemmingAthleteRival)
       else
-        B := ClearPhysicsLemmingAthleteNormal;
+        B := ResolveColor(ClearPhysicsLemmingAthleteNormal);
     end else begin
       if fLemming.LemIsRival then
-        B := ClearPhysicsLemmingRival
+        B := ResolveColor(ClearPhysicsLemmingRival)
       else
-        B := ClearPhysicsLemmingNormal;
+        B := ResolveColor(ClearPhysicsLemmingNormal);
     end;
 
     if fLemming.LemIsInvincible then
-      B := ClearPhysicsLemmingInvincible;
+      B := ResolveColor(ClearPhysicsLemmingInvincible);
 
     if fLemming.LemIsNeutral then
-      B := ClearPhysicsLemmingNeutral;
+      B := ResolveColor(ClearPhysicsLemmingNeutral);
 
     if fLemming.LemIsZombie then
-      B := ClearPhysicsLemmingZombie;
+      B := ResolveColor(ClearPhysicsLemmingZombie);
 
     if fDrawAsSelected then
-      B := ClearPhysicsLemmingSelected;
+      B := ResolveColor(ClearPhysicsLemmingSelected);
   end
   else
   begin
@@ -290,15 +290,58 @@ begin
 end;
 
 procedure TRecolorImage.LoadClearPhysicsShades;
+var
+  Nxmi: String;
+  Parser: TParser;
+  Sec: TParserSection;
+
+  // Default colors, loaded if custom file doesn't exist
+  procedure ResetColors;
+  begin
+    ClearPhysicsLemmingNormal := $FF7777FF;
+    ClearPhysicsLemmingRival := $FFFF0077;
+    ClearPhysicsLemmingAthleteNormal := $FF00FFFF;
+    ClearPhysicsLemmingAthleteRival := $FFFF99FF;
+    ClearPhysicsLemmingNeutral := $FFAA00FF;
+    ClearPhysicsLemmingZombie := $FF777744;
+    ClearPhysicsLemmingInvincible := $FFFFFFFF;
+    ClearPhysicsLemmingSelected := $FFFFFF77;
+  end;
+
 begin
-  ClearPhysicsLemmingNormal := $FF7777FF;
-  ClearPhysicsLemmingRival := $FFFF0077;
-  ClearPhysicsLemmingAthleteNormal := $FF00FFFF;
-  ClearPhysicsLemmingAthleteRival := $FFFF99FF;
-  ClearPhysicsLemmingNeutral := $FFAA00FF;
-  ClearPhysicsLemmingZombie := $FF777744;
-  ClearPhysicsLemmingInvincible := $FFFFFFFF;
-  ClearPhysicsLemmingSelected := $FFFFFF77;
+  ResetColors;
+
+  Parser := TParser.Create;
+  try
+    Nxmi := 'SLXClearPhysicsColors.nxmi';
+
+    if not FileExists(AppPath + SFSaveData + Nxmi) then
+    begin
+      with TStringList.Create do
+      try
+        Text := DEFAULT_CLEAR_PHYSICS_COLORS;
+        SaveToFile(AppPath + SFSaveData + Nxmi);
+      finally
+        Free;
+      end;
+    end;
+
+    Parser.LoadFromFile(AppPath + SFSaveData + Nxmi);
+
+    Sec := Parser.MainSection.Section['lemmings'];
+    if Sec = nil then Exit;
+
+    ClearPhysicsLemmingNormal := ParseColor32(Sec, 'normal', $FF7777FF);
+    ClearPhysicsLemmingRival := ParseColor32(Sec, 'rival', $FFFF0077);
+    ClearPhysicsLemmingAthleteNormal := ParseColor32(Sec, 'athlete_normal', $FF00FFFF);
+    ClearPhysicsLemmingAthleteRival := ParseColor32(Sec, 'athlete_rival', $FFFF99FF);
+    ClearPhysicsLemmingNeutral := ParseColor32(Sec, 'neutral', $FFAA00FF);
+    ClearPhysicsLemmingZombie := ParseColor32(Sec, 'zombie', $FF777744);
+    ClearPhysicsLemmingInvincible := ParseColor32(Sec, 'invincible', $FFFFFFFF);
+    ClearPhysicsLemmingSelected := ParseColor32(Sec, 'selected', $FFFFFF77);
+  finally
+    Parser.Free;
+  end;
 end;
 
 class procedure TRecolorImage.CombineDefaultPixels(F: TColor32; var B: TColor32; M: Cardinal);

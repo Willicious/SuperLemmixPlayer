@@ -18,7 +18,8 @@ uses
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming, LemProjectile,
   LemAnimationSet, LemMetaAnimation, LemCore,
-  LemLevel, LemStrings,
+  LemLevel, LemStrings, LemPalette,
+  LemNeoParser,
   SharedGlobals;
 
 type
@@ -103,6 +104,7 @@ type
                                   IsNeutral: Boolean = False; IsRival: Boolean = False);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
+    procedure LoadClearPhysicsColors;
 
     function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
@@ -113,7 +115,6 @@ type
     procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawExitMarkers(Gadget: TGadget; aMarker: TBitmap32);
     procedure DrawUserHelper;
-    procedure MakeColorCycle;
     function IsUseful(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
@@ -210,6 +211,10 @@ type
 
     property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
   end;
+
+var
+  GadgetShapeColor: TColor32;
+  TriggerBaseColor: TColor32;
 
 implementation
 
@@ -3184,7 +3189,7 @@ begin
 
   if GameParams.ColorCycle then
   begin
-    MakeColorCycle;
+    fFixedDrawColor := MakeColorCycle;
     BMP.DrawMode := dmCustom;
     BMP.OnPixelCombine := CombineFixedColor;
   end;
@@ -3294,14 +3299,6 @@ begin
   end;
 end;
 
-procedure TRenderer.MakeColorCycle;
-var
-  H: Integer;
-begin
-  H := GetTickCount mod 5000;
-  fFixedDrawColor := HSVToRGB(H / 5000, 1, 0.75);
-end;
-
 procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = False);
   function IsCursorOnGadget(Gadget: TGadget): Boolean;
   begin
@@ -3321,12 +3318,7 @@ begin
   fUsefulOnly := UsefulOnly;
 
   if fUsefulOnly then
-  begin
-    if GameParams.ColorCycle then
-      MakeColorCycle
-    else
-      fFixedDrawColor := $FF004400;
-  end;
+    fFixedDrawColor := ResolveColor(GadgetShapeColor);
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
@@ -3464,23 +3456,42 @@ var
 
   DrawRect: TRect;
 
+  function DarkenColor(C: TColor32; K: Byte): TColor32; inline;
+  begin
+    Result :=
+      (C and $FF000000) or
+      ((((C shr 16) and $FF) * K shr 8) shl 16) or
+      ((((C shr 8)  and $FF) * K shr 8) shl 8)  or
+      (((C and $FF) * K shr 8));
+  end;
+
   procedure DrawTriggerPixel();
   var
+    TriggerColor: TColor32;
     AlreadyPresent: Boolean;
+    CheckPatternOffset: Integer;
   begin
+    TriggerColor := ResolveColor(TriggerBaseColor);
     AlreadyPresent := PDst^ <> $00000000;
+
     if PPhys^ and PM_SOLID = 0 then
-      PDst^ := $FFFF00FF
-    else if PPhys^ and PM_STEEL <> 0 then
-      PDst^ := $FF600060
-    else
-      PDst^ := $FFA000A0;
+    begin
+      PDst^ := TriggerColor;
+      CheckPatternOffset := 216;
+    end else if PPhys^ and PM_STEEL <> 0 then
+    begin
+      PDst^ := DarkenColor(TriggerColor, 112);
+      CheckPatternOffset := 128;
+    end else begin
+      PDst^ := DarkenColor(TriggerColor, 192);
+      CheckPatternOffset := 200;
+    end;
 
     if (x - y) mod 2 <> 0 then
-      PDst^ := PDst^ - $00200020;
+      PDst^ := DarkenColor(PDst^, CheckPatternOffset);
 
     if AlreadyPresent then
-      PDst^ := PDst^ - $00300030;
+      PDst^ := DarkenColor(PDst^, 224);
   end;
 
 begin
@@ -3535,6 +3546,48 @@ begin
   fLayers.fIsEmpty[rlTriggers] := False;
 end;
 
+procedure TRenderer.LoadClearPhysicsColors;
+var
+  Nxmi: String;
+  Parser: TParser;
+  Sec: TParserSection;
+
+  // Default colors, loaded if custom file doesn't exist
+  procedure ResetColors;
+  begin
+    GadgetShapeColor := $FF004400;
+    TriggerBaseColor := $FFFF00FF;
+  end;
+
+begin
+  ResetColors;
+
+  Parser := TParser.Create;
+  try
+    Nxmi := 'SLXClearPhysicsColors.nxmi';
+
+    if not FileExists(AppPath + SFSaveData + Nxmi) then
+    begin
+      with TStringList.Create do
+      try
+        Text := DEFAULT_CLEAR_PHYSICS_COLORS;
+        SaveToFile(AppPath + SFSaveData + Nxmi);
+      finally
+        Free;
+      end;
+    end;
+
+    Parser.LoadFromFile(AppPath + SFSaveData + Nxmi);
+
+    Sec := Parser.MainSection.Section['gadgets'];
+    if Sec = nil then Exit;
+
+    GadgetShapeColor := ParseColor32(Sec, 'shape', $FF004400);
+    TriggerBaseColor := ParseColor32(Sec, 'trigger', $FFFF00FF);
+  finally
+    Parser.Free;
+  end;
+end;
 
 constructor TRenderer.Create;
 var
@@ -3557,6 +3610,8 @@ begin
 
   if not GameParams.ClassicMode then
     LoadHelperImages;
+
+  LoadClearPhysicsColors;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := TResourceStream.Create(HInstance, 'particles', 'lemdata');

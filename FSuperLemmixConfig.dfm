@@ -2734,7 +2734,7 @@ object FormNXConfig: TFormNXConfig
         Top = 76
         Width = 256
         Height = 17
-        Caption = 'Use Colour Cycle For Player Assists'
+        Caption = 'Use Color Cycle for Fall Distance Ruler'
         TabOrder = 4
         OnClick = OptionChanged
       end

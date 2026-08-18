@@ -4,41 +4,61 @@ unit LemPalette;
 interface
 
 uses
+  System.SysUtils, Windows,
+  LemNeoParser,
   GR32,
   SharedGlobals;
 
-type
-  TLemmixPalette = class
-  private
-    fColorArray: TArrayOfColor32;
-    fColorCount: Integer;
-    procedure SetColorCount(Value: Integer);
-    function GetColorS(Index: Integer): TColor32;
-  protected
-  public
-    property ColorS[Index: Integer]: TColor32 read GetColorS;
-    property ColorArray: TArrayOfColor32 read fColorArray;
-    property ColorCount: Integer read fColorCount write SetColorCount;
-  end;
+const
+  COLOR_CYCLE = TColor32($00FFFFFF); // Fully transparent color treated as cycle
+
+function IsCycleColor(Color: TColor32): Boolean;
+function ResolveColor(aColor: TColor32): TColor32;
+function MakeColorCycle: TColor32;
+function ParseColor32(Sec: TParserSection; const Key: String; Default: TColor32): TColor32;
 
 implementation
 
-{ TLemmixPalette }
-
-function TLemmixPalette.GetColorS(Index: Integer): TColor32;
+function IsCycleColor(Color: TColor32): Boolean;
 begin
-  if Index < fColorCount then
-    Result := fColorArray[Index]
-  else
-    Result := 0;  
+  Result := (Color and $FF000000) = 0;
 end;
 
-procedure TLemmixPalette.SetColorCount(Value: Integer);
+function ResolveColor(aColor: TColor32): TColor32;
 begin
-  if fColorCount = Value then
-    Exit;
-  SetLength(fColorArray, Value);
-  fColorCount := Value;
+  if (aColor = COLOR_CYCLE) then
+    Result := MakeColorCycle
+  else
+    Result := aColor;
+end;
+
+function MakeColorCycle: TColor32;
+begin
+  var H := GetTickCount mod 5000;
+  Result := HSVToRGB(H / 5000, 1, 0.75);
+end;
+
+function ParseColor32(Sec: TParserSection; const Key: String; Default: TColor32): TColor32;
+var
+  Value: UInt32;
+  S: String;
+begin
+  S := Trim(Sec.LineString[Key]);
+  S := Trim(S);
+
+  if SameText(S, 'CYCLE') or SameText(S, '$CYCLE') then
+    Exit(COLOR_CYCLE);
+
+  try
+    Value := StrToUInt(S);
+
+    if IsCycleColor(Value) then
+      Exit(COLOR_CYCLE);
+
+    Result := TColor32(Value);
+  except
+    Result := Default;
+  end;
 end;
 
 end.
