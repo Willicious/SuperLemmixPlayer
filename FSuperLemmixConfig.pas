@@ -62,7 +62,7 @@ type
     cbPostviewJingles: TCheckBox;
     rgGameLoading: TRadioGroup;
     cbMenuSounds: TCheckBox;
-    cbColourCycle: TCheckBox;
+    cbColorCycle: TCheckBox;
     cbHideSkillQ: TCheckBox;
     gbReplayOptions: TGroupBox;
     gbSkillPanelOptions: TGroupBox;
@@ -241,7 +241,7 @@ begin
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbSameLemmingOverwrite.Checked := GameParams.SameLemmingOverwrite;
     cbShowDecorations.Checked := GameParams.ShowDecorations;
-    cbColourCycle.Checked := GameParams.ColourCycle;
+    cbColorCycle.Checked := GameParams.ColorCycle;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
     cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
     cbClassicMode.Checked := GameParams.ClassicMode;
@@ -313,7 +313,7 @@ begin
   GameParams.SameLemmingOverwrite := cbSameLemmingOverwrite.Checked;
 
   GameParams.ShowDecorations := cbShowDecorations.Checked;
-  GameParams.ColourCycle := cbColourCycle.Checked;
+  GameParams.ColorCycle := cbColorCycle.Checked;
   GameParams.ShowButtonHints := cbShowButtonHints.Checked;
   GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;

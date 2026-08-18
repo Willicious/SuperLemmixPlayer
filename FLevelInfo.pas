@@ -857,7 +857,7 @@ procedure TLevelInfoPanel.PrepareEmbedCollectiblesRecords;
 var
   UserValue, WorldValue, LevelValue: Integer;
   Records, WorldRecords: TLevelRecords;
-  CollectibleIcon, TextColour: Integer;
+  CollectibleIcon, TextColor: Integer;
 begin
   Records := GameParams.CurrentLevel.UserRecords;
   WorldRecords := GameParams.CurrentLevel.WorldRecords;
@@ -870,28 +870,28 @@ begin
   begin
     if UserValue < 0 then UserValue := 0;
     CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
-    TextColour := 0;
+    TextColor := 0;
   end else begin
     CollectibleIcon := ICON_COLLECTIBLE;
-    TextColour := COLOR_RECORDS;
+    TextColor := COLOR_RECORDS;
   end;
 
   Add(CollectibleIcon, GameParams.Username + '''s record is '
       + IntToStr(UserValue) + '/' + IntToStr(LevelValue),
-      Records.CollectiblesGathered.User, True, pmNextRowLeft, TextColour);
+      Records.CollectiblesGathered.User, True, pmNextRowLeft, TextColor);
 
   if WorldValue < LevelValue then
   begin
     CollectibleIcon := ICON_COLLECTIBLE_UNOBTAINED;
-    TextColour := 0;
+    TextColor := 0;
   end else begin
     CollectibleIcon := ICON_COLLECTIBLE;
-    TextColour := COLOR_RECORDS;
+    TextColor := COLOR_RECORDS;
   end;
 
   if WorldValue > UserValue then
     Add(CollectibleIcon, 'World record is ' + IntToStr(WorldValue) + '/' + IntToStr(LevelValue),
-        WorldRecords.CollectiblesGathered.User, True, pmNextRowLeft, TextColour)
+        WorldRecords.CollectiblesGathered.User, True, pmNextRowLeft, TextColor)
   else
     AddDummy(False, pmNextRowLeft);
 end;

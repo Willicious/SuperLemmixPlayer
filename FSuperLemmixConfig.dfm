@@ -2729,7 +2729,7 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 3
         OnClick = OptionChanged
       end
-      object cbColourCycle: TCheckBox
+      object cbColorCycle: TCheckBox
         Left = 49
         Top = 76
         Width = 256

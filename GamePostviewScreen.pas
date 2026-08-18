@@ -30,7 +30,7 @@ type
       fAdvanceLevel: Boolean;
 
       function GetPostviewText: TextLineArray;
-      procedure LoadPostviewTextColours;
+      procedure LoadPostviewTextColors;
 
       function GetResultIndex: Integer;
       procedure NextLevel;
@@ -388,7 +388,7 @@ begin
   Entry := GameParams.CurrentLevel;
   FillChar(HueShift, SizeOf(TColorDiff), 0);
   SetLength(Result, 10);
-  LoadPostviewTextColours;
+  LoadPostviewTextColors;
 
   STarget := IntToStr(Results.gToRescue);
   SRescued := IntToStr(Results.gRescued);
@@ -559,15 +559,15 @@ begin
   Result[9].ColorShift := HueShift;
 end;
 
-procedure TGamePostviewScreen.LoadPostviewTextColours;
+procedure TGamePostviewScreen.LoadPostviewTextColors;
 var
   Parser: TParser;
   Sec: TParserSection;
   aPath: string;
   aFile: string;
 
-  // Default SLX colours, loaded if custom files don't exist
-  procedure ResetColours;
+  // Default SLX colors, loaded if custom files don't exist
+  procedure ResetColors;
   begin
     TopTextShift := 0.150;      // Teal
     RescueRecordShift := 0.500; // Violet
@@ -577,9 +577,9 @@ var
   end;
 
 begin
-  ResetColours;
+  ResetColors;
 
-  aFile := 'textcolours.nxmi';
+  aFile := 'textcolors.nxmi';
   aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
   if aPath = '' then

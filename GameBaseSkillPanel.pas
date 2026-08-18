@@ -620,7 +620,7 @@ var
     DstRect.Right := DstRect.Left + 32;
     DstRect.Bottom := DstRect.Top + 32;
 
-    // Recolour bricks for all construction skills
+    // Recolor bricks for all construction skills
     if (IconIndex in [44, 45, 46, 47, 48])
     // Recolor crumbs for Digger
     or (IconIndex = 54) then
@@ -1250,7 +1250,7 @@ begin
   LemmingKinds := Game.ActiveLemmingTypes;
   SelectedLemming := Game.RenderInterface.SelectedLemming;
 
-  // Define hue shift colours
+  // Define hue shift colors
   Red    := -1 / 3;
   Blue   :=  1 / 4;
   Purple :=  1 / 2;

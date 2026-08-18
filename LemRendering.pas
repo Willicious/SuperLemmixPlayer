@@ -3182,7 +3182,7 @@ begin
   DrawPoint.X := DrawPoint.X;
   DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2 div ResMod);
 
-  if GameParams.ColourCycle then
+  if GameParams.ColorCycle then
   begin
     MakeColorCycle;
     BMP.DrawMode := dmCustom;
@@ -3322,7 +3322,7 @@ begin
 
   if fUsefulOnly then
   begin
-    if GameParams.ColourCycle then
+    if GameParams.ColorCycle then
       MakeColorCycle
     else
       fFixedDrawColor := $FF004400;

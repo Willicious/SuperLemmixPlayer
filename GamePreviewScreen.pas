@@ -24,7 +24,7 @@ type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
     private
       function GetPreviewText: TextLineArray;
-      procedure LoadPreviewTextColours;
+      procedure LoadPreviewTextColors;
 
       procedure NextLevel;
       procedure PreviousLevel;
@@ -482,7 +482,7 @@ begin
   FillChar(HueShift, SizeOf(TColorDiff), 0);
 
   SetLength(Result, 7);
-  LoadPreviewTextColours;
+  LoadPreviewTextColors;
 
   HueShift.HShift := TitleShift;
   Result[0].Line := Entry.Title;
@@ -568,15 +568,15 @@ begin
   Result[6].ColorShift := HueShift;
 end;
 
-procedure TGamePreviewScreen.LoadPreviewTextColours;
+procedure TGamePreviewScreen.LoadPreviewTextColors;
 var
   Parser: TParser;
   Sec: TParserSection;
   aPath: string;
   aFile: string;
 
-  // Default SLX colours, loaded if custom files don't exist
-  procedure ResetColours;
+  // Default SLX colors, loaded if custom files don't exist
+  procedure ResetColors;
   begin
     TitleShift := 0.600;       // Red
     GroupShift := 0.600;       // Red
@@ -588,9 +588,9 @@ var
   end;
 
 begin
-  ResetColours;
+  ResetColors;
 
-  aFile := 'textcolours.nxmi';
+  aFile := 'textcolors.nxmi';
   aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
   if aPath = '' then

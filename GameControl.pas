@@ -87,7 +87,7 @@ type
     moPauseAfterBackwards,
     moTurboFF,
     moShowDecorations,
-    moColourCycle,
+    moColorCycle,
     moShowButtonHints,
     moInvertMouseWheelFramesteps,
     moClassicMode,
@@ -127,7 +127,7 @@ const
     moFullScreen,
     moHighResolution,
     moShowDecorations,
-    moColourCycle,
+    moColorCycle,
     moShowMinimap,
     moMinimapHighQuality,
     moIncreaseZoom,
@@ -281,7 +281,7 @@ type
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
     property ShowDecorations: boolean Index moShowDecorations read GetOptionFlag write SetOptionFlag;
-    property ColourCycle: boolean Index moColourCycle read GetOptionFlag write SetOptionFlag;
+    property ColorCycle: boolean Index moColorCycle read GetOptionFlag write SetOptionFlag;
     property ShowButtonHints: boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
     property InvertMouseWheelFramesteps: boolean Index moInvertMouseWheelFramesteps read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
@@ -516,7 +516,7 @@ begin
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     SaveBoolean('TurboFastForward', TurboFF);
     SaveBoolean('ShowDecorations', ShowDecorations);
-    SaveBoolean('ColourCycle', ColourCycle);
+    SaveBoolean('ColorCycle', ColorCycle);
     SaveBoolean('ShowButtonHints', ShowButtonHints);
     SaveBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
     SaveBoolean('ClassicMode', ClassicMode);
@@ -703,7 +703,7 @@ begin
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
     ShowDecorations := LoadBoolean('ShowDecorations', ShowDecorations);
-    ColourCycle := LoadBoolean('ColourCycle', ColourCycle);
+    ColorCycle := LoadBoolean('ColorCycle', ColorCycle);
     ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
     InvertMouseWheelFramesteps := LoadBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);

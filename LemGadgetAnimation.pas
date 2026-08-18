@@ -506,7 +506,7 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbFreezer)], FROZEN, 0, PICKUP_MID, PICKUP_BASELINE - 1);
   DrawFreezerIceCube(SkillIcons[Integer(spbFreezer)], PICKUP_MID - 7, PICKUP_BASELINE - 12);
 
-  // Ladderer, Platformer, Builder and Stacker are identifiable by their bag colours
+  // Ladderer, Platformer, Builder and Stacker are identifiable by their bag colors
   DrawAnimationFrame(SkillIcons[Integer(spbLadderer)], LADDERING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
   DrawAnimationFrame(SkillIcons[Integer(spbPlatformer)], PLATFORMING, 0, PICKUP_MID, PICKUP_BASELINE - 4);
   DrawAnimationFrame(SkillIcons[Integer(spbBuilder)], BRICKLAYING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
