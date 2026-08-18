@@ -135,6 +135,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Directional Select Left'
       'Directional Select Right'
       'Select Walking Lemming'
+      'Select Unassigned Lemming'
       'Infinite Skills'
       'Infinite Time'
       'Cheat'

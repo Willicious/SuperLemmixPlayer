@@ -1163,6 +1163,7 @@ begin
     if GameParams.Hotkeys.CheckForKey(lka_DirRight) then SDir := SDir + 1;
 
     Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
+    Game.IsSelectUnassignedHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceUnassigned);
     Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
   end;
 
@@ -1595,6 +1596,7 @@ const
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
+                         lka_ForceUnassigned,
                          lka_InfiniteSkills,
                          lka_InfiniteTime,
                          lka_Cheat,

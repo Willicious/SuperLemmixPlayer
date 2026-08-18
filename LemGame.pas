@@ -2747,6 +2747,8 @@ begin
     if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) and (not (IsHighlight or IsReplay)) then Continue;
     // Select only walkers
     if IsSelectWalkerHotkey and (L.LemAction <> baWalking) and (not (IsHighlight or IsReplay)) then Continue;
+    // Select only unassigned lemmings
+    if IsSelectUnassignedHotkey and (L.HasPermanentSkills or not (L.LemAction in [baWalking, baAscending, baFalling])) and (not (IsHighlight or IsReplay)) then Continue;
 
     // Increase number of lemmings in cursor (if not a zombie or neutral)
     if not L.CannotReceiveSkills then Inc(NumLemInCursor);

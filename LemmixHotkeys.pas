@@ -35,6 +35,7 @@ type
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
+                         lka_ForceUnassigned,
                          lka_InfiniteSkills,
                          lka_InfiniteTime,
                          lka_Cheat,
@@ -331,6 +332,7 @@ begin
   if s = 'dir_select_left' then Result := lka_DirLeft;
   if s = 'dir_select_right' then Result := lka_DirRight;
   if s = 'force_walker' then Result := lka_ForceWalker;
+  if s = 'force_unassigned' then Result := lka_ForceUnassigned;
   if s = 'cheat' then Result := lka_Cheat;
   if s = 'infinite_skills' then Result := lka_InfiniteSkills;
   if s = 'infinite_time' then Result := lka_InfiniteTime;
@@ -498,6 +500,7 @@ var
       lka_DirLeft:          Result := 'Dir_Select_Left';
       lka_DirRight:         Result := 'Dir_Select_Right';
       lka_ForceWalker:      Result := 'Force_Walker';
+      lka_ForceUnassigned:  Result := 'Force_Unassigned';
       lka_Cheat:            Result := 'Cheat';
       lka_InfiniteSkills:   Result := 'Infinite_Skills';
       lka_InfiniteTime:     Result := 'Infinite_Time';
