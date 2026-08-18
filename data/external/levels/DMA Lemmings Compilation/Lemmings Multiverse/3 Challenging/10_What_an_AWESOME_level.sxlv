@@ -1,14 +1,15 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.2
+#   Created with SLXEditor 3.2
 # ----------------------------- 
  
 #        Level info             
 # ----------------------------- 
  TITLE What an AWESOME level
  AUTHOR SEGA Genesis Lemmings 
+ MUSIC awesome_amiga
  ID xCBB68C6CCBB68C6C
- VERSION x000000000000000B
+ VERSION x000000000000000C
  
 #       Level dimensions        
 # ----------------------------- 
