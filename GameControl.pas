@@ -688,6 +688,10 @@ begin
       TMainForm(GameParams.MainForm).RestoreDefaultPosition;
     end;
 
+    // Backwards compatibility
+    ShowDecorations := not LoadBoolean('NoBackgrounds', ShowDecorations);
+
+    // Load Settings
     UserName := SL.Values['UserName'];
 
     AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
@@ -763,9 +767,6 @@ begin
     SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
     SoundManager.MuteMusic := not LoadBoolean('MusicEnabled', not SoundManager.MuteMusic);
     SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
-
-    // Backwards compatibility
-    ShowDecorations := not LoadBoolean('NoBackgrounds', ShowDecorations);
   except
     on E: Exception do
     begin
