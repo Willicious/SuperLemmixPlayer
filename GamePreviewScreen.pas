@@ -458,6 +458,7 @@ const
 var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
+  SpecialLemCount: Integer;
   Level: TLevel;
   Theme: TNeoTheme;
 
@@ -507,7 +508,8 @@ begin
 
   if HasSpecialLemmings then
   begin
-    if (Level.Info.LemmingsCount = 1) then
+    SpecialLemCount := Level.Info.NeutralCount + Level.Info.ZombieCount;
+    if (Level.Info.LemmingsCount - SpecialLemCount = 1) then
       Result[2].Line := Result[2].Line + IntToStr(RegularLemmingsCount) + ' '
                         + Theme.LemNamesSingular
     else if (Level.Info.LemmingsCount > 1) then
