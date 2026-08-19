@@ -459,6 +459,7 @@ var
   HueShift: TColorDiff;
   Entry: TNeoLevelEntry;
   SpecialLemCount: Integer;
+  ReleaseRateLine: String;
   Level: TLevel;
   Theme: TNeoTheme;
 
@@ -543,11 +544,15 @@ begin
 
   HueShift.HShift := ReleaseRateShift;
   Result[4].yPos := Result[3].yPos + LINE_Y_SPACING;
+  if GameParams.SpawnInterval then
+    ReleaseRateLine := SPreviewSpawnInterval + IntToStr(Level.Info.SpawnInterval)
+  else
+    ReleaseRateLine := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
+
   if Level.Info.SpawnIntervalLocked then
-  begin
-    Result[4].Line := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval) + SPreviewRRLocked;
-  end else
-  Result[4].Line := SPreviewReleaseRate + IntToStr(103 - Level.Info.SpawnInterval);
+    ReleaseRateLine := ReleaseRateLine + SPreviewRRLocked;
+
+  Result[4].Line := ReleaseRateLine;
   Result[4].ColorShift := HueShift;
 
   HueShift.HShift := TimeLimitShift;
