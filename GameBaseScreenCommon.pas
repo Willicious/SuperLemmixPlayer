@@ -132,13 +132,33 @@ end;
 procedure TGameBaseScreen.StartPlayback(aIndex: Integer);
 var
   Item: TPlaybackItem;
+
+  function ValidateLevel(aLevel: TNeoLevelEntry): Boolean;
+  begin
+    GameParams.SetLevel(Item.Level);
+    GameParams.LoadCurrentLevel(True);
+
+    Result := not GameParams.Level.HasAnyFallbacks;
+  end;
 begin
-  // Skip unmatched items
   while aIndex < GameParams.PlaybackItems.Count do
   begin
+    // Skip unmatched items
     Item := GameParams.PlaybackItems[aIndex];
-    if Item.Level <> nil then Break;
-    Inc(aIndex);
+    if Item.Level = nil then
+    begin
+      Inc(aIndex);
+      Continue;
+    end;
+
+    // Load and validate level
+    if not ValidateLevel(Item.Level) then
+    begin
+      Inc(aIndex);
+      Continue;
+    end;
+
+    Break; // valid level found
   end;
 
   // No more playable replays - stop playback
@@ -148,11 +168,8 @@ begin
     Exit;
   end;
 
+  // Refresh index
   Item := GameParams.PlaybackItems[aIndex];
-
-  // Load level
-  GameParams.SetLevel(Item.Level);
-  GameParams.LoadCurrentLevel(True);
 
   // Load replay
   GameParams.LoadedReplayFile := Item.ReplayFile;
