@@ -289,6 +289,7 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'splatpad' then fTriggerEffect := DOM_SPLAT;
     if Lowercase(Sec.LineTrimString['effect']) = 'traponce' then fTriggerEffect := DOM_TRAPONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewayup' then fTriggerEffect := DOM_ONEWAYUP;
+    if Lowercase(Sec.LineTrimString['effect']) = 'no_effect' then fTriggerEffect := DOM_ANIMATION;
     if Lowercase(Sec.LineTrimString['effect']) = 'animation' then fTriggerEffect := DOM_ANIMATION;
     if Lowercase(Sec.LineTrimString['effect']) = 'animationonce' then fTriggerEffect := DOM_ANIMONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'blasticine' then fTriggerEffect := DOM_BLASTICINE;
