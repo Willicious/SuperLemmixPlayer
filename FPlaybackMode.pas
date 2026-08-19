@@ -8,6 +8,7 @@ uses
   LemTypes,
   LemNeoLevelPack,
   LemmixHotkeys,
+  FEditHotkeys,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, StdCtrls, FileCtrl, ExtCtrls,
   SharedGlobals;
@@ -20,20 +21,22 @@ type
     rgPlaybackOrder: TRadioGroup;
     cbAutoskip: TCheckBox;
     lblPlaybackCancelHotkey: TLabel;
-    stPlaybackCancelHotkey: TStaticText;
     btnBeginPlayback: TButton;
     btnCancel: TButton;
     stPackName: TStaticText;
     lblWelcome: TLabel;
+    btnConfigureHotkeys: TButton;
     procedure btnBrowseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnBeginPlaybackClick(Sender: TObject);
+    procedure btnConfigureHotkeysClick(Sender: TObject);
 
   private
     fSelectedFolder: string;
     fCurrentlySelectedPack: string;
-    function GetPlaybackModeHotkey: String;
+    function GetPlaybackCancelHotkey: String;
+    procedure ShowPlaybackCancelHotkey;
 
   public
     procedure UpdatePackNameText;
@@ -96,7 +99,7 @@ begin
     stPackName.Caption := 'Playback Mode';
 end;
 
-function TFPlaybackMode.GetPlaybackModeHotkey: String;
+function TFPlaybackMode.GetPlaybackCancelHotkey: String;
 var
   Key: TLemmixHotkeyAction;
   ThisKey: TLemmixHotkey;
@@ -112,10 +115,24 @@ begin
   for n := 0 to MAX_KEY do
   begin
     ThisKey := GameParams.Hotkeys.CheckKeyEffect(n);
-    if ThisKey.Action <> Key then Continue;
-
-    Result := KeyNames[n];
+    if ThisKey.Action = Key then
+    begin
+      Result := KeyNames[n];
+      Exit;
+    end;
   end;
+end;
+
+procedure TFPlaybackMode.btnConfigureHotkeysClick(Sender: TObject);
+var
+  HotkeyForm: TFLemmixHotkeys;
+begin
+  HotkeyForm := TFLemmixHotkeys.Create(Self);
+  HotkeyForm.HotkeyManager := GameParams.Hotkeys;
+  HotkeyForm.ShowModal;
+  HotkeyForm.Free;
+
+  ShowPlaybackCancelHotkey;
 end;
 
 procedure TFPlaybackMode.SetGameParams;
@@ -147,8 +164,20 @@ begin
   GameParams.UnmatchedList.Clear;
   GameParams.ReplayVerifyList.Clear;
 
-  // Show currently-assigned Playback Mode hotkey
-  stPlaybackCancelHotkey.Caption := GetPlaybackModeHotkey;
+  // Show currently-assigned Playback Cancel Hotkey
+  ShowPlaybackCancelHotkey;
+end;
+
+procedure TFPlaybackMode.ShowPlaybackCancelHotkey;
+var
+  sHotkey: String;
+begin
+  sHotkey := GetPlaybackCancelHotkey;
+
+  if (sHotkey = '') then
+    sHotkey := '...';
+
+  btnConfigureHotkeys.Caption := sHotkey;
 end;
 
 procedure TFPlaybackMode.FormDestroy(Sender: TObject);

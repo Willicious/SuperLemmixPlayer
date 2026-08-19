@@ -116,20 +116,6 @@ object FPlaybackMode: TFPlaybackMode
     ShowHint = True
     TabOrder = 3
   end
-  object stPlaybackCancelHotkey: TStaticText
-    Left = 324
-    Top = 229
-    Width = 45
-    Height = 17
-    Hint = 
-      'Press this hotkey at any time during playback to cancel playback' +
-      ' mode.'#13#10'This hotkey can be changed in Settings > Configure Hotke' +
-      'ys.'
-    Caption = '(hotkey)'
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 4
-  end
   object btnBeginPlayback: TButton
     Left = 102
     Top = 300
@@ -137,7 +123,7 @@ object FPlaybackMode: TFPlaybackMode
     Height = 25
     Caption = 'Begin Playback'
     ModalResult = 1
-    TabOrder = 5
+    TabOrder = 4
     OnClick = btnBeginPlaybackClick
   end
   object btnCancel: TButton
@@ -148,7 +134,7 @@ object FPlaybackMode: TFPlaybackMode
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 6
+    TabOrder = 5
   end
   object stPackName: TStaticText
     AlignWithMargins = True
@@ -165,6 +151,15 @@ object FPlaybackMode: TFPlaybackMode
     Font.Name = 'Hobo Std'
     Font.Style = []
     ParentFont = False
+    TabOrder = 6
+  end
+  object btnConfigureHotkeys: TButton
+    Left = 328
+    Top = 224
+    Width = 57
+    Height = 25
+    Caption = '...'
     TabOrder = 7
+    OnClick = btnConfigureHotkeysClick
   end
 end
