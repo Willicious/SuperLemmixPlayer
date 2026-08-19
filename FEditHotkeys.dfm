@@ -263,7 +263,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbSpecialSkip: TComboBox
     Left = 371
-    Top = 353
+    Top = 357
     Width = 129
     Height = 21
     Style = csDropDownList

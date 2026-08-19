@@ -60,10 +60,12 @@ type
     fHotkeys: TLemmixHotkeyManager;
     fEditingKey: Boolean;
     procedure SetWindowPosition;
-    procedure RefreshList;
     procedure SetHotkeys(aValue: TLemmixHotkeyManager);
-    function FindKeyFromList(aValue: Integer): Integer;
     procedure HandleCaptions(Sender: TObject);
+    procedure RefreshList;
+    procedure RefreshListItem(aKey: Integer);
+    function GetHotkeyDescription(aKey: Integer): String;
+    function FindKeyFromList(aValue: Integer): Integer;
   public
     property HotkeyManager: TLemmixHotkeyManager write SetHotkeys;
   end;
@@ -215,110 +217,139 @@ begin
   Top := (Screen.Height div 2) - (Height div 2);
 end;
 
-procedure TFLemmixHotkeys.RefreshList;
+function TFLemmixHotkeys.GetHotkeyDescription(aKey: Integer): String;
 var
-  i: Integer;
-  e: Integer;
   Hotkey: TLemmixHotkey;
   s: String;
 begin
+  Hotkey := fHotkeys.CheckKeyEffect(aKey);
+
+  case Hotkey.Action of
+    lka_Skill: begin
+                 s := 'Select Skill: ';
+                 case Hotkey.Modifier of
+                   Integer(spbWalker):       s := s + 'Walker';      // 0
+                   Integer(spbJumper):       s := s + 'Jumper';      // 1
+                   Integer(spbShimmier):     s := s + 'Shimmier';    // 2
+                   Integer(spbBallooner):    s := s + 'Ballooner';   // 3
+                   Integer(spbSlider):       s := s + 'Slider';      // 4
+                   Integer(spbClimber):      s := s + 'Climber';     // 5
+                   Integer(spbSwimmer):      s := s + 'Swimmer';     // 6
+                   Integer(spbFloater):      s := s + 'Floater';     // 7
+                   Integer(spbGlider):       s := s + 'Glider';      // 8
+                   Integer(spbDisarmer):     s := s + 'Disarmer';    // 9
+                   Integer(spbTimebomber):   s := s + 'Timebomber';  // 10
+                   Integer(spbBomber):       s := s + 'Bomber';      // 11
+                   Integer(spbFreezer):      s := s + 'Freezer';     // 12
+                   Integer(spbBlocker):      s := s + 'Blocker';     // 13
+                   Integer(spbLadderer):     s := s + 'Ladderer';    // 14
+                   Integer(spbPlatformer):   s := s + 'Platformer';  // 15
+                   Integer(spbBuilder):      s := s + 'Builder';     // 16
+                   Integer(spbStacker):      s := s + 'Stacker';     // 17
+                   Integer(spbSpearer):      s := s + 'Spearer';     // 18
+                   Integer(spbGrenader):     s := s + 'Grenader';    // 19
+                   Integer(spbLaserer):      s := s + 'Laserer';     // 20
+                   Integer(spbBasher):       s := s + 'Basher';      // 21
+                   Integer(spbFencer):       s := s + 'Fencer';      // 22
+                   Integer(spbMiner):        s := s + 'Miner';       // 23
+                   Integer(spbDigger):       s := s + 'Digger';      // 24
+                   //Integer(spbPropeller):    s := s + 'Propeller';   // 25
+                   //Integer(spbBatter):       s := s + 'Batter';      // 26
+                   Integer(spbCloner):       s := s + 'Cloner';      // 27
+                   else s := s + '???';
+                 end;
+               end;
+    lka_SkillButton: begin
+                       s := 'Select Skill Button: ' + IntToStr(Hotkey.Modifier);
+                     end;
+    lka_Skip: begin
+                if Hotkey.Modifier < -1 then
+                  s := 'Time Skip: Back ' + IntToStr(Hotkey.Modifier * -1) + ' Frames'
+                else if Hotkey.Modifier = -1 then
+                  s := 'Time Skip: Back 1 Frame'
+                else if Hotkey.Modifier > 1 then
+                  s := 'Time Skip: Forward ' + IntToStr(Hotkey.Modifier) + ' Frames'
+                else
+                  s := 'Time Skip: Forward 1 Frame';
+              end;
+    lka_ClearPhysics: if Hotkey.Modifier = 0 then
+                        s := 'Clear Physics Mode (toggle)'
+                      else
+                        s := 'Clear Physics Mode (hold)';
+    lka_ShowUsedSkills: if Hotkey.Modifier = 0 then
+                          s := 'Show Used Skills (toggle)'
+                        else
+                          s := 'Show Used Skills (hold)';
+    lka_SpecialSkip: begin
+                       s := 'Skip to ';
+                       case TSpecialSkipCondition(Hotkey.Modifier) of
+                         ssc_LastAction: s := s + 'Previous Assignment';
+                         ssc_NextShrugger: s := s + 'Next Shrugger';
+                         ssc_HighlitStateChange: s := s + 'Highlit Lemming State Change';
+                       end;
+                     end;
+    lka_NudgeUp:    begin
+                      s := 'Nudge viewport up ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                    end;
+    lka_NudgeDown:  begin
+                      s := 'Nudge viewport down ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                    end;
+    lka_NudgeLeft:  begin
+                      s := 'Nudge viewport left ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                    end;
+    lka_NudgeRight: begin
+                      s := 'Nudge viewport right ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
+                    end;
+    else s := cbFunctions.Items[Integer(Hotkey.Action)];
+  end;
+
+  Result := s;
+end;
+
+procedure TFLemmixHotkeys.RefreshListItem(aKey: Integer);
+var
+  ListIndex: Integer;
+begin
+  ListIndex := lvHotkeys.ItemIndex;
+  if ListIndex = -1 then
+    Exit;
+
+  with lvHotkeys.Items[ListIndex] do
+  begin
+    Caption := fKeyNames[aKey];
+    SubItems[0] := GetHotkeyDescription(aKey);
+  end;
+end;
+
+procedure TFLemmixHotkeys.RefreshList;
+var
+  i, e: Integer;
+  Hotkey: TLemmixHotkey;
+begin
   e := 0;
+
   for i := 0 to MAX_KEY do
   begin
     Hotkey := fHotkeys.CheckKeyEffect(i);
-    if (Hotkey.Action = lka_Null) and not cbShowUnassigned.Checked then Continue;
-    case Hotkey.Action of
-      lka_Skill: begin
-                   s := 'Select Skill: ';
-                   case Hotkey.Modifier of
-                     Integer(spbWalker):       s := s + 'Walker';      // 0
-                     Integer(spbJumper):       s := s + 'Jumper';      // 1
-                     Integer(spbShimmier):     s := s + 'Shimmier';    // 2
-                     Integer(spbBallooner):    s := s + 'Ballooner';   // 3
-                     Integer(spbSlider):       s := s + 'Slider';      // 4
-                     Integer(spbClimber):      s := s + 'Climber';     // 5
-                     Integer(spbSwimmer):      s := s + 'Swimmer';     // 6
-                     Integer(spbFloater):      s := s + 'Floater';     // 7
-                     Integer(spbGlider):       s := s + 'Glider';      // 8
-                     Integer(spbDisarmer):     s := s + 'Disarmer';    // 9
-                     Integer(spbTimebomber):   s := s + 'Timebomber';  // 10
-                     Integer(spbBomber):       s := s + 'Bomber';      // 11
-                     Integer(spbFreezer):      s := s + 'Freezer';     // 12
-                     Integer(spbBlocker):      s := s + 'Blocker';     // 13
-                     Integer(spbLadderer):     s := s + 'Ladderer';    // 14
-                     Integer(spbPlatformer):   s := s + 'Platformer';  // 15
-                     Integer(spbBuilder):      s := s + 'Builder';     // 16
-                     Integer(spbStacker):      s := s + 'Stacker';     // 17
-                     Integer(spbSpearer):      s := s + 'Spearer';     // 18
-                     Integer(spbGrenader):     s := s + 'Grenader';    // 19
-                     Integer(spbLaserer):      s := s + 'Laserer';     // 20
-                     Integer(spbBasher):       s := s + 'Basher';      // 21
-                     Integer(spbFencer):       s := s + 'Fencer';      // 22
-                     Integer(spbMiner):        s := s + 'Miner';       // 23
-                     Integer(spbDigger):       s := s + 'Digger';      // 24
-                     //Integer(spbPropeller):    s := s + 'Propeller';   // 25
-                     //Integer(spbBatter):       s := s + 'Batter';      // 26
-                     Integer(spbCloner):       s := s + 'Cloner';      // 27
-                     else s := s + '???';
-                   end;
-                 end;
-      lka_SkillButton: begin
-                         s := 'Select Skill Button: ' + IntToStr(Hotkey.Modifier);
-                       end;
-      lka_Skip: begin
-                  if Hotkey.Modifier < -1 then
-                    s := 'Time Skip: Back ' + IntToStr(Hotkey.Modifier * -1) + ' Frames'
-                  else if Hotkey.Modifier = -1 then
-                    s := 'Time Skip: Back 1 Frame'
-                  else if Hotkey.Modifier > 1 then
-                    s := 'Time Skip: Forward ' + IntToStr(Hotkey.Modifier) + ' Frames'
-                  else
-                    s := 'Time Skip: Forward 1 Frame';
-                end;
-      lka_ClearPhysics: if Hotkey.Modifier = 0 then
-                          s := 'Clear Physics Mode (toggle)'
-                        else
-                          s := 'Clear Physics Mode (hold)';
-      lka_ShowUsedSkills: if Hotkey.Modifier = 0 then
-                            s := 'Show Used Skills (toggle)'
-                          else
-                            s := 'Show Used Skills (hold)';
-      lka_SpecialSkip: begin
-                         s := 'Skip to ';
-                         case TSpecialSkipCondition(Hotkey.Modifier) of
-                           ssc_LastAction: s := s + 'Previous Assignment';
-                           ssc_NextShrugger: s := s + 'Next Shrugger';
-                           ssc_HighlitStateChange: s := s + 'Highlit Lemming State Change';
-                         end;
-                       end;
-      lka_NudgeUp:    begin
-                        s := 'Nudge viewport up ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-                      end;
-      lka_NudgeDown:  begin
-                        s := 'Nudge viewport down ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-                      end;
-      lka_NudgeLeft:  begin
-                        s := 'Nudge viewport left ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-                      end;
-      lka_NudgeRight: begin
-                        s := 'Nudge viewport right ' + IntToStr(Abs(Hotkey.Modifier)) + ' pixels';
-                      end;
-      else s := cbFunctions.Items[Integer(fHotkeys.CheckKeyEffect(i).Action)];
-    end;
+
+    if (Hotkey.Action = lka_Null) and not cbShowUnassigned.Checked then
+      Continue;
+
     if e < lvHotkeys.Items.Count then
       with lvHotkeys.Items[e] do
       begin
         Caption := fKeyNames[i];
-        SubItems[0] := s;
+        SubItems[0] := GetHotkeyDescription(i);
       end
     else
       with lvHotkeys.Items.Add do
       begin
         Caption := fKeyNames[i];
-        SubItems.Add(s);
+        SubItems.Add(GetHotkeyDescription(i));
       end;
     Inc(e);
   end;
+
   while lvHotkeys.Items.Count > e do
     lvHotkeys.Items.Delete(e);
 end;
@@ -468,7 +499,7 @@ begin
   if i = -1 then Exit; // Safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_Skill then Exit;
   fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
-  RefreshList;
+  RefreshListItem(i);
 end;
 
 procedure TFLemmixHotkeys.seSkillButtonChange(Sender: TObject);
@@ -480,7 +511,7 @@ begin
   if fHotkeys.CheckKeyEffect(i).Action <> lka_SkillButton then Exit;
 
   fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
-  RefreshList;
+  RefreshListItem(i);
 end;
 
 procedure TFLemmixHotkeys.ebSkipDurationChange(Sender: TObject);
@@ -507,7 +538,7 @@ begin
   end;
 
   fHotkeys.SetKeyFunction(i, lka_Skip, TextValue);
-  RefreshList;
+  RefreshListItem(i);
 end;
 
 procedure TFLemmixHotkeys.ebClick(Sender: TObject);
@@ -541,7 +572,7 @@ begin
   end;
 
   fHotkeys.SetKeyFunction(i, aAction, TextValue);
-  RefreshList;
+  RefreshListItem(i);
 end;
 
 procedure TFLemmixHotkeys.lvHotkeysSelectItem(Sender: TObject;
@@ -602,7 +633,7 @@ begin
     fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 1)
   else
     fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 0);
-  RefreshList;
+  RefreshListItem(i);
 end;
 
 procedure TFLemmixHotkeys.cbSpecialSkipChange(Sender: TObject);
@@ -613,7 +644,7 @@ begin
   if i = -1 then Exit; // Safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_SpecialSkip then Exit;
   fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
-  RefreshList;
+  RefreshListItem(i);
 end;
 
 end.
