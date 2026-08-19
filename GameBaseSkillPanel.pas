@@ -1846,6 +1846,7 @@ begin
       begin
         DrawButtonSelector(spbRestart, True);
         fGameWindow.GotoSaveState(0);
+        Game.Restarted := True;
 
         // Always reset these if user restarts
         Game.PauseWasPressed := False;

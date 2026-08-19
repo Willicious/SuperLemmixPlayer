@@ -1636,7 +1636,13 @@ begin
     Exit;
   end;
 
-  if not Game.Playing then Exit;
+  // Eat preview/postview key presses in Playback Mode + Auto skip
+  if (GameParams.PlaybackModeActive) and (GameParams.AutoSkipPreviewPostview)
+    and ((Game.CurrentIteration <= 0) and not Game.Restarted) then
+      Exit;
+
+  if not Game.Playing then
+    Exit;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
    we do want the Rewind, FF and Turbo keys to respond }
@@ -1808,6 +1814,7 @@ begin
       lka_Restart: begin
                      SkillPanel.DrawButtonSelector(spbRestart, True);
                      GotoSaveState(0);
+                     Game.Restarted := True;
 
                      // Always reset these if user restarts
                      Game.PauseWasPressed := False;
@@ -1858,6 +1865,7 @@ begin
                     end else begin
                       Game.IsBackstepping := False;
                       GotoSaveState(0);
+                      Game.Restarted := True;
                     end;
                   end else if func.Modifier > 1 then
                   begin
@@ -2019,6 +2027,11 @@ var
 begin
   if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
+
+  // Eat preview/postview mouse clicks in Playback Mode + Auto skip
+  if (GameParams.PlaybackModeActive) and (GameParams.AutoSkipPreviewPostview)
+    and ((Game.CurrentIteration <= 0) and not Game.Restarted) then
+      Exit;
 
   // Interrupting hyperspeed can break the handling of savestates so we're not allowing it
   if Game.Playing and not IsHyperSpeed then

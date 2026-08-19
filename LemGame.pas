@@ -486,6 +486,7 @@ type
     SpawnIntervalModifier      : Integer; // Negative = decrease each update, positive = increase each update, 0 = no change
     fSpawnIntervalChanged      : Boolean; // Set to True in AdjustSpawnInterval when the SI has changed
     ReplayInsert               : Boolean;
+    Restarted                  : Boolean;
 
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -1487,6 +1488,8 @@ begin
   MessageQueue.Clear;
 
   ReplayInsert := False;
+  Restarted := False;
+
   Playing := True;
 
   UpdateLevelRecords;
@@ -9077,8 +9080,10 @@ end;
 
 procedure TLemmingGame.RegainControl(Force: Boolean = False);
 begin
+  // Keep replay active in Replay Insert mode
   if ReplayInsert and not Force then Exit;
 
+  // No need to cut replay if we're past the last replay action
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;
 
   fReplayManager.Cut(fCurrentIteration, CurrSpawnInterval);
