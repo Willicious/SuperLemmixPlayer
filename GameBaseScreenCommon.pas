@@ -125,31 +125,43 @@ begin
   GameParams.PlaybackItems.Clear;
   GameParams.PlaybackIndex := -1;
 
-  if ExitToMenu and (CurrentScreen <> gstMenu) then
-    CloseScreen(gstMenu);
+  if ExitToMenu then
+  begin
+    GameParams.MainForm.Caption := SProgramName;
+
+    if (CurrentScreen <> gstMenu) then
+      CloseScreen(gstMenu);
+  end;
 end;
 
 procedure TGameBaseScreen.StartPlayback(aIndex: Integer);
 var
   Item: TPlaybackItem;
+  FoundMatch: Boolean;
 
   function ValidateLevel(aLevel: TNeoLevelEntry): Boolean;
   begin
-    GameParams.SetLevel(Item.Level);
+    GameParams.SetLevel(aLevel);
     GameParams.LoadCurrentLevel(True);
 
     Result := not GameParams.Level.HasAnyFallbacks;
   end;
+
 begin
+  FoundMatch := False;
+
   while aIndex < GameParams.PlaybackItems.Count do
   begin
-    // Skip unmatched items
     Item := GameParams.PlaybackItems[aIndex];
+
+    // Skip unmatched items
     if Item.Level = nil then
     begin
       Inc(aIndex);
       Continue;
     end;
+
+    FoundMatch := True;
 
     // Load and validate level
     if not ValidateLevel(Item.Level) then
@@ -164,6 +176,18 @@ begin
   // No more playable replays - stop playback
   if aIndex >= GameParams.PlaybackItems.Count then
   begin
+    if (GameParams.PlaybackIndex = 0) and not FoundMatch then
+    begin
+      ShowMessage('Playback cancelled: No matching replays were found.');
+      StopPlayback(True);
+      Exit;
+    end else if (GameParams.PlaybackIndex = 0) then
+    begin
+      ShowMessage('Playback cancelled: Missing style pieces.');
+      StopPlayback(True);
+      Exit;
+    end;
+
     StopPlayback;
     Exit;
   end;
