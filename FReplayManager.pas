@@ -124,36 +124,38 @@ end;
 
 procedure TFReplayManager.btnBrowseClick(Sender: TObject);
 var
-  OpenDlg: TOpenDialog;
+  Dialog: TFileOpenDialog;
   InitialDir: String;
 begin
-  OpenDlg := TOpenDialog.Create(Self);
+  InitialDir := AppPath + SFReplays +
+    MakeSafeForFilename(GameParams.CurrentGroupName);
+
+  if not DirectoryExists(InitialDir) then
+    InitialDir := AppPath + SFReplays;
+
+  Dialog := TFileOpenDialog.Create(Self);
   try
-    OpenDlg.Title := 'Select any file in the folder containing replays';
+    Dialog.Title := 'Select a folder containing replays';
+    Dialog.DefaultFolder := InitialDir;
+    Dialog.Options := Dialog.Options + [fdoPickFolders];
 
-    InitialDir := AppPath + SFReplays + MakeSafeForFilename(GameParams.CurrentGroupName);
-
-    if not SysUtils.DirectoryExists(InitialDir) then
-      InitialDir := AppPath + SFReplays;
-
-    OpenDlg.InitialDir := InitialDir;
-    OpenDlg.Filter := 'SuperLemmix Replay (*.nxrp)|*.nxrp';
-    OpenDlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing, ofPathMustExist];
-
-    if OpenDlg.Execute then
+    if Dialog.Execute then
     begin
-      fSelectedFolder := ExtractFilePath(OpenDlg.FileName);
+      fSelectedFolder := Dialog.FileName;
 
-      if SysUtils.DirectoryExists(fSelectedFolder) then
+      if DirectoryExists(fSelectedFolder) then
       begin
         SetCurrentDir(fSelectedFolder);
-        stSelectedFolder.Caption := ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
-        GameParams.ReplayCheckPath := fSelectedFolder;  // Use fSelectedFolder directly
+        stSelectedFolder.Caption :=
+          ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
+
+        GameParams.ReplayCheckPath := fSelectedFolder + '\';
+        Output(GameParams.ReplayCheckPath);
       end else
         ShowMessage('The selected folder path is invalid.');
     end;
   finally
-    OpenDlg.Free;
+    Dialog.Free;
   end;
 end;
 
