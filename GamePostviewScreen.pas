@@ -239,14 +239,9 @@ begin
       so that modified replays can be saved in Playback Mode }
     MakeSaveReplayClickable;
 
-    // If in PlaybackMode, load the next level or stop playback if the list is empty
+    // If in PlaybackMode, load the next level
     if GameParams.PlaybackModeActive then
-    begin
-      if GameParams.PlaybackIndex >= GameParams.PlaybackList.Count -1 then
-        StopPlayback
-      else
-        StartPlayback(GameParams.PlaybackIndex + 1);
-    end;
+      StartPlayback(GameParams.PlaybackIndex + 1);
 
     // Check again for PlaybackMode after call to StartPlayback
     if GameParams.PlaybackModeActive then

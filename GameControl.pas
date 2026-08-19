@@ -29,6 +29,12 @@ var
                         be replaced once proper level select menus are introduced. }
 
 type
+  TPlaybackItem = record
+    ReplayID: Int64;
+    ReplayFile: string;
+    Level: TNeoLevelEntry;
+  end;
+
   TSkillsUsedRec = record
     Name  : string;
     Count : Integer;
@@ -185,9 +191,7 @@ type
     // Playback Mode
     fPlaybackModeActive: Boolean;
     fPlaybackOrder: TPlaybackOrder;
-    fPlaybackList: TStringList;
-    fUnmatchedList: TStringList;
-    fReplayVerifyList: TStringList;
+    fPlaybackItems: TList<TPlaybackItem>;
     fPlaybackIndex: Integer;
     fAutoSkipPreviewPostview: Boolean;
 
@@ -248,6 +252,10 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    function FindLevelByID(aID: Int64; UseCurrentLevel: Boolean = False): TNeoLevelEntry;
+    function LoadLevelByID(aID: Int64): Boolean;
+    function GetReplayID(const ReplayFile: string): Int64;
+
     procedure Save(aCriticality: TGameParamsSaveCriticality);
     procedure Load;
 
@@ -263,9 +271,6 @@ type
     procedure LoadCurrentLevel(NoOutput: Boolean = False); // Loads level specified by CurrentLevel into Level, and prepares renderer
     procedure ReloadCurrentLevel(NoOutput: Boolean = False); // Re-prepares using the existing TLevel in memory
     function GetIsPlaytesting: Boolean;
-
-    function FindLevelByID(aID: Int64): TNeoLevelEntry;
-    function LoadLevelByID(aID: Int64): Boolean;
 
     procedure ElevateSaveCriticality(aCriticality: TGameParamsSaveCriticality);
     property LastUserDataWriteTime: TDateTime read fLastUserDataWriteTime write fLastUserDataWriteTime;
@@ -306,9 +311,7 @@ type
 
     property PlaybackModeActive: Boolean read fPlaybackModeActive write fPlaybackModeActive;
     property PlaybackOrder: TPlaybackOrder read fPlaybackOrder write fPlaybackOrder;
-    property PlaybackList: TStringList read fPlaybackList write fPlaybackList;
-    property UnmatchedList: TStringList read fUnmatchedList write fUnmatchedList;
-    property ReplayVerifyList: TStringList read fReplayVerifyList write fReplayVerifyList;
+    property PlaybackItems: TList<TPlaybackItem> read fPlaybackItems write fPlaybackItems;
     property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
     property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
 
@@ -807,7 +810,7 @@ begin
   Result := SearchGroup(G);
 end;
 
-function TDosGameParams.FindLevelByID(aID: Int64): TNeoLevelEntry;
+function TDosGameParams.FindLevelByID(aID: Int64; UseCurrentLevel: Boolean = False): TNeoLevelEntry;
 var
   BaseGroup: TNeoLevelGroup;
   MatchingLevels: TObjectList<TNeoLevelEntry>;
@@ -829,7 +832,10 @@ begin
   Result := nil;
   MatchingLevels := TObjectList<TNeoLevelEntry>.Create(False);
   try
-    BaseGroup := GameParams.BaseLevelPack;
+    if UseCurrentLevel then
+      BaseGroup := GameParams.CurrentLevel.Group.ParentBasePack
+    else
+      BaseGroup := GameParams.BaseLevelPack;
     SearchGroup(BaseGroup);
 
     if MatchingLevels.Count = 0 then
@@ -863,6 +869,47 @@ begin
 
   finally
     MatchingLevels.Free;
+  end;
+end;
+
+function TDosGameParams.GetReplayID(const ReplayFile: string): Int64;
+var
+  i: Integer;
+  ReplayContent: TStringList;
+begin
+  Result := -1;
+  ReplayContent := TStringList.Create;
+  try
+    try
+      ReplayContent.LoadFromFile(ReplayFile);
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Failed to load replay file: ' + E.Message);
+        Exit;
+      end;
+    end;
+
+    for i := 0 to ReplayContent.Count - 1 do
+    begin
+      if Pos('ID ', ReplayContent[i]) = 1 then
+      begin
+        try
+          Result := StrToInt64(Copy(ReplayContent[i], 4, Length(ReplayContent[i]) - 3));
+        except
+          on E: Exception do
+          begin
+            ShowMessage('Invalid Replay ID format in file ' + ReplayFile + ': ' + E.Message);
+            Exit;
+          end;
+        end;
+        Break;
+      end;
+    end;
+    if Result = -1 then
+      ShowMessage('No valid Replay ID found in file ' + ReplayFile);
+  finally
+    ReplayContent.Free;
   end;
 end;
 
@@ -1071,9 +1118,7 @@ begin
                    'Default hotkeys have been loaded. Customizations to hotkeys during this session will not be saved.');
   end;
 
-  PlaybackList := TStringList.Create;
-  UnmatchedList := TStringList.Create;
-  ReplayVerifyList := TStringList.Create;
+  PlaybackItems := TList<TPlaybackItem>.Create;
 end;
 
 procedure TDosGameParams.CreateBasePack;
@@ -1106,9 +1151,7 @@ destructor TDosGameParams.Destroy;
 begin
   fHotkeys.Free;
   BaseLevelPack.Free;
-  PlaybackList.Free;
-  UnmatchedList.Free;
-  ReplayVerifyList.Free;
+  PlaybackItems.Free;
   inherited Destroy;
 end;
 

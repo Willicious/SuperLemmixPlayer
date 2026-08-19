@@ -674,8 +674,6 @@ end;
 procedure TFLevelSelect.btnPlaybackModeClick(Sender: TObject);
 var
   PlaybackModeForm: TFPlaybackMode;
-  ReplayFiles: TStringDynArray;
-  ReplayFile: string;
 begin
   PlaybackModeForm := TFPlaybackMode.Create(nil);
 
@@ -686,18 +684,9 @@ begin
 
     if PlaybackModeForm.ShowModal = mrOk then
     begin
-      if PlaybackModeForm.SelectedFolder = '' then
-        Exit;
+      GameParams.MainForm.Caption := SProgramName + ' - Beginning Playback...';
+      Application.ProcessMessages;
 
-      // Get list of replay files
-      ReplayFiles := TDirectory.GetFiles(PlaybackModeForm.SelectedFolder, '*.nxrp');
-
-      // Add replay file names to ReplayVerifyList
-      for ReplayFile in ReplayFiles do
-        GameParams.ReplayVerifyList.Add(ReplayFile); // Storing full path for easier access later
-
-      GameParams.PlaybackModeActive := True;
-      GameParams.Save(scImportant);
       WriteToParams;
       ModalResult := mrRetry;
     end;

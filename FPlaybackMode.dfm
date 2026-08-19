@@ -122,7 +122,6 @@ object FPlaybackMode: TFPlaybackMode
     Width = 123
     Height = 25
     Caption = 'Begin Playback'
-    ModalResult = 1
     TabOrder = 4
     OnClick = btnBeginPlaybackClick
   end

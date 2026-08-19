@@ -1184,7 +1184,14 @@ begin
   begin
     if GameParams.PlaybackModeActive then
     begin
-      GeneratePlaybackList;
+      if GameParams.PlaybackItems.Count > 0 then
+      begin
+        GameParams.PlaybackIndex := 0;
+        StartPlayback(GameParams.PlaybackIndex);
+      end else begin
+        StopPlayback;
+        ShowMessage('No matching replays found.' + #13 + 'Playback Mode cannot start.')
+      end;
     end else
       CloseScreen(gstReplayTest)
   end else if not Success then
