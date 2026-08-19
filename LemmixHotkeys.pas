@@ -127,7 +127,7 @@ procedure TLemmixHotkeyManager.ClearAllKeys;
 var
   i: Integer;
 begin
-  for i := 0 to MAX_KEY-1 do
+  for i := 0 to MAX_KEY do
     fKeyFunctions[i].Action := lka_Null;
 end;
 
