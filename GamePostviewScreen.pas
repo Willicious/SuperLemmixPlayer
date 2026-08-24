@@ -111,11 +111,23 @@ end;
 procedure TGamePostviewScreen.MakeShowSkillsUsedClickable;
 var
   R: TClickableRegion;
+  SSkillsUsed: String;
+
+  function GetTotalSkillsUsed(const SkillsUsedList: TSkillsUsedList): Integer;
+  var
+    i: Integer;
+  begin
+    Result := 0;
+    for i := Low(SkillsUsedList) to High(SkillsUsedList) do
+      Inc(Result, SkillsUsedList[i].Count);
+  end;
 begin
-  if GameParams.PlaybackModeActive or not GameParams.IsPlaytesting then
+  if GameParams.PlaybackModeActive then
     Exit;
 
-  R := MakeClickableText(Point(FooterOneOptionX, FooterOptionsTwoRowsHighY - 40), 'Show Skills Used', ShowSkillsUsed, True);
+  SSkillsUsed := IntToStr(GetTotalSkillsUsed(GameParams.GameResult.gSkillsUsedList));
+
+  R := MakeClickableText(Point(FooterOneOptionX, FooterOptionsTwoRowsHighY - 40), 'Show skills used ' + SSkillsUsed, ShowSkillsUsed, False, True);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
@@ -255,13 +267,10 @@ begin
       MakeTalismanOptions;
       MakeNextLevelClickable;
       MakeRetryLevelClickable(True);
+      MakeShowSkillsUsedClickable;
     end else begin
       MakeRetryLevelClickable(False);
     end;
-
-    // If in Playtest mode, show the Skills Used clickable
-    if GameParams.IsPlaytesting then
-      MakeShowSkillsUsedClickable;
 
     // Prepare some more clickables and hotkey options
     MakeLevelSelectClickable;
@@ -347,6 +356,7 @@ var
   Results: TGameResultsRec;
   Entry: TNeoLevelEntry;
   WhichText: TPostviewText;
+  PrevLine: Integer;
   STarget, SRescued, STimeSR, STimeTotal: string;
   SRescueRecord, STimeRecord, SSkillsRecord, SThisLine: string;
   InfiniteHotkeysUsed, LevelHasTalismans, LevelPassed, ShowSavedRecord: Boolean;
@@ -453,6 +463,7 @@ begin
     Result[0].Line := 'All ' + GameParams.Renderer.Theme.LemNamesPlural + ' accounted for.';
   Result[0].ColorShift := HueShift;
   Result[0].yPos := 0 + LINE_Y_SPACING;
+  PrevLine := 0;
 
   // Rescue result - needed
   HueShift.HShift := RescueRecordShift;
@@ -460,16 +471,18 @@ begin
     Result[1].Line := ''
   else
     Result[1].Line := SYouNeeded + SPadding(STarget) + STarget;
-  Result[1].yPos := Result[0].yPos + (LINE_Y_SPACING * 2);
+  Result[1].yPos := Result[PrevLine].yPos + (LINE_Y_SPACING * 2);
   Result[1].ColorShift := HueShift;
+  PrevLine := 1;
 
   // Rescue result - rescued
   if LevelHasTalismans and LevelPassed then
     Result[2].Line := ''
   else
     Result[2].Line := SYouRescued + SPadding(SRescued) + SRescued;
-  Result[2].yPos := Result[1].yPos + LINE_Y_SPACING;
+  Result[2].yPos := Result[PrevLine].yPos + LINE_Y_SPACING;
   Result[2].ColorShift := HueShift;
+  PrevLine := 2;
 
   // Rescue result - record
   ShowSavedRecord := Results.gSuccess
@@ -490,8 +503,9 @@ begin
   else
     Result[3].Line := '';
 
-  Result[3].yPos := Result[2].yPos + LINE_Y_SPACING;
+  Result[3].yPos := Result[PrevLine].yPos + LINE_Y_SPACING;
   Result[3].ColorShift := HueShift;
+  PrevLine := 3;
 
   // Comment - we allocate 2 lines for this
   HueShift.HShift := CommentShift;
@@ -514,44 +528,48 @@ begin
     Result[5].Line := WhichText.Text[1];
   end;
 
-  Result[4].yPos := Result[3].yPos + (LINE_Y_SPACING * 2);
-  Result[5].yPos := Result[4].yPos + LINE_Y_SPACING;
+  Result[4].yPos := Result[PrevLine].yPos + (LINE_Y_SPACING * 2);
+  Result[5].yPos := Result[PrevLine + 1].yPos + LINE_Y_SPACING;
   Result[4].ColorShift := HueShift;
   Result[5].ColorShift := HueShift;
+  PrevLine := 5;
 
-  // Always show total time taken
-  HueShift.HShift := TimeRecordShift;
-  Result[6].Line := SYourTotalTime + STimeTotal;
-  Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
-  Result[6].ColorShift := HueShift;
+//  // Always show total time taken
+//  HueShift.HShift := TimeRecordShift;
+//  Result[6].Line := SYourTotalTime + STimeTotal;
+//  Result[6].yPos := Result[5].yPos + (LINE_Y_SPACING * 2);
+//  Result[6].ColorShift := HueShift;
 
   // Time taken to reach SR
+  HueShift.HShift := TimeRecordShift;
   if (Results.gSuccess and not (Results.gToRescue <= 0))
   or (Playtesting and (Results.gRescued >= Results.gToRescue)) then
-    Result[7].Line := SYourTime + STimeSR
+    Result[6].Line := SYourTime + STimeSR
   else
-    Result[7].Line := '';
-  Result[7].yPos := Result[6].yPos + LINE_Y_SPACING;
-  Result[7].ColorShift := HueShift;
+    Result[6].Line := '';
+  Result[6].yPos := Result[PrevLine].yPos + LINE_Y_SPACING * 2;
+  Result[6].ColorShift := HueShift;
+  PrevLine := 6;
 
   // Time record
   if (Results.gSuccess and (Entry.UserRecords.TimeTaken.Value > 0))
   and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
-    Result[8].Line := SYourTimeRecord + STimeRecord
+    Result[7].Line := SYourTimeRecord + STimeRecord
   else
-    Result[8].Line := '';
-  Result[8].yPos := Result[7].yPos + LINE_Y_SPACING;
-  Result[8].ColorShift := HueShift;
+    Result[7].Line := '';
+  Result[7].yPos := Result[PrevLine].yPos + LINE_Y_SPACING;
+  Result[7].ColorShift := HueShift;
+  PrevLine := 7;
 
   // Skills record
   HueShift.HShift := SkillsRecordShift;
   if (Results.gSuccess and (Entry.UserRecords.TotalSkills.Value >= 0))
   and (not Results.gToRescue <= 0) and not InfiniteHotkeysUsed then
-    Result[9].Line := SYourFewestSkills + SSkillsRecord
+    Result[8].Line := SYourFewestSkills + SSkillsRecord
   else
-    Result[9].Line := '';
-  Result[9].yPos := Result[8].yPos + (LINE_Y_SPACING * 2);
-  Result[9].ColorShift := HueShift;
+    Result[8].Line := '';
+  Result[8].yPos := Result[PrevLine].yPos + (LINE_Y_SPACING * 2);
+  Result[8].ColorShift := HueShift;
 end;
 
 procedure TGamePostviewScreen.LoadPostviewTextColors;
@@ -616,9 +634,6 @@ var
   S: TStringList;
   Results: TGameResultsRec;
 begin
-  if not GameParams.IsPlaytesting then
-    Exit;
-
   Results := GameParams.GameResult;
 
   TotalSkills := 0;
@@ -626,7 +641,7 @@ begin
 
   S := TStringList.Create;
   try
-    S.Add('Skills used during this playtest:');
+    S.Add('Skills used during this playthrough:');
     S.Add('');
 
     for i := 0 to High(Results.gSkillsUsedList) do
@@ -647,6 +662,8 @@ begin
       S.Add('');
       S.Add(Format('Total Skills: %d', [TotalSkills]));
       S.Add(Format('Total Skill Types: %d', [TotalTypes]));
+      S.Add('');
+      S.Add(Format('Total Skills Record: %d', [GameParams.CurrentLevel.UserRecords.TotalSkills.Value]));
     end;
 
     MessageDlg(S.Text, mtInformation, [mbOK], 0);
