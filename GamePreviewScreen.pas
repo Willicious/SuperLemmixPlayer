@@ -489,7 +489,7 @@ begin
   HueShift.HShift := TitleShift;
   Result[0].Line := Entry.Title;
   Result[0].ColorShift := HueShift;
-  Result[0].yPos := 168;
+  Result[0].yPos := 170;
 
   HueShift.HShift := GroupShift;
   Result[1].yPos := Result[0].yPos + 40;
