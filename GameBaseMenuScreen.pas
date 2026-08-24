@@ -133,8 +133,7 @@ type
                                    aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
       function MakeClickableImageAuto(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
                                    aNormal: TBitmap32; aMargin: Integer = -1): TClickableRegion;
-      function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction;
-                                   SwapHues: Boolean = False; UseTeal: Boolean = False): TClickableRegion;
+      function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction; SwapHues: Boolean = False): TClickableRegion;
 
       function MakeHiddenOption(aKey: Word; aAction: TRegionAction): TClickableRegion; overload;
       function MakeHiddenOption(aFunc: TLemmixHotkeyAction; aAction: TRegionAction): TClickableRegion; overload;
@@ -468,12 +467,12 @@ end;
 
 // Changes hue of clickable text in pre-level screen
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
-  aText: String; aAction: TRegionAction; SwapHues: Boolean = False; UseTeal: Boolean = False): TClickableRegion;
+  aText: String; aAction: TRegionAction; SwapHues: Boolean = False): TClickableRegion;
 const
-  HUE_SHIFT_NORMAL = 0.250;
-  HUE_SHIFT_TEAL = 0.150;
-  HUE_SHIFT_HOVER = 0;
-  VALUE_SHIFT_CLICK = -0.250;
+  BLUE = 0.250;
+  TEAL = 0.150;
+  GREEN = 0;
+  ORANGE = 0.750;
 var
   tmpNormal, tmpHover, tmpClick: TBitmap32;
   ScreenRect: TRect;
@@ -487,15 +486,15 @@ begin
 
   if SwapHues then
   begin
-    NormalShift.HShift := HUE_SHIFT_HOVER;
-    HoverShift.HShift := IfThen(UseTeal, HUE_SHIFT_TEAL, HUE_SHIFT_NORMAL);
+    NormalShift.HShift := TEAL;
+    HoverShift.HShift := GREEN;
   end else begin
-    NormalShift.HShift := IfThen(UseTeal, HUE_SHIFT_TEAL, HUE_SHIFT_NORMAL);
-    HoverShift.HShift := HUE_SHIFT_HOVER;
+    NormalShift.HShift := BLUE;
+    HoverShift.HShift := TEAL;
   end;
 
-  ClickShift.HShift := HUE_SHIFT_HOVER;
-  ClickShift.VShift := VALUE_SHIFT_CLICK;
+  ClickShift.HShift := GREEN;
+  ClickShift.VShift := ORANGE;
 
   tmpNormal := TBitmap32.Create;
   tmpHover := TBitmap32.Create;

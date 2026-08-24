@@ -127,7 +127,7 @@ begin
 
   SSkillsUsed := IntToStr(GetTotalSkillsUsed(GameParams.GameResult.gSkillsUsedList));
 
-  R := MakeClickableText(Point(FooterOneOptionX, FooterOptionsTwoRowsHighY - 40), 'Show skills used ' + SSkillsUsed, ShowSkillsUsed, False, True);
+  R := MakeClickableText(Point(FooterOneOptionX, FooterOptionsTwoRowsHighY - 40), 'Show skills used ' + SSkillsUsed, ShowSkillsUsed, True);
 
   R.ShortcutKeys.Add(VK_RETURN);
   R.ShortcutKeys.Add(VK_SPACE);
