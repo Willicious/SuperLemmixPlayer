@@ -150,7 +150,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Save Replay'
       'Cancel Replay'
       'Edit Replay'
-      'Replay Insert Mode'
+      'Toggle Replay Insert Mode'
       'Toggle Music'
       'Toggle Sound'
       'Restart Level'

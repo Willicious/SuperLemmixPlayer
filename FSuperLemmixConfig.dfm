@@ -247,14 +247,14 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 4
       object lblScrollSpeed: TLabel
         Left = 44
-        Top = 36
+        Top = 32
         Width = 66
         Height = 13
         Caption = 'Scroll Speed:'
       end
       object cbEdgeScrolling: TCheckBox
         Left = 27
-        Top = 13
+        Top = 9
         Width = 234
         Height = 17
         Caption = 'Activate Edge Scrolling and Trap Cursor'
@@ -263,7 +263,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbPauseAfterBackwards: TCheckBox
         Left = 27
-        Top = 63
+        Top = 59
         Width = 205
         Height = 17
         Caption = 'Pause After Backwards Framestep'
@@ -272,7 +272,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbClassicMode: TGroupBox
         Left = 15
-        Top = 373
+        Top = 376
         Width = 290
         Height = 124
         Caption = 'Classic Mode Options'
@@ -341,14 +341,14 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 15
-        Top = 121
+        Top = 224
         Width = 290
-        Height = 96
+        Height = 133
         Caption = 'Replay Options'
         TabOrder = 4
         object cbReplayAfterRestart: TCheckBox
           Left = 12
-          Top = 24
+          Top = 84
           Width = 217
           Height = 17
           Caption = 'Auto-Replay After Restarting Level'
@@ -357,7 +357,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbReplayAfterBackskip: TCheckBox
           Left = 12
-          Top = 45
+          Top = 105
           Width = 234
           Height = 17
           Caption = 'Auto-Replay After Backwards Frameskip'
@@ -366,17 +366,30 @@ object FormNXConfig: TFormNXConfig
         end
         object cbSameLemmingOverwrite: TCheckBox
           Left = 12
-          Top = 68
+          Top = 63
           Width = 275
           Height = 17
           Caption = 'Allow Same-Lemming-Overwrite in Replay Insert'
           TabOrder = 2
           OnClick = OptionChanged
         end
+        object rgDefaultReplayMode: TRadioGroup
+          Left = 12
+          Top = 20
+          Width = 261
+          Height = 37
+          Caption = 'Default Mode'
+          Columns = 2
+          Items.Strings = (
+            'Standard'
+            'Insert')
+          TabOrder = 3
+          OnClick = OptionChanged
+        end
       end
       object gbSkillPanelOptions: TGroupBox
         Left = 15
-        Top = 251
+        Top = 111
         Width = 290
         Height = 99
         Caption = 'Skill Panel Options'
@@ -421,7 +434,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cmbScrollSpeed: TComboBox
         Left = 123
-        Top = 33
+        Top = 29
         Width = 102
         Height = 21
         Style = csDropDownList
@@ -438,7 +451,7 @@ object FormNXConfig: TFormNXConfig
       end
       object cbInvertMouseWheelFramesteps: TCheckBox
         Left = 27
-        Top = 86
+        Top = 82
         Width = 261
         Height = 17
         Caption = 'Invert Mousewheel Framestep Direction'

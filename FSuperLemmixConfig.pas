@@ -76,6 +76,7 @@ type
     cbInvertMouseWheelFramesteps: TCheckBox;
     btnStyleUpdater: TButton;
     cbSameLemmingOverwrite: TCheckBox;
+    rgDefaultReplayMode: TRadioGroup;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -240,6 +241,9 @@ begin
     cbReplayAfterBackskip.Checked := GameParams.ReplayAfterBackskip;
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbSameLemmingOverwrite.Checked := GameParams.SameLemmingOverwrite;
+
+    rgDefaultReplayMode.ItemIndex := Ord(GameParams.DefaultReplayMode);
+
     cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbColorCycle.Checked := GameParams.ColorCycle;
     cbShowButtonHints.Checked := GameParams.ShowButtonHints;
@@ -311,6 +315,10 @@ begin
   GameParams.ReplayAfterBackskip := cbReplayAfterBackskip.Checked;
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
   GameParams.SameLemmingOverwrite := cbSameLemmingOverwrite.Checked;
+
+  if (rgDefaultReplayMode.ItemIndex >= Ord(Low(TDefaultReplayMode)))
+    and (rgDefaultReplayMode.ItemIndex <= Ord(High(TDefaultReplayMode))) then
+      GameParams.DefaultReplayMode := TDefaultReplayMode(rgDefaultReplayMode.ItemIndex);
 
   GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ColorCycle := cbColorCycle.Checked;

@@ -1487,7 +1487,7 @@ begin
 
   MessageQueue.Clear;
 
-  ReplayInsert := False;
+  ReplayInsert := GameParams.DefaultReplayMode = rmInsert;
   Restarted := False;
 
   Playing := True;

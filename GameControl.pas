@@ -83,6 +83,12 @@ type
   );
 
 type
+  TDefaultReplayMode = (
+    rmStandard,
+    rmInsert
+  );
+
+type
   TMiscOption = (
     //moCheckUpdates,
     moAutoReplaySave,
@@ -179,6 +185,8 @@ type
     fLoadedWindowHeight: Integer;
 
     fUserName: String;
+
+    fDefaultReplayMode: TDefaultReplayMode;
 
     fAutoSaveReplayPattern: String;
     fIngameSaveReplayPattern: String;
@@ -314,6 +322,8 @@ type
     property PlaybackItems: TList<TPlaybackItem> read fPlaybackItems write fPlaybackItems;
     property PlaybackIndex: Integer read fPlaybackIndex write fPlaybackIndex;
     property AutoSkipPreviewPostview: Boolean read fAutoSkipPreviewPostview write fAutoSkipPreviewPostview;
+
+    property DefaultReplayMode: TDefaultReplayMode read fDefaultReplayMode write fDefaultReplayMode;
 
     property IsPlaytesting: Boolean read GetIsPlaytesting write fIsPlaytesting;
 
@@ -513,6 +523,12 @@ begin
     SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
     SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
     SaveBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
+
+    if (DefaultReplayMode = rmStandard) then
+      SaveString('DefaultReplayMode', 'Standard')
+    else if (DefaultReplayMode = rmInsert) then
+      SaveString('DefaultReplayMode', 'Insert');
+
     SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('SameLemmingOverwrite', SameLemmingOverwrite);
@@ -672,6 +688,18 @@ var
     else // Set default if the string is anything else
       PlaybackOrder := poByLevel;
   end;
+
+  procedure LoadDefaultReplayMode;
+  var
+    sOption: String;
+  begin
+    sOption := SL.Values['DefaultReplayMode'];
+
+    if (sOption = 'Insert') then
+      DefaultReplayMode := rmInsert
+    else // Set default if the string is anything else
+      DefaultReplayMode := rmStandard;
+  end;
 begin
   SL := TStringList.Create;
   try
@@ -702,6 +730,8 @@ begin
     if AutoSaveReplayPattern = '' then AutoSaveReplayPattern := DEFAULT_REPLAY_PATTERN_AUTO;
     if IngameSaveReplayPattern = '' then IngameSaveReplayPattern := DEFAULT_REPLAY_PATTERN_INGAME;
     if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
+
+    LoadDefaultReplayMode;
 
     ReplayAfterBackskip := LoadBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     LoadNextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
@@ -1103,6 +1133,7 @@ begin
   fCursorResize := 1;
   fShowLevelSelectOptions := True;
 
+  DefaultReplayMode := rmStandard;
   PlaybackOrder := poByLevel;
   fAutoSkipPreviewPostview := True;
 
