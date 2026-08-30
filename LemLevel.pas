@@ -146,7 +146,8 @@ type
 
     function GetHasAnyFallbacks: Boolean;
 
-    procedure SanitizeTalismanAndSetText(aTalisman: TTalisman);
+    procedure SanitizeTalisman(aTalisman: TTalisman);
+    procedure GenerateTalismanText(aTalisman: TTalisman);
   public
     constructor Create;
     destructor Destroy; override;
@@ -273,61 +274,26 @@ begin
   inherited;
 end;
 
-
-procedure TLevel.SanitizeTalismanAndSetText(aTalisman: TTalisman);
-const
-  CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18',
-                                          '24', '29', '35', '41',
-                                          '47', '53', '59', '65',
-                                          '71', '76', '82', '88',
-                                          '94');
+procedure TLevel.SanitizeTalisman(aTalisman: TTalisman);
 var
   Skill: TSkillPanelButton;
-  ReqText: String;
 
-  SkillTypeCount: Integer;
-  AllowedSkillTypeCount: Integer;
-  RemainSkillTypeCount: Integer;
   EverySkillZero: Boolean;
   TotalAvailableSkills: Integer;
   AtLeastOneSkillInfinite: Boolean;
-
-  FirstLimitedSkillLimit: Integer;
-  LimitedSkillCount: Integer;
-  FoundNonMatch: Boolean;
-
-  RestrictedSkills, ProhibitedSkills: Integer;
-  MoreThanTwoSkills: Boolean;
-
-  MadeSkillRestrictionText: Boolean;
 begin
   // Save requirement - if equal or lower than level save requirement, set to none
   if aTalisman.RescueCount <= Info.RescueCount then
     aTalisman.RescueCount := -1;
 
-  // Save requirement text - straightforward
-  if aTalisman.RescueCount >= 0 then
-    ReqText := 'Save ' + IntToStr(aTalisman.RescueCount) + ' / ' + IntToStr(Info.LemmingsCount - Info.ZombieCount)
-  else
-    ReqText := 'Complete';
-
   // Time limit - if level has a time limit, equal to or lower than talisman limit, set to none
   if Info.HasTimeLimit and (aTalisman.TimeLimit >= Info.TimeLimit * 17) then // Info.TimeLimit is seconds, aTalisman.TimeLimit is frames
     aTalisman.TimeLimit := -1;
 
-  // Time limit text - straightforward. Only show centiseconds if nonzero.
-  if aTalisman.TimeLimit >= 0 then
-  begin
-    ReqText := ReqText + ' in under ' + IntToStr(aTalisman.TimeLimit div (60 * 17)) + ':' +
-                                        LeadZeroStr((aTalisman.TimeLimit div 17) mod 60, 2);
-
-    if aTalisman.TimeLimit mod 17 <> 0 then
-      ReqText := ReqText + '.' + CENTISECONDS[aTalisman.TimeLimit mod 17];
-  end;
-
-  // Skillset - if skill not in skillset, or same / lesser amount provided, set to none
-  //            also do this if requirement is higher than or equal to total skills limit
-  // Also gather some info for total skills to use.
+  // Skillset
+  { if skill is not in skillset, or same / lesser amount given as requirement,
+    or requirement is higher than or equal to the total skills limit,
+    set to none }
   EverySkillZero := True;
   AtLeastOneSkillInfinite := False;
   TotalAvailableSkills := 0;
@@ -335,9 +301,15 @@ begin
   begin
     if Skill in Info.Skillset then
     begin
-      if ((Info.SkillCount[Skill] < 100) and (Info.SkillCount[Skill] + GetPickupSkillCount(Skill) <= aTalisman.SkillLimit[Skill])) or
-         ((aTalisman.TotalSkillLimit >= 0) and (aTalisman.SkillLimit[Skill] >= aTalisman.TotalSkillLimit)) then
+      if ((Info.SkillCount[Skill] < 100) and
+          (Info.SkillCount[Skill] + GetPickupSkillCount(Skill) <= aTalisman.SkillLimit[Skill]))
+      or ((aTalisman.TotalSkillLimit >= 0) and (aTalisman.SkillLimit[Skill] >= aTalisman.TotalSkillLimit)) then
         aTalisman.SkillLimit[Skill] := -1;
+
+      if (Info.SkillCount[Skill] + GetPickupSkillCount(Skill) < aTalisman.SkillMinimum[Skill])
+      or (aTalisman.SkillLimit[Skill] >= 0) and
+         (aTalisman.SkillLimit[Skill] < aTalisman.SkillMinimum[Skill]) then
+        aTalisman.SkillMinimum[Skill] := -1;
 
       if aTalisman.SkillLimit[Skill] <> 0 then
         EverySkillZero := False;
@@ -349,262 +321,111 @@ begin
         TotalAvailableSkills := TotalAvailableSkills + Info.SkillCount[Skill] + GetPickupSkillCount(Skill)
       else
         TotalAvailableSkills := TotalAvailableSkills + Min(Info.SkillCount[Skill] + GetPickupSkillCount(Skill), aTalisman.SkillLimit[Skill]);
-    end else
+    end else begin
       aTalisman.SkillLimit[Skill] := -1;
+      aTalisman.SkillMinimum[Skill] := -1;
+    end;
   end;
 
-  // Total skills - if every skill's limit is zero, set zero total skills limit and remove individual skill limits
-  //                else if total skill limit is greater than available skill count, set it to none
+  // Total Skills
+  // if every skill's limit is zero, set zero total skills limit and remove individual skill limits
   if EverySkillZero then
   begin
     aTalisman.TotalSkillLimit := 0;
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    begin
       aTalisman.SkillLimit[Skill] := -1;
-  end else if (not AtLeastOneSkillInfinite) and (aTalisman.TotalSkillLimit >= TotalAvailableSkills) then
+      aTalisman.SkillMinimum[Skill] := -1;
+    end;
+  end else
+  // else if total skill limit is greater than available skill count, set it to none
+  if (not AtLeastOneSkillInfinite) and (aTalisman.TotalSkillLimit >= TotalAvailableSkills) then
     aTalisman.TotalSkillLimit := -1;
 
+  // If level has no zombies, cancel kill zombies requirement (should never happen)
+  if Info.fZombieCount <= 0 then
+    aTalisman.RequireKillZombies := False;
+end;
 
-  // Special cases to look for with skills, or else build default text
+procedure TLevel.GenerateTalismanText(aTalisman: TTalisman);
+const
+  CENTISECONDS: array[0..16] of String =
+    ('00', '06', '12', '18', '24', '29', '35', '41', '47', '53', '59', '65',
+     '71', '76', '82', '88', '94');
+var
+  ReqText, S: String;
+  Skill: TSkillPanelButton;
 
-  MadeSkillRestrictionText := False;
+  procedure AddRequirement(const aText: String);
+  begin
+    ReqText := ReqText + sLineBreak + '• ' + aText;
+  end;
+begin
+  ReqText := 'Complete the level with the following' + sLineBreak +
+             'requirements:' + sLineBreak;
 
-  SkillTypeCount := 0;
-  AllowedSkillTypeCount := 0;
+  // Save requirement
+  if aTalisman.RescueCount >= 0 then
+    AddRequirement('Save ' + IntToStr(aTalisman.RescueCount) + ' / ' + IntToStr(Info.LemmingsCount - Info.ZombieCount));
 
+  // Time limit
+  if aTalisman.TimeLimit >= 0 then
+  begin
+    S := 'Solve in under ' + IntToStr(aTalisman.TimeLimit div (60 * 17)) + ':' +
+      LeadZeroStr((aTalisman.TimeLimit div 17) mod 60, 2);
+
+    // Only show centiseconds if nonzero
+    if aTalisman.TimeLimit mod 17 <> 0 then
+      S := S + '.' + CENTISECONDS[aTalisman.TimeLimit mod 17];
+
+    AddRequirement(S);
+  end;
+
+  // Skill requirements
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    if Skill in Info.Skillset then
-    begin
-      SkillTypeCount := SkillTypeCount + 1;
-      if aTalisman.SkillLimit[Skill] <> 0 then
-        AllowedSkillTypeCount := AllowedSkillTypeCount + 1;
-    end;
-
-  // - Skillset has at least one skill type, but talisman doesn't allow any skills
-
-  if not MadeSkillRestrictionText then
   begin
-    if ((aTalisman.TotalSkillLimit = 0) or (aTalisman.SkillTypeLimit = 0)) and (SkillTypeCount > 0) then
-    begin
-      ReqText := ReqText + ' without any skills';
-      MadeSkillRestrictionText := True;
-    end;
+    if (aTalisman.SkillMinimum[Skill] > 0) and
+       (aTalisman.SkillLimit[Skill] > 0) then
+      AddRequirement(
+        'Use at least ' + IntToStr(aTalisman.SkillMinimum[Skill]) +
+        ' but no more than ' + IntToStr(aTalisman.SkillLimit[Skill]) +
+        ' ' + SKILL_PLURAL_NAMES[Skill])
+    else if aTalisman.SkillMinimum[Skill] > 0 then
+      AddRequirement(
+        'Use at least ' + IntToStr(aTalisman.SkillMinimum[Skill]) +
+        ' ' + SKILL_PLURAL_NAMES[Skill])
+    else if aTalisman.SkillLimit[Skill] > 0 then
+      AddRequirement(
+        'Use no more than ' + IntToStr(aTalisman.SkillLimit[Skill]) +
+        ' ' + SKILL_PLURAL_NAMES[Skill]);
   end;
 
-  // - Skillset has at least X skill types, with Y or fewer of them allowed:
-  //    X 10, Y 4
-  //    X  7, Y 3
-  //    X  5, Y 2
-  //    X  2, Y 1
+  // Prohibited skills
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    if aTalisman.SkillLimit[Skill] = 0 then
+      AddRequirement('Use 0 ' + SKILL_PLURAL_NAMES[Skill]);
 
-  if not MadeSkillRestrictionText then
-  begin
-    if ((SkillTypeCount >= 10) and (AllowedSkillTypeCount <= 4)) or
-       ((SkillTypeCount >=  7) and (AllowedSkillTypeCount <= 3)) or
-       ((SkillTypeCount >=  5) and (AllowedSkillTypeCount <= 2)) or
-       ((SkillTypeCount >=  2) and (AllowedSkillTypeCount <= 1)) then
-    begin
-      // "using only X[, Y and Z]"
-      ReqText := ReqText + ' using only';
-
-      RemainSkillTypeCount := AllowedSkillTypeCount;
-
-      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        if (Skill in Info.Skillset) and (aTalisman.SkillLimit[Skill] < 0) then
-        begin
-          ReqText := ReqText + ' ' + SKILL_PLURAL_NAMES[Skill];
-          Dec(RemainSkillTypeCount);
-          case RemainSkillTypeCount of
-            2: ReqText := ReqText + ',';
-            1: begin
-                 if AllowedSkillTypeCount > 2 then
-                   ReqText := ReqText + ',';
-                 ReqText := ReqText + ' and';
-               end;
-          end;
-        end;
-
-      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        if aTalisman.SkillLimit[Skill] > 0 then
-        begin
-          if aTalisman.SkillLimit[Skill] = 1 then
-            ReqText := ReqText + ' 1 or less ' + SKILL_NAMES[Skill]
-          else
-            ReqText := ReqText + ' ' + IntToStr(aTalisman.SkillLimit[Skill]) + ' or less ' + SKILL_PLURAL_NAMES[Skill];
-          Dec(RemainSkillTypeCount);
-          case RemainSkillTypeCount of
-            2: ReqText := ReqText + ',';
-            1: begin
-                 if AllowedSkillTypeCount > 2 then
-                   ReqText := ReqText + ',';
-                 ReqText := ReqText + ' and';
-               end;
-          end;
-        end;
-
-      MadeSkillRestrictionText := True;
-    end;
-  end;
-
-
-  // - Same requirement (or lower purely due to skillset, on less than half) for all skill types
-
-  if not MadeSkillRestrictionText then
-  begin
-    if SkillTypeCount > 1 then
-    begin
-      // First, we check: Do all limited skills have the same limit?
-      FirstLimitedSkillLimit := -1;
-      LimitedSkillCount := 0;
-      FoundNonMatch := False;
-      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        if aTalisman.SkillLimit[Skill] > 0 then
-        begin
-          if FirstLimitedSkillLimit < 0 then
-            FirstLimitedSkillLimit := aTalisman.SkillLimit[Skill]
-          else if aTalisman.SkillLimit[Skill] <> FirstLimitedSkillLimit then
-          begin
-            FoundNonMatch := True;
-            Break;
-          end;
-
-          Inc(LimitedSkillCount);
-        end;
-
-      // We can also check now that enough skills are limited
-      if (FirstLimitedSkillLimit > 0) and
-         (not FoundNonMatch) and (LimitedSkillCount > SkillTypeCount div 2) and
-         ((LimitedSkillCount = 2) or (SkillTypeCount > 2)) then
-      begin
-        // Now we check: Do any non-limited skills allow for more uses than this limit?
-        for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-          if (Skill in Info.Skillset) and (aTalisman.SkillLimit[Skill] < 0) then
-          begin
-            if (Info.SkillCount[Skill] > 99) or (Info.SkillCount[Skill] + GetPickupSkillCount(Skill) >= aTalisman.SkillLimit[Skill]) then
-            begin
-              FoundNonMatch := True;
-              Break;
-            end;
-          end;
-
-        if not FoundNonMatch then
-        begin
-          ReqText := ReqText + ' using no more than ' + IntToStr(FirstLimitedSkillLimit) + ' of each skill';
-          MadeSkillRestrictionText := True;
-        end;
-      end;
-    end;
-  end;
-
-  // Default
-
-  if not MadeSkillRestrictionText then
-  begin
-    RestrictedSkills := 0;
-    ProhibitedSkills := 0;
-    for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      if aTalisman.SkillLimit[Skill] > 0 then
-        Inc(RestrictedSkills)
-      else if aTalisman.SkillLimit[Skill] = 0 then
-        Inc(ProhibitedSkills);
-
-    if RestrictedSkills > 0 then
-    begin
-      MoreThanTwoSkills := RestrictedSkills > 2;
-
-      ReqText := ReqText + ' using no more than';
-      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        if aTalisman.SkillLimit[Skill] > 0 then
-        begin
-          if aTalisman.SkillLimit[Skill] = 1 then
-            ReqText := ReqText + ' 1 ' + SKILL_NAMES[Skill]
-          else
-            ReqText := ReqText + ' ' + IntToStr(aTalisman.SkillLimit[Skill]) + ' ' + SKILL_PLURAL_NAMES[Skill];
-
-          Dec(RestrictedSkills);
-          if RestrictedSkills = 1 then
-          begin
-            if MoreThanTwoSkills then
-              ReqText := ReqText + ',';
-            ReqText := ReqText + ' and';
-          end else if RestrictedSkills > 1 then
-            ReqText := ReqText + ',';
-        end;
-
-      MadeSkillRestrictionText := True;
-    end;
-
-    if ProhibitedSkills > 0 then
-    begin
-      MoreThanTwoSkills := ProhibitedSkills > 2;
-
-      if MadeSkillRestrictionText then // At this point this would mean there WERE restricted skills
-      begin
-        ReqText := ReqText + ';';
-        if aTalisman.TotalSkillLimit < 0 then
-          ReqText := ReqText + ' and';
-      end;
-
-      ReqText := ReqText + ' without using';
-      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        if aTalisman.SkillLimit[Skill] = 0 then
-        begin
-          ReqText := ReqText + ' ' + SKILL_PLURAL_NAMES[Skill];
-          Dec(ProhibitedSkills);
-          if ProhibitedSkills = 1 then
-          begin
-            if MoreThanTwoSkills then
-              ReqText := ReqText + ',';
-            ReqText := ReqText + ' or';
-          end else if ProhibitedSkills > 1 then
-            ReqText := ReqText + ',';
-        end;
-
-      MadeSkillRestrictionText := True;
-    end;
-  end;
-
-  // Total skill limit
+  // Total skill requirement
   if aTalisman.TotalSkillLimit > 0 then
-  begin
-    if MadeSkillRestrictionText then
-    begin
-      ReqText := ReqText + ';';
-      if aTalisman.SkillTypeLimit <= 0 then
-        ReqText := ReqText + ' and';
-    end;
+    AddRequirement('Use no more than ' + IntToStr(aTalisman.TotalSkillLimit) + ' total skills');
 
-    ReqText := ReqText + ' using no more than ' + IntToStr(aTalisman.TotalSkillLimit) + ' total skills';
-  end;
-
-  // Skill type limit
+  // Total skill type requirement
   if aTalisman.SkillTypeLimit > 0 then
-  begin
-    if MadeSkillRestrictionText or (aTalisman.TotalSkillLimit > 0) then
-      ReqText := ReqText + '; and';
+    AddRequirement('Use no more than ' + IntToStr(aTalisman.SkillTypeLimit) + ' different skill types');
 
-    ReqText := ReqText + ' using no more than ' + IntToStr(aTalisman.SkillTypeLimit) + ' different skill types';
-  end;
-
-  // Special case for talismans with no further requirements
-  if ReqText = 'Complete' then
-    ReqText := 'Complete the level';
-
-  // Add the note about pressing pause
-  if aTalisman.RequireNoPause then
-    ReqText := ReqText + ', without pressing pause';
-
-  // Add the note about killing zombies
+  // Kill all zombies requirement
   if aTalisman.RequireKillZombies then
-    ReqText := ReqText + ', killing all zombies';
+    AddRequirement('Kill all Zombies');
 
-  // Add the note about Classic Mode
+  // No pause requirement
+  if aTalisman.RequireNoPause then
+    AddRequirement('Don''t press pause!');
+
+  // Classic Mode requirement
   if aTalisman.RequireClassicMode then
-    ReqText := ReqText + ', in Classic Mode';
+    AddRequirement('Play in Classic Mode');
 
-  ReqText := ReqText + '.';
-
-  // Write values
-  aTalisman.LevelLemmingCount := Info.LemmingsCount - Info.ZombieCount;
+  // Finalize text
   aTalisman.SetRequirementText(ReqText);
 end;
 
@@ -1524,7 +1345,10 @@ begin
 
   // 4. Sanitize and make requirement text for talismans
   for i := 0 to fTalismans.Count-1 do
-    SanitizeTalismanAndSetText(fTalismans[i]);
+  begin
+    SanitizeTalisman(fTalismans[i]);
+    GenerateTalismanText(fTalismans[i]);
+  end;
 
   fTalismans.Sort(TComparer<TTalisman>.Construct(
      function(const L, R: TTalisman): Integer

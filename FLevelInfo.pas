@@ -58,7 +58,7 @@ type
 
       procedure Add(aIcon: Integer; aText: Integer; aHintText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
       procedure Add(aIcon: Integer; aText: String; aHintText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
-      procedure AddTalisman(aWrapWidth: Integer);
+      procedure AddTalisman;
       procedure AddDummy(aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove);
       procedure AddPreview(aForceRedraw: Boolean);
       procedure AddClose;
@@ -97,6 +97,9 @@ uses
 
 const
   COLOR_TALISMAN_RESTRICTION = $0050A0; // BBGGRR, because it's WinForms not GR32
+  // Bookmark - TODO - add a different color for skill minimums
+  // Bookmark - TODO - change 'skill limit' to 'skill maximum' for clarity
+  // Bookmark - TODO - ensure skill minimum cannot be higher than about 10
   COLOR_RECORDS = $00A000;
 
 
@@ -288,35 +291,19 @@ begin
   Reposition(aMovement);
 end;
 
-procedure TLevelInfoPanel.AddTalisman(aWrapWidth: Integer);
+procedure TLevelInfoPanel.AddTalisman;
 var
   Img: TImage32;
   LblTitle, LblRequirement: TLabel;
-
   IconIndex: Integer;
-
   LabelHeight: Integer;
-
-  function MakeWrappedRequirementText: String;
-  var
-    WrapWidth: Integer;
-  begin
-    if LblTitle = nil then
-      WrapWidth := aWrapWidth
-    else
-      WrapWidth := Max(aWrapWidth, LblTitle.Width);
-
-    Result := BreakString(fTalisman.RequirementText, LblRequirement, WrapWidth);
-  end;
 begin
-  // Components' LEFT is set during creation
-  // Components' TOP is set at the end
-
   Img := TImage32.Create(Self);
   Img.Parent := Self;
   Img.Width := fAdjustedSizing.IconSize;
   Img.Height := fAdjustedSizing.IconSize;
   Img.Left := fCurrentPos.X;
+  Img.Top := fCurrentPos.Y;
   Img.ScaleMode := smResize;
   TLinearResampler.Create(Img.Bitmap);
 
@@ -326,58 +313,39 @@ begin
 
   DrawIcon(IconIndex, Img.Bitmap);
 
-  LabelHeight := 0;
-
   if fTalisman.Title <> '' then
   begin
     LblTitle := TLabel.Create(Self);
     LblTitle.Parent := Self;
     LblTitle.Font.Style := [fsBold];
     LblTitle.Caption := fTalisman.Title;
-    LblTitle.Left := fCurrentPos.X + Img.Width + fAdjustedSizing.PaddingSize;
-    LabelHeight := LabelHeight + LblTitle.Height;
+    LblTitle.Left := Img.Left + Img.Width + fAdjustedSizing.PaddingSize;
+    LblTitle.Top := fCurrentPos.Y;
   end else
     LblTitle := nil;
 
   LblRequirement := TLabel.Create(Self);
   LblRequirement.Parent := Self;
-  LblRequirement.Caption := MakeWrappedRequirementText;
-  LblRequirement.Left := fCurrentPos.X + Img.Width + fAdjustedSizing.PaddingSize;
-  LabelHeight := LabelHeight + LblRequirement.Height;
+  LblRequirement.Caption := fTalisman.RequirementText;
+  LblRequirement.Left := Img.Left + Img.Width + fAdjustedSizing.PaddingSize;
+
+  if LblTitle <> nil then
+    LblRequirement.Top := LblTitle.Top + LblTitle.Height
+  else
+    LblRequirement.Top := fCurrentPos.Y;
+
+  LabelHeight := LblRequirement.Top - fCurrentPos.Y + LblRequirement.Height;
+
+  fMinSize.X := Max(Img.Left + Img.Width, LblRequirement.Left + LblRequirement.Width)
+    + fAdjustedSizing.PaddingSize;
+
+  if LblTitle <> nil then
+    fMinSize.X := Max(fMinSize.X, LblTitle.Left + LblTitle.Width + fAdjustedSizing.PaddingSize);
+
+  fMinSize.Y := fCurrentPos.Y + Max(Img.Height, LabelHeight) + fAdjustedSizing.PaddingSize;
 
   fCurrentPos.X := fAdjustedSizing.PaddingSize;
-  fMinSize.X := LblRequirement.Left + LblRequirement.Width;
-  if LblTitle <> nil then
-    fMinSize.X := Max(fMinSize.X, LblTitle.Left + LblTitle.Width);
-  fMinSize.X := fMinSize.X + fAdjustedSizing.PaddingSize;
-
-  if LabelHeight > Img.Height then
-  begin
-    Img.Top := fCurrentPos.Y + ((LabelHeight - Img.Height) div 2);
-
-    if LblTitle = nil then
-      LblRequirement.Top := fCurrentPos.Y
-    else begin
-      LblTitle.Top := fCurrentPos.Y;
-      LblRequirement.Top := LblTitle.Top + LblTitle.Height;
-    end;
-
-    fMinSize.Y := LblRequirement.Top + LblRequirement.Height + fAdjustedSizing.PaddingSize;
-    fCurrentPos.Y := fCurrentPos.Y + LabelHeight + fAdjustedSizing.PaddingSize;
-  end else begin
-    Img.Top := fCurrentPos.Y;
-
-    if LblTitle = nil then
-      LblRequirement.Top := fCurrentPos.Y + ((Img.Height - LabelHeight) div 2)
-    else begin
-      LblTitle.Top := fCurrentPos.Y + ((Img.Height - LabelHeight) div 2);
-      LblRequirement.Top := LblTitle.Top + LblTitle.Height;
-    end;
-
-    fMinSize.Y := Img.Top + Img.Height + fAdjustedSizing.PaddingSize;
-    fCurrentPos.Y := fCurrentPos.Y + Img.Height + fAdjustedSizing.PaddingSize;
-  end;
-
+  fCurrentPos.Y := fMinSize.Y;
 end;
 
 procedure TLevelInfoPanel.Add(aIcon, aText: Integer; aHintText: String; aTextOnRight: Boolean;
@@ -586,8 +554,12 @@ begin
 end;
 
 procedure TLevelInfoPanel.ShowPopup;
+var
+  ReqCount: Integer;
+  ReqWidth: Integer;
+  ContentWidth: Integer;
 
-  function AddRequirements(aDry: Boolean): Integer;
+  function AddRequirementIcons(aDry: Boolean): Integer;
   var
     Skill: TSkillPanelButton;
 
@@ -640,78 +612,75 @@ procedure TLevelInfoPanel.ShowPopup;
           if TalCount < BaseCount + PickupCount then
             LocalAdd(ICON_SKILLS[Skill], TalCount, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
         end;
+
+        if (Talisman <> nil) and (Talisman.SkillMinimum[Skill] >= 1) then
+        begin
+          TalCount := Talisman.SkillMinimum[Skill];
+
+          if TalCount <= BaseCount + PickupCount then
+            LocalAdd(ICON_SKILLS[Skill], TalCount, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+        end;
       end;
 
-      if (Talisman.RequireKillZombies) then
-        LocalAdd(ICON_KILL_ZOMBIES, '', False, pmMoveHorz);
+    if (Talisman.RequireKillZombies) then
+      LocalAdd(ICON_KILL_ZOMBIES, '', False, pmMoveHorz);
 
-      if (Talisman.RequireClassicMode) then
-        LocalAdd(ICON_CLASSIC_MODE, '', False, pmMoveHorz);
+    if (Talisman.RequireClassicMode) then
+      LocalAdd(ICON_CLASSIC_MODE, '', False, pmMoveHorz);
 
-      if (Talisman.RequireNoPause) then
-        LocalAdd(ICON_NO_PAUSE, '', False, pmMoveHorz);
+    if (Talisman.RequireNoPause) then
+      LocalAdd(ICON_NO_PAUSE, '', False, pmMoveHorz);
   end;
 
-  procedure RepositionExistingControls(aNewWidth: Integer);
+  function GetLongestRequirementLine(const aText: String): Integer;
   var
+    Lines: TStringList;
     i: Integer;
-    ExistingRect: TRect;
-
-    Target, Offset: Integer;
   begin
-    if ControlCount = 0 then
-      Exit;
+    Result := 0;
 
-    ExistingRect := Controls[0].BoundsRect;
-    for i := 1 to ControlCount-1 do
-    begin
-      ExistingRect.Left := Min(ExistingRect.Left, Controls[i].Left);
-      ExistingRect.Top := Min(ExistingRect.Top, Controls[i].Top);
-      ExistingRect.Right := Max(ExistingRect.Right, Controls[i].Left + Controls[i].Width);
-      ExistingRect.Bottom := Max(ExistingRect.Bottom, Controls[i].Top + Controls[i].Height);
+    Lines := TStringList.Create;
+    try
+      Lines.Text := aText;
+
+      for i := 0 to Lines.Count - 1 do
+        Result := Max(Result, Canvas.TextWidth(Lines[i]));
+    finally
+      Lines.Free;
     end;
-
-    if ExistingRect.Width >= aNewWidth then
-      Exit;
-
-    Target := (aNewWidth - ExistingRect.Width) div 2;
-    Offset := Target - ExistingRect.Left;
-
-    for i := 0 to ControlCount-1 do
-      Controls[i].Left := Controls[i].Left + Offset;
   end;
-var
-  ReqCount: Integer;
-  ReqWidth: Integer;
-const
-  MIN_CENTER_REQ_COUNT = 5;
 begin
-  if (fTalisman <> nil) then
-  begin
-    BorderStyle := bsDialog;
+  if fTalisman = nil then
+    Exit;
 
-    Wipe;
+  BorderStyle := bsDialog;
 
-    ReqCount := AddRequirements(True);
-    ReqWidth := fAdjustedSizing.NormalSpacing * ReqCount - 8;
+  Wipe;
 
-    AddTalisman(Max(ReqWidth, MIN_CENTER_REQ_COUNT * fAdjustedSizing.NormalSpacing - 8));
+  // Determine how many requirement icons will be displayed nd set width accordingly
+  ReqCount := AddRequirementIcons(True);
+  ReqWidth := fAdjustedSizing.NormalSpacing * ReqCount - 8;
 
-    if fMinSize.X > ReqWidth + (fAdjustedSizing.PaddingSize * 2) then
-      fCurrentPos.X := (fMinSize.X - ReqWidth) div 2
-    else
-      RepositionExistingControls(ReqWidth + fAdjustedSizing.PaddingSize * 2);
+  // Add talisman info, accounting for possible increases in width
+  ContentWidth := Max(ReqWidth, GetLongestRequirementLine(Talisman.RequirementText) + 20);
+  AddTalisman;
+  ContentWidth := Max(ContentWidth, (fMinSize.X - fAdjustedSizing.PaddingSize * 2) + 20);
 
-    AddRequirements(False);
+  // Make sure the panel is wide enough for the content
+  fMinSize.X := ContentWidth + fAdjustedSizing.PaddingSize * 2;
 
-    AddClose;
-    ApplySize;
+  // Centre the requirement icons within the content area
+  fCurrentPos.X := fAdjustedSizing.PaddingSize + ((ContentWidth - ReqWidth) div 2);
 
-    Left := (Screen.Width - Width) div 2;
-    Top := TForm(Owner).Top + ((TForm(Owner).Height - Height) div 2);
+  AddRequirementIcons(False);
+  AddClose;
 
-    ShowModal;
-  end;
+  ApplySize;
+
+  Left := (Screen.Width - Width) div 2;
+  Top := TForm(Owner).Top + ((TForm(Owner).Height - Height) div 2);
+
+  ShowModal;
 end;
 
 procedure TLevelInfoPanel.PrepareEmbed(aForceRedraw: Boolean);
@@ -726,7 +695,7 @@ var
   BaseCount: Integer;
   PickupCount: Integer;
 
-  IsTalismanLimit: Boolean;
+  IsTalismanLimit, IsTalismanMinimum: Boolean;
 begin
   Wipe;
 
@@ -811,6 +780,7 @@ begin
       PickupCount := fLevel.GetPickupSkillCount(Skill);
 
       IsTalismanLimit := False;
+      IsTalismanMinimum := False;
 
       if (Talisman <> nil) and (Talisman.SkillLimit[Skill] >= 0) then
       begin
@@ -833,7 +803,28 @@ begin
         end;
       end;
 
-      if not IsTalismanLimit then
+      if (Talisman <> nil) and (Talisman.SkillMinimum[Skill] >= 1) then
+      begin
+        TalCount := Talisman.SkillMinimum[Skill];
+
+        if TalCount < BaseCount then
+        begin
+          IsTalismanMinimum := True;
+          SkillString := IntToStr(TalCount);
+        end else if TalCount < BaseCount + PickupCount then
+        begin
+          IsTalismanMinimum := True;
+          SkillString := IntToStr(TalCount) + ' (' + IntToStr(BaseCount + PickupCount - TalCount) + ')';
+        end;
+
+        if IsTalismanMinimum then
+        begin
+          SkillHintText := SkillName + ' minimum to complete talisman: ' + SkillString;
+          Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+        end;
+      end;
+
+      if not IsTalismanLimit and not IsTalismanMinimum then
       begin
         SkillString := IntToStr(BaseCount);
         SkillHintText := SkillName;

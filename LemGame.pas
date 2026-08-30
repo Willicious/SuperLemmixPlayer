@@ -674,7 +674,7 @@ const
   LEMMING_MAX_Y = 9;
 
 const
-  // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
+  // Order is important, because fTalismans[i].SkillLimit and .SkillMinimum use the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
   ActionListArray: array[0..25] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
@@ -940,6 +940,7 @@ var
     for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     begin
       if (SkillsUsed[i] > aTalisman.SkillLimit[i]) and (aTalisman.SkillLimit[i] >= 0) then Exit;
+      if (SkillsUsed[i] < aTalisman.SkillMinimum[i]) and (aTalisman.SkillMinimum[i] >= 1) then Exit;
       Inc(TotalSkills, SkillsUsed[i]);
       if SkillsUsed[i] > 0 then
         Inc(TotalSkillTypes);
