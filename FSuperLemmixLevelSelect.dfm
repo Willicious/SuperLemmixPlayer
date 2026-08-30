@@ -183,7 +183,7 @@ object FLevelSelect: TFLevelSelect
     ParentFont = False
     ReadOnly = True
     TabOrder = 14
-    OnClick = tvLevelSelectClick
+    OnChange = tvLevelSelectChange
     OnExpanded = tvLevelSelectExpanded
     OnKeyDown = tvLevelSelectKeyDown
     OnKeyUp = tvLevelSelectKeyUp
