@@ -297,6 +297,8 @@ procedure TFLevelSelect.InitializeTreeview;
     N.ImageIndex := GetImageIndexFromCompletionStatus(aLevel.Status);
     N.SelectedIndex := N.ImageIndex;
 
+    aLevel.TreeNode := N; // For search purposes
+
     if GameParams.CurrentLevel = aLevel then
       tvLevelSelect.Selected := N;
   end;
@@ -1520,47 +1522,31 @@ begin
 end;
 
 procedure TFLevelSelect.SearchLevels;
-  procedure CollapseAllNodes(TreeView: TTreeView; Node: TTreeNode);
-  begin
-    while Node <> nil do
-    begin
-      Node.Collapse(False);
-      Node := Node.GetNextSibling;
-    end;
-  end;
-
-  procedure ExpandAllNodes(TreeView: TTreeView; Node: TTreeNode; var Progress: Integer);
-  var
-    ChildNode: TTreeNode;
-  begin
-    while Node <> nil do
-    begin
-      Node.Expand(False);
-
-      // Update progress bar for expansion
-      Inc(Progress);
-      pbSearchProgress.Position := Progress;
-
-      // Keep the UI responsive
-      if (Progress mod 100 = 0) then
-        Application.ProcessMessages;
-
-      if Node.HasChildren then
-      begin
-        ChildNode := Node.GetFirstChild;
-        ExpandAllNodes(TreeView, ChildNode, Progress);
-      end;
-
-      Node := Node.GetNextSibling;
-    end;
-  end;
-
 var
-  SearchText: string;
-  i: Integer;
-  L: TNeoLevelEntry;
-  Node: TTreeNode;
-  Progress: Integer;
+  Progress, LevelCount: Integer;
+  SearchText: String;
+
+  procedure SearchGroup(aGroup: TNeoLevelGroup; const SearchText: String);
+  var
+    i: Integer;
+    L: TNeoLevelEntry;
+  begin
+    for i := 0 to aGroup.Levels.Count - 1 do
+    begin
+      L := aGroup.Levels[i];
+
+      if AnsiContainsText(L.Title, SearchText) then
+        lbSearchResults.Items.AddObject(L.Title, L.TreeNode);
+
+      Inc(Progress);
+
+      if Progress mod 10 = 0 then
+        pbSearchProgress.Position := Progress;
+    end;
+
+    for i := 0 to aGroup.Children.Count - 1 do
+      SearchGroup(aGroup.Children[i], SearchText);
+  end;
 begin
   // Update flag & prevent infinite re-entry
   if SearchingLevels then
@@ -1568,93 +1554,70 @@ begin
 
   SearchingLevels := True;
 
-  // Initialize search results list
-  lbSearchResults.Clear;
-  SearchText := Trim(sbSearchLevels.Text);
-
-  // Ensure valid search
-  if SearchText = '' then
-  begin
-    SearchingLevels := False;
-    Exit;
-  end;
-
-  // Update UI
-  sbSearchLevels.Enabled := False;
-  tvLevelSelect.Visible := False;
-  lblSearchResultsInfo.Visible := False;
-  lbSearchResults.Visible := False;
-  lbSearchResults.Enabled := True;
-  btnCloseSearch.Visible := False;
-
-  // Initialize progress bar and counter
-  pbSearchProgress.Position := 0;
-  pbSearchProgress.Max := tvLevelSelect.Items.Count * 2;
-  pbSearchProgress.Visible := True;
-
-  Progress := 0;
-
-  // Expand all nodes for searchability
-  tvLevelSelect.Items.BeginUpdate;
   try
-    ExpandAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode, Progress); // Start expanding from the root
-  finally
-    tvLevelSelect.Items.EndUpdate;
-  end;
+    Progress := 0;
+    LevelCount := GameParams.BaseLevelPack.LevelCount;
+    SearchText := Trim(sbSearchLevels.Text);
 
-  // Perform search and update progress bar
-  tvLevelSelect.Items.BeginUpdate;
-  try
-    for i := 0 to tvLevelSelect.Items.Count - 1 do
-    begin
-      if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
-      begin
-        L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
+    if (SearchText = '') or (LevelCount = 0) then
+      Exit;
 
-        if AnsiContainsText(L.Title, SearchText) then
-        begin
-          Node := tvLevelSelect.Items[i];
-          lbSearchResults.Items.AddObject(L.Title, Node);
-        end;
-      end;
+    // Initialize search results list
+    lbSearchResults.Clear;
 
-      // Update progress bar during the search
-      Inc(Progress);
-      pbSearchProgress.Position := Progress;
-
-      // Keep the UI responsive
-      if (Progress mod 100 = 0) then
-        Application.ProcessMessages;
-    end;
-  finally
-    tvLevelSelect.Items.EndUpdate;
-  end;
-
-  // Collapse all nodes after search
-  CollapseAllNodes(tvLevelSelect, tvLevelSelect.Items.GetFirstNode);
-
-  // Handle no results found
-  if (lbSearchResults.Items.Count <= 0) then
-  begin
-    lbSearchResults.Items.Add('No results found for "' + SearchText + '"');
+    // Update UI
+    sbSearchLevels.Visible := False;
+    tvLevelSelect.Visible := False;
+    lblSearchResultsInfo.Visible := False;
+    lbSearchResults.Visible := False;
     lbSearchResults.Enabled := False;
+    btnCloseSearch.Visible := False;
+
+    pbSearchProgress.Min := 0;
+    pbSearchProgress.Max := LevelCount;
+    pbSearchProgress.Position := 0;
+    pbSearchProgress.Visible := True;
+
+    lblSearchLevels.Caption := 'Searching ' + IntToStr(LevelCount) +
+      ' levels for "' + SearchText + '"';
+    lblSearchLevels.Repaint;
+
+    // Perform search & update progress bar
+    SearchGroup(GameParams.BaseLevelPack, SearchText);
+
+    // Update UI
+    if lbSearchResults.Items.Count = 0 then
+    begin
+      lbSearchResults.Items.Add('No results found for "' + SearchText + '"');
+      lbSearchResults.Enabled := False;
+    end else
+      lbSearchResults.Enabled := True;
+
+    pbSearchProgress.Position := pbSearchProgress.Max;
+    pbSearchProgress.Visible := False;
+
+    lblSearchLevels.Caption := 'Search Levels:';
+    sbSearchLevels.Visible := True;
+    lblSearchResultsInfo.Visible := True;
+    lbSearchResults.Visible := True;
+    btnCloseSearch.Visible := True;
+  finally
+    SearchingLevels := False;
   end;
-
-  // Update UI
-  pbSearchProgress.Visible := False;
-  sbSearchLevels.Enabled := True;
-  lblSearchResultsInfo.Visible := True;
-  lbSearchResults.Visible := True;
-  btnCloseSearch.Visible := True;
-
-  SearchingLevels := False;
 end;
 
 procedure TFLevelSelect.lbSearchResultsClick(Sender: TObject);
 var
-  TargetNode, CurrentNode, Node: TTreeNode;
-  TreeFlow: array of TTreeNode;
-  Count, i: Integer;
+  TargetNode: TTreeNode;
+
+  procedure ExpandParents(Node: TTreeNode);
+  begin
+    if not Assigned(Node) then
+      Exit;
+
+    ExpandParents(Node.Parent);
+    Node.Expand(False);
+  end;
 begin
   if lbSearchResults.ItemIndex = -1 then
     Exit;
@@ -1665,46 +1628,8 @@ begin
   if not Assigned(TargetNode) then
     Exit;
 
-  SearchingLevels := True; // Prevent unnecessary UI loading
-
-  // Build the treeflow from the target node up to the root
-  Count := 0;
-  CurrentNode := TargetNode;
-  while Assigned(CurrentNode) do
-  begin
-    Inc(Count);
-    SetLength(TreeFlow, Count);
-    TreeFlow[Count - 1] := CurrentNode;
-    CurrentNode := CurrentNode.Parent;
-  end;
-
-  // Reverse the treeflow so that TreeFlow[0] is now the top-most node
-  for i := 0 to (Count div 2) - 1 do
-  begin
-    CurrentNode := TreeFlow[i];
-    TreeFlow[i] := TreeFlow[Count - 1 - i];
-    TreeFlow[Count - 1 - i] := CurrentNode;
-  end;
-
-  // For each node in the treeflow except the last (the target node),
-  // expand it, and then collapse any node not in the treeflow
-  for i := 0 to Count - 2 do
-  begin
-    if not TreeFlow[i].Expanded then
-      TreeFlow[i].Expand(False);
-
-    Node := TreeFlow[i].GetFirstChild;
-    while Assigned(Node) do
-    begin
-      if Node <> TreeFlow[i+1] then
-        Node.Collapse(False);
-      Node := Node.GetNextSibling;
-    end;
-  end;
-
-  SearchingLevels := False; // Let the UI load (labels, preview, etc)
-
-  // Finally, select the chosen level
+  // Find the relevant node for the chosen level and select it
+  ExpandParents(TargetNode.Parent);
   tvLevelSelect.Selected := TargetNode;
 
   CloseSearchResultsPanel;

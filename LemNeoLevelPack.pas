@@ -84,6 +84,8 @@ type
       fCRC32: Cardinal;
       fCalculatedCRC: Boolean;
 
+      fTreeNode: TTreeNode;
+
       procedure LoadLevelFileData(aExtent: TNeoLevelLoadState);
 
       function GetFullPath: String;
@@ -126,7 +128,7 @@ type
       property TalismanStatus[Index: LongWord]: Boolean read GetTalismanStatus write SetTalismanStatus;
       property GroupIndex: Integer read GetGroupIndex;
       property MusicRotationIndex: Integer read GetMusicRotationIndex;
-
+      property TreeNode: TTreeNode read fTreeNode write fTreeNode;
       property CRC32: Cardinal read GetCRC32;
   end;
 
