@@ -63,6 +63,9 @@ type
     property LevelLemmingCount: Integer read fLevelLemmingCount write fLevelLemmingCount;
   end;
 
+const
+  MAX_MINIMUM_SKILL_REQ_VALUE = 10;
+
 implementation
 
 uses
@@ -171,7 +174,8 @@ begin
 
   // Apply single skill minimums (use at least X of skill)
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    fSkillMinimums[i] := aSec.LineNumericDefault[SKILL_NAMES[i] + '_minimum', -1];
+    fSkillMinimums[i] := Min(aSec.LineNumericDefault[SKILL_NAMES[i] + '_minimum', -1],
+                             MAX_MINIMUM_SKILL_REQ_VALUE); // ensure this requirement doesn't exceed 10
 
   // Apply single skill restrictions
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do

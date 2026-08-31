@@ -98,7 +98,6 @@ uses
 const
   COLOR_TALISMAN_RESTRICTION = $0050A0; // BBGGRR, because it's WinForms not GR32
   // Bookmark - TODO - add a different color for skill minimums
-  // Bookmark - TODO - ensure skill minimum cannot be higher than about 10
   COLOR_RECORDS = $00A000;
 
 
