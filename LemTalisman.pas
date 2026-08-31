@@ -22,7 +22,7 @@ type
     fTimeLimit: Integer;
     fTotalSkillLimit: Integer;
     fSkillTypeLimit: Integer;
-    fSkillLimits: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
+    fSkillMaximums: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
     fSkillMinimums: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
     fRequireKillZombies: Boolean;
     fRequireClassicMode: Boolean;
@@ -32,8 +32,8 @@ type
 
     fRequirementText: String;
 
-    function GetSkillLimit(aSkill: TSkillPanelButton): Integer;
-    procedure SetSkillLimit(aSkill: TSkillPanelButton; aCount: Integer);
+    function GetSkillMaximum(aSkill: TSkillPanelButton): Integer;
+    procedure SetSkillMaximum(aSkill: TSkillPanelButton; aCount: Integer);
     function GetSkillMinimum(aSkill: TSkillPanelButton): Integer;
     procedure SetSkillMinimum(aSkill: TSkillPanelButton; aCount: Integer);
   public
@@ -53,7 +53,7 @@ type
     property TimeLimit: Integer read fTimeLimit write fTimeLimit;
     property TotalSkillLimit: Integer read fTotalSkillLimit write fTotalSkillLimit;
     property SkillTypeLimit: Integer read fSkillTypeLimit write fSkillTypeLimit;
-    property SkillLimit[Index: TSkillPanelButton]: Integer read GetSkillLimit write SetSkillLimit;
+    property SkillMaximum[Index: TSkillPanelButton]: Integer read GetSkillMaximum write SetSkillMaximum;
     property SkillMinimum[Index: TSkillPanelButton]: Integer read GetSkillMinimum write SetSkillMinimum;
     property RequireKillZombies: Boolean read fRequireKillZombies write fRequireKillZombies;
     property RequireClassicMode: Boolean read fRequireClassicMode write fRequireClassicMode;
@@ -83,7 +83,7 @@ begin
 
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
-    fSkillLimits[Skill] := aSrc.fSkillLimits[Skill];
+    fSkillMaximums[Skill] := aSrc.fSkillMaximums[Skill];
     fSkillMinimums[Skill] := aSrc.fSkillMinimums[Skill];
   end;
 
@@ -108,7 +108,7 @@ begin
 
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
-    fSkillLimits[i] := -1;
+    fSkillMaximums[i] := -1;
     fSkillMinimums[i] := -1;
   end;
 end;
@@ -118,16 +118,16 @@ begin
   fRequirementText := aValue;
 end;
 
-procedure TTalisman.SetSkillLimit(aSkill: TSkillPanelButton; aCount: Integer);
+procedure TTalisman.SetSkillMaximum(aSkill: TSkillPanelButton; aCount: Integer);
 begin
   if aSkill <= LAST_SKILL_BUTTON then
-    fSkillLimits[aSkill] := aCount;
+    fSkillMaximums[aSkill] := aCount;
 end;
 
-function TTalisman.GetSkillLimit(aSkill: TSkillPanelButton): Integer;
+function TTalisman.GetSkillMaximum(aSkill: TSkillPanelButton): Integer;
 begin
   if aSkill <= LAST_SKILL_BUTTON then
-    Result := fSkillLimits[aSkill]
+    Result := fSkillMaximums[aSkill]
   else
     Result := -1;
 end;
@@ -175,20 +175,22 @@ begin
 
   // Apply single skill restrictions
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    fSkillLimits[i] := aSec.LineNumericDefault[SKILL_NAMES[i] + '_limit', -1];
+    fSkillMaximums[i] := aSec.LineNumericDefault[SKILL_NAMES[i] + '_maximum',
+                         aSec.LineNumericDefault[SKILL_NAMES[i] + '_limit', // backwards-compatibility
+                         -1]];
 
   // Apply skill restrictions to all
   NumEachSkillRestr := aSec.LineNumericDefault['skill_each_limit', -1];
   if (NumEachSkillRestr >= 0) then
     for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      fSkillLimits[i] := NumEachSkillRestr;
+      fSkillMaximums[i] := NumEachSkillRestr;
 
   // Apply use-only-one skill restriction
   S := Lowercase(aSec.LineTrimString['use_only_skill']);
   if S.Length > 1 then
     for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if SKILL_NAMES[i] <> S then
-        fSkillLimits[i] := 0;
+        fSkillMaximums[i] := 0;
 
   if aSec.Line['kill_zombies'] <> nil then
     fRequireKillZombies := True;
@@ -226,7 +228,7 @@ begin
   AddLine('skill_type_limit', fSkillTypeLimit);
 
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    AddLine(SKILL_NAMES[i] + '_limit', fSkillLimits[i]);
+    AddLine(SKILL_NAMES[i] + '_limit', fSkillMaximums[i]);
 
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     AddLine(SKILL_NAMES[i] + '_minimum', fSkillMinimums[i]);

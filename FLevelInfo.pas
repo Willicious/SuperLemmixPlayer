@@ -98,7 +98,6 @@ uses
 const
   COLOR_TALISMAN_RESTRICTION = $0050A0; // BBGGRR, because it's WinForms not GR32
   // Bookmark - TODO - add a different color for skill minimums
-  // Bookmark - TODO - change 'skill limit' to 'skill maximum' for clarity
   // Bookmark - TODO - ensure skill minimum cannot be higher than about 10
   COLOR_RECORDS = $00A000;
 
@@ -605,9 +604,9 @@ var
         BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
         PickupCount := fLevel.GetPickupSkillCount(Skill);
 
-        if (Talisman <> nil) and (Talisman.SkillLimit[Skill] >= 0) then
+        if (Talisman <> nil) and (Talisman.SkillMaximum[Skill] >= 0) then
         begin
-          TalCount := Talisman.SkillLimit[Skill];
+          TalCount := Talisman.SkillMaximum[Skill];
 
           if TalCount < BaseCount + PickupCount then
             LocalAdd(ICON_SKILLS[Skill], TalCount, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
@@ -782,9 +781,9 @@ begin
       IsTalismanLimit := False;
       IsTalismanMinimum := False;
 
-      if (Talisman <> nil) and (Talisman.SkillLimit[Skill] >= 0) then
+      if (Talisman <> nil) and (Talisman.SkillMaximum[Skill] >= 0) then
       begin
-        TalCount := Talisman.SkillLimit[Skill];
+        TalCount := Talisman.SkillMaximum[Skill];
 
         if TalCount < BaseCount then
         begin

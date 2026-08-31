@@ -302,27 +302,27 @@ begin
     if Skill in Info.Skillset then
     begin
       if ((Info.SkillCount[Skill] < 100) and
-          (Info.SkillCount[Skill] + GetPickupSkillCount(Skill) <= aTalisman.SkillLimit[Skill]))
-      or ((aTalisman.TotalSkillLimit >= 0) and (aTalisman.SkillLimit[Skill] >= aTalisman.TotalSkillLimit)) then
-        aTalisman.SkillLimit[Skill] := -1;
+          (Info.SkillCount[Skill] + GetPickupSkillCount(Skill) <= aTalisman.SkillMaximum[Skill]))
+      or ((aTalisman.TotalSkillLimit >= 0) and (aTalisman.SkillMaximum[Skill] >= aTalisman.TotalSkillLimit)) then
+        aTalisman.SkillMaximum[Skill] := -1;
 
       if (Info.SkillCount[Skill] + GetPickupSkillCount(Skill) < aTalisman.SkillMinimum[Skill])
-      or (aTalisman.SkillLimit[Skill] >= 0) and
-         (aTalisman.SkillLimit[Skill] < aTalisman.SkillMinimum[Skill]) then
+      or (aTalisman.SkillMaximum[Skill] >= 0) and
+         (aTalisman.SkillMaximum[Skill] < aTalisman.SkillMinimum[Skill]) then
         aTalisman.SkillMinimum[Skill] := -1;
 
-      if aTalisman.SkillLimit[Skill] <> 0 then
+      if aTalisman.SkillMaximum[Skill] <> 0 then
         EverySkillZero := False;
 
       if Info.SkillCount[Skill] > 99 then
         AtLeastOneSkillInfinite := True;
 
-      if aTalisman.SkillLimit[Skill] < 0 then
+      if aTalisman.SkillMaximum[Skill] < 0 then
         TotalAvailableSkills := TotalAvailableSkills + Info.SkillCount[Skill] + GetPickupSkillCount(Skill)
       else
-        TotalAvailableSkills := TotalAvailableSkills + Min(Info.SkillCount[Skill] + GetPickupSkillCount(Skill), aTalisman.SkillLimit[Skill]);
+        TotalAvailableSkills := TotalAvailableSkills + Min(Info.SkillCount[Skill] + GetPickupSkillCount(Skill), aTalisman.SkillMaximum[Skill]);
     end else begin
-      aTalisman.SkillLimit[Skill] := -1;
+      aTalisman.SkillMaximum[Skill] := -1;
       aTalisman.SkillMinimum[Skill] := -1;
     end;
   end;
@@ -334,7 +334,7 @@ begin
     aTalisman.TotalSkillLimit := 0;
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     begin
-      aTalisman.SkillLimit[Skill] := -1;
+      aTalisman.SkillMaximum[Skill] := -1;
       aTalisman.SkillMinimum[Skill] := -1;
     end;
   end else
@@ -385,24 +385,24 @@ begin
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
     if (aTalisman.SkillMinimum[Skill] > 0) and
-       (aTalisman.SkillLimit[Skill] > 0) then
+       (aTalisman.SkillMaximum[Skill] > 0) then
       AddRequirement(
         'Use at least ' + IntToStr(aTalisman.SkillMinimum[Skill]) +
-        ' but no more than ' + IntToStr(aTalisman.SkillLimit[Skill]) +
+        ' but no more than ' + IntToStr(aTalisman.SkillMaximum[Skill]) +
         ' ' + SKILL_PLURAL_NAMES[Skill])
     else if aTalisman.SkillMinimum[Skill] > 0 then
       AddRequirement(
         'Use at least ' + IntToStr(aTalisman.SkillMinimum[Skill]) +
         ' ' + SKILL_PLURAL_NAMES[Skill])
-    else if aTalisman.SkillLimit[Skill] > 0 then
+    else if aTalisman.SkillMaximum[Skill] > 0 then
       AddRequirement(
-        'Use no more than ' + IntToStr(aTalisman.SkillLimit[Skill]) +
+        'Use no more than ' + IntToStr(aTalisman.SkillMaximum[Skill]) +
         ' ' + SKILL_PLURAL_NAMES[Skill]);
   end;
 
   // Prohibited skills
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    if aTalisman.SkillLimit[Skill] = 0 then
+    if aTalisman.SkillMaximum[Skill] = 0 then
       AddRequirement('Use 0 ' + SKILL_PLURAL_NAMES[Skill]);
 
   // Total skill requirement
