@@ -360,9 +360,38 @@ var
   begin
     ReqText := ReqText + sLineBreak + '• ' + aText;
   end;
+
+  function HasRequirements(Tal: TTalisman): Boolean;
+  var
+    HasSkillRequirements: Boolean;
+    sButton: TSkillPanelButton;
+  begin
+    HasSkillRequirements := False;
+
+    for sButton := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    begin
+      if (Tal.SkillMinimum[sButton] > 0) or (Tal.SkillMaximum[sButton] >= 0) then
+      begin
+        HasSkillRequirements := True;
+        Break;
+      end;
+    end;
+
+    Result := HasSkillRequirements or
+              (Tal.RescueCount > -1) or
+              (Tal.TimeLimit > -1) or
+              (Tal.TotalSkillLimit > -1) or
+              (Tal.SkillTypeLimit > -1) or
+              Tal.RequireKillZombies or
+              Tal.RequireClassicMode or
+              Tal.RequireNoPause;
+  end;
 begin
-  ReqText := 'Complete the level with the following' + sLineBreak +
-             'requirements:' + sLineBreak;
+  ReqText := 'Complete the level';
+
+  if HasRequirements(aTalisman) then
+    ReqText := ReqText + ' with the following' + sLineBreak +
+               'requirements:' + sLineBreak;
 
   // Save requirement
   if aTalisman.RescueCount >= 0 then
@@ -426,7 +455,7 @@ begin
     AddRequirement('Play in Classic Mode');
 
   // Finalize text
-  aTalisman.SetRequirementText(ReqText);
+  aTalisman.SetRequirementText(ReqText + sLineBreak);
 end;
 
 function TLevel.GetHasAnyFallbacks: Boolean;

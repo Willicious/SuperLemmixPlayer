@@ -96,9 +96,8 @@ uses
   GameControl;
 
 const
-  COLOR_TALISMAN_RESTRICTION = $0050A0; // BBGGRR, because it's WinForms not GR32
-  // Bookmark - TODO - add a different color for skill minimums
-  COLOR_RECORDS = $00A000;
+  COLOR_TALISMAN_RESTRICTION = $0055AA; // BBGGRR, because it's WinForms not GR32
+  COLOR_RECORDS = $00AA00;
 
 
 {$R *.dfm}
@@ -561,9 +560,7 @@ var
   var
     Skill: TSkillPanelButton;
 
-    TalCount: Integer;
-    BaseCount: Integer;
-    PickupCount: Integer;
+    TalCount, BaseCount, PickupCount, MaxCount, MinCount: Integer;
 
     procedure LocalAdd(aIcon: Integer; aText: Integer; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
     begin
@@ -603,20 +600,28 @@ var
         BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
         PickupCount := fLevel.GetPickupSkillCount(Skill);
 
-        if (Talisman <> nil) and (Talisman.SkillMaximum[Skill] >= 0) then
+        if (Talisman <> nil) then
         begin
-          TalCount := Talisman.SkillMaximum[Skill];
+          if (Talisman.SkillMaximum[Skill] >= 0) and (Talisman.SkillMinimum[Skill] >= 1) then
+          begin
+            MinCount := Talisman.SkillMinimum[Skill];
+            MaxCount := Talisman.SkillMaximum[Skill];
 
-          if TalCount < BaseCount + PickupCount then
-            LocalAdd(ICON_SKILLS[Skill], TalCount, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
-        end;
+            if (MinCount <= BaseCount + PickupCount) and (MaxCount < BaseCount + PickupCount) then
+              LocalAdd(ICON_SKILLS[Skill], IntToStr(MinCount) + '-' + IntToStr(MaxCount), False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+          end else if (Talisman.SkillMaximum[Skill] >= 0) then
+          begin
+            TalCount := Talisman.SkillMaximum[Skill];
 
-        if (Talisman <> nil) and (Talisman.SkillMinimum[Skill] >= 1) then
-        begin
-          TalCount := Talisman.SkillMinimum[Skill];
+            if TalCount < BaseCount + PickupCount then
+              LocalAdd(ICON_SKILLS[Skill], '0-' + IntToStr(TalCount), False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+          end else if (Talisman.SkillMinimum[Skill] >= 1) then
+          begin
+            TalCount := Talisman.SkillMinimum[Skill];
 
-          if TalCount <= BaseCount + PickupCount then
-            LocalAdd(ICON_SKILLS[Skill], TalCount, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+            if TalCount <= BaseCount + PickupCount then
+              LocalAdd(ICON_SKILLS[Skill], IntToStr(TalCount) + '+', False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+          end;
         end;
       end;
 
@@ -687,13 +692,13 @@ var
   SIHintText: String;
 
   Skill: TSkillPanelButton;
-  SkillString, SkillName, SkillHintText: String;
+  SkillString, SkillName, SkillHintText, MaxString, MinString: String;
 
   TalCount: Integer;
   BaseCount: Integer;
   PickupCount: Integer;
 
-  IsTalismanLimit, IsTalismanMinimum: Boolean;
+  IsValidMax, IsValidMin: Boolean;
 begin
   Wipe;
 
@@ -770,6 +775,7 @@ begin
 
   Reposition(pmNextRowPadLeft);
 
+  // Check skill restrictions
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
     begin
@@ -777,8 +783,8 @@ begin
       BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
       PickupCount := fLevel.GetPickupSkillCount(Skill);
 
-      IsTalismanLimit := False;
-      IsTalismanMinimum := False;
+      IsValidMax := False;
+      IsValidMin := False;
 
       if (Talisman <> nil) and (Talisman.SkillMaximum[Skill] >= 0) then
       begin
@@ -786,18 +792,12 @@ begin
 
         if TalCount < BaseCount then
         begin
-          IsTalismanLimit := True;
-          SkillString := IntToStr(TalCount);
+          IsValidMax := True;
+          MaxString := IntToStr(TalCount);
         end else if TalCount < BaseCount + PickupCount then
         begin
-          IsTalismanLimit := True;
-          SkillString := IntToStr(TalCount) + ' (' + IntToStr(BaseCount + PickupCount - TalCount) + ')';
-        end;
-
-        if IsTalismanLimit then
-        begin
-          SkillHintText := SkillName + ' limit to complete talisman: ' + SkillString;
-          Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+          IsValidMax := True;
+          MaxString := IntToStr(TalCount) + ' (' + IntToStr(BaseCount + PickupCount - TalCount) + ')';
         end;
       end;
 
@@ -805,29 +805,39 @@ begin
       begin
         TalCount := Talisman.SkillMinimum[Skill];
 
-        if TalCount < BaseCount then
+        if TalCount <= BaseCount then
         begin
-          IsTalismanMinimum := True;
-          SkillString := IntToStr(TalCount);
-        end else if TalCount < BaseCount + PickupCount then
+          IsValidMin := True;
+          MinString := IntToStr(TalCount);
+        end else if TalCount <= BaseCount + PickupCount then
         begin
-          IsTalismanMinimum := True;
-          SkillString := IntToStr(TalCount) + ' (' + IntToStr(BaseCount + PickupCount - TalCount) + ')';
-        end;
-
-        if IsTalismanMinimum then
-        begin
-          SkillHintText := SkillName + ' minimum to complete talisman: ' + SkillString;
-          Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+          IsValidMin := True;
+          MinString := IntToStr(TalCount) + ' (' + IntToStr(BaseCount + PickupCount - TalCount) + ')';
         end;
       end;
 
-      if not IsTalismanLimit and not IsTalismanMinimum then
+      // Display talisman restrictions
+      if IsValidMin and IsValidMax then
+      begin
+        SkillString := MinString + '-' + MaxString;
+        SkillHintText := 'Use at least ' + MinString + ' and no more than ' + MaxString + ' ' + SkillName + ' to complete talisman';
+        Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+      end else if IsValidMax then
+      begin
+        SkillString := '0-' + MaxString;
+        SkillHintText := 'Use no more than ' + MaxString + ' ' + SkillName + ' to complete talisman';
+        Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+      end else if IsValidMin then
+      begin
+        SkillString := MinString + '+';
+        SkillHintText := 'Use at least ' + MinString + ' ' + SkillName + ' to complete talisman';
+        Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+      end else
       begin
         SkillString := IntToStr(BaseCount);
         SkillHintText := SkillName;
 
-        if (PickupCount > 0) then
+        if PickupCount > 0 then
           SkillString := SkillString + ' (' + IntToStr(PickupCount) + ')';
 
         Add(ICON_SKILLS[Skill], SkillString, SkillHintText, False, pmMoveHorz);
