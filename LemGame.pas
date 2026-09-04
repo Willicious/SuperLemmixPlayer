@@ -8123,7 +8123,7 @@ var
 begin
   SelectedLemFutureTaskCount := 0;
 
-  if not ReplayInsert or not GameParams.SameLemmingOverwrite then
+  if not ReplayInsert then
     Exit;
 
   L := RenderInterface.SelectedLemming;
@@ -8141,14 +8141,11 @@ var
 begin
   Result := False;
 
-  // Erase future tasks for this lemming if same-lemming-overwrite is enabled
-  if GameParams.SameLemmingOverwrite then
-  begin
-    L := fRenderInterface.SelectedLemming;
+  // Erase future tasks for this lemming
+  L := fRenderInterface.SelectedLemming;
 
-    if (L <> nil) and (SelectedLemFutureTaskCount > 0) then
-      ReplayManager.EraseLemSkillAssignment(L, CurrentIteration, True); // "True" here erases all future assignments for this lemming
-  end;
+  if (L <> nil) and (SelectedLemFutureTaskCount > 0) then
+    ReplayManager.EraseLemSkillAssignment(L, CurrentIteration, True); // "True" here erases all future assignments for this lemming
 
   // Prevent overwriting assignments in ReplayInsert Mode
   if not (ReplayInsert and ReplayManager.HasAssignmentAt(CurrentIteration)) then

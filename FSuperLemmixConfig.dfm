@@ -61,7 +61,6 @@ object FormNXConfig: TFormNXConfig
     ActivePage = tsGameplay
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
-    ExplicitHeight = 500
     object tsGeneral: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -362,15 +361,6 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Auto-Replay After Backwards Frameskip'
           TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbSameLemmingOverwrite: TCheckBox
-          Left = 12
-          Top = 63
-          Width = 275
-          Height = 17
-          Caption = 'Allow Same-Lemming-Overwrite in Replay Insert'
-          TabOrder = 2
           OnClick = OptionChanged
         end
         object rgDefaultReplayMode: TRadioGroup
