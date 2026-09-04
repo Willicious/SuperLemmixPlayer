@@ -9079,7 +9079,8 @@ end;
 procedure TLemmingGame.RegainControl(Force: Boolean = False);
 begin
   // Keep replay active in Replay Insert mode
-  if ReplayInsert and not Force then Exit;
+  if ReplayInsert and not GameParams.ClickAirToCutInsert and not Force then
+    Exit;
 
   // No need to cut replay if we're past the last replay action
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;

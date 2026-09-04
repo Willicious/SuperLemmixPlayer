@@ -93,6 +93,7 @@ type
     //moCheckUpdates,
     moAutoReplaySave,
     moLoadNextUnsolvedLevel,
+    moClickAirToCutInsert,
     moReplayAfterBackskip,
     moReplayAfterRestart,
     moPauseAfterBackwards,
@@ -285,9 +286,10 @@ type
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
     //property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
-    property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
-    property ReplayAfterBackskip: boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;
     property LoadNextUnsolvedLevel: boolean Index moLoadNextUnsolvedLevel read GetOptionFlag write SetOptionFlag;
+    property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
+    property ClickAirToCutInsert: Boolean Index moClickAirToCutInsert read GetOptionFlag write SetOptionFlag;
+    property ReplayAfterBackskip: boolean Index moReplayAfterBackskip read GetOptionFlag write SetOptionFlag;
     property ReplayAfterRestart: boolean Index moReplayAfterRestart read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
@@ -527,6 +529,7 @@ begin
     else if (DefaultReplayMode = rmInsert) then
       SaveString('DefaultReplayMode', 'Insert');
 
+    SaveBoolean('ClickAirToCutInsert', ClickAirToCutInsert);
     SaveBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     SaveBoolean('ReplayAfterRestart', ReplayAfterRestart);
     SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
@@ -730,6 +733,7 @@ begin
 
     LoadDefaultReplayMode;
 
+    ClickAirToCutInsert := LoadBoolean('ClickAirToCutInsert', ClickAirToCutInsert);
     ReplayAfterBackskip := LoadBoolean('ReplayAfterBackskip', ReplayAfterBackskip);
     LoadNextUnsolvedLevel := LoadBoolean('LoadNextUnsolvedLevel', LoadNextUnsolvedLevel);
     ReplayAfterRestart := LoadBoolean('ReplayAfterRestart', ReplayAfterRestart);
