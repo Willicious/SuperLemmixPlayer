@@ -11,7 +11,7 @@ uses
 const
   MAJOR_VERSION = 3;
   MINOR_VERSION = 0;
-  HOTFIX_VERSION = 2;
+  HOTFIX_VERSION = 3;
   RC_VERSION = 0;
 
   function COMMIT_ID: String;
