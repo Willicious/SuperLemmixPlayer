@@ -60,6 +60,7 @@ type
   TGameScreenType = (
     gstUnknown,
     gstMenu,
+    gstLevelSelect,
     gstPreview,
     gstPlay,
     gstPostview,

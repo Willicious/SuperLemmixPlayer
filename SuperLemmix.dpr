@@ -73,7 +73,8 @@ uses
   FLevelListDialog in 'FLevelListDialog.pas',
   FPlaybackMode in 'FPlaybackMode.pas' {TFPlaybackMode},
   FStyleUpdater in 'FStyleUpdater.pas' {FormStyleUpdater},
-  SLXManifest in 'SLXManifest.pas';
+  SLXManifest in 'SLXManifest.pas',
+  GameLevelSelectScreen in 'GameLevelSelectScreen.pas';
 
 {$R *.res}
 

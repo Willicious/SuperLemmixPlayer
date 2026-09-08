@@ -42,6 +42,7 @@ type
     destructor Destroy; override;
 
     procedure ShowMenuScreen;
+    procedure ShowLevelSelectScreen;
     procedure ShowPreviewScreen;
     procedure ShowPlayScreen;
     procedure ShowPostviewScreen;
@@ -61,6 +62,7 @@ implementation
 uses
   FMain,
   GameMenuScreen,
+  GameLevelSelectScreen,
   GamePreviewScreen,
   GamePostviewScreen,
   GameWindow,
@@ -266,6 +268,7 @@ begin
 
   case NewScreen of
     gstMenu      : ShowMenuScreen;
+    gstLevelSelect: ShowLevelSelectScreen;
     gstPreview   : ShowPreviewScreen;
     gstPlay      : ShowPlayScreen;
     gstPostview  : ShowPostviewScreen;
@@ -278,6 +281,12 @@ end;
 procedure TAppController.ShowMenuScreen;
 begin
   fActiveForm := TGameMenuScreen.Create(nil);
+  fActiveForm.ShowScreen;
+end;
+
+procedure TAppController.ShowLevelSelectScreen;
+begin
+  fActiveForm := TGameLevelSelectScreen.Create(nil);
   fActiveForm.ShowScreen;
 end;
 

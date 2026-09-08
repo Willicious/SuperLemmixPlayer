@@ -205,6 +205,8 @@ type
       function GetTalismans: TObjectList<TTalisman>;
       function GetTotalTalismansUnlockedCount: Integer;
       function GetTotalLevelsCompletedCount: Integer;
+      function GetTotalCollectibles: Integer;
+      //function GetTotalCollectiblesObtained: Integer; // TODO: Implement this
 
       function GetParentBasePack: TNeoLevelGroup;
     public
@@ -245,6 +247,8 @@ type
 
       property Talismans: TObjectList<TTalisman> read GetTalismans;
       property TalismansUnlocked: Integer read GetTotalTalismansUnlockedCount;
+      property TotalCollectibles: Integer read GetTotalCollectibles;
+      //property CollectiblesObtained: Integer read GetTotalCollectiblesObtained; TODO: Implement this
       property LevelsCompleted: Integer read GetTotalLevelsCompletedCount;
 
       property LevelIndex[aLevel: TNeoLevelEntry]: Integer read GetLevelIndex;
@@ -1813,6 +1817,14 @@ begin
     Result := Result + Children[i].TalismansUnlocked;
   for i := 0 to Levels.Count-1 do
     Result := Result + Levels[i].UnlockedTalismanList.Count;
+end;
+
+function TNeoLevelGroup.GetTotalCollectibles: Integer;
+var
+  i: Integer;
+begin
+  // TODO: implement a way to grab the total number of collectibles
+  Exit;
 end;
 
 function TNeoLevelGroup.GetTotalLevelsCompletedCount: Integer;

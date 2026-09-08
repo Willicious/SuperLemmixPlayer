@@ -116,6 +116,7 @@ type
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
 
       procedure DoLevelSelect;
+      procedure DoLevelSelectModal;
       procedure SaveReplay;
       procedure CancelPlaybackMode;
 
@@ -1161,6 +1162,12 @@ begin
 end;
 
 procedure TGameBaseMenuScreen.DoLevelSelect;
+begin
+  CloseScreen(gstLevelSelect); // Future level pack selection screen - WIP
+  //DoLevelSelectModal; // Current level select modal - TODO - eventually, this will be removed
+end;
+
+procedure TGameBaseMenuScreen.DoLevelSelectModal;
 var
   F: TFLevelSelect;
   OldLevel: TNeoLevelEntry;
