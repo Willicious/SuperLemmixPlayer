@@ -7997,7 +7997,7 @@ begin
         ApplySpear(P);
         CueSoundEffect(SFX_SpearHit);
         ProjectileList.Delete(i);
-      end else //if P.IsGrenade then // Bookmark - Grenaders and OWWs...?
+      end else //if P.IsGrenade then // TODO - Grenaders and OWWs...?
       begin
 //        OWWDetected := ((P.DX < 0) and HasTriggerAt(P.X - 1, P.Y, trOWRight))
 //                    or ((P.DX > 0) and HasTriggerAt(P.X + 1, P.Y, trOWLeft));

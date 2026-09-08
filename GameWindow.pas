@@ -715,7 +715,7 @@ begin
   // Rewind mode
   if Rewind then
   begin
-      // BOOKMARK - Test new overshoot prevention for a while, then remove this if it proves to be more reliabe
+      // TODO - Test new overshoot prevention for a while, then remove this if it proves to be more reliabe
 //    // Ensures that rendering has caught up before the next backwards skip is performed
 //    if IsHyperSpeed then
 //      RewindTimer.Enabled := False
@@ -853,7 +853,7 @@ begin
   // Update drawing
   DoDraw;
 
-  // BOOKMARK - New overshoot prevention
+  // TODO - New overshoot prevention
   // Ensure this frame has been rendered (prevents overshooting when backstepping)
   Game.LastDisplayedIteration := Game.CurrentIteration;
 
