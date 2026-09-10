@@ -47,7 +47,7 @@ type
     private
       fLemming: TLemming;
       fDrawAsSelected: Boolean;
-      fPhysicsView: Boolean;
+      fApplyPhysicsViewColors: Boolean;
       fSwaps: TColorSwapArray;
 
       procedure SwapColors(F: TColor32; var B: TColor32);
@@ -64,7 +64,7 @@ type
 
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
-      property PhysicsView: Boolean write fPhysicsView;
+      property ApplyPhysicsViewColors: Boolean read fApplyPhysicsViewColors write fApplyPhysicsViewColors;
 
       class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: Cardinal);
   end;
@@ -78,7 +78,6 @@ constructor TRecolorImage.Create;
 begin
   inherited;
 
-  // Until proper loading exists
   LoadSwaps(SFDefaultStyle);
   LoadPhysicsViewShades;
 end;
@@ -92,7 +91,7 @@ begin
   if fLemming = nil then Exit;
   if (F and $FF000000) = 0 then Exit;
 
-  if fPhysicsView then
+  if ApplyPhysicsViewColors then
   begin
     if fLemming.HasPermanentSkills then
     begin

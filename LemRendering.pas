@@ -463,7 +463,7 @@ begin
 
   Recolorer.Lemming := aLemming;
   Recolorer.DrawAsSelected := Selected or Highlit;
-  Recolorer.PhysicsView := fIsPhysicsView;
+  Recolorer.ApplyPhysicsViewColors := fIsPhysicsView;
 
   // Get the animation and meta-animation
   if aLemming.LemDX > 0 then
