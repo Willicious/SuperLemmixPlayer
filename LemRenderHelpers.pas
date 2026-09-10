@@ -143,6 +143,7 @@ type
 
   TRenderInterface = class // Used for communication between GameWindow, LemGame and LemRendering.
     private
+      fPhysicsView: Boolean;
       fDisableDrawing: Boolean;
       fLemmingList: TLemmingList;
       fProjectileList: TProjectileList;
@@ -189,6 +190,8 @@ type
       procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
       function SimulateLem(L: TLemming): TArrayArrayInt;
       function IsStartingSeconds: Boolean;
+
+      property PhysicsView: Boolean read fPhysicsView write fPhysicsView;
       property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ProjectileList: TProjectileList read fProjectileList write fProjectileList;

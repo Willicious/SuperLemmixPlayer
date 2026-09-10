@@ -41,7 +41,7 @@ type
   private
     fGadgets            : TGadgetList;
     fDrawingHelpers     : Boolean;
-    fRendererPhysicsView: Boolean;
+    fRenderPhysicsView  : Boolean;
 
     fRenderInterface    : TRenderInterface;
 
@@ -115,7 +115,7 @@ type
     procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawExitMarkers(Gadget: TGadget; aMarker: TBitmap32);
     procedure DrawUserHelper;
-    function IsNeededForPhysicsView(Gadget: TGadget): Boolean;
+    function ShouldRenderGadget(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
     procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
@@ -131,8 +131,8 @@ type
 
     procedure SetInterface(aInterface: TRenderInterface);
 
-    procedure DrawLevel(aDst: TBitmap32; IsPhysicsView: Boolean = False); overload;
-    procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; IsPhysicsView: Boolean = False); overload;
+    procedure DrawLevel(aDst: TBitmap32); overload;
+    procedure DrawLevel(aDst: TBitmap32; aRegion: TRect); overload;
 
     procedure LoadHelperImages;
 
@@ -150,15 +150,15 @@ type
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; HighRes: Boolean); overload;
 
     // Object rendering
-    procedure DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; IsPhysicsView: Boolean = False);
+    procedure DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True);
     procedure DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
     procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
-    procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsPhysicsView: Boolean = True);
+    procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
 
     // Lemming rendering
-    procedure DrawLemmings(IsPhysicsView: Boolean = False);
+    procedure DrawLemmings;
     procedure DrawLemmingLaser(aLemming: TLemming);
-    procedure DrawThisLemming(aLemming: TLemming; IsPhysicsView: Boolean = False);
+    procedure DrawThisLemming(aLemming: TLemming);
     procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
     procedure DrawFreezingOverlay(L: TLemming);
@@ -210,7 +210,7 @@ type
     property ParticleLayer: TBitmap32 read GetParticleLayer; // Needs to be replaced with making TRenderer draw them
 
     property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
-    property RendererPhysicsView: Boolean read fRendererPhysicsView write fRendererPhysicsView;
+    property RenderPhysicsView: Boolean read fRenderPhysicsView write fRenderPhysicsView;
   end;
 
 var
@@ -300,7 +300,7 @@ end;
 
 // Lemming Drawing
 
-procedure TRenderer.DrawLemmings(IsPhysicsView: Boolean = False);
+procedure TRenderer.DrawLemmings;
 var
   i: Integer;
   SelectedLemming, HighlitLemming: TLemming;
@@ -390,10 +390,10 @@ begin
   end;
 
   for i := 0 to LemmingList.Count-1 do
-    DrawThisLemming(LemmingList[i], IsPhysicsView);
+    DrawThisLemming(LemmingList[i]);
 end;
 
-procedure TRenderer.DrawThisLemming(aLemming: TLemming; IsPhysicsView: Boolean = False);
+procedure TRenderer.DrawThisLemming(aLemming: TLemming);
 var
   SrcRect, DstRect: TRect;
   SrcAnim: TBitmap32;
@@ -455,16 +455,16 @@ begin
   begin
     Selected := aLemming = fRenderInterface.SelectedLemming;
     Highlit := aLemming = fRenderInterface.HighlitLemming;
+    RenderPhysicsView := fRenderInterface.PhysicsView;
   end else begin
     Selected := False;
     Highlit := False;
+    RenderPhysicsView := False;
   end;
-
-  RendererPhysicsView := IsPhysicsView and Selected;
 
   Recolorer.Lemming := aLemming;
   Recolorer.DrawAsSelected := Selected or Highlit;
-  Recolorer.ApplyPhysicsViewColors := RendererPhysicsView;
+  Recolorer.ApplyPhysicsViewColors := RenderPhysicsView;
 
   // Get the animation and meta-animation
   if aLemming.LemDX > 0 then
@@ -553,13 +553,13 @@ begin
   end;
 
   // Helper for selected lemming
-  if (Selected and aLemming.CannotReceiveSkills) or IsPhysicsView
+  if (Selected and aLemming.CannotReceiveSkills) or RenderPhysicsView
     or ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds
       and not GameParams.HideHelpers) then
   begin
     if not GameParams.ClassicMode then
     begin
-      DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, IsPhysicsView);
+      DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
       fLayers.fIsEmpty[rlObjectHelpers] := False;
     end;
   end;
@@ -955,7 +955,7 @@ begin
   Result := fAni.Recolorer;
 end;
 
-procedure TRenderer.DrawLevel(aDst: TBitmap32; IsPhysicsView: Boolean = False);
+procedure TRenderer.DrawLevel(aDst: TBitmap32);
 var
   aRegionRect: TRect;
 begin
@@ -964,17 +964,17 @@ begin
   aRegionRect := Rect(aRegionRect.Left * ResMod, aRegionRect.Top * ResMod,
                       aRegionRect.Right * ResMod, aRegionRect.Bottom * ResMod);
 
-  DrawLevel(aDst, aRegionRect, IsPhysicsView);
+  DrawLevel(aDst, aRegionRect);
 end;
 
-procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect; IsPhysicsView: Boolean = False);
+procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect);
 begin
   fLayers.PhysicsMap := fPhysicsMap; // Can we assign this just once somewhere? very likely.
   if PtInRect(fPhysicsMap.BoundsRect, fRenderInterface.MousePos) then
     fLayers.OneWayHighlightBit := fPhysicsMap[fRenderInterface.MousePos.X, fRenderInterface.MousePos.Y] and PM_ONEWAYFLAGS
   else
     fLayers.OneWayHighlightBit := 0;
-  fLayers.CombineTo(aDst, aRegion, IsPhysicsView);
+  fLayers.CombineTo(aDst, aRegion, RenderPhysicsView);
 end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
@@ -1026,7 +1026,7 @@ begin
   CopyL := TLemming.Create;
   CopyL.Assign(L);
 
-  if (not GameParams.HideShadows) or RendererPhysicsView then
+  if (not GameParams.HideShadows) or RenderPhysicsView then
   begin
     case SkillButton of
     spbJumper:
@@ -2433,7 +2433,7 @@ procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean
 begin
   Bmp.DrawMode := dmCustom;
 
-  if RendererPhysicsView then
+  if RenderPhysicsView then
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
@@ -2588,7 +2588,7 @@ begin
           DrawY := LowY - WindowOffset;
 
         // Account for lemming cap / physics view hatch digits
-        if RendererPhysicsView or Gadget.ShowRemainingLemmings then
+        if RenderPhysicsView or Gadget.ShowRemainingLemmings then
         begin
           if DoDrawBelow then
           begin
@@ -2890,7 +2890,7 @@ begin
     end;
 end;
 
-procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsPhysicsView: Boolean = True);
+procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
 var
   numHelpers, indexHelper: Integer;
   DrawX, DrawY, DirDrawY: Integer;
@@ -2912,7 +2912,7 @@ begin
     DrawX := (L.LemX - numHelpers * 5) * ResMod;
     DrawY := 0;
 
-    if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_PV) and IsPhysicsView) then
+    if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_PV) and RenderPhysicsView) then
     begin
       DrawY := (L.LemY + 1) * ResMod;
       if numHelpers > 0 then
@@ -2936,7 +2936,7 @@ begin
     end;
 
     // Draw actual helper icons
-    if isPhysicsView then
+    if RenderPhysicsView then
     begin
       if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY)
       else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY);
@@ -3133,7 +3133,7 @@ var
 
     LemCap := Gadget.RemainingLemmingsCount;
 
-    if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or RendererPhysicsView) then
+    if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or RenderPhysicsView) then
       DrawNumber(XPos, YPos, LemCap, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
@@ -3199,10 +3199,10 @@ begin
   fLayers.fIsEmpty[rlObjectHelpers] := False;
 end;
 
-function TRenderer.IsNeededForPhysicsView(Gadget: TGadget): Boolean;
+function TRenderer.ShouldRenderGadget(Gadget: TGadget): Boolean;
 begin
   Result := True;
-  if not RendererPhysicsView then Exit;
+  if not RenderPhysicsView then Exit;
 
   if Gadget.TriggerEffect in [DOM_NONE, DOM_DECORATION] then
     Result := False;
@@ -3268,7 +3268,7 @@ var
   begin
     Gadget := fGadgets[aIndex];
     if (Gadget.TriggerEffectBase in [DOM_ANIMATION, DOM_ANIMONCE, DOM_DECORATION]) and not GameParams.ShowDecorations then Exit;
-    if not (IsValidForLayer(Gadget) and IsNeededForPhysicsView(Gadget)) then Exit;
+    if not (IsValidForLayer(Gadget) and ShouldRenderGadget(Gadget)) then Exit;
 
     if (aLayer = rlDecorations) and (Gadget.CanDrawToBackground) then
       ProcessDrawFrame(Gadget, fLayers[rlBackground])
@@ -3288,7 +3288,7 @@ begin
     if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
 
     // Special conditions
-    if (aLayer = rlDecorations) and (RendererPhysicsView or fDisableBackground) then Exit;
+    if (aLayer = rlDecorations) and (RenderPhysicsView or fDisableBackground) then Exit;
     if (aLayer = rlGadgetsLow) then
       for i := fGadgets.Count-1 downto 0 do
         HandleGadget(i)
@@ -3301,7 +3301,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; IsPhysicsView: Boolean = False);
+procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True);
   function IsCursorOnGadget(Gadget: TGadget): Boolean;
   begin
     // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
@@ -3317,9 +3317,13 @@ var
 begin
   fGadgets := Gadgets;
   fDrawingHelpers := DrawHelper;
-  RendererPhysicsView := IsPhysicsView;
 
-  if RendererPhysicsView then
+  if fRenderInterface <> nil then
+    RenderPhysicsView := fRenderInterface.PhysicsView
+  else
+    RenderPhysicsView := False;
+
+  if RenderPhysicsView then
     fFixedDrawColor := ResolveColor(GadgetShapeColor);
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
@@ -3356,10 +3360,10 @@ begin
     if (Gadget.TriggerEffect = DOM_WINDOW) then
     begin
       DrawPreassignedHelper := Gadget.HasPreassignedSkills and
-                              (not GameParams.HideHelpers or IsPhysicsView);
+                              (not GameParams.HideHelpers or RenderPhysicsView);
 
       DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
-                              (DrawHelper and IsPhysicsView and IsCursorOnGadget(Gadget));
+                              (DrawHelper and RenderPhysicsView and IsCursorOnGadget(Gadget));
 
       fLayers.fIsEmpty[rlObjectHelpers] := False;
 
@@ -3372,7 +3376,7 @@ begin
           DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       end;
 
-      if RendererPhysicsView then
+      if RenderPhysicsView then
       begin
         HatchPoint := Gadget.TriggerRect.TopLeft;
 
@@ -3418,7 +3422,7 @@ begin
   end;
 
   // Draw object helpers
-  if DrawHelper and IsPhysicsView then
+  if DrawHelper and RenderPhysicsView then
   begin
     if GameParams.ClassicMode then Exit;
 
@@ -3426,7 +3430,7 @@ begin
     begin
       Gadget := Gadgets[i];
 
-      if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) or (not IsNeededForPhysicsView(Gadget)) then
+      if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) or (not ShouldRenderGadget(Gadget)) then
         Continue;
 
       // Otherwise, draw its helper

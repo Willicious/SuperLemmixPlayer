@@ -65,7 +65,6 @@ type
     fSaveStateReplayStream: TMemoryStream;
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
-    fGameWindowPhysicsView: Boolean;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedResetMouseTrap : Boolean;
@@ -205,7 +204,7 @@ type
     procedure SetCurrentCursor(aCursor: Integer = 0); // 0 = autodetect correct graphic
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
-    property GameWindowPhysicsView: Boolean read fGameWindowPhysicsView write SetPhysicsView;
+    property PhysicsViewActive: Boolean read GetPhysicsView write SetPhysicsView;
     //property InternalZoom: Integer read fInternalZoom;
     function DoSuspendCursor: Boolean;
     function ShouldDisplayHQMinimap: Boolean;
@@ -513,15 +512,16 @@ end;
 
 procedure TGameWindow.SetPhysicsView(aValue: Boolean);
 begin
-  if fGameWindowPhysicsView <> aValue then
+  if fRenderInterface.PhysicsView <> aValue then
     SetRedraw(rdRedraw);
-  fGameWindowPhysicsView := aValue;
+
+  fRenderInterface.PhysicsView := aValue;
   SkillPanel.DrawButtonSelector(spbSquiggle, aValue);
 end;
 
 function TGameWindow.GetPhysicsView: Boolean;
 begin
-  Result := fGameWindowPhysicsView;
+  Result := fRenderInterface.PhysicsView;
 end;
 
 function TGameWindow.ShouldDisplayHQMinimap: Boolean;
@@ -1099,7 +1099,7 @@ begin
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
   or (fRenderInterface.UserHelper = hpi_FallDist)
-  or (GameWindowPhysicsView)
+  or (PhysicsViewActive)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     SetRedraw(rdRedraw);
 
@@ -1117,8 +1117,8 @@ begin
     try
       fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
       fRenderInterface.MousePos := Game.CursorPoint;
-      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, GameWindowPhysicsView);
-      fRenderer.DrawLemmings(GameWindowPhysicsView);
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True);
+      fRenderer.DrawLemmings;
       fRenderer.DrawProjectiles;
 
       if ShouldDisplayHQMinimap or (GameSpeed = gspPause) then
@@ -1129,7 +1129,7 @@ begin
         DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
       end;
 
-      fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, GameWindowPhysicsView);
+      fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect);
 
       if GameParams.ShowMinimap then
         RenderMinimap;
@@ -1876,9 +1876,9 @@ begin
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
       lka_PhysicsView: if not GameParams.ClassicMode then
               if func.Modifier = 0 then
-                GameWindowPhysicsView := not GameWindowPhysicsView
+                PhysicsViewActive := not PhysicsViewActive
               else
-                GameWindowPhysicsView := True;
+                PhysicsViewActive := True;
       lka_ShowUsedSkills: if func.Modifier = 0 then
                             SkillPanel.ShowUsedSkills := not SkillPanel.ShowUsedSkills
                           else
@@ -1985,7 +1985,7 @@ begin
       lka_ReleaseRateDown    : SetSelectedSkill(spbSlower, False);
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
       lka_PhysicsView       : if func.Modifier <> 0 then
-                                 GameWindowPhysicsView := False;
+                                 PhysicsViewActive := False;
       lka_ShowUsedSkills     : if func.Modifier <> 0 then
                                  SkillPanel.ShowUsedSkills := False;
     end;
@@ -2474,10 +2474,10 @@ begin
       BMP := TBitmap32.Create;
       BMP.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
 
-      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, GameWindowPhysicsView);
-      fRenderer.DrawLemmings(GameWindowPhysicsView);
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True);
+      fRenderer.DrawLemmings;
       fRenderer.DrawProjectiles;
-      fRenderer.DrawLevel(BMP, GameWindowPhysicsView);
+      fRenderer.DrawLevel(BMP);
 
       TPngInterface.SavePngFile(SaveName, BMP, True);
 
