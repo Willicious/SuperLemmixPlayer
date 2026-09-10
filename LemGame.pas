@@ -9178,6 +9178,7 @@ procedure TLemmingGame.Finish(aReason: Integer);
 begin
   SetGameResult;
   fGameFinished := True;
+  fRenderInterface.PhysicsView := False;
   MessageQueue.Add(GAMEMSG_FINISH, aReason);
 end;
 

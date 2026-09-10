@@ -303,6 +303,7 @@ begin
   fDrawRoutineFreezer := nil;
   fUserHelperIcon := hpi_None;
   fSelectedLemmingID := -1;
+  fPhysicsView := False;
 end;
 
 procedure TRenderInterface.SetDrawRoutineSpear(aRoutine: TProjectileRoutine);
