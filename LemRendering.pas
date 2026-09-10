@@ -41,7 +41,7 @@ type
   private
     fGadgets            : TGadgetList;
     fDrawingHelpers     : Boolean;
-    fIsPhysicsView      : Boolean;
+    fRendererPhysicsView: Boolean;
 
     fRenderInterface    : TRenderInterface;
 
@@ -210,6 +210,7 @@ type
     property ParticleLayer: TBitmap32 read GetParticleLayer; // Needs to be replaced with making TRenderer draw them
 
     property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
+    property RendererPhysicsView: Boolean read fRendererPhysicsView write fRendererPhysicsView;
   end;
 
 var
@@ -459,11 +460,11 @@ begin
     Highlit := False;
   end;
 
-  fIsPhysicsView := IsPhysicsView and Selected;
+  RendererPhysicsView := IsPhysicsView and Selected;
 
   Recolorer.Lemming := aLemming;
   Recolorer.DrawAsSelected := Selected or Highlit;
-  Recolorer.ApplyPhysicsViewColors := fIsPhysicsView;
+  Recolorer.ApplyPhysicsViewColors := RendererPhysicsView;
 
   // Get the animation and meta-animation
   if aLemming.LemDX > 0 then
@@ -1025,7 +1026,7 @@ begin
   CopyL := TLemming.Create;
   CopyL.Assign(L);
 
-  if (not GameParams.HideShadows) or fIsPhysicsView then
+  if (not GameParams.HideShadows) or RendererPhysicsView then
   begin
     case SkillButton of
     spbJumper:
@@ -2432,7 +2433,7 @@ procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean
 begin
   Bmp.DrawMode := dmCustom;
 
-  if fIsPhysicsView then
+  if RendererPhysicsView then
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
@@ -2587,7 +2588,7 @@ begin
           DrawY := LowY - WindowOffset;
 
         // Account for lemming cap / physics view hatch digits
-        if fIsPhysicsView or Gadget.ShowRemainingLemmings then
+        if RendererPhysicsView or Gadget.ShowRemainingLemmings then
         begin
           if DoDrawBelow then
           begin
@@ -3132,7 +3133,7 @@ var
 
     LemCap := Gadget.RemainingLemmingsCount;
 
-    if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or fIsPhysicsView) then
+    if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or RendererPhysicsView) then
       DrawNumber(XPos, YPos, LemCap, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
@@ -3201,7 +3202,7 @@ end;
 function TRenderer.IsNeededForPhysicsView(Gadget: TGadget): Boolean;
 begin
   Result := True;
-  if not fIsPhysicsView then Exit;
+  if not RendererPhysicsView then Exit;
 
   if Gadget.TriggerEffect in [DOM_NONE, DOM_DECORATION] then
     Result := False;
@@ -3287,7 +3288,7 @@ begin
     if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
 
     // Special conditions
-    if (aLayer = rlDecorations) and (fIsPhysicsView or fDisableBackground) then Exit;
+    if (aLayer = rlDecorations) and (RendererPhysicsView or fDisableBackground) then Exit;
     if (aLayer = rlGadgetsLow) then
       for i := fGadgets.Count-1 downto 0 do
         HandleGadget(i)
@@ -3316,9 +3317,9 @@ var
 begin
   fGadgets := Gadgets;
   fDrawingHelpers := DrawHelper;
-  fIsPhysicsView := IsPhysicsView;
+  RendererPhysicsView := IsPhysicsView;
 
-  if fIsPhysicsView then
+  if RendererPhysicsView then
     fFixedDrawColor := ResolveColor(GadgetShapeColor);
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
@@ -3371,7 +3372,7 @@ begin
           DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       end;
 
-      if fIsPhysicsView then
+      if RendererPhysicsView then
       begin
         HatchPoint := Gadget.TriggerRect.TopLeft;
 

@@ -1859,7 +1859,7 @@ begin
     spbSquiggle:
       begin
         if not GameParams.ClassicMode then
-        fGameWindow.PhysicsView := not fGameWindow.PhysicsView;
+        fGameWindow.GameWindowPhysicsView := not fGameWindow.GameWindowPhysicsView;
       end;
     spbNone: {nothing};
   else // Usual skill buttons

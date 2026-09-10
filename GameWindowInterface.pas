@@ -46,7 +46,7 @@ type
 
     procedure SetPhysicsView(aValue: Boolean);
     function GetPhysicsView: Boolean;
-    property PhysicsView: Boolean read GetPhysicsView write SetPhysicsView;
+    property GameWindowPhysicsView: Boolean read GetPhysicsView write SetPhysicsView;
   end;
 
 implementation
