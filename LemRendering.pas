@@ -3309,6 +3309,80 @@ procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = T
                       fRenderInterface.MousePos)
   end;
 
+  procedure DrawFallDistanceHelper(DrawX, DrawY: Integer);
+  var
+    i: Integer;
+    Color: TColor32;
+  begin
+    Color := $FF008800; // Green
+    if GameParams.HighResolution then
+    begin
+      DrawX := DrawX * 2;
+      DrawY := DrawY * 2;
+
+      for i := 0 to 121 do
+      begin
+        fLayers[rlObjectHelpers].PixelS[DrawX - 2, DrawY + i] := Color;
+        fLayers[rlObjectHelpers].PixelS[DrawX - 1, DrawY + i] := Color;
+        fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY + i] := Color;
+        fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY + i] := Color;
+        fLayers[rlObjectHelpers].PixelS[DrawX + 2, DrawY + i] := Color;
+        fLayers[rlObjectHelpers].PixelS[DrawX + 3, DrawY + i] := Color;
+      end;
+    end else begin
+      for i := 0 to 60 do
+      begin
+        fLayers[rlObjectHelpers].PixelS[DrawX - 1, DrawY + i] := Color;
+        fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY + i] := Color;
+        fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY + i] := Color;
+      end;
+    end;
+  end;
+
+  procedure DrawSpawnPoint(DrawX, DrawY: Integer);
+  var
+    ColorA, ColorB: TColor32;
+  begin
+    ColorA := $FFFFD700; // Yellow
+    ColorB := $FFFF4500; // Red
+    if GameParams.HighResolution then
+    begin
+      DrawX := DrawX * 2;
+      DrawY := DrawY * 2;
+
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY    ] := ColorA;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY    ] := ColorA;
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY + 1] := ColorA;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY + 1] := ColorA;
+
+      fLayers[rlObjectHelpers].PixelS[DrawX - 2, DrawY    ] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX - 1, DrawY    ] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX - 2, DrawY + 1] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX - 1, DrawY + 1] := ColorB;
+
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY - 2] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY - 2] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY - 1] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY - 1] := ColorB;
+
+      fLayers[rlObjectHelpers].PixelS[DrawX + 2, DrawY    ] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 3, DrawY    ] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 2, DrawY + 1] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 3, DrawY + 1] := ColorB;
+
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY + 2] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY + 2] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY + 3] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY + 3] := ColorB;
+    end else begin
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY    ] := ColorA;
+      fLayers[rlObjectHelpers].PixelS[DrawX - 1, DrawY    ] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY - 1] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX + 1, DrawY    ] := ColorB;
+      fLayers[rlObjectHelpers].PixelS[DrawX    , DrawY + 1] := ColorB;
+    end;
+  end;
+
 var
   Gadget: TGadget;
   i, i2: Integer;
@@ -3379,43 +3453,8 @@ begin
       if RenderPhysicsView then
       begin
         HatchPoint := Gadget.TriggerRect.TopLeft;
-
-        if GameParams.HighResolution then
-        begin
-          HatchPoint.X := HatchPoint.X * 2;
-          HatchPoint.Y := HatchPoint.Y * 2;
-
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFFD700;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFFD700;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+1] := $FFFFD700;
-
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y+1] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y+1] := $FFFF4500;
-
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2+1] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2+1] := $FFFF4500;
-
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y+1] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y+1] := $FFFF4500;
-
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2+1] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2+1] := $FFFF4500;
-        end else begin
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X-1, HatchPoint.Y] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-1] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFF4500;
-          fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFF4500;
-        end;
+        DrawFallDistanceHelper(HatchPoint.X, HatchPoint.Y);
+        DrawSpawnPoint(HatchPoint.X, HatchPoint.Y);
       end;
     end else
       Continue;
