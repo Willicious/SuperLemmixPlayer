@@ -83,15 +83,15 @@ type
     procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: Cardinal);
     procedure CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: Cardinal);
 
-    procedure DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
+    procedure DrawPhysicsViewTerrain(aDst: TBitmap32; aRegion: TRect);
   protected
   public
     fIsEmpty: array[TRenderLayer] of Boolean;
 
     constructor Create;
     procedure Prepare(aWidth, aHeight: Integer);
-    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = False; aTransparentBackground: Boolean = False); overload;
-    procedure CombineTo(aDst: TBitmap32; aClearPhysics: Boolean = False); overload;
+    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; aPhysicsView: Boolean = False; aTransparentBackground: Boolean = False); overload;
+    procedure CombineTo(aDst: TBitmap32; aPhysicsView: Boolean = False); overload;
     property Items[Index: TRenderLayer]: TBitmap32 read GetItem; default;
     property Width: Integer read fWidth;
     property Height: Integer read fHeight;
@@ -603,12 +603,12 @@ begin
   end;
 end;
 
-procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aClearPhysics: Boolean = False);
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aPhysicsView: Boolean = False);
 begin
-  CombineTo(aDst, fPhysicsMap.BoundsRect, aClearPhysics);
+  CombineTo(aDst, fPhysicsMap.BoundsRect, aPhysicsView);
 end;
 
-procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = False; aTransparentBackground: Boolean = False);
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aPhysicsView: Boolean = False; aTransparentBackground: Boolean = False);
 var
   i: TRenderLayer;
   LRRegion: TRect;
@@ -659,16 +659,16 @@ begin
 
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
-    if (not aClearPhysics) and (i = rlTriggers) then
-      Continue; // We only want to draw triggers when Clear Physics Mode is enabled
+    if (not aPhysicsView) and (i = rlTriggers) then
+      Continue; // We only want to draw triggers when Physics View is active
 
-    if aClearPhysics and (i in [rlBackground, rlOnTerrainGadgets, rlGadgetsHigh]) then
-      Continue; // We don't want to draw the first two in Clear Physics mode; while the latter has special handling
+    if aPhysicsView and (i in [rlBackground, rlOnTerrainGadgets, rlGadgetsHigh]) then
+      Continue; // We don't want to draw the first two in Physics View; while the latter has special handling
 
-    if aClearPhysics and (i = rlTerrain) then
+    if aPhysicsView and (i = rlTerrain) then
     begin // We want to draw based on physics map, not graphical map, in this case
       Items[rlGadgetsHigh].DrawTo(aDst, aRegion, aRegion); // We want it behind terrain
-      DrawClearPhysicsTerrain(aDst, aRegion);
+      DrawPhysicsViewTerrain(aDst, aRegion);
       Continue;
     end;
 
@@ -683,7 +683,7 @@ begin
   aDst.EndUpdate;
 end;
 
-procedure TRenderBitmaps.DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
+procedure TRenderBitmaps.DrawPhysicsViewTerrain(aDst: TBitmap32; aRegion: TRect);
 var
   x, y, LRy: Integer;
   PSrc, PDst, PDst2: PColor32;

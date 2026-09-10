@@ -65,7 +65,7 @@ type
     fSaveStateReplayStream: TMemoryStream;
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
-    fClearPhysics: Boolean;
+    fPhysicsView: Boolean;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedResetMouseTrap : Boolean;
@@ -131,8 +131,8 @@ type
     procedure DoDraw;
     procedure OnException(E: Exception; aCaller: String = 'Unknown');
     procedure ExecuteReplayEdit;
-    procedure SetClearPhysics(aValue: Boolean);
-    function GetClearPhysics: Boolean;
+    procedure SetPhysicsView(aValue: Boolean);
+    function GetPhysicsView: Boolean;
     procedure ProcessGameMessages;
     procedure SetMinimumWindowHeight(CurPanelHeight: Integer);
     procedure ApplyResize(NoRecenter: Boolean = False);
@@ -205,7 +205,7 @@ type
     procedure SetCurrentCursor(aCursor: Integer = 0); // 0 = autodetect correct graphic
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
-    property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
+    property PhysicsView: Boolean read fPhysicsView write SetPhysicsView;
     //property InternalZoom: Integer read fInternalZoom;
     function DoSuspendCursor: Boolean;
     function ShouldDisplayHQMinimap: Boolean;
@@ -511,17 +511,17 @@ begin
   end;
 end;
 
-procedure TGameWindow.SetClearPhysics(aValue: Boolean);
+procedure TGameWindow.SetPhysicsView(aValue: Boolean);
 begin
-  if fClearPhysics <> aValue then
+  if fPhysicsView <> aValue then
     SetRedraw(rdRedraw);
-  fClearPhysics := aValue;
-  SkillPanel.DrawButtonSelector(spbSquiggle, fClearPhysics);
+  fPhysicsView := aValue;
+  SkillPanel.DrawButtonSelector(spbSquiggle, fPhysicsView);
 end;
 
-function TGameWindow.GetClearPhysics: Boolean;
+function TGameWindow.GetPhysicsView: Boolean;
 begin
-  Result := fClearPhysics;
+  Result := fPhysicsView;
 end;
 
 function TGameWindow.ShouldDisplayHQMinimap: Boolean;
@@ -1099,7 +1099,7 @@ begin
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
   or (fRenderInterface.UserHelper = hpi_FallDist)
-  or (fClearPhysics)
+  or (fPhysicsView)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     SetRedraw(rdRedraw);
 
@@ -1117,8 +1117,8 @@ begin
     try
       fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
       fRenderInterface.MousePos := Game.CursorPoint;
-      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, fClearPhysics);
-      fRenderer.DrawLemmings(fClearPhysics);
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, fPhysicsView);
+      fRenderer.DrawLemmings(fPhysicsView);
       fRenderer.DrawProjectiles;
 
       if ShouldDisplayHQMinimap or (GameSpeed = gspPause) then
@@ -1129,7 +1129,7 @@ begin
         DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
       end;
 
-      fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
+      fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fPhysicsView);
 
       if GameParams.ShowMinimap then
         RenderMinimap;
@@ -1616,7 +1616,7 @@ const
                          lka_Restart,
                          lka_ReleaseMouse,
                          lka_Nuke, // Nuke also cancels, but requires double-press to do so so handled elsewhere
-                         lka_ClearPhysics,
+                         lka_PhysicsView,
                          lka_ShowUsedSkills,
                          lka_ZoomIn,
                          lka_ZoomOut,
@@ -1874,11 +1874,11 @@ begin
                   end else
                     if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
       lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
-      lka_ClearPhysics: if not GameParams.ClassicMode then
+      lka_PhysicsView: if not GameParams.ClassicMode then
               if func.Modifier = 0 then
-                ClearPhysics := not ClearPhysics
+                PhysicsView := not PhysicsView
               else
-                ClearPhysics := True;
+                PhysicsView := True;
       lka_ShowUsedSkills: if func.Modifier = 0 then
                             SkillPanel.ShowUsedSkills := not SkillPanel.ShowUsedSkills
                           else
@@ -1984,8 +1984,8 @@ begin
     case func.Action of
       lka_ReleaseRateDown    : SetSelectedSkill(spbSlower, False);
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
-      lka_ClearPhysics       : if func.Modifier <> 0 then
-                                 ClearPhysics := False;
+      lka_PhysicsView       : if func.Modifier <> 0 then
+                                 PhysicsView := False;
       lka_ShowUsedSkills     : if func.Modifier <> 0 then
                                  SkillPanel.ShowUsedSkills := False;
     end;
@@ -2474,10 +2474,10 @@ begin
       BMP := TBitmap32.Create;
       BMP.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
 
-      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, fClearPhysics);
-      fRenderer.DrawLemmings(fClearPhysics);
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, True, fPhysicsView);
+      fRenderer.DrawLemmings(fPhysicsView);
       fRenderer.DrawProjectiles;
-      fRenderer.DrawLevel(BMP, fClearPhysics);
+      fRenderer.DrawLevel(BMP, fPhysicsView);
 
       TPngInterface.SavePngFile(SaveName, BMP, True);
 

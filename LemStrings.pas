@@ -258,10 +258,10 @@ const
   );
 
 {-------------------------------------------------------------------------------
-  SLXClearPhysicsColors.nxmi
+  SLXPhysicsViewColors.nxmi
 -------------------------------------------------------------------------------}
 const
-  DEFAULT_CLEAR_PHYSICS_COLORS =
+  DEFAULT_PHYSICS_VIEW_COLORS =
     '$LEMMINGS' + sLineBreak +
     '  NORMAL $FF7777FF' + sLineBreak +
     '  RIVAL $FFFF0077' + sLineBreak +

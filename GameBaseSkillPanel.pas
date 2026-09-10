@@ -1856,10 +1856,10 @@ begin
         if GameParams.ClassicMode or not GameParams.ReplayAfterRestart then
           Game.RegainControl(True);
       end;
-    spbSquiggle: // Formerly spbClearPhysics
+    spbSquiggle:
       begin
         if not GameParams.ClassicMode then
-        fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
+        fGameWindow.PhysicsView := not fGameWindow.PhysicsView;
       end;
     spbNone: {nothing};
   else // Usual skill buttons

@@ -157,7 +157,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Previous Skill'
       'Next Skill'
       'Release Mouse'
-      'Clear Physics Mode'
+      'Physics View'
       'Show Used Skill Counts'
       'Fall Distance Template'
       'Zoom In'

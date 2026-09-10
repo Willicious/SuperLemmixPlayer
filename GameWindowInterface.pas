@@ -44,9 +44,9 @@ type
     function GetGameSpeed: TGameSpeed;
     property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
 
-    procedure SetClearPhysics(aValue: Boolean);
-    function GetClearPhysics: Boolean;
-    property ClearPhysics: Boolean read GetClearPhysics write SetClearPhysics;
+    procedure SetPhysicsView(aValue: Boolean);
+    function GetPhysicsView: Boolean;
+    property PhysicsView: Boolean read GetPhysicsView write SetPhysicsView;
   end;
 
 implementation

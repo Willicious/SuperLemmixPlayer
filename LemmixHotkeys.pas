@@ -57,7 +57,7 @@ type
                          lka_SkillLeft,
                          lka_SkillRight,
                          lka_ReleaseMouse,
-                         lka_ClearPhysics,
+                         lka_PhysicsView,
                          lka_ShowUsedSkills,
                          lka_FallDistance,
                          lka_ZoomIn,
@@ -214,8 +214,8 @@ begin
   SetKeyFunction($2E, lka_Cheat);
   SetKeyFunction($6A, lka_InfiniteSkills);
   SetKeyFunction($6F, lka_InfiniteTime);
-  SetKeyFunction($56, lka_ClearPhysics, 1);
-  SetKeyFunction($14, lka_ClearPhysics, 0);
+  SetKeyFunction($56, lka_PhysicsView, 1);
+  SetKeyFunction($14, lka_PhysicsView, 0);
   SetKeyFunction($4C, lka_LoadReplay);
   SetKeyFunction($53, lka_SaveReplay);
   SetKeyFunction($43, lka_CancelReplay);
@@ -275,7 +275,7 @@ begin
   SetKeyFunction($4F, lka_ReplayInsert);
   SetKeyFunction($0D, lka_SaveImage);
   SetKeyFunction($4A, lka_Scroll);
-  SetKeyFunction($BF, lka_ClearPhysics, 1);
+  SetKeyFunction($BF, lka_PhysicsView, 1);
   SetKeyFunction($31, lka_Skip, -17);
   SetKeyFunction($32, lka_Skip, -1);
   SetKeyFunction($33, lka_Skip, 1);
@@ -353,7 +353,7 @@ begin
   if s = 'next_skill' then Result := lka_SkillRight;
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
-  if s = 'clear_physics' then Result := lka_ClearPhysics;
+  if s = 'physics_view' then Result := lka_PhysicsView;
   if s = 'show_used_skills' then Result := lka_ShowUsedSkills;
   if s = 'fall_distance' then Result := lka_FallDistance;
   if s = 'edit_replay' then Result := lka_EditReplay;
@@ -521,7 +521,7 @@ var
       lka_SkillRight:       Result := 'Next_Skill';
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
-      lka_ClearPhysics:     Result := 'Clear_Physics';
+      lka_PhysicsView:     Result := 'Physics_View';
       lka_ShowUsedSkills:   Result := 'Show_Used_Skills';
       lka_FallDistance:     Result := 'Fall_Distance';
       lka_EditReplay:       Result := 'Edit_Replay';
@@ -594,7 +594,7 @@ begin
                                    lka_SkillButton,
                                    lka_Skip,
                                    lka_SpecialSkip,
-                                   lka_ClearPhysics,
+                                   lka_PhysicsView,
                                    lka_ShowUsedSkills] then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
 

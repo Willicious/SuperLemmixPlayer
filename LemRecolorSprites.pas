@@ -12,14 +12,14 @@ uses
   SharedGlobals;
 
 var
-  ClearPhysicsLemmingNormal: TColor32;
-  ClearPhysicsLemmingRival: TColor32;
-  ClearPhysicsLemmingAthleteNormal: TColor32;
-  ClearPhysicsLemmingAthleteRival: TColor32;
-  ClearPhysicsLemmingNeutral: TColor32;
-  ClearPhysicsLemmingZombie: TColor32;
-  ClearPhysicsLemmingInvincible: TColor32;
-  ClearPhysicsLemmingSelected: TColor32;
+  PhysicsViewLemmingNormal: TColor32;
+  PhysicsViewLemmingRival: TColor32;
+  PhysicsViewLemmingAthleteNormal: TColor32;
+  PhysicsViewLemmingAthleteRival: TColor32;
+  PhysicsViewLemmingNeutral: TColor32;
+  PhysicsViewLemmingZombie: TColor32;
+  PhysicsViewLemmingInvincible: TColor32;
+  PhysicsViewLemmingSelected: TColor32;
 
 type
   TColorSwapType = (rcl_Selected,
@@ -47,7 +47,7 @@ type
     private
       fLemming: TLemming;
       fDrawAsSelected: Boolean;
-      fClearPhysics: Boolean;
+      fPhysicsView: Boolean;
       fSwaps: TColorSwapArray;
 
       procedure SwapColors(F: TColor32; var B: TColor32);
@@ -60,11 +60,11 @@ type
       procedure ApplyPaletteSwapping(aColorDict: TColorDict; aShadeDict: TShadeDict; aTheme: TNeoTheme);
       procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: Cardinal);
       procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: Cardinal);
-      procedure LoadClearPhysicsShades;
+      procedure LoadPhysicsViewShades;
 
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
-      property ClearPhysics: Boolean write fClearPhysics;
+      property PhysicsView: Boolean write fPhysicsView;
 
       class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: Cardinal);
   end;
@@ -80,7 +80,7 @@ begin
 
   // Until proper loading exists
   LoadSwaps(SFDefaultStyle);
-  LoadClearPhysicsShades;
+  LoadPhysicsViewShades;
 end;
 
 procedure TRecolorImage.SwapColors(F: TColor32; var B: TColor32);
@@ -92,32 +92,32 @@ begin
   if fLemming = nil then Exit;
   if (F and $FF000000) = 0 then Exit;
 
-  if fClearPhysics then
+  if fPhysicsView then
   begin
     if fLemming.HasPermanentSkills then
     begin
       if fLemming.LemIsRival then
-        B := ResolveColor(ClearPhysicsLemmingAthleteRival)
+        B := ResolveColor(PhysicsViewLemmingAthleteRival)
       else
-        B := ResolveColor(ClearPhysicsLemmingAthleteNormal);
+        B := ResolveColor(PhysicsViewLemmingAthleteNormal);
     end else begin
       if fLemming.LemIsRival then
-        B := ResolveColor(ClearPhysicsLemmingRival)
+        B := ResolveColor(PhysicsViewLemmingRival)
       else
-        B := ResolveColor(ClearPhysicsLemmingNormal);
+        B := ResolveColor(PhysicsViewLemmingNormal);
     end;
 
     if fLemming.LemIsInvincible then
-      B := ResolveColor(ClearPhysicsLemmingInvincible);
+      B := ResolveColor(PhysicsViewLemmingInvincible);
 
     if fLemming.LemIsNeutral then
-      B := ResolveColor(ClearPhysicsLemmingNeutral);
+      B := ResolveColor(PhysicsViewLemmingNeutral);
 
     if fLemming.LemIsZombie then
-      B := ResolveColor(ClearPhysicsLemmingZombie);
+      B := ResolveColor(PhysicsViewLemmingZombie);
 
     if fDrawAsSelected then
-      B := ResolveColor(ClearPhysicsLemmingSelected);
+      B := ResolveColor(PhysicsViewLemmingSelected);
   end
   else
   begin
@@ -289,7 +289,7 @@ begin
   end;
 end;
 
-procedure TRecolorImage.LoadClearPhysicsShades;
+procedure TRecolorImage.LoadPhysicsViewShades;
 var
   Nxmi: String;
   Parser: TParser;
@@ -298,14 +298,14 @@ var
   // Default colors, loaded if custom file doesn't exist
   procedure ResetColors;
   begin
-    ClearPhysicsLemmingNormal := $FF7777FF;
-    ClearPhysicsLemmingRival := $FFFF0077;
-    ClearPhysicsLemmingAthleteNormal := $FF00FFFF;
-    ClearPhysicsLemmingAthleteRival := $FFFF99FF;
-    ClearPhysicsLemmingNeutral := $FFAA00FF;
-    ClearPhysicsLemmingZombie := $FF777744;
-    ClearPhysicsLemmingInvincible := $FFFFFFFF;
-    ClearPhysicsLemmingSelected := $FFFFFF77;
+    PhysicsViewLemmingNormal := $FF7777FF;
+    PhysicsViewLemmingRival := $FFFF0077;
+    PhysicsViewLemmingAthleteNormal := $FF00FFFF;
+    PhysicsViewLemmingAthleteRival := $FFFF99FF;
+    PhysicsViewLemmingNeutral := $FFAA00FF;
+    PhysicsViewLemmingZombie := $FF777744;
+    PhysicsViewLemmingInvincible := $FFFFFFFF;
+    PhysicsViewLemmingSelected := $FFFFFF77;
   end;
 
 begin
@@ -313,13 +313,13 @@ begin
 
   Parser := TParser.Create;
   try
-    Nxmi := 'SLXClearPhysicsColors.nxmi';
+    Nxmi := 'SLXPhysicsViewColors.nxmi';
 
     if not FileExists(AppPath + SFSaveData + Nxmi) then
     begin
       with TStringList.Create do
       try
-        Text := DEFAULT_CLEAR_PHYSICS_COLORS;
+        Text := DEFAULT_PHYSICS_VIEW_COLORS;
         SaveToFile(AppPath + SFSaveData + Nxmi);
       finally
         Free;
@@ -331,14 +331,14 @@ begin
     Sec := Parser.MainSection.Section['lemmings'];
     if Sec = nil then Exit;
 
-    ClearPhysicsLemmingNormal := ParseColor32(Sec, 'normal', $FF7777FF);
-    ClearPhysicsLemmingRival := ParseColor32(Sec, 'rival', $FFFF0077);
-    ClearPhysicsLemmingAthleteNormal := ParseColor32(Sec, 'athlete_normal', $FF00FFFF);
-    ClearPhysicsLemmingAthleteRival := ParseColor32(Sec, 'athlete_rival', $FFFF99FF);
-    ClearPhysicsLemmingNeutral := ParseColor32(Sec, 'neutral', $FFAA00FF);
-    ClearPhysicsLemmingZombie := ParseColor32(Sec, 'zombie', $FF777744);
-    ClearPhysicsLemmingInvincible := ParseColor32(Sec, 'invincible', $FFFFFFFF);
-    ClearPhysicsLemmingSelected := ParseColor32(Sec, 'selected', $FFFFFF77);
+    PhysicsViewLemmingNormal := ParseColor32(Sec, 'normal', $FF7777FF);
+    PhysicsViewLemmingRival := ParseColor32(Sec, 'rival', $FFFF0077);
+    PhysicsViewLemmingAthleteNormal := ParseColor32(Sec, 'athlete_normal', $FF00FFFF);
+    PhysicsViewLemmingAthleteRival := ParseColor32(Sec, 'athlete_rival', $FFFF99FF);
+    PhysicsViewLemmingNeutral := ParseColor32(Sec, 'neutral', $FFAA00FF);
+    PhysicsViewLemmingZombie := ParseColor32(Sec, 'zombie', $FF777744);
+    PhysicsViewLemmingInvincible := ParseColor32(Sec, 'invincible', $FFFFFFFF);
+    PhysicsViewLemmingSelected := ParseColor32(Sec, 'selected', $FFFFFF77);
   finally
     Parser.Free;
   end;
