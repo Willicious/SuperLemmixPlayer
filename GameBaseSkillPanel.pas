@@ -1,9 +1,13 @@
 unit GameBaseSkillPanel;
 
+// TODO - Completely redo the entire info string
+// TODO - Show hotkey labels on panel buttons
+// TODO - Add clickable talisman info button
+
 interface
 
 uses
-  System.Types, System.StrUtils, //Graphics,
+  System.Types, System.StrUtils, Graphics,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemAnimationSet, LemMetaAnimation, LemNeoLevelPack, LemProjectile,
@@ -1239,9 +1243,10 @@ end;
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: Char;
-  CurChar, CharID: Integer;
+  CurChar, CharID, TextX: Integer;
+  Color: TColor32;
 
-  SpecialCombine: Boolean;
+  SpecialCombine, UseSmallFont: Boolean;
   Red, Blue, Purple, Teal{, Yellow, Orange}: Single;
 
   LemmingKinds: TLemmingKinds;
@@ -1249,6 +1254,7 @@ var
 begin
   LemmingKinds := Game.ActiveLemmingTypes;
   SelectedLemming := Game.RenderInterface.SelectedLemming;
+  TextX := 4;
 
   // Define hue shift colors
   Red    := -1 / 3;
@@ -1264,6 +1270,13 @@ begin
   for CurChar := 1 to DrawStringLength do
   begin
     New := fNewDrawStr[CurChar];
+    UseSmallFont := False;
+
+    if New = ' ' then
+    begin
+      Inc(TextX, 8);
+      Continue;
+    end;
 
     case New of
       '%':               CharID := 0;
@@ -1323,25 +1336,39 @@ begin
       end else if (CurChar <= CursorInfoEndIndex) and (CursorOverPanelItem or (SelectedLemming <> nil))
         and not Game.StateIsUnplayable then
       begin
-        SpecialCombine := True;
+        SpecialCombine := False;
+        UseSmallFont := True;
 
         if CursorOverPanelItem then
-          fCombineHueShift := Blue
+          Color := clCornflowerBlue32
         else if (Game.SelectedLemFutureTaskCount > 0) then
-          fCombineHueShift := Purple
+          Color := clViolet32
         else
-          SpecialCombine := False;
+          Color := clLightGreen32;
+
+        with fImage.Bitmap do
+        begin
+          Font.Name := 'Hobo Std';
+          Font.Size := IfThen(GameParams.HighResolution, 8, 5);
+          Font.Quality := fqAntialiased;
+
+          RenderText(TextX, 6, New, Color);
+          TextX := TextX + TextWidth(New);
+        end;
       end else
         SpecialCombine := False;
 
-      if SpecialCombine then
+      if not UseSmallFont then
       begin
-        fInfoFont[CharID].DrawMode := dmCustom;
-        fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
-      end else begin
-        fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
+        if SpecialCombine then
+        begin
+          fInfoFont[CharID].DrawMode := dmCustom;
+          fInfoFont[CharID].OnPixelCombine := CombineShift;
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
+        end else begin
+          fInfoFont[CharID].DrawMode := dmOpaque;
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
+        end;
       end;
     end;
   end;
