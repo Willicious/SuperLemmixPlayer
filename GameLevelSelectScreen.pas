@@ -187,17 +187,18 @@ var
 begin
   ScreenImg.Bitmap.Font.Name := 'Tahoma';
   ScreenImg.Bitmap.Font.Size := 10;
+  ScreenImg.Bitmap.Font.Quality := fqAntialiased;
 
   ProgressX := PanelX + 16;
   InfoX := ProgressX + 96;
   Y := PanelY + LOGO_HEIGHT + 24;
 
-  ScreenImg.Bitmap.RenderText(ProgressX, Y, 'Progress: ', 4, clCornflowerBlue32);
-  ScreenImg.Bitmap.RenderText(InfoX, Y, Text, 4, clLightGreen32);
+  ScreenImg.Bitmap.RenderText(ProgressX, Y, 'Progress: ', clCornflowerBlue32);
+  ScreenImg.Bitmap.RenderText(InfoX, Y, Text, clLightGreen32);
 
   // TODO Remove this once the screen is fully implemented
-  ScreenImg.Bitmap.RenderText(ProgressX - 40, Y + 100, 'This is a temporary screen', 4, clWhite32);
-  ScreenImg.Bitmap.RenderText(ProgressX - 80, Y + 140, 'Press F3 to open the Level Select dialog', 4, clWhite32);
+  ScreenImg.Bitmap.RenderText(ProgressX - 40, Y + 100, 'This is a temporary screen', clWhite32);
+  ScreenImg.Bitmap.RenderText(ProgressX - 80, Y + 140, 'Press F3 to open the Level Select dialog', clWhite32);
 end;
 
 procedure TGameLevelSelectScreen.AddIcons(PanelX, PanelY: Integer);
