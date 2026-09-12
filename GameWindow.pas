@@ -2324,13 +2324,13 @@ var
 begin
   if not GameParams.ShowMinimap then Exit;
 
-  O := -P.X * 8 * fInternalZoom;
+  O := -P.X * (4 * ResMod) * fInternalZoom;
   O :=  O + Img.Width div 2;
   if O < MinScroll then O := MinScroll;
   if O > MaxScroll then O := MaxScroll;
   Img.OffSetHorz := O;
 
-  O := -P.Y * 8 * fInternalZoom;
+  O := -P.Y * (4 * ResMod) * fInternalZoom;
   O :=  O + Img.Height div 2;
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;

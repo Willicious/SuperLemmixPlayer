@@ -1940,6 +1940,7 @@ begin
   if not (ssLeft in Shift) then Exit;
 
   Pos := MousePosMinimap(X, Y);
+
   if PtInRect(fMinimapImage.Bitmap.BoundsRect, Pos) and Assigned(fOnMinimapClick) then
     fOnMinimapClick(Self, Pos)
   else
