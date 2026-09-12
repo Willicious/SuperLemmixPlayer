@@ -150,7 +150,6 @@ begin
           ExtractFileName(ExcludeTrailingPathDelimiter(fSelectedFolder));
 
         GameParams.ReplayCheckPath := fSelectedFolder + '\';
-        Output(GameParams.ReplayCheckPath);
       end else
         ShowMessage('The selected folder path is invalid.');
     end;
