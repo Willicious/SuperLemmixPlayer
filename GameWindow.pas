@@ -1427,8 +1427,8 @@ begin
   Img.BitmapAlign := baCustom;
   Img.ScaleMode := smScale;
 
-  // Create panel
-  SkillPanel := TSkillPanelStandard.CreateWithWindow(Self, Self);
+  // Create skill panel
+  SkillPanel := TSkillPanel.CreateWithWindow(Self, Self);
   SkillPanel.Parent := Self;
 
   Self.KeyPreview := True;

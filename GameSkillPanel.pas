@@ -10,7 +10,7 @@ uses
   SharedGlobals;
 
 type
-  TSkillPanelStandard = class(TBaseSkillPanel)
+  TSkillPanel = class(TBaseSkillPanel)
   protected
     function GetButtonList: TPanelButtonArray; override;
 
@@ -43,17 +43,17 @@ implementation
 uses
   GameControl, LemCore;
 
-constructor TSkillPanelStandard.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
+constructor TSkillPanel.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
   inherited;
 end;
 
-destructor TSkillPanelStandard.Destroy;
+destructor TSkillPanel.Destroy;
 begin
   inherited;
 end;
 
-function TSkillPanelStandard.PanelWidth: Integer;
+function TSkillPanel.PanelWidth: Integer;
 begin
   if GameParams.ShowMinimap then
     Result := 888
@@ -61,17 +61,17 @@ begin
     Result := 672;
 end;
 
-function TSkillPanelStandard.PanelHeight: Integer;
+function TSkillPanel.PanelHeight: Integer;
 begin
   Result := 80;
 end;
 
-function TSkillPanelStandard.DrawStringLength: Integer;
+function TSkillPanel.DrawStringLength: Integer;
 begin
   Result := 42;
 end;
 
-function TSkillPanelStandard.DrawStringTemplate: string;
+function TSkillPanel.DrawStringTemplate: string;
 begin
   if GameParams.AmigaTheme then
     Result := '..............' +       // 0 Cursor info
@@ -90,14 +90,14 @@ begin
               #97 + '_.-..';           // 36 Time icon         // 37 Time Limit
 end;
 
-function TSkillPanelStandard.TimeLimitStartIndex: Integer;
+function TSkillPanel.TimeLimitStartIndex: Integer;
 begin
   Result := 37;
 end;
 
 // First 2 digits = left & top of minimap frame
 // Second 2 digits = width & height of minimap itself
-function TSkillPanelStandard.MinimapRect: TRect;
+function TSkillPanel.MinimapRect: TRect;
 begin
   if GameParams.AmigaTheme then
     Result := Rect(704, 4, 862, 72)
@@ -106,13 +106,13 @@ begin
 end;
 
 // Assigns a clickable rectangle to the replay "R" icon
-function TSkillPanelStandard.ReplayIconRect: TRect;
+function TSkillPanel.ReplayIconRect: TRect;
 begin
   Result := Rect(212, 4, 232, 32);
 end;
 
 // Assigns a non-clickable rectangle to the timer icon & digits
-function TSkillPanelStandard.TimeIconRect: TRect;
+function TSkillPanel.TimeIconRect: TRect;
 begin
   if GameParams.AmigaTheme then
     Result := Rect(0, 0, 0, 0) // No need to show panel hint in Amiga theme
@@ -121,7 +121,7 @@ begin
 end;
 
 // Assigns a non-clickable rectangle to the hatch count icon & digits
-function TSkillPanelStandard.HatchIconRect: TRect;
+function TSkillPanel.HatchIconRect: TRect;
 begin
   if GameParams.AmigaTheme then
     Result := Rect(0, 0, 0, 0) // Amiga theme doesn't show hatch count
@@ -130,7 +130,7 @@ begin
 end;
 
 // Assigns a non-clickable rectangle to the alive count icon & digits
-function TSkillPanelStandard.AliveIconRect: TRect;
+function TSkillPanel.AliveIconRect: TRect;
 var
   Left, ThemeOffset, LemAliveCount: Integer;
 begin
@@ -149,7 +149,7 @@ begin
 end;
 
 // Assigns a non-clickable rectangle to the exit count icon & digits
-function TSkillPanelStandard.ExitIconRect: TRect;
+function TSkillPanel.ExitIconRect: TRect;
 var
   Left, ThemeOffset, SaveCount: Integer;
 begin
@@ -170,7 +170,7 @@ begin
   Result := GetPanelRect(Left, ThemeOffset, SaveCount)
 end;
 
-function TSkillPanelStandard.GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
+function TSkillPanel.GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
 var
   Left, Right, DigitCount: Integer;
 begin
@@ -196,7 +196,7 @@ begin
   Result := Rect(Left, 4, Right, 32);
 end;
 
-procedure TSkillPanelStandard.CreateNewInfoString;
+procedure TSkillPanel.CreateNewInfoString;
 begin
   if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
     SetPanelMessage(1);
@@ -222,7 +222,7 @@ begin
   end;
 end;
 
-function TSkillPanelStandard.GetButtonList: TPanelButtonArray;
+function TSkillPanel.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
 begin
@@ -239,12 +239,12 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbSquiggle;
 end;
 
-function TSkillPanelStandard.CursorInfoEndIndex: Integer;
+function TSkillPanel.CursorInfoEndIndex: Integer;
 begin
   Result := 13;
 end;
 
-function TSkillPanelStandard.LemmingCountStartIndex: Integer;
+function TSkillPanel.LemmingCountStartIndex: Integer;
 begin
   if GameParams.AmigaTheme then
     Result := 22
@@ -252,7 +252,7 @@ begin
     Result := 26;
 end;
 
-function TSkillPanelStandard.LemmingSavedStartIndex: Integer;
+function TSkillPanel.LemmingSavedStartIndex: Integer;
 begin
   if GameParams.AmigaTheme then
     Result := 29
