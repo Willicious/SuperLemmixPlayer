@@ -126,7 +126,8 @@ begin
   if GameParams.AmigaTheme then
     Result := Rect(0, 0, 0, 0) // Amiga theme doesn't show hatch count
   else
-    Result := GetPanelRect(288, Game.LemmingsToSpawn - Game.SpawnedDead, 32);
+    //Result := GetPanelRect(288, Game.LemmingsToSpawn - Game.SpawnedDead, 32);
+    Result := Rect(288, 0, 340, 32);
 end;
 
 // Assigns a non-clickable rectangle to the alive count icon & digits
@@ -209,7 +210,6 @@ begin
     SetInfoTime(38, 41);
   end else begin
     SetCollectibleIcon(16);
-    SetInfoLemHatch(20);
     SetInfoLemAlive(26);
     SetExitIcon(31);
     SetInfoLemIn(32);
