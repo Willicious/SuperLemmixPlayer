@@ -124,11 +124,13 @@ type
     // Refactor =================
     function GetCursorInfoString: String;
     function GetHatchCountString: String;
+    function GetLemsAliveString: String;
 
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Index, X, Y: Integer);
     procedure DrawReplayIcon;
     procedure DrawHatchInfo;
+    procedure DrawLemsAliveInfo;
     // =========================
 
     procedure DrawNewStr;
@@ -141,7 +143,6 @@ type
       function GetLemReplayTaskString(L: TLemming): String;
       function GetSkillString(L: TLemming): String;
       function GetPickupString(P: TGadget): String;
-    procedure SetInfoLemAlive(Pos: Integer);
     procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
     procedure SetCollectibleIcon(Pos: Integer);
@@ -1348,6 +1349,29 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawLemsAliveInfo;
+var
+  Color: TColor32;
+  LemmingKinds: TLemmingKinds;
+begin
+  DrawPanelIcon(3, AliveIconRect.Left, AliveIconRect.Top);
+  LemmingKinds := Game.ActiveLemmingTypes;
+
+  if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
+    Color := clRed32
+  else if (lkNeutral in LemmingKinds) and not (lkNormal in LemmingKinds) then
+    Color := clTeal32
+  else
+    Color := clLightGreen32;
+
+  with fImage.Bitmap do
+  begin
+    Font.Name := 'Hobo Std';
+    Font.Size := 8;
+    RenderText(AliveIconRect.Left + 32, 6, GetLemsAliveString, Color, True);
+  end;
+end;
+
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: Char;
@@ -1437,6 +1461,7 @@ begin
     DrawCursorInfo;
     DrawReplayIcon;
     DrawHatchInfo;
+    DrawLemsAliveInfo;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1622,12 +1647,9 @@ begin
     Result := IntToStr(HatchLems);
 end;
 
-procedure TBaseSkillPanel.SetInfoLemAlive(Pos: Integer);
+function TBaseSkillPanel.GetLemsAliveString: String;
 var
   LemNum: Integer;
-  S: string;
-const
-  LEN = 4;
 begin
   if GameParams.AmigaTheme then
     LemNum := Game.LemmingsActive
@@ -1638,14 +1660,9 @@ begin
     CustomAssert(LemNum >= 0, 'Negative number of alive lemmings displayed');
 
   if (LemNum >= 999) then
-    S := ' 999'
+    Result := ' 999'
   else
-    S := IntToStr(LemNum);
-
-  if Length(S) < LEN then
-    S := PadL(PadR(S, LEN - 1), LEN);
-
-  ModString(fNewDrawStr, S, Pos);
+    Result := IntToStr(LemNum);
 end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);

@@ -146,7 +146,8 @@ begin
     LemAliveCount := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
   end;
 
-  Result := GetPanelRect(Left, ThemeOffset, LemAliveCount);
+  Result := Rect(386, 0, 432, 32);
+  //Result := GetPanelRect(Left, ThemeOffset, LemAliveCount);
 end;
 
 // Assigns a non-clickable rectangle to the exit count icon & digits
@@ -205,12 +206,10 @@ begin
   if GameParams.AmigaTheme then
   begin
     SetCollectibleIcon(16);
-    SetInfoLemAlive(22);
     SetInfoLemIn(29);
     SetInfoTime(38, 41);
   end else begin
     SetCollectibleIcon(16);
-    SetInfoLemAlive(26);
     SetExitIcon(31);
     SetInfoLemIn(32);
     SetTimeLimit(37);
