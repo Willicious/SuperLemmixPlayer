@@ -26,9 +26,13 @@ type
   TBaseSkillPanel = class(TCustomControl)
   private
     fGame                 : TLemmingGame;
-    fIconBmp              : TBitmap32;   // For temporary storage
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
+
+    // Refactor ====================
+    fPanelButtons         : TBitmap32; // for storing panel buttons & button text
+    fPanelIcons           : TBitmap32; // for storing all panel icons
+    // ============================
 
     fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
@@ -36,6 +40,7 @@ type
 
     fCombineHueShift      : Single;
 
+    procedure LoadPanelIcons;
     procedure LoadPanelFont;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
@@ -76,7 +81,6 @@ type
     fSquiggleHighlight    : TBitmap32;
     fTurboHighlight       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
-    fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // Make one of this!
 
     fHighlitSkill         : TSkillPanelButton;
     fLastHighlitSkill     : TSkillPanelButton; // To avoid sounds when shouldn't be played
@@ -121,6 +125,8 @@ type
     function GetCursorInfoString: String;
 
     procedure DrawCursorInfo;
+    procedure DrawPanelIcon(Index, X, Y: Integer);
+    procedure DrawReplayIcon;
     // =========================
 
     procedure DrawNewStr;
@@ -137,7 +143,6 @@ type
     procedure SetInfoLemAlive(Pos: Integer);
     procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
-    procedure SetReplayIcon(Pos: Integer);
     procedure SetCollectibleIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
     procedure SetExitIcon(Pos: Integer);
@@ -296,9 +301,13 @@ begin
   fMinimapImage.ScaleMode := smScale;
   fMinimapImage.BitmapAlign := baCustom;
 
-  fIconBmp := TBitmap32.Create;
-  fIconBmp.DrawMode := dmBlend;
-  fIconBmp.CombineMode := cmMerge;
+  fPanelButtons := TBitmap32.Create;
+  fPanelButtons.DrawMode := dmBlend;
+  fPanelButtons.CombineMode := cmMerge;
+
+  fPanelIcons := TBitmap32.Create;
+  fPanelIcons.DrawMode := dmBlend;
+  fPanelIcons.CombineMode := cmMerge;
 
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
@@ -314,13 +323,6 @@ begin
   fMinimapImage.OnMouseDown := MinimapMouseDown;
   fMinimapImage.OnMouseMove := MinimapMouseMove;
   fMinimapImage.OnMouseUp := MinimapMouseUp;
-
-  // Create font and skill panel images (but do not yet load them)
-  SetLength(fInfoFont, NUM_FONT_CHARS);
-  for i := 0 to NUM_FONT_CHARS - 1 do
-  begin
-    fInfoFont[i] := TBitmap32.Create;
-  end;
 
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
@@ -398,9 +400,6 @@ var
   i: Integer;
   Button: TSkillPanelButton;
 begin
-  for i := 0 to NUM_FONT_CHARS - 1 do
-    fInfoFont[i].Free;
-
   for c := '0' to '9' do
     for i := 0 to 1 do
     begin
@@ -430,7 +429,8 @@ begin
 
   fImage.Free;
   fMinimapImage.Free;
-  fIconBmp.Free;
+  fPanelButtons.Free;
+  fPanelIcons.Free;
   inherited;
 end;
 
@@ -546,8 +546,8 @@ begin
   if (Index >= FirstSkillButtonIndex) and (Index <= LastSkillButtonIndex) then
     Exit; // Otherwise, "empty_slot.png" placeholder causes some graphical glitches
 
-  GetGraphic(ButtonName, fIconBmp);
-  fIconBmp.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
+  GetGraphic(ButtonName, fPanelButtons);
+  fPanelButtons.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
 end;
 
 procedure TBaseSkillPanel.LoadPanelFont;
@@ -555,35 +555,73 @@ var
   SrcRect: TRect;
   i: Integer;
 begin
-  // Load first the characters
-  GetGraphic('panel_font.png', fIconBmp);
-  SrcRect := Rect(0, 0, 16, 32);
-  for i := 0 to 37 do
-  begin
-    fInfoFont[i].SetSize(16, 32);
-    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 16, 0);
-  end;
+  Exit;
+//  // Load first the characters
+//  GetGraphic('panel_font.png', fIconBmp);
+//  SrcRect := Rect(0, 0, 16, 32);
+//  for i := 0 to 37 do
+//  begin
+//    fInfoFont[i].SetSize(16, 32);
+//    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+//    OffsetRect(SrcRect, 16, 0);
+//  end;
 
-  // Load now the icons for the text panel
-  GetGraphic('panel_icons.png', fIconBmp);
-  SrcRect := Rect(0, 0, 24, 32);
-  for i := 38 to 45 do
-  begin
-    fInfoFont[i].SetSize(24, 32);
-    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 24, 0);
-  end;
+//  // Load now the icons for the text panel
+//  GetGraphic('panel_icons.png', fIconBmp);
+//  fPanelIcons.Assign(fIconBmp);
+//  SrcRect := Rect(0, 0, 24, 32);
+//  for i := 38 to 45 do
+//  begin
+//    fInfoFont[i].SetSize(24, 32);
+//    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+//    OffsetRect(SrcRect, 24, 0);
+//  end;
 
-  // Load now the replay icons for the text panel
-  GetGraphic('replay_icons.png', fIconBmp);
-  SrcRect := Rect(0, 0, 24, 32);
-  for i := 46 to NUM_FONT_CHARS - 1 do
+//  // Load now the replay icons for the text panel
+//  GetGraphic('replay_icons.png', fIconBmp);
+//  SrcRect := Rect(0, 0, 24, 32);
+//  for i := 46 to NUM_FONT_CHARS - 1 do
+//  begin
+//    fInfoFont[i].SetSize(24, 32);
+//    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+//    OffsetRect(SrcRect, 24, 0);
+//  end;
+end;
+
+procedure TBaseSkillPanel.LoadPanelIcons;
+var
+  Width: Integer;
+
+  procedure AddGraphic(const Name: String);
+  var
+    Bitmap: TBitmap32;
+    Combined: TBitmap32;
   begin
-    fInfoFont[i].SetSize(24, 32);
-    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 24, 0);
+    Bitmap := TBitmap32.Create;
+    Bitmap.DrawMode := dmBlend;
+    try
+      GetGraphic(Name, Bitmap);
+
+      Combined := TBitmap32.Create;
+      try
+        Width := fPanelIcons.Width;
+        Combined.SetSize(Width + Bitmap.Width, Max(fPanelIcons.Height, Bitmap.Height));
+        fPanelIcons.DrawTo(Combined, 0, 0);
+
+        Bitmap.DrawTo(Combined, Width, 0);
+        fPanelIcons.Assign(Combined);
+      finally
+        Combined.Free;
+      end;
+    finally
+      Bitmap.Free;
+    end;
   end;
+begin
+  fPanelIcons := TBitmap32.Create;
+
+  AddGraphic('panel_icons.png');
+  AddGraphic('replay_icons.png');
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
@@ -743,14 +781,14 @@ var
   end;
 
 begin
-  GetGraphic('skill_count_digits.png', fIconBmp);
+  GetGraphic('skill_count_digits.png', fPanelButtons);
   SrcRect := Rect(0, 0, 8, 16);
   for c := '0' to '9' do
   begin
     for i := 0 to 1 do
     begin
       fSkillFont[c, i].SetSize(17, 16);
-      fIconBmp.DrawTo(fSkillFont[c, i], ((4 - 4 * i) * 2) + 1, 0, SrcRect);
+      fPanelButtons.DrawTo(fSkillFont[c, i], ((4 - 4 * i) * 2) + 1, 0, SrcRect);
 
       fSkillFontInvert[c, i].Assign(fSkillFont[c, i]);
       for y := 0 to fSkillFontInvert[c, i].Height-1 do
@@ -762,15 +800,15 @@ begin
 
   Inc(SrcRect.Right, 8); // Position is correct at this point, but Infinite symbol is 8px wide not 4px
   fSkillInfinite.SetSize(16, 16);
-  fIconBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
+  fPanelButtons.DrawTo(fSkillInfinite, 0, 0, SrcRect);
 
   OffsetRect(SrcRect, 16, 0); // Additional blue infinity symbol for when Infinite Skills mode is active
   fSkillInfiniteMode.SetSize(16, 16);
-  fIconBmp.DrawTo(fSkillInfiniteMode, 0, 0, SrcRect);
+  fPanelButtons.DrawTo(fSkillInfiniteMode, 0, 0, SrcRect);
 
   OffsetRect(SrcRect, 16, 0); // Locked RR/SI icon
   fSkillLock.SetSize(16, 16);
-  fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
+  fPanelButtons.DrawTo(fSkillLock, 0, 0, SrcRect);
 
   TempBmp := TBitmap32.Create;
   TKernelResampler.Create(TempBmp);
@@ -847,6 +885,7 @@ begin
   fImage.Bitmap.Assign(fOriginal);
 
   // Load the remaining graphics for icons, ...
+  LoadPanelIcons;
   LoadPanelFont;
   LoadSkillIcons;
   LoadSkillFont;
@@ -1267,6 +1306,35 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawPanelIcon(Index, X, Y: Integer);
+begin
+  fPanelIcons.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 24, 0, (Index + 1) * 24, 32));
+end;
+
+procedure TBaseSkillPanel.DrawReplayIcon;
+var
+  Index: Integer;
+  TickCount: Cardinal;
+  BlinkIcon, IsReplaying, IsClassicModeRewind: Boolean;
+begin
+  TickCount := GetTickCount;
+  BlinkIcon := ((TickCount div 500) mod 2) = 0;
+
+  IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
+  IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
+
+  if BlinkIcon or Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
+    Index := -1
+  else if GameParams.PlaybackModeActive and not IsReplaying then
+    Index := 10 // Purple "R"
+  else if Game.ReplayInsert and not IsClassicModeRewind then
+    Index := 9  // Blue "R"
+  else if not (RRIsPressed or IsClassicModeRewind) then
+    Index := 8; // Red "R"
+
+  DrawPanelIcon(Index, ReplayIconRect.Left, ReplayIconRect.Top);
+end;
+
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: Char;
@@ -1361,16 +1429,6 @@ begin
         end;
       end else
         SpecialCombine := False;
-
-      if SpecialCombine then
-      begin
-        fInfoFont[CharID].DrawMode := dmCustom;
-        fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
-      end else begin
-        fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, ((CurChar - 1) * 8) * 2, 0);
-      end;
     end;
   end;
 end;
@@ -1391,6 +1449,7 @@ begin
     CreateNewInfoString;
     DrawNewStr;
     DrawCursorInfo;
+    DrawReplayIcon;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1430,18 +1489,19 @@ var
   SrcRect: TRect;
   i: Integer;
 begin
-  // Clear the panel
-  for i := 1 to 14 do
-    fNewDrawStr[i] := ' ';
-
-  // Only load this one when needed
-  GetGraphic('panel_message.png', fIconBmp);
-  SrcRect := Rect(0, 0, 280, 32);
-  i := NUM_FONT_CHARS - 1;
-  fInfoFont[i].SetSize(280, 32);
-  fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-
-  fNewDrawStr[Pos] := FINAL_CHAR;
+  Exit;
+//  // Clear the panel
+//  for i := 1 to 14 do
+//    fNewDrawStr[i] := ' ';
+//
+//  // Only load this one when needed
+//  GetGraphic('panel_message.png', fIconBmp);
+//  SrcRect := Rect(0, 0, 280, 32);
+//  i := NUM_FONT_CHARS - 1;
+//  fInfoFont[i].SetSize(280, 32);
+//  fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+//
+//  fNewDrawStr[Pos] := FINAL_CHAR;
 end;
 
 function TBaseSkillPanel.GetPickupString(P: TGadget): String;
@@ -1672,27 +1732,6 @@ begin
   // Seconds
   S := LeadZeroStr(Time mod 60, 2);
   ModString(fNewDrawStr, S, PosSec);
-end;
-
-procedure TBaseSkillPanel.SetReplayIcon(Pos: Integer);
-var
-  TickCount: Cardinal;
-  BlinkIcon, IsReplaying, IsClassicModeRewind: Boolean;
-begin
-  TickCount := GetTickCount;
-  BlinkIcon := ((TickCount div 500) mod 2) = 0;
-
-  IsReplaying := Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause];
-  IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
-
-  if BlinkIcon or Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
-    fNewDrawStr[Pos] := ' '
-  else if GameParams.PlaybackModeActive and not IsReplaying then
-    fNewDrawStr[Pos] := #101 // Purple "R"
-  else if Game.ReplayInsert and not IsClassicModeRewind then
-    fNewDrawStr[Pos] := #100 // Blue "R"
-  else if not (RRIsPressed or IsClassicModeRewind) then
-    fNewDrawStr[Pos] := #99  // Red "R"
 end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);

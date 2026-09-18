@@ -203,13 +203,11 @@ begin
 
   if GameParams.AmigaTheme then
   begin
-    SetReplayIcon(14);
     SetCollectibleIcon(16);
     SetInfoLemAlive(22);
     SetInfoLemIn(29);
     SetInfoTime(38, 41);
   end else begin
-    SetReplayIcon(14);
     SetCollectibleIcon(16);
     SetInfoLemHatch(20);
     SetInfoLemAlive(26);
