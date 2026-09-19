@@ -22,14 +22,6 @@ type
     function AliveIconRect: TRect; override;
     function ExitIconRect: TRect; override;
     function GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
-
-    procedure CreateNewInfoString; override;
-    function DrawStringLength: Integer; override;
-    function DrawStringTemplate: string; override;
-    function TimeLimitStartIndex: Integer; override;
-    function CursorInfoEndIndex: Integer; override;
-    function LemmingCountStartIndex: Integer; override;
-    function LemmingSavedStartIndex: Integer; override;
   public
     function PanelWidth: Integer; override;
     function PanelHeight: Integer; override;
@@ -66,35 +58,6 @@ begin
   Result := 80;
 end;
 
-function TSkillPanel.DrawStringLength: Integer;
-begin
-  Result := 42;
-end;
-
-function TSkillPanel.DrawStringTemplate: string;
-begin
-  if GameParams.AmigaTheme then
-    Result := '..............' +       // 0 Cursor info
-              '.' + ' ' +              // 14 Replay icon
-              '.' + ' ' +              // 16 Collectible icon
-              'OUT' + ' ...' + ' ' +   // 18 Lemmings out       // 22 LemAlive
-              'IN' + ' ...' + ' ' +    // 26 Lemmings in (home) // 29 LemIn
-              'TIME' + ' .-..'         // 34 Time               // 39 Time limit
-  else
-    Result := '..............' +       // 0 Cursor info
-              '.' + ' ' +              // 14 Replay icon
-              '.' + ' ' +              // 16 Collectible icon
-              #93 + '_...' + ' ' +     // 18 Hatch icon        // 19 LemHatch
-              #94 + '_...' + ' ' +     // 24 Lem icon          // 25 LemAlive
-              #95 + '_...' + ' ' +     // 30 Exit icon         // 31 LemIn
-              #97 + '_.-..';           // 36 Time icon         // 37 Time Limit
-end;
-
-function TSkillPanel.TimeLimitStartIndex: Integer;
-begin
-  Result := 37;
-end;
-
 // First 2 digits = left & top of minimap frame
 // Second 2 digits = width & height of minimap itself
 function TSkillPanel.MinimapRect: TRect;
@@ -117,7 +80,7 @@ begin
   if GameParams.AmigaTheme then
     Result := Rect(0, 0, 0, 0) // No need to show panel hint in Amiga theme
   else
-    Result := Rect(578, 2, 672, 32)
+    Result := Rect(578, 0, 672, 32)
 end;
 
 // Assigns a non-clickable rectangle to the hatch count icon & digits
@@ -199,21 +162,11 @@ begin
   Result := Rect(Left, 4, Right, 32);
 end;
 
-procedure TSkillPanel.CreateNewInfoString;
-begin
-  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
-    SetPanelMessage(1);
-
-  if GameParams.AmigaTheme then
-  begin
-    SetCollectibleIcon(16);
-    SetInfoTime(38, 41);
-  end else begin
-    SetCollectibleIcon(16);
-    SetTimeLimit(37);
-    SetInfoTime(38, 41);
-  end;
-end;
+//procedure TSkillPanel.CreateNewInfoString; // TODO - extract to refactor
+//begin
+//  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
+//    SetPanelMessage(1);
+//end;
 
 function TSkillPanel.GetButtonList: TPanelButtonArray;
 var
@@ -230,27 +183,6 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbNuke;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbSquiggle;
-end;
-
-function TSkillPanel.CursorInfoEndIndex: Integer;
-begin
-  Result := 13;
-end;
-
-function TSkillPanel.LemmingCountStartIndex: Integer;
-begin
-  if GameParams.AmigaTheme then
-    Result := 22
-  else
-    Result := 26;
-end;
-
-function TSkillPanel.LemmingSavedStartIndex: Integer;
-begin
-  if GameParams.AmigaTheme then
-    Result := 29
-  else
-  Result := 32;
 end;
 
 end.

@@ -118,14 +118,11 @@ type
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer; CursorOverInvincible: Boolean = False);
 
     // Drawing routines for the info string at the top
-    function DrawStringLength: Integer; virtual; abstract;
-    function DrawStringTemplate: string; virtual; abstract;
-
-    // Refactor =================
     function GetCursorInfoString: String;
     function GetHatchCountString: String;
     function GetLemsAliveString: String;
     function GetLemsSavedString: String;
+    function GetTimeString: String;
 
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Index, X, Y: Integer);
@@ -133,21 +130,14 @@ type
     procedure DrawHatchInfo;
     procedure DrawLemsAliveInfo;
     procedure DrawLemsSavedInfo;
-    // =========================
+    procedure DrawTimeInfo;
 
-    procedure DrawNewStr;
-      function CursorInfoEndIndex: Integer; virtual; abstract;
-      function LemmingCountStartIndex: Integer; virtual; abstract;
-      function LemmingSavedStartIndex: Integer; virtual; abstract;
-      function TimeLimitStartIndex: Integer; virtual; abstract;
-    procedure CreateNewInfoString; virtual; abstract;
-    procedure SetPanelMessage(Pos: Integer);
-      function GetLemReplayTaskString(L: TLemming): String;
-      function GetSkillString(L: TLemming): String;
-      function GetPickupString(P: TGadget): String;
-    procedure SetInfoTime(PosMin, PosSec: Integer);
-    procedure SetCollectibleIcon(Pos: Integer);
-    procedure SetTimeLimit(Pos: Integer);
+    procedure SetCollectibleIcon(Pos: Integer); // TODO - extract to refactor
+    procedure SetPanelMessage(Pos: Integer); // TODO - extract to refactor
+
+    function GetLemReplayTaskString(L: TLemming): String;
+    function GetSkillString(L: TLemming): String;
+    function GetPickupString(P: TGadget): String;
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -176,6 +166,7 @@ type
     destructor Destroy; override;
 
     procedure PrepareForGame;
+    procedure ClearInfo;
     procedure RefreshInfo;
     procedure SetCursor(aCursor: TCursor);
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
@@ -377,11 +368,6 @@ begin
   fSkillLock.DrawMode := dmBlend;
   fSkillLock.CombineMode := cmMerge;
 
-  fLastDrawnStr := StringOfChar(' ', DrawStringLength);
-  fNewDrawStr := DrawStringTemplate;
-
-  CustomAssert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
-
   if GameParams.AmigaTheme then
     fMinimapViewRectColor := $FF00DD00
   else
@@ -428,7 +414,6 @@ begin
   fMinimap.Free;
 
   fOriginal.Free;
-
   fImage.Free;
   fMinimapImage.Free;
   fPanelButtons.Free;
@@ -1396,54 +1381,52 @@ begin
   end;
 end;
 
-procedure TBaseSkillPanel.DrawNewStr;
+procedure TBaseSkillPanel.DrawTimeInfo;
 var
-  New: Char;
-  CurChar, CharID: Integer;
-  SpecialCombine: Boolean;
-  Red, Blue, Purple, Teal{, Yellow, Orange}: Single;
-begin
+  Icon: Integer;
+  Color: TColor32;
 
-  // Define hue shift colors
-  Red    := -1 / 3;
-  Blue   :=  1 / 4;
-  Purple :=  1 / 2;
-  Teal   :=  1 / 6;
-
-  // Erase previous text there
-  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 16, 32, $00000000);
-
-  for CurChar := 1 to DrawStringLength do
+  function IsTimeRemainingPercent(aPercent: Integer): Boolean;
   begin
-    New := fNewDrawStr[CurChar];
-
-    case New of
-      '%':               CharID := 0;
-      '0'..'9':          CharID := ord(New) - ord('0') + 1;
-      '-':               CharID := 11;
-      'A'..'Z':          CharID := ord(New) - ord('A') + 12;
-      #91 .. FINAL_CHAR: CharID := ord(New) - ord('A') + 12;
-    else CharID := -1;
-    end;
-
-    if (CharID >= 0) then
-    begin
-      if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode)
-        and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
-      begin
-        SpecialCombine := True;
-
-        if Game.IsOutOfTime then
-          fCombineHueShift := Purple
-        else if (Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17}) and not Game.IsSuperLemmingMode then
-          fCombineHueShift := Red
-        else if (Level.Info.TimeLimit * 50 < Game.CurrentIteration + 750 {15 * 50}) and Game.IsSuperLemmingMode then
-          fCombineHueShift := Red
-        else
-          fCombineHueShift := Blue;
-      end;
-    end;
+    Result := ((Level.Info.TimeLimit * 17) - Game.CurrentIteration <=
+               (Level.Info.TimeLimit * 17 * aPercent) div 100);
   end;
+begin
+  if Level.Info.HasTimeLimit then
+  begin
+    Color := clYellow32;
+
+    if Game.IsOutOfTime then
+    begin
+      Color := clRed32;
+      Icon := 7;
+    end else if IsTimeRemainingPercent(35) then
+      Icon := 6  // TODO - alt icon?
+    else if IsTimeRemainingPercent(70) then
+      Icon := 6  // TODO - alt icon?
+    else
+      Icon := 6; // TODO - alt icon?
+  end else begin
+    Color := clLightGreen32;
+    Icon := 6;
+  end;
+
+  DrawPanelIcon(Icon, TimeIconRect.Left, TimeIconRect.Top);
+
+  with fImage.Bitmap do
+  begin
+    Font.Name := 'Hobo Std';
+    Font.Size := 8;
+    RenderText(TimeIconRect.Left + 20, 6, GetTimeString, Color, True);
+  end;
+end;
+
+procedure TBaseSkillPanel.ClearInfo;
+var
+  PanelInfoEnd: Integer;
+begin
+  PanelInfoEnd := TimeIconRect.Right;
+  fImage.Bitmap.FillRectS(0, 0, PanelInfoEnd, 32, $00000000);
 end;
 
 procedure TBaseSkillPanel.RefreshInfo;
@@ -1459,13 +1442,13 @@ begin
       GetButtonHints(i);
 
     // Text info string
-    CreateNewInfoString;
-    DrawNewStr;
+    ClearInfo;
     DrawCursorInfo;
     DrawReplayIcon;
     DrawHatchInfo;
     DrawLemsAliveInfo;
     DrawLemsSavedInfo;
+    DrawTimeInfo;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1696,12 +1679,10 @@ begin
     Result := ' 999';
 end;
 
-procedure TBaseSkillPanel.SetInfoTime(PosMin, PosSec: Integer);
+function TBaseSkillPanel.GetTimeString: String;
 var
   Time : Integer;
-  S: string;
-const
-  LEN = 2;
+  Prefix, Minutes, Seconds: String;
 begin
   if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode) then
   begin
@@ -1717,13 +1698,21 @@ begin
     else
       Time := Game.CurrentIteration div 17;
 
-  // Minutes
-  S := PadL(IntToStr(Time div 60), 2);
-  ModString(fNewDrawStr, S, PosMin);
+  if Game.IsOutOfTime and (Time <> 0) then
+    Prefix := '-'
+  else
+    Prefix := ' ';
 
-  // Seconds
-  S := LeadZeroStr(Time mod 60, 2);
-  ModString(fNewDrawStr, S, PosSec);
+  if Time div 60 >= 100 then
+  begin
+    Minutes := '99';
+    Seconds := '59';
+  end else begin
+    Minutes := PadL(IntToStr(Time div 60), 2);
+    Seconds := LeadZeroStr(Time mod 60, 2);
+  end;
+
+  Result := Prefix + Minutes + ':' + Seconds;
 end;
 
 procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
@@ -1735,14 +1724,6 @@ begin
     fNewDrawStr[Pos] := #92
   else
     fNewDrawStr[Pos] := #91;
-end;
-
-procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
-begin
-  if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode) then
-    fNewDrawStr[Pos] := #98
-  else
-    fNewDrawStr[Pos] := #97;
 end;
 
 
