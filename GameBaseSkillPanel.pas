@@ -94,6 +94,7 @@ type
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
     function ReplayIconRect: TRect; virtual; abstract;
+    function CollectibleIconRect: TRect; virtual; abstract;
     function HatchIconRect: TRect; virtual; abstract;
     function AliveIconRect: TRect; virtual; abstract;
     function ExitIconRect: TRect; virtual; abstract;
@@ -113,6 +114,7 @@ type
 
     // Drawing routines for the info string at the top
     function GetCursorInfoString: String;
+    function GetCollectibleString: String;
     function GetHatchCountString: String;
     function GetLemsAliveString: String;
     function GetLemsSavedString: String;
@@ -122,12 +124,11 @@ type
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Index, X, Y: Integer);
     procedure DrawReplayIcon;
+    procedure DrawCollectibleIcon;
     procedure DrawHatchInfo;
     procedure DrawLemsAliveInfo;
     procedure DrawLemsSavedInfo;
     procedure DrawTimeInfo;
-
-    //procedure SetCollectibleIcon(Pos: Integer); // TODO - extract to refactor
 
     function GetLemReplayTaskString(L: TLemming): String;
     function GetSkillString(L: TLemming): String;
@@ -1253,6 +1254,29 @@ begin
   DrawPanelIcon(Index, ReplayIconRect.Left, ReplayIconRect.Top);
 end;
 
+procedure TBaseSkillPanel.DrawCollectibleIcon;
+var
+  Icon: Integer;
+begin
+  if not LevelHasCollectibles then
+    Exit;
+
+  if (Game.CollectiblesRemaining > 0) then
+    Icon := 0
+  else
+    Icon := 1;
+
+  DrawPanelIcon(Icon, CollectibleIconRect.Left, CollectibleIconRect.Top);
+
+//  with fImage.Bitmap do
+//  begin
+//    Font.Name := 'Hobo Std';
+//    Font.Size := 8;
+//    RenderText(CollectibleIconRect.Left + 28, 6, GetCollectibleString, clLightGreen32, True);
+//  end;
+end;
+end;
+
 procedure TBaseSkillPanel.DrawHatchInfo;
 begin
   DrawPanelIcon(2, HatchIconRect.Left, HatchIconRect.Top);
@@ -1396,6 +1420,7 @@ begin
     ClearInfo;
     DrawCursorInfo;
     DrawReplayIcon;
+    DrawCollectibleIcon;
     DrawHatchInfo;
     DrawLemsAliveInfo;
     DrawLemsSavedInfo;
@@ -1549,6 +1574,18 @@ begin
   end;
 
   Result := S;
+end;
+
+function TBaseSkillPanel.GetCollectibleString: String;
+var
+  C: Integer;
+begin
+  C := Level.Info.CollectibleCount - Game.CollectiblesRemaining;
+
+  if C >= 999 then
+    Result := ' 999'
+  else
+    Result := IntToStr(C);
 end;
 
 function TBaseSkillPanel.GetHatchCountString: String;
@@ -1886,6 +1923,8 @@ begin
 
   if CursorOverMinimap then
                    ButtonHint := 'MINIMAP'
+  else if CursorOverIcon(CollectibleIconRect) and LevelHasCollectibles then
+                   ButtonHint := 'COLLECTIBLES'
   else if CursorOverIcon(HatchIconRect) then
                    ButtonHint := 'TO SPAWN'
   else if CursorOverIcon(AliveIconRect) then
@@ -2000,6 +2039,7 @@ var
 begin
   Result := False or CursorOverSkillButton(aButton)
                   or CursorOverIcon(ReplayIconRect)
+                  or CursorOverIcon(CollectibleIconRect)
                   or CursorOverIcon(HatchIconRect)
                   or CursorOverIcon(AliveIconRect)
                   or CursorOverIcon(ExitIconRect)
@@ -2074,6 +2114,11 @@ begin
     Result := aSI
   else
     Result := SpawnIntervalToReleaseRate(aSI);
+end;
+
+function TBaseSkillPanel.LevelHasCollectibles: Boolean;
+begin
+  Result := Level.Info.CollectibleCount > 0;
 end;
 
 end.

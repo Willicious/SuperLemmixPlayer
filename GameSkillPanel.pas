@@ -16,11 +16,11 @@ type
 
     function MinimapRect: TRect; override;
     function ReplayIconRect: TRect; override;
-    function TimeIconRect: TRect; override;
-
+    function CollectibleIconRect: TRect; override;
     function HatchIconRect: TRect; override;
     function AliveIconRect: TRect; override;
     function ExitIconRect: TRect; override;
+    function TimeIconRect: TRect; override;
     function GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
   public
     function PanelWidth: Integer; override;
@@ -70,7 +70,12 @@ end;
 
 function TSkillPanel.ReplayIconRect: TRect;
 begin
-  Result := Rect(212, 4, 232, 32); // TODO - ensure correct
+  Result := Rect(180, 4, 232, 32); // TODO - ensure correct
+end;
+
+function TSkillPanel.CollectibleIconRect: TRect;
+begin
+  Result := Rect(212, 0, 232, 32); // TODO - ensure correct
 end;
 
 function TSkillPanel.TimeIconRect: TRect;
