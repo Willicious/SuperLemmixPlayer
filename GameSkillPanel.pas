@@ -4,6 +4,7 @@ unit GameSkillPanel;
 interface
 
 uses
+  Math,
   LemTypes,
   Classes, GR32,
   GameWindowInterface, GameBaseSkillPanel,
@@ -17,11 +18,11 @@ type
     function MinimapRect: TRect; override;
     function ReplayIconRect: TRect; override;
     function CollectibleIconRect: TRect; override;
+    function TalismanIconRect: TRect; override;
     function HatchIconRect: TRect; override;
     function AliveIconRect: TRect; override;
     function ExitIconRect: TRect; override;
     function TimeIconRect: TRect; override;
-    function GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
   public
     function PanelWidth: Integer; override;
     function PanelHeight: Integer; override;
@@ -70,59 +71,40 @@ end;
 
 function TSkillPanel.ReplayIconRect: TRect;
 begin
-  Result := Rect(180, 4, 232, 32); // TODO - ensure correct
+  Result := Rect(200, 0, 220, 32);
 end;
 
 function TSkillPanel.CollectibleIconRect: TRect;
-begin
-  Result := Rect(212, 0, 232, 32); // TODO - ensure correct
+begin                 // add 36 if including text
+  Result := Rect(240, 0, 266, 32);
 end;
 
-function TSkillPanel.TimeIconRect: TRect;
+function TSkillPanel.TalismanIconRect: TRect;
 begin
-  Result := Rect(578, 0, 672, 32); // TODO - ensure correct
+  Result := Rect(280, 0, 306, 32);
 end;
 
 function TSkillPanel.HatchIconRect: TRect;
 begin
-  Result := Rect(288, 0, 340, 32); // TODO - ensure correct
+  var Left := IfThen(LevelHasCollectibles or LevelHasTalismans, 360, 280);
+  Result := Rect(Left, 0, Left + 60, 32);
 end;
 
 function TSkillPanel.AliveIconRect: TRect;
 begin
-  Result := Rect(386, 0, 432, 32); // TODO - ensure correct
+  var Left := IfThen(LevelHasCollectibles or LevelHasTalismans, 440, 380);
+  Result := Rect(Left, 0, Left + 60, 32);
 end;
 
 function TSkillPanel.ExitIconRect: TRect;
 begin
-  Result := Rect(478, 0, 510, 32); // TODO - ensure correct
+  var Left := IfThen(LevelHasCollectibles or LevelHasTalismans, 520, 480);
+  Result := Rect(Left, 0, Left + 60, 32);
 end;
 
-// TODO - Simplify & use
-function TSkillPanel.GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
-var
-  Left, Right, DigitCount: Integer;
+function TSkillPanel.TimeIconRect: TRect;
 begin
-  if aValue >= 0 then // For positive numbers
-  begin
-    if aValue < 10 then
-      DigitCount := 1
-    else if aValue < 100 then
-      DigitCount := 2
-    else
-      DigitCount := 3;
-  end else
-  begin
-    if aValue > -10 then // For negative numbers, including the '-' sign
-      DigitCount := 2
-    else
-      DigitCount := 3;
-  end;
-
-  Left := aPos;
-  Right := Left + aOffset + (DigitCount * 16);
-
-  Result := Rect(Left, 4, Right, 32);
+  Result := Rect(600, 0, 676, 32);
 end;
 
 function TSkillPanel.GetButtonList: TPanelButtonArray;

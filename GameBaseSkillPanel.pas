@@ -10,7 +10,7 @@ uses
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemAnimationSet, LemMetaAnimation, LemNeoLevelPack, LemProjectile,
-  LemCore, LemLemming, LemGame, LemLevel, LemGadgets,
+  LemCore, LemLemming, LemGame, LemLevel, LemGadgets, LemTalisman,
   SharedGlobals;
 
 type
@@ -27,6 +27,8 @@ type
     fGame                 : TLemmingGame;
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
+    fTalismanIconIndex    : Integer;
+    fCurrentTalisman      : Integer;
 
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
@@ -92,6 +94,7 @@ type
     function MinimapHeight: Integer;
     function ReplayIconRect: TRect; virtual; abstract;
     function CollectibleIconRect: TRect; virtual; abstract;
+    function TalismanIconRect: TRect; virtual; abstract;
     function HatchIconRect: TRect; virtual; abstract;
     function AliveIconRect: TRect; virtual; abstract;
     function ExitIconRect: TRect; virtual; abstract;
@@ -122,6 +125,7 @@ type
     procedure DrawPanelIcon(Index, X, Y: Integer);
     procedure DrawReplayIcon;
     procedure DrawCollectibleIcon;
+    procedure DrawTalismanIcon(Index: Integer);
     procedure DrawHatchInfo;
     procedure DrawLemsAliveInfo;
     procedure DrawLemsSavedInfo;
@@ -150,6 +154,7 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
+    procedure HandleTalismanIconClick;
 
     function GetSpawnIntervalValue(aSI: Integer): Integer; // Returns the SI or the equivalent RR, depending on user's settings
   public
@@ -176,6 +181,9 @@ type
 
     procedure ResizePanelWithWindow;
     procedure GetButtonHints(aButton: TSkillPanelButton);
+
+    function LevelHasCollectibles: Boolean;
+    function LevelHasTalismans: Boolean;
 
     function PanelWidth: Integer; virtual; abstract;
     function PanelHeight: Integer; virtual; abstract;
@@ -357,6 +365,8 @@ begin
     fSkillOvercount[i] := TBitmap32.Create;
 
   fRRIsPressed := False;
+  fTalismanIconIndex := 11;
+  fCurrentTalisman := -1;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -546,6 +556,7 @@ var
 begin
   AddGraphic('panel_icons.png');
   AddGraphic('replay_icons.png');
+  AddGraphic('talisman_icons.png');
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
@@ -1270,6 +1281,13 @@ begin
 //    RenderText(CollectibleIconRect.Left + 28, 6, GetCollectibleString, clLightGreen32, True);
 //  end;
 end;
+
+procedure TBaseSkillPanel.DrawTalismanIcon(Index: Integer);
+begin
+  if not LevelHasTalismans then
+    Exit;
+
+  DrawPanelIcon(Index, TalismanIconRect.Left, TalismanIconRect.Top);
 end;
 
 procedure TBaseSkillPanel.DrawHatchInfo;
@@ -1416,6 +1434,7 @@ begin
     DrawCursorInfo;
     DrawReplayIcon;
     DrawCollectibleIcon;
+    DrawTalismanIcon(fTalismanIconIndex);
     DrawHatchInfo;
     DrawLemsAliveInfo;
     DrawLemsSavedInfo;
@@ -1699,6 +1718,9 @@ begin
     Game.RegainControl(True);
   end;
 
+  if CursorOverIcon(TalismanIconRect) then
+    HandleTalismanIconClick;
+
   { Although we don't want to attempt game control whilst in HyperSpeed,
     we do want the Rewind, FF and Turbo keys to respond }
   if fGameWindow.IsHyperSpeed and not (fGameWindow.GameSpeed in [gspRewind, gspFF, gspTurbo]) then Exit;
@@ -1909,7 +1931,13 @@ begin
                    ButtonHint := 'MINIMAP'
   else if CursorOverIcon(CollectibleIconRect) and LevelHasCollectibles then
                    ButtonHint := 'COLLECTIBLES'
-  else if CursorOverIcon(HatchIconRect) then
+  else if CursorOverIcon(TalismanIconRect) and LevelHasTalismans then
+  begin
+    if fCurrentTalisman = -1 then
+                   ButtonHint := 'TALISMANS'
+    else
+                   ButtonHint := 'TALISMAN ' + IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
+  end else if CursorOverIcon(HatchIconRect) then
                    ButtonHint := 'TO SPAWN'
   else if CursorOverIcon(AliveIconRect) then
                    ButtonHint := 'AVAILABLE'
@@ -2024,11 +2052,45 @@ begin
   Result := False or CursorOverSkillButton(aButton)
                   or CursorOverIcon(ReplayIconRect)
                   or CursorOverIcon(CollectibleIconRect)
+                  or CursorOverIcon(TalismanIconRect)
                   or CursorOverIcon(HatchIconRect)
                   or CursorOverIcon(AliveIconRect)
                   or CursorOverIcon(ExitIconRect)
                   or CursorOverIcon(TimeIconRect)
                   or CursorOverMinimap;
+end;
+
+procedure TBaseSkillPanel.HandleTalismanIconClick;
+  procedure DisplayTalismanInfo(Tal: Integer);
+  var
+    Index: Integer;
+  begin
+    if Tal < 0 then
+      Index := 11
+    else begin
+      case Level.Talismans[Tal].Color of
+        tcBronze: Index := 12;
+        tcSilver: Index := 13;
+        tcGold:   Index := 14;
+      end;
+
+      // TODO - if Talisman is completed, add 3 to index
+      // TODO - Show talisman requirements in panel
+    end;
+
+    fTalismanIconIndex := Index;
+    DrawTalismanIcon(fTalismanIconIndex);
+  end;
+begin
+  if not LevelHasTalismans then
+    Exit;
+
+  if fCurrentTalisman < Level.Talismans.Count - 1 then
+    Inc(fCurrentTalisman)
+  else
+    fCurrentTalisman := -1;
+
+  DisplayTalismanInfo(fCurrentTalisman);
 end;
 
 {-----------------------------------------
@@ -2103,6 +2165,11 @@ end;
 function TBaseSkillPanel.LevelHasCollectibles: Boolean;
 begin
   Result := Level.Info.CollectibleCount > 0;
+end;
+
+function TBaseSkillPanel.LevelHasTalismans: Boolean;
+begin
+  Result := Level.Talismans.Count > 0;
 end;
 
 end.
