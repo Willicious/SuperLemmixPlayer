@@ -38,16 +38,12 @@ type
     fSelectDx             : Integer;
     fOnMinimapClick       : TMinimapClickEvent; // Event handler for minimap
 
-    fCombineHueShift      : Single;
-
     procedure LoadPanelIcons;
-    procedure LoadPanelFont;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
 
     function GetLevel: TLevel;
 
-    procedure CombineShift(F: TColor32; var B: TColor32; M: Cardinal);
     procedure SetShowUsedSkills(const Value: Boolean);
   protected
     fGameWindow           : IGameWindow;
@@ -85,8 +81,6 @@ type
     fHighlitSkill         : TSkillPanelButton;
     fLastHighlitSkill     : TSkillPanelButton; // To avoid sounds when shouldn't be played
 
-    fLastDrawnStr         : String;
-    fNewDrawStr           : String;
     fButtonHint           : String;
 
     // Global stuff
@@ -133,7 +127,7 @@ type
     procedure DrawLemsSavedInfo;
     procedure DrawTimeInfo;
 
-    procedure SetCollectibleIcon(Pos: Integer); // TODO - extract to refactor
+    //procedure SetCollectibleIcon(Pos: Integer); // TODO - extract to refactor
 
     function GetLemReplayTaskString(L: TLemming): String;
     function GetSkillString(L: TLemming): String;
@@ -213,12 +207,6 @@ type
     property ButtonHint: String read fButtonHint write fButtonHint;
   end;
 
-  procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
-
-const
-  NUM_FONT_CHARS = 50; // <--- If increasing this
-  FINAL_CHAR = #102;   // <--- You also need to increase this
-
 const
   // WARNING: The order of the strings has to correspond to the one
   //          of TSkillPanelButton in LemCore.pas!
@@ -253,15 +241,6 @@ uses
   LemTypes, LemReplay, LemStrings, LemNeoTheme,
   LemmixHotkeys,
   FSuperLemmixLevelSelect;
-
-procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
-var
-  i: Integer;
-begin
-  {  Classes, Controls, GR32, GR32_Image, GR32_Layers,}
-  for i := 1 to Length(aNew) do
-    aString[aStart + i - 1] := aNew[i];
-end;
 
 
 constructor TBaseSkillPanel.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
@@ -535,44 +514,6 @@ begin
 
   GetGraphic(ButtonName, fPanelButtons);
   fPanelButtons.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
-end;
-
-procedure TBaseSkillPanel.LoadPanelFont;
-var
-  SrcRect: TRect;
-  i: Integer;
-begin
-  Exit;
-//  // Load first the characters
-//  GetGraphic('panel_font.png', fIconBmp);
-//  SrcRect := Rect(0, 0, 16, 32);
-//  for i := 0 to 37 do
-//  begin
-//    fInfoFont[i].SetSize(16, 32);
-//    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-//    OffsetRect(SrcRect, 16, 0);
-//  end;
-
-//  // Load now the icons for the text panel
-//  GetGraphic('panel_icons.png', fIconBmp);
-//  fPanelIcons.Assign(fIconBmp);
-//  SrcRect := Rect(0, 0, 24, 32);
-//  for i := 38 to 45 do
-//  begin
-//    fInfoFont[i].SetSize(24, 32);
-//    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-//    OffsetRect(SrcRect, 24, 0);
-//  end;
-
-//  // Load now the replay icons for the text panel
-//  GetGraphic('replay_icons.png', fIconBmp);
-//  SrcRect := Rect(0, 0, 24, 32);
-//  for i := 46 to NUM_FONT_CHARS - 1 do
-//  begin
-//    fInfoFont[i].SetSize(24, 32);
-//    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-//    OffsetRect(SrcRect, 24, 0);
-//  end;
 end;
 
 procedure TBaseSkillPanel.LoadPanelIcons;
@@ -873,7 +814,6 @@ begin
 
   // Load the remaining graphics for icons, ...
   LoadPanelIcons;
-  LoadPanelFont;
   LoadSkillIcons;
   LoadSkillFont;
 end;
@@ -1261,16 +1201,6 @@ end;
 {-----------------------------------------
     Info string at top
 -----------------------------------------}
-procedure TBaseSkillPanel.CombineShift(F: TColor32; var B: TColor32; M: Cardinal);
-var
-  H, S, V: Single;
-begin
-  if AlphaComponent(F) = 0 then Exit;
-  RGBToHSV(F, H, S, V);
-  H := H + fCombineHueShift;
-  B := HSVToRGB(H, S, V);
-end;
-
 procedure TBaseSkillPanel.DrawCursorInfo;
 var
   Color: TColor32;
@@ -1304,6 +1234,7 @@ var
   TickCount: Cardinal;
   BlinkIcon, IsReplaying, IsClassicModeRewind: Boolean;
 begin
+  Index := -2;
   TickCount := GetTickCount;
   BlinkIcon := ((TickCount div 500) mod 2) = 0;
 
@@ -1470,7 +1401,6 @@ begin
     DrawLemsSavedInfo;
     DrawTimeInfo;
     DrawPanelMessage;
-    fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
     DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
@@ -1705,16 +1635,16 @@ begin
   Result := Prefix + Minutes + ':' + Seconds;
 end;
 
-procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer);
-begin
-  if (Level.Info.CollectibleCount <= 0)
-  or (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
-    fNewDrawStr[Pos] := ' '
-  else if Game.CollectiblesCompleted then
-    fNewDrawStr[Pos] := #92
-  else
-    fNewDrawStr[Pos] := #91;
-end;
+//procedure TBaseSkillPanel.SetCollectibleIcon(Pos: Integer); // TODO - Extract to refactor
+//begin
+//  if (Level.Info.CollectibleCount <= 0)
+//  or (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
+//    fNewDrawStr[Pos] := ' '
+//  else if Game.CollectiblesCompleted then
+//    fNewDrawStr[Pos] := #92
+//  else
+//    fNewDrawStr[Pos] := #91;
+//end;
 
 
 {-----------------------------------------
