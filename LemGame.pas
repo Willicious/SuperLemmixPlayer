@@ -59,8 +59,8 @@ type
       ZombieMap: TByteMap; // Still needed for now, because there is no proper method to set the ZombieMap
       CurrentIteration: Integer;
       ClockFrame: Integer;
-      ButtonsRemain: Integer;
-      CollectiblesRemain: Integer;
+      ButtonsRemaining: Integer;
+      CollectiblesRemaining: Integer;
       LemmingsToRelease: Integer;
       LemmingsCloned: Integer;
       LemmingsOut: Integer;
@@ -115,7 +115,6 @@ type
 
     fTalismanReceived          : Boolean;
     fNewTalismanReceived       : Boolean;
-    fCollectiblesCompleted     : Boolean;
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // Currently selected skill restricted by F3-F9
 
@@ -177,8 +176,8 @@ type
     fCurrentIteration          : Integer;
     fSelectedLemFutureTaskCount: Integer;
     fClockFrame                : Integer; // 17 frames is one game-second
-    ButtonsRemain              : Byte;
-    CollectiblesRemain         : Byte;
+    fButtonsRemaining          : Byte;
+    fCollectiblesRemaining     : Byte;
     LemmingsToRelease          : Integer; // Number of lemmings that were created
     LemmingsCloned             : Integer; // Number of cloned lemmings
     LemmingsOut                : Integer; // Number of lemmings currently walking around
@@ -559,7 +558,8 @@ type
     property ClockFrame: Integer read fClockFrame;
     property CursorPoint: TPoint read fCursorPoint write fCursorPoint;
     property GameFinished: Boolean read fGameFinished;
-    property CollectiblesCompleted: Boolean read fCollectiblesCompleted write fCollectiblesCompleted;
+    property CollectiblesRemaining: Byte read fCollectiblesRemaining;
+    property ButtonsRemaining: Byte read fButtonsRemaining;
     property Level: TLevel read fLevel write fLevel;
     property MessageQueue: TGameMessageQueue read fMessageQueue;
     property Playing: Boolean read fPlaying write fPlaying;
@@ -801,8 +801,8 @@ begin
   aState.ZombieMap.Assign(ZombieMap);
   aState.CurrentIteration := fCurrentIteration;
   aState.ClockFrame := fClockFrame;
-  aState.ButtonsRemain := ButtonsRemain;
-  aState.CollectiblesRemain := CollectiblesRemain;
+  aState.ButtonsRemaining := fButtonsRemaining;
+  aState.CollectiblesRemaining := fCollectiblesRemaining;
   aState.LemmingsToRelease := LemmingsToRelease;
   aState.LemmingsCloned := LemmingsCloned;
   aState.LemmingsOut := LemmingsOut;
@@ -859,8 +859,8 @@ begin
   ZombieMap.Assign(aState.ZombieMap);
   fCurrentIteration := aState.CurrentIteration;
   fClockFrame := aState.ClockFrame;
-  ButtonsRemain := aState.ButtonsRemain;
-  CollectiblesRemain := aState.CollectiblesRemain;
+  fButtonsRemaining := aState.ButtonsRemaining;
+  fCollectiblesRemaining := aState.CollectiblesRemaining;
   LemmingsToRelease := aState.LemmingsToRelease;
   LemmingsCloned := aState.LemmingsCloned;
   LemmingsOut := aState.LemmingsOut;
@@ -1243,8 +1243,8 @@ begin
 
   P := AppPath;
 
-  ButtonsRemain := 0;
-  CollectiblesRemain := 0;
+  fButtonsRemaining := 0;
+  fCollectiblesRemaining := 0;
 
   fHitTestAutoFail := False;
 
@@ -1393,7 +1393,6 @@ begin
   fCurrentIteration := 0;
   fClockFrame := 0;
   HatchesOpened := False;
-  CollectiblesCompleted := False;
 
   SpawnIntervalModifier := 0;
   IsInfiniteSkillsMode := False;
@@ -1433,8 +1432,8 @@ begin
 
   NextLemmingCountDown := 20;
 
-  ButtonsRemain := 0;
-  CollectiblesRemain := 0;
+  fButtonsRemaining := 0;
+  fCollectiblesRemaining := 0;
 
   // Create the list of interactive objects
   Gadgets.Clear;
@@ -1446,11 +1445,11 @@ begin
     Gadget := Gadgets[i];
     // Update number of buttons
     if Gadget.TriggerEffect = DOM_BUTTON then
-      Inc(ButtonsRemain);
+      Inc(fButtonsRemaining);
 
     // Update number of collectibles
     if Gadget.TriggerEffect = DOM_COLLECTIBLE then
-      Inc(CollectiblesRemain);
+      Inc(fCollectiblesRemaining);
   end;
 
   InitializeAllTriggerMaps;
@@ -2418,7 +2417,7 @@ begin
       DOM_EXIT:       WriteTriggerMap(ExitMap, Gadgets[i].TriggerRect);
       DOM_LOCKEXIT: begin
                       WriteTriggerMap(LockedExitMap, Gadgets[i].TriggerRect);
-                      if ButtonsRemain = 0 then Gadgets[i].CurrentFrame := 0;
+                      if fButtonsRemaining = 0 then Gadgets[i].CurrentFrame := 0;
                     end;
       DOM_WATER:         WriteTriggerMap(WaterMap, Gadgets[i].TriggerRect);
       DOM_FIRE:          WriteTriggerMap(FireMap, Gadgets[i].TriggerRect);
@@ -3539,7 +3538,7 @@ begin
 
   case TriggerType of
     trExit:         Result := ReadTriggerMap(X, Y, ExitMap)
-                           or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
+                           or ((fButtonsRemaining = 0) and ReadTriggerMap(X, Y, LockedExitMap));
     trForceLeft:    Result := (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT)
                            or ReadTriggerMap(X, Y, ForceLeftMap);
     trForceRight:   Result := (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT)
@@ -3601,7 +3600,7 @@ begin
     end;
 
     // Additional checks for locked exit
-    if (Gadget.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
+    if (Gadget.TriggerEffect = DOM_LOCKEXIT) and not (fButtonsRemaining = 0) then
       GadgetFound := False;
     // Additional check for any exit
     if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) and (Gadget.RemainingLemmingsCount = 0) then // We specifically must not use <= 0 here, as -1 = no limit
@@ -3831,11 +3830,10 @@ begin
     CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
 
   Gadget.Triggered := True;
-  Dec(CollectiblesRemain);
+  Dec(fCollectiblesRemaining);
 
-  if (CollectiblesRemain = 0) then
+  if (fCollectiblesRemaining = 0) then
   begin
-    CollectiblesCompleted := True;
     CueSoundEffect(SFX_CollectAll);
 
     // Optionally apply invincibility to the first lem who reaches the final collectible
@@ -3844,8 +3842,7 @@ begin
       if L.LemIsNeutral then L.LemIsNeutral := False;
       L.LemIsInvincible := True;
     end;
-  end else
-    CollectiblesCompleted := False;
+  end;
 end;
 
 function TLemmingGame.HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -3863,9 +3860,9 @@ begin
   Gadget := Gadgets[GadgetID];
   CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
   Gadget.Triggered := True;
-  Dec(ButtonsRemain);
+  Dec(fButtonsRemaining);
 
-  if ButtonsRemain = 0 then
+  if fButtonsRemaining = 0 then
   begin
     for n := 0 to (Gadgets.Count - 1) do
       if Gadgets[n].TriggerEffect = DOM_LOCKEXIT then
@@ -7835,7 +7832,7 @@ begin
 
   // Continue updating collectibles records for each new lem saved beyond the rescue count
   if LemmingsIn >= Level.Info.RescueCount then
-    NewRecs.CollectiblesGathered.Value := Level.Info.CollectibleCount - CollectiblesRemain;
+    NewRecs.CollectiblesGathered.Value := Level.Info.CollectibleCount - fCollectiblesRemaining;
 
   if fReplayManager.IsThisUsersReplay then
   begin
