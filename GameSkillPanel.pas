@@ -169,7 +169,8 @@ begin
   else
     SaveCount := Level.Info.RescueCount;
 
-  Result := GetPanelRect(Left, ThemeOffset, SaveCount)
+  Result := Rect(478, 0, 510, 32);
+  //Result := GetPanelRect(Left, ThemeOffset, SaveCount)
 end;
 
 function TSkillPanel.GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
@@ -206,12 +207,9 @@ begin
   if GameParams.AmigaTheme then
   begin
     SetCollectibleIcon(16);
-    SetInfoLemIn(29);
     SetInfoTime(38, 41);
   end else begin
     SetCollectibleIcon(16);
-    SetExitIcon(31);
-    SetInfoLemIn(32);
     SetTimeLimit(37);
     SetInfoTime(38, 41);
   end;

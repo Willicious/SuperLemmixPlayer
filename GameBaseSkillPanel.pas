@@ -125,12 +125,14 @@ type
     function GetCursorInfoString: String;
     function GetHatchCountString: String;
     function GetLemsAliveString: String;
+    function GetLemsSavedString: String;
 
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Index, X, Y: Integer);
     procedure DrawReplayIcon;
     procedure DrawHatchInfo;
     procedure DrawLemsAliveInfo;
+    procedure DrawLemsSavedInfo;
     // =========================
 
     procedure DrawNewStr;
@@ -143,11 +145,9 @@ type
       function GetLemReplayTaskString(L: TLemming): String;
       function GetSkillString(L: TLemming): String;
       function GetPickupString(P: TGadget): String;
-    procedure SetInfoLemIn(Pos: Integer);
     procedure SetInfoTime(PosMin, PosSec: Integer);
     procedure SetCollectibleIcon(Pos: Integer);
     procedure SetTimeLimit(Pos: Integer);
-    procedure SetExitIcon(Pos: Integer);
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -1372,6 +1372,30 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawLemsSavedInfo;
+var
+  Color: TColor32;
+  Icon: Integer;
+begin
+  if (Game.LemmingsSaved >= Level.Info.RescueCount) then
+  begin
+    Color := clTeal32;
+    Icon := 5;
+  end else begin
+    Color := clLightGreen32;
+    Icon := 4;
+  end;
+
+  DrawPanelIcon(Icon, ExitIconRect.Left, ExitIconRect.Top);
+
+  with fImage.Bitmap do
+  begin
+    Font.Name := 'Hobo Std';
+    Font.Size := 8;
+    RenderText(ExitIconRect.Left + 32, 6, GetLemsSavedString, Color, True);
+  end;
+end;
+
 procedure TBaseSkillPanel.DrawNewStr;
 var
   New: Char;
@@ -1393,12 +1417,6 @@ begin
   begin
     New := fNewDrawStr[CurChar];
 
-    if CurChar <= CursorInfoEndIndex then
-      Continue;
-
-    if (CurChar > LemmingCountStartIndex) and (CurChar <= LemmingCountStartIndex + 5) then
-      Continue;
-
     case New of
       '%':               CharID := 0;
       '0'..'9':          CharID := ord(New) - ord('0') + 1;
@@ -1410,22 +1428,7 @@ begin
 
     if (CharID >= 0) then
     begin
-      if (CurChar > LemmingSavedStartIndex) and (CurChar <= LemmingSavedStartIndex + 4) then
-      begin
-        var LevelPassed := Game.LemmingsSaved >= Level.Info.RescueCount;
-        if CursorOverIcon(ExitIconRect) and GameParams.AmigaTheme and not LevelPassed then
-        begin
-          SpecialCombine := True;
-          fCombineHueShift := Teal;
-        end else begin
-          if not LevelPassed then
-          begin
-            SpecialCombine := True;
-            fCombineHueShift := Blue;
-          end else
-            SpecialCombine := False;
-        end;
-      end else if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode)
+      if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode)
         and (CurChar > TimeLimitStartIndex) and (CurChar <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := True;
@@ -1462,6 +1465,7 @@ begin
     DrawReplayIcon;
     DrawHatchInfo;
     DrawLemsAliveInfo;
+    DrawLemsSavedInfo;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1665,12 +1669,9 @@ begin
     Result := IntToStr(LemNum);
 end;
 
-procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
+function TBaseSkillPanel.GetLemsSavedString: String;
 var
   ToSave, Required, TotalSaved: Integer;
-  S: string;
-const
-  LEN = 4;
 begin
   TotalSaved := Game.LemmingsSaved;
   Required := Level.Info.RescueCount;
@@ -1679,25 +1680,20 @@ begin
   if GameParams.AmigaTheme then
   begin
     if CursorOverIcon(ExitIconRect) and (ToSave > 0) then
-      S := IntToStr(Required)
+      Result := IntToStr(Required)
     else
-      S := IntToStr(TotalSaved);
+      Result := IntToStr(TotalSaved);
   end else begin
     if (ToSave < 0) then
-      S := IntToStr(TotalSaved)
+      Result := IntToStr(TotalSaved)
   else
-      S := IntToStr(ToSave);
+      Result := IntToStr(ToSave);
   end;
 
   if (TotalSaved <= -99) or (ToSave <= -99) then // Should never happen
-    S := ' -99'
+    Result := ' -99'
   else if (TotalSaved >= 999) or (Required >= 999) or (ToSave >= 999) then
-    S := ' 999'
-  else if Length(S) < LEN then
-    S := PadL(PadR(S, LEN - 1), LEN)
-  else;
-
-  ModString(fNewDrawStr, S, Pos);
+    Result := ' 999';
 end;
 
 procedure TBaseSkillPanel.SetInfoTime(PosMin, PosSec: Integer);
@@ -1747,14 +1743,6 @@ begin
     fNewDrawStr[Pos] := #98
   else
     fNewDrawStr[Pos] := #97;
-end;
-
-procedure TBaseSkillPanel.SetExitIcon(Pos: Integer);
-begin
-  if (Game.LemmingsSaved >= Level.Info.RescueCount) then
-    fNewDrawStr[Pos] := #96
-  else
-    fNewDrawStr[Pos] := #95;
 end;
 
 
