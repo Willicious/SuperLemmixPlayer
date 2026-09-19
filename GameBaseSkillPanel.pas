@@ -1,6 +1,5 @@
 unit GameBaseSkillPanel;
 
-// TODO - Completely redo the entire info string
 // TODO - Show hotkey labels on panel buttons
 // TODO - Add clickable talisman info button
 
@@ -29,10 +28,8 @@ type
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
 
-    // Refactor ====================
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
-    // ============================
 
     fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
@@ -153,8 +150,8 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
-    function GetSpawnIntervalValue(aSI: Integer): Integer; // Returns the SI or the equivalent RR, depending on user's settings
 
+    function GetSpawnIntervalValue(aSI: Integer): Integer; // Returns the SI or the equivalent RR, depending on user's settings
   public
     constructor Create(aOwner: TComponent); override;
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); virtual;
@@ -547,8 +544,6 @@ var
     end;
   end;
 begin
-  fPanelIcons := TBitmap32.Create;
-
   AddGraphic('panel_icons.png');
   AddGraphic('replay_icons.png');
 end;
@@ -1231,11 +1226,11 @@ end;
 
 procedure TBaseSkillPanel.DrawReplayIcon;
 var
-  Index: Integer;
+  Icon: Integer;
   TickCount: Cardinal;
   BlinkIcon, IsReplaying, IsClassicModeRewind: Boolean;
 begin
-  Index := -2;
+  Icon := -2;
   TickCount := GetTickCount;
   BlinkIcon := ((TickCount div 500) mod 2) = 0;
 
@@ -1243,15 +1238,15 @@ begin
   IsClassicModeRewind := (GameParams.ClassicMode and (fGameWindow.GameSpeed = gspRewind));
 
   if BlinkIcon or Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
-    Index := -1
+    Icon := -1
   else if GameParams.PlaybackModeActive and not IsReplaying then
-    Index := 10 // Purple "R"
+    Icon := 10 // Purple "R"
   else if Game.ReplayInsert and not IsClassicModeRewind then
-    Index := 9  // Blue "R"
+    Icon := 9  // Blue "R"
   else if not (RRIsPressed or IsClassicModeRewind) then
-    Index := 8; // Red "R"
+    Icon := 8; // Red "R"
 
-  DrawPanelIcon(Index, ReplayIconRect.Left, ReplayIconRect.Top);
+  DrawPanelIcon(Icon, ReplayIconRect.Left - 4, ReplayIconRect.Top);
 end;
 
 procedure TBaseSkillPanel.DrawCollectibleIcon;
@@ -1372,7 +1367,7 @@ begin
   begin
     Font.Name := 'Hobo Std';
     Font.Size := 8;
-    RenderText(TimeIconRect.Left + 20, 6, GetTimeString, Color, True);
+    RenderText(TimeIconRect.Left + 28, 6, GetTimeString, Color, True);
   end;
 end;
 
