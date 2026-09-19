@@ -124,6 +124,7 @@ type
     function GetLemsSavedString: String;
     function GetTimeString: String;
 
+    procedure DrawPanelMessage;
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Index, X, Y: Integer);
     procedure DrawReplayIcon;
@@ -133,7 +134,6 @@ type
     procedure DrawTimeInfo;
 
     procedure SetCollectibleIcon(Pos: Integer); // TODO - extract to refactor
-    procedure SetPanelMessage(Pos: Integer); // TODO - extract to refactor
 
     function GetLemReplayTaskString(L: TLemming): String;
     function GetSkillString(L: TLemming): String;
@@ -1421,6 +1421,26 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawPanelMessage;
+begin
+  if not Game.StateIsUnplayable then
+    Exit;
+
+  if Game.ShouldExitToPostview then
+    Exit;
+
+  ClearInfo;
+
+  with fImage.Bitmap do
+  begin
+    Font.Name := 'Hobo Std';
+    Font.Size := 8;
+
+    RenderText(4,   6, 'No lemmings remaining!', clLightGreen32, True);
+    RenderText(200, 6, 'Rewind or Restart to continue...', clCornflowerBlue32, True);
+  end;
+end;
+
 procedure TBaseSkillPanel.ClearInfo;
 var
   PanelInfoEnd: Integer;
@@ -1449,6 +1469,7 @@ begin
     DrawLemsAliveInfo;
     DrawLemsSavedInfo;
     DrawTimeInfo;
+    DrawPanelMessage;
     fLastDrawnStr := fNewDrawStr;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -1481,26 +1502,6 @@ begin
   finally
     Image.EndUpdate;
   end;
-end;
-
-procedure TBaseSkillPanel.SetPanelMessage(Pos: Integer);
-var
-  SrcRect: TRect;
-  i: Integer;
-begin
-  Exit;
-//  // Clear the panel
-//  for i := 1 to 14 do
-//    fNewDrawStr[i] := ' ';
-//
-//  // Only load this one when needed
-//  GetGraphic('panel_message.png', fIconBmp);
-//  SrcRect := Rect(0, 0, 280, 32);
-//  i := NUM_FONT_CHARS - 1;
-//  fInfoFont[i].SetSize(280, 32);
-//  fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-//
-//  fNewDrawStr[Pos] := FINAL_CHAR;
 end;
 
 function TBaseSkillPanel.GetPickupString(P: TGadget): String;

@@ -120,12 +120,6 @@ begin
   Result := Rect(Left, 4, Right, 32);
 end;
 
-//procedure TSkillPanel.CreateNewInfoString; // TODO - extract to refactor
-//begin
-//  if (Game.StateIsUnplayable and not Game.ShouldExitToPostview) then
-//    SetPanelMessage(1);
-//end;
-
 function TSkillPanel.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
