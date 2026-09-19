@@ -68,74 +68,32 @@ begin
     Result := Rect(710, 4, 880, 72);
 end;
 
-// Assigns a clickable rectangle to the replay "R" icon
 function TSkillPanel.ReplayIconRect: TRect;
 begin
-  Result := Rect(212, 4, 232, 32);
+  Result := Rect(212, 4, 232, 32); // TODO - ensure correct
 end;
 
-// Assigns a non-clickable rectangle to the timer icon & digits
 function TSkillPanel.TimeIconRect: TRect;
 begin
-  if GameParams.AmigaTheme then
-    Result := Rect(0, 0, 0, 0) // No need to show panel hint in Amiga theme
-  else
-    Result := Rect(578, 0, 672, 32)
+  Result := Rect(578, 0, 672, 32); // TODO - ensure correct
 end;
 
-// Assigns a non-clickable rectangle to the hatch count icon & digits
 function TSkillPanel.HatchIconRect: TRect;
 begin
-  if GameParams.AmigaTheme then
-    Result := Rect(0, 0, 0, 0) // Amiga theme doesn't show hatch count
-  else
-    //Result := GetPanelRect(288, Game.LemmingsToSpawn - Game.SpawnedDead, 32);
-    Result := Rect(288, 0, 340, 32);
+  Result := Rect(288, 0, 340, 32); // TODO - ensure correct
 end;
 
-// Assigns a non-clickable rectangle to the alive count icon & digits
 function TSkillPanel.AliveIconRect: TRect;
-var
-  Left, ThemeOffset, LemAliveCount: Integer;
 begin
-  if GameParams.AmigaTheme then
-  begin
-    Left := 288;
-    ThemeOffset := 64;
-    LemAliveCount := Game.LemmingsActive;
-  end else begin
-    Left := 386;
-    ThemeOffset := 32;
-    LemAliveCount := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
-  end;
-
-  Result := Rect(386, 0, 432, 32);
-  //Result := GetPanelRect(Left, ThemeOffset, LemAliveCount);
+  Result := Rect(386, 0, 432, 32); // TODO - ensure correct
 end;
 
-// Assigns a non-clickable rectangle to the exit count icon & digits
 function TSkillPanel.ExitIconRect: TRect;
-var
-  Left, ThemeOffset, SaveCount: Integer;
 begin
-  if GameParams.AmigaTheme then
-  begin
-    Left := 418;
-    ThemeOffset := 46;
-  end else begin
-    Left := 478;
-    ThemeOffset := 32;
-  end;
-
-  if (Game.LemmingsSaved > Level.Info.RescueCount) then
-    SaveCount := Game.LemmingsSaved
-  else
-    SaveCount := Level.Info.RescueCount;
-
-  Result := Rect(478, 0, 510, 32);
-  //Result := GetPanelRect(Left, ThemeOffset, SaveCount)
+  Result := Rect(478, 0, 510, 32); // TODO - ensure correct
 end;
 
+// TODO - Simplify & use
 function TSkillPanel.GetPanelRect(aPos, aOffset, aValue: Integer): TRect;
 var
   Left, Right, DigitCount: Integer;

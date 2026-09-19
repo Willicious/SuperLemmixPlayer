@@ -1638,10 +1638,7 @@ function TBaseSkillPanel.GetLemsAliveString: String;
 var
   LemNum: Integer;
 begin
-  if GameParams.AmigaTheme then
-    LemNum := Game.LemmingsActive
-  else
-    LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
+  LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
 
   if not (Game.IsOutOfTime or Game.NukeIsActive) then
     CustomAssert(LemNum >= 0, 'Negative number of alive lemmings displayed');
@@ -1660,18 +1657,10 @@ begin
   Required := Level.Info.RescueCount;
   ToSave := Required - TotalSaved;
 
-  if GameParams.AmigaTheme then
-  begin
-    if CursorOverIcon(ExitIconRect) and (ToSave > 0) then
-      Result := IntToStr(Required)
-    else
-      Result := IntToStr(TotalSaved);
-  end else begin
-    if (ToSave < 0) then
-      Result := IntToStr(TotalSaved)
+  if (ToSave < 0) then
+    Result := IntToStr(TotalSaved)
   else
-      Result := IntToStr(ToSave);
-  end;
+    Result := IntToStr(ToSave);
 
   if (TotalSaved <= -99) or (ToSave <= -99) then // Should never happen
     Result := ' -99'
@@ -1974,13 +1963,7 @@ begin
                    ButtonHint := 'TIMER'
   else if CursorOverIcon(ExitIconRect) then
   begin
-    var ShowToSaveHint: Boolean;
-    if GameParams.AmigaTheme then
-      ShowToSaveHint := Game.LemmingsSaved < Level.Info.RescueCount
-    else
-      ShowToSaveHint := Game.LemmingsSaved <= Level.Info.RescueCount;
-
-    if ShowToSaveHint then
+    if Game.LemmingsSaved <= Level.Info.RescueCount then
                    ButtonHint := 'TO SAVE'
     else
                    ButtonHint := 'SAVED';
