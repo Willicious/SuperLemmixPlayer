@@ -967,19 +967,32 @@ begin
 end;
 
 function TFLevelSelect.GetPackResultsString(G: TNeoLevelGroup): String;
+var
+  Levels, Talismans, Collectibles: Integer;
 begin
   Result := '';
 
-  if G.LevelCount > 0 then
-    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(G.LevelCount)
+  Levels := G.LevelCount;
+  if Levels > 0 then
+    Result := IntToStr(G.LevelsCompleted) + ' of ' + IntToStr(Levels)
     + ' levels completed';
 
-  if G.Talismans.Count > 0 then
+  Talismans := G.Talismans.Count;
+  if Talismans > 0 then
   begin
     if Result <> '' then
       Result := Result + '; ';
-    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count)
+    Result := Result + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(Talismans)
     + ' talismans unlocked';
+  end;
+
+  Collectibles := G.TotalCollectibles;
+  if Collectibles > 0 then
+  begin
+    if Result <> '' then
+      Result := Result + '; ';
+    Result := Result + IntToStr(G.TotalCollectiblesGathered) + ' of ' + IntToStr(Collectibles)
+    + ' collectibles gathered';
   end;
 end;
 
