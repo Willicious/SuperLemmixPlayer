@@ -75,6 +75,7 @@ type
       fAuthor: String;
       fFilename: String;
       fTalismans: TObjectList<TTalisman>;
+      fCollectibles: Integer;
 
       fLevelID: Int64;
 
@@ -96,6 +97,7 @@ type
       function GetGroupIndex: Integer;
       function GetMusicRotationIndex: Integer;
       function GetTalismans: TObjectList<TTalisman>;
+      function GetCollectibles: Integer;
 
       function GetCRC32: Cardinal;
 
@@ -123,6 +125,7 @@ type
       property Path: String read GetFullPath;
       property RelativePath: String read GetRelativePath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
+      property Collectibles: Integer read GetCollectibles write fCollectibles;
       property UnlockedTalismanList: TList<LongWord> read fUnlockedTalismanList;
       property Talismans: TObjectList<TTalisman> read GetTalismans;
       property TalismanStatus[Index: LongWord]: Boolean read GetTalismanStatus write SetTalismanStatus;
@@ -149,6 +152,7 @@ type
       fIsOrdered: Boolean;
 
       fTalismans: TObjectList<TTalisman>;
+      fTotalCollectibles: Integer;
 
       fPackTitle: String;
       fPackAuthor: String;
@@ -206,7 +210,7 @@ type
       function GetTotalTalismansUnlockedCount: Integer;
       function GetTotalLevelsCompletedCount: Integer;
       function GetTotalCollectibles: Integer;
-      //function GetTotalCollectiblesObtained: Integer; // TODO: Implement this
+      function GetTotalCollectiblesGathered: Integer;
 
       function GetParentBasePack: TNeoLevelGroup;
     public
@@ -248,7 +252,7 @@ type
       property Talismans: TObjectList<TTalisman> read GetTalismans;
       property TalismansUnlocked: Integer read GetTotalTalismansUnlockedCount;
       property TotalCollectibles: Integer read GetTotalCollectibles;
-      //property CollectiblesObtained: Integer read GetTotalCollectiblesObtained; TODO: Implement this
+      property TotalCollectiblesGathered: Integer read GetTotalCollectiblesGathered;
       property LevelsCompleted: Integer read GetTotalLevelsCompletedCount;
 
       property LevelIndex[aLevel: TNeoLevelEntry]: Integer read GetLevelIndex;
@@ -504,6 +508,7 @@ begin
       fTitle := Parser.MainSection.LineTrimString['title'];
       fAuthor := Parser.MainSection.LineTrimString['author'];
       fLevelID := Parser.MainSection.LineNumeric['id'];
+      fCollectibles := Parser.MainSection.LineNumeric['collectibles'];
 
       if Parser.MainSection.Section['talisman'] <> nil then
       begin
@@ -561,6 +566,12 @@ begin
     Result := -1
   else
     Result := fGroup.LevelIndex[Self];
+end;
+
+function TNeoLevelEntry.GetCollectibles: Integer;
+begin
+  LoadLevelFileData(lls_BasicInfo);
+  Result := fCollectibles;
 end;
 
 function TNeoLevelEntry.GetTalismans: TObjectList<TTalisman>;
@@ -1823,8 +1834,25 @@ function TNeoLevelGroup.GetTotalCollectibles: Integer;
 var
   i: Integer;
 begin
-  // TODO: implement a way to grab the total number of collectibles
-  Exit;
+  Result := 0;
+  for i := 0 to Children.Count-1 do
+    Result := Result + Children[i].TotalCollectibles;
+  for i := 0 to Levels.Count-1 do
+    Result := Result + Levels[i].Collectibles;
+end;
+
+function TNeoLevelGroup.GetTotalCollectiblesGathered: Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+
+  for i := 0 to Children.Count - 1 do
+    Inc(Result, Children[i].GetTotalCollectiblesGathered);
+
+  for i := 0 to Levels.Count - 1 do
+    if Levels[i].UserRecords.CollectiblesGathered.Value > 0 then
+      Inc(Result, Levels[i].UserRecords.CollectiblesGathered.Value);
 end;
 
 function TNeoLevelGroup.GetTotalLevelsCompletedCount: Integer;

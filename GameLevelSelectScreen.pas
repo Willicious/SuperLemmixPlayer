@@ -67,7 +67,7 @@ type
       procedure DrawPackList;
       procedure DrawGroupList(Pack: TNeoLevelGroup);
       procedure DrawLevelList(Group: TNeoLevelGroup);
-      procedure DrawIcons;
+      procedure DrawIcons(Pack: TNeoLevelGroup);
       procedure DrawLogoCropped(Pack: TNeoLevelGroup);
       procedure ShowLevelProgress(Pack: TNeoLevelGroup);
       procedure ShowTalismanProgress(Pack: TNeoLevelGroup);
@@ -300,7 +300,7 @@ begin
   RestoreWallpaper(Rect(FIRST_COLUMN_LEFT, GLOBAL_COLUMN_TOP, SECOND_COLUMN_LEFT,
       GLOBAL_COLUMN_TOP + PACK_INFO_HEIGHT));
 
-  DrawIcons;
+  DrawIcons(Pack);
   DrawLogoCropped(Pack);
   ShowLevelProgress(Pack);
   ShowTalismanProgress(Pack);
@@ -373,37 +373,25 @@ begin
   end;
 end;
 
-procedure TGameLevelSelectScreen.DrawIcons;
+procedure TGameLevelSelectScreen.DrawIcons(Pack: TNeoLevelGroup);
 var
   TalBMP, ColBMP: TBitmap32;
   X, Y, ImageX, ImageY: Integer;
   SrcRect, DstRect: TRect;
 
   function AllTalismansCompleted: Boolean;
-  var
-    TalCount, TalsUnlocked: Integer;
   begin
-    Result := True;
-
-    TalCount := GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count;
-    TalsUnlocked := GameParams.CurrentLevel.Group.ParentBasePack.TalismansUnlocked;
-
-    if TalsUnlocked < TalCount then
-      Result := False;
+    Result := Pack.TalismansUnlocked = Pack.Talismans.Count;
   end;
 
   function AllCollectiblesObtained: Boolean;
   begin
-    Result := True;
-
-//    ColCount := GameParams.CurrentLevel.Group.ParentBasePack.Collectibles.Count;
-//    ColsObtained := GameParams.CurrentLevel.Group.ParentBasePack.CollectiblesObtained;
-//
-//    if ColsObtained < ColCount then
-//      Result := False;
+    Result := Pack.TotalCollectiblesGathered = Pack.TotalCollectibles;
   end;
-
 begin
+  if Pack.Talismans.Count <= 0 then
+    Exit;
+  
   TalBMP := TBitmap32.Create;
   try
     GetGraphic('talismans.png', TalBMP);
@@ -422,6 +410,9 @@ begin
     TalBMP.Free;
   end;
 
+  if Pack.TotalCollectibles <= 0 then
+    Exit;
+  
   ColBMP := TBitmap32.Create;
   try
     GetGraphic('talismans.png', ColBMP);
@@ -475,10 +466,12 @@ var
   ProgressText: String;
   X, Y: Integer;
 begin
+  if Pack.TotalCollectibles <= 0 then
+    Exit;
+
   InitializeFont('Tahoma', fsBold, 6);
 
-  // TODO - implement a way to know the total number of collectibles obtained
-  ProgressText := IntToStr(Pack.LevelsCompleted) + ' / ' + IntToStr(Pack.LevelCount) + ' Collectibles';
+  ProgressText := IntToStr(Pack.TotalCollectiblesGathered) + ' / ' + IntToStr(Pack.TotalCollectibles) + ' Collectibles';
 
   X := FIRST_COLUMN_LEFT + 60;
   Y := COLLECTIBLE_ICON_TOP + 10;
