@@ -1163,8 +1163,8 @@ end;
 
 procedure TGameBaseMenuScreen.DoLevelSelect;
 begin
-  CloseScreen(gstLevelSelect); // Future level pack selection screen - WIP
-  //DoLevelSelectModal; // Current level select modal - TODO - eventually, this will be removed
+  //CloseScreen(gstLevelSelect); // Future level pack selection screen - WIP
+  DoLevelSelectModal; // Current level select modal - TODO - eventually, this will be removed
 end;
 
 procedure TGameBaseMenuScreen.DoLevelSelectModal;
