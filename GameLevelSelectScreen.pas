@@ -67,7 +67,6 @@ type
       procedure DrawPackList;
       procedure DrawGroupList(Pack: TNeoLevelGroup);
       procedure DrawLevelList(Group: TNeoLevelGroup);
-      procedure DrawIcons(Pack: TNeoLevelGroup);
       procedure DrawLogoCropped(Pack: TNeoLevelGroup);
       procedure ShowLevelProgress(Pack: TNeoLevelGroup);
       procedure ShowTalismanProgress(Pack: TNeoLevelGroup);
@@ -300,7 +299,6 @@ begin
   RestoreWallpaper(Rect(FIRST_COLUMN_LEFT, GLOBAL_COLUMN_TOP, SECOND_COLUMN_LEFT,
       GLOBAL_COLUMN_TOP + PACK_INFO_HEIGHT));
 
-  DrawIcons(Pack);
   DrawLogoCropped(Pack);
   ShowLevelProgress(Pack);
   ShowTalismanProgress(Pack);
@@ -373,24 +371,62 @@ begin
   end;
 end;
 
-procedure TGameLevelSelectScreen.DrawIcons(Pack: TNeoLevelGroup);
+procedure TGameLevelSelectScreen.ShowLevelProgress(Pack: TNeoLevelGroup);
 var
-  TalBMP, ColBMP: TBitmap32;
+  TotalLevels, TotalLevelsCompleted: Integer;
+  ProgressText: String;
   X, Y, ImageX, ImageY: Integer;
+  LvlBMP: TBitmap32;
   SrcRect, DstRect: TRect;
-
-  function AllTalismansCompleted: Boolean;
-  begin
-    Result := Pack.TalismansUnlocked = Pack.Talismans.Count;
-  end;
-
-  function AllCollectiblesObtained: Boolean;
-  begin
-    Result := Pack.TotalCollectiblesGathered = Pack.TotalCollectibles;
-  end;
 begin
-  if Pack.Talismans.Count <= 0 then
+  TotalLevels := Pack.LevelCount;
+  
+  if TotalLevels <= 0 then
     Exit;
+
+  TotalLevelsCompleted := Pack.LevelsCompleted;
+  
+  LvlBMP := TBitmap32.Create;
+  try
+    GetGraphic('levelinfo_icons.png', LvlBMP); // TODO - this should eventually be LoadIcons (see FSuperLemmixLevelSelect)
+
+    X := FIRST_COLUMN_LEFT;
+    Y := LEVEL_ICON_TOP;
+
+    ImageX := 160;
+    ImageY := IfThen(TotalLevelsCompleted = TotalLevels, 64, 96);
+
+    SrcRect := Rect(ImageX, ImageY, ImageX + 32, ImageY + 32);
+    DstRect := Rect(X, Y, X + 32, Y + 32);
+
+    LvlBMP.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
+  finally
+    LvlBMP.Free;
+  end;
+
+  InitializeFont('Tahoma', fsBold, 6);
+  ProgressText := IntToStr(TotalLevelsCompleted) + ' / ' + IntToStr(TotalLevels) + ' Levels';
+
+  X := FIRST_COLUMN_LEFT + 60;
+  Y := LEVEL_ICON_TOP + 10;
+
+  ScreenImg.Bitmap.RenderText(X, Y, ProgressText, clLightGreen32);
+end;
+
+procedure TGameLevelSelectScreen.ShowTalismanProgress(Pack: TNeoLevelGroup);
+var
+  TotalTalismans, TotalTalismansUnlocked: Integer;
+  ProgressText: String;
+  X, Y, ImageX, ImageY: Integer;
+  TalBMP: TBitmap32;
+  SrcRect, DstRect: TRect;
+begin
+  TotalTalismans := Pack.Talismans.Count;
+  
+  if TotalTalismans <= 0 then
+    Exit;
+
+  TotalTalismansUnlocked := Pack.TalismansUnlocked;
   
   TalBMP := TBitmap32.Create;
   try
@@ -399,7 +435,7 @@ begin
     X := FIRST_COLUMN_LEFT;
     Y := TALISMAN_ICON_TOP;
 
-    ImageX := IfThen(AllTalismansCompleted, 48, 0);
+    ImageX := IfThen(TotalTalismansUnlocked = TotalTalismans, 48, 0);
     ImageY := 96;
 
     SrcRect := Rect(ImageX, ImageY, ImageX + 48, ImageY + 48);
@@ -410,50 +446,8 @@ begin
     TalBMP.Free;
   end;
 
-  if Pack.TotalCollectibles <= 0 then
-    Exit;
-  
-  ColBMP := TBitmap32.Create;
-  try
-    GetGraphic('talismans.png', ColBMP);
-
-    X := FIRST_COLUMN_LEFT;
-    Y := COLLECTIBLE_ICON_TOP;
-
-    ImageX := IfThen(AllCollectiblesObtained, 48, 0);
-    ImageY := 144;
-
-    SrcRect := Rect(ImageX, ImageY, ImageX + 48, ImageY + 48);
-    DstRect := Rect(X, Y, X + 30, Y + 30);
-
-    ColBMP.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
-  finally
-    ColBMP.Free;
-  end;
-end;
-
-procedure TGameLevelSelectScreen.ShowLevelProgress(Pack: TNeoLevelGroup);
-var
-  ProgressText: String;
-  X, Y: Integer;
-begin
   InitializeFont('Tahoma', fsBold, 6);
-  ProgressText := IntToStr(Pack.LevelsCompleted) + ' / ' + IntToStr(Pack.LevelCount) + ' Levels';
-
-  X := FIRST_COLUMN_LEFT + 60;
-  Y := LEVEL_ICON_TOP + 10;
-
-  ScreenImg.Bitmap.RenderText(20, Y, 'LVL', clCornflowerBlue32); // TODO - Add Level Icon
-  ScreenImg.Bitmap.RenderText(X, Y, ProgressText, clLightGreen32);
-end;
-
-procedure TGameLevelSelectScreen.ShowTalismanProgress(Pack: TNeoLevelGroup);
-var
-  ProgressText: String;
-  X, Y: Integer;
-begin
-  InitializeFont('Tahoma', fsBold, 6);
-  ProgressText := IntToStr(Pack.TalismansUnlocked) + ' / ' + IntToStr(Pack.Talismans.Count) + ' Talismans';
+  ProgressText := IntToStr(TotalTalismansUnlocked) + ' / ' + IntToStr(TotalTalismans) + ' Talismans';
 
   X := FIRST_COLUMN_LEFT + 60;
   Y := TALISMAN_ICON_TOP + 10;
@@ -463,15 +457,39 @@ end;
 
 procedure TGameLevelSelectScreen.ShowCollectibleProgress(Pack: TNeoLevelGroup);
 var
+  TotalCollectibles, TotalCollectiblesGathered: Integer;
   ProgressText: String;
-  X, Y: Integer;
+  X, Y, ImageX, ImageY: Integer;
+  ColBMP: TBitmap32;
+  SrcRect, DstRect: TRect;
 begin
-  if Pack.TotalCollectibles <= 0 then
+  TotalCollectibles := Pack.TotalCollectibles;
+  
+  if TotalCollectibles <= 0 then
     Exit;
 
-  InitializeFont('Tahoma', fsBold, 6);
+  TotalCollectiblesGathered := Pack.TotalCollectiblesGathered;
 
-  ProgressText := IntToStr(Pack.TotalCollectiblesGathered) + ' / ' + IntToStr(Pack.TotalCollectibles) + ' Collectibles';
+  ColBMP := TBitmap32.Create;
+  try
+    GetGraphic('talismans.png', ColBMP);
+
+    X := FIRST_COLUMN_LEFT;
+    Y := COLLECTIBLE_ICON_TOP;
+
+    ImageX := IfThen(TotalCollectiblesGathered = TotalCollectibles, 48, 0);
+    ImageY := 144;
+
+    SrcRect := Rect(ImageX, ImageY, ImageX + 48, ImageY + 48);
+    DstRect := Rect(X, Y, X + 30, Y + 30);
+
+    ColBMP.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
+  finally
+    ColBMP.Free;
+  end;
+
+  InitializeFont('Tahoma', fsBold, 6);
+  ProgressText := IntToStr(TotalCollectiblesGathered) + ' / ' + IntToStr(TotalCollectibles) + ' Collectibles';
 
   X := FIRST_COLUMN_LEFT + 60;
   Y := COLLECTIBLE_ICON_TOP + 10;

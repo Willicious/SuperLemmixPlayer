@@ -1007,8 +1007,8 @@ begin
   Result := True;
 
   if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
+    and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
+      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
   else if FileExists(AppPath + SFGraphicsMenu + aName) and ((not aFromPackOnly) or (not aAcceptFailure)) then // N.B. aFromPackOnly + aAcceptFailure is an invalid combination
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
   else begin
