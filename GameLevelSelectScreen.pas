@@ -63,6 +63,7 @@ type
       procedure DrawTempText;
 
       procedure RestoreWallpaper(aRect: TRect);
+      procedure OpenPack(Pack: TNeoLevelGroup);
       procedure DrawLogoPanel(Pack: TNeoLevelGroup);
       procedure DrawPackList;
       procedure DrawGroupList(Pack: TNeoLevelGroup);
@@ -184,6 +185,25 @@ begin
   ScreenImg.Bitmap.Draw(aRect, aRect, fWallpaper);
 end;
 
+procedure TGameLevelSelectScreen.OpenPack(Pack: TNeoLevelGroup);
+begin
+  DrawLogoPanel(Pack);
+
+  if Pack.Children.Count > 0 then
+  begin
+    DrawGroupList(Pack);
+    DrawLevelList(Pack.Children[0]);
+  end else begin
+    fGroupList.Clear;
+    RestoreWallpaper(Rect(SECOND_COLUMN_LEFT,
+      GLOBAL_COLUMN_TOP,
+      SECOND_COLUMN_LEFT + SECOND_COLUMN_WIDTH,
+      GLOBAL_COLUMN_TOP + GROUP_ITEM_HEIGHT * 2));
+
+    DrawLevelList(Pack);
+  end;
+end;
+
 procedure TGameLevelSelectScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
 var
   PackItem: TPackItem;
@@ -195,9 +215,7 @@ begin
   for PackItem in fPackList do
     if System.Types.PtInRect(PackItem.Area, aPoint) then
     begin
-      DrawLogoPanel(PackItem.Pack);
-      DrawGroupList(PackItem.Pack);
-      DrawLevelList(PackItem.Pack.Children[0]);
+      OpenPack(PackItem.Pack);
       Exit;
     end;
 
@@ -268,8 +286,13 @@ begin
 
     DrawLogoPanel(Pack);
     DrawPackList;
-    DrawGroupList(Pack);
-    DrawLevelList(Pack.Children[0]);
+
+    if Pack.Children.Count > 0 then
+    begin
+      DrawGroupList(Pack);
+      DrawLevelList(Pack.Children[0]);
+    end else
+      DrawLevelList(Pack);
 
     // Classic Mode
     DrawClassicModeButton;
