@@ -3,28 +3,55 @@ unit GameLevelSelectScreen;
 interface
 
 uses
-  StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls,
-  Forms, Windows, ShellApi, Types, UMisc, Math, Graphics,
-  GameBaseMenuScreen,
-  GameControl,
-  LemNeoLevelPack,
-  LemNeoOnline,
-  LemNeoParser,
-  LemStrings,
-  LemTypes,
-  GR32, GR32_Resamplers,
+  StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
+  Types, UMisc, Math, Graphics, Generics.Collections,
+  GameBaseMenuScreen, GameControl,
+  LemNeoLevelPack, LemNeoOnline, LemNeoParser, LemStrings, LemTypes,
+  GR32, GR32_Image, GR32_Resamplers,
   SharedGlobals;
 
 type
+  TGameLevelSelectScreen = class;
+
+  TPackItem = class
+    private
+      fPack: TNeoLevelGroup;
+      fArea: TRect;
+    public
+      constructor Create(aPack: TNeoLevelGroup; aArea: TRect);
+      procedure DrawClickableText(aBitmap: TBitmap32; aFont: TFont);
+      property Pack: TNeoLevelGroup read fPack;
+      property Area: TRect read fArea;
+    end;
+
+  TGroupItem = class
+    private
+      fGroup: TNeoLevelGroup;
+      fArea: TRect;
+    public
+      constructor Create(aGroup: TNeoLevelGroup; aArea: TRect);
+      procedure DrawClickableText(aBitmap: TBitmap32; aFont: TFont);
+      property Group: TNeoLevelGroup read fGroup;
+      property Area: TRect read fArea;
+    end;
+
+  TLevelItem = class
+    private
+      fLevel: TNeoLevelEntry;
+      fArea: TRect;
+    public
+      constructor Create(aLevel: TNeoLevelEntry; aArea: TRect);
+      procedure DrawClickableText(aBitmap: TBitmap32; aFont: TFont);
+      property Level: TNeoLevelEntry read fLevel;
+      property Area: TRect read fArea;
+    end;
+
   TGameLevelSelectScreen = class(TGameBaseMenuScreen)
     private
-      procedure DrawLogoCropped(PanelX, PanelY: Integer);
-      procedure DrawPanelText(const Text: String; PanelX, PanelY: Integer);
-      procedure AddIcons(PanelX, PanelY: Integer);
-      procedure MakePackPanels;
-
-      procedure ShowSetupMenu;
-      procedure BeginGame;
+      fPackList: TObjectList<TPackItem>;
+      fGroupList: TObjectList<TGroupItem>;
+      fLevelList: TObjectList<TLevelItem>;
+      fWallpaper: TBitmap32;
     protected
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
       procedure OnKeyPress(var Key: Word); override;
@@ -32,9 +59,26 @@ type
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
 
+      procedure InitializeFont(aFont: String; aStyle: TFontStyle; aSize: Integer);
+      procedure DrawTempText;
+
+      procedure RestoreWallpaper(aRect: TRect);
+      procedure DrawLogoPanel(Pack: TNeoLevelGroup);
+      procedure DrawPackList;
+      procedure DrawGroupList(Pack: TNeoLevelGroup);
+      procedure DrawLevelList(Group: TNeoLevelGroup);
+      procedure DrawIcons;
+      procedure DrawLogoCropped(Pack: TNeoLevelGroup);
+      procedure ShowLevelProgress(Pack: TNeoLevelGroup);
+      procedure ShowTalismanProgress(Pack: TNeoLevelGroup);
+      procedure ShowCollectibleProgress(Pack: TNeoLevelGroup);
+
       procedure AfterRedrawClickables; override;
       procedure DoAfterConfig; override;
 
+      procedure BeginGame;
+
+      function IsCompilationPack(Pack: TNeoLevelGroup): Boolean;
       function GetWallpaperSuffix: String; override;
     public
       constructor Create(aOwner: TComponent); override;
@@ -42,40 +86,138 @@ type
   end;
 
 const
-  PANEL_WIDTH = 320;
-  PANEL_HEIGHT = 140;
-  LOGO_HEIGHT = 70;
+  GLOBAL_COLUMN_TOP = 20;
+
+  FIRST_COLUMN_LEFT = 20;
+  FIRST_COLUMN_WIDTH = 280;
+
+  SECOND_COLUMN_LEFT = 320;
+  SECOND_COLUMN_WIDTH = 400;
+
+  THIRD_COLUMN_LEFT = 720;
+
+  PACK_INFO_HEIGHT = 180;
+  LOGO_HEIGHT = 80;
+  LEVEL_ICON_TOP = 100;
+  TALISMAN_ICON_TOP = 130;
+  COLLECTIBLE_ICON_TOP = 160;
+
+  PACK_LIST_TOP = 200;
+  PACK_ITEM_HEIGHT = 24;
+
+  GROUP_ITEM_HEIGHT = 24;
+  GROUP_ITEM_GAP = 16;
+
+  LEVEL_LIST_TOP = 80;
+  LEVEL_ITEM_HEIGHT = 20;
+  LEVEL_LIST_HEIGHT = 420;
 
 implementation
 
 uses
-  LemMenuFont, // For size const
-  CustomPopup,
-  FSuperLemmixSetup,
-  GameSound,
-  LemGame, // To clear replay
-  LemVersion,
-  PngInterface;
+  LemMenuFont, CustomPopup, FSuperLemmixSetup, GameSound, LemGame, LemVersion, PngInterface;
 
-{ TGameMenuScreen }
+{ === TPackItem === }
+
+constructor TPackItem.Create(aPack: TNeoLevelGroup; aArea: TRect);
+begin
+  fPack := aPack;
+  fArea := aArea;
+end;
+
+procedure TPackItem.DrawClickableText(aBitmap: TBitmap32; aFont: TFont);
+begin
+  aBitmap.Font.Assign(aFont);
+  aBitmap.RenderText(fArea.Left, fArea.Top, fPack.Name, clWhite32);
+end;
+
+{ === TGroupItem === }
+
+constructor TGroupItem.Create(aGroup: TNeoLevelGroup; aArea: TRect);
+begin
+  fGroup := aGroup;
+  fArea := aArea;
+end;
+
+procedure TGroupItem.DrawClickableText(aBitmap: TBitmap32; aFont: TFont);
+begin
+  aBitmap.Font.Assign(aFont);
+  aBitmap.RenderText(fArea.Left, fArea.Top, fGroup.Name, clWhite32);
+end;
+
+{ === TLevelItem === }
+
+constructor TLevelItem.Create(aLevel: TNeoLevelEntry; aArea: TRect);
+begin
+  fLevel := aLevel;
+  fArea := aArea;
+end;
+
+procedure TLevelItem.DrawClickableText(aBitmap: TBitmap32; aFont: TFont);
+begin
+  aBitmap.Font.Assign(aFont);
+  aBitmap.RenderText(fArea.Left, fArea.Top, fLevel.Title, clWhite32);
+end;
+
+{ === TGameLevelSelectScreen === }
 
 constructor TGameLevelSelectScreen.Create(aOwner: TComponent);
 begin
   inherited;
-
-  GameParams.MainForm.Caption := 'SuperLemmix Level Pack Select';
+  fPackList := TObjectList<TPackItem>.Create;
+  fGroupList := TObjectList<TGroupItem>.Create;
+  fLevelList := TObjectList<TLevelItem>.Create;
+  fWallpaper := TBitmap32.Create;
+  GameParams.MainForm.Caption := SProgramName + ' Level Select';
 end;
 
 destructor TGameLevelSelectScreen.Destroy;
 begin
+  fWallpaper.Free;
+  fLevelList.Free;
+  fGroupList.Free;
+  fPackList.Free;
   inherited;
 end;
 
+procedure TGameLevelSelectScreen.RestoreWallpaper(aRect: TRect);
+begin
+  ScreenImg.Bitmap.Draw(aRect, aRect, fWallpaper);
+end;
+
 procedure TGameLevelSelectScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
+var
+  PackItem: TPackItem;
+  GroupItem: TGroupItem;
+  LevelItem: TLevelItem;
 begin
   inherited;
 
-  BeginGame;
+  for PackItem in fPackList do
+    if System.Types.PtInRect(PackItem.Area, aPoint) then
+    begin
+      DrawLogoPanel(PackItem.Pack);
+      DrawGroupList(PackItem.Pack);
+      DrawLevelList(PackItem.Pack.Children[0]);
+      Exit;
+    end;
+
+  for GroupItem in fGroupList do
+    if System.Types.PtInRect(GroupItem.Area, aPoint) then
+    begin
+      DrawLevelList(GroupItem.Group);
+      Exit;
+    end;
+
+  for LevelItem in fLevelList do
+    if System.Types.PtInRect(LevelItem.Area, aPoint) then
+    begin
+      GameParams.SetLevel(LevelItem.Level);
+      BeginGame; // TODO - Rather than loading straight to the game, display the level's info
+      Exit;
+    end;
+
+  DoLevelSelectModal;
 end;
 
 procedure TGameLevelSelectScreen.OnKeyPress(var Key: Word);
@@ -103,38 +245,89 @@ begin
 end;
 
 procedure TGameLevelSelectScreen.BuildScreen;
+var
+  Pack: TNeoLevelGroup;
 begin
   inherited;
 
-  fClickableRegions.Clear;
-
-  // Classic Mode
-  DrawClassicModeButton;
-  DrawAllClickables(true); // For the next step's sake // TODO - necessary here?
-  DrawAllClickables;
-  MakePackPanels;
-
-  if (GameParams.CurrentLevel <> nil) then
+  if (GameParams <> nil) and (GameParams.CurrentLevel <> nil) then
   begin
-    Exit; // TODO
+    Pack := GameParams.CurrentLevel.Group.ParentBasePack
+  end else begin
+    Pack := nil;
+    ShowMessage('Unable to load current level. Returning to Main Menu.');
+    CloseScreen(gstMenu);
+  end;
+
+  ScreenImg.BeginUpdate;
+  try
+    fWallpaper.Assign(ScreenImg.Bitmap);
+    fClickableRegions.Clear;
+
+    InitializeFont('Tahoma', fsBold, 8);
+    DrawTempText;
+
+    DrawLogoPanel(Pack);
+    DrawPackList;
+    DrawGroupList(Pack);
+    DrawLevelList(Pack.Children[0]);
+
+    // Classic Mode
+    DrawClassicModeButton;
+    DrawAllClickables;
+  finally
+    ScreenImg.EndUpdate;
   end;
 end;
 
-procedure TGameLevelSelectScreen.DrawLogoCropped(PanelX, PanelY: Integer);
+procedure TGameLevelSelectScreen.InitializeFont(aFont: String; aStyle: TFontStyle; aSize: Integer);
+begin
+  ScreenImg.Bitmap.Font.Name := aFont;
+  ScreenImg.Bitmap.Font.Style := [aStyle];
+  ScreenImg.Bitmap.Font.Size := aSize;
+  ScreenImg.Bitmap.Font.Quality := fqAntialiased;
+end;
+
+// TODO Remove this once the screen is fully implemented
+procedure TGameLevelSelectScreen.DrawTempText;
+begin
+  ScreenImg.Bitmap.RenderText(720, 400, 'Click here or Press F3', clWhite32);
+  ScreenImg.Bitmap.RenderText(720, 440, 'to open the Level Select dialog', clWhite32);
+end;
+
+procedure TGameLevelSelectScreen.DrawLogoPanel(Pack: TNeoLevelGroup);
+begin
+  RestoreWallpaper(Rect(FIRST_COLUMN_LEFT, GLOBAL_COLUMN_TOP, SECOND_COLUMN_LEFT,
+      GLOBAL_COLUMN_TOP + PACK_INFO_HEIGHT));
+
+  DrawIcons;
+  DrawLogoCropped(Pack);
+  ShowLevelProgress(Pack);
+  ShowTalismanProgress(Pack);
+  ShowCollectibleProgress(Pack);
+end;
+
+procedure TGameLevelSelectScreen.DrawLogoCropped(Pack: TNeoLevelGroup);
 var
   LogoBMP: TBitmap32;
-  X, Y: Integer;
+  X, Y, PosX, PosY: Integer;
   MinX, MinY, MaxX, MaxY: Integer;
   DstRect, SrcRect: TRect;
   Scale: Double;
   Pixel: TColor32;
-  LogoX, LogoY: Integer;
+  Level: TNeoLevelEntry;
   LogoWidth, LogoHeight: Integer;
 begin
   LogoBMP := TBitmap32.Create;
   try
     // Load logo
-    GetGraphic('logo.png', LogoBMP);
+    Level := GameParams.CurrentLevel;
+    try
+      GameParams.SetLevel(Pack.FirstLevelRecursive);
+      GetGraphic('logo.png', LogoBMP);
+    finally
+      GameParams.SetLevel(Level);
+    end;
 
     // Find the bounds of the visible part of the logo
     MinX := LogoBMP.Width;
@@ -161,19 +354,18 @@ begin
     begin
       SrcRect := Rect(MinX, MinY, MaxX + 1, MaxY + 1);
 
-      // Scale proportionally to fit within the logo row
-      Scale := Min(PANEL_WIDTH / (SrcRect.Right - SrcRect.Left), LOGO_HEIGHT /
-        (SrcRect.Bottom - SrcRect.Top));
+      Scale := Min(
+        FIRST_COLUMN_WIDTH / (SrcRect.Right - SrcRect.Left),
+        LOGO_HEIGHT / (SrcRect.Bottom - SrcRect.Top)
+      );
 
       LogoWidth := Round((SrcRect.Right - SrcRect.Left) * Scale);
       LogoHeight := Round((SrcRect.Bottom - SrcRect.Top) * Scale);
 
-      // Centre the logo in the upper part of the panel
-      LogoX := PanelX + (PANEL_WIDTH - LogoWidth) div 2;
-      LogoY := PanelY + (LOGO_HEIGHT - LogoHeight) div 2 + 8;
+      PosX := FIRST_COLUMN_LEFT;
+      PosY := GLOBAL_COLUMN_TOP;
 
-      DstRect := Rect(LogoX, LogoY, LogoX + LogoWidth, LogoY + LogoHeight);
-
+      DstRect := Rect(PosX, PosY, PosX + LogoWidth, PosY + LogoHeight);
       LogoBMP.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
     end;
   finally
@@ -181,35 +373,11 @@ begin
   end;
 end;
 
-procedure TGameLevelSelectScreen.DrawPanelText(const Text: String; PanelX, PanelY: Integer);
-var
-  ProgressX, InfoX, Y: Integer;
-begin
-  ScreenImg.Bitmap.Font.Name := 'Tahoma';
-  ScreenImg.Bitmap.Font.Size := 10;
-  ScreenImg.Bitmap.Font.Quality := fqAntialiased;
-
-  ProgressX := PanelX + 16;
-  InfoX := ProgressX + 96;
-  Y := PanelY + LOGO_HEIGHT + 24;
-
-  ScreenImg.Bitmap.RenderText(ProgressX, Y, 'Progress: ', clCornflowerBlue32);
-  ScreenImg.Bitmap.RenderText(InfoX, Y, Text, clLightGreen32);
-
-  // TODO Remove this once the screen is fully implemented
-  ScreenImg.Bitmap.RenderText(ProgressX - 40, Y + 100, 'This is a temporary screen', clWhite32);
-  ScreenImg.Bitmap.RenderText(ProgressX - 80, Y + 140, 'Press F3 to open the Level Select dialog', clWhite32);
-end;
-
-procedure TGameLevelSelectScreen.AddIcons(PanelX, PanelY: Integer);
+procedure TGameLevelSelectScreen.DrawIcons;
 var
   TalBMP, ColBMP: TBitmap32;
-  ImageX, ImageY, ImageSize, TalStart, ColStart: Integer;
-  DstRect, SrcRect: TRect;
-  Scale: Double;
-  Pixel: TColor32;
-  TalX, TalY, ColX, ColY: Integer;
-  TalWidth, TalHeight, ColWidth, ColHeight: Integer;
+  X, Y, ImageX, ImageY: Integer;
+  SrcRect, DstRect: TRect;
 
   function AllTalismansCompleted: Boolean;
   var
@@ -225,8 +393,6 @@ var
   end;
 
   function AllCollectiblesObtained: Boolean;
-  var
-    ColCount, ColsObtained: Integer;
   begin
     Result := True;
 
@@ -236,34 +402,20 @@ var
 //    if ColsObtained < ColCount then
 //      Result := False;
   end;
+
 begin
   TalBMP := TBitmap32.Create;
   try
-    // Load talisman icons
     GetGraphic('talismans.png', TalBMP);
-    ImageSize := 48;
-    TalStart := 96;
 
-    // Crop to the relevant part of the image
+    X := FIRST_COLUMN_LEFT;
+    Y := TALISMAN_ICON_TOP;
+
     ImageX := IfThen(AllTalismansCompleted, 48, 0);
-    ImageY := TalStart;
-    SrcRect := Rect(ImageX, ImageY, ImageX + ImageSize, ImageY + ImageSize);
+    ImageY := 96;
 
-//    // Scale proportionally to fit within the logo row
-//    Scale := Min(PANEL_WIDTH / (SrcRect.Right - SrcRect.Left), LOGO_HEIGHT /
-//      (SrcRect.Bottom - SrcRect.Top));
-
-//    TalWidth := Round((SrcRect.Right - SrcRect.Left) * Scale);
-//    TalHeight := Round((SrcRect.Bottom - SrcRect.Top) * Scale);
-
-    TalWidth := ImageSize;
-    TalHeight := ImageSize;
-
-    // Add the talisman icon to the bottom right of the panel
-    TalX := PanelX + PANEL_WIDTH - (TalWidth * 2);
-    TalY := PanelY + LOGO_HEIGHT + 16;
-
-    DstRect := Rect(TalX, TalY, TalX + TalWidth, TalY + TalHeight);
+    SrcRect := Rect(ImageX, ImageY, ImageX + 48, ImageY + 48);
+    DstRect := Rect(X, Y, X + 30, Y + 30);
 
     TalBMP.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
   finally
@@ -271,32 +423,17 @@ begin
   end;
 
   ColBMP := TBitmap32.Create;
-    try
-    // Load collectible icons
+  try
     GetGraphic('talismans.png', ColBMP);
-    ImageSize := 48;
-    ColStart := 144;
 
-    // Crop to the relevant part of the image
+    X := FIRST_COLUMN_LEFT;
+    Y := COLLECTIBLE_ICON_TOP;
+
     ImageX := IfThen(AllCollectiblesObtained, 48, 0);
-    ImageY := ColStart;
-    SrcRect := Rect(ImageX, ImageY, ImageX + ImageSize, ImageY + ImageSize);
+    ImageY := 144;
 
-//    // Scale proportionally to fit within the logo row
-//    Scale := Min(PANEL_WIDTH / (SrcRect.Right - SrcRect.Left), LOGO_HEIGHT /
-//      (SrcRect.Bottom - SrcRect.Top));
-
-//    TalWidth := Round((SrcRect.Right - SrcRect.Left) * Scale);
-//    TalHeight := Round((SrcRect.Bottom - SrcRect.Top) * Scale);
-
-    ColWidth := ImageSize;
-    ColHeight := ImageSize;
-
-    // Add the talisman icon to the bottom right of the panel
-    ColX := PanelX + PANEL_WIDTH - ColWidth;
-    ColY := PanelY + LOGO_HEIGHT + 16;
-
-    DstRect := Rect(ColX, ColY, ColX + ColWidth, ColY + ColHeight);
+    SrcRect := Rect(ImageX, ImageY, ImageX + 48, ImageY + 48);
+    DstRect := Rect(X, Y, X + 30, Y + 30);
 
     ColBMP.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
   finally
@@ -304,42 +441,49 @@ begin
   end;
 end;
 
-procedure TGameLevelSelectScreen.MakePackPanels;
+procedure TGameLevelSelectScreen.ShowLevelProgress(Pack: TNeoLevelGroup);
 var
-  PanelBMP: TBitmap32;
-  LogoBMP: TBitmap32;
-  Pack: TNeoLevelGroup;
-  PanelX, PanelY: Integer;
+  ProgressText: String;
+  X, Y: Integer;
 begin
-  PanelBMP := TBitmap32.Create;
-  LogoBMP := TBitmap32.Create;
+  InitializeFont('Tahoma', fsBold, 6);
+  ProgressText := IntToStr(Pack.LevelsCompleted) + ' / ' + IntToStr(Pack.LevelCount) + ' Levels';
 
-  Pack := GameParams.CurrentLevel.Group.ParentBasePack; // TODO: Once we have a full list, get the currently-selected pack
+  X := FIRST_COLUMN_LEFT + 60;
+  Y := LEVEL_ICON_TOP + 10;
 
-  try
-    // Create panel
-    PanelBMP.SetSize(PANEL_WIDTH, PANEL_HEIGHT);
-    PanelBMP.Clear($FF004A7F);
+  ScreenImg.Bitmap.RenderText(20, Y, 'LVL', clCornflowerBlue32); // TODO - Add Level Icon
+  ScreenImg.Bitmap.RenderText(X, Y, ProgressText, clLightGreen32);
+end;
 
-    // Centre the panel horizontally
-    PanelX := (ScreenImg.Bitmap.Width - PanelBMP.Width) div 2;
-    PanelY := 200;
+procedure TGameLevelSelectScreen.ShowTalismanProgress(Pack: TNeoLevelGroup);
+var
+  ProgressText: String;
+  X, Y: Integer;
+begin
+  InitializeFont('Tahoma', fsBold, 6);
+  ProgressText := IntToStr(Pack.TalismansUnlocked) + ' / ' + IntToStr(Pack.Talismans.Count) + ' Talismans';
 
-    // Draw panel
-    PanelBMP.DrawTo(ScreenImg.Bitmap, PanelX, PanelY);
+  X := FIRST_COLUMN_LEFT + 60;
+  Y := TALISMAN_ICON_TOP + 10;
 
-    // Draw logo
-    DrawLogoCropped(PanelX, PanelY);
+  ScreenImg.Bitmap.RenderText(X, Y, ProgressText, clLightGreen32);
+end;
 
-    // Draw text
-    DrawPanelText(IntToStr(Pack.LevelsCompleted) + ' / ' + IntToStr(Pack.LevelCount), PanelX, PanelY);
+procedure TGameLevelSelectScreen.ShowCollectibleProgress(Pack: TNeoLevelGroup);
+var
+  ProgressText: String;
+  X, Y: Integer;
+begin
+  InitializeFont('Tahoma', fsBold, 6);
 
-    // Add talisman and collectible icons
-    AddIcons(PanelX, PanelY);
-  finally
-    LogoBMP.Free;
-    PanelBMP.Free;
-  end;
+  // TODO - implement a way to know the total number of collectibles obtained
+  ProgressText := IntToStr(Pack.LevelsCompleted) + ' / ' + IntToStr(Pack.LevelCount) + ' Collectibles';
+
+  X := FIRST_COLUMN_LEFT + 60;
+  Y := COLLECTIBLE_ICON_TOP + 10;
+
+  ScreenImg.Bitmap.RenderText(X, Y, ProgressText, clLightGreen32);
 end;
 
 procedure TGameLevelSelectScreen.BeginGame;
@@ -361,32 +505,180 @@ begin
   Result := 'menu';
 end;
 
-procedure TGameLevelSelectScreen.ShowSetupMenu;
-var
-  F: TFNLSetup;
-  OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap: Boolean;
-begin
-  F := TFNLSetup.Create(Self);
-  try
-    OldAmigaTheme := GameParams.AmigaTheme;
-    OldFullScreen := GameParams.FullScreen;
-    OldHighRes := GameParams.HighResolution;
-    OldShowMinimap := GameParams.ShowMinimap;
-
-    F.ShowModal;
-
-    // And apply the settings chosen
-    ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighRes, OldShowMinimap, False, False);
-  finally
-    F.Free;
-  end;
-end;
-
 procedure TGameLevelSelectScreen.DoAfterConfig;
 begin
   inherited;
   ReloadCursor('amiga.png');
-  MakePackPanels;
+  DrawLogoPanel(GameParams.CurrentLevel.Group.ParentBasePack);
+end;
+
+function TGameLevelSelectScreen.IsCompilationPack(Pack: TNeoLevelGroup): Boolean;
+var
+  SubGroup, SubSubGroup: TNeoLevelGroup;
+begin
+  Result := False;
+
+  if (Pack = nil) then
+    Exit;
+
+  // Parent Group must have no levels or at least one subgroup
+  if (Pack.Levels.Count > 0) or (Pack.Children.Count = 0) then
+    Exit;
+
+  // Get the first subgroup
+  SubGroup := Pack.Children[0];
+
+  // SubGroup must also have no levels or at least one subgroup
+  if (SubGroup.Levels.Count > 0) or (SubGroup.Children.Count = 0) then
+    Exit;
+
+  // Get the first sub-subgroup
+  SubSubGroup := SubGroup.Children[0];
+
+  // If the sub-subgroup has levels, it is *probably* a compilation
+  // If it has at least one more subgroup, it is *definitely* a compilation
+  if (SubSubGroup.Levels.Count > 0) or (SubSubGroup.Children.Count > 0) then
+    Result := True;
+end;
+
+procedure TGameLevelSelectScreen.DrawPackList;
+var
+  i, j: Integer;
+  Pack: TNeoLevelGroup;
+  SubPack: TNeoLevelGroup;
+  PackFont: TFont;
+  Area: TRect;
+begin
+  PackFont := TFont.Create;
+  try
+    PackFont.Name := 'Tahoma';
+    PackFont.Size := 8;
+
+    fPackList.Clear;
+
+    for i := 0 to GameParams.BaseLevelPack.Children.Count - 1 do
+    begin
+      Pack := GameParams.BaseLevelPack.Children[i];
+
+      if IsCompilationPack(Pack) then
+      begin
+        for j := 0 to Pack.Children.Count - 1 do
+        begin
+          SubPack := Pack.Children[j];
+
+          Area := Rect(FIRST_COLUMN_LEFT,
+            PACK_LIST_TOP + fPackList.Count * PACK_ITEM_HEIGHT,
+            FIRST_COLUMN_LEFT + FIRST_COLUMN_WIDTH,
+            PACK_LIST_TOP + (fPackList.Count + 1) * PACK_ITEM_HEIGHT);
+
+          fPackList.Add(TPackItem.Create(SubPack, Area));
+          fPackList[fPackList.Count - 1].DrawClickableText(ScreenImg.Bitmap, PackFont);
+        end;
+      end else begin
+        Area := Rect(FIRST_COLUMN_LEFT,
+          PACK_LIST_TOP + fPackList.Count * PACK_ITEM_HEIGHT,
+          FIRST_COLUMN_LEFT + FIRST_COLUMN_WIDTH,
+          PACK_LIST_TOP + (fPackList.Count + 1) * PACK_ITEM_HEIGHT);
+
+        fPackList.Add(TPackItem.Create(Pack, Area));
+        fPackList[fPackList.Count - 1].DrawClickableText(ScreenImg.Bitmap, PackFont);
+      end;
+    end;
+  finally
+    PackFont.Free;
+  end;
+end;
+
+procedure TGameLevelSelectScreen.DrawGroupList(Pack: TNeoLevelGroup);
+var
+  i: Integer;
+  Group: TNeoLevelGroup;
+  GroupFont: TFont;
+  Area: TRect;
+  TextSize: TSize;
+  CurrentX, CurrentY: Integer;
+  GroupAreaRight: Integer;
+begin
+  GroupFont := TFont.Create;
+  try
+    GroupFont.Name := 'Tahoma';
+    GroupFont.Size := 8;
+
+    InitializeFont('Tahoma', fsBold, 8);
+
+    RestoreWallpaper(Rect(SECOND_COLUMN_LEFT,
+      GLOBAL_COLUMN_TOP,
+      SECOND_COLUMN_LEFT + SECOND_COLUMN_WIDTH,
+      GLOBAL_COLUMN_TOP + GROUP_ITEM_HEIGHT * 2));
+
+    fGroupList.Clear;
+
+    CurrentX := SECOND_COLUMN_LEFT;
+    CurrentY := GLOBAL_COLUMN_TOP;
+    GroupAreaRight := SECOND_COLUMN_LEFT + SECOND_COLUMN_WIDTH;
+
+    ScreenImg.Bitmap.Font.Assign(GroupFont);
+
+    for i := 0 to Pack.Children.Count - 1 do
+    begin
+      Group := Pack.Children[i];
+
+      TextSize := ScreenImg.Bitmap.TextExtent(Group.Name);
+      TextSize.cx := TextSize.cx + ScreenImg.Bitmap.TextExtent(' ').cx;
+
+      if (CurrentX + TextSize.cx > GroupAreaRight) and
+         (CurrentX > SECOND_COLUMN_LEFT) then
+      begin
+        CurrentX := SECOND_COLUMN_LEFT;
+        Inc(CurrentY, GROUP_ITEM_HEIGHT);
+      end;
+
+      Area := Rect(CurrentX, CurrentY, CurrentX + TextSize.cx, CurrentY + GROUP_ITEM_HEIGHT);
+
+      fGroupList.Add(TGroupItem.Create(Group, Area));
+      fGroupList[i].DrawClickableText(ScreenImg.Bitmap, GroupFont);
+
+      Inc(CurrentX, TextSize.cx + GROUP_ITEM_GAP);
+    end;
+  finally
+    GroupFont.Free;
+  end;
+end;
+
+procedure TGameLevelSelectScreen.DrawLevelList(Group: TNeoLevelGroup);
+var
+  i: Integer;
+  Level: TNeoLevelEntry;
+  LevelFont: TFont;
+  Area: TRect;
+begin
+  LevelFont := TFont.Create;
+  try
+    LevelFont.Name := 'Tahoma';
+    LevelFont.Size := 8;
+
+    RestoreWallpaper(Rect(SECOND_COLUMN_LEFT,
+      LEVEL_LIST_TOP,
+      SECOND_COLUMN_LEFT + SECOND_COLUMN_WIDTH,
+      LEVEL_LIST_TOP + LEVEL_LIST_HEIGHT));
+
+    fLevelList.Clear;
+
+    for i := 0 to Group.Levels.Count - 1 do
+    begin
+      Level := Group.Levels[i];
+
+      Area := Rect(SECOND_COLUMN_LEFT,
+        LEVEL_LIST_TOP + i * LEVEL_ITEM_HEIGHT,
+        SECOND_COLUMN_LEFT + SECOND_COLUMN_WIDTH,
+        LEVEL_LIST_TOP + (i + 1) * LEVEL_ITEM_HEIGHT);
+
+      fLevelList.Add(TLevelItem.Create(Level, Area));
+      fLevelList[i].DrawClickableText(ScreenImg.Bitmap, LevelFont);
+    end;
+  finally
+    LevelFont.Free;
+  end;
 end;
 
 end.
