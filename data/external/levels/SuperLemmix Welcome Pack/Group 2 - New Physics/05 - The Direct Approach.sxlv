@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.2
+#   Created with SLXEditor 3.3.1
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The Direct Approach
  AUTHOR WillLem
  ID x3278D9715D450C26
- VERSION x0000000000000038
+ VERSION x0000000000000039
  
 #       Level dimensions        
 # ----------------------------- 
@@ -117,7 +117,7 @@
  $END
  
  $GADGET
-   STYLE default
+   STYLE willlem_lemminas
    PIECE diamond
    X 313
    Y 71

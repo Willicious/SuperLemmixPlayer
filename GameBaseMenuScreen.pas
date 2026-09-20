@@ -463,7 +463,6 @@ begin
     tmpClick.Free;
     Temp.Free;
   end;
-
 end;
 
 // Changes hue of clickable text in pre-level screen
@@ -694,6 +693,7 @@ begin
       GetGraphic('classic_mode_on.png', BMP)
     else
       GetGraphic('classic_mode_off.png', BMP);
+
     NewRegion := MakeClickableImageAuto(SetButtonPosition((BMP.Width div 3) * 2, BMP.Height),
                                         BMP.BoundsRect, HandleClassicModeClick, BMP);
     NewRegion.ShortcutKeys.Add(VK_F4);
