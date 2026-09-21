@@ -29,8 +29,12 @@ type
     fGame                 : TLemmingGame;
     fShowUsedSkills       : Boolean;
     fRRIsPressed          : Boolean;
+
+    // Talisman button info
     fTalismanIconIndex    : Integer;
     fCurrentTalisman      : Integer;
+    fTalSaveRequirement   : Integer;
+    fTalHasSaveRequirement: Boolean;
 
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
@@ -1409,11 +1413,25 @@ procedure TBaseSkillPanel.DrawLemsAliveInfo;
 var
   Color: TColor32;
   LemmingKinds: TLemmingKinds;
+
+  function NotEnoughLemmings: Boolean;
+  var
+    LemsAlive, LemsToSave: Integer;
+  begin
+    LemsAlive := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
+
+    if (fCurrentTalisman >= 0) and fTalHasSaveRequirement then
+      LemsToSave := fTalSaveRequirement - Game.LemmingsSaved
+    else
+      LemsToSave := Level.Info.RescueCount - Game.LemmingsSaved;
+
+    Result := LemsAlive < LemsToSave;
+  end;
 begin
   DrawPanelIcon(3, AliveIconRect.Left, AliveIconRect.Top);
   LemmingKinds := Game.ActiveLemmingTypes;
 
-  if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
+  if NotEnoughLemmings then
     Color := clRed32
   else if (lkNeutral in LemmingKinds) and not (lkNormal in LemmingKinds) then
     Color := clTeal32
@@ -1435,11 +1453,23 @@ var
 begin
   if (Game.LemmingsSaved >= Level.Info.RescueCount) then
   begin
-    Color := clTeal32;
+    Color := clAquamarine32;
     Icon := 5;
   end else begin
     Color := clLightGreen32;
     Icon := 4;
+  end;
+
+  if (fCurrentTalisman >= 0) and (fTalHasSaveRequirement) then
+  begin
+    if (Game.LemmingsSaved >= fTalSaveRequirement) then
+    begin
+      Color := clAquamarine32;
+      Icon := 5;
+    end else begin
+      Color := clCornflowerBlue32;
+      Icon := 4;
+    end;
   end;
 
   DrawPanelIcon(Icon, ExitIconRect.Left, ExitIconRect.Top);
@@ -1740,6 +1770,10 @@ var
 begin
   TotalSaved := Game.LemmingsSaved;
   Required := Level.Info.RescueCount;
+
+  if (fCurrentTalisman >= 0) and fTalHasSaveRequirement then
+    Required := fTalSaveRequirement;
+
   ToSave := Required - TotalSaved;
 
   if (ToSave < 0) then
@@ -2178,7 +2212,15 @@ procedure TBaseSkillPanel.HandleTalismanIconClick;
       end;
 
       // TODO - if Talisman is completed, add 3 to index
-      // TODO - Show talisman requirements in panel
+
+      fTalSaveRequirement := Level.Talismans[Tal].RescueCount;
+      fTalHasSaveRequirement := fTalSaveRequirement > 0;
+
+      // TODO - fTalHasTimeLimit
+      // TODO - fTalHasSkillTypeLimit
+      // TODO - fTalHasNoPause
+      // TODO - fTalHasClassicMode
+      // TODO - fTalHasKillZombies
     end;
 
     fTalismanIconIndex := Index;
