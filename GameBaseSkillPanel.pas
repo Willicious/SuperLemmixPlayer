@@ -37,6 +37,9 @@ type
     fTalHasSaveRequirement: Boolean;
     fTalTimeLimit         : Integer;
     fTalHasTimeLimit      : Boolean;
+    fTalMaxSkillTypes     : Integer;
+    fSkillTypesUsed       : Integer;
+    fTalHasMaxSkillTypes  : Boolean;
 
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
@@ -83,6 +86,8 @@ type
     fSkillInfinite        : TBitmap32;
     fSkillInfiniteMode    : TBitmap32;
     fSkillSelected        : TBitmap32;
+    fSkillTypesHighlight  : TBitmap32;
+    fSkillTypesOvercount  : TBitmap32;
     fSquiggleHighlight    : TBitmap32;
     fTurboHighlight       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
@@ -165,6 +170,7 @@ type
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
     procedure HandleTalismanIconClick;
+    procedure DrawMaxSkillTypes;
 
     function GetSpawnIntervalValue(aSI: Integer): Integer; // Returns the SI or the equivalent RR, depending on user's settings
   public
@@ -182,9 +188,11 @@ type
     procedure PlayReleaseRateSound;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
+    procedure DrawMaxSkillTypesHighlight(aButton: TSkillPanelButton; Overcount: Boolean);
     procedure DrawSquiggleHighlight;
     procedure DrawTurboHighlight;
     procedure RemoveButtonHighlights;
+    procedure RemoveMaxSkillTypesHighlights;
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
     procedure DrawMinimap; virtual;
@@ -351,6 +359,14 @@ begin
   fSkillSelected.DrawMode := dmBlend;
   fSkillSelected.CombineMode := cmMerge;
 
+  fSkillTypesHighlight := TBitmap32.Create;
+  fSkillTypesHighlight.DrawMode := dmBlend;
+  fSkillTypesHighlight.CombineMode := cmMerge;
+
+  fSkillTypesOvercount := TBitmap32.Create;
+  fSkillTypesOvercount.DrawMode := dmBlend;
+  fSkillTypesOvercount.CombineMode := cmMerge;
+
   fSquiggleHighlight := TBitmap32.Create;
   fSquiggleHighlight.DrawMode := dmBlend;
   fSquiggleHighlight.CombineMode := cmMerge;
@@ -385,6 +401,13 @@ begin
   fRRIsPressed := False;
   fTalismanIconIndex := 12;
   fCurrentTalisman := -1;
+  fTalSaveRequirement := -1;
+  fTalHasSaveRequirement := False;
+  fTalTimeLimit := -1;
+  fTalHasTimeLimit := False;
+  fTalMaxSkillTypes := -1;
+  fSkillTypesUsed := 0;
+  fTalHasMaxSkillTypes := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -411,6 +434,8 @@ begin
   fSkillInfinite.Free;
   fSkillInfiniteMode.Free;
   fSkillSelected.Free;
+  fSkillTypesHighlight.Free;
+  fSkillTypesOvercount.Free;
   fSquiggleHighlight.Free;
   fTurboHighlight.Free;
   fSkillCountErase.Free;
@@ -652,6 +677,8 @@ begin
   // Load the erasing icon and selection outline first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
   GetGraphic('skill_selected.png', fSkillSelected);
+  GetGraphic('skill_types_highlight.png', fSkillTypesHighlight);
+  GetGraphic('skill_types_overcount.png', fSkillTypesOvercount);
   GetGraphic('squiggle_highlight.png', fSquiggleHighlight);
   GetGraphic('turbo_highlight.png', fTurboHighlight);
 
@@ -1098,6 +1125,40 @@ begin
   fSkillSelected.DrawTo(Image.Bitmap, BorderRect, fSkillSelected.BoundsRect);
 end;
 
+procedure TBaseSkillPanel.DrawMaxSkillTypesHighlight(aButton: TSkillPanelButton; Overcount: Boolean);
+var
+  BorderRect: TRect;
+begin
+  BorderRect := fButtonRects[aButton];
+
+  Inc(BorderRect.Right, 4);
+  Inc(BorderRect.Bottom, 2);
+
+  if Overcount then
+    fSkillTypesOvercount.DrawTo(Image.Bitmap, BorderRect, fSkillTypesOvercount.BoundsRect)
+  else
+    fSkillTypesHighlight.DrawTo(Image.Bitmap, BorderRect, fSkillTypesHighlight.BoundsRect);
+end;
+
+procedure TBaseSkillPanel.RemoveMaxSkillTypesHighlights;
+var
+  Button: TSkillPanelButton;
+  BorderRect: TRect;
+begin
+  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+  begin
+    BorderRect := fButtonRects[Button];
+
+    Inc(BorderRect.Right, 4);
+    Inc(BorderRect.Bottom, 2);
+
+    fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
+  end;
+
+  if fHighlitSkill <> spbNone then
+    DrawHighlight(fHighlitSkill);
+end;
+
 procedure TBaseSkillPanel.DrawTurboHighlight;
 var
   BorderRect: TRect;
@@ -1526,6 +1587,60 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawMaxSkillTypes;
+var
+  Button: TSkillPanelButton;
+  SkillTypesStr: String;
+  Overcount: Boolean;
+  CountRect, CountRectErase: TRect;
+begin
+  if (fCurrentTalisman < 0) or not fTalHasMaxSkillTypes then
+    Exit;
+
+  if fSkillTypesUsed > 0 then
+    RemoveMaxSkillTypesHighlights;
+
+  CountRect := Rect(TalismanIconRect.Right + 2, 6, TalismanIconRect.Right + 26, 28);
+  CountRectErase := Rect(CountRect.Left + 2, CountRect.Top + 2, CountRect.Right - 2, CountRect.Bottom - 2);
+
+  fSkillTypesUsed := 0;
+
+  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    if Game.SkillsUsed[Button] > 0 then
+      Inc(fSkillTypesUsed);
+
+  SkillTypesStr := IntToStr(Max(0, fTalMaxSkillTypes - fSkillTypesUsed));
+  Overcount := fSkillTypesUsed > fTalMaxSkillTypes;
+
+  with fImage.Bitmap do
+  begin
+    if Overcount then
+      FillRectS(CountRect, $FFFF0055)
+    else
+      FillRectS(CountRect, $FFB200FF);
+
+    FillRectS(CountRectErase, $FF000000);
+
+    if Overcount then
+      fSkillFontTalFailed[SkillTypesStr[1], 1].DrawTo(
+        fImage.Bitmap, CountRect.Left + 6, CountRect.Top + 5)
+    else if Length(SkillTypesStr) = 1 then
+      fSkillFont[SkillTypesStr[1], 1].DrawTo(
+        fImage.Bitmap, CountRect.Left + 6, CountRect.Top + 5)
+    else begin
+      fSkillFont[SkillTypesStr[1], 1].DrawTo(
+        fImage.Bitmap, CountRect.Left + 3, CountRect.Top + 5);
+
+      fSkillFont[SkillTypesStr[2], 0].DrawTo(
+        fImage.Bitmap, CountRect.Left + 3, CountRect.Top + 5);
+    end;
+  end;
+
+  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    if Game.SkillsUsed[Button] > 0 then
+      DrawMaxSkillTypesHighlight(Button, Overcount);
+end;
+
 procedure TBaseSkillPanel.DrawPanelMessage;
 begin
   if not Game.StateIsUnplayable then
@@ -1576,6 +1691,7 @@ begin
     DrawLemsAliveInfo;
     DrawLemsSavedInfo;
     DrawTimeInfo;
+    DrawMaxSkillTypes;
     DrawPanelMessage;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -2212,6 +2328,9 @@ begin
 end;
 
 procedure TBaseSkillPanel.HandleTalismanIconClick;
+var
+  Button: TSkillPanelButton;
+
   procedure DisplayTalismanInfo(Tal: Integer);
   var
     Index: Integer;
@@ -2233,7 +2352,9 @@ procedure TBaseSkillPanel.HandleTalismanIconClick;
       fTalTimeLimit := Level.Talismans[Tal].TimeLimit;
       fTalHasTimeLimit := fTalTimeLimit > 0;
 
-      // TODO - fTalHasSkillTypeLimit
+      fTalMaxSkillTypes := Level.Talismans[Tal].SkillTypeLimit;
+      fTalHasMaxSkillTypes := fTalMaxSkillTypes > 0;
+
       // TODO - fTalHasNoPause
       // TODO - fTalHasClassicMode
       // TODO - fTalHasKillZombies
@@ -2250,6 +2371,13 @@ begin
     Inc(fCurrentTalisman)
   else
     fCurrentTalisman := -1;
+
+  RemoveMaxSkillTypesHighlights;
+
+  with fImage.Bitmap do
+  begin
+    FillRectS(TimeIconRect.Right, 4, TimeIconRect.Right + 24, 24, $FF000000);
+  end;
 
   DisplayTalismanInfo(fCurrentTalisman);
 end;
