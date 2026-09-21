@@ -40,6 +40,7 @@ type
     fTalMaxSkillTypes     : Integer;
     fSkillTypesUsed       : Integer;
     fTalHasMaxSkillTypes  : Boolean;
+    fTalHasNoPause        : Boolean;
 
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
@@ -90,6 +91,7 @@ type
     fSkillTypesOvercount  : TBitmap32;
     fSquiggleHighlight    : TBitmap32;
     fTurboHighlight       : TBitmap32;
+    fNoPauseOverlay       : TBitmap32;
     fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
 
     fHighlitSkill         : TSkillPanelButton;
@@ -191,6 +193,8 @@ type
     procedure DrawMaxSkillTypesHighlight(aButton: TSkillPanelButton; Overcount: Boolean);
     procedure DrawSquiggleHighlight;
     procedure DrawTurboHighlight;
+    procedure DrawNoPauseOverlay;
+    procedure RemoveNoPauseOverlay;
     procedure RemoveButtonHighlights;
     procedure RemoveMaxSkillTypesHighlights;
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
@@ -375,6 +379,10 @@ begin
   fTurboHighlight.DrawMode := dmBlend;
   fTurboHighlight.CombineMode := cmMerge;
 
+  fNoPauseOverlay := TBitmap32.Create;
+  fNoPauseOverlay.DrawMode := dmBlend;
+  fNoPauseOverlay.CombineMode := cmMerge;
+
   fSkillCountErase := TBitmap32.Create;
   fSkillCountErase.DrawMode := dmBlend;
   fSkillCountErase.CombineMode := cmMerge;
@@ -408,6 +416,7 @@ begin
   fTalMaxSkillTypes := -1;
   fSkillTypesUsed := 0;
   fTalHasMaxSkillTypes := False;
+  fTalHasNoPause := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -438,6 +447,7 @@ begin
   fSkillTypesOvercount.Free;
   fSquiggleHighlight.Free;
   fTurboHighlight.Free;
+  fNoPauseOverlay.Free;
   fSkillCountErase.Free;
   fSkillCountEraseInvert.Free;
   fSkillLock.Free;
@@ -681,6 +691,7 @@ begin
   GetGraphic('skill_types_overcount.png', fSkillTypesOvercount);
   GetGraphic('squiggle_highlight.png', fSquiggleHighlight);
   GetGraphic('turbo_highlight.png', fTurboHighlight);
+  GetGraphic('no_pause.png', fNoPauseOverlay);
 
   fSkillCountEraseInvert.Assign(fSkillCountErase);
   for y := 0 to fSkillCountEraseInvert.Height-1 do
@@ -1098,9 +1109,13 @@ begin
   if fButtonRects[aButton].Left <= 0 then Exit;
 
   RemoveHighlight(aButton);
+  RemoveNoPauseOverlay;
 
   if Highlight then
   begin
+    if (aButton = spbPause) and (fCurrentTalisman >= 0) and (fTalHasNoPause) then
+      DrawNoPauseOverlay;
+
     if aButton = spbSquiggle then
       DrawSquiggleHighlight
     else
@@ -1192,6 +1207,26 @@ begin
   fSquiggleHighlight.DrawTo(Image.Bitmap, BorderRect, fSquiggleHighlight.BoundsRect);
 end;
 
+procedure TBaseSkillPanel.DrawNoPauseOverlay;
+var
+  BorderRect: TRect;
+begin
+  BorderRect := fButtonRects[spbPause];
+
+  Inc(BorderRect.Right, 4);
+  Inc(BorderRect.Bottom, 2);
+
+  fNoPauseOverlay.DrawTo(Image.Bitmap, BorderRect, fNoPauseOverlay.BoundsRect);
+end;
+
+procedure TBaseSkillPanel.RemoveNoPauseOverlay;
+begin
+  RemoveHighlight(spbPause);
+
+  if fGameWindow.GameSpeed = gspPause then
+    DrawHighlight(spbPause);
+end;
+
 procedure TBaseSkillPanel.RemoveButtonHighlights;
 begin
   RemoveHighlight(spbSlower);
@@ -1219,7 +1254,11 @@ begin
   Inc(BorderRect.Bottom, 4);
 
   fOriginal.DrawTo(Image.Bitmap, BorderRect, BorderRect);
-  Exit;
+
+  if (aButton = spbPause) and (fCurrentTalisman >= 0) and (fTalHasNoPause) then
+    DrawNoPauseOverlay;
+
+  Exit; // TODO - Huh? Why??
 
   // Top
   EraseRect := BorderRect;
@@ -2355,7 +2394,8 @@ var
       fTalMaxSkillTypes := Level.Talismans[Tal].SkillTypeLimit;
       fTalHasMaxSkillTypes := fTalMaxSkillTypes > 0;
 
-      // TODO - fTalHasNoPause
+      fTalHasNoPause := Level.Talismans[Tal].RequireNoPause;
+
       // TODO - fTalHasClassicMode
       // TODO - fTalHasKillZombies
     end;
