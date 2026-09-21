@@ -35,6 +35,8 @@ type
     fCurrentTalisman      : Integer;
     fTalSaveRequirement   : Integer;
     fTalHasSaveRequirement: Boolean;
+    fTalTimeLimit         : Integer;
+    fTalHasTimeLimit      : Boolean;
 
     fPanelButtons         : TBitmap32; // for storing panel buttons & button text
     fPanelIcons           : TBitmap32; // for storing all panel icons
@@ -381,7 +383,7 @@ begin
     fSkillOvercount[i] := TBitmap32.Create;
 
   fRRIsPressed := False;
-  fTalismanIconIndex := 11;
+  fTalismanIconIndex := 12;
   fCurrentTalisman := -1;
 end;
 
@@ -1358,11 +1360,11 @@ begin
   if BlinkIcon or Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     Icon := -1
   else if GameParams.PlaybackModeActive and not IsReplaying then
-    Icon := 10 // Purple "R"
+    Icon := 11 // Purple "R"
   else if Game.ReplayInsert and not IsClassicModeRewind then
-    Icon := 9  // Blue "R"
+    Icon := 10  // Blue "R"
   else if not (RRIsPressed or IsClassicModeRewind) then
-    Icon := 8; // Red "R"
+    Icon := 9; // Red "R"
 
   DrawPanelIcon(Icon, ReplayIconRect.Left - 4, ReplayIconRect.Top);
 end;
@@ -1486,30 +1488,32 @@ procedure TBaseSkillPanel.DrawTimeInfo;
 var
   Icon: Integer;
   Color: TColor32;
-
-  function IsTimeRemainingPercent(aPercent: Integer): Boolean;
-  begin
-    Result := ((Level.Info.TimeLimit * 17) - Game.CurrentIteration <=
-               (Level.Info.TimeLimit * 17 * aPercent) div 100);
-  end;
 begin
+  Icon := 6;
+  Color := clLightGreen32;
+
   if Level.Info.HasTimeLimit then
   begin
     Color := clYellow32;
+    Icon := 7;
 
     if Game.IsOutOfTime then
     begin
       Color := clRed32;
-      Icon := 7;
-    end else if IsTimeRemainingPercent(35) then
-      Icon := 6  // TODO - alt icon?
-    else if IsTimeRemainingPercent(70) then
-      Icon := 6  // TODO - alt icon?
-    else
-      Icon := 6; // TODO - alt icon?
-  end else begin
-    Color := clLightGreen32;
-    Icon := 6;
+      Icon := 8;
+    end;
+  end;
+
+  if (fCurrentTalisman >= 0) and (fTalTimeLimit > 0) then
+  begin
+    Color := clYellow32;
+    Icon := 7;
+
+    if Game.IsOutOfTime or (Game.CurrentIteration > fTalTimeLimit) then
+    begin
+      Color := clRed32;
+      Icon := 8;
+    end;
   end;
 
   DrawPanelIcon(Icon, TimeIconRect.Left, TimeIconRect.Top);
@@ -1789,7 +1793,7 @@ end;
 
 function TBaseSkillPanel.GetTimeString: String;
 var
-  Time : Integer;
+  Time: Integer;
   Prefix, Minutes, Seconds: String;
 begin
   if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode) then
@@ -1805,6 +1809,16 @@ begin
       Time := Game.CurrentIteration div 50
     else
       Time := Game.CurrentIteration div 17;
+
+  if (fCurrentTalisman >= 0) and fTalHasTimeLimit and (Game.CurrentIteration < fTalTimeLimit) then
+  begin
+    Time := fTalTimeLimit - Game.CurrentIteration;
+
+    if Game.IsSuperLemmingMode then
+      Time := Time div 50
+    else
+      Time := Time div 17;
+  end;
 
   if Game.IsOutOfTime and (Time <> 0) then
     Prefix := '-'
@@ -2203,12 +2217,12 @@ procedure TBaseSkillPanel.HandleTalismanIconClick;
     Index: Integer;
   begin
     if Tal < 0 then
-      Index := 11
+      Index := 12
     else begin
       case Level.Talismans[Tal].Color of
-        tcBronze: Index := 12;
-        tcSilver: Index := 13;
-        tcGold:   Index := 14;
+        tcBronze: Index := 13;
+        tcSilver: Index := 14;
+        tcGold:   Index := 15;
       end;
 
       // TODO - if Talisman is completed, add 3 to index
@@ -2216,7 +2230,9 @@ procedure TBaseSkillPanel.HandleTalismanIconClick;
       fTalSaveRequirement := Level.Talismans[Tal].RescueCount;
       fTalHasSaveRequirement := fTalSaveRequirement > 0;
 
-      // TODO - fTalHasTimeLimit
+      fTalTimeLimit := Level.Talismans[Tal].TimeLimit;
+      fTalHasTimeLimit := fTalTimeLimit > 0;
+
       // TODO - fTalHasSkillTypeLimit
       // TODO - fTalHasNoPause
       // TODO - fTalHasClassicMode
