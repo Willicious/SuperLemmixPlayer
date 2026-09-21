@@ -1106,6 +1106,11 @@ var
   Success: Boolean;
 begin
   Success := True;
+
+  // Limit talismans to 3 per level
+  if (fTalismans.Count = 3) then
+    Exit;
+
   T := TTalisman.Create;
   try
     T.LoadFromSection(aSection);
@@ -1114,7 +1119,9 @@ begin
     Success := False;
     T.Free;
   end;
-  if Success then fTalismans.Add(T);
+
+  if Success then
+    fTalismans.Add(T);
 end;
 
 procedure TLevel.LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
