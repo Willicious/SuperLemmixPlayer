@@ -1,7 +1,6 @@
 unit GameBaseSkillPanel;
 
 // TODO - Show hotkey labels on panel buttons
-// TODO - Add clickable talisman info button
 
 interface
 
@@ -21,6 +20,9 @@ type
 
 type
   TFontBitmapArray = array['0'..'9', 0..1] of TBitmap32;
+
+type
+  TTalismanStatus = (tsFailed, tsFailing, tsSucceeding);
 
   TBaseSkillPanel = class(TCustomControl)
   private
@@ -66,6 +68,8 @@ type
 
     fSkillFont            : TFontBitmapArray;
     fSkillFontInvert      : TFontBitmapArray;
+    fSkillFontTalActive   : TFontBitmapArray;
+    fSkillFontTalFailed   : TFontBitmapArray;
     fSkillOvercount       : array[100..MAXIMUM_SI] of TBitmap32;
     fSkillCountErase      : TBitmap32;
     fSkillCountEraseInvert: TBitmap32;
@@ -319,6 +323,14 @@ begin
       fSkillFontInvert[c, i] := TBitmap32.Create;
       fSkillFontInvert[c, i].DrawMode := dmBlend;
       fSkillFontInvert[c, i].CombineMode := cmMerge;
+
+      fSkillFontTalActive[c, i] := TBitmap32.Create;
+      fSkillFontTalActive[c, i].DrawMode := dmBlend;
+      fSkillFontTalActive[c, i].CombineMode := cmMerge;
+
+      fSkillFontTalFailed[c, i] := TBitmap32.Create;
+      fSkillFontTalFailed[c, i].DrawMode := dmBlend;
+      fSkillFontTalFailed[c, i].CombineMode := cmMerge;
     end;
 
   fSkillInfinite := TBitmap32.Create;
@@ -380,6 +392,8 @@ begin
     begin
       fSkillFont[c, i].Free;
       fSkillFontInvert[c, i].Free;
+      fSkillFontTalActive[c, i].Free;
+      fSkillFontTalFailed[c, i].Free;
     end;
 
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -729,6 +743,18 @@ begin
       for y := 0 to fSkillFontInvert[c, i].Height-1 do
         for x := 0 to fSkillFontInvert[c, i].Width-1 do
           fSkillFontInvert[c, i][x, y] := fSkillFontInvert[c,i][x,y] xor $00FFFFFF; // Don't invert alpha
+
+      fSkillFontTalActive[c, i].Assign(fSkillFont[c, i]);
+      for y := 0 to fSkillFontTalActive[c, i].Height - 1 do
+        for x := 0 to fSkillFontTalActive[c, i].Width - 1 do
+          fSkillFontTalActive[c, i][x, y] :=
+            (fSkillFontTalActive[c, i][x, y] and $FF000000) or $0000FF00; // Shift white to green
+
+      fSkillFontTalFailed[c, i].Assign(fSkillFont[c, i]);
+      for y := 0 to fSkillFontTalFailed[c, i].Height - 1 do
+        for x := 0 to fSkillFontTalFailed[c, i].Width - 1 do
+          fSkillFontTalFailed[c, i][x, y] :=
+            (fSkillFontTalFailed[c, i][x, y] and $FF000000) or $00FF0000; // Shift white to red
     end;
     OffsetRect(SrcRect, 8, 0);
   end;
@@ -1156,18 +1182,93 @@ var
 
   EraseBMP: TBitmap32;
   FontBMP: TFontBitmapArray;
-  // Don't need variables for Infinite, Lock or Overcount as they're never used in inverted form
 
   IsRegularSkill: Boolean;
+
+  // Talisman requirements
+  TalismanHasSkillRequirement: Boolean;
+  TalismanStatus: TTalismanStatus;
+  OrigNumber, UsedOfSkill: Integer;
+  SkillMax, SkillMin, TotalLimit: Integer;
 begin
   if fButtonRects[aButton].Left < 0 then Exit;
   if fGameWindow.IsHyperSpeed then Exit;
 
   IsRegularSkill := aButton <= LAST_SKILL_BUTTON;
 
-  if IsRegularSkill and fShowUsedSkills then
+  TalismanHasSkillRequirement := False;
+  TalismanStatus := tsSucceeding;
+
+  // Handle talisman requirement info
+  if fCurrentTalisman >= 0 then
   begin
-    if aNumber > 99 then aNumber := 99;
+    OrigNumber := aNumber;
+    UsedOfSkill := Game.SkillsUsed[aButton];
+
+    SkillMax := Level.Talismans[fCurrentTalisman].SkillMaximum[aButton];
+    SkillMin := Level.Talismans[fCurrentTalisman].SkillMinimum[aButton];
+    TotalLimit := Level.Talismans[fCurrentTalisman].TotalSkillLimit;
+
+    TalismanHasSkillRequirement := (SkillMax >= 0) or (SkillMin > 0) or (TotalLimit >= 0);
+
+    if TalismanHasSkillRequirement then
+    begin
+      if SkillMax >= 0 then
+      begin
+        if UsedOfSkill > SkillMax then
+          TalismanStatus := tsFailed
+        else
+          aNumber := SkillMax - UsedOfSkill;
+      end;
+
+      if (SkillMin > 0) and (UsedOfSkill < SkillMin) then
+      begin
+        { TODO - Unsure what's the best way of displaying a Minimum limit...
+          We could display the (minimum - used) or just the (used) in red,
+          but that could be misleading. Just displaying the (available) in
+          red doesn't give enough info though }
+
+        //aNumber := SkillMin - UsedOfSkill;
+        //TalismanStatus := tsFailing; // TODO - Use this to display (Min - Used) in red
+
+        TalismanStatus := tsFailed; // NOTE: This will just show the (available) in red...
+      end;
+
+      if TotalLimit >= 0 then
+      begin
+        if UsedOfSkill > TotalLimit then
+          TalismanStatus := tsFailed
+        else
+          aNumber := TotalLimit - UsedOfSkill;
+      end;
+
+      if aNumber < 0 then
+        TalismanStatus := tsFailed;
+    end;
+
+    if fShowUsedSkills then
+      aNumber := UsedOfSkill
+    else if TalismanStatus = tsFailed then //...because the number gets reset here
+      aNumber := OrigNumber;
+
+    if TalismanStatus <> tsSucceeding then
+      FontBMP := fSkillFontTalFailed
+    else if TalismanHasSkillRequirement then
+      FontBMP := fSkillFontTalActive
+    else if IsRegularSkill and fShowUsedSkills then
+      FontBMP := fSkillFontInvert
+    else
+      FontBMP := fSkillFont;
+
+    if fShowUsedSkills then
+      EraseBMP := fSkillCountEraseInvert
+    else
+      EraseBMP := fSkillCountErase;
+  end else if IsRegularSkill and fShowUsedSkills then
+  begin
+    if aNumber > 99 then
+      aNumber := 99;
+
     EraseBMP := fSkillCountEraseInvert;
     FontBMP := fSkillFontInvert;
   end else begin
@@ -1180,7 +1281,9 @@ begin
 
   // Erase previous number
   EraseBMP.DrawTo(fImage.Bitmap, ButtonLeft, ButtonTop);
-  if IsRegularSkill and (aNumber = 0) and not fShowUsedSkills then Exit;
+
+  if IsRegularSkill and (aNumber = 0) and not fShowUsedSkills then
+    Exit;
 
   if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
     fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
