@@ -46,6 +46,7 @@ type
     fPanelIcons           : TBitmap32;
     fReplayIcons          : TBitmap32;
     fTalismanIcons        : TBitmap32;
+    fLevelInfoIcons       : TBitmap32;
 
     fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
@@ -320,6 +321,10 @@ begin
   fTalismanIcons.DrawMode := dmBlend;
   fTalismanIcons.CombineMode := cmMerge;
 
+  fLevelInfoIcons := TBitmap32.Create;
+  fLevelInfoIcons.DrawMode := dmBlend;
+  fLevelInfoIcons.CombineMode := cmMerge;
+
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
@@ -473,6 +478,7 @@ begin
   fPanelIcons.Free;
   fReplayIcons.Free;
   fTalismanIcons.Free;
+  fLevelInfoIcons.Free;
   inherited;
 end;
 
@@ -643,7 +649,6 @@ var
   Button: TSkillPanelButton;
   X, Y, FloaterY: Integer;
   Offset: TPoint;
-  IconsImg: TBitmap32;
 
   procedure DrawIcon(dst: TBitmap32; IconIndex: Integer);
   var
@@ -676,15 +681,15 @@ var
       begin
         for x := 0 to 31 do
         begin
-          PixelColor := IconsImg.Pixel[x + SrcRect.Left, y + SrcRect.Top];
+          PixelColor := fLevelInfoIcons.Pixel[x + SrcRect.Left, y + SrcRect.Top];
 
           if (PixelColor = $FFB400B4) or (PixelColor = $FF780078) then
-            IconsImg.Pixel[x + SrcRect.Left, y + SrcRect.Top] := BrickColor;
+            fLevelInfoIcons.Pixel[x + SrcRect.Left, y + SrcRect.Top] := BrickColor;
         end;
       end;
     end;
 
-    IconsImg.DrawTo(dst, DstRect, SrcRect);
+    fLevelInfoIcons.DrawTo(dst, DstRect, SrcRect);
   end;
 
 begin
@@ -702,59 +707,54 @@ begin
     for x := 0 to fSkillCountEraseInvert.Width-1 do
       fSkillCountEraseInvert[x, y] := fSkillCountEraseInvert[x, y] xor $00FFFFFF; // Don't invert alpha
 
-  IconsImg := TBitmap32.Create;
-  try
-    LoadLevelInfoIcons(IconsImg);
+  LoadLevelInfoIcons(fLevelInfoIcons);
 
-    for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    begin
-      fSkillIcons[Button].SetSize(32, 48); // Make the full button available for drawing
+  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+  begin
+    fSkillIcons[Button].SetSize(32, 48); // Make the full button available for drawing
 
-      // Set Offset for each button
-      Offset := Point(0, 0);
+    // Set Offset for each button
+    Offset := Point(0, 0);
 
-      if GameParams.AmigaTheme then
-        FloaterY := 16
-      else
-        FloaterY := 12;
+    if GameParams.AmigaTheme then
+      FloaterY := 16
+    else
+      FloaterY := 12;
 
-      case Button of
-        spbWalker:    Offset := Point(1, 14);
-        spbJumper:    Offset := Point(0, 16);
-        spbShimmier:  Offset := Point(0, 16);
-        spbBallooner: Offset := Point(0, FloaterY);
-        spbSlider:    Offset := Point(-2, 15);
-        spbClimber:   Offset := Point(-1, 13);
-        spbSwimmer:   Offset := Point(0, 12);
-        spbFloater:   Offset := Point(0, FloaterY);
-        spbGlider:    Offset := Point(0, FloaterY);
-        spbDisarmer:  Offset := Point(-2, 16);
-        spbTimebomber:Offset := Point(-1, 12);
-        spbBomber:    Offset := Point(-1, 12);
-        spbFreezer:   Offset := Point(0, 15);
-        spbBlocker:   Offset := Point(1, 14);
-        spbLadderer:  Offset := Point(0, 16);
-        spbPlatformer:Offset := Point(0, 12);
-        spbBuilder:   Offset := Point(0, 12);
-        spbStacker:   Offset := Point(0, 16);
-        spbSpearer:   Offset := Point(0, 15);
-        spbGrenader:  Offset := Point(0, 15);
-        spbLaserer:   Offset := Point(0, 14);
-        spbBasher:    Offset := Point(0, 14);
-        spbFencer:    Offset := Point(-2, 16);
-        spbMiner:     Offset := Point(0, 15);
-        spbDigger:    Offset := Point(-1, 16);
-        //spbPropeller: Offset := Point(0, 14);
-        //spbBatter:    Offset := Point(0, 14);
-        spbCloner:    Offset := Point(-1, 15);
-        else          Offset := Point(0, 0);
-      end;
-
-      // Draw icons
-      DrawIcon(fSkillIcons[Button], ICON_SKILLS[Button]);
+    case Button of
+      spbWalker:    Offset := Point(1, 14);
+      spbJumper:    Offset := Point(0, 16);
+      spbShimmier:  Offset := Point(0, 16);
+      spbBallooner: Offset := Point(0, FloaterY);
+      spbSlider:    Offset := Point(-2, 15);
+      spbClimber:   Offset := Point(-1, 13);
+      spbSwimmer:   Offset := Point(0, 12);
+      spbFloater:   Offset := Point(0, FloaterY);
+      spbGlider:    Offset := Point(0, FloaterY);
+      spbDisarmer:  Offset := Point(-2, 16);
+      spbTimebomber:Offset := Point(-1, 12);
+      spbBomber:    Offset := Point(-1, 12);
+      spbFreezer:   Offset := Point(0, 15);
+      spbBlocker:   Offset := Point(1, 14);
+      spbLadderer:  Offset := Point(0, 16);
+      spbPlatformer:Offset := Point(0, 12);
+      spbBuilder:   Offset := Point(0, 12);
+      spbStacker:   Offset := Point(0, 16);
+      spbSpearer:   Offset := Point(0, 15);
+      spbGrenader:  Offset := Point(0, 15);
+      spbLaserer:   Offset := Point(0, 14);
+      spbBasher:    Offset := Point(0, 14);
+      spbFencer:    Offset := Point(-2, 16);
+      spbMiner:     Offset := Point(0, 15);
+      spbDigger:    Offset := Point(-1, 16);
+      //spbPropeller: Offset := Point(0, 14);
+      //spbBatter:    Offset := Point(0, 14);
+      spbCloner:    Offset := Point(-1, 15);
+      else          Offset := Point(0, 0);
     end;
-  finally
-    IconsImg.Free;
+
+    // Draw icons
+    DrawIcon(fSkillIcons[Button], ICON_SKILLS[Button]);
   end;
 end;
 
