@@ -42,6 +42,7 @@ type
     fTalHasMaxSkillTypes  : Boolean;
     fTalHasNoPause        : Boolean;
     fTalHasClassicMode    : Boolean;
+    fTalHasKillZombies    : Boolean;
 
     fPanelButtons         : TBitmap32;
     fPanelIcons           : TBitmap32;
@@ -179,6 +180,7 @@ type
     procedure HandleTalismanIconClick;
     procedure DrawMaxSkillTypesIcon;
     procedure DrawClassicModeIcon;
+    procedure DrawKillZombiesIcon;
 
     function GetSpawnIntervalValue(aSI: Integer): Integer; // Returns the SI or the equivalent RR, depending on user's settings
   public
@@ -436,6 +438,7 @@ begin
   fTalHasMaxSkillTypes := False;
   fTalHasNoPause := False;
   fTalHasClassicMode := False;
+  fTalHasKillZombies := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -1704,6 +1707,28 @@ begin
   fLevelInfoIcons.DrawTo(fImage.Bitmap, Rect(DstX, DstY, DstX + 24, DstY + 24),
                                         Rect(SrcX, SrcY, SrcX + 32, SrcY + 32));
 end;
+
+procedure TBaseSkillPanel.DrawKillZombiesIcon;
+var
+  SrcX, SrcY, DstX, DstY: Integer;
+begin
+  if (fCurrentTalisman < 0) or not (fTalHasKillZombies) then
+    Exit;
+
+  // Location of the kill zombies icon on the icon sheet
+  SrcX := 160;
+  SrcY := 128;
+
+  DstX := TalismanIconRect.Right + 4;
+  if fTalHasMaxSkillTypes then DstX := DstX + 24;
+  if fTalHasClassicMode then DstX := DstX + 24;
+
+  DstY := 4;
+
+  fLevelInfoIcons.DrawTo(fImage.Bitmap, Rect(DstX, DstY, DstX + 24, DstY + 24),
+                                        Rect(SrcX, SrcY, SrcX + 32, SrcY + 32));
+end;
+
 procedure TBaseSkillPanel.DrawPanelMessage;
 begin
   if not Game.StateIsUnplayable then
@@ -1756,6 +1781,7 @@ begin
     DrawTimeInfo;
     DrawMaxSkillTypesIcon;
     DrawClassicModeIcon;
+    DrawKillZombiesIcon;
     DrawPanelMessage;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -2424,8 +2450,7 @@ var
 
       fTalHasNoPause := Level.Talismans[Tal].RequireNoPause;
       fTalHasClassicMode := Level.Talismans[Tal].RequireClassicMode;
-
-      // TODO - fTalHasKillZombies
+      fTalHasKillZombies := Level.Talismans[Tal].RequireKillZombies;
     end;
 
     fTalismanIconIndex := Index;
