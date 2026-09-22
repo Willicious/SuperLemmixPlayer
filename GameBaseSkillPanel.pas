@@ -2437,7 +2437,8 @@ var
         tcGold:   Index := 3;
       end;
 
-      // TODO - if Talisman is completed, add 3 to index
+      if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[Tal].ID] then
+        Index := Index + 3;
 
       fTalSaveRequirement := Level.Talismans[Tal].RescueCount;
       fTalHasSaveRequirement := fTalSaveRequirement > 0;
