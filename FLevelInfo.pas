@@ -82,6 +82,7 @@ type
       procedure PrepareEmbed(aForceRedraw: Boolean);
       procedure PrepareEmbedRecords(aKind: TRecordDisplay);
       procedure PrepareEmbedCollectiblesRecords;
+      procedure LoadLevelInfoIcons(Bmp: TBitmap32);
 
       procedure Wipe;
 
@@ -121,17 +122,8 @@ begin
   begin
     fIcons := TBitmap32.Create;
 
-    IconsImg := 'levelinfo_icons.png';
-    aStyle := GameParams.Level.Info.GraphicSetName;
-    aStylePath := AppPath + SFStyles + aStyle + SFIcons;
-    aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
+    LoadLevelInfoIcons(fIcons);
 
-    if FileExists(aStylePath + IconsImg) then // Check styles folder first
-      TPNGInterface.LoadPngFile(aStylePath + IconsImg, fIcons)
-    else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then // Then levelpack folder
-      TPNGInterface.LoadPngFile(aPath + IconsImg, fIcons)
-    else
-      TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIcons);
     fIcons.DrawMode := dmBlend;
     fOwnIcons := True;
   end else if fTalismanOverrideBMP <> nil then
@@ -159,6 +151,39 @@ begin
     fIcons.Free;
 
   inherited;
+end;
+
+procedure TLevelInfoPanel.LoadLevelInfoIcons(Bmp: TBitmap32);
+var
+  S, Src, IconsImg: String;
+begin
+  IconsImg := 'levelinfo_icons.png';
+
+  // Check styles folder first
+  Src := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + IconsImg;
+  if not FileExists(Src) then
+  begin
+    S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
+    if S <> '' then
+      Src := AppPath + SFStyles + S + SFIcons + IconsImg;
+  end;
+
+  // Then levelpack folder
+  if not FileExists(Src) then
+  begin
+    if (GameParams.CurrentLevel <> nil) then
+    begin
+      S := GameParams.CurrentLevel.Group.FindFile(IconsImg);
+      if FileExists(S) then
+        Src := S;
+    end;
+  end;
+
+  // Then default
+  if not FileExists(Src) then
+    Src := AppPath + SFGraphicsMenu + IconsImg;
+
+  TPngInterface.LoadPngFile(Src, Bmp);
 end;
 
 procedure TLevelInfoPanel.DoTalismanOverride(aTalismanBMP: TBitmap32);

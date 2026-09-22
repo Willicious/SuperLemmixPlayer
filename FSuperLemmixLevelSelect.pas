@@ -149,7 +149,7 @@ type
     property TreeviewImagesLoaded: Boolean read fTreeviewImagesLoaded write fTreeviewImagesLoaded;
  public
     property LoadAsPack: Boolean read fLoadAsPack;
-    procedure LoadIcons;
+    procedure LoadLevelInfoIcons(Bmp: TBitmap32);
 
     function GetCurrentlySelectedPack: String;
   end;
@@ -428,21 +428,37 @@ begin
   ModalResult := mrOk;
 end;
 
-procedure TFLevelSelect.LoadIcons;
+procedure TFLevelSelect.LoadLevelInfoIcons(Bmp: TBitmap32);
 var
-  IconsImg, aStyle, aStylePath, aPath: String;
+  S, Src, IconsImg: String;
 begin
   IconsImg := 'levelinfo_icons.png';
-  aStyle := GameParams.Level.Info.GraphicSetName;
-  aStylePath := AppPath + SFStyles + aStyle + SFIcons;
-  aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
 
-  if FileExists(aStylePath + IconsImg) then // Check styles folder first
-    TPNGInterface.LoadPngFile(aStylePath + IconsImg, fIconBMP)
-  else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImg)) then // Then levelpack folder
-    TPNGInterface.LoadPngFile(aPath + IconsImg, fIconBMP)
-  else
-    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImg, fIconBMP); // Then default
+  // Check styles folder first
+  Src := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + IconsImg;
+  if not FileExists(Src) then
+  begin
+    S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
+    if S <> '' then
+      Src := AppPath + SFStyles + S + SFIcons + IconsImg;
+  end;
+
+  // Then levelpack folder
+  if not FileExists(Src) then
+  begin
+    if (GameParams.CurrentLevel <> nil) then
+    begin
+      S := GameParams.CurrentLevel.Group.FindFile(IconsImg);
+      if FileExists(S) then
+        Src := S;
+    end;
+  end;
+
+  // Then default
+  if not FileExists(Src) then
+    Src := AppPath + SFGraphicsMenu + IconsImg;
+
+  TPngInterface.LoadPngFile(Src, Bmp);
 end;
 
 procedure TFLevelSelect.MaybeReloadLevelInfo;
@@ -490,7 +506,7 @@ begin
   fTalismanButtons := TObjectList<TSpeedButton>.Create;
 
   fIconBMP := TBitmap32.Create;
-  LoadIcons;
+  LoadLevelInfoIcons(fIconBMP);
   fIconBMP.DrawMode := dmBlend;
   fIconBMP.CombineMode := cmMerge;
 
@@ -1154,7 +1170,7 @@ begin
   fInfoForm.Talisman := nil;
   fDisplayRecords := rdNone;
 
-  LoadIcons;
+  LoadLevelInfoIcons(fIconBMP);
   fInfoForm.PrepareEmbed(LevelChanged or RefreshLevel);
 
   SetTalismanInfo;

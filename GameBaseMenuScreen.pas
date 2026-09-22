@@ -1011,14 +1011,43 @@ begin
 end;
 
 function TGameBaseMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = False; aFromPackOnly: Boolean = False): Boolean;
+var
+  S, Src: String;
 begin
   Result := True;
 
-  if (not (GameParams.CurrentLevel = nil))
-    and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
-      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if FileExists(AppPath + SFGraphicsMenu + aName) and ((not aFromPackOnly) or (not aAcceptFailure)) then // N.B. aFromPackOnly + aAcceptFailure is an invalid combination
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
+  // Check styles folder first
+  Src := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aName;
+  if not FileExists(Src) then
+  begin
+    S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
+    if S <> '' then
+      Src := AppPath + SFStyles + S + SFIcons + aName;
+  end;
+
+  // Then levelpack folder
+  if not FileExists(Src) then
+  begin
+    if (GameParams.CurrentLevel <> nil) then
+    begin
+      S := GameParams.CurrentLevel.Group.FindFile(aName);
+      if FileExists(S) then
+        Src := S;
+    end;
+  end;
+
+  // Then default
+  if not FileExists(Src) then
+  begin
+    if GameParams.AmigaTheme then
+      Src := AppPath + SFGraphicsMenu + 'amiga/' + aName;
+
+    if not FileExists(Src) or not GameParams.AmigaTheme then
+      Src := AppPath + SFGraphicsMenu + aName;
+  end;
+
+  if FileExists(Src) and ((not aFromPackOnly) or (not aAcceptFailure)) then // N.B. aFromPackOnly + aAcceptFailure is an invalid combination
+    TPngInterface.LoadPngFile(Src, aDst)
   else begin
     if not aAcceptFailure then
       raise Exception.Create('Could not find gfx\menu\' + aName + '.');

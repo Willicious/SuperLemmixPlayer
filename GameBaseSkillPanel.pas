@@ -173,6 +173,7 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
+    procedure LoadLevelInfoIcons(Bmp: TBitmap32);
     procedure HandleTalismanIconClick;
     procedure DrawMaxSkillTypes;
 
@@ -515,42 +516,39 @@ end;
 -----------------------------------------------}
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
-  S, SrcFile: String;
-  Target: TNeoLevelGroup;
+  S, Src: String;
 begin
   // Check styles folder first
-  SrcFile := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aName;
-  if not FileExists(SrcFile) then
+  Src := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aName;
+  if not FileExists(Src) then
   begin
     S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
     if S <> '' then
-      SrcFile := AppPath + SFStyles + S + SFIcons + aName;
+      Src := AppPath + SFStyles + S + SFIcons + aName;
   end;
 
   // Then levelpack folder
-  if not FileExists(SrcFile) then
+  if not FileExists(Src) then
   begin
-    Target := GameParams.CurrentLevel.Group;
-    SrcFile := Target.Path + aName;
-
-    while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
+    if (GameParams.CurrentLevel <> nil) then
     begin
-      Target := Target.Parent;
-      SrcFile := Target.Path + aName;
+      S := GameParams.CurrentLevel.Group.FindFile(aName);
+      if FileExists(S) then
+        Src := S;
     end;
   end;
 
   // Then default
-  if not FileExists(SrcFile) then
+  if not FileExists(Src) then
   begin
     if GameParams.AmigaTheme then
-      SrcFile := AppPath + SFGraphicsPanel + 'amiga/' + aName;
+      Src := AppPath + SFGraphicsPanel + 'amiga/' + aName;
 
-    if not FileExists(SrcFile) or not GameParams.AmigaTheme then
-      SrcFile := AppPath + SFGraphicsPanel + aName;
+    if not FileExists(Src) or not GameParams.AmigaTheme then
+      Src := AppPath + SFGraphicsPanel + aName;
   end;
 
-  TPngInterface.LoadPngFile(SrcFile, aDst);
+  TPngInterface.LoadPngFile(Src, aDst);
 end;
 
 // Pave the area of NumButtons buttons with the blank panel
@@ -604,6 +602,39 @@ begin
   GetGraphic('talisman_icons.png', fTalismanIcons);
 end;
 
+procedure TBaseSkillPanel.LoadLevelInfoIcons(Bmp: TBitmap32);
+var
+  S, Src, IconsImg: String;
+begin
+  IconsImg := 'levelinfo_icons.png';
+
+  // Check styles folder first
+  Src := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + IconsImg;
+  if not FileExists(Src) then
+  begin
+    S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
+    if S <> '' then
+      Src := AppPath + SFStyles + S + SFIcons + IconsImg;
+  end;
+
+  // Then levelpack folder
+  if not FileExists(Src) then
+  begin
+    if (GameParams.CurrentLevel <> nil) then
+    begin
+      S := GameParams.CurrentLevel.Group.FindFile(IconsImg);
+      if FileExists(S) then
+        Src := S;
+    end;
+  end;
+
+  // Then default
+  if not FileExists(Src) then
+    Src := AppPath + SFGraphicsMenu + IconsImg;
+
+  TPngInterface.LoadPngFile(Src, Bmp);
+end;
+
 procedure TBaseSkillPanel.LoadSkillIcons;
 const
   PANEL_FALLBACK_BRICK_COLOR = $FF00BB00;
@@ -613,23 +644,6 @@ var
   X, Y, FloaterY: Integer;
   Offset: TPoint;
   IconsImg: TBitmap32;
-
-  procedure LoadIcons;
-  var
-    IconsImgPath, aStyle, aStylePath, aPath: String;
-  begin
-    IconsImgPath := 'levelinfo_icons.png';
-    aStyle := GameParams.Level.Info.GraphicSetName;
-    aStylePath := AppPath + SFStyles + aStyle + SFIcons;
-    aPath := GameParams.CurrentLevel.Group.ParentBasePack.Path;
-
-    if FileExists(aStylePath + IconsImgPath) then // Check styles folder first
-      TPNGInterface.LoadPngFile(aStylePath + IconsImgPath, IconsImg)
-    else if FileExists(GameParams.CurrentLevel.Group.FindFile(IconsImgPath)) then // Then levelpack folder
-      TPNGInterface.LoadPngFile(aPath + IconsImgPath, IconsImg)
-    else
-      TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + IconsImgPath, IconsImg); // Then default
-  end;
 
   procedure DrawIcon(dst: TBitmap32; IconIndex: Integer);
   var
@@ -690,7 +704,7 @@ begin
 
   IconsImg := TBitmap32.Create;
   try
-    LoadIcons;
+    LoadLevelInfoIcons(IconsImg);
 
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     begin

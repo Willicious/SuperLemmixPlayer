@@ -72,6 +72,7 @@ type
       procedure ShowLevelProgress(Pack: TNeoLevelGroup);
       procedure ShowTalismanProgress(Pack: TNeoLevelGroup);
       procedure ShowCollectibleProgress(Pack: TNeoLevelGroup);
+      procedure LoadLevelInfoIcons(Bmp: TBitmap32);
 
       procedure AfterRedrawClickables; override;
       procedure DoAfterConfig; override;
@@ -394,6 +395,39 @@ begin
   end;
 end;
 
+procedure TGameLevelSelectScreen.LoadLevelInfoIcons(Bmp: TBitmap32);
+var
+  S, Src, IconsImg: String;
+begin
+  IconsImg := 'levelinfo_icons.png';
+
+  // Check styles folder first
+  Src := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + IconsImg;
+  if not FileExists(Src) then
+  begin
+    S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
+    if S <> '' then
+      Src := AppPath + SFStyles + S + SFIcons + IconsImg;
+  end;
+
+  // Then levelpack folder
+  if not FileExists(Src) then
+  begin
+    if (GameParams.CurrentLevel <> nil) then
+    begin
+      S := GameParams.CurrentLevel.Group.FindFile(IconsImg);
+      if FileExists(S) then
+        Src := S;
+    end;
+  end;
+
+  // Then default
+  if not FileExists(Src) then
+    Src := AppPath + SFGraphicsMenu + IconsImg;
+
+  TPngInterface.LoadPngFile(Src, Bmp);
+end;
+
 procedure TGameLevelSelectScreen.ShowLevelProgress(Pack: TNeoLevelGroup);
 var
   TotalLevels, TotalLevelsCompleted: Integer;
@@ -411,7 +445,7 @@ begin
   
   LvlBMP := TBitmap32.Create;
   try
-    GetGraphic('levelinfo_icons.png', LvlBMP); // TODO - this should eventually be LoadIcons (see FSuperLemmixLevelSelect)
+    LoadLevelInfoIcons(LvlBMP);
 
     X := FIRST_COLUMN_LEFT;
     Y := LEVEL_ICON_TOP;
