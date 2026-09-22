@@ -75,8 +75,10 @@ type
     gbWindowOptions: TGroupBox;
     cbInvertMouseWheelFramesteps: TCheckBox;
     btnStyleUpdater: TButton;
-    rgDefaultReplayMode: TRadioGroup;
     cbClickAirToCutInsert: TCheckBox;
+    lblDefaultReplayMode: TLabel;
+    rbReplayModeStandard: TRadioButton;
+    rbReplayModeInsert: TRadioButton;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -242,7 +244,8 @@ begin
     cbReplayAfterRestart.Checked := GameParams.ReplayAfterRestart;
     cbClickAirToCutInsert.Checked := GameParams.ClickAirToCutInsert;
 
-    rgDefaultReplayMode.ItemIndex := Ord(GameParams.DefaultReplayMode);
+    rbReplayModeStandard.Checked := GameParams.DefaultReplayMode = rmStandard;
+    rbReplayModeInsert.Checked := GameParams.DefaultReplayMode = rmInsert;
 
     cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbColorCycle.Checked := GameParams.ColorCycle;
@@ -316,9 +319,10 @@ begin
   GameParams.ReplayAfterRestart := cbReplayAfterRestart.Checked;
   GameParams.ClickAirToCutInsert := cbClickAirToCutInsert.Checked;
 
-  if (rgDefaultReplayMode.ItemIndex >= Ord(Low(TDefaultReplayMode)))
-    and (rgDefaultReplayMode.ItemIndex <= Ord(High(TDefaultReplayMode))) then
-      GameParams.DefaultReplayMode := TDefaultReplayMode(rgDefaultReplayMode.ItemIndex);
+  if rbReplayModeInsert.Checked then
+    GameParams.DefaultReplayMode := rmInsert
+  else
+    GameParams.DefaultReplayMode := rmStandard;
 
   GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ColorCycle := cbColorCycle.Checked;
