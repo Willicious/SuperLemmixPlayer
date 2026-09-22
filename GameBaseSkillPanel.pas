@@ -2237,6 +2237,9 @@ procedure TBaseSkillPanel.GetButtonHints(aButton: TSkillPanelButton);
 begin
   ButtonHint := '';
 
+  if Game.StateIsUnplayable then
+    Exit;
+
   if CursorOverMinimap then
                    ButtonHint := 'MINIMAP'
   else if CursorOverIcon(CollectibleIconRect) and LevelHasCollectibles then
@@ -2408,7 +2411,7 @@ var
     DrawTalismanIcon(fTalismanIconIndex);
   end;
 begin
-  if not LevelHasTalismans then
+  if Game.StateIsUnplayable or not LevelHasTalismans then
     Exit;
 
   if fCurrentTalisman < Level.Talismans.Count - 1 then
