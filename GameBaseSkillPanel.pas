@@ -41,6 +41,7 @@ type
     fSkillTypesUsed       : Integer;
     fTalHasMaxSkillTypes  : Boolean;
     fTalHasNoPause        : Boolean;
+    fTalHasClassicMode    : Boolean;
 
     fPanelButtons         : TBitmap32;
     fPanelIcons           : TBitmap32;
@@ -176,7 +177,8 @@ type
 
     procedure LoadLevelInfoIcons(Bmp: TBitmap32);
     procedure HandleTalismanIconClick;
-    procedure DrawMaxSkillTypes;
+    procedure DrawMaxSkillTypesIcon;
+    procedure DrawClassicModeIcon;
 
     function GetSpawnIntervalValue(aSI: Integer): Integer; // Returns the SI or the equivalent RR, depending on user's settings
   public
@@ -433,6 +435,7 @@ begin
   fSkillTypesUsed := 0;
   fTalHasMaxSkillTypes := False;
   fTalHasNoPause := False;
+  fTalHasClassicMode := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -893,7 +896,7 @@ begin
   // Copy the created bitmap
   fImage.Bitmap.Assign(fOriginal);
 
-  // Load the remaining graphics for icons, ...
+  // Load the remaining gfx
   LoadPanelIcons;
   LoadSkillIcons;
   LoadSkillFont;
@@ -1630,7 +1633,7 @@ begin
   end;
 end;
 
-procedure TBaseSkillPanel.DrawMaxSkillTypes;
+procedure TBaseSkillPanel.DrawMaxSkillTypesIcon;
 var
   Button: TSkillPanelButton;
   SkillTypesStr: String;
@@ -1684,6 +1687,23 @@ begin
       DrawMaxSkillTypesHighlight(Button, Overcount);
 end;
 
+procedure TBaseSkillPanel.DrawClassicModeIcon;
+var
+  SrcX, SrcY, DstX, DstY: Integer;
+begin
+  if (fCurrentTalisman < 0) or not (fTalHasClassicMode) then
+    Exit;
+
+  // Location of the classic mode icon on the icon sheet
+  SrcX := 96;
+  SrcY := 128;
+
+  DstX := TalismanIconRect.Right + IfThen(fTalHasMaxSkillTypes, 28, 4);
+  DstY := 4;
+
+  fLevelInfoIcons.DrawTo(fImage.Bitmap, Rect(DstX, DstY, DstX + 24, DstY + 24),
+                                        Rect(SrcX, SrcY, SrcX + 32, SrcY + 32));
+end;
 procedure TBaseSkillPanel.DrawPanelMessage;
 begin
   if not Game.StateIsUnplayable then
@@ -1734,7 +1754,8 @@ begin
     DrawLemsAliveInfo;
     DrawLemsSavedInfo;
     DrawTimeInfo;
-    DrawMaxSkillTypes;
+    DrawMaxSkillTypesIcon;
+    DrawClassicModeIcon;
     DrawPanelMessage;
 
     DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
@@ -2402,8 +2423,8 @@ var
       fTalHasMaxSkillTypes := fTalMaxSkillTypes > 0;
 
       fTalHasNoPause := Level.Talismans[Tal].RequireNoPause;
+      fTalHasClassicMode := Level.Talismans[Tal].RequireClassicMode;
 
-      // TODO - fTalHasClassicMode
       // TODO - fTalHasKillZombies
     end;
 
@@ -2420,12 +2441,6 @@ begin
     fCurrentTalisman := -1;
 
   RemoveMaxSkillTypesHighlights;
-
-  with fImage.Bitmap do
-  begin
-    FillRectS(TimeIconRect.Right, 4, TimeIconRect.Right + 24, 24, $FF000000);
-  end;
-
   DisplayTalismanInfo(fCurrentTalisman);
 end;
 

@@ -71,17 +71,17 @@ end;
 
 function TSkillPanel.ReplayIconRect: TRect;
 begin
-  Result := Rect(200, 0, 220, 32);
+  Result := Rect(180, 0, 200, 32);
 end;
 
 function TSkillPanel.CollectibleIconRect: TRect;
 begin                 // add 36 if including text
-  Result := Rect(240, 0, 266, 32);
+  Result := Rect(220, 0, 246, 32);
 end;
 
 function TSkillPanel.TalismanIconRect: TRect;
 begin
-  Result := Rect(280, 0, 306, 32);
+  Result := Rect(250, 0, 276, 32);
 end;
 
 function TSkillPanel.HatchIconRect: TRect;
