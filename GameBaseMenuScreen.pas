@@ -543,7 +543,7 @@ var
   Tal: TTalisman;
   SrcRect: TRect;
   TalPoint: TPoint;
-  LoadPath, aImage: String;
+  S, LoadPath, aImage: String;
   i, TalCount, TotalTalWidth, YOffset: Integer;
   KeepTalismans, HasCollectibles, AllCollectiblesGathered: Boolean;
 
@@ -579,10 +579,18 @@ begin
 
   Temp := TBitmap32.Create;
   try
+
+    // TODO - This loading needs to be moved elsewhere
     aImage := 'talismans.png';
 
     // Try styles folder first
     LoadPath := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aImage;
+    if not FileExists(LoadPath) then
+    begin
+      S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
+      if S <> '' then
+        LoadPath := AppPath + SFStyles + S + SFIcons + aImage;
+    end;
 
     if not FileExists(LoadPath) then
     begin

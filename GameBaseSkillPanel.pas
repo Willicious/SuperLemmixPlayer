@@ -515,11 +515,17 @@ end;
 -----------------------------------------------}
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
-  SrcFile: String;
+  S, SrcFile: String;
   Target: TNeoLevelGroup;
 begin
   // Check styles folder first
   SrcFile := AppPath + SFStyles + GameParams.Level.Info.GraphicSetName + SFIcons + aName;
+  if not FileExists(SrcFile) then
+  begin
+    S := GameParams.Renderer.Theme.Icons; // Theme can specify another style
+    if S <> '' then
+      SrcFile := AppPath + SFStyles + S + SFIcons + aName;
+  end;
 
   // Then levelpack folder
   if not FileExists(SrcFile) then
@@ -544,7 +550,7 @@ begin
       SrcFile := AppPath + SFGraphicsPanel + aName;
   end;
 
-  TPngInterface.LoadPngFile(SrcFile, aDst)
+  TPngInterface.LoadPngFile(SrcFile, aDst);
 end;
 
 // Pave the area of NumButtons buttons with the blank panel
