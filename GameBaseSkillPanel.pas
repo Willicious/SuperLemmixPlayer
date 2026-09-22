@@ -85,6 +85,7 @@ type
     fSkillFontInvert      : TFontBitmapArray;
     fSkillFontTalActive   : TFontBitmapArray;
     fSkillFontTalFailed   : TFontBitmapArray;
+    fSkillFontTalFailing  : TFontBitmapArray;
     fSkillOvercount       : array[100..MAXIMUM_SI] of TBitmap32;
     fSkillCountErase      : TBitmap32;
     fSkillCountEraseInvert: TBitmap32;
@@ -369,6 +370,10 @@ begin
       fSkillFontTalFailed[c, i] := TBitmap32.Create;
       fSkillFontTalFailed[c, i].DrawMode := dmBlend;
       fSkillFontTalFailed[c, i].CombineMode := cmMerge;
+
+      fSkillFontTalFailing[c, i] := TBitmap32.Create;
+      fSkillFontTalFailing[c, i].DrawMode := dmBlend;
+      fSkillFontTalFailing[c, i].CombineMode := cmMerge;
     end;
 
   fSkillInfinite := TBitmap32.Create;
@@ -454,6 +459,7 @@ begin
       fSkillFontInvert[c, i].Free;
       fSkillFontTalActive[c, i].Free;
       fSkillFontTalFailed[c, i].Free;
+      fSkillFontTalFailing[c, i].Free;
     end;
 
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -803,6 +809,12 @@ begin
         for x := 0 to fSkillFontTalActive[c, i].Width - 1 do
           fSkillFontTalActive[c, i][x, y] :=
             (fSkillFontTalActive[c, i][x, y] and $FF000000) or $0000FF00; // Shift white to green
+
+      fSkillFontTalFailing[c, i].Assign(fSkillFont[c, i]);
+      for y := 0 to fSkillFontTalFailing[c, i].Height - 1 do
+        for x := 0 to fSkillFontTalFailing[c, i].Width - 1 do
+          fSkillFontTalFailing[c, i][x, y] :=
+            (fSkillFontTalFailing[c, i][x, y] and $FF000000) or $00FF8822; // Shift white to orange
 
       fSkillFontTalFailed[c, i].Assign(fSkillFont[c, i]);
       for y := 0 to fSkillFontTalFailed[c, i].Height - 1 do
@@ -1339,15 +1351,7 @@ begin
 
       if (SkillMin > 0) and (UsedOfSkill < SkillMin) then
       begin
-        { TODO - Unsure what's the best way of displaying a Minimum limit...
-          We could display the (minimum - used) or just the (used) in red,
-          but that could be misleading. Just displaying the (available) in
-          red doesn't give enough info though }
-
-        //aNumber := SkillMin - UsedOfSkill;
-        //TalismanStatus := tsFailing; // TODO - Use this to display (Min - Used) in red
-
-        TalismanStatus := tsFailed; // NOTE: This will just show the (available) in red...
+        TalismanStatus := tsFailing;
       end;
 
       if TotalLimit >= 0 then
@@ -1364,10 +1368,12 @@ begin
 
     if fShowUsedSkills then
       aNumber := UsedOfSkill
-    else if TalismanStatus = tsFailed then //...because the number gets reset here
+    else if TalismanStatus = tsFailed then
       aNumber := OrigNumber;
 
-    if TalismanStatus <> tsSucceeding then
+    if TalismanStatus = tsFailing then
+      FontBMP := fSkillFontTalFailing
+    else if TalismanStatus = tsFailed then
       FontBMP := fSkillFontTalFailed
     else if TalismanHasSkillRequirement then
       FontBMP := fSkillFontTalActive
