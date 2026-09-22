@@ -42,12 +42,14 @@ type
     fTalHasMaxSkillTypes  : Boolean;
     fTalHasNoPause        : Boolean;
 
-    fPanelButtons         : TBitmap32; // for storing panel buttons & button text
-    fPanelIcons           : TBitmap32; // for storing all panel icons
+    fPanelButtons         : TBitmap32;
+    fPanelIcons           : TBitmap32;
+    fReplayIcons          : TBitmap32;
+    fTalismanIcons        : TBitmap32;
 
     fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
-    fOnMinimapClick       : TMinimapClickEvent; // Event handler for minimap
+    fOnMinimapClick       : TMinimapClickEvent;
 
     procedure LoadPanelIcons;
     procedure LoadSkillIcons;
@@ -139,7 +141,7 @@ type
 
     procedure DrawPanelMessage;
     procedure DrawCursorInfo;
-    procedure DrawPanelIcon(Index, X, Y: Integer);
+    procedure DrawPanelIcon(Bitmap: TBitmap32; Index, X, Y: Integer);
     procedure DrawReplayIcon;
     procedure DrawCollectibleIcon;
     procedure DrawTalismanIcon(Index: Integer);
@@ -309,6 +311,14 @@ begin
   fPanelIcons.DrawMode := dmBlend;
   fPanelIcons.CombineMode := cmMerge;
 
+  fReplayIcons := TBitmap32.Create;
+  fReplayIcons.DrawMode := dmBlend;
+  fReplayIcons.CombineMode := cmMerge;
+
+  fTalismanIcons := TBitmap32.Create;
+  fTalismanIcons.DrawMode := dmBlend;
+  fTalismanIcons.CombineMode := cmMerge;
+
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
@@ -407,7 +417,7 @@ begin
     fSkillOvercount[i] := TBitmap32.Create;
 
   fRRIsPressed := False;
-  fTalismanIconIndex := 12;
+  fTalismanIconIndex := 0;
   fCurrentTalisman := -1;
   fTalSaveRequirement := -1;
   fTalHasSaveRequirement := False;
@@ -460,6 +470,8 @@ begin
   fMinimapImage.Free;
   fPanelButtons.Free;
   fPanelIcons.Free;
+  fReplayIcons.Free;
+  fTalismanIcons.Free;
   inherited;
 end;
 
@@ -580,38 +592,10 @@ begin
 end;
 
 procedure TBaseSkillPanel.LoadPanelIcons;
-var
-  Width: Integer;
-
-  procedure AddGraphic(const Name: String);
-  var
-    Bitmap: TBitmap32;
-    Combined: TBitmap32;
-  begin
-    Bitmap := TBitmap32.Create;
-    Bitmap.DrawMode := dmBlend;
-    try
-      GetGraphic(Name, Bitmap);
-
-      Combined := TBitmap32.Create;
-      try
-        Width := fPanelIcons.Width;
-        Combined.SetSize(Width + Bitmap.Width, Max(fPanelIcons.Height, Bitmap.Height));
-        fPanelIcons.DrawTo(Combined, 0, 0);
-
-        Bitmap.DrawTo(Combined, Width, 0);
-        fPanelIcons.Assign(Combined);
-      finally
-        Combined.Free;
-      end;
-    finally
-      Bitmap.Free;
-    end;
-  end;
 begin
-  AddGraphic('panel_icons.png');
-  AddGraphic('replay_icons.png');
-  AddGraphic('talisman_icons.png');
+  GetGraphic('panel_icons.png', fPanelIcons);
+  GetGraphic('replay_icons.png', fReplayIcons);
+  GetGraphic('talisman_icons.png', fTalismanIcons);
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
@@ -1439,9 +1423,9 @@ begin
   end;
 end;
 
-procedure TBaseSkillPanel.DrawPanelIcon(Index, X, Y: Integer);
+procedure TBaseSkillPanel.DrawPanelIcon(Bitmap: TBitmap32; Index, X, Y: Integer);
 begin
-  fPanelIcons.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 24, 0, (Index + 1) * 24, 32));
+  Bitmap.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 24, 0, (Index + 1) * 24, 32));
 end;
 
 procedure TBaseSkillPanel.DrawReplayIcon;
@@ -1460,13 +1444,13 @@ begin
   if BlinkIcon or Game.StateIsUnplayable or (not GameParams.PlaybackModeActive and not IsReplaying) then
     Icon := -1
   else if GameParams.PlaybackModeActive and not IsReplaying then
-    Icon := 11 // Purple "R"
+    Icon := 2 // Purple "R"
   else if Game.ReplayInsert and not IsClassicModeRewind then
-    Icon := 10  // Blue "R"
+    Icon := 1  // Blue "R"
   else if not (RRIsPressed or IsClassicModeRewind) then
-    Icon := 9; // Red "R"
+    Icon := 0; // Red "R"
 
-  DrawPanelIcon(Icon, ReplayIconRect.Left - 4, ReplayIconRect.Top);
+  DrawPanelIcon(fReplayIcons, Icon, ReplayIconRect.Left - 4, ReplayIconRect.Top);
 end;
 
 procedure TBaseSkillPanel.DrawCollectibleIcon;
@@ -1481,7 +1465,7 @@ begin
   else
     Icon := 1;
 
-  DrawPanelIcon(Icon, CollectibleIconRect.Left, CollectibleIconRect.Top);
+  DrawPanelIcon(fPanelIcons, Icon, CollectibleIconRect.Left, CollectibleIconRect.Top);
 
 //  with fImage.Bitmap do
 //  begin
@@ -1496,12 +1480,12 @@ begin
   if not LevelHasTalismans then
     Exit;
 
-  DrawPanelIcon(Index, TalismanIconRect.Left, TalismanIconRect.Top);
+  DrawPanelIcon(fTalismanIcons, Index, TalismanIconRect.Left, TalismanIconRect.Top);
 end;
 
 procedure TBaseSkillPanel.DrawHatchInfo;
 begin
-  DrawPanelIcon(2, HatchIconRect.Left, HatchIconRect.Top);
+  DrawPanelIcon(fPanelIcons, 2, HatchIconRect.Left, HatchIconRect.Top);
 
   with fImage.Bitmap do
   begin
@@ -1530,7 +1514,7 @@ var
     Result := LemsAlive < LemsToSave;
   end;
 begin
-  DrawPanelIcon(3, AliveIconRect.Left, AliveIconRect.Top);
+  DrawPanelIcon(fPanelIcons, 3, AliveIconRect.Left, AliveIconRect.Top);
   LemmingKinds := Game.ActiveLemmingTypes;
 
   if NotEnoughLemmings then
@@ -1574,7 +1558,7 @@ begin
     end;
   end;
 
-  DrawPanelIcon(Icon, ExitIconRect.Left, ExitIconRect.Top);
+  DrawPanelIcon(fPanelIcons, Icon, ExitIconRect.Left, ExitIconRect.Top);
 
   with fImage.Bitmap do
   begin
@@ -1616,7 +1600,7 @@ begin
     end;
   end;
 
-  DrawPanelIcon(Icon, TimeIconRect.Left, TimeIconRect.Top);
+  DrawPanelIcon(fPanelIcons, Icon, TimeIconRect.Left, TimeIconRect.Top);
 
   with fImage.Bitmap do
   begin
@@ -2375,12 +2359,12 @@ var
     Index: Integer;
   begin
     if Tal < 0 then
-      Index := 12
+      Index := 0
     else begin
       case Level.Talismans[Tal].Color of
-        tcBronze: Index := 13;
-        tcSilver: Index := 14;
-        tcGold:   Index := 15;
+        tcBronze: Index := 1;
+        tcSilver: Index := 2;
+        tcGold:   Index := 3;
       end;
 
       // TODO - if Talisman is completed, add 3 to index
