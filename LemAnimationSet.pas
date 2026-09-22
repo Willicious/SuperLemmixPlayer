@@ -458,20 +458,19 @@ var
   MetaSpritesFolder, LemSpritesFolder: String;
   MasksPath, EffectsPath, DefaultPath: String;
 
-  procedure GetThemeFolder(aDirectory: String; UseLemSpritesTheme: Boolean);
+  function GetThemeFolder(aDirectory: String; UseLemSpritesTheme: Boolean): String;
   begin
     if (fTheme = nil) then
-      ThemeFolder := SFDefaultStyle
+      Result := SFDefaultStyle
     else if UseLemSpritesTheme then
-      ThemeFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS
+      Result := PieceManager.Dealias(fTheme.Lemmings, rkLemmings).Piece.GS
+    else if (aDirectory = SFPiecesEffects) and (fTheme.Effects <> '') then
+      Result := fTheme.Effects
     else
-      ThemeFolder := fTheme.Name;
+      Result := fTheme.Name;
 
-    if ThemeFolder = '' then
-      ThemeFolder := SFDefaultStyle;
-
-    if not DirectoryExists(AppPath + SFStyles + ThemeFolder + aDirectory) then
-      ThemeFolder := SFDefaultStyle;
+    if (Result = '') or not DirectoryExists(AppPath + SFStyles + Result + aDirectory) then
+      Result := SFDefaultStyle;
   end;
 
   procedure UpscalePieces(Bitmap: TBitmap32);
@@ -521,7 +520,7 @@ begin
   try
     { ========================= Lemming sprites ============================== }
 
-    GetThemeFolder(SFPiecesLemmings, True);
+    ThemeFolder := GetThemeFolder(SFPiecesLemmings, True);
     SetCurrentDir(AppPath + SFStyles + ThemeFolder + SFPiecesLemmings);
 
     if (fMetaLemmingAnimations.Count = 0) then
@@ -629,7 +628,7 @@ begin
     LoadEffectsFromMasksFolder('freezer.png', 'freezer-hr.png', fIceCubeBitmap);
 
     { Customisable Effects - these are replaced with defaults if not present in the spriteset's effects folder }
-    GetThemeFolder(SFPiecesEffects, False);
+    ThemeFolder := GetThemeFolder(SFPiecesEffects, False);
     EffectsPath := AppPath + SFStyles + ThemeFolder + SFPiecesEffects;
     DefaultPath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
 

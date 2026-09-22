@@ -2,6 +2,7 @@ LEMMINGS willlem_lemminas
 NAMES_SINGULAR Lemmina
 NAMES_PLURAL Lemminas
 ICONS willlem_lemminas
+EFFECTS willlem_lemminas
 
 $COLORS
   MASK xFF69DD

@@ -36,6 +36,7 @@ type
       fLemNamesSingular: String;
       fExitMarkerFrames: Integer;
       fIcons: String; // Which panel icons to use (can select other styles)
+      fEffects: String; // Which sprite effects to use (can select other styles)
       fColors: array of TNeoThemeColor;
 
       fSoundsSetFromTheme: Boolean;
@@ -60,6 +61,7 @@ type
       property LemNamesSingular: String read fLemNamesSingular write fLemNamesSingular;
       property ExitMarkerFrames: Integer read fExitMarkerFrames write fExitMarkerFrames;
       property Icons: String read fIcons write fIcons;
+      property Effects: String read fEffects write fEffects;
       property Colors[Name: String]: TColor32 read GetColor;
       property SoundsSetFromTheme: Boolean read fSoundsSetFromTheme write fSoundsSetFromTheme;
       property MissingSoundsList: TStringList read fMissingSoundsList write fMissingSoundsList;
@@ -120,8 +122,8 @@ begin
     if fLemNamesSingular = '' then fLemNamesSingular := 'Lemming';
 
     fExitMarkerFrames := Parser.MainSection.LineNumeric['exit_marker_frames'];
-
     fIcons := Parser.MainSection.LineString['icons'];
+    fEffects := Parser.MainSection.LineString['effects'];
 
     Sec := Parser.MainSection.Section['colors'];
     if Sec = nil then
