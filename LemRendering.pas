@@ -363,7 +363,8 @@ begin
 
     if (((LemmingList[i].LemFreezerExplosionTimer > 0)
       or (LemmingList[i].LemExplosionTimer > 0)) and not LemmingList[i].LemHideCountdown)
-      or (LemmingList[i] = fRenderInterface.HighlitLemming) then
+      or (LemmingList[i] = fRenderInterface.HighlitLemming)
+      or (LemmingList[i] = fRenderInterface.CameraLockLemming) then
     begin
       DrawLemmingCountdown(LemmingList[i]);
       fLayers.fIsEmpty[rlEffects] := False;
@@ -844,7 +845,7 @@ end;
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
 var
   Countdown: TBitmap32;
-  ShowCountdown, ShowHighlight: Boolean;
+  ShowCountdown, ShowHighlight, ShowCameraLock: Boolean;
   SrcRect: TRect;
   n, tensDigit, onesDigit: Integer;
   xPos: Integer;
@@ -862,9 +863,12 @@ begin
                  or (aLemming.LemExplosionTimer > 0))
              and not aLemming.LemHideCountdown;
   ShowHighlight := (aLemming = fRenderInterface.HighlitLemming);
+  ShowCameraLock := (aLemming = fRenderInterface.CameraLockLemming);
 
-  if ShowCountdown and ShowHighlight then
-    ShowCountdown := (GetTickCount mod 1000 < 500);
+  if ShowCountdown and (ShowHighlight or ShowCameraLock) then
+    ShowCountdown := (GetTickCount mod 1000 < 500)
+  else if ShowHighlight and ShowCameraLock then
+    ShowHighlight := (GetTickCount mod 1000 < 500);
 
   if ShowCountdown then
   begin
@@ -915,7 +919,9 @@ begin
 
     Countdown.DrawTo(fLayers[rlEffects], xPos, (aLemming.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlEffects], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
+    fAni.HighlightBitmap.DrawTo(fLayers[rlEffects], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod)
+  else if ShowCameraLock then
+    fAni.CameraLockBitmap.DrawTo(fLayers[rlEffects], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);

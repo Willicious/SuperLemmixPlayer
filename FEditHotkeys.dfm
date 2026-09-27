@@ -132,6 +132,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Save State'
       'Load State'
       'Highlight Lemming'
+      'Camera Lock Lemming'
       'Directional Select Left'
       'Directional Select Right'
       'Select Walking Lemming'

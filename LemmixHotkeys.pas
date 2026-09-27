@@ -32,6 +32,7 @@ type
                          lka_SaveState,
                          lka_LoadState,
                          lka_Highlight,
+                         lka_CameraLock,
                          lka_DirLeft,
                          lka_DirRight,
                          lka_ForceWalker,
@@ -195,6 +196,7 @@ begin
   SetKeyByName('NumPad +', lka_ReleaseRateMax);
   SetKeyByName('NumPad -', lka_ReleaseRateMin);
   SetKeyByName('H', lka_Highlight);
+  SetKeyByName('NumPad .', lka_CameraLock);
   SetKeyByName('Ctrl (Right)', lka_ForceWalker);
   SetKeyByName('W', lka_ForceWalker);
   SetKeyByName('Left Arrow', lka_DirLeft);
@@ -269,6 +271,7 @@ begin
   SetKeyByName('F7', lka_LoadReplay);
   SetKeyByName('Ctrl (Left)', lka_Highlight);
   SetKeyByName('Ctrl (Right)', lka_Highlight);
+  SetKeyByName('NumPad .', lka_CameraLock);
   SetKeyByName('M', lka_Music);
   SetKeyByName('N', lka_Sound);
   SetKeyByName('F4', lka_ReleaseRateDown);
@@ -356,6 +359,7 @@ begin
   if s = 'next_skill' then Result := lka_SkillRight;
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
+  if s = 'camera_lock' then Result := lka_CameraLock;
   if s = 'physics_view' then Result := lka_PhysicsView;
   if s = 'show_used_skills' then Result := lka_ShowUsedSkills;
   if s = 'fall_distance' then Result := lka_FallDistance;
@@ -524,7 +528,8 @@ var
       lka_SkillRight:       Result := 'Next_Skill';
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
-      lka_PhysicsView:     Result := 'Physics_View';
+      lka_CameraLock:       Result := 'Camera_Lock';
+      lka_PhysicsView:      Result := 'Physics_View';
       lka_ShowUsedSkills:   Result := 'Show_Used_Skills';
       lka_FallDistance:     Result := 'Fall_Distance';
       lka_EditReplay:       Result := 'Edit_Replay';

@@ -162,11 +162,13 @@ type
       fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
       fGetHighlitLemRoutine: TGetLemmingRoutine;
+      fGetCameraLockLemRoutine: TGetLemmingRoutine;
       fIsStartingSecondsRoutine: TIsStartingSecondsRoutine;
       fUserHelperIcon: THelperIcon;
       fForceUpdate: Boolean;
       function GetSelectedSkill: TSkillPanelButton;
       function GetHighlitLemming: TLemming;
+      function GetCameraLockLemming: TLemming;
       function GetSelectedLemming: TLemming;
       procedure SetSelectedLemming(aValue: TLemming);
       function GetReplayLemming: TLemming;
@@ -181,6 +183,7 @@ type
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
       procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
+      procedure SetGetCameraLockRoutine(aRoutine: TGetLemmingRoutine);
       procedure SetIsStartingSecondsRoutine(aRoutine: TIsStartingSecondsRoutine);
       procedure AddTerrainBrick(X, Y: Integer; Color: TColor32);
       procedure AddTerrainFreezer(X, Y: Integer);
@@ -200,6 +203,7 @@ type
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
       property SelectedLemming: TLemming read GetSelectedLemming write SetSelectedLemming;
       property HighlitLemming: TLemming read GetHighlitLemming;
+      property CameraLockLemming: TLemming read GetCameraLockLemming;
       property ReplayLemming: TLemming read GetReplayLemming write SetReplayLemming;
       property PhysicsMap: TBitmap32 read fPhysicsMap write fPhysicsMap;
       property TerrainMap: TBitmap32 read fTerrainMap write fTerrainMap;
@@ -337,6 +341,11 @@ begin
   fGetHighlitLemRoutine := aRoutine;
 end;
 
+procedure TRenderInterface.SetGetCameraLockRoutine(aRoutine: TGetLemmingRoutine);
+begin
+  fGetCameraLockLemRoutine := aRoutine;
+end;
+
 procedure TRenderInterface.SetIsStartingSecondsRoutine(aRoutine: TIsStartingSecondsRoutine);
 begin
   fIsStartingSecondsRoutine := aRoutine;
@@ -393,6 +402,11 @@ end;
 function TRenderInterface.GetHighlitLemming: TLemming;
 begin
   Result := fGetHighlitLemRoutine;
+end;
+
+function TRenderInterface.GetCameraLockLemming: TLemming;
+begin
+  Result := fGetCameraLockLemRoutine;
 end;
 
 procedure TRenderInterface.SetSelectedLemming(aValue: TLemming);

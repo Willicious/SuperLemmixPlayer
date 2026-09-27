@@ -199,6 +199,7 @@ type
     fInvincibilityOverlay   : TBitmap32;
     fNumbersBitmap          : TBitmap32;
     fHighlightBitmap        : TBitmap32;
+    fCameraLockBitmap       : TBitmap32;
     fBalloonPopBitmap       : TBitmap32;
     fExitMarkerNormalBitmap : TBitmap32;
     fExitMarkerRivalBitmap  : TBitmap32;
@@ -238,6 +239,7 @@ type
     property InvincibilityOverlay  : TBitmap32 read fInvincibilityOverlay;
     property NumbersBitmap         : TBitmap32 read fNumbersBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
+    property CameraLockBitmap      : TBitmap32 read fCameraLockBitmap;
     property BalloonPopBitmap      : TBitmap32 read fBalloonPopBitmap;
     property ExitMarkerNormalBitmap: TBitmap32 read fExitMarkerNormalBitmap;
     property ExitMarkerRivalBitmap : TBitmap32 read fExitMarkerRivalBitmap;
@@ -600,6 +602,9 @@ begin
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
 
+    fCameraLockBitmap.DrawMode := dmBlend;
+    fCameraLockBitmap.CombineMode := cmMerge;
+
     fBalloonPopBitmap.DrawMode := dmBlend;
     fBalloonPopBitmap.CombineMode := cmMerge;
 
@@ -638,6 +643,7 @@ begin
     LoadEffects('slowfreeze.png', 'slowfreeze-hr.png', fSlowfreezeDigitsBitmap);
     LoadEffects('numbers.png', 'numbers-hr.png', fNumbersBitmap);
     LoadEffects('highlight.png', 'highlight-hr.png', fHighlightBitmap);
+    LoadEffects('cameralock.png', 'cameralock-hr.png', fCameraLockBitmap);
     LoadEffects('grenades.png', 'grenades-hr.png', fGrenadeBitmap);
     LoadEffects('freezing_overlay.png', 'freezing_overlay-hr.png', fFreezingOverlay);
     LoadEffects('unfreezing_overlay.png', 'unfreezing_overlay-hr.png', fUnfreezingOverlay);
@@ -667,6 +673,7 @@ begin
   fInvincibilityOverlay.Clear;
   fNumbersBitmap.Clear;
   fHighlightBitmap.Clear;
+  fCameraLockBitmap.Clear;
   fBalloonPopBitmap.Clear;
   fExitMarkerNormalBitmap.Clear;
   fExitMarkerRivalBitmap.Clear;
@@ -695,6 +702,7 @@ begin
   fInvincibilityOverlay := TBitmap32.Create;
   fNumbersBitmap := TBitmap32.Create;
   fHighlightBitmap := TBitmap32.Create;
+  fCameraLockBitmap := TBitmap32.Create;
   fBalloonPopBitmap := TBitmap32.Create;
   fExitMarkerNormalBitmap := TBitmap32.Create;
   fExitMarkerRivalBitmap := TBitmap32.Create;
@@ -717,6 +725,7 @@ begin
   fInvincibilityOverlay.Free;
   fNumbersBitmap.Free;
   fHighlightBitmap.Free;
+  fCameraLockBitmap.Free;
   fBalloonPopBitmap.Free;
   fExitMarkerNormalBitmap.Free;
   fExitMarkerRivalBitmap.Free;
