@@ -86,7 +86,7 @@ type
 
       fSilentRemove: Boolean;
 
-      constructor Create(aPhysicsMap: TBitmap32; aLemming: TLemming);
+      constructor Create(aPhysicsMap: TBitmap32; L: TLemming);
 
       procedure Fire;
       procedure Discard;
@@ -98,8 +98,8 @@ type
       function GetGrenadeHotspot: TPoint;
     public
       constructor CreateAssign(aSrc: TProjectile);
-      constructor CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
-      constructor CreateGrenade(aPhysicsMap: TBitmap32; aLemming: TLemming);
+      constructor CreateSpear(aPhysicsMap: TBitmap32; L: TLemming);
+      constructor CreateGrenade(aPhysicsMap: TBitmap32; L: TLemming);
       constructor CreateForCloner(aPhysicsMap: TBitmap32; aNewLemming: TLemming; aOldProjectile: TProjectile);
 
       function Update: TProjectilePointArray;
@@ -213,10 +213,10 @@ begin
   fSilentRemove := aSrc.fSilentRemove;
 end;
 
-constructor TProjectile.Create(aPhysicsMap: TBitmap32; aLemming: TLemming);
+constructor TProjectile.Create(aPhysicsMap: TBitmap32; L: TLemming);
 begin
   fPhysicsMap := aPhysicsMap;
-  fLemming := aLemming;
+  fLemming := L;
 
   if fLemming <> nil then
   begin
@@ -241,20 +241,20 @@ begin
 end;
 
 constructor TProjectile.CreateGrenade(aPhysicsMap: TBitmap32;
-  aLemming: TLemming);
+  L: TLemming);
 begin
   fIsSpear := False;
   fIsGrenade := True;
-  Create(aPhysicsMap, aLemming);
+  Create(aPhysicsMap, L);
   SetPositionFromLemming;
 end;
 
-constructor TProjectile.CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
+constructor TProjectile.CreateSpear(aPhysicsMap: TBitmap32; L: TLemming);
 begin
   //fIsBat := False;
   fIsSpear := True;
   fIsGrenade := False;
-  Create(aPhysicsMap, aLemming);
+  Create(aPhysicsMap, L);
   SetPositionFromLemming;
 end;
 

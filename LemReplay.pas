@@ -73,7 +73,7 @@ type
       procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override;
     public
-      procedure SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
+      procedure SetInfoFromLemming(L: TLemming; aHighlit: Boolean);
       property LemmingIndex: Integer read fLemmingIndex write fLemmingIndex;
       property LemmingIdentifier: String read fLemmingIdentifier write fLemmingIdentifier;
       property LemmingX: Integer read fLemmingX write fLemmingX;
@@ -945,13 +945,13 @@ begin
   fLemmingHighlit := False;
 end;
 
-procedure TBaseReplayLemmingItem.SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
+procedure TBaseReplayLemmingItem.SetInfoFromLemming(L: TLemming; aHighlit: Boolean);
 begin
-  fLemmingIndex := aLemming.LemIndex;
-  fLemmingIdentifier := aLemming.LemIdentifier;
-  fLemmingX := aLemming.LemX;
-  fLemmingDx := aLemming.LemDX;
-  fLemmingY := aLemming.LemY;
+  fLemmingIndex := L.LemIndex;
+  fLemmingIdentifier := L.LemIdentifier;
+  fLemmingX := L.LemX;
+  fLemmingDx := L.LemDX;
+  fLemmingY := L.LemY;
   fLemmingHighlit := aHighlit;
 end;
 
