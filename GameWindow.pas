@@ -2020,7 +2020,7 @@ procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
 -------------------------------------------------------------------------------}
 var
   PassKey: Word;
-  OldHighlightLemming: TLemming;
+  OldHighlitLemming: TLemming;
   InTestMode: Boolean;
   RMBUnassigned, Paused, InClassicModes: Boolean;
   CtrlPressed, ShiftPressed, AltPressed: Boolean;
@@ -2097,15 +2097,13 @@ begin
       end;
     end;
 
-    // Check for highlight hotkey to assign skills to highlit lemmings
+    // Check for highlight hotkey to highlight the selected lemming
     if Game.IsHighlightHotkey then
     begin
-      OldHighlightLemming := fRenderInterface.HighlitLemming;
+      OldHighlitLemming := fRenderInterface.HighlitLemming;
+      Game.HighlightSelectedLemming;
 
-      // Assign skill to highlit lemming by clicking the skill button
-      Game.ProcessHighlightAssignment;
-
-      if fRenderInterface.HighlitLemming <> OldHighlightLemming then
+      if fRenderInterface.HighlitLemming <> OldHighlitLemming then
         SoundManager.PlaySound(SFX_SkillButton);
     end;
 

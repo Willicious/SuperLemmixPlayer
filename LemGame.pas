@@ -520,7 +520,7 @@ type
     procedure HitTest(Autofail: Boolean = False);
     procedure UpdateSelectedLemFutureTaskCount;
     function ProcessSkillAssignment(IsHighlight: Boolean = False): Boolean;
-    function ProcessHighlightAssignment: Boolean;
+    function HighlightSelectedLemming: Boolean;
     procedure RegainControl(Force: Boolean = False);
     procedure EnsureCorrectReplayDetails;
     procedure SetGameResult;
@@ -8161,7 +8161,7 @@ begin
     PlayAssignFailSound;
 end;
 
-function TLemmingGame.ProcessHighlightAssignment: Boolean;
+function TLemmingGame.HighlightSelectedLemming: Boolean;
 var
   L: TLemming;
 begin
