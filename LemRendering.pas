@@ -848,7 +848,7 @@ var
   ShowCountdown, ShowHighlight, ShowCameraLock: Boolean;
   SrcRect: TRect;
   n, tensDigit, onesDigit: Integer;
-  xPos: Integer;
+  xPos, DXOffset: Integer;
 begin
   if L.LemRemoved then Exit;
 
@@ -870,6 +870,8 @@ begin
   else if ShowHighlight and ShowCameraLock then
     ShowHighlight := (GetTickCount mod 1000 < 500);
 
+  DXOffset := IfThen(L.LemDX < 0, 1, 0);
+
   if ShowCountdown then
   begin
     if L.LemExplosionTimer > 0 then
@@ -886,20 +888,12 @@ begin
     // Calculate X-coordinate for drawing
     if tensDigit = 0 then
     begin
-      if L.LemDX < 0 then
-        xPos := (L.LemX - 3) * ResMod  // Center single-digit for left-facing lem
-      else
-        xPos := (L.LemX - 2) * ResMod; // Center single-digit
+      xPos := (L.LemX - (2 + DXOffset)) * ResMod; // Center single-digit
     end else if tensDigit = 1 then
     begin
-      if L.LemDX < 0 then
-        xPos := (L.LemX - 6) * ResMod  // Center "1"-leading double-digit for left-facing lem
-      else
-        xPos := (L.LemX - 5) * ResMod; // Center "1"-leading double-digit
-    end else if L.LemDX < 0 then
-        xPos := (L.LemX - 7) * ResMod  // Center all other double-digits for left-facing lem
-      else
-        xPos := (L.LemX - 6) * ResMod; // Center all other double-digits
+      xPos := (L.LemX - (5 + DXOffset)) * ResMod; // Center "1"-leading double-digit
+    end else
+      xPos := (L.LemX - (6 + DXOffset)) * ResMod; // Center all other double-digits
 
     // Draw tens digit
     if tensDigit <> 0 then
@@ -919,9 +913,9 @@ begin
 
     Countdown.DrawTo(fLayers[rlEffects], xPos, (L.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlEffects], (L.LemX - 2) * ResMod, (L.LemY - 20) * ResMod)
+    fAni.HighlightBitmap.DrawTo(fLayers[rlEffects], (L.LemX - (2 + DXOffset)) * ResMod, (L.LemY - 20) * ResMod)
   else if ShowCameraLock then
-    fAni.CameraLockBitmap.DrawTo(fLayers[rlEffects], (L.LemX - 2) * ResMod, (L.LemY - 20) * ResMod);
+    fAni.CameraLockBitmap.DrawTo(fLayers[rlEffects], (L.LemX - (3 + DXOffset)) * ResMod, (L.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);
