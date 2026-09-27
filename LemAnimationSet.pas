@@ -191,9 +191,9 @@ type
     fLemmingAnimations     : TBitmaps; // List of lemmings bitmaps
 
     fPortalWarpBitmap       : TBitmap32;
-    fCountDownDigitsBitmap  : TBitmap32;
-    fRadiationDigitsBitmap  : TBitmap32;
-    fSlowfreezeDigitsBitmap : TBitmap32;
+    fCountDownBitmap        : TBitmap32;
+    fRadiationBitmap        : TBitmap32;
+    fSlowfreezeBitmap       : TBitmap32;
     fFreezingOverlay        : TBitmap32;
     fUnfreezingOverlay      : TBitmap32;
     fInvincibilityOverlay   : TBitmap32;
@@ -231,9 +231,9 @@ type
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
     property PortalWarpBitmap      : TBitmap32 read fPortalWarpBitmap;
-    property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
-    property RadiationDigitsBitmap : TBitmap32 read fRadiationDigitsBitmap;
-    property SlowfreezeDigitsBitmap: TBitmap32 read fSlowfreezeDigitsBitmap;
+    property CountDownBitmap       : TBitmap32 read fCountDownBitmap;
+    property RadiationBitmap       : TBitmap32 read fRadiationBitmap;
+    property SlowfreezeBitmap      : TBitmap32 read fSlowfreezeBitmap;
     property FreezingOverlay       : TBitmap32 read fFreezingOverlay;
     property UnfreezingOverlay     : TBitmap32 read fUnfreezingOverlay;
     property InvincibilityOverlay  : TBitmap32 read fInvincibilityOverlay;
@@ -578,14 +578,14 @@ begin
     fPortalWarpBitmap.DrawMode := dmBlend;
     fPortalWarpBitmap.CombineMode := cmMerge;
 
-    fCountDownDigitsBitmap.DrawMode := dmBlend;
-    fCountDownDigitsBitmap.CombineMode := cmMerge;
+    fCountDownBitmap.DrawMode := dmBlend;
+    fCountDownBitmap.CombineMode := cmMerge;
 
-    fRadiationDigitsBitmap.DrawMode := dmBlend;
-    fRadiationDigitsBitmap.CombineMode := cmMerge;
+    fRadiationBitmap.DrawMode := dmBlend;
+    fRadiationBitmap.CombineMode := cmMerge;
 
-    fSlowfreezeDigitsBitmap.DrawMode := dmBlend;
-    fSlowfreezeDigitsBitmap.CombineMode := cmMerge;
+    fSlowfreezeBitmap.DrawMode := dmBlend;
+    fSlowfreezeBitmap.CombineMode := cmMerge;
 
     fFreezingOverlay.DrawMode := dmBlend;
     fFreezingOverlay.CombineMode := cmMerge;
@@ -638,9 +638,9 @@ begin
     DefaultPath := AppPath + SFStyles + SFDefaultStyle + SFPiecesEffects;
 
     LoadEffects('portalwarp.png', 'portalwarp-hr.png', fPortalWarpBitmap);
-    LoadEffects('countdown.png', 'countdown-hr.png', fCountDownDigitsBitmap);
-    LoadEffects('radiation.png', 'radiation-hr.png', fRadiationDigitsBitmap);
-    LoadEffects('slowfreeze.png', 'slowfreeze-hr.png', fSlowfreezeDigitsBitmap);
+    LoadEffects('countdown.png', 'countdown-hr.png', fCountDownBitmap);
+    LoadEffects('radiation.png', 'radiation-hr.png', fRadiationBitmap);
+    LoadEffects('slowfreeze.png', 'slowfreeze-hr.png', fSlowfreezeBitmap);
     LoadEffects('numbers.png', 'numbers-hr.png', fNumbersBitmap);
     LoadEffects('highlight.png', 'highlight-hr.png', fHighlightBitmap);
     LoadEffects('cameralock.png', 'cameralock-hr.png', fCameraLockBitmap);
@@ -665,9 +665,9 @@ begin
   fLemmingAnimations.Clear;
   fMetaLemmingAnimations.Clear;
   fPortalWarpBitmap.Clear;
-  fCountDownDigitsBitmap.Clear;
-  fRadiationDigitsBitmap.Clear;
-  fSlowfreezeDigitsBitmap.Clear;
+  fCountDownBitmap.Clear;
+  fRadiationBitmap.Clear;
+  fSlowfreezeBitmap.Clear;
   fFreezingOverlay.Clear;
   fUnfreezingOverlay.Clear;
   fInvincibilityOverlay.Clear;
@@ -694,9 +694,9 @@ begin
   fLemmingAnimations := TBitmaps.Create;
   fRecolorer := TRecolorImage.Create;
   fPortalWarpBitmap := TBitmap32.Create;
-  fCountDownDigitsBitmap := TBitmap32.Create;
-  fRadiationDigitsBitmap := TBitmap32.Create;
-  fSlowfreezeDigitsBitmap := TBitmap32.Create;
+  fCountDownBitmap := TBitmap32.Create;
+  fRadiationBitmap := TBitmap32.Create;
+  fSlowfreezeBitmap := TBitmap32.Create;
   fFreezingOverlay := TBitmap32.Create;
   fUnfreezingOverlay := TBitmap32.Create;
   fInvincibilityOverlay := TBitmap32.Create;
@@ -717,9 +717,9 @@ begin
   fMetaLemmingAnimations.Free;
   fLemmingAnimations.Free;
   fPortalWarpBitmap.Free;
-  fCountDownDigitsBitmap.Free;
-  fRadiationDigitsBitmap.Free;
-  fSlowfreezeDigitsBitmap.Free;
+  fCountDownBitmap.Free;
+  fRadiationBitmap.Free;
+  fSlowfreezeBitmap.Free;
   fFreezingOverlay.Free;
   fUnfreezingOverlay.Free;
   fInvincibilityOverlay.Free;

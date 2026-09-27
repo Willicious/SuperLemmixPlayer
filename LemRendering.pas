@@ -853,11 +853,11 @@ begin
   if L.LemRemoved then Exit;
 
   if L.LemIsRadiating then
-    Countdown := fAni.RadiationDigitsBitmap
+    Countdown := fAni.RadiationBitmap
   else if (L.LemFreezerExplosionTimer > 0) then
-    Countdown := fAni.SlowfreezeDigitsBitmap
+    Countdown := fAni.SlowfreezeBitmap
   else
-    Countdown := fAni.CountDownDigitsBitmap;
+    Countdown := fAni.CountDownBitmap;
 
   ShowCountdown := ((L.LemFreezerExplosionTimer > 0)
                  or (L.LemExplosionTimer > 0))
