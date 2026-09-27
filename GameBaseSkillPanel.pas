@@ -1586,7 +1586,7 @@ begin
       Icon := 5;
     end else begin
       Color := clCornflowerBlue32;
-      Icon := 4;
+      Icon := 10;
     end;
   end;
 
@@ -1622,8 +1622,8 @@ begin
 
   if (fCurrentTalisman >= 0) and (fTalTimeLimit > 0) then
   begin
-    Color := clYellow32;
-    Icon := 7;
+    Color := clCornflowerBlue32;
+    Icon := 9;
 
     if Game.IsOutOfTime or (Game.CurrentIteration > fTalTimeLimit) then
     begin
