@@ -448,44 +448,44 @@ begin
   case TLemmixHotkeyAction(cbFunctions.ItemIndex) of
     lka_Skill: begin
                  if cbSkill.ItemIndex = -1 then cbSkill.ItemIndex := 0;
-                 fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
+                 fHotkeys.SetKeyByCode(i, lka_Skill, cbSkill.ItemIndex);
                end;
     lka_SkillButton: begin
                        if seSkillButton.Value <= 0 then seSkillButton.Value := 1;
                        if seSkillButton.Value >= 15 then seSkillButton.Value := 14;
 
-                       fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
+                       fHotkeys.SetKeyByCode(i, lka_SkillButton, seSkillButton.Value);
                      end;
     lka_Skip: begin
                 ebSkipDuration.Text := IntToStr(StrToIntDef(ebSkipDuration.Text, 0)); // Destroys non-numeric values
-                fHotkeys.SetKeyFunction(i, lka_Skip, StrToInt(ebSkipDuration.Text));
+                fHotkeys.SetKeyByCode(i, lka_Skip, StrToInt(ebSkipDuration.Text));
               end;
     lka_SpecialSkip: begin
                        if cbSpecialSkip.ItemIndex = -1 then cbSpecialSkip.ItemIndex := 0;
-                       fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
+                       fHotkeys.SetKeyByCode(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
                      end;
     lka_PhysicsView,
     lka_ShowUsedSkills: if cbHoldKey.Checked then
-                          fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
+                          fHotkeys.SetKeyByCode(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
                         else
-                          fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 0);
+                          fHotkeys.SetKeyByCode(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 0);
     lka_NudgeUp:    begin
                       ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-                      fHotkeys.SetKeyFunction(i, lka_NudgeUp, StrToInt(ebNudgeAmount.Text));
+                      fHotkeys.SetKeyByCode(i, lka_NudgeUp, StrToInt(ebNudgeAmount.Text));
                     end;
     lka_NudgeDown:  begin
                       ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-                      fHotkeys.SetKeyFunction(i, lka_NudgeDown, StrToInt(ebNudgeAmount.Text));
+                      fHotkeys.SetKeyByCode(i, lka_NudgeDown, StrToInt(ebNudgeAmount.Text));
                     end;
     lka_NudgeLeft:  begin
                       ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-                      fHotkeys.SetKeyFunction(i, lka_NudgeLeft, StrToInt(ebNudgeAmount.Text));
+                      fHotkeys.SetKeyByCode(i, lka_NudgeLeft, StrToInt(ebNudgeAmount.Text));
                     end;
     lka_NudgeRight: begin
                       ebNudgeAmount.Text := IntToStr(StrToIntDef(ebNudgeAmount.Text, 160));
-                      fHotkeys.SetKeyFunction(i, lka_NudgeRight, StrToInt(ebNudgeAmount.Text));
+                      fHotkeys.SetKeyByCode(i, lka_NudgeRight, StrToInt(ebNudgeAmount.Text));
                     end;
-    else fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
+    else fHotkeys.SetKeyByCode(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
   end;
   SetVisibleModifier(TLemmixHotkeyAction(cbFunctions.ItemIndex));
   RefreshList;
@@ -498,7 +498,7 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; // Safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_Skill then Exit;
-  fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
+  fHotkeys.SetKeyByCode(i, lka_Skill, cbSkill.ItemIndex);
   RefreshListItem(i);
 end;
 
@@ -510,7 +510,7 @@ begin
   if (i = -1) then Exit; // Safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_SkillButton then Exit;
 
-  fHotkeys.SetKeyFunction(i, lka_SkillButton, seSkillButton.Value);
+  fHotkeys.SetKeyByCode(i, lka_SkillButton, seSkillButton.Value);
   RefreshListItem(i);
 end;
 
@@ -537,7 +537,7 @@ begin
     end;
   end;
 
-  fHotkeys.SetKeyFunction(i, lka_Skip, TextValue);
+  fHotkeys.SetKeyByCode(i, lka_Skip, TextValue);
   RefreshListItem(i);
 end;
 
@@ -571,7 +571,7 @@ begin
     end;
   end;
 
-  fHotkeys.SetKeyFunction(i, aAction, TextValue);
+  fHotkeys.SetKeyByCode(i, aAction, TextValue);
   RefreshListItem(i);
 end;
 
@@ -630,9 +630,9 @@ begin
   lka_ShowUsedSkills]) then Exit;
 
   if cbHoldKey.Checked then
-    fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 1)
+    fHotkeys.SetKeyByCode(i, fHotkeys.CheckKeyEffect(i).Action, 1)
   else
-    fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 0);
+    fHotkeys.SetKeyByCode(i, fHotkeys.CheckKeyEffect(i).Action, 0);
   RefreshListItem(i);
 end;
 
@@ -643,7 +643,7 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; // Safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_SpecialSkip then Exit;
-  fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
+  fHotkeys.SetKeyByCode(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
   RefreshListItem(i);
 end;
 
