@@ -159,7 +159,7 @@ var
            RightStr(S, Length(S) - FoundEndPos);
     end;
   begin
-    KeyNames := TLemmixHotkeyManager.GetKeyNames(True);
+    KeyNames := TLemmixHotkeyManager.GetKeyNames;
 
     while Pos('[', S) <> 0 do
     begin

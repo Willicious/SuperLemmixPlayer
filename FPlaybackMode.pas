@@ -120,7 +120,7 @@ begin
   Result := '';
 
   Key := lka_CancelPlayback;
-  KeyNames := TLemmixHotkeyManager.GetKeyNames(True);
+  KeyNames := TLemmixHotkeyManager.GetKeyNames;
 
   for n := 0 to MAX_KEY do
   begin
