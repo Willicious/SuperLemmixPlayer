@@ -502,6 +502,7 @@ type
     function HasPixelAt(X, Y: Integer): Boolean;
     function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
     function HasWaterObjectAt(X, Y: Integer): Boolean;
+    function HasBlankPixelAbove(x, y: Integer): Boolean;
     function FindGroundPixel(x, y: Integer): Integer;
     function HasSteelAt(x, y: Integer): Boolean;
     function HasIndestructibleAt(x, y, Direction: Integer; Skill: TBasicLemmingAction): Boolean;
@@ -5038,12 +5039,16 @@ begin
     // Climbers and Hoisters are cancelled mid-action
     if (L.LemAction in [baClimbing, baHoisting]) and (L.LemY <= 7) then
     begin
-      if L.LemIsSlider then
-        Transition(L, baSliding)
-      else begin
-        Transition(L, baFalling);
-        TurnAround(L);
-        Inc(L.LemX, L.LemDX);
+      // Continue Climbing/Hoisting if there is at least 1 empty pixel above
+      if not HasBlankPixelAbove(L.LemX, L.LemY) then
+      begin
+        if L.LemIsSlider then
+          Transition(L, baSliding)
+        else begin
+          Transition(L, baFalling);
+          TurnAround(L);
+          Inc(L.LemX, L.LemDX);
+        end;
       end;
     end;
 
@@ -6842,6 +6847,22 @@ begin
   Result := True;
 end;
 
+function TLemmingGame.HasBlankPixelAbove(x, y: Integer): Boolean;
+var
+  i: Integer;
+begin
+  Result := False;
+
+  for i := 0 to y do
+  begin
+    if not HasPixelAt(x, i) then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
+end;
+
 function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
 begin
   // Find the new ground pixel
@@ -6852,9 +6873,7 @@ begin
   begin
     while HasPixelAt(x, y + Result - 1) and (Result > -10) do
       Dec(Result);
-  end
-  else
-  begin
+  end else begin
     Inc(Result);
     while (not HasPixelAt(x, y + Result)) and (Result < 4) do
       Inc(Result);
