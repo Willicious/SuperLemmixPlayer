@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.2
+#   Created with SLXEditor 3.3.1
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE The race against cliches
  AUTHOR DMA Design
  ID xAFD4B18EAFD4B18E
- VERSION x0000000000000011
+ VERSION x0000000000000012
  
 #       Level dimensions        
 # ----------------------------- 
@@ -1449,14 +1449,6 @@
    X 721
    Y -5
    NO_OVERWRITE
-   ONE_WAY
- $END
- 
- $TERRAIN
-   STYLE slx_snow
-   PIECE rocks_03
-   X 536
-   Y 57
    ONE_WAY
  $END
  
