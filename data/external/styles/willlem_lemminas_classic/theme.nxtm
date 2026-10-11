@@ -4,6 +4,8 @@ NAMES_PLURAL Lemminas
 ICONS willlem_lemminas
 EFFECTS willlem_lemminas
 
+EXIT_MARKER_FRAMES 5
+
 $COLORS
   MASK x006090
   MINIMAP x006090
