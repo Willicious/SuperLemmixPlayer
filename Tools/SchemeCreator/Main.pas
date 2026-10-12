@@ -168,7 +168,7 @@ begin
   FeatureEdit.Top := FNextTop;
   FeatureEdit.Left := 20;
   FeatureEdit.Width := 200;
-  FeatureEdit.Text := 'e.g. LEMMING_HAIR'; // Default name, can be edited
+  FeatureEdit.Text := 'LEMMING_HAIR'; // Default name, can be edited
   FeatureEdit.OnClick := FeatureEditClick;
 
   // Update the base top position for the current feature row
@@ -178,7 +178,7 @@ begin
   // Create hex edit fields for each state and link them to NewPair
   NewPair.LabelEdit := FeatureEdit; // Associate with the feature name
 
-  SHexDefault := 'e.g. x00BB00';
+  SHexDefault := 'NoChange';
 
   // Create and setup each TEdit for different states
   NewPair.HexNormal := TEdit.Create(Self);
