@@ -1,0 +1,61 @@
+EFFECT LOCKEDEXIT
+TRIGGER_X 10
+TRIGGER_Y 30
+TRIGGER_WIDTH 2
+TRIGGER_HEIGHT 3
+
+SOUND_EXHAUST thunk
+
+$PRIMARY_ANIMATION
+  NAME *blank
+  FRAMES 5
+  WIDTH 22
+  HEIGHT 32
+$END
+
+
+$ANIMATION
+  NAME opening
+  FRAMES 5
+  STATE MatchPhysics
+  
+  $TRIGGER
+    CONDITION Ready
+    HIDE
+  $END
+
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+
+$ANIMATION
+  NAME main
+  FRAMES 12
+  HIDE
+  
+  $TRIGGER
+    CONDITION Ready
+  $END
+  
+  $TRIGGER
+    CONDITION Exhausted
+    HIDE
+  $END
+$END
+
+
+$ANIMATION
+  NAME closing
+  FRAMES 12
+  INITIAL_FRAME 1
+  HIDE
+  
+  $TRIGGER
+    CONDITION Exhausted
+    STATE LoopToZero
+  $END
+$END
+
