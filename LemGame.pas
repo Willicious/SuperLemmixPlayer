@@ -3587,8 +3587,7 @@ var
   GadgetFound: Boolean;
   Gadget: TGadget;
 begin
-  // Because ObjectTypeToTrigger defaults to trZombie, looking for this trigger type is nonsense!
-  CustomAssert(TriggerType <> trZombie, 'FindObjectId called for trZombie');
+  CustomAssert(TriggerType <> trNone, 'FindObjectId called for trNone');
 
   GadgetID := Gadgets.Count;
   GadgetFound := False;

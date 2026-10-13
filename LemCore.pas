@@ -178,42 +178,6 @@ const
     'cloners'
     );
 
-type
-  TTriggerTypes = (
-    trExit,       // As well for locked exits, once all buttons are pressed
-    trButton,
-    trForceLeft,  // As well for blockers
-    trForceRight, // As well for blockers
-    trTrap,       // For triggered and one-time traps
-    trAnim,       // Ditto for triggered animations
-    trWater,
-    trBlasticine,
-    trVinewater,
-    trPoison,
-    trLava,
-    trFire,
-    trOWLeft,
-    trOWRight,
-    trOWUp,
-    trOWDown,
-    trBlocker,    // Total blocker area!
-    trSteel,
-    trTeleport,
-    trPortal,
-    trPickup,
-    trCollectible,
-    trUpdraft,
-    trSplitter,
-    trRadiation,
-    trSlowfreeze,
-    trNoSplat,
-    trSplat,
-    trNormalizer,
-    trSkillAssigner,
-    trZombie
-  );
-
-
 const
   AssignableSkills = [
     baDigging,
@@ -345,49 +309,83 @@ const
     baNone  // Squiggle
   );
 
+type
+  TTriggerTypes = (
+    trNone,
+    trExit,
+    trButton,
+    trForceLeft,
+    trForceRight,
+    trTrap,
+    trAnim,
+    trWater,
+    trBlasticine,
+    trVinewater,
+    trPoison,
+    trLava,
+    trFire,
+    trOWLeft,
+    trOWRight,
+    trOWUp,
+    trOWDown,
+    trBlocker,
+    trSteel,
+    trTeleport,
+    trPortal,
+    trPickup,
+    trCollectible,
+    trUpdraft,
+    trSplitter,
+    trRadiation,
+    trSlowfreeze,
+    trNoSplat,
+    trSplat,
+    trNormalizer,
+    trSkillAssigner,
+    trZombie
+  );
+
 const
-  // All objects that don't have trigger areas get mapped to trZombie
-  // This only works as long as there are no object types that create Zombie fields!!!
   ObjectTypeToTrigger: array[-1..37] of TTriggerTypes = (
-    trZombie,                 // -1 No-object
-    trZombie,                 // 0  No trigger area
-    trZombie,                 // 1  Hatch
-    trExit,                   // 2  Exit
-    trExit,                   // 3  Locked exit
-    trButton,                 // 4  Button
-    trForceLeft,              // 5  Force-field left
-    trForceRight,             // 6  Force-field right
-    trTrap,                   // 7  Triggered trap
-    trTrap,                   // 8  Once trap
-    trWater,                  // 9  Water
-    trBlasticine,             // 10 Blasticine
-    trVinewater,              // 11 Vinewater
-    trPoison,                 // 12 Poison
-    trLava,                   // 13 Lava
-    trFire,                   // 14 Triggers burner
-    trOWLeft,                 // 15 OWW left
-    trOWRight,                // 16 OWW right
-    trOWDown,                 // 17 OWW down
-    trOWUp,                   // 18 OWW up
-    trZombie,                 // 19 Blocker (note - there is no blocker object!)
-    trTeleport,               // 20 Teleporter
-    trZombie,                 // 21 Receiver
-    trPortal,                 // 22 Portal
-    trPickup,                 // 23 Pickup skill
-    trCollectible,            // 24 Collectible
-    trUpdraft,                // 25 Updraft
-    trSplitter,               // 26 Splitter
-    trRadiation,              // 27 Radiation
-    trSlowfreeze,             // 28 Slowfreeze
-    trNoSplat,                // 29 No-splat
-    trSplat,                  // 30 Splat
-    trNormalizer,             // 31 Normalizer
-    trSkillAssigner,          // 32 Skill assigner
-    trZombie,                 // 33 Decoration
-    trAnim,                   // 34 Triggered animation
-    trAnim,                   // 35 Once animation
-    trSteel,                  // 36 Steel
-    trZombie                  // 37 Preplaced lemming
+    trNone,                   // -1 DOM_NOOBJECT
+    trNone,                   //  0 DOM_NONE
+    trNone,                   //  1 DOM_WINDOW
+    trExit,                   //  2 DOM_EXIT
+    trExit,                   //  3 DOM_LOCKEXIT
+    trButton,                 //  4 DOM_BUTTON
+    trNone,                   //  5 DOM_BLOCKER
+    trForceLeft,              //  6 DOM_FORCELEFT
+    trForceRight,             //  7 DOM_FORCERIGHT
+    trTrap,                   //  8 DOM_TRAP
+    trTrap,                   //  9 DOM_TRAPONCE
+    trWater,                  // 10 DOM_WATER
+    trBlasticine,             // 11 DOM_BLASTICINE
+    trVinewater,              // 12 DOM_VINEWATER
+    trPoison,                 // 13 DOM_POISON
+    trLava,                   // 14 DOM_LAVA
+    trFire,                   // 15 DOM_FIRE
+    trOWLeft,                 // 16 DOM_ONEWAYLEFT
+    trOWRight,                // 17 DOM_ONEWAYRIGHT
+    trOWUp,                   // 18 DOM_ONEWAYUP
+    trOWDown,                 // 19 DOM_ONEWAYDOWN
+    trTeleport,               // 20 DOM_TELEPORT
+    trNone,                   // 21 DOM_RECEIVER
+    trPortal,                 // 22 DOM_PORTAL
+    trPickup,                 // 23 DOM_PICKUP
+    trCollectible,            // 24 DOM_COLLECTIBLE
+    trUpdraft,                // 25 DOM_UPDRAFT
+    trSplitter,               // 26 DOM_SPLITTER
+    trRadiation,              // 27 DOM_RADIATION
+    trSlowfreeze,             // 28 DOM_SLOWFREEZE
+    trNoSplat,                // 29 DOM_NOSPLAT
+    trSplat,                  // 30 DOM_SPLAT
+    trNormalizer,             // 31 DOM_NORMALIZER
+    trSkillAssigner,          // 32 DOM_SKILLASSIGNER
+    trNone,                   // 33 DOM_DECORATION
+    trAnim,                   // 34 DOM_ANIMATION
+    trAnim,                   // 35 DOM_ANIMONCE
+    trSteel,                  // 36 DOM_STEEL
+    trNone                    // 37 DOM_LEMMING
   );
 
 type
