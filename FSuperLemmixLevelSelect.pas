@@ -1671,9 +1671,6 @@ begin
   // Find the relevant node for the chosen level and select it
   ExpandParents(TargetNode.Parent);
   tvLevelSelect.Selected := TargetNode;
-
-  CloseSearchResultsPanel;
-  tvLevelSelect.SetFocus;
 end;
 
 procedure TFLevelSelect.ResetSearchBar;
@@ -1702,6 +1699,7 @@ end;
 procedure TFLevelSelect.btnCloseSearchClick(Sender: TObject);
 begin
   CloseSearchResultsPanel;
+  tvLevelSelect.SetFocus;
 end;
 
 procedure TFLevelSelect.btnEditLevelClick(Sender: TObject);
