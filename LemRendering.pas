@@ -241,16 +241,72 @@ var
   OldCombine: TPixelCombineEvent;
   OldMode: TDrawMode;
 
-  i: Integer;
   L: TLemming;
-begin
-  if not GameParams.ShowMinimap then Exit;
+  G: TGadget;
 
-  if fRenderInterface.DisableDrawing then Exit;
+  i, j: Integer;
+  MinimapLemColor: TColor32;
+  ThisAnim: TGadgetAnimationInstance;
+  GadgetRect: TRect;
+  BMP: TBitmap32;
+begin
+  if not GameParams.ShowMinimap then
+    Exit;
+
+  if fRenderInterface.DisableDrawing then
+    Exit;
+
+  Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
 
   if not LemmingsOnly then
   begin
-    Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
+    if fRenderInterface <> nil then
+    begin
+      if fRenderInterface.Gadgets <> nil then
+      for i := 0 to fRenderInterface.Gadgets.Count-1 do
+      begin
+        G := fRenderInterface.Gadgets[i];
+
+        if G.TriggerEffect in [DOM_NONE, DOM_DECORATION, DOM_ANIMATION, DOM_ANIMONCE] then
+          Continue;
+
+        if G.Animations.Count = 0 then
+          Continue;
+
+        for j := 0 to G.Animations.Count - 1 do
+        begin
+          ThisAnim := G.Animations[j];
+
+          if ThisAnim.MetaAnimation.FrameCount = 0 then
+            Continue;
+
+          BMP := ThisAnim.MetaAnimation.GetFrameBitmap(0);
+
+          if BMP = nil then
+            Continue;
+
+          BMP.DrawMode := dmCustom;
+          BMP.OnPixelCombine := CombineFixedColor;
+
+          fFixedDrawColor := $FF0088FF; // Blue
+          //fFixedDrawColor := $FF00FF00; // Green
+          //fFixedDrawColor := $FF00FFFF; // Cyan
+          //fFixedDrawColor := $FFFF00FF; // Pink
+
+          GadgetRect := Rect(
+            (G.Left + ThisAnim.MetaAnimation.OffsetX) div 4,
+            (G.Top + ThisAnim.MetaAnimation.OffsetY) div 4,
+            (G.Left + ThisAnim.MetaAnimation.OffsetX + BMP.Width) div 4,
+            (G.Top + ThisAnim.MetaAnimation.OffsetY + BMP.Height) div 4);
+
+          BMP.DrawTo(Dst, GadgetRect, BMP.BoundsRect);
+
+          BMP.DrawMode := dmBlend;
+          BMP.OnPixelCombine := nil;
+        end;
+      end;
+    end;
+
     OldCombine := fPhysicsMap.OnPixelCombine;
     OldMode := fPhysicsMap.DrawMode;
 
@@ -269,19 +325,17 @@ begin
   for i := 0 to fRenderInterface.LemmingList.Count-1 do
   begin
     L := fRenderInterface.LemmingList[i];
-  if L.LemRemoved then Continue;
-  if L.LemIsZombie then
-    begin
-      Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
-      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
-      Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
-      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
-    end else begin
-      Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
-      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
-      Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
-      Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
-    end;
+    if L.LemRemoved then Continue;
+
+    if L.LemIsZombie then
+      MinimapLemColor := $FFFF0000
+    else
+      MinimapLemColor := $FF00FF00;
+
+    Dst.PixelS[L.LemX div 4, L.LemY div 4] := MinimapLemColor;
+    Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := MinimapLemColor;
+    Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := MinimapLemColor;
+    Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := MinimapLemColor;
   end;
 end;
 
@@ -3136,7 +3190,6 @@ var
     if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or RenderPhysicsView) then
       DrawNumber(XPos, YPos, LemCap, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
-
 begin
   for i := 0 to Gadget.Animations.Count-1 do
   begin
