@@ -81,9 +81,11 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 
     procedure SearchLevels;
+    procedure ResetSearchBar;
     procedure CloseSearchResultsPanel;
     procedure sbSearchLevelsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure sbSearchLevelsInvokeSearch(Sender: TObject);
+    procedure sbSearchLevelsClick(Sender: TObject);
     procedure lbSearchResultsClick(Sender: TObject);
     procedure btnCloseSearchClick(Sender: TObject);
     procedure btnEditLevelClick(Sender: TObject);
@@ -502,6 +504,8 @@ procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
   lblName.Font.Name := 'Hobo Std';
   lblName.Font.Style := [];
+
+  ResetSearchBar;
 
   fTalismanButtons := TObjectList<TSpeedButton>.Create;
 
@@ -1539,6 +1543,12 @@ begin
   end;
 end;
 
+procedure TFLevelSelect.sbSearchLevelsClick(Sender: TObject);
+begin
+  sbSearchLevels.Clear;
+  sbSearchLevels.Font.Color := clWindowText;
+end;
+
 procedure TFLevelSelect.sbSearchLevelsInvokeSearch(Sender: TObject);
 begin
   SearchLevels;
@@ -1564,8 +1574,9 @@ var
     begin
       L := aGroup.Levels[i];
 
-      if AnsiContainsText(L.Title, SearchText) then
-        lbSearchResults.Items.AddObject(L.Title, L.TreeNode);
+      if AnsiContainsText(L.Title, SearchText) or
+         AnsiContainsText(L.Author, SearchText) then
+           lbSearchResults.Items.AddObject(L.Title, L.TreeNode);
 
       Inc(Progress);
 
@@ -1665,13 +1676,19 @@ begin
   tvLevelSelect.SetFocus;
 end;
 
+procedure TFLevelSelect.ResetSearchBar;
+begin
+  sbSearchLevels.Font.Color := clActiveCaption;
+  sbSearchLevels.Text := 'Search for a title or author';
+end;
+
 procedure TFLevelSelect.CloseSearchResultsPanel;
 begin
   // Close and reset search panel
   lbSearchResults.Clear;
   lbSearchResults.Visible := False;
   btnCloseSearch.Visible := False;
-  sbSearchLevels.Text := '';
+  ResetSearchBar;
 
   tvLevelSelect.Visible := True;
   lblSearchResultsInfo.Visible := False;

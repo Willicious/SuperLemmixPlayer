@@ -324,7 +324,15 @@ object FLevelSelect: TFLevelSelect
     Top = 8
     Width = 247
     Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clActiveCaption
+    Font.Height = -11
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 12
+    Text = 'Search for a title or author'
+    OnClick = sbSearchLevelsClick
     OnKeyDown = sbSearchLevelsKeyDown
     OnInvokeSearch = sbSearchLevelsInvokeSearch
   end
