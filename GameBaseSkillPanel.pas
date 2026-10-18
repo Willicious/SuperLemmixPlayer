@@ -2408,6 +2408,7 @@ var
 begin
   Result := False or CursorOverSkillButton(aButton)
                   or CursorOverIcon(ReplayIconRect)
+                  or CursorOverIcon(TalismanIconRect)
                   or CursorOverMinimap;
 end;
 
