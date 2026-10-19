@@ -49,6 +49,7 @@ type
     fReplayIcons          : TBitmap32;
     fTalismanIcons        : TBitmap32;
     fLevelInfoIcons       : TBitmap32;
+    //fAmigaFont            : TBitmap32;
 
     fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
@@ -57,6 +58,7 @@ type
     procedure LoadPanelIcons;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
+    //procedure LoadAmigaFont;
 
     function GetLevel: TLevel;
 
@@ -143,6 +145,7 @@ type
     function GetLemsSavedString: String;
     function GetTimeString: String;
 
+    //procedure DrawAmigaText(X, Y: Integer; const Text: string);
     procedure DrawPanelMessage;
     procedure DrawCursorInfo;
     procedure DrawPanelIcon(Bitmap: TBitmap32; Index, X, Y: Integer);
@@ -270,6 +273,11 @@ const
     'squiggle.png'
     );
 
+  ICON_WIDTH = 32;
+
+//  AMIGA_CHAR_WIDTH = 16;
+//  AMIGA_CHAR_HEIGHT = 30;
+//  AMIGA_CHARACTERS = '0123456789%ABCDEFGHIJKLMNOPQRSTUVWXYZ-+';
 
 implementation
 
@@ -330,6 +338,10 @@ begin
   fLevelInfoIcons := TBitmap32.Create;
   fLevelInfoIcons.DrawMode := dmBlend;
   fLevelInfoIcons.CombineMode := cmMerge;
+
+//  fAmigaFont := TBitmap32.Create;
+//  fAmigaFont.DrawMode := dmBlend;
+//  fAmigaFont.CombineMode := cmMerge;
 
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
@@ -492,6 +504,7 @@ begin
   fReplayIcons.Free;
   fTalismanIcons.Free;
   fLevelInfoIcons.Free;
+  //fAmigaFont.Free;
   inherited;
 end;
 
@@ -856,7 +869,6 @@ begin
   end;
 end;
 
-
 procedure TBaseSkillPanel.ReadBitmapFromStyle;
 var
   ButtonList: TPanelButtonArray;
@@ -918,6 +930,7 @@ begin
   LoadPanelIcons;
   LoadSkillIcons;
   LoadSkillFont;
+  //LoadAmigaFont;
 end;
 
 procedure TBaseSkillPanel.PlayReleaseRateSound;
@@ -1462,6 +1475,9 @@ begin
   else
     Color := clLightGreen32;
 
+//  if GameParams.AmigaTheme then
+//    DrawAmigaText(4, 2, GetCursorInfoString)
+//  else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
@@ -1534,11 +1550,14 @@ procedure TBaseSkillPanel.DrawHatchInfo;
 begin
   DrawPanelIcon(fPanelIcons, 2, HatchIconRect.Left, HatchIconRect.Top);
 
+//  if GameParams.AmigaTheme then
+//    DrawAmigaText(HatchIconRect.Left + ICON_WIDTH, 2, GetHatchCountString)
+//  else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
     Font.Size := 8;
-    RenderText(HatchIconRect.Left + 32, 6, GetHatchCountString, clLightGreen32, True);
+    RenderText(HatchIconRect.Left + ICON_WIDTH, 6, GetHatchCountString, clLightGreen32, True);
   end;
 end;
 
@@ -1561,7 +1580,6 @@ var
     Result := LemsAlive < LemsToSave;
   end;
 begin
-  DrawPanelIcon(fPanelIcons, 3, AliveIconRect.Left, AliveIconRect.Top);
   LemmingKinds := Game.ActiveLemmingTypes;
 
   if NotEnoughLemmings then
@@ -1571,11 +1589,16 @@ begin
   else
     Color := clLightGreen32;
 
+  DrawPanelIcon(fPanelIcons, 3, AliveIconRect.Left, AliveIconRect.Top);
+
+//  if GameParams.AmigaTheme then
+//    DrawAmigaText(AliveIconRect.Left + ICON_WIDTH, 2, GetLemsAliveString)
+//  else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
     Font.Size := 8;
-    RenderText(AliveIconRect.Left + 32, 6, GetLemsAliveString, Color, True);
+    RenderText(AliveIconRect.Left + ICON_WIDTH, 6, GetLemsAliveString, Color, True);
   end;
 end;
 
@@ -1607,11 +1630,14 @@ begin
 
   DrawPanelIcon(fPanelIcons, Icon, ExitIconRect.Left, ExitIconRect.Top);
 
+//  if GameParams.AmigaTheme then
+//    DrawAmigaText(ExitIconRect.Left + ICON_WIDTH, 2, GetLemsSavedString)
+//  else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
     Font.Size := 8;
-    RenderText(ExitIconRect.Left + 32, 6, GetLemsSavedString, Color, True);
+    RenderText(ExitIconRect.Left + ICON_WIDTH, 6, GetLemsSavedString, Color, True);
   end;
 end;
 
@@ -1649,11 +1675,14 @@ begin
 
   DrawPanelIcon(fPanelIcons, Icon, TimeIconRect.Left, TimeIconRect.Top);
 
+//  if GameParams.AmigaTheme then
+//    DrawAmigaText(TimeIconRect.Left + (ICON_WIDTH - 4), 2, GetTimeString)
+//  else
   with fImage.Bitmap do
   begin
     Font.Name := 'Hobo Std';
     Font.Size := 8;
-    RenderText(TimeIconRect.Left + 28, 6, GetTimeString, Color, True);
+    RenderText(TimeIconRect.Left + (ICON_WIDTH - 4), 6, GetTimeString, Color, True);
   end;
 end;
 
@@ -2021,7 +2050,7 @@ end;
 function TBaseSkillPanel.GetTimeString: String;
 var
   Time: Integer;
-  Prefix, Minutes, Seconds: String;
+  Prefix, Divider, Minutes, Seconds: String;
 begin
   if (Level.Info.HasTimeLimit and not Game.IsInfiniteTimeMode) then
   begin
@@ -2052,6 +2081,11 @@ begin
   else
     Prefix := ' ';
 
+//  if GameParams.AmigaTheme then
+//    Divider := '-'
+//  else
+    Divider := ':';
+
   if Time div 60 >= 100 then
   begin
     Minutes := '99';
@@ -2061,7 +2095,7 @@ begin
     Seconds := LeadZeroStr(Time mod 60, 2);
   end;
 
-  Result := Prefix + Minutes + ':' + Seconds;
+  Result := Prefix + Minutes + Divider + Seconds;
 end;
 
 
@@ -2324,8 +2358,12 @@ begin
   begin
     if fCurrentTalisman = -1 then
                    ButtonHint := 'TALISMANS'
-    else
+    else begin
+//      if GameParams.AmigaTheme then
+//                   ButtonHint := IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
+//      else
                    ButtonHint := 'TALISMAN ' + IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
+    end;
   end else if CursorOverIcon(HatchIconRect) then
                    ButtonHint := 'TO SPAWN'
   else if CursorOverIcon(AliveIconRect) then
@@ -2583,5 +2621,34 @@ function TBaseSkillPanel.LevelHasTalismans: Boolean;
 begin
   Result := Level.Talismans.Count > 0;
 end;
+
+//procedure TBaseSkillPanel.LoadAmigaFont;
+//begin
+//  if not GameParams.AmigaTheme then
+//    Exit;
+//
+//  GetGraphic('amiga_font.png', fAmigaFont);
+//end;
+
+//procedure TBaseSkillPanel.DrawAmigaText(X, Y: Integer; const Text: string);
+//var
+//  i, Index: Integer;
+//  C: Char;
+//  SrcRect: TRect;
+//begin
+//  for i := 1 to Length(Text) do
+//  begin
+//    C := UpCase(Text[i]);
+//    Index := Pos(C, AMIGA_CHARACTERS) - 1;
+//
+//    if Index >= 0 then
+//    begin
+//      SrcRect := Rect(Index * AMIGA_CHAR_WIDTH, 0, (Index + 1) * AMIGA_CHAR_WIDTH, AMIGA_CHAR_HEIGHT);
+//      fImage.Bitmap.Draw(X, Y, SrcRect, fAmigaFont);
+//    end;
+//
+//    Inc(X, AMIGA_CHAR_WIDTH);
+//  end;
+//end;
 
 end.
