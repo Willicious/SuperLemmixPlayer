@@ -968,8 +968,13 @@ end;
 
 procedure TBaseSkillPanel.SetShowUsedSkills(const Value: Boolean);
 begin
-  fShowUsedSkills := Value;
-  RefreshInfo;
+  Image.BeginUpdate;
+  try
+    fShowUsedSkills := Value;
+    RefreshInfo;
+  finally
+    Image.EndUpdate;
+  end;
 end;
 
 procedure TBaseSkillPanel.SetSkillIcons;
@@ -1253,9 +1258,17 @@ end;
 
 procedure TBaseSkillPanel.RemoveButtonHighlights;
 begin
-  RemoveHighlight(spbSlower);
-  RemoveHighlight(spbFaster);
-  RemoveHighlight(spbRestart);
+  Image.BeginUpdate;
+  try
+    if RRIsPressed then
+    begin
+      RemoveHighlight(spbSlower);
+      RemoveHighlight(spbFaster);
+    end else
+      RemoveHighlight(spbRestart);
+  finally
+    Image.EndUpdate;
+  end;
 end;
 
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
@@ -2242,10 +2255,18 @@ end;
 procedure TBaseSkillPanel.ImgMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
-  Game.SetSelectedSkill(spbSlower, False);
-  Game.SetSelectedSkill(spbFaster, False);
-  RemoveButtonHighlights;
-  RRIsPressed := False;
+  Image.BeginUpdate;
+  try
+    Game.SetSelectedSkill(spbSlower, False);
+    Game.SetSelectedSkill(spbFaster, False);
+    RemoveButtonHighlights;
+    RRIsPressed := False;
+
+    DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
+    DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
+  finally
+    Image.EndUpdate;
+  end;
 end;
 
 procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
@@ -2472,8 +2493,14 @@ begin
   else
     fCurrentTalisman := -1;
 
-  RemoveMaxSkillTypesHighlights;
-  DisplayTalismanInfo(fCurrentTalisman);
+  Image.BeginUpdate;
+  try
+    RemoveMaxSkillTypesHighlights;
+    DisplayTalismanInfo(fCurrentTalisman);
+    RefreshInfo;
+  finally
+    Image.EndUpdate;
+  end;
 end;
 
 {-----------------------------------------
