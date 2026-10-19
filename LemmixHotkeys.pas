@@ -669,8 +669,6 @@ end;
 class function TLemmixHotkeyManager.GetKeyNames: TKeyNameArray;
 var
   i: Integer;
-  P: PChar;
-  ScanCode: UInt;
 begin
   for i := 0 to MAX_KEY do
     Result[i] := '';

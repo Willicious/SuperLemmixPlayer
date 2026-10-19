@@ -152,7 +152,6 @@ type
       fIsOrdered: Boolean;
 
       fTalismans: TObjectList<TTalisman>;
-      fTotalCollectibles: Integer;
 
       fPackTitle: String;
       fPackAuthor: String;

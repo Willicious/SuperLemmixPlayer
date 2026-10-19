@@ -106,11 +106,6 @@ const
 { TLevelInfoPanel }
 
 constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32; fTalismanOverrideBMP: TBitmap32 = nil);
-var
-IconsImg: String;
-aStyle: String;
-aStylePath: String;
-aPath: String;
 begin
   inherited Create(aOwner);
 
