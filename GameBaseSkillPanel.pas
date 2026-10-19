@@ -1326,7 +1326,6 @@ begin
 
   IsRegularSkill := aButton <= LAST_SKILL_BUTTON;
 
-  TalismanHasSkillRequirement := False;
   TalismanStatus := tsSucceeding;
 
   // Handle talisman requirement info
@@ -2430,16 +2429,14 @@ begin
 end;
 
 procedure TBaseSkillPanel.HandleTalismanIconClick;
-var
-  Button: TSkillPanelButton;
-
   procedure DisplayTalismanInfo(Tal: Integer);
   var
     Index: Integer;
   begin
-    if Tal < 0 then
-      Index := 0
-    else begin
+    Index := 0;
+
+    if Tal >= 0 then
+    begin
       case Level.Talismans[Tal].Color of
         tcBronze: Index := 1;
         tcSilver: Index := 2;
