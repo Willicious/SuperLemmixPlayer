@@ -666,17 +666,19 @@ var
   var
     SrcRect, DstRect: TRect;
     PixelColor: TColor32;
-    x, y: Integer;
+    x, y, Width: Integer;
   begin
-    SrcRect.Left := (IconIndex mod 6) * 32;
-    SrcRect.Top := (IconIndex div 6) * 32;
-    SrcRect.Right := SrcRect.Left + 32;
-    SrcRect.Bottom := SrcRect.Top + 32;
+    Width := 32;
+
+    SrcRect.Left := (IconIndex mod 6) * Width;
+    SrcRect.Top := (IconIndex div 6) * Width;
+    SrcRect.Right := SrcRect.Left + Width;
+    SrcRect.Bottom := SrcRect.Top + Width;
 
     DstRect.Left := 0 + Offset.X;
     DstRect.Top := 0 + Offset.Y;
-    DstRect.Right := DstRect.Left + 32;
-    DstRect.Bottom := DstRect.Top + 32;
+    DstRect.Right := DstRect.Left + Width;
+    DstRect.Bottom := DstRect.Top + Width;
 
     // Recolor bricks for all construction skills
     if (IconIndex in [44, 45, 46, 47, 48])
