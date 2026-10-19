@@ -178,6 +178,7 @@ type
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
     procedure LoadLevelInfoIcons(Bmp: TBitmap32);
+    procedure DisplayTalismanInfo(Tal: Integer);
     procedure HandleTalismanIconClick;
     procedure DrawMaxSkillTypesIcon;
     procedure DrawClassicModeIcon;
@@ -2449,41 +2450,42 @@ begin
                   or CursorOverMinimap;
 end;
 
-procedure TBaseSkillPanel.HandleTalismanIconClick;
-  procedure DisplayTalismanInfo(Tal: Integer);
-  var
-    Index: Integer;
+procedure TBaseSkillPanel.DisplayTalismanInfo(Tal: Integer);
+var
+  Index: Integer;
+begin
+  Index := 0;
+
+  if Tal >= 0 then
   begin
-    Index := 0;
-
-    if Tal >= 0 then
-    begin
-      case Level.Talismans[Tal].Color of
-        tcBronze: Index := 1;
-        tcSilver: Index := 2;
-        tcGold:   Index := 3;
-      end;
-
-      if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[Tal].ID] then
-        Index := Index + 3;
-
-      fTalSaveRequirement := Level.Talismans[Tal].RescueCount;
-      fTalHasSaveRequirement := fTalSaveRequirement > 0;
-
-      fTalTimeLimit := Level.Talismans[Tal].TimeLimit;
-      fTalHasTimeLimit := fTalTimeLimit > 0;
-
-      fTalMaxSkillTypes := Level.Talismans[Tal].SkillTypeLimit;
-      fTalHasMaxSkillTypes := fTalMaxSkillTypes > 0;
-
-      fTalHasNoPause := Level.Talismans[Tal].RequireNoPause;
-      fTalHasClassicMode := Level.Talismans[Tal].RequireClassicMode;
-      fTalHasKillZombies := Level.Talismans[Tal].RequireKillZombies;
+    case Level.Talismans[Tal].Color of
+      tcBronze: Index := 1;
+      tcSilver: Index := 2;
+      tcGold:   Index := 3;
     end;
 
-    fTalismanIconIndex := Index;
-    DrawTalismanIcon(fTalismanIconIndex);
+    if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[Tal].ID] then
+      Index := Index + 3;
+
+    fTalSaveRequirement := Level.Talismans[Tal].RescueCount;
+    fTalHasSaveRequirement := fTalSaveRequirement > 0;
+
+    fTalTimeLimit := Level.Talismans[Tal].TimeLimit;
+    fTalHasTimeLimit := fTalTimeLimit > 0;
+
+    fTalMaxSkillTypes := Level.Talismans[Tal].SkillTypeLimit;
+    fTalHasMaxSkillTypes := fTalMaxSkillTypes > 0;
+
+    fTalHasNoPause := Level.Talismans[Tal].RequireNoPause;
+    fTalHasClassicMode := Level.Talismans[Tal].RequireClassicMode;
+    fTalHasKillZombies := Level.Talismans[Tal].RequireKillZombies;
   end;
+
+  fTalismanIconIndex := Index;
+  DrawTalismanIcon(fTalismanIconIndex);
+end;
+
+procedure TBaseSkillPanel.HandleTalismanIconClick;
 begin
   if Game.StateIsUnplayable or not LevelHasTalismans then
     Exit;
