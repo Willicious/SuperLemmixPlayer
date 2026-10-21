@@ -107,6 +107,10 @@ type
 
     fButtonHint           : String;
 
+    fMaxSkillTypesIconRect: TRect;
+    fClassicModeIconRect  : TRect;
+    fKillZombiesIconRect  : TRect;
+
     // Global stuff
     property Level: TLevel read GetLevel;
     property Game: TLemmingGame read fGame;
@@ -457,6 +461,10 @@ begin
   fTalHasNoPause := False;
   fTalHasClassicMode := False;
   fTalHasKillZombies := False;
+
+  fMaxSkillTypesIconRect := Rect(0,0,0,0);
+  fClassicModeIconRect := Rect(0,0,0,0);
+  fKillZombiesIconRect := Rect(0,0,0,0);
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -1715,6 +1723,7 @@ begin
   CountRect := Rect(TalismanIconRect.Right + 2, 6 - RectYOffset, TalismanIconRect.Right + 26, 28 + RectYOffset);
   CountRectErase := Rect(CountRect.Left + 2, CountRect.Top + 2, CountRect.Right - 2, CountRect.Bottom - 2);
 
+  fMaxSkillTypesIconRect := CountRect;
   fSkillTypesUsed := 0;
 
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -1756,6 +1765,7 @@ end;
 procedure TBaseSkillPanel.DrawClassicModeIcon;
 var
   SrcX, SrcY, DstX, DstY: Integer;
+  SrcRect: TRect;
 begin
   if (fCurrentTalisman < 0) or not (fTalHasClassicMode) then
     Exit;
@@ -1767,13 +1777,16 @@ begin
   DstX := TalismanIconRect.Right + IfThen(fTalHasMaxSkillTypes, 28, 4);
   DstY := 4;
 
-  fLevelInfoIcons.DrawTo(fImage.Bitmap, Rect(DstX, DstY, DstX + 24, DstY + 24),
-                                        Rect(SrcX, SrcY, SrcX + 32, SrcY + 32));
+  fClassicModeIconRect := Rect(DstX, DstY, DstX + 24, DstY + 24);
+  SrcRect := Rect(SrcX, SrcY, SrcX + 32, SrcY + 32);
+
+  fLevelInfoIcons.DrawTo(fImage.Bitmap, fClassicModeIconRect, SrcRect);
 end;
 
 procedure TBaseSkillPanel.DrawKillZombiesIcon;
 var
   SrcX, SrcY, DstX, DstY: Integer;
+  SrcRect: TRect;
 begin
   if (fCurrentTalisman < 0) or not (fTalHasKillZombies) then
     Exit;
@@ -1788,8 +1801,10 @@ begin
 
   DstY := 4;
 
-  fLevelInfoIcons.DrawTo(fImage.Bitmap, Rect(DstX, DstY, DstX + 24, DstY + 24),
-                                        Rect(SrcX, SrcY, SrcX + 32, SrcY + 32));
+  fKillZombiesIconRect := Rect(DstX, DstY, DstX + 24, DstY + 24);
+  SrcRect := Rect(SrcX, SrcY, SrcX + 32, SrcY + 32);
+
+  fLevelInfoIcons.DrawTo(fImage.Bitmap, fKillZombiesIconRect, SrcRect);
 end;
 
 procedure TBaseSkillPanel.DrawPanelMessage;
@@ -2377,7 +2392,13 @@ begin
 //      else
                    ButtonHint := 'TALISMAN ' + IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
     end;
-  end else if CursorOverIcon(HatchIconRect) then
+  end else if CursorOverIcon(fMaxSkillTypesIconRect) then
+                   ButtonHint := 'MAX SKILL TYPES'
+  else if CursorOverIcon(fClassicModeIconRect) then
+                   ButtonHint := 'CLASSIC MODE'
+  else if CursorOverIcon(fKillZombiesIconRect) then
+                   ButtonHint := 'KILL ALL ZOMBIES'
+  else if CursorOverIcon(HatchIconRect) then
                    ButtonHint := 'TO SPAWN'
   else if CursorOverIcon(AliveIconRect) then
                    ButtonHint := 'AVAILABLE'
@@ -2494,6 +2515,9 @@ begin
                   or CursorOverIcon(ReplayIconRect)
                   or CursorOverIcon(CollectibleIconRect)
                   or CursorOverIcon(TalismanIconRect)
+                  or CursorOverIcon(fMaxSkillTypesIconRect)
+                  or CursorOverIcon(fClassicModeIconRect)
+                  or CursorOverIcon(fKillZombiesIconRect)
                   or CursorOverIcon(HatchIconRect)
                   or CursorOverIcon(AliveIconRect)
                   or CursorOverIcon(ExitIconRect)
