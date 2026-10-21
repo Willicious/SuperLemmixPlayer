@@ -2385,8 +2385,12 @@ begin
   else if CursorOverIcon(TalismanIconRect) and LevelHasTalismans then
   begin
     if fCurrentTalisman = -1 then
-                   ButtonHint := 'TALISMANS'
-    else begin
+    begin
+      if Game.Replaying or Game.ReplayInsert then
+                   ButtonHint := 'TALISMANS (Click)'
+      else
+                   ButtonHint := 'TALISMANS (Click to Show)'
+    end else begin
 //      if GameParams.AmigaTheme then
 //                   ButtonHint := IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
 //      else
