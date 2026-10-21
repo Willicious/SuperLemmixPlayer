@@ -1356,7 +1356,7 @@ begin
   TalismanStatus := tsSucceeding;
 
   // Handle talisman requirement info
-  if fCurrentTalisman >= 0 then
+  if (fCurrentTalisman >= 0) and IsRegularSkill then
   begin
     OrigNumber := aNumber;
     UsedOfSkill := Game.SkillsUsed[aButton];
