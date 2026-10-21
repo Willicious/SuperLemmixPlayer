@@ -1701,7 +1701,18 @@ begin
   if fSkillTypesUsed > 0 then
     RemoveMaxSkillTypesHighlights;
 
-  CountRect := Rect(TalismanIconRect.Right + 2, 6, TalismanIconRect.Right + 26, 28);
+  if GameParams.AmigaTheme then
+  begin
+    RectYOffset := 1;
+    FontYOffset := 4;
+    NumFont := fSkillFontInvert;
+  end else begin
+    RectYOffset := 0;
+    FontYOffset := 5;
+    NumFont := fSkillFont;
+  end;
+
+  CountRect := Rect(TalismanIconRect.Right + 2, 6 - RectYOffset, TalismanIconRect.Right + 26, 28 + RectYOffset);
   CountRectErase := Rect(CountRect.Left + 2, CountRect.Top + 2, CountRect.Right - 2, CountRect.Bottom - 2);
 
   fSkillTypesUsed := 0;
@@ -1724,16 +1735,16 @@ begin
 
     if Overcount then
       fSkillFontTalFailed[SkillTypesStr[1], 1].DrawTo(
-        fImage.Bitmap, CountRect.Left + 6, CountRect.Top + 5)
+        fImage.Bitmap, CountRect.Left + 6, CountRect.Top + FontYOffset)
     else if Length(SkillTypesStr) = 1 then
-      fSkillFont[SkillTypesStr[1], 1].DrawTo(
-        fImage.Bitmap, CountRect.Left + 6, CountRect.Top + 5)
+      NumFont[SkillTypesStr[1], 1].DrawTo(
+        fImage.Bitmap, CountRect.Left + 6, CountRect.Top + FontYOffset)
     else begin
-      fSkillFont[SkillTypesStr[1], 1].DrawTo(
-        fImage.Bitmap, CountRect.Left + 3, CountRect.Top + 5);
+      NumFont[SkillTypesStr[1], 1].DrawTo(
+        fImage.Bitmap, CountRect.Left + 3, CountRect.Top + FontYOffset);
 
-      fSkillFont[SkillTypesStr[2], 0].DrawTo(
-        fImage.Bitmap, CountRect.Left + 3, CountRect.Top + 5);
+      NumFont[SkillTypesStr[2], 0].DrawTo(
+        fImage.Bitmap, CountRect.Left + 3, CountRect.Top + FontYOffset);
     end;
   end;
 
