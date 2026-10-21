@@ -111,6 +111,8 @@ type
     fClassicModeIconRect  : TRect;
     fKillZombiesIconRect  : TRect;
 
+    fTotalCollectibles    : Integer;
+
     // Global stuff
     property Level: TLevel read GetLevel;
     property Game: TLemmingGame read fGame;
@@ -465,6 +467,8 @@ begin
   fMaxSkillTypesIconRect := Rect(0,0,0,0);
   fClassicModeIconRect := Rect(0,0,0,0);
   fKillZombiesIconRect := Rect(0,0,0,0);
+
+  fTotalCollectibles := Level.Info.CollectibleCount;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -2381,8 +2385,10 @@ begin
   if CursorOverMinimap then
                    ButtonHint := 'MINIMAP'
   else if CursorOverIcon(CollectibleIconRect) and LevelHasCollectibles then
-                   ButtonHint := 'COLLECTIBLES'
-  else if CursorOverIcon(TalismanIconRect) and LevelHasTalismans then
+  begin
+    var Gathered := fTotalCollectibles - Game.CollectiblesRemaining;
+                   ButtonHint := 'COLLECTIBLES (' + IntToStr(Gathered) + ' of ' + IntToStr(fTotalCollectibles) + ')'
+  end else if CursorOverIcon(TalismanIconRect) and LevelHasTalismans then
   begin
     if fCurrentTalisman = -1 then
     begin
