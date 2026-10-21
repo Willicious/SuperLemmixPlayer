@@ -1410,7 +1410,7 @@ begin
     else
       FontBMP := fSkillFont;
 
-    if fShowUsedSkills then
+    if fShowUsedSkills or (GameParams.AmigaTheme and TalismanHasSkillRequirement) then
       EraseBMP := fSkillCountEraseInvert
     else
       EraseBMP := fSkillCountErase;
@@ -1690,6 +1690,8 @@ procedure TBaseSkillPanel.DrawMaxSkillTypesIcon;
 var
   Button: TSkillPanelButton;
   SkillTypesStr: String;
+  RectYOffset, FontYOffset: Integer;
+  NumFont: TFontBitmapArray;
   Overcount: Boolean;
   CountRect, CountRectErase: TRect;
 begin
