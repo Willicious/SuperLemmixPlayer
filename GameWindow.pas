@@ -843,12 +843,11 @@ begin
     // Refresh panel if in usual or fast play mode
     if not Hyper then
     begin
-      SkillPanel.RefreshInfo;
+      SetRedraw(rdRedraw);
       CheckResetCursor;
     end else if (Game.CurrentIteration = fHyperSpeedTarget) then
     begin
       fHyperSpeedTarget := -1;
-      SkillPanel.RefreshInfo;
       SetRedraw(rdRedraw);
       CheckResetCursor;
     end;
