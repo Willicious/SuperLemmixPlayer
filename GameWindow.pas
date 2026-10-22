@@ -168,6 +168,7 @@ type
     fGame                : TLemmingGame;      // Reference to globalgame gamemechanics
     Img                  : TImage32;          // The image in which the level is drawn (reference to inherited ScreenImg!)
     fHUDLayer            : TBitmapLayer;      // An optional transparent layer on which to display HUD items
+    fHUDReplayIconRect   : TRect;
     SkillPanel           : TBaseSkillPanel;   // Our good old dos skill panel (now improved!)
     fActivateCount       : Integer;           // Used when activating the form
     GameScroll           : TGameScroll;       // Scrollmode
@@ -1150,6 +1151,7 @@ begin
         RenderMinimap;
 
       SkillPanel.RefreshInfo;
+      SkillPanel.DrawReplayIconTo(fHUDLayer.Bitmap, 20, 20);
 
       fLastSelectedLemming := fRenderInterface.SelectedLemming;
       fLastHighlightLemming := fRenderInterface.HighlitLemming;
@@ -1456,6 +1458,8 @@ begin
   fHUDLayer.OnMouseMove := HUDLayer_MouseMove;
   fHUDLayer.OnMouseDown := HUDLayer_MouseDown;
   fHUDLayer.OnMouseUp := HUDLayer_MouseUp;
+
+  fHUDReplayIconRect := Rect(20, 20, 20 + (24 * 2), 20 + (32 * 2));
 
   // Create skill panel
   SkillPanel := TSkillPanel.CreateWithWindow(Self, Self);
@@ -2063,6 +2067,10 @@ begin
     and ((Game.CurrentIteration <= 0) and not Game.Restarted) then
       Exit;
 
+  // Eat HUD layer clicks
+  if (Layer = fHUDLayer) and PtInRect(fHUDReplayIconRect, Point(X, Y)) then
+      Exit;
+
   // Interrupting hyperspeed can break the handling of savestates so we're not allowing it
   if Game.Playing and not IsHyperSpeed then
   begin
@@ -2191,12 +2199,13 @@ end;
 
 procedure TGameWindow.HUDLayer_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
-  Exit;
+  SkillPanel.CursorOverHUDReplayIcon := PtInRect(fHUDReplayIconRect, Point(X, Y));
 end;
 
 procedure TGameWindow.HUDLayer_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  Exit;
+  if PtInRect(fHUDReplayIconRect, Point(X, Y)) then
+    Game.RegainControl(True);
 end;
 
 procedure TGameWindow.HUDLayer_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);

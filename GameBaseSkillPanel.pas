@@ -105,7 +105,8 @@ type
     fHighlitSkill         : TSkillPanelButton;
     fLastHighlitSkill     : TSkillPanelButton; // To avoid sounds when shouldn't be played
 
-    fButtonHint           : String;
+    fButtonHint              : String;
+    fCursorOverHUDReplayIcon : Boolean;
 
     fMaxSkillTypesIconRect: TRect;
     fClassicModeIconRect  : TRect;
@@ -154,8 +155,8 @@ type
     //procedure DrawAmigaText(X, Y: Integer; const Text: string);
     procedure DrawPanelMessage;
     procedure DrawCursorInfo;
+    procedure DrawPanelIconTo(aDst: TBitmap32; aSrc: TBitmap32; Index, X, Y: Integer; DoEnlarge: Boolean = False);
     procedure DrawPanelIcon(Bitmap: TBitmap32; Index, X, Y: Integer);
-    procedure DrawReplayIcon;
     procedure DrawCollectibleIcon;
     procedure DrawTalismanIcon(Index: Integer);
     procedure DrawHatchInfo;
@@ -217,6 +218,7 @@ type
     procedure RemoveButtonHighlights;
     procedure RemoveMaxSkillTypesHighlights;
     procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
+    procedure DrawReplayIconTo(aBitmap: TBitmap32; X, Y: Integer);
 
     procedure DrawMinimap; virtual;
 
@@ -234,6 +236,7 @@ type
     function CursorOverPanelItem: Boolean;
     function CursorOverIcon(aIconRect: TRect): Boolean;
     function CursorOverMinimap: Boolean;
+    property CursorOverHUDReplayIcon: Boolean read fCursorOverHUDReplayIcon write fCursorOverHUDReplayIcon;
 
     property Image: TImage32 read fImage;
 
@@ -469,6 +472,7 @@ begin
   fKillZombiesIconRect := Rect(0,0,0,0);
 
   fTotalCollectibles := Level.Info.CollectibleCount;
+  fCursorOverHUDReplayIcon := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -1498,17 +1502,27 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawPanelIconTo(aDst: TBitmap32; aSrc: TBitmap32; Index, X, Y: Integer; DoEnlarge: Boolean = False);
+begin
+  if DoEnlarge then
+    aSrc.DrawTo(aDst, Rect(X, Y, X + (24 * 2), Y + (32 * 2)), Rect(Index * 24, 0, (Index + 1) * 24, 32))
+  else
+    aSrc.DrawTo(aDst, X, Y, Rect(Index * 24, 0, (Index + 1) * 24, 32));
+end;
+
 procedure TBaseSkillPanel.DrawPanelIcon(Bitmap: TBitmap32; Index, X, Y: Integer);
 begin
   Bitmap.DrawTo(fImage.Bitmap, X, Y, Rect(Index * 24, 0, (Index + 1) * 24, 32));
 end;
 
-procedure TBaseSkillPanel.DrawReplayIcon;
+procedure TBaseSkillPanel.DrawReplayIconTo(aBitmap: TBitmap32; X, Y: Integer);
 var
   Icon: Integer;
   TickCount: Cardinal;
   BlinkIcon, IsReplaying, IsClassicModeRewind: Boolean;
 begin
+  aBitmap.FillRectS(Rect(X, Y, X + (24 * 2), Y + (32 * 2)), $00000000);
+
   Icon := -2;
   TickCount := GetTickCount;
   BlinkIcon := ((TickCount div 500) mod 2) = 0;
@@ -1525,7 +1539,7 @@ begin
   else if not (RRIsPressed or IsClassicModeRewind) then
     Icon := 0; // Red "R"
 
-  DrawPanelIcon(fReplayIcons, Icon, ReplayIconRect.Left - 4, ReplayIconRect.Top);
+  DrawPanelIconTo(aBitmap, fReplayIcons, Icon, X, Y, True);
 end;
 
 procedure TBaseSkillPanel.DrawCollectibleIcon;
@@ -1854,7 +1868,6 @@ begin
     // Text info string
     ClearInfo;
     DrawCursorInfo;
-    DrawReplayIcon;
     DrawCollectibleIcon;
     DrawTalismanIcon(fTalismanIconIndex);
     DrawHatchInfo;
@@ -2391,12 +2404,8 @@ begin
   end else if CursorOverIcon(TalismanIconRect) and LevelHasTalismans then
   begin
     if fCurrentTalisman = -1 then
-    begin
-      if Game.Replaying or Game.ReplayInsert then
-                   ButtonHint := 'TALISMANS (Click)'
-      else
                    ButtonHint := 'TALISMANS (Click to Show)'
-    end else begin
+    else begin
 //      if GameParams.AmigaTheme then
 //                   ButtonHint := IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
 //      else
@@ -2420,7 +2429,7 @@ begin
                    ButtonHint := 'TO SAVE'
     else
                    ButtonHint := 'SAVED';
-  end else if CursorOverIcon(ReplayIconRect) then
+  end else if CursorOverHUDReplayIcon then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
                    ButtonHint := 'CANCEL REPLAY'
@@ -2522,7 +2531,7 @@ var
   aButton: TSkillPanelButton;
 begin
   Result := False or CursorOverSkillButton(aButton)
-                  or CursorOverIcon(ReplayIconRect)
+                  or CursorOverHUDReplayIcon
                   or CursorOverIcon(CollectibleIconRect)
                   or CursorOverIcon(TalismanIconRect)
                   or CursorOverIcon(fMaxSkillTypesIconRect)
