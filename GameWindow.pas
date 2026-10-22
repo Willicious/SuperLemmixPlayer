@@ -114,6 +114,10 @@ type
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Img_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Img_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+  { hud eventhandlers }
+    procedure HUDLayer_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure HUDLayer_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure HUDLayer_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
   { skillpanel eventhandlers }
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
@@ -163,6 +167,7 @@ type
   protected
     fGame                : TLemmingGame;      // Reference to globalgame gamemechanics
     Img                  : TImage32;          // The image in which the level is drawn (reference to inherited ScreenImg!)
+    fHUDLayer            : TBitmapLayer;      // An optional transparent layer on which to display HUD items
     SkillPanel           : TBaseSkillPanel;   // Our good old dos skill panel (now improved!)
     fActivateCount       : Integer;           // Used when activating the form
     GameScroll           : TGameScroll;       // Scrollmode
@@ -393,6 +398,10 @@ begin
   // Set the width, height, and position of the game image
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
   Img.Height := Min(ClientHeight - CurPanelHeight, GameParams.Level.Info.Height * fInternalZoom * ResMod);
+
+  // Adjust the HUD layer
+  fHUDLayer.Bitmap.SetSize(Img.Width, Img.Height);
+  fHUDLayer.Location := FloatRect(0, 0, Img.Width, Img.Height);
 
   // Offset the level to the vertical centre of the screen
   VertOffset := ((ClientHeight - CurPanelHeight - Img.Height) div 2);
@@ -1437,6 +1446,17 @@ begin
   Img.BitmapAlign := baCustom;
   Img.ScaleMode := smScale;
 
+  fHUDLayer := TBitmapLayer.Create(Img.Layers);
+  fHUDLayer.Bitmap.SetSize(Img.Width, Img.Height);
+  fHUDLayer.Bitmap.DrawMode := dmBlend;
+  fHUDLayer.Bitmap.CombineMode := cmMerge;
+  fHUDLayer.Bitmap.Clear(0);
+  fHUDLayer.Scaled := False;
+  fHUDLayer.Location := FloatRect(0, 0, Img.Width, Img.Height);
+  fHUDLayer.OnMouseMove := HUDLayer_MouseMove;
+  fHUDLayer.OnMouseDown := HUDLayer_MouseDown;
+  fHUDLayer.OnMouseUp := HUDLayer_MouseUp;
+
   // Create skill panel
   SkillPanel := TSkillPanel.CreateWithWindow(Self, Self);
   SkillPanel.Parent := Self;
@@ -2167,6 +2187,21 @@ procedure TGameWindow.Img_MouseUp(Sender: TObject; Button: TMouseButton;
 begin
   CheckShifts(Shift);
   fMouseClickFrameskip := GetTickCount;
+end;
+
+procedure TGameWindow.HUDLayer_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+  Exit;
+end;
+
+procedure TGameWindow.HUDLayer_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  Exit;
+end;
+
+procedure TGameWindow.HUDLayer_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  Exit;
 end;
 
 procedure TGameWindow.InitializeCursor;
