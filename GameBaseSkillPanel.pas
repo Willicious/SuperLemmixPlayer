@@ -223,7 +223,7 @@ type
     procedure DrawMinimap; virtual;
 
     procedure ResizePanelWithWindow;
-    procedure GetButtonHints(aButton: TSkillPanelButton);
+    procedure SetButtonHints(aButton: TSkillPanelButton);
 
     function LevelHasCollectibles: Boolean;
     function LevelHasTalismans: Boolean;
@@ -1863,7 +1863,7 @@ begin
   Image.BeginUpdate;
   try
     for i := Low(fButtonRects) to High(fButtonRects) do
-      GetButtonHints(i);
+      SetButtonHints(i);
 
     // Text info string
     ClearInfo;
@@ -2388,7 +2388,7 @@ begin
   DrawMinimap;
 end;
 
-procedure TBaseSkillPanel.GetButtonHints(aButton: TSkillPanelButton);
+procedure TBaseSkillPanel.SetButtonHints(aButton: TSkillPanelButton);
 begin
   ButtonHint := '';
 
