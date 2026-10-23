@@ -28,6 +28,7 @@ type
   private
     fGame                 : TLemmingGame;
     fShowUsedSkills       : Boolean;
+    fShowSavedLems        : Boolean;
     fRRIsPressed          : Boolean;
 
     // Talisman button info
@@ -190,6 +191,7 @@ type
     procedure LoadLevelInfoIcons(Bmp: TBitmap32);
     procedure DisplayTalismanInfo(Tal: Integer);
     procedure HandleTalismanIconClick;
+    procedure HandleExitIconClick;
     procedure DrawMaxSkillTypesIcon;
     procedure DrawClassicModeIcon;
     procedure DrawKillZombiesIcon;
@@ -474,6 +476,8 @@ begin
   fKillZombiesIconRect := Rect(0,0,0,0);
 
   fCursorOverHUDReplayIcon := False;
+  fShowUsedSkills := False;
+  fShowSavedLems := False;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -2065,7 +2069,7 @@ begin
 
   ToSave := Required - TotalSaved;
 
-  if (ToSave < 0) then
+  if (ToSave < 0) or fShowSavedLems then
     Result := IntToStr(TotalSaved)
   else
     Result := IntToStr(ToSave);
@@ -2161,6 +2165,9 @@ begin
 
   if CursorOverIcon(TalismanIconRect) then
     HandleTalismanIconClick;
+
+  if CursorOverIcon(ExitIconRect) then
+    HandleExitIconClick;
 
   { Although we don't want to attempt game control whilst in HyperSpeed,
     we do want the Rewind, FF and Turbo keys to respond }
@@ -2409,10 +2416,10 @@ begin
                    ButtonHint := 'TIMER'
   else if CursorOverIcon(ExitIconRect) then
   begin
-    if Game.LemmingsSaved <= Level.Info.RescueCount then
-                   ButtonHint := 'TO SAVE'
+    if (Game.LemmingsSaved >= Level.Info.RescueCount) or fShowSavedLems then
+                   ButtonHint := 'SAVED (Click for TO SAVE)'
     else
-                   ButtonHint := 'SAVED';
+                   ButtonHint := 'TO SAVE (Click for SAVED)';
   end else if CursorOverHUDReplayIcon then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
@@ -2613,6 +2620,11 @@ begin
   finally
     Image.EndUpdate;
   end;
+end;
+
+procedure TBaseSkillPanel.HandleExitIconClick;
+begin
+  fShowSavedLems := not fShowSavedLems;
 end;
 
 {-----------------------------------------
