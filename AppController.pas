@@ -79,6 +79,7 @@ begin
   fLoadSuccess := True;
 
   LoadEmbeddedFont('HOBO_STD_FONT');
+  LoadEmbeddedFont('VAGA_RND_FONT');
 
   SoundManager := TSoundManager.Create;
   SoundManager.LoadDefaultSounds;  
