@@ -59,7 +59,6 @@ type
     procedure LoadPanelIcons;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
-    //procedure LoadAmigaFont;
 
     function GetLevel: TLevel;
 
@@ -154,7 +153,6 @@ type
     function GetLemsSavedString: String;
     function GetTimeString: String;
 
-    //procedure DrawAmigaText(X, Y: Integer; const Text: string);
     procedure SetFont(aFont: String; IsSuffix: Boolean = False);
     procedure DrawPanelMessage;
     procedure DrawCursorInfo;
@@ -698,7 +696,7 @@ const
 var
   BrickColor: TColor32;
   Button: TSkillPanelButton;
-  X, Y, FloaterY: Integer;
+  X, Y: Integer;
   Offset: TPoint;
 
   procedure DrawIcon(dst: TBitmap32; IconIndex: Integer);
@@ -769,21 +767,16 @@ begin
     // Set Offset for each button
     Offset := Point(0, 0);
 
-    if GameParams.AmigaTheme then
-      FloaterY := 16
-    else
-      FloaterY := 12;
-
     case Button of
       spbWalker:    Offset := Point(1, 14);
       spbJumper:    Offset := Point(0, 16);
       spbShimmier:  Offset := Point(0, 16);
-      spbBallooner: Offset := Point(0, FloaterY);
+      spbBallooner: Offset := Point(0, 12);
       spbSlider:    Offset := Point(-2, 15);
       spbClimber:   Offset := Point(-1, 13);
       spbSwimmer:   Offset := Point(0, 12);
-      spbFloater:   Offset := Point(0, FloaterY);
-      spbGlider:    Offset := Point(0, FloaterY);
+      spbFloater:   Offset := Point(0, 12);
+      spbGlider:    Offset := Point(0, 12);
       spbDisarmer:  Offset := Point(-2, 16);
       spbTimebomber:Offset := Point(-1, 12);
       spbBomber:    Offset := Point(-1, 12);
@@ -955,7 +948,6 @@ begin
   LoadPanelIcons;
   LoadSkillIcons;
   LoadSkillFont;
-  //LoadAmigaFont;
 end;
 
 procedure TBaseSkillPanel.PlayReleaseRateSound;
@@ -1437,7 +1429,7 @@ begin
     else
       FontBMP := fSkillFont;
 
-    if fShowUsedSkills or (GameParams.AmigaTheme and TalismanHasSkillRequirement) then
+    if fShowUsedSkills then
       EraseBMP := fSkillCountEraseInvert
     else
       EraseBMP := fSkillCountErase;
@@ -1474,7 +1466,7 @@ begin
         fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2)
     end else
       fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 6, ButtonTop + 2);
-  end else if (aNumber < 10) and not GameParams.AmigaTheme then
+  end else if (aNumber < 10) then
   begin
     NumberStr := LeadZeroStr(aNumber, 2);
     FontBMP[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 2, ButtonTop + 2);
@@ -1529,9 +1521,6 @@ begin
   else
     Color := clLightGreen32;
 
-//  if GameParams.AmigaTheme then
-//    DrawAmigaText(4, 2, GetCursorInfoString)
-//  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1613,9 +1602,6 @@ procedure TBaseSkillPanel.DrawHatchInfo;
 begin
   DrawPanelIcon(fPanelIcons, 2, HatchIconRect.Left, HatchIconRect.Top);
 
-//  if GameParams.AmigaTheme then
-//    DrawAmigaText(HatchIconRect.Left + ICON_WIDTH, 2, GetHatchCountString)
-//  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1653,9 +1639,6 @@ begin
 
   DrawPanelIcon(fPanelIcons, 3, AliveIconRect.Left, AliveIconRect.Top);
 
-//  if GameParams.AmigaTheme then
-//    DrawAmigaText(AliveIconRect.Left + ICON_WIDTH, 2, GetLemsAliveString)
-//  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1691,9 +1674,6 @@ begin
 
   DrawPanelIcon(fPanelIcons, Icon, ExitIconRect.Left, ExitIconRect.Top);
 
-//  if GameParams.AmigaTheme then
-//    DrawAmigaText(ExitIconRect.Left + ICON_WIDTH, 2, GetLemsSavedString)
-//  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1735,9 +1715,6 @@ begin
 
   DrawPanelIcon(fPanelIcons, Icon, TimeIconRect.Left, TimeIconRect.Top);
 
-//  if GameParams.AmigaTheme then
-//    DrawAmigaText(TimeIconRect.Left + (ICON_WIDTH - 4), 2, GetTimeString)
-//  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1749,8 +1726,7 @@ procedure TBaseSkillPanel.DrawMaxSkillTypesIcon;
 var
   Button: TSkillPanelButton;
   SkillTypesStr: String;
-  RectYOffset, FontYOffset: Integer;
-  NumFont: TFontBitmapArray;
+  FontYOffset: Integer;
   Overcount: Boolean;
   CountRect, CountRectErase: TRect;
 begin
@@ -1760,18 +1736,7 @@ begin
   if fSkillTypesUsed > 0 then
     RemoveMaxSkillTypesHighlights;
 
-  if GameParams.AmigaTheme then
-  begin
-    RectYOffset := 1;
-    FontYOffset := 4;
-    NumFont := fSkillFontInvert;
-  end else begin
-    RectYOffset := 0;
-    FontYOffset := 5;
-    NumFont := fSkillFont;
-  end;
-
-  CountRect := Rect(TalismanIconRect.Right + 2, 6 - RectYOffset, TalismanIconRect.Right + 26, 28 + RectYOffset);
+  CountRect := Rect(TalismanIconRect.Right + 2, 6, TalismanIconRect.Right + 26, 28);
   CountRectErase := Rect(CountRect.Left + 2, CountRect.Top + 2, CountRect.Right - 2, CountRect.Bottom - 2);
 
   fMaxSkillTypesIconRect := CountRect;
@@ -1793,17 +1758,19 @@ begin
 
     FillRectS(CountRectErase, $FF000000);
 
+    FontYOffset := 5;
+
     if Overcount then
       fSkillFontTalFailed[SkillTypesStr[1], 1].DrawTo(
         fImage.Bitmap, CountRect.Left + 6, CountRect.Top + FontYOffset)
     else if Length(SkillTypesStr) = 1 then
-      NumFont[SkillTypesStr[1], 1].DrawTo(
+      fSkillFont[SkillTypesStr[1], 1].DrawTo(
         fImage.Bitmap, CountRect.Left + 6, CountRect.Top + FontYOffset)
     else begin
-      NumFont[SkillTypesStr[1], 1].DrawTo(
+      fSkillFont[SkillTypesStr[1], 1].DrawTo(
         fImage.Bitmap, CountRect.Left + 3, CountRect.Top + FontYOffset);
 
-      NumFont[SkillTypesStr[2], 0].DrawTo(
+      fSkillFont[SkillTypesStr[2], 0].DrawTo(
         fImage.Bitmap, CountRect.Left + 3, CountRect.Top + FontYOffset);
     end;
   end;
@@ -2145,10 +2112,7 @@ begin
   else
     Prefix := ' ';
 
-//  if GameParams.AmigaTheme then
-//    Divider := '-'
-//  else
-    Divider := ':';
+  Divider := ':';
 
   if Time div 60 >= 100 then
   begin
@@ -2432,9 +2396,6 @@ begin
                    ButtonHint := 'TALISMANS';
                    ButtonHintSuffix := 'Click to Show';
     end else begin
-//      if GameParams.AmigaTheme then
-//                   ButtonHint := IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
-//      else
                    ButtonHint := 'TALISMAN ' + IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
     end;
   end else if CursorOverIcon(fMaxSkillTypesIconRect) then
@@ -2773,34 +2734,5 @@ begin
   if (Result = '') or (Result.Length >= 14) then
     Result := 'COLLECTIBLES';
 end;
-
-//procedure TBaseSkillPanel.LoadAmigaFont;
-//begin
-//  if not GameParams.AmigaTheme then
-//    Exit;
-//
-//  GetGraphic('amiga_font.png', fAmigaFont);
-//end;
-
-//procedure TBaseSkillPanel.DrawAmigaText(X, Y: Integer; const Text: string);
-//var
-//  i, Index: Integer;
-//  C: Char;
-//  SrcRect: TRect;
-//begin
-//  for i := 1 to Length(Text) do
-//  begin
-//    C := UpCase(Text[i]);
-//    Index := Pos(C, AMIGA_CHARACTERS) - 1;
-//
-//    if Index >= 0 then
-//    begin
-//      SrcRect := Rect(Index * AMIGA_CHAR_WIDTH, 0, (Index + 1) * AMIGA_CHAR_WIDTH, AMIGA_CHAR_HEIGHT);
-//      fImage.Bitmap.Draw(X, Y, SrcRect, fAmigaFont);
-//    end;
-//
-//    Inc(X, AMIGA_CHAR_WIDTH);
-//  end;
-//end;
 
 end.
