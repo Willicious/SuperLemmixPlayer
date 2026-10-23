@@ -121,6 +121,7 @@ type
       procedure CancelPlaybackMode;
 
       procedure ShowConfigMenu;
+      procedure ChangeResolution;
       procedure ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
 
@@ -1251,6 +1252,19 @@ begin
     else
       CloseScreen(gstPreview);
   end;
+end;
+
+procedure TGameBaseMenuScreen.ChangeResolution;
+begin
+  GameParams.HighResolution := not GameParams.HighResolution;
+  GameParams.Save(scImportant);
+
+  CloseScreen(CurrentScreen);
+
+  PieceManager.Clear;
+
+  TLinearResampler.Create(ScreenImg.Bitmap);
+  DoAfterConfig;
 end;
 
 procedure TGameBaseMenuScreen.ShowConfigMenu;

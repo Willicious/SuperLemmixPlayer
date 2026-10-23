@@ -273,6 +273,9 @@ begin
   MakePanels;
   MakeFooterText;
 
+  MakeHiddenOption(VK_F9, ChangeResolution);
+  MakeHiddenOption(VK_NUMPAD0, ChangeResolution);
+
   LoadScrollerGraphics;
   DrawScroller;
   PrepareScrollerTextList;
