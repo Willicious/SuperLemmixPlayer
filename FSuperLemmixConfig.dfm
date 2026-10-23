@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'SuperLemmix Configuration'
-  ClientHeight = 545
+  ClientHeight = 533
   ClientWidth = 328
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,23 +19,23 @@ object FormNXConfig: TFormNXConfig
   OnCreate = FormCreate
   DesignSize = (
     328
-    545)
+    533)
   PixelsPerInch = 96
   TextHeight = 13
   object btnOK: TButton
     Left = 27
-    Top = 516
+    Top = 504
     Width = 92
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 0
     OnClick = btnOKClick
-    ExplicitTop = 530
+    ExplicitTop = 516
   end
   object btnCancel: TButton
     Left = 124
-    Top = 516
+    Top = 504
     Width = 80
     Height = 25
     Anchors = [akLeft, akBottom]
@@ -43,28 +43,28 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 1
-    ExplicitTop = 530
+    ExplicitTop = 516
   end
   object btnApply: TButton
     Left = 208
-    Top = 516
+    Top = 504
     Width = 92
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Apply'
     TabOrder = 2
     OnClick = btnApplyClick
-    ExplicitTop = 530
+    ExplicitTop = 516
   end
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 328
-    Height = 514
+    Height = 502
     ActivePage = tsGameplay
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
-    ExplicitHeight = 528
+    ExplicitHeight = 514
     object tsGeneral: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -275,7 +275,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbClassicMode: TGroupBox
         Left = 15
-        Top = 359
+        Top = 335
         Width = 290
         Height = 124
         Caption = 'Classic Mode Options'
@@ -344,7 +344,7 @@ object FormNXConfig: TFormNXConfig
       end
       object gbReplayOptions: TGroupBox
         Left = 15
-        Top = 224
+        Top = 200
         Width = 290
         Height = 121
         Caption = 'Replay Options'
@@ -406,7 +406,7 @@ object FormNXConfig: TFormNXConfig
         Left = 15
         Top = 111
         Width = 290
-        Height = 99
+        Height = 74
         Caption = 'Skill Panel Options'
         TabOrder = 3
         object cbTurboFF: TCheckBox
@@ -435,15 +435,6 @@ object FormNXConfig: TFormNXConfig
           ParentShowHint = False
           ShowHint = True
           TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbShowButtonHints: TCheckBox
-          Left = 12
-          Top = 69
-          Width = 158
-          Height = 17
-          Caption = 'Show Panel Button Hints'
-          TabOrder = 2
           OnClick = OptionChanged
         end
       end
@@ -2823,7 +2814,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 3
       DesignSize = (
         320
-        486)
+        474)
       object lblSound: TLabel
         Left = 40
         Top = 42
@@ -2869,7 +2860,7 @@ object FormNXConfig: TFormNXConfig
       end
       object rgExitSound: TRadioGroup
         Left = 55
-        Top = 225
+        Top = 219
         Width = 210
         Height = 65
         Anchors = []
@@ -2879,7 +2870,7 @@ object FormNXConfig: TFormNXConfig
           'Boing!')
         TabOrder = 3
         OnClick = OptionChanged
-        ExplicitTop = 232
+        ExplicitTop = 225
       end
       object gbMenuSounds: TGroupBox
         Left = 55

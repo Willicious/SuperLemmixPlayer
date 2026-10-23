@@ -66,7 +66,6 @@ type
     cbHideSkillQ: TCheckBox;
     gbReplayOptions: TGroupBox;
     gbSkillPanelOptions: TGroupBox;
-    cbShowButtonHints: TCheckBox;
     cbAmigaTheme: TCheckBox;
     imgAmigaTick: TImage;
     lblScrollSpeed: TLabel;
@@ -249,7 +248,6 @@ begin
 
     cbShowDecorations.Checked := GameParams.ShowDecorations;
     cbColorCycle.Checked := GameParams.ColorCycle;
-    cbShowButtonHints.Checked := GameParams.ShowButtonHints;
     cbInvertMouseWheelFramesteps.Checked := GameParams.InvertMouseWheelFramesteps;
     cbClassicMode.Checked := GameParams.ClassicMode;
     cbHideShadows.Checked := GameParams.HideShadows;
@@ -326,7 +324,6 @@ begin
 
   GameParams.ShowDecorations := cbShowDecorations.Checked;
   GameParams.ColorCycle := cbColorCycle.Checked;
-  GameParams.ShowButtonHints := cbShowButtonHints.Checked;
   GameParams.InvertMouseWheelFramesteps := cbInvertMouseWheelFramesteps.Checked;
   GameParams.ClassicMode := cbClassicMode.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;

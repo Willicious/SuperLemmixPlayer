@@ -101,7 +101,6 @@ type
     moTurboFF,
     moShowDecorations,
     moColorCycle,
-    moShowButtonHints,
     moInvertMouseWheelFramesteps,
     moClassicMode,
     moHideShadows,
@@ -136,7 +135,6 @@ const
     moPauseAfterBackwards,
     moReplayAfterRestart,
     moReplayAfterBackskip,
-    moShowButtonHints,
     moFullScreen,
     moHighResolution,
     moShowDecorations,
@@ -297,7 +295,6 @@ type
     property TurboFF: boolean Index moTurboFF read GetOptionFlag write SetOptionFlag;
     property ShowDecorations: boolean Index moShowDecorations read GetOptionFlag write SetOptionFlag;
     property ColorCycle: boolean Index moColorCycle read GetOptionFlag write SetOptionFlag;
-    property ShowButtonHints: boolean Index moShowButtonHints read GetOptionFlag write SetOptionFlag;
     property InvertMouseWheelFramesteps: boolean Index moInvertMouseWheelFramesteps read GetOptionFlag write SetOptionFlag;
     property ClassicMode: boolean Index moClassicMode read GetOptionFlag write SetOptionFlag;
     property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
@@ -538,7 +535,6 @@ begin
     SaveBoolean('TurboFastForward', TurboFF);
     SaveBoolean('ShowDecorations', ShowDecorations);
     SaveBoolean('ColorCycle', ColorCycle);
-    SaveBoolean('ShowButtonHints', ShowButtonHints);
     SaveBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
     SaveBoolean('ClassicMode', ClassicMode);
     SaveBoolean('HideShadows', HideShadows);
@@ -743,7 +739,6 @@ begin
     TurboFF := LoadBoolean('TurboFastForward', TurboFF);
     ShowDecorations := LoadBoolean('ShowDecorations', ShowDecorations);
     ColorCycle := LoadBoolean('ColorCycle', ColorCycle);
-    ShowButtonHints := LoadBoolean('ShowButtonHints', ShowButtonHints);
     InvertMouseWheelFramesteps := LoadBoolean('InvertMouseWheelFramesteps', InvertMouseWheelFramesteps);
     ClassicMode := LoadBoolean('ClassicMode', ClassicMode);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
