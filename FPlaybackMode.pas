@@ -169,7 +169,7 @@ end;
 
 procedure TFPlaybackMode.FormCreate(Sender: TObject);
 begin
-  stPackName.Font.Name := 'Hobo Std';
+  stPackName.Font.Name := SFontHobo;
 
   fOrderedLevels := TList<TNeoLevelEntry>.Create;
   fLevelIndex := TDictionary<Int64, Integer>.Create;
