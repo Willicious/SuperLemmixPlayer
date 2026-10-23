@@ -107,6 +107,7 @@ type
     fLastHighlitSkill     : TSkillPanelButton; // To avoid sounds when shouldn't be played
 
     fButtonHint              : String;
+    fButtonHintSuffix        : String;
     fCursorOverHUDReplayIcon : Boolean;
 
     fMaxSkillTypesIconRect: TRect;
@@ -227,6 +228,7 @@ type
 
     procedure ResizePanelWithWindow;
     procedure SetButtonHints(aButton: TSkillPanelButton);
+    function GetRRSIButtonHint(aButton: TSkillPanelButton): String;
     function GetSkillButtonHints(aButton: TSkillPanelButton): String;
 
     function LevelHasCollectibles: Boolean;
@@ -260,6 +262,7 @@ type
     property ShowUsedSkills: Boolean read fShowUsedSkills write SetShowUsedSkills;
     property RRIsPressed: Boolean read fRRIsPressed write fRRIsPressed;
     property ButtonHint: String read fButtonHint write fButtonHint;
+    property ButtonHintSuffix: String read fButtonHintSuffix write fButtonHintSuffix;
   end;
 
 const
@@ -1533,6 +1536,13 @@ begin
   begin
     SetFont(SFontVaga);
     RenderText(4, 6, GetCursorInfoString, Color, True);
+
+    if (ButtonHintSuffix <> '') then
+    begin
+      var ButtonHintGap := TextWidth(ButtonHint) + 12; // Set this before changing the font size
+      SetFont(SFontVaga, True);
+      RenderText(ButtonHintGap, 10, ButtonHintSuffix, Color, True);
+    end;
   end;
 end;
 
@@ -2403,6 +2413,7 @@ end;
 procedure TBaseSkillPanel.SetButtonHints(aButton: TSkillPanelButton);
 begin
   ButtonHint := '';
+  ButtonHintSuffix := '';
 
   if Game.StateIsUnplayable then
     Exit;
@@ -2412,12 +2423,15 @@ begin
   else if CursorOverIcon(CollectibleIconRect) and LevelHasCollectibles then
   begin
     var Gathered := fTotalCollectibles - Game.CollectiblesRemaining;
-                   ButtonHint := fCollectibleName + ' (' + IntToStr(Gathered) + ' of ' + IntToStr(fTotalCollectibles) + ')'
+                   ButtonHint := fCollectibleName;
+                   ButtonHintSuffix := IntToStr(Gathered) + ' of ' + IntToStr(fTotalCollectibles);
   end else if CursorOverIcon(TalismanIconRect) and LevelHasTalismans then
   begin
     if fCurrentTalisman = -1 then
-                   ButtonHint := 'TALISMANS (Click to Show)'
-    else begin
+    begin
+                   ButtonHint := 'TALISMANS';
+                   ButtonHintSuffix := 'Click to Show';
+    end else begin
 //      if GameParams.AmigaTheme then
 //                   ButtonHint := IntToStr(fCurrentTalisman + 1) + ' of ' + IntToStr(Level.Talismans.Count)
 //      else
@@ -2438,9 +2452,13 @@ begin
   else if CursorOverIcon(ExitIconRect) then
   begin
     if (Game.LemmingsSaved >= Level.Info.RescueCount) or fShowSavedLems then
-                   ButtonHint := 'SAVED (Click for TO SAVE)'
-    else
-                   ButtonHint := 'TO SAVE (Click for SAVED)';
+    begin
+                   ButtonHint := 'SAVED';
+                   ButtonHintSuffix := 'Click for TO SAVE';
+    end else begin
+                   ButtonHint := 'TO SAVE';
+                   ButtonHintSuffix := 'Click for SAVED';
+    end;
   end else if CursorOverHUDReplayIcon then
   begin
     if Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
@@ -2453,8 +2471,8 @@ begin
   begin
     case aButton of
       spbNone:     ButtonHint := '';
-      spbSlower:   ButtonHint := 'SLOWER';
-      spbFaster:   ButtonHint := 'FASTER';
+      spbSlower:   ButtonHint := GetRRSIButtonHint(spbSlower);
+      spbFaster:   ButtonHint := GetRRSIButtonHint(spbFaster);
       spbPause:    ButtonHint := 'PAUSE';
       spbRewind:   ButtonHint := 'REWIND';
       spbFastForward:
@@ -2466,6 +2484,24 @@ begin
       spbNuke:     ButtonHint := 'NUKE';
       spbSquiggle: ButtonHint := '';
       else         ButtonHint := GetSkillButtonHints(aButton);
+    end;
+  end;
+end;
+
+function TBaseSkillPanel.GetRRSIButtonHint(aButton: TSkillPanelButton): String;
+begin
+  if GameParams.SpawnInterval then
+  begin
+    Result := 'SPAWN INTERVAL';
+    case aButton of
+      spbSlower: ButtonHintSuffix := 'Longer';
+      spbFaster: ButtonHintSuffix := 'Shorter';
+    end;
+  end else begin
+    Result := 'RELEASE RATE';
+    case aButton of
+      spbSlower: ButtonHintSuffix := 'Slower';
+      spbFaster: ButtonHintSuffix := 'Faster';
     end;
   end;
 end;
