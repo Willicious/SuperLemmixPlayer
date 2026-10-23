@@ -2434,7 +2434,11 @@ begin
       spbNone:     ButtonHint := '';
       spbSlower:   ButtonHint := GetRRSIButtonHint(spbSlower);
       spbFaster:   ButtonHint := GetRRSIButtonHint(spbFaster);
-      spbPause:    ButtonHint := 'PAUSE';
+      spbPause:
+        if (fCurrentTalisman <> -1) and fTalHasNoPause then
+          ButtonHint := 'DON''T PRESS PAUSE!'
+        else
+          ButtonHint := 'PAUSE';
       spbRewind:   ButtonHint := 'REWIND';
       spbFastForward:
         if GameParams.TurboFF then
