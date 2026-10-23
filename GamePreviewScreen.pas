@@ -350,6 +350,7 @@ begin
     MakeHiddenOption(VK_SPACE, BeginPlay);
     MakeHiddenOption(VK_RETURN, BeginPlay);
     MakeHiddenOption(VK_F2, ShowConfigMenu);
+    MakeHiddenOption(VK_F8, ChangeTheme);
     MakeHiddenOption(VK_F9, ChangeResolution);
     MakeHiddenOption(VK_NUMPAD0, ChangeResolution);
     MakeHiddenOption(lka_SaveImage, SaveLevelImage);
