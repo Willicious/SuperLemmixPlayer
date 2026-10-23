@@ -224,6 +224,7 @@ type
 
     procedure ResizePanelWithWindow;
     procedure SetButtonHints(aButton: TSkillPanelButton);
+    function GetSkillButtonHints(aButton: TSkillPanelButton): String;
 
     function LevelHasCollectibles: Boolean;
     function LevelHasTalismans: Boolean;
@@ -2436,9 +2437,41 @@ begin
       spbRestart:  ButtonHint := 'RESTART';
       spbNuke:     ButtonHint := 'NUKE';
       spbSquiggle: ButtonHint := '';
-      else         ButtonHint := Uppercase(SKILL_NAMES[aButton]);
+      else         ButtonHint := GetSkillButtonHints(aButton);
     end;
   end;
+end;
+
+function TBaseSkillPanel.GetSkillButtonHints(aButton: TSkillPanelButton): String;
+var
+  S: String;
+  IsValidMax: Boolean;
+  SkillMin, SkillMax, SkillCount: Integer;
+begin
+  S := Uppercase(SKILL_NAMES[aButton]);
+
+  if LevelHasTalismans and (fCurrentTalisman >= 0) then
+  begin
+    SkillMin := Level.Talismans[fCurrentTalisman].SkillMinimum[aButton];
+    SkillMax := Level.Talismans[fCurrentTalisman].SkillMaximum[aButton];
+    SkillCount := Level.Info.SkillCount[aButton];
+
+    IsValidMax := (SkillMax > 0) and (SkillMax < SkillCount);
+
+    if (SkillMax = 0) then
+      S := 'USE 0 ' + S + 'S'
+    else if (SkillMin > 0) or IsValidMax then
+    begin
+      if (SkillMin > 0) and not IsValidMax then
+        S := 'USE ' + IntToStr(SkillMin) + '-' + IntToStr(SkillCount) + ' ' + S + 'S'
+      else if (SkillMin < 0) and IsValidMax then
+        S := 'USE 0-' + IntToStr(SkillMax) + ' ' + S + 'S'
+      else if (SkillMin > 0) and IsValidMax then
+        S := 'USE ' + IntToStr(SkillMin) + '-' + IntToStr(SkillMax) + ' ' + S + 'S';
+    end;
+  end;
+
+  Result := S;
 end;
 
 function TBaseSkillPanel.CursorOverIcon(aIconRect: TRect): Boolean;
