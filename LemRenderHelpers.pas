@@ -458,9 +458,12 @@ var
     if (H <= 0) then
       H := DefaultPickupSize;
 
+    var XOffset := IfThen(GameParams.HighResolution, 2, 4);
+    var YOffset := IfThen(GameParams.HighResolution, 1, 2);
+
     // Magic numbers are needed due to some offset of MousePos
     Result := System.Types.PtInRect(Rect(
-      P.Left - 4, P.Top  + 1, P.Left - 2 + (W * ResMod), P.Top  + 3 + (H * ResMod)),
+      P.Left - XOffset, P.Top + YOffset, P.Left + W - XOffset + 1, P.Top + H + YOffset),
       MousePos);
   end;
 begin

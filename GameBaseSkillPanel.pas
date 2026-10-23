@@ -1511,8 +1511,10 @@ procedure TBaseSkillPanel.DrawCursorInfo;
 var
   Color: TColor32;
 begin
-  if not (CursorOverPanelItem or (Game.RenderInterface.SelectedLemming <> nil)) then
-    Exit;
+  if (Game.RenderInterface.SelectedLemming = nil)
+    and (Game.RenderInterface.PickupInCursor = nil)
+      and not CursorOverPanelItem then
+        Exit;
 
   if CursorOverPanelItem then
     Color := clCornflowerBlue32
@@ -2005,10 +2007,10 @@ begin
 
   S := '';
 
-  if ((PickupInCursor <> nil) and (SelectedLemming = nil)) then
-    S := Uppercase(GetPickupString(PickupInCursor))
-  else if CursorOverPanelItem then
+  if CursorOverPanelItem then
     S := ButtonHint
+  else if ((PickupInCursor <> nil) and (SelectedLemming = nil)) then
+    S := Uppercase(GetPickupString(PickupInCursor))
   else begin
     if (Game.SelectedLemFutureTaskCount > 0) then
       S := Uppercase(GetLemReplayTaskString(SelectedLemming))
