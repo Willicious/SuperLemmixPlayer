@@ -2041,7 +2041,7 @@ begin
   if ((PickupInCursor <> nil) and (SelectedLemming = nil)) then
     S := Uppercase(GetPickupString(PickupInCursor))
   else if CursorOverPanelItem then
-    S := ButtonHint + StringOfChar(' ', 13 - Length(ButtonHint))
+    S := ButtonHint
   else begin
     if (Game.SelectedLemFutureTaskCount > 0) then
       S := Uppercase(GetLemReplayTaskString(SelectedLemming))
