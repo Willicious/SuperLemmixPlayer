@@ -230,6 +230,7 @@ type
     DefaultMinHeight : Integer;
 
     LevelString: String;
+    CollectibleName: String;
     BaseLevelPack: TNeoLevelGroup;
 
     // This is initialized by the window in which the game will be played

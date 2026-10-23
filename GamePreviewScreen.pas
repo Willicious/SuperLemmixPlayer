@@ -328,7 +328,6 @@ const
   TEXT_Y_POSITION = 170;
 begin
   CurrentScreen := gstPreview;
-  SetWindowCaption;
 
   fClickableRegions.Clear;
   CustomAssert(GameParams <> nil, 'GameParams not initialized correctly');
@@ -336,6 +335,7 @@ begin
   ScreenImg.BeginUpdate;
   try
     DrawLevelPreview;
+    SetWindowCaption;
 
     // Draw text
     Lines := GetPreviewText;
@@ -374,7 +374,7 @@ end;
 
 procedure TGamePreviewScreen.SetWindowCaption;
 var
-  S, Title, Pack: string;
+  S, C, Title, Pack: String;
   CurTheme: TNeoTheme;
   RescueCount, LemCount, CollectibleCount: Integer;
 begin
@@ -394,7 +394,16 @@ begin
     S := S + CurTheme.LemNamesPlural;
 
   if CollectibleCount <> 0 then
-    S := S + ' - ' + IntToStr(CollectibleCount) + ' Diamonds to collect';
+  begin
+    C := GameParams.CollectibleName;
+
+    if (C = '') or (C.Length >= 14) then
+      C := 'Collectables'
+    else
+      C := 'Collectable ' + UpCase(C[1]) + Copy(C, 2, MaxInt);
+
+    S := S + ' - ' + C + ': ' + IntToStr(CollectibleCount);
+  end;
 
   GameParams.MainForm.Caption := S;
 end;

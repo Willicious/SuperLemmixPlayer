@@ -91,6 +91,7 @@ type
     function GetSkillType: TSkillPanelButton;
     function GetSoundEffectActivate: String;
     function GetSoundEffectExhaust: String;
+    function GetCollectibleName: String;
     function GetIsOnlyOnTerrain: Boolean;
     function GetIsUpsideDown: Boolean;
     function GetIsNoOverwrite: Boolean;
@@ -153,6 +154,7 @@ type
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
     property SoundEffectActivate: String read GetSoundEffectActivate;
     property SoundEffectExhaust: String read GetSoundEffectExhaust;
+    property CollectibleName: String read GetCollectibleName;
     property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property NeutralMode: Boolean read sNeutralMode write sNeutralMode;
     property KeyFrame: Integer read GetKeyFrame;
@@ -370,6 +372,11 @@ function TGadget.GetSkillType: TSkillPanelButton;
 begin
   CustomAssert(TriggerEffect in [DOM_PICKUP, DOM_SKILLASSIGNER], 'Object.SkillType called for object other than Pickup or Skill Assigner');
   Result := TSkillPanelButton(Obj.Skill);
+end;
+
+function TGadget.GetCollectibleName: String;
+begin
+  Result := MetaObj.CollectibleName;
 end;
 
 function TGadget.GetSoundEffectActivate: String;

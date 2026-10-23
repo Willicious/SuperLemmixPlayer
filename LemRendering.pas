@@ -3945,12 +3945,11 @@ var
 
   procedure CheckLockedExits;
   var
-    i: Integer;
     HasButtons: Boolean;
   begin
     HasButtons := False;
     // Check whether buttons exist
-    for i := 0 to fPreviewGadgets.Count - 1 do
+    for var i := 0 to fPreviewGadgets.Count - 1 do
     begin
       if fPreviewGadgets[i].TriggerEffect = DOM_BUTTON then
         HasButtons := True;
@@ -3958,7 +3957,7 @@ var
     if not HasButtons then
     begin
       // Set all exits to open exits
-      for i := 0 to fPreviewGadgets.Count - 1 do
+      for var i := 0 to fPreviewGadgets.Count - 1 do
       begin
         if fPreviewGadgets[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
           fPreviewGadgets[i].CurrentFrame := 0
@@ -4008,6 +4007,22 @@ var
     Result := ((fPhysicsMap.PixelS[L.LemX, L.LemY - 9] and PM_SOLID) <> 0)
            or ((fPhysicsMap.PixelS[L.LemX, L.LemY - 10] and PM_SOLID) <> 0);
   end;
+
+  procedure SetCollectibleName;
+  begin
+    GameParams.CollectibleName := '';
+
+    for var i := 0 to fPreviewGadgets.Count - 1 do
+    begin
+      if fPreviewGadgets[i].TriggerEffect <> DOM_COLLECTIBLE then
+        Continue;
+
+      GameParams.CollectibleName := fPreviewGadgets[i].CollectibleName;
+
+      if GameParams.CollectibleName <> '' then
+        Break;
+    end;
+  end;
 begin
   if RenderInfoRec.Level = nil then Exit;
 
@@ -4040,6 +4055,9 @@ begin
 
   // Draw all objects (except ObjectHelpers)
   DrawAllGadgets(fPreviewGadgets, False);
+
+  // Set the collectible name
+  SetCollectibleName;
 
   // Draw preplaced lemmings
   L := TLemming.Create;

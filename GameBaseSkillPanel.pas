@@ -113,6 +113,7 @@ type
     fKillZombiesIconRect  : TRect;
 
     fTotalCollectibles    : Integer;
+    fCollectibleName      : String;
 
     // Global stuff
     property Level: TLevel read GetLevel;
@@ -146,7 +147,6 @@ type
 
     // Drawing routines for the info string at the top
     function GetCursorInfoString: String;
-    function GetCollectibleString: String;
     function GetHatchCountString: String;
     function GetLemsAliveString: String;
     function GetLemsSavedString: String;
@@ -227,6 +227,7 @@ type
 
     function LevelHasCollectibles: Boolean;
     function LevelHasTalismans: Boolean;
+    function GetCollectibleName: String;
 
     function PanelWidth: Integer; virtual; abstract;
     function PanelHeight: Integer; virtual; abstract;
@@ -471,7 +472,6 @@ begin
   fClassicModeIconRect := Rect(0,0,0,0);
   fKillZombiesIconRect := Rect(0,0,0,0);
 
-  fTotalCollectibles := Level.Info.CollectibleCount;
   fCursorOverHUDReplayIcon := False;
 end;
 
@@ -990,10 +990,12 @@ begin
     ReadBitmapFromStyle;
     SetButtonRects;
     SetSkillIcons;
-
   finally
     fImage.EndUpdate;
   end;
+
+  fTotalCollectibles := Level.Info.CollectibleCount;
+  fCollectibleName := GetCollectibleName;
 end;
 
 procedure TBaseSkillPanel.SetShowUsedSkills(const Value: Boolean);
@@ -1555,13 +1557,6 @@ begin
     Icon := 1;
 
   DrawPanelIcon(fPanelIcons, Icon, CollectibleIconRect.Left, CollectibleIconRect.Top);
-
-//  with fImage.Bitmap do
-//  begin
-//    Font.Name := 'Hobo Std';
-//    Font.Size := 8;
-//    RenderText(CollectibleIconRect.Left + 28, 6, GetCollectibleString, clLightGreen32, True);
-//  end;
 end;
 
 procedure TBaseSkillPanel.DrawTalismanIcon(Index: Integer);
@@ -2028,18 +2023,6 @@ begin
   Result := S;
 end;
 
-function TBaseSkillPanel.GetCollectibleString: String;
-var
-  C: Integer;
-begin
-  C := Level.Info.CollectibleCount - Game.CollectiblesRemaining;
-
-  if C >= 999 then
-    Result := ' 999'
-  else
-    Result := IntToStr(C);
-end;
-
 function TBaseSkillPanel.GetHatchCountString: String;
 var
   HatchLems: Integer;
@@ -2400,7 +2383,7 @@ begin
   else if CursorOverIcon(CollectibleIconRect) and LevelHasCollectibles then
   begin
     var Gathered := fTotalCollectibles - Game.CollectiblesRemaining;
-                   ButtonHint := 'COLLECTIBLES (' + IntToStr(Gathered) + ' of ' + IntToStr(fTotalCollectibles) + ')'
+                   ButtonHint := fCollectibleName + ' (' + IntToStr(Gathered) + ' of ' + IntToStr(fTotalCollectibles) + ')'
   end else if CursorOverIcon(TalismanIconRect) and LevelHasTalismans then
   begin
     if fCurrentTalisman = -1 then
@@ -2676,6 +2659,17 @@ end;
 function TBaseSkillPanel.LevelHasTalismans: Boolean;
 begin
   Result := Level.Talismans.Count > 0;
+end;
+
+function TBaseSkillPanel.GetCollectibleName: String;
+begin
+  if not LevelHasCollectibles then
+    Exit('');
+
+  Result := Uppercase(GameParams.CollectibleName);
+
+  if (Result = '') or (Result.Length >= 14) then
+    Result := 'COLLECTIBLES';
 end;
 
 //procedure TBaseSkillPanel.LoadAmigaFont;

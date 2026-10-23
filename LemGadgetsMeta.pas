@@ -67,8 +67,9 @@ type
     fPreviewFrameIndex            : Integer; // Index of preview (previewscreen)
     fDigitMinLength               : Integer;
 
-    fSoundActivate  : String;
-    fSoundExhaust   : String;
+    fCollectibleName : String;
+    fSoundActivate   : String;
+    fSoundExhaust    : String;
 
     fCyclesSinceLastUse: Integer; // To improve TNeoPieceManager.Tidy
 
@@ -150,6 +151,7 @@ type
       function GetSoundEffectExhaust: String;
       procedure SetSoundEffectExhaust(aValue: String);
       function GetDigitAnimation: TGadgetAnimation;
+      function GetCollectibleName: String;
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
@@ -176,6 +178,7 @@ type
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
       property SoundEffectActivate: String read GetSoundEffectActivate write SetSoundEffectActivate;
       property SoundEffectExhaust: String read GetSoundEffectExhaust write SetSoundEffectExhaust;
+      property CollectibleName: String read GetCollectibleName;
 
       property CanResizeHorizontal      : Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
       property CanResizeVertical        : Boolean read GetCanResizeVertical write SetCanResizeVertical;
@@ -308,6 +311,9 @@ begin
     or (Lowercase(Sec.LineTrimString['effect']) = 'background')
     or (Lowercase(Sec.LineTrimString['effect']) = 'paint') then
       fTriggerEffect := DOM_DECORATION;
+
+    if (fTriggerEffect = DOM_COLLECTIBLE) and (Lowercase(Sec.LineTrimString['name']) <> '') then
+      fCollectibleName := (Lowercase(Sec.LineTrimString['name']));
 
     if Sec.Section['PRIMARY_ANIMATION'] = nil then
     begin
@@ -737,6 +743,11 @@ begin
     ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
+end;
+
+function TGadgetMetaAccessor.GetCollectibleName: String;
+begin
+  Result := fGadgetMetaInfo.fCollectibleName;
 end;
 
 function TGadgetMetaAccessor.GetSoundEffectActivate: String;
