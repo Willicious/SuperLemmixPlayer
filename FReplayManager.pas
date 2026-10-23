@@ -224,7 +224,7 @@ end;
 
 procedure TFReplayManager.FormShow(Sender: TObject);
 begin
-  stPackName.Font.Name := 'Hobo Std';
+  stPackName.Font.Name := SFontHobo;
   SetFromOptions;
   UpdateLabels;
 end;

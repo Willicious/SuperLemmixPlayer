@@ -99,6 +99,10 @@ const
   SFSaveData = 'settings\';
   SFTemp = 'temp\';
 
+  { Fonts }
+  SFontHobo = 'Hobo Std';
+  SFontVaga = 'QTVagaRound';
+
 resourcestring
   SProgramName = 'SuperLemmix';
   SDummyString = '';

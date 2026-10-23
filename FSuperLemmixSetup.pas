@@ -6,6 +6,7 @@ uses
   Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, Vcl.ExtCtrls, Vcl.Imaging.pngimage,
+  LemStrings,
   SharedGlobals;
 
 type
@@ -46,7 +47,7 @@ uses
 procedure TFNLSetup.FormCreate(Sender: TObject);
 begin
   SetupPages.TabIndex := 0;
-  lblWelcome.Font.Name := 'Hobo Std';
+  lblWelcome.Font.Name := SFontHobo;
 end;
 
 procedure TFNLSetup.lblWelcomeClick(Sender: TObject);

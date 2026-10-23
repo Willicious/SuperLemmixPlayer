@@ -154,6 +154,7 @@ type
     function GetTimeString: String;
 
     //procedure DrawAmigaText(X, Y: Integer; const Text: string);
+    procedure SetFont(aFont: String; IsSuffix: Boolean = False);
     procedure DrawPanelMessage;
     procedure DrawCursorInfo;
     procedure DrawPanelIconTo(aDst: TBitmap32; aSrc: TBitmap32; Index, X, Y: Integer; DoEnlarge: Boolean = False);
@@ -1484,6 +1485,33 @@ end;
 {-----------------------------------------
     Info string at top
 -----------------------------------------}
+procedure TBaseSkillPanel.SetFont(aFont: String; IsSuffix: Boolean = False);
+begin
+  with fImage.Bitmap do
+  begin
+    if aFont = SFontHobo then
+    begin
+      Font.Name := SFontHobo;
+      Font.Style := [];
+      Font.Size := 8;
+    end;
+
+    if aFont = SFontVaga then
+    begin
+      Font.Name := SFontVaga;
+
+      if IsSuffix then
+      begin
+        Font.Style := [];
+        Font.Size := 8;
+      end else begin
+        Font.Style := [fsBold];
+        Font.Size := 10;
+      end;
+    end;
+  end;
+end;
+
 procedure TBaseSkillPanel.DrawCursorInfo;
 var
   Color: TColor32;
@@ -1503,8 +1531,7 @@ begin
 //  else
   with fImage.Bitmap do
   begin
-    Font.Name := 'Hobo Std';
-    Font.Size := 8;
+    SetFont(SFontVaga);
     RenderText(4, 6, GetCursorInfoString, Color, True);
   end;
 end;
@@ -1581,8 +1608,7 @@ begin
 //  else
   with fImage.Bitmap do
   begin
-    Font.Name := 'Hobo Std';
-    Font.Size := 8;
+    SetFont(SFontVaga);
     RenderText(HatchIconRect.Left + ICON_WIDTH, 6, GetHatchCountString, clLightGreen32, True);
   end;
 end;
@@ -1622,8 +1648,7 @@ begin
 //  else
   with fImage.Bitmap do
   begin
-    Font.Name := 'Hobo Std';
-    Font.Size := 8;
+    SetFont(SFontVaga);
     RenderText(AliveIconRect.Left + ICON_WIDTH, 6, GetLemsAliveString, Color, True);
   end;
 end;
@@ -1661,8 +1686,7 @@ begin
 //  else
   with fImage.Bitmap do
   begin
-    Font.Name := 'Hobo Std';
-    Font.Size := 8;
+    SetFont(SFontVaga);
     RenderText(ExitIconRect.Left + ICON_WIDTH, 6, GetLemsSavedString, Color, True);
   end;
 end;
@@ -1706,9 +1730,8 @@ begin
 //  else
   with fImage.Bitmap do
   begin
-    Font.Name := 'Hobo Std';
-    Font.Size := 8;
-    RenderText(TimeIconRect.Left + (ICON_WIDTH - 4), 6, GetTimeString, Color, True);
+    SetFont(SFontVaga);
+    RenderText(TimeIconRect.Left + (ICON_WIDTH - 9), 6, GetTimeString, Color, True);
   end;
 end;
 
@@ -1837,11 +1860,9 @@ begin
 
   with fImage.Bitmap do
   begin
-    Font.Name := 'Hobo Std';
-    Font.Size := 8;
-
+    SetFont(SFontHobo);
     RenderText(4,   6, 'No lemmings remaining!', clLightGreen32, True);
-    RenderText(200, 6, 'Rewind or Restart to continue...', clCornflowerBlue32, True);
+    RenderText(190, 6, 'Rewind or Restart to continue...', clCornflowerBlue32, True);
   end;
 end;
 

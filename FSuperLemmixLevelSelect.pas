@@ -502,7 +502,7 @@ end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
-  lblName.Font.Name := 'Hobo Std';
+  lblName.Font.Name := SFontHobo;
   lblName.Font.Style := [];
 
   ResetSearchBar;
