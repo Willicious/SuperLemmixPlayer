@@ -277,6 +277,7 @@ begin
     MakeExitToMenuClickable;
 
     MakeHiddenOption(VK_F2, ShowConfigMenu);
+    MakeHiddenOption(VK_F8, ChangeTheme);
     MakeHiddenOption(VK_F9, ChangeResolution);
     MakeHiddenOption(VK_NUMPAD0, ChangeResolution);
     MakeHiddenOption(lka_CancelPlayback, CancelPlaybackMode);
