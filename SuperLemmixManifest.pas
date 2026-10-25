@@ -1,4 +1,4 @@
-unit SLXManifest;
+unit SuperLemmixManifest;
 
 { This unit is used to build a hash-based manifest for all files in the
   SuperLemmix directory. The idea is that it generates and stores both
@@ -21,7 +21,7 @@ uses
   System.IOUtils, System.Generics.Collections, System.Types;
 
 type
-  TSLXManifest = class
+  TSuperLemmixManifest = class
   private
     type
       TFileEntry = class
@@ -58,44 +58,44 @@ implementation
 uses
   Windows;
 
-{ TSLXManifest.TFileEntry }
+{ TSuperLemmixManifest.TFileEntry }
 
-constructor TSLXManifest.TFileEntry.Create;
+constructor TSuperLemmixManifest.TFileEntry.Create;
 begin
   Known := TList<string>.Create;
 end;
 
-destructor TSLXManifest.TFileEntry.Destroy;
+destructor TSuperLemmixManifest.TFileEntry.Destroy;
 begin
   Known.Free;
   inherited;
 end;
 
-{ TSLXManifest }
+{ TSuperLemmixManifest }
 
-constructor TSLXManifest.Create;
+constructor TSuperLemmixManifest.Create;
 begin
   FEntries := TObjectDictionary<string, TFileEntry>.Create([doOwnsValues]);
 end;
 
-destructor TSLXManifest.Destroy;
+destructor TSuperLemmixManifest.Destroy;
 begin
   FEntries.Free;
   inherited;
 end;
 
-function TSLXManifest.NormalizePath(const BaseFolder, FullPath: string): string;
+function TSuperLemmixManifest.NormalizePath(const BaseFolder, FullPath: string): string;
 begin
   Result := FullPath.Substring(BaseFolder.Length).TrimLeft(['\', '/']);
   Result := StringReplace(Result, '/', '\', [rfReplaceAll]);
 end;
 
-function TSLXManifest.ComputeShortHash(const FileName: string): string;
+function TSuperLemmixManifest.ComputeShortHash(const FileName: string): string;
 begin
   Result := Copy(LowerCase(THashSHA2.GetHashStringFromFile(FileName)), 1, 16);
 end;
 
-procedure TSLXManifest.AddOrUpdateFile(const RelativePath, Hash: string);
+procedure TSuperLemmixManifest.AddOrUpdateFile(const RelativePath, Hash: string);
 var
   Entry: TFileEntry;
 begin
@@ -121,7 +121,7 @@ begin
     Entry.Known.Add(Hash);
 end;
 
-procedure TSLXManifest.ScanFolder(const BaseFolder: string; IncludeSubfolders: Boolean);
+procedure TSuperLemmixManifest.ScanFolder(const BaseFolder: string; IncludeSubfolders: Boolean);
 var
   Files: TStringDynArray;
   FilePath, RelPath, Hash: string;
@@ -144,7 +144,7 @@ begin
   end;
 end;
 
-procedure TSLXManifest.LoadFromIni(const FileName: string);
+procedure TSuperLemmixManifest.LoadFromIni(const FileName: string);
 var
   Ini: TIniFile;
   Sections: TStringList;
@@ -186,7 +186,7 @@ begin
   end;
 end;
 
-procedure TSLXManifest.SaveToIni(const FileName: string);
+procedure TSuperLemmixManifest.SaveToIni(const FileName: string);
 var
   Ini: TIniFile;
   Pair: TPair<string, TFileEntry>;
@@ -209,7 +209,7 @@ begin
   end;
 end;
 
-procedure TSLXManifest.LoadFromResource(const ResourceName: string);
+procedure TSuperLemmixManifest.LoadFromResource(const ResourceName: string);
 var
   ResStream: TResourceStream;
   Ini: TMemIniFile;
@@ -261,7 +261,7 @@ begin
   end;
 end;
 
-function TSLXManifest.GetCurrentHash(const RelativePath: string): string;
+function TSuperLemmixManifest.GetCurrentHash(const RelativePath: string): string;
 var
   Entry: TFileEntry;
 begin
@@ -271,7 +271,7 @@ begin
     Result := '';
 end;
 
-function TSLXManifest.IsKnownHash(const RelativePath, Hash: string): Boolean;
+function TSuperLemmixManifest.IsKnownHash(const RelativePath, Hash: string): Boolean;
 var
   Entry: TFileEntry;
 begin
