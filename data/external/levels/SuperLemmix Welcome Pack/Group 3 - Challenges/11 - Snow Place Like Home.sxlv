@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.2
+#   Created with SLXEditor 3.3.1
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Snow Place Like Home
  AUTHOR WillLem
  ID x47C3367D62C4D956
- VERSION x0000000000000037
+ VERSION x0000000000000039
  
 #       Level dimensions        
 # ----------------------------- 
@@ -40,14 +40,7 @@
    BASHER 10
    MINER 10
    DIGGER 1
- $END 
- 
- $TALISMAN 
-   TITLE Gold Talisman
-   ID 0
-   COLOR Gold
-   SAVE_REQUIREMENT 50
- $END 
+ $END
  
 #     Interactive objects       
 # ----------------------------- 
@@ -173,8 +166,8 @@
  $GADGET
    STYLE default
    PIECE diamond
-   X 487
-   Y 91
+   X 485
+   Y 87
    NO_OVERWRITE
  $END
  
