@@ -7,7 +7,7 @@ uses
   LemStrings,
   LemTypes,
   LemNeoLevelPack,
-  LemmixHotkeys,
+  LemHotkeys,
   FEditHotkeys,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, StdCtrls, FileCtrl, ExtCtrls,
@@ -135,9 +135,9 @@ end;
 
 procedure TFPlaybackMode.btnConfigureHotkeysClick(Sender: TObject);
 var
-  HotkeyForm: TFLemmixHotkeys;
+  HotkeyForm: TFLemHotkeys;
 begin
-  HotkeyForm := TFLemmixHotkeys.Create(Self);
+  HotkeyForm := TFLemHotkeys.Create(Self);
   HotkeyForm.HotkeyManager := GameParams.Hotkeys;
   HotkeyForm.ShowModal;
   HotkeyForm.Free;

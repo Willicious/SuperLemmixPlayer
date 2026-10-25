@@ -1,4 +1,4 @@
-object FLemmixHotkeys: TFLemmixHotkeys
+object FLemHotkeys: TFLemHotkeys
   Left = 300
   Top = 125
   HorzScrollBar.Visible = False

@@ -12,7 +12,7 @@ interface
 uses
   LemNeoPieceManager,
   LemNeoLevelPack,
-  LemmixHotkeys,
+  LemHotkeys,
   Math,
   Dialogs, StdCtrls, SysUtils, StrUtils, IOUtils, Classes, Forms, Types,
   System.Generics.Collections,

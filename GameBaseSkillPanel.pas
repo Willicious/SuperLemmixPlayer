@@ -300,7 +300,7 @@ uses
   SysUtils, Math, Windows, UMisc, PngInterface,
   GameControl, GameSound,
   LemTypes, LemReplay, LemStrings, LemNeoTheme,
-  LemmixHotkeys,
+  LemHotkeys,
   FSuperLemmixLevelSelect;
 
 

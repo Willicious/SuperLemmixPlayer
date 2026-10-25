@@ -7,7 +7,7 @@ interface
 uses
   Types,
   LemNeoLevelPack,
-  LemmixHotkeys,
+  LemHotkeys,
   Windows, Classes, SysUtils, StrUtils, Controls, Dialogs, UITypes,
   UMisc, Math,
   Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,

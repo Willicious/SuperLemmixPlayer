@@ -9,7 +9,7 @@ uses
   LemTypes,
   PngInterface,
   LemNeoLevelPack,
-  LemmixHotkeys,
+  LemHotkeys,
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers, GR32_Image,
   UMisc, Dialogs,

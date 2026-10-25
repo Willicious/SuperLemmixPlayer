@@ -3,13 +3,13 @@ unit FEditHotkeys;
 interface
 
 uses
-  LemmixHotkeys, LemCore,
+  LemHotkeys, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Vcl.Buttons, Vcl.Samples.Spin,
   SharedGlobals;
 
 type
-  TFLemmixHotkeys = class(TForm)
+  TFLemHotkeys = class(TForm)
     lvHotkeys: TListView;
     cbFunctions: TComboBox;
     btnSaveClose: TButton;
@@ -69,13 +69,13 @@ type
   end;
 
 var
-  FLemmixHotkeys: TFLemmixHotkeys;
+  FLemHotkeys: TFLemHotkeys;
 
 implementation
 
 {$R *.dfm}
 
-procedure TFLemmixHotkeys.FormCreate(Sender: TObject);
+procedure TFLemHotkeys.FormCreate(Sender: TObject);
 begin
   SetWindowPosition;
   fKeyNames := TLemmixHotkeyManager.GetKeyNames;
@@ -83,7 +83,7 @@ begin
   HandleCaptions(Self);
 end;
 
-procedure TFLemmixHotkeys.HandleCaptions(Sender: TObject);
+procedure TFLemHotkeys.HandleCaptions(Sender: TObject);
 var
 i: Integer;
 begin
@@ -102,7 +102,7 @@ begin
   end else Exit;
 end;
 
-procedure TFLemmixHotkeys.lvHotkeysClick(Sender: TObject);
+procedure TFLemHotkeys.lvHotkeysClick(Sender: TObject);
 var
   i: Integer;
 begin
@@ -144,7 +144,7 @@ begin
 end;
 
 
-function TFLemmixHotkeys.FindKeyFromList(aValue: Integer): Integer;
+function TFLemHotkeys.FindKeyFromList(aValue: Integer): Integer;
 var
   i: Integer;
 begin
@@ -158,7 +158,7 @@ begin
     end;
 end;
 
-procedure TFLemmixHotkeys.btnFindKeyKeyDown(Sender: TObject; var Key: Word;
+procedure TFLemHotkeys.btnFindKeyKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   i: Integer;
@@ -202,20 +202,20 @@ begin
     ShowMessage('Could not find the key.');
 end;
 
-procedure TFLemmixHotkeys.btnFindKeyClick(Sender: TObject);
+procedure TFLemHotkeys.btnFindKeyClick(Sender: TObject);
 begin
   fEditingKey := False;
   btnFindKey.Caption := 'Finding Key...';
   lblFindKey.Caption := 'Press any key to edit...';
 end;
 
-procedure TFLemmixHotkeys.SetWindowPosition;
+procedure TFLemHotkeys.SetWindowPosition;
 begin
   Left := (Screen.Width div 2) - (Width div 2);
   Top := (Screen.Height div 2) - (Height div 2);
 end;
 
-function TFLemmixHotkeys.GetHotkeyDescription(aKey: Integer): String;
+function TFLemHotkeys.GetHotkeyDescription(aKey: Integer): String;
 var
   Hotkey: TLemmixHotkey;
   s: String;
@@ -304,7 +304,7 @@ begin
   Result := s;
 end;
 
-procedure TFLemmixHotkeys.RefreshListItem(aKey: Integer);
+procedure TFLemHotkeys.RefreshListItem(aKey: Integer);
 var
   ListIndex: Integer;
 begin
@@ -319,7 +319,7 @@ begin
   end;
 end;
 
-procedure TFLemmixHotkeys.RefreshList;
+procedure TFLemHotkeys.RefreshList;
 var
   i, e: Integer;
   Hotkey: TLemmixHotkey;
@@ -356,37 +356,37 @@ begin
     lvHotkeys.Items.Delete(e);
 end;
 
-procedure TFLemmixHotkeys.SetHotkeys(aValue: TLemmixHotkeyManager);
+procedure TFLemHotkeys.SetHotkeys(aValue: TLemmixHotkeyManager);
 begin
   fHotkeys := aValue;
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnResetClick(Sender: TObject);
+procedure TFLemHotkeys.btnResetClick(Sender: TObject);
 begin
   fHotkeys.LoadFile; // Loads the previously saved hotkeys.ini file
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnSaveCloseClick(Sender: TObject);
+procedure TFLemHotkeys.btnSaveCloseClick(Sender: TObject);
 begin
   fHotkeys.SaveFile; // Saves current layout to hotkeys.ini
   Close;
 end;
 
-procedure TFLemmixHotkeys.btnCancelClick(Sender: TObject);
+procedure TFLemHotkeys.btnCancelClick(Sender: TObject);
 begin
   fHotkeys.LoadFile; // Loads previous hotkeys.ini file to prevent saving changes
   RefreshList;
   Close;
 end;
 
-procedure TFLemmixHotkeys.cbShowUnassignedClick(Sender: TObject);
+procedure TFLemHotkeys.cbShowUnassignedClick(Sender: TObject);
 begin
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
+procedure TFLemHotkeys.SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
 begin
   lblSkill.Visible := False;
   cbSkill.Visible := False;
@@ -441,7 +441,7 @@ begin
   end;
 end;
 
-procedure TFLemmixHotkeys.cbFunctionsChange(Sender: TObject);
+procedure TFLemHotkeys.cbFunctionsChange(Sender: TObject);
 var
   i: Integer;
 begin
@@ -493,7 +493,7 @@ begin
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.cbSkillChange(Sender: TObject);
+procedure TFLemHotkeys.cbSkillChange(Sender: TObject);
 var
   i: Integer;
 begin
@@ -504,7 +504,7 @@ begin
   RefreshListItem(i);
 end;
 
-procedure TFLemmixHotkeys.seSkillButtonChange(Sender: TObject);
+procedure TFLemHotkeys.seSkillButtonChange(Sender: TObject);
 var
   i: Integer;
 begin
@@ -516,7 +516,7 @@ begin
   RefreshListItem(i);
 end;
 
-procedure TFLemmixHotkeys.ebSkipDurationChange(Sender: TObject);
+procedure TFLemHotkeys.ebSkipDurationChange(Sender: TObject);
 var
   i: Integer;
   TextValue: Integer;
@@ -543,13 +543,13 @@ begin
   RefreshListItem(i);
 end;
 
-procedure TFLemmixHotkeys.ebClick(Sender: TObject);
+procedure TFLemHotkeys.ebClick(Sender: TObject);
 begin
   if Sender is TEdit then
     TEdit(Sender).SelectAll;
 end;
 
-procedure TFLemmixHotkeys.ebNudgeAmountChange(Sender: TObject);
+procedure TFLemHotkeys.ebNudgeAmountChange(Sender: TObject);
 var
   i: Integer;
   aAction: TLemmixHotkeyAction;
@@ -577,14 +577,14 @@ begin
   RefreshListItem(i);
 end;
 
-procedure TFLemmixHotkeys.lvHotkeysSelectItem(Sender: TObject;
+procedure TFLemHotkeys.lvHotkeysSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);
 begin
   // Just reuse the OnClick code.
   lvHotkeysClick(Sender);
 end;
 
-procedure TFLemmixHotkeys.btnClassicLayoutClick(Sender: TObject);
+procedure TFLemHotkeys.btnClassicLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsClassic;
@@ -592,7 +592,7 @@ begin
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnAdvancedLayoutClick(Sender: TObject);
+procedure TFLemHotkeys.btnAdvancedLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAdvanced;
@@ -600,7 +600,7 @@ begin
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnNeoLemmixLayoutClick(Sender: TObject);
+procedure TFLemHotkeys.btnNeoLemmixLayoutClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   fHotkeys.SetDefaultsAlternative;
@@ -608,14 +608,14 @@ begin
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.btnClearAllKeysClick(Sender: TObject);
+procedure TFLemHotkeys.btnClearAllKeysClick(Sender: TObject);
 begin
   fHotkeys.ClearAllKeys;
   cbShowUnassigned.Checked := True;
   RefreshList;
 end;
 
-procedure TFLemmixHotkeys.cbHoldKeyClick(Sender: TObject);
+procedure TFLemHotkeys.cbHoldKeyClick(Sender: TObject);
 var
   i: Integer;
 begin
@@ -632,7 +632,7 @@ begin
   RefreshListItem(i);
 end;
 
-procedure TFLemmixHotkeys.cbSpecialSkipChange(Sender: TObject);
+procedure TFLemHotkeys.cbSpecialSkipChange(Sender: TObject);
 var
   i: Integer;
 begin

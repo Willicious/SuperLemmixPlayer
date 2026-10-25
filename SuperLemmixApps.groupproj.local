@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>2017/06/08 21:23:18.000.611,C:\Users\Namida\Games\Lemmings\LemmixSource\NeoLemmixSource\NeoLemmixApps.groupproj=C:\Users\Namida\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
-  </Transactions>
-	<Default.Personality>
-		<Projects ActiveProject="C:\Users\Namida\Games\Lemmings\LemmixSource\NeoLemmixSource\Tools\NXPConvert\NXPConvert.dproj"/>
-	</Default.Personality>
-</BorlandProject>

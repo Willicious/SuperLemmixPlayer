@@ -4,7 +4,7 @@ interface
 
 uses
   GameControl, GameSound, LemStrings,
-  FEditHotkeys, LemmixHotkeys,
+  FEditHotkeys, LemHotkeys,
   FStyleUpdater,
   Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
@@ -370,11 +370,11 @@ end;
 
 procedure TFormNXConfig.btnHotkeysClick(Sender: TObject);
 var
-  HotkeyForm: TFLemmixHotkeys;
+  HotkeyForm: TFLemHotkeys;
 begin
   HotkeyForm := nil;
   try
-    HotkeyForm := TFLemmixHotkeys.Create(Self);
+    HotkeyForm := TFLemHotkeys.Create(Self);
     HotkeyForm.HotkeyManager := GameParams.Hotkeys;
     HotkeyForm.ShowModal;
   finally

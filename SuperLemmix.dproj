@@ -219,7 +219,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
             <Form>BaseDosForm</Form>
         </DCCReference>
         <DCCReference Include="FEditHotkeys.pas">
-            <Form>FLemmixHotkeys</Form>
+            <Form>FLemHotkeys</Form>
         </DCCReference>
         <DCCReference Include="FEditReplay.pas">
             <Form>FReplayEditor</Form>
@@ -259,7 +259,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="LemLevel.pas"/>
         <DCCReference Include="LemMetaAnimation.pas"/>
         <DCCReference Include="LemMetaTerrain.pas"/>
-        <DCCReference Include="LemmixHotkeys.pas"/>
+        <DCCReference Include="LemHotkeys.pas"/>
         <DCCReference Include="LemNeoLevelPack.pas"/>
         <DCCReference Include="LemNeoParser.pas"/>
         <DCCReference Include="LemNeoPieceManager.pas"/>

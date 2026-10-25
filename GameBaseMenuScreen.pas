@@ -15,7 +15,7 @@ uses
   LemStrings,
   LemTalisman,
   LemTypes,
-  LemmixHotkeys,
+  LemHotkeys,
   FLevelInfo,
   GameBaseScreenCommon,
   GameControl,

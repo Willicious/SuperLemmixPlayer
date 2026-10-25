@@ -7,7 +7,7 @@ interface
 uses
   System.Types, Generics.Collections,
   PngInterface,
-  LemmixHotkeys,
+  LemHotkeys,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   LemCore, LemLevel, LemRendering, LemRenderHelpers,

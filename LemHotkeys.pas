@@ -1,4 +1,4 @@
-unit LemmixHotkeys;
+unit LemHotkeys;
 
 interface
 
@@ -435,8 +435,8 @@ begin
     try
       if FileExists(AppPath + SFSaveData + 'hotkeys.ini') then
         StringList.LoadFromFile(AppPath + SFSaveData + 'hotkeys.ini')
-      else if FileExists(AppPath + 'SuperLemmixHotkeys.ini') then
-        StringList.LoadFromFile(AppPath + 'SuperLemmixHotkeys.ini')
+      else if FileExists(AppPath + 'SuperLemHotkeys.ini') then
+        StringList.LoadFromFile(AppPath + 'SuperLemHotkeys.ini')
       else begin
         SetDefaultsAdvanced;
         Exit;

@@ -7,7 +7,7 @@ interface
 uses
   Types,
   Dialogs,
-  LemmixHotkeys,
+  LemHotkeys,
   Windows, Classes, SysUtils, Controls, StrUtils,
   UMisc,
   Gr32, Gr32_Layers, GR32_Image,

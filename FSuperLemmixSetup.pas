@@ -38,7 +38,7 @@ type
 implementation
 
 uses
-  GameControl, LemmixHotkeys, LemCore;
+  GameControl, LemHotkeys, LemCore;
 
 {$R *.dfm}
 
