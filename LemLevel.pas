@@ -282,8 +282,10 @@ var
   TotalAvailableSkills: Integer;
   AtLeastOneSkillInfinite: Boolean;
 begin
-  // Save requirement - if equal or lower than level save requirement, set to none
+  // Save requirement - if equal or lower than rescue count, or more than max possible, set to none
   if aTalisman.RescueCount <= Info.RescueCount then
+    aTalisman.RescueCount := -1;
+  if aTalisman.RescueCount > Info.LemmingsCount + Info.SkillCount[spbCloner] - Info.ZombieCount then
     aTalisman.RescueCount := -1;
 
   // Time limit - if level has a time limit, equal to or lower than talisman limit, set to none
