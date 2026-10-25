@@ -70,6 +70,7 @@ type
       destructor Destroy; override;
 
       procedure AddKeysFromFunction(aFunc: TLemmixHotkeyAction);
+      procedure Update(aCenter: TPoint; aClickRect: TRect; aNormal, aHover, aClick: TBitmap32);
 
       property Bounds: TRect read fBounds;
       property ClickArea: TRect read fClickArea;
@@ -86,10 +87,10 @@ type
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
     private
-      fCalledFromClassicModeButton: Boolean;
       fMenuFont                   : TMenuFont;
       fBasicCursor                : TNLCursor;
       fKeyStates                  : TDictionary<Word, UInt64>;
+      fClassicModeRegion          : TClickableRegion;
 
       fTalRects: TList<TRect>;
       fTalismanImage : TBitmap32;
@@ -133,9 +134,9 @@ type
       function GetWallpaperDrawMode: String;
 
       function MakeClickableImage(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
-                                   aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
+                                   aNormal, aHover, aClick: TBitmap32; aExistingRegion: TClickableRegion = nil): TClickableRegion;
       function MakeClickableImageAuto(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
-                                   aNormal: TBitmap32; aMargin: Integer = -1): TClickableRegion;
+                                   aNormal: TBitmap32; aMargin: Integer = -1; aExistingRegion: TClickableRegion = nil): TClickableRegion;
       function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction; SwapHues: Boolean = False): TClickableRegion;
 
       function MakeHiddenOption(aKey: Word; aAction: TRegionAction): TClickableRegion; overload;
@@ -224,7 +225,7 @@ begin
   ScreenImg.OnMouseDown := Img_MouseDown;
   ScreenImg.OnMouseMove := Img_MouseMove;
 
-  fCalledFromClassicModeButton := False;
+  fClassicModeRegion := nil;
 
   fTalRects := TList<TRect>.Create;
   fTalismanImage := nil;
@@ -344,9 +345,8 @@ begin
   GameParams.MinimumWindowHeight := GameParams.DefaultMinHeight;
 end;
 
-function TGameBaseMenuScreen.MakeClickableImage(aImageCenter: TPoint;
-  aImageClickRect: TRect; aAction: TRegionAction; aNormal, aHover,
-  aClick: TBitmap32): TClickableRegion;
+function TGameBaseMenuScreen.MakeClickableImage(aImageCenter: TPoint; aImageClickRect: TRect;
+  aAction: TRegionAction; aNormal, aHover, aClick: TBitmap32; aExistingRegion: TClickableRegion = nil): TClickableRegion;
 var
   tmpNormal, tmpHover, tmpClick: TBitmap32;
   ScreenRect: TRect;
@@ -371,8 +371,14 @@ begin
     aHover.DrawTo(tmpHover, 0, 0);
     aClick.DrawTo(tmpClick, 0, 0);
 
-    Result := TClickableRegion.Create(aImageCenter, aImageClickRect, aAction, tmpNormal, tmpHover, tmpClick);
-    fClickableRegions.Add(Result);
+    if aExistingRegion = nil then
+    begin
+      Result := TClickableRegion.Create(aImageCenter, aImageClickRect, aAction, tmpNormal, tmpHover, tmpClick);
+      fClickableRegions.Add(Result);
+    end else begin
+      aExistingRegion.Update(aImageCenter, aImageClickRect, tmpNormal, tmpHover, tmpClick);
+      Result := aExistingRegion;
+    end;
   finally
     tmpNormal.Free;
     tmpHover.Free;
@@ -380,9 +386,8 @@ begin
   end;
 end;
 
-function TGameBaseMenuScreen.MakeClickableImageAuto(aImageCenter: TPoint;
-  aImageClickRect: TRect; aAction: TRegionAction;
-  aNormal: TBitmap32; aMargin: Integer): TClickableRegion;
+function TGameBaseMenuScreen.MakeClickableImageAuto(aImageCenter: TPoint; aImageClickRect: TRect;
+  aAction: TRegionAction; aNormal: TBitmap32; aMargin: Integer = -1; aExistingRegion: TClickableRegion = nil): TClickableRegion;
 const
   DEFAULT_MARGIN = 5;
 
@@ -458,7 +463,7 @@ begin
     Types.OffsetRect(aImageClickRect, aMargin, aMargin);
 
     Result := MakeClickableImage(aImageCenter, aImageClickRect, aAction,
-                                 tmpNormal, tmpHover, tmpClick);
+      tmpNormal, tmpHover, tmpClick, aExistingRegion);
   finally
     tmpNormal.Free;
     tmpHover.Free;
@@ -687,8 +692,8 @@ end;
 procedure TGameBaseMenuScreen.DrawClassicModeButton;
   function SetButtonPosition(XOffset: Integer; YOffset: Integer): TPoint;
   begin
-    Result.X := (ScreenImg.Bitmap.Width - XOffset);
-    Result.Y := (0 + YOffset);
+    Result.X := ScreenImg.Bitmap.Width - XOffset;
+    Result.Y := YOffset;
   end;
 
 var
@@ -705,41 +710,32 @@ begin
       GetGraphic('classic_mode_off.png', BMP);
 
     NewRegion := MakeClickableImageAuto(SetButtonPosition((BMP.Width div 3) * 2, BMP.Height),
-                                        BMP.BoundsRect, HandleClassicModeClick, BMP);
-    NewRegion.ShortcutKeys.Add(VK_F4);
+      BMP.BoundsRect, HandleClassicModeClick, BMP, -1, fClassicModeRegion);
+
+    if fClassicModeRegion = nil then
+    begin
+      fClassicModeRegion := NewRegion;
+      fClassicModeRegion.ShortcutKeys.Add(VK_F4);
+    end;
   finally
     BMP.Free;
   end;
+
+  DrawAllClickables;
 end;
 
 procedure TGameBaseMenuScreen.HandleClassicModeClick;
 begin
-  if GameParams.MenuSounds then SoundManager.PlaySound(SFX_OK);
+  if GameParams.MenuSounds then
+    SoundManager.PlaySound(SFX_OK);
 
-  // Set Classic Mode properties
-  if not GameParams.ClassicMode then
-  begin
-    GameParams.ClassicMode := True;
-    GameParams.HideShadows := True;
-    GameParams.HideHelpers := True;
-    GameParams.HideSkillQ := True;
-  end else begin
-    GameParams.ClassicMode := False;
-    GameParams.HideShadows := False;
-    GameParams.HideHelpers := False;
-    GameParams.HideSkillQ := False;
-  end;
+  GameParams.ClassicMode := not GameParams.ClassicMode;
+  GameParams.HideShadows := GameParams.ClassicMode;
+  GameParams.HideHelpers := GameParams.ClassicMode;
+  GameParams.HideSkillQ := GameParams.ClassicMode;
 
-  // Reload config to apply changes and redraw button
-  if GameParams.IsPlaytesting then
-  begin
-    fCalledFromClassicModeButton := True;
-    ShowConfigMenu;
-  end else begin
-    GameParams.Save(scCritical);
-    GameParams.Load;
-    DrawClassicModeButton;
-  end;
+  GameParams.Save(scImportant);
+  DrawClassicModeButton;
 end;
 
 procedure TGameBaseMenuScreen.HandleCollectibleClick;
@@ -1296,18 +1292,10 @@ begin
   ConfigDlg := TFormNXConfig.Create(Self);
   try
     ConfigDlg.SetGameParams;
-
-    // Skip the dialog and go straight to result
-    if fCalledFromClassicModeButton and GameParams.IsPlaytesting then
-      ConfigDlg.ModalResult := MrOK
-
-    // Show the dialog
-    else begin
-      ConfigDlg.NXConfigPages.TabIndex := 0;
-      ConfigDlg.ShowModal;
-      ResetWindowSize := ConfigDlg.ResetWindowSize;
-      ResetWindowPos := ConfigDlg.ResetWindowPosition;
-    end;
+    ConfigDlg.NXConfigPages.TabIndex := 0;
+    ConfigDlg.ShowModal;
+    ResetWindowSize := ConfigDlg.ResetWindowSize;
+    ResetWindowPos := ConfigDlg.ResetWindowPosition;
   finally
     ConfigDlg.Free;
   end;
@@ -1317,12 +1305,7 @@ begin
   GameParams.Save(scImportant);
   ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
 
-  if fCalledFromClassicModeButton then
-  begin
-    fCalledFromClassicModeButton := False;
-    DrawClassicModeButton;
-  end else
-    DoAfterConfig;
+  DoAfterConfig;
 end;
 
 procedure TGameBaseMenuScreen.ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
@@ -1376,27 +1359,17 @@ begin
       fShortcutKeys.Add(n);
 end;
 
-constructor TClickableRegion.Create(aCenter: TPoint; aClickRect: TRect; aAction: TRegionAction; aNormal, aHover, aClick: TBitmap32);
+constructor TClickableRegion.Create(aCenter: TPoint; aClickRect: TRect;
+  aAction: TRegionAction; aNormal, aHover, aClick: TBitmap32);
 begin
   inherited Create;
 
   fShortcutKeys := TList<Word>.Create;
-
-  fBitmaps := TBitmap32.Create(aNormal.Width * 3, aNormal.Height);
-
-  fBounds := SizedRect(aCenter.X - aNormal.Width div 2, aCenter.Y - aNormal.Height div 2, aNormal.Width, aNormal.Height);
-  fClickArea := SizedRect(fBounds.Left + aClickRect.Left, fBounds.Top + aClickRect.Top, aClickRect.Width, aClickRect.Height);
-
-  if aHover = nil then aHover := aNormal;
-  if aClick = nil then aClick := aHover;
-
-  aNormal.DrawTo(fBitmaps, 0, 0);
-  aHover.DrawTo(fBitmaps, aNormal.Width, 0);
-  aClick.DrawTo(fBitmaps, aNormal.Width * 2, 0);
-
   fDrawInFrontWhenHighlit := True;
-
   fAction := aAction;
+
+  fBitmaps := TBitmap32.Create;
+  Update(aCenter, aClickRect, aNormal, aHover, aClick);
 end;
 
 constructor TClickableRegion.Create(aAction: TRegionAction;
@@ -1435,6 +1408,31 @@ begin
     rsHover: Types.OffsetRect(Result, fBitmaps.Width div 3, 0);
     rsClick: Types.OffsetRect(Result, fBitmaps.Width div 3 * 2, 0);
   end;
+end;
+
+procedure TClickableRegion.Update(aCenter: TPoint; aClickRect: TRect; aNormal, aHover, aClick: TBitmap32);
+begin
+  if aHover = nil then
+    aHover := aNormal;
+  if aClick = nil then
+    aClick := aHover;
+
+  fBounds := SizedRect(
+    aCenter.X - aNormal.Width div 2,
+    aCenter.Y - aNormal.Height div 2,
+    aNormal.Width, aNormal.Height);
+
+  fClickArea := SizedRect(
+    fBounds.Left + aClickRect.Left,
+    fBounds.Top + aClickRect.Top,
+    aClickRect.Width, aClickRect.Height);
+
+  fBitmaps.SetSize(aNormal.Width * 3, aNormal.Height);
+  fBitmaps.Clear(0);
+
+  aNormal.DrawTo(fBitmaps, 0, 0);
+  aHover.DrawTo(fBitmaps, aNormal.Width, 0);
+  aClick.DrawTo(fBitmaps, aNormal.Width * 2, 0);
 end;
 
 end.
