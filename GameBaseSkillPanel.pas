@@ -1953,7 +1953,7 @@ procedure TBaseSkillPanel.ClearInfo;
 var
   PanelInfoEnd: Integer;
 begin
-  PanelInfoEnd := TimeIconRect.Right;
+  PanelInfoEnd := MinimapRect.Left - 8;
   fImage.Bitmap.FillRectS(0, 0, PanelInfoEnd, 32, $00000000);
 end;
 
