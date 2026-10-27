@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        SuperLemmix Level      
-#   Created with SLXEditor 3.0.2
+#   Created with SLXEditor 3.3.1
 # ----------------------------- 
  
 #        Level info             
@@ -8,7 +8,7 @@
  TITLE Suicidal Tendencies
  AUTHOR DMA Design
  ID xDFB37823DFB37823
- VERSION x000000000000000F
+ VERSION x0000000000000010
  
 #       Level dimensions        
 # ----------------------------- 
@@ -64,7 +64,7 @@
    X 296
    Y 60
    WIDTH 64
-   HEIGHT 24
+   HEIGHT 76
    NO_OVERWRITE
  $END
  
@@ -84,127 +84,7 @@
    X 376
    Y 84
    WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 376
-   Y 88
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 376
-   Y 96
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 376
-   Y 104
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 376
-   Y 112
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 68
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 76
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 84
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 96
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 104
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 112
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 112
-   WIDTH 64
-   HEIGHT 24
-   NO_OVERWRITE
- $END
- 
- $GADGET
-   STYLE slx_brick
-   PIECE water
-   X 296
-   Y 92
-   WIDTH 64
-   HEIGHT 24
+   HEIGHT 52
    NO_OVERWRITE
  $END
  
