@@ -2679,7 +2679,7 @@ var
   aButton: TSkillPanelButton;
 begin
   Result := False or CursorOverSkillButton(aButton)
-                  or CursorOverIcon(ReplayIconRect)
+                  or CursorOverHUDReplayIcon
                   or CursorOverIcon(TalismanIconRect)
                   or CursorOverIcon(ExitIconRect)
                   or CursorOverMinimap;
