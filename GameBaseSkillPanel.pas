@@ -233,6 +233,7 @@ type
 
     function LevelHasCollectibles: Boolean;
     function LevelHasTalismans: Boolean;
+    function TotalTalismanIcons: Integer;
     function GetCollectibleName: String;
 
     function PanelWidth: Integer; virtual; abstract;
@@ -2840,6 +2841,30 @@ end;
 function TBaseSkillPanel.LevelHasTalismans: Boolean;
 begin
   Result := Level.Talismans.Count > 0;
+end;
+
+function TBaseSkillPanel.TotalTalismanIcons: Integer;
+var
+  Count: Integer;
+begin
+  Result := 0;
+
+  for var Tal := 0 to Level.Talismans.Count - 1 do
+  begin
+    Count := 0;
+
+    if Level.Talismans[Tal].RequireClassicMode then
+      Inc(Count);
+
+    if Level.Talismans[Tal].RequireKillZombies then
+      Inc(Count);
+
+    if Level.Talismans[Tal].SkillTypeLimit > 0 then
+      Inc(Count);
+
+    if Count > Result then
+      Result := Count;
+  end;
 end;
 
 function TBaseSkillPanel.GetCollectibleName: String;

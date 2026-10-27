@@ -15,6 +15,7 @@ type
   protected
     function GetButtonList: TPanelButtonArray; override;
 
+    function GetIconRect(Left, XOffset: Integer): TRect;
     function MinimapRect: TRect; override;
     function ReplayIconRect: TRect; override;
     function CollectibleIconRect: TRect; override;
@@ -75,7 +76,7 @@ begin
 end;
 
 function TSkillPanel.CollectibleIconRect: TRect;
-begin                 // add 36 if including text
+begin
   Result := Rect(220, 0, 246, 32);
 end;
 
@@ -86,20 +87,17 @@ end;
 
 function TSkillPanel.HatchIconRect: TRect;
 begin
-  var Left := IfThen(LevelHasCollectibles or LevelHasTalismans, 360, 280);
-  Result := Rect(Left, 0, Left + 60, 32);
+  Result := GetIconRect(280, 20);
 end;
 
 function TSkillPanel.AliveIconRect: TRect;
 begin
-  var Left := IfThen(LevelHasCollectibles or LevelHasTalismans, 440, 380);
-  Result := Rect(Left, 0, Left + 60, 32);
+  Result := GetIconRect(380, 15);
 end;
 
 function TSkillPanel.ExitIconRect: TRect;
 begin
-  var Left := IfThen(LevelHasCollectibles or LevelHasTalismans, 520, 480);
-  Result := Rect(Left, 0, Left + 60, 32);
+  Result := GetIconRect(480, 10);
 end;
 
 function TSkillPanel.TimeIconRect: TRect;
@@ -122,6 +120,19 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbNuke;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbSquiggle;
+end;
+
+function TSkillPanel.GetIconRect(Left, XOffset: Integer): TRect;
+begin
+  if GameParams.AmigaTheme then
+    Dec(Left, 4);
+
+  if LevelHasCollectibles or LevelHasTalismans then
+    Inc(Left, XOffset);
+
+  Inc(Left, TotalTalismanIcons * XOffset);
+
+  Result := Rect(Left, 0, Left + 60, 32);
 end;
 
 end.
