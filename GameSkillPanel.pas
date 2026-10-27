@@ -102,7 +102,8 @@ end;
 
 function TSkillPanel.TimeIconRect: TRect;
 begin
-  Result := Rect(600, 0, 676, 32);
+  var Left := 600 - IfThen(GameParams.AmigaTheme, 4, 2);
+  Result := Rect(Left, 0, Left + 80, 32);
 end;
 
 function TSkillPanel.GetButtonList: TPanelButtonArray;
