@@ -50,7 +50,7 @@ type
     fReplayIcons          : TBitmap32;
     fTalismanIcons        : TBitmap32;
     fLevelInfoIcons       : TBitmap32;
-    //fAmigaFont            : TBitmap32;
+    fAmigaFont            : TBitmap32;
 
     fMinimapViewRectColor : TColor32;
     fSelectDx             : Integer;
@@ -59,6 +59,7 @@ type
     procedure LoadPanelIcons;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
+    procedure LoadAmigaFont;
 
     function GetLevel: TLevel;
 
@@ -154,6 +155,7 @@ type
     function GetTimeString: String;
 
     procedure SetFont(aFont: String; IsSuffix: Boolean = False);
+    procedure DrawAmigaText(X, Y: Integer; const Text: string; Color: TColor32; Small: Boolean = False);
     procedure DrawPanelMessage;
     procedure DrawCursorInfo;
     procedure DrawPanelIconTo(aDst: TBitmap32; aSrc: TBitmap32; Index, X, Y: Integer; DoEnlarge: Boolean = False);
@@ -290,9 +292,9 @@ const
 
   ICON_WIDTH = 32;
 
-//  AMIGA_CHAR_WIDTH = 16;
-//  AMIGA_CHAR_HEIGHT = 30;
-//  AMIGA_CHARACTERS = '0123456789%ABCDEFGHIJKLMNOPQRSTUVWXYZ-+';
+  AMIGA_CHAR_WIDTH = 16;
+  AMIGA_CHAR_HEIGHT = 30;
+  AMIGA_CHARACTERS = '0123456789%ABCDEFGHIJKLMNOPQRSTUVWXYZ-+';
 
 implementation
 
@@ -354,9 +356,9 @@ begin
   fLevelInfoIcons.DrawMode := dmBlend;
   fLevelInfoIcons.CombineMode := cmMerge;
 
-//  fAmigaFont := TBitmap32.Create;
-//  fAmigaFont.DrawMode := dmBlend;
-//  fAmigaFont.CombineMode := cmMerge;
+  fAmigaFont := TBitmap32.Create;
+  fAmigaFont.DrawMode := dmBlend;
+  fAmigaFont.CombineMode := cmMerge;
 
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
@@ -527,7 +529,7 @@ begin
   fReplayIcons.Free;
   fTalismanIcons.Free;
   fLevelInfoIcons.Free;
-  //fAmigaFont.Free;
+  fAmigaFont.Free;
   inherited;
 end;
 
@@ -887,6 +889,14 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.LoadAmigaFont;
+begin
+  if not GameParams.AmigaTheme then
+    Exit;
+
+  GetGraphic('amiga_font.png', fAmigaFont);
+end;
+
 procedure TBaseSkillPanel.ReadBitmapFromStyle;
 var
   ButtonList: TPanelButtonArray;
@@ -948,6 +958,7 @@ begin
   LoadPanelIcons;
   LoadSkillIcons;
   LoadSkillFont;
+  LoadAmigaFont;
 end;
 
 procedure TBaseSkillPanel.PlayReleaseRateSound;
@@ -1507,6 +1518,78 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawAmigaText(X, Y: Integer; const Text: string;
+  Color: TColor32; Small: Boolean = False);
+var
+  i, Index: Integer;
+  C: Char;
+  SrcRect, DstRect: TRect;
+  CharWidth, CharHeight: Integer;
+  CharBitmap: TBitmap32;
+
+  procedure ApplyTextColor(Bitmap: TBitmap32; TextColor: TColor32);
+  var
+    PX, PY: Integer;
+    Pixel: TColor32;
+    H, S, V, TextH, TextS, TextV: Single;
+    A: Byte;
+  begin
+    RGBToHSV(TextColor, TextH, TextS, TextV);
+
+    for PY := 0 to Bitmap.Height - 1 do
+      for PX := 0 to Bitmap.Width - 1 do
+      begin
+        Pixel := Bitmap.Pixel[PX, PY];
+        A := AlphaComponent(Pixel);
+
+        if A <> 0 then
+        begin
+          RGBToHSV(Pixel, H, S, V);
+          Pixel := HSVToRGB(TextH, TextS, V);
+          Bitmap.Pixel[PX, PY] := SetAlpha(Pixel, A);
+        end;
+      end;
+  end;
+begin
+  if Small then
+  begin
+    CharWidth := AMIGA_CHAR_WIDTH div 2;
+    CharHeight := (AMIGA_CHAR_HEIGHT div 2) - 2;
+  end else begin
+    CharWidth := AMIGA_CHAR_WIDTH - 4;
+    CharHeight := AMIGA_CHAR_HEIGHT - 10;
+  end;
+
+  for i := 1 to Length(Text) do
+  begin
+    C := UpCase(Text[i]);
+    Index := Pos(C, AMIGA_CHARACTERS) - 1;
+
+    if Index >= 0 then
+    begin
+      SrcRect := Rect(Index * AMIGA_CHAR_WIDTH, 0, (Index + 1) * AMIGA_CHAR_WIDTH, AMIGA_CHAR_HEIGHT);
+      DstRect := Rect(X, Y, X + CharWidth, Y + CharHeight);
+
+      if Color = clLightGreen32 then
+        fImage.Bitmap.Draw(DstRect, SrcRect, fAmigaFont)
+      else
+      begin
+        CharBitmap := TBitmap32.Create;
+        try
+          CharBitmap.SetSize(AMIGA_CHAR_WIDTH, AMIGA_CHAR_HEIGHT);
+          CharBitmap.Draw(CharBitmap.BoundsRect, SrcRect, fAmigaFont);
+          ApplyTextColor(CharBitmap, Color);
+          fImage.Bitmap.Draw(DstRect, CharBitmap.BoundsRect, CharBitmap);
+        finally
+          CharBitmap.Free;
+        end;
+      end;
+    end;
+
+    Inc(X, CharWidth);
+  end;
+end;
+
 procedure TBaseSkillPanel.DrawCursorInfo;
 var
   Color: TColor32;
@@ -1523,6 +1606,15 @@ begin
   else
     Color := clLightGreen32;
 
+  if GameParams.AmigaTheme then
+  begin
+    if (ButtonHintSuffix <> '') then
+    begin
+      DrawAmigaText(4, 8, GetCursorInfoString, clLightGreen32);
+      DrawAmigaText(10 + (ButtonHint.Length * 12), 14, ButtonHintSuffix, clCornflowerBlue32, True);
+    end else
+      DrawAmigaText(4, 8, GetCursorInfoString, Color);
+  end else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1604,6 +1696,9 @@ procedure TBaseSkillPanel.DrawHatchInfo;
 begin
   DrawPanelIcon(fPanelIcons, 2, HatchIconRect.Left, HatchIconRect.Top);
 
+  if GameParams.AmigaTheme then
+    DrawAmigaText(HatchIconRect.Left + ICON_WIDTH, 8, GetHatchCountString, clLightGreen32)
+  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1641,6 +1736,9 @@ begin
 
   DrawPanelIcon(fPanelIcons, 3, AliveIconRect.Left, AliveIconRect.Top);
 
+  if GameParams.AmigaTheme then
+    DrawAmigaText(AliveIconRect.Left + ICON_WIDTH, 8, GetLemsAliveString, Color)
+  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1676,6 +1774,9 @@ begin
 
   DrawPanelIcon(fPanelIcons, Icon, ExitIconRect.Left, ExitIconRect.Top);
 
+  if GameParams.AmigaTheme then
+    DrawAmigaText(ExitIconRect.Left + ICON_WIDTH, 8, GetLemsSavedString, Color)
+  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -1717,6 +1818,9 @@ begin
 
   DrawPanelIcon(fPanelIcons, Icon, TimeIconRect.Left, TimeIconRect.Top);
 
+  if GameParams.AmigaTheme then
+    DrawAmigaText(TimeIconRect.Left + (ICON_WIDTH - 4), 8, GetTimeString, Color)
+  else
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
@@ -2114,7 +2218,10 @@ begin
   else
     Prefix := ' ';
 
-  Divider := ':';
+  if GameParams.AmigaTheme then
+    Divider := '-'
+  else
+    Divider := ':';
 
   if Time div 60 >= 100 then
   begin
