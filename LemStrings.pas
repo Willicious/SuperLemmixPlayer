@@ -187,7 +187,7 @@ resourcestring
   STalismanUnlocked = 'You unlocked a new talisman!';
   STalismanAchieved = 'You achieved a talisman!';
 
-  SYouNeeded =  'You needed  ';
+  SYouNeeded =  'You needed ';
   SYouRescued = 'You rescued ';
   SYourRecord = 'Your record ';
 

@@ -473,7 +473,7 @@ begin
   if LevelHasTalismans and LevelPassed then
     Result[1].Line := ''
   else
-    Result[1].Line := SYouNeeded + SPadding(STarget) + STarget;
+    Result[1].Line := SYouNeeded + ' ' + SPadding(STarget) + STarget;
   Result[1].yPos := Result[PrevLine].yPos + (LINE_Y_SPACING * 2);
   Result[1].ColorShift := HueShift;
   PrevLine := 1;
