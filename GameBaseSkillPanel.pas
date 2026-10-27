@@ -2223,7 +2223,11 @@ begin
   else
     Divider := ':';
 
-  if Time div 60 >= 100 then
+  if Game.IsOutOfTime and (Time div 60 >= 10) then
+  begin
+    Minutes := '9';
+    Seconds := '59';
+  end else if (Time div 60 >= 100) then
   begin
     Minutes := '99';
     Seconds := '59';
