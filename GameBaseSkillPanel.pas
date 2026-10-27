@@ -1824,7 +1824,7 @@ begin
   with fImage.Bitmap do
   begin
     SetFont(SFontVaga);
-    RenderText(TimeIconRect.Left + (ICON_WIDTH - 9), 6, GetTimeString, Color, True);
+    RenderText(TimeIconRect.Left + ICON_WIDTH, 6, GetTimeString, Color, True);
   end;
 end;
 
@@ -2216,7 +2216,7 @@ begin
   if Game.IsOutOfTime and (Time <> 0) then
     Prefix := '-'
   else
-    Prefix := ' ';
+    Prefix := '';
 
   if GameParams.AmigaTheme then
     Divider := '-'
@@ -2228,7 +2228,7 @@ begin
     Minutes := '99';
     Seconds := '59';
   end else begin
-    Minutes := PadL(IntToStr(Time div 60), 2);
+    Minutes := IntToStr(Time div 60);
     Seconds := LeadZeroStr(Time mod 60, 2);
   end;
 
