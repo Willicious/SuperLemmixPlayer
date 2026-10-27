@@ -75,6 +75,8 @@ type
     fInternalZoom: Integer;
     fZoomDirection: Integer;
     fMaxZoom: Integer;
+    fZoomChanged: Boolean;
+    fZoomDisplayStart: Cardinal;
     fMinimapBuffer: TBitmap32;
 
   { detecting if redraw is needed. These are a bit kludgy but I'm strongly considering a full rewrite of TGameWindow }
@@ -140,6 +142,7 @@ type
     procedure SetMinimumWindowHeight(CurPanelHeight: Integer);
     procedure ApplyResize(NoRecenter: Boolean = False);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = False);
+    procedure UpdateZoomDisplay;
     procedure CycleZoom;
     procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
@@ -233,6 +236,9 @@ type
     function MouseFrameSkip: Integer; // Performs repeated skips when mouse buttons are held
     function GetLemmingOffscreenEdge: Integer;
   end;
+
+const
+  ZOOM_DISPLAY_DURATION = 1000;
 
 implementation
 
@@ -331,9 +337,59 @@ begin
 
     SetRedraw(rdRedraw);
     CheckResetCursor(True);
+
+    fZoomDisplayStart := GetTickCount;
+    fZoomChanged := not NoRedraw;
   finally
     SkillPanel.Image.EndUpdate;
   end;
+end;
+
+procedure TGameWindow.UpdateZoomDisplay;
+var
+  ZoomRect: TRect;
+  S: string;
+  PX, PY: Integer;
+  Pixel: TColor32;
+  A: Byte;
+  Canvas: TCanvas;
+begin
+  if not fZoomChanged then
+    Exit;
+
+  ZoomRect := Rect(Img.Width - 140, 40, Img.Width - 40, 80);
+  fHUDLayer.Bitmap.FillRectS(ZoomRect, 0);
+
+  if GetTickCount - fZoomDisplayStart >= ZOOM_DISPLAY_DURATION then
+    Exit;
+
+  S := IntToStr(fInternalZoom * 100) + '%';
+  Canvas := fHUDLayer.Bitmap.Canvas;
+
+  Canvas.Font.Name := SFontVaga;
+  Canvas.Font.Size := 16;
+  Canvas.Font.Style := [fsBold];
+  Canvas.Font.Color := clWhite;
+  Canvas.Brush.Style := bsClear;
+
+  SetBkMode(Canvas.Handle, TRANSPARENT);
+  Canvas.TextOut(ZoomRect.Right - Canvas.TextWidth(S), ZoomRect.Top, S);
+
+  { Restore alpha for Graphics32 blending, retaining antialiasing }
+  for PY := ZoomRect.Top to ZoomRect.Bottom - 1 do
+    for PX := ZoomRect.Left to ZoomRect.Right - 1 do
+    begin
+      Pixel := fHUDLayer.Bitmap.Pixel[PX, PY];
+
+      A := RedComponent(Pixel);
+      if GreenComponent(Pixel) > A then
+        A := GreenComponent(Pixel);
+      if BlueComponent(Pixel) > A then
+        A := BlueComponent(Pixel);
+
+      if A > 0 then
+        fHUDLayer.Bitmap.Pixel[PX, PY] := SetAlpha(clWhite32, A);
+    end;
 end;
 
 procedure TGameWindow.CycleZoom;
@@ -1153,6 +1209,8 @@ begin
       SkillPanel.RefreshInfo;
       SkillPanel.DrawReplayIconTo(fHUDLayer.Bitmap, 20, 20);
 
+      UpdateZoomDisplay;
+
       fLastSelectedLemming := fRenderInterface.SelectedLemming;
       fLastHighlightLemming := fRenderInterface.HighlitLemming;
       fLastSelectedSkill := fRenderInterface.SelectedSkill;
@@ -1504,6 +1562,7 @@ begin
   fHighlitStartCopyLemming := TLemming.Create;
   HotkeyManager := TLemmixHotkeyManager.Create;
   fMouseClickFrameskip := GetTickCount;
+  fZoomChanged := False;
 end;
 
 destructor TGameWindow.Destroy;
