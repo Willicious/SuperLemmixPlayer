@@ -124,7 +124,7 @@ begin
     Exit;
   end;
 
-  // If hash changed, update current and preserve history
+  { If hash changed, update current and preserve history }
   if Entry.Current <> Hash then
   begin
     if (Entry.Current <> '') and not Entry.Known.Contains(Entry.Current) then
@@ -157,7 +157,7 @@ begin
     Scopes.Sorted := True;
     Scopes.Duplicates := dupIgnore;
 
-    // Normalize the selected folders.
+    { Normalize the selected folders }
     for I := 0 to High(RelativeFolders) do
     begin
       Folder := StringReplace(
@@ -170,13 +170,13 @@ begin
         Scopes.Add(Folder);
     end;
 
-    // Scan all selected folders.
+    { Scan all selected folders }
     for I := 0 to Scopes.Count - 1 do
     begin
       Folder := TPath.Combine(BaseFolder, Scopes[I]);
 
-      // A missing directory is still a valid scope: its old files
-      // will be marked as deleted during reconciliation.
+      { A missing directory is still a valid scope: its old files
+        will be marked as deleted during reconciliation }
       if not TDirectory.Exists(Folder) then
         Continue;
 
@@ -193,8 +193,8 @@ begin
       end;
     end;
 
-    // Mark previously known files as deleted when they are no
-    // longer present in any of the selected folder scopes.
+    { Mark previously known files as deleted when they are no
+      longer present in any of the selected folder scopes }
     for Pair in FEntries do
     begin
       if Pair.Value.Current = '' then
@@ -272,7 +272,7 @@ var
 begin
   Ini := TMemIniFile.Create(FileName);
   try
-    // Remove old sections, including entries for files no longer scanned.
+    { Remove old sections, including entries for files no longer scanned }
     Ini.Clear;
 
     for Pair in FEntries do
