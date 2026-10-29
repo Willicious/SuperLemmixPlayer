@@ -18,9 +18,27 @@ interface
 
 uses
   Windows, System.Zip, System.SysUtils, System.Classes, System.IniFiles,
-  System.Hash, System.IOUtils, System.Generics.Collections, System.Types;
+  System.Hash, System.IOUtils, System.Generics.Collections, System.Types,
+  SharedGlobals;
 
 type
+  TManifestFileStatus = (
+    mfsMissing,
+    mfsCurrent,
+    mfsOutdated,
+    mfsUserModified,
+    mfsNotTracked,
+    mfsRemoved
+  );
+
+  TManifestAction = (
+    maNone,
+    maInstall,
+    maUpdate,
+    maPreserve,
+    maReviewRemoval
+  );
+
   TSuperLemmixManifest = class
   private
     type
@@ -47,12 +65,15 @@ type
     procedure UpdateReleaseManifest(const ZipFileName, ManifestFileName: string);
     procedure ScanZipFile(const ZipFileName: string);
     procedure ScanFolders(const BaseFolder: string; const RelativeFolders: array of string);
+    procedure ScanInstallation(const BaseFolder: string; Results: TStrings);
     procedure LoadFromIni(const FileName: string);
     procedure SaveToIni(const FileName: string);
     procedure LoadFromResource(const ResourceName: string);
 
     function GetCurrentHash(const RelativePath: string): string;
     function IsKnownHash(const RelativePath, Hash: string): Boolean;
+    function GetFileStatus(const BaseFolder, RelativePath: string): TManifestFileStatus;
+    function GetFileAction(const BaseFolder, RelativePath: string): TManifestAction;
   end;
 
 implementation
@@ -336,6 +357,75 @@ begin
   end;
 end;
 
+
+procedure TSuperLemmixManifest.ScanInstallation(const BaseFolder: string; Results: TStrings);
+var
+  Pair: TPair<string, TFileEntry>;
+  FilePath, RelativePath: string;
+  Files: TStringDynArray;
+  Status: TManifestFileStatus;
+
+  function StatusText(Value: TManifestFileStatus): string;
+  begin
+    case Value of
+      mfsMissing:
+        Result := 'Missing';
+
+      mfsCurrent:
+        Result := 'Up to date';
+
+      mfsOutdated:
+        Result := 'Official update available';
+
+      mfsUserModified:
+        Result := 'User-modified';
+
+      mfsNotTracked:
+        Result := 'Not tracked';
+
+      mfsRemoved:
+        Result := 'Officially removed';
+    else
+      Result := 'Unknown';
+    end;
+  end;
+
+begin
+  Results.Clear;
+
+  if not TDirectory.Exists(BaseFolder) then
+    raise Exception.CreateFmt(
+      'Installation folder not found: %s', [BaseFolder]);
+
+  // Check every file recorded in the manifest, including
+  // files that are missing from the local installation.
+  for Pair in FEntries do
+  begin
+    if IsInScope(Pair.Key, 'styles') then
+      Continue;
+
+    Status := GetFileStatus(BaseFolder, Pair.Key);
+
+    Results.Add(
+      Pair.Key + ' = ' + StatusText(Status));
+  end;
+
+  // Find local files that do not appear in the manifest.
+  Files := TDirectory.GetFiles(
+    BaseFolder, '*', TSearchOption.soAllDirectories);
+
+  for FilePath in Files do
+  begin
+    RelativePath := NormalizePath(BaseFolder, FilePath);
+
+    if IsInScope(RelativePath, 'styles') then
+      Continue;
+
+    if not FEntries.ContainsKey(RelativePath) then
+      Results.Add(RelativePath + ' = Not tracked');
+  end;
+end;
+
 procedure TSuperLemmixManifest.LoadFromIni(const FileName: string);
 var
   Ini: TIniFile;
@@ -488,6 +578,70 @@ begin
     Result := Entry.Known.Contains(LowerCase(Hash))
   else
     Result := False;
+end;
+
+function TSuperLemmixManifest.GetFileStatus(const BaseFolder, RelativePath: string): TManifestFileStatus;
+var
+  Entry: TFileEntry;
+  FullPath, NormalizedPath, Hash: string;
+begin
+  NormalizedPath := LowerCase(
+    StringReplace(RelativePath, '/', '\', [rfReplaceAll]));
+
+  FullPath := TPath.Combine(BaseFolder, NormalizedPath);
+
+  if not FileExists(FullPath) then
+    Exit(mfsMissing);
+
+  if not FEntries.TryGetValue(NormalizedPath, Entry) then
+    Exit(mfsNotTracked);
+
+  Hash := ComputeShortHash(FullPath);
+
+  if (Entry.Current <> '') and (Hash = Entry.Current) then
+    Exit(mfsCurrent);
+
+  if Entry.Known.Contains(Hash) then
+  begin
+    if Entry.Current = '' then
+      Exit(mfsRemoved)
+    else
+      Exit(mfsOutdated);
+  end;
+
+  Result := mfsUserModified;
+end;
+
+function TSuperLemmixManifest.GetFileAction(const BaseFolder, RelativePath: string): TManifestAction;
+var
+  Status: TManifestFileStatus;
+begin
+  Status := GetFileStatus(BaseFolder, RelativePath);
+
+  case Status of
+    mfsCurrent:
+      Result := maNone;
+
+    mfsMissing:
+      begin
+        if GetCurrentHash(RelativePath) <> '' then
+          Result := maInstall
+        else
+          Result := maReviewRemoval;
+      end;
+
+    mfsOutdated:
+      Result := maUpdate;
+
+    mfsUserModified,
+    mfsNotTracked:
+      Result := maPreserve;
+
+    mfsRemoved:
+      Result := maReviewRemoval;
+  else
+    Result := maNone;
+  end;
 end;
 
 end.
