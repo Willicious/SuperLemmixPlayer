@@ -17,8 +17,8 @@ unit SuperLemmixManifest;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.IniFiles, System.Hash,
-  System.IOUtils, System.Generics.Collections, System.Types;
+  Windows, System.Zip, System.SysUtils, System.Classes, System.IniFiles,
+  System.Hash, System.IOUtils, System.Generics.Collections, System.Types;
 
 type
   TSuperLemmixManifest = class
@@ -44,21 +44,18 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    // Build-time
+    procedure UpdateReleaseManifest(const ZipFileName, ManifestFileName: string);
+    procedure ScanZipFile(const ZipFileName: string);
     procedure ScanFolders(const BaseFolder: string; const RelativeFolders: array of string);
     procedure LoadFromIni(const FileName: string);
     procedure SaveToIni(const FileName: string);
-
-    // Runtime
     procedure LoadFromResource(const ResourceName: string);
+
     function GetCurrentHash(const RelativePath: string): string;
     function IsKnownHash(const RelativePath, Hash: string): Boolean;
   end;
 
 implementation
-
-uses
-  Windows;
 
 { TSuperLemmixManifest.TFileEntry }
 
@@ -135,6 +132,113 @@ begin
 
   if not Entry.Known.Contains(Hash) then
     Entry.Known.Add(Hash);
+end;
+
+procedure TSuperLemmixManifest.UpdateReleaseManifest(const ZipFileName, ManifestFileName: string);
+var
+  Manifest: TSuperLemmixManifest;
+begin
+  Manifest := TSuperLemmixManifest.Create;
+  try
+    { Load the previous release's hashes and history }
+    Manifest.LoadFromIni(ManifestFileName);
+
+    { Update the manifest from the new release ZIP }
+    Manifest.ScanZipFile(ZipFileName);
+
+    { Save only after scanning succeeds }
+    Manifest.SaveToIni(ManifestFileName);
+  finally
+    Manifest.Free;
+  end;
+end;
+
+procedure TSuperLemmixManifest.ScanZipFile(const ZipFileName: string);
+var
+  Zip: TZipFile;
+  FileNames: TArray<string>;
+  ScannedFiles: TDictionary<string, string>;
+  Pair: TPair<string, TFileEntry>;
+  ScannedPair: TPair<string, string>;
+  OriginalEntryName, EntryName, RelativePath, Hash: string;
+  I: Integer;
+  IsDirectory: Boolean;
+  EntryStream: TMemoryStream;
+  Bytes: TBytes;
+begin
+  { Preserve the existing manifest if the ZIP is missing }
+  if not FileExists(ZipFileName) then
+    raise Exception.CreateFmt(
+      'Release ZIP not found: %s', [ZipFileName]);
+
+  Zip := TZipFile.Create;
+  ScannedFiles := TDictionary<string, string>.Create;
+  try
+    Zip.Open(ZipFileName, zmRead);
+    try
+      FileNames := Zip.FileNames;
+
+      { Read and hash every file before modifying the manifest }
+      for I := 0 to High(FileNames) do
+      begin
+        OriginalEntryName := FileNames[I];
+        EntryName := StringReplace(OriginalEntryName, '/', '\', [rfReplaceAll]);
+
+        IsDirectory := EntryName.EndsWith('\');
+
+        if IsDirectory then
+          Continue;
+
+        RelativePath := LowerCase(EntryName);
+
+        { Styles are updated separately }
+        if IsInScope(RelativePath, 'styles') then
+          Continue;
+
+        { Reject unsafe paths rather than recording them }
+        if RelativePath.StartsWith('\') or (Pos(':', RelativePath) > 0) then
+          raise Exception.CreateFmt(
+            'Invalid path in release ZIP: %s', [OriginalEntryName]);
+
+        if (RelativePath = '..') or RelativePath.StartsWith('..\') or
+           (Pos('\..\', '\' + RelativePath + '\') > 0) then
+          raise Exception.CreateFmt(
+            'Invalid path in release ZIP: %s', [OriginalEntryName]);
+
+        Zip.Read(OriginalEntryName, Bytes);
+
+        EntryStream := TMemoryStream.Create;
+        try
+          if Length(Bytes) > 0 then
+            EntryStream.WriteBuffer(Bytes[0], Length(Bytes));
+
+          EntryStream.Position := 0;
+          Hash := Copy(
+            LowerCase(THashSHA2.GetHashString(EntryStream)), 1, 16);
+        finally
+          EntryStream.Free;
+        end;
+
+        ScannedFiles.AddOrSetValue(RelativePath, Hash);
+      end;
+    finally
+      Zip.Close;
+    end;
+
+    { Only update the manifest after the entire ZIP was read }
+    for Pair in FEntries do
+    begin
+      if (Pair.Value.Current <> '') and
+         not ScannedFiles.ContainsKey(Pair.Key) then
+        Pair.Value.Current := '';
+    end;
+
+    for ScannedPair in ScannedFiles do
+      AddOrUpdateFile(ScannedPair.Key, ScannedPair.Value);
+  finally
+    ScannedFiles.Free;
+    Zip.Free;
+  end;
 end;
 
 procedure TSuperLemmixManifest.ScanFolders(const BaseFolder: string; const RelativeFolders: array of string);
