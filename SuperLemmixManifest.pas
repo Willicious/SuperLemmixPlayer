@@ -134,6 +134,14 @@ begin
     Entry.Known.Add(Hash);
 end;
 
+procedure TSuperLemmixManifest.MarkFileDeleted(const RelativePath: string);
+var
+  Entry: TFileEntry;
+begin
+  if FEntries.TryGetValue(RelativePath, Entry) then
+    Entry.Current := '';
+end;
+
 procedure TSuperLemmixManifest.UpdateReleaseManifest(const ZipFileName, ManifestFileName: string);
 var
   Manifest: TSuperLemmixManifest;
@@ -477,14 +485,6 @@ begin
     Result := Entry.Known.Contains(LowerCase(Hash))
   else
     Result := False;
-end;
-
-procedure TSuperLemmixManifest.MarkFileDeleted(const RelativePath: string);
-var
-  Entry: TFileEntry;
-begin
-  if FEntries.TryGetValue(RelativePath, Entry) then
-    Entry.Current := '';
 end;
 
 end.
