@@ -236,6 +236,9 @@ begin
     { Only update the manifest after the entire ZIP was read }
     for Pair in FEntries do
     begin
+      if IsInScope(Pair.Key, 'styles') then
+        Continue;
+
       if (Pair.Value.Current <> '') and
          not ScannedFiles.ContainsKey(Pair.Key) then
         Pair.Value.Current := '';
