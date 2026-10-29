@@ -36,14 +36,16 @@ type
 
     function NormalizePath(const BaseFolder, FullPath: string): string;
     function ComputeShortHash(const FileName: string): string;
-    procedure AddOrUpdateFile(const RelativePath, Hash: string);
+    function IsInScope(const RelativePath, RelativeFolder: string): Boolean;
 
+    procedure AddOrUpdateFile(const RelativePath, Hash: string);
+    procedure MarkFileDeleted(const RelativePath: string);
   public
     constructor Create;
     destructor Destroy; override;
 
     // Build-time
-    procedure ScanFolder(const BaseFolder: string; IncludeSubfolders: Boolean = True);
+    procedure ScanFolders(const BaseFolder: string; const RelativeFolders: array of string);
     procedure LoadFromIni(const FileName: string);
     procedure SaveToIni(const FileName: string);
 
@@ -88,11 +90,25 @@ function TSuperLemmixManifest.NormalizePath(const BaseFolder, FullPath: string):
 begin
   Result := FullPath.Substring(BaseFolder.Length).TrimLeft(['\', '/']);
   Result := StringReplace(Result, '/', '\', [rfReplaceAll]);
+  Result := LowerCase(Result);
 end;
 
 function TSuperLemmixManifest.ComputeShortHash(const FileName: string): string;
 begin
   Result := Copy(LowerCase(THashSHA2.GetHashStringFromFile(FileName)), 1, 16);
+end;
+
+function TSuperLemmixManifest.IsInScope(const RelativePath, RelativeFolder: string): Boolean;
+var
+  Folder: string;
+begin
+  Folder := LowerCase(
+    StringReplace(RelativeFolder, '/', '\', [rfReplaceAll]));
+
+  Folder := ExcludeTrailingPathDelimiter(Folder);
+
+  Result := (RelativePath = Folder) or
+    RelativePath.StartsWith(Folder + '\');
 end;
 
 procedure TSuperLemmixManifest.AddOrUpdateFile(const RelativePath, Hash: string);
@@ -111,7 +127,7 @@ begin
   // If hash changed, update current and preserve history
   if Entry.Current <> Hash then
   begin
-    if not Entry.Known.Contains(Entry.Current) then
+    if (Entry.Current <> '') and not Entry.Known.Contains(Entry.Current) then
       Entry.Known.Add(Entry.Current);
 
     Entry.Current := Hash;
@@ -121,26 +137,87 @@ begin
     Entry.Known.Add(Hash);
 end;
 
-procedure TSuperLemmixManifest.ScanFolder(const BaseFolder: string; IncludeSubfolders: Boolean);
+procedure TSuperLemmixManifest.ScanFolders(const BaseFolder: string; const RelativeFolders: array of string);
 var
   Files: TStringDynArray;
-  FilePath, RelPath, Hash: string;
-  SearchOpt: TSearchOption;
+  FilePath, RelPath, Hash, Folder: string;
+  ScannedFiles, Scopes: TStringList;
+  Pair: TPair<string, TFileEntry>;
+  I, J: Integer;
+  InScope: Boolean;
 begin
-  if IncludeSubfolders then
-    SearchOpt := TSearchOption.soAllDirectories
-  else
-    SearchOpt := TSearchOption.soTopDirectoryOnly;
+  ScannedFiles := TStringList.Create;
+  Scopes := TStringList.Create;
+  try
+    ScannedFiles.CaseSensitive := False;
+    ScannedFiles.Sorted := True;
+    ScannedFiles.Duplicates := dupIgnore;
 
-  Files := TDirectory.GetFiles(BaseFolder, '*.*', SearchOpt);
+    Scopes.CaseSensitive := False;
+    Scopes.Sorted := True;
+    Scopes.Duplicates := dupIgnore;
 
-  for FilePath in Files do
-  begin
-    // TODO: Add filter to only search in certain folders
+    // Normalize the selected folders.
+    for I := 0 to High(RelativeFolders) do
+    begin
+      Folder := StringReplace(
+        RelativeFolders[I], '/', '\', [rfReplaceAll]);
 
-    RelPath := NormalizePath(BaseFolder, FilePath);
-    Hash := ComputeShortHash(FilePath);
-    AddOrUpdateFile(RelPath, Hash);
+      Folder := ExcludeTrailingPathDelimiter(Folder);
+      Folder := LowerCase(Folder);
+
+      if Folder <> '' then
+        Scopes.Add(Folder);
+    end;
+
+    // Scan all selected folders.
+    for I := 0 to Scopes.Count - 1 do
+    begin
+      Folder := TPath.Combine(BaseFolder, Scopes[I]);
+
+      // A missing directory is still a valid scope: its old files
+      // will be marked as deleted during reconciliation.
+      if not TDirectory.Exists(Folder) then
+        Continue;
+
+      Files := TDirectory.GetFiles(
+        Folder, '*.*', TSearchOption.soAllDirectories);
+
+      for FilePath in Files do
+      begin
+        RelPath := NormalizePath(BaseFolder, FilePath);
+        ScannedFiles.Add(RelPath);
+
+        Hash := ComputeShortHash(FilePath);
+        AddOrUpdateFile(RelPath, Hash);
+      end;
+    end;
+
+    // Mark previously known files as deleted when they are no
+    // longer present in any of the selected folder scopes.
+    for Pair in FEntries do
+    begin
+      if Pair.Value.Current = '' then
+        Continue;
+
+      InScope := False;
+
+      for J := 0 to Scopes.Count - 1 do
+      begin
+        if IsInScope(Pair.Key, Scopes[J]) then
+        begin
+          InScope := True;
+          Break;
+        end;
+      end;
+
+      if InScope and (ScannedFiles.IndexOf(Pair.Key) = -1) then
+        MarkFileDeleted(Pair.Key);
+    end;
+
+  finally
+    Scopes.Free;
+    ScannedFiles.Free;
   end;
 end;
 
@@ -171,10 +248,11 @@ begin
       KnownItems := KnownStr.Split([',']);
 
       for S in KnownItems do
-        if S <> '' then
-          Entry.Known.Add(Trim(S));
+        if Trim(S) <> '' then
+          if not Entry.Known.Contains(Trim(S)) then
+            Entry.Known.Add(Trim(S));
 
-      if not Entry.Known.Contains(Entry.Current) then
+      if (Entry.Current <> '') and not Entry.Known.Contains(Entry.Current) then
         Entry.Known.Add(Entry.Current);
 
       FEntries.AddOrSetValue(Sections[I], Entry);
@@ -188,13 +266,14 @@ end;
 
 procedure TSuperLemmixManifest.SaveToIni(const FileName: string);
 var
-  Ini: TIniFile;
+  Ini: TMemIniFile;
   Pair: TPair<string, TFileEntry>;
   KnownStr: string;
 begin
-  Ini := TIniFile.Create(FileName);
+  Ini := TMemIniFile.Create(FileName);
   try
-    Ini.EraseSection('');
+    // Remove old sections, including entries for files no longer scanned.
+    Ini.Clear;
 
     for Pair in FEntries do
     begin
@@ -204,6 +283,7 @@ begin
       Ini.WriteString(Pair.Key, 'Known', KnownStr);
     end;
 
+    Ini.UpdateFile;
   finally
     Ini.Free;
   end;
@@ -212,49 +292,63 @@ end;
 procedure TSuperLemmixManifest.LoadFromResource(const ResourceName: string);
 var
   ResStream: TResourceStream;
+  Strings: TStringList;
   Ini: TMemIniFile;
   Sections: TStringList;
+  I: Integer;
   Entry: TFileEntry;
   KnownStr: string;
   KnownItems: TArray<string>;
   S: string;
-  SL: TStringList;
 begin
   ResStream := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
   try
-    SL := TStringList.Create;
+    Strings := TStringList.Create;
     try
-      SL.LoadFromStream(ResStream, TEncoding.UTF8);
+      Strings.LoadFromStream(ResStream);
 
       Ini := TMemIniFile.Create('');
       try
-        Ini.SetStrings(SL);
+        Ini.SetStrings(Strings);
 
         Sections := TStringList.Create;
         try
           Ini.ReadSections(Sections);
-          for var I := 0 to Sections.Count - 1 do
+
+          for I := 0 to Sections.Count - 1 do
           begin
             Entry := TFileEntry.Create;
-            Entry.Current := Ini.ReadString(Sections[I], 'Current', '');
-            KnownStr := Ini.ReadString(Sections[I], 'Known', '');
-            KnownItems := KnownStr.Split([',']);
-            for S in KnownItems do
-              if S <> '' then
-                Entry.Known.Add(Trim(S));
-            if not Entry.Known.Contains(Entry.Current) then
-              Entry.Known.Add(Entry.Current);
-            FEntries.AddOrSetValue(Sections[I], Entry);
+            try
+              Entry.Current := Ini.ReadString(
+                Sections[I], 'Current', '');
+
+              KnownStr := Ini.ReadString(
+                Sections[I], 'Known', '');
+
+              KnownItems := KnownStr.Split([',']);
+
+              for S in KnownItems do
+                if Trim(S) <> '' then
+                  if not Entry.Known.Contains(Trim(S)) then
+                    Entry.Known.Add(Trim(S));
+
+              if (Entry.Current <> '') and not Entry.Known.Contains(Entry.Current) then
+                Entry.Known.Add(Entry.Current);
+
+              FEntries.AddOrSetValue(Sections[I], Entry);
+              Entry := nil;
+            finally
+              Entry.Free;
+            end;
           end;
         finally
           Sections.Free;
         end;
-
       finally
         Ini.Free;
       end;
     finally
-      SL.Free;
+      Strings.Free;
     end;
   finally
     ResStream.Free;
@@ -265,7 +359,7 @@ function TSuperLemmixManifest.GetCurrentHash(const RelativePath: string): string
 var
   Entry: TFileEntry;
 begin
-  if FEntries.TryGetValue(RelativePath, Entry) then
+  if FEntries.TryGetValue(LowerCase(StringReplace(RelativePath, '/', '\', [rfReplaceAll])), Entry) then
     Result := Entry.Current
   else
     Result := '';
@@ -275,10 +369,18 @@ function TSuperLemmixManifest.IsKnownHash(const RelativePath, Hash: string): Boo
 var
   Entry: TFileEntry;
 begin
-  if FEntries.TryGetValue(RelativePath, Entry) then
-    Result := Entry.Known.Contains(Hash)
+  if FEntries.TryGetValue(LowerCase(StringReplace(RelativePath, '/', '\', [rfReplaceAll])), Entry) then
+    Result := Entry.Known.Contains(LowerCase(Hash))
   else
     Result := False;
+end;
+
+procedure TSuperLemmixManifest.MarkFileDeleted(const RelativePath: string);
+var
+  Entry: TFileEntry;
+begin
+  if FEntries.TryGetValue(RelativePath, Entry) then
+    Entry.Current := '';
 end;
 
 end.
