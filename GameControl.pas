@@ -326,11 +326,11 @@ type
 
     property IsPlaytesting: Boolean read GetIsPlaytesting write fIsPlaytesting;
 
-    property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
-    property DumpMode: boolean read fDumpMode write fDumpMode;
-    property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
-    property ShownText: boolean read fShownText write fShownText;
     //property DoneUpdateCheck: Boolean read fDoneUpdateCheck write fDoneUpdateCheck;
+    property MatchBlankReplayUsername: Boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
+    property DumpMode: Boolean read fDumpMode write fDumpMode;
+    property OneLevelMode: Boolean read fOneLevelMode write fOneLevelMode;
+    property ShownText: Boolean read fShownText write fShownText;
 
     property Directory: string read fDirectory write fDirectory;
 
