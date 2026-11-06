@@ -62,13 +62,11 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure UpdateReleaseManifest(const ZipFileName, ManifestFileName: string);
     procedure ScanZipFile(const ZipFileName: string);
     procedure ScanFolders(const BaseFolder: string; const RelativeFolders: array of string);
     procedure ScanInstallation(const BaseFolder: string; Results: TStrings);
     procedure LoadFromIni(const FileName: string);
     procedure SaveToIni(const FileName: string);
-    procedure LoadFromResource(const ResourceName: string);
 
     function GetCurrentHash(const RelativePath: string): string;
     function IsKnownHash(const RelativePath, Hash: string): Boolean;
@@ -161,25 +159,6 @@ var
 begin
   if FEntries.TryGetValue(RelativePath, Entry) then
     Entry.Current := '';
-end;
-
-procedure TSuperLemmixManifest.UpdateReleaseManifest(const ZipFileName, ManifestFileName: string);
-var
-  Manifest: TSuperLemmixManifest;
-begin
-  Manifest := TSuperLemmixManifest.Create;
-  try
-    { Load the previous release's hashes and history }
-    Manifest.LoadFromIni(ManifestFileName);
-
-    { Update the manifest from the new release ZIP }
-    Manifest.ScanZipFile(ZipFileName);
-
-    { Save only after scanning succeeds }
-    Manifest.SaveToIni(ManifestFileName);
-  finally
-    Manifest.Free;
-  end;
 end;
 
 procedure TSuperLemmixManifest.ScanZipFile(const ZipFileName: string);
@@ -491,72 +470,6 @@ begin
     Ini.UpdateFile;
   finally
     Ini.Free;
-  end;
-end;
-
-procedure TSuperLemmixManifest.LoadFromResource(const ResourceName: string);
-var
-  ResStream: TResourceStream;
-  Strings: TStringList;
-  Ini: TMemIniFile;
-  Sections: TStringList;
-  I: Integer;
-  Entry: TFileEntry;
-  KnownStr: string;
-  KnownItems: TArray<string>;
-  S: string;
-begin
-  ResStream := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
-  try
-    Strings := TStringList.Create;
-    try
-      Strings.LoadFromStream(ResStream);
-
-      Ini := TMemIniFile.Create('');
-      try
-        Ini.SetStrings(Strings);
-
-        Sections := TStringList.Create;
-        try
-          Ini.ReadSections(Sections);
-
-          for I := 0 to Sections.Count - 1 do
-          begin
-            Entry := TFileEntry.Create;
-            try
-              Entry.Current := Ini.ReadString(
-                Sections[I], 'Current', '');
-
-              KnownStr := Ini.ReadString(
-                Sections[I], 'Known', '');
-
-              KnownItems := KnownStr.Split([',']);
-
-              for S in KnownItems do
-                if Trim(S) <> '' then
-                  if not Entry.Known.Contains(Trim(S)) then
-                    Entry.Known.Add(Trim(S));
-
-              if (Entry.Current <> '') and not Entry.Known.Contains(Entry.Current) then
-                Entry.Known.Add(Entry.Current);
-
-              FEntries.AddOrSetValue(Sections[I], Entry);
-              Entry := nil;
-            finally
-              Entry.Free;
-            end;
-          end;
-        finally
-          Sections.Free;
-        end;
-      finally
-        Ini.Free;
-      end;
-    finally
-      Strings.Free;
-    end;
-  finally
-    ResStream.Free;
   end;
 end;
 
