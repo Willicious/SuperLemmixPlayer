@@ -105,6 +105,8 @@ const
 
 resourcestring
   SProgramName = 'SuperLemmix';
+  SProgramEXE = 'SuperLemmix.exe';
+  SBassDLL = 'bass.dll';
   SDummyString = '';
 
   {-------------------------------------------------------------------------------

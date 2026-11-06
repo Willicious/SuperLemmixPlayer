@@ -19,6 +19,7 @@ interface
 uses
   Windows, System.Zip, System.SysUtils, System.Classes, System.IniFiles,
   System.Hash, System.IOUtils, System.Generics.Collections, System.Types,
+  LemStrings,
   SharedGlobals;
 
 type
@@ -588,7 +589,7 @@ begin
   try
     for Pair in fEntries do
     begin
-      if SameText(Pair.Key, 'SuperLemmix.exe') then
+      if SameText(Pair.Key, SProgramEXE) then
         Continue;
 
       if IsInScope(Pair.Key, 'styles') then

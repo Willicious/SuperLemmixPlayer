@@ -9,6 +9,7 @@ uses
   System.IOUtils, System.RegularExpressions, System.Zip,
   System.Generics.Collections,
   SuperLemmixManifest,
+  LemStrings,
   SharedGlobals;
 
   procedure DownloadLatestRelease(const DestinationFolder: string; out ZipFileName, VersionText: string);
@@ -236,7 +237,7 @@ begin
             Continue;
 
           { The running executable is handled separately if needed }
-          if SameText(RelativePath, 'SuperLemmix.exe') then
+          if SameText(RelativePath, SProgramEXE) then
             Continue;
 
           DstFile := TPath.Combine(BaseFolder, RelativePath);
@@ -342,8 +343,8 @@ begin
         end;
 
         { Prepare the executable for replacement after the game exits }
-        ExeSource := TPath.Combine(StageFolder, 'SuperLemmix.exe');
-        ExeDownloadPath := TPath.Combine(BaseFolder, 'SuperLemmix.exe.download');
+        ExeSource := TPath.Combine(StageFolder, SProgramEXE);
+        ExeDownloadPath := TPath.Combine(BaseFolder, SProgramEXE + '.download');
 
         if not TFile.Exists(ExeSource) then
           raise Exception.Create('Updated executable not found in release ZIP.');
@@ -557,7 +558,7 @@ begin
 
   ProcessId := GetCurrentProcessId;
 
-  ExePath := TPath.Combine(BaseFolder, 'SuperLemmix.exe');
+  ExePath := TPath.Combine(BaseFolder, SProgramEXE);
   TempPath := ExePath + '.download';
 
   if not TFile.Exists(TempPath) then

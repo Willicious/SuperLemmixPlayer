@@ -160,15 +160,15 @@ begin
   fMusicStream := TMemoryStream.Create;
   fMusicChannel := $FFFFFFFF;
 
-  if FileExists(AppPath + 'bass.dll') then
+  if FileExists(AppPath + SBassDLL) then
   begin
-    Load_BASSDLL(AppPath + 'bass.dll');
+    Load_BASSDLL(AppPath + SBassDLL);
     fIsBassLoaded := BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil);
     if not fIsBassLoaded then
-    ShowMessage('BASS.DLL could not initialize. SuperLemmix will run but music and sound will not play.'
+    ShowMessage(Uppercase(SBassDLL) + ' could not initialize. SuperLemmix will run but music and sound will not play.'
                 + #13#10 + 'Please try restarting SuperLemmix to fix this issue.');
   end else begin
-    ShowMessage('BASS.DLL not found. SuperLemmix will run but music and sound will not play.');
+    ShowMessage(Uppercase(SBassDLL) + ' not found. SuperLemmix will run but music and sound will not play.');
     fIsBassLoaded := False;
   end;
 end;
