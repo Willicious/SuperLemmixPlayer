@@ -401,8 +401,11 @@ begin
   SLXInfoText := SProgramName + ' Player ' + CurrentVersionString;
   {$ifdef exp}if COMMIT_ID <> '' then SLXInfoText := SLXInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
+  var Point := System.Types.Point(InternalScreenWidth div 2, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
+
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
-  MenuFont.DrawTextCentered(ScreenImg.Bitmap, SLXInfoText, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
+  MakeClickableText(Point, SLXInfoText, PerformOnlineUpdateManually);
+  DrawAllClickables;
 end;
 
 procedure TGameMenuScreen.LoadLayoutData;
@@ -853,6 +856,7 @@ begin
   inherited;
   ReloadCursor('menu');
   MakePanels;
+  MakeFooterText;
 end;
 
 procedure TGameMenuScreen.DoCleanInstallCheck;
