@@ -4,7 +4,7 @@ interface
 
 uses
   StrUtils, Classes, SysUtils, DateUtils, IOUtils, UITypes,
-  Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
+  Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi, StdCtrls,
   Types, UMisc, Math,
   GameBaseMenuScreen,
   GameControl,
@@ -62,6 +62,7 @@ type
       fReelForceDirection: Integer;
 
       fCleanInstallFail: Boolean;
+      fUpdateCheckPending: Boolean;
 
       fGroupSignCenter: TPoint;
       fGroupGraphic: TBitmap32;
@@ -210,6 +211,15 @@ begin
     ShowSetupMenu;
 
     EnableIdle;
+  end else if fUpdateCheckPending then
+  begin
+    DisableIdle;
+    fUpdateCheckPending := False;
+
+    PerformOnlineUpdate;
+    GameParams.LastUpdateCheck := Now;
+
+    EnableIdle;
   end else if not fDisableScroller then
     UpdateReel;
 
@@ -270,11 +280,7 @@ begin
 
   EnableIdle;
 
-  if HoursBetween(GameParams.LastUpdateCheck, Now) >= (7 * 24) then
-  begin
-    PerformOnlineUpdate;
-    GameParams.LastUpdateCheck := Now;
-  end;
+  fUpdateCheckPending := HoursBetween(GameParams.LastUpdateCheck, Now) >= (7 * 24);
 end;
 
 procedure TGameMenuScreen.CleanupIngameStuff;
@@ -903,11 +909,31 @@ end;
 procedure TGameMenuScreen.PerformOnlineUpdate;
 var
   BaseFolder, TempFolder, ZipFile, VersionText: string;
+  UpdateDialog: TForm;
 begin
+  UpdateDialog := TForm.Create(nil);
   BaseFolder := ExtractFilePath(ParamStr(0));
   TempFolder := TPath.Combine(BaseFolder, 'updates');
   ZipFile := '';
   try
+    UpdateDialog.BorderStyle := bsDialog;
+    UpdateDialog.Position := poMainFormCenter;
+    UpdateDialog.Caption := 'SuperLemmix';
+    UpdateDialog.ClientWidth := 300;
+    UpdateDialog.ClientHeight := 80;
+
+    with TLabel.Create(UpdateDialog) do
+    begin
+      Parent := UpdateDialog;
+      Align := alClient;
+      Alignment := taCenter;
+      Layout := tlCenter;
+      Caption := 'Checking for updates. Please wait...';
+    end;
+
+    UpdateDialog.Show;
+    UpdateDialog.Update;
+
     try
       DownloadLatestRelease(TempFolder, ZipFile, VersionText);
 
@@ -934,6 +960,8 @@ begin
         Log('Update check failed: ' + E.Message);
     end;
   finally
+    UpdateDialog.Free;
+
     if (ZipFile <> '') and TFile.Exists(ZipFile) then
     begin
       try
