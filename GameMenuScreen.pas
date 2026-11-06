@@ -374,7 +374,7 @@ end;
 procedure TGameMenuScreen.MakeFooterText;
 var
   PackInfoText: String;
-  NLInfoText: String;
+  SLXInfoText: String;
 
   HasAuthor: Boolean;
 begin
@@ -398,11 +398,11 @@ begin
   else
     PackInfoText := #13 + 'No Pack';
 
-  NLInfoText := SProgramName + ' Player ' + CurrentVersionString;
-  {$ifdef exp}if COMMIT_ID <> '' then NLInfoText := NLInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
+  SLXInfoText := SProgramName + ' Player ' + CurrentVersionString;
+  {$ifdef exp}if COMMIT_ID <> '' then SLXInfoText := SLXInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
-  MenuFont.DrawTextCentered(ScreenImg.Bitmap, NLInfoText, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
+  MenuFont.DrawTextCentered(ScreenImg.Bitmap, SLXInfoText, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
 end;
 
 procedure TGameMenuScreen.LoadLayoutData;
