@@ -100,7 +100,8 @@ type
 
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
-      procedure PerformOnlineUpdate;
+      procedure PerformOnlineUpdateManually;
+      procedure PerformOnlineUpdate(Auto: Boolean);
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
       procedure DisableIdle;
@@ -216,8 +217,7 @@ begin
     DisableIdle;
     fUpdateCheckPending := False;
 
-    PerformOnlineUpdate;
-    GameParams.LastUpdateCheck := Now;
+    PerformOnlineUpdate(True);
 
     EnableIdle;
   end else if not fDisableScroller then
@@ -906,69 +906,94 @@ begin
   end;
 end;
 
-procedure TGameMenuScreen.PerformOnlineUpdate;
-var
-  BaseFolder, TempFolder, ZipFile, VersionText: string;
-  UpdateDialog: TForm;
+procedure TGameMenuScreen.PerformOnlineUpdateManually;
 begin
-  UpdateDialog := TForm.Create(nil);
+  PerformOnlineUpdate(False);
+end;
+
+procedure TGameMenuScreen.PerformOnlineUpdate(Auto: Boolean);
+var
+  BaseFolder, TempFolder, ZipFile: string;
+  AssetName, DownloadURL, VersionText: string;
+  UpdateDialog: TForm;
+  UpdateLabel: TLabel;
+begin
   BaseFolder := ExtractFilePath(ParamStr(0));
   TempFolder := TPath.Combine(BaseFolder, 'updates');
   ZipFile := '';
-  try
-    UpdateDialog.BorderStyle := bsDialog;
-    UpdateDialog.Position := poMainFormCenter;
-    UpdateDialog.Caption := 'SuperLemmix';
-    UpdateDialog.ClientWidth := 300;
-    UpdateDialog.ClientHeight := 80;
 
-    with TLabel.Create(UpdateDialog) do
+  try
+    CheckLatestVersion(AssetName, DownloadURL, VersionText);
+
+    if not IsNewerVersion(VersionText) then
     begin
-      Parent := UpdateDialog;
-      Align := alClient;
-      Alignment := taCenter;
-      Layout := tlCenter;
-      Caption := 'Checking for updates. Please wait...';
+      if not Auto then
+        ShowMessage('SuperLemmix is up to date!');
+
+      GameParams.LastUpdateCheck := Now;
+      Exit;
     end;
 
-    UpdateDialog.Show;
-    UpdateDialog.Update;
+    if MessageDlg(Format(
+      'SuperLemmix version %s is available.' + sLineBreak + sLineBreak +
+      'Would you like to download and install it now?',
+      [VersionText]), mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    begin
+      GameParams.LastUpdateCheck := 0;
+      Exit;
+    end;
 
+    UpdateDialog := TForm.Create(nil);
     try
-      DownloadLatestRelease(TempFolder, ZipFile, VersionText);
+      UpdateDialog.BorderStyle := bsDialog;
+      UpdateDialog.Position := poMainFormCenter;
+      UpdateDialog.Caption := 'SuperLemmix';
+      UpdateDialog.ClientWidth := 300;
+      UpdateDialog.ClientHeight := 80;
 
-      if ZipFile = '' then
-        Exit;
+      UpdateLabel := TLabel.Create(UpdateDialog);
+      UpdateLabel.Parent := UpdateDialog;
+      UpdateLabel.Align := alClient;
+      UpdateLabel.Alignment := taCenter;
+      UpdateLabel.Layout := tlCenter;
+      UpdateLabel.Caption := 'Updating SuperLemmix. Please wait...';
 
+      UpdateDialog.Show;
+      UpdateDialog.Update;
+
+      DownloadLatestRelease(TempFolder, AssetName, DownloadURL, ZipFile);
       ApplyUpdate(ZipFile, BaseFolder);
 
+      UpdateDialog.Hide;
+
       MessageDlg(Format(
-          'SuperLemmix has been updated to version %s!' + sLineBreak + sLineBreak +
-          'The application will now restart to complete the update.',
-          [VersionText]), mtInformation, [mbOK], 0);
+        'SuperLemmix has been updated to version %s!' + sLineBreak + sLineBreak +
+        'The application will now restart to complete the update.',
+        [VersionText]), mtInformation, [mbOK], 0);
 
-      if not ReplaceExecutable(BaseFolder) then
-      begin
-        var ErrorMsg := 'Error replacing executable';
-        MessageDlg(ErrorMsg, mtError, [mbOK], 0);
-        Log(ErrorMsg);
+      if ReplaceExecutable(BaseFolder) then
+        Application.Terminate
+      else begin
+        MessageDlg('Error replacing executable.', mtError, [mbOK], 0);
+        Log('Error replacing executable.');
       end;
 
-      Application.Terminate;
-    except
-      on E: Exception do
-        Log('Update check failed: ' + E.Message);
+    finally
+      UpdateDialog.Free;
     end;
-  finally
-    UpdateDialog.Free;
 
-    if (ZipFile <> '') and TFile.Exists(ZipFile) then
-    begin
-      try
-        TFile.Delete(ZipFile);
-      except
-        // Non-fatal if cleanup fails
-      end;
+  except
+    on E: Exception do
+      Log('Update check failed: ' + E.Message);
+  end;
+
+  { Clean up downloaded ZIP }
+  if (ZipFile <> '') and TFile.Exists(ZipFile) then
+  begin
+    try
+      TFile.Delete(ZipFile);
+    except
+      // Non-fatal if cleanup fails
     end;
   end;
 end;

@@ -12,7 +12,8 @@ uses
   LemStrings,
   SharedGlobals;
 
-  procedure DownloadLatestRelease(const DestinationFolder: string; out ZipFileName, VersionText: string);
+  procedure CheckLatestVersion(out AssetName, DownloadURL, VersionText: string);
+  procedure DownloadLatestRelease(const DestinationFolder, AssetName, DownloadURL: string; out ZipFileName: string);
   procedure ApplyUpdate(const ZipFileName, BaseFolder: string);
 
   function ReplaceExecutable(const BaseFolder: string): Boolean;
@@ -24,8 +25,7 @@ const
     'https://api.github.com/repos/Willicious/SuperLemmix-Download/releases/latest';
 
 
-procedure DownloadLatestRelease(const DestinationFolder: string;
-  out ZipFileName, VersionText: string);
+procedure CheckLatestVersion(out AssetName, DownloadURL, VersionText: string);
 var
   Http: THTTPClient;
   Response: IHTTPResponse;
@@ -33,12 +33,11 @@ var
   ReleaseObject, AssetObject: TJSONObject;
   AssetsArray: TJSONArray;
   AssetValue, NameValue, URLValue: TJSONValue;
-  CandidateName, DownloadURL, Version, TempPath: string;
+  CandidateName, Version: string;
   Match: TMatch;
-  FileStream: TFileStream;
   i: Integer;
 begin
-  ZipFileName := '';
+  AssetName := '';
   VersionText := '';
   CandidateName := '';
   DownloadURL := '';
@@ -113,12 +112,30 @@ begin
                Match.Groups[2].Value + '.' +
                Match.Groups[3].Value;
 
-    { Prepare the destination and temporary download }
+    AssetName := CandidateName;
+    VersionText := Version;
+  finally
+    JsonValue.Free;
+    Http.Free;
+  end;
+end;
+
+procedure DownloadLatestRelease(const DestinationFolder, AssetName, DownloadURL: string; out ZipFileName: string);
+var
+  Http: THTTPClient;
+  Response: IHTTPResponse;
+  TempPath: string;
+  FileStream: TFileStream;
+begin
+  ZipFileName := '';
+
+  Http := THTTPClient.Create;
+  try
+    Http.UserAgent := 'SuperLemmixOnlineUpdater';
+
     TDirectory.CreateDirectory(DestinationFolder);
 
-    ZipFileName := TPath.Combine(
-      DestinationFolder, CandidateName);
-
+    ZipFileName := TPath.Combine(DestinationFolder, AssetName);
     TempPath := ZipFileName + '.part';
 
     if TFile.Exists(TempPath) then
@@ -144,19 +161,15 @@ begin
         raise Exception.Create(
           'Could not finalise downloaded ZIP.');
 
-      VersionText := Version;
-
     except
       if TFile.Exists(TempPath) then
         TFile.Delete(TempPath);
 
       ZipFileName := '';
-      VersionText := '';
       raise;
     end;
 
   finally
-    JsonValue.Free;
     Http.Free;
   end;
 end;
