@@ -276,6 +276,7 @@ end;
 procedure TSuperLemmixManifest.ScanFolders(const BaseFolder: string; const RelativeFolders: array of string);
 var
   Files: TStringDynArray;
+  RootFiles: array[0..0] of string;
   FilePath, RelPath, Hash, Folder: string;
   ScannedFiles, Scopes: TStringList;
   Pair: TPair<string, TFileEntry>;
@@ -322,6 +323,23 @@ begin
       for FilePath in Files do
       begin
         RelPath := NormalizePath(BaseFolder, FilePath);
+        ScannedFiles.Add(RelPath);
+
+        Hash := ComputeShortHash(FilePath);
+        UpdateHash(RelPath, Hash);
+      end;
+    end;
+
+    { Scan root files }
+    RootFiles[0] := SBassDLL;
+
+    for Folder in RootFiles do
+    begin
+      FilePath := TPath.Combine(BaseFolder, Folder);
+
+      if FileExists(FilePath) then
+      begin
+        RelPath := LowerCase(Folder);
         ScannedFiles.Add(RelPath);
 
         Hash := ComputeShortHash(FilePath);
