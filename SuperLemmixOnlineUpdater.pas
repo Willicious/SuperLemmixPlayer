@@ -177,7 +177,7 @@ var
   i, BackupIndex: Integer;
   ManifestBackupPath, ReportPath: string;
   Report: TStringList;
-  ManifestBackupCreated: Boolean;
+  ManifestBackupCreated, PreviousManifestExists: Boolean;
   ExeSource, ExeDownloadPath: string;
 begin
   if not TFile.Exists(ZipFileName) then
@@ -185,9 +185,6 @@ begin
 
   if not TDirectory.Exists(BaseFolder) then
     raise Exception.Create('Installation folder not found.');
-
-  StageFolder := '';
-  ManifestBackupCreated := False;
 
   ReportPath := TPath.Combine(BaseFolder, 'UpdateReport.txt');
   Report := TStringList.Create;
@@ -204,6 +201,10 @@ begin
     ManifestPath := TPath.Combine(BaseFolder, 'data\manifest.ini');
     Manifest.LoadFromIni(ManifestPath);
     Manifest.ScanZipFile(ZipFileName);
+
+    StageFolder := '';
+    ManifestBackupCreated := False;
+    PreviousManifestExists := TFile.Exists(ManifestPath);
 
     { Extract the release into a temporary staging directory }
     StageFolder := TPath.Combine(TPath.GetTempPath, 'SuperLemmixUpdater\Staging');
@@ -355,16 +356,19 @@ begin
         TFile.Copy(ExeSource, ExeDownloadPath);
         Report.Add('Prepared executable replacement.');
 
-        { Back up the existing manifest before updating it }
+        { Back up the existing manifest, if one exists }
         ManifestBackupPath := ManifestPath + '.update-backup';
 
-        if TFile.Exists(ManifestBackupPath) then
-          raise Exception.CreateFmt(
-            'Temporary manifest backup already exists: %s',
-            [ManifestBackupPath]);
+        if PreviousManifestExists then
+        begin
+          if TFile.Exists(ManifestBackupPath) then
+            raise Exception.CreateFmt(
+              'Temporary manifest backup already exists: %s',
+              [ManifestBackupPath]);
 
-        TFile.Copy(ManifestPath, ManifestBackupPath);
-        ManifestBackupCreated := True;
+          TFile.Copy(ManifestPath, ManifestBackupPath);
+          ManifestBackupCreated := True;
+        end;
 
         { Save the updated manifest }
         Manifest.SaveToIni(ManifestPath);
@@ -451,17 +455,29 @@ begin
           end;
 
           { Restore the original manifest }
-          if ManifestBackupCreated then
+          if PreviousManifestExists then
           begin
-            try
-              if TFile.Exists(ManifestBackupPath) then
-              begin
-                TFile.Copy(ManifestBackupPath, ManifestPath, True);
-                TFile.Delete(ManifestBackupPath);
+            if ManifestBackupCreated then
+            begin
+              try
+                if TFile.Exists(ManifestBackupPath) then
+                begin
+                  TFile.Copy(ManifestBackupPath, ManifestPath, True);
+                  TFile.Delete(ManifestBackupPath);
+                end;
+              except
+                on E: Exception do
+                  Report.Add('Rollback error restoring manifest: ' + E.Message);
               end;
+            end;
+          end else begin
+            { Remove the newly created manifest }
+            try
+              if TFile.Exists(ManifestPath) then
+                TFile.Delete(ManifestPath);
             except
               on E: Exception do
-                Report.Add('Rollback error restoring manifest: ' + E.Message);
+                Report.Add('Rollback error deleting new manifest: ' + E.Message);
             end;
           end;
 
