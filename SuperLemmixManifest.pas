@@ -220,6 +220,10 @@ begin
 
         RelativePath := LowerCase(EntryName);
 
+        { The executable is always updated separately }
+        if SameText(RelativePath, SProgramEXE) then
+          Continue;
+
         { Styles are updated separately }
         if IsInScope(RelativePath, 'styles') then
           Continue;
@@ -257,6 +261,9 @@ begin
     { Only update the manifest after the entire ZIP was read }
     for Pair in fEntries do
     begin
+      if SameText(Pair.Key, SProgramEXE) then
+        Continue;
+
       if IsInScope(Pair.Key, 'styles') then
         Continue;
 
@@ -418,6 +425,9 @@ begin
   // Check every file recorded in the manifest, including any missing from the local installation
   for Pair in fEntries do
   begin
+    if SameText(Pair.Key, SProgramEXE) then
+      Continue;
+
     if IsInScope(Pair.Key, 'styles') then
       Continue;
 
@@ -434,6 +444,9 @@ begin
   for FilePath in Files do
   begin
     RelativePath := NormalizePath(BaseFolder, FilePath);
+
+    if SameText(RelativePath, SProgramEXE) then
+      Continue;
 
     if IsInScope(RelativePath, 'styles') then
       Continue;
@@ -463,6 +476,9 @@ begin
 
     for i := 0 to Sections.Count - 1 do
     begin
+      if SameText(Sections[i], SProgramEXE) then
+        Continue;
+
       Entry := TFileEntry.Create;
       Entry.Current := Ini.ReadString(Sections[i], 'Current', '');
 
