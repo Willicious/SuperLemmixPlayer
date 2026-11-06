@@ -873,21 +873,29 @@ procedure TGameMenuScreen.DoCleanInstallCheck;
 var
   SL: TStringList;
   FMVer, CVer: Integer;
+  SData, SStyles, SVersionINI: String;
 begin
   SL := TStringList.Create;
   try
-    if FileExists(AppPath + 'styles\version.ini') then
-    begin
-      SL.LoadFromFile(AppPath + 'styles\version.ini');
-      if SL.Count >= 4 then
-      begin
-        FMVer := StrToIntDef(SL[0], -1);
-        CVer := StrToIntDef(SL[1], -1);
+    SData := 'data\';
+    SStyles := 'styles\';
+    SVersionINI := 'version.ini';
 
-        if (FMVer < MAJOR_VERSION) or
-          ((FMVer = MAJOR_VERSION) and (CVer < MINOR_VERSION)) then
-            fCleanInstallFail := True;
-      end;
+    if FileExists(AppPath + SData + SVersionINI) then
+      SL.LoadFromFile(AppPath + SData + SVersionINI)
+    else if FileExists(AppPath + SStyles + SVersionINI) then
+      SL.LoadFromFile(AppPath + SStyles + SVersionINI)
+    else
+      Exit;
+
+    if SL.Count >= 4 then
+    begin
+      FMVer := StrToIntDef(SL[0], -1);
+      CVer := StrToIntDef(SL[1], -1);
+
+      if (FMVer < MAJOR_VERSION) or
+        ((FMVer = MAJOR_VERSION) and (CVer < MINOR_VERSION)) then
+          fCleanInstallFail := True;
     end;
 
     SL.Clear;
@@ -905,8 +913,8 @@ begin
       {$endif}
     {$endif}
 
-    ForceDirectories(AppPath + 'styles\');
-    SL.SaveToFile(AppPath + 'styles\version.ini');
+    ForceDirectories(AppPath + 'data\');
+    SL.SaveToFile(AppPath + 'data\version.ini');
   finally
     SL.Free;
   end;
