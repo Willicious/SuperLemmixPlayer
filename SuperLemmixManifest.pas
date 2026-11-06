@@ -228,6 +228,10 @@ begin
         if IsInScope(RelativePath, 'styles') then
           Continue;
 
+        { The local manifest is maintained by the updater }
+        if SameText(RelativePath, 'data\manifest.ini') then
+          Continue;
+
         { Reject unsafe paths rather than recording them }
         if RelativePath.StartsWith('\') or (Pos(':', RelativePath) > 0) then
           raise Exception.CreateFmt(
@@ -265,6 +269,9 @@ begin
         Continue;
 
       if IsInScope(Pair.Key, 'styles') then
+        Continue;
+
+      if SameText(Pair.Key, 'data\manifest.ini') then
         Continue;
 
       if (Pair.Value.Current <> '') and
