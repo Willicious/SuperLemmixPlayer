@@ -126,6 +126,7 @@ type
       procedure ChangeResolution;
       procedure ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
+      procedure ClearClickableRegions;
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = False; aFromPackOnly: Boolean = False): Boolean;
 
@@ -1194,6 +1195,12 @@ end;
 procedure TGameBaseMenuScreen.DoAfterConfig;
 begin
   // Intentionally blank.
+end;
+
+procedure TGameBaseMenuScreen.ClearClickableRegions;
+begin
+  fClickableRegions.Clear;
+  fClassicModeRegion := nil;
 end;
 
 procedure TGameBaseMenuScreen.DoLevelSelect;

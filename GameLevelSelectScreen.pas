@@ -280,7 +280,7 @@ begin
   ScreenImg.BeginUpdate;
   try
     fWallpaper.Assign(ScreenImg.Bitmap);
-    fClickableRegions.Clear;
+    ClearClickableRegions;
 
     InitializeFont('Tahoma', fsBold, 8);
     DrawTempText;

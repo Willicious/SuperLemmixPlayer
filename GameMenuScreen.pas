@@ -317,7 +317,7 @@ var
 begin
   BMP := TBitmap32.Create;
   try
-    fClickableRegions.Clear;
+    ClearClickableRegions;
 
     // Classic Mode
     DrawClassicModeButton;

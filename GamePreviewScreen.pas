@@ -328,8 +328,8 @@ const
   TEXT_Y_POSITION = 170;
 begin
   CurrentScreen := gstPreview;
+  ClearClickableRegions;
 
-  fClickableRegions.Clear;
   CustomAssert(GameParams <> nil, 'GameParams not initialized correctly');
 
   ScreenImg.BeginUpdate;

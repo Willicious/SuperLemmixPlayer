@@ -239,7 +239,7 @@ const
   TEXT_Y_POSITION = 28;
 begin
   CurrentScreen := gstPostview;
-  fClickableRegions.Clear;
+  ClearClickableRegions;
   ScreenImg.BeginUpdate;
 
   try
