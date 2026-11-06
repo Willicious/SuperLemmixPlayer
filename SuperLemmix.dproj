@@ -300,6 +300,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         </DCCReference>
         <DCCReference Include="SuperLemmixManifest.pas"/>
         <DCCReference Include="GameLevelSelectScreen.pas"/>
+        <DCCReference Include="SuperLemmixOnlineUpdater.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

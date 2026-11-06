@@ -1,0 +1,636 @@
+
+unit SuperLemmixOnlineUpdater;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.ShellAPI,
+  System.SysUtils, System.Classes, System.JSON, System.Net.HttpClient,
+  System.IOUtils, System.RegularExpressions, System.Zip,
+  System.Generics.Collections,
+  SuperLemmixManifest,
+  SharedGlobals;
+
+  procedure DownloadLatestRelease(const DestinationFolder: string; out ZipFileName, VersionText: string);
+  procedure ApplyUpdate(const ZipFileName, BaseFolder: string);
+
+  function ReplaceExecutable(const BaseFolder: string): Boolean;
+
+implementation
+
+const
+  LATEST_RELEASE_URL =
+    'https://api.github.com/repos/Willicious/SuperLemmix-Download/releases/latest';
+
+
+procedure DownloadLatestRelease(const DestinationFolder: string;
+  out ZipFileName, VersionText: string);
+var
+  Http: THTTPClient;
+  Response: IHTTPResponse;
+  JsonValue: TJSONValue;
+  ReleaseObject, AssetObject: TJSONObject;
+  AssetsArray: TJSONArray;
+  AssetValue, NameValue, URLValue: TJSONValue;
+  CandidateName, DownloadURL, Version, TempPath: string;
+  Match: TMatch;
+  FileStream: TFileStream;
+  i: Integer;
+begin
+  ZipFileName := '';
+  VersionText := '';
+  CandidateName := '';
+  DownloadURL := '';
+
+  Http := THTTPClient.Create;
+  JsonValue := nil;
+  try
+    Http.UserAgent := 'SuperLemmixOnlineUpdater';
+
+    { Retrieve the latest published GitHub Release }
+    Response := Http.Get(LATEST_RELEASE_URL);
+
+    if Response.StatusCode <> 200 then
+      raise Exception.CreateFmt(
+        'Could not retrieve latest release. HTTP status: %d',
+        [Response.StatusCode]);
+
+    JsonValue := TJSONObject.ParseJSONValue(
+      Response.ContentAsString(TEncoding.UTF8));
+
+    if not (JsonValue is TJSONObject) then
+      raise Exception.Create('Invalid GitHub release response.');
+
+    ReleaseObject := JsonValue as TJSONObject;
+
+    AssetValue := ReleaseObject.GetValue('assets');
+
+    if not (AssetValue is TJSONArray) then
+      raise Exception.Create('Invalid GitHub release asset list.');
+
+    AssetsArray := AssetValue as TJSONArray;
+
+    { Find the SuperLemmix ZIP in the release assets }
+    for i := 0 to AssetsArray.Count - 1 do
+    begin
+      if not (AssetsArray.Items[i] is TJSONObject) then
+        Continue;
+
+      AssetObject := AssetsArray.Items[i] as TJSONObject;
+
+      NameValue := AssetObject.GetValue('name');
+      URLValue := AssetObject.GetValue('browser_download_url');
+
+      if not (NameValue is TJSONString) then
+        Continue;
+
+      if not (URLValue is TJSONString) then
+        Continue;
+
+      CandidateName := TJSONString(NameValue).Value;
+
+      if not SameText(ExtractFileExt(CandidateName), '.zip') then
+        Continue;
+
+      if not CandidateName.StartsWith('SuperLemmix', True) then
+        Continue;
+
+      Match := TRegEx.Match(CandidateName, '(\d+)\.(\d+)\.(\d+)');
+
+      if not Match.Success then
+        Continue;
+
+      DownloadURL := TJSONString(URLValue).Value;
+      Break;
+    end;
+
+    if DownloadURL = '' then
+      raise Exception.Create(
+        'No versioned SuperLemmix ZIP found in latest release.');
+
+    Version := Match.Groups[1].Value + '.' +
+               Match.Groups[2].Value + '.' +
+               Match.Groups[3].Value;
+
+    { Prepare the destination and temporary download }
+    TDirectory.CreateDirectory(DestinationFolder);
+
+    ZipFileName := TPath.Combine(
+      DestinationFolder, CandidateName);
+
+    TempPath := ZipFileName + '.part';
+
+    if TFile.Exists(TempPath) then
+      TFile.Delete(TempPath);
+
+    try
+      FileStream := TFileStream.Create(TempPath, fmCreate);
+      try
+        Response := Http.Get(DownloadURL, FileStream);
+
+        if Response.StatusCode <> 200 then
+          raise Exception.CreateFmt(
+            'ZIP download failed. HTTP status: %d',
+            [Response.StatusCode]);
+      finally
+        FileStream.Free;
+      end;
+
+      if TFile.Exists(ZipFileName) then
+        TFile.Delete(ZipFileName);
+
+      if not RenameFile(TempPath, ZipFileName) then
+        raise Exception.Create(
+          'Could not finalise downloaded ZIP.');
+
+      VersionText := Version;
+
+    except
+      if TFile.Exists(TempPath) then
+        TFile.Delete(TempPath);
+
+      ZipFileName := '';
+      VersionText := '';
+      raise;
+    end;
+
+  finally
+    JsonValue.Free;
+    Http.Free;
+  end;
+end;
+
+procedure ApplyUpdate(const ZipFileName, BaseFolder: string);
+var
+  Manifest: TSuperLemmixManifest;
+  Plan: TObjectList<TUpdateActionItem>;
+  Item: TUpdateActionItem;
+  StageFolder, RelativePath, RecycleTarget, ManifestPath: string;
+  SrcFile, DstFile, BackupFile: string;
+  Zip: TZipFile;
+  InstalledFiles: TStringList;
+  BackupFiles: TDictionary<string, string>;
+  RecycleFiles: TDictionary<string, string>;
+  PreservedFiles: TDictionary<string, string>;
+  Pair: TPair<string, string>;
+  i, BackupIndex: Integer;
+  ManifestBackupPath, ReportPath: string;
+  Report: TStringList;
+  ManifestBackupCreated: Boolean;
+  ExeSource, ExeDownloadPath: string;
+begin
+  if not TFile.Exists(ZipFileName) then
+    raise Exception.Create('Update ZIP file not found.');
+
+  if not TDirectory.Exists(BaseFolder) then
+    raise Exception.Create('Installation folder not found.');
+
+  StageFolder := '';
+  ManifestBackupCreated := False;
+
+  ReportPath := TPath.Combine(BaseFolder, 'UpdateReport.txt');
+  Report := TStringList.Create;
+  Report.Clear;
+  Report.Add('Applying SuperLemmix update...');
+
+  { Load local history and scan the new release }
+  Manifest := TSuperLemmixManifest.Create;
+  InstalledFiles := TStringList.Create;
+  BackupFiles := TDictionary<string, string>.Create;
+  RecycleFiles := TDictionary<string, string>.Create;
+  PreservedFiles := TDictionary<string, string>.Create;
+  try
+    ManifestPath := TPath.Combine(BaseFolder, 'data\manifest.ini');
+    Manifest.LoadFromIni(ManifestPath);
+    Manifest.ScanZipFile(ZipFileName);
+
+    { Extract the release into a temporary staging directory }
+    StageFolder := TPath.Combine(TPath.GetTempPath, 'SuperLemmixUpdater\Staging');
+    if TDirectory.Exists(StageFolder) then
+      TDirectory.Delete(StageFolder, True);
+    TDirectory.CreateDirectory(StageFolder);
+
+    Zip := TZipFile.Create;
+    try
+      Zip.Open(ZipFileName, zmRead);
+      try
+        Zip.ExtractAll(StageFolder);
+      finally
+        Zip.Close;
+      end;
+    finally
+      Zip.Free;
+    end;
+
+    { Generate the update plan using the new release hashes }
+    Plan := Manifest.GetUpdatePlan(BaseFolder);
+    try
+      try
+        { Execute non-destructive copy/update/backup phases. No files are permanently deleted yet }
+        for Item in Plan do
+        begin
+          RelativePath := Item.RelativePath;
+
+          if SameText(ExtractFileDir(RelativePath), 'styles') or
+             SameText(Copy(RelativePath, 1, 7), 'styles\') then
+            Continue;
+
+          { The running executable is handled separately if needed }
+          if SameText(RelativePath, 'SuperLemmix.exe') then
+            Continue;
+
+          DstFile := TPath.Combine(BaseFolder, RelativePath);
+
+          case Item.Action of
+            maInstall:
+            begin
+              SrcFile := TPath.Combine(StageFolder, RelativePath);
+
+              if not TFile.Exists(SrcFile) then
+                raise Exception.CreateFmt(
+                  'Update file not found in staging directory: %s',
+                  [RelativePath]);
+
+              TDirectory.CreateDirectory(ExtractFilePath(DstFile));
+              InstalledFiles.Add(DstFile);
+              TFile.Copy(SrcFile, DstFile, True);
+
+              Report.Add('Installed: ' + RelativePath);
+            end;
+
+            maUpdate:
+            begin
+              SrcFile := TPath.Combine(StageFolder, RelativePath);
+
+              if not TFile.Exists(SrcFile) then
+                raise Exception.CreateFmt(
+                  'Update file not found in staging directory: %s',
+                  [RelativePath]);
+
+              { Back up the existing file before replacing it }
+              BackupFile := DstFile + '.update-backup';
+
+              if TFile.Exists(BackupFile) then
+                raise Exception.CreateFmt(
+                  'Temporary backup already exists: %s', [BackupFile]);
+
+              BackupFiles.Add(DstFile, BackupFile);
+
+              if not RenameFile(DstFile, BackupFile) then
+                raise Exception.CreateFmt(
+                  'Could not back up existing file: %s', [RelativePath]);
+
+              TDirectory.CreateDirectory(ExtractFilePath(DstFile));
+              InstalledFiles.Add(DstFile);
+              TFile.Copy(SrcFile, DstFile, True);
+
+              Report.Add('Updated: ' + RelativePath);
+            end;
+
+            maPreserve:
+            begin
+              SrcFile := TPath.Combine(StageFolder, RelativePath);
+
+              { If the file was removed from the release, preserve the user's modified version }
+              if not TFile.Exists(SrcFile) then
+              begin
+                Report.Add('Preserved (removed from release): ' + RelativePath);
+                Continue;
+              end;
+
+              { Back up the user's modified file }
+              if TFile.Exists(DstFile) then
+              begin
+                BackupFile := DstFile + '.backup';
+                BackupIndex := 1;
+
+                while TFile.Exists(BackupFile) do
+                begin
+                  BackupFile := DstFile + '.backup.' + IntToStr(BackupIndex);
+                  Inc(BackupIndex);
+                end;
+
+                PreservedFiles.Add(DstFile, BackupFile);
+
+                if not RenameFile(DstFile, BackupFile) then
+                  raise Exception.CreateFmt(
+                    'Could not preserve existing file: %s', [RelativePath]);
+              end;
+
+              { Install the official release version }
+              TDirectory.CreateDirectory(ExtractFilePath(DstFile));
+              InstalledFiles.Add(DstFile);
+              TFile.Copy(SrcFile, DstFile, True);
+
+              Report.Add('Preserved & Updated: ' + RelativePath);
+            end;
+
+            maReviewRemoval:
+            begin
+              { Defer deletion: stage for safe removal post-update }
+              if TFile.Exists(DstFile) then
+              begin
+                RecycleTarget := DstFile + '.recycle';
+                RecycleFiles.Add(DstFile, RecycleTarget);
+
+                if not RenameFile(DstFile, RecycleTarget) then
+                  raise Exception.CreateFmt(
+                    'Could not stage file for removal: %s', [RelativePath]);
+              end;
+            end;
+          end;
+        end;
+
+        { Prepare the executable for replacement after the game exits }
+        ExeSource := TPath.Combine(StageFolder, 'SuperLemmix.exe');
+        ExeDownloadPath := TPath.Combine(BaseFolder, 'SuperLemmix.exe.download');
+
+        if not TFile.Exists(ExeSource) then
+          raise Exception.Create('Updated executable not found in release ZIP.');
+
+        if TFile.Exists(ExeDownloadPath) then
+          TFile.Delete(ExeDownloadPath);
+
+        TFile.Copy(ExeSource, ExeDownloadPath);
+        Report.Add('Prepared executable replacement.');
+
+        { Back up the existing manifest before updating it }
+        ManifestBackupPath := ManifestPath + '.update-backup';
+
+        if TFile.Exists(ManifestBackupPath) then
+          raise Exception.CreateFmt(
+            'Temporary manifest backup already exists: %s',
+            [ManifestBackupPath]);
+
+        TFile.Copy(ManifestPath, ManifestBackupPath);
+        ManifestBackupCreated := True;
+
+        { Save the updated manifest }
+        Manifest.SaveToIni(ManifestPath);
+        Report.Add('Manifest successfully updated.');
+      except
+        on E: Exception do
+        begin
+          Report.Add('Update failed. Rolling back changes...');
+          Report.Add('Reason: ' + E.Message);
+
+          { Remove newly installed files }
+          for i := InstalledFiles.Count - 1 downto 0 do
+          begin
+            try
+              if TFile.Exists(InstalledFiles[i]) then
+                TFile.Delete(InstalledFiles[i]);
+            except
+              on E: Exception do
+                Report.Add('Rollback error deleting ' + InstalledFiles[i] + ': ' + E.Message);
+            end;
+          end;
+
+          { Restore files replaced during the update }
+          for Pair in BackupFiles do
+          begin
+            try
+              if TFile.Exists(Pair.Value) then
+              begin
+                if TFile.Exists(Pair.Key) then
+                  TFile.Delete(Pair.Key);
+
+                if not RenameFile(Pair.Value, Pair.Key) then
+                  raise Exception.Create('Could not restore backup.');
+              end;
+            except
+              on E: Exception do
+                Report.Add('Rollback error restoring ' + Pair.Key + ': ' + E.Message);
+            end;
+          end;
+
+          { Restore the user's original modified files }
+          for Pair in PreservedFiles do
+          begin
+            try
+              if TFile.Exists(Pair.Value) then
+              begin
+                if TFile.Exists(Pair.Key) then
+                  TFile.Delete(Pair.Key);
+
+                if not RenameFile(Pair.Value, Pair.Key) then
+                  raise Exception.Create('Could not restore preserved file.');
+              end;
+            except
+              on E: Exception do
+                Report.Add('Rollback error restoring ' + Pair.Key + ': ' + E.Message);
+            end;
+          end;
+
+          { Restore files staged for removal }
+          for Pair in RecycleFiles do
+          begin
+            try
+              if TFile.Exists(Pair.Value) then
+              begin
+                if TFile.Exists(Pair.Key) then
+                  TFile.Delete(Pair.Key);
+
+                if not RenameFile(Pair.Value, Pair.Key) then
+                  raise Exception.Create('Could not restore recycled file.');
+              end;
+            except
+              on E: Exception do
+                Report.Add('Rollback error restoring ' + Pair.Key + ': ' + E.Message);
+            end;
+          end;
+
+          { Remove the prepared executable replacement }
+          try
+            if TFile.Exists(ExeDownloadPath) then
+              TFile.Delete(ExeDownloadPath);
+          except
+            on E: Exception do
+              Report.Add('Rollback error deleting prepared executable: ' + E.Message);
+          end;
+
+          { Restore the original manifest }
+          if ManifestBackupCreated then
+          begin
+            try
+              if TFile.Exists(ManifestBackupPath) then
+              begin
+                TFile.Copy(ManifestBackupPath, ManifestPath, True);
+                TFile.Delete(ManifestBackupPath);
+              end;
+            except
+              on E: Exception do
+                Report.Add('Rollback error restoring manifest: ' + E.Message);
+            end;
+          end;
+
+          { Prevent entering cleanup }
+          raise;
+        end;
+      end;
+
+      { Successful update: remove temporary backups and recycled files }
+
+      { Remove temporary backups of updated files }
+      for Pair in BackupFiles do
+      begin
+        try
+          if TFile.Exists(Pair.Value) then
+            TFile.Delete(Pair.Value);
+        except
+          on E: Exception do
+            Report.Add('Cleanup warning - could not delete temporary backup: ' + Pair.Value + ': ' + E.Message);
+        end;
+      end;
+
+      { Permanently remove files staged for deletion }
+      for Pair in RecycleFiles do
+      begin
+        try
+          if TFile.Exists(Pair.Value) then
+            TFile.Delete(Pair.Value);
+        except
+          on E: Exception do
+            Report.Add('Cleanup warning - could not delete recycled file: ' + Pair.Value + ': ' + E.Message);
+        end;
+      end;
+
+      { Remove the temporary manifest backup }
+      if ManifestBackupCreated then
+      begin
+        try
+          if TFile.Exists(ManifestBackupPath) then
+            TFile.Delete(ManifestBackupPath);
+        except
+          on E: Exception do
+            Report.Add('Cleanup warning - could not delete manifest backup: ' + E.Message);
+        end;
+      end;
+    finally
+      Plan.Free;
+    end;
+  finally
+    try
+      try
+        if (StageFolder <> '') and TDirectory.Exists(StageFolder) then
+          TDirectory.Delete(StageFolder, True);
+      except
+        on E: Exception do
+          Report.Add('Cleanup warning - could not remove staging directory: ' + E.Message);
+      end;
+    finally
+      { Write the update report, whether the update succeeded or failed }
+      try
+        Report.Add('');
+        Report.Add('Finished: ' + DateTimeToStr(Now));
+
+        TFile.WriteAllText(ReportPath, Report.Text, TEncoding.UTF8);
+      except
+        on E: Exception do
+          Log('Could not write update report: ' + E.Message);
+      end;
+
+      Manifest.Free;
+      InstalledFiles.Free;
+      BackupFiles.Free;
+      RecycleFiles.Free;
+      PreservedFiles.Free;
+      Report.Free;
+    end;
+  end;
+end;
+
+function ReplaceExecutable(const BaseFolder: string): Boolean;
+var
+  ExePath, TempPath, BackupPath, ScriptPath: string;
+  Script, Arguments: string;
+  ProcessId: Cardinal;
+  ShellResult: HINST;
+
+  function Quote(const Value: string): string;
+  begin
+    Result := '''' + StringReplace(Value, '''', '''''', [rfReplaceAll]) + '''';
+  end;
+
+begin
+  Result := False;
+
+  ProcessId := GetCurrentProcessId;
+
+  ExePath := TPath.Combine(BaseFolder, 'SuperLemmix.exe');
+  TempPath := ExePath + '.download';
+
+  if not TFile.Exists(TempPath) then
+  begin
+    Log('Could not start executable replacement: downloaded executable not found.');
+    Exit;
+  end;
+
+  BackupPath := ExePath + '.backup.' + IntToStr(ProcessId);
+
+  ScriptPath := TPath.Combine(
+    TPath.GetTempPath,
+    'SuperLemmixUpdate_' + IntToStr(ProcessId) + '.ps1');
+
+  Script :=
+    '$ErrorActionPreference = ''Stop''' + sLineBreak +
+    '$processId = ' + IntToStr(ProcessId) + sLineBreak +
+    '$exePath = ' + Quote(ExePath) + sLineBreak +
+    '$tempPath = ' + Quote(TempPath) + sLineBreak +
+    '$backupPath = ' + Quote(BackupPath) + sLineBreak +
+    '$scriptPath = $PSCommandPath' + sLineBreak +
+    '$originalMoved = $false' + sLineBreak +
+    'try {' + sLineBreak +
+    '    while (Get-Process -Id $processId -ErrorAction SilentlyContinue) {' + sLineBreak +
+    '        Start-Sleep -Milliseconds 500' + sLineBreak +
+    '    }' + sLineBreak +
+    '    if (!(Test-Path -LiteralPath $tempPath -PathType Leaf)) {' + sLineBreak +
+    '        throw ''Downloaded update not found.''' + sLineBreak +
+    '    }' + sLineBreak +
+    '    if (Test-Path -LiteralPath $backupPath) {' + sLineBreak +
+    '        throw ''Executable backup already exists.''' + sLineBreak +
+    '    }' + sLineBreak +
+    '    if (Test-Path -LiteralPath $exePath) {' + sLineBreak +
+    '        Move-Item -LiteralPath $exePath -Destination $backupPath' + sLineBreak +
+    '        $originalMoved = $true' + sLineBreak +
+    '    }' + sLineBreak +
+    '    Move-Item -LiteralPath $tempPath -Destination $exePath' + sLineBreak +
+    '    Start-Process -FilePath $exePath -WorkingDirectory (Split-Path -Parent $exePath)' + sLineBreak +
+    '    if ($originalMoved) {' + sLineBreak +
+    '        Remove-Item -LiteralPath $backupPath -Force -ErrorAction SilentlyContinue' + sLineBreak +
+    '    }' + sLineBreak +
+    '}' + sLineBreak +
+    'catch {' + sLineBreak +
+    '    if ($originalMoved -and (Test-Path -LiteralPath $backupPath)) {' + sLineBreak +
+    '        Remove-Item -LiteralPath $exePath -Force -ErrorAction SilentlyContinue' + sLineBreak +
+    '        Move-Item -LiteralPath $backupPath -Destination $exePath -ErrorAction SilentlyContinue' + sLineBreak +
+    '    }' + sLineBreak +
+    '}' + sLineBreak +
+    'finally {' + sLineBreak +
+    '    Remove-Item -LiteralPath $scriptPath -Force -ErrorAction SilentlyContinue' + sLineBreak +
+    '}' + sLineBreak;
+
+  try
+    TFile.WriteAllText(ScriptPath, Script, TEncoding.UTF8);
+
+    Arguments :=
+      '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' +
+      ScriptPath + '"';
+
+    ShellResult := ShellExecute(
+      0, 'open', 'powershell.exe', PChar(Arguments), nil, SW_HIDE);
+
+    Result := NativeInt(ShellResult) > 32;
+
+    if not Result then
+      TFile.Delete(ScriptPath);
+  except
+    on E: Exception do
+    begin
+      Log('Could not start executable replacement: ' + E.Message);
+      Result := False;
+    end;
+  end;
+end;
+
+end.

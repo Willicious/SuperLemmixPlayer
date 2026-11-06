@@ -74,7 +74,8 @@ uses
   FPlaybackMode in 'FPlaybackMode.pas' {TFPlaybackMode},
   FStyleUpdater in 'FStyleUpdater.pas' {FormStyleUpdater},
   SuperLemmixManifest in 'SuperLemmixManifest.pas',
-  GameLevelSelectScreen in 'GameLevelSelectScreen.pas';
+  GameLevelSelectScreen in 'GameLevelSelectScreen.pas',
+  SuperLemmixOnlineUpdater in 'SuperLemmixOnlineUpdater.pas';
 
 {$R *.res}
 
