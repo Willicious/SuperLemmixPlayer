@@ -39,6 +39,16 @@ type
     maReviewRemoval
   );
 
+  TUpdateActionItem = class
+  private
+    fRelativePath: string;
+    fAction: TManifestAction;
+  public
+    constructor Create(const aPath: string; aAction: TManifestAction);
+    property RelativePath: string read fRelativePath write fRelativePath;
+    property Action: TManifestAction read fAction write fAction;
+  end;
+
   TSuperLemmixManifest = class
   private
     type
@@ -56,7 +66,7 @@ type
     function ComputeShortHash(const FileName: string): string;
     function IsInScope(const RelativePath, RelativeFolder: string): Boolean;
 
-    procedure AddOrUpdateFile(const RelativePath, Hash: string);
+    procedure UpdateHash(const RelativePath, Hash: string);
     procedure MarkFileDeleted(const RelativePath: string);
   public
     constructor Create;
@@ -72,9 +82,19 @@ type
     function IsKnownHash(const RelativePath, Hash: string): Boolean;
     function GetFileStatus(const BaseFolder, RelativePath: string): TManifestFileStatus;
     function GetFileAction(const BaseFolder, RelativePath: string): TManifestAction;
+    function GetUpdatePlan(const BaseFolder: string): TObjectList<TUpdateActionItem>;
   end;
 
 implementation
+
+{ TUpdateActionItem }
+
+constructor TUpdateActionItem.Create(const aPath: string; aAction: TManifestAction);
+begin
+  inherited Create;
+  fRelativePath := aPath;
+  fAction := aAction;
+end;
 
 { TSuperLemmixManifest.TFileEntry }
 
@@ -127,7 +147,7 @@ begin
     RelativePath.StartsWith(Folder + '\');
 end;
 
-procedure TSuperLemmixManifest.AddOrUpdateFile(const RelativePath, Hash: string);
+procedure TSuperLemmixManifest.UpdateHash(const RelativePath, Hash: string);
 var
   Entry: TFileEntry;
 begin
@@ -245,7 +265,7 @@ begin
     end;
 
     for ScannedPair in ScannedFiles do
-      AddOrUpdateFile(ScannedPair.Key, ScannedPair.Value);
+      UpdateHash(ScannedPair.Key, ScannedPair.Value);
   finally
     ScannedFiles.Free;
     Zip.Free;
@@ -304,7 +324,7 @@ begin
         ScannedFiles.Add(RelPath);
 
         Hash := ComputeShortHash(FilePath);
-        AddOrUpdateFile(RelPath, Hash);
+        UpdateHash(RelPath, Hash);
       end;
     end;
 
@@ -553,6 +573,37 @@ begin
       Result := maReviewRemoval;
   else
     Result := maNone;
+  end;
+end;
+
+function TSuperLemmixManifest.GetUpdatePlan(const BaseFolder: string): TObjectList<TUpdateActionItem>;
+var
+  Pair: TPair<string, TFileEntry>;
+  Action: TManifestAction;
+begin
+  if not TDirectory.Exists(BaseFolder) then
+    raise Exception.CreateFmt('Installation folder not found: %s', [BaseFolder]);
+
+  Result := TObjectList<TUpdateActionItem>.Create(True);
+  try
+    for Pair in fEntries do
+    begin
+      if SameText(Pair.Key, 'SuperLemmix.exe') then
+        Continue;
+
+      if IsInScope(Pair.Key, 'styles') then
+        Continue;
+
+      Action := GetFileAction(BaseFolder, Pair.Key);
+
+      if Action = maNone then
+        Continue;
+
+      Result.Add(TUpdateActionItem.Create(Pair.Key, Action));
+    end;
+  except
+    Result.Free;
+    raise;
   end;
 end;
 
