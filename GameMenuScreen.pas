@@ -3,15 +3,16 @@ unit GameMenuScreen;
 interface
 
 uses
-  StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
+  StrUtils, Classes, SysUtils, DateUtils, IOUtils, UITypes,
+  Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
   Types, UMisc, Math,
   GameBaseMenuScreen,
   GameControl,
   LemNeoLevelPack,
-  //LemNeoOnline,
   LemNeoParser,
   LemStrings,
   LemTypes,
+  SuperLemmixManifest, SuperLemmixOnlineUpdater,
   GR32, GR32_Resamplers,
   SharedGlobals;
 
@@ -61,8 +62,6 @@ type
       fReelForceDirection: Integer;
 
       fCleanInstallFail: Boolean;
-      //fUpdateCheckThread: TDownloadThread;
-      fVersionInfo: TStringList;
 
       fGroupSignCenter: TPoint;
       fGroupGraphic: TBitmap32;
@@ -100,8 +99,7 @@ type
 
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
-      //procedure InitiateUpdateCheck;
-      //procedure HandleUpdateCheckResult;
+      procedure PerformOnlineUpdate;
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
       procedure DisableIdle;
@@ -146,8 +144,6 @@ begin
   ScrollerReel := TBitmap32.Create;
   ScrollerText := TBitmap32.Create;
 
-  fVersionInfo := TStringList.Create;
-
   fGroupGraphic := TBitmap32.Create;
 
   fScrollerTextList := TStringList.Create;
@@ -161,8 +157,6 @@ begin
   ScrollerLemmings.Free;
   ScrollerReel.Free;
   ScrollerText.Free;
-
-  fVersionInfo.Free;
 
   fGroupGraphic.Free;
 
@@ -216,17 +210,6 @@ begin
     ShowSetupMenu;
 
     EnableIdle;
-//  end else if (fUpdateCheckThread <> nil) and (fUpdateCheckThread.Complete) then
-//  begin
-//    DisableIdle;
-//
-//    if fUpdateCheckThread.Success then
-//      HandleUpdateCheckResult;
-//
-//    fUpdateCheckThread.Free;
-//    fUpdateCheckThread := nil;
-//
-//    EnableIdle;
   end else if not fDisableScroller then
     UpdateReel;
 
@@ -247,12 +230,6 @@ end;
 
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
-//  if fUpdateCheckThread <> nil then
-//  begin
-//    fUpdateCheckThread.Kill;
-//    FreeAndNil(fUpdateCheckThread);
-//  end;
-
   inherited;
 end;
 
@@ -283,9 +260,6 @@ begin
 
   DoCleanInstallCheck;
 
-//  if not GameParams.DoneUpdateCheck then
-//    InitiateUpdateCheck;
-
   if (GameParams.CurrentLevel <> nil) and
      (fScrollerTextList.Count > 0) then
   begin
@@ -295,6 +269,12 @@ begin
     fDisableScroller := True;
 
   EnableIdle;
+
+  if HoursBetween(GameParams.LastUpdateCheck, Now) >= (7 * 24) then
+  begin
+    PerformOnlineUpdate;
+    GameParams.LastUpdateCheck := Now;
+  end;
 end;
 
 procedure TGameMenuScreen.CleanupIngameStuff;
@@ -920,64 +900,49 @@ begin
   end;
 end;
 
-// TODO - FIF "UpdateCheck" to find all related code in case you want to re-implement this
-//procedure TGameMenuScreen.InitiateUpdateCheck;
-//begin
-//  GameParams.DoneUpdateCheck := True;
-    // This part will have to be done differently as FStyleManager unit has been removed
-//  fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo);
-//end;
-//
-//procedure TGameMenuScreen.HandleUpdateCheckResult;
-//var
-//  NewVersionStr, OrigVersionStr: String;
-//  SL: TStringList;
-//  n: Integer;
-//  NewestID: Int64;
-//  URL: String;
-//begin
-//  NewVersionStr := fVersionInfo.Values['game'];
-//  if LeftStr(NewVersionStr, 1) = 'V' then
-//    NewVersionStr := RightStr(NewVersionStr, Length(NewVersionStr)-1);
-//
-//  OrigVersionStr := NewVersionStr;
-//  NewVersionStr := StringReplace(NewVersionStr, '-', '.', [rfReplaceAll]);
-//
-//  SL := TStringList.Create;
-//  try
-//    try
-//      SL.Delimiter := '.';
-//      SL.StrictDelimiter := True;
-//      SL.DelimitedText := NewVersionStr;
-//
-//      if SL.Count < 4 then
-//        SL.Add('A');
-//
-//      SL[3] := Char(Ord(SL[3][1]) - 65);
-//
-//      NewestID := 0;
-//      for n := 0 to 3 do
-//        NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
-//
-//      if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
-//      begin
-//        case RunCustomPopup(Self, 'Update', 'A SuperLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
-//          'Go to SuperLemmix Github|Remind me later') of
-//          1: begin
-//               URL := 'https://github.com/Willicious/SuperLemmix-Download';
-//               ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
-//               CloseScreen(gstExit);
-//             end;
-//          //2: do nothing;
-//        end;
-//      end;
-//
-//    except
-//      // Fail silently.
-//    end;
-//  finally
-//    SL.Free;
-//  end;
-//end;
+procedure TGameMenuScreen.PerformOnlineUpdate;
+var
+  BaseFolder, TempFolder, ZipFile, VersionText: string;
+begin
+  BaseFolder := ExtractFilePath(ParamStr(0));
+  TempFolder := TPath.Combine(BaseFolder, 'updates');
+  ZipFile := '';
+  try
+    try
+      DownloadLatestRelease(TempFolder, ZipFile, VersionText);
+
+      if ZipFile = '' then
+        Exit;
+
+      ApplyUpdate(ZipFile, BaseFolder);
+
+      MessageDlg(Format(
+          'SuperLemmix has been updated to version %s!' + sLineBreak + sLineBreak +
+          'The application will now restart to complete the update.',
+          [VersionText]), mtInformation, [mbOK], 0);
+
+      if not ReplaceExecutable(BaseFolder) then
+      begin
+        var ErrorMsg := 'Error replacing executable';
+        MessageDlg(ErrorMsg, mtError, [mbOK], 0);
+        Log(ErrorMsg);
+      end;
+
+      Application.Terminate;
+    except
+      on E: Exception do
+        Log('Update check failed: ' + E.Message);
+    end;
+  finally
+    if (ZipFile <> '') and TFile.Exists(ZipFile) then
+    begin
+      try
+        TFile.Delete(ZipFile);
+      except
+        // Non-fatal if cleanup fails
+      end;
+    end;
+  end;
+end;
 
 end.
