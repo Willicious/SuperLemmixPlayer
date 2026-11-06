@@ -50,7 +50,7 @@ type
       end;
 
   private
-    FEntries: TObjectDictionary<string, TFileEntry>;
+    fEntries: TObjectDictionary<string, TFileEntry>;
 
     function NormalizePath(const BaseFolder, FullPath: string): string;
     function ComputeShortHash(const FileName: string): string;
@@ -93,12 +93,12 @@ end;
 
 constructor TSuperLemmixManifest.Create;
 begin
-  FEntries := TObjectDictionary<string, TFileEntry>.Create([doOwnsValues]);
+  fEntries := TObjectDictionary<string, TFileEntry>.Create([doOwnsValues]);
 end;
 
 destructor TSuperLemmixManifest.Destroy;
 begin
-  FEntries.Free;
+  fEntries.Free;
   inherited;
 end;
 
@@ -131,12 +131,12 @@ procedure TSuperLemmixManifest.AddOrUpdateFile(const RelativePath, Hash: string)
 var
   Entry: TFileEntry;
 begin
-  if not FEntries.TryGetValue(RelativePath, Entry) then
+  if not fEntries.TryGetValue(RelativePath, Entry) then
   begin
     Entry := TFileEntry.Create;
     Entry.Current := Hash;
     Entry.Known.Add(Hash);
-    FEntries.Add(RelativePath, Entry);
+    fEntries.Add(RelativePath, Entry);
     Exit;
   end;
 
@@ -157,7 +157,7 @@ procedure TSuperLemmixManifest.MarkFileDeleted(const RelativePath: string);
 var
   Entry: TFileEntry;
 begin
-  if FEntries.TryGetValue(RelativePath, Entry) then
+  if fEntries.TryGetValue(RelativePath, Entry) then
     Entry.Current := '';
 end;
 
@@ -169,7 +169,7 @@ var
   Pair: TPair<string, TFileEntry>;
   ScannedPair: TPair<string, string>;
   OriginalEntryName, EntryName, RelativePath, Hash: string;
-  I: Integer;
+  i: Integer;
   IsDirectory: Boolean;
   EntryStream: TMemoryStream;
   Bytes: TBytes;
@@ -187,9 +187,9 @@ begin
       FileNames := Zip.FileNames;
 
       { Read and hash every file before modifying the manifest }
-      for I := 0 to High(FileNames) do
+      for i := 0 to High(FileNames) do
       begin
-        OriginalEntryName := FileNames[I];
+        OriginalEntryName := FileNames[i];
         EntryName := StringReplace(OriginalEntryName, '/', '\', [rfReplaceAll]);
 
         IsDirectory := EntryName.EndsWith('\');
@@ -234,7 +234,7 @@ begin
     end;
 
     { Only update the manifest after the entire ZIP was read }
-    for Pair in FEntries do
+    for Pair in fEntries do
     begin
       if IsInScope(Pair.Key, 'styles') then
         Continue;
@@ -310,7 +310,7 @@ begin
 
     { Mark previously known files as deleted when they are no
       longer present in any of the selected folder scopes }
-    for Pair in FEntries do
+    for Pair in fEntries do
     begin
       if Pair.Value.Current = '' then
         Continue;
@@ -376,9 +376,8 @@ begin
     raise Exception.CreateFmt(
       'Installation folder not found: %s', [BaseFolder]);
 
-  // Check every file recorded in the manifest, including
-  // files that are missing from the local installation.
-  for Pair in FEntries do
+  // Check every file recorded in the manifest, including any missing from the local installation
+  for Pair in fEntries do
   begin
     if IsInScope(Pair.Key, 'styles') then
       Continue;
@@ -400,7 +399,7 @@ begin
     if IsInScope(RelativePath, 'styles') then
       Continue;
 
-    if not FEntries.ContainsKey(RelativePath) then
+    if not fEntries.ContainsKey(RelativePath) then
       Results.Add(RelativePath + ' = Not tracked');
   end;
 end;
@@ -423,12 +422,12 @@ begin
   try
     Ini.ReadSections(Sections);
 
-    for I := 0 to Sections.Count - 1 do
+    for i := 0 to Sections.Count - 1 do
     begin
       Entry := TFileEntry.Create;
-      Entry.Current := Ini.ReadString(Sections[I], 'Current', '');
+      Entry.Current := Ini.ReadString(Sections[i], 'Current', '');
 
-      KnownStr := Ini.ReadString(Sections[I], 'Known', '');
+      KnownStr := Ini.ReadString(Sections[i], 'Known', '');
       KnownItems := KnownStr.Split([',']);
 
       for S in KnownItems do
@@ -439,7 +438,7 @@ begin
       if (Entry.Current <> '') and not Entry.Known.Contains(Entry.Current) then
         Entry.Known.Add(Entry.Current);
 
-      FEntries.AddOrSetValue(Sections[I], Entry);
+      fEntries.AddOrSetValue(Sections[i], Entry);
     end;
 
   finally
@@ -459,7 +458,7 @@ begin
     { Remove old sections, including entries for files no longer scanned }
     Ini.Clear;
 
-    for Pair in FEntries do
+    for Pair in fEntries do
     begin
       KnownStr := string.Join(',', Pair.Value.Known.ToArray);
 
@@ -477,7 +476,7 @@ function TSuperLemmixManifest.GetCurrentHash(const RelativePath: string): string
 var
   Entry: TFileEntry;
 begin
-  if FEntries.TryGetValue(LowerCase(StringReplace(RelativePath, '/', '\', [rfReplaceAll])), Entry) then
+  if fEntries.TryGetValue(LowerCase(StringReplace(RelativePath, '/', '\', [rfReplaceAll])), Entry) then
     Result := Entry.Current
   else
     Result := '';
@@ -487,7 +486,7 @@ function TSuperLemmixManifest.IsKnownHash(const RelativePath, Hash: string): Boo
 var
   Entry: TFileEntry;
 begin
-  if FEntries.TryGetValue(LowerCase(StringReplace(RelativePath, '/', '\', [rfReplaceAll])), Entry) then
+  if fEntries.TryGetValue(LowerCase(StringReplace(RelativePath, '/', '\', [rfReplaceAll])), Entry) then
     Result := Entry.Known.Contains(LowerCase(Hash))
   else
     Result := False;
@@ -506,7 +505,7 @@ begin
   if not FileExists(FullPath) then
     Exit(mfsMissing);
 
-  if not FEntries.TryGetValue(NormalizedPath, Entry) then
+  if not fEntries.TryGetValue(NormalizedPath, Entry) then
     Exit(mfsNotTracked);
 
   Hash := ComputeShortHash(FullPath);
