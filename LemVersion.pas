@@ -16,8 +16,8 @@ const
 
   function COMMIT_ID: String;
 
-function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
-function MakeVersionID(aFormat, aCore, aFeature, aHotfix: Integer): Int64;
+function MakeVersionString(aMajor, aMinor, aHotfix, aRC: Integer): String;
+function MakeVersionID(aMajor, aMinor, aHotfix, aRC: Integer): Int64;
 function CurrentVersionString: String;
 function CurrentVersionID: Int64;
 function IsNewerVersion(const AvailableVersion: string): Boolean;
@@ -42,7 +42,7 @@ begin
   Result := MakeVersionID(MAJOR_VERSION, MINOR_VERSION, HOTFIX_VERSION, RC_VERSION);
 end;
 
-function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
+function MakeVersionString(aMajor, aMinor, aHotfix, aRC: Integer): String;
   function NumberToLetters(aValue: Integer): String;
   var
     n: Integer;
@@ -55,29 +55,29 @@ function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
     until aValue = 0;
   end;
 begin
-  Result := IntToStr(aFormat);
-  Result := Result + '.' + IntToStr(aCore);
-  Result := Result + '.' + IntToStr(aFeature);
+  Result := IntToStr(aMajor);
+  Result := Result + '.' + IntToStr(aMinor);
+
+  if aHotfix <> 0 then
+    Result := Result + '.' + IntToStr(aHotfix);
+
   {$ifdef rc}
-  Result := Result + '-RC' + IntToStr(aHotfix);
-  {$else}
-  if aHotfix > 0 then
-    Result := Result + '-' + NumberToLetters(aHotfix);
+  Result := Result + '-RC' + IntToStr(aRC);
   {$endif}
 end;
 
-function MakeVersionID(aFormat, aCore, aFeature, aHotfix: Integer): Int64;
+function MakeVersionID(aMajor, aMinor, aHotfix, aRC: Integer): Int64;
 begin
-  Result := aFormat;
-  Result := (Result * 1000) + aCore;
-  Result := (Result * 1000) + aFeature;
-  Result := (Result * 1000) {$ifndef rc}+ aHotfix{$endif};
+  Result := aMajor;
+  Result := (Result * 1000) + aMinor;
+  Result := (Result * 1000) + aHotfix;
+  Result := (Result * 1000) {$ifndef rc}+ aRC{$endif};
 end;
 
 function IsNewerVersion(const AvailableVersion: string): Boolean;
 var
   Match: TMatch;
-  FormatVersion, CoreVersion, FeatureVersion: Integer;
+  Major, Minor, Hotfix: Integer;
 begin
   Match := TRegEx.Match(AvailableVersion, '^(\d+)\.(\d+)\.(\d+)$');
 
@@ -85,12 +85,11 @@ begin
     raise Exception.Create(
       'Invalid release version: ' + AvailableVersion);
 
-  FormatVersion := StrToInt(Match.Groups[1].Value);
-  CoreVersion := StrToInt(Match.Groups[2].Value);
-  FeatureVersion := StrToInt(Match.Groups[3].Value);
+  Major := StrToInt(Match.Groups[1].Value);
+  Minor := StrToInt(Match.Groups[2].Value);
+  Hotfix := StrToInt(Match.Groups[3].Value);
 
-  Result := MakeVersionID(
-    FormatVersion, CoreVersion, FeatureVersion, 0) > CurrentVersionID;
+  Result := MakeVersionID(Major, Minor, Hotfix, 0) > CurrentVersionID;
 end;
 
 end.
