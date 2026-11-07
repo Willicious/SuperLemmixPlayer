@@ -100,7 +100,7 @@ type
 
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
-      procedure PerformOnlineUpdateManually;
+      procedure DoOnlineUpdate;
       procedure PerformOnlineUpdate(Auto: Boolean);
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
@@ -404,7 +404,7 @@ begin
   var Point := System.Types.Point(InternalScreenWidth div 2, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
 
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
-  MakeClickableText(Point, SLXInfoText, PerformOnlineUpdateManually);
+  MakeClickableText(Point, SLXInfoText, DoOnlineUpdate);
   DrawAllClickables;
 end;
 
@@ -908,7 +908,7 @@ begin
   end;
 end;
 
-procedure TGameMenuScreen.PerformOnlineUpdateManually;
+procedure TGameMenuScreen.DoOnlineUpdate;
 begin
   PerformOnlineUpdate(False);
 end;
