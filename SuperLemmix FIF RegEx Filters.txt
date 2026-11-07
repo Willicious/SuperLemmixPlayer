@@ -1,0 +1,3 @@
+*.pas *.txt *.pas.rej *.res *.ddp *.dfm *.bat *.cfg *.dof *.dpr *.inc *.dproj *dproj.local *.identcache *.rc
+
+*.* !+\styles* !+\levels*
