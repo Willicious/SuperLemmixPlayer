@@ -1309,7 +1309,6 @@ begin
     waiting for a quit or a screen transition to save them. }
   GameParams.Save(scImportant);
   ApplyConfigChanges(OldAmigaTheme, OldFullScreen, OldHighResolution, OldShowMinimap, ResetWindowSize, ResetWindowPos);
-
   DoAfterConfig;
 end;
 
@@ -1400,6 +1399,9 @@ end;
 
 destructor TClickableRegion.Destroy;
 begin
+  if Assigned(fResetTimer) then
+    fResetTimer.Free;
+
   fBitmaps.Free;
   fShortcutKeys.Free;
   inherited;
