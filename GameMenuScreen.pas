@@ -3,8 +3,8 @@ unit GameMenuScreen;
 interface
 
 uses
-  StrUtils, Classes, SysUtils, DateUtils, IOUtils, UITypes,
-  Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi, StdCtrls,
+  StrUtils, Classes, SysUtils, DateUtils,
+  Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
   Types, UMisc, Math,
   GameBaseMenuScreen,
   GameControl,
@@ -101,7 +101,6 @@ type
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
       procedure DoOnlineUpdate;
-      procedure PerformOnlineUpdate(Auto: Boolean);
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
       procedure DisableIdle;
@@ -911,98 +910,6 @@ end;
 procedure TGameMenuScreen.DoOnlineUpdate;
 begin
   PerformOnlineUpdate(False);
-end;
-
-procedure TGameMenuScreen.PerformOnlineUpdate(Auto: Boolean);
-var
-  BaseFolder, TempFolder, ZipFile: string;
-  AssetName, DownloadURL, VersionText: string;
-  UpdateDialog: TForm;
-  UpdateLabel: TLabel;
-begin
-  BaseFolder := ExtractFilePath(ParamStr(0));
-  TempFolder := TPath.Combine(BaseFolder, 'updates');
-  ZipFile := '';
-
-  try
-    CheckLatestVersion(AssetName, DownloadURL, VersionText);
-
-    if not IsNewerVersion(VersionText) then
-    begin
-      if not Auto then
-        ShowMessage('SuperLemmix is up to date!');
-
-      GameParams.LastUpdateCheck := Now;
-      Exit;
-    end;
-
-    if MessageDlg(Format(
-      'SuperLemmix version %s is available.' + sLineBreak + sLineBreak +
-      'Would you like to download and install it now?',
-      [VersionText]), mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
-    begin
-      GameParams.LastUpdateCheck := 0;
-      Exit;
-    end;
-
-    UpdateDialog := TForm.Create(nil);
-    try
-      UpdateDialog.BorderStyle := bsDialog;
-      UpdateDialog.Position := poMainFormCenter;
-      UpdateDialog.Caption := 'SuperLemmix';
-      UpdateDialog.ClientWidth := 300;
-      UpdateDialog.ClientHeight := 80;
-
-      UpdateLabel := TLabel.Create(UpdateDialog);
-      UpdateLabel.Parent := UpdateDialog;
-      UpdateLabel.Align := alClient;
-      UpdateLabel.Alignment := taCenter;
-      UpdateLabel.Layout := tlCenter;
-      UpdateLabel.Caption := 'Updating SuperLemmix. Please wait...';
-
-      UpdateDialog.Show;
-      UpdateDialog.Update;
-
-      DownloadLatestRelease(TempFolder, AssetName, DownloadURL, ZipFile);
-      ApplyUpdate(ZipFile, BaseFolder);
-
-      UpdateDialog.Hide;
-
-      MessageDlg(Format(
-        'SuperLemmix has been updated to version %s!' + sLineBreak + sLineBreak +
-        'The application will now restart to complete the update.',
-        [VersionText]), mtInformation, [mbOK], 0);
-
-      if ReplaceExecutable(BaseFolder) then
-        Application.Terminate
-      else begin
-        MessageDlg('Error replacing executable.', mtError, [mbOK], 0);
-        Log('Error replacing executable.');
-      end;
-
-    finally
-      UpdateDialog.Free;
-    end;
-
-  except
-    on E: Exception do
-    begin
-      Log('Update check failed: ' + E.Message);
-
-      if not Auto then
-        ShowMessage('No published update is currently available.' + sLineBreak + E.Message);
-    end;
-  end;
-
-  { Clean up downloaded ZIP }
-  if (ZipFile <> '') and TFile.Exists(ZipFile) then
-  begin
-    try
-      TFile.Delete(ZipFile);
-    except
-      // Non-fatal if cleanup fails
-    end;
-  end;
 end;
 
 end.
