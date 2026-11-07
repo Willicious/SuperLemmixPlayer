@@ -986,7 +986,12 @@ begin
 
   except
     on E: Exception do
+    begin
       Log('Update check failed: ' + E.Message);
+
+      if not Auto then
+        ShowMessage('No published update is currently available.' + sLineBreak + E.Message);
+    end;
   end;
 
   { Clean up downloaded ZIP }
