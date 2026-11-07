@@ -14,6 +14,7 @@ object FormStyleUpdater: TFormStyleUpdater
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClick = FormClick
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
@@ -39,7 +40,7 @@ object FormStyleUpdater: TFormStyleUpdater
     ReadOnly = True
     TabOrder = 0
     ViewStyle = vsReport
-    OnSelectItem = lvAvailableUpdatesSelectItem
+    OnClick = lvAvailableUpdatesClick
   end
   object lvLocalStyles: TListView
     Left = 13
@@ -54,6 +55,7 @@ object FormStyleUpdater: TFormStyleUpdater
     ReadOnly = True
     TabOrder = 1
     ViewStyle = vsReport
+    OnClick = lvLocalStylesClick
   end
   object btnDownloadSelected: TButton
     Left = 226

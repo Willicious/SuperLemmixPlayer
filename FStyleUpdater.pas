@@ -25,9 +25,10 @@ type
     procedure btnDownloadAllClick(Sender: TObject);
     procedure btnDownloadSelectedClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure lvAvailableUpdatesSelectItem(Sender: TObject; Item: TListItem;
-      Selected: Boolean);
     procedure FormDestroy(Sender: TObject);
+    procedure lvLocalStylesClick(Sender: TObject);
+    procedure lvAvailableUpdatesClick(Sender: TObject);
+    procedure FormClick(Sender: TObject);
   private
     { Private declarations }
     fChecksumsLocal: String;
@@ -58,6 +59,13 @@ implementation
 
 {$R *.dfm}
 
+procedure TFormStyleUpdater.FormClick(Sender: TObject);
+begin
+  lvLocalStyles.ClearSelection;
+  lvAvailableUpdates.ClearSelection;
+  UpdateControls;
+end;
+
 procedure TFormStyleUpdater.FormCreate(Sender: TObject);
 begin
   fChecksumsLocal := AppPath + SFStyles + 'styletimes.ini';
@@ -87,7 +95,7 @@ end;
 
 procedure TFormStyleUpdater.UpdateControls;
 begin
-  btnDownloadSelected.Enabled :=  Assigned(lvAvailableUpdates.Selected);
+  btnDownloadSelected.Enabled := Assigned(lvAvailableUpdates.Selected);
   btnDownloadAll.Enabled := lvAvailableUpdates.Items.Count > 0;
 end;
 
@@ -112,9 +120,15 @@ begin
   end;
 end;
 
-procedure TFormStyleUpdater.lvAvailableUpdatesSelectItem(Sender: TObject;
-  Item: TListItem; Selected: Boolean);
+procedure TFormStyleUpdater.lvAvailableUpdatesClick(Sender: TObject);
 begin
+  lvLocalStyles.ClearSelection;
+  UpdateControls;
+end;
+
+procedure TFormStyleUpdater.lvLocalStylesClick(Sender: TObject);
+begin
+  lvAvailableUpdates.ClearSelection;
   UpdateControls;
 end;
 
