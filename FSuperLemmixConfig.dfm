@@ -233,7 +233,7 @@ object FormNXConfig: TFormNXConfig
         Top = 111
         Width = 134
         Height = 48
-        Hint = 'Setup your own hotkey configuration'
+        Hint = 'Open Style Updater'
         Caption = 'Update Styles'
         ParentShowHint = False
         ShowHint = True
