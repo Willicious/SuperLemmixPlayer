@@ -31,7 +31,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'OK'
     TabOrder = 0
     OnClick = btnOKClick
-    ExplicitTop = 516
   end
   object btnCancel: TButton
     Left = 124
@@ -43,7 +42,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 1
-    ExplicitTop = 516
   end
   object btnApply: TButton
     Left = 208
@@ -54,17 +52,15 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Apply'
     TabOrder = 2
     OnClick = btnApplyClick
-    ExplicitTop = 516
   end
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 328
     Height = 502
-    ActivePage = tsGameplay
+    ActivePage = tsGeneral
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3
-    ExplicitHeight = 514
     object tsGeneral: TTabSheet
       Caption = 'General'
       object lblUserName: TLabel
@@ -233,9 +229,9 @@ object FormNXConfig: TFormNXConfig
         OnClick = OptionChanged
       end
       object btnStyleUpdater: TButton
-        Left = 21
+        Left = 160
         Top = 111
-        Width = 273
+        Width = 134
         Height = 48
         Hint = 'Setup your own hotkey configuration'
         Caption = 'Update Styles'
@@ -243,6 +239,18 @@ object FormNXConfig: TFormNXConfig
         ShowHint = True
         TabOrder = 4
         OnClick = btnStyleUpdaterClick
+      end
+      object btnCheckForUpdates: TButton
+        Left = 21
+        Top = 111
+        Width = 134
+        Height = 48
+        Hint = 'Check online for an available update to SuperLemmix'
+        Caption = 'Check For Updates'
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 5
+        OnClick = btnCheckForUpdatesClick
       end
     end
     object tsGameplay: TTabSheet
@@ -2870,7 +2878,6 @@ object FormNXConfig: TFormNXConfig
           'Boing!')
         TabOrder = 3
         OnClick = OptionChanged
-        ExplicitTop = 225
       end
       object gbMenuSounds: TGroupBox
         Left = 55

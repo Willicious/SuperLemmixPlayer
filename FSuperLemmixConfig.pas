@@ -3,12 +3,12 @@ unit FSuperLemmixConfig;
 interface
 
 uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls, Math,
   GameControl, GameSound, LemStrings,
   FEditHotkeys, LemHotkeys,
   FStyleUpdater,
-  Math,
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, Vcl.WinXCtrls, Vcl.ExtCtrls,
+  SuperLemmixOnlineUpdater,
   SharedGlobals;
 
 type
@@ -78,6 +78,7 @@ type
     lblDefaultReplayMode: TLabel;
     rbReplayModeStandard: TRadioButton;
     rbReplayModeInsert: TRadioButton;
+    btnCheckForUpdates: TButton;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -92,6 +93,7 @@ type
     procedure cbShowMinimapClick(Sender: TObject);
     procedure cbEdgeScrollingClick(Sender: TObject);
     procedure btnStyleUpdaterClick(Sender: TObject);
+    procedure btnCheckForUpdatesClick(Sender: TObject);
   private
     fIsSetting: Boolean;
     fResetWindowSize: Boolean;
@@ -380,6 +382,11 @@ begin
   finally
     HotkeyForm.Free;
   end;
+end;
+
+procedure TFormNXConfig.btnCheckForUpdatesClick(Sender: TObject);
+begin
+  PerformOnlineUpdate(False);
 end;
 
 procedure TFormNXConfig.btnStyleUpdaterClick(Sender: TObject);
