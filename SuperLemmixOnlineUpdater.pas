@@ -142,9 +142,8 @@ begin
   Http := THTTPClient.Create;
   JsonValue := nil;
   try
-    Http.UserAgent := 'SuperLemmixOnlineUpdater';
-
     { Retrieve the latest published GitHub Release }
+    Http.UserAgent := 'SuperLemmixOnlineUpdater';
     Response := Http.Get(LATEST_RELEASE_URL);
 
     if Response.StatusCode <> 200 then
@@ -159,7 +158,6 @@ begin
       raise Exception.Create('Invalid GitHub release response.');
 
     ReleaseObject := JsonValue as TJSONObject;
-
     AssetValue := ReleaseObject.GetValue('assets');
 
     if not (AssetValue is TJSONArray) then
@@ -174,7 +172,6 @@ begin
         Continue;
 
       AssetObject := AssetsArray.Items[i] as TJSONObject;
-
       NameValue := AssetObject.GetValue('name');
       URLValue := AssetObject.GetValue('browser_download_url');
 
@@ -192,7 +189,7 @@ begin
       if not CandidateName.StartsWith('SuperLemmix', True) then
         Continue;
 
-      Match := TRegEx.Match(CandidateName, '(\d+)\.(\d+)\.(\d+)');
+      Match := TRegEx.Match(CandidateName, '(\d+)\.(\d+)(?:\.(\d+))?');
 
       if not Match.Success then
         Continue;
@@ -206,8 +203,12 @@ begin
         'No versioned SuperLemmix ZIP found in latest release.');
 
     Version := Match.Groups[1].Value + '.' +
-               Match.Groups[2].Value + '.' +
-               Match.Groups[3].Value;
+               Match.Groups[2].Value + '.0';
+
+    if Match.Groups.Count > 3 then
+      Version := Match.Groups[1].Value + '.' +
+                 Match.Groups[2].Value + '.' +
+                 Match.Groups[3].Value;
 
     fAssetName := CandidateName;
     fVersionText := Version;
