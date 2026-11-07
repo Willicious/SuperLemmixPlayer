@@ -192,12 +192,15 @@ begin
   if (aName = 'JUMP') then SFX_Jump := aSound;
   if (aName = 'LASER') then SFX_Laser := aSound;
   if (aName = 'LETS_GO') then SFX_LetsGo := aSound;
+  if (aName = 'NORMALIZE') then SFX_Normalize := aSound;
   if (aName = 'OH_NO') then SFX_OhNo := aSound;
   if (aName = 'MENU_OK') then SFX_OK := aSound;
   if (aName = 'PICKUP') then SFX_Pickup := aSound;
   if (aName = 'EXPLODE') then SFX_Pop := aSound;
+  if (aName = 'PORTAL') then SFX_Portal := aSound;
   if (aName = 'PROPELLER') then SFX_Propeller := aSound;
   if (aName = 'RELEASE_RATE') then SFX_ReleaseRate := aSound;
+  if (aName = 'SKILL_ASSIGNER') then SFX_SkillAssigner := aSound;
   if (aName = 'SKILL_BUTTON') then SFX_SkillButton := aSound;
   if (aName = 'SPEAR_HIT') then SFX_SpearHit := aSound;
   if (aName = 'SPEAR_THROW') then SFX_SpearThrow := aSound;
