@@ -15,4 +15,5 @@ Kernel/gr32png/
 Kernel/JCL/
 *.dproj.local
 *.stat
-data/external/styles/version.ini
+data/external/data/version.ini
+**/version.ini
