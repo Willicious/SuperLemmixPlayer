@@ -149,7 +149,7 @@ const
 implementation
 
 uses
-GameControl, LemNeoLevelPack;
+GameControl, LemLevelPack;
 
 (* --- TSoundManager --- *)
 

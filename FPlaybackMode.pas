@@ -6,7 +6,7 @@ uses
   GameControl,
   LemStrings,
   LemTypes,
-  LemNeoLevelPack,
+  LemLevelPack,
   LemHotkeys,
   FEditHotkeys,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,

@@ -3,7 +3,7 @@ unit LemGadgetAnimation;
 interface
 
 uses
-  LemNeoTheme,
+  LemTheme,
   LemAnimationSet, LemMetaAnimation,
   LemCore,
   LemStrings,
@@ -11,7 +11,7 @@ uses
   PngInterface,
   UMisc,
   LemTypes,
-  LemNeoParser,
+  LemParser,
   GR32,
   Classes,
   StrUtils,
@@ -262,7 +262,7 @@ implementation
 
 uses
   LemProjectile,
-  LemNeoPieceManager,
+  LemPieceManager,
   GameControl;
 
 // TGadgetAnimation

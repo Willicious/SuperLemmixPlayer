@@ -6,7 +6,7 @@ diff a/LemTalisman.pas b/LemTalisman.pas	(rejected hunks)
  
  uses
    LemCore,
-   LemNeoParser,
+   LemParser,
    UMisc,
    Classes, SysUtils;
  

@@ -4,7 +4,7 @@ unit LemTerrain;
 interface
 
 uses
-  LemNeoParser,
+  LemParser,
   Dialogs,
   Classes,
   LemPiece, LemStrings,
@@ -63,7 +63,7 @@ implementation
 
 uses
   LemMetaTerrain,
-  LemNeoPieceManager;
+  LemPieceManager;
 
 { TTerrain }
 

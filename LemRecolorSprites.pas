@@ -5,8 +5,8 @@ interface
 uses
   Dialogs,
   Classes, SysUtils,
-  LemNeoParser,
-  LemNeoTheme,
+  LemParser,
+  LemTheme,
   LemLemming, LemTypes, LemStrings, LemPalette,
   GR32, GR32_Blend,
   SharedGlobals;

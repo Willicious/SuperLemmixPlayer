@@ -19,7 +19,7 @@ uses
   LemLevel,
   LemLemming, LemCore, LemVersion, LemStrings,
   Contnrs, Classes, SysUtils, StrUtils, Windows,
-  LemNeoParser,
+  LemParser,
   SharedGlobals;
 
 const
@@ -221,7 +221,7 @@ var
 implementation
 
 uses
-  CustomPopup, LemNeoLevelPack, LemTypes, GameControl, uMisc; // In TReplay.GetSaveFileName
+  CustomPopup, LemLevelPack, LemTypes, GameControl, uMisc; // In TReplay.GetSaveFileName
 
 var
   IncludeInternalInfo: Boolean;

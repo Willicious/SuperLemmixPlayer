@@ -16,7 +16,7 @@ interface
 uses
   Classes, SysUtils, StrUtils,
   Dialogs, UMisc, Math,
-  LemLevel, LemStrings, LemNeoParser,
+  LemLevel, LemStrings, LemParser,
   LemPiece, LemTerrain, LemGadgetsModel,
   LemSteel, LemLemming,
   LemDosStructures, LemTypes, LemCore;

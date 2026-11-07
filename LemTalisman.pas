@@ -4,7 +4,7 @@ interface
 
 uses
   LemCore,
-  LemNeoParser,
+  LemParser,
   UMisc,
   Classes, SysUtils,
   SharedGlobals;

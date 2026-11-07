@@ -7,7 +7,7 @@ uses
   Dialogs,
   Classes, SysUtils, GR32,
   LemRenderHelpers,
-  LemNeoParser, PngInterface, LemStrings, LemTypes, Contnrs,
+  LemParser, PngInterface, LemStrings, LemTypes, Contnrs,
   SharedGlobals;
 
 const
@@ -94,7 +94,7 @@ type
 implementation
 
 uses
-  LemNeoPieceManager,
+  LemPieceManager,
   GameControl;
 
 { TMetaTerrain }

@@ -1,9 +1,6 @@
 {$include lem_directives.inc}
 unit LemRenderHelpers;
 
-// Moved some stuff here from LemRendering so that I can reference it in
-// LemNeoGraphicSet without circular dependancy.
-
 interface
 
 uses

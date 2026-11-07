@@ -4,7 +4,7 @@ interface
 
 uses
   LemTypes,
-  LemNeoLevelPack,
+  LemLevelPack,
   LemRes,
   LemGame, AppController,
   GameControl,

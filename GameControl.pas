@@ -10,8 +10,8 @@ unit GameControl;
 interface
 
 uses
-  LemNeoPieceManager,
-  LemNeoLevelPack,
+  LemPieceManager,
+  LemLevelPack,
   LemHotkeys,
   Math,
   Dialogs, StdCtrls, SysUtils, StrUtils, IOUtils, Classes, Forms, Types,

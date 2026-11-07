@@ -7,9 +7,9 @@ interface
 uses
   Dialogs,
   GR32, LemTypes, UMisc,
-  PngInterface, LemStrings, LemNeoTheme,
+  PngInterface, LemStrings, LemTheme,
   Classes, SysUtils, StrUtils,
-  Contnrs, LemNeoParser,
+  Contnrs, LemParser,
   LemAnimationSet,
   LemGadgetAnimation, LemGadgetsConstants,
   SharedGlobals;

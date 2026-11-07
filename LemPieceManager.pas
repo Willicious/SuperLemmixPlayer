@@ -1,4 +1,4 @@
-unit LemNeoPieceManager;
+unit LemPieceManager;
 
 { The TNeoPieceManager class is used in a similar manner to how graphic sets were in the past.
   It could be thought of as a huge dynamic graphic set. }
@@ -7,11 +7,11 @@ interface
 
 uses
   Dialogs,
-  PngInterface, LemNeoTheme, LemAnimationSet,
+  PngInterface, LemTheme, LemAnimationSet,
   LemMetaTerrain, LemTerrainGroup, LemGadgetsMeta, LemGadgetsConstants, LemTypes, GR32, LemStrings,
   Generics.Collections,
   StrUtils, Classes, SysUtils,
-  LemNeoParser,
+  LemParser,
   SharedGlobals;
 
 const

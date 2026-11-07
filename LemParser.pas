@@ -1,4 +1,4 @@
-unit LemNeoParser;
+unit LemParser;
 
 (*
 
@@ -23,7 +23,7 @@ of parsing the file into keyword / value pairs and seperate subsections.
 --- Usage Notes ---
 
 >> General
-Make sure that if StrUtils is used in the same unit as this, LemNeoParser comes AFTER StrUtils in the "Uses" clause. This
+Make sure that if StrUtils is used in the same unit as this, LemParser comes AFTER StrUtils in the "Uses" clause. This
 is because StrUtils also has a class called TParser. Why didn't I rename it? Because nowhere in the code is StrUtils' TParser
 ever used, and for a frequently-used class like this, having a simple name is important.
 

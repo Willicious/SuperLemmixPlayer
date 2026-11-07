@@ -242,7 +242,7 @@ const
 
 implementation
 
-uses FBaseDosForm, FEditReplay, LemReplay, LemNeoLevelPack;
+uses FBaseDosForm, FEditReplay, LemReplay, LemLevelPack;
 
 { TGameWindow }
 

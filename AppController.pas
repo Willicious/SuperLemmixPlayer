@@ -10,11 +10,11 @@ uses
   GameCommandLine,
   GR32, PngInterface,
   LemSystemMessages,
-  LemTypes, LemRendering, LemNeoLevelPack, LemLevel, LemGadgetsModel, LemGadgetsMeta,
+  LemTypes, LemRendering, LemLevelPack, LemLevel, LemGadgetsModel, LemGadgetsMeta,
   LemStrings,
   GameControl, LemVersion,
   GameSound,          // Initial creation
-  LemNeoPieceManager, // Initial creation
+  LemPieceManager, // Initial creation
   FBaseDosForm, GameBaseScreenCommon,
   CustomPopup,
   SharedGlobals;

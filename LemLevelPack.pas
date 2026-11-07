@@ -1,4 +1,4 @@
-unit LemNeoLevelPack;
+unit LemLevelPack;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   GR32, CRC32, PngInterface, LemLevel,
   Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms, ComCtrls, StdCtrls,
   LemTalisman,
-  LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
+  LemStrings, LemTypes, LemParser, LemPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
   UMisc,
   SharedGlobals;
 

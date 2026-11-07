@@ -5,7 +5,7 @@ interface
 
 uses
   System.SysUtils, Windows,
-  LemNeoParser,
+  LemParser,
   GR32,
   SharedGlobals;
 

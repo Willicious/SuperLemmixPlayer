@@ -12,14 +12,14 @@ uses
   UMisc, SysUtils, StrUtils,
   PngInterface,
   LemRecolorSprites,
-  LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
+  LemRenderHelpers, LemPieceManager, LemTheme,
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming, LemProjectile,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings, LemPalette,
-  LemNeoParser,
+  LemParser,
   SharedGlobals;
 
 type

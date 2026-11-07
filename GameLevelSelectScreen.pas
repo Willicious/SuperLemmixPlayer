@@ -6,7 +6,7 @@ uses
   StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
   Types, UMisc, Math, Graphics, Generics.Collections,
   GameBaseMenuScreen, GameControl,
-  LemNeoLevelPack, LemNeoOnline, LemNeoParser, LemStrings, LemTypes,
+  LemLevelPack, LemParser, LemStrings, LemTypes,
   GR32, GR32_Image, GR32_Resamplers,
   SharedGlobals;
 

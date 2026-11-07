@@ -6,7 +6,7 @@ interface
 
 uses
   Types,
-  LemNeoLevelPack,
+  LemLevelPack,
   LemHotkeys,
   Windows, Classes, SysUtils, StrUtils, Controls, Dialogs, UITypes,
   UMisc, Math,
@@ -57,7 +57,7 @@ type
 
 implementation
 
-uses Forms, LemNeoParser;
+uses Forms, LemParser;
 
 var
   TopTextShift: Extended;      // 0.150; - Teal

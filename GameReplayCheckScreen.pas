@@ -6,7 +6,7 @@ interface
 
 uses
   Types, Math,
-  LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager,
+  LemRendering, LemLevel, LemRenderHelpers, LemPieceManager,
   Windows, Classes, SysUtils, StrUtils, IOUtils, Controls, Contnrs,
   UMisc,
   Gr32, Gr32_Layers, GR32_Resamplers, GR32_Image,
@@ -88,7 +88,7 @@ uses
   LemReplay,
   FReplayManager,
   Forms,
-  LemNeoLevelPack,
+  LemLevelPack,
   CustomPopup;
 
 { TGameReplayCheckScreen }

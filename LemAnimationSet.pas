@@ -10,9 +10,9 @@ uses
   LemCore,
   LemTypes,
   LemRecolorSprites,
-  LemNeoTheme,
+  LemTheme,
   LemMetaAnimation,
-  LemNeoParser,
+  LemParser,
   LemStrings,
   SharedGlobals;
 
@@ -261,7 +261,7 @@ type
 implementation
 
 uses
-  LemNeoPieceManager,
+  LemPieceManager,
   GameControl;
 
 { TBaseAnimationSet }

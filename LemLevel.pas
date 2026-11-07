@@ -10,7 +10,7 @@ uses
   LemTalisman,
   LemTerrain, LemTerrainGroup, LemGadgetsModel, LemGadgets, LemGadgetsConstants, LemGadgetsMeta,
   LemStrings, LemTypes,
-  LemNeoPieceManager, LemNeoParser,
+  LemPieceManager, LemParser,
   SharedGlobals;
 
 type

@@ -8,7 +8,7 @@ uses
   System.Types, System.StrUtils, Graphics,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
-  LemAnimationSet, LemMetaAnimation, LemNeoLevelPack, LemProjectile,
+  LemAnimationSet, LemMetaAnimation, LemLevelPack, LemProjectile,
   LemCore, LemLemming, LemGame, LemLevel, LemGadgets, LemTalisman,
   SharedGlobals;
 
@@ -302,7 +302,7 @@ implementation
 uses
   SysUtils, Math, Windows, UMisc, PngInterface,
   GameControl, GameSound,
-  LemTypes, LemReplay, LemStrings, LemNeoTheme,
+  LemTypes, LemReplay, LemStrings, LemTheme,
   LemHotkeys,
   FSuperLemmixLevelSelect;
 

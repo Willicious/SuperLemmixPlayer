@@ -19,7 +19,7 @@ uses
   Dialogs,
   LemCore, LemVersion,
   Contnrs, Classes, SysUtils, StrUtils,
-  LemNeoParser;
+  LemParser;
 
 const
   SKILL_REPLAY_NAME_COUNT = 18;

@@ -22,7 +22,7 @@ uses
   LemCore, LemTypes, LemStrings,
   LemLevel,
   LemRenderHelpers, LemRendering,
-  LemNeoTheme,
+  LemTheme,
   LemGadgets, LemGadgetsConstants, LemLemming, LemProjectile, LemRecolorSprites,
   LemReplay,
   LemTalisman,
@@ -611,7 +611,7 @@ var
 implementation
 
 uses
-  LemNeoLevelPack;
+  LemLevelPack;
 
 const
   LEMMIX_REPLAY_VERSION    = 105;

@@ -54,8 +54,8 @@ type
 implementation
 
 uses
-  LemNeoPieceManager, FMain,
-  FSuperLemmixConfig, LemNeoLevelPack, FSuperLemmixLevelSelect, UITypes;
+  LemPieceManager, FMain,
+  FSuperLemmixConfig, LemLevelPack, FSuperLemmixLevelSelect, UITypes;
 
 { TGameBaseScreen }
 

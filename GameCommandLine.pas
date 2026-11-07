@@ -7,7 +7,7 @@ interface
 uses
   GR32, PngInterface,
   GameControl,
-  LemNeoPieceManager,
+  LemPieceManager,
   LemLevel,
   LemGadgetsMeta, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
   LemStrings, LemTypes,

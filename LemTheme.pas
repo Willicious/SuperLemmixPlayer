@@ -1,4 +1,4 @@
-unit LemNeoTheme;
+unit LemTheme;
 
 { A simple unit for management of themes. These are basically just the remnants
   of graphic sets onces the terrain and objects are taken out. They define which
@@ -11,7 +11,7 @@ uses
   GR32,
   GameSound, LemTypes, LemStrings, PngInterface,
   StrUtils, Classes, SysUtils,
-  LemNeoParser,
+  LemParser,
   SharedGlobals;
 
 const

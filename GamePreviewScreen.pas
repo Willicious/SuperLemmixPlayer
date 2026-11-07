@@ -8,13 +8,13 @@ uses
   Generics.Collections,
   LemTypes,
   PngInterface,
-  LemNeoLevelPack,
+  LemLevelPack,
   LemHotkeys,
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers, GR32_Image,
   UMisc, Dialogs,
   FStyleUpdater,
-  LemCore, LemStrings, LemRendering, LemLevel, LemNeoTheme, LemGame,
+  LemCore, LemStrings, LemRendering, LemLevel, LemTheme, LemGame,
   LemGadgetsMeta, LemGadgets, LemMenuFont,
   LemTalisman,
   GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow,
@@ -64,7 +64,7 @@ type
 implementation
 
 uses
-  CustomPopup, FBaseDosForm, FLevelInfo, GameSound, LemNeoParser;
+  CustomPopup, FBaseDosForm, FLevelInfo, GameSound, LemParser;
 
 var
   TitleShift: Extended;       // 0.600; - Red

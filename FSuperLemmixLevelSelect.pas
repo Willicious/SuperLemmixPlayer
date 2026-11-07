@@ -4,7 +4,7 @@ interface
 
 uses
   GameControl, GameSound,
-  LemNeoLevelPack,
+  LemLevelPack,
   LemStrings,
   LemTypes,
   LemCore,
@@ -17,7 +17,7 @@ uses
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
   Types, IOUtils, Vcl.FileCtrl, // For Playback Mode
   ActiveX, ShlObj, ComObj, // For the shortcut creation
-  LemNeoParser, System.ImageList,
+  LemParser, System.ImageList,
   SharedGlobals, ShellAPI, Vcl.WinXCtrls;
 
 const

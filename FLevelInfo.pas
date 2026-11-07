@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Themes,
-  LemLevel, LemTalisman, LemNeoLevelPack,
+  LemLevel, LemTalisman, LemLevelPack,
   LemTypes, LemStrings, LemCore,
   UMisc, Types, Math,
   GR32, GR32_Image, GR32_Resamplers, PngInterface,
