@@ -10,8 +10,8 @@ uses
 
 const
   MAJOR_VERSION = 3;
-  MINOR_VERSION = 0;
-  HOTFIX_VERSION = 4;
+  MINOR_VERSION = 1;
+  HOTFIX_VERSION = 0;
   RC_VERSION = 0;
 
   function COMMIT_ID: String;
