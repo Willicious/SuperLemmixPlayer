@@ -855,8 +855,6 @@ procedure TGameMenuScreen.DoAfterConfig;
 begin
   inherited;
   ReloadCursor('menu');
-  MakePanels;
-  MakeFooterText;
 end;
 
 procedure TGameMenuScreen.DoCleanInstallCheck;
