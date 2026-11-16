@@ -2663,14 +2663,26 @@ begin
 
     DOM_TELEPORT:
       begin
-        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+        var ID := Gadget.PairingId + 1;
+        if (ID <= 26) then
+          fHelperImages[THelperIcon(ID)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
         fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
       end;
 
     DOM_RECEIVER:
       begin
-        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+        var ID := Gadget.PairingId + 1;
+        if (ID <= 26) then
+          fHelperImages[THelperIcon(ID)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
         fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
+      end;
+
+    DOM_PORTAL:
+      begin
+        fHelperImages[hpi_Portal].DrawTo(Dst, DrawX - 25 * ResMod, DrawY);
+        var ID := Gadget.PairingId + 1;
+        if (ID <= 26) then
+          fHelperImages[THelperIcon(ID)].DrawTo(Dst, DrawX + 15 * ResMod, DrawY);
       end;
 
     DOM_EXIT:
@@ -2745,12 +2757,6 @@ begin
     DOM_UPDRAFT:
       begin
         fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
-      end;
-
-    DOM_PORTAL:
-      begin
-        fHelperImages[hpi_Portal].DrawTo(Dst, DrawX - 25 * ResMod, DrawY);
-        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX + 15 * ResMod, DrawY);
       end;
 
     DOM_SPLITTER:
