@@ -1181,18 +1181,21 @@ begin
 end;
 
 procedure TFLevelSelect.DisplayPackTalismanInfo(Group: TNeoLevelGroup);
+const
+  TALISMAN_SPACING = 32;
 var
   TotalTalismans, CurrentTalisman: Integer;
   Level: TNeoLevelEntry;
   Talismans: TObjectList<TTalisman>;
   Tal: TTalisman;
-  i, TotalHeight: Integer;
+  i, TotalHeight, ReqTop: Integer;
 
   procedure CreateUIElements;
   var
     TitleLabel, LevLabel, ReqLabel: TLabel;
     NewButton: TSpeedButton;
-    LabelStartY, LabelTotalHeight: Integer;
+    ReqLabels: TList<TLabel>;
+    LabelStartY, LabelTotalHeight, ReqHeight: Integer;
   begin
     if Trim(Tal.Title) <> '' then
     begin
@@ -1200,74 +1203,96 @@ var
       TitleLabel.Parent := fPackTalBox;
       TitleLabel.Font.Style := [fsBold];
       TitleLabel.Caption := Tal.Title;
-    end
-    else
+    end else
       TitleLabel := nil;
 
     LevLabel := TLabel.Create(Self);
     LevLabel.Parent := fPackTalBox;
     LevLabel.Caption := Level.Group.Name + ' ' + IntToStr(Level.GroupIndex + 1) + ': ' + Level.Title;
 
-    ReqLabel := TLabel.Create(Self);
-    ReqLabel.Parent := fPackTalBox;
-    ReqLabel.Caption := BreakString(Tal.RequirementText, ReqLabel, fPackTalBox.ClientWidth - 16 - 40);
+    ReqLabels := TList<TLabel>.Create;
+    try
+      for var S in Tal.RequirementLines do
+      begin
+        ReqLabel := TLabel.Create(Self);
+        ReqLabel.Parent := fPackTalBox;
+        ReqLabel.Caption := '• ' + S;
+        ReqLabel.Left := 60;
+        ReqLabel.Width := fPackTalBox.ClientWidth - 48 - 16;
+        ReqLabel.WordWrap := True;
+        ReqLabel.AutoSize := True;
 
-    NewButton := TSpeedButton.Create(Self);
-    NewButton.Parent := fPackTalBox;
+        ReqLabels.Add(ReqLabel);
+      end;
 
-    NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
-    NewButton.Height := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+      NewButton := TSpeedButton.Create(Self);
+      NewButton.Parent := fPackTalBox;
 
-    NewButton.Margins.Left := SPEEDBUTTON_PADDING_SIZE - 3;
-    NewButton.Margins.Top := SPEEDBUTTON_PADDING_SIZE - 3;
-    NewButton.Margins.Right := SPEEDBUTTON_PADDING_SIZE - 1;
-    NewButton.Margins.Bottom := SPEEDBUTTON_PADDING_SIZE - 1;
+      NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+      NewButton.Height := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
 
-    NewButton.Tag := NativeInt(Level);
-    NewButton.OnClick := PackListTalButtonClick;
+      NewButton.Margins.Left := SPEEDBUTTON_PADDING_SIZE - 3;
+      NewButton.Margins.Top := SPEEDBUTTON_PADDING_SIZE - 3;
+      NewButton.Margins.Right := SPEEDBUTTON_PADDING_SIZE - 1;
+      NewButton.Margins.Bottom := SPEEDBUTTON_PADDING_SIZE - 1;
 
-    if Level.TalismanStatus[Tal.ID] then
-      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color])
-    else
-      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET);
+      NewButton.Tag := NativeInt(Level);
+      NewButton.OnClick := PackListTalButtonClick;
 
-    if TitleLabel <> nil then
-    begin
-      TitleLabel.Left := 48;
-      LevLabel.Left := 60;
-    end
-    else
-      LevLabel.Left := 48;
-    ReqLabel.Left := 48;
-    NewButton.Left := 8 - SPEEDBUTTON_PADDING_SIZE;
+      if Level.TalismanStatus[Tal.ID] then
+        DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color])
+      else
+        DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET);
 
-    LabelTotalHeight := LevLabel.Height + ReqLabel.Height;
-    if TitleLabel <> nil then
-      LabelTotalHeight := LabelTotalHeight + TitleLabel.Height;
+      if TitleLabel <> nil then
+      begin
+        TitleLabel.Left := 48;
+        LevLabel.Left := 60;
+      end else
+        LevLabel.Left := 48;
 
-    if (NewButton.Height > LabelTotalHeight) then
-    begin
-      NewButton.Top := TotalHeight;
-      LabelStartY := TotalHeight + ((NewButton.Height - LabelTotalHeight) div 2);
+      NewButton.Left := 8 - SPEEDBUTTON_PADDING_SIZE;
 
-      TotalHeight := TotalHeight + NewButton.Height + 8;
-    end
-    else
-    begin
-      LabelStartY := TotalHeight;
-      NewButton.Top := TotalHeight + ((LabelTotalHeight - NewButton.Height) div 2);
+      ReqHeight := 0;
+      for ReqLabel in ReqLabels do
+        Inc(ReqHeight, ReqLabel.Height + 4);
 
-      TotalHeight := TotalHeight + LabelTotalHeight + 8;
+      if ReqLabels.Count > 0 then
+        Dec(ReqHeight, 4);
+
+      LabelTotalHeight := LevLabel.Height + ReqHeight;
+
+      if TitleLabel <> nil then
+        Inc(LabelTotalHeight, TitleLabel.Height);
+
+      if NewButton.Height > LabelTotalHeight then
+      begin
+        NewButton.Top := TotalHeight;
+        LabelStartY := TotalHeight + ((NewButton.Height - LabelTotalHeight) div 2);
+        TotalHeight := TotalHeight + NewButton.Height + TALISMAN_SPACING;
+      end else begin
+        LabelStartY := TotalHeight;
+        NewButton.Top := TotalHeight + ((LabelTotalHeight - NewButton.Height) div 2);
+        TotalHeight := TotalHeight + LabelTotalHeight + TALISMAN_SPACING;
+      end;
+
+      if TitleLabel <> nil then
+      begin
+        TitleLabel.Top := LabelStartY;
+        LevLabel.Top := TitleLabel.Top + TitleLabel.Height + 4;
+      end else
+        LevLabel.Top := LabelStartY;
+
+      ReqTop := LevLabel.Top + LevLabel.Height + 4;
+
+      for ReqLabel in ReqLabels do
+      begin
+        ReqLabel.Top := ReqTop;
+        Inc(ReqTop, ReqLabel.Height + 4);
+      end;
+    finally
+      ReqLabels.Free;
     end;
-
-    if TitleLabel <> nil then
-    begin
-      TitleLabel.Top := LabelStartY;
-      LevLabel.Top := TitleLabel.Top + TitleLabel.Height;
-    end
-    else
-      LevLabel.Top := LabelStartY;
-    ReqLabel.Top := LevLabel.Top + LevLabel.Height;
   end;
 begin
   fPackTalBox.VertScrollBar.Position := 0;
@@ -1311,7 +1336,6 @@ begin
 
   pbUIProgress.Visible := False;
 end;
-
 
 procedure TFLevelSelect.SetTalismanInfo;
 var

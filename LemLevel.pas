@@ -147,7 +147,7 @@ type
     function GetHasAnyFallbacks: Boolean;
 
     procedure SanitizeTalisman(aTalisman: TTalisman);
-    procedure GenerateTalismanText(aTalisman: TTalisman);
+    procedure GenerateTalismanRequirements(aTalisman: TTalisman);
   public
     constructor Create;
     destructor Destroy; override;
@@ -186,6 +186,17 @@ uses
   Dialogs, Math; // For backwards compatibility
 
 { TLevelInfo }
+
+function CompareRequirementLines(const L, R: TArray<String>): Integer;
+begin
+  for var i := 0 to Min(High(L), High(R)) do
+  begin
+    Result := CompareStr(L[i], R[i]);
+    if Result <> 0 then Exit;
+  end;
+
+  Result := CompareValue(Length(L), Length(R));
+end;
 
 procedure TLevelInfo.Clear;
 begin
@@ -349,51 +360,23 @@ begin
     aTalisman.RequireKillZombies := False;
 end;
 
-procedure TLevel.GenerateTalismanText(aTalisman: TTalisman);
+
+procedure TLevel.GenerateTalismanRequirements(aTalisman: TTalisman);
 const
   CENTISECONDS: array[0..16] of String =
-    ('00', '06', '12', '18', '24', '29', '35', '41', '47', '53', '59', '65',
-     '71', '76', '82', '88', '94');
+    ('00', '06', '12', '18', '24', '29', '35', '41', '47', '53',
+     '59', '65', '71', '76', '82', '88', '94');
 var
-  ReqText, S: String;
+  ReqLines: TArray<String>;
   Skill: TSkillPanelButton;
 
   procedure AddRequirement(const aText: String);
   begin
-    ReqText := ReqText + sLineBreak + '• ' + aText;
-  end;
-
-  function HasRequirements(Tal: TTalisman): Boolean;
-  var
-    HasSkillRequirements: Boolean;
-    sButton: TSkillPanelButton;
-  begin
-    HasSkillRequirements := False;
-
-    for sButton := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    begin
-      if (Tal.SkillMinimum[sButton] > 0) or (Tal.SkillMaximum[sButton] >= 0) then
-      begin
-        HasSkillRequirements := True;
-        Break;
-      end;
-    end;
-
-    Result := HasSkillRequirements or
-              (Tal.RescueCount > -1) or
-              (Tal.TimeLimit > -1) or
-              (Tal.TotalSkillLimit > -1) or
-              (Tal.SkillTypeLimit > -1) or
-              Tal.RequireKillZombies or
-              Tal.RequireClassicMode or
-              Tal.RequireNoPause;
+    SetLength(ReqLines, Length(ReqLines) + 1);
+    ReqLines[High(ReqLines)] := aText;
   end;
 begin
-  ReqText := 'Complete the level';
-
-  if HasRequirements(aTalisman) then
-    ReqText := ReqText + ' with the following' + sLineBreak +
-               'requirements:' + sLineBreak;
+  ReqLines := [];
 
   // Save requirement
   if aTalisman.RescueCount >= 0 then
@@ -402,7 +385,7 @@ begin
   // Time limit
   if aTalisman.TimeLimit >= 0 then
   begin
-    S := 'Solve in under ' + IntToStr(aTalisman.TimeLimit div (60 * 17)) + ':' +
+    var S := 'Solve in under ' + IntToStr(aTalisman.TimeLimit div (60 * 17)) + ':' +
       LeadZeroStr((aTalisman.TimeLimit div 17) mod 60, 2);
 
     // Only show centiseconds if nonzero
@@ -456,8 +439,8 @@ begin
   if aTalisman.RequireClassicMode then
     AddRequirement('Play in Classic Mode');
 
-  // Finalize text
-  aTalisman.SetRequirementText(ReqText + sLineBreak);
+  // Finalise requirement lines
+  aTalisman.RequirementLines := ReqLines;
 end;
 
 function TLevel.GetHasAnyFallbacks: Boolean;
@@ -1385,7 +1368,7 @@ begin
   for i := 0 to fTalismans.Count-1 do
   begin
     SanitizeTalisman(fTalismans[i]);
-    GenerateTalismanText(fTalismans[i]);
+    GenerateTalismanRequirements(fTalismans[i]);
   end;
 
   fTalismans.Sort(TComparer<TTalisman>.Construct(
@@ -1398,7 +1381,7 @@ begin
        else if L.Title <> R.Title then
          Result := CompareStr(L.Title, R.Title)
        else
-         Result := CompareStr(L.RequirementText, R.RequirementText);
+         Result := CompareRequirementLines(L.RequirementLines, R.RequirementLines);
      end
     ));
 end;

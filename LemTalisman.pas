@@ -30,8 +30,9 @@ type
 
     fLevelLemmingCount: Integer;
 
-    fRequirementText: String;
+    fRequirementLines: TArray<String>;
 
+    procedure SetRequirementLines(aValue: TArray<String>);
     function GetSkillMaximum(aSkill: TSkillPanelButton): Integer;
     procedure SetSkillMaximum(aSkill: TSkillPanelButton; aCount: Integer);
     function GetSkillMinimum(aSkill: TSkillPanelButton): Integer;
@@ -42,7 +43,6 @@ type
     procedure LoadFromSection(aSec: TParserSection);
     procedure SaveToSection(aSec: TParserSection);
 
-    procedure SetRequirementText(aValue: String);
     procedure Clone(aSrc: TTalisman);
 
     property Title: String read fTitle write fTitle;
@@ -58,8 +58,7 @@ type
     property RequireKillZombies: Boolean read fRequireKillZombies write fRequireKillZombies;
     property RequireClassicMode: Boolean read fRequireClassicMode write fRequireClassicMode;
     property RequireNoPause: Boolean read fRequireNoPause write fRequireNoPause;
-    property RequirementText: String read fRequirementText;
-
+    property RequirementLines: TArray<String> read fRequirementLines write SetRequirementLines;
     property LevelLemmingCount: Integer read fLevelLemmingCount write fLevelLemmingCount;
   end;
 
@@ -91,7 +90,7 @@ begin
   end;
 
   fLevelLemmingCount := aSrc.fLevelLemmingCount;
-  fRequirementText := aSrc.fRequirementText;
+  fRequirementLines := aSrc.fRequirementLines;
 end;
 
 constructor TTalisman.Create;
@@ -116,9 +115,9 @@ begin
   end;
 end;
 
-procedure TTalisman.SetRequirementText(aValue: String);
+procedure TTalisman.SetRequirementLines(aValue: TArray<String>);
 begin
-  fRequirementText := aValue;
+  fRequirementLines := aValue;
 end;
 
 procedure TTalisman.SetSkillMaximum(aSkill: TSkillPanelButton; aCount: Integer);

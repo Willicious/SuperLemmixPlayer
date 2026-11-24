@@ -311,9 +311,11 @@ end;
 procedure TLevelInfoPanel.AddTalisman;
 var
   Img: TImage32;
-  LblTitle, LblRequirement: TLabel;
+  LblTitle, LblTopText, LblRequirement: TLabel;
   IconIndex: Integer;
   LabelHeight: Integer;
+  TopText: String;
+  RequirementLines: TStringList;
 begin
   Img := TImage32.Create(Self);
   Img.Parent := Self;
@@ -341,23 +343,50 @@ begin
   end else
     LblTitle := nil;
 
-  LblRequirement := TLabel.Create(Self);
-  LblRequirement.Parent := Self;
-  LblRequirement.Caption := fTalisman.RequirementText;
-  LblRequirement.Left := Img.Left + Img.Width + fAdjustedSizing.PaddingSize;
+  if Length(fTalisman.RequirementLines) > 0 then
+    TopText := 'Complete the level with the following requirements:'
+  else
+    TopText := 'Complete the level';
+
+  LblTopText := TLabel.Create(Self);
+  LblTopText.Parent := Self;
+  LblTopText.Caption := TopText;
+  LblTopText.Left := Img.Left + Img.Width + fAdjustedSizing.PaddingSize;
 
   if LblTitle <> nil then
-    LblRequirement.Top := LblTitle.Top + LblTitle.Height
+    LblTopText.Top := LblTitle.Top + LblTitle.Height + 8
+  else
+    LblTopText.Top := fCurrentPos.Y;
+
+  RequirementLines := TStringList.Create;
+  try
+    for var S in fTalisman.RequirementLines do
+      RequirementLines.Add('• ' + S);
+
+    LblRequirement := TLabel.Create(Self);
+    LblRequirement.Parent := Self;
+    LblRequirement.AutoSize := True;
+    LblRequirement.Caption := RequirementLines.Text.TrimRight;
+  finally
+    RequirementLines.Free;
+  end;
+
+  LblRequirement.Left := Img.Left + Img.Width + fAdjustedSizing.PaddingSize;
+
+  if LblTopText <> nil then
+    LblRequirement.Top := LblTopText.Top + LblTopText.Height + 8
   else
     LblRequirement.Top := fCurrentPos.Y;
 
   LabelHeight := LblRequirement.Top - fCurrentPos.Y + LblRequirement.Height;
 
-  fMinSize.X := Max(Img.Left + Img.Width, LblRequirement.Left + LblRequirement.Width)
-    + fAdjustedSizing.PaddingSize;
+  fMinSize.X := Max(Img.Left + Img.Width, LblRequirement.Left + LblRequirement.Width) + fAdjustedSizing.PaddingSize;
 
   if LblTitle <> nil then
     fMinSize.X := Max(fMinSize.X, LblTitle.Left + LblTitle.Width + fAdjustedSizing.PaddingSize);
+
+  if LblTopText <> nil then
+    fMinSize.X := Max(fMinSize.X, LblTopText.Left + LblTopText.Width + fAdjustedSizing.PaddingSize);
 
   fMinSize.Y := fCurrentPos.Y + Max(Img.Height, LabelHeight) + fAdjustedSizing.PaddingSize;
 
@@ -655,22 +684,12 @@ var
       LocalAdd(ICON_NO_PAUSE, '', False, pmMoveHorz);
   end;
 
-  function GetLongestRequirementLine(const aText: String): Integer;
-  var
-    Lines: TStringList;
-    i: Integer;
+  function GetLongestRequirementLine(const aLines: TArray<String>): Integer;
   begin
     Result := 0;
 
-    Lines := TStringList.Create;
-    try
-      Lines.Text := aText;
-
-      for i := 0 to Lines.Count - 1 do
-        Result := Max(Result, Canvas.TextWidth(Lines[i]));
-    finally
-      Lines.Free;
-    end;
+    for var S in aLines do
+      Result := Max(Result, Canvas.TextWidth('• ' + S));
   end;
 begin
   if fTalisman = nil then
@@ -685,9 +704,9 @@ begin
   ReqWidth := fAdjustedSizing.NormalSpacing * ReqCount - 8;
 
   // Add talisman info, accounting for possible increases in width
-  ContentWidth := Max(ReqWidth, GetLongestRequirementLine(Talisman.RequirementText) + 20);
+  ContentWidth := Max(ReqWidth, GetLongestRequirementLine(Talisman.RequirementLines) + 80);
   AddTalisman;
-  ContentWidth := Max(ContentWidth, (fMinSize.X - fAdjustedSizing.PaddingSize * 2) + 20);
+  ContentWidth := Max(ContentWidth, (fMinSize.X - fAdjustedSizing.PaddingSize * 2) + 80);
 
   // Make sure the panel is wide enough for the content
   fMinSize.X := ContentWidth + fAdjustedSizing.PaddingSize * 2;
