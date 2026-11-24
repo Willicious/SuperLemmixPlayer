@@ -410,6 +410,14 @@ begin
   begin
     NewZoom := -1;
 
+    if Sender = cbAmigaTheme then
+    begin
+      if cbMinimapHighQuality.Checked then
+        cbMinimapHighQuality.Checked := not cbAmigaTheme.Checked;
+
+      cbMinimapHighQuality.Enabled := not cbAmigaTheme.Checked;
+    end;
+
     if Sender = cbHighResolution then
     begin
       if cbHighResolution.Checked then
@@ -535,12 +543,17 @@ procedure TFormNXConfig.SetCheckboxes;
       cmbScrollSpeed.Enabled := False;
     end;
 
-
     if GameParams.ClassicMode then
     begin
       cbHideShadows.Enabled := False;
       cbHideHelpers.Enabled := False;
       cbHideSkillQ.Enabled := False;
+    end;
+
+    if GameParams.AmigaTheme then
+    begin
+      cbMinimapHighQuality.Checked := False;
+      cbMinimapHighQuality.Enabled := False;
     end;
 
     if not GameParams.ShowMinimap then
