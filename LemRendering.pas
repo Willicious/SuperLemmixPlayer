@@ -247,6 +247,7 @@ var
   i, j: Integer;
   MinimapLemColor: TColor32;
   ThisAnim: TGadgetAnimationInstance;
+  Anim: TGadgetAnimation;
   GadgetRect: TRect;
   BMP: TBitmap32;
 begin
@@ -276,11 +277,12 @@ begin
         for j := 0 to G.Animations.Count - 1 do
         begin
           ThisAnim := G.Animations[j];
+          Anim := ThisAnim.MetaAnimation;
 
-          if ThisAnim.MetaAnimation.FrameCount = 0 then
+          if Anim.FrameCount = 0 then
             Continue;
 
-          BMP := ThisAnim.MetaAnimation.GetFrameBitmap(0);
+          BMP := Anim.GetFrameBitmap(0);
 
           if BMP = nil then
             Continue;
@@ -294,10 +296,9 @@ begin
           //fFixedDrawColor := $FFFF00FF; // Pink
 
           GadgetRect := Rect(
-            (G.Left + ThisAnim.MetaAnimation.OffsetX) div 4,
-            (G.Top + ThisAnim.MetaAnimation.OffsetY) div 4,
-            (G.Left + ThisAnim.MetaAnimation.OffsetX + BMP.Width) div 4,
-            (G.Top + ThisAnim.MetaAnimation.OffsetY + BMP.Height) div 4);
+            (G.Left + Anim.OffsetX) div 4, (G.Top + Anim.OffsetY) div 4,
+            (G.Left + Anim.OffsetX + Anim.Width + G.WidthVariance) div 4,
+            (G.Top + Anim.OffsetY + Anim.Height + G.HeightVariance) div 4);
 
           BMP.DrawTo(Dst, GadgetRect, BMP.BoundsRect);
 
